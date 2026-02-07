@@ -1757,6 +1757,68 @@ SPEECH_ENABLE_SPEECH = _("Speech support")
 # widget.
 SPEECH_SYSTEM_MESSAGES_ARE_DETAILED = _("_System messages are detailed")
 
+# Translators: The on-screen braille display is a graphical window that displays a
+# visual representation of what would be shown on a connected braille display,
+# including the braille dots and the text characters they correspond to. It is
+# primarily used by developers and testers who may not have a physical braille
+# display.
+BRAILLE_MONITOR = _("On-screen braille")
+
+# Translators: The on-screen speech display is a graphical window that displays a
+# scrolling log of all text spoken by the screen reader. It is primarily used by
+# developers and testers to verify what is being spoken without having to listen
+# to the audio.
+SPEECH_MONITOR = _("On-screen speech")
+
+# Translators: This is the title of the on-screen display settings category in the
+# Orca Preferences dialog. These settings control the appearance of the on-screen
+# braille and speech monitor windows.
+ON_SCREEN_DISPLAY = _("On-Screen Display")
+
+# Translators: This is the label of a spin button that controls the number of braille
+# cells displayed in the on-screen braille monitor.
+BRAILLE_MONITOR_CELL_COUNT = _("Cell count")
+
+# Translators: This is the label of a checkbox that controls whether the on-screen
+# braille monitor shows Unicode braille dot patterns instead of text characters.
+BRAILLE_MONITOR_SHOW_DOTS = _("Show braille dot patterns")
+
+# Translators: This is the label of a color button that controls the text color
+# in the on-screen braille monitor.
+BRAILLE_MONITOR_FOREGROUND = _("Text color")
+
+# Translators: This is the label of a color button that controls the background color
+# in the on-screen braille monitor.
+BRAILLE_MONITOR_BACKGROUND = _("Background color")
+
+# Translators: This is the label of a spin button that controls the font size of
+# text in the on-screen speech monitor.
+SPEECH_MONITOR_FONT_SIZE = _("Font size")
+
+# Translators: This is the label of a color button that controls the text color
+# in the on-screen speech monitor.
+SPEECH_MONITOR_FOREGROUND = _("Text color")
+
+# Translators: This is the label of a color button that controls the background color
+# in the on-screen speech monitor.
+SPEECH_MONITOR_BACKGROUND = _("Background color")
+
+# Translators: This is an informational message displayed at the top of the on-screen
+# speech display preferences page, briefly explaining the feature and how to toggle it.
+SPEECH_MONITOR_INFO = _(
+    "The on-screen speech display is a window that shows what the screen reader "
+    "is speaking. The default keybinding to show or hide it is Orca+Shift+S. "
+    "This can be changed in Commands."
+)
+
+# Translators: This is an informational message displayed at the top of the on-screen
+# braille display preferences page, briefly explaining the feature and how to toggle it.
+BRAILLE_MONITOR_INFO = _(
+    "The on-screen braille display is a window intended for developers that shows "
+    "what would be presented on a braille display. To show or hide it, assign a "
+    "keybinding in Commands."
+)
+
 # Translators: This is the label of the Braille page in the Orca Preferences dialog.
 BRAILLE = _("Braille")
 

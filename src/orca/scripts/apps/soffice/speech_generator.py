@@ -35,7 +35,7 @@ from gi.repository import Atspi
 from orca import debug
 from orca import focus_manager
 from orca import messages
-from orca import speech_and_verbosity_manager
+from orca import speech_presenter
 from orca import speech_generator
 from orca import table_navigator
 from orca.ax_component import AXComponent
@@ -146,17 +146,17 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         result = super()._generate_real_table_cell(obj, **args)
 
-        speech_manager = speech_and_verbosity_manager.get_manager()
+        presenter = speech_presenter.get_presenter()
         if not self._script.utilities.is_spreadsheet_cell(obj):
             if table_navigator.get_navigator().last_input_event_was_navigation_command():
                 return result
 
-            if speech_manager.get_announce_cell_coordinates():
+            if presenter.get_announce_cell_coordinates():
                 result.append(AXObject.get_name(obj))
             return result
 
         if (
-            speech_manager.get_announce_spreadsheet_cell_coordinates()
+            presenter.get_announce_spreadsheet_cell_coordinates()
             or args.get("formatType") == "basicWhereAmI"
         ):
             label = AXTable.get_label_for_cell_coordinates(

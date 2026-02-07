@@ -104,7 +104,7 @@ class LearnModePresenter:
         presenter = presentation_manager.get_manager()
         presenter.present_message(messages.VERSION)
         presenter.speak_message(messages.LEARN_MODE_START_SPEECH)
-        presenter.display_message(messages.LEARN_MODE_START_BRAILLE)
+        presenter.present_braille_message(messages.LEARN_MODE_START_BRAILLE)
 
         input_event_manager.get_manager().grab_keyboard("Entering learn mode")
         msg = "LEARN MODE PRESENTER: Is now active"

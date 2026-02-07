@@ -269,7 +269,7 @@ class OrcaTestContext:
             manager_instance.present_message = self.mocker.Mock()
             manager_instance.speak_message = self.mocker.Mock()
             manager_instance.speak_character = self.mocker.Mock()
-            manager_instance.display_message = self.mocker.Mock()
+            manager_instance.present_braille_message = self.mocker.Mock()
             manager_instance.spell_item = self.mocker.Mock()
             manager_instance.spell_phonetically = self.mocker.Mock()
             manager_instance.play_sound = self.mocker.Mock()

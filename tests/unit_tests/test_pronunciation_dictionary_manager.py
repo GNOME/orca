@@ -46,7 +46,7 @@ class TestPronunciationDictionaryManager:
             "orca.preferences_grid_base",
             "orca.script_manager",
             "orca.settings_manager",
-            "orca.speech_and_verbosity_manager",
+            "orca.speech_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -76,9 +76,9 @@ class TestPronunciationDictionaryManager:
         manager_instance.get_pronunciations.return_value = {}
         manager_instance.get_general_settings.return_value = {"profile": ["Default", "default"]}
 
-        # Set up speech_and_verbosity_manager
-        speech_manager = essential_modules["orca.speech_and_verbosity_manager"]
-        speech_instance = speech_manager.get_manager.return_value
+        # Set up speech_manager
+        speech_manager_mock = essential_modules["orca.speech_manager"]
+        speech_instance = speech_manager_mock.get_manager.return_value
         speech_instance.get_use_pronunciation_dictionary.return_value = True
         speech_instance.set_use_pronunciation_dictionary.return_value = True
 
@@ -216,7 +216,7 @@ class TestPronunciationDictionaryManagerIntegration:
             "orca.preferences_grid_base",
             "orca.script_manager",
             "orca.settings_manager",
-            "orca.speech_and_verbosity_manager",
+            "orca.speech_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -246,9 +246,9 @@ class TestPronunciationDictionaryManagerIntegration:
         manager_instance.get_pronunciations.return_value = {}
         manager_instance.get_general_settings.return_value = {"profile": ["Default", "default"]}
 
-        # Set up speech_and_verbosity_manager
-        speech_manager = essential_modules["orca.speech_and_verbosity_manager"]
-        speech_instance = speech_manager.get_manager.return_value
+        # Set up speech_manager
+        speech_manager_mock = essential_modules["orca.speech_manager"]
+        speech_instance = speech_manager_mock.get_manager.return_value
         speech_instance.get_use_pronunciation_dictionary.return_value = True
         speech_instance.set_use_pronunciation_dictionary.return_value = True
 

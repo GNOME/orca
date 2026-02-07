@@ -29,7 +29,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import Any, TYPE_CHECKING
 
 import pytest
 
@@ -376,13 +376,13 @@ class TestTypingEchoPresenter:
 
         settings_mock.presentLockingKeys = None
 
-        speech_manager_patch = test_context.patch("orca.speech_and_verbosity_manager.get_manager")
-        speech_manager_instance = speech_manager_patch.return_value
+        speech_presenter_patch = test_context.patch("orca.speech_presenter.get_presenter")
+        speech_presenter_instance = speech_presenter_patch.return_value
 
-        speech_manager_instance.get_only_speak_displayed_text.return_value = False
+        speech_presenter_instance.get_only_speak_displayed_text.return_value = False
         assert presenter.get_locking_keys_presented() is True
 
-        speech_manager_instance.get_only_speak_displayed_text.return_value = True
+        speech_presenter_instance.get_only_speak_displayed_text.return_value = True
         assert presenter.get_locking_keys_presented() is False
 
         presenter.set_locking_keys_presented(True)
@@ -498,7 +498,7 @@ class TestTypingEchoPresenter:
 
         from orca import presentation_manager
 
-        pres_manager = presentation_manager.get_manager()
+        pres_manager: Any = presentation_manager.get_manager()
         pres_manager.present_message.reset_mock()
 
         presenter.cycle_key_echo(script_mock, None, True)
@@ -847,7 +847,7 @@ class TestTypingEchoPresenter:
 
         from orca import presentation_manager
 
-        pres_manager = presentation_manager.get_manager()
+        pres_manager: Any = presentation_manager.get_manager()
         pres_manager.speak_message.reset_mock()
 
         result = presenter.echo_previous_word(script_mock, obj_mock)
@@ -891,7 +891,7 @@ class TestTypingEchoPresenter:
 
         from orca import presentation_manager
 
-        pres_manager = presentation_manager.get_manager()
+        pres_manager: Any = presentation_manager.get_manager()
         pres_manager.speak_message.reset_mock()
 
         result = presenter.echo_previous_sentence(script_mock, obj_mock)

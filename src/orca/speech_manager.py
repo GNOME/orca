@@ -1,7 +1,7 @@
 # Orca
 #
 # Copyright 2005-2008 Sun Microsystems Inc.
-# Copyright 2011-2025 Igalia, S.L.
+# Copyright 2011-2026 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -19,30 +19,23 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-public-methods
-# pylint: disable=too-many-lines
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=wrong-import-position
-# pylint: disable=too-many-instance-attributes
 # pylint: disable=too-many-statements
 # pylint: disable=too-many-locals
-# pylint: disable=too-many-branches
+# pylint: disable=too-many-lines
 
-"""Configures speech and verbosity settings and adjusts strings accordingly."""
+"""Manages the speech engine: server, synthesizer, voice, and output parameters."""
 
-# This must be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
-
 
 import importlib
 import locale
 import queue
-import re
-import string
 import threading
-from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Callable, Iterable, TYPE_CHECKING
+from typing import Any, TYPE_CHECKING
 
 import gi
 
@@ -54,31 +47,18 @@ from . import cmdnames
 from . import command_manager
 from . import dbus_service
 from . import debug
-from . import focus_manager
 from . import guilabels
 from . import input_event
 from . import keybindings
-from . import mathsymbols
 from . import messages
-from . import object_properties
 from . import preferences_grid_base
 from . import presentation_manager
-from . import pronunciation_dictionary_manager
 from . import settings
 from . import speech
 from . import speechserver
 from .acss import ACSS
-from .ax_document import AXDocument
-from .ax_hypertext import AXHypertext
-from .ax_object import AXObject
-from .ax_table import AXTable
-from .ax_text import AXText
-from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
-    gi.require_version("Atspi", "2.0")
-    from gi.repository import Atspi
-
     from .scripts import default
     from .speechserver import SpeechServer
 
@@ -106,390 +86,6 @@ class PunctuationStyle(Enum):
         return self.name.lower()
 
 
-class VerbosityLevel(Enum):
-    """Verbosity level enumeration with int values from settings."""
-
-    BRIEF = settings.VERBOSITY_LEVEL_BRIEF
-    VERBOSE = settings.VERBOSITY_LEVEL_VERBOSE
-
-    @property
-    def string_name(self) -> str:
-        """Returns the lowercase string name for this enum value."""
-
-        return self.name.lower()
-
-
-@dataclass(frozen=True)
-class SpeechPreference:
-    """Descriptor for a single preference."""
-
-    prefs_key: str
-    label: str
-    getter: Callable[[], bool]
-    setter: Callable[[bool], bool]
-
-
-class AnnouncementsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
-    """GtkGrid containing the Container Announcements preferences page."""
-
-    def __init__(self, manager: SpeechAndVerbosityManager) -> None:
-        (
-            _general_prefs,
-            _object_details_prefs,
-            announcements_prefs,
-        ) = manager.get_speech_preferences()
-
-        controls = [
-            preferences_grid_base.BooleanPreferenceControl(
-                label=announcements_prefs[0].label,
-                getter=announcements_prefs[0].getter,
-                setter=announcements_prefs[0].setter,
-                prefs_key=announcements_prefs[0].prefs_key,
-                member_of=guilabels.ANNOUNCE_WHEN_ENTERING,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=announcements_prefs[1].label,
-                getter=announcements_prefs[1].getter,
-                setter=announcements_prefs[1].setter,
-                prefs_key=announcements_prefs[1].prefs_key,
-                member_of=guilabels.ANNOUNCE_WHEN_ENTERING,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=announcements_prefs[2].label,
-                getter=announcements_prefs[2].getter,
-                setter=announcements_prefs[2].setter,
-                prefs_key=announcements_prefs[2].prefs_key,
-                member_of=guilabels.ANNOUNCE_WHEN_ENTERING,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=announcements_prefs[3].label,
-                getter=announcements_prefs[3].getter,
-                setter=announcements_prefs[3].setter,
-                prefs_key=announcements_prefs[3].prefs_key,
-                member_of=guilabels.ANNOUNCE_WHEN_ENTERING,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=announcements_prefs[4].label,
-                getter=announcements_prefs[4].getter,
-                setter=announcements_prefs[4].setter,
-                prefs_key=announcements_prefs[4].prefs_key,
-                member_of=guilabels.ANNOUNCE_WHEN_ENTERING,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=announcements_prefs[5].label,
-                getter=announcements_prefs[5].getter,
-                setter=announcements_prefs[5].setter,
-                prefs_key=announcements_prefs[5].prefs_key,
-                member_of=guilabels.ANNOUNCE_WHEN_ENTERING,
-            ),
-        ]
-
-        super().__init__(guilabels.ANNOUNCEMENTS, controls)
-
-
-class ProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
-    """GtkGrid containing the Progress Bars preferences page."""
-
-    def __init__(self, manager: SpeechAndVerbosityManager) -> None:
-        controls: list[preferences_grid_base.ControlType] = [
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.GENERAL_SPEAK_UPDATES,
-                getter=manager.get_speak_progress_bar_updates,
-                setter=manager.set_speak_progress_bar_updates,
-                prefs_key="speakProgressBarUpdates",
-            ),
-            preferences_grid_base.IntRangePreferenceControl(
-                label=guilabels.GENERAL_FREQUENCY_SECS,
-                getter=manager.get_progress_bar_speech_interval,
-                setter=manager.set_progress_bar_speech_interval,
-                prefs_key="progressBarSpeechInterval",
-                minimum=0,
-                maximum=100,
-            ),
-            preferences_grid_base.EnumPreferenceControl(
-                label=guilabels.GENERAL_APPLIES_TO,
-                getter=manager.get_progress_bar_speech_verbosity,
-                setter=manager.set_progress_bar_speech_verbosity,
-                prefs_key="progressBarSpeechVerbosity",
-                options=[
-                    guilabels.PROGRESS_BAR_ALL,
-                    guilabels.PROGRESS_BAR_APPLICATION,
-                    guilabels.PROGRESS_BAR_WINDOW,
-                ],
-                values=[
-                    settings.PROGRESS_BAR_ALL,
-                    settings.PROGRESS_BAR_APPLICATION,
-                    settings.PROGRESS_BAR_WINDOW,
-                ],
-            ),
-        ]
-
-        super().__init__(guilabels.PROGRESS_BARS, controls)
-
-
-class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
-    """GtkGrid containing the Verbosity preferences page."""
-
-    def __init__(self, manager: SpeechAndVerbosityManager) -> None:
-        self._manager = manager
-        (
-            general_prefs,
-            object_details_prefs,
-            _announcements_prefs,
-        ) = manager.get_speech_preferences()
-
-        text_speak_blank_lines = SpeechPreference(
-            "speakBlankLines",
-            guilabels.SPEECH_SPEAK_BLANK_LINES,
-            manager.get_speak_blank_lines,
-            manager.set_speak_blank_lines,
-        )
-        text_speak_misspelled = SpeechPreference(
-            "speakMisspelledIndicator",
-            guilabels.SPEECH_SPEAK_MISSPELLED_WORD_INDICATOR,
-            manager.get_speak_misspelled_indicator,
-            manager.set_speak_misspelled_indicator,
-        )
-        text_speak_indentation = SpeechPreference(
-            "enableSpeechIndentation",
-            guilabels.SPEECH_SPEAK_INDENTATION_AND_JUSTIFICATION,
-            manager.get_speak_indentation_and_justification,
-            manager.set_speak_indentation_and_justification,
-        )
-        text_indentation_only_if_changed = SpeechPreference(
-            "speakIndentationOnlyIfChanged",
-            guilabels.SPEECH_INDENTATION_ONLY_IF_CHANGED,
-            manager.get_speak_indentation_only_if_changed,
-            manager.set_speak_indentation_only_if_changed,
-        )
-
-        self._only_speak_displayed_control = preferences_grid_base.BooleanPreferenceControl(
-            label=object_details_prefs[0].label,
-            getter=object_details_prefs[0].getter,
-            setter=object_details_prefs[0].setter,
-            prefs_key=object_details_prefs[0].prefs_key,
-            member_of=guilabels.SPEECH_OBJECT_DETAILS,
-        )
-
-        self._enable_indentation_control = preferences_grid_base.BooleanPreferenceControl(
-            label=text_speak_indentation.label,
-            getter=text_speak_indentation.getter,
-            setter=text_speak_indentation.setter,
-            prefs_key=text_speak_indentation.prefs_key,
-            member_of=guilabels.SPEECH_OBJECT_DETAILS,
-            determine_sensitivity=self._only_speak_displayed_text_is_off,
-        )
-
-        controls = [
-            preferences_grid_base.BooleanPreferenceControl(
-                label=general_prefs[0].label,
-                getter=general_prefs[0].getter,
-                setter=general_prefs[0].setter,
-                prefs_key=general_prefs[0].prefs_key,
-                member_of=guilabels.GENERAL,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.OBJECT_PRESENTATION_IS_DETAILED,
-                getter=manager._get_verbosity_is_verbose,
-                setter=manager._set_verbosity_from_bool,
-                prefs_key="speechVerbosityLevel",
-                member_of=guilabels.GENERAL,
-            ),
-            self._only_speak_displayed_control,
-            preferences_grid_base.BooleanPreferenceControl(
-                label=object_details_prefs[1].label,
-                getter=object_details_prefs[1].getter,
-                setter=object_details_prefs[1].setter,
-                prefs_key=object_details_prefs[1].prefs_key,
-                member_of=guilabels.SPEECH_OBJECT_DETAILS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=object_details_prefs[2].label,
-                getter=object_details_prefs[2].getter,
-                setter=object_details_prefs[2].setter,
-                prefs_key=object_details_prefs[2].prefs_key,
-                member_of=guilabels.SPEECH_OBJECT_DETAILS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=object_details_prefs[3].label,
-                getter=object_details_prefs[3].getter,
-                setter=object_details_prefs[3].setter,
-                prefs_key=object_details_prefs[3].prefs_key,
-                member_of=guilabels.SPEECH_OBJECT_DETAILS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=object_details_prefs[4].label,
-                getter=object_details_prefs[4].getter,
-                setter=object_details_prefs[4].setter,
-                prefs_key=object_details_prefs[4].prefs_key,
-                member_of=guilabels.SPEECH_OBJECT_DETAILS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=text_speak_blank_lines.label,
-                getter=text_speak_blank_lines.getter,
-                setter=text_speak_blank_lines.setter,
-                prefs_key=text_speak_blank_lines.prefs_key,
-                member_of=guilabels.SPEECH_OBJECT_DETAILS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=text_speak_misspelled.label,
-                getter=text_speak_misspelled.getter,
-                setter=text_speak_misspelled.setter,
-                prefs_key=text_speak_misspelled.prefs_key,
-                member_of=guilabels.SPEECH_OBJECT_DETAILS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off,
-            ),
-            self._enable_indentation_control,
-            preferences_grid_base.BooleanPreferenceControl(
-                label=text_indentation_only_if_changed.label,
-                getter=text_indentation_only_if_changed.getter,
-                setter=text_indentation_only_if_changed.setter,
-                prefs_key=text_indentation_only_if_changed.prefs_key,
-                member_of=guilabels.SPEECH_OBJECT_DETAILS,
-                determine_sensitivity=self._indentation_enabled,
-            ),
-        ]
-
-        super().__init__(guilabels.VERBOSITY, controls)
-
-    def _only_speak_displayed_text_is_off(self) -> bool:
-        """Returns True if only-speak-displayed-text is off in the UI."""
-
-        only_displayed_widget = self.get_widget_for_control(self._only_speak_displayed_control)
-        if only_displayed_widget:
-            return not only_displayed_widget.get_active()
-        return True
-
-    def _indentation_enabled(self) -> bool:
-        """Check if speak indentation is enabled in the UI (widget state, not settings)."""
-
-        if not self._only_speak_displayed_text_is_off():
-            return False
-        widget = self.get_widget_for_control(self._enable_indentation_control)
-        return widget.get_active() if widget else True
-
-
-class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
-    """GtkGrid containing the Tables preferences page."""
-
-    def __init__(self, manager: SpeechAndVerbosityManager) -> None:
-        # Table preferences
-        table_gui_rows = SpeechPreference(
-            "readFullRowInGUITable",
-            guilabels.SPEECH_SPEAK_FULL_ROW_IN_GUI_TABLES,
-            manager.get_speak_row_in_gui_table,
-            manager.set_speak_row_in_gui_table,
-        )
-        table_doc_rows = SpeechPreference(
-            "readFullRowInDocumentTable",
-            guilabels.SPEECH_SPEAK_FULL_ROW_IN_DOCUMENT_TABLES,
-            manager.get_speak_row_in_document_table,
-            manager.set_speak_row_in_document_table,
-        )
-        table_spreadsheet_rows = SpeechPreference(
-            "readFullRowInSpreadSheet",
-            guilabels.SPEECH_SPEAK_FULL_ROW_IN_SPREADSHEETS,
-            manager.get_speak_row_in_spreadsheet,
-            manager.set_speak_row_in_spreadsheet,
-        )
-        table_cell_headers = SpeechPreference(
-            "speakCellHeaders",
-            guilabels.TABLE_SPEAK_CELL_HEADER,
-            manager.get_announce_cell_headers,
-            manager.set_announce_cell_headers,
-        )
-        table_cell_coords = SpeechPreference(
-            "speakCellCoordinates",
-            guilabels.TABLE_SPEAK_CELL_COORDINATES,
-            manager.get_announce_cell_coordinates,
-            manager.set_announce_cell_coordinates,
-        )
-        table_spreadsheet_coords = SpeechPreference(
-            "speakSpreadsheetCoordinates",
-            guilabels.SPREADSHEET_SPEAK_CELL_COORDINATES,
-            manager.get_announce_spreadsheet_cell_coordinates,
-            manager.set_announce_spreadsheet_cell_coordinates,
-        )
-        table_cell_span = SpeechPreference(
-            "speakCellSpan",
-            guilabels.TABLE_SPEAK_CELL_SPANS,
-            manager.get_announce_cell_span,
-            manager.set_announce_cell_span,
-        )
-        table_selected_range = SpeechPreference(
-            "alwaysSpeakSelectedSpreadsheetRange",
-            guilabels.SPREADSHEET_SPEAK_SELECTED_RANGE,
-            manager.get_always_announce_selected_range_in_spreadsheet,
-            manager.set_always_announce_selected_range_in_spreadsheet,
-        )
-
-        controls = [
-            preferences_grid_base.BooleanPreferenceControl(
-                label=table_gui_rows.label,
-                getter=table_gui_rows.getter,
-                setter=table_gui_rows.setter,
-                prefs_key=table_gui_rows.prefs_key,
-                member_of=guilabels.TABLE_ROW_NAVIGATION,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=table_doc_rows.label,
-                getter=table_doc_rows.getter,
-                setter=table_doc_rows.setter,
-                prefs_key=table_doc_rows.prefs_key,
-                member_of=guilabels.TABLE_ROW_NAVIGATION,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=table_spreadsheet_rows.label,
-                getter=table_spreadsheet_rows.getter,
-                setter=table_spreadsheet_rows.setter,
-                prefs_key=table_spreadsheet_rows.prefs_key,
-                member_of=guilabels.TABLE_ROW_NAVIGATION,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=table_cell_headers.label,
-                getter=table_cell_headers.getter,
-                setter=table_cell_headers.setter,
-                prefs_key=table_cell_headers.prefs_key,
-                member_of=guilabels.TABLE_CELL_NAVIGATION,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=table_cell_coords.label,
-                getter=table_cell_coords.getter,
-                setter=table_cell_coords.setter,
-                prefs_key=table_cell_coords.prefs_key,
-                member_of=guilabels.TABLE_CELL_NAVIGATION,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=table_spreadsheet_coords.label,
-                getter=table_spreadsheet_coords.getter,
-                setter=table_spreadsheet_coords.setter,
-                prefs_key=table_spreadsheet_coords.prefs_key,
-                member_of=guilabels.TABLE_CELL_NAVIGATION,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=table_cell_span.label,
-                getter=table_cell_span.getter,
-                setter=table_cell_span.setter,
-                prefs_key=table_cell_span.prefs_key,
-                member_of=guilabels.TABLE_CELL_NAVIGATION,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=table_selected_range.label,
-                getter=table_selected_range.getter,
-                setter=table_selected_range.setter,
-                prefs_key=table_selected_range.prefs_key,
-                member_of=guilabels.TABLE_CELL_NAVIGATION,
-            ),
-        ]
-
-        super().__init__(guilabels.TABLES, controls)
-
-
 class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     """GtkGrid containing the Voice settings page."""
 
@@ -501,7 +97,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         HYPERLINK = 2
         SYSTEM = 3
 
-    def __init__(self, manager: SpeechAndVerbosityManager) -> None:
+    def __init__(self, manager: SpeechManager) -> None:
         super().__init__(guilabels.SPEECH)
         self._manager = manager
         self._initializing = True
@@ -617,7 +213,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         global_combos = []
         for label_text, model, changed_handler in row_data:
-            # Don't include manual separators - FocusManagedListBox adds them automatically
             row_widget, combo, _label = self._create_combo_box_row(
                 label_text, model, changed_handler, include_top_separator=False
             )
@@ -915,7 +510,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         result["verbalizePunctuationStyle"] = settings.verbalizePunctuationStyle
         result["capitalizationStyle"] = settings.capitalizationStyle
 
-        # Save switch settings (already saved via handlers, just report them)
         result["speakNumbersAsDigits"] = self._manager.get_speak_numbers_as_digits()
         result["useColorNames"] = self._manager.get_use_color_names()
         result["enablePauseBreaks"] = self._manager.get_insert_pauses_between_utterances()
@@ -981,12 +575,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         volume_scale.set_value(volume)
 
     def _get_acss_for_voice_type(self, voice_type: VoicesPreferencesGrid.VoiceType) -> ACSS:
-        """Return the local ACSS copy for the given voice type.
-
-        Returns the local copy that gets saved when Apply/OK is clicked.
-        Script activation won't reload settings while the dialog is open,
-        so these local copies won't be lost during editing.
-        """
+        """Return the local ACSS copy for the given voice type."""
 
         if voice_type == self.VoiceType.DEFAULT:
             return self._default_voice
@@ -1435,7 +1024,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
     def _on_auto_language_switching_toggled(self, switch: Gtk.Switch, _state: Any) -> None:
         """Handle auto language switching switch change."""
-
         if self._initializing:
             return
         self._manager.set_auto_language_switching(switch.get_active())
@@ -1550,119 +1138,17 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._has_unsaved_changes = True
 
 
-class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
-    """Main speech preferences grid with enable toggle and categorized settings."""
-
-    def __init__(
-        self,
-        manager: SpeechAndVerbosityManager,
-        title_change_callback: Callable[[str], None] | None = None,
-    ) -> None:
-        super().__init__(guilabels.SPEECH)
-        self._manager = manager
-        self._initializing = True
-        self._title_change_callback = title_change_callback
-
-        # Create child grids (but don't attach them yet - they'll go in the stack detail)
-        self._voices_grid = VoicesPreferencesGrid(manager)
-        self._verbosity_grid = VerbosityPreferencesGrid(manager)
-        self._tables_grid = TablesPreferencesGrid(manager)
-        self._progress_bars_grid = ProgressBarsPreferencesGrid(manager)
-        self._announcements_grid = AnnouncementsPreferencesGrid(manager)
-
-        self._build()
-        self._initializing = False
-
-    def _build(self) -> None:
-        row = 0
-
-        categories = [
-            (guilabels.VOICE, "voice", self._voices_grid),
-            (guilabels.VERBOSITY, "verbosity", self._verbosity_grid),
-            (guilabels.TABLES, "tables", self._tables_grid),
-            (guilabels.PROGRESS_BARS, "progress-bars", self._progress_bars_grid),
-            (guilabels.ANNOUNCEMENTS, "announcements", self._announcements_grid),
-        ]
-
-        enable_listbox, stack, _categories_listbox = self._create_multi_page_stack(
-            enable_label=guilabels.SPEECH_ENABLE_SPEECH,
-            enable_getter=self._manager.get_speech_is_enabled,
-            enable_setter=self._manager.set_speech_is_enabled,
-            categories=categories,
-            title_change_callback=self._title_change_callback,
-            main_title=guilabels.SPEECH,
-        )
-
-        self.attach(enable_listbox, 0, row, 1, 1)
-        row += 1
-        self.attach(stack, 0, row, 1, 1)
-
-    def on_becoming_visible(self) -> None:
-        """Reset to the categories view when this grid becomes visible."""
-
-        self.multipage_on_becoming_visible()
-
-    def reload(self) -> None:
-        """Reload all child grids."""
-
-        self._initializing = True
-        self._voices_grid.reload()
-        self._verbosity_grid.reload()
-        self._tables_grid.reload()
-        self._progress_bars_grid.reload()
-        self._announcements_grid.reload()
-        self._initializing = False
-
-    def save_settings(self) -> dict:
-        """Save all settings from child grids."""
-
-        result: dict[str, Any] = {}
-        result["enableSpeech"] = self._manager.get_speech_is_enabled()
-        result.update(self._voices_grid.save_settings())
-        result.update(self._verbosity_grid.save_settings())
-        result.update(self._tables_grid.save_settings())
-        result.update(self._progress_bars_grid.save_settings())
-        result.update(self._announcements_grid.save_settings())
-
-        return result
-
-    def has_changes(self) -> bool:
-        """Check if any child grid has changes."""
-
-        return (
-            self._has_unsaved_changes
-            or self._voices_grid.has_changes()
-            or self._verbosity_grid.has_changes()
-            or self._tables_grid.has_changes()
-            or self._progress_bars_grid.has_changes()
-            or self._announcements_grid.has_changes()
-        )
-
-    def refresh(self) -> None:
-        """Refresh all child grids."""
-
-        self._initializing = True
-        self._voices_grid.refresh()
-        self._verbosity_grid.refresh()
-        self._tables_grid.refresh()
-        self._progress_bars_grid.refresh()
-        self._announcements_grid.refresh()
-        self._initializing = False
-
-
-class SpeechAndVerbosityManager:
-    """Configures speech and verbosity settings and adjusts strings accordingly."""
+class SpeechManager:
+    """Manages the speech engine: server, synthesizer, voice, and output parameters."""
 
     def __init__(self) -> None:
-        self._last_indentation_description: str = ""
-        self._last_error_description: str = ""
         self._families_sorted: bool = False
         self._initialized: bool = False
 
-        msg = "SPEECH AND VERBOSITY MANAGER: Registering D-Bus commands."
+        msg = "SPEECH MANAGER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("SpeechAndVerbosityManager", self)
+        controller.register_decorated_module("SpeechManager", self)
 
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""
@@ -1676,8 +1162,6 @@ class SpeechAndVerbosityManager:
 
         # Common keybindings (same for desktop and laptop)
         kb_s = keybindings.KeyBinding("s", keybindings.ORCA_MODIFIER_MASK)
-        kb_v = keybindings.KeyBinding("v", keybindings.ORCA_MODIFIER_MASK)
-        kb_f11 = keybindings.KeyBinding("F11", keybindings.ORCA_MODIFIER_MASK)
 
         # (name, function, description, desktop_kb, laptop_kb)
         commands_data = [
@@ -1702,35 +1186,7 @@ class SpeechAndVerbosityManager:
                 None,
                 None,
             ),
-            (
-                "changeNumberStyleHandler",
-                self.change_number_style,
-                cmdnames.CHANGE_NUMBER_STYLE,
-                None,
-                None,
-            ),
             ("toggleSilenceSpeechHandler", self.toggle_speech, cmdnames.TOGGLE_SPEECH, kb_s, kb_s),
-            (
-                "toggleSpeechVerbosityHandler",
-                self.toggle_verbosity,
-                cmdnames.TOGGLE_SPEECH_VERBOSITY,
-                kb_v,
-                kb_v,
-            ),
-            (
-                "toggleSpeakingIndentationJustificationHandler",
-                self.toggle_indentation_and_justification,
-                cmdnames.TOGGLE_SPOKEN_INDENTATION_AND_JUSTIFICATION,
-                None,
-                None,
-            ),
-            (
-                "toggleTableCellReadModeHandler",
-                self.toggle_table_cell_reading_mode,
-                cmdnames.TOGGLE_TABLE_CELL_READ_MODE,
-                kb_f11,
-                kb_f11,
-            ),
             (
                 "decreaseSpeechRateHandler",
                 self.decrease_rate,
@@ -1787,7 +1243,7 @@ class SpeechAndVerbosityManager:
                 )
             )
 
-        msg = "SPEECH AND VERBOSITY MANAGER: Commands set up."
+        msg = "SPEECH MANAGER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _get_server(self) -> SpeechServer | None:
@@ -1795,7 +1251,7 @@ class SpeechAndVerbosityManager:
 
         result = speech.get_speech_server()
         if result is None:
-            msg = "SPEECH AND VERBOSITY MANAGER: Speech server is None."
+            msg = "SPEECH MANAGER: Speech server is None."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -1811,11 +1267,11 @@ class SpeechAndVerbosityManager:
         try:
             result_queue.get(timeout=2.0)
         except queue.Empty:
-            msg = "SPEECH AND VERBOSITY MANAGER: Speech server health check timed out"
+            msg = "SPEECH MANAGER: Speech server health check timed out"
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return None
 
-        tokens = ["SPEECH AND VERBOSITY MANAGER: Speech server is", result]
+        tokens = ["SPEECH MANAGER: Speech server is", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
@@ -1843,7 +1299,7 @@ class SpeechAndVerbosityManager:
                     result[server_name] = module_name
 
             except (AttributeError, TypeError, ImportError) as error:
-                tokens = [f"SPEECH AND VERBOSITY MANAGER: {module_name} not available:", error]
+                tokens = [f"SPEECH MANAGER: {module_name} not available:", error]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result
@@ -1866,7 +1322,7 @@ class SpeechAndVerbosityManager:
         """Returns a list of available servers."""
 
         result = self._get_available_servers()
-        msg = f"SPEECH AND VERBOSITY MANAGER: Available servers: {result}."
+        msg = f"SPEECH MANAGER: Available servers: {result}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
@@ -1876,12 +1332,12 @@ class SpeechAndVerbosityManager:
 
         server = self._get_server()
         if server is None:
-            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            msg = "SPEECH MANAGER: Cannot get speech server."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return ""
 
         name = server.get_factory_name()
-        msg = f"SPEECH AND VERBOSITY MANAGER: Server is: {name}."
+        msg = f"SPEECH MANAGER: Server is: {name}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return name
 
@@ -1897,12 +1353,12 @@ class SpeechAndVerbosityManager:
 
         server = self._get_server()
         if server is None:
-            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            msg = "SPEECH MANAGER: Cannot get speech server."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return ""
 
         result = server.get_output_module()
-        msg = f"SPEECH AND VERBOSITY MANAGER: Synthesizer is: {result}."
+        msg = f"SPEECH MANAGER: Synthesizer is: {result}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
@@ -1912,17 +1368,17 @@ class SpeechAndVerbosityManager:
 
         server = self._get_server()
         if server is None:
-            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            msg = "SPEECH MANAGER: Cannot get speech server."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         available = self.get_available_synthesizers()
         if value not in available:
-            tokens = [f"SPEECH AND VERBOSITY MANAGER: '{value}' is not in", available]
+            tokens = [f"SPEECH MANAGER: '{value}' is not in", available]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting synthesizer to: {value}."
+        msg = f"SPEECH MANAGER: Setting synthesizer to: {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         server.set_output_module(value)
         return server.get_output_module() == value
@@ -1933,13 +1389,13 @@ class SpeechAndVerbosityManager:
 
         server = self._get_server()
         if server is None:
-            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            msg = "SPEECH MANAGER: Cannot get speech server."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return []
 
         synthesizers = server.get_speech_servers()
         result = [s.get_info()[1] for s in synthesizers]
-        msg = f"SPEECH AND VERBOSITY MANAGER: Available synthesizers: {result}."
+        msg = f"SPEECH MANAGER: Available synthesizers: {result}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
@@ -1984,7 +1440,7 @@ class SpeechAndVerbosityManager:
         """Returns a list of available voices for the specified language."""
 
         tokens = [
-            "SPEECH AND VERBOSITY MANAGER: get_voices_for_language. Language:",
+            "SPEECH MANAGER: get_voices_for_language. Language:",
             language,
             "Variant:",
             variant,
@@ -2006,7 +1462,7 @@ class SpeechAndVerbosityManager:
         for name, lang, var in voices:
             result.append((name, lang or "", var or ""))
 
-        msg = f"SPEECH AND VERBOSITY MANAGER: Found {len(result)} voice(s) for '{language}'."
+        msg = f"SPEECH MANAGER: Found {len(result)} voice(s) for '{language}'."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
@@ -2034,7 +1490,7 @@ class SpeechAndVerbosityManager:
 
         available = self.get_available_voices()
         if voice_name not in available:
-            msg = f"SPEECH AND VERBOSITY MANAGER: '{voice_name}' is not in {available}"
+            msg = f"SPEECH MANAGER: '{voice_name}' is not in {available}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -2050,7 +1506,7 @@ class SpeechAndVerbosityManager:
                 result = True
                 break
 
-        msg = f"SPEECH AND VERBOSITY MANAGER: Set voice to '{voice_name}': {result}"
+        msg = f"SPEECH MANAGER: Set voice to '{voice_name}': {result}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
@@ -2065,7 +1521,7 @@ class SpeechAndVerbosityManager:
             return ("", "")
 
         server_name, server_id = server.get_info()
-        msg = f"SPEECH AND VERBOSITY MANAGER: Speech server info: {server_name}, {server_id}."
+        msg = f"SPEECH MANAGER: Speech server info: {server_name}, {server_id}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return server_name, server_id
 
@@ -2073,12 +1529,12 @@ class SpeechAndVerbosityManager:
         """Checks the speech setting and initializes speech if necessary."""
 
         if not settings.enableSpeech:
-            msg = "SPEECH AND VERBOSITY MANAGER: Speech is not enabled. Shutting down speech."
+            msg = "SPEECH MANAGER: Speech is not enabled. Shutting down speech."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self.shutdown_speech()
             return
 
-        msg = "SPEECH AND VERBOSITY MANAGER: Speech is enabled."
+        msg = "SPEECH MANAGER: Speech is enabled."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self.start_speech()
 
@@ -2092,7 +1548,7 @@ class SpeechAndVerbosityManager:
         """Starts the speech server."""
 
         tokens = [
-            "SPEECH AND VERBOSITY MANAGER: start_speech. Script:",
+            "SPEECH MANAGER: start_speech. Script:",
             script,
             "Event:",
             event,
@@ -2113,7 +1569,7 @@ class SpeechAndVerbosityManager:
         """Interrupts the speech server."""
 
         tokens = [
-            "SPEECH AND VERBOSITY MANAGER: interrupt_speech. Script:",
+            "SPEECH MANAGER: interrupt_speech. Script:",
             script,
             "Event:",
             event,
@@ -2137,7 +1593,7 @@ class SpeechAndVerbosityManager:
         """Shuts down the speech server."""
 
         tokens = [
-            "SPEECH AND VERBOSITY MANAGER: shutdown_speech. Script:",
+            "SPEECH MANAGER: shutdown_speech. Script:",
             script,
             "Event:",
             event,
@@ -2162,7 +1618,7 @@ class SpeechAndVerbosityManager:
         """Shuts down and re-initializes speech."""
 
         tokens = [
-            "SPEECH AND VERBOSITY MANAGER: refresh_speech. Script:",
+            "SPEECH MANAGER: refresh_speech. Script:",
             script,
             "Event:",
             event,
@@ -2184,7 +1640,7 @@ class SpeechAndVerbosityManager:
         if default_voice and ACSS.RATE in default_voice:
             result = default_voice[ACSS.RATE]
 
-        msg = f"SPEECH AND VERBOSITY MANAGER: Current rate is: {result}."
+        msg = f"SPEECH MANAGER: Current rate is: {result}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
@@ -2199,7 +1655,7 @@ class SpeechAndVerbosityManager:
         if default_voice and ACSS.RATE in default_voice:
             default_voice[ACSS.RATE] = value
 
-        msg = f"SPEECH AND VERBOSITY MANAGER: Set rate to: {value}."
+        msg = f"SPEECH MANAGER: Set rate to: {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return True
 
@@ -2213,7 +1669,7 @@ class SpeechAndVerbosityManager:
         """Decreases the speech rate."""
 
         tokens = [
-            "SPEECH AND VERBOSITY MANAGER: decrease_rate. Script:",
+            "SPEECH MANAGER: decrease_rate. Script:",
             script,
             "Event:",
             event,
@@ -2224,7 +1680,7 @@ class SpeechAndVerbosityManager:
 
         server = self._get_server()
         if server is None:
-            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            msg = "SPEECH MANAGER: Cannot get speech server."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2244,7 +1700,7 @@ class SpeechAndVerbosityManager:
         """Increases the speech rate."""
 
         tokens = [
-            "SPEECH AND VERBOSITY MANAGER: increase_rate. Script:",
+            "SPEECH MANAGER: increase_rate. Script:",
             script,
             "Event:",
             event,
@@ -2255,7 +1711,7 @@ class SpeechAndVerbosityManager:
 
         server = self._get_server()
         if server is None:
-            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            msg = "SPEECH MANAGER: Cannot get speech server."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2274,7 +1730,7 @@ class SpeechAndVerbosityManager:
         if default_voice and ACSS.AVERAGE_PITCH in default_voice:
             result = default_voice[ACSS.AVERAGE_PITCH]
 
-        msg = f"SPEECH AND VERBOSITY MANAGER: Current pitch is: {result}."
+        msg = f"SPEECH MANAGER: Current pitch is: {result}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
@@ -2289,7 +1745,7 @@ class SpeechAndVerbosityManager:
         if default_voice and ACSS.AVERAGE_PITCH in default_voice:
             default_voice[ACSS.AVERAGE_PITCH] = value
 
-        msg = f"SPEECH AND VERBOSITY MANAGER: Set pitch to: {value}."
+        msg = f"SPEECH MANAGER: Set pitch to: {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return True
 
@@ -2303,7 +1759,7 @@ class SpeechAndVerbosityManager:
         """Decreases the speech pitch"""
 
         tokens = [
-            "SPEECH AND VERBOSITY MANAGER: decrease_pitch. Script:",
+            "SPEECH MANAGER: decrease_pitch. Script:",
             script,
             "Event:",
             event,
@@ -2314,7 +1770,7 @@ class SpeechAndVerbosityManager:
 
         server = self._get_server()
         if server is None:
-            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            msg = "SPEECH MANAGER: Cannot get speech server."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2334,7 +1790,7 @@ class SpeechAndVerbosityManager:
         """Increase the speech pitch"""
 
         tokens = [
-            "SPEECH AND VERBOSITY MANAGER: increase_pitch. Script:",
+            "SPEECH MANAGER: increase_pitch. Script:",
             script,
             "Event:",
             event,
@@ -2345,7 +1801,7 @@ class SpeechAndVerbosityManager:
 
         server = self._get_server()
         if server is None:
-            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            msg = "SPEECH MANAGER: Cannot get speech server."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2364,7 +1820,7 @@ class SpeechAndVerbosityManager:
         if default_voice and ACSS.GAIN in default_voice:
             result = default_voice[ACSS.GAIN]
 
-        msg = f"SPEECH AND VERBOSITY MANAGER: Current volume is: {result}."
+        msg = f"SPEECH MANAGER: Current volume is: {result}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
@@ -2379,7 +1835,7 @@ class SpeechAndVerbosityManager:
         if default_voice and ACSS.GAIN in default_voice:
             default_voice[ACSS.GAIN] = value
 
-        msg = f"SPEECH AND VERBOSITY MANAGER: Set volume to: {value}."
+        msg = f"SPEECH MANAGER: Set volume to: {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return True
 
@@ -2393,7 +1849,7 @@ class SpeechAndVerbosityManager:
         """Decreases the speech volume"""
 
         tokens = [
-            "SPEECH AND VERBOSITY MANAGER: decrease_volume. Script:",
+            "SPEECH MANAGER: decrease_volume. Script:",
             script,
             "Event:",
             event,
@@ -2404,7 +1860,7 @@ class SpeechAndVerbosityManager:
 
         server = self._get_server()
         if server is None:
-            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            msg = "SPEECH MANAGER: Cannot get speech server."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2424,7 +1880,7 @@ class SpeechAndVerbosityManager:
         """Increases the speech volume"""
 
         tokens = [
-            "SPEECH AND VERBOSITY MANAGER: increase_volume. Script:",
+            "SPEECH MANAGER: increase_volume. Script:",
             script,
             "Event:",
             event,
@@ -2435,7 +1891,7 @@ class SpeechAndVerbosityManager:
 
         server = self._get_server()
         if server is None:
-            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            msg = "SPEECH MANAGER: Cannot get speech server."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2458,11 +1914,11 @@ class SpeechAndVerbosityManager:
         try:
             style = CapitalizationStyle[value.upper()]
         except KeyError:
-            msg = f"SPEECH AND VERBOSITY MANAGER: Invalid capitalization style: {value}"
+            msg = f"SPEECH MANAGER: Invalid capitalization style: {value}"
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return False
 
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting capitalization style to {value}."
+        msg = f"SPEECH MANAGER: Setting capitalization style to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.capitalizationStyle = style.value
         self.update_capitalization_style()
@@ -2478,7 +1934,7 @@ class SpeechAndVerbosityManager:
         """Cycle through the speech-dispatcher capitalization styles."""
 
         tokens = [
-            "SPEECH AND VERBOSITY MANAGER: cycle_capitalization_style. Script:",
+            "SPEECH MANAGER: cycle_capitalization_style. Script:",
             script,
             "Event:",
             event,
@@ -2512,7 +1968,7 @@ class SpeechAndVerbosityManager:
 
         server = self._get_server()
         if server is None:
-            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            msg = "SPEECH MANAGER: Cannot get speech server."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2532,11 +1988,11 @@ class SpeechAndVerbosityManager:
         try:
             style = PunctuationStyle[value.upper()]
         except KeyError:
-            msg = f"SPEECH AND VERBOSITY MANAGER: Invalid punctuation level: {value}"
+            msg = f"SPEECH MANAGER: Invalid punctuation level: {value}"
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return False
 
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting punctuation level to {value}."
+        msg = f"SPEECH MANAGER: Setting punctuation level to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.verbalizePunctuationStyle = style.value
         self.update_punctuation_level()
@@ -2552,7 +2008,7 @@ class SpeechAndVerbosityManager:
         """Cycles through punctuation levels for speech."""
 
         tokens = [
-            "SPEECH AND VERBOSITY MANAGER: cycle_punctuation_level. Script:",
+            "SPEECH MANAGER: cycle_punctuation_level. Script:",
             script,
             "Event:",
             event,
@@ -2590,7 +2046,7 @@ class SpeechAndVerbosityManager:
 
         server = self._get_server()
         if server is None:
-            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            msg = "SPEECH MANAGER: Cannot get speech server."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2602,7 +2058,7 @@ class SpeechAndVerbosityManager:
 
         server = self._get_server()
         if server is None:
-            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            msg = "SPEECH MANAGER: Cannot get speech server."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
@@ -2612,10 +2068,7 @@ class SpeechAndVerbosityManager:
             server_id = info[1]
 
         if server_id and server_id != active_id:
-            msg = (
-                f"SPEECH AND VERBOSITY MANAGER: Updating synthesizer from {active_id} "
-                f"to {server_id}."
-            )
+            msg = f"SPEECH MANAGER: Updating synthesizer from {active_id} to {server_id}."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             server.set_output_module(server_id)
 
@@ -2629,7 +2082,7 @@ class SpeechAndVerbosityManager:
         """Cycles through available speech synthesizers."""
 
         tokens = [
-            "SPEECH AND VERBOSITY MANAGER: cycle_synthesizer. Script:",
+            "SPEECH MANAGER: cycle_synthesizer. Script:",
             script,
             "Event:",
             event,
@@ -2640,19 +2093,19 @@ class SpeechAndVerbosityManager:
 
         server = self._get_server()
         if server is None:
-            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get speech server."
+            msg = "SPEECH MANAGER: Cannot get speech server."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         available = server.list_output_modules()
         if not available:
-            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get output modules."
+            msg = "SPEECH MANAGER: Cannot get output modules."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         current = server.get_output_module()
         if not current:
-            msg = "SPEECH AND VERBOSITY MANAGER: Cannot get current output module."
+            msg = "SPEECH MANAGER: Cannot get current output module."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -2666,434 +2119,6 @@ class SpeechAndVerbosityManager:
         server.set_output_module(available[index])
         if script is not None and notify_user:
             presentation_manager.get_manager().present_message(available[index])
-        return True
-
-    @dbus_service.getter
-    def get_speak_misspelled_indicator(self) -> bool:
-        """Returns whether the misspelled indicator is spoken."""
-
-        return settings.speakMisspelledIndicator
-
-    @dbus_service.setter
-    def set_speak_misspelled_indicator(self, value: bool) -> bool:
-        """Sets whether the misspelled indicator is spoken."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak misspelled indicator to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakMisspelledIndicator = value
-        return True
-
-    @dbus_service.getter
-    def get_speak_description(self) -> bool:
-        """Returns whether object descriptions are spoken."""
-
-        return settings.speakDescription
-
-    @dbus_service.setter
-    def set_speak_description(self, value: bool) -> bool:
-        """Sets whether object descriptions are spoken."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak description to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakDescription = value
-        return True
-
-    @dbus_service.getter
-    def get_speak_position_in_set(self) -> bool:
-        """Returns whether the position and set size of objects are spoken."""
-
-        return settings.enablePositionSpeaking
-
-    @dbus_service.setter
-    def set_speak_position_in_set(self, value: bool) -> bool:
-        """Sets whether the position and set size of objects are spoken."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak position in set to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enablePositionSpeaking = value
-        return True
-
-    @dbus_service.getter
-    def get_speak_widget_mnemonic(self) -> bool:
-        """Returns whether widget mnemonics are spoken."""
-
-        return settings.enableMnemonicSpeaking
-
-    @dbus_service.setter
-    def set_speak_widget_mnemonic(self, value: bool) -> bool:
-        """Sets whether widget mnemonics are spoken."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak widget mnemonics to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableMnemonicSpeaking = value
-        return True
-
-    @dbus_service.getter
-    def get_speak_tutorial_messages(self) -> bool:
-        """Returns whether tutorial messages are spoken."""
-
-        return settings.enableTutorialMessages
-
-    @dbus_service.setter
-    def set_speak_tutorial_messages(self, value: bool) -> bool:
-        """Sets whether tutorial messages are spoken."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak tutorial messages to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableTutorialMessages = value
-        return True
-
-    @dbus_service.getter
-    def get_insert_pauses_between_utterances(self) -> bool:
-        """Returns whether pauses are inserted between utterances, e.g. between name and role."""
-
-        return settings.enablePauseBreaks
-
-    @dbus_service.setter
-    def set_insert_pauses_between_utterances(self, value: bool) -> bool:
-        """Sets whether pauses are inserted between utterances, e.g. between name and role."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting insert pauses to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enablePauseBreaks = value
-        return True
-
-    @dbus_service.getter
-    def get_repeated_character_limit(self) -> int:
-        """Returns the count at which repeated, non-alphanumeric symbols will be described."""
-
-        return settings.repeatCharacterLimit
-
-    @dbus_service.setter
-    def set_repeated_character_limit(self, value: int) -> bool:
-        """Sets the count at which repeated, non-alphanumeric symbols will be described."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting repeated character limit to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.repeatCharacterLimit = value
-        return True
-
-    @dbus_service.getter
-    def get_use_pronunciation_dictionary(self) -> bool:
-        """Returns whether the user's pronunciation dictionary should be applied."""
-
-        return settings.usePronunciationDictionary
-
-    @dbus_service.setter
-    def set_use_pronunciation_dictionary(self, value: bool) -> bool:
-        """Sets whether the user's pronunciation dictionary should be applied."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting use pronunciation dictionary to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.usePronunciationDictionary = value
-        return True
-
-    @dbus_service.getter
-    def get_speak_blank_lines(self) -> bool:
-        """Returns whether blank lines will be spoken."""
-
-        return settings.speakBlankLines
-
-    @dbus_service.setter
-    def set_speak_blank_lines(self, value: bool) -> bool:
-        """Sets whether blank lines will be spoken."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak blank lines to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakBlankLines = value
-        return True
-
-    @dbus_service.getter
-    def get_speak_row_in_gui_table(self) -> bool:
-        """Returns whether Up/Down in GUI tables speaks the row or just the cell."""
-
-        return settings.readFullRowInGUITable
-
-    @dbus_service.setter
-    def set_speak_row_in_gui_table(self, value: bool) -> bool:
-        """Sets whether Up/Down in GUI tables speaks the row or just the cell."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak row in GUI table to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.readFullRowInGUITable = value
-        return True
-
-    @dbus_service.getter
-    def get_speak_row_in_document_table(self) -> bool:
-        """Returns whether Up/Down in text-document tables speaks the row or just the cell."""
-
-        return settings.readFullRowInDocumentTable
-
-    @dbus_service.setter
-    def set_speak_row_in_document_table(self, value: bool) -> bool:
-        """Sets whether Up/Down in text-document tables speaks the row or just the cell."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak row in document table to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.readFullRowInDocumentTable = value
-        return True
-
-    @dbus_service.getter
-    def get_speak_row_in_spreadsheet(self) -> bool:
-        """Returns whether Up/Down in spreadsheets speaks the row or just the cell."""
-
-        return settings.readFullRowInSpreadSheet
-
-    @dbus_service.setter
-    def set_speak_row_in_spreadsheet(self, value: bool) -> bool:
-        """Sets whether Up/Down in spreadsheets speaks the row or just the cell."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak row in spreadsheet to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.readFullRowInSpreadSheet = value
-        return True
-
-    @dbus_service.getter
-    def get_announce_cell_span(self) -> bool:
-        """Returns whether cell spans are announced when greater than 1."""
-
-        return settings.speakCellSpan
-
-    @dbus_service.setter
-    def set_announce_cell_span(self, value: bool) -> bool:
-        """Sets whether cell spans are announced when greater than 1."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce cell spans to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakCellSpan = value
-        return True
-
-    @dbus_service.getter
-    def get_announce_cell_coordinates(self) -> bool:
-        """Returns whether (non-spreadsheet) cell coordinates are announced."""
-
-        return settings.speakCellCoordinates
-
-    @dbus_service.setter
-    def set_announce_cell_coordinates(self, value: bool) -> bool:
-        """Sets whether (non-spreadsheet) cell coordinates are announced."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce cell coordinates to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakCellCoordinates = value
-        return True
-
-    @dbus_service.getter
-    def get_announce_spreadsheet_cell_coordinates(self) -> bool:
-        """Returns whether spreadsheet cell coordinates are announced."""
-
-        return settings.speakSpreadsheetCoordinates
-
-    @dbus_service.setter
-    def set_announce_spreadsheet_cell_coordinates(self, value: bool) -> bool:
-        """Sets whether spreadsheet cell coordinates are announced."""
-
-        msg = (
-            f"SPEECH AND VERBOSITY MANAGER: Setting announce spreadsheet cell coordinates to "
-            f"{value}."
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakSpreadsheetCoordinates = value
-        return True
-
-    @dbus_service.getter
-    def get_always_announce_selected_range_in_spreadsheet(self) -> bool:
-        """Returns whether the selected range in spreadsheets is always announced."""
-
-        return settings.alwaysSpeakSelectedSpreadsheetRange
-
-    @dbus_service.setter
-    def set_always_announce_selected_range_in_spreadsheet(self, value: bool) -> bool:
-        """Sets whether the selected range in spreadsheets is always announced."""
-
-        msg = (
-            f"SPEECH AND VERBOSITY MANAGER: Setting always announce selected spreadsheet range to "
-            f"{value}."
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.alwaysSpeakSelectedSpreadsheetRange = value
-        return True
-
-    @dbus_service.getter
-    def get_announce_cell_headers(self) -> bool:
-        """Returns whether cell headers are announced."""
-
-        return settings.speakCellHeaders
-
-    @dbus_service.setter
-    def set_announce_cell_headers(self, value: bool) -> bool:
-        """Sets whether cell headers are announced."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce cell headers to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakCellHeaders = value
-        return True
-
-    @dbus_service.getter
-    def get_announce_blockquote(self) -> bool:
-        """Returns whether blockquotes are announced when entered."""
-
-        return settings.speakContextBlockquote
-
-    @dbus_service.setter
-    def set_announce_blockquote(self, value: bool) -> bool:
-        """Sets whether blockquotes are announced when entered."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce blockquotes to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakContextBlockquote = value
-        return True
-
-    @dbus_service.getter
-    def get_announce_form(self) -> bool:
-        """Returns whether non-landmark forms are announced when entered."""
-
-        return settings.speakContextNonLandmarkForm
-
-    @dbus_service.setter
-    def set_announce_form(self, value: bool) -> bool:
-        """Sets whether non-landmark forms are announced when entered."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce forms to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakContextNonLandmarkForm = value
-        return True
-
-    @dbus_service.getter
-    def get_announce_grouping(self) -> bool:
-        """Returns whether groupings are announced when entered."""
-
-        return settings.speakContextPanel
-
-    @dbus_service.setter
-    def set_announce_grouping(self, value: bool) -> bool:
-        """Sets whether groupings are announced when entered."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce groupings to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakContextPanel = value
-        return True
-
-    @dbus_service.getter
-    def get_announce_landmark(self) -> bool:
-        """Returns whether landmarks are announced when entered."""
-
-        return settings.speakContextLandmark
-
-    @dbus_service.setter
-    def set_announce_landmark(self, value: bool) -> bool:
-        """Sets whether landmarks are announced when entered."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce landmarks to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakContextLandmark = value
-        return True
-
-    @dbus_service.getter
-    def get_announce_list(self) -> bool:
-        """Returns whether lists are announced when entered."""
-
-        return settings.speakContextList
-
-    @dbus_service.setter
-    def set_announce_list(self, value: bool) -> bool:
-        """Sets whether lists are announced when entered."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce lists to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakContextList = value
-        return True
-
-    @dbus_service.getter
-    def get_announce_table(self) -> bool:
-        """Returns whether tables are announced when entered."""
-
-        return settings.speakContextTable
-
-    @dbus_service.setter
-    def set_announce_table(self, value: bool) -> bool:
-        """Sets whether tables are announced when entered."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting announce tables to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakContextTable = value
-        return True
-
-    @dbus_service.getter
-    def get_use_color_names(self) -> bool:
-        """Returns whether colors are announced by name or as RGB values."""
-
-        return settings.useColorNames
-
-    @dbus_service.setter
-    def set_use_color_names(self, value: bool) -> bool:
-        """Sets whether colors are announced by name or as RGB values."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting use color names to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.useColorNames = value
-        return True
-
-    @dbus_service.getter
-    def get_speak_numbers_as_digits(self) -> bool:
-        """Returns whether numbers are spoken as digits."""
-
-        return settings.speakNumbersAsDigits
-
-    @dbus_service.setter
-    def set_speak_numbers_as_digits(self, value: bool) -> bool:
-        """Sets whether numbers are spoken as digits."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak numbers as digits to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakNumbersAsDigits = value
-        return True
-
-    @dbus_service.getter
-    def get_auto_language_switching(self) -> bool:
-        """Returns whether automatic language switching is enabled."""
-
-        return settings.enableAutoLanguageSwitching
-
-    @dbus_service.setter
-    def set_auto_language_switching(self, value: bool) -> bool:
-        """Sets whether automatic language switching is enabled."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting auto language switching to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableAutoLanguageSwitching = value
-        return True
-
-    @dbus_service.command
-    def change_number_style(
-        self,
-        script: default.Script | None = None,
-        event: input_event.InputEvent | None = None,
-        notify_user: bool = True,
-    ) -> bool:
-        """Changes spoken number style between digits and words."""
-
-        tokens = [
-            "SPEECH AND VERBOSITY MANAGER: change_number_style. Script:",
-            script,
-            "Event:",
-            event,
-            "notify_user:",
-            notify_user,
-        ]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        speak_digits = self.get_speak_numbers_as_digits()
-        if speak_digits:
-            brief = messages.NUMBER_STYLE_WORDS_BRIEF
-            full = messages.NUMBER_STYLE_WORDS_FULL
-        else:
-            brief = messages.NUMBER_STYLE_DIGITS_BRIEF
-            full = messages.NUMBER_STYLE_DIGITS_FULL
-
-        self.set_speak_numbers_as_digits(not speak_digits)
-        if script is not None and notify_user:
-            presentation_manager.get_manager().present_message(full, brief)
         return True
 
     def get_speech_is_enabled_and_not_muted(self) -> bool:
@@ -3111,7 +2136,7 @@ class SpeechAndVerbosityManager:
     def set_speech_is_muted(self, value: bool) -> bool:
         """Sets whether speech output is temporarily muted."""
 
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speech muted to {value}."
+        msg = f"SPEECH MANAGER: Setting speech muted to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.silenceSpeech = value
         return True
@@ -3126,7 +2151,7 @@ class SpeechAndVerbosityManager:
     def set_speech_is_enabled(self, value: bool) -> bool:
         """Sets whether the speech server is enabled. See also is-muted."""
 
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speech enabled to {value}."
+        msg = f"SPEECH MANAGER: Setting speech enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         settings.enableSpeech = value
@@ -3140,63 +2165,78 @@ class SpeechAndVerbosityManager:
         return True
 
     @dbus_service.getter
-    def get_only_speak_displayed_text(self) -> bool:
-        """Returns whether only displayed text should be spoken."""
+    def get_speak_numbers_as_digits(self) -> bool:
+        """Returns whether numbers are spoken as digits."""
 
-        return settings.onlySpeakDisplayedText
+        return settings.speakNumbersAsDigits
 
     @dbus_service.setter
-    def set_only_speak_displayed_text(self, value: bool) -> bool:
-        """Sets whether only displayed text should be spoken."""
+    def set_speak_numbers_as_digits(self, value: bool) -> bool:
+        """Sets whether numbers are spoken as digits."""
 
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting only speak displayed text to {value}."
+        msg = f"SPEECH MANAGER: Setting speak numbers as digits to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.onlySpeakDisplayedText = value
+        settings.speakNumbersAsDigits = value
         return True
 
     @dbus_service.getter
-    def get_speak_progress_bar_updates(self) -> bool:
-        """Returns whether speech progress bar updates are enabled."""
+    def get_use_color_names(self) -> bool:
+        """Returns whether colors are announced by name or as RGB values."""
 
-        return settings.speakProgressBarUpdates
+        return settings.useColorNames
 
     @dbus_service.setter
-    def set_speak_progress_bar_updates(self, value: bool) -> bool:
-        """Sets whether speech progress bar updates are enabled."""
+    def set_use_color_names(self, value: bool) -> bool:
+        """Sets whether colors are announced by name or as RGB values."""
 
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak progress bar updates to {value}."
+        msg = f"SPEECH MANAGER: Setting use color names to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakProgressBarUpdates = value
+        settings.useColorNames = value
         return True
 
     @dbus_service.getter
-    def get_progress_bar_speech_interval(self) -> int:
-        """Returns the speech progress bar update interval in seconds."""
+    def get_insert_pauses_between_utterances(self) -> bool:
+        """Returns whether pauses are inserted between utterances, e.g. between name and role."""
 
-        return settings.progressBarSpeechInterval
+        return settings.enablePauseBreaks
 
     @dbus_service.setter
-    def set_progress_bar_speech_interval(self, value: int) -> bool:
-        """Sets the speech progress bar update interval in seconds."""
+    def set_insert_pauses_between_utterances(self, value: bool) -> bool:
+        """Sets whether pauses are inserted between utterances, e.g. between name and role."""
 
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting progress bar speech interval to {value}."
+        msg = f"SPEECH MANAGER: Setting insert pauses to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.progressBarSpeechInterval = value
+        settings.enablePauseBreaks = value
         return True
 
     @dbus_service.getter
-    def get_progress_bar_speech_verbosity(self) -> int:
-        """Returns the speech progress bar verbosity level."""
+    def get_use_pronunciation_dictionary(self) -> bool:
+        """Returns whether the user's pronunciation dictionary should be applied."""
 
-        return settings.progressBarSpeechVerbosity
+        return settings.usePronunciationDictionary
 
     @dbus_service.setter
-    def set_progress_bar_speech_verbosity(self, value: int) -> bool:
-        """Sets the speech progress bar verbosity level."""
+    def set_use_pronunciation_dictionary(self, value: bool) -> bool:
+        """Sets whether the user's pronunciation dictionary should be applied."""
 
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting progress bar speech verbosity to {value}."
+        msg = f"SPEECH MANAGER: Setting use pronunciation dictionary to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.progressBarSpeechVerbosity = value
+        settings.usePronunciationDictionary = value
+        return True
+
+    @dbus_service.getter
+    def get_auto_language_switching(self) -> bool:
+        """Returns whether automatic language switching is enabled."""
+
+        return settings.enableAutoLanguageSwitching
+
+    @dbus_service.setter
+    def set_auto_language_switching(self, value: bool) -> bool:
+        """Sets whether automatic language switching is enabled."""
+
+        msg = f"SPEECH MANAGER: Setting auto language switching to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.enableAutoLanguageSwitching = value
         return True
 
     @dbus_service.command
@@ -3209,7 +2249,7 @@ class SpeechAndVerbosityManager:
         """Toggles speech on and off."""
 
         tokens = [
-            "SPEECH AND VERBOSITY MANAGER: toggle_speech. Script:",
+            "SPEECH MANAGER: toggle_speech. Script:",
             script,
             "Event:",
             event,
@@ -3235,520 +2275,16 @@ class SpeechAndVerbosityManager:
             self.set_speech_is_muted(True)
         return True
 
-    @dbus_service.getter
-    def get_messages_are_detailed(self) -> bool:
-        """Returns whether informative messages will be detailed or brief."""
+    def create_voices_preferences_grid(self) -> VoicesPreferencesGrid:
+        """Returns the GtkGrid containing the voices preferences UI."""
 
-        return settings.messagesAreDetailed
+        return VoicesPreferencesGrid(self)
 
-    @dbus_service.setter
-    def set_messages_are_detailed(self, value: bool) -> bool:
-        """Sets whether informative messages will be detailed or brief."""
 
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting messages are detailed to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.messagesAreDetailed = value
-        return True
+_manager: SpeechManager = SpeechManager()
 
-    def use_verbose_speech(self) -> bool:
-        """Returns whether the speech verbosity level is set to verbose."""
 
-        return settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE
-
-    @dbus_service.getter
-    def get_verbosity_level(self) -> str:
-        """Returns the current speech verbosity level for object presentation."""
-
-        return VerbosityLevel(settings.speechVerbosityLevel).string_name
-
-    @dbus_service.setter
-    def set_verbosity_level(self, value: str) -> bool:
-        """Sets the speech verbosity level for object presentation."""
-
-        try:
-            level = VerbosityLevel[value.upper()]
-        except KeyError:
-            msg = f"SPEECH AND VERBOSITY MANAGER: Invalid verbosity level: {value}"
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
-            return False
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting verbosity level to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speechVerbosityLevel = level.value
-        return True
-
-    def _get_verbosity_is_verbose(self) -> bool:
-        """Returns True if verbosity level is VERBOSE, False if BRIEF."""
-
-        return self.get_verbosity_level() == VerbosityLevel.VERBOSE.string_name
-
-    def _set_verbosity_from_bool(self, value: bool) -> bool:
-        """Sets verbosity level to VERBOSE if True, BRIEF if False."""
-
-        if value:
-            level_name = VerbosityLevel.VERBOSE.string_name
-        else:
-            level_name = VerbosityLevel.BRIEF.string_name
-        return self.set_verbosity_level(level_name)
-
-    def _speech_enabled_and_only_speak_displayed_text_is_off(self) -> bool:
-        """Returns True if speech is enabled AND only-speak-displayed-text is off."""
-
-        return self.get_speech_is_enabled() and not self.get_only_speak_displayed_text()
-
-    @dbus_service.command
-    def toggle_verbosity(
-        self,
-        script: default.Script | None = None,
-        event: input_event.InputEvent | None = None,
-        notify_user: bool = True,
-    ) -> bool:
-        """Toggles speech verbosity level between verbose and brief."""
-
-        tokens = [
-            "SPEECH AND VERBOSITY MANAGER: toggle_verbosity. Script:",
-            script,
-            "Event:",
-            event,
-            "notify_user:",
-            notify_user,
-        ]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
-            if script is not None and notify_user:
-                presentation_manager.get_manager().present_message(
-                    messages.SPEECH_VERBOSITY_VERBOSE
-                )
-            settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_VERBOSE
-        else:
-            if script is not None and notify_user:
-                presentation_manager.get_manager().present_message(messages.SPEECH_VERBOSITY_BRIEF)
-            settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
-        return True
-
-    @dbus_service.getter
-    def get_speak_indentation_and_justification(self) -> bool:
-        """Returns whether speaking of indentation and justification is enabled."""
-
-        return settings.enableSpeechIndentation
-
-    @dbus_service.setter
-    def set_speak_indentation_and_justification(self, value: bool) -> bool:
-        """Sets whether speaking of indentation and justification is enabled."""
-
-        msg = (
-            f"SPEECH AND VERBOSITY MANAGER: Setting speak indentation and justification to {value}."
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableSpeechIndentation = value
-        return True
-
-    @dbus_service.getter
-    def get_speak_indentation_only_if_changed(self) -> bool:
-        """Returns whether indentation will be announced only if it has changed."""
-
-        return settings.speakIndentationOnlyIfChanged
-
-    @dbus_service.setter
-    def set_speak_indentation_only_if_changed(self, value: bool) -> bool:
-        """Sets whether indentation will be announced only if it has changed."""
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Setting speak indentation only if changed to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakIndentationOnlyIfChanged = value
-        return True
-
-    @dbus_service.command
-    def toggle_indentation_and_justification(
-        self,
-        script: default.Script | None = None,
-        event: input_event.InputEvent | None = None,
-        notify_user: bool = True,
-    ) -> bool:
-        """Toggles the speaking of indentation and justification."""
-
-        tokens = [
-            "SPEECH AND VERBOSITY MANAGER: toggle_indentation_and_justification. ",
-            "Script:",
-            script,
-            "Event:",
-            event,
-            "notify_user:",
-            notify_user,
-        ]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        value = self.get_speak_indentation_and_justification()
-        self.set_speak_indentation_and_justification(not value)
-        if self.get_speak_indentation_and_justification():
-            full = messages.INDENTATION_JUSTIFICATION_ON_FULL
-            brief = messages.INDENTATION_JUSTIFICATION_ON_BRIEF
-        else:
-            full = messages.INDENTATION_JUSTIFICATION_OFF_FULL
-            brief = messages.INDENTATION_JUSTIFICATION_OFF_BRIEF
-        if script is not None and notify_user:
-            presentation_manager.get_manager().present_message(full, brief)
-        return True
-
-    @dbus_service.command
-    def toggle_table_cell_reading_mode(
-        self,
-        script: default.Script | None = None,
-        event: input_event.InputEvent | None = None,
-        notify_user: bool = True,
-    ) -> bool:
-        """Toggles between speak cell and speak row."""
-
-        tokens = [
-            "SPEECH AND VERBOSITY MANAGER: toggle_table_cell_reading_mode. Script:",
-            script,
-            "Event:",
-            event,
-            "notify_user:",
-            notify_user,
-        ]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        # TODO - JD: This is due to the requirement on script utilities.
-        if script is None:
-            msg = "SPEECH AND VERBOSITY MANAGER: Toggling table cell reading mode requires script."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        table = AXTable.get_table(focus_manager.get_manager().get_locus_of_focus())
-        if table is None and notify_user:
-            presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
-            return True
-
-        # TODO - JD: Use the new getters and setters for this.
-        if not script.utilities.get_document_for_object(table):
-            setting_name = "readFullRowInGUITable"
-        elif script.utilities.is_spreadsheet_table(table):
-            setting_name = "readFullRowInSpreadSheet"
-        else:
-            setting_name = "readFullRowInDocumentTable"
-
-        speak_row = getattr(settings, setting_name)
-        setattr(settings, setting_name, not speak_row)
-
-        if not speak_row:
-            msg = messages.TABLE_MODE_ROW
-        else:
-            msg = messages.TABLE_MODE_CELL
-
-        if notify_user:
-            presentation_manager.get_manager().present_message(msg)
-        return True
-
-    @staticmethod
-    def adjust_for_digits(obj: Atspi.Accessible, text: str) -> str:
-        """Adjusts text to present numbers as digits."""
-
-        def _convert(word):
-            if word.isnumeric():
-                word = " ".join(list(word))
-            return word
-
-        if not (settings.speakNumbersAsDigits or AXUtilities.is_text_input_telephone(obj)):
-            return text
-
-        return " ".join(map(_convert, text.split()))
-
-    @staticmethod
-    def _adjust_for_links(obj: Atspi.Accessible, line: str, start_offset: int) -> str:
-        """Adjust line to include the word "link" after any hypertext links."""
-
-        # This adjustment should only be made in cases where there is only presentable text.
-        # In content where embedded objects are present, "link" is presented as the role of any
-        # embedded link children.
-        if "\ufffc" in line:
-            return line
-
-        end_offset = start_offset + len(line)
-        links = AXHypertext.get_all_links_in_range(obj, start_offset, end_offset)
-        offsets = [AXHypertext.get_link_end_offset(link) for link in links]
-        offsets = sorted([offset - start_offset for offset in offsets], reverse=True)
-        tokens = list(line)
-        for o in offsets:
-            if 0 <= o <= len(tokens):
-                text = f" {messages.LINK}"
-                if o < len(tokens) and tokens[o].isalnum():
-                    text += " "
-                tokens[o:o] = text
-        return "".join(tokens)
-
-    def _adjust_for_repeats(self, text: str) -> str:
-        """Adjust line to include a description of repeated symbols."""
-
-        def replacement(match):
-            char = match.group(1)
-            count = len(match.group(0))
-            if match.start() > 0 and text[match.start() - 1].isalnum():
-                return f" {messages.repeated_char_count(char, count)}"
-            return messages.repeated_char_count(char, count)
-
-        limit = self.get_repeated_character_limit()
-        if len(text) < 4 or limit < 4:
-            return text
-
-        pattern = re.compile(r"([^a-zA-Z0-9\s])\1{" + str(limit - 1) + ",}")
-        return re.sub(pattern, replacement, text)
-
-    @staticmethod
-    def _should_verbalize_punctuation(obj: Atspi.Accessible) -> bool:
-        """Returns True if punctuation should be verbalized."""
-
-        ancestor = AXObject.find_ancestor_inclusive(obj, AXUtilities.is_code)
-        if ancestor is None:
-            return False
-
-        document = AXObject.find_ancestor_inclusive(ancestor, AXUtilities.is_document)
-        if AXDocument.is_plain_text(document):
-            return False
-
-        # If the user has set their punctuation level to All, then the synthesizer will
-        # do the work for us. If the user has set their punctuation level to None, then
-        # they really don't want punctuation and we mustn't override that.
-        if settings.verbalizePunctuationStyle in [
-            settings.PUNCTUATION_STYLE_ALL,
-            settings.PUNCTUATION_STYLE_NONE,
-        ]:
-            return False
-
-        return True
-
-    @staticmethod
-    def _adjust_for_verbalized_punctuation(obj: Atspi.Accessible, text: str) -> str:
-        """Surrounds punctuation symbols with spaces to increase the likelihood of presentation."""
-
-        if not SpeechAndVerbosityManager._should_verbalize_punctuation(obj):
-            return text
-
-        result = text
-        punctuation = set(re.findall(r"[^\w\s]", result))
-        for symbol in punctuation:
-            result = result.replace(symbol, f" {symbol} ")
-
-        return result
-
-    def _apply_pronunciation_dictionary(self, text: str) -> str:
-        """Applies the pronunciation dictionary to the text."""
-
-        if not self.get_use_pronunciation_dictionary():
-            return text
-
-        manager = pronunciation_dictionary_manager.get_manager()
-        words = re.split(r"(\W+)", text)
-        return "".join(map(manager.get_pronunciation, words))
-
-    def get_indentation_description(self, line: str, only_if_changed: bool | None = None) -> str:
-        """Returns a description of the indentation in the given line."""
-
-        if (
-            self.get_only_speak_displayed_text()
-            or not self.get_speak_indentation_and_justification()
-        ):
-            return ""
-
-        line = line.replace("\u00a0", " ")
-        end = re.search("[^ \t]", line)
-        if end:
-            line = line[: end.start()]
-
-        result = ""
-        spaces = [m.span() for m in re.finditer(" +", line)]
-        tabs = [m.span() for m in re.finditer("\t+", line)]
-        spans = sorted(spaces + tabs)
-        for span in spans:
-            if span in spaces:
-                result += f"{messages.spaces_count(span[1] - span[0])} "
-            else:
-                result += f"{messages.tabs_count(span[1] - span[0])} "
-
-        if only_if_changed is None:
-            only_if_changed = self.get_speak_indentation_only_if_changed()
-
-        if only_if_changed:
-            if self._last_indentation_description == result:
-                return ""
-
-            if not result and self._last_indentation_description:
-                self._last_indentation_description = ""
-                return messages.spaces_count(0)
-
-        self._last_indentation_description = result
-        return result
-
-    def get_error_description(
-        self, obj: Atspi.Accessible, offset: int | None = None, only_if_changed: bool | None = True
-    ) -> str:
-        """Returns a description of the error at the current offset."""
-
-        if not self.get_speak_misspelled_indicator():
-            return ""
-
-        # If we're on whitespace or punctuation, we cannot be on an error.
-        char = AXText.get_character_at_offset(obj, offset)[0]
-        if char in string.punctuation + string.whitespace + "\u00a0":
-            self._last_error_description = ""
-            return ""
-
-        msg = ""
-        if AXText.string_has_spelling_error(obj, offset):
-            # TODO - JD: We're using the message here to preserve existing behavior.
-            msg = messages.MISSPELLED
-        elif AXText.string_has_grammar_error(obj, offset):
-            msg = object_properties.STATE_INVALID_GRAMMAR_SPEECH
-
-        if only_if_changed and msg == self._last_error_description:
-            return ""
-
-        self._last_error_description = msg
-        return msg
-
-    def adjust_for_presentation(
-        self, obj: Atspi.Accessible, text: str, start_offset: int | None = None
-    ) -> str:
-        """Adjusts text for spoken presentation."""
-
-        tokens = [
-            f"SPEECH AND VERBOSITY MANAGER: Adjusting '{text}' from",
-            obj,
-            f"start_offset: {start_offset}",
-        ]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if AXUtilities.is_math_related(obj):
-            text = mathsymbols.adjust_for_speech(text)
-
-        if start_offset is not None:
-            text = self._adjust_for_links(obj, text, start_offset)
-
-        text = self.adjust_for_digits(obj, text)
-        text = self._adjust_for_repeats(text)
-        text = self._adjust_for_verbalized_punctuation(obj, text)
-        text = self._apply_pronunciation_dictionary(text)
-
-        msg = f"SPEECH AND VERBOSITY MANAGER: Adjusted text: '{text}'"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return text
-
-    def create_speech_preferences_grid(
-        self, title_change_callback: Callable[[str], None] | None = None
-    ) -> SpeechPreferencesGrid:
-        """Returns the GtkGrid containing the combined speech preferences UI."""
-
-        return SpeechPreferencesGrid(self, title_change_callback)
-
-    def get_speech_preferences(
-        self,
-    ) -> tuple[
-        tuple[SpeechPreference, ...],  # general
-        tuple[SpeechPreference, ...],  # object_details
-        tuple[SpeechPreference, ...],  # announcements
-    ]:
-        """Return descriptors for speech preferences, organized by section."""
-
-        general = (
-            SpeechPreference(
-                "messagesAreDetailed",
-                guilabels.SPEECH_SYSTEM_MESSAGES_ARE_DETAILED,
-                self.get_messages_are_detailed,
-                self.set_messages_are_detailed,
-            ),
-        )
-
-        object_details = (
-            SpeechPreference(
-                "onlySpeakDisplayedText",
-                guilabels.SPEECH_ONLY_SPEAK_DISPLAYED_TEXT,
-                self.get_only_speak_displayed_text,
-                self.set_only_speak_displayed_text,
-            ),
-            SpeechPreference(
-                "speakDescription",
-                guilabels.SPEECH_SPEAK_DESCRIPTION,
-                self.get_speak_description,
-                self.set_speak_description,
-            ),
-            SpeechPreference(
-                "enablePositionSpeaking",
-                guilabels.SPEECH_SPEAK_CHILD_POSITION,
-                self.get_speak_position_in_set,
-                self.set_speak_position_in_set,
-            ),
-            SpeechPreference(
-                "enableMnemonicSpeaking",
-                guilabels.PRESENT_OBJECT_MNEMONICS,
-                self.get_speak_widget_mnemonic,
-                self.set_speak_widget_mnemonic,
-            ),
-            SpeechPreference(
-                "enableTutorialMessages",
-                guilabels.SPEECH_SPEAK_TUTORIAL_MESSAGES,
-                self.get_speak_tutorial_messages,
-                self.set_speak_tutorial_messages,
-            ),
-        )
-
-        announcements = (
-            SpeechPreference(
-                "speakContextBlockquote",
-                guilabels.ANNOUNCE_BLOCKQUOTES,
-                self.get_announce_blockquote,
-                self.set_announce_blockquote,
-            ),
-            SpeechPreference(
-                "speakContextNonLandmarkForm",
-                guilabels.ANNOUNCE_FORMS,
-                self.get_announce_form,
-                self.set_announce_form,
-            ),
-            SpeechPreference(
-                "speakContextLandmark",
-                guilabels.ANNOUNCE_LANDMARKS,
-                self.get_announce_landmark,
-                self.set_announce_landmark,
-            ),
-            SpeechPreference(
-                "speakContextList",
-                guilabels.ANNOUNCE_LISTS,
-                self.get_announce_list,
-                self.set_announce_list,
-            ),
-            SpeechPreference(
-                "speakContextPanel",
-                guilabels.ANNOUNCE_PANELS,
-                self.get_announce_grouping,
-                self.set_announce_grouping,
-            ),
-            SpeechPreference(
-                "speakContextTable",
-                guilabels.ANNOUNCE_TABLES,
-                self.get_announce_table,
-                self.set_announce_table,
-            ),
-        )
-
-        return general, object_details, announcements
-
-    def apply_speech_preferences(
-        self, updates: Iterable[tuple[SpeechPreference, bool]]
-    ) -> dict[str, bool]:
-        """Apply the provided speech preference values."""
-
-        result = {}
-        for descriptor, value in updates:
-            descriptor.setter(value)
-            result[descriptor.prefs_key] = value
-        return result
-
-
-_manager: SpeechAndVerbosityManager = SpeechAndVerbosityManager()
-
-
-def get_manager() -> SpeechAndVerbosityManager:
-    """Returns the Speech and Verbosity Manager"""
+def get_manager() -> SpeechManager:
+    """Returns the Speech Manager"""
 
     return _manager

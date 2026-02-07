@@ -33,7 +33,7 @@ from gi.repository import Atspi
 from . import debug
 from . import settings_manager
 from . import sleep_mode_manager
-from . import speech_and_verbosity_manager
+from . import speech_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .scripts import apps, default, sleepmode, toolkits
@@ -361,7 +361,7 @@ class ScriptManager:
                 self._app_settings_snapshots[new_script.app]
             )
 
-        speech_and_verbosity_manager.get_manager().check_speech_setting()
+        speech_manager.get_manager().check_speech_setting()
 
     def reclaim_scripts(self) -> None:
         """Compares the list of known scripts to the list of known apps,

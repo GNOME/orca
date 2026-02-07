@@ -48,7 +48,7 @@ from . import messages
 from . import object_properties
 from . import script_manager
 from . import settings
-from . import speech_and_verbosity_manager
+from . import speech_presenter
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
@@ -1321,7 +1321,7 @@ class Generator:
         if not self._get_is_nameless_toggle(obj):
             role_string = self.get_localized_role_name(obj, role=Atspi.Role.COLUMN_HEADER)
             if self._mode == "speech":
-                if speech_and_verbosity_manager.get_manager().use_verbose_speech() and args.get(
+                if speech_presenter.get_presenter().use_verbose_speech() and args.get(
                     "formatType"
                 ) not in ["basicWhereAmI", "detailedWhereAmI"]:
                     text = f"{text} {role_string}"
@@ -1358,7 +1358,7 @@ class Generator:
         text = ". ".join(tokens)
         role_string = self.get_localized_role_name(obj, role=Atspi.Role.ROW_HEADER)
         if self._mode == "speech":
-            if speech_and_verbosity_manager.get_manager().use_verbose_speech() and args.get(
+            if speech_presenter.get_presenter().use_verbose_speech() and args.get(
                 "formatType"
             ) not in ["basicWhereAmI", "detailedWhereAmI"]:
                 text = f"{text} {role_string}"

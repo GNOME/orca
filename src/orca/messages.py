@@ -2112,6 +2112,30 @@ SPEECH_DISABLED = _("Speech disabled.")
 # has been turned back on.
 SPEECH_ENABLED = _("Speech enabled.")
 
+# Translators: The on-screen braille display is a graphical window that displays a
+# visual representation of what would be shown on a connected braille display,
+# including the braille dots and the text characters they correspond to. This
+# message is presented to the user when the on-screen braille display has been
+# turned on.
+BRAILLE_MONITOR_ENABLED = _("On-screen braille enabled.")
+
+# Translators: The on-screen braille display is a graphical window that displays a
+# visual representation of what would be shown on a connected braille display,
+# including the braille dots and the text characters they correspond to. This
+# message is presented to the user when the on-screen braille display has been
+# turned off.
+BRAILLE_MONITOR_DISABLED = _("On-screen braille disabled.")
+
+# Translators: The on-screen speech display is a graphical window that displays a
+# scrolling log of all text spoken by the screen reader. This message is presented
+# to the user when the on-screen speech display has been turned on.
+SPEECH_MONITOR_ENABLED = _("On-screen speech enabled.")
+
+# Translators: The on-screen speech display is a graphical window that displays a
+# scrolling log of all text spoken by the screen reader. This message is presented
+# to the user when the on-screen speech display has been turned off.
+SPEECH_MONITOR_DISABLED = _("On-screen speech disabled.")
+
 # Translators: Orca has a sleep mode which causes Orca to essentially behave as
 # if it were not running for a given application. Some use cases include self-
 # voicing apps with associated commands (e.g. ChromeVox) and VMs. In the former

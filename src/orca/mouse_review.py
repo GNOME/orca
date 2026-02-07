@@ -66,7 +66,7 @@ from . import preferences_grid_base
 from . import presentation_manager
 from . import script_manager
 from . import settings
-from . import speech_and_verbosity_manager
+from . import speech_presenter
 from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -173,7 +173,7 @@ class _StringContext:
             return False
 
         voice = self._script.speech_generator.voice(obj=self._obj, string=self._string)
-        manager = speech_and_verbosity_manager.get_manager()
+        manager = speech_presenter.get_presenter()
         string = manager.adjust_for_presentation(self._obj, self._string)
 
         focus_manager.get_manager().emit_region_changed(
@@ -181,7 +181,7 @@ class _StringContext:
         )
         presenter = presentation_manager.get_manager()
         presenter.speak_message(string, voice=voice, interrupt=False)
-        presenter.display_message(self._string)
+        presenter.present_braille_message(self._string)
         return True
 
 

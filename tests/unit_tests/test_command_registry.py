@@ -328,9 +328,8 @@ SAY_ALL_PRESENTER_HANDLERS = frozenset(
     }
 )
 
-SPEECH_AND_VERBOSITY_MANAGER_HANDLERS = frozenset(
+SPEECH_MANAGER_HANDLERS = frozenset(
     {
-        "changeNumberStyleHandler",
         "cycleCapitalizationStyleHandler",
         "cycleSpeakingPunctuationLevelHandler",
         "cycleSynthesizerHandler",
@@ -341,6 +340,12 @@ SPEECH_AND_VERBOSITY_MANAGER_HANDLERS = frozenset(
         "increaseSpeechRateHandler",
         "increaseSpeechVolumeHandler",
         "toggleSilenceSpeechHandler",
+    }
+)
+
+SPEECH_PRESENTER_HANDLERS = frozenset(
+    {
+        "changeNumberStyleHandler",
         "toggleSpeakingIndentationJustificationHandler",
         "toggleSpeechVerbosityHandler",
         "toggleTableCellReadModeHandler",
@@ -398,13 +403,16 @@ EXPECTED_TOTAL_COMMANDS = (
     + len(TABLE_NAVIGATOR_HANDLERS)
     + len(OBJECT_NAVIGATOR_HANDLERS)
     + len(SAY_ALL_PRESENTER_HANDLERS)
-    + len(SPEECH_AND_VERBOSITY_MANAGER_HANDLERS)
+    + len(SPEECH_MANAGER_HANDLERS)
+    + len(SPEECH_PRESENTER_HANDLERS)
     + len(DEFAULT_SCRIPT_HANDLERS)
     + len(DOCUMENT_PRESENTER_HANDLERS)
 )
 
-class Fake():
+
+class Fake:
     pass
+
 
 @pytest.mark.unit
 class TestCommandRegistry:
@@ -437,7 +445,8 @@ class TestCommandRegistry:
             "orca.ax_table",
             "orca.ax_text",
             "orca.ax_event_synthesizer",
-            "orca.speech_and_verbosity_manager",
+            "orca.speech_manager",
+            "orca.speech_presenter",
             "orca.orca_platform",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
@@ -473,23 +482,27 @@ class TestCommandRegistry:
         gi_repository_mock.Gio = gio_mock
 
         gio_wnck = essential_modules["gi.repository.Wnck"]
+
         class Screen:
+            @staticmethod
             def get_windows_stacked():
                 return []
+
+            @staticmethod
             def get_active_workspace():
                 return None
+
+            @staticmethod
             def connect(fill1, fill2):
                 return None
-        gio_wnck.Screen.get_default = test_context.Mock(
-            return_value=Screen
-        )
+
+        gio_wnck.Screen.get_default = test_context.Mock(return_value=Screen)
         gi_repository_mock.Wnck = gio_wnck
 
         debug_mock = essential_modules["orca.debug"]
         debug_mock.debugFile = None
 
         flat_review_mock = essential_modules["orca.flat_review"]
-        flat_review_context_mock = test_context.Mock()
         flat_review_mock.Context = Fake
 
         return essential_modules
@@ -620,10 +633,8 @@ class TestCommandRegistry:
 
         return essential_modules
 
-    def _setup_speech_and_verbosity_manager_dependencies(
-        self, test_context: OrcaTestContext
-    ) -> dict[str, MagicMock]:
-        """Sets up dependencies for speech and verbosity manager testing."""
+    def _setup_speech_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
+        """Sets up dependencies for speech manager and presenter testing."""
 
         additional_modules = [
             "orca.mathsymbols",
@@ -1052,13 +1063,11 @@ class TestCommandRegistry:
         )
         assert not missing, f"Missing commands in say_all_presenter: {missing}"
 
-    def test_speech_and_verbosity_manager_handlers_exist(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test that all speech and verbosity manager handlers are registered in CommandManager."""
+    def test_speech_manager_handlers_exist(self, test_context: OrcaTestContext) -> None:
+        """Test that all speech manager handlers are registered in CommandManager."""
 
-        self._setup_speech_and_verbosity_manager_dependencies(test_context)
-        from orca.speech_and_verbosity_manager import get_manager
+        self._setup_speech_dependencies(test_context)
+        from orca.speech_manager import get_manager
         from orca import command_manager
 
         manager = get_manager()
@@ -1067,10 +1076,28 @@ class TestCommandRegistry:
         cmd_manager = command_manager.get_manager()
         missing = frozenset(
             name
-            for name in SPEECH_AND_VERBOSITY_MANAGER_HANDLERS
+            for name in SPEECH_MANAGER_HANDLERS
             if cmd_manager.get_keyboard_command(name) is None
         )
-        assert not missing, f"Missing commands in speech_and_verbosity_manager: {missing}"
+        assert not missing, f"Missing commands in speech_manager: {missing}"
+
+    def test_speech_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
+        """Test that all speech presenter handlers are registered in CommandManager."""
+
+        self._setup_speech_dependencies(test_context)
+        from orca.speech_presenter import get_presenter
+        from orca import command_manager
+
+        presenter = get_presenter()
+        presenter.set_up_commands()
+
+        cmd_manager = command_manager.get_manager()
+        missing = frozenset(
+            name
+            for name in SPEECH_PRESENTER_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
+        assert not missing, f"Missing commands in speech_presenter: {missing}"
 
     def test_document_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all document presenter handlers are registered."""
@@ -1120,7 +1147,8 @@ class TestCommandRegistry:
             + len(TABLE_NAVIGATOR_HANDLERS)
             + len(OBJECT_NAVIGATOR_HANDLERS)
             + len(SAY_ALL_PRESENTER_HANDLERS)
-            + len(SPEECH_AND_VERBOSITY_MANAGER_HANDLERS)
+            + len(SPEECH_MANAGER_HANDLERS)
+            + len(SPEECH_PRESENTER_HANDLERS)
             + len(DEFAULT_SCRIPT_HANDLERS)
             + len(DOCUMENT_PRESENTER_HANDLERS)
         )

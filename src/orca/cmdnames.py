@@ -432,6 +432,19 @@ DECREASE_SPEECH_VOLUME = _("Decrease the speech volume")
 #  We call it 'silencing'.
 TOGGLE_SPEECH = _("Toggle the silencing of speech")
 
+# Translators: The on-screen braille display is a graphical window that displays a
+# visual representation of what would be shown on a connected braille display,
+# including the braille dots and the text characters they correspond to. It is
+# primarily used by developers and testers who may not have a physical braille
+# display.
+TOGGLE_BRAILLE_MONITOR = _("Toggle the on-screen braille display on and off")
+
+# Translators: The on-screen speech display is a graphical window that displays a
+# scrolling log of all text spoken by the screen reader. It is primarily used by
+# developers and testers to verify what is being spoken without having to listen
+# to the audio.
+TOGGLE_SPEECH_MONITOR = _("Toggle the on-screen speech display on and off")
+
 # Translators: Orca has a sleep mode which causes Orca to essentially behave as
 # if it were not running for a given application. Some use cases include self-
 # voicing apps with associated commands (e.g. ChromeVox) and VMs. In the former

@@ -60,7 +60,7 @@ from . import say_all_presenter
 from . import settings
 from . import settings_manager
 from . import sound_presenter
-from . import speech_and_verbosity_manager
+from . import speech_presenter
 from . import spellcheck_presenter
 from . import system_information_presenter
 from . import text_attribute_manager
@@ -214,14 +214,14 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self._add_navigation_row("profiles", self.profiles_grid.get_label().get_text())
         self.update_menu_labels()
 
-        speech_manager = speech_and_verbosity_manager.get_manager()
+        presenter = speech_presenter.get_presenter()
 
         def update_title(title: str) -> None:
             """Update the panel header title and window accessible name."""
 
             self._set_page_title(title)
 
-        self.speech_grid = speech_manager.create_speech_preferences_grid(
+        self.speech_grid = presenter.create_speech_preferences_grid(
             title_change_callback=update_title
         )
         self.stack.add_named(self.speech_grid, "speech")
@@ -244,8 +244,8 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self.stack.add_named(self.keybindings_grid, "keybindings")
         self._add_navigation_row("keybindings", self.keybindings_grid.get_label().get_text())
 
-        presenter = typing_echo_presenter.get_presenter()
-        self.typing_echo_grid = presenter.create_preferences_grid()
+        typing_pres = typing_echo_presenter.get_presenter()
+        self.typing_echo_grid = typing_pres.create_preferences_grid()
         self.stack.add_named(self.typing_echo_grid, "typing_echo")
         self._add_navigation_row("typing_echo", self.typing_echo_grid.get_label().get_text())
 

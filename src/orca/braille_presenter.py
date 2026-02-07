@@ -1,7 +1,7 @@
 # Orca
 #
 # Copyright 2005-2008 Sun Microsystems Inc.
-# Copyright 2011-2025 Igalia, S.L.
+# Copyright 2011-2026 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -29,18 +29,25 @@ from __future__ import annotations
 
 import os
 from enum import Enum
-from typing import Any
+from typing import Any, TYPE_CHECKING
 
 from . import braille
+from . import braille_monitor
 from . import brltablenames
 from . import cmdnames
+from . import command_manager
 from . import dbus_service
 from . import debug
 from . import guilabels
+from . import input_event
 from . import input_event_manager
+from . import messages
 from . import preferences_grid_base
 from . import settings
 from .orca_platform import tablesdir  # pylint: disable=import-error
+
+if TYPE_CHECKING:
+    from .scripts import default
 
 
 class VerbosityLevel(Enum):
@@ -323,6 +330,44 @@ class BrailleProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGr
         super().__init__(guilabels.PROGRESS_BARS, controls)
 
 
+class BrailleOSDPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
+    """GtkGrid containing the braille on-screen display preferences page."""
+
+    def __init__(self, presenter: BraillePresenter) -> None:
+        controls: list[preferences_grid_base.ControlType] = [
+            preferences_grid_base.IntRangePreferenceControl(
+                label=guilabels.BRAILLE_MONITOR_CELL_COUNT,
+                getter=presenter.get_monitor_cell_count,
+                setter=presenter.set_monitor_cell_count,
+                prefs_key="brailleMonitorCellCount",
+                minimum=1,
+                maximum=80,
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.BRAILLE_MONITOR_SHOW_DOTS,
+                getter=presenter.get_monitor_show_dots,
+                setter=presenter.set_monitor_show_dots,
+                prefs_key="brailleMonitorShowDots",
+            ),
+            preferences_grid_base.ColorPreferenceControl(
+                label=guilabels.BRAILLE_MONITOR_FOREGROUND,
+                getter=presenter.get_monitor_foreground,
+                setter=presenter.set_monitor_foreground,
+                prefs_key="brailleMonitorForeground",
+            ),
+            preferences_grid_base.ColorPreferenceControl(
+                label=guilabels.BRAILLE_MONITOR_BACKGROUND,
+                getter=presenter.get_monitor_background,
+                setter=presenter.set_monitor_background,
+                prefs_key="brailleMonitorBackground",
+            ),
+        ]
+
+        super().__init__(
+            guilabels.ON_SCREEN_DISPLAY, controls, info_message=guilabels.BRAILLE_MONITOR_INFO
+        )
+
+
 class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
     """GtkGrid containing the Braille preferences page with nested stack navigation."""
 
@@ -340,6 +385,7 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._display_settings_grid = BrailleDisplaySettingsPreferencesGrid(presenter)
         self._flash_messages_grid = BrailleFlashMessagesPreferencesGrid(presenter)
         self._progress_bars_grid = BrailleProgressBarsPreferencesGrid(presenter)
+        self._osd_grid = BrailleOSDPreferencesGrid(presenter)
 
         self._build()
         self._initializing = False
@@ -356,6 +402,8 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
             (guilabels.BRAILLE_FLASH_MESSAGES, "flash_messages", self._flash_messages_grid),
             (guilabels.PROGRESS_BARS, "progress-bars", self._progress_bars_grid),
         ]
+        if settings.enableExperimentalFeatures:
+            categories.append((guilabels.ON_SCREEN_DISPLAY, "osd", self._osd_grid))
 
         enable_listbox, stack, _categories_listbox = self._create_multi_page_stack(
             enable_label=guilabels.BRAILLE_ENABLE_BRAILLE_SUPPORT,
@@ -382,6 +430,7 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._display_settings_grid.reload()
         self._flash_messages_grid.reload()
         self._progress_bars_grid.reload()
+        self._osd_grid.reload()
 
     def save_settings(self) -> dict:
         """Persist staged values."""
@@ -392,6 +441,7 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         result.update(self._display_settings_grid.save_settings())
         result.update(self._flash_messages_grid.save_settings())
         result.update(self._progress_bars_grid.save_settings())
+        result.update(self._osd_grid.save_settings())
         return result
 
     def refresh(self) -> None:
@@ -402,6 +452,7 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._display_settings_grid.refresh()
         self._flash_messages_grid.refresh()
         self._progress_bars_grid.refresh()
+        self._osd_grid.refresh()
         self._initializing = False
 
     def has_changes(self) -> bool:
@@ -412,7 +463,7 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
             or self._display_settings_grid.has_changes()
             or self._flash_messages_grid.has_changes()
             or self._progress_bars_grid.has_changes()
-            or self._has_unsaved_changes
+            or self._osd_grid.has_changes()
         )
 
 
@@ -426,6 +477,63 @@ class BraillePresenter:
         controller.register_decorated_module("BraillePresenter", self)
         self._command_names: dict[int, str] | None = None
         self._table_names: dict[str, str] | None = None
+        self._monitor: braille_monitor.BrailleMonitor | None = None
+        self._monitor_enabled_override: bool | None = None
+        self._initialized = False
+
+    def set_up_commands(self) -> None:
+        """Sets up commands with CommandManager."""
+
+        if self._initialized:
+            return
+        self._initialized = True
+
+        manager = command_manager.get_manager()
+        if settings.enableExperimentalFeatures:
+            manager.add_command(
+                command_manager.KeyboardCommand(
+                    "toggle_braille_monitor",
+                    self.toggle_monitor,
+                    guilabels.BRAILLE,
+                    cmdnames.TOGGLE_BRAILLE_MONITOR,
+                )
+            )
+
+        msg = "BRAILLE PRESENTER: Commands set up."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    @dbus_service.command
+    def toggle_monitor(
+        self,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Toggles the braille monitor on and off."""
+
+        tokens = [
+            "BRAILLE PRESENTER: toggle_monitor. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        from . import presentation_manager  # pylint: disable=import-outside-toplevel
+
+        if self.get_monitor_is_enabled():
+            self.set_monitor_is_enabled(False)
+            if script is not None and notify_user:
+                presentation_manager.get_manager().present_message(
+                    messages.BRAILLE_MONITOR_DISABLED
+                )
+        else:
+            self.set_monitor_is_enabled(True)
+            if script is not None and notify_user:
+                presentation_manager.get_manager().present_message(messages.BRAILLE_MONITOR_ENABLED)
+        return True
 
     @staticmethod
     def _build_table_names() -> dict[str, str]:
@@ -577,11 +685,93 @@ class BraillePresenter:
     def use_braille(self) -> bool:
         """Returns whether braille is to be used."""
 
-        result = settings.enableBraille or settings.enableBrailleMonitor
+        result = settings.enableBraille or self.get_monitor_is_enabled()
         if not result:
             msg = "BRAILLE PRESENTER: Braille is disabled."
             debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
+
+    @dbus_service.getter
+    def get_monitor_is_enabled(self) -> bool:
+        """Returns whether the braille monitor is enabled."""
+
+        return self._monitor_enabled_override or False
+
+    @dbus_service.setter
+    def set_monitor_is_enabled(self, value: bool) -> bool:
+        """Sets whether the braille monitor is enabled."""
+
+        msg = f"BRAILLE PRESENTER: Setting enable braille monitor to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        self._monitor_enabled_override = value
+        if not value:
+            self.destroy_monitor()
+        return True
+
+    @dbus_service.getter
+    def get_monitor_cell_count(self) -> int:
+        """Returns the configured braille monitor cell count."""
+
+        return settings.brailleMonitorCellCount
+
+    @dbus_service.setter
+    def set_monitor_cell_count(self, value: int) -> bool:
+        """Sets the braille monitor cell count."""
+
+        msg = f"BRAILLE PRESENTER: Setting braille monitor cell count to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.brailleMonitorCellCount = value
+        self.destroy_monitor()
+        return True
+
+    @dbus_service.getter
+    def get_monitor_show_dots(self) -> bool:
+        """Returns whether the braille monitor shows Unicode braille dots."""
+
+        return settings.brailleMonitorShowDots
+
+    @dbus_service.setter
+    def set_monitor_show_dots(self, value: bool) -> bool:
+        """Sets whether the braille monitor shows Unicode braille dots."""
+
+        msg = f"BRAILLE PRESENTER: Setting braille monitor show dots to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.brailleMonitorShowDots = value
+        return True
+
+    @dbus_service.getter
+    def get_monitor_foreground(self) -> str:
+        """Returns the braille monitor foreground color."""
+
+        return settings.brailleMonitorForeground
+
+    @dbus_service.setter
+    def set_monitor_foreground(self, value: str) -> bool:
+        """Sets the braille monitor foreground color."""
+
+        msg = f"BRAILLE PRESENTER: Setting braille monitor foreground to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.brailleMonitorForeground = value
+        if self._monitor is not None:
+            self._monitor.reapply_css()
+        return True
+
+    @dbus_service.getter
+    def get_monitor_background(self) -> str:
+        """Returns the braille monitor background color."""
+
+        return settings.brailleMonitorBackground
+
+    @dbus_service.setter
+    def set_monitor_background(self, value: str) -> bool:
+        """Sets the braille monitor background color."""
+
+        msg = f"BRAILLE PRESENTER: Setting braille monitor background to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        settings.brailleMonitorBackground = value
+        if self._monitor is not None:
+            self._monitor.reapply_css()
+        return True
 
     def present_regions(
         self,
@@ -1087,7 +1277,7 @@ class BraillePresenter:
 
         braille.kill_flash(restore_saved)
 
-    def display_message(self, message: str, restore_previous: bool = True) -> None:
+    def present_message(self, message: str, restore_previous: bool = True) -> None:
         """Displays a single line message in braille."""
 
         if not self.use_braille():
@@ -1164,9 +1354,57 @@ class BraillePresenter:
         else:
             braille.set_brlapi_priority()
 
+    def update_monitor(
+        self, cursor_cell: int, substring: str, mask: str | None, display_size: int
+    ) -> None:
+        """Updates the braille monitor display, creating it on demand if enabled."""
+
+        if not self.get_monitor_is_enabled():
+            return
+
+        cell_count = settings.brailleMonitorCellCount or display_size
+        if self._monitor is None:
+            self._monitor = braille_monitor.BrailleMonitor(
+                cell_count,
+                on_close=lambda: self.set_monitor_is_enabled(False),
+            )
+            self._monitor.show_all()
+
+        if settings.brailleMonitorShowDots:
+            substring = self._to_unicode_braille(substring)
+
+        self._monitor.write_text(cursor_cell, substring, mask)
+
+    @staticmethod
+    def _to_unicode_braille(text: str) -> str:
+        """Convert text to Unicode braille dot pattern characters.
+
+        Uses louis.charToDots() to map each character to its braille dot pattern,
+        then converts to Unicode braille characters (U+2800 block).
+        """
+
+        try:
+            import louis  # pylint: disable=import-outside-toplevel
+
+            table = settings.brailleContractionTable if settings.enableContractedBraille else ""
+            if not table:
+                table = "en-us-comp8.ctb"
+            dots_str = louis.charToDots([table], text)
+            return "".join(chr(0x2800 | (ord(c) & 0xFF)) for c in dots_str)
+        except Exception:  # pylint: disable=broad-except
+            return text
+
+    def destroy_monitor(self) -> None:
+        """Destroys the braille monitor widget if it exists."""
+
+        if self._monitor is not None:
+            self._monitor.destroy()
+            self._monitor = None
+
     def init_braille(self) -> None:
         """Initializes braille if enabled."""
 
+        braille.set_monitor_callback(self.update_monitor)
         if not self.get_braille_is_enabled():
             return
 

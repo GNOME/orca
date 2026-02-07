@@ -45,7 +45,7 @@ from . import keybindings
 from . import messages
 from . import presentation_manager
 from . import settings
-from . import speech_and_verbosity_manager
+from . import speech_presenter
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
@@ -902,7 +902,7 @@ class TableNavigator:
 
         script.present_object(cell, offset=0, priorObj=previous_cell, interrupt=True)
 
-        manager = speech_and_verbosity_manager.get_manager()
+        manager = speech_presenter.get_presenter()
         # TODO - JD: This should be part of the normal table cell presentation.
         if manager.get_announce_cell_coordinates():
             presentation_manager.get_manager().present_message(

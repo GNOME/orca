@@ -39,8 +39,9 @@ if TYPE_CHECKING:
     from unittest.mock import MagicMock
 
 
-class Fake():
+class Fake:
     pass
+
 
 @pytest.mark.unit
 class TestFlatReviewPresenter:
@@ -62,7 +63,7 @@ class TestFlatReviewPresenter:
             "dasbus.client",
             "dasbus.client.proxy",
             "orca.flat_review",
-            "orca.speech_and_verbosity_manager",
+            "orca.speech_presenter",
             "orca.ax_event_synthesizer",
             "orca.ax_text",
             "orca.braille_presenter",
@@ -233,9 +234,9 @@ class TestFlatReviewPresenter:
         ax_text_class_mock.get_text = test_context.Mock(return_value="test text")
         ax_text_mock.AXText = ax_text_class_mock
 
-        speech_verbosity_mock = essential_modules["orca.speech_and_verbosity_manager"]
+        speech_verbosity_mock = essential_modules["orca.speech_presenter"]
         speech_verbosity_instance = test_context.Mock()
-        speech_verbosity_mock.get_manager = test_context.Mock(
+        speech_verbosity_mock.get_presenter = test_context.Mock(
             return_value=speech_verbosity_instance
         )
 

@@ -41,7 +41,6 @@ from typing import Any, Callable, Iterable, Iterator, Sequence, TYPE_CHECKING, c
 
 from gi.repository import GLib
 
-from . import brlmon
 from . import debug
 from . import script_manager
 from . import settings
@@ -269,7 +268,6 @@ class _BrlapiTask:
 class _BrailleState:
     """Mutable runtime state for BrlAPI, lines, and viewport."""
 
-    monitor: brlmon.BrlMon | None = None
     brlapi: Any = None
     brlapi_available: bool = False
     brlapi_running: bool = False
@@ -302,9 +300,16 @@ class _BrailleState:
     brlapi_current_priority: int = BRLAPI_PRIORITY_DEFAULT
     default_contraction_table: str | None = None
     pending_key_ranges: list[int] = field(default_factory=list)
+    monitor_callback: Callable[[int, str, str | None, int], None] | None = None
 
 
 _STATE = _BrailleState(brlapi_available=_BRLAPI_AVAILABLE)
+
+
+def set_monitor_callback(callback: Callable[[int, str, str | None, int], None] | None) -> None:
+    """Sets the callback for updating the braille monitor display."""
+
+    _STATE.monitor_callback = callback
 
 
 def _log_brlapi_unavailable(resource: str, error: BaseException | None = None) -> None:
@@ -731,11 +736,6 @@ def _finish_brlapi_connection(
 
     if _STATE.pending_key_ranges:
         _apply_key_ranges(list(_STATE.pending_key_ranges))
-
-    # The monitor will be created in refresh if needed.
-    if _STATE.monitor:
-        _STATE.monitor.destroy()
-        _STATE.monitor = None
 
     if not _STATE.lines:
         _clear()
@@ -1743,7 +1743,9 @@ def _prepare_refresh(stop_flash: bool) -> bool:
     if stop_flash:
         kill_flash(restore_saved=False)
 
-    braille_enabled = settings.enableBraille or settings.enableBrailleMonitor
+    from . import braille_presenter  # pylint: disable=import-outside-toplevel
+
+    braille_enabled = braille_presenter.get_presenter().use_braille()
 
     # TODO - JD: This should be taken care of in orca.py.
     if not braille_enabled:
@@ -1954,23 +1956,12 @@ def _paint_display(line_info: _LineInfo, start_position: int, end_position: int)
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return False
 
-    if settings.enableBrailleMonitor:
-        if not _STATE.monitor:
-            try:
-                _STATE.monitor = brlmon.BrlMon(_STATE.display_size[0])
-                _STATE.monitor.show_all()
-            except (GLib.GError, RuntimeError, TypeError) as error:
-                debug.print_message(debug.LEVEL_WARNING, f"brlmon failed: {error}")
-                _STATE.monitor = None
+    if _STATE.monitor_callback is not None:
         if line_info.attribute_mask:
             sub_mask = line_info.attribute_mask[start_position:end_position]
         else:
             sub_mask = None
-        if _STATE.monitor:
-            _STATE.monitor.write_text(_STATE.cursor_cell, substring, sub_mask)
-    elif _STATE.monitor:
-        _STATE.monitor.destroy()
-        _STATE.monitor = None
+        _STATE.monitor_callback(_STATE.cursor_cell, substring, sub_mask, _STATE.display_size[0])
 
     _STATE.beginning_is_showing = start_position == 0
     _STATE.end_is_showing = end_position >= len(line_info.string)
@@ -2493,9 +2484,6 @@ def shutdown() -> bool:
         _STATE.brlapi_worker = None
         _STATE.idle = False
 
-        if _STATE.monitor:
-            _STATE.monitor.destroy()
-            _STATE.monitor = None
         _STATE.display_size = [DEFAULT_DISPLAY_SIZE, 1]
     else:
         msg = "BRAILLE: Braille was not running."

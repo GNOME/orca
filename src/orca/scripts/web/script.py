@@ -51,7 +51,8 @@ from orca import messages
 from orca import presentation_manager
 from orca import say_all_presenter
 from orca import speech
-from orca import speech_and_verbosity_manager
+from orca import speech_manager
+from orca import speech_presenter
 from orca import structural_navigator
 from orca import table_navigator
 from orca.scripts import default
@@ -159,16 +160,16 @@ class Script(default.Script):
         if not contents:
             return
 
-        speech_manager = speech_and_verbosity_manager.get_manager()
+        speech_pres = speech_presenter.get_presenter()
         obj, start, _end, string = contents[0]
         if start > 0 and string == "\n":
-            if speech_manager.get_speak_blank_lines():
+            if speech_pres.get_speak_blank_lines():
                 presentation_manager.get_manager().speak_message(messages.BLANK, interrupt=False)
                 return
 
         presenter = presentation_manager.get_manager()
         if string:
-            if error := speech_manager.get_error_description(obj, start):
+            if error := speech_pres.get_error_description(obj, start):
                 presenter.speak_message(error)
             presenter.speak_character(string)
         else:
@@ -198,8 +199,8 @@ class Script(default.Script):
         word_contents = self.utilities.get_word_contents_at_offset(obj, offset, use_cache=True)
         text_obj, start_offset, _end_offset, _word = word_contents[0]
 
-        speech_manager = speech_and_verbosity_manager.get_manager()
-        if error := speech_manager.get_error_description(text_obj, start_offset):
+        speech_pres = speech_presenter.get_presenter()
+        if error := speech_pres.get_error_description(text_obj, start_offset):
             presentation_manager.get_manager().speak_message(error)
 
         # TODO - JD: Clean up the focused + alreadyFocused mess which by side effect is causing
@@ -690,7 +691,7 @@ class Script(default.Script):
             self.utilities.clear_caret_context()
 
         should_present = True
-        mgr = speech_and_verbosity_manager.get_manager()
+        mgr = speech_presenter.get_presenter()
         if mgr.get_only_speak_displayed_text():
             should_present = False
             msg = "WEB: Not presenting due to settings"
@@ -794,7 +795,7 @@ class Script(default.Script):
             presentation_manager.get_manager().speak_contents(
                 self.utilities.get_line_contents_at_offset(obj, offset)
             )
-        elif speech_and_verbosity_manager.get_manager().get_speech_is_enabled_and_not_muted():
+        elif speech_manager.get_manager().get_speech_is_enabled_and_not_muted():
             msg = "WEB: Doing SayAll"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             say_all_presenter.get_presenter().say_all(self, None)

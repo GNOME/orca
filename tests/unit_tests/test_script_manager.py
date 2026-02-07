@@ -68,7 +68,7 @@ class TestScriptManager:
             "orca.scripts.sleepmode",
             "orca.scripts.toolkits",
             "orca.sleep_mode_manager",
-            "orca.speech_and_verbosity_manager",
+            "orca.speech_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -119,7 +119,7 @@ class TestScriptManager:
             return_value=settings_manager_instance
         )
 
-        speech_verbosity_mock = essential_modules["orca.speech_and_verbosity_manager"]
+        speech_verbosity_mock = essential_modules["orca.speech_manager"]
         speech_manager_instance = test_context.Mock()
         speech_manager_instance.check_speech_setting = test_context.Mock()
         speech_verbosity_mock.get_manager = test_context.Mock(return_value=speech_manager_instance)
@@ -835,7 +835,7 @@ class TestScriptManager:
 
         mock_get_speech_manager = test_context.Mock()
         test_context.patch(
-            "orca.script_manager.speech_and_verbosity_manager.get_manager",
+            "orca.script_manager.speech_manager.get_manager",
             new=mock_get_speech_manager,
         )
         mock_speech_manager_instance = test_context.Mock()
@@ -915,7 +915,7 @@ class TestScriptManager:
         settings_mock = essential_modules["orca.settings"]
         from orca.script_manager import ScriptManager
 
-        speech_patch = "orca.script_manager.speech_and_verbosity_manager.get_manager"
+        speech_patch = "orca.script_manager.speech_manager.get_manager"
         mock_get_speech_manager = test_context.Mock()
         test_context.patch(speech_patch, new=mock_get_speech_manager)
 

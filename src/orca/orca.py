@@ -52,7 +52,7 @@ from . import presentation_manager
 from . import script_manager
 from . import settings
 from . import settings_manager
-from . import speech_and_verbosity_manager
+from . import speech_manager
 from . import systemd
 from .ax_utilities import AXUtilities
 
@@ -123,7 +123,7 @@ def shutdown(script=None, _event=None, _signum=None):
     dbus_service.get_remote_controller().shutdown()
 
     orca_modifier_manager.get_manager().unset_orca_modifiers("Shutting down.")
-    if speech_and_verbosity_manager.get_manager().get_current_server():
+    if speech_manager.get_manager().get_current_server():
         manager = presentation_manager.get_manager()
         manager.interrupt_presentation()
         manager.present_message(messages.STOP_ORCA, reset_styles=False)

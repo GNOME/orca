@@ -136,7 +136,7 @@ class SleepModeManager:
             manager.speak_message(msg)
 
             # Don't restore previous braille content because Orca is no longer active.
-            manager.display_message(msg, restore_previous=False)
+            manager.present_braille_message(msg, restore_previous=False)
         _script_manager.set_active_script(
             _script_manager.get_or_create_sleep_mode_script(script.app), "Sleep mode toggled on"
         )

@@ -73,7 +73,8 @@ from orca import script_manager
 from orca import settings_manager
 from orca import sleep_mode_manager
 from orca import speech
-from orca import speech_and_verbosity_manager
+from orca import speech_manager
+from orca import speech_presenter
 from orca import spellcheck_presenter
 from orca import structural_navigator
 from orca import system_information_presenter
@@ -151,12 +152,14 @@ class Script(script.Script):
         """Returns (extension_getter, localized_name) for each extension."""
 
         return [
+            (braille_presenter.get_presenter, guilabels.BRAILLE),
             (notification_presenter.get_presenter, guilabels.KB_GROUP_NOTIFICATIONS),
             (clipboard.get_presenter, guilabels.KB_GROUP_CLIPBOARD),
             (command_manager.get_manager, guilabels.KB_GROUP_DEFAULT),
             (say_all_presenter.get_presenter, guilabels.KB_GROUP_DEFAULT),
             (typing_echo_presenter.get_presenter, guilabels.KB_GROUP_DEFAULT),
-            (speech_and_verbosity_manager.get_manager, guilabels.KB_GROUP_SPEECH_VERBOSITY),
+            (speech_manager.get_manager, guilabels.KB_GROUP_SPEECH_VERBOSITY),
+            (speech_presenter.get_presenter, guilabels.KB_GROUP_SPEECH_VERBOSITY),
             (bypass_mode_manager.get_manager, guilabels.KB_GROUP_DEFAULT),
             (sleep_mode_manager.get_manager, guilabels.KB_GROUP_SLEEP_MODE),
             (system_information_presenter.get_presenter, guilabels.KB_GROUP_SYSTEM_INFORMATION),
@@ -458,9 +461,9 @@ class Script(script.Script):
             settings_manager.get_manager().load_app_settings(self)
 
             # TODO - JD: Should these be moved into check_speech_setting?
-            speech_and_verbosity_manager.get_manager().update_punctuation_level()
-            speech_and_verbosity_manager.get_manager().update_capitalization_style()
-            speech_and_verbosity_manager.get_manager().update_synthesizer()
+            speech_manager.get_manager().update_punctuation_level()
+            speech_manager.get_manager().update_capitalization_style()
+            speech_manager.get_manager().update_synthesizer()
 
         presenter = document_presenter.get_presenter()
         if presenter.has_state_for_app(self.app):
@@ -1040,7 +1043,7 @@ class Script(script.Script):
         if not AXUtilities.is_presentable_selected_change(event):
             return True
 
-        if speech_and_verbosity_manager.get_manager().get_only_speak_displayed_text():
+        if speech_presenter.get_presenter().get_only_speak_displayed_text():
             return True
 
         announce_state = False
@@ -1238,7 +1241,7 @@ class Script(script.Script):
         if not word.strip():
             word, start, _end = AXText.get_word_at_offset(event.source, start - 1)
 
-        manager = speech_and_verbosity_manager.get_manager()
+        manager = speech_presenter.get_presenter()
         if error := manager.get_error_description(event.source, start, False):
             presentation_manager.get_manager().speak_message(error)
 
@@ -1279,7 +1282,7 @@ class Script(script.Script):
             presentation_manager.get_manager().speak_character(text)
         else:
             voice = self.speech_generator.voice(string=text)
-            manager = speech_and_verbosity_manager.get_manager()
+            manager = speech_presenter.get_presenter()
             text = manager.adjust_for_presentation(event.source, text)
             presentation_manager.get_manager().speak_message(text, voice)
 
@@ -1344,7 +1347,7 @@ class Script(script.Script):
                 presentation_manager.get_manager().speak_character(text)
             else:
                 voice = self.speech_generator.voice(obj=event.source, string=text)
-                manager = speech_and_verbosity_manager.get_manager()
+                manager = speech_presenter.get_presenter()
                 text = manager.adjust_for_presentation(event.source, text)
                 presentation_manager.get_manager().speak_message(text, voice)
 
@@ -1632,8 +1635,8 @@ class Script(script.Script):
         if not character or character == "\r":
             character = "\n"
 
-        speech_manager = speech_and_verbosity_manager.get_manager()
-        speak_blank_lines = speech_manager.get_speak_blank_lines()
+        speech_pres = speech_presenter.get_presenter()
+        speak_blank_lines = speech_pres.get_speak_blank_lines()
         if character == "\n":
             line_string = AXText.get_line_at_offset(obj, max(0, offset))[0]
             if not line_string or line_string == "\n":
@@ -1652,7 +1655,7 @@ class Script(script.Script):
                 presentation_manager.get_manager().speak_message(messages.BLANK, interrupt=False)
             return
 
-        if error := speech_manager.get_error_description(obj, offset):
+        if error := speech_presenter.get_presenter().get_error_description(obj, offset):
             presentation_manager.get_manager().speak_message(error)
 
         presentation_manager.get_manager().speak_character(character)
@@ -1668,7 +1671,7 @@ class Script(script.Script):
 
         line, start_offset = AXText.get_line_at_offset(obj, offset)[0:2]
         if line and line != "\n":
-            manager = speech_and_verbosity_manager.get_manager()
+            manager = speech_presenter.get_presenter()
             indentation_description = manager.get_indentation_description(line)
             if indentation_description:
                 presentation_manager.get_manager().speak_message(indentation_description)
@@ -1700,7 +1703,7 @@ class Script(script.Script):
                 result.extend(voice)
                 utterance.append(result)
             speech.speak(utterance)
-        elif speech_and_verbosity_manager.get_manager().get_speak_blank_lines():
+        elif speech_presenter.get_presenter().get_speak_blank_lines():
             presentation_manager.get_manager().speak_message(messages.BLANK, interrupt=False)
 
         self.point_of_reference["lastTextUnitSpoken"] = "line"
@@ -1713,7 +1716,7 @@ class Script(script.Script):
             return
 
         if len(phrase) > 1 or phrase.isalnum():
-            manager = speech_and_verbosity_manager.get_manager()
+            manager = speech_presenter.get_presenter()
             result = manager.get_indentation_description(phrase)
             if result:
                 presentation_manager.get_manager().speak_message(result)
@@ -1745,14 +1748,14 @@ class Script(script.Script):
             obj, offset
         )
 
-        speech_manager = speech_and_verbosity_manager.get_manager()
+        speech_pres = speech_presenter.get_presenter()
         if "\n" in word:
             # Announce when we cross a hard line boundary, based on whether or not indentation and
             # justification should be spoken. This was done to avoid yet another setting in
             # response to some users saying this announcement was too chatty. The idea of using
             # this setting for the decision is that if the user wants indentation and justification
             # announced, they are interested in explicit whitespace information.
-            if speech_manager.get_speak_indentation_and_justification():
+            if speech_pres.get_speak_indentation_and_justification():
                 presentation_manager.get_manager().speak_character("\n")
             if word.startswith("\n"):
                 start_offset += 1
@@ -1772,7 +1775,7 @@ class Script(script.Script):
         msg = f"DEFAULT: Final word at offset {offset} is '{text}' ({start_offset}-{end_offset})"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        if error := speech_manager.get_error_description(obj, start_offset):
+        if error := speech_presenter.get_presenter().get_error_description(obj, start_offset):
             presentation_manager.get_manager().speak_message(error)
 
         self.say_phrase(obj, start_offset, end_offset)

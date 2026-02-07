@@ -62,7 +62,7 @@ class TestWhereAmIPresenter:
 
         additional_modules = [
             "orca.flat_review_presenter",
-            "orca.speech_and_verbosity_manager",
+            "orca.speech_presenter",
             "orca.spellcheck_presenter",
             "orca.ax_component",
             "orca.ax_text",
@@ -128,7 +128,7 @@ class TestWhereAmIPresenter:
         speech_verbosity_instance.adjust_for_digits = test_context.Mock(
             return_value="adjusted text"
         )
-        essential_modules["orca.speech_and_verbosity_manager"].get_manager = test_context.Mock(
+        essential_modules["orca.speech_presenter"].get_presenter = test_context.Mock(
             return_value=speech_verbosity_instance
         )
 
@@ -640,7 +640,7 @@ class TestWhereAmIPresenter:
         presenter = WhereAmIPresenter()
         test_context.patch_object(presenter, "_get_all_selected_text", return_value="selected text")
 
-        manager = deps["orca.speech_and_verbosity_manager"].get_manager.return_value
+        manager = deps["orca.speech_presenter"].get_presenter.return_value
         manager.get_indentation_description.return_value = "indent: 2"
 
         def mock_adjust_for_presentation(_obj, text) -> str:

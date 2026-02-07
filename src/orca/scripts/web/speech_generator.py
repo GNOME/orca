@@ -46,7 +46,7 @@ from orca import focus_manager
 from orca import input_event_manager
 from orca import messages
 from orca import object_properties
-from orca import speech_and_verbosity_manager
+from orca import speech_presenter
 from orca import speech_generator
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
@@ -435,7 +435,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def _generate_number_of_children(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if (
             self._only_speak_displayed_text()
-            or not speech_and_verbosity_manager.get_manager().use_verbose_speech()
+            or not speech_presenter.get_presenter().use_verbose_speech()
         ):
             return []
 
@@ -605,7 +605,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not document_presenter.get_presenter().in_focus_mode(self._script.app):
             return result
 
-        if speech_and_verbosity_manager.get_manager().get_announce_cell_coordinates():
+        if speech_presenter.get_presenter().get_announce_cell_coordinates():
             label = AXTable.get_label_for_cell_coordinates(obj)
             if label:
                 result.append(label)
@@ -695,7 +695,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not result:
             if (
                 focus_manager.get_manager().in_say_all()
-                or not speech_and_verbosity_manager.get_manager().get_speak_blank_lines()
+                or not speech_presenter.get_presenter().get_speak_blank_lines()
                 or args.get("formatType") == "ancestor"
             ):
                 string = ""

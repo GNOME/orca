@@ -53,7 +53,7 @@ from . import messages
 from . import presentation_manager
 from . import script_manager
 from . import settings
-from . import speech_and_verbosity_manager
+from . import speech_presenter
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -389,7 +389,7 @@ class FlatReviewPresenter:
         if event is None:
             return
 
-        if speech_and_verbosity_manager.get_manager().use_verbose_speech():
+        if speech_presenter.get_presenter().use_verbose_speech():
             presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_START)
         self._item_presentation(script, event)
 
@@ -412,7 +412,7 @@ class FlatReviewPresenter:
         if event is None or script is None:
             return
 
-        if speech_and_verbosity_manager.get_manager().use_verbose_speech():
+        if speech_presenter.get_presenter().use_verbose_speech():
             presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_STOP)
         script.update_braille(focus)
 
@@ -1381,7 +1381,7 @@ class FlatReviewPresenter:
             elif speech_type == 3:
                 presenter.spell_phonetically(line_string)
             else:
-                manager = speech_and_verbosity_manager.get_manager()
+                manager = speech_presenter.get_presenter()
                 line_string = manager.adjust_for_presentation(
                     self._context.get_current_object(), line_string
                 )
@@ -1422,7 +1422,7 @@ class FlatReviewPresenter:
                 elif speech_type == 3:
                     presenter.spell_phonetically(word_string)
                 elif speech_type == 1:
-                    manager = speech_and_verbosity_manager.get_manager()
+                    manager = speech_presenter.get_presenter()
                     word_string = manager.adjust_for_presentation(
                         self._context.get_current_object(), word_string
                     )

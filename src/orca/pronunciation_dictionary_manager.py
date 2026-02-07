@@ -37,7 +37,7 @@ from . import preferences_grid_base
 from . import presentation_manager
 from . import script_manager
 from . import settings_manager
-from . import speech_and_verbosity_manager
+from . import speech_manager
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -222,15 +222,15 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
     def _on_listbox_realize(self, _widget: Gtk.Widget) -> None:
         """Disable pronunciation dictionary when listbox is shown."""
 
-        speech_manager = speech_and_verbosity_manager.get_manager()
-        self._saved_use_pronunciation_dictionary = speech_manager.get_use_pronunciation_dictionary()
-        speech_manager.set_use_pronunciation_dictionary(False)
+        presenter = speech_manager.get_manager()
+        self._saved_use_pronunciation_dictionary = presenter.get_use_pronunciation_dictionary()
+        presenter.set_use_pronunciation_dictionary(False)
 
     def _on_listbox_unrealize(self, _widget: Gtk.Widget) -> None:
         """Restore pronunciation dictionary when listbox is hidden."""
 
-        speech_manager = speech_and_verbosity_manager.get_manager()
-        speech_manager.set_use_pronunciation_dictionary(self._saved_use_pronunciation_dictionary)
+        presenter = speech_manager.get_manager()
+        presenter.set_use_pronunciation_dictionary(self._saved_use_pronunciation_dictionary)
 
     def _on_add_clicked(self, _button: Gtk.Button) -> None:
         """Handle Add button click to open add dialog."""
@@ -240,9 +240,9 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
     def _show_add_dialog(self) -> None:
         """Show dialog to add a new pronunciation."""
 
-        speech_manager = speech_and_verbosity_manager.get_manager()
-        saved_use_pronunciation_dictionary = speech_manager.get_use_pronunciation_dictionary()
-        speech_manager.set_use_pronunciation_dictionary(False)
+        presenter = speech_manager.get_manager()
+        saved_use_pronunciation_dictionary = presenter.get_use_pronunciation_dictionary()
+        presenter.set_use_pronunciation_dictionary(False)
 
         dialog, add_button = self._create_header_bar_dialog(
             guilabels.ADD_NEW_PRONUNCIATION, guilabels.DIALOG_CANCEL, guilabels.DIALOG_ADD
@@ -294,7 +294,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
                     self._pronunciations.append((phrase, substitution))
                     self._has_unsaved_changes = True
                     self.refresh()
-            speech_manager.set_use_pronunciation_dictionary(saved_use_pronunciation_dictionary)
+            presenter.set_use_pronunciation_dictionary(saved_use_pronunciation_dictionary)
             dlg.destroy()
 
         dialog.connect("response", on_response)
@@ -307,9 +307,9 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
     ) -> None:
         """Show dialog to edit an existing pronunciation."""
 
-        speech_manager = speech_and_verbosity_manager.get_manager()
-        saved_use_pronunciation_dictionary = speech_manager.get_use_pronunciation_dictionary()
-        speech_manager.set_use_pronunciation_dictionary(False)
+        presenter = speech_manager.get_manager()
+        saved_use_pronunciation_dictionary = presenter.get_use_pronunciation_dictionary()
+        presenter.set_use_pronunciation_dictionary(False)
 
         dialog, edit_button = self._create_header_bar_dialog(
             guilabels.EDIT_PRONUNCIATION, guilabels.DIALOG_CANCEL, guilabels.DIALOG_EDIT
@@ -363,7 +363,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
                     self._pronunciations[row_index] = (new_phrase, new_substitution)
                     self._has_unsaved_changes = True
                     self.refresh()
-            speech_manager.set_use_pronunciation_dictionary(saved_use_pronunciation_dictionary)
+            presenter.set_use_pronunciation_dictionary(saved_use_pronunciation_dictionary)
             dlg.destroy()
 
         dialog.connect("response", on_response)

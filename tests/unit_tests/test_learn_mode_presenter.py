@@ -210,7 +210,8 @@ class TestLearnModePresenter:
         for method_name in [
             "get_learn_mode_presenter",
             "get_where_am_i_presenter",
-            "get_speech_and_verbosity_manager",
+            "get_speech_manager",
+            "get_speech_presenter",
             "get_sleep_mode_manager",
             "get_flat_review_presenter",
             "get_flat_review_finder",
@@ -302,7 +303,7 @@ class TestLearnModePresenter:
         messages = essential_modules["orca.messages"]
         pres_manager.present_message.assert_called_with(messages.VERSION)
         pres_manager.speak_message.assert_called_with(messages.LEARN_MODE_START_SPEECH)
-        pres_manager.display_message.assert_called_with(messages.LEARN_MODE_START_BRAILLE)
+        pres_manager.present_braille_message.assert_called_with(messages.LEARN_MODE_START_BRAILLE)
         input_manager = essential_modules["orca.input_event_manager"].get_manager.return_value
         input_manager.grab_keyboard.assert_called_with("Entering learn mode")
 

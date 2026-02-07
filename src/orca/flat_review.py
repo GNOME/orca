@@ -41,7 +41,7 @@ from . import braille_presenter
 from . import debug
 from . import focus_manager
 from . import script_manager
-from . import speech_and_verbosity_manager
+from . import speech_presenter
 from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -727,7 +727,7 @@ class Context:
 
         lines = AXText.get_visible_lines(obj, cliprect)
         # Optionally skip whitespace-only lines based on user preference.
-        if not speech_and_verbosity_manager.get_manager().get_speak_blank_lines():
+        if not speech_presenter.get_presenter().get_speak_blank_lines():
             lines = [t for t in lines if t[0] and t[0].strip()]
         tokens = ["FLAT REVIEW:", len(lines), "lines found for", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)

@@ -43,7 +43,7 @@ from . import object_properties
 from . import presentation_manager
 from . import settings
 from . import sound_presenter
-from . import speech_and_verbosity_manager
+from . import speech_presenter
 from . import spellcheck_presenter
 from . import table_navigator
 from .ax_component import AXComponent
@@ -228,7 +228,7 @@ class Utilities:
 
         # TODO - JD: Move this into the AXUtilities.
         if (
-            not speech_and_verbosity_manager.get_manager().get_speak_progress_bar_updates()
+            not speech_presenter.get_presenter().get_speak_progress_bar_updates()
             and not braille_presenter.get_presenter().get_braille_progress_bar_updates()
             and not sound_presenter.get_presenter().get_beep_progress_bar_updates()
         ):
@@ -437,7 +437,7 @@ class Utilities:
         if table is None:
             return False
 
-        manager = speech_and_verbosity_manager.get_manager()
+        manager = speech_presenter.get_presenter()
         if not self.get_document_for_object(table):
             return manager.get_speak_row_in_gui_table()
         if self.is_spreadsheet_table(table):
@@ -1498,8 +1498,7 @@ class Utilities:
                     self.handle_text_selection_change(child, False)
 
         speak_message = (
-            speak_message
-            and not speech_and_verbosity_manager.get_manager().get_only_speak_displayed_text()
+            speak_message and not speech_presenter.get_presenter().get_only_speak_displayed_text()
         )
         for start, end, message in changes:
             string = AXText.get_substring(obj, start, end)

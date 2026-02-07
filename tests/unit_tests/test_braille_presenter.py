@@ -28,6 +28,8 @@
 
 from __future__ import annotations
 
+import unittest.mock
+
 from typing import TYPE_CHECKING
 
 import gi
@@ -48,7 +50,7 @@ class TestBraillePresenter:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Set up mocks for braille_presenter dependencies."""
 
-        additional_modules = ["orca.braille", "orca.orca_platform"]
+        additional_modules = ["orca.braille", "orca.braille_monitor", "orca.orca_platform"]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         platform_mock = essential_modules["orca.orca_platform"]
@@ -261,15 +263,15 @@ class TestBraillePresenter:
         settings_mock = essential_modules["orca.settings"]
 
         settings_mock.enableBraille = True
-        settings_mock.enableBrailleMonitor = False
+        presenter.set_monitor_is_enabled(False)
         assert presenter.use_braille() is True
 
         settings_mock.enableBraille = False
-        settings_mock.enableBrailleMonitor = True
+        presenter.set_monitor_is_enabled(True)
         assert presenter.use_braille() is True
 
         settings_mock.enableBraille = False
-        settings_mock.enableBrailleMonitor = False
+        presenter.set_monitor_is_enabled(False)
         assert presenter.use_braille() is False
 
     def test_use_verbose_braille(self, test_context: OrcaTestContext):
@@ -804,6 +806,169 @@ class TestBraillePresenter:
         assert result is True
         assert settings_mock.displayObjectMnemonic is False
 
+    def test_get_set_monitor_is_enabled(self, test_context: OrcaTestContext):
+        """Test getting and setting braille monitor enabled status."""
+
+        self._setup_dependencies(test_context)
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+
+        result = presenter.set_monitor_is_enabled(True)
+        assert result is True
+        assert presenter.get_monitor_is_enabled() is True
+
+        result = presenter.set_monitor_is_enabled(False)
+        assert result is True
+        assert presenter.get_monitor_is_enabled() is False
+
+    def test_set_braille_monitor_disabled_destroys_monitor(self, test_context: OrcaTestContext):
+        """Test explicitly disabling braille monitor destroys the monitor widget."""
+
+        self._setup_dependencies(test_context)
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+        mock_monitor = test_context.Mock()
+        presenter._monitor = mock_monitor
+
+        presenter.set_monitor_is_enabled(False)
+
+        mock_monitor.destroy.assert_called_once()
+        assert presenter._monitor is None
+
+    def test_init_braille_registers_monitor_callback(self, test_context: OrcaTestContext):
+        """Test init_braille registers the monitor callback with braille."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        braille_mock = essential_modules["orca.braille"]
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+        settings_mock.enableBraille = True
+
+        presenter.init_braille()
+
+        braille_mock.set_monitor_callback.assert_called_once_with(presenter.update_monitor)
+
+    def test_update_monitor_creates_when_enabled(self, test_context: OrcaTestContext):
+        """Test update_monitor creates monitor on demand when enabled."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        braille_monitor_mock = essential_modules["orca.braille_monitor"]
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+        presenter.set_monitor_is_enabled(True)
+        presenter.set_monitor_cell_count(40)
+        mock_monitor = test_context.Mock()
+        braille_monitor_mock.BrailleMonitor.return_value = mock_monitor
+
+        presenter.update_monitor(1, "hello", None, 40)
+
+        braille_monitor_mock.BrailleMonitor.assert_called_once_with(
+            40,
+            on_close=unittest.mock.ANY,
+        )
+        mock_monitor.show_all.assert_called_once()
+        mock_monitor.write_text.assert_called_once_with(1, "hello", None)
+
+    def test_update_monitor_uses_cell_count_setting(self, test_context: OrcaTestContext):
+        """Test update_monitor uses the configured cell count instead of display size."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        braille_monitor_mock = essential_modules["orca.braille_monitor"]
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+        presenter.set_monitor_is_enabled(True)
+        presenter.set_monitor_cell_count(20)
+        mock_monitor = test_context.Mock()
+        braille_monitor_mock.BrailleMonitor.return_value = mock_monitor
+
+        presenter.update_monitor(1, "hello", None, 40)
+
+        braille_monitor_mock.BrailleMonitor.assert_called_once_with(
+            20,
+            on_close=unittest.mock.ANY,
+        )
+
+    def test_update_monitor_skips_when_disabled(self, test_context: OrcaTestContext):
+        """Test update_monitor skips update when disabled without destroying."""
+
+        self._setup_dependencies(test_context)
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+        presenter.set_monitor_is_enabled(False)
+        mock_monitor = test_context.Mock()
+        presenter._monitor = mock_monitor
+
+        presenter.update_monitor(1, "hello", None, 40)
+
+        mock_monitor.write_text.assert_not_called()
+        assert presenter._monitor is mock_monitor
+
+    def test_destroy_monitor(self, test_context: OrcaTestContext):
+        """Test destroy_monitor destroys existing monitor."""
+
+        self._setup_dependencies(test_context)
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+        mock_monitor = test_context.Mock()
+        presenter._monitor = mock_monitor
+
+        presenter.destroy_monitor()
+
+        mock_monitor.destroy.assert_called_once()
+        assert presenter._monitor is None
+
+    def test_destroy_monitor_no_op_when_none(self, test_context: OrcaTestContext):
+        """Test destroy_monitor does nothing when no monitor exists."""
+
+        self._setup_dependencies(test_context)
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+        assert presenter._monitor is None
+
+        presenter.destroy_monitor()
+
+        assert presenter._monitor is None
+
+    def test_shutdown_braille_does_not_destroy_monitor(self, test_context: OrcaTestContext):
+        """Test shutdown_braille does not destroy the monitor."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+        mock_monitor = test_context.Mock()
+        presenter._monitor = mock_monitor
+
+        presenter.shutdown_braille()
+
+        mock_monitor.destroy.assert_not_called()
+        assert presenter._monitor is mock_monitor
+        essential_modules["orca.braille"].shutdown.assert_called_once()
+
+    def test_set_braille_disabled_keeps_monitor(self, test_context: OrcaTestContext):
+        """Test disabling braille does not destroy the monitor."""
+
+        self._setup_dependencies(test_context)
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+        mock_monitor = test_context.Mock()
+        presenter._monitor = mock_monitor
+
+        presenter.set_braille_is_enabled(False)
+
+        mock_monitor.destroy.assert_not_called()
+        assert presenter._monitor is mock_monitor
+
 
 @pytest.mark.unit
 class TestBraillePreferencesGridUI:
@@ -813,7 +978,7 @@ class TestBraillePreferencesGridUI:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Set up mocks for braille_presenter GUI dependencies."""
 
-        additional_modules = ["orca.braille", "orca.orca_platform"]
+        additional_modules = ["orca.braille", "orca.braille_monitor", "orca.orca_platform"]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         platform_mock = essential_modules["orca.orca_platform"]
@@ -857,6 +1022,10 @@ class TestBraillePreferencesGridUI:
         settings_mock.progressBarBrailleVerbosity = 0
         settings_mock.displayObjectMnemonic = True
         settings_mock.enableBrailleContext = True
+        settings_mock.brailleMonitorCellCount = 32
+        settings_mock.brailleMonitorShowDots = False
+        settings_mock.brailleMonitorForeground = "#000000"
+        settings_mock.brailleMonitorBackground = "#ffffff"
 
         guilabels_mock = essential_modules["orca.guilabels"]
         guilabels_mock.OBJECT_PRESENTATION_IS_DETAILED = "Detailed"
@@ -891,6 +1060,13 @@ class TestBraillePreferencesGridUI:
         guilabels_mock.PROGRESS_BAR_WINDOW = "Window"
         guilabels_mock.PROGRESS_BARS = "Progress Bars"
         guilabels_mock.BRAILLE = "Braille"
+        guilabels_mock.BRAILLE_MONITOR = "On-screen braille"
+        guilabels_mock.ON_SCREEN_DISPLAY = "On-Screen Display"
+        guilabels_mock.BRAILLE_MONITOR_CELL_COUNT = "Cell count"
+        guilabels_mock.BRAILLE_MONITOR_SHOW_DOTS = "Show braille dot patterns"
+        guilabels_mock.BRAILLE_MONITOR_FOREGROUND = "Text color"
+        guilabels_mock.BRAILLE_MONITOR_BACKGROUND = "Background color"
+        guilabels_mock.BRAILLE_MONITOR_INFO = "On-screen braille info"
 
         return essential_modules
 

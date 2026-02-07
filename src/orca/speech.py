@@ -23,8 +23,8 @@
 
 from __future__ import annotations
 
-
 import importlib
+from dataclasses import dataclass
 from typing import Any, Callable, TYPE_CHECKING
 
 from . import debug
@@ -41,6 +41,36 @@ if TYPE_CHECKING:
 # The speech server to use for all speech operations.
 #
 _speechserver: speechserver.SpeechServer | None = None
+
+
+@dataclass
+class _MonitorCallbacks:
+    """Callbacks for the speech monitor, registered by speech_presenter."""
+
+    write_text: Callable[[str], None] | None = None
+    write_key: Callable[[str], None] | None = None
+    write_character: Callable[[str], None] | None = None
+    begin_group: Callable[[], None] | None = None
+    end_group: Callable[[], None] | None = None
+
+
+_monitor_callbacks = _MonitorCallbacks()
+
+
+def set_monitor_callbacks(
+    write_text: Callable[[str], None] | None = None,
+    write_key: Callable[[str], None] | None = None,
+    write_character: Callable[[str], None] | None = None,
+    begin_group: Callable[[], None] | None = None,
+    end_group: Callable[[], None] | None = None,
+) -> None:
+    """Sets the callbacks for updating the speech monitor display."""
+
+    _monitor_callbacks.write_text = write_text
+    _monitor_callbacks.write_key = write_key
+    _monitor_callbacks.write_character = write_character
+    _monitor_callbacks.begin_group = begin_group
+    _monitor_callbacks.end_group = end_group
 
 
 def _init_speech_server(module_name: str, speech_server_info: list[str] | None) -> None:
@@ -166,6 +196,8 @@ def _speak(text: str, acss: ACSS | dict[str, Any] | None, interrupt: bool) -> No
     msg = f"SPEECH OUTPUT: '{text}' {resolved_voice}"
     debug.print_message(debug.LEVEL_INFO, msg, True)
     _speechserver.speak(text, resolved_voice, interrupt)
+    if _monitor_callbacks.write_text is not None:
+        _monitor_callbacks.write_text(text)
 
 
 def speak(content: Any, acss: ACSS | dict[str, Any] | None = None, interrupt: bool = True) -> None:
@@ -194,7 +226,41 @@ def speak(content: Any, acss: ACSS | dict[str, Any] | None = None, interrupt: bo
     if not isinstance(content, list):
         return
 
-    to_speak = []
+    _begin_monitor_group()
+    try:
+        _speak_list(content, acss, interrupt)
+    finally:
+        _end_monitor_group()
+
+
+_monitor_group_depth: int = 0
+
+
+def _begin_monitor_group() -> None:
+    """Signals the start of a grouped utterance to the speech monitor."""
+
+    global _monitor_group_depth  # pylint: disable=global-statement
+    if _monitor_group_depth == 0 and _monitor_callbacks.begin_group is not None:
+        _monitor_callbacks.begin_group()
+    _monitor_group_depth += 1
+
+
+def _end_monitor_group() -> None:
+    """Signals the end of a grouped utterance to the speech monitor."""
+
+    global _monitor_group_depth  # pylint: disable=global-statement
+    _monitor_group_depth -= 1
+    if _monitor_group_depth == 0 and _monitor_callbacks.end_group is not None:
+        _monitor_callbacks.end_group()
+
+
+def _speak_list(content: list, acss: ACSS | dict[str, Any] | None, interrupt: bool) -> None:
+    """Processes a list of speech content items."""
+
+    valid_types = (str, list, speech_generator.Pause, ACSS)
+    error = "SPEECH: Bad content sent to speak():"
+
+    to_speak: list[str] = []
     active_voice = acss
     if acss is not None:
         active_voice = ACSS(acss)
@@ -209,7 +275,7 @@ def speak(content: Any, acss: ACSS | dict[str, Any] | None = None, interrupt: bo
                 to_speak.append(element)
         elif to_speak:
             new_voice = ACSS(acss)
-            new_items_to_speak = []
+            new_items_to_speak: list[str] = []
             if isinstance(element, speech_generator.Pause):
                 if to_speak[-1] and to_speak[-1][-1].isalnum():
                     to_speak[-1] += "."
@@ -249,6 +315,8 @@ def speak_key_event(
     debug.print_message(debug.LEVEL_INFO, log_line, True)
     if _speechserver:
         _speechserver.speak_key_event(event, acss)
+    if _monitor_callbacks.write_key is not None:
+        _monitor_callbacks.write_key(key_name)
 
 
 def speak_character(character: str, acss: ACSS | dict[str, Any] | None = None) -> None:
@@ -263,6 +331,8 @@ def speak_character(character: str, acss: ACSS | dict[str, Any] | None = None) -
     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
     if _speechserver:
         _speechserver.speak_character(character, acss=acss)
+    if _monitor_callbacks.write_character is not None:
+        _monitor_callbacks.write_character(character)
 
 
 def get_speech_server() -> speechserver.SpeechServer | None:

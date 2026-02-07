@@ -46,7 +46,7 @@ from orca import object_properties
 from orca import preferences_grid_base
 from orca import presentation_manager
 from orca import settings
-from orca import speech_and_verbosity_manager
+from orca import speech_presenter
 from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
 from orca.ax_text import AXText
@@ -622,7 +622,7 @@ class SpellCheckPresenter:
         manager.speak_message(msg)
 
         # Don't restore previous braille content to prevent accidental clicks on old elements.
-        manager.display_message(msg, restore_previous=False)
+        manager.present_braille_message(msg, restore_previous=False)
         self._state.completion_announced = True
         return True
 
@@ -738,7 +738,7 @@ class SpellCheckPresenter:
             presentation_manager.get_manager().spell_item(string)
 
         if (
-            speech_and_verbosity_manager.get_manager().get_speak_position_in_set()
+            speech_presenter.get_presenter().get_speak_position_in_set()
             and items[0] == focus_manager.get_manager().get_locus_of_focus()
         ):
             index = AXUtilities.get_position_in_set(items[0]) + 1

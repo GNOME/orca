@@ -47,7 +47,6 @@ class TestBrailleLineRanges:
         settings_mock.enableContractedBraille = False
         settings_mock.disableBrailleEOL = False
         settings_mock.enableBraille = True
-        settings_mock.enableBrailleMonitor = False
         settings_mock.enableBrailleWordWrap = False
 
         ax_event_synthesizer_mock = test_context.Mock()
@@ -66,9 +65,13 @@ class TestBrailleLineRanges:
         platform_mock = test_context.Mock()
         platform_mock.tablesdir = "/tmp"
 
+        braille_presenter_mock = test_context.Mock()
+        braille_presenter_mock.get_presenter.return_value.use_braille.return_value = True
+
         test_context.patch_modules(
             {
-                "orca.brlmon": test_context.Mock(),
+                "orca.braille_monitor": test_context.Mock(),
+                "orca.braille_presenter": braille_presenter_mock,
                 "orca.brltablenames": test_context.Mock(),
                 "orca.cmdnames": test_context.Mock(),
                 "orca.debug": debug_mock,
@@ -238,10 +241,9 @@ class TestBrailleLineRanges:
         """_prepare_refresh should shut down and reset state when braille is disabled."""
 
         self._setup_dependencies(test_context)
-        from orca import braille
+        from orca import braille, braille_presenter
 
-        braille.settings.enableBraille = False
-        braille.settings.enableBrailleMonitor = False
+        braille_presenter.get_presenter.return_value.use_braille.return_value = False  # type: ignore[attr-defined]
         braille._STATE.brlapi_running = True
         braille._STATE.last_text_info = braille._TextInfo(object(), 1, 2, 3)
         braille.shutdown = test_context.Mock()

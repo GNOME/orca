@@ -52,7 +52,7 @@ from orca import flat_review_presenter
 from orca import focus_manager
 from orca import input_event_manager
 from orca import script_utilities
-from orca import speech_and_verbosity_manager
+from orca import speech_presenter
 from orca.ax_component import AXComponent
 from orca.ax_document import AXDocument
 from orca.ax_hypertext import AXHypertext
@@ -1396,7 +1396,7 @@ class Utilities(script_utilities.Utilities):
         tokens = ["WEB: First context on line is: ", first_obj, ", ", first_offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        skip_space = not speech_and_verbosity_manager.get_manager().get_speak_blank_lines()
+        skip_space = not speech_presenter.get_presenter().get_speak_blank_lines()
         obj, offset = self.previous_context(first_obj, first_offset, skip_space)
         if not obj and first_obj:
             self.clear_cached_objects()
@@ -1465,7 +1465,7 @@ class Utilities(script_utilities.Utilities):
         tokens = ["WEB: Last context on line is: ", last_obj, ", ", last_offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        skip_space = not speech_and_verbosity_manager.get_manager().get_speak_blank_lines()
+        skip_space = not speech_presenter.get_presenter().get_speak_blank_lines()
         obj, offset = self.next_context(last_obj, last_offset, skip_space)
         if not obj and last_obj:
             self.clear_cached_objects()

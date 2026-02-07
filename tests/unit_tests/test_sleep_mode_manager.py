@@ -63,7 +63,7 @@ class TestSleepModeManager:
         braille_presenter_mock = essential_modules["orca.braille_presenter"]
         braille_presenter_instance = test_context.Mock()
         braille_presenter_instance.use_braille = test_context.Mock(return_value=True)
-        braille_presenter_instance.display_message = test_context.Mock()
+        braille_presenter_instance.present_message = test_context.Mock()
         braille_presenter_mock.get_presenter = test_context.Mock(
             return_value=braille_presenter_instance
         )

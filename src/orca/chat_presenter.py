@@ -469,7 +469,7 @@ class ChatPresenter:
         if text.strip():
             voice = script.speech_generator.voice(string=text)
             presentation_manager.get_manager().speak_message(text, voice=voice)
-        presentation_manager.get_manager().display_message(text)
+        presentation_manager.get_manager().present_braille_message(text)
 
     def present_message_at_index(self, script: default.Script, index: int) -> None:
         """Presents the chat message at the specified index."""

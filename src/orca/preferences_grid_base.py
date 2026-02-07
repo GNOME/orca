@@ -175,6 +175,7 @@ class IntRangePreferenceControl:  # pylint: disable=too-many-instance-attributes
     prefs_key: Optional[str] = None
     member_of: Optional[str] = None
     determine_sensitivity: Optional[Callable[[], bool]] = None
+    apply_immediately: bool = False
 
 
 @dataclass
@@ -200,6 +201,18 @@ class EnumPreferenceControl:  # pylint: disable=too-many-instance-attributes
     getter: Callable[[], Any]
     setter: Callable[[Any], Any]
     values: Optional[list[Any]] = None
+    prefs_key: Optional[str] = None
+    member_of: Optional[str] = None
+    determine_sensitivity: Optional[Callable[[], bool]] = None
+
+
+@dataclass
+class ColorPreferenceControl:
+    """Represents a color preference with its UI label and getters/setters."""
+
+    label: str
+    getter: Callable[[], str]
+    setter: Callable[[str], Any]
     prefs_key: Optional[str] = None
     member_of: Optional[str] = None
     determine_sensitivity: Optional[Callable[[], bool]] = None
@@ -1202,6 +1215,7 @@ ControlType = (
     | IntRangePreferenceControl
     | FloatRangePreferenceControl
     | EnumPreferenceControl
+    | ColorPreferenceControl
     | SelectionPreferenceControl
 )
 
@@ -1396,6 +1410,8 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
             return self._create_float_range_row(control, listbox)
         if isinstance(control, EnumPreferenceControl):
             return self._create_enum_row(control, listbox)
+        if isinstance(control, ColorPreferenceControl):
+            return self._create_color_row(control, listbox)
         if isinstance(control, SelectionPreferenceControl):
             return self._create_selection_row(control, listbox)
         raise TypeError(f"Unknown control type: {type(control)}")
@@ -1455,7 +1471,6 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         spin = Gtk.SpinButton(adjustment=adjustment)
         spin.set_digits(0)
         spin.connect("value-changed", self._on_value_changed)
-        spin.connect("changed", lambda w: w.update())
         label.set_mnemonic_widget(spin)
         hbox.pack_end(spin, False, False, 0)
         row.add(hbox)
@@ -1492,6 +1507,44 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         row.add(vbox)
         listbox.add_row_with_widget(row, scale)
         return scale
+
+    @staticmethod
+    def _set_color_button_hex(button: Gtk.ColorButton, hex_color: str) -> None:
+        """Set a ColorButton's color from a hex string."""
+
+        button.set_color(Gdk.color_parse(hex_color))  # type: ignore[arg-type]
+
+    @staticmethod
+    def _rgba_to_hex(rgba: Gdk.RGBA) -> str:
+        """Convert a Gdk.RGBA to a hex color string."""
+
+        return f"#{int(rgba.red * 255):02x}{int(rgba.green * 255):02x}{int(rgba.blue * 255):02x}"
+
+    def _create_color_row(
+        self, control: ColorPreferenceControl, listbox: FocusManagedListBox
+    ) -> Gtk.ColorButton:
+        """Create a color button row for a color control."""
+
+        row = Gtk.ListBoxRow()
+        row.set_activatable(False)
+
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
+        self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
+
+        label = Gtk.Label(label=control.label, xalign=0)
+        label.set_use_underline(True)
+        label.set_hexpand(True)
+        hbox.pack_start(label, True, True, 0)
+
+        color_button = Gtk.ColorButton()
+        color_button.set_use_alpha(False)
+        self._set_color_button_hex(color_button, control.getter())
+        color_button.connect("color-set", self._on_value_changed)
+        label.set_mnemonic_widget(color_button)
+        hbox.pack_end(color_button, False, False, 0)
+        row.add(hbox)
+        listbox.add_row_with_widget(row, color_button)
+        return color_button
 
     def _create_enum_row(
         self, control: EnumPreferenceControl, listbox: FocusManagedListBox
@@ -1747,6 +1800,12 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
             if isinstance(control, BooleanPreferenceControl) and control.apply_immediately:
                 assert isinstance(widget, Gtk.Switch)
                 control.setter(widget.get_active())
+            elif isinstance(control, IntRangePreferenceControl) and control.apply_immediately:
+                assert isinstance(widget, Gtk.SpinButton)
+                control.setter(widget.get_value_as_int())
+            elif isinstance(control, ColorPreferenceControl):
+                assert isinstance(widget, Gtk.ColorButton)
+                control.setter(self._rgba_to_hex(widget.get_rgba()))
             elif isinstance(control, SelectionPreferenceControl):
                 if control.apply_immediately and control.setter is not None:
                     if isinstance(widget, Gtk.ComboBoxText):
@@ -1783,6 +1842,17 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
             )
             label.set_sensitive(not all_insensitive)
 
+    def has_changes(self) -> bool:
+        """Return True if the user has made changes that haven't been written to file."""
+
+        for i, control in enumerate(self._controls):
+            if isinstance(control, IntRangePreferenceControl):
+                widget = self._widgets[i]
+                if isinstance(widget, Gtk.SpinButton):
+                    widget.update()
+
+        return self._has_unsaved_changes
+
     def reload(self) -> None:
         """Reload all values from their getters and refresh the UI."""
 
@@ -1818,6 +1888,10 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                     widget.set_active(index)
                 except ValueError:
                     pass
+
+            elif isinstance(control, ColorPreferenceControl):
+                assert isinstance(widget, Gtk.ColorButton)
+                self._set_color_button_hex(widget, control.getter())
 
             elif isinstance(control, SelectionPreferenceControl):
                 current_value = control.getter()
@@ -1877,6 +1951,13 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                     control.setter(value)
                     if control.prefs_key:
                         result[control.prefs_key] = value
+
+            elif isinstance(control, ColorPreferenceControl):
+                assert isinstance(widget, Gtk.ColorButton)
+                value = self._rgba_to_hex(widget.get_rgba())
+                control.setter(value)
+                if control.prefs_key:
+                    result[control.prefs_key] = value
 
             elif isinstance(control, SelectionPreferenceControl):
                 value = None

@@ -55,7 +55,8 @@ from . import say_all_presenter
 from . import settings
 from . import settings_manager
 from . import speech
-from . import speech_and_verbosity_manager
+from . import speech_manager
+from . import speech_presenter
 from .ax_document import AXDocument
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
@@ -191,17 +192,18 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _only_speak_displayed_text(self) -> bool:
-        return speech_and_verbosity_manager.get_manager().get_only_speak_displayed_text()
+        return speech_presenter.get_presenter().get_only_speak_displayed_text()
 
     def _generate_result_separator(self, obj: Atspi.Accessible, **args) -> list[Any]:
         return PAUSE
 
     def _generate_pause(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        manager = speech_and_verbosity_manager.get_manager()
-        if not manager.get_insert_pauses_between_utterances() or args.get("eliminatePauses", False):
+        if not speech_manager.get_manager().get_insert_pauses_between_utterances() or args.get(
+            "eliminatePauses", False
+        ):
             return []
 
-        if speech_and_verbosity_manager.get_manager().get_punctuation_level() == "all":
+        if speech_manager.get_manager().get_punctuation_level() == "all":
             return []
 
         return PAUSE
@@ -272,8 +274,7 @@ class SpeechGenerator(generator.Generator):
             if settings_manager.get_manager().is_configuring():
                 auto_lang_switching = False
             else:
-                speech_manager = speech_and_verbosity_manager.get_manager()
-                auto_lang_switching = speech_manager.get_auto_language_switching()
+                auto_lang_switching = speech_manager.get_manager().get_auto_language_switching()
             if auto_lang_switching:
                 # Only update the language if it has changed from the user's preferred voice.
                 # If that occurred, changing the dialect should not be problematic/bothersome.
@@ -325,7 +326,7 @@ class SpeechGenerator(generator.Generator):
     @log_generator_output
     def _generate_accessible_description(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if (
-            not speech_and_verbosity_manager.get_manager().get_speak_description()
+            not speech_presenter.get_presenter().get_speak_description()
             or self._only_speak_displayed_text()
         ):
             return []
@@ -339,7 +340,7 @@ class SpeechGenerator(generator.Generator):
 
         result = super()._generate_accessible_description(obj, **args)
         if result:
-            manager = speech_and_verbosity_manager.get_manager()
+            manager = speech_presenter.get_presenter()
             result[0] = manager.adjust_for_presentation(obj, result[0])
             result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
@@ -380,7 +381,7 @@ class SpeechGenerator(generator.Generator):
     def _generate_accessible_label_and_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
         result = super()._generate_accessible_label_and_name(obj, **args)
         if result:
-            manager = speech_and_verbosity_manager.get_manager()
+            manager = speech_presenter.get_presenter()
             result[0] = manager.adjust_for_presentation(obj, result[0])
             if len(result) == 1:
                 result.extend(self.voice(DEFAULT, obj=obj, **args))
@@ -390,7 +391,7 @@ class SpeechGenerator(generator.Generator):
     def _generate_accessible_placeholder_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
         result = super()._generate_accessible_placeholder_text(obj, **args)
         if result:
-            manager = speech_and_verbosity_manager.get_manager()
+            manager = speech_presenter.get_presenter()
             result[0] = manager.adjust_for_presentation(obj, result[0])
             result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
@@ -437,7 +438,7 @@ class SpeechGenerator(generator.Generator):
             Atspi.Role.TABLE_CELL,
             Atspi.Role.UNKNOWN,
         ]
-        if not speech_and_verbosity_manager.get_manager().use_verbose_speech():
+        if not speech_presenter.get_presenter().use_verbose_speech():
             do_not_speak.extend(
                 [
                     Atspi.Role.CANVAS,
@@ -534,10 +535,9 @@ class SpeechGenerator(generator.Generator):
     def _generate_tutorial(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Provides the tutorial message for obj."""
 
-        if (
-            not speech_and_verbosity_manager.get_manager().get_speak_tutorial_messages()
-            and not args.get("formatType", "").endswith("WhereAmI")
-        ):
+        if not speech_presenter.get_presenter().get_speak_tutorial_messages() and not args.get(
+            "formatType", ""
+        ).endswith("WhereAmI"):
             return []
 
         text = AXObject.get_help_text(obj)
@@ -599,7 +599,7 @@ class SpeechGenerator(generator.Generator):
     def _generate_number_of_children(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if (
             self._only_speak_displayed_text()
-            or not speech_and_verbosity_manager.get_manager().use_verbose_speech()
+            or not speech_presenter.get_presenter().use_verbose_speech()
         ):
             return []
 
@@ -709,7 +709,7 @@ class SpeechGenerator(generator.Generator):
         if focus_manager.get_manager().in_say_all():
             provider = say_all_presenter.get_presenter()
         else:
-            provider = speech_and_verbosity_manager.get_manager()
+            provider = speech_presenter.get_presenter()
 
         if provider.get_announce_blockquote():
             enabled.append(Atspi.Role.BLOCK_QUOTE)
@@ -1105,7 +1105,7 @@ class SpeechGenerator(generator.Generator):
         if (
             self._only_speak_displayed_text()
             or not (
-                speech_and_verbosity_manager.get_manager().get_speak_position_in_set()
+                speech_presenter.get_presenter().get_speak_position_in_set()
                 or args.get("forceList", False)
             )
             or args.get("formatType") == "ancestor"
@@ -1159,7 +1159,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         if not (
-            speech_and_verbosity_manager.get_manager().get_speak_widget_mnemonic()
+            speech_presenter.get_presenter().get_speak_widget_mnemonic()
             or args.get("forceMnemonic", False)
         ):
             return []
@@ -1840,7 +1840,7 @@ class SpeechGenerator(generator.Generator):
     def _generate_state_has_popup(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if (
             self._only_speak_displayed_text()
-            or not speech_and_verbosity_manager.get_manager().use_verbose_speech()
+            or not speech_presenter.get_presenter().use_verbose_speech()
         ):
             return []
 
@@ -2018,14 +2018,14 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _get_progress_bar_update_interval(self):
-        interval = speech_and_verbosity_manager.get_manager().get_progress_bar_speech_interval()
+        interval = speech_presenter.get_presenter().get_progress_bar_speech_interval()
         return int(interval)
 
     def _get_progress_bar_verbosity(self):
-        return speech_and_verbosity_manager.get_manager().get_progress_bar_speech_verbosity()
+        return speech_presenter.get_presenter().get_progress_bar_speech_verbosity()
 
     def _should_present_progress_bar_update(self, obj, **args):
-        if not speech_and_verbosity_manager.get_manager().get_speak_progress_bar_updates():
+        if not speech_presenter.get_presenter().get_speak_progress_bar_updates():
             return False
 
         return super()._should_present_progress_bar_update(obj, **args)
@@ -2038,7 +2038,7 @@ class SpeechGenerator(generator.Generator):
         result = super()._generate_real_table_cell(obj, **args)
         if (
             not (result and result[0])
-            and speech_and_verbosity_manager.get_manager().get_speak_blank_lines()
+            and speech_presenter.get_presenter().get_speak_blank_lines()
             and not args.get("readingRow", False)
             and args.get("formatType") != "ancestor"
         ):
@@ -2053,7 +2053,7 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_table_cell_column_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if not speech_and_verbosity_manager.get_manager().get_announce_cell_headers():
+        if not speech_presenter.get_presenter().get_announce_cell_headers():
             return []
 
         if focus_manager.get_manager().in_say_all():
@@ -2075,7 +2075,7 @@ class SpeechGenerator(generator.Generator):
         if args.get("readingRow"):
             return []
 
-        if not speech_and_verbosity_manager.get_manager().get_announce_cell_headers():
+        if not speech_presenter.get_presenter().get_announce_cell_headers():
             return []
 
         if focus_manager.get_manager().in_say_all():
@@ -2106,7 +2106,7 @@ class SpeechGenerator(generator.Generator):
         if self._script.utilities.is_spreadsheet_table(obj):
             return []
 
-        if not speech_and_verbosity_manager.get_manager().use_verbose_speech():
+        if not speech_presenter.get_presenter().use_verbose_speech():
             return self._generate_accessible_role(obj, **args)
 
         if self._script.utilities.is_text_document_table(obj):
@@ -2136,7 +2136,7 @@ class SpeechGenerator(generator.Generator):
         if args.get("readingRow"):
             return []
 
-        if not speech_and_verbosity_manager.get_manager().get_announce_cell_coordinates():
+        if not speech_presenter.get_presenter().get_announce_cell_coordinates():
             return []
 
         if not self._script.utilities.cell_column_changed(obj):
@@ -2158,7 +2158,7 @@ class SpeechGenerator(generator.Generator):
         if args.get("readingRow"):
             return []
 
-        if not speech_and_verbosity_manager.get_manager().get_announce_cell_coordinates():
+        if not speech_presenter.get_presenter().get_announce_cell_coordinates():
             return []
 
         row = AXTable.get_cell_coordinates(obj, find_cell=True)[0]
@@ -2217,14 +2217,14 @@ class SpeechGenerator(generator.Generator):
             if args.get("total", 1) > 1:
                 return [""]
             if (
-                speech_and_verbosity_manager.get_manager().get_speak_blank_lines()
+                speech_presenter.get_presenter().get_speak_blank_lines()
                 and not focus_manager.get_manager().in_say_all()
                 and not AXUtilities.is_table_cell_or_header(obj)
                 and args.get("formatType") != "ancestor"
             ):
                 result[0] = messages.BLANK
 
-        manager = speech_and_verbosity_manager.get_manager()
+        manager = speech_presenter.get_presenter()
         result[0] = manager.adjust_for_presentation(obj, result[0])
         return result
 
@@ -2243,7 +2243,7 @@ class SpeechGenerator(generator.Generator):
                 return [""]
 
             if (
-                speech_and_verbosity_manager.get_manager().get_speak_blank_lines()
+                speech_presenter.get_presenter().get_speak_blank_lines()
                 and not focus_manager.get_manager().in_say_all()
                 and not AXUtilities.is_table_cell_or_header(obj)
                 and args.get("formatType") != "ancestor"
@@ -2270,7 +2270,7 @@ class SpeechGenerator(generator.Generator):
                 args.pop("string")
 
             voice = self.voice(string=string, obj=obj, **args)
-            manager = speech_and_verbosity_manager.get_manager()
+            manager = speech_presenter.get_presenter()
             rv: list[Any] = [manager.adjust_for_presentation(obj, string, start)]
             rv.extend(voice)
 
@@ -2298,7 +2298,7 @@ class SpeechGenerator(generator.Generator):
             if charname and charname != string:
                 result[0] = charname
 
-        manager = speech_and_verbosity_manager.get_manager()
+        manager = speech_presenter.get_presenter()
         result[0] = manager.adjust_for_presentation(obj, result[0])
         result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
@@ -2317,7 +2317,7 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_text_indentation(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if not speech_and_verbosity_manager.get_manager().get_speak_indentation_and_justification():
+        if not speech_presenter.get_presenter().get_speak_indentation_and_justification():
             return []
 
         if input_event_manager.get_manager().last_event_was_word_navigation():
@@ -2329,7 +2329,7 @@ class SpeechGenerator(generator.Generator):
             only_if_changed = False
 
         line = AXText.get_line_at_offset(obj, args.get("startOffset"))[0]
-        description = speech_and_verbosity_manager.get_manager().get_indentation_description(
+        description = speech_presenter.get_presenter().get_indentation_description(
             line, only_if_changed
         )
         if not description:
@@ -2782,7 +2782,7 @@ class SpeechGenerator(generator.Generator):
                 obj, **args
             ) or self._generate_text_line(obj, **args)
 
-        if speech_and_verbosity_manager.get_manager().get_announce_list():
+        if speech_presenter.get_presenter().get_announce_list():
             if args.get("index", 0) + 1 < args.get("total", 1):
                 return result
 
@@ -2807,7 +2807,7 @@ class SpeechGenerator(generator.Generator):
             obj, **args
         )
 
-        if speech_and_verbosity_manager.get_manager().get_announce_list():
+        if speech_presenter.get_presenter().get_announce_list():
             if args.get("index", 0) + 1 < args.get("total", 1):
                 return result
 
@@ -4368,7 +4368,7 @@ class SpeechGenerator(generator.Generator):
         if not result or (len(result) == 1 and result[0][0] == "\n"):
             if (
                 focus_manager.get_manager().in_say_all()
-                or not speech_and_verbosity_manager.get_manager().get_speak_blank_lines()
+                or not speech_presenter.get_presenter().get_speak_blank_lines()
                 or args.get("formatType") == "ancestor"
             ):
                 string = ""

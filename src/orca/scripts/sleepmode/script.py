@@ -110,7 +110,7 @@ class Script(default.Script):
             manager.speak_message(msg)
 
             # Don't restore previous braille content because Orca is no longer active.
-            manager.display_message(msg, restore_previous=False)
+            manager.present_braille_message(msg, restore_previous=False)
             return True
 
         msg = "SLEEP MODE: Ignoring event."
@@ -280,7 +280,7 @@ class Script(default.Script):
         manager.speak_message(msg)
 
         # Don't restore previous braille content because Orca is no longer active.
-        manager.display_message(msg, restore_previous=False)
+        manager.present_braille_message(msg, restore_previous=False)
         return True
 
     def on_window_deactivated(self, event: Atspi.Event) -> bool:

@@ -30,11 +30,9 @@ from typing import Any, TYPE_CHECKING
 from . import braille_presenter
 from . import debug
 from . import live_region_presenter
-from . import phonnames
-from . import settings
 from . import sound_presenter
-from . import speech
-from . import speech_and_verbosity_manager
+from . import speech_manager
+from . import speech_presenter
 from . import typing_echo_presenter
 
 from .acss import ACSS
@@ -60,19 +58,12 @@ class PresentationManager:
 
         return script_manager.get_manager().get_active_script()
 
-    def _get_voice(self, string: str = "") -> list[ACSS]:
-        """Returns the voice to use for the given string."""
-
-        if active_script := self._get_active_script():
-            return active_script.speech_generator.voice(string=string)
-        return []
-
     def interrupt_presentation(self, kill_flash: bool = True) -> None:
         """Convenience method to interrupt whatever is being presented at the moment."""
 
         msg = "PRESENTATION MANAGER: Interrupting presentation"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        speech_and_verbosity_manager.get_manager().interrupt_speech()
+        speech_manager.get_manager().interrupt_speech()
         if kill_flash:
             braille_presenter.get_presenter().kill_flash()
         live_region_presenter.get_presenter().flush_messages()
@@ -83,7 +74,7 @@ class PresentationManager:
         # Braille settings apply dynamically; just ensure enabled/disabled state is correct.
         braille_presenter.get_presenter().check_braille_setting()
         # Speech needs full restart because synthesizer/server might have changed.
-        speech_and_verbosity_manager.get_manager().refresh_speech()
+        speech_manager.get_manager().refresh_speech()
 
     def shutdown_presenters(self) -> None:
         """Shuts down braille, speech, and sound."""
@@ -91,7 +82,8 @@ class PresentationManager:
         msg = "PRESENTATION MANAGER: Shutting down presenters"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         sound_presenter.get_presenter().shutdown_sound()
-        speech_and_verbosity_manager.get_manager().shutdown_speech()
+        speech_presenter.get_presenter().destroy_monitor()
+        speech_manager.get_manager().shutdown_speech()
         braille_presenter.get_presenter().shutdown_braille()
 
     def start_presenters(self) -> None:
@@ -99,9 +91,10 @@ class PresentationManager:
 
         msg = "PRESENTATION MANAGER: Starting presenters"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        speech_and_verbosity_manager.get_manager().start_speech()
+        speech_manager.get_manager().start_speech()
         braille_presenter.get_presenter().init_braille()
         sound_presenter.get_presenter().init_sound()
+        speech_presenter.get_presenter().init_monitor()
 
     def present_keyboard_event(self, script: default.Script, event: KeyboardEvent) -> None:
         """Presents the KeyboardEvent event."""
@@ -111,9 +104,7 @@ class PresentationManager:
     def present_key_event(self, event: KeyboardEvent) -> None:
         """Presents a key event via speech (and potentially braille/sound in the future)."""
 
-        key_name = event.get_key_name() if event.is_printable_key() else None
-        voice = self._get_voice(string=key_name or "")
-        speech.speak_key_event(event, voice[0] if voice else None)
+        speech_presenter.get_presenter().present_key_event(event)
 
     def present_message(
         self,
@@ -131,14 +122,9 @@ class PresentationManager:
         if brief is None:
             brief = full
 
-        speech_manager = speech_and_verbosity_manager.get_manager()
-        if speech_manager.get_speech_is_enabled_and_not_muted():
-            if not speech_manager.get_messages_are_detailed():
-                message = brief
-            else:
-                message = full
-            if message:
-                self.speak_message(message, voice=voice, reset_styles=reset_styles, force=force)
+        speech_presenter.get_presenter().present_message(
+            full, brief, voice=voice, reset_styles=reset_styles, force=force
+        )
 
         presenter = braille_presenter.get_presenter()
         if not (presenter.use_braille() and presenter.get_flash_messages_are_enabled()):
@@ -154,7 +140,7 @@ class PresentationManager:
             message = [i for i in message if isinstance(i, str)]
             message = " ".join(message)
 
-        presenter.display_message(message)
+        presenter.present_message(message)
 
     @staticmethod
     def play_sound(sounds: list[Icon | Tone] | Icon | Tone, interrupt: bool = True) -> None:
@@ -163,32 +149,27 @@ class PresentationManager:
         sound_presenter.get_presenter().play(sounds, interrupt)
 
     @staticmethod
-    def display_message(message: str, restore_previous: bool = True) -> None:
+    def present_braille_message(message: str, restore_previous: bool = True) -> None:
         """Displays a single line in braille."""
 
-        braille_presenter.get_presenter().display_message(
+        braille_presenter.get_presenter().present_message(
             message, restore_previous=restore_previous
         )
 
     def spell_item(self, text: str) -> None:
         """Speak the characters in the string one by one."""
 
-        for character in text:
-            self.speak_character(character)
+        speech_presenter.get_presenter().spell_item(text)
 
     def spell_phonetically(self, item_string: str) -> None:
         """Phonetically spell item_string."""
 
-        for character in item_string:
-            voice = self._get_voice(string=character)
-            phonetic_string = phonnames.get_phonetic_name(character.lower())
-            self.speak_message(phonetic_string, voice)
+        speech_presenter.get_presenter().spell_phonetically(item_string)
 
     def speak_character(self, character: str) -> None:
         """Speaks a single character."""
 
-        voice = self._get_voice(string=character)
-        speech.speak_character(character, voice[0] if voice else None)
+        speech_presenter.get_presenter().speak_character(character)
 
     def speak_message(
         self,
@@ -199,59 +180,18 @@ class PresentationManager:
         force: bool = False,
         obj: Atspi.Accessible | None = None,
     ) -> None:
-        """Method to speak a single string."""
+        """Speaks a single string."""
 
-        try:
-            assert isinstance(text, str)
-        except AssertionError:
-            tokens = ["PRESENTATION MANAGER: speak_message called with non-string:", text]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
-            debug.print_exception(debug.LEVEL_WARNING)
-            return
-
-        speech_manager = speech_and_verbosity_manager.get_manager()
-        if speech_manager.get_speech_is_muted() or (
-            speech_manager.get_only_speak_displayed_text() and not force
-        ):
-            return
-
-        voices = settings.voices
-        system_voice = voices.get(settings.SYSTEM_VOICE)
-        if voice is None:
-            voice = self._get_voice(string=text)
-        voice = voice or system_voice
-        if voice == system_voice and reset_styles:
-            cap_style = speech_manager.get_capitalization_style()
-            speech_manager.set_capitalization_style("none")
-
-            punct_style = speech_manager.get_punctuation_level()
-            speech_manager.set_punctuation_level("some")
-
-        text = speech_manager.adjust_for_presentation(obj, text)
-        voice_to_use: ACSS | dict[str, Any] | None = None
-        if isinstance(voice, list) and voice:
-            voice_to_use = voice[0]
-        elif not isinstance(voice, list):
-            voice_to_use = voice
-        speech.speak(text, voice_to_use, interrupt)
-
-        if voice == system_voice and reset_styles:
-            speech_manager.set_capitalization_style(cap_style)
-            speech_manager.set_punctuation_level(punct_style)
+        speech_presenter.get_presenter().speak_message(
+            text, voice=voice, interrupt=interrupt, reset_styles=reset_styles, force=force, obj=obj
+        )
 
     def speak_contents(
         self, contents: list[tuple[Atspi.Accessible, int, int, str]], **args: Any
     ) -> None:
         """Speaks the specified contents."""
 
-        tokens = ["PRESENTATION MANAGER: Speaking", contents, args]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
-
-        if not (active_script := self._get_active_script()):
-            return
-
-        utterances = active_script.speech_generator.generate_contents(contents, **args)
-        speech.speak(utterances)
+        speech_presenter.get_presenter().speak_contents(contents, **args)
 
     def display_contents(
         self, contents: list[tuple[Atspi.Accessible, int, int, str]], **args: Any

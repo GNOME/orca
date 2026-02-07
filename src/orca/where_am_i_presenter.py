@@ -37,7 +37,7 @@ from . import input_event
 from . import keybindings
 from . import messages
 from . import presentation_manager
-from . import speech_and_verbosity_manager
+from . import speech_presenter
 from . import spellcheck_presenter
 from . import text_attribute_manager
 from .ax_component import AXComponent
@@ -509,7 +509,7 @@ class WhereAmIPresenter:
             presentation_manager.get_manager().speak_message(messages.NO_SELECTED_TEXT)
             return True
 
-        manager = speech_and_verbosity_manager.get_manager()
+        manager = speech_presenter.get_presenter()
         indentation = manager.get_indentation_description(text, only_if_changed=False)
         text = manager.adjust_for_presentation(obj, text)
         msg = messages.SELECTED_TEXT_IS % f"{indentation} {text}"

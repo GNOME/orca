@@ -1,7 +1,7 @@
 # Orca
 #
 # Copyright 2006-2008 Sun Microsystems Inc.
-# Copyright 2011 The Orca Team.
+# Copyright 2011-2026 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,9 +22,10 @@
 
 """Provides a graphical braille display, mainly for development tasks."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
+import os
+from typing import Callable
 
 try:
     from brlapi import KEY_CMD_ROUTE
@@ -34,9 +35,11 @@ except ImportError:
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gdk, Gtk
 
+from . import guilabels
 from . import script_manager
+from . import settings
 
 # Attribute/Selection mask strings:
 DOT_7 = "\x40"  # 01000000
@@ -44,7 +47,7 @@ DOT_8 = "\x80"  # 10000000
 DOTS_78 = "\xc0"  # 11000000
 
 
-class BrlDot(Gtk.Alignment):
+class BrailleDot(Gtk.Alignment):
     """A single braille dot."""
 
     MARKUP_NORMAL = "<tt><small>%s</small></tt>"
@@ -52,7 +55,7 @@ class BrlDot(Gtk.Alignment):
     SYMBOL_RAISED = "\u25cf"  # "●"
 
     def __init__(self, dot_number: int, is_raised: bool = False) -> None:
-        """Create a new BrlDot.
+        """Create a new BrailleDot.
 
         Arguments:
         - dot_number: an integer reflecting the location of the dot within
@@ -86,25 +89,28 @@ class BrlDot(Gtk.Alignment):
         self.label.set_markup(self.MARKUP_NORMAL % self.SYMBOL_LOWERED)
 
 
-class BrlCell(Gtk.Button):
+class BrailleCell(Gtk.Button):
     """A single graphical braille cell with cursor routing capability."""
 
-    MARKUP_NORMAL = "<tt><big>%s</big></tt>"
-    MARKUP_CURSOR_CELL = "<b><u>%s</u></b>"
+    MARKUP_NORMAL = "<tt><span size='x-large'><b>%s</b></span></tt>"
+    MARKUP_BRAILLE = "<tt><span size='xx-large'><b>%s</b></span></tt>"
+    MARKUP_CURSOR_CELL = "<u>%s</u>"
 
     def __init__(self, position: int) -> None:
-        """Create a new BrlCell.
+        """Create a new BrailleCell.
 
         Arguments:
         - position: The location of the cell with respect to the monitor.
         """
 
         super().__init__()
-        self.set_size_request(30, 45)
+        self.get_style_context().add_class("braille-cell")
+        self.set_size_request(36, 52)
         self._position = position
         self._displayed_char = Gtk.Label()
-        self._dot7 = BrlDot(7)
-        self._dot8 = BrlDot(8)
+        self._displayed_char.set_valign(Gtk.Align.END)
+        self._dot7 = BrailleDot(7)
+        self._dot8 = BrailleDot(8)
 
         grid = Gtk.Grid()
         grid.attach(self._displayed_char, 0, 0, 2, 3)
@@ -136,7 +142,7 @@ class BrlCell(Gtk.Button):
     def clear(self) -> None:
         """Clears the braille cell."""
 
-        self._displayed_char.set_markup("")
+        self._displayed_char.set_markup(self.MARKUP_NORMAL % " ")
         self._dot7.lower_dot()
         self._dot8.lower_dot()
 
@@ -156,7 +162,8 @@ class BrlCell(Gtk.Button):
         elif char == "\t":
             char = "$t"
 
-        markup = self.MARKUP_NORMAL
+        is_braille = len(char) == 1 and 0x2800 <= ord(char) <= 0x28FF
+        markup = self.MARKUP_BRAILLE if is_braille else self.MARKUP_NORMAL
         if is_cursor_cell:
             markup = markup % self.MARKUP_CURSOR_CELL
         self._displayed_char.set_markup(markup % char)
@@ -167,33 +174,101 @@ class BrlCell(Gtk.Button):
             self._dot8.raise_dot()
 
 
-class BrlMon(Gtk.Window):
+class BrailleMonitor(Gtk.Window):
     """Displays a GUI braille monitor that mirrors what would be displayed
     by Orca on a connected, configured, and enabled braille display."""
 
-    def __init__(self, num_cells: int = 32) -> None:
-        """Create a new BrlMon.
+    _shared_css_provider: Gtk.CssProvider | None = None
 
-        Arguments:
-        - num_cells: how many braille cells to make
-        """
+    def __init__(self, num_cells: int = 32, on_close: Callable[[], None] | None = None) -> None:
+        """Create a new BrailleMonitor."""
 
         super().__init__()
-        self.set_title("Braille Monitor")
+        self._on_close = on_close
+        self.set_title(guilabels.BRAILLE_MONITOR)
+        self.set_icon_name("orca")
 
-        grid = Gtk.Grid()
-        self.add(grid)
+        titlebar = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL)
+        title_label = Gtk.Label(label=guilabels.BRAILLE_MONITOR)
+        titlebar.set_center_widget(title_label)
+        close_btn = Gtk.Button.new_from_icon_name(
+            "window-close-symbolic", Gtk.IconSize.LARGE_TOOLBAR
+        )
+        close_btn.set_relief(Gtk.ReliefStyle.NONE)
+        close_btn.connect("clicked", self._on_close_clicked)
+        titlebar.pack_end(close_btn, False, False, 0)
+        self.set_titlebar(titlebar)
 
-        self.cells: list[BrlCell] = []
+        self.get_style_context().add_class("braille-monitor")
+        titlebar.get_style_context().add_class("braille-monitor-titlebar")
+        title_label.get_style_context().add_class("braille-monitor-title")
+        close_btn.get_style_context().add_class("braille-monitor-close")
+
+        cell_box = Gtk.Grid()
+        self.add(cell_box)
+        if os.environ.get("XDG_SESSION_TYPE", "").lower() == "wayland":
+            cell_box.set_sensitive(False)
+
+        self.cells: list[BrailleCell] = []
         for i in range(num_cells):
-            cell = BrlCell(i)
-            grid.attach(cell, i, 0, 1, 1)
+            cell = BrailleCell(i)
+            cell_box.attach(cell, i, 0, 1, 1)
             self.cells.append(cell)
 
+        if BrailleMonitor._shared_css_provider is None:
+            BrailleMonitor._shared_css_provider = Gtk.CssProvider()
+            Gtk.StyleContext.add_provider_for_screen(
+                Gdk.Screen.get_default(),
+                BrailleMonitor._shared_css_provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+            )
+        self._apply_css()
+
         self.set_resizable(False)
+        self.set_keep_above(True)
         self.set_property("accept-focus", False)
         self.set_skip_taskbar_hint(True)
         self.set_skip_pager_hint(True)
+
+        self.connect("delete-event", self._on_delete_event)
+
+    def reapply_css(self) -> None:
+        """Reapplies CSS styling (e.g. after color changes)."""
+
+        self._apply_css()
+
+    def _apply_css(self) -> None:
+        """Apply CSS styling for colors and minimal titlebar."""
+
+        bg = settings.brailleMonitorBackground
+        fg = settings.brailleMonitorForeground
+        css = (
+            f".braille-monitor {{ background-color: {bg}; }}\n"
+            f".braille-monitor-titlebar {{ min-height: 0; padding: 0; margin: 0; "
+            f"background-color: {bg}; border: none; box-shadow: none; }}\n"
+            f".braille-monitor-title {{ color: {fg}; font-size: small; font-weight: bold; }}\n"
+            f".braille-monitor-close {{ min-height: 16px; min-width: 16px; "
+            f"padding: 2px; margin: 0; color: {fg}; }}\n"
+            f".braille-monitor-close:hover {{ opacity: 0.7; }}\n"
+            f".braille-monitor .braille-cell {{ "
+            f"background: {bg}; color: {fg}; border-color: {fg}; }}\n"
+            f".braille-monitor .braille-cell label {{ color: {fg}; }}"
+        )
+        if BrailleMonitor._shared_css_provider is not None:
+            BrailleMonitor._shared_css_provider.load_from_data(css.encode())
+
+    def _on_close_clicked(self, _button: Gtk.Button) -> None:
+        """Handle the close button click."""
+
+        if self._on_close is not None:
+            self._on_close()
+
+    def _on_delete_event(self, _window: Gtk.Window, _event: Gdk.Event) -> bool:
+        """Intercept the close request to toggle the monitor off."""
+
+        if self._on_close is not None:
+            self._on_close()
+        return True
 
     def clear(self) -> None:
         """Clears the braille monitor display."""

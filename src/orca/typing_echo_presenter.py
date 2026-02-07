@@ -45,7 +45,7 @@ from . import preferences_grid_base
 from . import presentation_manager
 from . import settings
 from . import sleep_mode_manager
-from . import speech_and_verbosity_manager
+from . import speech_presenter
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
@@ -598,7 +598,7 @@ class TypingEchoPresenter:
         if result is not None:
             return result
 
-        return not speech_and_verbosity_manager.get_manager().get_only_speak_displayed_text()
+        return not speech_presenter.get_presenter().get_only_speak_displayed_text()
 
     @dbus_service.setter
     def set_locking_keys_presented(self, value: bool | None) -> bool:
@@ -862,7 +862,7 @@ class TypingEchoPresenter:
         if locking_state_string := event.get_locking_state_string():
             keyname = event.get_key_name()
             msg = f"{keyname} {locking_state_string}"
-            presentation_manager.get_manager().display_message(msg)
+            presentation_manager.get_manager().present_braille_message(msg)
 
         presentation_manager.get_manager().present_key_event(event)
 

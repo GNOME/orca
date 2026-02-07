@@ -49,7 +49,7 @@ class TestProfileManager:
         additional_modules = [
             "orca.braille",
             "orca.orca",
-            "orca.speech_and_verbosity_manager",
+            "orca.speech_manager",
             "orca.braille_presenter",
             "orca.presentation_manager",
         ]
@@ -66,7 +66,7 @@ class TestProfileManager:
             "startingProfile": ["Default", "default"],
         }
 
-        speech_manager_mock = essential_modules["orca.speech_and_verbosity_manager"]
+        speech_manager_mock = essential_modules["orca.speech_manager"]
         speech_manager_mock.get_manager.return_value.refresh_speech.return_value = None
 
         braille_mock = essential_modules["orca.braille"]
@@ -324,7 +324,7 @@ class TestProfilePreferencesGridUI:
         additional_modules = [
             "orca.braille",
             "orca.orca",
-            "orca.speech_and_verbosity_manager",
+            "orca.speech_manager",
             "orca.braille_presenter",
             "orca.presentation_manager",
         ]

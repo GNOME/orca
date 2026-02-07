@@ -83,11 +83,18 @@ enableEchoByWord: bool = False
 enableEchoBySentence: bool = False
 presentLockingKeys: bool | None = None
 
-# Managed by speech_and_verbosity_manager.py
+# Managed by speech_manager.py
 silenceSpeech: bool = False
 enableSpeech: bool = True
-enablePauseBreaks: bool = True
+verbalizePunctuationStyle: int = PUNCTUATION_STYLE_MOST
+capitalizationStyle: str = CAPITALIZATION_STYLE_NONE
 speakNumbersAsDigits: bool = False
+useColorNames: bool = True
+enablePauseBreaks: bool = True
+usePronunciationDictionary: bool = True
+enableAutoLanguageSwitching: bool = True
+
+# Managed by speech_presenter.py
 speakMisspelledIndicator: bool = True
 enableSpeechIndentation: bool = False
 speakIndentationOnlyIfChanged: bool = False
@@ -97,14 +104,12 @@ enableTutorialMessages: bool = True
 speakDescription: bool = True
 enablePositionSpeaking: bool = False
 enableMnemonicSpeaking: bool = True
-enableAutoLanguageSwitching: bool = True
 speakContextNonLandmarkForm: bool = True
 speakContextBlockquote: bool = True
 speakContextPanel: bool = True
 speakContextLandmark: bool = True
 speakContextList: bool = True
 speakContextTable: bool = True
-useColorNames: bool = True
 readFullRowInGUITable: bool = True
 readFullRowInDocumentTable: bool = True
 readFullRowInSpreadSheet: bool = False
@@ -114,11 +119,8 @@ speakCellHeaders: bool = True
 speakSpreadsheetCoordinates: bool = True
 alwaysSpeakSelectedSpreadsheetRange: bool = False
 messagesAreDetailed: bool = True
-usePronunciationDictionary: bool = True
 repeatCharacterLimit: int = 4
 speechVerbosityLevel: int = VERBOSITY_LEVEL_VERBOSE
-verbalizePunctuationStyle: int = PUNCTUATION_STYLE_MOST
-capitalizationStyle: str = CAPITALIZATION_STYLE_NONE
 speakProgressBarUpdates: bool = True
 progressBarSpeechInterval: int = 10
 progressBarSpeechVerbosity: int = PROGRESS_BAR_APPLICATION
@@ -212,8 +214,16 @@ speechServerFactory: str = "speechdispatcherfactory"
 speechServerInfo: list[str] | None = None  # None means let the factory decide.
 speechSystemOverride: str | None = None
 
-# Braille Monitor
-enableBrailleMonitor: bool = False
+# Managed by braille_presenter.py
+brailleMonitorCellCount: int = 32
+brailleMonitorShowDots: bool = False
+brailleMonitorForeground: str = "#000000"
+brailleMonitorBackground: str = "#ffffff"
+
+# Managed by speech_presenter.py
+speechMonitorFontSize: int = 14
+speechMonitorForeground: str = "#ffffff"
+speechMonitorBackground: str = "#000000"
 
 # Managed by sound_presenter.py
 beepProgressBarUpdates: bool = False
@@ -242,3 +252,4 @@ spellcheckPresentContext: bool = True
 # N.B. The following are experimental and may change or go away at any time.
 enableSadPidginHack: bool = False
 ignoreStatusBarProgressBars: bool = True
+enableExperimentalFeatures: bool = False

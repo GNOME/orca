@@ -38,7 +38,7 @@ from orca import input_event_manager
 from orca import input_event
 from orca import messages
 from orca import presentation_manager
-from orca import speech_and_verbosity_manager
+from orca import speech_presenter
 from orca import structural_navigator
 from orca import table_navigator
 from orca import typing_echo_presenter
@@ -361,10 +361,10 @@ class Script(default.Script):
             return True
 
         if self.utilities.is_spreadsheet_table(event.source):
-            manager = speech_and_verbosity_manager.get_manager()
-            if manager.get_only_speak_displayed_text():
+            presenter = speech_presenter.get_presenter()
+            if presenter.get_only_speak_displayed_text():
                 return True
-            if manager.get_always_announce_selected_range_in_spreadsheet():
+            if presenter.get_always_announce_selected_range_in_spreadsheet():
                 self.utilities.speak_selected_cell_range(event.source)
                 return True
             if self.utilities.handle_row_and_column_selection_change(event.source):

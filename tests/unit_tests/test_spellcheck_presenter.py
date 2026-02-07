@@ -52,7 +52,8 @@ class TestSpellCheckPresenter:
             "orca.messages",
             "orca.object_properties",
             "orca.preferences_grid_base",
-            "orca.speech_and_verbosity_manager",
+            "orca.presentation_manager",
+            "orca.speech_presenter",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
