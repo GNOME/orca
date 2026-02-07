@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2026-02-01 15:48+0000\n"
+"POT-Creation-Date: 2026-02-07 09:57+0000\n"
 "PO-Revision-Date: 2026-02-05 19:05+0100\n"
 "Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
@@ -25,6 +25,12 @@ msgstr ""
 #: orca-autostart.desktop.in:3
 msgid "Orca Screen Reader"
 msgstr "Orka képernyőolvasó"
+
+#: orca.desktop.in:3
+#| msgctxt "keyboard"
+#| msgid "Orca"
+msgid "Orca"
+msgstr "Orka"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
@@ -4988,7 +4994,6 @@ msgstr "A kurzornál levő szó megjelenítése számítógépes Braille alakban
 # Megjegyzés: Mivel mindenhol régóta Gáborral egyeztetve az Orca nevet magyarosan Orkaként írjuk a fordításban, így a fordítást megváltoztattam Orka képernyőolvasóra az Orca képernyőolvasó helyett.
 #. Translators: This is the title of the Orca Preferences dialog box.
 #: src/orca/guilabels.py:1313
-#| msgid "Orca Screen Reader"
 msgid "Screen Reader"
 msgstr "Orka képernyőolvasó"
 
