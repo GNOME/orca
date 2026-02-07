@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2026-02-01 15:48+0000\n"
-"PO-Revision-Date: 2026-02-04 04:28+0100\n"
+"POT-Creation-Date: 2026-02-07 09:57+0000\n"
+"PO-Revision-Date: 2026-02-07 16:23+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -21,6 +21,12 @@ msgstr ""
 #: orca-autostart.desktop.in:3
 msgid "Orca Screen Reader"
 msgstr "Orca - ეკრანის მკითხველი"
+
+#: orca.desktop.in:3
+#| msgctxt "keyboard"
+#| msgid "Orca"
+msgid "Orca"
+msgstr "Orca"
 
 #. Translators: short braille for the rolename of an invalid GUI object.
 #. We strive to keep it under three characters to preserve real estate.
