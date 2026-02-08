@@ -29,7 +29,7 @@ generated_schema = custom_target(
   output: 'org.gnome.Orca.gschema.xml',
   command: [python3, schema_generator, meson.project_source_root() / 'src', '@OUTPUT@'],
   depend_files: [schema_generator, schema_sources],
-  install: false,
+  install: true,
   install_dir: get_option('datadir') / 'glib-2.0' / 'schemas'
 )
 
