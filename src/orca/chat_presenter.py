@@ -27,12 +27,14 @@ from __future__ import annotations
 
 from collections import deque
 from dataclasses import dataclass
+from enum import Enum
 from typing import Iterator, TYPE_CHECKING
 
 from . import cmdnames
 from . import command_manager
 from . import dbus_service
 from . import debug
+from . import gsettings_registry
 from . import focus_manager
 from . import guilabels
 from . import input_event
@@ -51,6 +53,24 @@ if TYPE_CHECKING:
     from gi.repository import Atspi
 
     from .scripts import default
+
+
+@gsettings_registry.get_registry().gsettings_enum(
+    "org.gnome.Orca.ChatMessageVerbosity",
+    values={"all": 0, "all-if-focused": 1, "focused-channel": 2},
+)
+class ChatMessageVerbosity(Enum):
+    """Chat message verbosity level enumeration."""
+
+    ALL = settings.CHAT_SPEAK_ALL
+    ALL_IF_FOCUSED = settings.CHAT_SPEAK_ALL_IF_FOCUSED
+    FOCUSED_CHANNEL = settings.CHAT_SPEAK_FOCUSED_CHANNEL
+
+    @property
+    def string_name(self) -> str:
+        """Returns the lowercase string name for this enum value."""
+
+        return self.name.lower().replace("_", "-")
 
 
 class Conversation:
@@ -377,6 +397,7 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
         super().__init__(guilabels.KB_GROUP_CHAT, controls)
 
 
+@gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Chat", name="chat")
 class ChatPresenter:
     """Presenter for chat preferences and commands."""
 
@@ -642,6 +663,13 @@ class ChatPresenter:
         self.present_message_at_index(script, chat.get_current_index())
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="speak-room-name",
+        schema="chat",
+        gtype="b",
+        default=False,
+        summary="Speak chat room name",
+    )
     @dbus_service.getter
     def get_speak_room_name(self, app: Atspi.Accessible | None = None) -> bool:
         """Returns whether to speak the chat room name."""
@@ -659,6 +687,13 @@ class ChatPresenter:
         settings.chatSpeakRoomName = value
         return value
 
+    @gsettings_registry.get_registry().gsetting(
+        key="announce-buddy-typing",
+        schema="chat",
+        gtype="b",
+        default=False,
+        summary="Announce when buddies are typing",
+    )
     @dbus_service.getter
     def get_announce_buddy_typing(self) -> bool:
         """Returns whether to announce when buddies are typing."""
@@ -672,6 +707,13 @@ class ChatPresenter:
         settings.chatAnnounceBuddyTyping = value
         return value
 
+    @gsettings_registry.get_registry().gsetting(
+        key="room-histories",
+        schema="chat",
+        gtype="b",
+        default=False,
+        summary="Provide chat room specific message histories",
+    )
     @dbus_service.getter
     def get_room_histories(self) -> bool:
         """Returns whether to provide chat room specific message histories."""
@@ -685,6 +727,13 @@ class ChatPresenter:
         settings.chatRoomHistories = value
         return value
 
+    @gsettings_registry.get_registry().gsetting(
+        key="message-verbosity",
+        schema="chat",
+        genum="org.gnome.Orca.ChatMessageVerbosity",
+        default="all",
+        summary="Chat message verbosity (all, all-if-focused, focused-channel)",
+    )
     @dbus_service.getter
     def get_message_verbosity(self, app: Atspi.Accessible | None = None) -> int:
         """Returns the chat message verbosity setting."""
@@ -702,6 +751,13 @@ class ChatPresenter:
         settings.chatMessageVerbosity = value
         return value
 
+    @gsettings_registry.get_registry().gsetting(
+        key="speak-room-name-last",
+        schema="chat",
+        gtype="b",
+        default=False,
+        summary="Speak chat room name after message",
+    )
     @dbus_service.getter
     def get_speak_room_name_last(self) -> bool:
         """Returns whether to speak the chat room name after the message."""

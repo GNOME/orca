@@ -39,6 +39,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk
 
 from . import cmdnames
+from . import gsettings_registry
 from . import command_manager
 from . import dbus_service
 from . import debug
@@ -586,6 +587,7 @@ class ProfileManager:
         """Sets the active profile by internal name."""
 
         settings_manager.get_manager().set_profile(internal_name, update_locale)
+        gsettings_registry.get_registry().set_active_profile(internal_name)
         return True
 
     def load_profile(self, internal_name: str, update_locale: bool = False) -> None:

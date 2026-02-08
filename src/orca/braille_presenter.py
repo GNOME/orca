@@ -44,12 +44,17 @@ from . import input_event_manager
 from . import messages
 from . import preferences_grid_base
 from . import settings
+from . import gsettings_registry
 from .orca_platform import tablesdir  # pylint: disable=import-error
 
 if TYPE_CHECKING:
     from .scripts import default
 
 
+@gsettings_registry.get_registry().gsettings_enum(
+    "org.gnome.Orca.VerbosityLevel",
+    values={"brief": 0, "verbose": 1},
+)
 class VerbosityLevel(Enum):
     """Verbosity level enumeration with int values from settings."""
 
@@ -63,6 +68,10 @@ class VerbosityLevel(Enum):
         return self.name.lower()
 
 
+@gsettings_registry.get_registry().gsettings_enum(
+    "org.gnome.Orca.BrailleIndicator",
+    values={"none": 0, "dot7": 64, "dot8": 128, "dots78": 192},
+)
 class BrailleIndicator(Enum):
     """Braille indicator enumeration with int values from settings."""
 
@@ -467,6 +476,7 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         )
 
 
+@gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Braille", name="braille")
 class BraillePresenter:
     """Provides braille presentation support."""
 
@@ -800,6 +810,9 @@ class BraillePresenter:
             stop_flash=stop_flash,
         )
 
+    @gsettings_registry.get_registry().gsetting(
+        key="enabled", schema="braille", gtype="b", default=True, summary="Enable braille output"
+    )
     @dbus_service.getter
     def get_braille_is_enabled(self) -> bool:
         """Returns whether braille is enabled."""
@@ -827,6 +840,13 @@ class BraillePresenter:
         level = settings.brailleVerbosityLevel
         return level == settings.VERBOSITY_LEVEL_VERBOSE
 
+    @gsettings_registry.get_registry().gsetting(
+        key="verbosity-level",
+        schema="braille",
+        genum="org.gnome.Orca.VerbosityLevel",
+        default="verbose",
+        summary="Braille verbosity level (brief, verbose)",
+    )
     @dbus_service.getter
     def get_verbosity_level(self) -> str:
         """Returns the current braille verbosity level for object presentation."""
@@ -856,6 +876,13 @@ class BraillePresenter:
         level = settings.brailleRolenameStyle
         return level == settings.VERBOSITY_LEVEL_VERBOSE
 
+    @gsettings_registry.get_registry().gsetting(
+        key="rolename-style",
+        schema="braille",
+        genum="org.gnome.Orca.VerbosityLevel",
+        default="verbose",
+        summary="Braille rolename style (brief, verbose)",
+    )
     @dbus_service.getter
     def get_rolename_style(self) -> str:
         """Returns the current rolename style for object presentation."""
@@ -879,6 +906,13 @@ class BraillePresenter:
         settings.brailleRolenameStyle = level.value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="present-mnemonics",
+        schema="braille",
+        gtype="b",
+        default=True,
+        summary="Present mnemonics on braille display",
+    )
     @dbus_service.getter
     def get_present_mnemonics(self) -> bool:
         """Returns whether mnemonics are presented on the braille display."""
@@ -894,6 +928,13 @@ class BraillePresenter:
         settings.displayObjectMnemonic = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="display-ancestors",
+        schema="braille",
+        gtype="b",
+        default=True,
+        summary="Display ancestors of current object",
+    )
     @dbus_service.getter
     def get_display_ancestors(self) -> bool:
         """Returns whether ancestors of the current object will be displayed."""
@@ -909,6 +950,13 @@ class BraillePresenter:
         settings.enableBrailleContext = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="braille-progress-bar-updates",
+        schema="braille",
+        gtype="b",
+        default=False,
+        summary="Show progress bar updates in braille",
+    )
     @dbus_service.getter
     def get_braille_progress_bar_updates(self) -> bool:
         """Returns whether braille progress bar updates are enabled."""
@@ -924,6 +972,13 @@ class BraillePresenter:
         settings.brailleProgressBarUpdates = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="progress-bar-braille-interval",
+        schema="braille",
+        gtype="i",
+        default=10,
+        summary="Progress bar braille update interval in seconds",
+    )
     @dbus_service.getter
     def get_progress_bar_braille_interval(self) -> int:
         """Returns the braille progress bar update interval in seconds."""
@@ -939,6 +994,13 @@ class BraillePresenter:
         settings.progressBarBrailleInterval = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="progress-bar-braille-verbosity",
+        schema="braille",
+        genum="org.gnome.Orca.ProgressBarVerbosity",
+        default="application",
+        summary="Progress bar braille verbosity (all, application, window)",
+    )
     @dbus_service.getter
     def get_progress_bar_braille_verbosity(self) -> int:
         """Returns the braille progress bar verbosity level."""
@@ -954,6 +1016,13 @@ class BraillePresenter:
         settings.progressBarBrailleVerbosity = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="contracted-braille",
+        schema="braille",
+        gtype="b",
+        default=False,
+        summary="Enable contracted braille",
+    )
     @dbus_service.getter
     def get_contracted_braille_is_enabled(self) -> bool:
         """Returns whether contracted braille is enabled."""
@@ -969,6 +1038,13 @@ class BraillePresenter:
         settings.enableContractedBraille = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="computer-braille-at-cursor",
+        schema="braille",
+        gtype="b",
+        default=True,
+        summary="Use computer braille at cursor position",
+    )
     @dbus_service.getter
     def get_computer_braille_at_cursor_is_enabled(self) -> bool:
         """Returns whether computer braille is used at the cursor position."""
@@ -989,6 +1065,13 @@ class BraillePresenter:
 
         return settings.brailleContractionTable
 
+    @gsettings_registry.get_registry().gsetting(
+        key="contraction-table",
+        schema="braille",
+        gtype="s",
+        default="",
+        summary="Braille contraction table name",
+    )
     @dbus_service.getter
     def get_contraction_table(self) -> str:
         """Returns the current braille contraction table name."""
@@ -1055,6 +1138,13 @@ class BraillePresenter:
         settings.brailleContractionTable = file_path
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="end-of-line-indicator",
+        schema="braille",
+        gtype="b",
+        default=True,
+        summary="Show end-of-line indicator",
+    )
     @dbus_service.getter
     def get_end_of_line_indicator_is_enabled(self) -> bool:
         """Returns whether the end-of-line indicator is enabled."""
@@ -1073,6 +1163,13 @@ class BraillePresenter:
         settings.disableBrailleEOL = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="word-wrap",
+        schema="braille",
+        gtype="b",
+        default=False,
+        summary="Enable braille word wrap",
+    )
     @dbus_service.getter
     def get_word_wrap_is_enabled(self) -> bool:
         """Returns whether braille word wrap is enabled."""
@@ -1088,6 +1185,13 @@ class BraillePresenter:
         settings.enableBrailleWordWrap = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="flash-messages",
+        schema="braille",
+        gtype="b",
+        default=True,
+        summary="Enable braille flash messages",
+    )
     @dbus_service.getter
     def get_flash_messages_are_enabled(self) -> bool:
         """Returns whether 'flash' messages (i.e. announcements) are enabled."""
@@ -1110,6 +1214,13 @@ class BraillePresenter:
             return -1
         return self.get_flash_message_duration()
 
+    @gsettings_registry.get_registry().gsetting(
+        key="flash-message-duration",
+        schema="braille",
+        gtype="i",
+        default=5000,
+        summary="Flash message duration in milliseconds",
+    )
     @dbus_service.getter
     def get_flash_message_duration(self) -> int:
         """Returns flash message duration in milliseconds."""
@@ -1149,6 +1260,13 @@ class BraillePresenter:
         settings.textAttributesBrailleIndicator = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="flash-messages-persistent",
+        schema="braille",
+        gtype="b",
+        default=False,
+        summary="Make flash messages persistent",
+    )
     @dbus_service.getter
     def get_flash_messages_are_persistent(self) -> bool:
         """Returns whether 'flash' messages are persistent (as opposed to temporary)."""
@@ -1164,6 +1282,13 @@ class BraillePresenter:
         settings.flashIsPersistent = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="flash-messages-detailed",
+        schema="braille",
+        gtype="b",
+        default=True,
+        summary="Use detailed flash messages",
+    )
     @dbus_service.getter
     def get_flash_messages_are_detailed(self) -> bool:
         """Returns whether 'flash' messages are detailed (as opposed to brief)."""
@@ -1187,6 +1312,13 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return value
 
+    @gsettings_registry.get_registry().gsetting(
+        key="selector-indicator",
+        schema="braille",
+        genum="org.gnome.Orca.BrailleIndicator",
+        default="dots78",
+        summary="Braille selector indicator style (none, dot7, dot8, dots78)",
+    )
     @dbus_service.getter
     def get_selector_indicator(self) -> str:
         """Returns the braille selector indicator style."""
@@ -1218,6 +1350,13 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return value
 
+    @gsettings_registry.get_registry().gsetting(
+        key="link-indicator",
+        schema="braille",
+        genum="org.gnome.Orca.BrailleIndicator",
+        default="dots78",
+        summary="Braille link indicator style (none, dot7, dot8, dots78)",
+    )
     @dbus_service.getter
     def get_link_indicator(self) -> str:
         """Returns the braille link indicator style."""
@@ -1249,6 +1388,13 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return value
 
+    @gsettings_registry.get_registry().gsetting(
+        key="text-attributes-indicator",
+        schema="braille",
+        genum="org.gnome.Orca.BrailleIndicator",
+        default="none",
+        summary="Braille text attributes indicator style (none, dot7, dot8, dots78)",
+    )
     @dbus_service.getter
     def get_text_attributes_indicator(self) -> str:
         """Returns the braille text attributes indicator style."""

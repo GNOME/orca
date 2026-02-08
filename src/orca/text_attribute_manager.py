@@ -37,6 +37,7 @@ from gi.repository import Gtk
 
 from . import dbus_service
 from . import debug
+from . import gsettings_registry
 from . import guilabels
 from . import settings
 from .ax_text import AXText, AXTextAttribute
@@ -396,6 +397,10 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
     # pylint: enable=no-member, c-extension-no-member
 
 
+@gsettings_registry.get_registry().gsettings_schema(
+    "org.gnome.Orca.TextAttributes",
+    name="text-attributes",
+)
 class TextAttributeManager:
     """Manager for text attribute presentation settings."""
 
@@ -410,6 +415,13 @@ class TextAttributeManager:
 
         return TextAttributePreferencesGrid()
 
+    @gsettings_registry.get_registry().gsetting(
+        key="attributes-to-speak",
+        schema="text-attributes",
+        gtype="as",
+        default=[],
+        summary="Text attributes to speak",
+    )
     @dbus_service.getter
     def get_attributes_to_speak(self) -> list[str]:
         """Returns the list of text attributes to speak."""
@@ -428,6 +440,13 @@ class TextAttributeManager:
         settings.textAttributesToSpeak = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="attributes-to-braille",
+        schema="text-attributes",
+        gtype="as",
+        default=[],
+        summary="Text attributes to mark in braille",
+    )
     @dbus_service.getter
     def get_attributes_to_braille(self) -> list[str]:
         """Returns the list of text attributes to mark in braille."""

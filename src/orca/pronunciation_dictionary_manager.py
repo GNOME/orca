@@ -31,6 +31,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
+from . import gsettings_registry
 from . import guilabels
 from . import messages
 from . import preferences_grid_base
@@ -437,6 +438,10 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         self._initializing = False
 
 
+@gsettings_registry.get_registry().gsettings_schema(
+    "org.gnome.Orca.Pronunciations",
+    name="pronunciations",
+)
 class PronunciationDictionaryManager:
     """Manager for the pronunciation dictionary."""
 
@@ -466,6 +471,13 @@ class PronunciationDictionaryManager:
         key = word.lower()
         self._dictionary[key] = replacement
 
+    @gsettings_registry.get_registry().gsetting(
+        key="entries",
+        schema="pronunciations",
+        gtype="a{ss}",
+        default={},
+        summary="Pronunciation dictionary entries",
+    )
     def get_dictionary(self) -> dict[str, str]:
         """Returns the pronunciation dictionary."""
 

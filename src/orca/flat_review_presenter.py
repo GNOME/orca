@@ -44,6 +44,7 @@ from . import cmdnames
 from . import command_manager
 from . import dbus_service
 from . import debug
+from . import gsettings_registry
 from . import flat_review
 from . import focus_manager
 from . import guilabels
@@ -65,6 +66,7 @@ if TYPE_CHECKING:
     from .scripts import default
 
 
+@gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.FlatReview", name="flat-review")
 class FlatReviewPresenter:
     """Provides access to on-screen objects via flat-review."""
 
@@ -1304,6 +1306,13 @@ class FlatReviewPresenter:
             presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_APPENDED)
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="restricted",
+        schema="flat-review",
+        gtype="b",
+        default=False,
+        summary="Restrict flat review to current object",
+    )
     @dbus_service.getter
     def get_is_restricted(self) -> bool:
         """Returns whether flat review is restricted to the current object."""

@@ -39,6 +39,7 @@ from gi.repository import Atspi
 
 from orca import dbus_service
 from orca import debug
+from orca import gsettings_registry
 from orca import focus_manager
 from orca import guilabels
 from orca import messages
@@ -84,6 +85,7 @@ class _PresentationState:
         self.completion_announced = False
 
 
+@gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Spellcheck", name="spellcheck")
 class SpellCheckPresenter:
     """Singleton presenter for spell check support and preferences."""
 
@@ -98,6 +100,13 @@ class SpellCheckPresenter:
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("SpellCheckPresenter", self)
 
+    @gsettings_registry.get_registry().gsetting(
+        key="spell-error",
+        schema="spellcheck",
+        gtype="b",
+        default=True,
+        summary="Spell misspelled word",
+    )
     @dbus_service.getter
     def get_spell_error(self) -> bool:
         """Returns whether misspelled word should be spelled."""
@@ -116,6 +125,13 @@ class SpellCheckPresenter:
         settings.spellcheckSpellError = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="spell-suggestion",
+        schema="spellcheck",
+        gtype="b",
+        default=True,
+        summary="Spell suggested correction",
+    )
     @dbus_service.getter
     def get_spell_suggestion(self) -> bool:
         """Returns whether the suggested correction should be spelled."""
@@ -134,6 +150,13 @@ class SpellCheckPresenter:
         settings.spellcheckSpellSuggestion = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="present-context",
+        schema="spellcheck",
+        gtype="b",
+        default=True,
+        summary="Present context/surrounding sentence",
+    )
     @dbus_service.getter
     def get_present_context(self) -> bool:
         """Returns whether to present the context/surrounding sentence."""

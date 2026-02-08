@@ -57,12 +57,17 @@ from . import settings
 from . import speech
 from . import speechserver
 from .acss import ACSS
+from . import gsettings_registry
 
 if TYPE_CHECKING:
     from .scripts import default
     from .speechserver import SpeechServer
 
 
+@gsettings_registry.get_registry().gsettings_enum(
+    "org.gnome.Orca.CapitalizationStyle",
+    values={"none": 0, "spell": 1, "icon": 2},
+)
 class CapitalizationStyle(Enum):
     """Capitalization style enumeration with string values from settings."""
 
@@ -71,6 +76,10 @@ class CapitalizationStyle(Enum):
     ICON = settings.CAPITALIZATION_STYLE_ICON
 
 
+@gsettings_registry.get_registry().gsettings_enum(
+    "org.gnome.Orca.PunctuationStyle",
+    values={"all": 0, "most": 1, "some": 2, "none": 3},
+)
 class PunctuationStyle(Enum):
     """Punctuation style enumeration with int values from settings."""
 
@@ -1138,6 +1147,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._has_unsaved_changes = True
 
 
+@gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Speech", name="speech")
+@gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Voice", name="voice")
 class SpeechManager:
     """Manages the speech engine: server, synthesizer, voice, and output parameters."""
 
@@ -1347,6 +1358,9 @@ class SpeechManager:
 
         return self._switch_server(value)
 
+    @gsettings_registry.get_registry().gsetting(
+        key="synthesizer", schema="speech", gtype="s", default="", summary="Speech synthesizer"
+    )
     @dbus_service.getter
     def get_current_synthesizer(self) -> str:
         """Returns the current synthesizer of the speech server."""
@@ -1466,6 +1480,9 @@ class SpeechManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
+    @gsettings_registry.get_registry().gsetting(
+        key="family-name", schema="voice", gtype="s", default="", summary="Voice family name"
+    )
     @dbus_service.getter
     def get_current_voice(self) -> str:
         """Returns the current voice name."""
@@ -1631,6 +1648,9 @@ class SpeechManager:
         self.start_speech()
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="rate", schema="voice", gtype="i", default=50, summary="Speech rate (0-100)"
+    )
     @dbus_service.getter
     def get_rate(self) -> int:
         """Returns the current speech rate."""
@@ -1721,6 +1741,9 @@ class SpeechManager:
 
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="pitch", schema="voice", gtype="d", default=5.0, summary="Speech pitch (0.0-10.0)"
+    )
     @dbus_service.getter
     def get_pitch(self) -> float:
         """Returns the current speech pitch."""
@@ -1811,6 +1834,9 @@ class SpeechManager:
 
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="volume", schema="voice", gtype="d", default=10.0, summary="Speech volume (0.0-10.0)"
+    )
     @dbus_service.getter
     def get_volume(self) -> float:
         """Returns the current speech volume."""
@@ -1901,6 +1927,13 @@ class SpeechManager:
 
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="capitalization-style",
+        schema="speech",
+        genum="org.gnome.Orca.CapitalizationStyle",
+        default="none",
+        summary="Capitalization style (none, spell, icon)",
+    )
     @dbus_service.getter
     def get_capitalization_style(self) -> str:
         """Returns the current capitalization style."""
@@ -1975,6 +2008,13 @@ class SpeechManager:
         server.update_capitalization_style()
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="punctuation-level",
+        schema="speech",
+        genum="org.gnome.Orca.PunctuationStyle",
+        default="most",
+        summary="Punctuation verbosity level (none, some, most, all)",
+    )
     @dbus_service.getter
     def get_punctuation_level(self) -> str:
         """Returns the current punctuation level."""
@@ -2141,6 +2181,9 @@ class SpeechManager:
         settings.silenceSpeech = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="enable", schema="speech", gtype="b", default=True, summary="Enable speech output"
+    )
     @dbus_service.getter
     def get_speech_is_enabled(self) -> bool:
         """Returns whether the speech server is enabled. See also is-muted."""
@@ -2164,6 +2207,13 @@ class SpeechManager:
 
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="speak-numbers-as-digits",
+        schema="speech",
+        gtype="b",
+        default=False,
+        summary="Speak numbers as individual digits",
+    )
     @dbus_service.getter
     def get_speak_numbers_as_digits(self) -> bool:
         """Returns whether numbers are spoken as digits."""
@@ -2179,6 +2229,13 @@ class SpeechManager:
         settings.speakNumbersAsDigits = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="use-color-names",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Use color names instead of values",
+    )
     @dbus_service.getter
     def get_use_color_names(self) -> bool:
         """Returns whether colors are announced by name or as RGB values."""
@@ -2194,6 +2251,13 @@ class SpeechManager:
         settings.useColorNames = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="insert-pauses-between-utterances",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Insert pauses between utterances",
+    )
     @dbus_service.getter
     def get_insert_pauses_between_utterances(self) -> bool:
         """Returns whether pauses are inserted between utterances, e.g. between name and role."""
@@ -2209,6 +2273,13 @@ class SpeechManager:
         settings.enablePauseBreaks = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="use-pronunciation-dictionary",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Apply user pronunciation dictionary",
+    )
     @dbus_service.getter
     def get_use_pronunciation_dictionary(self) -> bool:
         """Returns whether the user's pronunciation dictionary should be applied."""
@@ -2224,6 +2295,13 @@ class SpeechManager:
         settings.usePronunciationDictionary = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="auto-language-switching",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Automatically switch voice based on text language",
+    )
     @dbus_service.getter
     def get_auto_language_switching(self) -> bool:
         """Returns whether automatic language switching is enabled."""

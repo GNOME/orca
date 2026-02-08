@@ -42,6 +42,7 @@ from . import command_manager
 from . import guilabels
 from . import dbus_service
 from . import debug
+from . import gsettings_registry
 from . import focus_manager
 from . import input_event
 from . import input_event_manager
@@ -67,6 +68,10 @@ if TYPE_CHECKING:
     from .scripts import default
 
 
+@gsettings_registry.get_registry().gsettings_enum(
+    "org.gnome.Orca.SayAllStyle",
+    values={"line": 0, "sentence": 1},
+)
 class SayAllStyle(Enum):
     """Style enumeration with int values from settings."""
 
@@ -158,6 +163,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
         super().__init__(guilabels.GENERAL_SAY_ALL, controls, info_message=info)
 
 
+@gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.SayAll", name="say-all")
 class SayAllPresenter:
     """Module for commands related to the current accessible object."""
 
@@ -549,6 +555,13 @@ class SayAllPresenter:
         )
         self._script.utilities.set_caret_context(context.obj, context.current_offset)
 
+    @gsettings_registry.get_registry().gsetting(
+        key="announce-blockquote",
+        schema="say-all",
+        gtype="b",
+        default=True,
+        summary="Announce blockquotes",
+    )
     @dbus_service.getter
     def get_announce_blockquote(self) -> bool:
         """Returns whether blockquotes are announced when entered."""
@@ -564,6 +577,13 @@ class SayAllPresenter:
         settings.sayAllContextBlockquote = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="announce-form",
+        schema="say-all",
+        gtype="b",
+        default=True,
+        summary="Announce non-landmark forms",
+    )
     @dbus_service.getter
     def get_announce_form(self) -> bool:
         """Returns whether non-landmark forms are announced when entered."""
@@ -579,6 +599,13 @@ class SayAllPresenter:
         settings.sayAllContextNonLandmarkForm = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="announce-grouping",
+        schema="say-all",
+        gtype="b",
+        default=True,
+        summary="Announce groupings",
+    )
     @dbus_service.getter
     def get_announce_grouping(self) -> bool:
         """Returns whether groupings are announced when entered."""
@@ -594,6 +621,13 @@ class SayAllPresenter:
         settings.sayAllContextPanel = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="announce-landmark",
+        schema="say-all",
+        gtype="b",
+        default=True,
+        summary="Announce landmarks",
+    )
     @dbus_service.getter
     def get_announce_landmark(self) -> bool:
         """Returns whether landmarks are announced when entered."""
@@ -609,6 +643,13 @@ class SayAllPresenter:
         settings.sayAllContextLandmark = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="announce-list",
+        schema="say-all",
+        gtype="b",
+        default=True,
+        summary="Announce lists",
+    )
     @dbus_service.getter
     def get_announce_list(self) -> bool:
         """Returns whether lists are announced when entered."""
@@ -624,6 +665,13 @@ class SayAllPresenter:
         settings.sayAllContextList = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="announce-table",
+        schema="say-all",
+        gtype="b",
+        default=True,
+        summary="Announce tables",
+    )
     @dbus_service.getter
     def get_announce_table(self) -> bool:
         """Returns whether tables are announced when entered."""
@@ -639,6 +687,13 @@ class SayAllPresenter:
         settings.sayAllContextTable = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="style",
+        schema="say-all",
+        genum="org.gnome.Orca.SayAllStyle",
+        default="sentence",
+        summary="Say All style (line, sentence)",
+    )
     @dbus_service.getter
     def get_style(self) -> str:
         """Returns the current Say All style."""
@@ -662,6 +717,13 @@ class SayAllPresenter:
         settings.sayAllStyle = style.value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="structural-navigation",
+        schema="say-all",
+        gtype="b",
+        default=False,
+        summary="Enable structural navigation in Say All",
+    )
     @dbus_service.getter
     def get_structural_navigation_enabled(self) -> bool:
         """Returns whether structural navigation keys can be used in Say All."""
@@ -677,6 +739,13 @@ class SayAllPresenter:
         settings.structNavInSayAll = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="rewind-and-fast-forward",
+        schema="say-all",
+        gtype="b",
+        default=False,
+        summary="Enable rewind and fast forward in Say All",
+    )
     @dbus_service.getter
     def get_rewind_and_fast_forward_enabled(self) -> bool:
         """Returns whether Up and Down can be used in Say All."""

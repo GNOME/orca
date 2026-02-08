@@ -43,6 +43,7 @@ from . import cmdnames
 from . import command_manager
 from . import dbus_service
 from . import debug
+from . import gsettings_registry
 from . import guilabels
 from . import input_event
 from . import keybindings
@@ -146,6 +147,10 @@ if TYPE_CHECKING:
     from .scripts import default
 
 
+@gsettings_registry.get_registry().gsettings_schema(
+    "org.gnome.Orca.SystemInformation",
+    name="system-information",
+)
 class SystemInformationPresenter:
     """Provides commands to present system information."""
 
@@ -231,6 +236,13 @@ class SystemInformationPresenter:
         settings.presentTimeFormat = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="date-format",
+        schema="system-information",
+        gtype="s",
+        default="%x",
+        summary="Date format string",
+    )
     @dbus_service.getter
     def get_date_format(self) -> str:
         """Returns the current date format name."""
@@ -263,6 +275,13 @@ class SystemInformationPresenter:
 
         return [fmt.string_name for fmt in DateFormat]
 
+    @gsettings_registry.get_registry().gsetting(
+        key="time-format",
+        schema="system-information",
+        gtype="s",
+        default="%X",
+        summary="Time format string",
+    )
     @dbus_service.getter
     def get_time_format(self) -> str:
         """Returns the current time format name."""

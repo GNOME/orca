@@ -114,11 +114,13 @@ i18n.merge_file(
 )
 
 gnome.post_install(
+  glib_compile_schemas: true,
   gtk_update_icon_cache: true,
 )
 
 summary += {'Install dir': python.find_installation('python3').get_install_dir()}
 
+subdir('data')
 subdir('docs')
 subdir('help')
 subdir('icons')

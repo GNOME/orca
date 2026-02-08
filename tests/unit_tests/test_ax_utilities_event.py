@@ -1137,9 +1137,16 @@ class TestAXUtilitiesEvent:
             input_event_manager, "get_manager", return_value=mock_input_manager
         )
 
-        from orca import settings
+        from orca import settings, typing_echo_presenter
 
         test_context.patch_object(settings, "presentLockingKeys", new=True)
+
+        mock_presenter = test_context.Mock()
+        mock_presenter.get_character_echo_enabled.return_value = True
+        mock_presenter.get_key_echo_enabled.return_value = True
+        test_context.patch_object(
+            typing_echo_presenter, "get_presenter", return_value=mock_presenter
+        )
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
         test_context.patch_object(
@@ -3404,9 +3411,16 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesRole, "is_password_text", return_value=True)
         test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
 
-        from orca import settings
+        from orca import settings, typing_echo_presenter
 
         test_context.patch_object(settings, "presentLockingKeys", new=True)
+
+        mock_presenter = test_context.Mock()
+        mock_presenter.get_key_echo_enabled.return_value = True
+        mock_presenter.get_character_echo_enabled.return_value = False
+        test_context.patch_object(
+            typing_echo_presenter, "get_presenter", return_value=mock_presenter
+        )
 
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == TextEventReason.TYPING_ECHOABLE
@@ -3414,7 +3428,6 @@ class TestAXUtilitiesEvent:
         mock_event.any_data = "multi-char"
         test_context.patch_object(AXUtilitiesRole, "is_password_text", return_value=False)
         test_context.patch_object(settings, "presentLockingKeys", new=False)
-        test_context.patch_object(settings, "enableEchoByCharacter", new=False)
 
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == TextEventReason.TYPING

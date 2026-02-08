@@ -45,6 +45,7 @@ from . import debug
 from . import debugging_tools_manager
 from . import event_manager
 from . import focus_manager
+from . import gsettings_registry
 from . import messages
 from . import mouse_review
 from . import orca_modifier_manager
@@ -70,6 +71,7 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
     if is_reload:
         _profile = settings.activeProfile[1]
         settings_manager.get_manager().set_profile(_profile)
+        gsettings_registry.get_registry().set_active_profile(_profile)
 
     if script is None:
         script = script_manager.get_manager().get_default_script()

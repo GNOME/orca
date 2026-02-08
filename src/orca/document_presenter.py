@@ -29,6 +29,7 @@ from __future__ import annotations
 
 
 from dataclasses import dataclass
+from enum import Enum
 from typing import Callable, TYPE_CHECKING
 
 import gi
@@ -42,6 +43,7 @@ from . import cmdnames
 from . import command_manager
 from . import dbus_service
 from . import debug
+from . import gsettings_registry
 from . import focus_manager
 from . import guilabels
 from . import input_event
@@ -64,6 +66,24 @@ from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     from .scripts import default
+
+
+@gsettings_registry.get_registry().gsettings_enum(
+    "org.gnome.Orca.FindResultsVerbosity",
+    values={"none": 0, "if-line-changed": 1, "all": 2},
+)
+class FindResultsVerbosity(Enum):
+    """Find results verbosity level enumeration."""
+
+    NONE = settings.FIND_SPEAK_NONE
+    IF_LINE_CHANGED = settings.FIND_SPEAK_IF_LINE_CHANGED
+    ALL = settings.FIND_SPEAK_ALL
+
+    @property
+    def string_name(self) -> str:
+        """Returns the lowercase string name for this enum value."""
+
+        return self.name.lower().replace("_", "-")
 
 
 @dataclass
@@ -367,6 +387,7 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._initializing = False
 
 
+@gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Document", name="document")
 class DocumentPresenter:
     """Manages document-related presentation and navigation settings."""
 
@@ -993,6 +1014,13 @@ class DocumentPresenter:
 
         self._made_find_announcement = False
 
+    @gsettings_registry.get_registry().gsetting(
+        key="native-nav-triggers-focus-mode",
+        schema="document",
+        gtype="b",
+        default=True,
+        summary="Native navigation triggers focus mode",
+    )
     @dbus_service.getter
     def get_native_nav_triggers_focus_mode(self) -> bool:
         """Returns whether native navigation triggers focus mode."""
@@ -1011,6 +1039,13 @@ class DocumentPresenter:
         settings.nativeNavTriggersFocusMode = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="auto-sticky-focus-mode",
+        schema="document",
+        gtype="b",
+        default=True,
+        summary="Auto-detect sticky focus mode for web apps",
+    )
     @dbus_service.getter
     def get_auto_sticky_focus_mode_for_web_apps(self) -> bool:
         """Returns whether to auto-detect web apps and enable sticky focus mode."""
@@ -1029,6 +1064,13 @@ class DocumentPresenter:
         settings.autoStickyFocusModeForWebApps = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="say-all-on-load",
+        schema="document",
+        gtype="b",
+        default=True,
+        summary="Perform say all when document loads",
+    )
     @dbus_service.getter
     def get_say_all_on_load(self) -> bool:
         """Returns whether to perform say all when a document loads."""
@@ -1047,6 +1089,13 @@ class DocumentPresenter:
         settings.sayAllOnLoad = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="page-summary-on-load",
+        schema="document",
+        gtype="b",
+        default=True,
+        summary="Present page summary when document loads",
+    )
     @dbus_service.getter
     def get_page_summary_on_load(self) -> bool:
         """Returns whether to present a page summary when a document loads."""
@@ -1065,6 +1114,13 @@ class DocumentPresenter:
         settings.pageSummaryOnLoad = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="find-results-verbosity",
+        schema="document",
+        genum="org.gnome.Orca.FindResultsVerbosity",
+        default="all",
+        summary="Find results verbosity (none, if-line-changed, all)",
+    )
     @dbus_service.getter
     def get_speak_find_results(self) -> bool:
         """Returns whether to speak find results."""
@@ -1107,6 +1163,13 @@ class DocumentPresenter:
             settings.findResultsVerbosity = settings.FIND_SPEAK_ALL
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="find-results-minimum-length",
+        schema="document",
+        gtype="i",
+        default=4,
+        summary="Minimum length for find results to be spoken",
+    )
     @dbus_service.getter
     def get_find_results_minimum_length(self) -> int:
         """Returns the minimum length for find results to be spoken."""
@@ -1125,6 +1188,13 @@ class DocumentPresenter:
         settings.findResultsMinimumLength = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="layout-mode",
+        schema="document",
+        gtype="b",
+        default=True,
+        summary="Use document layout mode",
+    )
     @dbus_service.getter
     def get_layout_mode(self) -> bool:
         """Returns whether layout mode is enabled."""

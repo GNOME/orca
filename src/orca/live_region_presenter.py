@@ -38,6 +38,7 @@ from . import cmdnames
 from . import command_manager
 from . import dbus_service
 from . import debug
+from . import gsettings_registry
 from . import focus_manager
 from . import guilabels
 from . import input_event
@@ -171,6 +172,10 @@ class LiveRegionMessageQueue:
         return len(self._heap)
 
 
+@gsettings_registry.get_registry().gsettings_schema(
+    "org.gnome.Orca.LiveRegions",
+    name="live-regions",
+)
 class LiveRegionPresenter:
     """Presents live region announcements."""
 
@@ -535,6 +540,13 @@ class LiveRegionPresenter:
         presentation_manager.get_manager().present_message(message)
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="enabled",
+        schema="live-regions",
+        gtype="b",
+        default=True,
+        summary="Enable live region support",
+    )
     def get_is_enabled(self) -> bool:
         """Returns whether live region support is enabled."""
 
@@ -551,6 +563,13 @@ class LiveRegionPresenter:
         settings.enableLiveRegions = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="present-from-inactive-tab",
+        schema="live-regions",
+        gtype="b",
+        default=False,
+        summary="Present live regions from inactive tabs",
+    )
     def get_present_live_region_from_inactive_tab(self) -> bool:
         """Returns whether live region messages are presented from inactive tabs."""
 

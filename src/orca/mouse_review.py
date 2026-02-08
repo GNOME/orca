@@ -58,6 +58,7 @@ from . import cmdnames
 from . import command_manager
 from . import dbus_service
 from . import debug
+from . import gsettings_registry
 from . import focus_manager
 from . import guilabels
 from . import input_event
@@ -398,6 +399,10 @@ class MousePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
         super().__init__(guilabels.MOUSE, controls, info_message=guilabels.MOUSE_WAYLAND_WARNING)
 
 
+@gsettings_registry.get_registry().gsettings_schema(
+    "org.gnome.Orca.MouseReview",
+    name="mouse-review",
+)
 class MouseReviewer:
     """Main class for the mouse-review feature."""
 
@@ -536,6 +541,13 @@ class MouseReviewer:
 
         return obj
 
+    @gsettings_registry.get_registry().gsetting(
+        key="present-tooltips",
+        schema="mouse-review",
+        gtype="b",
+        default=False,
+        summary="Present tooltips on mouse hover",
+    )
     @dbus_service.getter
     def get_present_tooltips(self) -> bool:
         """Returns whether tooltips displayed due to mouse hover are spoken (requires X11)."""
@@ -551,6 +563,13 @@ class MouseReviewer:
         settings.presentToolTips = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="enabled",
+        schema="mouse-review",
+        gtype="b",
+        default=False,
+        summary="Enable mouse review",
+    )
     @dbus_service.getter
     def get_is_enabled(self) -> bool:
         """Returns whether mouse review is enabled (requires Wnck)."""

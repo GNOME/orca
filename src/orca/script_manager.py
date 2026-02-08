@@ -31,6 +31,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import debug
+from . import gsettings_registry
 from . import settings_manager
 from . import sleep_mode_manager
 from . import speech_manager
@@ -348,7 +349,10 @@ class ScriptManager:
 
         self._active_script = new_script
         if new_script is None:
+            gsettings_registry.get_registry().set_active_app(None)
             return
+
+        gsettings_registry.get_registry().set_active_app(new_script.app_name)
 
         tokens = ["SCRIPT MANAGER: Setting active script to", new_script, "reason:", reason]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)

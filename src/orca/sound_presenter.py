@@ -26,6 +26,7 @@
 from __future__ import annotations
 
 
+from enum import Enum
 from typing import Any, TYPE_CHECKING
 
 import gi
@@ -35,6 +36,7 @@ from gi.repository import Gtk
 
 from . import dbus_service
 from . import debug
+from . import gsettings_registry
 from . import guilabels
 from . import preferences_grid_base
 from . import settings
@@ -42,6 +44,24 @@ from . import sound
 
 if TYPE_CHECKING:
     from .sound import Icon, Tone
+
+
+@gsettings_registry.get_registry().gsettings_enum(
+    "org.gnome.Orca.ProgressBarVerbosity",
+    values={"all": 0, "application": 1, "window": 2},
+)
+class ProgressBarVerbosity(Enum):
+    """Progress bar verbosity level enumeration."""
+
+    ALL = settings.PROGRESS_BAR_ALL
+    APPLICATION = settings.PROGRESS_BAR_APPLICATION
+    WINDOW = settings.PROGRESS_BAR_WINDOW
+
+    @property
+    def string_name(self) -> str:
+        """Returns the lowercase string name for this enum value."""
+
+        return self.name.lower()
 
 
 class SoundProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
@@ -223,6 +243,7 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         return self._progress_bars_grid.has_changes() or self._has_unsaved_changes
 
 
+@gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Sound", name="sound")
 class SoundPresenter:
     """Provides sound presentation support."""
 
@@ -239,6 +260,13 @@ class SoundPresenter:
 
         return SoundPreferencesGrid(self, title_change_callback)
 
+    @gsettings_registry.get_registry().gsetting(
+        key="enabled",
+        schema="sound",
+        gtype="b",
+        default=True,
+        summary="Enable sound output",
+    )
     @dbus_service.getter
     def get_sound_is_enabled(self) -> bool:
         """Returns whether sound is enabled."""
@@ -254,6 +282,13 @@ class SoundPresenter:
         settings.enableSound = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="volume",
+        schema="sound",
+        gtype="d",
+        default=0.5,
+        summary="Sound volume (0.0-1.0)",
+    )
     @dbus_service.getter
     def get_sound_volume(self) -> float:
         """Returns the sound volume (0.0 to 1.0)."""
@@ -269,6 +304,13 @@ class SoundPresenter:
         settings.soundVolume = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="beep-progress-bar-updates",
+        schema="sound",
+        gtype="b",
+        default=False,
+        summary="Beep progress bar updates",
+    )
     @dbus_service.getter
     def get_beep_progress_bar_updates(self) -> bool:
         """Returns whether beep progress bar updates are enabled."""
@@ -284,6 +326,13 @@ class SoundPresenter:
         settings.beepProgressBarUpdates = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="progress-bar-beep-interval",
+        schema="sound",
+        gtype="i",
+        default=0,
+        summary="Progress bar beep interval in seconds",
+    )
     @dbus_service.getter
     def get_progress_bar_beep_interval(self) -> int:
         """Returns the beep progress bar update interval in seconds."""
@@ -299,6 +348,13 @@ class SoundPresenter:
         settings.progressBarBeepInterval = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="progress-bar-beep-verbosity",
+        schema="sound",
+        genum="org.gnome.Orca.ProgressBarVerbosity",
+        default="application",
+        summary="Progress bar beep verbosity (all, application, window)",
+    )
     @dbus_service.getter
     def get_progress_bar_beep_verbosity(self) -> int:
         """Returns the beep progress bar verbosity level."""

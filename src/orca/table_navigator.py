@@ -37,6 +37,7 @@ from . import cmdnames
 from . import command_manager
 from . import dbus_service
 from . import debug
+from . import gsettings_registry
 from . import focus_manager
 from . import guilabels
 from . import input_event
@@ -61,6 +62,10 @@ if TYPE_CHECKING:
     from .scripts import default
 
 
+@gsettings_registry.get_registry().gsettings_schema(
+    "org.gnome.Orca.TableNavigation",
+    name="table-navigation",
+)
 class TableNavigator:
     """Provides Orca-controlled navigation for tabular content."""
 
@@ -917,6 +922,13 @@ class TableNavigator:
                     messages.cell_span(rowspan, colspan)
                 )
 
+    @gsettings_registry.get_registry().gsetting(
+        key="enabled",
+        schema="table-navigation",
+        gtype="b",
+        default=True,
+        summary="Enable table navigation",
+    )
     @dbus_service.getter
     def get_is_enabled(self) -> bool:
         """Returns whether table navigation is enabled."""
@@ -944,6 +956,13 @@ class TableNavigator:
 
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="skip-blank-cells",
+        schema="table-navigation",
+        gtype="b",
+        default=False,
+        summary="Skip blank cells during navigation",
+    )
     @dbus_service.getter
     def get_skip_blank_cells(self) -> bool:
         """Returns whether blank cells should be skipped during navigation."""

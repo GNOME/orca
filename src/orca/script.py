@@ -50,7 +50,8 @@ class Script:
 
     def __init__(self, app: Atspi.Accessible) -> None:
         self.app = app
-        self.name = f"{AXObject.get_name(self.app) or 'default'} (module={self.__module__})"
+        self.app_name: str | None = AXObject.get_name(self.app) or None
+        self.name = f"{self.app_name or 'default'} (module={self.__module__})"
         self.present_if_inactive: bool = True
         self.run_find_command_on: Atspi.Accessible | None = None
         self.point_of_reference: dict = {}

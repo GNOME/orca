@@ -34,6 +34,7 @@ from . import cmdnames
 from . import command_manager
 from . import dbus_service
 from . import debug
+from . import gsettings_registry
 from . import focus_manager
 from . import guilabels
 from . import input_event
@@ -56,6 +57,10 @@ if TYPE_CHECKING:
     from .scripts import default
 
 
+@gsettings_registry.get_registry().gsettings_schema(
+    "org.gnome.Orca.CaretNavigation",
+    name="caret-navigation",
+)
 class CaretNavigator:
     """Implements the caret navigation support available to scripts."""
 
@@ -164,6 +169,13 @@ class CaretNavigator:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
+    @gsettings_registry.get_registry().gsetting(
+        key="enabled",
+        schema="caret-navigation",
+        gtype="b",
+        default=True,
+        summary="Enable caret navigation",
+    )
     @dbus_service.getter
     def get_is_enabled(self) -> bool:
         """Returns whether caret navigation is enabled."""
@@ -191,6 +203,13 @@ class CaretNavigator:
 
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="triggers-focus-mode",
+        schema="caret-navigation",
+        gtype="b",
+        default=False,
+        summary="Caret navigation triggers focus mode",
+    )
     @dbus_service.getter
     def get_triggers_focus_mode(self) -> bool:
         """Returns whether caret navigation triggers focus mode."""

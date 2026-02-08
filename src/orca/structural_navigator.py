@@ -46,6 +46,7 @@ from . import cmdnames
 from . import command_manager
 from . import dbus_service
 from . import debug
+from . import gsettings_registry
 from . import focus_manager
 from . import guilabels
 from . import input_event_manager
@@ -76,6 +77,10 @@ class NavigationMode(Enum):
     GUI = "GUI"
 
 
+@gsettings_registry.get_registry().gsettings_schema(
+    "org.gnome.Orca.StructuralNavigation",
+    name="structural-navigation",
+)
 class StructuralNavigator:
     """Implements the structural navigation support available to scripts."""
 
@@ -474,6 +479,13 @@ class StructuralNavigator:
 
         return not self.get_triggers_focus_mode()
 
+    @gsettings_registry.get_registry().gsetting(
+        key="wraps",
+        schema="structural-navigation",
+        gtype="b",
+        default=True,
+        summary="Wrap when reaching top/bottom",
+    )
     @dbus_service.getter
     def get_navigation_wraps(self) -> bool:
         """Returns whether navigation wraps when reaching the top/bottom of the document."""
@@ -489,6 +501,13 @@ class StructuralNavigator:
         settings.wrappedStructuralNavigation = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="large-object-text-length",
+        schema="structural-navigation",
+        gtype="i",
+        default=75,
+        summary="Minimum text length for large objects",
+    )
     @dbus_service.getter
     def get_large_object_text_length(self) -> int:
         """Returns the minimum number of characters to be considered a 'large object'."""
@@ -504,6 +523,13 @@ class StructuralNavigator:
         settings.largeObjectTextLength = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="enabled",
+        schema="structural-navigation",
+        gtype="b",
+        default=True,
+        summary="Enable structural navigation",
+    )
     @dbus_service.getter
     def get_is_enabled(self) -> bool:
         """Returns whether structural navigation is enabled."""
@@ -551,6 +577,13 @@ class StructuralNavigator:
         )
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="triggers-focus-mode",
+        schema="structural-navigation",
+        gtype="b",
+        default=False,
+        summary="Structural navigation triggers focus mode",
+    )
     @dbus_service.getter
     def get_triggers_focus_mode(self) -> bool:
         """Returns whether structural navigation triggers focus mode."""

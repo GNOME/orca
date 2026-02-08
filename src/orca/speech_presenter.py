@@ -67,6 +67,7 @@ from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from . import gsettings_registry
 
 if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
@@ -611,6 +612,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._initializing = False
 
 
+@gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Speech", name="speech")
 class SpeechPresenter:
     """Configures verbosity settings and adjusts strings for speech presentation."""
 
@@ -709,6 +711,13 @@ class SpeechPresenter:
         msg = "SPEECH PRESENTER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
+    @gsettings_registry.get_registry().gsetting(
+        key="speak-misspelled-indicator",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Speak misspelled word indicator",
+    )
     @dbus_service.getter
     def get_speak_misspelled_indicator(self) -> bool:
         """Returns whether the misspelled indicator is spoken."""
@@ -724,6 +733,13 @@ class SpeechPresenter:
         settings.speakMisspelledIndicator = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="speak-description",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Speak object descriptions",
+    )
     @dbus_service.getter
     def get_speak_description(self) -> bool:
         """Returns whether object descriptions are spoken."""
@@ -739,6 +755,13 @@ class SpeechPresenter:
         settings.speakDescription = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="speak-position-in-set",
+        schema="speech",
+        gtype="b",
+        default=False,
+        summary="Speak position in set",
+    )
     @dbus_service.getter
     def get_speak_position_in_set(self) -> bool:
         """Returns whether the position and set size of objects are spoken."""
@@ -754,6 +777,13 @@ class SpeechPresenter:
         settings.enablePositionSpeaking = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="speak-widget-mnemonic",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Speak widget mnemonics",
+    )
     @dbus_service.getter
     def get_speak_widget_mnemonic(self) -> bool:
         """Returns whether widget mnemonics are spoken."""
@@ -769,6 +799,13 @@ class SpeechPresenter:
         settings.enableMnemonicSpeaking = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="speak-tutorial-messages",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Speak tutorial messages",
+    )
     @dbus_service.getter
     def get_speak_tutorial_messages(self) -> bool:
         """Returns whether tutorial messages are spoken."""
@@ -784,6 +821,13 @@ class SpeechPresenter:
         settings.enableTutorialMessages = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="repeated-character-limit",
+        schema="speech",
+        gtype="i",
+        default=4,
+        summary="Threshold for repeated character compression",
+    )
     @dbus_service.getter
     def get_repeated_character_limit(self) -> int:
         """Returns the count at which repeated, non-alphanumeric symbols will be described."""
@@ -799,6 +843,13 @@ class SpeechPresenter:
         settings.repeatCharacterLimit = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="speak-blank-lines",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Speak blank lines",
+    )
     @dbus_service.getter
     def get_speak_blank_lines(self) -> bool:
         """Returns whether blank lines will be spoken."""
@@ -814,6 +865,13 @@ class SpeechPresenter:
         settings.speakBlankLines = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="speak-row-in-gui-table",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Speak full row in GUI tables",
+    )
     @dbus_service.getter
     def get_speak_row_in_gui_table(self) -> bool:
         """Returns whether Up/Down in GUI tables speaks the row or just the cell."""
@@ -829,6 +887,13 @@ class SpeechPresenter:
         settings.readFullRowInGUITable = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="speak-row-in-document-table",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Speak full row in document tables",
+    )
     @dbus_service.getter
     def get_speak_row_in_document_table(self) -> bool:
         """Returns whether Up/Down in text-document tables speaks the row or just the cell."""
@@ -844,6 +909,13 @@ class SpeechPresenter:
         settings.readFullRowInDocumentTable = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="speak-row-in-spreadsheet",
+        schema="speech",
+        gtype="b",
+        default=False,
+        summary="Speak full row in spreadsheets",
+    )
     @dbus_service.getter
     def get_speak_row_in_spreadsheet(self) -> bool:
         """Returns whether Up/Down in spreadsheets speaks the row or just the cell."""
@@ -859,6 +931,13 @@ class SpeechPresenter:
         settings.readFullRowInSpreadSheet = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="announce-cell-span",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Announce cell span",
+    )
     @dbus_service.getter
     def get_announce_cell_span(self) -> bool:
         """Returns whether cell spans are announced when greater than 1."""
@@ -874,6 +953,13 @@ class SpeechPresenter:
         settings.speakCellSpan = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="announce-cell-coordinates",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Announce cell coordinates",
+    )
     @dbus_service.getter
     def get_announce_cell_coordinates(self) -> bool:
         """Returns whether (non-spreadsheet) cell coordinates are announced."""
@@ -889,6 +975,13 @@ class SpeechPresenter:
         settings.speakCellCoordinates = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="announce-spreadsheet-cell-coordinates",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Announce spreadsheet cell coordinates",
+    )
     @dbus_service.getter
     def get_announce_spreadsheet_cell_coordinates(self) -> bool:
         """Returns whether spreadsheet cell coordinates are announced."""
@@ -904,6 +997,13 @@ class SpeechPresenter:
         settings.speakSpreadsheetCoordinates = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="always-announce-selected-range-in-spreadsheet",
+        schema="speech",
+        gtype="b",
+        default=False,
+        summary="Always announce selected range in spreadsheets",
+    )
     @dbus_service.getter
     def get_always_announce_selected_range_in_spreadsheet(self) -> bool:
         """Returns whether the selected range in spreadsheets is always announced."""
@@ -919,6 +1019,13 @@ class SpeechPresenter:
         settings.alwaysSpeakSelectedSpreadsheetRange = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="announce-cell-headers",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Announce cell headers",
+    )
     @dbus_service.getter
     def get_announce_cell_headers(self) -> bool:
         """Returns whether cell headers are announced."""
@@ -934,6 +1041,13 @@ class SpeechPresenter:
         settings.speakCellHeaders = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="announce-blockquote",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Announce blockquotes",
+    )
     @dbus_service.getter
     def get_announce_blockquote(self) -> bool:
         """Returns whether blockquotes are announced when entered."""
@@ -949,6 +1063,9 @@ class SpeechPresenter:
         settings.speakContextBlockquote = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="announce-form", schema="speech", gtype="b", default=True, summary="Announce forms"
+    )
     @dbus_service.getter
     def get_announce_form(self) -> bool:
         """Returns whether non-landmark forms are announced when entered."""
@@ -964,6 +1081,13 @@ class SpeechPresenter:
         settings.speakContextNonLandmarkForm = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="announce-grouping",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Announce groupings/panels",
+    )
     @dbus_service.getter
     def get_announce_grouping(self) -> bool:
         """Returns whether groupings are announced when entered."""
@@ -979,6 +1103,13 @@ class SpeechPresenter:
         settings.speakContextPanel = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="announce-landmark",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Announce landmarks",
+    )
     @dbus_service.getter
     def get_announce_landmark(self) -> bool:
         """Returns whether landmarks are announced when entered."""
@@ -994,6 +1125,9 @@ class SpeechPresenter:
         settings.speakContextLandmark = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="announce-list", schema="speech", gtype="b", default=True, summary="Announce lists"
+    )
     @dbus_service.getter
     def get_announce_list(self) -> bool:
         """Returns whether lists are announced when entered."""
@@ -1009,6 +1143,9 @@ class SpeechPresenter:
         settings.speakContextList = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="announce-table", schema="speech", gtype="b", default=True, summary="Announce tables"
+    )
     @dbus_service.getter
     def get_announce_table(self) -> bool:
         """Returns whether tables are announced when entered."""
@@ -1059,6 +1196,13 @@ class SpeechPresenter:
             presentation_manager.get_manager().present_message(full, brief)
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="only-speak-displayed-text",
+        schema="speech",
+        gtype="b",
+        default=False,
+        summary="Only speak displayed text",
+    )
     @dbus_service.getter
     def get_only_speak_displayed_text(self) -> bool:
         """Returns whether only displayed text should be spoken."""
@@ -1074,6 +1218,13 @@ class SpeechPresenter:
         settings.onlySpeakDisplayedText = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="speak-progress-bar-updates",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Speak progress bar updates",
+    )
     @dbus_service.getter
     def get_speak_progress_bar_updates(self) -> bool:
         """Returns whether speech progress bar updates are enabled."""
@@ -1089,6 +1240,13 @@ class SpeechPresenter:
         settings.speakProgressBarUpdates = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="progress-bar-speech-interval",
+        schema="speech",
+        gtype="i",
+        default=10,
+        summary="Progress bar speech update interval in seconds",
+    )
     @dbus_service.getter
     def get_progress_bar_speech_interval(self) -> int:
         """Returns the speech progress bar update interval in seconds."""
@@ -1104,6 +1262,13 @@ class SpeechPresenter:
         settings.progressBarSpeechInterval = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="progress-bar-speech-verbosity",
+        schema="speech",
+        genum="org.gnome.Orca.ProgressBarVerbosity",
+        default="application",
+        summary="Progress bar speech verbosity (all, application, window)",
+    )
     @dbus_service.getter
     def get_progress_bar_speech_verbosity(self) -> int:
         """Returns the speech progress bar verbosity level."""
@@ -1119,6 +1284,13 @@ class SpeechPresenter:
         settings.progressBarSpeechVerbosity = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="messages-are-detailed",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Use detailed informative messages",
+    )
     @dbus_service.getter
     def get_messages_are_detailed(self) -> bool:
         """Returns whether informative messages will be detailed or brief."""
@@ -1139,6 +1311,13 @@ class SpeechPresenter:
 
         return settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE
 
+    @gsettings_registry.get_registry().gsetting(
+        key="verbosity-level",
+        schema="speech",
+        genum="org.gnome.Orca.VerbosityLevel",
+        default="verbose",
+        summary="Speech verbosity level (brief, verbose)",
+    )
     @dbus_service.getter
     def get_verbosity_level(self) -> str:
         """Returns the current speech verbosity level for object presentation."""
@@ -1216,6 +1395,13 @@ class SpeechPresenter:
             settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="speak-indentation-and-justification",
+        schema="speech",
+        gtype="b",
+        default=False,
+        summary="Speak indentation and justification",
+    )
     @dbus_service.getter
     def get_speak_indentation_and_justification(self) -> bool:
         """Returns whether speaking of indentation and justification is enabled."""
@@ -1231,6 +1417,13 @@ class SpeechPresenter:
         settings.enableSpeechIndentation = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="speak-indentation-only-if-changed",
+        schema="speech",
+        gtype="b",
+        default=False,
+        summary="Speak indentation only if changed",
+    )
     @dbus_service.getter
     def get_speak_indentation_only_if_changed(self) -> bool:
         """Returns whether indentation will be announced only if it has changed."""

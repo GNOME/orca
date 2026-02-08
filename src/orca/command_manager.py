@@ -42,6 +42,7 @@ from gi.repository import Gdk, GLib, Gtk
 from . import cmdnames
 from . import dbus_service
 from . import debug
+from . import gsettings_registry
 from . import guilabels
 from . import input_event
 from . import input_event_manager
@@ -1074,6 +1075,10 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
 
 # pylint: disable-next=too-many-public-methods
+@gsettings_registry.get_registry().gsettings_schema(
+    "org.gnome.Orca.Keybindings",
+    name="keybindings",
+)
 class CommandManager:
     """Singleton manager for coordinating commands between scripts and UI."""
 
@@ -1711,6 +1716,18 @@ class CommandManager:
         """Returns the current keyboard commands dict."""
 
         return self._keyboard_commands
+
+    @gsettings_registry.get_registry().gsetting(
+        key="entries",
+        schema="keybindings",
+        gtype="a{saas}",
+        default={},
+        summary="User keybinding overrides",
+    )
+    def get_keybinding_overrides(self) -> dict:
+        """Returns the user's keybinding overrides."""
+
+        return settings_manager.get_manager().get_active_keybindings()
 
     # pylint: disable-next=too-many-arguments, too-many-positional-arguments
     def register_command(
