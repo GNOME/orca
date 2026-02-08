@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2026-02-07 09:57+0000\n"
-"PO-Revision-Date: 2026-02-07 16:23+0100\n"
+"POT-Creation-Date: 2026-02-08 16:05+0000\n"
+"PO-Revision-Date: 2026-02-08 17:17+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -23,8 +23,6 @@ msgid "Orca Screen Reader"
 msgstr "Orca - ეკრანის მკითხველი"
 
 #: orca.desktop.in:3
-#| msgctxt "keyboard"
-#| msgid "Orca"
 msgid "Orca"
 msgstr "Orca"
 
@@ -1143,6 +1141,23 @@ msgstr "საუბრის ხმის დაწევა"
 msgid "Toggle the silencing of speech"
 msgstr "საუბრის დადუმების გადართვა"
 
+#. Translators: The on-screen braille display is a graphical window that displays a
+#. visual representation of what would be shown on a connected braille display,
+#. including the braille dots and the text characters they correspond to. It is
+#. primarily used by developers and testers who may not have a physical braille
+#. display.
+#: src/orca/cmdnames.py:440
+msgid "Toggle the on-screen braille display on and off"
+msgstr "გადართავს ეკრანზე ნაჩვენებ ბრეილს"
+
+#. Translators: The on-screen speech display is a graphical window that displays a
+#. scrolling log of all text spoken by the screen reader. It is primarily used by
+#. developers and testers to verify what is being spoken without having to listen
+#. to the audio.
+#: src/orca/cmdnames.py:446
+msgid "Toggle the on-screen speech display on and off"
+msgstr "ეკრანზე გამოტანილი წარმოთქმის ჩვენების გადართვა"
+
 #. Translators: Orca has a sleep mode which causes Orca to essentially behave as
 #. if it were not running for a given application. Some use cases include self-
 #. voicing apps with associated commands (e.g. ChromeVox) and VMs. In the former
@@ -1155,7 +1170,7 @@ msgstr "საუბრის დადუმების გადართვ�
 #. another application window, Orca commands, speech, and braille immediately
 #. resume working. This string is the command which toggles sleep mode on/off
 #. for the app being used at the time the command is given.
-#: src/orca/cmdnames.py:447
+#: src/orca/cmdnames.py:460
 msgid "Toggle sleep mode for the current application"
 msgstr "ძილის რეჟიმის გადართვა მიმდინარე აპლიკაციისთვის"
 
@@ -1163,7 +1178,7 @@ msgstr "ძილის რეჟიმის გადართვა მიმ
 #. Orca will speak when presenting objects as the user navigates within
 #. applications and reads content. The levels can be toggled via command.
 #. This string describes that command.
-#: src/orca/cmdnames.py:453
+#: src/orca/cmdnames.py:466
 msgid "Toggle speech verbosity level"
 msgstr "საუბრის დიაგნოსტიკური შეტყობინებების დონის გადართვა"
 
@@ -1171,29 +1186,29 @@ msgstr "საუბრის დიაგნოსტიკური შეტ�
 #. for use with a full-size keyboard with a numeric keypad, and a "laptop" layout
 #. intended for use with laptop keyboards that lack a numeric keypad. This command
 #. toggles between these two layouts at runtime.
-#: src/orca/cmdnames.py:459
+#: src/orca/cmdnames.py:472
 msgid "Toggle keyboard layout"
 msgstr "კლავიატურის განლაგების გადართვა"
 
 #. Translators: this string is associated with the keyboard shortcut to quit
 #. Orca.
-#: src/orca/cmdnames.py:463
+#: src/orca/cmdnames.py:476
 msgid "Quit the screen reader"
 msgstr "ეკრანის მკითხველიდან გასვლა"
 
 #. Translators: the preferences configuration dialog is the dialog that allows
 #. users to set their preferences for Orca.
-#: src/orca/cmdnames.py:467
+#: src/orca/cmdnames.py:480
 msgid "Display the preferences configuration dialog"
 msgstr "პარამეტრების მორგების ფანჯრის ჩვენება"
 
 #. Translators: the preferences configuration dialog is the dialog that allows
 #. users to set their preferences for a specific application within Orca.
-#: src/orca/cmdnames.py:471
+#: src/orca/cmdnames.py:484
 msgid "Display the application preferences configuration dialog"
 msgstr "აპლიკაციის პარამეტრების მორგების ფანჯრის ჩვენება"
 
-#: src/orca/cmdnames.py:476
+#: src/orca/cmdnames.py:489
 msgid "Toggle the speaking of indentation and justification"
 msgstr "შეწევისა და სწორებების წარმოთქმის გადართვა"
 
@@ -1201,27 +1216,27 @@ msgstr "შეწევისა და სწორებების წარ
 #. spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
 #. three"). This string to be translated refers to an Orca command for quickly
 #. toggling between the two options.
-#: src/orca/cmdnames.py:483
+#: src/orca/cmdnames.py:496
 msgid "Change spoken number style"
 msgstr "ნათქვამი რიცხვის სტილის შეცვლა"
 
 #. Translators: Orca has a command to present the current clipboard contents to
 #. the user without them having to switch to a clipboard manager application. This
 #. string is the description of that command.
-#: src/orca/cmdnames.py:488
+#: src/orca/cmdnames.py:501
 msgid "Present clipboard contents"
 msgstr "ბუფერის მიმდინარე შემცველობა"
 
 #. Translators: Orca allows users to cycle through punctuation levels. None,
 #. some, most, or all, punctuation will be spoken.
-#: src/orca/cmdnames.py:492
+#: src/orca/cmdnames.py:505
 msgid "Cycle to the next speaking of punctuation level"
 msgstr "პუნქტუაციის გამოთქმის შემდეგ დონეზე გადასვლა"
 
 #. Translators: Orca allows users to cycle through the speech synthesizers
 #. available on their system, such as espeak, voxin, mbrola, etc. This string
 #. is the description of the command.
-#: src/orca/cmdnames.py:497
+#: src/orca/cmdnames.py:510
 msgid "Cycle to the next speech synthesizer"
 msgstr "შემდეგ საუბრის სინთეზატორზე გადასვლა"
 
@@ -1231,14 +1246,14 @@ msgstr "შემდეგ საუბრის სინთეზატორ�
 #. and selected when reading Spanish content. This string to be translated refers
 #. to an Orca command which makes it possible for users to quickly cycle amongst
 #. their saved profiles without having to get into a GUI.
-#: src/orca/cmdnames.py:505
+#: src/orca/cmdnames.py:518
 msgid "Cycle to the next settings profile"
 msgstr "შემდეგ პარამეტრების პროფილზე გდასვლა"
 
 #. Translators: Orca has a feature that allows users to save and load collections
 #. of settings into named "profiles". This string to be translated refers to an
 #. Orca command which presents the name of the currently active profile.
-#: src/orca/cmdnames.py:510
+#: src/orca/cmdnames.py:523
 msgid "Present the current profile"
 msgstr "მიმდინარე პროფილის წარდგენა"
 
@@ -1249,7 +1264,7 @@ msgstr "მიმდინარე პროფილის წარდგე�
 #. 'icon'. This string to be translated refers to an Orca command which makes it
 #. possible for users to quickly cycle amongst these alternatives without having
 #. to get into a GUI.
-#: src/orca/cmdnames.py:519
+#: src/orca/cmdnames.py:532
 msgid "Cycle to the next capitalization style"
 msgstr "შემდეგ სიმბოლოების რეგისტრის შეცვლის სტილზე გადასვლა"
 
@@ -1263,14 +1278,14 @@ msgstr "შემდეგ სიმბოლოების რეგისტ�
 #. A user can choose to have no echo, one type of echo, or multiple types of
 #. echo. The following string refers to a command that allows the user to quickly
 #. choose which type of echo is being used.
-#: src/orca/cmdnames.py:531
+#: src/orca/cmdnames.py:544
 msgid "Cycle to the next key echo level"
 msgstr "ღილაკების ექოს შემდეგ დონეზე გადასვლა"
 
 #. Translators: this is a debug message that Orca users will not normally see. It
 #. describes a debug routine that allows the user to adjust the level of debug
 #. information that Orca generates at run time.
-#: src/orca/cmdnames.py:536
+#: src/orca/cmdnames.py:549
 msgid "Cycle the debug level at run time"
 msgstr "გამართვის დონის შეცვლა გაშვებულობის დროს"
 
@@ -1279,7 +1294,7 @@ msgstr "გამართვის დონის შეცვლა გაშ
 #. the currently-running application. This is sometimes needed because applications
 #. fail to notify AT-SPI when something changes resulting in AT-SPI having stale
 #. information which impacts Orca's logic and/or presentation to users.
-#: src/orca/cmdnames.py:543
+#: src/orca/cmdnames.py:556
 msgid "Clear the AT-SPI cache for the current application"
 msgstr "AT-SPI-ის კეშის გასუფთავება მიმდინარე აპლიკაციისთვის"
 
@@ -1287,44 +1302,44 @@ msgstr "AT-SPI-ის კეშის გასუფთავება მი�
 #. describes a command to print detailed debugging information about the current
 #. state such as the current Orca settings and a list of all the running accessible
 #. applications, etc.
-#: src/orca/cmdnames.py:549
+#: src/orca/cmdnames.py:562
 msgid "Capture snapshot for debugging"
 msgstr "ეკრანის სწრაფი ასლის აღება გამართვისთვის"
 
 #. Translators: Orca allows the item under the pointer to be spoken. This toggles
 #. the feature without the need to get into a GUI.
-#: src/orca/cmdnames.py:553
+#: src/orca/cmdnames.py:566
 msgid "Toggle mouse review mode"
 msgstr "თაგუნას გადახედვის რეჟიმის გადართვა"
 
 #. Translators: Orca has a command to present the battery status (e.g. level, whether
 #. or not it is plugged in, etc.). This string is the name of that command.
-#: src/orca/cmdnames.py:557
+#: src/orca/cmdnames.py:570
 msgid "Present battery status"
 msgstr "მიმდინარე ელემენტის სტატუსი"
 
 #. Translators: Orca has a command to present the CPU and memory usage as percents.
 #. This string is the name of that command.
-#: src/orca/cmdnames.py:561
+#: src/orca/cmdnames.py:574
 msgid "Present CPU and memory usage"
 msgstr "მიმდინარე CPU-ისა და მეხსიერების გამოყენება"
 
 #. Translators: Orca has a command to present the current time in speech and in
 #. braille.
-#: src/orca/cmdnames.py:565
+#: src/orca/cmdnames.py:578
 msgid "Present current time"
 msgstr "მიმდინარე დროის ჩვენება"
 
 #. Translators: Orca has a command to present the current date in speech and in
 #. braille.
-#: src/orca/cmdnames.py:569
+#: src/orca/cmdnames.py:582
 msgid "Present current date"
 msgstr "მიმდინარე თარიღის ჩვენება"
 
 #. Translators: Orca has a command to present the pixel size and location of
 #. the current object. This string is how this command is described in the list
 #. of keyboard shortcuts.
-#: src/orca/cmdnames.py:574
+#: src/orca/cmdnames.py:587
 msgid "Present size and location of current object"
 msgstr "მიმდინარე ობიექტის ზომისა და მდებარეობის ჩვენება"
 
@@ -1335,21 +1350,21 @@ msgstr "მიმდინარე ობიექტის ზომისა 
 #. be used in editors to move the current line of text down. By temporarily
 #. disabling Orca commands, Alt+Down would be ignored by Orca and work as
 #. expected in the editor.
-#: src/orca/cmdnames.py:583
+#: src/orca/cmdnames.py:596
 msgid "Toggle all Orca command keys"
 msgstr "Orca-ის ყველა ბრძანების ღილაკები გადართვა"
 
 #. Translators: Orca has a command to review previous chat room messages in
 #. speech and braille. This string to be translated is associated with the
 #. keyboard commands used to review those previous messages.
-#: src/orca/cmdnames.py:588
+#: src/orca/cmdnames.py:601
 msgid "Present previous chat room message"
 msgstr "წინა ჩატის ოთახის შეტყობინების წარდგენა"
 
 #. Translators: Orca has a command to review chat room messages in
 #. speech and braille. This string to be translated is associated with the
 #. keyboard commands used to review the next message in the history.
-#: src/orca/cmdnames.py:593
+#: src/orca/cmdnames.py:606
 msgid "Present next chat room message"
 msgstr "შემდეგი ჩატის ოთახის შეტყობინების წარდგენა"
 
@@ -1358,7 +1373,7 @@ msgstr "შემდეგი ჩატის ოთახის შეტყო
 #. to have this typing status announced by Orca; others find that announcement
 #. unpleasant. Therefore, it is a setting in Orca. This string to be translated
 #. is associated with the command to toggle typing status presentation on or off.
-#: src/orca/cmdnames.py:600
+#: src/orca/cmdnames.py:613
 msgid "Toggle typing announcements"
 msgstr "კრეფის გამოცხადებების გადართვა"
 
@@ -1369,7 +1384,7 @@ msgstr "კრეფის გამოცხადებების გად�
 #. messages from #a11y). Therefore, this is a setting in Orca. This string to be
 #. translated is associated with the command to toggle specific room history on
 #. or off.
-#: src/orca/cmdnames.py:609
+#: src/orca/cmdnames.py:622
 msgid "Toggle chat room specific message histories"
 msgstr "ჩატის ოთახის სპეციფიკური შეტყობინების ისტორიების გადართვა"
 
@@ -1380,70 +1395,70 @@ msgstr "ჩატის ოთახის სპეციფიკური შ
 #. has an option to present the name of the room first ("#a11y <joanie> hello!"
 #. instead of "<joanie> hello!"). This string to be translated is associated with
 #. the command to toggle room name presentation on or off.
-#: src/orca/cmdnames.py:618
+#: src/orca/cmdnames.py:631
 msgid "Toggle room name presentation"
 msgstr "ოთახის სახელის წარმოდგენის გადართვა"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the left.
-#: src/orca/cmdnames.py:623
+#: src/orca/cmdnames.py:636
 msgid "Line Left"
 msgstr "ხაზი მარცხნივ"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the right.
-#: src/orca/cmdnames.py:628
+#: src/orca/cmdnames.py:641
 msgid "Line Right"
 msgstr "ხაზი მარჯვნივ"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls up.
-#: src/orca/cmdnames.py:633
+#: src/orca/cmdnames.py:646
 msgid "Line Up"
 msgstr "ხაზი მაღლა"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls down.
-#: src/orca/cmdnames.py:638
+#: src/orca/cmdnames.py:651
 msgid "Line Down"
 msgstr "ხაზი დაბლა"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, it instructs the braille display to freeze.
-#: src/orca/cmdnames.py:643
+#: src/orca/cmdnames.py:656
 msgid "Freeze"
 msgstr "დამაგრება"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the top left of the window.
-#: src/orca/cmdnames.py:648
+#: src/orca/cmdnames.py:661
 msgid "Top Left"
 msgstr "ზედა მარცხენა"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to the bottom left of the window.
-#: src/orca/cmdnames.py:653
+#: src/orca/cmdnames.py:666
 msgid "Bottom Left"
 msgstr "ქვედა მარცხენა"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display scrolls to position containing the cursor.
-#: src/orca/cmdnames.py:658
+#: src/orca/cmdnames.py:671
 msgid "Cursor Position"
 msgstr "კურსორის პოზიცია"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
 #. button, the display toggles between six-dot braille and eight-dot braille.
-#: src/orca/cmdnames.py:663
+#: src/orca/cmdnames.py:676
 msgid "Six Dots"
 msgstr "ექვსი წერტილი"
 
@@ -1452,7 +1467,7 @@ msgstr "ექვსი წერტილი"
 #. represents a whole set of buttons known as cursor routing keys and are a way
 #. for a user to move the application's caret to the position indicated on the
 #. display.
-#: src/orca/cmdnames.py:670
+#: src/orca/cmdnames.py:683
 msgid "Cursor Routing"
 msgstr "კურსორული მართვა"
 
@@ -1461,7 +1476,7 @@ msgstr "კურსორული მართვა"
 #. represents the start of a selection operation. It is called "Cut Begin" to map
 #. to what BrlTTY users are used to: in character cell mode operation on virtual
 #. consoles, the act of copying text is erroneously called a "cut" operation.
-#: src/orca/cmdnames.py:677
+#: src/orca/cmdnames.py:690
 msgid "Cut Begin"
 msgstr "ამოჭრის დასაწყისი"
 
@@ -1470,97 +1485,97 @@ msgstr "ამოჭრის დასაწყისი"
 #. represents marking the endpoint of a selection. It is called "Cut Line" to map
 #. to what BrlTTY users are used to: in character cell mode operation on virtual
 #. consoles, the act of copying text is erroneously called a "cut" operation.
-#: src/orca/cmdnames.py:684
+#: src/orca/cmdnames.py:697
 msgid "Cut Line"
 msgstr "ხაზის ამოჭრა"
 
 #. Translators: this is a command which causes Orca to present the last received
 #. notification message.
-#: src/orca/cmdnames.py:688
+#: src/orca/cmdnames.py:701
 msgid "Present last notification message"
 msgstr "ბოლო შეტყობინების ტექსტის ჩვენება"
 
 #. Translators: this is a command which causes Orca to present a list of all the
 #. notification messages received.
-#: src/orca/cmdnames.py:692
+#: src/orca/cmdnames.py:705
 msgid "Present notification messages list"
 msgstr "შეტყობინებების ტექსტის ჩამონათვლის ჩვენება"
 
 #. Translators: this is a command which causes Orca to present the previous
 #. notification message.
-#: src/orca/cmdnames.py:696
+#: src/orca/cmdnames.py:709
 msgid "Present previous notification message"
 msgstr "წინა შეტყობინების ტექსტის ჩვენება"
 
 #. Translators: this is a command which causes Orca to present the next
 #. notification message.
-#: src/orca/cmdnames.py:700
+#: src/orca/cmdnames.py:713
 msgid "Present next notification message"
 msgstr "შემდეგი გაფრთხილების შეტყობინების ტქმა"
 
 #. Translators: this is a command related to navigating within a document.
-#: src/orca/cmdnames.py:703
+#: src/orca/cmdnames.py:716
 msgid "Go to next character"
 msgstr "შემდეგ სიმბოლოზე გადასვლა"
 
 #. Translators: this is a command related to navigating within a document.
-#: src/orca/cmdnames.py:706
+#: src/orca/cmdnames.py:719
 msgid "Go to previous character"
 msgstr "წინა სიმბოლოზე გადასვლა"
 
 #. Translators: this is a command related to navigating within a document.
-#: src/orca/cmdnames.py:709
+#: src/orca/cmdnames.py:722
 msgid "Go to next word"
 msgstr "შემდეგ სიტყვაზე გადასვლა"
 
 #. Translators: this is a command related to navigating within a document.
-#: src/orca/cmdnames.py:712
+#: src/orca/cmdnames.py:725
 msgid "Go to previous word"
 msgstr "წინა სიტყვაზე გადასვლა"
 
 #. Translators: this is a command related to navigating within a document.
-#: src/orca/cmdnames.py:715
+#: src/orca/cmdnames.py:728
 msgid "Go to next line"
 msgstr "შემდეგ ხაზზე გადასვლა"
 
 #. Translators: this is a command related to navigating within a document.
-#: src/orca/cmdnames.py:718
+#: src/orca/cmdnames.py:731
 msgid "Go to previous line"
 msgstr "წინა ხაზზე გადასვლა"
 
 #. Translators: this is a command related to navigating within a document.
-#: src/orca/cmdnames.py:721
+#: src/orca/cmdnames.py:734
 msgid "Go to the top of the file"
 msgstr "ფაილის დასაწყისში გადასვლა"
 
 #. Translators: this is a command related to navigating within a document.
-#: src/orca/cmdnames.py:724
+#: src/orca/cmdnames.py:737
 msgid "Go to the bottom of the file"
 msgstr "ფაილის ბოლოში გადასვლა"
 
 #. Translators: this is a command related to navigating within a document.
-#: src/orca/cmdnames.py:727
+#: src/orca/cmdnames.py:740
 msgid "Go to the beginning of the line"
 msgstr "ხაზის დასაწყისში გადასვლა"
 
 #. Translators: this is a command related to navigating within a document.
-#: src/orca/cmdnames.py:730
+#: src/orca/cmdnames.py:743
 msgid "Go to the end of the line"
 msgstr "ხაზის ბოლოში გადასვლა"
 
 #. Translators: this is a command related to navigating within a document.
-#: src/orca/cmdnames.py:733
+#: src/orca/cmdnames.py:746
 msgid "Go to the next object"
 msgstr "შემდეგ ობიექტზე გადასვლა"
 
 #. Translators: this is a command related to navigating within a document.
-#: src/orca/cmdnames.py:736
+#: src/orca/cmdnames.py:749
 msgid "Go to the previous object"
 msgstr "წინა ობიექტზე გადასვლა"
 
 #. Translators: this is for causing a collapsed combo box which was reached
 #. by Orca's caret navigation to be expanded.
-#: src/orca/cmdnames.py:740
+#: src/orca/cmdnames.py:753
 msgid "Cause the current combo box to be expanded"
 msgstr "მიმდინარე ჩამოსაშლელის ჩამოშლა"
 
@@ -1568,7 +1583,7 @@ msgstr "მიმდინარე ჩამოსაშლელის ჩა�
 #. itself controls how the arrow keys move the caret around HTML content. It's
 #. often broken, so Orca needs to provide its own support. As such, Orca offers
 #. the user the ability to toggle which application is controlling the caret.
-#: src/orca/cmdnames.py:746
+#: src/orca/cmdnames.py:759
 msgid "Switch between native and screen-reader caret navigation"
 msgstr "საკუთარ და ეკრანის წამკითხველის კარეტით ნავიგაციას შორის გადართვა"
 
@@ -1579,7 +1594,7 @@ msgstr "საკუთარ და ეკრანის წამკითხ
 #. idle ("polite"), and when there is a change ("assertive"). Orca has several
 #. features to facilitate accessing live regions. This string refers to a command
 #. to cycle through the different "politeness" levels.
-#: src/orca/cmdnames.py:755
+#: src/orca/cmdnames.py:768
 msgid "Advance live region politeness setting"
 msgstr "დამატებითი ცოცხალი რეგიონის ზრდილობის პარამეტრი"
 
@@ -1590,21 +1605,21 @@ msgstr "დამატებითი ცოცხალი რეგიონ�
 #. idle ("polite"), and when there is a change ("assertive"). Orca has several
 #. features to facilitate accessing live regions. This string refers to a command
 #. to turn off live regions by default.
-#: src/orca/cmdnames.py:764
+#: src/orca/cmdnames.py:777
 msgid "Set default live region politeness level to off"
 msgstr "ნაგულისხმევი ცოცხალი რეგიონის ზრდილობის დონის გამორთულზე დაყენება"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 #. This string refers to a command for presenting the previous live region message.
-#: src/orca/cmdnames.py:769
+#: src/orca/cmdnames.py:782
 msgid "Present previous live region message"
 msgstr "წინა ცოცხალი რეგიონის შეტყობინების წარდგენა"
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
 #. This string refers to a command for presenting the next live region message.
-#: src/orca/cmdnames.py:774
+#: src/orca/cmdnames.py:787
 msgid "Present next live region message"
 msgstr "შემდეგი ცოცხალი რეგიონის შეტყობინების წარდგენა"
 
@@ -1617,14 +1632,14 @@ msgstr "შემდეგი ცოცხალი რეგიონის შ
 #. level of "off") and still manually review recent updates to live regions via
 #. Orca commands for doing so -- as long as the monitoring of live regions is
 #. enabled.
-#: src/orca/cmdnames.py:785
+#: src/orca/cmdnames.py:798
 msgid "Monitor live regions"
 msgstr "ცოცხალი რეგიონების მონიტორინგი"
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This string refers to
 #. the command to set the row.
-#: src/orca/cmdnames.py:790
+#: src/orca/cmdnames.py:803
 msgid "Set the row to use as dynamic column headers"
 msgstr "მწკრივის დაყენება დინამიკური სვეტის თავსართებად გამოსაყენებლად"
 
@@ -1632,14 +1647,14 @@ msgstr "მწკრივის დაყენება დინამიკ�
 #. or table should be treated as containing column headers. This string refers to
 #. the command to unset the row so it is no longer treated as if it contained
 #. column headers.
-#: src/orca/cmdnames.py:796
+#: src/orca/cmdnames.py:809
 msgid "Clear the dynamic column headers"
 msgstr "დინამიკური სვეტის თავსართების გასუფთავება"
 
 #. Translators: Orca allows you to dynamically define which column of a
 #. spreadsheet or table should be treated as containing row headers. This
 #. string refers to the command to set the column.
-#: src/orca/cmdnames.py:801
+#: src/orca/cmdnames.py:814
 msgid "Set the column to use as dynamic row headers"
 msgstr "სვეტის დაყენება დინამიკური მწკრივის თავსართებად გამოსაყენებლად"
 
@@ -1647,13 +1662,13 @@ msgstr "სვეტის დაყენება დინამიკურ�
 #. spreadsheet or table should be treated as containing column headers. This
 #. string refers to the command to unset the column so it is no longer treated
 #. as if it contained row headers.
-#: src/orca/cmdnames.py:807
+#: src/orca/cmdnames.py:820
 msgid "Clear the dynamic row headers"
 msgstr "დინამიკური მწკრივის თავსართების გასუფთავება"
 
 #. Translators: This string refers to an Orca command. The command causes Orca
 #. to present the formula for the current table cell.
-#: src/orca/cmdnames.py:811
+#: src/orca/cmdnames.py:824
 msgid "Present the formula for the current cell"
 msgstr "ფორმულის წარმოდგენა მიმდინარე უჯრედისთვის"
 
@@ -1664,454 +1679,454 @@ msgstr "ფორმულის წარმოდგენა მიმდი�
 #. the navigation can be restricted to the current document or to non-document/GUI
 #. objects. This string is the description of the command which switches among the
 #. available modes: off, document, and GUI.
-#: src/orca/cmdnames.py:820
+#: src/orca/cmdnames.py:833
 msgid "Cycles to the next structural navigation mode"
 msgstr "გადასვლა შემდეგი სტრუქტურული ნავიგაციის რეჟიმზე"
 
 #. Translators: Orca has commands for navigating within a table, e.g. to the
 #. next cell in a given direction. This string is the description of the command
 #. which enables/disables this support.
-#: src/orca/cmdnames.py:825
+#: src/orca/cmdnames.py:838
 msgid "Toggle table navigation keys"
 msgstr "ცხრილის ნავიგაციის ღილაკების გადართვა"
 
 #. Translators: this is for navigating among blockquotes in a document.
-#: src/orca/cmdnames.py:828
+#: src/orca/cmdnames.py:841
 msgid "Go to previous blockquote"
 msgstr "წინა ციტატის ბლოკზე დაბრუნება"
 
 #. Translators: this is for navigating among blockquotes in a document.
-#: src/orca/cmdnames.py:831
+#: src/orca/cmdnames.py:844
 msgid "Go to next blockquote"
 msgstr "შემდეგ ციტატის ბლოკზე გადასვლა"
 
 #. Translators: this is for navigating among blockquotes in a document.
-#: src/orca/cmdnames.py:834
+#: src/orca/cmdnames.py:847
 msgid "Display a list of blockquotes"
 msgstr "ციტატის ბლოკების სიის გამოტანა"
 
 #. Translators: this is for navigating among buttons in a document.
-#: src/orca/cmdnames.py:837
+#: src/orca/cmdnames.py:850
 msgid "Go to previous button"
 msgstr "წინა ღილაკზე გადასვლა"
 
 #. Translators: this is for navigating among buttons in a document.
-#: src/orca/cmdnames.py:840
+#: src/orca/cmdnames.py:853
 msgid "Go to next button"
 msgstr "შემდეგ ღილაკზე გადასვლა"
 
 #. Translators: this is for navigating among buttons in a document.
-#: src/orca/cmdnames.py:843
+#: src/orca/cmdnames.py:856
 msgid "Display a list of buttons"
 msgstr "ღილაკების სიის ჩვენება"
 
 #. Translators: this is for navigating among check boxes in a document.
-#: src/orca/cmdnames.py:846
+#: src/orca/cmdnames.py:859
 msgid "Go to previous check box"
 msgstr "წინა ჩამრთველზე გადასვლა"
 
 #. Translators: this is for navigating among check boxes in a document.
-#: src/orca/cmdnames.py:849
+#: src/orca/cmdnames.py:862
 msgid "Go to next check box"
 msgstr "შემდეგ ჩამრთველზე გადასვლა"
 
 #. Translators: this is for navigating among check boxes in a document.
-#: src/orca/cmdnames.py:852
+#: src/orca/cmdnames.py:865
 msgid "Display a list of check boxes"
 msgstr "ჩამრთველების სიის ჩვენება"
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
-#: src/orca/cmdnames.py:856
+#: src/orca/cmdnames.py:869
 msgid "Go to previous clickable"
 msgstr "წინა დაწკაპუნებადზე გადასვლა"
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
-#: src/orca/cmdnames.py:860
+#: src/orca/cmdnames.py:873
 msgid "Go to next clickable"
 msgstr "შემდეგ დაწკაპუნებადზე გადასვლა"
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
-#: src/orca/cmdnames.py:864
+#: src/orca/cmdnames.py:877
 msgid "Display a list of clickables"
 msgstr "დაწკაპუნებადების სიის ჩვენება"
 
 #. Translators: this is for navigating among combo boxes in a document.
-#: src/orca/cmdnames.py:867
+#: src/orca/cmdnames.py:880
 msgid "Go to previous combo box"
 msgstr "წინა ჩამოშლად სიაზე გადასვლა"
 
 #. Translators: this is for navigating among combo boxes in a document.
-#: src/orca/cmdnames.py:870
+#: src/orca/cmdnames.py:883
 msgid "Go to next combo box"
 msgstr "შემდეგ ჩამოშლად სიაზე გადასვლა"
 
 #. Translators: This string describes a document navigation command which moves
 #. to the start of the current container. Examples of containers include tables,
 #. lists, and blockquotes.
-#: src/orca/cmdnames.py:875
+#: src/orca/cmdnames.py:888
 msgid "Go to start of container"
 msgstr "კონტეინერის დასაწყისში გადასვლა"
 
 #. Translators: This string describes a document navigation command which moves
 #. to the end of the current container. Examples of containers include tables,
 #. lists, and blockquotes.
-#: src/orca/cmdnames.py:880
+#: src/orca/cmdnames.py:893
 msgid "Go to end of container"
 msgstr "კონტეინერის ბოლოში გადასვლა"
 
 #. Translators: this is for navigating among combo boxes in a document.
-#: src/orca/cmdnames.py:883
+#: src/orca/cmdnames.py:896
 msgid "Display a list of combo boxes"
 msgstr "ჩამოშლადი სიების ჩამონათვლის ჩვენება"
 
 #. Translators: this is for navigating among entries in a document.
-#: src/orca/cmdnames.py:886
+#: src/orca/cmdnames.py:899
 msgid "Go to previous entry"
 msgstr "წინა ელემენტზე გადასვლა"
 
 #. Translators: this is for navigating among entries in a document.
-#: src/orca/cmdnames.py:889
+#: src/orca/cmdnames.py:902
 msgid "Go to next entry"
 msgstr "შემდეგ ელემენტზე გადასვლა"
 
 #. Translators: this is for navigating among entries in a document.
-#: src/orca/cmdnames.py:892
+#: src/orca/cmdnames.py:905
 msgid "Display a list of entries"
 msgstr "ელემენტების სიის ჩვენება"
 
 #. Translators: this is for navigating among form fields in a document.
-#: src/orca/cmdnames.py:895
+#: src/orca/cmdnames.py:908
 msgid "Go to previous form field"
 msgstr "წინა ფორმის ველზე გადასვლა"
 
 #. Translators: this is for navigating among form fields in a document.
-#: src/orca/cmdnames.py:898
+#: src/orca/cmdnames.py:911
 msgid "Go to next form field"
 msgstr "შემდეგ ფორმის ველზე გადასვლა"
 
 #. Translators: this is for navigating among form fields in a document.
-#: src/orca/cmdnames.py:901
+#: src/orca/cmdnames.py:914
 msgid "Display a list of form fields"
 msgstr "ფორმის ველების სიის ჩვენება"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
-#: src/orca/cmdnames.py:904
+#: src/orca/cmdnames.py:917
 msgid "Go to previous heading"
 msgstr "წინა მიმართულებაზე გადასვლა"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
-#: src/orca/cmdnames.py:907
+#: src/orca/cmdnames.py:920
 msgid "Go to next heading"
 msgstr "შემდეგ მიმართულებაზე გადასვლა"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
-#: src/orca/cmdnames.py:910
+#: src/orca/cmdnames.py:923
 msgid "Display a list of headings"
 msgstr "მიმართულებების სიის ჩვენება"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
-#: src/orca/cmdnames.py:914
+#: src/orca/cmdnames.py:927
 #, python-format
 msgid "Go to previous heading at level %d"
 msgstr "წინა %d დონის სათაურზე გადასვლა"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
-#: src/orca/cmdnames.py:918
+#: src/orca/cmdnames.py:931
 #, python-format
 msgid "Go to next heading at level %d"
 msgstr "შემდეგ %d დონის სათაურზე გადასვლა"
 
 #. Translators: this is for navigating among headings (e.g. <h1>) in a document.
 #. <h1> is a heading at level 1, <h2> is a heading at level 2, etc.
-#: src/orca/cmdnames.py:922
+#: src/orca/cmdnames.py:935
 #, python-format
 msgid "Display a list of headings at level %d"
 msgstr "სათაურის სიის ჩვენება დონეზე %d"
 
 #. Translators: this is for navigating among iframes in a document.
-#: src/orca/cmdnames.py:925
+#: src/orca/cmdnames.py:938
 msgid "Go to previous internal frame"
 msgstr "წინა შიდა ჩარჩოზე გადასვლა"
 
 #. Translators: this is for navigating among iframes in a document.
-#: src/orca/cmdnames.py:928
+#: src/orca/cmdnames.py:941
 msgid "Go to next internal frame"
 msgstr "შემდეგ შიდა ჩარჩოზე გადასვლა"
 
 #. Translators: this is for navigating among images in a document.
-#: src/orca/cmdnames.py:931
+#: src/orca/cmdnames.py:944
 msgid "Display a list of internal frames"
 msgstr "შიდა ჩარჩოების სიის ჩვენება"
 
 #. Translators: this is for navigating among images in a document.
-#: src/orca/cmdnames.py:934
+#: src/orca/cmdnames.py:947
 msgid "Go to previous image"
 msgstr "წინა გამოსახულებაზე გადასვლა"
 
 #. Translators: this is for navigating among images in a document.
-#: src/orca/cmdnames.py:937
+#: src/orca/cmdnames.py:950
 msgid "Go to next image"
 msgstr "შემდეგ გამოსახულებაზე გადასვლა"
 
 #. Translators: this is for navigating among images in a document.
-#: src/orca/cmdnames.py:940
+#: src/orca/cmdnames.py:953
 msgid "Display a list of images"
 msgstr "გამოსახულებების სიის ჩვენება"
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
-#: src/orca/cmdnames.py:945
+#: src/orca/cmdnames.py:958
 msgid "Go to previous landmark"
 msgstr "წინა ორიენტირზე გადასვლა"
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
-#: src/orca/cmdnames.py:950
+#: src/orca/cmdnames.py:963
 msgid "Go to next landmark"
 msgstr "შემდეგ ორიენტირზე გადასვლა"
 
 #. Translators: this is for navigating among ARIA landmarks in a document. ARIA
 #. role landmarks are the W3C defined HTML tag attribute 'role' used to identify
 #. important part of webpage like banners, main context, search etc.
-#: src/orca/cmdnames.py:955
+#: src/orca/cmdnames.py:968
 msgid "Display a list of landmarks"
 msgstr "ორიენტირების სიის ჩამონათვალი"
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: src/orca/cmdnames.py:960
+#: src/orca/cmdnames.py:973
 msgid "Go to previous large object"
 msgstr "წინა დიდ ობიექტზე გადასვლა"
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: src/orca/cmdnames.py:965
+#: src/orca/cmdnames.py:978
 msgid "Go to next large object"
 msgstr "შემდეგ დიდ ობიექტზე გადასვლა"
 
 #. Translators: this is for navigating among large objects in a document.
 #. A 'large object' is a logical chunk of text, such as a paragraph, a list,
 #. a table, etc.
-#: src/orca/cmdnames.py:970
+#: src/orca/cmdnames.py:983
 msgid "Display a list of large objects"
 msgstr "დიდი ობიექტების სიის ჩვენება"
 
 #. Translators: this is for navigating among links in a document.
-#: src/orca/cmdnames.py:973
+#: src/orca/cmdnames.py:986
 msgid "Go to previous link"
 msgstr "წინა ბმულზე გადასვლა"
 
 #. Translators: this is for navigating among links in a document.
-#: src/orca/cmdnames.py:976
+#: src/orca/cmdnames.py:989
 msgid "Go to next link"
 msgstr "შემდეგ ბმულზე გადასვლა"
 
 #. Translators: this is for navigating among links in a document.
-#: src/orca/cmdnames.py:979
+#: src/orca/cmdnames.py:992
 msgid "Display a list of links"
 msgstr "ბმულების სიის ჩვენება"
 
 #. Translators: this is for navigating among lists in a document.
-#: src/orca/cmdnames.py:982
+#: src/orca/cmdnames.py:995
 msgid "Go to previous list"
 msgstr "წინა სიაზე გადასვლა"
 
 #. Translators: this is for navigating among lists in a document.
-#: src/orca/cmdnames.py:985
+#: src/orca/cmdnames.py:998
 msgid "Go to next list"
 msgstr "შემდეგ სიაზე გადასვლა"
 
 #. Translators: this is for navigating among lists in a document.
-#: src/orca/cmdnames.py:988
+#: src/orca/cmdnames.py:1001
 msgid "Display a list of lists"
 msgstr "სიების ჩამონათვლის ჩვენება"
 
 #. Translators: this is for navigating among list items in a document.
-#: src/orca/cmdnames.py:991
+#: src/orca/cmdnames.py:1004
 msgid "Go to previous list item"
 msgstr "წინა სიის ელემენტზე გადასვლა"
 
 #. Translators: this is for navigating among list items in a document.
-#: src/orca/cmdnames.py:994
+#: src/orca/cmdnames.py:1007
 msgid "Go to next list item"
 msgstr "შემდეგ სიის ელემენტზე გადასვლა"
 
 #. Translators: this is for navigating among list items in a document.
-#: src/orca/cmdnames.py:997
+#: src/orca/cmdnames.py:1010
 msgid "Display a list of list items"
 msgstr "სიის ელემენტების ჩამონათვლის ჩვენება"
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. https://w3c.github.io/aria/#dfn-live-region
-#: src/orca/cmdnames.py:1002
+#: src/orca/cmdnames.py:1015
 msgid "Go to previous live region"
 msgstr "წინა ცოცხალ რეგიონზე გადასვლა"
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. https://w3c.github.io/aria/#dfn-live-region
-#: src/orca/cmdnames.py:1007
+#: src/orca/cmdnames.py:1020
 msgid "Go to next live region"
 msgstr "შემდეგ ცოცხალ რეგიონზე გადასვლა"
 
 #. Translators: this is for navigating among live regions in a document. A live
 #. region is an area of a web page that is periodically updated, e.g. a stock
 #. ticker. https://w3c.github.io/aria/#dfn-live-region
-#: src/orca/cmdnames.py:1012
+#: src/orca/cmdnames.py:1025
 msgid "Go to the last live region which made an announcement"
 msgstr "განცხადების გამკეთებელ უკანასკნელ ცოცხალ რეგიონზე გადასვლა"
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
-#: src/orca/cmdnames.py:1016
+#: src/orca/cmdnames.py:1029
 msgid "Go to the parent of the object with navigator focus."
 msgstr "ნავიგატორის ფოკუსის მქონე ობიექტის მშობელზე გადასვლა."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
-#: src/orca/cmdnames.py:1020
+#: src/orca/cmdnames.py:1033
 msgid "Go to the first child of the object with navigator focus."
 msgstr "ნავიგატორი ფოკუსის მქონე ობიექტის პირველ შვილზე გადასვლა."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
-#: src/orca/cmdnames.py:1024
+#: src/orca/cmdnames.py:1037
 msgid "Go to the next sibling of the object with navigator focus."
 msgstr "ნავიგატორის ფოკუსის მქონე ობიექტის შემდეგ დაზე გადასვლა."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
-#: src/orca/cmdnames.py:1028
+#: src/orca/cmdnames.py:1041
 msgid "Go to the previous sibling of the object with navigator focus."
 msgstr "ნავიგატორის ფოკუსის მქონე ობიექტის წინა დაზე გადასვლა."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. Users are also able to synthesize a click on the objects.
-#: src/orca/cmdnames.py:1032
+#: src/orca/cmdnames.py:1045
 msgid "Click on the object with navigator focus."
 msgstr "დააწკაპუნეთ ნავიგატორის ფოკუსის მქონე ობიექტზე."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. This hierarchy can be simplified, and the simplification can be
 #. toggled on and off.
-#: src/orca/cmdnames.py:1037
+#: src/orca/cmdnames.py:1050
 msgid "Toggle simplified object navigation."
 msgstr "გამარტივებული ობიექტის ნავიგაციის გადართვა."
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: src/orca/cmdnames.py:1040
+#: src/orca/cmdnames.py:1053
 msgid "Go to previous paragraph"
 msgstr "წინა პარაგრაფზე გადასვლა"
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: src/orca/cmdnames.py:1043
+#: src/orca/cmdnames.py:1056
 msgid "Go to next paragraph"
 msgstr "შემდეგ პარაგრაფზე გადასვლა"
 
 #. Translators: this is for navigating among paragraphs in a document.
-#: src/orca/cmdnames.py:1046
+#: src/orca/cmdnames.py:1059
 msgid "Display a list of paragraphs"
 msgstr "პარაგრაფების სიის ჩვენება"
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: src/orca/cmdnames.py:1049
+#: src/orca/cmdnames.py:1062
 msgid "Go to previous radio button"
 msgstr "წინა რადიო ღილაკზე გადასვლა"
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: src/orca/cmdnames.py:1052
+#: src/orca/cmdnames.py:1065
 msgid "Go to next radio button"
 msgstr "შემდეგ რადიო ღილაკზე გადასვლა"
 
 #. Translators: this is for navigating among radio buttons in a document.
-#: src/orca/cmdnames.py:1055
+#: src/orca/cmdnames.py:1068
 msgid "Display a list of radio buttons"
 msgstr "ყველა რადიო ღილაკის სიის ჩვენება"
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
-#: src/orca/cmdnames.py:1059
+#: src/orca/cmdnames.py:1072
 msgid "Go to previous separator"
 msgstr "წინა გამყოფზე გადასვლა"
 
 #. Translators: this is for navigating among separators (e.g. <hr>) in a
 #. document.
-#: src/orca/cmdnames.py:1063
+#: src/orca/cmdnames.py:1076
 msgid "Go to next separator"
 msgstr "შემდეგ გამყოფზე გადასვლა"
 
 #. Translators: this is for navigating among tables in a document.
-#: src/orca/cmdnames.py:1066
+#: src/orca/cmdnames.py:1079
 msgid "Go to previous table"
 msgstr "წინა ცხრილზე გადასვლა"
 
 #. Translators: this is for navigating among tables in a document.
-#: src/orca/cmdnames.py:1069
+#: src/orca/cmdnames.py:1082
 msgid "Go to next table"
 msgstr "შემდეგ ცხრილზე გადასვლა"
 
 #. Translators: this is for navigating among tables in a document.
-#: src/orca/cmdnames.py:1072
+#: src/orca/cmdnames.py:1085
 msgid "Display a list of tables"
 msgstr "ცხრილების სიის ჩვენება"
 
 #. Translators: this is for navigating among table cells in a document.
-#: src/orca/cmdnames.py:1075
+#: src/orca/cmdnames.py:1088
 msgid "Go down one cell"
 msgstr "ერთი უჯრედით დაბლა გადასვლა"
 
 #. Translators: this is for navigating among table cells in a document.
-#: src/orca/cmdnames.py:1078
+#: src/orca/cmdnames.py:1091
 msgid "Go to the first cell in a table"
 msgstr "ცხრილის პირველ უჯრედზე გადასვლა"
 
 #. Translators: this is for navigating among table cells in a document.
-#: src/orca/cmdnames.py:1081
+#: src/orca/cmdnames.py:1094
 msgid "Go to the last cell in a table"
 msgstr "ცხრილის ბოლო უჯრედზე გადასვლა"
 
 #. Translators: this is for navigating among table cells in a document.
-#: src/orca/cmdnames.py:1084
+#: src/orca/cmdnames.py:1097
 msgid "Go left one cell"
 msgstr "ერთი უჯრედით მარცხნივ გადასვლა"
 
 #. Translators: this is for navigating among table cells in a document.
-#: src/orca/cmdnames.py:1087
+#: src/orca/cmdnames.py:1100
 msgid "Go right one cell"
 msgstr "ერთი უჯრედით მარჯვნივ გადასვლა"
 
 #. Translators: this is for navigating among table cells in a document.
-#: src/orca/cmdnames.py:1090
+#: src/orca/cmdnames.py:1103
 msgid "Go up one cell"
 msgstr "ერთი უჯრედით ზემოთ გადასვლა"
 
 #. Translators: this is for navigating among table cells in a document.
-#: src/orca/cmdnames.py:1093
+#: src/orca/cmdnames.py:1106
 msgid "Go to the beginning of the row"
 msgstr "მწკრივის დასაწყისში გადასვლა"
 
 #. Translators: this is for navigating among table cells in a document.
-#: src/orca/cmdnames.py:1096
+#: src/orca/cmdnames.py:1109
 msgid "Go to the end of the row"
 msgstr "მწკრივის ბოლოში გადასვლა"
 
 #. Translators: this is for navigating among table cells in a document.
-#: src/orca/cmdnames.py:1099
+#: src/orca/cmdnames.py:1112
 msgid "Go to the top of the column"
 msgstr "სვეტის თავზე გადასვლა"
 
 #. Translators: this is for navigating among table cells in a document.
-#: src/orca/cmdnames.py:1102
+#: src/orca/cmdnames.py:1115
 msgid "Go to the bottom of the column"
 msgstr "სვეტის ბოლოში გადასვლა"
 
@@ -2126,7 +2141,7 @@ msgstr "სვეტის ბოლოში გადასვლა"
 #. it is disabled, Orca will treat each object as if it were on a separate line,
 #. both for presentation and navigation. This string is associated with the Orca
 #. command to manually toggle layout mode on/off.
-#: src/orca/cmdnames.py:1115
+#: src/orca/cmdnames.py:1128
 msgid "Toggle layout mode"
 msgstr "განლაგების რეჟიმის გადართვა"
 
@@ -2144,7 +2159,7 @@ msgstr "განლაგების რეჟიმის გადართ�
 #. key presses as something that should be handled by the focused widget.
 #. This string is associated with the Orca command to manually switch
 #. between these two modes.
-#: src/orca/cmdnames.py:1131
+#: src/orca/cmdnames.py:1144
 msgid "Switch between browse mode and focus mode"
 msgstr "დათვალიერებისა და ფოკუსის რეჟიმებს შორის გადართვა"
 
@@ -2157,7 +2172,7 @@ msgstr "დათვალიერებისა და ფოკუსის 
 #. navigation and use interaction model. As a result, Orca has a command which
 #. enables setting a "sticky" focus mode which disables all automatic toggling.
 #. This string is associated with the Orca command to enable sticky focus mode.
-#: src/orca/cmdnames.py:1142
+#: src/orca/cmdnames.py:1155
 msgid "Enable sticky focus mode"
 msgstr "წებოვანი ფოკუსის რეჟიმის ჩართვა"
 
@@ -2170,37 +2185,37 @@ msgstr "წებოვანი ფოკუსის რეჟიმის ჩ
 #. navigation and use interaction model. As a result, Orca has a command which
 #. enables setting a "sticky" browse mode which disables all automatic toggling.
 #. This string is associated with the Orca command to enable sticky browse mode.
-#: src/orca/cmdnames.py:1153
+#: src/orca/cmdnames.py:1166
 msgid "Enable sticky browse mode"
 msgstr "წებოვანი დათვალიერების რეჟიმი"
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: src/orca/cmdnames.py:1156
+#: src/orca/cmdnames.py:1169
 msgid "Go to previous unvisited link"
 msgstr "წინა უნახავ ბმულზე გადასვლა"
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: src/orca/cmdnames.py:1159
+#: src/orca/cmdnames.py:1172
 msgid "Go to next unvisited link"
 msgstr "შემდეგ უნახავ ბმულზე გადასვლა"
 
 #. Translators: this is for navigating among unvisited links in a document.
-#: src/orca/cmdnames.py:1162
+#: src/orca/cmdnames.py:1175
 msgid "Display a list of unvisited links"
 msgstr "უნახავი ბმულების სიის ჩვენება"
 
 #. Translators: this is for navigating among visited links in a document.
-#: src/orca/cmdnames.py:1165
+#: src/orca/cmdnames.py:1178
 msgid "Go to previous visited link"
 msgstr "წინა უკვე ნანახ ბმულზე გადასვლა"
 
 #. Translators: this is for navigating among visited links in a document.
-#: src/orca/cmdnames.py:1168
+#: src/orca/cmdnames.py:1181
 msgid "Go to next visited link"
 msgstr "შემდეგ უკვე ნანახ ბმულზე გადასვლა"
 
 #. Translators: this is for navigating among visited links in a document.
-#: src/orca/cmdnames.py:1171
+#: src/orca/cmdnames.py:1184
 msgid "Display a list of visited links"
 msgstr "უკვე ნანახი ბმულების სიის ჩვენება"
 
@@ -3584,8 +3599,8 @@ msgstr "ჩასანაცვლებელი სტრიქონი"
 #. speech synthesizer to say what the user finds most helpful. This string is
 #. the label for the widget to add a new entry.
 #: src/orca/guilabels.py:330
-msgid "_New entry"
-msgstr "_ახალი ჩანაწერი"
+msgid "New entry"
+msgstr "ახალი ჩანაწერი"
 
 #. Translators: The pronunciation dictionary allows the user to correct words
 #. which the speech synthesizer mispronounces (e.g. a person's name, a technical
@@ -3595,8 +3610,8 @@ msgstr "_ახალი ჩანაწერი"
 #. speech synthesizer to say what the user finds most helpful. This string is
 #. the label for the widget to delete the selected entry.
 #: src/orca/guilabels.py:339
-msgid "_Delete"
-msgstr "_წაშლა"
+msgid "Delete"
+msgstr "წაშლა"
 
 #. Translators: The pronunciation dictionary allows the user to correct words
 #. which the speech synthesizer mispronounces (e.g. a person's name, a technical
@@ -3778,7 +3793,7 @@ msgstr "ქმედებები"
 #. Translators: This is the label of the Documents page in the Orca Preferences
 #. dialog. On that page there are settings related to navigating and reading documents,
 #. including web pages, word processor documents, and PDFs.
-#: src/orca/guilabels.py:469 src/orca/guilabels.py:1766
+#: src/orca/guilabels.py:469 src/orca/guilabels.py:1831
 msgid "Documents"
 msgstr "დოკუმენტები"
 
@@ -4809,10 +4824,10 @@ msgstr "შემოკლებების _ცხრილი:"
 msgid "D_uration (secs):"
 msgstr "_ხანგრძლივობა (წმ):"
 
-#. Translators: This is the label for a setting which turns off the braille
-#. indicator symbol which Orca normally shows at the end of each line of text.
+#. Translators: This is the label for a setting which controls whether Orca
+#. displays the braille indicator symbol at the end of each line of text.
 #: src/orca/guilabels.py:1209
-msgid "Disable _end of line symbol"
+msgid "_End of line symbol"
 msgstr "_ხაზის ბოლოს სიმბოლოს გამორთვა"
 
 #. Translators: This is a label for a group of settings related to a refreshable
@@ -5221,26 +5236,29 @@ msgid "Current Profile"
 msgstr "მიმდინარე პროფილი"
 
 #: src/orca/guilabels.py:1508
+#, python-format
 msgid ""
-"loaded at startup. To edit an existing profile, select it below and then "
-"adjust settings on the other pages. To rename or delete the selected "
-"profile, use the Tab key to navigate to its associated buttons."
+"Profiles are collections of settings. The \"%s\" profile is loaded at "
+"startup. To edit an existing profile, select it below and then adjust "
+"settings on the other pages. To rename or delete the selected profile, use "
+"the Tab key to navigate to its associated buttons."
 msgstr ""
-"ჩატვირთულია გაშვებისას. არსებული პროფილის ჩასასწორებლად აირჩიეთ ის ქვემოთ და "
-"შემდეგ შეცვალეთ პარამეტრები სხვა გვერდებზე. არჩეული პროფილის სახელის "
-"შესაცვლელად ან წასაშლელად, გამოიყენეთ Tab ღილაკი მასთან დაკავშირებულ "
-"ღილაკებზე გადასასვლელად."
+"პროფილი პარამეტრების ნაკრებია. ჩატვირთვისას ხდება \"%s\" პროფილის ჩატვირთვა. "
+"არსებული პროფილის ჩასასწორებლად მონიშნეთ ის ქვემოთ და მოირგეთ მისი "
+"პარამეტრები სხვა გვერდზე. მონიშნული პროფილის სახელის გადასარქმევად, ან "
+"წასაშლელად გამოიყენეთ ტაბულაციის ღილაკი მის ასოცირებულ ღილაკებს შორის "
+"ნავიგაციისთვის."
 
 #. Translators: This is a label in the Preferences dialog box. It applies to
 #. several options related to which progress bars Orca should speak and how
 #. often Orca should speak them.
-#: src/orca/guilabels.py:1516
+#: src/orca/guilabels.py:1519
 msgid "Progress Bars"
 msgstr "მიმდინარეობის ზოლები"
 
 #. Translators: Orca has a Say All feature which speaks the entire document.
 #. This is the label for the group of settings related to Say All.
-#: src/orca/guilabels.py:1520
+#: src/orca/guilabels.py:1523
 msgid "Say All"
 msgstr "ყველაფრის თქმა"
 
@@ -5251,11 +5269,11 @@ msgstr "ყველაფრის თქმა"
 #. fiction, it would probably be best to do say all by sentence so it sounds
 #. more natural. If Orca were speaking something like a page of computer
 #. commands, doing a say all by line would work better.
-#: src/orca/guilabels.py:1529
+#: src/orca/guilabels.py:1532
 msgid "Say All By"
 msgstr "ყველაფრის თქმა"
 
-#: src/orca/guilabels.py:1535
+#: src/orca/guilabels.py:1538
 msgid ""
 "Say All reads from the current location to the end of the document, pausing "
 "after each sentence or line based on the \"Say All By\" value."
@@ -5264,7 +5282,7 @@ msgstr ""
 "პაუზა ყოველი წინადადების ან სტრიქონის შემდეგ \"თქვი ყველა\" მნიშვნელობის "
 "საფუძველზე."
 
-#: src/orca/guilabels.py:1545
+#: src/orca/guilabels.py:1548
 msgid ""
 "If enabled, you can use the arrow keys and/or structural navigation commands "
 "to move within the document while Say All is active."
@@ -5273,7 +5291,7 @@ msgstr ""
 "ნავიგაციის ბრძანებები დოკუმენტში გადასაადგილებლად, სანამ 'ყველაფრის "
 "წარმოთქმა' აქტიურია."
 
-#: src/orca/guilabels.py:1553
+#: src/orca/guilabels.py:1556
 msgid ""
 "The \"Container Announcements\" settings determine what additional details "
 "will be announced as Say All moves through the document."
@@ -5282,7 +5300,7 @@ msgstr ""
 "დეტალები გამოცხადდება, როდესაც 'ყველაფრის წარმოთქმა' დოკუმენტში "
 "გადაადგილდება."
 
-#: src/orca/guilabels.py:1557
+#: src/orca/guilabels.py:1560
 msgid "Speak object under mo_use"
 msgstr "თაგუნას _ქვეშ მყოფი ობიექტის წარმოთქმა"
 
@@ -5292,42 +5310,42 @@ msgstr "თაგუნას _ქვეშ მყოფი ობიექტ�
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text. The
 #. following string is the label for the widget from which the user can select
 #. which profile should be loaded when Orca starts up.
-#: src/orca/guilabels.py:1565
+#: src/orca/guilabels.py:1568
 msgid "Start-up Profile:"
 msgstr "გაშვებისას ჩასატვირთი პროფილი:"
 
 #. Translators: This is an option in the Preferences dialog box related to the
 #. presentation of progress bar updates. If this widget is enabled, Orca will
 #. periodically display the current percentage in braille.
-#: src/orca/guilabels.py:1570
+#: src/orca/guilabels.py:1573
 msgid "_Braille updates"
 msgstr "ბრაილის _განახლებები"
 
 #. This button will load the selected settings profile in the application.
-#: src/orca/guilabels.py:1574
+#: src/orca/guilabels.py:1577
 msgid "_Load"
 msgstr "_ჩატვირთვა"
 
-#: src/orca/guilabels.py:1576
+#: src/orca/guilabels.py:1579
 msgid "_Present tooltips"
 msgstr "_მიმდინარე მინიშნებები"
 
 #. Translators: This is the label for a button in a dialog.
-#: src/orca/guilabels.py:1579
+#: src/orca/guilabels.py:1582
 msgid "_Remove"
 msgstr "_წაშლა"
 
 #. Translators: This is an option in the Preferences dialog box related to the
 #. presentation of progress bar updates. If this widget is enabled, Orca will
 #. periodically speak the current percentage.
-#: src/orca/guilabels.py:1584
+#: src/orca/guilabels.py:1587
 msgid "_Speak updates"
 msgstr "განახლებების _წარმოთქმა"
 
 #. Translators: Here this is a label for a spin button through which a user can
 #. customize the frequency in seconds an announcement should be made regarding
 #. the current value of a progress bar.
-#: src/orca/guilabels.py:1589
+#: src/orca/guilabels.py:1592
 msgctxt "ProgressBar"
 msgid "Frequency (secs):"
 msgstr "სიხშირე (წმ):"
@@ -5336,7 +5354,7 @@ msgstr "სიხშირე (წმ):"
 #. The default Orca modifier is KP_Insert for the "desktop" keyboard layout and
 #. Caps Lock for the "laptop" keyboard layout. This string is a label for choosing
 #. which key(s) should be used as the Orca modifier.
-#: src/orca/guilabels.py:1595
+#: src/orca/guilabels.py:1598
 msgid "Screen Reader _Modifier Key(s):"
 msgstr "ეკრანის მკითხველის _მოდიფიკატორი ღილაკები:"
 
@@ -5346,7 +5364,7 @@ msgstr "ეკრანის მკითხველის _მოდიფი
 #. arrows into it and before speaking the new location. Upon navigating out of
 #. the form, Orca will announce that the form has been exited prior to speaking
 #. the new location.
-#: src/orca/guilabels.py:1603
+#: src/orca/guilabels.py:1606
 msgid "Announce _forms during navigation"
 msgstr "_ფორმების გამოცხადება ნავიგაციისას"
 
@@ -5356,7 +5374,7 @@ msgstr "_ფორმების გამოცხადება ნავი
 #. entered as the user arrows into it and before speaking the list content. Upon
 #. navigating out of the list, Orca will announce that the list has been exited
 #. prior to speaking the new location.
-#: src/orca/guilabels.py:1611
+#: src/orca/guilabels.py:1614
 msgid "Announce _lists during navigation"
 msgstr "_სიების გამოცხადება ნავიგაციისას"
 
@@ -5367,7 +5385,7 @@ msgstr "_სიების გამოცხადება ნავიგა
 #. of the panel, Orca will announce that the panel has been exited prior to
 #. speaking the new location. A panel is a generic container of objects, such as
 #. a group of related form fields.
-#: src/orca/guilabels.py:1620
+#: src/orca/guilabels.py:1623
 msgid "Announce _panels during navigation"
 msgstr "_პანელების გამოცხადება ნავიგაციისას"
 
@@ -5377,7 +5395,7 @@ msgstr "_პანელების გამოცხადება ნავ
 #. columns has been entered as the user arrows into it and before speaking the
 #. table content. Upon navigating out of the table, Orca will announce that the
 #. table has been exited prior to speaking the new location.
-#: src/orca/guilabels.py:1628
+#: src/orca/guilabels.py:1631
 msgid "Announce _tables during navigation"
 msgstr "_ცხრილების გამოცხადება ნავიგაციისას"
 
@@ -5387,7 +5405,7 @@ msgstr "_ცხრილების გამოცხადება ნავ
 #. the user arrows into it and before speaking the text. Upon navigating out of
 #. the blockquote, Orca will announce that the blockquote has been exited prior
 #. to speaking the new location.
-#: src/orca/guilabels.py:1636
+#: src/orca/guilabels.py:1639
 msgid "Announce block_quotes during navigation"
 msgstr "ციტატის ბლოკების გამოცხადება ნავიგაციის_ას"
 
@@ -5399,7 +5417,7 @@ msgstr "ციტატის ბლოკების გამოცხად�
 #. exited prior to speaking the new location. ARIA landmarks are the W3C defined
 #. HTML tag attribute 'role' used to identify important part of webpage like
 #. banners, main context, search, etc.
-#: src/orca/guilabels.py:1646
+#: src/orca/guilabels.py:1649
 msgid "Announce land_marks during navigation"
 msgstr "_ორიენტრირების გამოცხადება ნავიგაციისას"
 
@@ -5409,7 +5427,7 @@ msgstr "_ორიენტრირების გამოცხადებ�
 #. indicate the presence of red squiggly spelling error lines -- things which
 #. Orca normally speaks. This setting is primarily intended for low vision users
 #. and sighted users with a learning disability.
-#: src/orca/guilabels.py:1654
+#: src/orca/guilabels.py:1657
 msgid "Only speak displayed text"
 msgstr "მხოლოდ ნაჩვენები ტექსტის წაკითხვა"
 
@@ -5417,14 +5435,14 @@ msgstr "მხოლოდ ნაჩვენები ტექსტის წ
 #. including foreground and background color. The setting associated with this
 #. widget determines how Orca will speak colors: As rgb values or as names
 #. (e.g. light blue).
-#: src/orca/guilabels.py:1660
+#: src/orca/guilabels.py:1663
 msgid "S_peak colors as names"
 msgstr "_ფერის სახელების წარმოთქმა"
 
 #. Translators: This is a label for a widget associated with whether Orca will
 #. present the mnemonic (underlined character) of an object, such as a button or
 #. menu item, when it becomes focused/selected.
-#: src/orca/guilabels.py:1665
+#: src/orca/guilabels.py:1668
 msgid "Mnemonics"
 msgstr "მნემონიკები"
 
@@ -5434,20 +5452,20 @@ msgstr "მნემონიკები"
 #. contents of the accessible description tend to be longer, e.g. matching the
 #. text of the tooltip, and are sometimes redundant to the accessible name.
 #. Therefore, we allow the user to opt out of this additional information.
-#: src/orca/guilabels.py:1673
+#: src/orca/guilabels.py:1676
 msgid "Description"
 msgstr "აღწერა"
 
 #. Translators: This is a label for a widget associated with whether Orca will
 #. speak indentation and justification information for text content.
-#: src/orca/guilabels.py:1677
+#: src/orca/guilabels.py:1680
 msgid "Indentation and justification"
 msgstr "შეწევა და სწორება"
 
 #. Translators: This is the label for a widget on the Speech preferences page.
 #. When checked, indentation and justification will only be announced when they
 #. have changed from the previous line.
-#: src/orca/guilabels.py:1682
+#: src/orca/guilabels.py:1685
 msgid "Only speak indentation if changed"
 msgstr "შეწევის, მხოლოდ, მაშინ წარმოთქმა, თუ ის შეიცვალა"
 
@@ -5456,19 +5474,19 @@ msgstr "შეწევის, მხოლოდ, მაშინ წარმ�
 #. is enabled, when a user first moves into a word with this indicator, or types
 #. a misspelled word causing this indicator to appear, Orca will announce that
 #. the word is misspelled.
-#: src/orca/guilabels.py:1689
+#: src/orca/guilabels.py:1692
 msgid "Misspelled-word indicator"
 msgstr "არასწორად დაწერილი სიტყვის მაჩვენებელი"
 
 #. Translators: This is a label for a widget associated with whether Orca will
 #. speak blank lines when navigating in document content.
-#: src/orca/guilabels.py:1693
+#: src/orca/guilabels.py:1696
 msgid "Blank lines"
 msgstr "ცარიელი ხაზები"
 
 #. Translators: This widget toggles whether or not Orca says the child
 #. position (e.g., item 6 of 7).
-#: src/orca/guilabels.py:1697
+#: src/orca/guilabels.py:1700
 msgid "Position in set"
 msgstr "პოზიციის წარმოთქმა დაყენებულია"
 
@@ -5478,7 +5496,7 @@ msgstr "პოზიციის წარმოთქმა დაყენე�
 #. and web content, and spreadsheet tables such as those found in Calc are not
 #. considered GUI tables. If this setting is enabled, Orca will speak the entire
 #. row; if it is disabled, Orca will only speak the cell with focus.
-#: src/orca/guilabels.py:1705
+#: src/orca/guilabels.py:1708
 msgid "Speak full row in _GUI tables"
 msgstr "სრული მწკრივის წარმოთქმა ინტე_რფეისის ცხრილებში"
 
@@ -5489,7 +5507,7 @@ msgstr "სრული მწკრივის წარმოთქმა ი
 #. spreadsheet tables such as found in Calc. If this setting is enabled, Orca
 #. will speak the entire row; if it is disabled, Orca will only speak the cell
 #. with focus.
-#: src/orca/guilabels.py:1714
+#: src/orca/guilabels.py:1717
 msgid "Speak full row in _document tables"
 msgstr "სრული მწკრივის წარმოთქმა _დოკუმენტის ცხრილებში"
 
@@ -5497,26 +5515,26 @@ msgstr "სრული მწკრივის წარმოთქმა _�
 #. what happens if a user presses Up or Down arrow to move row by row in a
 #. spreadsheet. If this setting is enabled, Orca will speak the entire row; if
 #. it is disabled, Orca will only speak the cell with focus.
-#: src/orca/guilabels.py:1720
+#: src/orca/guilabels.py:1723
 msgid "Speak full row in sp_readsheets"
 msgstr "სრული მწკრივის წარმოთქმა ელცხ_რილებში"
 
 #. Translators: This is a label for a widget associated with whether Orca speaks
 #. tutorial messages / "help text".
-#: src/orca/guilabels.py:1724
+#: src/orca/guilabels.py:1727
 msgid "Tutorial messages"
 msgstr "სახელმძღვანელოს შეტყობინებები"
 
 #. Translators: This is the label for a group of settings on the Speech
 #. preferences page. It groups settings related to how objects are presented
 #. via speech (descriptions, mnemonics, child position).
-#: src/orca/guilabels.py:1729
+#: src/orca/guilabels.py:1732
 msgid "Spoken Object Details"
 msgstr "წარმოთქმული ობიექტის დეტალები"
 
 #. Translators: This is a setting in the Speech and Braille preferences pages.
 #. When enabled, Orca will provide detailed/verbose object descriptions.
-#: src/orca/guilabels.py:1733
+#: src/orca/guilabels.py:1736
 msgid "Object presentation is detailed"
 msgstr "ობიექტის წარმოდგენა დეტალურია"
 
@@ -5524,7 +5542,7 @@ msgstr "ობიექტის წარმოდგენა დეტალ�
 #. When checked, Orca will apply the user's pronunciation dictionary when speaking.
 #. The pronunciation dictionary allows users to customize how specific words or
 #. character sequences are spoken by the speech synthesizer.
-#: src/orca/guilabels.py:1739
+#: src/orca/guilabels.py:1742
 msgid "Use pronunciation dictionary"
 msgstr "გამოთქმის ლექსიკონის გამოყენება"
 
@@ -5532,13 +5550,13 @@ msgstr "გამოთქმის ლექსიკონის გამო�
 #. chose what is and is not spoken by Orca during navigation or Say All. For
 #. instance, when the user first navigates into a table, should Orca speak the
 #. table details or just the newly focused/selected cell?
-#: src/orca/guilabels.py:1745
+#: src/orca/guilabels.py:1748
 msgid "Spoken Context"
 msgstr "წარმოთქმული შემცველობა"
 
 #. Translators: This is the label for a widget in the preferences dialog.
 #. If selected speech support will be enabled.
-#: src/orca/guilabels.py:1749
+#: src/orca/guilabels.py:1752
 msgid "Speech support"
 msgstr "წარმოთქმის მხარდაჭერა"
 
@@ -5549,31 +5567,110 @@ msgstr "წარმოთქმის მხარდაჭერა"
 #. the message to be displayed is long/detailed, Orca provides a brief
 #. alternative. Users who prefer that brief alternative can uncheck this
 #. widget.
-#: src/orca/guilabels.py:1758
+#: src/orca/guilabels.py:1761
 msgid "_System messages are detailed"
 msgstr "_სისტემური შეტყობინებები დეტალურია"
 
+#. Translators: The on-screen braille display is a graphical window that displays a
+#. visual representation of what would be shown on a connected braille display,
+#. including the braille dots and the text characters they correspond to. It is
+#. primarily used by developers and testers who may not have a physical braille
+#. display.
+#: src/orca/guilabels.py:1768
+msgid "On-screen braille"
+msgstr "ეკრანზე ბრაილი"
+
+#. Translators: The on-screen speech display is a graphical window that displays a
+#. scrolling log of all text spoken by the screen reader. It is primarily used by
+#. developers and testers to verify what is being spoken without having to listen
+#. to the audio.
+#: src/orca/guilabels.py:1774
+msgid "On-screen speech"
+msgstr "ეკრანზე საუბრის ჩვენება"
+
+#. Translators: This is the title of the on-screen display settings category in the
+#. Orca Preferences dialog. These settings control the appearance of the on-screen
+#. braille and speech monitor windows.
+#: src/orca/guilabels.py:1779
+msgid "On-Screen Display"
+msgstr "ეკრანზე ჩვენება"
+
+#. Translators: This is the label of a spin button that controls the number of braille
+#. cells displayed in the on-screen braille monitor.
+#: src/orca/guilabels.py:1783
+msgid "Cell count"
+msgstr "უჯრედების რაოდენობა"
+
+#. Translators: This is the label of a checkbox that controls whether the on-screen
+#. braille monitor shows Unicode braille dot patterns instead of text characters.
+#: src/orca/guilabels.py:1787
+msgid "Show braille dot patterns"
+msgstr "ბრაილის წერტილის შაბლონების ჩვენება"
+
+#. Translators: This is the label of a color button that controls the text color
+#. in the on-screen braille monitor.
+#. Translators: This is the label of a color button that controls the text color
+#. in the on-screen speech monitor.
+#: src/orca/guilabels.py:1791 src/orca/guilabels.py:1803
+msgid "Text color"
+msgstr "ტექსტის ფერი"
+
+#. Translators: This is the label of a color button that controls the background color
+#. in the on-screen braille monitor.
+#. Translators: This is the label of a color button that controls the background color
+#. in the on-screen speech monitor.
+#: src/orca/guilabels.py:1795 src/orca/guilabels.py:1807
+msgid "Background color"
+msgstr "ფონის ფერი"
+
+#. Translators: This is the label of a spin button that controls the font size of
+#. text in the on-screen speech monitor.
+#: src/orca/guilabels.py:1799
+msgid "Font size"
+msgstr "ფონტის ზომა"
+
+#: src/orca/guilabels.py:1812
+msgid ""
+"The on-screen speech display is a window that shows what the screen reader "
+"is speaking. The default keybinding to show or hide it is Orca+Shift+S. This "
+"can be changed in Commands."
+msgstr ""
+"ეკრანზე საუბრის ჩვენება ფანჯარაა, რომელიც აჩვენებს, რას კითხულობს ეკრანის "
+"წამკითხავი. მისი ჩვენების/დამალვის ნაგულისხმევი კლავიატურის მალსახმობია "
+"Orca+Shift+S. ამისი შეცვლა ბრძანებებიდან შეგიძლიათ."
+
+#: src/orca/guilabels.py:1820
+msgid ""
+"The on-screen braille display is a window intended for developers that shows "
+"what would be presented on a braille display. To show or hide it, assign a "
+"keybinding in Commands."
+msgstr ""
+"ეკრანზე არსებული ბრაილის ჩვენება ფანჯარაა, რომელიც განკუთვნილია "
+"პროგრამისტებისთვის და აჩვენებს, რა იქნებოდა წარმოდგენილი ბრაილის ეკრანზე. "
+"მის საჩვენებლად/დასამალად დააყენეთ კლავიატურის მალსახმობი ბრძანებების "
+"ფანჯარაში."
+
 #. Translators: This is the label of the Braille page in the Orca Preferences dialog.
-#: src/orca/guilabels.py:1761
+#: src/orca/guilabels.py:1826
 msgid "Braille"
 msgstr "ბრაილური"
 
 #. Translators: This string is a label for a preferences page containing settings
 #. that apply when the user is navigating using the application's native navigation
 #. (e.g., arrow keys handled by the app) rather than the screen reader's browse mode.
-#: src/orca/guilabels.py:1771
+#: src/orca/guilabels.py:1836
 msgid "Native navigation"
 msgstr "საკუთარი ნავიგაცია"
 
 #. Translators: This string is a label for a group of settings related to what
 #. happens when a document or web page finishes loading.
-#: src/orca/guilabels.py:1775
+#: src/orca/guilabels.py:1840
 msgid "Page load"
 msgstr "გვერდის ჩატვირთვა"
 
 #. Translators: This is the label for a group of settings related to what Orca
 #. announces when entering/exiting different types of containers/ancestors.
-#: src/orca/guilabels.py:1779
+#: src/orca/guilabels.py:1844
 msgid "Container Announcements"
 msgstr "კონტეინერის გამოცხადებები"
 
@@ -5581,18 +5678,18 @@ msgstr "კონტეინერის გამოცხადებებ�
 #. whether Orca announces entering a type of container (e.g. blockquotes, forms,
 #. landmarks, lists, panels, tables). The full meaning is "Announce when entering
 #. [container type]" where the container types are listed below this heading.
-#: src/orca/guilabels.py:1785
+#: src/orca/guilabels.py:1850
 msgid "Announce when entering"
 msgstr "გამოცხადება შესვლისას"
 
 #. Translators: This is the label of the Echo page in the Orca Preferences dialog.
 #. On that page there are a variety of settings related to what Orca will echo
 #. as the user types on the keyboard.
-#: src/orca/guilabels.py:1790
+#: src/orca/guilabels.py:1855
 msgid "Echo"
 msgstr "ექო"
 
-#: src/orca/guilabels.py:1796
+#: src/orca/guilabels.py:1861
 msgid ""
 "Key echo speaks the key you pressed. Typing echo speaks what was inserted "
 "into the document as a result of your typing."
@@ -5603,28 +5700,28 @@ msgstr ""
 #. Translators: This is the label of the General page in the Orca Preferences
 #. dialog. On that page there are a variety of general Orca settings which do
 #. not fit well into any of the other pages.
-#: src/orca/guilabels.py:1803
+#: src/orca/guilabels.py:1868
 msgid "General"
 msgstr "მთავარი"
 
 #. Translators: This is the label of the Key Bindings page in the Orca Preferences
 #. dialog. On that page there is a list of all Orca commands and the keystrokes
 #. associated with them. The user can customize the keystrokes for any command.
-#: src/orca/guilabels.py:1808
+#: src/orca/guilabels.py:1873
 msgid "Key Bindings"
 msgstr "კლავიატურის ბმები"
 
 #. Translators: This is the label of the Commands page in the Orca Preferences
 #. dialog. On that page there is a list of all Orca commands and the keystrokes
 #. associated with them. The user can customize the keystrokes for any command.
-#: src/orca/guilabels.py:1813
+#: src/orca/guilabels.py:1878
 msgid "Commands"
 msgstr "ბრძანებები"
 
 #. Translators: This is the label of the Mouse page in the Orca Preferences dialog.
 #. On that page there are settings related to what information Orca presents when
 #. the mouse pointer moves.
-#: src/orca/guilabels.py:1818
+#: src/orca/guilabels.py:1883
 msgid "Mouse"
 msgstr "თაგუნა"
 
@@ -5632,7 +5729,7 @@ msgstr "თაგუნა"
 #. preferences page. Mouse review features may not work properly on
 #. Wayland because Wayland restricts applications from monitoring the
 #. mouse pointer.
-#: src/orca/guilabels.py:1824
+#: src/orca/guilabels.py:1889
 msgid "These settings may not work on Wayland."
 msgstr "ამ პარამეტრებმა, შეიძლება, Wayland-ზე არ იმუშაოს."
 
@@ -5641,25 +5738,25 @@ msgstr "ამ პარამეტრებმა, შეიძლება, W
 #. to the speech synthesizer. For instance "idk" can be sent to the speech server
 #. as "I don't know" or "I D K" or "eye dee kay" or whatever causes the user's
 #. speech synthesizer to say what the user finds most helpful.
-#: src/orca/guilabels.py:1831
+#: src/orca/guilabels.py:1896
 msgid "Pronunciation"
 msgstr "გამოთქმა"
 
 #. Translators: This is the label of the Sound page in the Orca Preferences dialog.
 #. On that page there are settings related to sound output, including volume
 #. and progress bar beep notifications.
-#: src/orca/guilabels.py:1836
+#: src/orca/guilabels.py:1901
 msgid "Sound"
 msgstr "ხმა"
 
 #. Translators: This is the label for a widget in the preferences dialog which
 #. turns sound support on or off.
-#: src/orca/guilabels.py:1840
+#: src/orca/guilabels.py:1905
 msgid "Sound support"
 msgstr "ხმის მხარდაჭერა"
 
 #. Translators: This is the label for the volume control in the Sound preferences.
-#: src/orca/guilabels.py:1843
+#: src/orca/guilabels.py:1908
 msgid "Volume"
 msgstr "ხმის სიმაღლე"
 
@@ -5667,28 +5764,28 @@ msgstr "ხმის სიმაღლე"
 #. dialog. On that page there are settings related to table navigation, such as
 #. whether to speak table cell coordinates, row and column headers, and whether
 #. to read tables cell by cell or by full rows.
-#: src/orca/guilabels.py:1849
+#: src/orca/guilabels.py:1914
 msgid "Tables"
 msgstr "ცხრილები"
 
 #. Translators: This is the label of the Time and Date page in the Orca Preferences
 #. dialog.
-#: src/orca/guilabels.py:1853
+#: src/orca/guilabels.py:1918
 msgid "Time and Date"
 msgstr "თარიღი და დრო"
 
 #. Translators: This is the label of the Speech page in the Orca Preferences dialog.
-#: src/orca/guilabels.py:1856
+#: src/orca/guilabels.py:1921
 msgid "Speech"
 msgstr "საუბარი"
 
 #. Translators: This is the label of the Text Attributes page in the Orca Preferences
 #. dialog.
-#: src/orca/guilabels.py:1860
+#: src/orca/guilabels.py:1925
 msgid "Text Attributes"
 msgstr "ტექსტის ატრიბუტები"
 
-#: src/orca/guilabels.py:1867
+#: src/orca/guilabels.py:1932
 msgid ""
 "Configure which text attributes are spoken and/or marked in braille, and the "
 "order in which they are presented."
@@ -5698,14 +5795,14 @@ msgstr ""
 
 #. Translators: This is the label of the Voice page in the Orca Preferences
 #. dialog.
-#: src/orca/guilabels.py:1873
+#: src/orca/guilabels.py:1938
 msgid "Voice"
 msgstr "ხმა"
 
 #. Translators: This is the label for a group of settings on the Voice preferences
 #. page. It contains widgets that control whether speech is enabled and how
 #. certain content (numbers, colors) is spoken.
-#: src/orca/guilabels.py:1878
+#: src/orca/guilabels.py:1943
 msgid "Speech Settings"
 msgstr "წარმოთქმის მორგება"
 
@@ -5714,7 +5811,7 @@ msgstr "წარმოთქმის მორგება"
 #. default, hyperlink, uppercase, or system). The button displays only an icon
 #. (a cog/gear), so this label is for screen reader users. The %s is replaced
 #. with the voice type name (e.g., "Default", "Uppercase", "Hyperlink", "System").
-#: src/orca/guilabels.py:1885
+#: src/orca/guilabels.py:1950
 #, python-format
 msgctxt "VoiceType"
 msgid "%s Settings"
@@ -5723,7 +5820,7 @@ msgstr "%s-ის მორგება"
 #. Translators: This is a label for a setting that controls whether Orca will
 #. automatically switch the speech synthesizer's language based on the language
 #. of the text or UI element being spoken.
-#: src/orca/guilabels.py:1890
+#: src/orca/guilabels.py:1955
 msgid "Automatic language switching"
 msgstr "ავტომატური ენის გადართვა"
 
@@ -5731,7 +5828,7 @@ msgstr "ავტომატური ენის გადართვა"
 #. pane of the Orca Preferences dialog. On that pane there is a long list of
 #. possible text attributes. The user can select one and then, by using the
 #. Move buttons in this group, adjust when that attribute is spoken by Orca.
-#: src/orca/guilabels.py:1896
+#: src/orca/guilabels.py:1961
 msgid "Adjust selected attribute"
 msgstr "მონიშნული ატრიბუტის მორგება"
 
@@ -5739,7 +5836,7 @@ msgstr "მონიშნული ატრიბუტის მორგე�
 #. braille dot or dots should be used to indicate that character(s) being
 #. shown on the braille display have a particular attribute (e.g. bold). The
 #. "indicator" can be chosen from among: None, Dot 7, Dot 8, Dots 7 and 8.
-#: src/orca/guilabels.py:1902
+#: src/orca/guilabels.py:1967
 msgid "Braille Indicator"
 msgstr "ბრაილის ინდიკატორი"
 
@@ -5749,7 +5846,7 @@ msgstr "ბრაილის ინდიკატორი"
 #. button, move that attribute down one line in the list. The ordering in the
 #. list is important as Orca will speak the selected text attributes in the
 #. given order.
-#: src/orca/guilabels.py:1910
+#: src/orca/guilabels.py:1975
 msgid "Move down one"
 msgstr "ერთით ჩატანა"
 
@@ -5759,7 +5856,7 @@ msgstr "ერთით ჩატანა"
 #. button, move that attribute up one line in the list. The ordering in the list
 #. is important as Orca will speak the selected text attributes in the given
 #. order.
-#: src/orca/guilabels.py:1918
+#: src/orca/guilabels.py:1983
 msgid "Move up one"
 msgstr "ერთით ატანა"
 
@@ -5769,7 +5866,7 @@ msgstr "ერთით ატანა"
 #. button, move that attribute to the bottom of the list. The ordering in the
 #. list is important as Orca will speak the selected text attributes in the
 #. given order.
-#: src/orca/guilabels.py:1926
+#: src/orca/guilabels.py:1991
 msgid "Move to bottom"
 msgstr "ბოლოში ჩამოტანა"
 
@@ -5779,31 +5876,31 @@ msgstr "ბოლოში ჩამოტანა"
 #. button, move that attribute to the top of the list. The ordering in the list
 #. is important as Orca will speak the selected text attributes in the given
 #. order.
-#: src/orca/guilabels.py:1934
+#: src/orca/guilabels.py:1999
 msgid "Move to top"
 msgstr "ზემოთ ატანა"
 
 #. Translators: This is a label for a group of widgets associated with how Orca
 #. will present text attributes such as bold, underline, italic, font size,
-#: src/orca/guilabels.py:1938
+#: src/orca/guilabels.py:2003
 msgid "Text attributes"
 msgstr "ტექსტის ატრიბუტები"
 
 #. Translators: This is the accessible name for a widget in the preferences dialog
 #. that allows the user to reorder text attributes in the list.
-#: src/orca/guilabels.py:1942
+#: src/orca/guilabels.py:2007
 msgid "Reorder"
 msgstr "გადალაგება"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus. The choices are Brief and Verbose.
-#: src/orca/guilabels.py:1946
+#: src/orca/guilabels.py:2011
 msgid "Verbosity"
 msgstr "გამოტანილი შეტყობინებების რაოდენობა"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: src/orca/guilabels.py:1950
+#: src/orca/guilabels.py:2015
 msgid "Ver_bose"
 msgstr "_მეტი შეტყობინება"
 
@@ -5811,14 +5908,14 @@ msgstr "_მეტი შეტყობინება"
 #. will speak regardless of which voice (Default, Hyperlink, System, Uppercase)
 #. is being used. For instance, Orca can speak numbers as individual digits
 #. (e.g. 123 as 1 2 3) or as a whole (e.g. 123 as one hundred and twenty three).
-#: src/orca/guilabels.py:1956
+#: src/orca/guilabels.py:2021
 msgid "Global Voice Settings"
 msgstr "გლობალურ ხმის პარამეტრები"
 
 #. Translators: If this setting is enabled, 123 will be spoken as the individual
 #. digits 1 2 3; otherwise, it will be sent to the synthesizer and (likely)
 #. spoken as one hundred and twenty three.
-#: src/orca/guilabels.py:1961
+#: src/orca/guilabels.py:2026
 msgid "Speak _numbers as digits"
 msgstr "რიცხვების ციფრებად _წარმოთქმა"
 
@@ -5830,21 +5927,21 @@ msgstr "რიცხვების ციფრებად _წარმოთ
 #. system -- each of which can be configured by the user to sound the way he/she
 #. finds most helpful. This string is displayed in the label for the group of
 #. all of the controls associated with configuring a particular voice type.
-#: src/orca/guilabels.py:1971
+#: src/orca/guilabels.py:2036
 msgid "Voice Type Settings"
 msgstr "ხმის ტიპის მორგება"
 
 #. Translators: This is the label for a widget from which the user can select
 #. which speech synthesis system Orca should use. Examples of speech synthesis
 #. systems include Speech Dispatcher and Spiel.
-#: src/orca/guilabels.py:1976
+#: src/orca/guilabels.py:2041
 msgid "Speech _system:"
 msgstr "საუბრის _სისტემა:"
 
 #. Translators: This is the label for a widget from which the user can select
 #. which speech synthesizer Orca should use. Examples of speech synthesizers
 #. include eSpeak, Festival, and Pico.
-#: src/orca/guilabels.py:1981
+#: src/orca/guilabels.py:2046
 msgid "Speech synthesi_zer:"
 msgstr "საუბრის სინ_თესატორი:"
 
@@ -5855,38 +5952,38 @@ msgstr "საუბრის სინ_თესატორი:"
 #. or play a tone (which Speech Dispatcher refers to as a sound 'icon'). Orca
 #. refers to these things as 'capitalization style'. This string is the text of
 #. the label through which users can choose which of style they would prefer.
-#: src/orca/guilabels.py:1990
+#: src/orca/guilabels.py:2055
 msgid "Capitalization style"
 msgstr "რეგისტრის სტილი"
 
 #. Translators: This is the label for a widget from which the user can select
 #. the language of the speech synthesizer.
-#: src/orca/guilabels.py:1994
+#: src/orca/guilabels.py:2059
 msgid "_Language:"
 msgstr "ე_ნა:"
 
 #. Translators: This is the label for a widget from which the user can select
 #. which voice from the current speech synthesizer should be used. Often voices
 #. have human names such as "Allison". Hence the use of the term person.
-#: src/orca/guilabels.py:1999
+#: src/orca/guilabels.py:2064
 msgid "_Person:"
 msgstr "_პიროვნება:"
 
 #. Translators: This is the label for a widget from which the user can set the
 #. speaking rate of the current voice.
-#: src/orca/guilabels.py:2003
+#: src/orca/guilabels.py:2068
 msgid "_Rate:"
 msgstr "_სიჩქარე:"
 
 #. Translators: This is the label for a widget from which the user can set the
 #. pitch of the current voice.
-#: src/orca/guilabels.py:2007
+#: src/orca/guilabels.py:2072
 msgid "Pi_tch:"
 msgstr "_ტონი:"
 
 #. Translators: This is the label for a widget from which the user can set the
 #. volume of the current voice.
-#: src/orca/guilabels.py:2011
+#: src/orca/guilabels.py:2076
 msgid "Vo_lume:"
 msgstr "_ხმის სიმაღლე:"
 
@@ -5898,18 +5995,18 @@ msgstr "_ხმის სიმაღლე:"
 #. system -- each of which can be configured by the user to sound the way he/she
 #. finds most helpful. This string is displayed in the label for the combo box
 #. in which the user selects a voice type to configure.
-#: src/orca/guilabels.py:2021
+#: src/orca/guilabels.py:2086
 msgid "_Voice type:"
 msgstr "_ხმის ტიპი:"
 
 #. Translators: This refers to the voice used by Orca by default.
-#: src/orca/guilabels.py:2024
+#: src/orca/guilabels.py:2089
 msgid "Default"
 msgstr "ნაგულისხმევი"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which are part of a hyperlink.
-#: src/orca/guilabels.py:2028
+#: src/orca/guilabels.py:2093
 msgid "Hyperlink"
 msgstr "ჰიპერბმული"
 
@@ -5919,13 +6016,13 @@ msgstr "ჰიპერბმული"
 #. indicate the presence of the red squiggly line found under a spelling error;
 #. Orca might say "3 of 6" when a user Tabs into a list of six items and the
 #. third item is selected. And so on.
-#: src/orca/guilabels.py:2036
+#: src/orca/guilabels.py:2101
 msgid "System"
 msgstr "სისტემა"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is written in uppercase.
-#: src/orca/guilabels.py:2040
+#: src/orca/guilabels.py:2105
 msgid "Uppercase"
 msgstr "დიდი სიმბოლოები"
 
@@ -5934,7 +6031,7 @@ msgstr "დიდი სიმბოლოები"
 #. Super+M, but it works in all desktop environments. This string is the title
 #. of the dialog that contains the list of notification messages. The string
 #. substitution is for the number of messages in the list.
-#: src/orca/guilabels.py:2051
+#: src/orca/guilabels.py:2116
 #, python-format
 msgid "%d notification"
 msgid_plural "%d notifications"
@@ -11188,6 +11285,38 @@ msgstr "საუბარი გამორთულია."
 msgid "Speech enabled."
 msgstr "საუბარი ჩართულია."
 
+#. Translators: The on-screen braille display is a graphical window that displays a
+#. visual representation of what would be shown on a connected braille display,
+#. including the braille dots and the text characters they correspond to. This
+#. message is presented to the user when the on-screen braille display has been
+#. turned on.
+#: src/orca/messages.py:2120
+msgid "On-screen braille enabled."
+msgstr "ეკრანზე ბრაილის ჩვენება ჩართულია."
+
+#. Translators: The on-screen braille display is a graphical window that displays a
+#. visual representation of what would be shown on a connected braille display,
+#. including the braille dots and the text characters they correspond to. This
+#. message is presented to the user when the on-screen braille display has been
+#. turned off.
+#: src/orca/messages.py:2127
+msgid "On-screen braille disabled."
+msgstr "ეკრანზე ბრაილის ჩვენება გამორთულია."
+
+#. Translators: The on-screen speech display is a graphical window that displays a
+#. scrolling log of all text spoken by the screen reader. This message is presented
+#. to the user when the on-screen speech display has been turned on.
+#: src/orca/messages.py:2132
+msgid "On-screen speech enabled."
+msgstr "ეკრანზე საუბრის მაჩვენებელი ჩართულია."
+
+#. Translators: The on-screen speech display is a graphical window that displays a
+#. scrolling log of all text spoken by the screen reader. This message is presented
+#. to the user when the on-screen speech display has been turned off.
+#: src/orca/messages.py:2137
+msgid "On-screen speech disabled."
+msgstr "ეკრანზე საუბრის მაჩვენებელი გამორთულია."
+
 #. Translators: Orca has a sleep mode which causes Orca to essentially behave as
 #. if it were not running for a given application. Some use cases include self-
 #. voicing apps with associated commands (e.g. ChromeVox) and VMs. In the former
@@ -11201,7 +11330,7 @@ msgstr "საუბარი ჩართულია."
 #. resume working. This string is the message Orca presents when sleep mode is
 #. disabled by the user. The string substitution is the name of the application.
 #. For example "Sleep mode disabled for VirtualBox."
-#: src/orca/messages.py:2128
+#: src/orca/messages.py:2152
 #, python-format
 msgid "Sleep mode disabled for %s."
 msgstr "ძილის რეჟიმი გაითიშა %s-სთვის."
@@ -11219,38 +11348,38 @@ msgstr "ძილის რეჟიმი გაითიშა %s-სთვი
 #. resume working. This string is the message Orca presents when sleep mode is
 #. enabled by the user. The string substitution is the name of the application.
 #. For example "Sleep mode enabled for VirtualBox."
-#: src/orca/messages.py:2143
+#: src/orca/messages.py:2167
 #, python-format
 msgid "Sleep mode enabled for %s."
 msgstr "ძილის რეჟიმ ჩაირთო %s-სთვის."
 
 #. Translators: This string announces speech rate change.
-#: src/orca/messages.py:2146
+#: src/orca/messages.py:2170
 msgid "faster."
 msgstr "უფროსწრაფად."
 
 #. Translators: This string announces speech rate change.
-#: src/orca/messages.py:2149
+#: src/orca/messages.py:2173
 msgid "slower."
 msgstr "უფრონელა."
 
 #. Translators: This string announces speech pitch change.
-#: src/orca/messages.py:2152
+#: src/orca/messages.py:2176
 msgid "higher."
 msgstr "უფრომაღლა."
 
 #. Translators: This string announces speech pitch change.
-#: src/orca/messages.py:2155
+#: src/orca/messages.py:2179
 msgid "lower."
 msgstr "უფროდაბლა."
 
 #. Translators: This string announces speech volume change.
-#: src/orca/messages.py:2158
+#: src/orca/messages.py:2182
 msgid "louder."
 msgstr "უფროხმამაღლა."
 
 #. Translators: This string announces speech volume change.
-#: src/orca/messages.py:2161
+#: src/orca/messages.py:2185
 msgid "softer."
 msgstr "უფრორბილად."
 
@@ -11259,7 +11388,7 @@ msgstr "უფრორბილად."
 #. applications and reads content. The two levels are "brief" and "verbose".
 #. The following string is a message spoken to the user upon toggling
 #. this setting via command.
-#: src/orca/messages.py:2168
+#: src/orca/messages.py:2192
 msgctxt "Speech"
 msgid "Verbosity level: brief"
 msgstr "დიაგნოსტიკური შეტყობინებების დონე: მოკლე"
@@ -11269,25 +11398,25 @@ msgstr "დიაგნოსტიკური შეტყობინებ�
 #. applications and reads content. The two levels are "brief" and "verbose".
 #. The following string is a message spoken to the user upon toggling
 #. this setting via command.
-#: src/orca/messages.py:2175
+#: src/orca/messages.py:2199
 msgctxt "Speech"
 msgid "Verbosity level: verbose"
 msgstr "დიაგნოსტიკური შეტყობინებების დონე: ყველა"
 
 #. Translators: This message is presented to the user when Orca is launched.
-#: src/orca/messages.py:2178
+#: src/orca/messages.py:2202
 msgid "Screen reader on."
 msgstr "ეკრანის მკითხველი ჩართულია."
 
 #. Translators: This message is presented to the user when Orca is quit.
-#: src/orca/messages.py:2181
+#: src/orca/messages.py:2205
 msgid "Screen reader off."
 msgstr "ეკრანის მკითხველი გამორთულია."
 
 #. Translators: Orca has a command to present the contents of the status bar.
 #. This is a brief message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
-#: src/orca/messages.py:2186
+#: src/orca/messages.py:2210
 msgctxt "status bar"
 msgid "Not found"
 msgstr "ნაპოვნი არაა"
@@ -11295,7 +11424,7 @@ msgstr "ნაპოვნი არაა"
 #. Translators: Orca has a command to present the contents of the status bar.
 #. This is a detailed message which will be presented if Orca cannot find the
 #. status bar (e.g. because there isn't one).
-#: src/orca/messages.py:2191
+#: src/orca/messages.py:2215
 msgid "Status bar not found"
 msgstr "სტატუსის ზოლი ვერ ვიპოვე"
 
@@ -11303,7 +11432,7 @@ msgstr "სტატუსის ზოლი ვერ ვიპოვე"
 #. window and then move focus to that text.  For example, they may want to find
 #. the "OK" button.  This message lets them know a string they were searching
 #. for was not found.
-#: src/orca/messages.py:2197
+#: src/orca/messages.py:2221
 msgid "string not found"
 msgstr "სტრიქონი ვერ ვიპოვე"
 
@@ -11311,7 +11440,7 @@ msgstr "სტრიქონი ვერ ვიპოვე"
 #. a document or other container by object type. H moves you to the next heading,
 #. Shift H to the previous heading, T to the next table, and so on. This message
 #. is presented when the user disables the structural navigation feature of Orca.
-#: src/orca/messages.py:2203
+#: src/orca/messages.py:2227
 msgid "Structural navigation disabled"
 msgstr "სტრუქტურული ნავიგაცია გამორთულია"
 
@@ -11320,7 +11449,7 @@ msgstr "სტრუქტურული ნავიგაცია გამ�
 #. Shift H to the previous heading, T to the next table, and so on. This message
 #. is presented when the user enables the structural navigation feature for
 #. navigating within the current document.
-#: src/orca/messages.py:2210
+#: src/orca/messages.py:2234
 msgid "Document mode"
 msgstr "დოკუმენტის რეჟიმი"
 
@@ -11329,7 +11458,7 @@ msgstr "დოკუმენტის რეჟიმი"
 #. Shift H to the previous heading, T to the next table, and so on. This message
 #. is presented when the user enables the structural navigation feature for
 #. navigating within the GUI of the current application.
-#: src/orca/messages.py:2217
+#: src/orca/messages.py:2241
 msgid "GUI mode"
 msgstr "გრაფიკული რეჟიმი"
 
@@ -11339,7 +11468,7 @@ msgstr "გრაფიკული რეჟიმი"
 #. type, such as from link to link, or from heading to heading, or from form
 #. field to form field. This is a brief message which will be presented to the
 #. user if the desired structural navigation object could not be found.
-#: src/orca/messages.py:2225
+#: src/orca/messages.py:2249
 msgctxt "structural navigation"
 msgid "Not found"
 msgstr "ნაპოვნი არაა"
@@ -11352,7 +11481,7 @@ msgstr "ნაპოვნი არაა"
 #. the AtspiCollection interface. If an object claims to not support that
 #. interface, Orca will present this message to the user to indicate that
 #. structural navigation is not available. This is the detailed version.
-#: src/orca/messages.py:2235
+#: src/orca/messages.py:2259
 msgid "Not supported for this location."
 msgstr "მხარდაჭერილი არაა ამ მდებარეობისთვის."
 
@@ -11364,13 +11493,13 @@ msgstr "მხარდაჭერილი არაა ამ მდება
 #. the AtspiCollection interface. If an object claims to not support that
 #. interface, Orca will present this message to the user to indicate that
 #. structural navigation is not available. This is the brief version.
-#: src/orca/messages.py:2245
+#: src/orca/messages.py:2269
 msgctxt "structural navigation"
 msgid "Not supported"
 msgstr "მხარდაჭერილი არაა"
 
 #. Translators: This message describes the (row, col) position of a table cell.
-#: src/orca/messages.py:2248
+#: src/orca/messages.py:2272
 #, python-format
 msgid "Row %(row)d, column %(column)d."
 msgstr "მწკრივი %(row)d, სვეტი %(column)d."
@@ -11378,67 +11507,67 @@ msgstr "მწკრივი %(row)d, სვეტი %(column)d."
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
-#: src/orca/messages.py:2253
+#: src/orca/messages.py:2277
 msgid "Speak cell"
 msgstr "უჯრედის წარმოთქმა"
 
 #. Translators: When users are navigating a table, they sometimes want the entire
 #. row of a table read; other times they want just the current cell presented.
 #. This string is a message presented to the user when this setting is toggled.
-#: src/orca/messages.py:2258
+#: src/orca/messages.py:2282
 msgid "Speak row"
 msgstr "ახლა წარმოთქმა"
 
 #. Translators: a uniform table is one in which each table cell occupies one row
 #. and one column (i.e. a perfect grid). In contrast, a non-uniform table is one
 #. in which at least one table cell occupies more than one row and/or column.
-#: src/orca/messages.py:2263
+#: src/orca/messages.py:2287
 msgid "Non-uniform"
 msgstr "არაერთგვაროვანი"
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. If the user gives a table navigation command but is not in a
 #. table, presents this message.
-#: src/orca/messages.py:2268
+#: src/orca/messages.py:2292
 msgid "Not in a table."
 msgstr "ცხრილი არაა."
 
 #. Translators: Orca has commands for navigating within a table, e.g. to the
 #. next cell in a given direction. This string is the message that will be
 #. presented when those commands are disabled.
-#: src/orca/messages.py:2273
+#: src/orca/messages.py:2297
 msgid "Table navigation disabled."
 msgstr "ცხრილის ნავიგაცია გათიშულია."
 
 #. Translators: Orca has commands for navigating within a table, e.g. to the
 #. next cell in a given direction. This string is the message that will be
 #. presented when those commands are enabled.
-#: src/orca/messages.py:2278
+#: src/orca/messages.py:2302
 msgid "Table navigation enabled."
 msgstr "ცხრილის ნავიგაცია ჩართულია."
 
 #. Translators: This is a message presented to users when the columns in a table
 #. have been reordered.
-#: src/orca/messages.py:2282
+#: src/orca/messages.py:2306
 msgid "Columns reordered"
 msgstr "სვეტები გადაადგილებულია"
 
 #. Translators: This is a message presented to users when the rows in a table
 #. have been reordered.
-#: src/orca/messages.py:2286
+#: src/orca/messages.py:2310
 msgid "Rows reordered"
 msgstr "მწკრივები გადაადგილებულია"
 
 #. Translators: this is in reference to a column in a table. The substitution
 #. is the index (e.g. the first column is "column 1").
-#: src/orca/messages.py:2290
+#: src/orca/messages.py:2314
 #, python-format
 msgid "column %d"
 msgstr "სვეტი %d"
 
 #. Translators: this is in reference to a column in a table. If the user is in
 #. the first column of a table with five columns, the position is "column 1 of 5"
-#: src/orca/messages.py:2294
+#: src/orca/messages.py:2318
 #, python-format
 msgid "column %(index)d of %(total)d"
 msgstr "სვეტი %(index)d %(total)d-დან"
@@ -11446,21 +11575,21 @@ msgstr "სვეტი %(index)d %(total)d-დან"
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell below the current cell and is already in the last row.
-#: src/orca/messages.py:2299
+#: src/orca/messages.py:2323
 msgid "Bottom of column."
 msgstr "სვეტის ბოლო."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the cell above the current cell and is already in the first row.
-#: src/orca/messages.py:2304
+#: src/orca/messages.py:2328
 msgid "Top of column."
 msgstr "სვეტის თავი."
 
 #. Translators: this message is spoken to announce that a table column just became
 #. selected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
-#: src/orca/messages.py:2309
+#: src/orca/messages.py:2333
 #, python-format
 msgid "Column %s selected"
 msgstr "მონიშნულია სვეტი %s"
@@ -11470,7 +11599,7 @@ msgstr "მონიშნულია სვეტი %s"
 #. string substitution is the label of the first column in the range. The second string
 #. substitution is the label in the last column in the range. An example message for
 #. Calc would be "Columns B through F selected".
-#: src/orca/messages.py:2316
+#: src/orca/messages.py:2340
 #, python-format
 msgid "Columns %s through %s selected"
 msgstr "მონიშნულია სვეტები %s-დან %s-მდე"
@@ -11480,7 +11609,7 @@ msgstr "მონიშნულია სვეტები %s-დან %s-მ
 #. string substitution is the label of the first column in the range. The second string
 #. substitution is the label in the last column in the range. An example message for
 #. Calc would be "Columns B through F unselected".
-#: src/orca/messages.py:2323
+#: src/orca/messages.py:2347
 #, python-format
 msgid "Columns %s through %s unselected"
 msgstr "მონიშვნა მოხსნილია სვეტებიდან %s-%s"
@@ -11488,21 +11617,21 @@ msgstr "მონიშვნა მოხსნილია სვეტებ�
 #. Translators: this message is spoken to announce that a table column just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string substitution
 #. is the column label (e.g. "B").
-#: src/orca/messages.py:2328
+#: src/orca/messages.py:2352
 #, python-format
 msgid "Column %s unselected"
 msgstr "სვეტის %s მონიშვნა გაუქმდა"
 
 #. Translators: this is in reference to a row in a table. The substitution is
 #. the index (e.g. the first row is "row 1").
-#: src/orca/messages.py:2332
+#: src/orca/messages.py:2356
 #, python-format
 msgid "row %d"
 msgstr "მწკრივი %d"
 
 #. Translators: this is in reference to a row in a table. If the user is in the
 #. the first row of a table with five rows, the position is "row 1 of 5"
-#: src/orca/messages.py:2336
+#: src/orca/messages.py:2360
 #, python-format
 msgid "row %(index)d of %(total)d"
 msgstr "მწკრივი %(index)d %(total)d-დან"
@@ -11510,46 +11639,46 @@ msgstr "მწკრივი %(index)d %(total)d-დან"
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the left of the current cell and is already in the first column.
-#: src/orca/messages.py:2341
+#: src/orca/messages.py:2365
 msgid "Beginning of row."
 msgstr "მწკრივის დასაწყისი."
 
 #. Translators: This is for navigating document content by moving from table cell
 #. to table cell. This is the message presented when the user attempts to move to
 #. the right of the current cell and is already in the last column.
-#: src/orca/messages.py:2346
+#: src/orca/messages.py:2370
 msgid "End of row."
 msgstr "მწკრივის დასასრული."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted a table row.
-#: src/orca/messages.py:2350
+#: src/orca/messages.py:2374
 msgid "Row deleted."
 msgstr "მწკრივი წაიშალა."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. deleted the last row of a table.
-#: src/orca/messages.py:2354
+#: src/orca/messages.py:2378
 msgid "Last row deleted."
 msgstr "ბოლო მწკრივი წაიშალა."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row.
-#: src/orca/messages.py:2358
+#: src/orca/messages.py:2382
 msgid "Row inserted."
 msgstr "მწკრივი ჩასმულია."
 
 #. Translators: This message is presented to the user to confirm that he/she just
 #. inserted a table row at the end of the table. This typically happens when the
 #. user presses Tab from within the last cell of the table.
-#: src/orca/messages.py:2363
+#: src/orca/messages.py:2387
 msgid "Row inserted at the end of the table."
 msgstr "წკრივი დაემატა ცხრილის ბოლოში."
 
 #. Translators: this message is spoken to announce that a table row just became selected
 #. (e.g as a result of navigation via Shift + Arrows). The string substitution is the row
 #. label (e.g. "2").
-#: src/orca/messages.py:2368
+#: src/orca/messages.py:2392
 #, python-format
 msgid "Row %s selected"
 msgstr "მწკრივი %s მოინიშნა"
@@ -11559,7 +11688,7 @@ msgstr "მწკრივი %s მოინიშნა"
 #. string substitution is the label of the first row in the range. The second string
 #. substitution is the label of the last row in the range. An example message for
 #. Calc would be "Rows 2 through 10 selected".
-#: src/orca/messages.py:2375
+#: src/orca/messages.py:2399
 #, python-format
 msgid "Rows %s through %s selected"
 msgstr "მონიშნულია მწკრივები %s-დან %s-მდე"
@@ -11569,7 +11698,7 @@ msgstr "მონიშნულია მწკრივები %s-დან 
 #. string substitution is the label of the first row in the range. The second string
 #. substitution is the label of the last row in the range. An example message for
 #. Calc would be "Rows 2 through 10 unselected".
-#: src/orca/messages.py:2382
+#: src/orca/messages.py:2406
 #, python-format
 msgid "Rows %s through %s unselected"
 msgstr "გაუქმდა მონიშვნა მწკრივებისთვის %s-დან %s-მდე"
@@ -11577,21 +11706,21 @@ msgstr "გაუქმდა მონიშვნა მწკრივებ�
 #. Translators: this message is spoken to announce that a table row just became
 #. unselected (e.g as a result of navigation via Shift + Arrows). The string
 #. substitution is the row label (e.g. "2").
-#: src/orca/messages.py:2387
+#: src/orca/messages.py:2411
 #, python-format
 msgid "Row %s unselected"
 msgstr "მწკრივის %s მონიშვნა გაუქმდა"
 
 #. Translators: when the user selects (highlights) text in a document, Orca lets
 #. them know.
-#: src/orca/messages.py:2391
+#: src/orca/messages.py:2415
 msgctxt "text"
 msgid "selected"
 msgstr "მონიშნული"
 
 #. Translators: when the user unselects (un-highlights) text in a document, Orca
 #. lets them know.
-#: src/orca/messages.py:2395
+#: src/orca/messages.py:2419
 msgctxt "text"
 msgid "unselected"
 msgstr "მოუნიშნავი"
@@ -11599,47 +11728,47 @@ msgstr "მოუნიშნავი"
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
-#: src/orca/messages.py:2400
+#: src/orca/messages.py:2424
 msgid "%H hours, %M minutes and %S seconds"
 msgstr "%H საათი, %M წუთი და %S წამი"
 
 #. Translators: Orca has a feature to speak the time when the user presses a
 #. shortcut key. This is one of the alternative formats that the user may wish
 #. it to be presented with.
-#: src/orca/messages.py:2405
+#: src/orca/messages.py:2429
 msgid "%H hours and %M minutes"
 msgstr "%H საათი და %M წუთი"
 
 #. Translators: this is information about a unicode character reported to the
 #. user.  The value is the unicode number value of this character in hex.
-#: src/orca/messages.py:2409
+#: src/orca/messages.py:2433
 #, python-format
 msgid "Unicode %s"
 msgstr "უნიკოდი %s"
 
 #. Translators: This string is presented when an application's undo command is
 #. used in a document resulting in a change to that document's contents.
-#: src/orca/messages.py:2413
+#: src/orca/messages.py:2437
 msgctxt "command"
 msgid "undo"
 msgstr "გაუქმება"
 
 #. Translators: This string is presented when an application's redo command is
 #. used in a document resulting in a change to that document's contents.
-#: src/orca/messages.py:2417
+#: src/orca/messages.py:2441
 msgctxt "command"
 msgid "redo"
 msgstr "გამეორება"
 
 #. Translators: This message presents the Orca version number.
-#: src/orca/messages.py:2420
+#: src/orca/messages.py:2444
 #, python-format
 msgid "Screen reader version %s."
 msgstr "ეკრანის მკითხველის ვერსია %s."
 
 #. Translators: This is presented when the user has navigated to a line with only
 #. whitespace characters (space, tab, etc.) on it.
-#: src/orca/messages.py:2424
+#: src/orca/messages.py:2448
 msgid "white space"
 msgstr "თეთრი გამოტოვება"
 
@@ -11647,7 +11776,7 @@ msgstr "თეთრი გამოტოვება"
 #. top of a page or list is reached without that object being found, we "wrap" to
 #. the bottom and continue looking upwards. We need to inform the user when this
 #. is taking place.
-#: src/orca/messages.py:2430
+#: src/orca/messages.py:2454
 msgid "Wrapping to bottom."
 msgstr "გადატანა ბოლოსკენ."
 
@@ -11655,21 +11784,21 @@ msgstr "გადატანა ბოლოსკენ."
 #. bottom of a page or list is reached without that object being found, we "wrap"
 #. to the top and continue looking downwards. We need to inform the user when
 #. this is taking place.
-#: src/orca/messages.py:2436
+#: src/orca/messages.py:2460
 msgid "Wrapping to top."
 msgstr "გადატანა თავისკენ."
 
 #. Translators, normally layered panes and tables have items in them. Thus it is
 #. noteworthy when this is not the case. This message is presented to the user to
 #. indicate the current layered pane or table contains zero items.
-#: src/orca/messages.py:2441
+#: src/orca/messages.py:2465
 msgid "0 items"
 msgstr "0 ელემენტი"
 
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: src/orca/messages.py:2452 src/orca/messages.py:2465
+#: src/orca/messages.py:2476 src/orca/messages.py:2489
 #, python-format
 msgid "Cell spans %d row"
 msgid_plural "Cell spans %d rows"
@@ -11677,7 +11806,7 @@ msgstr[0] "უჯრედი %d მწკრივს იკავებს"
 msgstr[1] "უჯრედი %d მწკრივს იკავებს"
 
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2455
+#: src/orca/messages.py:2479
 #, python-format
 msgid " %d column"
 msgid_plural " %d columns"
@@ -11687,7 +11816,7 @@ msgstr[1] " %d სვეტი"
 #. Translators: The cell here refers to a cell within a table within a
 #. document. We need to announce when the cell occupies or "spans" more
 #. than a single row and/or column.
-#: src/orca/messages.py:2460
+#: src/orca/messages.py:2484
 #, python-format
 msgid "Cell spans %d column"
 msgid_plural "Cell spans %d columns"
@@ -11695,7 +11824,7 @@ msgstr[0] "უჯრედი %d სვეტს იკავებს"
 msgstr[1] "უჯრედი %d სვეტს იკავებს"
 
 #. Translators: This message describes the number of characters in a string.
-#: src/orca/messages.py:2474
+#: src/orca/messages.py:2498
 #, python-format
 msgid "%d characters"
 msgid_plural "%d characters"
@@ -11704,7 +11833,7 @@ msgstr[1] "%d სიმბოლო"
 
 #. Translators: This message describes the number of characters that were just
 #. selected in a body of text.
-#: src/orca/messages.py:2482
+#: src/orca/messages.py:2506
 #, python-format
 msgid "%d character selected"
 msgid_plural "%d characters selected"
@@ -11713,7 +11842,7 @@ msgstr[1] "არჩეულია %d სიმბოლო"
 
 #. Translators: This message describes the number of characters that were just
 #. unselected in a body of text.
-#: src/orca/messages.py:2490
+#: src/orca/messages.py:2514
 #, python-format
 msgid "%d character unselected"
 msgid_plural "%d characters unselected"
@@ -11723,7 +11852,7 @@ msgstr[1] "%d სიმბოლოს მონიშვნა გაუქმ�
 #. Translators: People can enter a string of text that is too wide to be
 #. fully displayed in a spreadsheet cell. This message will be spoken if
 #. such a cell is encountered.
-#: src/orca/messages.py:2499
+#: src/orca/messages.py:2523
 #, python-format
 msgid "%d character too long"
 msgid_plural "%d characters too long"
@@ -11733,7 +11862,7 @@ msgstr[1] "%d სიმბოლო მეტისმეტად ბევრ�
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a braille message containing the app which just claimed focus.
-#: src/orca/messages.py:2508
+#: src/orca/messages.py:2532
 #, python-format
 msgid "(%d dialog)"
 msgid_plural "(%d dialogs)"
@@ -11743,7 +11872,7 @@ msgstr[1] "(%d დიალოგი)"
 #. Translators: This message informs the user how many unfocused alert and
 #. dialog windows a newly (re)focused application has. It is added at the
 #. end of a spoken message containing the app which just claimed focus.
-#: src/orca/messages.py:2517
+#: src/orca/messages.py:2541
 #, python-format
 msgid "%d unfocused dialog"
 msgid_plural "%d unfocused dialogs"
@@ -11751,7 +11880,7 @@ msgstr[0] "%d ფოკუსის არმქონე ფანჯარა"
 msgstr[1] "%d ფოკუსის არმქონე ფანჯარა"
 
 #. Translators: This is the size of a file in bytes
-#: src/orca/messages.py:2524
+#: src/orca/messages.py:2548
 #, python-format
 msgid "%d byte"
 msgid_plural "%d bytes"
@@ -11760,7 +11889,7 @@ msgstr[1] "%d ბაიტი"
 
 #. Translators: This message informs the user hoq many files were found as
 #. a result of a search.
-#: src/orca/messages.py:2532
+#: src/orca/messages.py:2556
 #, python-format
 msgid "%d file found"
 msgid_plural "%d files found"
@@ -11768,7 +11897,7 @@ msgstr[0] "ნაპოვნია %d ფაილი"
 msgstr[1] "ნაპოვნია %d ფაილი"
 
 #. Translators: This message presents the number of forms in a document.
-#: src/orca/messages.py:2542
+#: src/orca/messages.py:2566
 #, python-format
 msgid "%d form"
 msgid_plural "%d forms"
@@ -11776,7 +11905,7 @@ msgstr[0] "%d ფორმა"
 msgstr[1] "%d ფორმა"
 
 #. Translators: This message presents the number of headings in a document.
-#: src/orca/messages.py:2552
+#: src/orca/messages.py:2576
 #, python-format
 msgid "%d heading"
 msgid_plural "%d headings"
@@ -11785,7 +11914,7 @@ msgstr[1] "%d მიმართულება"
 
 #. Translators: This message presents the number of items in a layered pane
 #. or table.
-#: src/orca/messages.py:2560
+#: src/orca/messages.py:2584
 #, python-format
 msgid "%d item"
 msgid_plural "%d items"
@@ -11795,7 +11924,7 @@ msgstr[1] "%d ელემენტი"
 #. Translators: This message presents the number of landmarks in a document.
 #. ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
 #. identify important part of webpage like banners, main context, search etc.
-#: src/orca/messages.py:2572
+#: src/orca/messages.py:2596
 #, python-format
 msgid "%d landmark"
 msgid_plural "%d landmarks"
@@ -11805,7 +11934,7 @@ msgstr[1] "%d ორიენტირი"
 #. Translators: Orca has several commands that search for, and present a list
 #. of, objects based on one or more criteria. This is a message that will be
 #. presented to the user to indicate how many matching items were found.
-#: src/orca/messages.py:2581
+#: src/orca/messages.py:2605
 #, python-format
 msgid "%d item found"
 msgid_plural "%d items found"
@@ -11815,7 +11944,7 @@ msgstr[1] "ნაპოვნია %d ელემენტი"
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested blockquotes, such as can be seen in deep email threads,
 #. and then navigates out of several levels at once.
-#: src/orca/messages.py:2590
+#: src/orca/messages.py:2614
 #, python-format
 msgid "Leaving %d blockquote."
 msgid_plural "Leaving %d blockquotes."
@@ -11824,7 +11953,7 @@ msgstr[1] "%d ციტატის ბლოკიდან გასვლა.
 
 #. Translators: This message is presented when a user is navigating within a
 #. series of nested lists and then navigates out of several levels at once.
-#: src/orca/messages.py:2598
+#: src/orca/messages.py:2622
 #, python-format
 msgid "Leaving %d list."
 msgid_plural "Leaving %d lists."
@@ -11837,12 +11966,12 @@ msgstr[1] "%d სიიდან გასვლა."
 #. you're currently viewing messages 1-100 out of some huge, unspecified
 #. number. Normally Orca announces "list with n items" when the count is
 #. known. This is the corresponding message for the unknown-count scenario.
-#: src/orca/messages.py:2611
+#: src/orca/messages.py:2635
 msgid "List of unknown size"
 msgstr "უცნობი ზომის სია"
 
 #. Translators: This message describes a bulleted or numbered list.
-#: src/orca/messages.py:2614
+#: src/orca/messages.py:2638
 #, python-format
 msgid "List with %d item"
 msgid_plural "List with %d items"
@@ -11851,7 +11980,7 @@ msgstr[1] "სია %d ელემენტით"
 
 #. Translators: This message describes the number of items of a bulleted or numbered list
 #. that is inside of another list.
-#: src/orca/messages.py:2622
+#: src/orca/messages.py:2646
 #, python-format
 msgid "Nested list with %d item"
 msgid_plural "Nested list with %d items"
@@ -11863,20 +11992,20 @@ msgstr[1] "ერთმანეთში ჩალაგებული სი�
 #. scrolling, adding and/or removing items as the user moves up or down.
 #. Normally Orca announces "feed with n articles" when the count is known.
 #. This is the corresponding message for the unknown-count scenario.
-#: src/orca/messages.py:2634
+#: src/orca/messages.py:2658
 msgid "Feed of unknown size"
 msgstr "უცნობი ზომის ელტა"
 
 #. Translators: This message describes the number of articles (news items,
 #. social media posts, etc.) in a feed.
-#: src/orca/messages.py:2638
+#: src/orca/messages.py:2662
 #, python-format
 msgid "Feed with %d article"
 msgid_plural "Feed with %d articles"
 msgstr[0] "ლენტა %d სტატიით"
 msgstr[1] "ლენტა %d სტატიით"
 
-#: src/orca/messages.py:2648
+#: src/orca/messages.py:2672
 #, python-format
 msgid "Description list with %d term"
 msgid_plural "Description list with %d terms"
@@ -11885,7 +12014,7 @@ msgstr[1] "აღწერების სია %d ელემენტით"
 
 #. Translators: A GtkNotebook (https://docs.gtk.org/gtk4/class.Notebook.html) is an
 #. example of a "tab list". This message describes the tab list to the user.
-#: src/orca/messages.py:2657
+#: src/orca/messages.py:2681
 #, python-format
 msgid "Tab list with %d tab"
 msgid_plural "Tab list with %d tabs"
@@ -11896,7 +12025,7 @@ msgstr[1] "ჩანართების სია %d ჩანართით"
 #. A given term ("dt" element) can have 0 or more values ("dd" elements).
 #. This message presents the number values a particular term has.
 #. See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl
-#: src/orca/messages.py:2667
+#: src/orca/messages.py:2691
 #, python-format
 msgid "%d value"
 msgid_plural "%d values"
@@ -11905,7 +12034,7 @@ msgstr[1] "%d მნიშვნელობა"
 
 #. Translators: this represents the number of rows in a mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
-#: src/orca/messages.py:2675
+#: src/orca/messages.py:2699
 #, python-format
 msgid "math table with %d row"
 msgid_plural "math table with %d rows"
@@ -11918,15 +12047,15 @@ msgstr[1] "მათემატიკის ცხრილი %d მწკრ�
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2678 src/orca/messages.py:2694
-#: src/orca/messages.py:2831
+#: src/orca/messages.py:2702 src/orca/messages.py:2718
+#: src/orca/messages.py:2855
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
 msgstr[0] "%d სვეტი"
 msgstr[1] "%d სვეტი"
 
-#: src/orca/messages.py:2689
+#: src/orca/messages.py:2713
 #, python-format
 msgid "nested math table with %d row"
 msgid_plural "nested math table with %d rows"
@@ -11935,7 +12064,7 @@ msgstr[1] "ერთმანეთში ჩალაგებული მა�
 
 #. Translators: This message is presented to inform the user of the number of
 #. messages in a list.
-#: src/orca/messages.py:2704
+#: src/orca/messages.py:2728
 #, python-format
 msgid "%d message.\n"
 msgid_plural "%d messages.\n"
@@ -11944,7 +12073,7 @@ msgstr[1] "%d შეტყობინება.\n"
 
 #. Translators: This message is presented to inform the user of the value of
 #. a slider, progress bar, or other such component.
-#: src/orca/messages.py:2712
+#: src/orca/messages.py:2736
 #, python-format
 msgid "%d percent."
 msgid_plural "%d percent."
@@ -11954,7 +12083,7 @@ msgstr[1] "%d პროცენტი."
 #. Translators: This message announces the percentage of the document that
 #. has been read. The value is calculated by knowing the index of the current
 #. position divided by the total number of objects on the page.
-#: src/orca/messages.py:2721
+#: src/orca/messages.py:2745
 #, python-format
 msgid "%d percent of document read"
 msgid_plural "%d percent of document read"
@@ -11963,28 +12092,28 @@ msgstr[1] "დოკუმენტის %d პროცენტი წაკ�
 
 #. Translators: this represents a text attribute expressed in pixels, such as
 #. a margin, indentation, font size, etc.
-#: src/orca/messages.py:2729
+#: src/orca/messages.py:2753
 #, python-format
 msgid "%d pixel"
 msgid_plural "%d pixels"
 msgstr[0] "%d პიქსელი"
 msgstr[1] "%d პიქსელი"
 
-#: src/orca/messages.py:2739
+#: src/orca/messages.py:2763
 #, python-format
 msgid "%(count)d %(repeatChar)s character"
 msgid_plural "%(count)d %(repeatChar)s characters"
 msgstr[0] "%(count)d %(repeatChar)s სიმბოლო"
 msgstr[1] "%(count)d %(repeatChar)s სიმბოლო"
 
-#: src/orca/messages.py:2749
+#: src/orca/messages.py:2773
 #, python-format
 msgid "%(index)d of %(total)d item selected"
 msgid_plural "%(index)d of %(total)d items selected"
 msgstr[0] "მონიშნულია %(index)d ელემენტი %(total)d-დან"
 msgstr[1] "მონიშნულია %(index)d ელემენტი %(total)d-დან"
 
-#: src/orca/messages.py:2760
+#: src/orca/messages.py:2784
 #, python-format
 msgid "%d Screen reader shortcut found."
 msgid_plural "%d Screen reader shortcuts found."
@@ -11993,7 +12122,7 @@ msgstr[1] "აღმოჩენილია %d ეკრანის წამ�
 
 #. Translators: This message is presented to inform the user of the number of
 #. space characters in a string.
-#: src/orca/messages.py:2770
+#: src/orca/messages.py:2794
 #, python-format
 msgid "%d space"
 msgid_plural "%d spaces"
@@ -12002,7 +12131,7 @@ msgstr[1] "%d გამოტოვება"
 
 #. Translators: This message is presented to inform the user of the number of
 #. tab characters in a string.
-#: src/orca/messages.py:2778
+#: src/orca/messages.py:2802
 #, python-format
 msgid "%d tab"
 msgid_plural "%d tabs"
@@ -12010,7 +12139,7 @@ msgstr[0] "%d ტაბულაცია"
 msgstr[1] "%d ტაბულაცია"
 
 #. Translators: This message presents the number of tables in a document.
-#: src/orca/messages.py:2788
+#: src/orca/messages.py:2812
 #, python-format
 msgid "%d table"
 msgid_plural "%d tables"
@@ -12021,18 +12150,18 @@ msgstr[1] "%d ცხრილი"
 #. number of rows and the number of columns are unknown. Normally
 #. Orca announces the table dimensions (e.g. "table with 100 rows
 #. 15 columns"). When both counts are unknown, it presents this.
-#: src/orca/messages.py:2800
+#: src/orca/messages.py:2824
 msgid "table of unknown size"
 msgstr "უცნობი ზომის ცხრილი"
 
-#: src/orca/messages.py:2807
+#: src/orca/messages.py:2831
 #, python-format
 msgid "table with %d column, row count unknown"
 msgid_plural "table with %d columns, row count unknown"
 msgstr[0] "ცხრილი %d სვეტით. მწკრივების რიცხვი უცნობია"
 msgstr[1] "ცხრილი %d სვეტით. მწკრივების რიცხვი უცნობია"
 
-#: src/orca/messages.py:2820
+#: src/orca/messages.py:2844
 #, python-format
 msgid "table with %d row, column count unknown"
 msgid_plural "table with %d rows, column count unknown"
@@ -12040,7 +12169,7 @@ msgstr[0] "ცხრილი %d მწკრივით. სვეტები
 msgstr[1] "ცხრილი %d მწკრივით. სვეტების რიცხვი უცნობია"
 
 #. Translators: this represents the number of rows in a table.
-#: src/orca/messages.py:2828
+#: src/orca/messages.py:2852
 #, python-format
 msgid "table with %d row"
 msgid_plural "table with %d rows"
@@ -12049,7 +12178,7 @@ msgstr[1] "ცხრილი %d მწკრივით"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of seconds.
-#: src/orca/messages.py:2841
+#: src/orca/messages.py:2865
 #, python-format
 msgid "%d second ago"
 msgid_plural "%d seconds ago"
@@ -12058,7 +12187,7 @@ msgstr[1] "%d წამის წინ"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of minutes.
-#: src/orca/messages.py:2849
+#: src/orca/messages.py:2873
 #, python-format
 msgid "%d minute ago"
 msgid_plural "%d minutes ago"
@@ -12067,7 +12196,7 @@ msgstr[1] "%d წუთის წინ"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of hours.
-#: src/orca/messages.py:2857
+#: src/orca/messages.py:2881
 #, python-format
 msgid "%d hour ago"
 msgid_plural "%d hours ago"
@@ -12076,7 +12205,7 @@ msgstr[1] "%d საათის წინ"
 
 #. Translators: This message informs the user how long ago something took
 #. place in terms of days.
-#: src/orca/messages.py:2865
+#: src/orca/messages.py:2889
 #, python-format
 msgid "%d day ago"
 msgid_plural "%d days ago"
@@ -12085,7 +12214,7 @@ msgstr[1] "%d დღის წინ"
 
 #. Translators: This message presents the number of unvisited links in a
 #. document.
-#: src/orca/messages.py:2892
+#: src/orca/messages.py:2916
 #, python-format
 msgid "%d unvisited link"
 msgid_plural "%d unvisited links"
@@ -12094,7 +12223,7 @@ msgstr[1] "%d უხილავი ბმული"
 
 #. Translators: This message presents the number of visited links in a
 #. document.
-#: src/orca/messages.py:2903
+#: src/orca/messages.py:2927
 #, python-format
 msgid "%d visited link"
 msgid_plural "%d visited links"
