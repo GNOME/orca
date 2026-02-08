@@ -327,7 +327,7 @@ DICTIONARY_REPLACEMENT_STRING = _("Replacement String")
 # as "I don't know" or "I D K" or "eye dee kay" or whatever causes the user's
 # speech synthesizer to say what the user finds most helpful. This string is
 # the label for the widget to add a new entry.
-DICTIONARY_NEW_ENTRY = _("_New entry")
+DICTIONARY_NEW_ENTRY = _("New entry")
 
 # Translators: The pronunciation dictionary allows the user to correct words
 # which the speech synthesizer mispronounces (e.g. a person's name, a technical
@@ -336,7 +336,7 @@ DICTIONARY_NEW_ENTRY = _("_New entry")
 # as "I don't know" or "I D K" or "eye dee kay" or whatever causes the user's
 # speech synthesizer to say what the user finds most helpful. This string is
 # the label for the widget to delete the selected entry.
-DICTIONARY_DELETE = _("_Delete")
+DICTIONARY_DELETE = _("Delete")
 
 # Translators: The pronunciation dictionary allows the user to correct words
 # which the speech synthesizer mispronounces (e.g. a person's name, a technical
