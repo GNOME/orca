@@ -1503,11 +1503,14 @@ CURRENT_PROFILE = _("Current Profile")
 # preferences page. It explains to the user what profiles are and how they work.
 # The quoted profile name is `PROFILE_DEFAULT = C_("Profile", "Default")` defined
 # earlier in this file.
-PROFILES_INFO = _(
-    f'Profiles are collections of settings. The "{PROFILE_DEFAULT}" profile is '
-    "loaded at startup. To edit an existing profile, select it below and then "
-    "adjust settings on the other pages. To rename or delete the selected profile, "
-    "use the Tab key to navigate to its associated buttons."
+PROFILES_INFO = (
+    _(
+        'Profiles are collections of settings. The "%s" profile is '
+        "loaded at startup. To edit an existing profile, select it below and then "
+        "adjust settings on the other pages. To rename or delete the selected profile, "
+        "use the Tab key to navigate to its associated buttons."
+    )
+    % PROFILE_DEFAULT
 )
 
 # Translators: This is a label in the Preferences dialog box. It applies to
