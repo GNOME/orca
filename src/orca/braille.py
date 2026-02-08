@@ -1087,9 +1087,9 @@ class Text(Region):
         cursor_offset += len(self._label)
         super().__init__(string, cursor_offset, True)
 
-        if not self._contracted and not settings.disableBrailleEOL:
+        if not self._contracted and settings.enableBrailleEOL:
             self.string += self._eol
-        elif settings.disableBrailleEOL:
+        elif not settings.enableBrailleEOL:
             # Ensure there is a place to click on at the end of a line so the user can route the
             # caret there.
             self.string += " "

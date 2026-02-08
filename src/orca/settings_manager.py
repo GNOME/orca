@@ -624,6 +624,9 @@ class SettingsManager:
         _profile = general.get("profile", settings.profile)
         self._profile = _profile[1]
 
+        if "enableBrailleEOL" in general:
+            general["disableBrailleEOL"] = not general["enableBrailleEOL"]
+
         # Build the profile settings to save (only non-default values)
         profile_general: dict = {}
         for key, value in general.items():

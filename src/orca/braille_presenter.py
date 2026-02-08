@@ -148,10 +148,10 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
             | preferences_grid_base.EnumPreferenceControl
         ] = [
             preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.BRAILLE_DISABLE_END_OF_LINE_SYMBOL,
-                getter=presenter._get_disable_eol,
-                setter=presenter._set_disable_eol,
-                prefs_key="disableBrailleEOL",
+                label=guilabels.BRAILLE_ENABLE_END_OF_LINE_SYMBOL,
+                getter=presenter.get_end_of_line_indicator_is_enabled,
+                setter=presenter.set_end_of_line_indicator_is_enabled,
+                prefs_key="enableBrailleEOL",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.BRAILLE_ENABLE_WORD_WRAP,
@@ -649,19 +649,6 @@ class BraillePresenter:
         settings.brailleVerbosityLevel = level
         return True
 
-    def _get_disable_eol(self) -> bool:
-        """Returns whether the end-of-line indicator is disabled."""
-
-        return settings.disableBrailleEOL
-
-    def _set_disable_eol(self, value: bool) -> bool:
-        """Sets whether the end-of-line indicator is disabled."""
-
-        msg = f"BRAILLE PRESENTER: Setting disable-eol to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.disableBrailleEOL = value
-        return True
-
     def _get_use_abbreviated_rolenames(self) -> bool:
         """Returns whether abbreviated role names are used."""
 
@@ -1149,18 +1136,15 @@ class BraillePresenter:
     def get_end_of_line_indicator_is_enabled(self) -> bool:
         """Returns whether the end-of-line indicator is enabled."""
 
-        # The setting, unfortunately, is disableBrailleEOL.
-        return not settings.disableBrailleEOL
+        return settings.enableBrailleEOL
 
     @dbus_service.setter
     def set_end_of_line_indicator_is_enabled(self, value: bool) -> bool:
         """Sets whether the end-of-line indicator is enabled."""
 
-        # The setting, unfortunately, is disableBrailleEOL.
-        value = not value
-        msg = f"BRAILLE PRESENTER: Setting disable-eol to {value}."
+        msg = f"BRAILLE PRESENTER: Setting enable-eol to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.disableBrailleEOL = value
+        settings.enableBrailleEOL = value
         return True
 
     @gsettings_registry.get_registry().gsetting(

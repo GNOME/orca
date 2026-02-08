@@ -45,7 +45,7 @@ class TestBrailleLineRanges:
         settings_mock = test_context.Mock()
         settings_mock.BRAILLE_UNDERLINE_NONE = 0
         settings_mock.enableContractedBraille = False
-        settings_mock.disableBrailleEOL = False
+        settings_mock.enableBrailleEOL = True
         settings_mock.enableBraille = True
         settings_mock.enableBrailleWordWrap = False
 

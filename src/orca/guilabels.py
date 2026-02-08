@@ -1204,9 +1204,9 @@ BRAILLE_CONTRACTION_TABLE = _("Contraction _Table:")
 # displayed.
 BRAILLE_DURATION_SECS = _("D_uration (secs):")
 
-# Translators: This is the label for a setting which turns off the braille
-# indicator symbol which Orca normally shows at the end of each line of text.
-BRAILLE_DISABLE_END_OF_LINE_SYMBOL = _("Disable _end of line symbol")
+# Translators: This is the label for a setting which controls whether Orca
+# displays the braille indicator symbol at the end of each line of text.
+BRAILLE_ENABLE_END_OF_LINE_SYMBOL = _("_End of line symbol")
 
 # Translators: This is a label for a group of settings related to a refreshable
 # braille display.

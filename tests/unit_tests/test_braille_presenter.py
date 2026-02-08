@@ -239,19 +239,19 @@ class TestBraillePresenter:
         presenter = get_presenter()
         settings_mock = essential_modules["orca.settings"]
 
-        settings_mock.disableBrailleEOL = False
+        settings_mock.enableBrailleEOL = True
         assert presenter.get_end_of_line_indicator_is_enabled() is True
 
-        settings_mock.disableBrailleEOL = True
+        settings_mock.enableBrailleEOL = False
         assert presenter.get_end_of_line_indicator_is_enabled() is False
 
         result = presenter.set_end_of_line_indicator_is_enabled(True)
         assert result is True
-        assert not settings_mock.disableBrailleEOL
+        assert settings_mock.enableBrailleEOL
 
         result = presenter.set_end_of_line_indicator_is_enabled(False)
         assert result is True
-        assert settings_mock.disableBrailleEOL
+        assert not settings_mock.enableBrailleEOL
 
     def test_use_braille(self, test_context: OrcaTestContext):
         """Test use_braille method."""
@@ -674,8 +674,8 @@ class TestBraillePresenter:
         assert result is True
         assert settings_mock.brailleVerbosityLevel == settings_mock.VERBOSITY_LEVEL_BRIEF
 
-    def test_get_disable_eol(self, test_context: OrcaTestContext):
-        """Test _get_disable_eol returns the disableBrailleEOL setting."""
+    def test_get_eol_enabled(self, test_context: OrcaTestContext):
+        """Test get_end_of_line_indicator_is_enabled returns enableBrailleEOL."""
 
         essential_modules = self._setup_dependencies(test_context)
         from orca.braille_presenter import get_presenter
@@ -683,14 +683,14 @@ class TestBraillePresenter:
         presenter = get_presenter()
         settings_mock = essential_modules["orca.settings"]
 
-        settings_mock.disableBrailleEOL = True
-        assert presenter._get_disable_eol() is True
+        settings_mock.enableBrailleEOL = True
+        assert presenter.get_end_of_line_indicator_is_enabled() is True
 
-        settings_mock.disableBrailleEOL = False
-        assert presenter._get_disable_eol() is False
+        settings_mock.enableBrailleEOL = False
+        assert presenter.get_end_of_line_indicator_is_enabled() is False
 
-    def test_set_disable_eol(self, test_context: OrcaTestContext):
-        """Test _set_disable_eol sets the disableBrailleEOL setting."""
+    def test_set_eol_enabled(self, test_context: OrcaTestContext):
+        """Test set_end_of_line_indicator_is_enabled sets enableBrailleEOL."""
 
         essential_modules = self._setup_dependencies(test_context)
         settings_mock = essential_modules["orca.settings"]
@@ -698,13 +698,13 @@ class TestBraillePresenter:
 
         presenter = get_presenter()
 
-        result = presenter._set_disable_eol(True)
+        result = presenter.set_end_of_line_indicator_is_enabled(True)
         assert result is True
-        assert settings_mock.disableBrailleEOL is True
+        assert settings_mock.enableBrailleEOL is True
 
-        result = presenter._set_disable_eol(False)
+        result = presenter.set_end_of_line_indicator_is_enabled(False)
         assert result is True
-        assert settings_mock.disableBrailleEOL is False
+        assert settings_mock.enableBrailleEOL is False
 
     def test_get_use_abbreviated_rolenames(self, test_context: OrcaTestContext):
         """Test _get_use_abbreviated_rolenames returns True when brief style."""
@@ -999,7 +999,7 @@ class TestBraillePreferencesGridUI:
         settings_mock.brailleShowContext = True
         settings_mock.enableContractedBraille = False
         settings_mock.enableComputerBrailleAtCursor = True
-        settings_mock.disableBrailleEOL = False
+        settings_mock.enableBrailleEOL = True
         settings_mock.enableBrailleWordWrap = False
         settings_mock.brailleContractionTable = ""
         settings_mock.brailleLinkIndicator = 0x00
@@ -1035,7 +1035,7 @@ class TestBraillePreferencesGridUI:
         guilabels_mock.VERBOSITY = "Verbosity"
         guilabels_mock.BRAILLE_ENABLE_CONTRACTED_BRAILLE = "Enable contracted braille"
         guilabels_mock.BRAILLE_COMPUTER_BRAILLE_AT_CURSOR = "Expand word at cursor"
-        guilabels_mock.BRAILLE_DISABLE_END_OF_LINE_SYMBOL = "Disable end of line symbol"
+        guilabels_mock.BRAILLE_ENABLE_END_OF_LINE_SYMBOL = "End of line symbol"
         guilabels_mock.BRAILLE_ENABLE_WORD_WRAP = "Enable word wrap"
         guilabels_mock.BRAILLE_CONTRACTION_TABLE = "Contraction table"
         guilabels_mock.BRAILLE_HYPERLINK_INDICATOR = "Hyperlink indicator"
@@ -1219,7 +1219,7 @@ class TestBraillePreferencesGridUI:
 
         assert isinstance(result, dict)
         assert "brailleVerbosityLevel" in result
-        assert "disableBrailleEOL" in result
+        assert "enableBrailleEOL" in result
         assert "enableFlashMessages" in result
         assert "brailleProgressBarUpdates" in result
 
