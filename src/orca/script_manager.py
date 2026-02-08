@@ -358,9 +358,15 @@ class ScriptManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         new_script.activate()
 
-        # Restore settings snapshot for this app if we have one.
-        # Example: old_script is terminal, new_script is mate-terminal (e.g. for UI)
-        if new_script.app and new_script.app in self._app_settings_snapshots:
+        # Restore settings snapshot only for same-app script switches
+        # (e.g. terminal script <-> GTK script within mate-terminal).
+        # Cross-app switches rely on load_app_settings from activate().
+        if (
+            old_script
+            and new_script.app
+            and old_script.app == new_script.app
+            and new_script.app in self._app_settings_snapshots
+        ):
             settings_manager.get_manager().restore_settings(
                 self._app_settings_snapshots[new_script.app]
             )

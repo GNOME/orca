@@ -1074,3 +1074,80 @@ class TestSpeechManager:
         assert result == case["expected"]
         settings_mock = essential_modules["orca.settings"]
         assert settings_mock.enableAutoLanguageSwitching == case["input_value"]
+
+    def test_toggle_speech_unmutes_when_muted(self, test_context: OrcaTestContext) -> None:
+        """Test toggle_speech unmutes when speech is currently muted."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.silenceSpeech = True
+        settings_mock.enableSpeech = True
+
+        from orca.speech_manager import SpeechManager
+
+        manager = SpeechManager()
+        script = test_context.Mock()
+        manager.toggle_speech(script)
+
+        assert settings_mock.silenceSpeech is False
+
+    def test_toggle_speech_enables_when_disabled(self, test_context: OrcaTestContext) -> None:
+        """Test toggle_speech enables speech when enableSpeech is False."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.enableSpeech = False
+        settings_mock.silenceSpeech = False
+
+        from orca.speech_manager import SpeechManager
+
+        manager = SpeechManager()
+        script = test_context.Mock()
+        manager.toggle_speech(script)
+
+        assert settings_mock.enableSpeech is True
+        essential_modules["orca.speech"].init.assert_called()
+
+    def test_toggle_speech_mutes_when_app_profile_has_speech_enabled(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test toggle_speech mutes when the app profile has enableSpeech=True."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.enableSpeech = True
+        settings_mock.silenceSpeech = False
+
+        settings_manager_instance = essential_modules["orca.settings_manager"].get_manager()
+        settings_manager_instance.get_app_setting.return_value = True
+
+        from orca.speech_manager import SpeechManager
+
+        manager = SpeechManager()
+        script = test_context.Mock()
+        manager.toggle_speech(script)
+
+        assert settings_mock.silenceSpeech is True
+        assert settings_mock.enableSpeech is True
+
+    def test_toggle_speech_disables_when_app_profile_has_speech_disabled(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test toggle_speech restores enableSpeech=False when app profile disables speech."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.enableSpeech = True
+        settings_mock.silenceSpeech = False
+
+        settings_manager_instance = essential_modules["orca.settings_manager"].get_manager()
+        settings_manager_instance.get_app_setting.return_value = False
+
+        from orca.speech_manager import SpeechManager
+
+        manager = SpeechManager()
+        script = test_context.Mock()
+        manager.toggle_speech(script)
+
+        assert settings_mock.enableSpeech is False
+        assert settings_mock.silenceSpeech is False

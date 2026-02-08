@@ -960,6 +960,58 @@ class TestScriptManager:
         assert settings_mock.testSetting1 == "original_value1"
         assert settings_mock.testSetting2 == "original_value2"
 
+    def test_set_active_script_does_not_restore_snapshot_for_different_app(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that snapshot is not restored when switching between different apps."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        default_script = essential_modules["default_script"]
+        settings_mock = essential_modules["orca.settings"]
+        from orca.script_manager import ScriptManager
+
+        speech_patch = "orca.script_manager.speech_manager.get_manager"
+        mock_get_speech_manager = test_context.Mock()
+        test_context.patch(speech_patch, new=mock_get_speech_manager)
+
+        speech_manager_instance = test_context.Mock()
+        mock_get_speech_manager.return_value = speech_manager_instance
+
+        settings_mock.testSetting1 = "original_value1"
+
+        settings_manager_instance = essential_modules["settings_manager_instance"]
+
+        def mock_snapshot():
+            return {"testSetting1": settings_mock.testSetting1}
+
+        def mock_restore(snapshot):
+            for key, value in snapshot.items():
+                setattr(settings_mock, key, value)
+
+        settings_manager_instance.snapshot_settings = test_context.Mock(side_effect=mock_snapshot)
+        settings_manager_instance.restore_settings = test_context.Mock(side_effect=mock_restore)
+
+        manager = ScriptManager()
+        app_a = test_context.Mock()
+        app_b = test_context.Mock()
+
+        old_script = test_context.Mock()
+        old_script.app = app_a
+        old_script.deactivate = test_context.Mock()
+
+        def modify_setting_on_activate():
+            settings_mock.testSetting1 = "modified_by_activate"
+
+        new_script = default_script
+        new_script.app = app_b
+        new_script.activate = test_context.Mock(side_effect=modify_setting_on_activate)
+
+        manager._active_script = old_script
+        manager.set_active_script(new_script)
+
+        settings_manager_instance.restore_settings.assert_not_called()
+        assert settings_mock.testSetting1 == "modified_by_activate"
+
     @pytest.mark.parametrize(
         "case",
         [
