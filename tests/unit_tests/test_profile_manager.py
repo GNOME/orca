@@ -198,12 +198,64 @@ class TestProfileManager:
         essential_modules = self._setup_dependencies(test_context)
         from orca.profile_manager import ProfileManager
 
+        mock_run = test_context.patch("subprocess.run")
         manager = ProfileManager()
         manager.remove_profile("spanish")
 
         essential_modules[
             "orca.settings_manager"
         ].get_manager.return_value.remove_profile.assert_called_once_with("spanish")
+        mock_run.assert_called_once_with(
+            ["dconf", "reset", "-f", "/org/gnome/orca/spanish/"], check=True
+        )
+
+    def test_remove_profile_dconf_failure(self, test_context: OrcaTestContext) -> None:
+        """Test removing a profile when dconf reset fails."""
+
+        import subprocess
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.profile_manager import ProfileManager
+
+        mock_run = test_context.patch("subprocess.run")
+        mock_run.side_effect = subprocess.CalledProcessError(1, "dconf")
+        manager = ProfileManager()
+        manager.remove_profile("spanish")
+
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.remove_profile.assert_called_once_with("spanish")
+        mock_run.assert_called_once()
+
+    def test_remove_profile_dconf_not_found(self, test_context: OrcaTestContext) -> None:
+        """Test removing a profile when dconf is not installed."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.profile_manager import ProfileManager
+
+        mock_run = test_context.patch("subprocess.run")
+        mock_run.side_effect = FileNotFoundError("dconf not found")
+        manager = ProfileManager()
+        manager.remove_profile("spanish")
+
+        essential_modules[
+            "orca.settings_manager"
+        ].get_manager.return_value.remove_profile.assert_called_once_with("spanish")
+        mock_run.assert_called_once()
+
+    def test_remove_profile_sanitizes_name(self, test_context: OrcaTestContext) -> None:
+        """Test removing a profile sanitizes the name for the dconf path."""
+
+        self._setup_dependencies(test_context)
+        from orca.profile_manager import ProfileManager
+
+        mock_run = test_context.patch("subprocess.run")
+        manager = ProfileManager()
+        manager.remove_profile("My Profile")
+
+        mock_run.assert_called_once_with(
+            ["dconf", "reset", "-f", "/org/gnome/orca/my-profile/"], check=True
+        )
 
     def test_rename_profile(self, test_context: OrcaTestContext) -> None:
         """Test renaming a profile."""

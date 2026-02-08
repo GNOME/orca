@@ -29,6 +29,7 @@
 from __future__ import annotations
 
 
+import subprocess
 import time
 from json import dump, load
 from typing import Callable, TYPE_CHECKING
@@ -641,6 +642,16 @@ class ProfileManager:
         """Removes a profile by internal name."""
 
         settings_manager.get_manager().remove_profile(internal_name)
+
+        sanitized_name = gsettings_registry.get_registry().sanitize_gsettings_path(internal_name)
+        path = f"{gsettings_registry.GSETTINGS_PATH_PREFIX}{sanitized_name}/"
+        try:
+            subprocess.run(["dconf", "reset", "-f", path], check=True)
+            msg = f"PROFILE MANAGER: Cleared GSettings for profile: {internal_name}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+        except (subprocess.CalledProcessError, FileNotFoundError) as e:
+            msg = f"PROFILE MANAGER: Failed to clear GSettings for profile: {internal_name}: {e}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def rename_profile(self, old_internal_name: str, new_profile: list[str]) -> None:
         """Renames a profile."""
