@@ -91,8 +91,7 @@ class TestBypassModeManager:
 
         command_manager_mock = essential_modules["orca.command_manager"]
         command_manager_instance = test_context.Mock()
-        command_manager_instance.get_keyboard_commands = test_context.Mock(return_value={})
-        command_manager_instance.set_active_commands = test_context.Mock()
+        command_manager_instance.set_all_suspended = test_context.Mock()
         command_manager_instance.get_command = test_context.Mock(return_value=None)
         command_manager_mock.get_manager = test_context.Mock(return_value=command_manager_instance)
 
@@ -228,14 +227,14 @@ class TestBypassModeManager:
         else:
             pres_manager.present_message.assert_not_called()
 
-        # Verify set_active_commands was called
         cmd_manager = essential_modules["command_manager_instance"]
-        cmd_manager.set_active_commands.assert_called()
-        call_args = cmd_manager.set_active_commands.call_args
+        cmd_manager.set_all_suspended.assert_called()
+        call_args = cmd_manager.set_all_suspended.call_args
         if expected_active:
-            assert call_args[0][1] == "bypass mode enabled"
+            assert call_args[0][0] is True
+            assert call_args[0][1] == frozenset({"bypass_mode_toggle"})
         else:
-            assert call_args[0][1] == "bypass mode disabled"
+            assert call_args[0][0] is False
 
         modifier_manager = essential_modules["modifier_manager_instance"]
         modifier_method = getattr(modifier_manager, expected_modifier_call)

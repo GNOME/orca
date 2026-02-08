@@ -48,7 +48,6 @@ class BypassModeManager:
     def __init__(self) -> None:
         self._is_active: bool = False
         self._initialized: bool = False
-        self._saved_commands: dict[str, command_manager.KeyboardCommand] = {}
 
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""
@@ -88,7 +87,7 @@ class BypassModeManager:
             if event is not None:
                 presentation_manager.get_manager().present_message(messages.BYPASS_MODE_DISABLED)
             reason = "bypass mode disabled"
-            manager.set_active_commands(self._saved_commands, reason)
+            manager.set_all_suspended(False)
             orca_modifier_manager.get_manager().refresh_orca_modifiers(reason)
             return True
 
@@ -96,10 +95,7 @@ class BypassModeManager:
             presentation_manager.get_manager().present_message(messages.BYPASS_MODE_ENABLED)
 
         reason = "bypass mode enabled"
-        self._saved_commands = manager.get_keyboard_commands()
-        bypass_cmd = manager.get_keyboard_command(self.COMMAND_NAME)
-        bypass_commands = {self.COMMAND_NAME: bypass_cmd} if bypass_cmd else {}
-        manager.set_active_commands(bypass_commands, reason)
+        manager.set_all_suspended(True, frozenset({self.COMMAND_NAME}))
         orca_modifier_manager.get_manager().unset_orca_modifiers(reason)
 
         return True

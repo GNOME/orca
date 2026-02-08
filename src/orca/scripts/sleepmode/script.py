@@ -60,12 +60,8 @@ class Script(default.Script):
 
         tokens = ["SLEEP MODE: Activating script for", self.app]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        manager = command_manager.get_manager()
-        sleep_cmd = manager.get_keyboard_command(sleep_mode_manager.SleepModeManager.COMMAND_NAME)
-        sleep_commands = (
-            {sleep_mode_manager.SleepModeManager.COMMAND_NAME: sleep_cmd} if sleep_cmd else {}
-        )
-        manager.set_active_commands(sleep_commands, "Entering sleep mode")
+        exceptions = frozenset({sleep_mode_manager.SleepModeManager.COMMAND_NAME})
+        command_manager.get_manager().set_all_suspended(True, exceptions)
         orca_modifier_manager.get_manager().unset_orca_modifiers("Entering sleep mode.")
 
     def deactivate(self) -> None:
@@ -73,6 +69,8 @@ class Script(default.Script):
 
         tokens = ["SLEEP MODE: De-activating script for", self.app]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        command_manager.get_manager().set_all_suspended(False)
+        orca_modifier_manager.get_manager().refresh_orca_modifiers("Leaving sleep mode.")
 
     def get_braille_generator(self) -> BrailleGenerator:
         """Returns the braille generator for this script."""

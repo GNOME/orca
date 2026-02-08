@@ -1551,6 +1551,37 @@ class CommandManager:
             )
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
+    def set_all_suspended(self, suspended: bool, exceptions: frozenset[str] | None = None) -> None:
+        """Sets the suspended state for all commands, optionally excluding exceptions."""
+
+        added_count = 0
+        removed_count = 0
+
+        for cmd in self._keyboard_commands.values():
+            if exceptions and cmd.get_name() in exceptions:
+                continue
+            was_active = cmd.is_active()
+            cmd.set_suspended(suspended)
+            is_active = cmd.is_active()
+
+            kb = cmd.get_keybinding()
+            if kb is None:
+                continue
+
+            if was_active and not is_active and kb.has_grabs():
+                kb.remove_grabs()
+                removed_count += 1
+            elif not was_active and is_active and not kb.has_grabs():
+                kb.add_grabs()
+                added_count += 1
+
+        if removed_count or added_count:
+            msg = (
+                f"COMMAND MANAGER: set_all_suspended({suspended}): "
+                f"removed {removed_count}, added {added_count}"
+            )
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
     @staticmethod
     def _binding_key(kb: keybindings.KeyBinding | None) -> tuple[str, int, int] | None:
         """Returns a hashable key for a keybinding, or None if no binding."""
