@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2026-02-07 18:56+0000\n"
-"PO-Revision-Date: 2026-02-07 22:50+0200\n"
+"POT-Creation-Date: 2026-02-08 13:52+0000\n"
+"PO-Revision-Date: 2026-02-08 17:35+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -31,8 +31,6 @@ msgid "Orca Screen Reader"
 msgstr "Інструмент читання з екрана «Orca»"
 
 #: orca.desktop.in:3
-#| msgctxt "keyboard"
-#| msgid "Orca"
 msgid "Orca"
 msgstr "Orca"
 
@@ -1154,7 +1152,6 @@ msgstr "Увімкнути або вимкнути звук вимови"
 #. primarily used by developers and testers who may not have a physical braille
 #. display.
 #: src/orca/cmdnames.py:440
-#| msgid "Turn contracted braille on and off"
 msgid "Toggle the on-screen braille display on and off"
 msgstr "Увімкнути або вимкнути показ екранної панелі брайля"
 
@@ -4840,11 +4837,12 @@ msgstr "Таблиця _скорочень:"
 msgid "D_uration (secs):"
 msgstr "_Тривалість (у секундах):"
 
-#. Translators: This is the label for a setting which turns off the braille
-#. indicator symbol which Orca normally shows at the end of each line of text.
+#. Translators: This is the label for a setting which controls whether Orca
+#. displays the braille indicator symbol at the end of each line of text.
 #: src/orca/guilabels.py:1209
-msgid "Disable _end of line symbol"
-msgstr "Вимкнути символ _кінця рядка"
+#| msgid "Disable _end of line symbol"
+msgid "_End of line symbol"
+msgstr "Символ _кінця рядка"
 
 #. Translators: This is a label for a group of settings related to a refreshable
 #. braille display.
@@ -5589,7 +5587,6 @@ msgstr "_Системні повідомлення — докладні"
 #. primarily used by developers and testers who may not have a physical braille
 #. display.
 #: src/orca/guilabels.py:1765
-#| msgid "Mark in braille"
 msgid "On-screen braille"
 msgstr "Екранний брайль"
 
@@ -5598,7 +5595,6 @@ msgstr "Екранний брайль"
 #. developers and testers to verify what is being spoken without having to listen
 #. to the audio.
 #: src/orca/guilabels.py:1771
-#| msgid "Increase the speech rate"
 msgid "On-screen speech"
 msgstr "Екранне озвучення"
 
@@ -5612,8 +5608,6 @@ msgstr "Екранна панель"
 #. Translators: This is the label of a spin button that controls the number of braille
 #. cells displayed in the on-screen braille monitor.
 #: src/orca/guilabels.py:1780
-#| msgid "Cell spans %d column"
-#| msgid_plural "Cell spans %d columns"
 msgid "Cell count"
 msgstr "Кількість комірок"
 
@@ -5628,8 +5622,6 @@ msgstr "Показувати точкові візерунки брайля"
 #. Translators: This is the label of a color button that controls the text color
 #. in the on-screen speech monitor.
 #: src/orca/guilabels.py:1788 src/orca/guilabels.py:1800
-#| msgctxt "textattr"
-#| msgid "Text body"
 msgid "Text color"
 msgstr "Колір тексту"
 
@@ -5638,16 +5630,12 @@ msgstr "Колір тексту"
 #. Translators: This is the label of a color button that controls the background color
 #. in the on-screen speech monitor.
 #: src/orca/guilabels.py:1792 src/orca/guilabels.py:1804
-#| msgctxt "textattr"
-#| msgid "background color"
 msgid "Background color"
 msgstr "Колір тла"
 
 #. Translators: This is the label of a spin button that controls the font size of
 #. text in the on-screen speech monitor.
 #: src/orca/guilabels.py:1796
-#| msgctxt "textattr"
-#| msgid "size"
 msgid "Font size"
 msgstr "Розмір шрифту"
 
@@ -5657,9 +5645,9 @@ msgid ""
 "is speaking. The default keybinding to show or hide it is Orca+Shift+S. This "
 "can be changed in Commands."
 msgstr ""
-"Екранна панель озвучення – це вікно, яке показує, що озвучує програма"
-" зчитування з екрана. Типове клавіатурне скорочення для його показу або"
-" приховування – Orca+Shift+S. Це можна змінити у розділі «Команди»."
+"Екранна панель озвучення – це вікно, яке показує, що озвучує програма "
+"зчитування з екрана. Типове клавіатурне скорочення для його показу або "
+"приховування – Orca+Shift+S. Це можна змінити у розділі «Команди»."
 
 #: src/orca/guilabels.py:1817
 msgid ""
@@ -5667,9 +5655,9 @@ msgid ""
 "what would be presented on a braille display. To show or hide it, assign a "
 "keybinding in Commands."
 msgstr ""
-"Екранна панель брайля — це вікно, призначене для розробників, яке показує"
-" те, що буде представлено на дисплеї брайля. Щоб показати або приховати"
-" його, призначте комбінацію клавіш у розділі «Команди»."
+"Екранна панель брайля — це вікно, призначене для розробників, яке показує "
+"те, що буде представлено на дисплеї брайля. Щоб показати або приховати його, "
+"призначте комбінацію клавіш у розділі «Команди»."
 
 #. Translators: This is the label of the Braille page in the Orca Preferences dialog.
 #: src/orca/guilabels.py:1823
@@ -11314,7 +11302,6 @@ msgstr "Вимову увімкнено."
 #. message is presented to the user when the on-screen braille display has been
 #. turned on.
 #: src/orca/messages.py:2120
-#| msgid "Mouse review enabled."
 msgid "On-screen braille enabled."
 msgstr "Екранний брайль увімкнено."
 
@@ -11324,7 +11311,6 @@ msgstr "Екранний брайль увімкнено."
 #. message is presented to the user when the on-screen braille display has been
 #. turned off.
 #: src/orca/messages.py:2127
-#| msgid "Mouse review disabled."
 msgid "On-screen braille disabled."
 msgstr "Екранний брайль вимкнено."
 
@@ -11332,7 +11318,6 @@ msgstr "Екранний брайль вимкнено."
 #. scrolling log of all text spoken by the screen reader. This message is presented
 #. to the user when the on-screen speech display has been turned on.
 #: src/orca/messages.py:2132
-#| msgid "Speech enabled."
 msgid "On-screen speech enabled."
 msgstr "Екранне озвучення увімкнено."
 
@@ -11340,7 +11325,6 @@ msgstr "Екранне озвучення увімкнено."
 #. scrolling log of all text spoken by the screen reader. This message is presented
 #. to the user when the on-screen speech display has been turned off.
 #: src/orca/messages.py:2137
-#| msgid "Speech disabled."
 msgid "On-screen speech disabled."
 msgstr "Екранне озвучення вимкнено."
 
