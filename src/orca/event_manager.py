@@ -608,6 +608,9 @@ class EventManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._gidle_id = 0
             rerun = False  # destroy and don't call again
+        except Exception:  # pylint: disable=broad-except
+            self._gidle_id = GLib.idle_add(self._dequeue_object_event)
+            raise
 
         return rerun
 
