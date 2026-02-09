@@ -2008,13 +2008,13 @@ msgstr "Μετάβαση στο πρώτο παιδί του αντικειμέ�
 #. as a hierarchy.
 #: src/orca/cmdnames.py:1037
 msgid "Go to the next sibling of the object with navigator focus."
-msgstr "Μετάβαση στο επόμενο αδερφό του αντικειμένου με εστίαση πλοηγού."
+msgstr "Μετάβαση στο επόμενο αδελφό του αντικειμένου με εστίαση πλοηγού."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy.
 #: src/orca/cmdnames.py:1041
 msgid "Go to the previous sibling of the object with navigator focus."
-msgstr "Μετάβαση στο προηγούμενο αδερφό του αντικειμένου με εστίαση πλοηγού."
+msgstr "Μετάβαση στο προηγούμενο αδελφό του αντικειμένου με εστίαση πλοηγού."
 
 #. Translators: the object navigator allows users to explore UI objects presented
 #. as a hierarchy. Users are also able to synthesize a click on the objects.
@@ -2089,7 +2089,7 @@ msgstr "Εμφάνιση λίστας πινάκων"
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1088
 msgid "Go down one cell"
-msgstr "Μετάβαση προς τα κάτω κατά ένα κελί"
+msgstr "Μετάβαση ένα κελί κάτω"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1091
@@ -2104,17 +2104,17 @@ msgstr "Μετάβαση στο τελευταίο κελί του πίνακα"
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1097
 msgid "Go left one cell"
-msgstr "Μετάβαση αριστερά κατά ένα κελί"
+msgstr "Μετάβαση ένα κελί αριστερά"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1100
 msgid "Go right one cell"
-msgstr "Μετάβαση δεξιά κατά ένα κελί"
+msgstr "Μετάβαση ένα κελί δεξιά"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1103
 msgid "Go up one cell"
-msgstr "Μετάβαση προς τα πάνω κατά ένα κελί"
+msgstr "Μετάβαση ένα κελί πάνω"
 
 #. Translators: this is for navigating among table cells in a document.
 #: src/orca/cmdnames.py:1106
@@ -2179,8 +2179,6 @@ msgstr "Εναλλαγή μεταξύ λειτουργίας περιήγηση�
 #. enables setting a "sticky" focus mode which disables all automatic toggling.
 #. This string is associated with the Orca command to enable sticky focus mode.
 #: src/orca/cmdnames.py:1155
-#, fuzzy
-#| msgid "Enables sticky focus mode."
 msgid "Enable sticky focus mode"
 msgstr "Ενεργοποίηση κολλώδους λειτουργίας εστίασης"
 
@@ -2194,40 +2192,38 @@ msgstr "Ενεργοποίηση κολλώδους λειτουργίας εσ�
 #. enables setting a "sticky" browse mode which disables all automatic toggling.
 #. This string is associated with the Orca command to enable sticky browse mode.
 #: src/orca/cmdnames.py:1166
-#, fuzzy
-#| msgid "Enables sticky browse mode."
 msgid "Enable sticky browse mode"
 msgstr "Ενεργοποίηση κολλώδους λειτουργίας περιήγησης"
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: src/orca/cmdnames.py:1169
 msgid "Go to previous unvisited link"
-msgstr "Μετάβαση στον προηγούμενο μη επισκεπτόμενο σύνδεσμο"
+msgstr "Μετάβαση στον προηγούμενο μη επισκεφθέντα σύνδεσμο"
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: src/orca/cmdnames.py:1172
 msgid "Go to next unvisited link"
-msgstr "Μετάβαση στον επόμενο μη επισκεπτόμενο σύνδεσμο"
+msgstr "Μετάβαση στον επόμενο μη επισκεφθέντα σύνδεσμο"
 
 #. Translators: this is for navigating among unvisited links in a document.
 #: src/orca/cmdnames.py:1175
 msgid "Display a list of unvisited links"
-msgstr "Εμφάνιση λίστας μη επισκεπτόμενων συνδέσμων"
+msgstr "Εμφάνιση λίστας μη επισκεφθέντων συνδέσμων"
 
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1178
 msgid "Go to previous visited link"
-msgstr "Μετάβαση στον προηγούμενο επισκεπτόμενο σύνδεσμο"
+msgstr "Μετάβαση στον προηγούμενο επισκεφθέντα σύνδεσμο"
 
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1181
 msgid "Go to next visited link"
-msgstr "Μετάβαση στον επόμενο επισκεπτόμενο σύνδεσμο"
+msgstr "Μετάβαση στον επόμενο επισκεφθέντα σύνδεσμο"
 
 #. Translators: this is for navigating among visited links in a document.
 #: src/orca/cmdnames.py:1184
 msgid "Display a list of visited links"
-msgstr "Εμφάνιση λίστας επισκεπτόμενων συνδέσμων"
+msgstr "Εμφάνιση λίστας επισκεφθέντων συνδέσμων"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
@@ -2549,7 +2545,7 @@ msgstr "φούξια"
 #: src/orca/colornames.py:214
 msgctxt "color name"
 msgid "gainsboro"
-msgstr "γκρι ουρανί"
+msgstr "αχνό γκρι"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
@@ -2878,7 +2874,7 @@ msgstr "θολό τριανταφυλλί"
 #: src/orca/colornames.py:402
 msgctxt "color name"
 msgid "moccasin"
-msgstr "μόκα"
+msgstr "χρώμα μοκασινιού"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
@@ -3057,147 +3053,147 @@ msgstr "μπεζ της άμμου"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:506
+#: src/orca/colornames.py:510
 msgctxt "color name"
 msgid "sea green"
 msgstr "θαλασσοπράσινο"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:510
+#: src/orca/colornames.py:514
 msgctxt "color name"
 msgid "seashell"
 msgstr "κοχύλι"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:514
+#: src/orca/colornames.py:518
 msgctxt "color name"
 msgid "sienna"
 msgstr "σιένα"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:518
+#: src/orca/colornames.py:522
 msgctxt "color name"
 msgid "silver"
 msgstr "ασημί"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:522
+#: src/orca/colornames.py:526
 msgctxt "color name"
 msgid "sky blue"
 msgstr "ουρανί"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:526
+#: src/orca/colornames.py:530
 msgctxt "color name"
 msgid "slate blue"
 msgstr "τεφροκύανο"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:530
+#: src/orca/colornames.py:534
 msgctxt "color name"
 msgid "slate gray"
 msgstr "γκρι σχιστόλιθου"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:534
+#: src/orca/colornames.py:538
 msgctxt "color name"
 msgid "snow"
 msgstr "χιονί"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:538
+#: src/orca/colornames.py:542
 msgctxt "color name"
 msgid "spring green"
 msgstr "πράσινο της άνοιξης"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:542
+#: src/orca/colornames.py:546
 msgctxt "color name"
 msgid "steel blue"
 msgstr "μπλε του ατσαλιού"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:546
+#: src/orca/colornames.py:550
 msgctxt "color name"
 msgid "tan"
 msgstr "ώχρα"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:550
-msgctxt "color name"
-msgid "teal"
-msgstr "σκούρο κυανό"
-
-#. Translators: This refers to a CSS color name. The name, hex value, and color
-#. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:554
 msgctxt "color name"
-msgid "thistle"
-msgstr "σικλαμέν"
+msgid "teal"
+msgstr "πετρόλ"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
 #: src/orca/colornames.py:558
+msgctxt "color name"
+msgid "thistle"
+msgstr "αχνό μωβ"
+
+#. Translators: This refers to a CSS color name. The name, hex value, and color
+#. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
+#: src/orca/colornames.py:562
 msgctxt "color name"
 msgid "tomato"
 msgstr "τοματί"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:562
+#: src/orca/colornames.py:566
 msgctxt "color name"
 msgid "turquoise"
 msgstr "τιρκουάζ"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:566
+#: src/orca/colornames.py:570
 msgctxt "color name"
 msgid "violet"
 msgstr "βιολετί"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:570
+#: src/orca/colornames.py:574
 msgctxt "color name"
 msgid "wheat"
 msgstr "σταρένιο"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:574
+#: src/orca/colornames.py:578
 msgctxt "color name"
 msgid "white"
 msgstr "άσπρο"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:578
+#: src/orca/colornames.py:582
 msgctxt "color name"
 msgid "white smoke"
 msgstr "λευκός καπνός"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:582
+#: src/orca/colornames.py:586
 msgctxt "color name"
 msgid "yellow"
 msgstr "κίτρινο"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
-#: src/orca/colornames.py:586
+#: src/orca/colornames.py:590
 msgctxt "color name"
 msgid "yellow green"
 msgstr "κίτρινο πράσινο"
@@ -3218,24 +3214,18 @@ msgstr "Ε_νεργοποίηση"
 #. that a blockquote has been entered before speaking the text. At the end of
 #. the text, Orca will announce that the blockquote is being exited.
 #: src/orca/guilabels.py:41
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "Blockquotes"
 msgctxt "Context"
 msgid "Blockquotes"
-msgstr "Μεγάλες παραθέσεις"
+msgstr "Παραθέσεις"
 
 #. Translators: Some users want to hear additional information when entering
 #. different types of content. If this checkbox is checked, Orca will announce
 #. that a form has been entered before speaking the contents of that form. At
 #. the end of the form, Orca will announce that the form is being exited.
 #: src/orca/guilabels.py:47
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "Form Fields"
 msgctxt "Context"
 msgid "Forms"
-msgstr "Πεδία φόρμας"
+msgstr "Φόρμες"
 
 #. Translators: Some users want to hear additional information when entering
 #. different types of content. If this checkbox is checked, Orca will announce
@@ -3243,9 +3233,6 @@ msgstr "Πεδία φόρμας"
 #. defined HTML tag attribute 'role' used to identify important part of webpage
 #. like banners, main context, search, etc.
 #: src/orca/guilabels.py:54
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "Landmarks"
 msgctxt "Context"
 msgid "Landmarks"
 msgstr "Ορόσημα"
@@ -3256,9 +3243,6 @@ msgstr "Ορόσημα"
 #. list. At the end of the list content, Orca will announce that the list is
 #. being exited.
 #: src/orca/guilabels.py:61
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "Lists"
 msgctxt "Context"
 msgid "Lists"
 msgstr "Λίστες"
@@ -3272,7 +3256,7 @@ msgstr "Λίστες"
 #: src/orca/guilabels.py:69
 msgctxt "Context"
 msgid "Panels"
-msgstr ""
+msgstr "Πάνελ"
 
 #. Translators: Some users want to hear additional information when entering
 #. different types of content. If this checkbox is checked, Orca will announce
@@ -3280,9 +3264,6 @@ msgstr ""
 #. content of that table. At the end of the table content, Orca will announce
 #. that the table is being exited.
 #: src/orca/guilabels.py:76
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "Tables"
 msgctxt "Context"
 msgid "Tables"
 msgstr "Πίνακες"
@@ -3290,22 +3271,25 @@ msgstr "Πίνακες"
 #. Translators: This is a shorter version of "Automatic focus mode during caret/structural
 #. navigation" used on sub-pages where the navigation type context is already clear.
 #: src/orca/guilabels.py:80
-#, fuzzy
-#| msgid "Enables sticky focus mode."
 msgid "Automatic focus mode"
-msgstr "Ενεργοποίηση κολλώδους λειτουργίας εστίασης"
+msgstr "Αυτόματη λειτουργία εστίασης"
 
 #: src/orca/guilabels.py:87
 msgid ""
 "Automatic focus mode causes Orca to switch to focus mode when you navigate "
 "into a form field or other interactive widget."
 msgstr ""
+"Η αυτόματη λειτουργία εστίασης προκαλεί την εναλλαγή του Orca σε λειτουργία "
+"εστίασης όταν πλοηγείστε σε ένα πεδίο φόρμας ή άλλο διαδραστικό γραφικό "
+"στοιχείο."
 
 #: src/orca/guilabels.py:94
 msgid ""
 "Native navigation refers to keyboard commands handled by the application, "
 "such as Tab, Page Up, Page Down, and Enter."
 msgstr ""
+"Η εγγενής πλοήγηση αναφέρεται σε εντολές πληκτρολογίου που χειρίζεται η "
+"εφαρμογή, όπως Tab, Page Up, Page Down και Enter."
 
 #. Translators: This setting controls whether Orca automatically enables sticky
 #. focus mode for web applications (such as Facebook Messenger) and Electron apps
@@ -3314,53 +3298,45 @@ msgstr ""
 #. consistent with `MODE_FOCUS_IS_STICKY = _("Focus mode is sticky.")` in
 #. messages.py.
 #: src/orca/guilabels.py:104
-#, fuzzy
-#| msgid "Automatic focus mode during caret navigation"
 msgid "Automatic sticky focus mode for web applications"
-msgstr "Αυτόματη λειτουργία εστίασης κατά την πλοήγηση δρομέα"
+msgstr "Αυτόματη κολλώδης λειτουργία εστίασης για διαδικτυακές εφαρμογές"
 
 #: src/orca/guilabels.py:109
 msgid ""
 "Automatic sticky focus mode causes Orca to detect web applications and "
 "Electron apps and stay in focus mode until toggled off by command."
 msgstr ""
+"Η αυτόματη κολλώδης λειτουργία εστίασης προκαλεί τον εντοπισμό διαδικτυακών "
+"εφαρμογών και εφαρμογών Electron από το Orca και την παραμονή σε λειτουργία "
+"εστίασης μέχρι την απενεργοποίησή της με εντολή."
 
 #. Translators: A single braille cell on a refreshable braille display consists
 #. of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
 #. this option, Dot 7 will be used to 'underline' text of interest, e.g. when
 #. "marking"/indicating that a given word is bold.
 #: src/orca/guilabels.py:117
-#, fuzzy
-#| msgid "Dot _7"
 msgid "Dot 7"
-msgstr "Τελεία _7"
+msgstr "Τελεία 7"
 
 #. Translators: A single braille cell on a refreshable braille display consists
 #. of 8 dots. Dot 8 is the dot in the bottom right corner. If the user selects
-#. this option, Dot 8 will be used to 'underline' text of interest,  e.g. when
+#. this option, Dot 8 will be used to 'underline' text of interest,  e.g. when
 #. "marking"/indicating that a given word is bold.
 #: src/orca/guilabels.py:123
-#, fuzzy
-#| msgid "Dot _8"
 msgid "Dot 8"
-msgstr "Τελεία _8"
+msgstr "Τελεία 8"
 
 #. Translators: A single braille cell on a refreshable braille display consists
 #. of 8 dots. Dots 7-8 are the dots at the bottom. If the user selects this
-#. option, Dots 7-8 will be used to 'underline' text of interest,  e.g. when
+#. option, Dots 7-8 will be used to 'underline' text of interest,  e.g. when
 #. "marking"/indicating that a given word is bold.
 #: src/orca/guilabels.py:129
-#, fuzzy
-#| msgid "Dots 7 an_d 8"
 msgid "Dots 7 and 8"
-msgstr "Τελείες 7 _και 8"
+msgstr "Τελείες 7 και 8"
 
 #. Translators: This option refers to the dot or dots in braille which will be
 #. used to underline certain characters.
 #: src/orca/guilabels.py:133
-#, fuzzy
-#| msgctxt "capitalization style"
-#| msgid "None"
 msgctxt "braille dots"
 msgid "None"
 msgstr "Καμία"
@@ -3382,23 +3358,20 @@ msgstr "_Εντάξει"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/guilabels.py:145
-#, fuzzy
-#| msgid "Save _As"
 msgid "Save"
-msgstr "Αποθήκευση _ως"
+msgstr "Αποθήκευση"
 
 #. Translators: This is the label for a button in a dialog.
 #: src/orca/guilabels.py:148
 msgid "Close without saving"
-msgstr ""
+msgstr "Κλείσιμο χωρίς αποθήκευση"
 
 #. Translators: This is the format for a menu item that applies settings to the
 #. specified profile. The %s will be replaced with the profile name.
 #: src/orca/guilabels.py:152
-#, fuzzy, python-format
-#| msgid "Applies to:"
+#, python-format
 msgid "Apply to %s"
-msgstr "Εφαρμογή σε:"
+msgstr "Εφαρμογή στο %s"
 
 #. Translators: This is the format for a menu item that saves settings to the
 #. specified profile and closes the dialog. The %s will be replaced with the
@@ -3406,39 +3379,35 @@ msgstr "Εφαρμογή σε:"
 #: src/orca/guilabels.py:157
 #, python-format
 msgid "Save to %s and close"
-msgstr ""
+msgstr "Αποθήκευση στο %s και κλείσιμο"
 
 #. Translators: This is the label for a menu item to remove a profile.
 #: src/orca/guilabels.py:160
-#, fuzzy
-#| msgid "Remove User Profile"
 msgid "Remove Profile..."
-msgstr "Αφαίρεση Προφίλ Χρήστη"
+msgstr "Αφαίρεση προφίλ..."
 
 #. Translators: This is the label for a menu item to rename a profile.
 #: src/orca/guilabels.py:163
 msgid "Rename..."
-msgstr ""
+msgstr "Μετονομασία..."
 
 #. Translators: This is the accessible name for the main menu button in the
 #. preferences dialog. The menu contains actions like Help, Apply, Save, and Cancel.
 #: src/orca/guilabels.py:167
-#, fuzzy
-#| msgid "Find Options"
 msgid "Options"
-msgstr "Επιλογές εύρεσης"
+msgstr "Επιλογές"
 
 #. Translators: This is the primary message in a dialog asking the user to confirm
 #. closing the preferences window without saving changes.
 #: src/orca/guilabels.py:171
 msgid "Save Changes?"
-msgstr ""
+msgstr "Αποθήκευση αλλαγών;"
 
 #. Translators: This is the secondary message in a dialog asking the user to confirm
 #. closing the preferences window without saving changes.
 #: src/orca/guilabels.py:175
 msgid "Your changes will be lost if you don't save them."
-msgstr ""
+msgstr "Οι αλλαγές σας θα χαθούν αν δεν τις αποθηκεύσετε."
 
 #. Translators: Profiles in Orca make it possible for users to quickly switch
 #. amongst a group of pre-defined settings (e.g. an 'English' profile for reading
@@ -3447,10 +3416,8 @@ msgstr ""
 #. This message appears in a dialog when the user closes the preferences
 #. after switching to a different profile.
 #: src/orca/guilabels.py:183
-#, fuzzy
-#| msgid "Load user profile"
 msgid "You switched profiles."
-msgstr "Φόρτωση προφίλ χρήστη"
+msgstr "Αλλάξατε προφίλ."
 
 #. Translators: Profiles in Orca make it possible for users to quickly switch
 #. amongst a group of pre-defined settings (e.g. an 'English' profile for reading
@@ -3458,11 +3425,10 @@ msgstr "Φόρτωση προφίλ χρήστη"
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text.
 #. This is a button label in the profile switch dialog. %s is the profile name.
 #: src/orca/guilabels.py:190
-#, fuzzy, python-format
-#| msgid "Unicode %s"
+#, python-format
 msgctxt "profile"
 msgid "Use %s"
-msgstr "Unicode %s"
+msgstr "Χρήση %s"
 
 #. Translators: Profiles in Orca make it possible for users to quickly switch
 #. amongst a group of pre-defined settings (e.g. an 'English' profile for reading
@@ -3472,7 +3438,7 @@ msgstr "Unicode %s"
 #: src/orca/guilabels.py:197
 #, python-format
 msgid "Switch back to %s"
-msgstr ""
+msgstr "Επιστροφή στο %s"
 
 #. Translators: Orca uses Speech Dispatcher to present content to users via
 #. text-to-speech. Speech Dispatcher has a feature to control how capital
@@ -3518,7 +3484,7 @@ msgstr "Ανακοίνωση όταν πληκτρολογούν οι _φίλο�
 #. contains the latest messages from all the chat rooms that they are in.
 #: src/orca/guilabels.py:230
 msgid "Provide chat room specific _message histories"
-msgstr "Παροχή ιστορικών μηνυμάτων ανά δωμάτιο συνομιλίας"
+msgstr "Παροχή ιστορικών _μηνυμάτων ανά δωμάτιο συνομιλίας"
 
 #. Translators: This is the label of a panel holding options for how messages in
 #. this application's chat rooms should be spoken. The options are: Speak messages
@@ -3534,44 +3500,34 @@ msgstr "Εκφώνηση μηνυμάτων από"
 #. whether or not the chat application currently has focus. This is the default
 #. behavior.
 #: src/orca/guilabels.py:243
-#, fuzzy
-#| msgid "All cha_nnels"
 msgid "All channels"
-msgstr "Όλα τα κα_νάλια"
+msgstr "Όλα τα κανάλια"
 
 #. Translators: This is the label of a widget in the preferences dialog. If it is
 #. selected, Orca will speak all new chat messages as they appear if and only if the
 #. chat application has focus.
 #: src/orca/guilabels.py:248
-#, fuzzy
-#| msgid "All channels when an_y %s window is active"
 msgid "All channels when the application is active"
-msgstr "Όλα τα κανάλια όταν οποιο_δήποτε %s παράθυρο είναι ενεργό"
+msgstr "Όλα τα κανάλια όταν η εφαρμογή είναι ενεργή"
 
 #. Translators: This is the label of a widget in the preferences dialog. If it is
 #. selected, Orca will only speak new chat messages for the currently active channel,
 #: src/orca/guilabels.py:252
-#, fuzzy
-#| msgid "A channel only if its _window is active"
 msgid "A channel only if its window is active"
-msgstr "Ένα κανάλι μόνο αν το _παράθυρό του είναι ενεργό"
+msgstr "Ένα κανάλι μόνο αν το παράθυρό του είναι ενεργό"
 
 #. Translators: If this widget is enabled, then Orca will speak the name of the
 #. chat room prior to presenting an incoming message.
 #: src/orca/guilabels.py:256
-#, fuzzy
-#| msgid "_Speak Chat Room name"
 msgid "_Speak room name"
-msgstr "_Εκφώνηση ονόματος δωματίου συνομιλίας"
+msgstr "_Εκφώνηση ονόματος δωματίου"
 
 #. Translators: This setting controls when the chat room name is spoken relative
 #. to the message content. When enabled, the room name is spoken after the message.
 #. When disabled, the room name is spoken before the message.
 #: src/orca/guilabels.py:261
-#, fuzzy
-#| msgid "speak chat room name."
 msgid "Speak room name last"
-msgstr "εκφώνηση ονόματος του δωματίου συνομιλίας."
+msgstr "Εκφώνηση ονόματος δωματίου στο τέλος"
 
 #. Translators: When presenting the content of a line on a web page, Orca by
 #. default presents the full line, including any links or form fields on that
@@ -3584,10 +3540,8 @@ msgstr "εκφώνηση ονόματος του δωματίου συνομιλ
 #. it is disabled, Orca will treat each object as if it were on a separate line,
 #. both for presentation and navigation.
 #: src/orca/guilabels.py:273
-#, fuzzy
-#| msgid "Layout mode."
 msgid "Layout mode"
-msgstr "Λειτουργία διάταξης."
+msgstr "Λειτουργία διάταξης"
 
 #: src/orca/guilabels.py:281
 msgid ""
@@ -3595,6 +3549,9 @@ msgid ""
 "the screen. Otherwise, Orca will treat each object as if it were on a "
 "separate line."
 msgstr ""
+"Αν η λειτουργία διάταξης είναι ενεργοποιημένη, το Orca θα παρουσιάσει την "
+"πλήρη γραμμή όπως εμφανίζεται στην οθόνη. Διαφορετικά, το Orca θα χειριστεί "
+"κάθε αντικείμενο σαν να βρισκόταν σε ξεχωριστή γραμμή."
 
 #. Translators: This is a label which will appear in the list of available speech
 #. engines as a special item. It refers to the default engine configured within
@@ -3617,6 +3574,8 @@ msgstr "Λεξικό προφοράς"
 #: src/orca/guilabels.py:303
 msgid "Customize how words are spoken. Add a word and its replacement below."
 msgstr ""
+"Προσαρμόστε την εκφώνηση των λέξεων. Προσθέστε μια λέξη και την αντικατάστασή "
+"της παρακάτω."
 
 #. Translators: This is a label for a column header in Orca's pronunciation
 #. dictionary. The pronunciation dictionary allows the user to correct words
@@ -3647,10 +3606,8 @@ msgstr "Συμβολοσειρά αντικατάστασης"
 #. speech synthesizer to say what the user finds most helpful. This string is
 #. the label for the widget to add a new entry.
 #: src/orca/guilabels.py:330
-#, fuzzy
-#| msgid "_New entry"
 msgid "New entry"
-msgstr "_Νέα εισαγωγή"
+msgstr "Νέα καταχώρηση"
 
 #. Translators: The pronunciation dictionary allows the user to correct words
 #. which the speech synthesizer mispronounces (e.g. a person's name, a technical
@@ -3660,10 +3617,8 @@ msgstr "_Νέα εισαγωγή"
 #. speech synthesizer to say what the user finds most helpful. This string is
 #. the label for the widget to delete the selected entry.
 #: src/orca/guilabels.py:339
-#, fuzzy
-#| msgid "_Delete"
 msgid "Delete"
-msgstr "_Διαγραφή"
+msgstr "Διαγραφή"
 
 #. Translators: The pronunciation dictionary allows the user to correct words
 #. which the speech synthesizer mispronounces (e.g. a person's name, a technical
@@ -3671,24 +3626,18 @@ msgstr "_Διαγραφή"
 #. an alternative string. This message is displayed when the pronunciation
 #. dictionary is empty.
 #: src/orca/guilabels.py:346
-#, fuzzy
-#| msgid "Pronunciation"
 msgid "No pronunciation entries"
-msgstr "Προφορά"
+msgstr "Δεν υπάρχουν καταχωρήσεις προφοράς"
 
 #. Translators: Title for the dialog to add a new pronunciation entry.
 #: src/orca/guilabels.py:349
-#, fuzzy
-#| msgid "Pronunciation"
 msgid "Add New Pronunciation"
-msgstr "Προφορά"
+msgstr "Προσθήκη νέας προφοράς"
 
 #. Translators: Title for the dialog to edit an existing pronunciation entry.
 #: src/orca/guilabels.py:352
-#, fuzzy
-#| msgid "Pronunciation"
 msgid "Edit Pronunciation"
-msgstr "Προφορά"
+msgstr "Επεξεργασία προφοράς"
 
 #. Translators: Orca has a "find" feature which allows the user to search the
 #. active application for on screen text and widgets. This string is the title
@@ -3756,8 +3705,6 @@ msgstr "_Αναδίπλωση γύρω"
 #. with a group of options related to what constitutes a match. The options are
 #. to match case and to match the entire word only.
 #: src/orca/guilabels.py:404
-#, fuzzy
-#| msgid "Options:"
 msgid "Match options:"
 msgstr "Επιλογές αντιστοίχισης:"
 
@@ -3818,7 +3765,7 @@ msgstr "Εντολή"
 msgid "Key Binding"
 msgstr "Συνδυασμός πλήκτρων"
 
-# #-#-#-#-#  gnome-system-tools.HEAD.el.po (el)  #-#-#-#-#
+# #-#-#-#-#  gnome-system-tools.HEAD.el.po (el)  #-#-#-#-#
 #. Translators: This string is a label for the group of Orca commands which
 #. can be used in any setting, task, or application. They are not specific
 #. to, for instance, web browsing.
@@ -3840,23 +3787,21 @@ msgstr "Εργαλεία αποσφαλμάτωσης"
 #: src/orca/guilabels.py:459
 msgctxt "keybindings"
 msgid "Learn mode"
-msgstr "Λειτουργίας εκμάθησης"
+msgstr "Λειτουργία εκμάθησης"
 
-# #-#-#-#-#  libgnomeui.HEAD.el.po (el)  #-#-#-#-#
-# #-#-#-#-#  gnome-libs-el.po (gnome-libs 1.2.12)  #-#-#-#-#
+# #-#-#-#-#  libgnomeui.HEAD.el.po (el)  #-#-#-#-#
+# #-#-#-#-#  gnome-libs-el.po (gnome-libs 1.2.12)  #-#-#-#-#
 #
-# #-#-#-#-#  libgda-el.po (gnome-db 0.0.91)  #-#-#-#-#
+# #-#-#-#-#  libgda-el.po (gnome-db 0.0.91)  #-#-#-#-#
 #
-# #-#-#-#-#  toutdoux-el.po (toutdoux 1.0)  #-#-#-#-#
+# #-#-#-#-#  toutdoux-el.po (toutdoux 1.0)  #-#-#-#-#
 #
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to presenting and performing the accessible actions associated
 #. with the current object.
 #: src/orca/guilabels.py:464
-#, fuzzy
-#| msgid "section"
 msgid "Actions"
-msgstr "παράγραφος"
+msgstr "Ενέργειες"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to documents.
@@ -3864,32 +3809,30 @@ msgstr "παράγραφος"
 #. dialog. On that page there are settings related to navigating and reading documents,
 #. including web pages, word processor documents, and PDFs.
 #: src/orca/guilabels.py:469 src/orca/guilabels.py:1831
-#, fuzzy
-#| msgid "Document mode"
 msgid "Documents"
-msgstr "Λειτουργία εγγράφου"
+msgstr "Έγγραφα"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to caret navigation, such as moving by character, word, and line.
 #. These commands are enabled by default for web content and can be optionally
 #. toggled on in other applications.
 #: src/orca/guilabels.py:475
-#, fuzzy
-#| msgid "Table Navigation"
 msgid "Caret navigation"
-msgstr "Πλοήγηση πίνακα"
+msgstr "Πλοήγηση με δρομέα"
 
 #: src/orca/guilabels.py:480
 msgid ""
 "When enabled, Orca handles the arrow keys, Home, and End to move through "
 "content by character, word, or line."
 msgstr ""
+"Όταν είναι ενεργοποιημένο, το Orca χειρίζεται τα πλήκτρα βελών, Home και End "
+"για μετακίνηση στο περιεχόμενο ανά χαρακτήρα, λέξη ή γραμμή."
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to chat applications such as instant messaging.
 #: src/orca/guilabels.py:486
 msgid "Chat"
-msgstr ""
+msgstr "Συνομιλία"
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to the clipboard.
