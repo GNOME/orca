@@ -32,7 +32,7 @@ from __future__ import annotations
 import string
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Callable, Iterable, TYPE_CHECKING
+from typing import Callable, Iterable, TYPE_CHECKING
 
 from . import cmdnames
 from . import command_manager
@@ -186,15 +186,6 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
         self._presenter = presenter
         super().__init__(guilabels.ECHO, controls, info_message=guilabels.ECHO_INFO)
 
-    def save_settings(self) -> dict[str, Any]:
-        """Save all values and persist to GSettings."""
-
-        result = super().save_settings()
-        gsettings_registry.get_registry().save_to_gsettings(
-            self._presenter.get_gs_handle(), "typing-echo", result
-        )
-        return result
-
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.TypingEcho", name="typing-echo")
 class TypingEchoPresenter:
@@ -203,18 +194,10 @@ class TypingEchoPresenter:
     def __init__(self) -> None:
         self._delayed_terminal_press: input_event.KeyboardEvent | None = None
         self._initialized: bool = False
-        self._gs = gsettings_registry.GSettingsSchemaHandle(
-            "org.gnome.Orca.TypingEcho", "typing-echo"
-        )
-
         msg = "TYPING ECHO PRESENTER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("TypingEchoPresenter", self)
-
-    def get_gs_handle(self) -> gsettings_registry.GSettingsSchemaHandle:
-        """Returns the GSettings schema handle for this presenter."""
-        return self._gs
 
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""

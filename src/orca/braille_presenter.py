@@ -451,9 +451,6 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         result.update(self._flash_messages_grid.save_settings())
         result.update(self._progress_bars_grid.save_settings())
         result.update(self._osd_grid.save_settings())
-        gsettings_registry.get_registry().save_to_gsettings(
-            self._presenter.get_gs_handle(), "braille", result
-        )
         return result
 
     def refresh(self) -> None:
@@ -493,11 +490,6 @@ class BraillePresenter:
         self._monitor: braille_monitor.BrailleMonitor | None = None
         self._monitor_enabled_override: bool | None = None
         self._initialized = False
-        self._gs = gsettings_registry.GSettingsSchemaHandle("org.gnome.Orca.Braille", "braille")
-
-    def get_gs_handle(self) -> gsettings_registry.GSettingsSchemaHandle:
-        """Returns the GSettings schema handle for this presenter."""
-        return self._gs
 
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""
