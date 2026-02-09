@@ -512,8 +512,35 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._initializing = False
 
 
+@gsettings_registry.get_registry().gsettings_schema(
+    "org.gnome.Orca.ProfileMetadata", name="metadata"
+)
 class ProfileManager:
     """Manager for Orca profiles."""
+
+    @gsettings_registry.get_registry().gsetting(
+        key="display-name",
+        schema="metadata",
+        gtype="s",
+        default="",
+        summary="Original display name (label) of the profile or app",
+    )
+    def get_display_name(self) -> str:
+        """Returns the display name for the active profile."""
+
+        return gsettings_registry.get_registry().get_active_profile()
+
+    @gsettings_registry.get_registry().gsetting(
+        key="internal-name",
+        schema="metadata",
+        gtype="s",
+        default="",
+        summary="Original internal name (JSON dict key) of the profile",
+    )
+    def get_internal_name(self) -> str:
+        """Returns the internal name for the active profile."""
+
+        return gsettings_registry.get_registry().get_active_profile()
 
     def __init__(self) -> None:
         self._initialized: bool = False

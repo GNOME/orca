@@ -32,7 +32,7 @@ from __future__ import annotations
 import string
 from dataclasses import dataclass
 from enum import Enum
-from typing import Callable, Iterable, TYPE_CHECKING
+from typing import Any, Callable, Iterable, TYPE_CHECKING
 
 from . import cmdnames
 from . import command_manager
@@ -183,7 +183,17 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             ),
         ]
 
+        self._presenter = presenter
         super().__init__(guilabels.ECHO, controls, info_message=guilabels.ECHO_INFO)
+
+    def save_settings(self) -> dict[str, Any]:
+        """Save all values and persist to GSettings."""
+
+        result = super().save_settings()
+        gsettings_registry.get_registry().save_to_gsettings(
+            self._presenter.get_gs_handle(), "typing-echo", result
+        )
+        return result
 
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.TypingEcho", name="typing-echo")
@@ -193,11 +203,18 @@ class TypingEchoPresenter:
     def __init__(self) -> None:
         self._delayed_terminal_press: input_event.KeyboardEvent | None = None
         self._initialized: bool = False
+        self._gs = gsettings_registry.GSettingsSchemaHandle(
+            "org.gnome.Orca.TypingEcho", "typing-echo"
+        )
 
         msg = "TYPING ECHO PRESENTER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("TypingEchoPresenter", self)
+
+    def get_gs_handle(self) -> gsettings_registry.GSettingsSchemaHandle:
+        """Returns the GSettings schema handle for this presenter."""
+        return self._gs
 
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""
@@ -393,7 +410,12 @@ class TypingEchoPresenter:
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="key-echo", schema="typing-echo", gtype="b", default=True, summary="Enable key echo"
+        key="key-echo",
+        schema="typing-echo",
+        gtype="b",
+        default=True,
+        summary="Enable key echo",
+        settings_key="enableKeyEcho",
     )
     @dbus_service.getter
     def get_key_echo_enabled(self) -> bool:
@@ -416,6 +438,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=False,
         summary="Echo inserted characters",
+        settings_key="enableEchoByCharacter",
     )
     @dbus_service.getter
     def get_character_echo_enabled(self) -> bool:
@@ -438,6 +461,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=False,
         summary="Echo completed words",
+        settings_key="enableEchoByWord",
     )
     @dbus_service.getter
     def get_word_echo_enabled(self) -> bool:
@@ -460,6 +484,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=False,
         summary="Echo completed sentences",
+        settings_key="enableEchoBySentence",
     )
     @dbus_service.getter
     def get_sentence_echo_enabled(self) -> bool:
@@ -482,6 +507,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=True,
         summary="Echo alphabetic keys",
+        settings_key="enableAlphabeticKeys",
     )
     @dbus_service.getter
     def get_alphabetic_keys_enabled(self) -> bool:
@@ -504,6 +530,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=True,
         summary="Echo numeric keys",
+        settings_key="enableNumericKeys",
     )
     @dbus_service.getter
     def get_numeric_keys_enabled(self) -> bool:
@@ -526,6 +553,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=True,
         summary="Echo punctuation keys",
+        settings_key="enablePunctuationKeys",
     )
     @dbus_service.getter
     def get_punctuation_keys_enabled(self) -> bool:
@@ -543,7 +571,12 @@ class TypingEchoPresenter:
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="space", schema="typing-echo", gtype="b", default=True, summary="Echo space key"
+        key="space",
+        schema="typing-echo",
+        gtype="b",
+        default=True,
+        summary="Echo space key",
+        settings_key="enableSpace",
     )
     @dbus_service.getter
     def get_space_enabled(self) -> bool:
@@ -566,6 +599,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=True,
         summary="Echo modifier keys",
+        settings_key="enableModifierKeys",
     )
     @dbus_service.getter
     def get_modifier_keys_enabled(self) -> bool:
@@ -588,6 +622,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=True,
         summary="Echo function keys",
+        settings_key="enableFunctionKeys",
     )
     @dbus_service.getter
     def get_function_keys_enabled(self) -> bool:
@@ -605,7 +640,12 @@ class TypingEchoPresenter:
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="action-keys", schema="typing-echo", gtype="b", default=True, summary="Echo action keys"
+        key="action-keys",
+        schema="typing-echo",
+        gtype="b",
+        default=True,
+        summary="Echo action keys",
+        settings_key="enableActionKeys",
     )
     @dbus_service.getter
     def get_action_keys_enabled(self) -> bool:
@@ -626,8 +666,9 @@ class TypingEchoPresenter:
         key="navigation-keys",
         schema="typing-echo",
         gtype="b",
-        default=True,
+        default=False,
         summary="Echo navigation keys",
+        settings_key="enableNavigationKeys",
     )
     @dbus_service.getter
     def get_navigation_keys_enabled(self) -> bool:
@@ -650,6 +691,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=False,
         summary="Echo diacritical keys",
+        settings_key="enableDiacriticalKeys",
     )
     @dbus_service.getter
     def get_diacritical_keys_enabled(self) -> bool:

@@ -266,6 +266,7 @@ class SoundPresenter:
         gtype="b",
         default=True,
         summary="Enable sound output",
+        settings_key="enableSound",
     )
     @dbus_service.getter
     def get_sound_is_enabled(self) -> bool:
@@ -288,6 +289,7 @@ class SoundPresenter:
         gtype="d",
         default=0.5,
         summary="Sound volume (0.0-1.0)",
+        settings_key="soundVolume",
     )
     @dbus_service.getter
     def get_sound_volume(self) -> float:
@@ -310,6 +312,7 @@ class SoundPresenter:
         gtype="b",
         default=False,
         summary="Beep progress bar updates",
+        settings_key="beepProgressBarUpdates",
     )
     @dbus_service.getter
     def get_beep_progress_bar_updates(self) -> bool:
@@ -332,6 +335,7 @@ class SoundPresenter:
         gtype="i",
         default=0,
         summary="Progress bar beep interval in seconds",
+        settings_key="progressBarBeepInterval",
     )
     @dbus_service.getter
     def get_progress_bar_beep_interval(self) -> int:
@@ -354,6 +358,7 @@ class SoundPresenter:
         genum="org.gnome.Orca.ProgressBarVerbosity",
         default="application",
         summary="Progress bar beep verbosity (all, application, window)",
+        settings_key="progressBarBeepVerbosity",
     )
     @dbus_service.getter
     def get_progress_bar_beep_verbosity(self) -> int:

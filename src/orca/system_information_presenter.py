@@ -242,6 +242,7 @@ class SystemInformationPresenter:
         gtype="s",
         default="%x",
         summary="Date format string",
+        settings_key="presentDateFormat",
     )
     @dbus_service.getter
     def get_date_format(self) -> str:
@@ -281,6 +282,7 @@ class SystemInformationPresenter:
         gtype="s",
         default="%X",
         summary="Time format string",
+        settings_key="presentTimeFormat",
     )
     @dbus_service.getter
     def get_time_format(self) -> str:

@@ -561,6 +561,7 @@ class SayAllPresenter:
         gtype="b",
         default=True,
         summary="Announce blockquotes",
+        settings_key="sayAllContextBlockquote",
     )
     @dbus_service.getter
     def get_announce_blockquote(self) -> bool:
@@ -583,6 +584,7 @@ class SayAllPresenter:
         gtype="b",
         default=True,
         summary="Announce non-landmark forms",
+        settings_key="sayAllContextNonLandmarkForm",
     )
     @dbus_service.getter
     def get_announce_form(self) -> bool:
@@ -605,6 +607,7 @@ class SayAllPresenter:
         gtype="b",
         default=True,
         summary="Announce groupings",
+        settings_key="sayAllContextPanel",
     )
     @dbus_service.getter
     def get_announce_grouping(self) -> bool:
@@ -627,6 +630,7 @@ class SayAllPresenter:
         gtype="b",
         default=True,
         summary="Announce landmarks",
+        settings_key="sayAllContextLandmark",
     )
     @dbus_service.getter
     def get_announce_landmark(self) -> bool:
@@ -649,6 +653,7 @@ class SayAllPresenter:
         gtype="b",
         default=True,
         summary="Announce lists",
+        settings_key="sayAllContextList",
     )
     @dbus_service.getter
     def get_announce_list(self) -> bool:
@@ -671,6 +676,7 @@ class SayAllPresenter:
         gtype="b",
         default=True,
         summary="Announce tables",
+        settings_key="sayAllContextTable",
     )
     @dbus_service.getter
     def get_announce_table(self) -> bool:
@@ -693,6 +699,7 @@ class SayAllPresenter:
         genum="org.gnome.Orca.SayAllStyle",
         default="sentence",
         summary="Say All style (line, sentence)",
+        settings_key="sayAllStyle",
     )
     @dbus_service.getter
     def get_style(self) -> str:
@@ -723,6 +730,7 @@ class SayAllPresenter:
         gtype="b",
         default=False,
         summary="Enable structural navigation in Say All",
+        settings_key="structNavInSayAll",
     )
     @dbus_service.getter
     def get_structural_navigation_enabled(self) -> bool:
@@ -745,6 +753,7 @@ class SayAllPresenter:
         gtype="b",
         default=False,
         summary="Enable rewind and fast forward in Say All",
+        settings_key="rewindAndFastForwardInSayAll",
     )
     @dbus_service.getter
     def get_rewind_and_fast_forward_enabled(self) -> bool:

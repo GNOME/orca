@@ -669,6 +669,7 @@ class ChatPresenter:
         gtype="b",
         default=False,
         summary="Speak chat room name",
+        settings_key="chatSpeakRoomName",
     )
     @dbus_service.getter
     def get_speak_room_name(self, app: Atspi.Accessible | None = None) -> bool:
@@ -693,6 +694,7 @@ class ChatPresenter:
         gtype="b",
         default=False,
         summary="Announce when buddies are typing",
+        settings_key="chatAnnounceBuddyTyping",
     )
     @dbus_service.getter
     def get_announce_buddy_typing(self) -> bool:
@@ -713,6 +715,7 @@ class ChatPresenter:
         gtype="b",
         default=False,
         summary="Provide chat room specific message histories",
+        settings_key="chatRoomHistories",
     )
     @dbus_service.getter
     def get_room_histories(self) -> bool:
@@ -733,6 +736,7 @@ class ChatPresenter:
         genum="org.gnome.Orca.ChatMessageVerbosity",
         default="all",
         summary="Chat message verbosity (all, all-if-focused, focused-channel)",
+        settings_key="chatMessageVerbosity",
     )
     @dbus_service.getter
     def get_message_verbosity(self, app: Atspi.Accessible | None = None) -> int:
@@ -757,6 +761,7 @@ class ChatPresenter:
         gtype="b",
         default=False,
         summary="Speak chat room name after message",
+        settings_key="presentChatRoomLast",
     )
     @dbus_service.getter
     def get_speak_room_name_last(self) -> bool:

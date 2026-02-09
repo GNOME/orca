@@ -43,6 +43,7 @@ from gi.repository import GLib
 from gi.repository import Gdk
 
 from . import debug
+from . import gsettings_registry
 from . import keybindings
 from . import input_event_manager
 from . import settings
@@ -217,6 +218,14 @@ class OrcaModifierManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         GLib.timeout_add(1, toggle, keyboard_event.modifiers, modifier)
 
+    @gsettings_registry.get_registry().gsetting(
+        key="orca-modifier-keys",
+        schema="keybindings",
+        gtype="as",
+        default=["Insert", "KP_Insert"],
+        summary="Keys used as the Orca modifier",
+        settings_key="orcaModifierKeys",
+    )
     def get_orca_modifier_keys(self) -> list[str]:
         """Returns the list of Orca modifier keys."""
 

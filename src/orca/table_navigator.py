@@ -928,6 +928,7 @@ class TableNavigator:
         gtype="b",
         default=True,
         summary="Enable table navigation",
+        settings_key="tableNavigationEnabled",
     )
     @dbus_service.getter
     def get_is_enabled(self) -> bool:
@@ -962,6 +963,7 @@ class TableNavigator:
         gtype="b",
         default=False,
         summary="Skip blank cells during navigation",
+        settings_key="skipBlankCells",
     )
     @dbus_service.getter
     def get_skip_blank_cells(self) -> bool:

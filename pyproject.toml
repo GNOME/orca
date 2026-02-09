@@ -11,6 +11,7 @@ lint.ignore = [
 
 [tool.pylint.master]
 #extension-pkg-allow-list = ["brlapi"] # this makes cli pylint crash.
+init-hook = "import sys, os; sys.path.insert(0, os.path.join(os.getcwd(), 'src'))"
 
 [tool.pylint.typecheck]
 ignored-classes = ["AXUtilities"]

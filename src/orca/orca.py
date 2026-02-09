@@ -196,6 +196,13 @@ def main():
         proxy.Set("org.a11y.Status", "IsEnabled", GLib.Variant("b", True))
 
     load_user_settings(is_reload=False)
+    manager = settings_manager.get_manager()
+    prefs_dir = manager.get_prefs_dir()
+    profiles = manager.available_profiles()
+    registry = gsettings_registry.get_registry()
+    registry.migrate_all(prefs_dir, profiles)
+    registry.sync_missing_profiles(prefs_dir, profiles)
+    Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
 
     if not systemd.get_manager().is_systemd_managed():
         # Legacy behavior, here for backwards-compatibility. You really should

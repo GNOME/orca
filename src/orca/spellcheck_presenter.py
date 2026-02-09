@@ -106,6 +106,7 @@ class SpellCheckPresenter:
         gtype="b",
         default=True,
         summary="Spell misspelled word",
+        settings_key="spellcheckSpellError",
     )
     @dbus_service.getter
     def get_spell_error(self) -> bool:
@@ -131,6 +132,7 @@ class SpellCheckPresenter:
         gtype="b",
         default=True,
         summary="Spell suggested correction",
+        settings_key="spellcheckSpellSuggestion",
     )
     @dbus_service.getter
     def get_spell_suggestion(self) -> bool:
@@ -156,6 +158,7 @@ class SpellCheckPresenter:
         gtype="b",
         default=True,
         summary="Present context/surrounding sentence",
+        settings_key="spellcheckPresentContext",
     )
     @dbus_service.getter
     def get_present_context(self) -> bool:

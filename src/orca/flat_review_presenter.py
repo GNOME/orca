@@ -1312,6 +1312,7 @@ class FlatReviewPresenter:
         gtype="b",
         default=False,
         summary="Restrict flat review to current object",
+        settings_key="flatReviewIsRestricted",
     )
     @dbus_service.getter
     def get_is_restricted(self) -> bool:

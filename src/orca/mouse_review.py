@@ -547,6 +547,7 @@ class MouseReviewer:
         gtype="b",
         default=False,
         summary="Present tooltips on mouse hover",
+        settings_key="presentToolTips",
     )
     @dbus_service.getter
     def get_present_tooltips(self) -> bool:
@@ -569,6 +570,7 @@ class MouseReviewer:
         gtype="b",
         default=False,
         summary="Enable mouse review",
+        settings_key="enableMouseReview",
     )
     @dbus_service.getter
     def get_is_enabled(self) -> bool:

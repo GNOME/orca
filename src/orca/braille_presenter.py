@@ -451,6 +451,9 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         result.update(self._flash_messages_grid.save_settings())
         result.update(self._progress_bars_grid.save_settings())
         result.update(self._osd_grid.save_settings())
+        gsettings_registry.get_registry().save_to_gsettings(
+            self._presenter.get_gs_handle(), "braille", result
+        )
         return result
 
     def refresh(self) -> None:
@@ -490,6 +493,11 @@ class BraillePresenter:
         self._monitor: braille_monitor.BrailleMonitor | None = None
         self._monitor_enabled_override: bool | None = None
         self._initialized = False
+        self._gs = gsettings_registry.GSettingsSchemaHandle("org.gnome.Orca.Braille", "braille")
+
+    def get_gs_handle(self) -> gsettings_registry.GSettingsSchemaHandle:
+        """Returns the GSettings schema handle for this presenter."""
+        return self._gs
 
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""
@@ -705,6 +713,14 @@ class BraillePresenter:
             self.destroy_monitor()
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="monitor-cell-count",
+        schema="braille",
+        gtype="i",
+        default=32,
+        summary="Braille monitor cell count",
+        settings_key="brailleMonitorCellCount",
+    )
     @dbus_service.getter
     def get_monitor_cell_count(self) -> int:
         """Returns the configured braille monitor cell count."""
@@ -721,6 +737,14 @@ class BraillePresenter:
         self.destroy_monitor()
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="monitor-show-dots",
+        schema="braille",
+        gtype="b",
+        default=False,
+        summary="Show Unicode braille dots in braille monitor",
+        settings_key="brailleMonitorShowDots",
+    )
     @dbus_service.getter
     def get_monitor_show_dots(self) -> bool:
         """Returns whether the braille monitor shows Unicode braille dots."""
@@ -736,6 +760,14 @@ class BraillePresenter:
         settings.brailleMonitorShowDots = value
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="monitor-foreground",
+        schema="braille",
+        gtype="s",
+        default="#000000",
+        summary="Braille monitor foreground color",
+        settings_key="brailleMonitorForeground",
+    )
     @dbus_service.getter
     def get_monitor_foreground(self) -> str:
         """Returns the braille monitor foreground color."""
@@ -753,6 +785,14 @@ class BraillePresenter:
             self._monitor.reapply_css()
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="monitor-background",
+        schema="braille",
+        gtype="s",
+        default="#ffffff",
+        summary="Braille monitor background color",
+        settings_key="brailleMonitorBackground",
+    )
     @dbus_service.getter
     def get_monitor_background(self) -> str:
         """Returns the braille monitor background color."""
@@ -798,7 +838,12 @@ class BraillePresenter:
         )
 
     @gsettings_registry.get_registry().gsetting(
-        key="enabled", schema="braille", gtype="b", default=True, summary="Enable braille output"
+        key="enabled",
+        schema="braille",
+        gtype="b",
+        default=True,
+        summary="Enable braille output",
+        settings_key="enableBraille",
     )
     @dbus_service.getter
     def get_braille_is_enabled(self) -> bool:
@@ -833,6 +878,7 @@ class BraillePresenter:
         genum="org.gnome.Orca.VerbosityLevel",
         default="verbose",
         summary="Braille verbosity level (brief, verbose)",
+        settings_key="brailleVerbosityLevel",
     )
     @dbus_service.getter
     def get_verbosity_level(self) -> str:
@@ -869,6 +915,7 @@ class BraillePresenter:
         genum="org.gnome.Orca.VerbosityLevel",
         default="verbose",
         summary="Braille rolename style (brief, verbose)",
+        settings_key="brailleRolenameStyle",
     )
     @dbus_service.getter
     def get_rolename_style(self) -> str:
@@ -899,6 +946,7 @@ class BraillePresenter:
         gtype="b",
         default=True,
         summary="Present mnemonics on braille display",
+        settings_key="displayObjectMnemonic",
     )
     @dbus_service.getter
     def get_present_mnemonics(self) -> bool:
@@ -921,6 +969,7 @@ class BraillePresenter:
         gtype="b",
         default=True,
         summary="Display ancestors of current object",
+        settings_key="enableBrailleContext",
     )
     @dbus_service.getter
     def get_display_ancestors(self) -> bool:
@@ -943,6 +992,7 @@ class BraillePresenter:
         gtype="b",
         default=False,
         summary="Show progress bar updates in braille",
+        settings_key="brailleProgressBarUpdates",
     )
     @dbus_service.getter
     def get_braille_progress_bar_updates(self) -> bool:
@@ -965,6 +1015,7 @@ class BraillePresenter:
         gtype="i",
         default=10,
         summary="Progress bar braille update interval in seconds",
+        settings_key="progressBarBrailleInterval",
     )
     @dbus_service.getter
     def get_progress_bar_braille_interval(self) -> int:
@@ -987,6 +1038,7 @@ class BraillePresenter:
         genum="org.gnome.Orca.ProgressBarVerbosity",
         default="application",
         summary="Progress bar braille verbosity (all, application, window)",
+        settings_key="progressBarBrailleVerbosity",
     )
     @dbus_service.getter
     def get_progress_bar_braille_verbosity(self) -> int:
@@ -1009,6 +1061,7 @@ class BraillePresenter:
         gtype="b",
         default=False,
         summary="Enable contracted braille",
+        settings_key="enableContractedBraille",
     )
     @dbus_service.getter
     def get_contracted_braille_is_enabled(self) -> bool:
@@ -1031,6 +1084,7 @@ class BraillePresenter:
         gtype="b",
         default=True,
         summary="Use computer braille at cursor position",
+        settings_key="enableComputerBrailleAtCursor",
     )
     @dbus_service.getter
     def get_computer_braille_at_cursor_is_enabled(self) -> bool:
@@ -1058,6 +1112,7 @@ class BraillePresenter:
         gtype="s",
         default="",
         summary="Braille contraction table name",
+        settings_key="brailleContractionTable",
     )
     @dbus_service.getter
     def get_contraction_table(self) -> str:
@@ -1131,6 +1186,7 @@ class BraillePresenter:
         gtype="b",
         default=True,
         summary="Show end-of-line indicator",
+        settings_key="enableBrailleEOL",
     )
     @dbus_service.getter
     def get_end_of_line_indicator_is_enabled(self) -> bool:
@@ -1153,6 +1209,7 @@ class BraillePresenter:
         gtype="b",
         default=False,
         summary="Enable braille word wrap",
+        settings_key="enableBrailleWordWrap",
     )
     @dbus_service.getter
     def get_word_wrap_is_enabled(self) -> bool:
@@ -1175,6 +1232,7 @@ class BraillePresenter:
         gtype="b",
         default=True,
         summary="Enable braille flash messages",
+        settings_key="enableFlashMessages",
     )
     @dbus_service.getter
     def get_flash_messages_are_enabled(self) -> bool:
@@ -1204,6 +1262,7 @@ class BraillePresenter:
         gtype="i",
         default=5000,
         summary="Flash message duration in milliseconds",
+        settings_key="brailleFlashTime",
     )
     @dbus_service.getter
     def get_flash_message_duration(self) -> int:
@@ -1250,6 +1309,7 @@ class BraillePresenter:
         gtype="b",
         default=False,
         summary="Make flash messages persistent",
+        settings_key="flashIsPersistent",
     )
     @dbus_service.getter
     def get_flash_messages_are_persistent(self) -> bool:
@@ -1272,6 +1332,7 @@ class BraillePresenter:
         gtype="b",
         default=True,
         summary="Use detailed flash messages",
+        settings_key="flashIsDetailed",
     )
     @dbus_service.getter
     def get_flash_messages_are_detailed(self) -> bool:
@@ -1302,6 +1363,7 @@ class BraillePresenter:
         genum="org.gnome.Orca.BrailleIndicator",
         default="dots78",
         summary="Braille selector indicator style (none, dot7, dot8, dots78)",
+        settings_key="brailleSelectorIndicator",
     )
     @dbus_service.getter
     def get_selector_indicator(self) -> str:
@@ -1340,6 +1402,7 @@ class BraillePresenter:
         genum="org.gnome.Orca.BrailleIndicator",
         default="dots78",
         summary="Braille link indicator style (none, dot7, dot8, dots78)",
+        settings_key="brailleLinkIndicator",
     )
     @dbus_service.getter
     def get_link_indicator(self) -> str:
@@ -1378,6 +1441,7 @@ class BraillePresenter:
         genum="org.gnome.Orca.BrailleIndicator",
         default="none",
         summary="Braille text attributes indicator style (none, dot7, dot8, dots78)",
+        settings_key="textAttributesBrailleIndicator",
     )
     @dbus_service.getter
     def get_text_attributes_indicator(self) -> str:

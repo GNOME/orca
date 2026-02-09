@@ -1,40 +1,40 @@
 #!/usr/bin/python
+# pylint: disable=too-many-arguments,too-many-positional-arguments,too-many-locals
+# pylint: disable=too-many-branches,too-many-statements,too-many-return-statements
+# pylint: disable=too-many-lines
 # gsettings_import_export.py
 #
 # Standalone tool for importing/exporting Orca settings between JSON and GSettings.
 #
 # Examples (run from the repo root):
 #
-# 1. Compile and view the GSettings schemas that will be generated for Orca:
+# 1. Import your JSON settings into dconf. First preview what will be written:
 #
-#      python tools/gsettings_import_export.py compile-schemas /tmp/orca-schemas
-#      cat /tmp/orca-schemas/org.gnome.Orca.gschema.xml
-#
-# 2. Import your JSON settings into dconf. First preview what will be written:
-#
-#      python tools/gsettings_import_export.py import --dry-run \
-#          --schema-dir /tmp/orca-schemas $HOME/.local/share/orca
+#      python tools/gsettings_import_export.py import --dry-run $HOME/.local/share/orca
 #
 #    If the output looks correct, run the import for real. WARNING: This overwrites
 #    any existing Orca settings in your dconf database. To clear imported settings
 #    afterwards use "dconf reset -f /org/gnome/orca/" but note that this will not
 #    restore whatever was there before the import.
 #
-#      python tools/gsettings_import_export.py import \
-#          --schema-dir /tmp/orca-schemas $HOME/.local/share/orca
+#      python tools/gsettings_import_export.py import $HOME/.local/share/orca
 #
 #    View the result:
 #
 #      dconf dump /org/gnome/orca/
 #
-# 3. Export your dconf settings to JSON files that can be copied to another machine:
+# 2. Export your dconf settings to JSON files that can be copied to another machine:
 #
-#      python tools/gsettings_import_export.py export \
-#          --schema-dir /tmp/orca-schemas /tmp/orca-export
+#      python tools/gsettings_import_export.py export /tmp/orca-export
 #
 #    This creates /tmp/orca-export/user-settings.conf and, if there are app-specific
 #    overrides, /tmp/orca-export/app-settings/<AppName>.conf. To use the exported
 #    files on another machine, copy them to $HOME/.local/share/orca/.
+#
+# 3. Roundtrip test (import → export → diff against original):
+#
+#      python tools/gsettings_import_export.py roundtrip \
+#          $HOME/.local/share/orca /tmp/orca-roundtrip
 #
 #
 # Copyright 2026 Igalia, S.L.
@@ -58,245 +58,104 @@
 """Standalone tool for importing/exporting Orca settings between JSON and GSettings."""
 
 import argparse
+import ast
+import io
 import json
 import os
-import re
+import shutil
 import subprocess
 import sys
-from dataclasses import dataclass
+from contextlib import redirect_stdout
+from pathlib import Path
 from typing import Any
 
-from gi.repository import Gio, GLib
+from gi.repository import Gio
+
+from generate_gsettings_schemas import _discover_schemas
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
+from orca.gsettings_migrator import (  # pylint: disable=wrong-import-position
+    KEYBINDINGS_METADATA_KEYS,
+    REVERSE_LEGACY_KEY_ALIASES,
+    VOICE_FAMILY_FIELDS,
+    VOICE_MIGRATION_MAP,
+    VOICE_TYPES,
+    SettingsMapping,
+    add_legacy_aliases,
+    apply_legacy_aliases,
+    export_keybindings,
+    export_pronunciations,
+    export_synthesizer,
+    export_voice,
+    gsettings_to_json,
+    hoist_keybindings_metadata,
+    import_keybindings,
+    import_pronunciations,
+    import_synthesizer,
+    import_voice,
+    json_to_gsettings,
+    resolve_enum_nick,
+    sanitize_gsettings_path,
+    stamp_version,
+)
 
 GSETTINGS_PATH_PREFIX = "/org/gnome/orca/"
 
-SCHEMAS = {
-    "speech": "org.gnome.Orca.Speech",
-    "voice": "org.gnome.Orca.Voice",
-    "typing-echo": "org.gnome.Orca.TypingEcho",
-    "caret-navigation": "org.gnome.Orca.CaretNavigation",
-    "structural-navigation": "org.gnome.Orca.StructuralNavigation",
-    "table-navigation": "org.gnome.Orca.TableNavigation",
-    "document": "org.gnome.Orca.Document",
-    "say-all": "org.gnome.Orca.SayAll",
-    "flat-review": "org.gnome.Orca.FlatReview",
-    "sound": "org.gnome.Orca.Sound",
-    "chat": "org.gnome.Orca.Chat",
-    "spellcheck": "org.gnome.Orca.Spellcheck",
-    "mouse-review": "org.gnome.Orca.MouseReview",
-    "live-regions": "org.gnome.Orca.LiveRegions",
-    "system-information": "org.gnome.Orca.SystemInformation",
-    "pronunciations": "org.gnome.Orca.Pronunciations",
-    "keybindings": "org.gnome.Orca.Keybindings",
-    "text-attributes": "org.gnome.Orca.TextAttributes",
-}
 
-VOICE_TYPES = ["default", "uppercase", "hyperlink", "system"]
-
-# ACSS key → (GSettings key, gtype, default)
-VOICE_MIGRATION_MAP = {
-    "rate": ("rate", "i", 50),
-    "average-pitch": ("pitch", "d", 5.0),
-    "gain": ("volume", "d", 10.0),
-}
+def _parse_settings_types(src_dir: Path) -> dict[str, str]:
+    """Parse settings.py to get type annotations for module-level attributes."""
+    settings_file = src_dir / "orca" / "settings.py"
+    tree = ast.parse(settings_file.read_text())
+    types: dict[str, str] = {}
+    for node in ast.walk(tree):
+        if isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name):
+            if isinstance(node.annotation, ast.Name):
+                types[node.target.id] = node.annotation.id
+    return types
 
 
-def sanitize_gsettings_path(name: str) -> str:
-    """Sanitize a name for use in a GSettings path."""
-    sanitized = name.lower()
-    sanitized = re.sub(r"[^a-z0-9-]", "-", sanitized)
-    sanitized = re.sub(r"-+", "-", sanitized)
-    return sanitized.strip("-")
+def _build_schemas_and_mappings() -> tuple[dict[str, str], dict[str, list[SettingsMapping]]]:
+    """Build SCHEMAS and ALL_MAPPINGS from @gsetting decorators via AST parsing."""
+
+    src_dir = Path(__file__).resolve().parent.parent / "src"
+    schemas_raw, all_settings, all_enums = _discover_schemas(src_dir)
+    settings_types = _parse_settings_types(src_dir)
+
+    schemas: dict[str, str] = dict(schemas_raw)
+    mappings: dict[str, list[SettingsMapping]] = {}
+
+    for setting in all_settings:
+        settings_key = setting.get("settings_key")
+        if settings_key is None:
+            continue
+        schema = setting["schema"]
+        genum = setting.get("genum")
+        enum_map: dict[int, str] | None = None
+        string_enum = False
+        if genum and genum in all_enums:
+            enum_map = {v: k for k, v in all_enums[genum].items()}
+            string_enum = settings_types.get(settings_key) == "str"
+        gtype = setting.get("gtype", "")
+        mapping = SettingsMapping(
+            settings_key, setting["key"], gtype, setting["default"], enum_map, string_enum
+        )
+        mappings.setdefault(schema, []).append(mapping)
+
+    return schemas, mappings
 
 
-@dataclass
-class SettingsMapping:
-    """Describes a mapping between a JSON settings key and a GSettings key."""
-
-    json_key: str
-    gs_key: str
-    gtype: str  # "b", "s", "i", "d"
-    default: Any
-    enum_map: dict[int, str] | None = None
-
-
-SPEECH_MAPPINGS = [
-    SettingsMapping("enableSpeech", "enable", "b", True),
-    SettingsMapping("onlySpeakDisplayedText", "only-speak-displayed-text", "b", False),
-    SettingsMapping("messagesAreDetailed", "messages-are-detailed", "b", True),
-    SettingsMapping("capitalizationStyle", "capitalization-style", "s", "none"),
-    SettingsMapping(
-        "verbalizePunctuationStyle",
-        "punctuation-level",
-        "s",
-        1,
-        enum_map={0: "all", 1: "most", 2: "some", 3: "none"},
-    ),
-    SettingsMapping(
-        "speechVerbosityLevel",
-        "verbosity-level",
-        "s",
-        1,
-        enum_map={0: "brief", 1: "verbose"},
-    ),
-]
-
-TYPING_ECHO_MAPPINGS = [
-    SettingsMapping("enableKeyEcho", "key-echo", "b", True),
-    SettingsMapping("enableEchoByCharacter", "character-echo", "b", False),
-    SettingsMapping("enableEchoByWord", "word-echo", "b", False),
-    SettingsMapping("enableEchoBySentence", "sentence-echo", "b", False),
-    SettingsMapping("enableAlphabeticKeys", "alphabetic-keys", "b", True),
-    SettingsMapping("enableNumericKeys", "numeric-keys", "b", True),
-    SettingsMapping("enablePunctuationKeys", "punctuation-keys", "b", True),
-    SettingsMapping("enableSpace", "space", "b", True),
-    SettingsMapping("enableModifierKeys", "modifier-keys", "b", True),
-    SettingsMapping("enableFunctionKeys", "function-keys", "b", True),
-    SettingsMapping("enableActionKeys", "action-keys", "b", True),
-    SettingsMapping("enableNavigationKeys", "navigation-keys", "b", False),
-    SettingsMapping("enableDiacriticalKeys", "diacritical-keys", "b", False),
-]
-
-CARET_NAVIGATION_MAPPINGS = [
-    SettingsMapping("caretNavigationEnabled", "enabled", "b", True),
-    SettingsMapping("caretNavTriggersFocusMode", "triggers-focus-mode", "b", False),
-]
-
-STRUCTURAL_NAVIGATION_MAPPINGS = [
-    SettingsMapping("structuralNavigationEnabled", "enabled", "b", True),
-    SettingsMapping("wrappedStructuralNavigation", "wraps", "b", True),
-    SettingsMapping("structNavTriggersFocusMode", "triggers-focus-mode", "b", False),
-    SettingsMapping("largeObjectTextLength", "large-object-text-length", "i", 75),
-]
-
-TABLE_NAVIGATION_MAPPINGS = [
-    SettingsMapping("tableNavigationEnabled", "enabled", "b", True),
-    SettingsMapping("skipBlankCells", "skip-blank-cells", "b", False),
-]
-
-DOCUMENT_MAPPINGS = [
-    SettingsMapping("nativeNavTriggersFocusMode", "native-nav-triggers-focus-mode", "b", True),
-    SettingsMapping("autoStickyFocusModeForWebApps", "auto-sticky-focus-mode", "b", True),
-    SettingsMapping("layoutMode", "layout-mode", "b", True),
-    SettingsMapping("sayAllOnLoad", "say-all-on-load", "b", True),
-    SettingsMapping("pageSummaryOnLoad", "page-summary-on-load", "b", True),
-    SettingsMapping(
-        "findResultsVerbosity",
-        "find-results-verbosity",
-        "s",
-        2,
-        enum_map={0: "none", 1: "if-line-changed", 2: "all"},
-    ),
-    SettingsMapping("findResultsMinimumLength", "find-results-minimum-length", "i", 4),
-]
-
-SAY_ALL_MAPPINGS = [
-    SettingsMapping("sayAllContextBlockquote", "announce-blockquote", "b", True),
-    SettingsMapping("sayAllContextNonLandmarkForm", "announce-form", "b", True),
-    SettingsMapping("sayAllContextPanel", "announce-grouping", "b", True),
-    SettingsMapping("sayAllContextLandmark", "announce-landmark", "b", True),
-    SettingsMapping("sayAllContextList", "announce-list", "b", True),
-    SettingsMapping("sayAllContextTable", "announce-table", "b", True),
-    SettingsMapping(
-        "sayAllStyle",
-        "style",
-        "s",
-        1,
-        enum_map={0: "line", 1: "sentence"},
-    ),
-    SettingsMapping("structNavInSayAll", "structural-navigation", "b", False),
-    SettingsMapping("rewindAndFastForwardInSayAll", "rewind-and-fast-forward", "b", False),
-]
-
-FLAT_REVIEW_MAPPINGS = [
-    SettingsMapping("flatReviewIsRestricted", "restricted", "b", False),
-]
-
-SOUND_MAPPINGS = [
-    SettingsMapping("enableSound", "enabled", "b", True),
-    SettingsMapping("soundVolume", "volume", "d", 0.5),
-    SettingsMapping("beepProgressBarUpdates", "beep-progress-bar-updates", "b", False),
-    SettingsMapping("progressBarBeepInterval", "progress-bar-beep-interval", "i", 0),
-    SettingsMapping(
-        "progressBarBeepVerbosity",
-        "progress-bar-beep-verbosity",
-        "s",
-        1,
-        enum_map={0: "all", 1: "application", 2: "window"},
-    ),
-]
-
-CHAT_MAPPINGS = [
-    SettingsMapping(
-        "chatMessageVerbosity",
-        "message-verbosity",
-        "s",
-        0,
-        enum_map={0: "all", 1: "all-if-focused", 2: "focused-channel"},
-    ),
-    SettingsMapping("chatSpeakRoomName", "speak-room-name", "b", False),
-    SettingsMapping("chatAnnounceBuddyTyping", "announce-buddy-typing", "b", False),
-    SettingsMapping("chatRoomHistories", "room-histories", "b", False),
-    SettingsMapping("presentChatRoomLast", "speak-room-name-last", "b", False),
-]
-
-SPELLCHECK_MAPPINGS = [
-    SettingsMapping("spellcheckSpellError", "spell-error", "b", True),
-    SettingsMapping("spellcheckSpellSuggestion", "spell-suggestion", "b", True),
-    SettingsMapping("spellcheckPresentContext", "present-context", "b", True),
-]
-
-MOUSE_REVIEW_MAPPINGS = [
-    SettingsMapping("enableMouseReview", "enabled", "b", False),
-    SettingsMapping("presentToolTips", "present-tooltips", "b", False),
-]
-
-LIVE_REGIONS_MAPPINGS = [
-    SettingsMapping("enableLiveRegions", "enabled", "b", True),
-    SettingsMapping("presentLiveRegionFromInactiveTab", "present-from-inactive-tab", "b", False),
-]
-
-SYSTEM_INFORMATION_MAPPINGS = [
-    SettingsMapping("presentDateFormat", "date-format", "s", "%x"),
-    SettingsMapping("presentTimeFormat", "time-format", "s", "%X"),
-]
-
-TEXT_ATTRIBUTES_MAPPINGS = [
-    SettingsMapping("textAttributesToSpeak", "attributes-to-speak", "as", []),
-    SettingsMapping("textAttributesToBraille", "attributes-to-braille", "as", []),
-]
-
-ALL_MAPPINGS = {
-    "speech": SPEECH_MAPPINGS,
-    "typing-echo": TYPING_ECHO_MAPPINGS,
-    "caret-navigation": CARET_NAVIGATION_MAPPINGS,
-    "structural-navigation": STRUCTURAL_NAVIGATION_MAPPINGS,
-    "table-navigation": TABLE_NAVIGATION_MAPPINGS,
-    "document": DOCUMENT_MAPPINGS,
-    "say-all": SAY_ALL_MAPPINGS,
-    "flat-review": FLAT_REVIEW_MAPPINGS,
-    "sound": SOUND_MAPPINGS,
-    "chat": CHAT_MAPPINGS,
-    "spellcheck": SPELLCHECK_MAPPINGS,
-    "mouse-review": MOUSE_REVIEW_MAPPINGS,
-    "live-regions": LIVE_REGIONS_MAPPINGS,
-    "system-information": SYSTEM_INFORMATION_MAPPINGS,
-    "text-attributes": TEXT_ATTRIBUTES_MAPPINGS,
-}
+SCHEMAS, ALL_MAPPINGS = _build_schemas_and_mappings()
 
 
 class SchemaSource:
     """Loads GSettings schemas and creates Gio.Settings instances."""
 
-    def __init__(self, schema_dir: str | None = None) -> None:
-        if schema_dir:
-            parent = Gio.SettingsSchemaSource.get_default()  # pylint: disable=no-value-for-parameter
-            self._source = Gio.SettingsSchemaSource.new_from_directory(schema_dir, parent, True)
-        else:
-            self._source = Gio.SettingsSchemaSource.get_default()  # pylint: disable=no-value-for-parameter
+    def __init__(self) -> None:
+        self._source = Gio.SettingsSchemaSource.get_default()  # pylint: disable=no-value-for-parameter
         self._cache: dict[str, Gio.Settings] = {}
 
     def lookup(self, schema_id: str) -> "Gio.SettingsSchema | None":
+        """Returns the schema for schema_id, or None if not installed."""
         return self._source.lookup(schema_id, True)
 
     def get_settings(self, schema_id: str, path: str) -> Gio.Settings:
@@ -310,74 +169,6 @@ class SchemaSource:
         gs = Gio.Settings.new_full(schema, None, path)
         self._cache[cache_key] = gs
         return gs
-
-
-def json_to_gsettings(json_dict: dict, gs: Gio.Settings, mappings: list[SettingsMapping]) -> bool:
-    """Writes JSON settings to a Gio.Settings object. Returns True if any value was written."""
-    wrote_any = False
-    for m in mappings:
-        if m.json_key not in json_dict:
-            continue
-        value = json_dict[m.json_key]
-        if m.enum_map is not None:
-            if value == m.default:
-                continue
-            gs_value = m.enum_map.get(value)
-            if gs_value is not None:
-                gs.set_string(m.gs_key, gs_value)
-                wrote_any = True
-        elif m.gtype == "b":
-            if value == m.default:
-                continue
-            gs.set_boolean(m.gs_key, value)
-            wrote_any = True
-        elif m.gtype == "s":
-            if value == m.default:
-                continue
-            gs.set_string(m.gs_key, value)
-            wrote_any = True
-        elif m.gtype == "i":
-            if int(value) == m.default:
-                continue
-            gs.set_int(m.gs_key, int(value))
-            wrote_any = True
-        elif m.gtype == "d":
-            if float(value) == m.default:
-                continue
-            gs.set_double(m.gs_key, float(value))
-            wrote_any = True
-        elif m.gtype == "as":
-            if value == m.default:
-                continue
-            gs.set_strv(m.gs_key, value)
-            wrote_any = True
-    return wrote_any
-
-
-def gsettings_to_json(gs: Gio.Settings, mappings: list[SettingsMapping]) -> dict:
-    """Reads explicitly-set GSettings values into a JSON-compatible dict."""
-    result: dict[str, Any] = {}
-    for m in mappings:
-        user_value = gs.get_user_value(m.gs_key)
-        if user_value is None:
-            continue
-        if m.enum_map is not None:
-            gs_str = user_value.get_string()
-            reverse_map = {v: k for k, v in m.enum_map.items()}
-            json_value = reverse_map.get(gs_str)
-            if json_value is not None:
-                result[m.json_key] = json_value
-        elif m.gtype == "b":
-            result[m.json_key] = user_value.get_boolean()
-        elif m.gtype == "s":
-            result[m.json_key] = user_value.get_string()
-        elif m.gtype == "i":
-            result[m.json_key] = user_value.get_int32()
-        elif m.gtype == "d":
-            result[m.json_key] = user_value.get_double()
-        elif m.gtype == "as":
-            result[m.json_key] = list(user_value.unpack())
-    return result
 
 
 def _build_profile_path(profile: str, suffix: str) -> str:
@@ -397,6 +188,7 @@ def _import_mapped_settings(
     json_dict: dict,
     label: str,
     dry_run: bool,
+    skip_defaults: bool = True,
 ) -> None:
     """Import mapped settings (speech or typing-echo) for a given path."""
     mappings = ALL_MAPPINGS.get(schema_name, [])
@@ -410,52 +202,57 @@ def _import_mapped_settings(
                 continue
             value = json_dict[m.json_key]
             if m.enum_map is not None:
-                if value == m.default:
+                nick = resolve_enum_nick(value, m.enum_map)
+                if nick is None:
                     continue
-                gs_value = m.enum_map.get(value)
-                if gs_value is not None:
-                    print(f"  {path}{m.gs_key} = {gs_value!r}")
-            elif value != m.default:
+                if skip_defaults and nick == m.default:
+                    continue
+                print(f"  {path}{m.gs_key} = {nick!r}")
+            elif not skip_defaults or value != m.default:
                 print(f"  {path}{m.gs_key} = {value!r}")
         return
 
     gs = source.get_settings(schema_id, path)
-    if json_to_gsettings(json_dict, gs, mappings):
-        gs.set_int("version", 1)
+    if json_to_gsettings(json_dict, gs, mappings, skip_defaults):
+        stamp_version(gs)
         print(f"  Imported {schema_name} for {label}")
 
 
-def _import_synthesizer(
+def _import_synthesizer_for_profile(
     source: SchemaSource,
     profile_prefs: dict,
     profile: str,
     label: str,
     dry_run: bool,
 ) -> None:
-    """Import speechServerInfo[1] as the synthesizer key."""
-    speech_server_info = profile_prefs.get("speechServerInfo", [])
-    if len(speech_server_info) < 2 or not speech_server_info[1]:
+    """Import speechServerInfo as speech-server and synthesizer keys."""
+    speech_server_info = profile_prefs.get("speechServerInfo")
+    if speech_server_info is None or len(speech_server_info) < 2:
         return
-    synthesizer = speech_server_info[1]
     path = _build_profile_path(profile, "speech")
 
     if dry_run:
-        print(f"  {path}synthesizer = {synthesizer!r}")
+        print(f"  {path}speech-server = {speech_server_info[0]!r}")
+        print(f"  {path}synthesizer = {speech_server_info[1]!r}")
         return
 
     gs = source.get_settings(SCHEMAS["speech"], path)
-    gs.set_string("synthesizer", synthesizer)
-    if gs.get_user_value("version") is None:
-        gs.set_int("version", 1)
-    print(f"  Imported synthesizer={synthesizer!r} for {label}")
+    if import_synthesizer(gs, profile_prefs):
+        if gs.get_user_value("version") is None:
+            stamp_version(gs)
+        print(
+            f"  Imported speech-server={speech_server_info[0]!r}, "
+            f"synthesizer={speech_server_info[1]!r} for {label}"
+        )
 
 
-def _import_voice(
+def _import_voice_for_path(
     source: SchemaSource,
     voice_data: dict,
     path: str,
     label: str,
     dry_run: bool,
+    skip_defaults: bool = True,
 ) -> None:
     """Import ACSS voice data to GSettings."""
     if dry_run:
@@ -463,120 +260,109 @@ def _import_voice(
             if acss_key not in voice_data:
                 continue
             value = voice_data[acss_key]
-            if gs_type == "i" and int(value) == default:
-                continue
-            if gs_type == "d" and float(value) == default:
-                continue
+            if skip_defaults:
+                if gs_type == "b" and bool(value) == default:
+                    continue
+                if gs_type == "i" and int(value) == default:
+                    continue
+                if gs_type == "d" and float(value) == default:
+                    continue
             print(f"  {path}{gs_key} = {value!r}")
         family = voice_data.get("family", {})
-        if isinstance(family, dict) and family.get("name"):
-            print(f"  {path}family-name = {family['name']!r}")
+        if isinstance(family, dict):
+            for json_field, gs_key in VOICE_FAMILY_FIELDS.items():
+                val = family.get(json_field)
+                if val is not None and str(val):
+                    print(f"  {path}{gs_key} = {str(val)!r}")
         return
 
     gs = source.get_settings(SCHEMAS["voice"], path)
-    migrated = False
-
-    for acss_key, (gs_key, gs_type, default) in VOICE_MIGRATION_MAP.items():
-        if acss_key not in voice_data:
-            continue
-        value = voice_data[acss_key]
-        if gs_type == "i" and int(value) == default:
-            continue
-        if gs_type == "d" and float(value) == default:
-            continue
-        if gs_type == "i":
-            gs.set_int(gs_key, int(value))
-        elif gs_type == "d":
-            gs.set_double(gs_key, float(value))
-        migrated = True
-
-    family = voice_data.get("family", {})
-    if isinstance(family, dict):
-        name = family.get("name")
-        if name:
-            gs.set_string("family-name", name)
-            migrated = True
-
-    if migrated:
-        gs.set_int("version", 1)
+    if import_voice(gs, voice_data, skip_defaults):
+        stamp_version(gs)
         print(f"  Imported {label}")
 
 
-def _import_pronunciations(
+def _import_pronunciations_for_path(
     source: SchemaSource,
     pronunciations_dict: dict,
     path: str,
     label: str,
     dry_run: bool,
 ) -> None:
-    """Import pronunciation dictionary to GSettings.
-
-    JSON format: {word: [word, replacement]} or {word: replacement}
-    GSettings format: a{ss} {word: replacement}
-    """
-    converted: dict[str, str] = {}
-    for key, value in pronunciations_dict.items():
-        if isinstance(value, list) and len(value) >= 2:
-            converted[key] = value[1]
-        elif isinstance(value, list) and len(value) == 1:
-            converted[key] = value[0]
-        elif isinstance(value, str):
-            converted[key] = value
-    if not converted:
-        return
-
+    """Import pronunciation dictionary to GSettings."""
     if dry_run:
-        print(f"  {path}entries = {converted!r}")
+        converted: dict[str, str] = {}
+        for key, value in pronunciations_dict.items():
+            if isinstance(value, list) and len(value) >= 2:
+                converted[key] = value[1]
+            elif isinstance(value, list) and len(value) == 1:
+                converted[key] = value[0]
+            elif isinstance(value, str):
+                converted[key] = value
+        if converted:
+            print(f"  {path}entries = {converted!r}")
         return
 
     gs = source.get_settings(SCHEMAS["pronunciations"], path)
-    gs.set_value("entries", GLib.Variant("a{ss}", converted))
-    gs.set_int("version", 1)
-    print(f"  Imported pronunciations for {label}")
+    if import_pronunciations(gs, pronunciations_dict):
+        stamp_version(gs)
+        print(f"  Imported pronunciations for {label}")
 
 
-# Keys in the JSON keybindings dict that are metadata, not actual keybinding commands.
-_KEYBINDINGS_METADATA_KEYS = {"keyboardLayout", "orcaModifierKeys"}
-
-
-def _import_keybindings(
+def _import_keybindings_for_path(
     source: SchemaSource,
     keybindings_dict: dict,
     path: str,
     label: str,
     dry_run: bool,
 ) -> None:
-    """Import keybinding overrides to GSettings.
-
-    JSON format: {command_name: [[keysym, mask, mods, clicks], ...]}
-    GSettings format: a{saas} (same structure, all strings)
-    """
-    converted: dict[str, list[list[str]]] = {}
-    for key, value in keybindings_dict.items():
-        if key in _KEYBINDINGS_METADATA_KEYS:
-            continue
-        if isinstance(value, list):
-            bindings: list[list[str]] = []
-            for binding in value:
-                if isinstance(binding, list):
-                    bindings.append([str(v) for v in binding])
-            converted[key] = bindings
-    if not converted:
-        return
-
+    """Import keybinding overrides to GSettings."""
     if dry_run:
-        for cmd, bindings in sorted(converted.items()):
-            if not bindings:
+        converted: dict[str, list[list[str]]] = {}
+        for key, value in keybindings_dict.items():
+            if key in KEYBINDINGS_METADATA_KEYS:
+                continue
+            if isinstance(value, list):
+                bindings: list[list[str]] = []
+                for binding in value:
+                    if isinstance(binding, list):
+                        bindings.append([str(v) for v in binding])
+                converted[key] = bindings
+        if not converted:
+            return
+        for cmd, cmd_bindings in sorted(converted.items()):
+            if not cmd_bindings:
                 print(f"  {path}entries[{cmd}] = [] (unbound)")
             else:
-                for b in bindings:
+                for b in cmd_bindings:
                     print(f"  {path}entries[{cmd}] = {b}")
         return
 
     gs = source.get_settings(SCHEMAS["keybindings"], path)
-    gs.set_value("entries", GLib.Variant("a{saas}", converted))
-    gs.set_int("version", 1)
-    print(f"  Imported keybindings for {label}")
+    if import_keybindings(gs, keybindings_dict):
+        stamp_version(gs)
+        print(f"  Imported keybindings for {label}")
+
+
+def _write_metadata(
+    source: SchemaSource,
+    path: str,
+    display_name: str,
+    internal_name: str,
+    label: str,
+    dry_run: bool,
+) -> None:
+    """Write display-name and internal-name to the metadata schema at the given path."""
+    if dry_run:
+        print(f"  {path}display-name = {display_name!r}")
+        if internal_name:
+            print(f"  {path}internal-name = {internal_name!r}")
+        return
+    gs = source.get_settings(SCHEMAS["metadata"], path)
+    gs.set_string("display-name", display_name)
+    if internal_name:
+        gs.set_string("internal-name", internal_name)
+    print(f"  Stored metadata for {label}")
 
 
 def _import_profile(
@@ -586,15 +372,25 @@ def _import_profile(
     dry_run: bool,
 ) -> None:
     """Import all settings for a single profile."""
+    apply_legacy_aliases(profile_prefs)
+    hoist_keybindings_metadata(profile_prefs)
     profile = sanitize_gsettings_path(profile_name)
 
     for schema_name in ALL_MAPPINGS:
         path = _build_profile_path(profile, schema_name)
         _import_mapped_settings(
-            source, schema_name, path, profile_prefs, f"profile:{profile_name}", dry_run
+            source,
+            schema_name,
+            path,
+            profile_prefs,
+            f"profile:{profile_name}",
+            dry_run,
+            skip_defaults=True,
         )
 
-    _import_synthesizer(source, profile_prefs, profile, f"profile:{profile_name}", dry_run)
+    _import_synthesizer_for_profile(
+        source, profile_prefs, profile, f"profile:{profile_name}", dry_run
+    )
 
     voices = profile_prefs.get("voices", {})
     for voice_type in VOICE_TYPES:
@@ -603,19 +399,34 @@ def _import_profile(
             continue
         vt = sanitize_gsettings_path(voice_type)
         path = _build_profile_path(profile, f"voices/{vt}")
-        _import_voice(
-            source, voice_data, path, f"voice:{voice_type}/profile:{profile_name}", dry_run
+        _import_voice_for_path(
+            source,
+            voice_data,
+            path,
+            f"voice:{voice_type}/profile:{profile_name}",
+            dry_run,
+            skip_defaults=True,
         )
 
     pronunciations = profile_prefs.get("pronunciations", {})
     if pronunciations:
         path = _build_profile_path(profile, "pronunciations")
-        _import_pronunciations(source, pronunciations, path, f"profile:{profile_name}", dry_run)
+        _import_pronunciations_for_path(
+            source, pronunciations, path, f"profile:{profile_name}", dry_run
+        )
 
     keybindings_data = profile_prefs.get("keybindings", {})
     if keybindings_data:
         path = _build_profile_path(profile, "keybindings")
-        _import_keybindings(source, keybindings_data, path, f"profile:{profile_name}", dry_run)
+        _import_keybindings_for_path(
+            source, keybindings_data, path, f"profile:{profile_name}", dry_run
+        )
+
+    profile_label = profile_prefs.get("profile", [profile_name])[0]
+    metadata_path = _build_profile_path(profile, "metadata")
+    _write_metadata(
+        source, metadata_path, profile_label, profile_name, f"profile:{profile_name}", dry_run
+    )
 
 
 def _import_app(
@@ -634,6 +445,7 @@ def _import_app(
 
     for profile_name, profile_data in prefs.get("profiles", {}).items():
         general = profile_data.get("general", {})
+        apply_legacy_aliases(general)
         pronunciations = profile_data.get("pronunciations", {})
         app_keybindings = profile_data.get("keybindings", {})
         if not general and not pronunciations and not app_keybindings:
@@ -642,7 +454,9 @@ def _import_app(
 
         for schema_name in ALL_MAPPINGS:
             path = _build_app_path(app_name, profile_name, schema_name)
-            _import_mapped_settings(source, schema_name, path, general, label, dry_run)
+            _import_mapped_settings(
+                source, schema_name, path, general, label, dry_run, skip_defaults=False
+            )
 
         voices = general.get("voices", {})
         for voice_type in VOICE_TYPES:
@@ -651,15 +465,27 @@ def _import_app(
                 continue
             vt = sanitize_gsettings_path(voice_type)
             path = _build_app_path(app_name, profile_name, f"voices/{vt}")
-            _import_voice(source, voice_data, path, f"voice:{voice_type}/{label}", dry_run)
+            _import_voice_for_path(source, voice_data, path, f"voice:{voice_type}/{label}", dry_run)
 
         if pronunciations:
             path = _build_app_path(app_name, profile_name, "pronunciations")
-            _import_pronunciations(source, pronunciations, path, label, dry_run)
+            _import_pronunciations_for_path(source, pronunciations, path, label, dry_run)
 
         if app_keybindings:
             path = _build_app_path(app_name, profile_name, "keybindings")
-            _import_keybindings(source, app_keybindings, path, label, dry_run)
+            _import_keybindings_for_path(source, app_keybindings, path, label, dry_run)
+
+        metadata_path = _build_app_path(app_name, profile_name, "metadata")
+        _write_metadata(source, metadata_path, app_name, profile_name, label, dry_run)
+
+        profile = sanitize_gsettings_path(profile_name)
+        profile_metadata_path = _build_profile_path(profile, "metadata")
+        if dry_run:
+            print(f"  {profile_metadata_path}internal-name = {profile_name!r} (if not set)")
+        else:
+            gs = source.get_settings(SCHEMAS["metadata"], profile_metadata_path)
+            if gs.get_user_value("internal-name") is None:
+                gs.set_string("internal-name", profile_name)
 
 
 def import_settings(settings_dir: str, source: SchemaSource, dry_run: bool = False) -> None:
@@ -691,56 +517,6 @@ def import_settings(settings_dir: str, source: SchemaSource, dry_run: bool = Fal
             _import_app(source, app_name, os.path.join(app_dir, filename), dry_run)
 
 
-def _export_voice(gs: Gio.Settings) -> dict:
-    """Export voice settings from a Gio.Settings to ACSS format."""
-    voice_data: dict[str, Any] = {}
-
-    for acss_key, (gs_key, gs_type, _default) in VOICE_MIGRATION_MAP.items():
-        user_value = gs.get_user_value(gs_key)
-        if user_value is None:
-            continue
-        if gs_type == "i":
-            voice_data[acss_key] = user_value.get_int32()
-        elif gs_type == "d":
-            voice_data[acss_key] = user_value.get_double()
-
-    family_value = gs.get_user_value("family-name")
-    if family_value is not None:
-        name = family_value.get_string()
-        if name:
-            voice_data["family"] = {"name": name}
-
-    return voice_data
-
-
-def _export_pronunciations(gs: Gio.Settings) -> dict:
-    """Export pronunciation dictionary from GSettings to JSON format.
-
-    GSettings format: a{ss} {word: replacement}
-    JSON format: {word: [word, replacement]}
-    """
-    user_value = gs.get_user_value("entries")
-    if user_value is None:
-        return {}
-    entries = user_value.unpack()
-    result: dict[str, list[str]] = {}
-    for word, replacement in entries.items():
-        result[word] = [word, replacement]
-    return result
-
-
-def _export_keybindings(gs: Gio.Settings) -> dict:
-    """Export keybinding overrides from GSettings to JSON format.
-
-    GSettings format: a{saas} {command: [[keysym, mask, mods, clicks], ...]}
-    JSON format: same structure
-    """
-    user_value = gs.get_user_value("entries")
-    if user_value is None:
-        return {}
-    return user_value.unpack()
-
-
 def _export_profile(source: SchemaSource, profile_name: str) -> dict:
     """Export all settings for a profile from dconf to a JSON-compatible dict."""
     profile_data: dict[str, Any] = {}
@@ -755,13 +531,12 @@ def _export_profile(source: SchemaSource, profile_name: str) -> dict:
         except ValueError:
             pass
 
-    # Synthesizer (special case: not in a mapping table)
     try:
         path = _build_profile_path(profile, "speech")
         gs = source.get_settings(SCHEMAS["speech"], path)
-        synth_value = gs.get_user_value("synthesizer")
-        if synth_value is not None:
-            profile_data["speechServerInfo"] = ["Speech Dispatcher", synth_value.get_string()]
+        synth_result = export_synthesizer(gs)
+        if synth_result is not None:
+            profile_data["speechServerInfo"] = list(synth_result)
     except ValueError:
         pass
 
@@ -772,7 +547,7 @@ def _export_profile(source: SchemaSource, profile_name: str) -> dict:
             vt = sanitize_gsettings_path(voice_type)
             path = _build_profile_path(profile, f"voices/{vt}")
             gs = source.get_settings(SCHEMAS["voice"], path)
-            voice_data = _export_voice(gs)
+            voice_data = export_voice(gs)
             if voice_data:
                 voices[voice_type] = voice_data
         except ValueError:
@@ -784,7 +559,7 @@ def _export_profile(source: SchemaSource, profile_name: str) -> dict:
     try:
         path = _build_profile_path(profile, "pronunciations")
         gs = source.get_settings(SCHEMAS["pronunciations"], path)
-        pronunciations = _export_pronunciations(gs)
+        pronunciations = export_pronunciations(gs)
         if pronunciations:
             profile_data["pronunciations"] = pronunciations
     except ValueError:
@@ -794,12 +569,13 @@ def _export_profile(source: SchemaSource, profile_name: str) -> dict:
     try:
         path = _build_profile_path(profile, "keybindings")
         gs = source.get_settings(SCHEMAS["keybindings"], path)
-        kb = _export_keybindings(gs)
+        kb = export_keybindings(gs)
         if kb:
             profile_data["keybindings"] = kb
     except ValueError:
         pass
 
+    add_legacy_aliases(profile_data)
     return profile_data
 
 
@@ -812,9 +588,15 @@ def _dconf_list(path: str) -> list[str]:
         return []
 
 
-def _export_apps(source: SchemaSource, profile_name: str, output_dir: str) -> None:
+def _export_apps(
+    source: SchemaSource,
+    profile_name: str,
+    output_dir: str,
+    original_profile_name: str = "",
+) -> None:
     """Export app-specific settings for a profile."""
     profile = sanitize_gsettings_path(profile_name)
+    original_profile_name = original_profile_name or profile_name
     apps_prefix = f"{GSETTINGS_PATH_PREFIX}{profile}/apps/"
     app_entries = _dconf_list(apps_prefix)
     if not app_entries:
@@ -823,26 +605,37 @@ def _export_apps(source: SchemaSource, profile_name: str, output_dir: str) -> No
     app_settings_dir = os.path.join(output_dir, "app-settings")
     os.makedirs(app_settings_dir, exist_ok=True)
 
-    for app_name in app_entries:
+    for sanitized_app in app_entries:
+        metadata_path = _build_app_path(sanitized_app, profile, "metadata")
+        app_display_name, _ = _read_metadata(source, metadata_path)
+        original_app_name = app_display_name or sanitized_app
+
         app_data: dict[str, Any] = {}
 
-        # Mapped settings (speech, typing-echo, caret-navigation, etc.)
         for schema_name, mappings in ALL_MAPPINGS.items():
             try:
-                path = _build_app_path(app_name, profile, schema_name)
+                path = _build_app_path(sanitized_app, profile, schema_name)
                 gs = source.get_settings(SCHEMAS[schema_name], path)
                 app_data.update(gsettings_to_json(gs, mappings))
             except ValueError:
                 pass
 
-        # Voices
+        try:
+            path = _build_app_path(sanitized_app, profile, "speech")
+            gs = source.get_settings(SCHEMAS["speech"], path)
+            synth_result = export_synthesizer(gs)
+            if synth_result is not None:
+                app_data["speechServerInfo"] = list(synth_result)
+        except ValueError:
+            pass
+
         voices: dict[str, Any] = {}
         for voice_type in VOICE_TYPES:
             try:
                 vt = sanitize_gsettings_path(voice_type)
-                path = _build_app_path(app_name, profile, f"voices/{vt}")
+                path = _build_app_path(sanitized_app, profile, f"voices/{vt}")
                 gs = source.get_settings(SCHEMAS["voice"], path)
-                voice_data = _export_voice(gs)
+                voice_data = export_voice(gs)
                 if voice_data:
                     voices[voice_type] = voice_data
             except ValueError:
@@ -850,42 +643,58 @@ def _export_apps(source: SchemaSource, profile_name: str, output_dir: str) -> No
         if voices:
             app_data["voices"] = voices
 
-        # Pronunciations (stored outside "general" in app settings JSON)
         app_pronunciations: dict[str, list[str]] = {}
         try:
-            path = _build_app_path(app_name, profile, "pronunciations")
+            path = _build_app_path(sanitized_app, profile, "pronunciations")
             gs = source.get_settings(SCHEMAS["pronunciations"], path)
-            app_pronunciations = _export_pronunciations(gs)
+            app_pronunciations = export_pronunciations(gs)
         except ValueError:
             pass
 
-        # Keybindings (stored outside "general" in app settings JSON)
         app_kb: dict = {}
         try:
-            path = _build_app_path(app_name, profile, "keybindings")
+            path = _build_app_path(sanitized_app, profile, "keybindings")
             gs = source.get_settings(SCHEMAS["keybindings"], path)
-            app_kb = _export_keybindings(gs)
+            app_kb = export_keybindings(gs)
         except ValueError:
             pass
 
         if not app_data and not app_pronunciations and not app_kb:
             continue
 
-        filepath = os.path.join(app_settings_dir, f"{app_name}.conf")
+        filepath = os.path.join(app_settings_dir, f"{original_app_name}.conf")
         if os.path.isfile(filepath):
             with open(filepath, encoding="utf-8") as f:
                 existing = json.load(f)
         else:
             existing = {"profiles": {}}
+        add_legacy_aliases(app_data)
         profile_entry: dict[str, Any] = {"general": app_data}
         if app_pronunciations:
             profile_entry["pronunciations"] = app_pronunciations
         if app_kb:
             profile_entry["keybindings"] = app_kb
-        existing.setdefault("profiles", {})[profile_name] = profile_entry
+        existing.setdefault("profiles", {})[original_profile_name] = profile_entry
         with open(filepath, "w", encoding="utf-8") as f:
             json.dump(existing, f, indent=4)
-        print(f"  Exported app:{app_name}/profile:{profile_name}")
+        print(f"  Exported app:{original_app_name}/profile:{profile_name}")
+
+
+def _read_metadata(source: SchemaSource, path: str) -> tuple[str, str]:
+    """Read display-name and internal-name from metadata. Returns ("", "") if not set."""
+    display_name = ""
+    internal_name = ""
+    try:
+        gs = source.get_settings(SCHEMAS["metadata"], path)
+        user_value = gs.get_user_value("display-name")
+        if user_value is not None:
+            display_name = user_value.get_string()
+        user_value = gs.get_user_value("internal-name")
+        if user_value is not None:
+            internal_name = user_value.get_string()
+    except ValueError:
+        pass
+    return display_name, internal_name
 
 
 def export_settings(source: SchemaSource, output_dir: str) -> None:
@@ -896,54 +705,325 @@ def export_settings(source: SchemaSource, output_dir: str) -> None:
         return
 
     result: dict[str, Any] = {"profiles": {}}
+    profile_name_map: dict[str, str] = {}
 
-    for profile_name in entries:
-        profile_data = _export_profile(source, profile_name)
+    for sanitized_name in entries:
+        metadata_path = _build_profile_path(sanitized_name, "metadata")
+        display_name, internal_name = _read_metadata(source, metadata_path)
+        profile_key = internal_name or sanitized_name
+        profile_name_map[sanitized_name] = profile_key
+
+        profile_data = _export_profile(source, sanitized_name)
         if profile_data:
-            profile_data["profile"] = [
-                profile_name.replace("-", " ").title(),
-                profile_name,
-            ]
-            result["profiles"][profile_name] = profile_data
-            print(f"  Exported profile:{profile_name}")
+            profile_label = display_name or profile_key.replace("-", " ").title()
+            profile_data["profile"] = [profile_label, profile_key]
+            result["profiles"][profile_key] = profile_data
+            print(f"  Exported profile:{profile_key}")
 
     output_file = os.path.join(output_dir, "user-settings.conf")
     with open(output_file, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=4)
     print(f"Wrote {output_file}")
 
-    for profile_name in entries:
-        _export_apps(source, profile_name, output_dir)
+    for sanitized_name in entries:
+        original_name = profile_name_map.get(sanitized_name, sanitized_name)
+        _export_apps(source, sanitized_name, output_dir, original_name)
 
 
-def compile_schemas(src_dir: str, output_dir: str) -> str:
-    """Generate and compile GSettings schemas. Returns the schema directory."""
-    os.makedirs(output_dir, exist_ok=True)
+_LEGACY_ROOT_KEYS = {"general", "keybindings", "pronunciations", "startingProfile"}
 
-    generator = os.path.join(os.path.dirname(__file__), "generate_gsettings_schemas.py")
-    if not os.path.isfile(generator):
-        print(f"Error: Schema generator not found: {generator}", file=sys.stderr)
-        sys.exit(1)
+_KNOWN_UNMIGRATED_KEYS: set[str] = set()
 
-    output_xml = os.path.join(output_dir, "org.gnome.Orca.gschema.xml")
-    subprocess.check_call([sys.executable, generator, src_dir, output_xml])
-    print(f"Generated schema: {output_xml}")
+_LEGACY_CONSTANT_KEYS: set[str] = set()
 
-    subprocess.check_call(["glib-compile-schemas", output_dir])
-    print(f"Compiled schemas in: {output_dir}")
+_LEGACY_ALIAS_KEYS = {"progressBarVerbosity", "progressBarUpdateInterval"}
 
-    return output_dir
+
+def _build_default_info() -> dict[str, tuple[Any, dict[int, str] | None]]:
+    """Build a map of settings_key → (default_value, enum_map) from all known mappings."""
+    defaults: dict[str, tuple[Any, dict[int, str] | None]] = {}
+    for mappings in ALL_MAPPINGS.values():
+        for m in mappings:
+            defaults[m.json_key] = (m.default, m.enum_map)
+    return defaults
+
+
+_DEFAULT_INFO: dict[str, tuple[Any, dict[int, str] | None]] = {}
+
+
+def _get_default_info() -> dict[str, tuple[Any, dict[int, str] | None]]:
+    """Lazily build and cache the defaults map."""
+    if not _DEFAULT_INFO:
+        _DEFAULT_INFO.update(_build_default_info())
+    return _DEFAULT_INFO
+
+
+def _diff_dicts(
+    original: Any,
+    exported: Any,
+    path: str = "",
+    diffs: list[tuple[str, str, Any]] | None = None,
+) -> list[tuple[str, str, Any]]:
+    """Recursively compare two dicts/values. Returns list of (kind, path, original_value)."""
+    if diffs is None:
+        diffs = []
+    if isinstance(original, dict) and isinstance(exported, dict):
+        all_keys = sorted(set(original) | set(exported))
+        for key in all_keys:
+            child_path = f"{path}.{key}" if path else key
+            if key not in exported:
+                diffs.append(("removed", child_path, original[key]))
+            elif key not in original:
+                diffs.append(("added", child_path, exported[key]))
+            else:
+                _diff_dicts(original[key], exported[key], child_path, diffs)
+    elif original != exported:
+        diffs.append(("changed", path, (original, exported)))
+    return diffs
+
+
+def _is_default_voice_entry(value: Any) -> bool:
+    """Return True if value is a voice dict containing only default values."""
+    if not isinstance(value, dict):
+        return False
+    for key, val in value.items():
+        if key == "established" and val is False:
+            continue
+        return False
+    return True
+
+
+_VOICE_FAMILY_FIELD_NAMES = frozenset(VOICE_FAMILY_FIELDS.keys())
+
+
+def _classify_diff(kind: str, path: str, value: Any) -> str:
+    """Classify a diff item into a known category, or return empty string for unexpected."""
+    parts = path.split(".")
+    if parts[0] in _LEGACY_ROOT_KEYS:
+        return "legacy_root"
+    if parts[-1] in _KNOWN_UNMIGRATED_KEYS:
+        return "unmigrated"
+    if parts[-1] in _LEGACY_CONSTANT_KEYS:
+        return "legacy_constant"
+    if parts[-1] in _LEGACY_ALIAS_KEYS:
+        return "legacy_alias"
+    if parts[-1] in REVERSE_LEGACY_KEY_ALIASES:
+        return "legacy_alias"
+    if (
+        kind == "removed"
+        and ".voices." in path
+        and parts[-1] in _VOICE_FAMILY_FIELD_NAMES
+        and (value is None or value == "")
+    ):
+        return "null_voice_field"
+    if kind == "removed" and ".voices." in path and _is_default_voice_entry(value):
+        return "default_voice"
+    if kind == "removed":
+        leaf = parts[-1]
+        if leaf in ("pronunciations", "keybindings") and isinstance(value, dict) and not value:
+            return "empty_dict"
+        info = _get_default_info()
+        if leaf in info:
+            default, enum_map = info[leaf]
+            if _values_match_default(value, default, enum_map):
+                return "default_value"
+        if leaf in KEYBINDINGS_METADATA_KEYS and _is_hoisted_keybinding_metadata(parts):
+            return "legacy_alias"
+        if _is_empty_synthesizer(leaf, value):
+            return "default_value"
+    return ""
+
+
+def _is_hoisted_keybinding_metadata(parts: list[str]) -> bool:
+    """Return True if this is a keyboardLayout/orcaModifierKeys inside a keybindings dict."""
+    return len(parts) >= 3 and parts[-2] == "keybindings"
+
+
+def _is_empty_synthesizer(key: str, value: Any) -> bool:
+    """Return True if this is an empty speechServerInfo."""
+    return key == "speechServerInfo" and isinstance(value, list) and all(v == "" for v in value)
+
+
+def _values_match_default(value: Any, default: Any, enum_map: dict[int, str] | None = None) -> bool:
+    """Check if a JSON value matches a schema default, handling type coercion and enums."""
+    if value == default:
+        return True
+    if enum_map is not None:
+        nick = resolve_enum_nick(value, enum_map)
+        return nick == default
+    if isinstance(default, bool):
+        return bool(value) == default
+    if isinstance(default, int):
+        try:
+            return int(value) == default
+        except (TypeError, ValueError):
+            return False
+    return False
+
+
+def _diff_json_files(
+    original_path: str, exported_path: str, label: str, verbose: bool = False
+) -> None:
+    """Load two JSON files and print a categorized diff (ignoring key order)."""
+    with open(original_path, encoding="utf-8") as f:
+        original = json.load(f)
+    with open(exported_path, encoding="utf-8") as f:
+        exported = json.load(f)
+    diffs = _diff_dicts(original, exported)
+    if not diffs:
+        if verbose:
+            print(f"* {label}: (no differences)")
+        return
+
+    category_labels = {
+        "legacy_root": "Legacy root-level keys (not part of profiles)",
+        "unmigrated": "Settings not yet migrated to GSettings",
+        "legacy_constant": "Legacy constants (data migrated under a different key)",
+        "legacy_alias": "Legacy key aliases at default value",
+        "null_voice_field": "Null/empty voice family fields (no GSettings representation)",
+        "default_voice": "Voice entries with only default values",
+        "default_value": "Settings at their schema default (normalized away)",
+        "empty_dict": "Empty dicts",
+    }
+
+    categories: dict[str, list[tuple[str, str, Any]]] = {}
+    unexpected: list[tuple[str, str, Any]] = []
+    for kind, path, value in diffs:
+        cat = _classify_diff(kind, path, value)
+        if cat:
+            categories.setdefault(cat, []).append((kind, path, value))
+        else:
+            unexpected.append((kind, path, value))
+
+    if not unexpected and not verbose:
+        return
+
+    print(f"* {label}")
+
+    if verbose and categories:
+        print("  Expected/known losses:")
+        for cat, items in categories.items():
+            desc = category_labels.get(cat, cat)
+            print(f"    {desc} ({len(items)}):")
+            for kind, path, value in items:
+                if kind == "changed":
+                    orig, exp = value
+                    print(
+                        f"      {path}: {_truncate(json.dumps(orig, default=str))} → "
+                        f"{_truncate(json.dumps(exp, default=str))}"
+                    )
+                elif cat == "default_value":
+                    print(f"      {path}: {_format_diff_value(path, value)}")
+                else:
+                    print(f"      {path}: {_truncate(json.dumps(value, default=str))}")
+
+    if unexpected:
+        not_in_dconf = [(p, v) for k, p, v in unexpected if k == "removed"]
+        not_in_json = [(p, v) for k, p, v in unexpected if k == "added"]
+        differs = [(p, v) for k, p, v in unexpected if k == "changed"]
+        if not_in_dconf:
+            print(f"  Not in dconf ({len(not_in_dconf)}):")
+            for path, val in not_in_dconf:
+                print(f"    {path}: {_truncate(json.dumps(val, default=str))}")
+        if not_in_json:
+            print(f"  Not in JSON ({len(not_in_json)}):")
+            for path, val in not_in_json:
+                print(f"    {path}: {_truncate(json.dumps(val, default=str))}")
+        if differs:
+            print(f"  Differs ({len(differs)}):")
+            for path, val in differs:
+                orig, exp = val
+                print(
+                    f"    {path}: {_truncate(json.dumps(orig, default=str))} (JSON) → "
+                    f"{_truncate(json.dumps(exp, default=str))} (dconf)"
+                )
+    elif verbose and not categories:
+        print("  (no differences)")
+
+
+def _format_diff_value(path: str, value: Any) -> str:
+    """Format a diff value, resolving enum nicks when possible."""
+    raw = _truncate(json.dumps(value, default=str))
+    leaf = path.split(".")[-1]
+    info = _get_default_info()
+    if leaf not in info:
+        return raw
+    default, enum_map = info[leaf]
+    if enum_map is None:
+        return raw
+    nick = resolve_enum_nick(value, enum_map)
+    if nick is None:
+        return raw
+    return f"{raw} (= {nick!r}, schema default {default!r})"
+
+
+def _print_file_summary(filepath: str) -> None:
+    """Print a summary of a JSON file's contents."""
+    try:
+        with open(filepath, encoding="utf-8") as f:
+            data = json.load(f)
+        print(f"  Contents: {json.dumps(data, indent=2)}")
+    except (OSError, json.JSONDecodeError) as err:
+        print(f"  (could not read: {err})")
+
+
+def _truncate(text: str, max_length: int = 120) -> str:
+    """Truncate a string with ellipsis if it exceeds max_length."""
+    if len(text) <= max_length:
+        return text
+    return text[: max_length - 3] + "..."
+
+
+def diff_settings(original_dir: str, exported_dir: str, verbose: bool = False) -> None:
+    """Diff two settings directories (original JSON vs exported JSON)."""
+
+    original_conf = os.path.join(original_dir, "user-settings.conf")
+    exported_conf = os.path.join(exported_dir, "user-settings.conf")
+    if os.path.isfile(original_conf) and os.path.isfile(exported_conf):
+        _diff_json_files(original_conf, exported_conf, "user-settings.conf", verbose)
+
+    original_app_dir = os.path.join(original_dir, "app-settings")
+    exported_app_dir = os.path.join(exported_dir, "app-settings")
+    if os.path.isdir(original_app_dir):
+        original_apps = {f for f in os.listdir(original_app_dir) if f.endswith(".conf")}
+        exported_apps = set()
+        if os.path.isdir(exported_app_dir):
+            exported_apps = {f for f in os.listdir(exported_app_dir) if f.endswith(".conf")}
+
+        for app in sorted(original_apps | exported_apps):
+            orig = os.path.join(original_app_dir, app)
+            exp = os.path.join(exported_app_dir, app)
+            if not os.path.isfile(orig):
+                print(f"* app-settings/{app}: only in dconf")
+                _print_file_summary(exp)
+            elif not os.path.isfile(exp):
+                print(f"* app-settings/{app}: only in JSON")
+                _print_file_summary(orig)
+            else:
+                _diff_json_files(orig, exp, f"app-settings/{app}", verbose)
+
+
+def roundtrip(settings_dir: str, output_dir: str, verbose: bool = False) -> None:
+    """Import JSON → dconf, export dconf → JSON, diff original vs exported."""
+
+    source = SchemaSource()
+    subprocess.run(["dconf", "reset", "-f", "/org/gnome/orca/"], check=True)
+    with redirect_stdout(io.StringIO()):
+        import_settings(settings_dir, source)
+        Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
+
+        if os.path.isdir(output_dir):
+            shutil.rmtree(output_dir)
+        os.makedirs(output_dir, exist_ok=True)
+        export_settings(source, output_dir)
+
+    diff_settings(settings_dir, output_dir, verbose)
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(
-        description="Orca GSettings tool: compile schemas, import/export settings"
-    )
+    """CLI entry point for import, export, roundtrip, and diff commands."""
+    parser = argparse.ArgumentParser(description="Orca GSettings tool: import/export settings")
     subparsers = parser.add_subparsers(dest="command", required=True)
-
-    cs = subparsers.add_parser("compile-schemas", help="Generate and compile GSettings schemas")
-    cs.add_argument("output_dir", help="Output directory for compiled schemas")
-    cs.add_argument("--src-dir", default="src", help="Path to src directory (default: src)")
 
     imp = subparsers.add_parser("import", help="Import JSON settings into GSettings/dconf")
     imp.add_argument(
@@ -951,42 +1031,61 @@ def main() -> None:
         help="Directory containing user-settings.conf (and optionally app-settings/)",
     )
     imp.add_argument(
-        "--schema-dir",
-        default=None,
-        help="Directory with compiled schemas (default: system-installed)",
-    )
-    imp.add_argument(
         "--dry-run", action="store_true", help="Show what would be written without changes"
     )
 
     exp = subparsers.add_parser("export", help="Export GSettings/dconf settings to JSON")
     exp.add_argument("output_dir", help="Directory to write exported settings")
-    exp.add_argument(
-        "--schema-dir",
-        default=None,
-        help="Directory with compiled schemas (default: system-installed)",
+
+    rt = subparsers.add_parser("roundtrip", help="Import JSON → dconf → export JSON, then diff")
+    rt.add_argument(
+        "settings_dir",
+        help="Directory containing user-settings.conf (e.g. ~/.local/share/orca)",
     )
+    rt.add_argument("output_dir", help="Directory for exported JSON (e.g. /tmp/orca-roundtrip)")
+    rt.add_argument("-v", "--verbose", action="store_true", help="Show expected/known losses too")
+
+    di = subparsers.add_parser("diff", help="Export dconf → JSON, then diff against original JSON")
+    di.add_argument(
+        "settings_dir",
+        help="Directory containing original user-settings.conf (e.g. ~/.local/share/orca)",
+    )
+    di.add_argument("output_dir", help="Directory for exported JSON (e.g. /tmp/orca-diff)")
+    di.add_argument("-v", "--verbose", action="store_true", help="Show expected/known losses too")
 
     args = parser.parse_args()
 
-    if args.command == "compile-schemas":
-        compile_schemas(args.src_dir, args.output_dir)
-
-    elif args.command == "import":
-        source = SchemaSource(args.schema_dir)
+    if args.command == "import":
+        source = SchemaSource()
         print(f"Importing from {args.settings_dir}...")
         import_settings(args.settings_dir, source, dry_run=args.dry_run)
         if args.dry_run:
             print("(dry run - no changes made)")
         else:
-            Gio.Settings.sync()
+            Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
             print("Import complete.")
 
     elif args.command == "export":
-        source = SchemaSource(args.schema_dir)
+        source = SchemaSource()
         os.makedirs(args.output_dir, exist_ok=True)
         print(f"Exporting to {args.output_dir}...")
         export_settings(source, args.output_dir)
+
+    elif args.command == "roundtrip":
+        roundtrip(args.settings_dir, args.output_dir, args.verbose)
+
+    elif args.command == "diff":
+        source = SchemaSource()
+        if os.path.isdir(args.output_dir):
+            shutil.rmtree(args.output_dir)
+        os.makedirs(args.output_dir, exist_ok=True)
+        if args.verbose:
+            print(f"Exporting current dconf to {args.output_dir}...")
+            export_settings(source, args.output_dir)
+        else:
+            with redirect_stdout(io.StringIO()):
+                export_settings(source, args.output_dir)
+        diff_settings(args.settings_dir, args.output_dir, args.verbose)
 
 
 if __name__ == "__main__":

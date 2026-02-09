@@ -22,6 +22,8 @@ schema_sources = files(
   '../src/orca/pronunciation_dictionary_manager.py',
   '../src/orca/command_manager.py',
   '../src/orca/text_attribute_manager.py',
+  '../src/orca/profile_manager.py',
+  '../src/orca/orca_modifier_manager.py',
 )
 
 generated_schema = custom_target(

@@ -1020,6 +1020,7 @@ class DocumentPresenter:
         gtype="b",
         default=True,
         summary="Native navigation triggers focus mode",
+        settings_key="nativeNavTriggersFocusMode",
     )
     @dbus_service.getter
     def get_native_nav_triggers_focus_mode(self) -> bool:
@@ -1045,6 +1046,7 @@ class DocumentPresenter:
         gtype="b",
         default=True,
         summary="Auto-detect sticky focus mode for web apps",
+        settings_key="autoStickyFocusModeForWebApps",
     )
     @dbus_service.getter
     def get_auto_sticky_focus_mode_for_web_apps(self) -> bool:
@@ -1070,6 +1072,7 @@ class DocumentPresenter:
         gtype="b",
         default=True,
         summary="Perform say all when document loads",
+        settings_key="sayAllOnLoad",
     )
     @dbus_service.getter
     def get_say_all_on_load(self) -> bool:
@@ -1095,6 +1098,7 @@ class DocumentPresenter:
         gtype="b",
         default=True,
         summary="Present page summary when document loads",
+        settings_key="pageSummaryOnLoad",
     )
     @dbus_service.getter
     def get_page_summary_on_load(self) -> bool:
@@ -1120,6 +1124,7 @@ class DocumentPresenter:
         genum="org.gnome.Orca.FindResultsVerbosity",
         default="all",
         summary="Find results verbosity (none, if-line-changed, all)",
+        settings_key="findResultsVerbosity",
     )
     @dbus_service.getter
     def get_speak_find_results(self) -> bool:
@@ -1169,6 +1174,7 @@ class DocumentPresenter:
         gtype="i",
         default=4,
         summary="Minimum length for find results to be spoken",
+        settings_key="findResultsMinimumLength",
     )
     @dbus_service.getter
     def get_find_results_minimum_length(self) -> int:
@@ -1194,6 +1200,7 @@ class DocumentPresenter:
         gtype="b",
         default=True,
         summary="Use document layout mode",
+        settings_key="layoutMode",
     )
     @dbus_service.getter
     def get_layout_mode(self) -> bool:

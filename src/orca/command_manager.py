@@ -30,6 +30,7 @@ from __future__ import annotations
 
 
 import time
+from enum import Enum
 from typing import TYPE_CHECKING, Any, Callable
 
 import gi
@@ -1074,6 +1075,22 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         return keybindings.get_modifier_names(kb.modifiers) + kb.keysymstring + click_count_str
 
 
+@gsettings_registry.get_registry().gsettings_enum(
+    "org.gnome.Orca.KeyboardLayout",
+    values={"desktop": 1, "laptop": 2},
+)
+class KeyboardLayout(Enum):
+    """Keyboard layout enumeration."""
+
+    DESKTOP = settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+    LAPTOP = settings.GENERAL_KEYBOARD_LAYOUT_LAPTOP
+
+    def get_string_name(self) -> str:
+        """Returns the lowercase string name for this enum value."""
+
+        return self.name.lower()
+
+
 # pylint: disable-next=too-many-public-methods
 @gsettings_registry.get_registry().gsettings_schema(
     "org.gnome.Orca.Keybindings",
@@ -1104,6 +1121,14 @@ class CommandManager:
 
         return self._is_desktop
 
+    @gsettings_registry.get_registry().gsetting(
+        key="keyboard-layout",
+        schema="keybindings",
+        genum="org.gnome.Orca.KeyboardLayout",
+        default="desktop",
+        summary="Keyboard layout (desktop, laptop)",
+        settings_key="keyboardLayout",
+    )
     @dbus_service.getter
     def get_keyboard_layout_is_desktop(self) -> bool:
         """Returns True if the current keyboard layout is desktop."""

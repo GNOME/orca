@@ -20,17 +20,20 @@
 
 """Shared GSettings infrastructure for Orca modules."""
 
+# pylint: disable=too-many-arguments,too-many-positional-arguments
+# pylint: disable=too-many-locals,too-many-instance-attributes
+
 from __future__ import annotations
 
 import json
 import os
-import re
 from dataclasses import dataclass
 from typing import Any, Callable
 
 from gi.repository import Gio
 
 from . import debug
+from . import gsettings_migrator
 
 GSETTINGS_PATH_PREFIX = "/org/gnome/orca/"
 
@@ -46,17 +49,10 @@ class SettingDescriptor:
     getter: Callable[[], Any] | None = None
     voice_type: str | None = None
     genum: str | None = None
+    settings_key: str | None = None
 
 
-@dataclass
-class SettingsMapping:
-    """Describes a mapping between a JSON settings key and a GSettings key."""
-
-    json_key: str
-    gs_key: str
-    gtype: str  # "b", "s", "i", "d"
-    default: Any
-    enum_map: dict[int, str] | None = None
+SettingsMapping = gsettings_migrator.SettingsMapping
 
 
 class GSettingsRegistry:
@@ -65,19 +61,39 @@ class GSettingsRegistry:
     def __init__(self) -> None:
         self._app_name: str | None = None
         self._profile: str = "default"
-        self._descriptors: dict[str, SettingDescriptor] = {}
+        self._descriptors: dict[tuple[str, str], SettingDescriptor] = {}
         self._mappings: dict[str, list[SettingsMapping]] = {}
         self._enums: dict[str, dict[str, int]] = {}
         self._schemas: dict[str, str] = {}
+        self._extras_migrated: set[str] = set()
 
     @staticmethod
     def sanitize_gsettings_path(name: str) -> str:
         """Sanitize a name for use in a GSettings path."""
 
-        sanitized = name.lower()
-        sanitized = re.sub(r"[^a-z0-9-]", "-", sanitized)
-        sanitized = re.sub(r"-+", "-", sanitized)
-        return sanitized.strip("-")
+        return gsettings_migrator.sanitize_gsettings_path(name)
+
+    def _get_gs(
+        self, schema_name: str, profile: str, sub_path: str = "", app_name: str = ""
+    ) -> Gio.Settings | None:
+        """Creates Gio.Settings for a sub-schema at the correct dconf path."""
+
+        schema_id = self._schemas.get(schema_name)
+        if schema_id is None:
+            return None
+        source = Gio.SettingsSchemaSource.get_default()  # pylint: disable=no-value-for-parameter
+        if source is None:
+            return None
+        if source.lookup(schema_id, True) is None:
+            return None
+        profile = gsettings_migrator.sanitize_gsettings_path(profile)
+        suffix = sub_path if sub_path else schema_name
+        if app_name:
+            app = gsettings_migrator.sanitize_gsettings_path(app_name)
+            path = f"{GSETTINGS_PATH_PREFIX}{profile}/apps/{app}/{suffix}/"
+        else:
+            path = f"{GSETTINGS_PATH_PREFIX}{profile}/{suffix}/"
+        return Gio.Settings.new_with_path(schema_id, path)
 
     def set_active_app(self, app_name: str | None) -> None:
         """Sets the active app name for GSettings lookups."""
@@ -108,11 +124,12 @@ class GSettingsRegistry:
         gtype: str = "",
         genum: str | None = None,
         voice_type: str | None = None,
+        settings_key: str | None = None,
     ) -> Callable[[Callable], Callable]:
         """Decorator marking a method's associated GSettings key."""
 
         def decorator(func: Callable) -> Callable:
-            self._descriptors[key] = SettingDescriptor(
+            self._descriptors[(schema, key)] = SettingDescriptor(
                 gsettings_key=key,
                 schema=schema,
                 gtype=gtype,
@@ -120,6 +137,7 @@ class GSettingsRegistry:
                 getter=None,
                 voice_type=voice_type,
                 genum=genum,
+                settings_key=settings_key,
             )
             func.gsetting_key = key  # type: ignore[attr-defined]
             return func
@@ -159,60 +177,43 @@ class GSettingsRegistry:
 
         self._mappings[schema_name] = mappings
 
+    def _build_mappings_from_descriptors(self, schema_name: str) -> list[SettingsMapping]:
+        """Builds SettingsMapping list from @gsetting descriptors for a schema."""
+
+        mappings: list[SettingsMapping] = []
+        for (schema, _key), desc in self._descriptors.items():
+            if schema != schema_name or desc.settings_key is None:
+                continue
+            enum_map: dict[int, str] | None = None
+            if desc.genum and desc.genum in self._enums:
+                enum_map = {v: k for k, v in self._enums[desc.genum].items()}
+            mappings.append(
+                SettingsMapping(
+                    desc.settings_key, desc.gsettings_key, desc.gtype, desc.default, enum_map
+                )
+            )
+        return mappings
+
     def _get_settings_mappings(self, schema_name: str) -> list[SettingsMapping]:
         """Returns the registered mappings for a schema name."""
 
-        return self._mappings.get(schema_name, [])
+        if schema_name in self._mappings:
+            return self._mappings[schema_name]
+        return self._build_mappings_from_descriptors(schema_name)
 
     def _json_to_gsettings(
         self,
         json_dict: dict,
         gs: Gio.Settings,
         schema_name: str,
+        skip_defaults: bool = True,
     ) -> bool:
         """Writes JSON settings to a Gio.Settings object. Returns True if any value was written."""
 
         mappings = self._get_settings_mappings(schema_name)
         if not mappings:
             return False
-
-        wrote_any = False
-        for m in mappings:
-            if m.json_key not in json_dict:
-                continue
-
-            value = json_dict[m.json_key]
-
-            if m.enum_map is not None:
-                # int in JSON → string in GSettings
-                if value == m.default:
-                    continue
-                gs_value = m.enum_map.get(value)
-                if gs_value is not None:
-                    gs.set_string(m.gs_key, gs_value)
-                    wrote_any = True
-            elif m.gtype == "b":
-                if value == m.default:
-                    continue
-                gs.set_boolean(m.gs_key, value)
-                wrote_any = True
-            elif m.gtype == "s":
-                if value == m.default:
-                    continue
-                gs.set_string(m.gs_key, value)
-                wrote_any = True
-            elif m.gtype == "i":
-                if int(value) == m.default:
-                    continue
-                gs.set_int(m.gs_key, int(value))
-                wrote_any = True
-            elif m.gtype == "d":
-                if float(value) == m.default:
-                    continue
-                gs.set_double(m.gs_key, float(value))
-                wrote_any = True
-
-        return wrote_any
+        return gsettings_migrator.json_to_gsettings(json_dict, gs, mappings, skip_defaults)
 
     def _gsettings_to_json(
         self,
@@ -224,87 +225,260 @@ class GSettingsRegistry:
         mappings = self._get_settings_mappings(schema_name)
         if not mappings:
             return {}
+        return gsettings_migrator.gsettings_to_json(gs, mappings)
 
-        result: dict[str, Any] = {}
-        for m in mappings:
-            user_value = gs.get_user_value(m.gs_key)
-            if user_value is None:
+    def _is_migration_done(self) -> bool:
+        """Returns True if JSON-to-GSettings migration has already been completed."""
+
+        for name, schema_id in self._schemas.items():
+            handle = GSettingsSchemaHandle(schema_id, name)
+            if handle.is_current_version():
+                msg = f"GSETTINGS REGISTRY: Migration already done (found version on '{name}')."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
+
+        count = len(self._schemas)
+        msg = f"GSETTINGS REGISTRY: No migration version found. {count} schema(s) to migrate."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return False
+
+    def _stamp_migration_done(self) -> None:
+        """Stamps version on all schemas to mark migration as complete."""
+
+        stamped = 0
+        for name, schema_id in self._schemas.items():
+            handle = GSettingsSchemaHandle(schema_id, name)
+            if handle.set_version():
+                stamped += 1
+
+        msg = f"GSETTINGS REGISTRY: Stamped migration version on {stamped} schema(s)."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    def migrate_all(self, prefs_dir: str, profiles: list) -> bool:
+        """Migrates all registered schemas from JSON to GSettings."""
+
+        if self._is_migration_done():
+            return False
+
+        migrated_any = False
+        for name, schema_id in self._schemas.items():
+            handle = GSettingsSchemaHandle(schema_id, name)
+            if self.migrate_schema(handle, name, prefs_dir, profiles):
+                migrated_any = True
+
+        if migrated_any:
+            self._migrate_display_names(prefs_dir, profiles)
+        self._stamp_migration_done()
+        return migrated_any
+
+    def _migrate_display_names(self, prefs_dir: str, profiles: list) -> None:
+        """Writes display-name and internal-name metadata for all profiles and apps."""
+
+        metadata_id = self._schemas.get("metadata")
+        if metadata_id is None:
+            return
+
+        metadata_handle = GSettingsSchemaHandle(metadata_id, "metadata")
+
+        stamped_profiles: set[str] = set()
+        for label, profile_name in profiles:
+            gs = metadata_handle.get_for_profile(profile_name)
+            if gs is not None:
+                gs.set_string("display-name", label)
+                gs.set_string("internal-name", profile_name)
+                stamped_profiles.add(profile_name)
+
+        app_dir = os.path.join(prefs_dir, "app-settings")
+        if not os.path.isdir(app_dir):
+            return
+
+        for filename in os.listdir(app_dir):
+            if not filename.endswith(".conf"):
+                continue
+            app_name = filename[:-5]
+            filepath = os.path.join(app_dir, filename)
+            try:
+                with open(filepath, encoding="utf-8") as f:
+                    app_prefs = json.load(f)
+            except (OSError, json.JSONDecodeError):
                 continue
 
-            if m.enum_map is not None:
-                # string in GSettings → int in JSON
-                gs_str = user_value.get_string()
-                reverse_map = {v: k for k, v in m.enum_map.items()}
-                json_value = reverse_map.get(gs_str)
-                if json_value is not None:
-                    result[m.json_key] = json_value
-            elif m.gtype == "b":
-                result[m.json_key] = user_value.get_boolean()
-            elif m.gtype == "s":
-                result[m.json_key] = user_value.get_string()
-            elif m.gtype == "i":
-                result[m.json_key] = user_value.get_int32()
-            elif m.gtype == "d":
-                result[m.json_key] = user_value.get_double()
+            for profile_name in app_prefs.get("profiles", {}):
+                if profile_name not in stamped_profiles:
+                    gs = metadata_handle.get_for_profile(profile_name)
+                    if gs is not None:
+                        gs.set_string("display-name", profile_name)
+                        gs.set_string("internal-name", profile_name)
+                        stamped_profiles.add(profile_name)
 
-        return result
+                gs = metadata_handle.get_for_app(app_name, profile_name)
+                if gs is not None:
+                    gs.set_string("display-name", app_name)
+                    gs.set_string("internal-name", profile_name)
+
+    def save_to_gsettings(
+        self, handle: GSettingsSchemaHandle, schema_name: str, values: dict[str, Any]
+    ) -> None:
+        """Persists settings values to GSettings for the active profile."""
+
+        gs = handle.get_for_profile(self._profile)
+        if gs is None:
+            return
+        self._json_to_gsettings(values, gs, schema_name)
+
+    def save_all_to_gsettings(
+        self,
+        profile_name: str,
+        general: dict,
+        pronunciations: dict,
+        keybindings: dict,
+        app_name: str = "",
+    ) -> None:
+        """Writes all settings to dconf for the given profile (and optional app)."""
+
+        general = dict(general)
+        gsettings_migrator.apply_legacy_aliases(general)
+
+        profile = gsettings_migrator.sanitize_gsettings_path(profile_name)
+        skip_defaults = not app_name
+
+        for schema_name in self._schemas:
+            if schema_name in ("voice", "pronunciations", "metadata"):
+                continue
+            gs = self._get_gs(schema_name, profile, app_name=app_name)
+            if gs is not None:
+                mappings = self._get_settings_mappings(schema_name)
+                self._reset_mapped_keys(gs, mappings)
+                self._json_to_gsettings(general, gs, schema_name, skip_defaults)
+
+        self._migrate_voices(general, profile, skip_defaults, app_name)
+        self._migrate_synthesizer(general, profile, app_name)
+
+        prefs_for_dicts = dict(general)
+        if pronunciations:
+            prefs_for_dicts["pronunciations"] = dict(pronunciations)
+            self._migrate_dict_schema(
+                "pronunciations",
+                prefs_for_dicts,
+                profile,
+                gsettings_migrator.import_pronunciations,
+                app_name,
+            )
+        if keybindings:
+            prefs_for_dicts["keybindings"] = dict(keybindings)
+            self._migrate_dict_schema(
+                "keybindings",
+                prefs_for_dicts,
+                profile,
+                gsettings_migrator.import_keybindings,
+                app_name,
+            )
+
+        self._write_metadata(general, profile, app_name)
+        Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
+
+    def _write_metadata(self, general: dict, profile: str, app_name: str) -> None:
+        """Writes display-name and internal-name to the metadata schema."""
+
+        metadata_gs = self._get_gs("metadata", profile, app_name=app_name)
+        if metadata_gs is None:
+            return
+
+        if app_name:
+            metadata_gs.set_string("display-name", app_name)
+            metadata_gs.set_string("internal-name", profile)
+        else:
+            profile_tuple = general.get("profile")
+            if isinstance(profile_tuple, list) and len(profile_tuple) >= 2:
+                metadata_gs.set_string("display-name", profile_tuple[0])
+                metadata_gs.set_string("internal-name", profile_tuple[1])
+
+    def sync_missing_profiles(self, prefs_dir: str, profiles: list) -> None:
+        """Syncs profiles that exist in JSON but have no dconf entries."""
+
+        settings_file = os.path.join(prefs_dir, "user-settings.conf")
+        try:
+            with open(settings_file, encoding="utf-8") as f:
+                prefs = json.load(f)
+        except (OSError, json.JSONDecodeError):
+            return
+
+        for _label, profile_name in profiles:
+            profile = gsettings_migrator.sanitize_gsettings_path(profile_name)
+            metadata_gs = self._get_gs("metadata", profile)
+            if metadata_gs is None:
+                continue
+            if metadata_gs.get_user_value("display-name") is not None:
+                continue
+
+            profile_data = prefs.get("profiles", {}).get(profile_name, {})
+            if not profile_data:
+                continue
+
+            msg = f"GSETTINGS REGISTRY: Syncing missing profile '{profile_name}' to dconf."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            pronunciations = profile_data.get("pronunciations", {})
+            keybindings = profile_data.get("keybindings", {})
+            self.save_all_to_gsettings(profile_name, profile_data, pronunciations, keybindings)
+
+    def reset_profile(self, profile_name: str) -> None:
+        """Resets all dconf keys for a profile."""
+
+        profile = gsettings_migrator.sanitize_gsettings_path(profile_name)
+        for schema_name in self._schemas:
+            if schema_name == "voice":
+                for voice_type in gsettings_migrator.VOICE_TYPES:
+                    vt = gsettings_migrator.sanitize_gsettings_path(voice_type)
+                    gs = self._get_gs("voice", profile, f"voices/{vt}")
+                    if gs is not None:
+                        self._reset_all_keys(gs)
+                continue
+            gs = self._get_gs(schema_name, profile)
+            if gs is not None:
+                self._reset_all_keys(gs)
+        Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
 
     @staticmethod
-    def _get_settings_manager():
-        """Returns the settings manager singleton. Lazy import to avoid circular imports.
+    def _reset_all_keys(gs: Gio.Settings) -> None:
+        """Resets all user-set keys on a Gio.Settings instance."""
 
-        This is only needed for migration from JSON to GSettings."""
+        for key in gs.list_keys():
+            if gs.get_user_value(key) is not None:
+                gs.reset(key)
 
-        from . import settings_manager  # pylint: disable=import-outside-toplevel
+    @staticmethod
+    def _reset_mapped_keys(gs: Gio.Settings, mappings: list[SettingsMapping]) -> None:
+        """Resets all user-set mapped keys so _json_to_gsettings writes a clean slate."""
 
-        return settings_manager.get_manager()
+        for m in mappings:
+            if gs.get_user_value(m.gs_key) is not None:
+                gs.reset(m.gs_key)
 
-    # pylint: disable-next=too-many-locals
     def migrate_schema(
         self,
         handle: GSettingsSchemaHandle,
         schema_name: str,
-        owner_name: str = "",
+        prefs_dir: str,
+        profiles: list,
     ) -> bool:
-        """Migrates JSON settings to GSettings for all profiles and apps.
-
-        Args:
-            handle:      The GSettingsSchemaHandle for the schema being migrated.
-            schema_name: The name used with register_settings_mappings() for this schema.
-            owner_name:  Module name for debug messages.
-        """
-
-        if handle.is_current_version():
-            msg = f"{owner_name}: GSettings already current."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if not handle.has_key("version"):
-            msg = f"{owner_name}: Schema missing version key."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
+        """Migrates JSON settings to GSettings for all profiles and apps."""
 
         mappings = self._get_settings_mappings(schema_name)
         if not mappings:
-            msg = f"{owner_name}: No mappings registered for '{schema_name}'."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        msg = f"{owner_name}: Migrating settings to GSettings."
+        msg = f"GSETTINGS REGISTRY: Migrating '{schema_name}' settings to GSettings."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        manager = self._get_settings_manager()
         migrated_any = False
 
-        for _label, profile_name in manager.available_profiles():
-            if self._migrate_profile(handle, schema_name, profile_name, owner_name):
+        for _label, profile_name in profiles:
+            if self._migrate_profile(handle, schema_name, profile_name, prefs_dir):
                 migrated_any = True
 
-        if self._migrate_all_apps(handle, schema_name, owner_name):
+        if self._migrate_all_apps(handle, schema_name, prefs_dir):
             migrated_any = True
 
-        msg = f"{owner_name}: Migration complete."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
         return migrated_any
 
     def _migrate_profile(
@@ -312,7 +486,7 @@ class GSettingsRegistry:
         handle: GSettingsSchemaHandle,
         schema_name: str,
         profile_name: str,
-        owner_name: str,
+        prefs_dir: str,
     ) -> bool:
         """Migrates a single profile's settings from JSON to GSettings."""
 
@@ -320,8 +494,7 @@ class GSettingsRegistry:
         if gs is None:
             return False
 
-        manager = self._get_settings_manager()
-        settings_file = manager.get_settings_file_path()
+        settings_file = os.path.join(prefs_dir, "user-settings.conf")
         try:
             with open(settings_file, encoding="utf-8") as f:
                 prefs = json.load(f)
@@ -329,23 +502,127 @@ class GSettingsRegistry:
         except (OSError, json.JSONDecodeError):
             return False
 
-        wrote = self._json_to_gsettings(profile_prefs, gs, schema_name)
+        gsettings_migrator.apply_legacy_aliases(profile_prefs)
+        gsettings_migrator.hoist_keybindings_metadata(profile_prefs)
+
+        skip_defaults = True
+
+        wrote = self._json_to_gsettings(profile_prefs, gs, schema_name, skip_defaults)
         if wrote:
-            handle.stamp_version(gs)
-            msg = f"{owner_name}: Migrated profile:{profile_name}"
+            msg = f"GSETTINGS REGISTRY: Migrated {schema_name} profile:{profile_name}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-        return wrote
+
+        wrote_extra = self._migrate_profile_extras(profile_name, profile_prefs, skip_defaults)
+
+        return wrote or wrote_extra
+
+    def _migrate_profile_extras(
+        self,
+        profile_name: str,
+        profile_prefs: dict,
+        skip_defaults: bool,
+    ) -> bool:
+        """Migrates voices, synthesizer, pronunciations, and keybindings for a profile."""
+
+        key = f"profile:{profile_name}"
+        if key in self._extras_migrated:
+            return False
+        self._extras_migrated.add(key)
+
+        profile = gsettings_migrator.sanitize_gsettings_path(profile_name)
+        wrote_any = False
+
+        if self._migrate_voices(profile_prefs, profile, skip_defaults):
+            wrote_any = True
+        if self._migrate_synthesizer(profile_prefs, profile):
+            wrote_any = True
+        if self._migrate_dict_schema(
+            "pronunciations",
+            profile_prefs,
+            profile,
+            gsettings_migrator.import_pronunciations,
+        ):
+            wrote_any = True
+        if self._migrate_dict_schema(
+            "keybindings",
+            profile_prefs,
+            profile,
+            gsettings_migrator.import_keybindings,
+        ):
+            wrote_any = True
+        return wrote_any
+
+    def _migrate_voices(
+        self,
+        profile_prefs: dict,
+        profile: str,
+        skip_defaults: bool,
+        app_name: str = "",
+    ) -> bool:
+        """Migrates voice settings for all voice types."""
+
+        if "voice" not in self._schemas:
+            return False
+        voices = profile_prefs.get("voices", {})
+        wrote_any = False
+        for voice_type in gsettings_migrator.VOICE_TYPES:
+            voice_data = voices.get(voice_type, {})
+            if not voice_data:
+                continue
+            vt = gsettings_migrator.sanitize_gsettings_path(voice_type)
+            voice_gs = self._get_gs("voice", profile, f"voices/{vt}", app_name)
+            if voice_gs is None:
+                continue
+            if gsettings_migrator.import_voice(voice_gs, voice_data, skip_defaults):
+                wrote_any = True
+        return wrote_any
+
+    def _migrate_synthesizer(
+        self,
+        profile_prefs: dict,
+        profile: str,
+        app_name: str = "",
+    ) -> bool:
+        """Migrates synthesizer setting."""
+
+        if "speech" not in self._schemas:
+            return False
+        gs = self._get_gs("speech", profile, "speech", app_name)
+        if gs is None:
+            return False
+        if not gsettings_migrator.import_synthesizer(gs, profile_prefs):
+            return False
+        return True
+
+    def _migrate_dict_schema(
+        self,
+        schema_name: str,
+        prefs: dict,
+        profile: str,
+        importer: Callable[[Gio.Settings, dict], bool],
+        app_name: str = "",
+    ) -> bool:
+        """Migrates a dict-based schema (pronunciations or keybindings)."""
+
+        data = prefs.get(schema_name, {})
+        if not data or schema_name not in self._schemas:
+            return False
+        gs = self._get_gs(schema_name, profile, schema_name, app_name)
+        if gs is None:
+            return False
+        if not importer(gs, data):
+            return False
+        return True
 
     def _migrate_all_apps(
         self,
         handle: GSettingsSchemaHandle,
         schema_name: str,
-        owner_name: str,
+        prefs_dir: str,
     ) -> bool:
         """Migrates app-specific settings from JSON to GSettings."""
 
-        manager = self._get_settings_manager()
-        app_settings_dir = os.path.join(manager.get_prefs_dir(), "app-settings")
+        app_settings_dir = os.path.join(prefs_dir, "app-settings")
         if not os.path.isdir(app_settings_dir):
             return False
 
@@ -354,7 +631,7 @@ class GSettingsRegistry:
             if not filename.endswith(".conf"):
                 continue
             app_name = filename[:-5]
-            if self._migrate_app(handle, schema_name, app_name, app_settings_dir, owner_name):
+            if self._migrate_app(handle, schema_name, app_name, app_settings_dir):
                 migrated_any = True
         return migrated_any
 
@@ -364,7 +641,6 @@ class GSettingsRegistry:
         schema_name: str,
         app_name: str,
         app_settings_dir: str,
-        owner_name: str,
     ) -> bool:
         """Migrates a single app's settings from JSON to GSettings for all profiles."""
 
@@ -378,18 +654,72 @@ class GSettingsRegistry:
         migrated_any = False
         for profile_name, profile_data in prefs.get("profiles", {}).items():
             general = profile_data.get("general", {})
-            if not general:
+            gsettings_migrator.apply_legacy_aliases(general)
+            pronunciations = profile_data.get("pronunciations", {})
+            app_keybindings = profile_data.get("keybindings", {})
+            if not general and not pronunciations and not app_keybindings:
                 continue
+
             gs = handle.get_for_app(app_name, profile_name)
             if gs is None:
                 continue
-            wrote = self._json_to_gsettings(general, gs, schema_name)
+            wrote = self._json_to_gsettings(general, gs, schema_name, skip_defaults=False)
             if wrote:
-                handle.stamp_version(gs)
-                msg = f"{owner_name}: Migrated app:{app_name}/profile:{profile_name}"
+                msg = (
+                    f"GSETTINGS REGISTRY: Migrated {schema_name}"
+                    f" app:{app_name}/profile:{profile_name}"
+                )
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 migrated_any = True
+
+            if self._migrate_app_extras(
+                app_name, profile_name, general, pronunciations, app_keybindings
+            ):
+                migrated_any = True
+
         return migrated_any
+
+    def _migrate_app_extras(
+        self,
+        app_name: str,
+        profile_name: str,
+        general: dict,
+        pronunciations: dict,
+        keybindings_data: dict,
+    ) -> bool:
+        """Migrates voices, pronunciations, and keybindings for an app override."""
+
+        key = f"app:{app_name}:{profile_name}"
+        if key in self._extras_migrated:
+            return False
+        self._extras_migrated.add(key)
+
+        app_prefs = dict(general)
+        app_prefs["pronunciations"] = pronunciations
+        app_prefs["keybindings"] = keybindings_data
+
+        wrote_any = False
+        if self._migrate_voices(general, profile_name, False, app_name):
+            wrote_any = True
+        if self._migrate_synthesizer(general, profile_name, app_name):
+            wrote_any = True
+        if self._migrate_dict_schema(
+            "pronunciations",
+            app_prefs,
+            profile_name,
+            gsettings_migrator.import_pronunciations,
+            app_name,
+        ):
+            wrote_any = True
+        if self._migrate_dict_schema(
+            "keybindings",
+            app_prefs,
+            profile_name,
+            gsettings_migrator.import_keybindings,
+            app_name,
+        ):
+            wrote_any = True
+        return wrote_any
 
 
 class GSettingsSchemaHandle:
@@ -399,27 +729,16 @@ class GSettingsSchemaHandle:
         self,
         schema_id: str,
         path_suffix: str,
-        owner_name: str = "",
         version: int = 1,
     ) -> None:
-        """Initialize a GSettings schema handle.
-
-        Args:
-            schema_id:   Relocatable schema ID (e.g., "org.gnome.Orca.TypingEcho").
-            path_suffix: Suffix after the profile segment (e.g., "typing-echo").
-            owner_name:  Module name for debug messages.
-            version:     Schema version number for version tracking.
-        """
         self._schema_id = schema_id
         self._path_suffix = path_suffix
-        self._owner_name = owner_name
         self._version = version
         self._schema: Gio.SettingsSchema | None = None
         self._cache: dict[str, Gio.Settings] = {}
 
-    @property
-    def schema_id(self) -> str:
-        """The schema ID for this handle."""
+    def get_schema_id(self) -> str:
+        """Returns the schema ID for this handle."""
         return self._schema_id
 
     def get_schema(self) -> Gio.SettingsSchema | None:
@@ -430,16 +749,16 @@ class GSettingsSchemaHandle:
 
         source = Gio.SettingsSchemaSource.get_default()  # pylint: disable=no-value-for-parameter
         if source is None:
-            msg = f"{self._owner_name}: GSettings schema source not available"
+            msg = f"GSETTINGS REGISTRY: Schema source not available for {self._schema_id}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return None
 
         self._schema = source.lookup(self._schema_id, True)
         if self._schema is None:
-            msg = f"{self._owner_name}: Schema {self._schema_id} not found"
+            msg = f"GSETTINGS REGISTRY: Schema {self._schema_id} not found"
             debug.print_message(debug.LEVEL_INFO, msg, True)
         else:
-            msg = f"{self._owner_name}: Schema {self._schema_id} loaded"
+            msg = f"GSETTINGS REGISTRY: Schema {self._schema_id} loaded"
             debug.print_message(debug.LEVEL_INFO, msg, True)
         return self._schema
 
@@ -548,7 +867,7 @@ class GSettingsSchemaHandle:
         writer: Callable[[Gio.Settings, str], None],
         sub_path: str = "",
     ) -> bool:
-        """Sets a value in the current profile, stamping version on first write."""
+        """Sets a value in the current profile."""
 
         if not self.has_key(key):
             return False
@@ -559,8 +878,6 @@ class GSettingsSchemaHandle:
             return False
 
         writer(gs, key)
-        if self.has_key("version") and gs.get_user_value("version") is None:
-            gs.set_int("version", self._version)
         return True
 
     def set_boolean(self, key: str, value: bool, sub_path: str = "") -> bool:

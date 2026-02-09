@@ -41,6 +41,7 @@ from typing import TYPE_CHECKING
 from gi.repository import GLib
 
 from . import debug
+from . import gsettings_registry
 from . import orca_i18n  # pylint: disable=no-name-in-module
 from . import settings
 from . import pronunciation_dictionary_manager
@@ -528,6 +529,13 @@ class SettingsManager:
             settings_file.truncate()
             dump(prefs, settings_file, indent=4)
 
+        registry = gsettings_registry.get_registry()
+        registry.reset_profile(old_internal_name)
+        new_internal_name = new_profile[1]
+        pronunciations = profile_data.get("pronunciations", {})
+        keybindings = profile_data.get("keybindings", {})
+        registry.save_all_to_gsettings(new_internal_name, profile_data, pronunciations, keybindings)
+
     def _set_settings_runtime(self, settings_dict: dict) -> None:
         """Apply settings to the runtime settings module."""
 
@@ -619,6 +627,9 @@ class SettingsManager:
             file_name = os.path.join(self._prefs_dir, "app-settings", f"{app_name}.conf")
             with open(file_name, "w", encoding="utf-8") as settings_file:
                 dump(prefs, settings_file, indent=4)
+            gsettings_registry.get_registry().save_all_to_gsettings(
+                self._profile, app_general, app_pronunciations, app_keybindings, app_name
+            )
             return
 
         _profile = general.get("profile", settings.profile)
@@ -673,6 +684,10 @@ class SettingsManager:
             settings_file.seek(0)
             settings_file.truncate()
             dump(prefs, settings_file, indent=4)
+
+        gsettings_registry.get_registry().save_all_to_gsettings(
+            self._profile, general, pronunciations, keybindings
+        )
 
         # Clear any cached app settings snapshots so they don't overwrite the
         # newly saved settings when focus returns to the original application.

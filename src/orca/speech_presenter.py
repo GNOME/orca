@@ -717,6 +717,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Speak misspelled word indicator",
+        settings_key="speakMisspelledIndicator",
     )
     @dbus_service.getter
     def get_speak_misspelled_indicator(self) -> bool:
@@ -739,6 +740,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Speak object descriptions",
+        settings_key="speakDescription",
     )
     @dbus_service.getter
     def get_speak_description(self) -> bool:
@@ -761,6 +763,7 @@ class SpeechPresenter:
         gtype="b",
         default=False,
         summary="Speak position in set",
+        settings_key="enablePositionSpeaking",
     )
     @dbus_service.getter
     def get_speak_position_in_set(self) -> bool:
@@ -783,6 +786,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Speak widget mnemonics",
+        settings_key="enableMnemonicSpeaking",
     )
     @dbus_service.getter
     def get_speak_widget_mnemonic(self) -> bool:
@@ -805,6 +809,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Speak tutorial messages",
+        settings_key="enableTutorialMessages",
     )
     @dbus_service.getter
     def get_speak_tutorial_messages(self) -> bool:
@@ -827,6 +832,7 @@ class SpeechPresenter:
         gtype="i",
         default=4,
         summary="Threshold for repeated character compression",
+        settings_key="repeatCharacterLimit",
     )
     @dbus_service.getter
     def get_repeated_character_limit(self) -> int:
@@ -849,6 +855,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Speak blank lines",
+        settings_key="speakBlankLines",
     )
     @dbus_service.getter
     def get_speak_blank_lines(self) -> bool:
@@ -871,6 +878,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Speak full row in GUI tables",
+        settings_key="readFullRowInGUITable",
     )
     @dbus_service.getter
     def get_speak_row_in_gui_table(self) -> bool:
@@ -893,6 +901,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Speak full row in document tables",
+        settings_key="readFullRowInDocumentTable",
     )
     @dbus_service.getter
     def get_speak_row_in_document_table(self) -> bool:
@@ -915,6 +924,7 @@ class SpeechPresenter:
         gtype="b",
         default=False,
         summary="Speak full row in spreadsheets",
+        settings_key="readFullRowInSpreadSheet",
     )
     @dbus_service.getter
     def get_speak_row_in_spreadsheet(self) -> bool:
@@ -937,6 +947,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Announce cell span",
+        settings_key="speakCellSpan",
     )
     @dbus_service.getter
     def get_announce_cell_span(self) -> bool:
@@ -959,6 +970,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Announce cell coordinates",
+        settings_key="speakCellCoordinates",
     )
     @dbus_service.getter
     def get_announce_cell_coordinates(self) -> bool:
@@ -981,6 +993,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Announce spreadsheet cell coordinates",
+        settings_key="speakSpreadsheetCoordinates",
     )
     @dbus_service.getter
     def get_announce_spreadsheet_cell_coordinates(self) -> bool:
@@ -1003,6 +1016,7 @@ class SpeechPresenter:
         gtype="b",
         default=False,
         summary="Always announce selected range in spreadsheets",
+        settings_key="alwaysSpeakSelectedSpreadsheetRange",
     )
     @dbus_service.getter
     def get_always_announce_selected_range_in_spreadsheet(self) -> bool:
@@ -1025,6 +1039,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Announce cell headers",
+        settings_key="speakCellHeaders",
     )
     @dbus_service.getter
     def get_announce_cell_headers(self) -> bool:
@@ -1047,6 +1062,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Announce blockquotes",
+        settings_key="speakContextBlockquote",
     )
     @dbus_service.getter
     def get_announce_blockquote(self) -> bool:
@@ -1064,7 +1080,12 @@ class SpeechPresenter:
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="announce-form", schema="speech", gtype="b", default=True, summary="Announce forms"
+        key="announce-form",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Announce forms",
+        settings_key="speakContextNonLandmarkForm",
     )
     @dbus_service.getter
     def get_announce_form(self) -> bool:
@@ -1087,6 +1108,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Announce groupings/panels",
+        settings_key="speakContextPanel",
     )
     @dbus_service.getter
     def get_announce_grouping(self) -> bool:
@@ -1109,6 +1131,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Announce landmarks",
+        settings_key="speakContextLandmark",
     )
     @dbus_service.getter
     def get_announce_landmark(self) -> bool:
@@ -1126,7 +1149,12 @@ class SpeechPresenter:
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="announce-list", schema="speech", gtype="b", default=True, summary="Announce lists"
+        key="announce-list",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Announce lists",
+        settings_key="speakContextList",
     )
     @dbus_service.getter
     def get_announce_list(self) -> bool:
@@ -1144,7 +1172,12 @@ class SpeechPresenter:
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="announce-table", schema="speech", gtype="b", default=True, summary="Announce tables"
+        key="announce-table",
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Announce tables",
+        settings_key="speakContextTable",
     )
     @dbus_service.getter
     def get_announce_table(self) -> bool:
@@ -1202,6 +1235,7 @@ class SpeechPresenter:
         gtype="b",
         default=False,
         summary="Only speak displayed text",
+        settings_key="onlySpeakDisplayedText",
     )
     @dbus_service.getter
     def get_only_speak_displayed_text(self) -> bool:
@@ -1224,6 +1258,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Speak progress bar updates",
+        settings_key="speakProgressBarUpdates",
     )
     @dbus_service.getter
     def get_speak_progress_bar_updates(self) -> bool:
@@ -1246,6 +1281,7 @@ class SpeechPresenter:
         gtype="i",
         default=10,
         summary="Progress bar speech update interval in seconds",
+        settings_key="progressBarSpeechInterval",
     )
     @dbus_service.getter
     def get_progress_bar_speech_interval(self) -> int:
@@ -1268,6 +1304,7 @@ class SpeechPresenter:
         genum="org.gnome.Orca.ProgressBarVerbosity",
         default="application",
         summary="Progress bar speech verbosity (all, application, window)",
+        settings_key="progressBarSpeechVerbosity",
     )
     @dbus_service.getter
     def get_progress_bar_speech_verbosity(self) -> int:
@@ -1290,6 +1327,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Use detailed informative messages",
+        settings_key="messagesAreDetailed",
     )
     @dbus_service.getter
     def get_messages_are_detailed(self) -> bool:
@@ -1317,6 +1355,7 @@ class SpeechPresenter:
         genum="org.gnome.Orca.VerbosityLevel",
         default="verbose",
         summary="Speech verbosity level (brief, verbose)",
+        settings_key="speechVerbosityLevel",
     )
     @dbus_service.getter
     def get_verbosity_level(self) -> str:
@@ -1401,6 +1440,7 @@ class SpeechPresenter:
         gtype="b",
         default=False,
         summary="Speak indentation and justification",
+        settings_key="enableSpeechIndentation",
     )
     @dbus_service.getter
     def get_speak_indentation_and_justification(self) -> bool:
@@ -1423,6 +1463,7 @@ class SpeechPresenter:
         gtype="b",
         default=False,
         summary="Speak indentation only if changed",
+        settings_key="speakIndentationOnlyIfChanged",
     )
     @dbus_service.getter
     def get_speak_indentation_only_if_changed(self) -> bool:
@@ -1776,6 +1817,14 @@ class SpeechPresenter:
             self.destroy_monitor()
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="monitor-font-size",
+        schema="speech",
+        gtype="i",
+        default=14,
+        summary="Speech monitor font size",
+        settings_key="speechMonitorFontSize",
+    )
     @dbus_service.getter
     def get_monitor_font_size(self) -> int:
         """Returns the speech monitor font size."""
@@ -1793,6 +1842,14 @@ class SpeechPresenter:
             self._monitor.set_font_size(value)
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="monitor-foreground",
+        schema="speech",
+        gtype="s",
+        default="#ffffff",
+        summary="Speech monitor foreground color",
+        settings_key="speechMonitorForeground",
+    )
     @dbus_service.getter
     def get_monitor_foreground(self) -> str:
         """Returns the speech monitor foreground color."""
@@ -1810,6 +1867,14 @@ class SpeechPresenter:
             self._monitor.reapply_css()
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key="monitor-background",
+        schema="speech",
+        gtype="s",
+        default="#000000",
+        summary="Speech monitor background color",
+        settings_key="speechMonitorBackground",
+    )
     @dbus_service.getter
     def get_monitor_background(self) -> str:
         """Returns the speech monitor background color."""

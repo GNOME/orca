@@ -175,6 +175,7 @@ class CaretNavigator:
         gtype="b",
         default=True,
         summary="Enable caret navigation",
+        settings_key="caretNavigationEnabled",
     )
     @dbus_service.getter
     def get_is_enabled(self) -> bool:
@@ -209,6 +210,7 @@ class CaretNavigator:
         gtype="b",
         default=False,
         summary="Caret navigation triggers focus mode",
+        settings_key="caretNavTriggersFocusMode",
     )
     @dbus_service.getter
     def get_triggers_focus_mode(self) -> bool:

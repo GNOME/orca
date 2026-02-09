@@ -421,6 +421,7 @@ class TextAttributeManager:
         gtype="as",
         default=[],
         summary="Text attributes to speak",
+        settings_key="textAttributesToSpeak",
     )
     @dbus_service.getter
     def get_attributes_to_speak(self) -> list[str]:
@@ -446,6 +447,7 @@ class TextAttributeManager:
         gtype="as",
         default=[],
         summary="Text attributes to mark in braille",
+        settings_key="textAttributesToBraille",
     )
     @dbus_service.getter
     def get_attributes_to_braille(self) -> list[str]:
