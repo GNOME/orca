@@ -777,29 +777,41 @@ def _get_default_table() -> str:
     # for the largest group of users; not the perfect default for all users.
     prefer = ["g1", "g2", "comp6", "comp8"]
 
-    def is_candidate(t: str) -> bool:
+    def is_candidate(t: str, prefix: str) -> bool:
         """Return True for locale-matching table candidates."""
-        return t.startswith(language) and not any(e in t for e in exclude)
+        return t.startswith(prefix) and not any(e in t for e in exclude)
 
-    tables = list(filter(is_candidate, tables))
+    candidates = [t for t in tables if is_candidate(t, language)]
+    if not candidates:
+        short = language.split("-", maxsplit=1)[0]
+        if short != language:
+            msg = f"BRAILLE: No tables for '{language}', trying '{short}'"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            candidates = [t for t in tables if is_candidate(t, short)]
+
     candidate_tokens: list[Any] = [
         "BRAILLE:",
-        len(tables),
+        len(candidates),
         "candidate tables for locale found:",
-        ", ".join(tables),
+        ", ".join(candidates),
     ]
     debug.print_tokens(debug.LEVEL_INFO, candidate_tokens, True)
 
-    if not tables:
+    if not candidates:
         return ""
 
     for p in prefer:
-        for table in tables:
+        for table in candidates:
             if p in table:
                 return os.path.join(tablesdir, table)
 
     # If we couldn't find a preferred match, just go with the first match for the locale.
-    return os.path.join(tablesdir, tables[0])
+    return os.path.join(tablesdir, candidates[0])
+
+
+def get_default_contraction_table() -> str:
+    """Returns the default contraction table path for the current locale."""
+    return _STATE.default_contraction_table or ""
 
 
 if LOUIS:

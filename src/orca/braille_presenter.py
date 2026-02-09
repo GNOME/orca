@@ -1104,7 +1104,7 @@ class BraillePresenter:
     def get_contraction_table_path(self) -> str:
         """Returns the current braille contraction table file path."""
 
-        return settings.brailleContractionTable
+        return settings.brailleContractionTable or braille.get_default_contraction_table()
 
     @gsettings_registry.get_registry().gsetting(
         key="contraction-table",
