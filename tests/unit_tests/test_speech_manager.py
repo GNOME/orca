@@ -1151,3 +1151,85 @@ class TestSpeechManager:
 
         assert settings_mock.enableSpeech is False
         assert settings_mock.silenceSpeech is False
+
+
+class TestVoicesPreferencesGridUI:  # pylint: disable=too-few-public-methods
+    """Test VoicesPreferencesGrid save behavior."""
+
+    def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
+        """Set up mocks for VoicesPreferencesGrid dependencies."""
+
+        additional_modules = [
+            "orca.speech",
+            "orca.speechserver",
+            "orca.acss",
+            "orca.presentation_manager",
+        ]
+        essential_modules = test_context.setup_shared_dependencies(additional_modules)
+
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.speechSystemOverride = "spiel"
+        settings_mock.speechFactoryModules = ["spiel", "speechdispatcherfactory"]
+        settings_mock.speechServerInfo = None
+        settings_mock.speechServerFactory = "spiel"
+        settings_mock.voices = {}
+        settings_mock.DEFAULT_VOICE = "default"
+        settings_mock.UPPERCASE_VOICE = "uppercase"
+        settings_mock.HYPERLINK_VOICE = "hyperlink"
+        settings_mock.SYSTEM_VOICE = "system"
+
+        settings_mock.CAPITALIZATION_STYLE_NONE = "none"
+        settings_mock.CAPITALIZATION_STYLE_SPELL = "spell"
+        settings_mock.CAPITALIZATION_STYLE_ICON = "icon"
+        settings_mock.PUNCTUATION_STYLE_NONE = 3
+        settings_mock.PUNCTUATION_STYLE_SOME = 2
+        settings_mock.PUNCTUATION_STYLE_MOST = 1
+        settings_mock.PUNCTUATION_STYLE_ALL = 0
+
+        settings_mock.verbalizePunctuationStyle = 2
+        settings_mock.capitalizationStyle = "none"
+        settings_mock.enableSpeech = True
+        settings_mock.silenceSpeech = False
+        settings_mock.speakNumbersAsDigits = False
+        settings_mock.useColorNames = True
+        settings_mock.enablePauseBreaks = True
+        settings_mock.usePronunciationDictionary = True
+        settings_mock.enableAutoLanguageSwitching = False
+
+        settings_manager_mock = essential_modules["orca.settings_manager"]
+        settings_manager_instance = test_context.Mock()
+        settings_manager_instance._prefs_dir = "/tmp/orca-test"
+        settings_manager_instance._load_user_customizations.return_value = True
+        settings_manager_mock.get_manager.return_value = settings_manager_instance
+
+        return essential_modules
+
+    def test_save_settings_includes_speech_server_factory(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test save_settings includes speechServerFactory."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.speechServerFactory = "spiel"
+
+        from orca.speech_manager import SpeechManager, VoicesPreferencesGrid
+
+        manager = SpeechManager()
+        mock_server = test_context.Mock()
+        mock_server.get_factory_name.return_value = "Spiel"
+        mock_server.get_output_module.return_value = "Piper"
+        test_context.patch_object(manager, "_get_server", return_value=mock_server)
+
+        grid_mock = test_context.Mock()
+        grid_mock._manager = manager
+        grid_mock._default_voice = {}
+        grid_mock._uppercase_voice = {}
+        grid_mock._hyperlink_voice = {}
+        grid_mock._system_voice = {}
+        grid_mock._has_unsaved_changes = True
+
+        result = VoicesPreferencesGrid.save_settings(grid_mock)
+
+        assert result["speechServerFactory"] == "spiel"
+        assert result["speechServerInfo"] == ["Spiel", "Piper"]

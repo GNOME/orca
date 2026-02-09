@@ -180,16 +180,15 @@ class SpeechServer(speechserver.SpeechServer):
         client.set_priority(speechd.Priority.MESSAGE)
 
         # The speechServerInfo setting is not connected to the speechServerFactory. As a result,
-        # the user's chosen server (synthesizer) might be from spiel.
+        # the user's chosen server (synthesizer) might be from spiel. Don't mutate self._id
+        # here because it must stay consistent with the _active_servers key for proper cleanup.
         if self._id and self._id != self.DEFAULT_SERVER_ID:
             try:
                 available_modules = client.list_output_modules()
-                if self._id not in available_modules:
-                    self._id = self.DEFAULT_SERVER_ID
-                else:
+                if self._id in available_modules:
                     client.set_output_module(self._id)
             except (AttributeError, speechd.SSIPCommandError):
-                self._id = self.DEFAULT_SERVER_ID
+                pass
         self._current_voice_properties = {}
         mode = self._punctuation_mode_map[settings.verbalizePunctuationStyle]
         client.set_punctuation(mode)

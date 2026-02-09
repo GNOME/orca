@@ -516,6 +516,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         server_name = self._manager.get_current_server()
         synthesizer_id = self._manager.get_current_synthesizer()
         result["speechServerInfo"] = [server_name, synthesizer_id]
+        result["speechServerFactory"] = settings.speechServerFactory
 
         result["verbalizePunctuationStyle"] = settings.verbalizePunctuationStyle
         result["capitalizationStyle"] = settings.capitalizationStyle
