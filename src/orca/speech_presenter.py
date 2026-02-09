@@ -588,10 +588,11 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         return result
 
     def has_changes(self) -> bool:
-        """Check if any child grid has changes."""
+        """Return True if there are unsaved changes."""
 
         return (
-            self._voices_grid.has_changes()
+            self._has_unsaved_changes
+            or self._voices_grid.has_changes()
             or self._verbosity_grid.has_changes()
             or self._tables_grid.has_changes()
             or self._progress_bars_grid.has_changes()

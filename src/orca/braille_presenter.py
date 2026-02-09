@@ -465,10 +465,11 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._initializing = False
 
     def has_changes(self) -> bool:
-        """Return True if any child grid has unsaved changes."""
+        """Return True if there are unsaved changes."""
 
         return (
-            self._verbosity_grid.has_changes()
+            self._has_unsaved_changes
+            or self._verbosity_grid.has_changes()
             or self._display_settings_grid.has_changes()
             or self._flash_messages_grid.has_changes()
             or self._progress_bars_grid.has_changes()
