@@ -22,6 +22,8 @@
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-instance-attributes
 # pylint: disable=too-many-statements
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-positional-arguments
 
 """Manager for Orca profile creation, loading, and management."""
 
@@ -37,7 +39,7 @@ from typing import Callable, TYPE_CHECKING
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import GLib, Gtk
+from gi.repository import GLib, Gtk  # pylint: disable=no-name-in-module
 
 from . import cmdnames
 from . import gsettings_registry
@@ -660,7 +662,7 @@ class ProfileManager:
         return ["Default", "default"]
 
     @dbus_service.setter
-    def set_starting_profile(self, profile: list[str]) -> bool:
+    def set_starting_profile(self, _profile: list[str]) -> bool:
         """No-op for backwards compatibility. Starting profile is always Default."""
 
         return True
@@ -669,6 +671,9 @@ class ProfileManager:
         """Removes a profile by internal name."""
 
         settings_manager.get_manager().remove_profile(internal_name)
+
+        if not gsettings_registry.get_registry().is_enabled():
+            return
 
         sanitized_name = gsettings_registry.get_registry().sanitize_gsettings_path(internal_name)
         path = f"{gsettings_registry.GSETTINGS_PATH_PREFIX}{sanitized_name}/"

@@ -20,6 +20,7 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-statements
+# pylint: disable=too-many-locals
 # pylint: disable=wrong-import-position
 
 """The main module for the Orca screen reader."""
@@ -34,7 +35,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi
-from gi.repository import Gdk
+from gi.repository import Gdk  # pylint: disable=no-name-in-module
 from gi.repository import Gio
 from gi.repository import GLib
 
@@ -100,7 +101,7 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
     manager.print_running_applications(force=False)
 
 
-def shutdown(script=None, _event=None, _signum=None):
+def shutdown(_event=None, _signum=None):
     """Exits Orca. Returns True if shutdown ran to completion."""
 
     if hasattr(shutdown, "in_progress"):
@@ -200,9 +201,20 @@ def main():
     prefs_dir = manager.get_prefs_dir()
     profiles = manager.available_profiles()
     registry = gsettings_registry.get_registry()
+
+    default_prefs_dir = os.path.join(
+        GLib.get_user_data_dir(),
+        "orca",  # pylint: disable=no-value-for-parameter
+    )
+    if os.path.realpath(prefs_dir) != os.path.realpath(default_prefs_dir):
+        registry.set_enabled(False)
+    elif not settings.useGSettings:
+        registry.set_enabled(False)
+
     registry.migrate_all(prefs_dir, profiles)
     registry.sync_missing_profiles(prefs_dir, profiles)
-    Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
+    if registry.is_enabled():
+        Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
 
     if not systemd.get_manager().is_systemd_managed():
         # Legacy behavior, here for backwards-compatibility. You really should

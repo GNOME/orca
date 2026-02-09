@@ -61,11 +61,24 @@ class GSettingsRegistry:
     def __init__(self) -> None:
         self._app_name: str | None = None
         self._profile: str = "default"
+        self._enabled: bool = True
         self._descriptors: dict[tuple[str, str], SettingDescriptor] = {}
         self._mappings: dict[str, list[SettingsMapping]] = {}
         self._enums: dict[str, dict[str, int]] = {}
         self._schemas: dict[str, str] = {}
         self._extras_migrated: set[str] = set()
+
+    def set_enabled(self, enabled: bool) -> None:
+        """Sets whether GSettings operations are enabled."""
+
+        self._enabled = enabled
+        msg = f"GSETTINGS REGISTRY: GSettings operations {'enabled' if enabled else 'disabled'}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    def is_enabled(self) -> bool:
+        """Returns whether GSettings operations are enabled."""
+
+        return self._enabled
 
     @staticmethod
     def sanitize_gsettings_path(name: str) -> str:
@@ -78,6 +91,8 @@ class GSettingsRegistry:
     ) -> Gio.Settings | None:
         """Creates Gio.Settings for a sub-schema at the correct dconf path."""
 
+        if not self._enabled:
+            return None
         schema_id = self._schemas.get(schema_name)
         if schema_id is None:
             return None
@@ -257,6 +272,9 @@ class GSettingsRegistry:
     def migrate_all(self, prefs_dir: str, profiles: list) -> bool:
         """Migrates all registered schemas from JSON to GSettings."""
 
+        if not self._enabled:
+            return False
+
         if self._is_migration_done():
             return False
 
@@ -326,6 +344,9 @@ class GSettingsRegistry:
     ) -> None:
         """Writes all settings to dconf for the given profile (and optional app)."""
 
+        if not self._enabled:
+            return
+
         general = dict(general)
         gsettings_migrator.apply_legacy_aliases(general)
 
@@ -386,6 +407,9 @@ class GSettingsRegistry:
     def sync_missing_profiles(self, prefs_dir: str, profiles: list) -> None:
         """Syncs profiles that exist in JSON but have no dconf entries."""
 
+        if not self._enabled:
+            return
+
         settings_file = os.path.join(prefs_dir, "user-settings.conf")
         try:
             with open(settings_file, encoding="utf-8") as f:
@@ -413,6 +437,9 @@ class GSettingsRegistry:
 
     def reset_profile(self, profile_name: str) -> None:
         """Resets all dconf keys for a profile."""
+
+        if not self._enabled:
+            return
 
         profile = gsettings_migrator.sanitize_gsettings_path(profile_name)
         for schema_name in self._schemas:

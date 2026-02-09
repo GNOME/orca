@@ -21,6 +21,8 @@
 # pylint: disable=wrong-import-position
 # pylint: disable=import-outside-toplevel
 # pylint: disable=protected-access
+# pylint: disable=too-many-lines
+# pylint: disable=too-few-public-methods
 
 """Unit tests for gsettings_registry.py."""
 
@@ -1707,3 +1709,110 @@ class TestStringArraySupport:
             assert result == {"textAttributesToSpeak": ["size", "weight", "style"]}
         finally:
             registry._mappings.pop("test-as-read", None)
+
+
+@pytest.mark.unit
+class TestEnabledFlag:
+    """Tests for the _enabled flag and set_enabled/is_enabled."""
+
+    def _setup(self, test_context: OrcaTestContext):
+        """Set up dependencies."""
+
+        additional_modules = [
+            "orca.cmdnames",
+            "orca.messages",
+            "orca.object_properties",
+            "orca.orca_gui_navlist",
+            "orca.orca_i18n",
+            "orca.AXHypertext",
+            "orca.AXObject",
+            "orca.AXTable",
+            "orca.AXText",
+            "orca.AXUtilities",
+            "orca.input_event",
+        ]
+        test_context.setup_shared_dependencies(additional_modules)
+
+    def test_enabled_by_default(self, test_context: OrcaTestContext) -> None:
+        """Test that a new GSettingsRegistry is enabled by default."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        assert registry.is_enabled() is True
+
+    def test_set_enabled_false(self, test_context: OrcaTestContext) -> None:
+        """Test set_enabled(False) disables the registry."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        registry.set_enabled(False)
+        assert registry.is_enabled() is False
+
+    def test_set_enabled_true_after_false(self, test_context: OrcaTestContext) -> None:
+        """Test set_enabled(True) re-enables after disable."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        registry.set_enabled(False)
+        registry.set_enabled(True)
+        assert registry.is_enabled() is True
+
+    def test_get_gs_returns_none_when_disabled(self, test_context: OrcaTestContext) -> None:
+        """Test _get_gs returns None when registry is disabled."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        registry._schemas["test"] = "org.gnome.Orca.Test"
+        registry.set_enabled(False)
+        assert registry._get_gs("test", "default") is None
+
+    def test_migrate_all_returns_false_when_disabled(self, test_context: OrcaTestContext) -> None:
+        """Test migrate_all returns False immediately when disabled."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        registry.set_enabled(False)
+        assert registry.migrate_all("/tmp/test", []) is False
+
+    def test_save_all_to_gsettings_noop_when_disabled(self, test_context: OrcaTestContext) -> None:
+        """Test save_all_to_gsettings does nothing when disabled."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        registry._schemas["speech"] = "org.gnome.Orca.Speech"
+        registry.set_enabled(False)
+        test_context.patch("orca.gsettings_registry.Gio.Settings.sync")
+        registry.save_all_to_gsettings("default", {"enableSpeech": True}, {}, {})
+
+    def test_sync_missing_profiles_noop_when_disabled(self, test_context: OrcaTestContext) -> None:
+        """Test sync_missing_profiles does nothing when disabled."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        registry.set_enabled(False)
+        registry.sync_missing_profiles("/tmp/test", [["Default", "default"]])
+
+    def test_reset_profile_noop_when_disabled(self, test_context: OrcaTestContext) -> None:
+        """Test reset_profile does nothing when disabled."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        registry._schemas["speech"] = "org.gnome.Orca.Speech"
+        registry.set_enabled(False)
+        registry.reset_profile("default")
