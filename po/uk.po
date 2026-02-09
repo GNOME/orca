@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2026-02-08 13:52+0000\n"
-"PO-Revision-Date: 2026-02-08 17:35+0200\n"
+"POT-Creation-Date: 2026-02-08 16:05+0000\n"
+"PO-Revision-Date: 2026-02-09 17:50+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3609,8 +3609,9 @@ msgstr "Рядок заміни"
 #. speech synthesizer to say what the user finds most helpful. This string is
 #. the label for the widget to add a new entry.
 #: src/orca/guilabels.py:330
-msgid "_New entry"
-msgstr "Н_ова стаття"
+#| msgid "_New entry"
+msgid "New entry"
+msgstr "Новий запис"
 
 #. Translators: The pronunciation dictionary allows the user to correct words
 #. which the speech synthesizer mispronounces (e.g. a person's name, a technical
@@ -3620,8 +3621,9 @@ msgstr "Н_ова стаття"
 #. speech synthesizer to say what the user finds most helpful. This string is
 #. the label for the widget to delete the selected entry.
 #: src/orca/guilabels.py:339
-msgid "_Delete"
-msgstr "В_илучити"
+#| msgid "_Delete"
+msgid "Delete"
+msgstr "Вилучити"
 
 #. Translators: The pronunciation dictionary allows the user to correct words
 #. which the speech synthesizer mispronounces (e.g. a person's name, a technical
@@ -3803,7 +3805,7 @@ msgstr "Дії"
 #. Translators: This is the label of the Documents page in the Orca Preferences
 #. dialog. On that page there are settings related to navigating and reading documents,
 #. including web pages, word processor documents, and PDFs.
-#: src/orca/guilabels.py:469 src/orca/guilabels.py:1828
+#: src/orca/guilabels.py:469 src/orca/guilabels.py:1831
 msgid "Documents"
 msgstr "Документи"
 
@@ -4840,7 +4842,6 @@ msgstr "_Тривалість (у секундах):"
 #. Translators: This is the label for a setting which controls whether Orca
 #. displays the braille indicator symbol at the end of each line of text.
 #: src/orca/guilabels.py:1209
-#| msgid "Disable _end of line symbol"
 msgid "_End of line symbol"
 msgstr "Символ _кінця рядка"
 
@@ -5250,12 +5251,19 @@ msgid "Current Profile"
 msgstr "Поточний профіль"
 
 #: src/orca/guilabels.py:1508
+#, python-format
+#| msgid ""
+#| "loaded at startup. To edit an existing profile, select it below and then "
+#| "adjust settings on the other pages. To rename or delete the selected "
+#| "profile, use the Tab key to navigate to its associated buttons."
 msgid ""
-"loaded at startup. To edit an existing profile, select it below and then "
-"adjust settings on the other pages. To rename or delete the selected "
-"profile, use the Tab key to navigate to its associated buttons."
+"Profiles are collections of settings. The \"%s\" profile is loaded at "
+"startup. To edit an existing profile, select it below and then adjust "
+"settings on the other pages. To rename or delete the selected profile, use "
+"the Tab key to navigate to its associated buttons."
 msgstr ""
-"завантажено при запуску. Для редагування наявного профілю позначте його у "
+"Профілі є збірками параметрів. Під час запуску буде завантажено профіль «"
+"%s». Для редагування наявного профілю позначте його у "
 "списку нижче і скоригуйте параметри на інших сторінках. Щоб перейменувати "
 "або вилучити позначений профіль, скористайтеся клавішею Tab для переходу до "
 "відповідних кнопок дій."
@@ -5263,13 +5271,13 @@ msgstr ""
 #. Translators: This is a label in the Preferences dialog box. It applies to
 #. several options related to which progress bars Orca should speak and how
 #. often Orca should speak them.
-#: src/orca/guilabels.py:1516
+#: src/orca/guilabels.py:1519
 msgid "Progress Bars"
 msgstr "Смужки поступу"
 
 #. Translators: Orca has a Say All feature which speaks the entire document.
 #. This is the label for the group of settings related to Say All.
-#: src/orca/guilabels.py:1520
+#: src/orca/guilabels.py:1523
 msgid "Say All"
 msgstr "Вимовляти все"
 
@@ -5280,11 +5288,11 @@ msgstr "Вимовляти все"
 #. fiction, it would probably be best to do say all by sentence so it sounds
 #. more natural. If Orca were speaking something like a page of computer
 #. commands, doing a say all by line would work better.
-#: src/orca/guilabels.py:1529
+#: src/orca/guilabels.py:1532
 msgid "Say All By"
 msgstr "Вимовляти все по"
 
-#: src/orca/guilabels.py:1535
+#: src/orca/guilabels.py:1538
 msgid ""
 "Say All reads from the current location to the end of the document, pausing "
 "after each sentence or line based on the \"Say All By\" value."
@@ -5293,7 +5301,7 @@ msgstr ""
 "після кожного речення або рядка, на основі значення параметра «Вимовляти все "
 "по»."
 
-#: src/orca/guilabels.py:1545
+#: src/orca/guilabels.py:1548
 msgid ""
 "If enabled, you can use the arrow keys and/or structural navigation commands "
 "to move within the document while Say All is active."
@@ -5302,7 +5310,7 @@ msgstr ""
 "командами навігації структурою для пересування документом, доки активним є "
 "режим «Вимовляти все»."
 
-#: src/orca/guilabels.py:1553
+#: src/orca/guilabels.py:1556
 msgid ""
 "The \"Container Announcements\" settings determine what additional details "
 "will be announced as Say All moves through the document."
@@ -5310,7 +5318,7 @@ msgstr ""
 "Параметри «Оголошення контейнера» визначають, які додаткові подробиці "
 "озвучуватиме програм при пересуванні документом у режимі «Вимовляти все»."
 
-#: src/orca/guilabels.py:1557
+#: src/orca/guilabels.py:1560
 msgid "Speak object under mo_use"
 msgstr "Озвучувати об'єкт під вказівником _миші"
 
@@ -5320,42 +5328,42 @@ msgstr "Озвучувати об'єкт під вказівником _миші
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text. The
 #. following string is the label for the widget from which the user can select
 #. which profile should be loaded when Orca starts up.
-#: src/orca/guilabels.py:1565
+#: src/orca/guilabels.py:1568
 msgid "Start-up Profile:"
 msgstr "Профіль запуску:"
 
 #. Translators: This is an option in the Preferences dialog box related to the
 #. presentation of progress bar updates. If this widget is enabled, Orca will
 #. periodically display the current percentage in braille.
-#: src/orca/guilabels.py:1570
+#: src/orca/guilabels.py:1573
 msgid "_Braille updates"
 msgstr "Оновлення на _брайлі"
 
 #. This button will load the selected settings profile in the application.
-#: src/orca/guilabels.py:1574
+#: src/orca/guilabels.py:1577
 msgid "_Load"
 msgstr "_Завантажити"
 
-#: src/orca/guilabels.py:1576
+#: src/orca/guilabels.py:1579
 msgid "_Present tooltips"
 msgstr "_Виводити контексті підказки"
 
 #. Translators: This is the label for a button in a dialog.
-#: src/orca/guilabels.py:1579
+#: src/orca/guilabels.py:1582
 msgid "_Remove"
 msgstr "Ви_лучити"
 
 #. Translators: This is an option in the Preferences dialog box related to the
 #. presentation of progress bar updates. If this widget is enabled, Orca will
 #. periodically speak the current percentage.
-#: src/orca/guilabels.py:1584
+#: src/orca/guilabels.py:1587
 msgid "_Speak updates"
 msgstr "Вимовляти _оновлення"
 
 #. Translators: Here this is a label for a spin button through which a user can
 #. customize the frequency in seconds an announcement should be made regarding
 #. the current value of a progress bar.
-#: src/orca/guilabels.py:1589
+#: src/orca/guilabels.py:1592
 msgctxt "ProgressBar"
 msgid "Frequency (secs):"
 msgstr "Частота (сек):"
@@ -5364,7 +5372,7 @@ msgstr "Частота (сек):"
 #. The default Orca modifier is KP_Insert for the "desktop" keyboard layout and
 #. Caps Lock for the "laptop" keyboard layout. This string is a label for choosing
 #. which key(s) should be used as the Orca modifier.
-#: src/orca/guilabels.py:1595
+#: src/orca/guilabels.py:1598
 msgid "Screen Reader _Modifier Key(s):"
 msgstr "_Клавіші-модифікатори екранного читача:"
 
@@ -5374,7 +5382,7 @@ msgstr "_Клавіші-модифікатори екранного читача
 #. arrows into it and before speaking the new location. Upon navigating out of
 #. the form, Orca will announce that the form has been exited prior to speaking
 #. the new location.
-#: src/orca/guilabels.py:1603
+#: src/orca/guilabels.py:1606
 msgid "Announce _forms during navigation"
 msgstr "Оголошувати _форми під час навігації"
 
@@ -5384,7 +5392,7 @@ msgstr "Оголошувати _форми під час навігації"
 #. entered as the user arrows into it and before speaking the list content. Upon
 #. navigating out of the list, Orca will announce that the list has been exited
 #. prior to speaking the new location.
-#: src/orca/guilabels.py:1611
+#: src/orca/guilabels.py:1614
 msgid "Announce _lists during navigation"
 msgstr "Оголошувати _списки під час навігації"
 
@@ -5395,7 +5403,7 @@ msgstr "Оголошувати _списки під час навігації"
 #. of the panel, Orca will announce that the panel has been exited prior to
 #. speaking the new location. A panel is a generic container of objects, such as
 #. a group of related form fields.
-#: src/orca/guilabels.py:1620
+#: src/orca/guilabels.py:1623
 msgid "Announce _panels during navigation"
 msgstr "Оголошувати _панелі під час навігації"
 
@@ -5405,7 +5413,7 @@ msgstr "Оголошувати _панелі під час навігації"
 #. columns has been entered as the user arrows into it and before speaking the
 #. table content. Upon navigating out of the table, Orca will announce that the
 #. table has been exited prior to speaking the new location.
-#: src/orca/guilabels.py:1628
+#: src/orca/guilabels.py:1631
 msgid "Announce _tables during navigation"
 msgstr "Оголошувати _таблиці під час навігації"
 
@@ -5415,7 +5423,7 @@ msgstr "Оголошувати _таблиці під час навігації"
 #. the user arrows into it and before speaking the text. Upon navigating out of
 #. the blockquote, Orca will announce that the blockquote has been exited prior
 #. to speaking the new location.
-#: src/orca/guilabels.py:1636
+#: src/orca/guilabels.py:1639
 msgid "Announce block_quotes during navigation"
 msgstr "Оголошувати блоки _цитат під час навігації"
 
@@ -5427,7 +5435,7 @@ msgstr "Оголошувати блоки _цитат під час навіга
 #. exited prior to speaking the new location. ARIA landmarks are the W3C defined
 #. HTML tag attribute 'role' used to identify important part of webpage like
 #. banners, main context, search, etc.
-#: src/orca/guilabels.py:1646
+#: src/orca/guilabels.py:1649
 msgid "Announce land_marks during navigation"
 msgstr "Оголошувати _орієнтири під час навігації"
 
@@ -5437,7 +5445,7 @@ msgstr "Оголошувати _орієнтири під час навігац�
 #. indicate the presence of red squiggly spelling error lines -- things which
 #. Orca normally speaks. This setting is primarily intended for low vision users
 #. and sighted users with a learning disability.
-#: src/orca/guilabels.py:1654
+#: src/orca/guilabels.py:1657
 msgid "Only speak displayed text"
 msgstr "Вимовляти лише показаний текст"
 
@@ -5445,14 +5453,14 @@ msgstr "Вимовляти лише показаний текст"
 #. including foreground and background color. The setting associated with this
 #. widget determines how Orca will speak colors: As rgb values or as names
 #. (e.g. light blue).
-#: src/orca/guilabels.py:1660
+#: src/orca/guilabels.py:1663
 msgid "S_peak colors as names"
 msgstr "Вимовляти _кольори як назви"
 
 #. Translators: This is a label for a widget associated with whether Orca will
 #. present the mnemonic (underlined character) of an object, such as a button or
 #. menu item, when it becomes focused/selected.
-#: src/orca/guilabels.py:1665
+#: src/orca/guilabels.py:1668
 msgid "Mnemonics"
 msgstr "Мнемоніка"
 
@@ -5462,20 +5470,20 @@ msgstr "Мнемоніка"
 #. contents of the accessible description tend to be longer, e.g. matching the
 #. text of the tooltip, and are sometimes redundant to the accessible name.
 #. Therefore, we allow the user to opt out of this additional information.
-#: src/orca/guilabels.py:1673
+#: src/orca/guilabels.py:1676
 msgid "Description"
 msgstr "Опис"
 
 #. Translators: This is a label for a widget associated with whether Orca will
 #. speak indentation and justification information for text content.
-#: src/orca/guilabels.py:1677
+#: src/orca/guilabels.py:1680
 msgid "Indentation and justification"
 msgstr "Відступи і вирівнювання"
 
 #. Translators: This is the label for a widget on the Speech preferences page.
 #. When checked, indentation and justification will only be announced when they
 #. have changed from the previous line.
-#: src/orca/guilabels.py:1682
+#: src/orca/guilabels.py:1685
 msgid "Only speak indentation if changed"
 msgstr "Вимовляти відступи, лише якщо їх змінено"
 
@@ -5484,19 +5492,19 @@ msgstr "Вимовляти відступи, лише якщо їх змінен
 #. is enabled, when a user first moves into a word with this indicator, or types
 #. a misspelled word causing this indicator to appear, Orca will announce that
 #. the word is misspelled.
-#: src/orca/guilabels.py:1689
+#: src/orca/guilabels.py:1692
 msgid "Misspelled-word indicator"
 msgstr "Вказівник слів із помилками"
 
 #. Translators: This is a label for a widget associated with whether Orca will
 #. speak blank lines when navigating in document content.
-#: src/orca/guilabels.py:1693
+#: src/orca/guilabels.py:1696
 msgid "Blank lines"
 msgstr "Порожні рядки"
 
 #. Translators: This widget toggles whether or not Orca says the child
 #. position (e.g., item 6 of 7).
-#: src/orca/guilabels.py:1697
+#: src/orca/guilabels.py:1700
 msgid "Position in set"
 msgstr "Позиція у наборі"
 
@@ -5506,7 +5514,7 @@ msgstr "Позиція у наборі"
 #. and web content, and spreadsheet tables such as those found in Calc are not
 #. considered GUI tables. If this setting is enabled, Orca will speak the entire
 #. row; if it is disabled, Orca will only speak the cell with focus.
-#: src/orca/guilabels.py:1705
+#: src/orca/guilabels.py:1708
 msgid "Speak full row in _GUI tables"
 msgstr "Вимовляти увесь рядок у _таблицях граф. інтерфейсу"
 
@@ -5517,7 +5525,7 @@ msgstr "Вимовляти увесь рядок у _таблицях граф. 
 #. spreadsheet tables such as found in Calc. If this setting is enabled, Orca
 #. will speak the entire row; if it is disabled, Orca will only speak the cell
 #. with focus.
-#: src/orca/guilabels.py:1714
+#: src/orca/guilabels.py:1717
 msgid "Speak full row in _document tables"
 msgstr "Вимовляти увесь рядок у _таблицях документа"
 
@@ -5525,26 +5533,26 @@ msgstr "Вимовляти увесь рядок у _таблицях докум
 #. what happens if a user presses Up or Down arrow to move row by row in a
 #. spreadsheet. If this setting is enabled, Orca will speak the entire row; if
 #. it is disabled, Orca will only speak the cell with focus.
-#: src/orca/guilabels.py:1720
+#: src/orca/guilabels.py:1723
 msgid "Speak full row in sp_readsheets"
 msgstr "Вимовляти увесь рядок у електронних _таблицях"
 
 #. Translators: This is a label for a widget associated with whether Orca speaks
 #. tutorial messages / "help text".
-#: src/orca/guilabels.py:1724
+#: src/orca/guilabels.py:1727
 msgid "Tutorial messages"
 msgstr "Навчальні повідомлення"
 
 #. Translators: This is the label for a group of settings on the Speech
 #. preferences page. It groups settings related to how objects are presented
 #. via speech (descriptions, mnemonics, child position).
-#: src/orca/guilabels.py:1729
+#: src/orca/guilabels.py:1732
 msgid "Spoken Object Details"
 msgstr "Параметри озвучуваного об'єкта"
 
 #. Translators: This is a setting in the Speech and Braille preferences pages.
 #. When enabled, Orca will provide detailed/verbose object descriptions.
-#: src/orca/guilabels.py:1733
+#: src/orca/guilabels.py:1736
 msgid "Object presentation is detailed"
 msgstr "Докладне озвучення об'єкта"
 
@@ -5552,7 +5560,7 @@ msgstr "Докладне озвучення об'єкта"
 #. When checked, Orca will apply the user's pronunciation dictionary when speaking.
 #. The pronunciation dictionary allows users to customize how specific words or
 #. character sequences are spoken by the speech synthesizer.
-#: src/orca/guilabels.py:1739
+#: src/orca/guilabels.py:1742
 msgid "Use pronunciation dictionary"
 msgstr "Використати словник вимов"
 
@@ -5560,13 +5568,13 @@ msgstr "Використати словник вимов"
 #. chose what is and is not spoken by Orca during navigation or Say All. For
 #. instance, when the user first navigates into a table, should Orca speak the
 #. table details or just the newly focused/selected cell?
-#: src/orca/guilabels.py:1745
+#: src/orca/guilabels.py:1748
 msgid "Spoken Context"
 msgstr "Зміст мовлення"
 
 #. Translators: This is the label for a widget in the preferences dialog.
 #. If selected speech support will be enabled.
-#: src/orca/guilabels.py:1749
+#: src/orca/guilabels.py:1752
 msgid "Speech support"
 msgstr "Підтримка синтезу мовлення"
 
@@ -5577,7 +5585,7 @@ msgstr "Підтримка синтезу мовлення"
 #. the message to be displayed is long/detailed, Orca provides a brief
 #. alternative. Users who prefer that brief alternative can uncheck this
 #. widget.
-#: src/orca/guilabels.py:1758
+#: src/orca/guilabels.py:1761
 msgid "_System messages are detailed"
 msgstr "_Системні повідомлення — докладні"
 
@@ -5586,7 +5594,7 @@ msgstr "_Системні повідомлення — докладні"
 #. including the braille dots and the text characters they correspond to. It is
 #. primarily used by developers and testers who may not have a physical braille
 #. display.
-#: src/orca/guilabels.py:1765
+#: src/orca/guilabels.py:1768
 msgid "On-screen braille"
 msgstr "Екранний брайль"
 
@@ -5594,26 +5602,26 @@ msgstr "Екранний брайль"
 #. scrolling log of all text spoken by the screen reader. It is primarily used by
 #. developers and testers to verify what is being spoken without having to listen
 #. to the audio.
-#: src/orca/guilabels.py:1771
+#: src/orca/guilabels.py:1774
 msgid "On-screen speech"
 msgstr "Екранне озвучення"
 
 #. Translators: This is the title of the on-screen display settings category in the
 #. Orca Preferences dialog. These settings control the appearance of the on-screen
 #. braille and speech monitor windows.
-#: src/orca/guilabels.py:1776
+#: src/orca/guilabels.py:1779
 msgid "On-Screen Display"
 msgstr "Екранна панель"
 
 #. Translators: This is the label of a spin button that controls the number of braille
 #. cells displayed in the on-screen braille monitor.
-#: src/orca/guilabels.py:1780
+#: src/orca/guilabels.py:1783
 msgid "Cell count"
 msgstr "Кількість комірок"
 
 #. Translators: This is the label of a checkbox that controls whether the on-screen
 #. braille monitor shows Unicode braille dot patterns instead of text characters.
-#: src/orca/guilabels.py:1784
+#: src/orca/guilabels.py:1787
 msgid "Show braille dot patterns"
 msgstr "Показувати точкові візерунки брайля"
 
@@ -5621,7 +5629,7 @@ msgstr "Показувати точкові візерунки брайля"
 #. in the on-screen braille monitor.
 #. Translators: This is the label of a color button that controls the text color
 #. in the on-screen speech monitor.
-#: src/orca/guilabels.py:1788 src/orca/guilabels.py:1800
+#: src/orca/guilabels.py:1791 src/orca/guilabels.py:1803
 msgid "Text color"
 msgstr "Колір тексту"
 
@@ -5629,17 +5637,17 @@ msgstr "Колір тексту"
 #. in the on-screen braille monitor.
 #. Translators: This is the label of a color button that controls the background color
 #. in the on-screen speech monitor.
-#: src/orca/guilabels.py:1792 src/orca/guilabels.py:1804
+#: src/orca/guilabels.py:1795 src/orca/guilabels.py:1807
 msgid "Background color"
 msgstr "Колір тла"
 
 #. Translators: This is the label of a spin button that controls the font size of
 #. text in the on-screen speech monitor.
-#: src/orca/guilabels.py:1796
+#: src/orca/guilabels.py:1799
 msgid "Font size"
 msgstr "Розмір шрифту"
 
-#: src/orca/guilabels.py:1809
+#: src/orca/guilabels.py:1812
 msgid ""
 "The on-screen speech display is a window that shows what the screen reader "
 "is speaking. The default keybinding to show or hide it is Orca+Shift+S. This "
@@ -5649,7 +5657,7 @@ msgstr ""
 "зчитування з екрана. Типове клавіатурне скорочення для його показу або "
 "приховування – Orca+Shift+S. Це можна змінити у розділі «Команди»."
 
-#: src/orca/guilabels.py:1817
+#: src/orca/guilabels.py:1820
 msgid ""
 "The on-screen braille display is a window intended for developers that shows "
 "what would be presented on a braille display. To show or hide it, assign a "
@@ -5660,26 +5668,26 @@ msgstr ""
 "призначте комбінацію клавіш у розділі «Команди»."
 
 #. Translators: This is the label of the Braille page in the Orca Preferences dialog.
-#: src/orca/guilabels.py:1823
+#: src/orca/guilabels.py:1826
 msgid "Braille"
 msgstr "Брайль"
 
 #. Translators: This string is a label for a preferences page containing settings
 #. that apply when the user is navigating using the application's native navigation
 #. (e.g., arrow keys handled by the app) rather than the screen reader's browse mode.
-#: src/orca/guilabels.py:1833
+#: src/orca/guilabels.py:1836
 msgid "Native navigation"
 msgstr "Природна навігація"
 
 #. Translators: This string is a label for a group of settings related to what
 #. happens when a document or web page finishes loading.
-#: src/orca/guilabels.py:1837
+#: src/orca/guilabels.py:1840
 msgid "Page load"
 msgstr "Завантаження сторінки"
 
 #. Translators: This is the label for a group of settings related to what Orca
 #. announces when entering/exiting different types of containers/ancestors.
-#: src/orca/guilabels.py:1841
+#: src/orca/guilabels.py:1844
 msgid "Container Announcements"
 msgstr "Оголошення контейнера"
 
@@ -5687,18 +5695,18 @@ msgstr "Оголошення контейнера"
 #. whether Orca announces entering a type of container (e.g. blockquotes, forms,
 #. landmarks, lists, panels, tables). The full meaning is "Announce when entering
 #. [container type]" where the container types are listed below this heading.
-#: src/orca/guilabels.py:1847
+#: src/orca/guilabels.py:1850
 msgid "Announce when entering"
 msgstr "Оголошувати при вході до"
 
 #. Translators: This is the label of the Echo page in the Orca Preferences dialog.
 #. On that page there are a variety of settings related to what Orca will echo
 #. as the user types on the keyboard.
-#: src/orca/guilabels.py:1852
+#: src/orca/guilabels.py:1855
 msgid "Echo"
 msgstr "Озвучення"
 
-#: src/orca/guilabels.py:1858
+#: src/orca/guilabels.py:1861
 msgid ""
 "Key echo speaks the key you pressed. Typing echo speaks what was inserted "
 "into the document as a result of your typing."
@@ -5710,28 +5718,28 @@ msgstr ""
 #. Translators: This is the label of the General page in the Orca Preferences
 #. dialog. On that page there are a variety of general Orca settings which do
 #. not fit well into any of the other pages.
-#: src/orca/guilabels.py:1865
+#: src/orca/guilabels.py:1868
 msgid "General"
 msgstr "Загальне"
 
 #. Translators: This is the label of the Key Bindings page in the Orca Preferences
 #. dialog. On that page there is a list of all Orca commands and the keystrokes
 #. associated with them. The user can customize the keystrokes for any command.
-#: src/orca/guilabels.py:1870
+#: src/orca/guilabels.py:1873
 msgid "Key Bindings"
 msgstr "Прив'язки клавіш"
 
 #. Translators: This is the label of the Commands page in the Orca Preferences
 #. dialog. On that page there is a list of all Orca commands and the keystrokes
 #. associated with them. The user can customize the keystrokes for any command.
-#: src/orca/guilabels.py:1875
+#: src/orca/guilabels.py:1878
 msgid "Commands"
 msgstr "Команди"
 
 #. Translators: This is the label of the Mouse page in the Orca Preferences dialog.
 #. On that page there are settings related to what information Orca presents when
 #. the mouse pointer moves.
-#: src/orca/guilabels.py:1880
+#: src/orca/guilabels.py:1883
 msgid "Mouse"
 msgstr "Миша"
 
@@ -5739,7 +5747,7 @@ msgstr "Миша"
 #. preferences page. Mouse review features may not work properly on
 #. Wayland because Wayland restricts applications from monitoring the
 #. mouse pointer.
-#: src/orca/guilabels.py:1886
+#: src/orca/guilabels.py:1889
 msgid "These settings may not work on Wayland."
 msgstr "Ці параметри можуть не працювати у Wayland."
 
@@ -5748,25 +5756,25 @@ msgstr "Ці параметри можуть не працювати у Wayland.
 #. to the speech synthesizer. For instance "idk" can be sent to the speech server
 #. as "I don't know" or "I D K" or "eye dee kay" or whatever causes the user's
 #. speech synthesizer to say what the user finds most helpful.
-#: src/orca/guilabels.py:1893
+#: src/orca/guilabels.py:1896
 msgid "Pronunciation"
 msgstr "Вимова"
 
 #. Translators: This is the label of the Sound page in the Orca Preferences dialog.
 #. On that page there are settings related to sound output, including volume
 #. and progress bar beep notifications.
-#: src/orca/guilabels.py:1898
+#: src/orca/guilabels.py:1901
 msgid "Sound"
 msgstr "Звук"
 
 #. Translators: This is the label for a widget in the preferences dialog which
 #. turns sound support on or off.
-#: src/orca/guilabels.py:1902
+#: src/orca/guilabels.py:1905
 msgid "Sound support"
 msgstr "Підтримка звуку"
 
 #. Translators: This is the label for the volume control in the Sound preferences.
-#: src/orca/guilabels.py:1905
+#: src/orca/guilabels.py:1908
 msgid "Volume"
 msgstr "Гучність"
 
@@ -5774,28 +5782,28 @@ msgstr "Гучність"
 #. dialog. On that page there are settings related to table navigation, such as
 #. whether to speak table cell coordinates, row and column headers, and whether
 #. to read tables cell by cell or by full rows.
-#: src/orca/guilabels.py:1911
+#: src/orca/guilabels.py:1914
 msgid "Tables"
 msgstr "Таблиці"
 
 #. Translators: This is the label of the Time and Date page in the Orca Preferences
 #. dialog.
-#: src/orca/guilabels.py:1915
+#: src/orca/guilabels.py:1918
 msgid "Time and Date"
 msgstr "Час і дата"
 
 #. Translators: This is the label of the Speech page in the Orca Preferences dialog.
-#: src/orca/guilabels.py:1918
+#: src/orca/guilabels.py:1921
 msgid "Speech"
 msgstr "Озвучення"
 
 #. Translators: This is the label of the Text Attributes page in the Orca Preferences
 #. dialog.
-#: src/orca/guilabels.py:1922
+#: src/orca/guilabels.py:1925
 msgid "Text Attributes"
 msgstr "Атрибути тексту"
 
-#: src/orca/guilabels.py:1929
+#: src/orca/guilabels.py:1932
 msgid ""
 "Configure which text attributes are spoken and/or marked in braille, and the "
 "order in which they are presented."
@@ -5805,14 +5813,14 @@ msgstr ""
 
 #. Translators: This is the label of the Voice page in the Orca Preferences
 #. dialog.
-#: src/orca/guilabels.py:1935
+#: src/orca/guilabels.py:1938
 msgid "Voice"
 msgstr "Голос"
 
 #. Translators: This is the label for a group of settings on the Voice preferences
 #. page. It contains widgets that control whether speech is enabled and how
 #. certain content (numbers, colors) is spoken.
-#: src/orca/guilabels.py:1940
+#: src/orca/guilabels.py:1943
 msgid "Speech Settings"
 msgstr "Параметри озвучення"
 
@@ -5821,7 +5829,7 @@ msgstr "Параметри озвучення"
 #. default, hyperlink, uppercase, or system). The button displays only an icon
 #. (a cog/gear), so this label is for screen reader users. The %s is replaced
 #. with the voice type name (e.g., "Default", "Uppercase", "Hyperlink", "System").
-#: src/orca/guilabels.py:1947
+#: src/orca/guilabels.py:1950
 #, python-format
 msgctxt "VoiceType"
 msgid "%s Settings"
@@ -5830,7 +5838,7 @@ msgstr "Параметри %s"
 #. Translators: This is a label for a setting that controls whether Orca will
 #. automatically switch the speech synthesizer's language based on the language
 #. of the text or UI element being spoken.
-#: src/orca/guilabels.py:1952
+#: src/orca/guilabels.py:1955
 msgid "Automatic language switching"
 msgstr "Автоматичне перемикання мов"
 
@@ -5838,7 +5846,7 @@ msgstr "Автоматичне перемикання мов"
 #. pane of the Orca Preferences dialog. On that pane there is a long list of
 #. possible text attributes. The user can select one and then, by using the
 #. Move buttons in this group, adjust when that attribute is spoken by Orca.
-#: src/orca/guilabels.py:1958
+#: src/orca/guilabels.py:1961
 msgid "Adjust selected attribute"
 msgstr "Коригувати вибраний атрибут"
 
@@ -5846,7 +5854,7 @@ msgstr "Коригувати вибраний атрибут"
 #. braille dot or dots should be used to indicate that character(s) being
 #. shown on the braille display have a particular attribute (e.g. bold). The
 #. "indicator" can be chosen from among: None, Dot 7, Dot 8, Dots 7 and 8.
-#: src/orca/guilabels.py:1964
+#: src/orca/guilabels.py:1967
 msgid "Braille Indicator"
 msgstr "Індикатор Брайля"
 
@@ -5856,7 +5864,7 @@ msgstr "Індикатор Брайля"
 #. button, move that attribute down one line in the list. The ordering in the
 #. list is important as Orca will speak the selected text attributes in the
 #. given order.
-#: src/orca/guilabels.py:1972
+#: src/orca/guilabels.py:1975
 msgid "Move down one"
 msgstr "На один вниз"
 
@@ -5866,7 +5874,7 @@ msgstr "На один вниз"
 #. button, move that attribute up one line in the list. The ordering in the list
 #. is important as Orca will speak the selected text attributes in the given
 #. order.
-#: src/orca/guilabels.py:1980
+#: src/orca/guilabels.py:1983
 msgid "Move up one"
 msgstr "На один вгору"
 
@@ -5876,7 +5884,7 @@ msgstr "На один вгору"
 #. button, move that attribute to the bottom of the list. The ordering in the
 #. list is important as Orca will speak the selected text attributes in the
 #. given order.
-#: src/orca/guilabels.py:1988
+#: src/orca/guilabels.py:1991
 msgid "Move to bottom"
 msgstr "Пересунути вниз"
 
@@ -5886,31 +5894,31 @@ msgstr "Пересунути вниз"
 #. button, move that attribute to the top of the list. The ordering in the list
 #. is important as Orca will speak the selected text attributes in the given
 #. order.
-#: src/orca/guilabels.py:1996
+#: src/orca/guilabels.py:1999
 msgid "Move to top"
 msgstr "Пересунути вверх"
 
 #. Translators: This is a label for a group of widgets associated with how Orca
 #. will present text attributes such as bold, underline, italic, font size,
-#: src/orca/guilabels.py:2000
+#: src/orca/guilabels.py:2003
 msgid "Text attributes"
 msgstr "Атрибути тексту"
 
 #. Translators: This is the accessible name for a widget in the preferences dialog
 #. that allows the user to reorder text attributes in the list.
-#: src/orca/guilabels.py:2004
+#: src/orca/guilabels.py:2007
 msgid "Reorder"
 msgstr "Перевпорядкування"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus. The choices are Brief and Verbose.
-#: src/orca/guilabels.py:2008
+#: src/orca/guilabels.py:2011
 msgid "Verbosity"
 msgstr "Докладність"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: src/orca/guilabels.py:2012
+#: src/orca/guilabels.py:2015
 msgid "Ver_bose"
 msgstr "_Докладно"
 
@@ -5918,14 +5926,14 @@ msgstr "_Докладно"
 #. will speak regardless of which voice (Default, Hyperlink, System, Uppercase)
 #. is being used. For instance, Orca can speak numbers as individual digits
 #. (e.g. 123 as 1 2 3) or as a whole (e.g. 123 as one hundred and twenty three).
-#: src/orca/guilabels.py:2018
+#: src/orca/guilabels.py:2021
 msgid "Global Voice Settings"
 msgstr "Загальні параметри голосу"
 
 #. Translators: If this setting is enabled, 123 will be spoken as the individual
 #. digits 1 2 3; otherwise, it will be sent to the synthesizer and (likely)
 #. spoken as one hundred and twenty three.
-#: src/orca/guilabels.py:2023
+#: src/orca/guilabels.py:2026
 msgid "Speak _numbers as digits"
 msgstr "Вимовляти _числа як цифри"
 
@@ -5937,21 +5945,21 @@ msgstr "Вимовляти _числа як цифри"
 #. system -- each of which can be configured by the user to sound the way he/she
 #. finds most helpful. This string is displayed in the label for the group of
 #. all of the controls associated with configuring a particular voice type.
-#: src/orca/guilabels.py:2033
+#: src/orca/guilabels.py:2036
 msgid "Voice Type Settings"
 msgstr "Параметри типу голосу"
 
 #. Translators: This is the label for a widget from which the user can select
 #. which speech synthesis system Orca should use. Examples of speech synthesis
 #. systems include Speech Dispatcher and Spiel.
-#: src/orca/guilabels.py:2038
+#: src/orca/guilabels.py:2041
 msgid "Speech _system:"
 msgstr "С_истема озвучування мови:"
 
 #. Translators: This is the label for a widget from which the user can select
 #. which speech synthesizer Orca should use. Examples of speech synthesizers
 #. include eSpeak, Festival, and Pico.
-#: src/orca/guilabels.py:2043
+#: src/orca/guilabels.py:2046
 msgid "Speech synthesi_zer:"
 msgstr "Син_тезатор мови:"
 
@@ -5962,38 +5970,38 @@ msgstr "Син_тезатор мови:"
 #. or play a tone (which Speech Dispatcher refers to as a sound 'icon'). Orca
 #. refers to these things as 'capitalization style'. This string is the text of
 #. the label through which users can choose which of style they would prefer.
-#: src/orca/guilabels.py:2052
+#: src/orca/guilabels.py:2055
 msgid "Capitalization style"
 msgstr "Стиль великих літер"
 
 #. Translators: This is the label for a widget from which the user can select
 #. the language of the speech synthesizer.
-#: src/orca/guilabels.py:2056
+#: src/orca/guilabels.py:2059
 msgid "_Language:"
 msgstr "_Мова:"
 
 #. Translators: This is the label for a widget from which the user can select
 #. which voice from the current speech synthesizer should be used. Often voices
 #. have human names such as "Allison". Hence the use of the term person.
-#: src/orca/guilabels.py:2061
+#: src/orca/guilabels.py:2064
 msgid "_Person:"
 msgstr "_Особа:"
 
 #. Translators: This is the label for a widget from which the user can set the
 #. speaking rate of the current voice.
-#: src/orca/guilabels.py:2065
+#: src/orca/guilabels.py:2068
 msgid "_Rate:"
 msgstr "_Темп:"
 
 #. Translators: This is the label for a widget from which the user can set the
 #. pitch of the current voice.
-#: src/orca/guilabels.py:2069
+#: src/orca/guilabels.py:2072
 msgid "Pi_tch:"
 msgstr "Висота _тону:"
 
 #. Translators: This is the label for a widget from which the user can set the
 #. volume of the current voice.
-#: src/orca/guilabels.py:2073
+#: src/orca/guilabels.py:2076
 msgid "Vo_lume:"
 msgstr "_Гучність"
 
@@ -6005,18 +6013,18 @@ msgstr "_Гучність"
 #. system -- each of which can be configured by the user to sound the way he/she
 #. finds most helpful. This string is displayed in the label for the combo box
 #. in which the user selects a voice type to configure.
-#: src/orca/guilabels.py:2083
+#: src/orca/guilabels.py:2086
 msgid "_Voice type:"
 msgstr "Тип _голосу:"
 
 #. Translators: This refers to the voice used by Orca by default.
-#: src/orca/guilabels.py:2086
+#: src/orca/guilabels.py:2089
 msgid "Default"
 msgstr "Типово"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which are part of a hyperlink.
-#: src/orca/guilabels.py:2090
+#: src/orca/guilabels.py:2093
 msgid "Hyperlink"
 msgstr "Посилання"
 
@@ -6026,13 +6034,13 @@ msgstr "Посилання"
 #. indicate the presence of the red squiggly line found under a spelling error;
 #. Orca might say "3 of 6" when a user Tabs into a list of six items and the
 #. third item is selected. And so on.
-#: src/orca/guilabels.py:2098
+#: src/orca/guilabels.py:2101
 msgid "System"
 msgstr "Система"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is written in uppercase.
-#: src/orca/guilabels.py:2102
+#: src/orca/guilabels.py:2105
 msgid "Uppercase"
 msgstr "Верхній регістр"
 
@@ -6041,7 +6049,7 @@ msgstr "Верхній регістр"
 #. Super+M, but it works in all desktop environments. This string is the title
 #. of the dialog that contains the list of notification messages. The string
 #. substitution is for the number of messages in the list.
-#: src/orca/guilabels.py:2113
+#: src/orca/guilabels.py:2116
 #, python-format
 msgid "%d notification"
 msgid_plural "%d notifications"
