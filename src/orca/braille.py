@@ -898,9 +898,15 @@ class Region:
             else:
                 mode = 0
 
-        contracted, in_position, out_position, cursor_position = LOUIS.translate(
-            [self._contraction_table], line, cursorPos=cursor_offset, mode=mode
-        )
+        try:
+            contracted, in_position, out_position, cursor_position = LOUIS.translate(
+                [self._contraction_table], line, cursorPos=cursor_offset, mode=mode
+            )
+        except RuntimeError as error:
+            msg = f"BRAILLE: Failed to contract with table '{self._contraction_table}': {error}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            self._contracted = False
+            return line, [], [], cursor_offset
 
         # Make sure the cursor is at a realistic spot.
         # Note that if cursor_offset is beyond the end of the buffer,
