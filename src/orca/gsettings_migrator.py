@@ -268,8 +268,12 @@ def import_synthesizer(gs: Gio.Settings, profile_prefs: dict) -> bool:
     speech_server_info = profile_prefs.get("speechServerInfo")
     if speech_server_info is None or len(speech_server_info) < 2:
         return False
-    gs.set_string("speech-server", speech_server_info[0])
-    gs.set_string("synthesizer", speech_server_info[1])
+    server_name = speech_server_info[0]
+    synthesizer = speech_server_info[1]
+    if server_name is None and synthesizer is None:
+        return False
+    gs.set_string("speech-server", server_name or "")
+    gs.set_string("synthesizer", synthesizer or "")
     return True
 
 

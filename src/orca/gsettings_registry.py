@@ -316,16 +316,6 @@ class GSettingsRegistry:
                     gs.set_string("display-name", app_name)
                     gs.set_string("internal-name", profile_name)
 
-    def save_to_gsettings(
-        self, handle: GSettingsSchemaHandle, schema_name: str, values: dict[str, Any]
-    ) -> None:
-        """Persists settings values to GSettings for the active profile."""
-
-        gs = handle.get_for_profile(self._profile)
-        if gs is None:
-            return
-        self._json_to_gsettings(values, gs, schema_name)
-
     def save_all_to_gsettings(
         self,
         profile_name: str,
@@ -340,7 +330,7 @@ class GSettingsRegistry:
         gsettings_migrator.apply_legacy_aliases(general)
 
         profile = gsettings_migrator.sanitize_gsettings_path(profile_name)
-        skip_defaults = not app_name
+        skip_defaults = not app_name and profile_name == "default"
 
         for schema_name in self._schemas:
             if schema_name in ("voice", "pronunciations", "metadata"):
@@ -505,7 +495,7 @@ class GSettingsRegistry:
         gsettings_migrator.apply_legacy_aliases(profile_prefs)
         gsettings_migrator.hoist_keybindings_metadata(profile_prefs)
 
-        skip_defaults = True
+        skip_defaults = profile_name == "default"
 
         wrote = self._json_to_gsettings(profile_prefs, gs, schema_name, skip_defaults)
         if wrote:
