@@ -38,7 +38,6 @@ from . import preferences_grid_base
 from . import presentation_manager
 from . import script_manager
 from . import settings_manager
-from . import speech_manager
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -57,7 +56,6 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
 
         self._pronunciations: list[tuple[str, str]] = []
         self._listbox: Gtk.ListBox | None = None
-        self._saved_use_pronunciation_dictionary: bool = False
         self._has_unsaved_changes: bool = False
         self._loaded_from_settings: bool = False
 
@@ -102,7 +100,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         self._listbox.set_selection_mode(Gtk.SelectionMode.SINGLE)
         self._listbox.get_style_context().add_class("frame")
 
-        # Disable pronunciation dictionary when listbox is shown
+        # Suppress pronunciation substitution while editing entries
         self._listbox.connect("realize", self._on_listbox_realize)
         self._listbox.connect("unrealize", self._on_listbox_unrealize)
 
@@ -221,17 +219,14 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
             )
 
     def _on_listbox_realize(self, _widget: Gtk.Widget) -> None:
-        """Disable pronunciation dictionary when listbox is shown."""
+        """Suppress pronunciation substitution while editing entries."""
 
-        presenter = speech_manager.get_manager()
-        self._saved_use_pronunciation_dictionary = presenter.get_use_pronunciation_dictionary()
-        presenter.set_use_pronunciation_dictionary(False)
+        self._manager.suppress()
 
     def _on_listbox_unrealize(self, _widget: Gtk.Widget) -> None:
-        """Restore pronunciation dictionary when listbox is hidden."""
+        """Restore pronunciation substitution when done editing entries."""
 
-        presenter = speech_manager.get_manager()
-        presenter.set_use_pronunciation_dictionary(self._saved_use_pronunciation_dictionary)
+        self._manager.unsuppress()
 
     def _on_add_clicked(self, _button: Gtk.Button) -> None:
         """Handle Add button click to open add dialog."""
@@ -240,10 +235,6 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
 
     def _show_add_dialog(self) -> None:
         """Show dialog to add a new pronunciation."""
-
-        presenter = speech_manager.get_manager()
-        saved_use_pronunciation_dictionary = presenter.get_use_pronunciation_dictionary()
-        presenter.set_use_pronunciation_dictionary(False)
 
         dialog, add_button = self._create_header_bar_dialog(
             guilabels.ADD_NEW_PRONUNCIATION, guilabels.DIALOG_CANCEL, guilabels.DIALOG_ADD
@@ -295,7 +286,6 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
                     self._pronunciations.append((phrase, substitution))
                     self._has_unsaved_changes = True
                     self.refresh()
-            presenter.set_use_pronunciation_dictionary(saved_use_pronunciation_dictionary)
             dlg.destroy()
 
         dialog.connect("response", on_response)
@@ -307,10 +297,6 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         self, phrase: str, substitution: str, row_index: int
     ) -> None:
         """Show dialog to edit an existing pronunciation."""
-
-        presenter = speech_manager.get_manager()
-        saved_use_pronunciation_dictionary = presenter.get_use_pronunciation_dictionary()
-        presenter.set_use_pronunciation_dictionary(False)
 
         dialog, edit_button = self._create_header_bar_dialog(
             guilabels.EDIT_PRONUNCIATION, guilabels.DIALOG_CANCEL, guilabels.DIALOG_EDIT
@@ -364,7 +350,6 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
                     self._pronunciations[row_index] = (new_phrase, new_substitution)
                     self._has_unsaved_changes = True
                     self.refresh()
-            presenter.set_use_pronunciation_dictionary(saved_use_pronunciation_dictionary)
             dlg.destroy()
 
         dialog.connect("response", on_response)
@@ -447,6 +432,7 @@ class PronunciationDictionaryManager:
 
     def __init__(self) -> None:
         self._dictionary: dict[str, str] = {}
+        self._suppressed: bool = False
 
     def create_preferences_grid(
         self, script: default.Script
@@ -455,9 +441,21 @@ class PronunciationDictionaryManager:
 
         return PronunciationDictionaryPreferencesGrid(self, script)
 
+    def suppress(self) -> None:
+        """Suppresses pronunciation substitution without changing the user's preference."""
+
+        self._suppressed = True
+
+    def unsuppress(self) -> None:
+        """Restores pronunciation substitution after a prior suppress call."""
+
+        self._suppressed = False
+
     def get_pronunciation(self, word: str) -> str:
         """Returns the pronunciation for word, or word if not found."""
 
+        if self._suppressed:
+            return word
         return self._dictionary.get(word.lower(), word)
 
     def set_pronunciation(self, word: str, replacement: str) -> None:
