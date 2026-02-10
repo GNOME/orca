@@ -1245,7 +1245,25 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if document_presenter.get_presenter().browse_mode_is_sticky(self.app):
+        if caret_navigator.get_navigator().last_input_event_was_navigation_command():
+            msg = "WEB: Event ignored: Last command was caret nav"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if structural_navigator.get_navigator().last_input_event_was_navigation_command():
+            msg = "WEB: Event ignored: Last command was struct nav"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if table_navigator.get_navigator().last_input_event_was_navigation_command():
+            msg = "WEB: Event ignored: Last command was table nav"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if (
+            document_presenter.get_presenter().browse_mode_is_sticky(self.app)
+            and not input_event_manager.get_manager().last_event_was_tab_navigation()
+        ):
             msg = "WEB: Element claimed focus, but browse mode is sticky"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -1304,21 +1322,6 @@ class Script(default.Script):
             else:
                 msg = "WEB: Search for caret context failed"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        if caret_navigator.get_navigator().last_input_event_was_navigation_command():
-            msg = "WEB: Event ignored: Last command was caret nav"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if structural_navigator.get_navigator().last_input_event_was_navigation_command():
-            msg = "WEB: Event ignored: Last command was struct nav"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if table_navigator.get_navigator().last_input_event_was_navigation_command():
-            msg = "WEB: Event ignored: Last command was table nav"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
 
         if not (AXUtilities.is_focusable(event.source) and AXUtilities.is_focused(event.source)):
             msg = "WEB: Event ignored: Source is not focusable or focused"
