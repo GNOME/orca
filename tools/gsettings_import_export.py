@@ -152,6 +152,12 @@ class SchemaSource:
 
     def __init__(self) -> None:
         self._source = Gio.SettingsSchemaSource.get_default()  # pylint: disable=no-value-for-parameter
+        if self._source is None:
+            print(
+                "Error: No GSettings schema source found.\nXDG_DATA_DIRS may not be set correctly.",
+                file=sys.stderr,
+            )
+            sys.exit(1)
         self._cache: dict[str, Gio.Settings] = {}
 
     def lookup(self, schema_id: str) -> "Gio.SettingsSchema | None":
@@ -165,7 +171,16 @@ class SchemaSource:
             return self._cache[cache_key]
         schema = self._source.lookup(schema_id, True)
         if schema is None:
-            raise ValueError(f"Schema {schema_id} not found in schema source")
+            print(
+                f"Error: {schema_id} not found in the default GSettings schema "
+                "directories. \nIf you built Orca with a custom prefix "
+                "(e.g. `meson setup -Dprefix=/my/prefix`),"
+                "\ntry adding its `share` directory via: "
+                "\n\n`export XDG_DATA_DIRS=/my/prefix/share:$XDG_DATA_DIRS`"
+                "\n\nbefore re-running this (experimental and currently unsupported) tool.",
+                file=sys.stderr,
+            )
+            sys.exit(1)
         gs = Gio.Settings.new_full(schema, None, path)
         self._cache[cache_key] = gs
         return gs
