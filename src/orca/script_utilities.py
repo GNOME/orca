@@ -533,6 +533,9 @@ class Utilities:
     def _find_window_witih_descendant(self, child: Atspi.Accessible) -> Atspi.Accessible | None:
         """A terrible, non-performant workaround for broken ancestry."""
 
+        if not AXObject.is_valid(child):
+            return None
+
         app = AXUtilities.get_application(child)
         if app is None:
             return None
