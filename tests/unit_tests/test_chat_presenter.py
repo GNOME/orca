@@ -398,6 +398,7 @@ class TestChat:
         """Test get_conversation_for_object when name doesn't match log's room."""
 
         self._setup_dependencies(test_context)
+        from unittest.mock import patch
         from orca.chat_presenter import Chat, Conversation
 
         mock_script = test_context.Mock()
@@ -407,9 +408,8 @@ class TestChat:
         conversation1 = Conversation("Room1", mock_log1)
         chat._conversation_list.add_message("Hello", conversation1)
 
-        chat.get_chat_room_name = test_context.Mock(return_value="Room2")
-
-        result = chat.get_conversation_for_object(mock_log1)
+        with patch.object(chat, "get_chat_room_name", return_value="Room2"):
+            result = chat.get_conversation_for_object(mock_log1)
 
         assert result is None
 
@@ -763,3 +763,93 @@ class TestChatPresenter:
         pres_manager.present_message.assert_called_with(
             essential_modules["orca.messages"].CHAT_LIST_BOTTOM
         )
+
+    def _setup_verbosity_test(
+        self, test_context: OrcaTestContext, verbosity: int
+    ) -> tuple[dict[str, Mock], Mock]:
+        """Sets up mocks for utter_message verbosity tests. Returns (modules, script)."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.CHAT_SPEAK_ALL_ANY_APP = 0
+        settings_mock.CHAT_SPEAK_ALL_ACTIVE_APP = 1
+        settings_mock.CHAT_SPEAK_CURRENT_ACTIVE_APP = 2
+        settings_mock.CHAT_SPEAK_CURRENT_ANY_APP = 3
+        mock_script = self._setup_navigation_mocks(test_context, essential_modules)
+        settings_manager_mock = essential_modules["orca.settings_manager"]
+        manager_instance = settings_manager_mock.get_manager.return_value
+        manager_instance.get_app_setting = test_context.Mock(return_value=verbosity)
+        return essential_modules, mock_script
+
+    def test_utter_message_all_speaks_regardless(self, test_context: OrcaTestContext) -> None:
+        """Test that ALL verbosity speaks regardless of focus or active channel."""
+
+        essential_modules, mock_script = self._setup_verbosity_test(test_context, 0)
+        from orca.chat_presenter import get_presenter
+
+        presenter = get_presenter()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.speak_message.reset_mock()
+        presenter.utter_message(mock_script, "Room", "Hello", focused=False, active_channel=False)
+
+        pres_manager.speak_message.assert_called_once()
+
+    def test_utter_message_active_channel_speaks_when_active(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that ACTIVE_CHANNEL verbosity speaks when active_channel=True."""
+
+        essential_modules, mock_script = self._setup_verbosity_test(test_context, 3)
+        from orca.chat_presenter import get_presenter
+
+        presenter = get_presenter()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.speak_message.reset_mock()
+        presenter.utter_message(mock_script, "Room", "Hello", focused=False, active_channel=True)
+
+        pres_manager.speak_message.assert_called_once()
+
+    def test_utter_message_active_channel_silent_when_inactive(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that ACTIVE_CHANNEL verbosity is silent when active_channel=False."""
+
+        essential_modules, mock_script = self._setup_verbosity_test(test_context, 3)
+        from orca.chat_presenter import get_presenter
+
+        presenter = get_presenter()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.speak_message.reset_mock()
+        presenter.utter_message(mock_script, "Room", "Hello", focused=False, active_channel=False)
+
+        pres_manager.speak_message.assert_not_called()
+
+    def test_utter_message_focused_channel_silent_when_unfocused(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that FOCUSED_CHANNEL is silent when unfocused even if active_channel=True."""
+
+        essential_modules, mock_script = self._setup_verbosity_test(test_context, 2)
+        from orca.chat_presenter import get_presenter
+
+        presenter = get_presenter()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.speak_message.reset_mock()
+        presenter.utter_message(mock_script, "Room", "Hello", focused=False, active_channel=True)
+
+        pres_manager.speak_message.assert_not_called()
+
+    def test_utter_message_focused_channel_speaks_when_focused(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that FOCUSED_CHANNEL speaks when focused=True."""
+
+        essential_modules, mock_script = self._setup_verbosity_test(test_context, 2)
+        from orca.chat_presenter import get_presenter
+
+        presenter = get_presenter()
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.speak_message.reset_mock()
+        presenter.utter_message(mock_script, "", "Hello", focused=True, active_channel=True)
+
+        pres_manager.speak_message.assert_called_once()

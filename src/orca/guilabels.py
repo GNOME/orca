@@ -232,24 +232,32 @@ CHAT_SEPARATE_MESSAGE_HISTORIES = _("Provide chat room specific _message histori
 # Translators: This is the label of a panel holding options for how messages in
 # this application's chat rooms should be spoken. The options are: Speak messages
 # from all channels (i.e. even if the chat application doesn't have focus); speak
-# messages from a channel only if it is the active channel; speak messages from
-# any channel, but only if the chat application has focus.
+# messages from the active channel regardless of application focus; speak messages
+# from all channels but only if the chat application has focus; speak messages from
+# the active channel only if the chat application has focus.
 CHAT_SPEAK_MESSAGES_FROM = _("Speak messages from")
 
 # Translators: This is the label of a widget in the preferences dialog. If it is
 # selected, Orca will speak all new chat messages as they appear irrespective of
 # whether or not the chat application currently has focus. This is the default
 # behavior.
-CHAT_SPEAK_MESSAGES_ALL = _("All channels")
+CHAT_SPEAK_MESSAGES_ALL = _("All channels when using any application")
+
+# Translators: This is the label of a widget in the preferences dialog. If it is
+# selected, Orca will only speak new chat messages for the currently active channel
+# (the selected tab or focused chat window), regardless of whether or not the chat
+# application currently has focus.
+CHAT_SPEAK_MESSAGES_ACTIVE_CHANNEL = _("The active channel when using any application")
 
 # Translators: This is the label of a widget in the preferences dialog. If it is
 # selected, Orca will speak all new chat messages as they appear if and only if the
 # chat application has focus.
-CHAT_SPEAK_MESSAGES_ALL_IF_FOCUSED = _("All channels when the application is active")
+CHAT_SPEAK_MESSAGES_ALL_IF_FOCUSED = _("All channels when using the application")
 
 # Translators: This is the label of a widget in the preferences dialog. If it is
-# selected, Orca will only speak new chat messages for the currently active channel,
-CHAT_SPEAK_MESSAGES_ACTIVE = _("A channel only if its window is active")
+# selected, Orca will only speak new chat messages for the currently active channel
+# (the selected tab or focused chat window) when the chat application has focus.
+CHAT_SPEAK_MESSAGES_ACTIVE = _("The active channel when using the application")
 
 # Translators: If this widget is enabled, then Orca will speak the name of the
 # chat room prior to presenting an incoming message.

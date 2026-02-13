@@ -46,6 +46,7 @@ from . import script_manager
 from . import settings
 from . import settings_manager
 from .ax_object import AXObject
+from .ax_selection import AXSelection
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
@@ -57,14 +58,15 @@ if TYPE_CHECKING:
 
 @gsettings_registry.get_registry().gsettings_enum(
     "org.gnome.Orca.ChatMessageVerbosity",
-    values={"all": 0, "all-if-focused": 1, "focused-channel": 2},
+    values={"all": 0, "all-if-focused": 1, "focused-channel": 2, "active-channel": 3},
 )
 class ChatMessageVerbosity(Enum):
     """Chat message verbosity level enumeration."""
 
-    ALL = settings.CHAT_SPEAK_ALL
-    ALL_IF_FOCUSED = settings.CHAT_SPEAK_ALL_IF_FOCUSED
-    FOCUSED_CHANNEL = settings.CHAT_SPEAK_FOCUSED_CHANNEL
+    ALL_ANY_APP = settings.CHAT_SPEAK_ALL_ANY_APP
+    ALL_ACTIVE_APP = settings.CHAT_SPEAK_ALL_ACTIVE_APP
+    CURRENT_ACTIVE_APP = settings.CHAT_SPEAK_CURRENT_ACTIVE_APP
+    CURRENT_ANY_APP = settings.CHAT_SPEAK_CURRENT_ANY_APP
 
     @property
     def string_name(self) -> str:
@@ -276,24 +278,39 @@ class Chat:
             return not AXUtilities.is_editable(obj) and AXUtilities.is_multi_line(obj)
         return False
 
-    def is_focused_chat(self, obj: Atspi.Accessible) -> bool:
-        """Returns True if obj is from the active chat room."""
+    def is_current_channel_in_active_app(self, obj: Atspi.Accessible) -> bool:
+        """Returns True if obj is from the active chat room in the focused window."""
+
+        if not self.is_active_channel(obj):
+            return False
+        return self._script.utilities.top_level_object_is_active_and_current(obj)
+
+    def is_active_channel(self, obj: Atspi.Accessible) -> bool:
+        """Returns True if obj is in the active/selected channel."""
 
         if AXUtilities.is_showing(obj):
-            active = self._script.utilities.top_level_object_is_active_and_current(obj)
-            tokens = ["INFO:", obj, "'s window is focused chat:", active]
+            tokens = ["CHAT:", obj, "is in active channel (showing)"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return active
+            return True
 
-        # TODO - JD: This was in the smuxi-frontend-gnome Chat class. Who knows if it's
-        # still relevant?
         if page_tab := AXObject.find_ancestor(obj, AXUtilities.is_page_tab):
-            result = AXUtilities.is_showing(page_tab)
-            tokens = ["INFO:", obj, "is in focused tab:", result]
+            tab_list = AXObject.get_parent(page_tab)
+            selected = AXSelection.get_selected_child(tab_list, 0)
+            result = selected == page_tab
+            tokens = [
+                "CHAT:",
+                obj,
+                "tab:",
+                page_tab,
+                "selected tab:",
+                selected,
+                "is active channel:",
+                result,
+            ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
 
-        tokens = ["INFO:", obj, "is not focused chat (not showing)"]
+        tokens = ["CHAT:", obj, "is not in active channel (not showing, no tab)"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
@@ -346,13 +363,15 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     def __init__(self, presenter: ChatPresenter) -> None:
         options = [
             guilabels.CHAT_SPEAK_MESSAGES_ALL,
-            guilabels.CHAT_SPEAK_MESSAGES_ACTIVE,
+            guilabels.CHAT_SPEAK_MESSAGES_ACTIVE_CHANNEL,
             guilabels.CHAT_SPEAK_MESSAGES_ALL_IF_FOCUSED,
+            guilabels.CHAT_SPEAK_MESSAGES_ACTIVE,
         ]
         values = [
-            settings.CHAT_SPEAK_ALL,
-            settings.CHAT_SPEAK_FOCUSED_CHANNEL,
-            settings.CHAT_SPEAK_ALL_IF_FOCUSED,
+            settings.CHAT_SPEAK_ALL_ANY_APP,
+            settings.CHAT_SPEAK_CURRENT_ANY_APP,
+            settings.CHAT_SPEAK_ALL_ACTIVE_APP,
+            settings.CHAT_SPEAK_CURRENT_ACTIVE_APP,
         ]
 
         controls: list[
@@ -462,8 +481,13 @@ class ChatPresenter:
 
         return ChatPreferencesGrid(self)
 
-    def utter_message(
-        self, script: default.Script, room_name: str, message: str, focused: bool = True
+    def utter_message(  # pylint: disable=too-many-arguments,too-many-positional-arguments
+        self,
+        script: default.Script,
+        room_name: str,
+        message: str,
+        focused: bool = True,
+        active_channel: bool = True,
     ) -> None:
         """Speak/braille a chat room message, taking user settings into account."""
 
@@ -472,10 +496,12 @@ class ChatPresenter:
         if (
             active_script is not None
             and active_script.name != script.name
-            and verbosity == settings.CHAT_SPEAK_ALL_IF_FOCUSED
+            and verbosity == settings.CHAT_SPEAK_ALL_ACTIVE_APP
         ):
             return
-        if not focused and verbosity == settings.CHAT_SPEAK_FOCUSED_CHANNEL:
+        if not focused and verbosity == settings.CHAT_SPEAK_CURRENT_ACTIVE_APP:
+            return
+        if not active_channel and verbosity == settings.CHAT_SPEAK_CURRENT_ANY_APP:
             return
 
         text = ""
@@ -536,11 +562,12 @@ class ChatPresenter:
                 conversation.add_message(message)
                 chat.add_message(message, conversation)
 
-            focused = chat.is_focused_chat(event.source)
+            focused = chat.is_current_channel_in_active_app(event.source)
+            active_channel = chat.is_active_channel(event.source)
             if focused:
                 name = ""
             if message:
-                self.utter_message(script, name, message, focused)
+                self.utter_message(script, name, message, focused, active_channel)
             return True
 
         if chat.is_auto_completed_text_event(event):
@@ -735,7 +762,7 @@ class ChatPresenter:
         schema="chat",
         genum="org.gnome.Orca.ChatMessageVerbosity",
         default="all",
-        summary="Chat message verbosity (all, all-if-focused, focused-channel)",
+        summary="Chat message verbosity (all, all-if-focused, focused-channel, active-channel)",
         settings_key="chatMessageVerbosity",
     )
     @dbus_service.getter

@@ -51,9 +51,10 @@ PROGRESS_BAR_ALL: int = 0
 PROGRESS_BAR_APPLICATION: int = 1
 PROGRESS_BAR_WINDOW: int = 2
 
-CHAT_SPEAK_ALL: int = 0
-CHAT_SPEAK_ALL_IF_FOCUSED: int = 1
-CHAT_SPEAK_FOCUSED_CHANNEL: int = 2
+CHAT_SPEAK_ALL_ANY_APP: int = 0
+CHAT_SPEAK_ALL_ACTIVE_APP: int = 1
+CHAT_SPEAK_CURRENT_ACTIVE_APP: int = 2
+CHAT_SPEAK_CURRENT_ANY_APP: int = 3
 
 DEFAULT_VOICE: str = "default"
 UPPERCASE_VOICE: str = "uppercase"
@@ -239,7 +240,7 @@ orcaModifierKeys: list[str] = DESKTOP_MODIFIER_KEYS
 doubleClickTimeout: float = 0.5
 
 # Managed by chat_presenter.py
-chatMessageVerbosity: int = CHAT_SPEAK_ALL
+chatMessageVerbosity: int = CHAT_SPEAK_ALL_ANY_APP
 chatSpeakRoomName: bool = False
 chatAnnounceBuddyTyping: bool = False
 chatRoomHistories: bool = False

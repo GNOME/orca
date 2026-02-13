@@ -157,9 +157,9 @@ class TestSettingsManagerFileIO:
         settings_obj.CAPITALIZATION_STYLE_SPELL = "spell"
         settings_obj.CAPITALIZATION_STYLE_ICON = "icon"
         # Chat constants
-        settings_obj.CHAT_SPEAK_ALL = 0
-        settings_obj.CHAT_SPEAK_ALL_IF_FOCUSED = 1
-        settings_obj.CHAT_SPEAK_FOCUSED_CHANNEL = 2
+        settings_obj.CHAT_SPEAK_ALL_ANY_APP = 0
+        settings_obj.CHAT_SPEAK_ALL_ACTIVE_APP = 1
+        settings_obj.CHAT_SPEAK_CURRENT_ACTIVE_APP = 2
         # Find constants
         settings_obj.FIND_SPEAK_NONE = 0
         settings_obj.FIND_SPEAK_IF_LINE_CHANGED = 1
