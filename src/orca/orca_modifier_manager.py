@@ -40,7 +40,7 @@ gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi
 from gi.repository import GLib
-from gi.repository import Gdk
+from gi.repository import Gdk  # pylint: disable=no-name-in-module
 
 from . import debug
 from . import gsettings_registry
@@ -58,6 +58,7 @@ class OrcaModifierManager:
     def __init__(self) -> None:
         self._grabbed_modifiers: dict = {}
         self._is_pressed: bool = False
+        self._modifiers_are_set: bool = False
 
         # Related to hacks which will soon die.
         self._original_xmodmap: bytes = b""
@@ -92,7 +93,7 @@ class OrcaModifierManager:
         if modifier in ["Insert", "KP_Insert"]:
             return self.is_modifier_grabbed(modifier)
 
-        return True
+        return self._modifiers_are_set
 
     def get_pressed_state(self) -> bool:
         """Returns True if the Orca modifier has been pressed but not yet released."""
@@ -254,6 +255,7 @@ class OrcaModifierManager:
             self.remove_modifier_grab(modifier)
         self._is_pressed = False
         self.add_grabs_for_orca_modifiers()
+        self._modifiers_are_set = True
 
         display = os.environ.get("DISPLAY")
         if not display:
@@ -261,7 +263,7 @@ class OrcaModifierManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        self.unset_orca_modifiers(reason)
+        self._restore_original_xkbcomp()
         with subprocess.Popen(
             ["xkbcomp", display, "-"], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL
         ) as p:
@@ -274,7 +276,7 @@ class OrcaModifierManager:
         msg = "ORCA MODIFIER MANAGER: Creating Orca xmodmap"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        if self.is_orca_modifier("Caps_Lock") or self.is_orca_modifier("Shift_Lock"):
+        if "Caps_Lock" in settings.orcaModifierKeys or "Shift_Lock" in settings.orcaModifierKeys:
             self.set_caps_lock_as_orca_modifier(True)
             self._caps_lock_cleared = True
         elif self._caps_lock_cleared:
@@ -284,10 +286,17 @@ class OrcaModifierManager:
     def unset_orca_modifiers(self, reason: str = "") -> None:
         """Turns the Orca modifiers back into their original purpose."""
 
-        msg = "ORCA MODIFIER MANAGER: Attempting to restore original xmodmap"
+        msg = "ORCA MODIFIER MANAGER: Unsetting Orca modifiers"
         if reason:
             msg += f": {reason}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        self._modifiers_are_set = False
+        self._restore_original_xkbcomp()
+        input_event_manager.get_manager().unmap_all_modifiers()
+
+    def _restore_original_xkbcomp(self) -> None:
+        """Restores the original xkbcomp keymap."""
 
         if not self._original_xmodmap:
             msg = "ORCA MODIFIER MANAGER: No stored xmodmap found"

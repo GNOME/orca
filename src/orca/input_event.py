@@ -40,7 +40,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi
-from gi.repository import Gdk
+from gi.repository import Gdk  # pylint: disable=no-name-in-module
 from gi.repository import GLib
 
 from . import command_manager
@@ -603,8 +603,12 @@ class KeyboardEvent(InputEvent):
 
         # pylint: disable=import-outside-toplevel
         from . import learn_mode_presenter
+        from . import sleep_mode_manager
 
         if learn_mode_presenter.get_presenter().is_active():
+            return
+
+        if sleep_mode_manager.get_manager().is_active_for_app(self._script.app):
             return
 
         presentation_manager.get_manager().present_keyboard_event(self._script, self)

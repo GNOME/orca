@@ -77,7 +77,7 @@ class BypassModeManager:
         return self._is_active
 
     def toggle_enabled(
-        self, script: default.Script, event: input_event.InputEvent | None = None
+        self, _script: default.Script, event: input_event.InputEvent | None = None
     ) -> bool:
         """Toggles bypass mode."""
 

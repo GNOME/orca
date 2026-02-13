@@ -223,18 +223,36 @@ class TestOrcaModifierManager:
                 "expected_result": False,
             },
             {
-                "id": "caps_lock_always_true",
+                "id": "caps_lock_modifiers_set",
                 "modifier": "Caps_Lock",
                 "orca_modifier_keys": ["Caps_Lock"],
                 "is_grabbed": False,
+                "modifiers_are_set": True,
                 "expected_result": True,
             },
             {
-                "id": "shift_lock_always_true",
+                "id": "caps_lock_modifiers_not_set",
+                "modifier": "Caps_Lock",
+                "orca_modifier_keys": ["Caps_Lock"],
+                "is_grabbed": False,
+                "modifiers_are_set": False,
+                "expected_result": False,
+            },
+            {
+                "id": "shift_lock_modifiers_set",
                 "modifier": "Shift_Lock",
                 "orca_modifier_keys": ["Shift_Lock"],
                 "is_grabbed": False,
+                "modifiers_are_set": True,
                 "expected_result": True,
+            },
+            {
+                "id": "shift_lock_modifiers_not_set",
+                "modifier": "Shift_Lock",
+                "orca_modifier_keys": ["Shift_Lock"],
+                "is_grabbed": False,
+                "modifiers_are_set": False,
+                "expected_result": False,
             },
             {
                 "id": "not_orca_modifier",
@@ -258,6 +276,7 @@ class TestOrcaModifierManager:
 
         manager = orca_modifier_manager.OrcaModifierManager()
         manager._grabbed_modifiers = {"Insert": 1, "KP_Insert": 2} if case["is_grabbed"] else {}
+        manager._modifiers_are_set = case.get("modifiers_are_set", False)
 
         test_context.patch(
             "orca.orca_modifier_manager.settings.orcaModifierKeys", new=case["orca_modifier_keys"]
@@ -677,16 +696,17 @@ class TestOrcaModifierManager:
         mock_context_manager.__enter__ = test_context.Mock(return_value=mock_process)
         mock_context_manager.__exit__ = test_context.Mock(return_value=None)
         mock_popen.return_value = mock_context_manager
-        mock_unset = test_context.Mock()
-        test_context.patch_object(manager, "unset_orca_modifiers", new=mock_unset)
+        mock_restore = test_context.Mock()
+        test_context.patch_object(manager, "_restore_original_xkbcomp", new=mock_restore)
         mock_create = test_context.Mock()
         test_context.patch_object(manager, "_create_orca_xmodmap", new=mock_create)
         manager.refresh_orca_modifiers("test reason")
-        mock_unset.assert_called_once_with("test reason")
+        mock_restore.assert_called_once()
         mock_popen.assert_called_once_with(
             ["xkbcomp", ":0", "-"], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL
         )
         assert manager._original_xmodmap == b"xmodmap_content"
+        assert manager._modifiers_are_set is True
         mock_create.assert_called_once()
 
     @pytest.mark.parametrize(
@@ -717,15 +737,14 @@ class TestOrcaModifierManager:
         manager = orca_modifier_manager.OrcaModifierManager()
         manager._caps_lock_cleared = caps_cleared
 
-        def is_orca_modifier_side_effect(modifier):
-            if modifier == "Caps_Lock":
-                return caps_lock_orca
-            if modifier == "Shift_Lock":
-                return shift_lock_orca
-            return False
-
-        mock_is_orca_modifier = test_context.Mock(side_effect=is_orca_modifier_side_effect)
-        test_context.patch_object(manager, "is_orca_modifier", new=mock_is_orca_modifier)
+        orca_modifier_keys: list[str] = []
+        if caps_lock_orca:
+            orca_modifier_keys.append("Caps_Lock")
+        if shift_lock_orca:
+            orca_modifier_keys.append("Shift_Lock")
+        test_context.patch(
+            "orca.orca_modifier_manager.settings.orcaModifierKeys", new=orca_modifier_keys
+        )
         mock_set_caps = test_context.Mock()
         test_context.patch_object(manager, "set_caps_lock_as_orca_modifier", new=mock_set_caps)
         manager._create_orca_xmodmap()
@@ -753,6 +772,7 @@ class TestOrcaModifierManager:
         from orca import orca_modifier_manager
 
         manager = orca_modifier_manager.OrcaModifierManager()
+        manager._modifiers_are_set = True
         if has_xmodmap:
             test_context.patch("os.environ", new={"DISPLAY": ":0"})
             manager._original_xmodmap = b"original_xmodmap_content"
@@ -763,6 +783,13 @@ class TestOrcaModifierManager:
         mock_popen = test_context.Mock()
         test_context.patch("orca.orca_modifier_manager.subprocess.Popen", new=mock_popen)
 
+        mock_unmap = test_context.Mock()
+        mock_iem = test_context.Mock()
+        mock_iem.unmap_all_modifiers = mock_unmap
+        test_context.patch(
+            "orca.orca_modifier_manager.input_event_manager.get_manager", return_value=mock_iem
+        )
+
         if has_xmodmap:
             mock_process = test_context.Mock()
             mock_context_manager = test_context.Mock()
@@ -772,6 +799,8 @@ class TestOrcaModifierManager:
 
         manager.unset_orca_modifiers("test reason" if has_xmodmap else "")
 
+        assert manager._modifiers_are_set is False
+        mock_unmap.assert_called_once()
         if expects_popen_call:
             mock_popen.assert_called_once_with(
                 ["xkbcomp", "-w0", "-", ":0"], stdin=subprocess.PIPE, stdout=None, stderr=None

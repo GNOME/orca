@@ -44,7 +44,6 @@ from . import messages
 from . import preferences_grid_base
 from . import presentation_manager
 from . import settings
-from . import sleep_mode_manager
 from . import speech_presenter
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
@@ -915,7 +914,7 @@ class TypingEchoPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
 
-    def echo_delayed_terminal_press(self, script: default.Script, event: Atspi.Event) -> None:
+    def echo_delayed_terminal_press(self, _script: default.Script, event: Atspi.Event) -> None:
         """Echoes a previously delayed terminal key press if it matches the inserted text."""
 
         if self._delayed_terminal_press is None:
@@ -937,11 +936,6 @@ class TypingEchoPresenter:
 
     def echo_keyboard_event(self, script: default.Script, event: input_event.KeyboardEvent) -> None:
         """Presents the KeyboardEvent event."""
-
-        if sleep_mode_manager.get_manager().is_active_for_app(script.app):
-            msg = "TYPING ECHO PRESENTER: Ignoring keyboard event, sleep mode active."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
 
         if not event.is_pressed_key():
             script.utilities.clear_cached_command_state_deprecated()
