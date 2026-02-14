@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-02-01 15:48+0000\n"
-"PO-Revision-Date: 2026-02-06 19:38+0100\n"
+"PO-Revision-Date: 2026-02-14 19:38+0100\n"
 "Last-Translator: Bàrbara Vidal <barbara@barbara.cat>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -6783,7 +6783,7 @@ msgstr "conté com a membre"
 #: src/orca/mathsymbols.py:1411
 msgctxt "math symbol"
 msgid "does not contain as a member"
-msgstr "no conté com a mmbre"
+msgstr "no conté com a membre"
 
 #. Translators: this is the spoken representation for the character '∍' (U+220d)
 #: src/orca/mathsymbols.py:1414
