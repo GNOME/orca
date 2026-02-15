@@ -515,19 +515,9 @@ class SpeechServer(speechserver.SpeechServer):
 
         return families
 
-    def speak(
-        self, text: str | None = None, acss: dict[str, Any] | None = None, interrupt: bool = True
-    ) -> None:
+    def speak(self, text: str | None = None, acss: dict[str, Any] | None = None) -> None:
         if not text:
             return
-
-        # In order to re-enable this, a potentially non-trivial amount of work
-        # will be needed to ensure multiple utterances sent to speech.speak
-        # do not result in the intial utterances getting cut off before they
-        # can be heard by the user. Anyone needing to interrupt speech can
-        # do so by using the default script's method interrupt_presentation.
-        # if interrupt:
-        #    self._cancel()
 
         if len(text) == 1:
             msg = f"SPEECH DISPATCHER: Speaking '{text}' as char"

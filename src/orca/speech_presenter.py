@@ -2073,7 +2073,7 @@ class SpeechPresenter:
             voice_to_use = voice[0]
         elif not isinstance(voice, list):
             voice_to_use = voice
-        speech.speak(text, voice_to_use, interrupt)
+        speech.speak(text, voice_to_use)
 
         if voice == system_voice and reset_styles:
             mgr.set_capitalization_style(cap_style)
@@ -2092,6 +2092,106 @@ class SpeechPresenter:
 
         utterances = active_script.speech_generator.generate_contents(contents, **args)
         speech.speak(utterances)
+
+    def present_generated_speech(
+        self, script: default.Script, obj: Atspi.Accessible, **args: Any
+    ) -> None:
+        """Generates speech for obj using the script's speech generator and speaks it."""
+
+        utterances = script.speech_generator.generate_speech(obj, **args)
+        speech.speak(utterances)
+
+    def speak_line(
+        self,
+        script: default.Script,
+        obj: Atspi.Accessible,
+        start_offset: int,
+        end_offset: int,
+        line: str,
+    ) -> None:
+        """Generates and speaks a line using the script's speech generator."""
+
+        indentation = self.get_indentation_description(line)
+        if indentation:
+            self.speak_message(indentation)
+
+        utterances = script.speech_generator.generate_line(obj, start_offset, end_offset, line)
+        speech.speak(utterances)
+
+    def speak_phrase(
+        self,
+        script: default.Script,
+        obj: Atspi.Accessible,
+        start_offset: int,
+        end_offset: int,
+        phrase: str,
+    ) -> None:
+        """Generates and speaks a phrase using the script's speech generator."""
+
+        if len(phrase) <= 1 and not phrase.isalnum():
+            self.speak_character(phrase)
+            return
+
+        indentation = self.get_indentation_description(phrase)
+        if indentation:
+            self.speak_message(indentation)
+
+        utterances = script.speech_generator.generate_phrase(obj, start_offset, end_offset, phrase)
+        speech.speak(utterances)
+
+    def speak_word(
+        self,
+        script: default.Script,
+        obj: Atspi.Accessible,
+        offset: int,
+    ) -> None:
+        """Generates and speaks a word using the script's speech generator."""
+
+        utterances = script.speech_generator.generate_word(obj, offset)
+        speech.speak(utterances)
+
+    def speak_character_at_offset(
+        self,
+        obj: Atspi.Accessible,
+        offset: int,
+        character: str,
+    ) -> None:
+        """Handles presentation of a character at the given offset."""
+
+        if not character or character == "\r":
+            character = "\n"
+
+        if character == "\n":
+            line_string = AXText.get_line_at_offset(obj, max(0, offset))[0]
+            if not line_string or line_string == "\n":
+                if self.get_speak_blank_lines():
+                    self.speak_message(messages.BLANK, interrupt=False)
+                return
+
+        if character in ["\n", "\r\n"]:
+            if self.get_speak_blank_lines():
+                self.speak_message(messages.BLANK, interrupt=False)
+            return
+
+        if error := self.get_error_description(obj, offset):
+            self.speak_message(error)
+
+        self.speak_character(character)
+
+    def speak_string(self, text: str, voice: ACSS | list[ACSS] | None = None) -> None:
+        """Speaks a string using the specified voice."""
+
+        voice_to_use: ACSS | dict[str, Any] | None = None
+        if isinstance(voice, list) and voice:
+            voice_to_use = voice[0]
+        elif not isinstance(voice, list):
+            voice_to_use = voice
+        speech.speak(text, voice_to_use)
+
+    def say_all(self, utterance_iterator: Any, progress_callback: Callable[..., Any]) -> None:
+        """Speaks each item in the utterance_iterator."""
+
+        speech.say_all(utterance_iterator, progress_callback)
 
     def speak_character(self, character: str) -> None:
         """Speaks a single character."""

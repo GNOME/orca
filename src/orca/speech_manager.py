@@ -920,7 +920,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         settings.voices[settings_key] = ACSS(local_voice)
 
         # Clear the speech server's cached voice properties so the new voice is applied
-        server = speech.get_speech_server()
+        server = self._manager.get_server()
         if server is not None:
             server.clear_cached_voice_properties()
 
@@ -1157,6 +1157,7 @@ class SpeechManager:
     def __init__(self) -> None:
         self._families_sorted: bool = False
         self._initialized: bool = False
+        self._server: SpeechServer | None = None
 
         msg = "SPEECH MANAGER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1259,10 +1260,15 @@ class SpeechManager:
         msg = "SPEECH MANAGER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
+    def get_server(self) -> SpeechServer | None:
+        """Returns the speech server instance, or None if not initialized."""
+
+        return self._server
+
     def _get_server(self) -> SpeechServer | None:
         """Returns the speech server if it is responsive.."""
 
-        result = speech.get_speech_server()
+        result = self._server
         if result is None:
             msg = "SPEECH MANAGER: Speech server is None."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1655,8 +1661,83 @@ class SpeechManager:
             notify_user,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        speech.init()
+        self._init_server()
         return True
+
+    def _init_server(self) -> None:
+        """Initializes the speech server."""
+
+        debug.print_message(debug.LEVEL_INFO, "SPEECH MANAGER: Initializing server", True)
+        if self._server:
+            debug.print_message(debug.LEVEL_INFO, "SPEECH MANAGER: Already initialized", True)
+            return
+
+        # HACK: Orca goes to incredible lengths to avoid a broken configuration, so this
+        #       last-chance override exists to get the speech system loaded, without risking
+        #       it being written to disk unintentionally.
+        if settings.speechSystemOverride:
+            setattr(settings, "speechServerFactory", settings.speechSystemOverride)
+            setattr(settings, "speechServerInfo", ["Default Synthesizer", "default"])
+
+        module_name = settings.speechServerFactory
+        self._server = self._init_server_from_module(module_name, settings.speechServerInfo)
+
+        if not self._server:
+            for module_name in settings.speechFactoryModules:
+                if module_name != settings.speechServerFactory:
+                    self._server = self._init_server_from_module(module_name, None)
+                    if self._server:
+                        break
+
+        if self._server:
+            tokens = ["SPEECH MANAGER: Using speech server factory:", module_name]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        else:
+            msg = "SPEECH MANAGER: Speech not available"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        speech.set_server(self._server)
+        debug.print_message(debug.LEVEL_INFO, "SPEECH MANAGER: Server initialized", True)
+
+    @staticmethod
+    def _init_server_from_module(
+        module_name: str, speech_server_info: list[str] | None
+    ) -> SpeechServer | None:
+        """Attempts to initialize a speech server from the given module."""
+
+        if not module_name:
+            return None
+
+        factory = None
+        try:
+            factory = importlib.import_module(f"orca.{module_name}")
+        except ImportError:
+            try:
+                factory = importlib.import_module(module_name)
+            except ImportError:
+                debug.print_exception(debug.LEVEL_SEVERE)
+
+        if not factory:
+            msg = f"SPEECH MANAGER: Failed to import module: {module_name}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return None
+
+        speech_server_info = settings.speechServerInfo
+        server = None
+        if speech_server_info:
+            server = factory.SpeechServer.get_speech_server(speech_server_info)
+
+        if not server:
+            server = factory.SpeechServer.get_speech_server()
+            if speech_server_info:
+                tokens = ["SPEECH MANAGER: Invalid speechServerInfo:", speech_server_info]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        if not server:
+            msg = f"SPEECH MANAGER: No speech server for factory: {module_name}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+
+        return server
 
     @dbus_service.command
     def interrupt_speech(
@@ -1703,7 +1784,8 @@ class SpeechManager:
 
         if server := self._get_server():
             server.shutdown_active_servers()
-            speech.deprecated_clear_server()
+            self._server = None
+            speech.set_server(None)
 
         return True
 
@@ -2302,9 +2384,9 @@ class SpeechManager:
         settings.enableSpeech = value
         if value:
             self.start_speech()
-            speech.speak(messages.SPEECH_ENABLED)
+            presentation_manager.get_manager().present_message(messages.SPEECH_ENABLED)
         else:
-            speech.speak(messages.SPEECH_DISABLED)
+            presentation_manager.get_manager().present_message(messages.SPEECH_DISABLED)
             self.shutdown_speech()
 
         return True
@@ -2451,7 +2533,7 @@ class SpeechManager:
                 presentation_manager.get_manager().present_message(messages.SPEECH_ENABLED)
         elif not settings.enableSpeech:
             settings.enableSpeech = True
-            speech.init()
+            self._init_server()
             if script is not None and notify_user:
                 presentation_manager.get_manager().present_message(messages.SPEECH_ENABLED)
         else:

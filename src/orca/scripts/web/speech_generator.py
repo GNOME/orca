@@ -705,3 +705,36 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result = [string, self.voice(speech_generator.DEFAULT, **args)]
 
         return result
+
+    def generate_line(
+        self, obj: Atspi.Accessible, start_offset: int, end_offset: int, line: str
+    ) -> list[Any]:
+        """Generates speech for a web document line via DOM-walking contents."""
+
+        if not self._script.utilities.in_document_content(obj):
+            return super().generate_line(obj, start_offset, end_offset, line)
+
+        if AXUtilities.is_editable(obj) and "\ufffc" not in line:
+            return super().generate_line(obj, start_offset, end_offset, line)
+
+        document = self._script.utilities.get_top_level_document_for_object(obj)
+        prior_context = self._script.utilities.get_prior_context(document=document)
+        prior_obj = prior_context[0] if prior_context else None
+
+        contents = self._script.utilities.get_line_contents_at_offset(
+            obj, start_offset, use_cache=True
+        )
+        return self.generate_contents(contents, priorObj=prior_obj)
+
+    def generate_word(self, obj: Atspi.Accessible, offset: int) -> list[Any]:
+        """Generates speech for a web document word via DOM-walking contents."""
+
+        word_contents = self._script.utilities.get_word_contents_at_offset(
+            obj, offset, use_cache=True
+        )
+        if not word_contents:
+            return []
+        text_obj = word_contents[0][0]
+        return self.generate_contents(
+            word_contents, alreadyFocused=AXUtilities.is_text_input(text_obj)
+        )

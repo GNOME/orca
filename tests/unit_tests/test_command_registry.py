@@ -686,8 +686,6 @@ class TestCommandRegistry:
         essential_modules["orca.dbus_service"].command = passthrough_decorator
         essential_modules["orca.dbus_service"].parameterized_command = passthrough_decorator
 
-        essential_modules["orca.speech"].get_speech_server.return_value = test_context.Mock()
-
         acss_mock = essential_modules["orca.acss"]
         acss_mock.ACSS = test_context.Mock()
         acss_mock.ACSS.RATE = "rate"

@@ -494,18 +494,12 @@ class SpeechServer(speechserver.SpeechServer):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self.speak(event_string, acss=acss)
 
-    def speak(
-        self, text: str | None = None, acss: ACSS | None = None, interrupt: bool = True
-    ) -> None:
+    def speak(self, text: str | None = None, acss: ACSS | None = None) -> None:
         if not text:
             return
 
         if not acss:
             acss = settings.voices[settings.DEFAULT_VOICE]
-
-        # See speechdispatcherfactory.py for why this is disabled
-        # if interrupt:
-        #     self._speaker.cancel()
 
         if len(text) == 1:
             msg = f"SPIEL: Speaking '{text}' as char"

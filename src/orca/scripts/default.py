@@ -34,7 +34,7 @@ from __future__ import annotations
 
 
 import re
-from typing import Any, Callable, TYPE_CHECKING
+from typing import Callable, TYPE_CHECKING
 
 from orca import action_presenter
 from orca import ax_event_synthesizer
@@ -72,7 +72,6 @@ from orca import script
 from orca import script_manager
 from orca import settings_manager
 from orca import sleep_mode_manager
-from orca import speech
 from orca import speech_manager
 from orca import speech_presenter
 from orca import spellcheck_presenter
@@ -437,16 +436,12 @@ class Script(script.Script):
 
         active_window = self.utilities.top_level_object(new_focus)
         focus_manager.get_manager().set_active_window(active_window)
-        self.update_braille(new_focus)
-
         if old_focus is None:
             old_focus = active_window
 
-        utterances = self.speech_generator.generate_speech(new_focus, priorObj=old_focus)
-
         if self.utilities.should_interrupt_for_locus_of_focus_change(old_focus, new_focus, event):
             presentation_manager.get_manager().interrupt_presentation()
-        speech.speak(utterances, interrupt=False)
+        presentation_manager.get_manager().present_object(self, new_focus, priorObj=old_focus)
         return True
 
     def activate(self) -> None:
@@ -1241,8 +1236,8 @@ class Script(script.Script):
         if not word.strip():
             word, start, _end = AXText.get_word_at_offset(event.source, start - 1)
 
-        manager = speech_presenter.get_presenter()
-        if error := manager.get_error_description(event.source, start, False):
+        speech_pres = speech_presenter.get_presenter()
+        if error := speech_pres.get_error_description(event.source, start, False):
             presentation_manager.get_manager().speak_message(error)
 
         return True
@@ -1282,8 +1277,8 @@ class Script(script.Script):
             presentation_manager.get_manager().speak_character(text)
         else:
             voice = self.speech_generator.voice(string=text)
-            manager = speech_presenter.get_presenter()
-            text = manager.adjust_for_presentation(event.source, text)
+            speech_pres = speech_presenter.get_presenter()
+            text = speech_pres.adjust_for_presentation(event.source, text)
             presentation_manager.get_manager().speak_message(text, voice)
 
         return True
@@ -1347,8 +1342,8 @@ class Script(script.Script):
                 presentation_manager.get_manager().speak_character(text)
             else:
                 voice = self.speech_generator.voice(obj=event.source, string=text)
-                manager = speech_presenter.get_presenter()
-                text = manager.adjust_for_presentation(event.source, text)
+                speech_pres = speech_presenter.get_presenter()
+                text = speech_pres.adjust_for_presentation(event.source, text)
                 presentation_manager.get_manager().speak_message(text, voice)
 
         if len(text) != 1 or reason not in [
@@ -1451,16 +1446,12 @@ class Script(script.Script):
         if not is_progress_bar_update:
             presentation_manager.get_manager().interrupt_presentation()
 
-        self.update_braille(event.source, isProgressBarUpdate=is_progress_bar_update)
-        speech.speak(
-            self.speech_generator.generate_speech(
-                event.source, alreadyFocused=True, isProgressBarUpdate=is_progress_bar_update
-            )
-        )
-        presentation_manager.get_manager().play_sound(
-            self.sound_generator.generate_sound(
-                event.source, alreadyFocused=True, isProgressBarUpdate=is_progress_bar_update
-            )
+        presentation_manager.get_manager().present_object(
+            self,
+            event.source,
+            generate_sound=True,
+            alreadyFocused=True,
+            isProgressBarUpdate=is_progress_bar_update,
         )
         return True
 
@@ -1621,9 +1612,6 @@ class Script(script.Script):
         else:
             offset = AXText.get_caret_offset(obj)
 
-        # If we have selected text and the last event was a move to the
-        # right, then speak the character to the left of where the text
-        # caret is (i.e. the selected character).
         if input_event_manager.get_manager().last_event_was_forward_caret_selection():
             offset -= 1
 
@@ -1632,33 +1620,7 @@ class Script(script.Script):
             obj, start_offset, end_offset, focus_manager.CARET_TRACKING
         )
 
-        if not character or character == "\r":
-            character = "\n"
-
-        speech_pres = speech_presenter.get_presenter()
-        speak_blank_lines = speech_pres.get_speak_blank_lines()
-        if character == "\n":
-            line_string = AXText.get_line_at_offset(obj, max(0, offset))[0]
-            if not line_string or line_string == "\n":
-                # This is a blank line. Announce it if the user requested
-                # that blank lines be spoken.
-                if speak_blank_lines:
-                    presentation_manager.get_manager().speak_message(
-                        messages.BLANK, interrupt=False
-                    )
-                return
-
-        if character in ["\n", "\r\n"]:
-            # This is a blank line. Announce it if the user requested
-            # that blank lines be spoken.
-            if speak_blank_lines:
-                presentation_manager.get_manager().speak_message(messages.BLANK, interrupt=False)
-            return
-
-        if error := speech_presenter.get_presenter().get_error_description(obj, offset):
-            presentation_manager.get_manager().speak_message(error)
-
-        presentation_manager.get_manager().speak_character(character)
+        speech_presenter.get_presenter().speak_character_at_offset(obj, offset, character)
         self.point_of_reference["lastTextUnitSpoken"] = "char"
 
     def say_line(self, obj: Atspi.Accessible, offset: int | None = None) -> None:
@@ -1671,40 +1633,14 @@ class Script(script.Script):
 
         line, start_offset = AXText.get_line_at_offset(obj, offset)[0:2]
         if line and line != "\n":
-            manager = speech_presenter.get_presenter()
-            indentation_description = manager.get_indentation_description(line)
-            if indentation_description:
-                presentation_manager.get_manager().speak_message(indentation_description)
-
             end_offset = start_offset + len(line)
             focus_manager.get_manager().emit_region_changed(
                 obj, start_offset, end_offset, focus_manager.CARET_TRACKING
             )
 
-            utterance = []
-            split = self.utilities.split_substring_by_language(obj, start_offset, end_offset)
-            if not split:
-                speech.speak(line)
-                return
-
-            for start, _end, text, language, dialect in split:
-                if not text:
-                    continue
-
-                # TODO - JD: This needs to be done in the generators.
-                voice = self.speech_generator.voice(
-                    obj=obj, string=text, language=language, dialect=dialect
-                )
-                text = manager.adjust_for_presentation(obj, text, start)
-
-                # Some synthesizers will verbalize initial whitespace.
-                text = text.lstrip()
-                result: list[Any] = [text]
-                result.extend(voice)
-                utterance.append(result)
-            speech.speak(utterance)
-        elif speech_presenter.get_presenter().get_speak_blank_lines():
-            presentation_manager.get_manager().speak_message(messages.BLANK, interrupt=False)
+        speech_presenter.get_presenter().speak_line(
+            self, obj, start_offset, start_offset + len(line), line
+        )
 
         self.point_of_reference["lastTextUnitSpoken"] = "line"
 
@@ -1716,23 +1652,11 @@ class Script(script.Script):
             return
 
         if len(phrase) > 1 or phrase.isalnum():
-            manager = speech_presenter.get_presenter()
-            result = manager.get_indentation_description(phrase)
-            if result:
-                presentation_manager.get_manager().speak_message(result)
-
             focus_manager.get_manager().emit_region_changed(
                 obj, start_offset, end_offset, focus_manager.CARET_TRACKING
             )
 
-            voice = self.speech_generator.voice(obj=obj, string=phrase)
-            phrase = manager.adjust_for_presentation(obj, phrase)
-            utterance: list[Any] = [phrase]
-            utterance.extend(voice)
-            speech.speak(utterance)
-        else:
-            presentation_manager.get_manager().speak_character(phrase)
-
+        speech_presenter.get_presenter().speak_phrase(self, obj, start_offset, end_offset, phrase)
         self.point_of_reference["lastTextUnitSpoken"] = "phrase"
 
     def say_word(self, obj: Atspi.Accessible) -> None:
@@ -1784,15 +1708,14 @@ class Script(script.Script):
     def present_object(self, obj: Atspi.Accessible, **args) -> None:
         """Presents the current object."""
 
-        interrupt = args.get("interrupt", False)
-        tokens = ["DEFAULT: Presenting object", obj, ". Interrupt:", interrupt]
+        tokens = ["DEFAULT: Presenting object", obj, ". Interrupt:", args.get("interrupt", False)]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         offset = args.get("offset")
         if offset is not None:
             AXText.set_caret_offset(obj, offset)
 
-        if not args.get("speechonly", False):
-            self.update_braille(obj, **args)
-        utterances = self.speech_generator.generate_speech(obj, **args)
-        speech.speak(utterances, interrupt=interrupt)
+        speech_only = args.pop("speechonly", False)
+        presentation_manager.get_manager().present_object(
+            self, obj, generate_braille=not speech_only, **args
+        )

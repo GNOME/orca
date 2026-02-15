@@ -50,8 +50,8 @@ from . import keybindings
 from . import messages
 from . import preferences_grid_base
 from . import presentation_manager
-from . import speech
 from . import settings
+from . import speech_presenter
 from . import speechserver
 from . import structural_navigator
 from .acss import ACSS
@@ -259,7 +259,9 @@ class SayAllPresenter:
             presentation_manager.get_manager().present_message(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
-        speech.say_all(self._say_all_iter(obj, offset), self._progress_callback)
+        speech_presenter.get_presenter().say_all(
+            self._say_all_iter(obj, offset), self._progress_callback
+        )
         return True
 
     @dbus_service.command

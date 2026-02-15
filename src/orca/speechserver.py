@@ -160,9 +160,7 @@ class SpeechServer:
     def speak_key_event(self, event: input_event.KeyboardEvent, acss: ACSS | None = None) -> None:
         """Speaks event."""
 
-    def speak(
-        self, text: str | None = None, acss: ACSS | None = None, interrupt: bool = True
-    ) -> None:
+    def speak(self, text: str | None = None, acss: ACSS | None = None) -> None:
         """Speaks text using the voice specified by acss."""
 
     def say_all(

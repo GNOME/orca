@@ -54,7 +54,6 @@ from . import object_properties
 from . import say_all_presenter
 from . import settings
 from . import settings_manager
-from . import speech
 from . import speech_manager
 from . import speech_presenter
 from .ax_document import AXDocument
@@ -242,7 +241,7 @@ class SpeechGenerator(generator.Generator):
         elif len(dialect) <= 1 or not dialect.isalpha():
             dialect = ""
 
-        server = speech.get_speech_server()
+        server = speech_manager.get_manager().get_server()
         # TODO - JD: We probably never should have gotten to this point if there is no speech
         # server. Thus we should probably return early in generate_speech() instead. For now,
         # this check is in place of an assertion that was being reached on a user's system.
@@ -4377,3 +4376,48 @@ class SpeechGenerator(generator.Generator):
             result = [[string, self.voice(DEFAULT, **args)]]
 
         return result
+
+    def generate_line(
+        self, obj: Atspi.Accessible, start_offset: int, end_offset: int, line: str
+    ) -> list[Any]:
+        """Generates speech for a line of text, handling language splitting and voice selection."""
+
+        if not line or line == "\n":
+            if not speech_presenter.get_presenter().get_speak_blank_lines():
+                return []
+            return [messages.BLANK, self.voice(DEFAULT)]
+
+        presenter = speech_presenter.get_presenter()
+        split = self._script.utilities.split_substring_by_language(obj, start_offset, end_offset)
+        if not split:
+            text = presenter.adjust_for_presentation(obj, line)
+            return [text, self.voice(obj=obj, string=text)]
+
+        result: list[Any] = []
+        for start, _end, text, language, dialect in split:
+            if not text:
+                continue
+            text = presenter.adjust_for_presentation(obj, text, start).lstrip()
+            if not text:
+                continue
+            voice = self.voice(obj=obj, string=text, language=language, dialect=dialect)
+            result.extend([text, voice])
+
+        return result
+
+    def generate_phrase(
+        self, obj: Atspi.Accessible, start_offset: int, end_offset: int, phrase: str
+    ) -> list[Any]:
+        """Generates speech for a phrase of text with voice selection and text adjustment."""
+
+        presenter = speech_presenter.get_presenter()
+        text = presenter.adjust_for_presentation(obj, phrase)
+        if not text:
+            return []
+        voice = self.voice(obj=obj, string=text)
+        return [text, voice]
+
+    def generate_word(self, obj: Atspi.Accessible, offset: int) -> list[Any]:
+        """Generates speech for a word at offset. Overridden by web for DOM-walking."""
+
+        return []

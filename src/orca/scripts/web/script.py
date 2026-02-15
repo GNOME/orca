@@ -50,7 +50,6 @@ from orca import live_region_presenter
 from orca import messages
 from orca import presentation_manager
 from orca import say_all_presenter
-from orca import speech
 from orca import speech_manager
 from orca import speech_presenter
 from orca import structural_navigator
@@ -199,15 +198,10 @@ class Script(default.Script):
         word_contents = self.utilities.get_word_contents_at_offset(obj, offset, use_cache=True)
         text_obj, start_offset, _end_offset, _word = word_contents[0]
 
-        speech_pres = speech_presenter.get_presenter()
-        if error := speech_pres.get_error_description(text_obj, start_offset):
+        if error := speech_presenter.get_presenter().get_error_description(text_obj, start_offset):
             presentation_manager.get_manager().speak_message(error)
 
-        # TODO - JD: Clean up the focused + alreadyFocused mess which by side effect is causing
-        # the content of some objects (e.g. table cells) to not be generated.
-        presentation_manager.get_manager().speak_contents(
-            word_contents, alreadyFocused=AXUtilities.is_text_input(text_obj)
-        )
+        speech_presenter.get_presenter().speak_word(self, obj, offset)
         self.point_of_reference["lastTextUnitSpoken"] = "word"
 
     def say_line(self, obj: Atspi.Accessible, offset: int | None = None) -> None:
@@ -221,24 +215,7 @@ class Script(default.Script):
             super().say_line(obj)
             return
 
-        # TODO - JD: We're making an exception here because the default script's say_line()
-        # handles verbalized punctuation, indentation, repeats, etc. That adjustment belongs
-        # in the generators, but that's another potentially non-trivial change.
-        if AXUtilities.is_editable(obj) and "\ufffc" not in AXText.get_line_at_offset(obj)[0]:
-            msg = "WEB: Object is editable and line has no EOCs."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            if not document_presenter.get_presenter().in_focus_mode(self.app):
-                self.utilities.set_caret_position(obj, 0)
-            super().say_line(obj)
-            return
-
         document = self.utilities.get_top_level_document_for_object(obj)
-        prior_context = self.utilities.get_prior_context(document=document)
-        if prior_context is not None:
-            prior_obj, _prior_offset = prior_context
-        else:
-            prior_obj = None
-
         if offset is None:
             obj, offset = self.utilities.get_caret_context(document)
             tokens = ["WEB: Adjusted object and offset for say line to", obj, offset]
@@ -252,7 +229,11 @@ class Script(default.Script):
         ):
             self.utilities.set_caret_position(contents[0][0], contents[0][1])
 
-        presentation_manager.get_manager().speak_contents(contents, priorObj=prior_obj)
+        line, start_offset = AXText.get_line_at_offset(obj, offset)[0:2]
+        speech_presenter.get_presenter().speak_line(
+            self, obj, start_offset, start_offset + len(line), line
+        )
+
         self.point_of_reference["lastTextUnitSpoken"] = "line"
 
     def present_object(self, obj: Atspi.Accessible, **args) -> None:
@@ -615,8 +596,12 @@ class Script(default.Script):
         if contents:
             presentation_manager.get_manager().speak_contents(contents, **args)
         else:
-            utterances = self.speech_generator.generate_speech(new_focus, **args)
-            speech.speak(utterances)
+            presentation_manager.get_manager().present_object(
+                self,
+                new_focus,
+                generate_braille=False,
+                **args,  # type: ignore[arg-type]
+            )
 
         document_presenter.get_presenter().update_mode_if_needed(self, old_focus, new_focus)
         return True

@@ -98,10 +98,6 @@ class TestSpeechManager:
         dbus_service_mock.parameterized_command = passthrough_decorator
 
         speech_mock = essential_modules["orca.speech"]
-        speech_mock.get_speech_server.return_value = test_context.Mock()
-        speech_mock.init.return_value = None
-        speech_mock.shutdown_speech_server.return_value = True
-        speech_mock.deprecated_clear_server.return_value = None
         speech_mock.speak.return_value = None
 
         debug_mock = essential_modules["orca.debug"]
@@ -170,14 +166,16 @@ class TestSpeechManager:
     )
     def test_get_server_scenarios(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test _get_server method scenarios."""
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.speech_manager import SpeechManager
 
+        manager = SpeechManager()
+
         if case["scenario"] == "none_server":
-            essential_modules["orca.speech"].get_speech_server.return_value = None
+            manager._server = None
         else:  # timeout scenario
             mock_speech_server = test_context.Mock()
-            essential_modules["orca.speech"].get_speech_server.return_value = mock_speech_server
+            manager._server = mock_speech_server
 
             def mock_queue_constructor():
                 mock_queue = test_context.Mock()
@@ -186,7 +184,6 @@ class TestSpeechManager:
 
             test_context.patch("queue.Queue", new=mock_queue_constructor)
 
-        manager = SpeechManager()
         result = manager._get_server()
         assert result is case["expected_result"]
 
@@ -652,10 +649,7 @@ class TestSpeechManager:
 
         mock_server = test_context.Mock()
         mock_server.is_alive.return_value = True
-        test_context.patch(
-            "orca.speech_manager.speech.get_speech_server",
-            side_effect=lambda: mock_server,
-        )
+        manager._server = mock_server
         result = manager._get_server()
         assert result is mock_server
 
@@ -1102,11 +1096,12 @@ class TestSpeechManager:
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
+        mock_init = test_context.patch_object(manager, "_init_server")
         script = test_context.Mock()
         manager.toggle_speech(script)
 
         assert settings_mock.enableSpeech is True
-        essential_modules["orca.speech"].init.assert_called()
+        mock_init.assert_called()
 
     def test_toggle_speech_mutes_when_app_profile_has_speech_enabled(
         self, test_context: OrcaTestContext

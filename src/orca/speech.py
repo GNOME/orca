@@ -17,13 +17,10 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=too-many-branches
-
-"""Manages the default speech server for Orca."""
+"""Speech output functions for Orca."""
 
 from __future__ import annotations
 
-import importlib
 from dataclasses import dataclass
 from typing import Any, Callable, TYPE_CHECKING
 
@@ -34,19 +31,16 @@ from .acss import ACSS
 from .speechserver import VoiceFamily
 
 if TYPE_CHECKING:
-    from types import ModuleType
     from . import input_event
     from . import speechserver
 
-# The speech server to use for all speech operations.
-#
-_speechserver: speechserver.SpeechServer | None = None
-
 
 @dataclass
-class _MonitorCallbacks:
-    """Callbacks for the speech monitor, registered by speech_presenter."""
+class _State:
+    """Mutable state for the speech module."""
 
+    server: speechserver.SpeechServer | None = None
+    monitor_group_depth: int = 0
     write_text: Callable[[str], None] | None = None
     write_key: Callable[[str], None] | None = None
     write_character: Callable[[str], None] | None = None
@@ -54,7 +48,13 @@ class _MonitorCallbacks:
     end_group: Callable[[], None] | None = None
 
 
-_monitor_callbacks = _MonitorCallbacks()
+_state = _State()
+
+
+def set_server(server: speechserver.SpeechServer | None) -> None:
+    """Sets the speech server, called by SpeechManager."""
+
+    _state.server = server
 
 
 def set_monitor_callbacks(
@@ -66,88 +66,14 @@ def set_monitor_callbacks(
 ) -> None:
     """Sets the callbacks for updating the speech monitor display."""
 
-    _monitor_callbacks.write_text = write_text
-    _monitor_callbacks.write_key = write_key
-    _monitor_callbacks.write_character = write_character
-    _monitor_callbacks.begin_group = begin_group
-    _monitor_callbacks.end_group = end_group
+    _state.write_text = write_text
+    _state.write_key = write_key
+    _state.write_character = write_character
+    _state.begin_group = begin_group
+    _state.end_group = end_group
 
 
-def _init_speech_server(module_name: str, speech_server_info: list[str] | None) -> None:
-    global _speechserver
-
-    if not module_name:
-        return
-
-    factory: ModuleType | None = None
-    try:
-        factory = importlib.import_module(f"orca.{module_name}")
-    except ImportError:
-        try:
-            factory = importlib.import_module(module_name)
-        except ImportError:
-            debug.print_exception(debug.LEVEL_SEVERE)
-
-    # Now, get the speech server we care about.
-    #
-    if not factory:
-        msg = f"SPEECH: Failed to import module: {module_name}"
-        debug.print_message(debug.LEVEL_WARNING, msg, True)
-        return
-
-    speech_server_info = settings.speechServerInfo
-    if speech_server_info:
-        _speechserver = factory.SpeechServer.get_speech_server(speech_server_info)
-
-    if not _speechserver:
-        _speechserver = factory.SpeechServer.get_speech_server()
-        if speech_server_info:
-            tokens = ["SPEECH: Invalid speechServerInfo:", speech_server_info]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-    if not _speechserver:
-        msg = f"SPEECH: No speech server for factory: {module_name}"
-        debug.print_message(debug.LEVEL_WARNING, msg, True)
-
-
-def init() -> None:
-    """Initializes the speech server."""
-
-    debug.print_message(debug.LEVEL_INFO, "SPEECH: Initializing", True)
-    if _speechserver:
-        debug.print_message(debug.LEVEL_INFO, "SPEECH: Already initialized", True)
-        return
-
-    # HACK: Orca goes to incredible lengths to avoid a broken configuration, so this
-    #       last-chance override exists to get the speech system loaded, without risking
-    #       it being written to disk unintentionally.
-    if settings.speechSystemOverride:
-        setattr(settings, "speechServerFactory", settings.speechSystemOverride)
-        setattr(settings, "speechServerInfo", ["Default Synthesizer", "default"])
-
-    module_name = settings.speechServerFactory
-    _init_speech_server(module_name, settings.speechServerInfo)
-
-    if not _speechserver:
-        # Try fallback modules
-        module_names = settings.speechFactoryModules
-        for module_name in module_names:
-            if module_name != settings.speechServerFactory:
-                _init_speech_server(module_name, None)
-                if _speechserver:
-                    break
-
-    if _speechserver:
-        tokens = ["SPEECH: Using speech server factory:", module_name]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-    else:
-        msg = "SPEECH: Not available"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    debug.print_message(debug.LEVEL_INFO, "SPEECH: Initialized", True)
-
-
-def __resolve_acss(acss: ACSS | dict[str, Any] | list[dict[str, Any]] | None = None) -> ACSS:
+def _resolve_acss(acss: ACSS | dict[str, Any] | list[dict[str, Any]] | None = None) -> ACSS:
     if isinstance(acss, ACSS):
         family = acss.get(acss.FAMILY)
         try:
@@ -160,8 +86,7 @@ def __resolve_acss(acss: ACSS | dict[str, Any] | list[dict[str, Any]] | None = N
         return ACSS(acss[0])
     if isinstance(acss, dict):
         return ACSS(acss)
-    voices = settings.voices
-    return ACSS(voices[settings.DEFAULT_VOICE])
+    return ACSS(settings.voices[settings.DEFAULT_VOICE])
 
 
 def say_all(utterance_iterator: Any, progress_callback: Callable[..., Any]) -> None:
@@ -169,109 +94,99 @@ def say_all(utterance_iterator: Any, progress_callback: Callable[..., Any]) -> N
 
     if settings.silenceSpeech:
         return
-    if _speechserver:
-        _speechserver.say_all(utterance_iterator, progress_callback)
+
+    server = _state.server
+    if server:
+        server.say_all(utterance_iterator, progress_callback)
     else:
         for [context, _acss] in utterance_iterator:
             log_line = f"SPEECH OUTPUT: '{context.utterance}'"
             debug.print_message(debug.LEVEL_INFO, log_line, True)
 
 
-def _speak(text: str, acss: ACSS | dict[str, Any] | None, interrupt: bool) -> None:
+def _speak(text: str, acss: ACSS | dict[str, Any] | None) -> None:
     """Speaks the individual string using the given ACSS."""
 
-    if not _speechserver:
+    server = _state.server
+    if not server:
         log_line = f"SPEECH OUTPUT: '{text}' {acss}"
         debug.print_message(debug.LEVEL_INFO, log_line, True)
         return
 
     voice = ACSS(settings.voices.get(settings.DEFAULT_VOICE))
     try:
-        voice.update(__resolve_acss(acss))
+        voice.update(_resolve_acss(acss))
     except (TypeError, ValueError, AttributeError) as error:
         msg = f"SPEECH: Exception updating voice with {acss}: {error}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    resolved_voice = __resolve_acss(voice)
+    resolved_voice = _resolve_acss(voice)
     msg = f"SPEECH OUTPUT: '{text}' {resolved_voice}"
     debug.print_message(debug.LEVEL_INFO, msg, True)
-    _speechserver.speak(text, resolved_voice, interrupt)
-    if _monitor_callbacks.write_text is not None:
-        _monitor_callbacks.write_text(text)
+    server.speak(text, resolved_voice)
+    if _state.write_text is not None:
+        _state.write_text(text)
 
 
-def speak(content: Any, acss: ACSS | dict[str, Any] | None = None, interrupt: bool = True) -> None:
-    """Speaks the given content.  The content can be either a simple
-    string or an array of arrays of objects returned by a speech
-    generator."""
+def speak(content: Any, acss: ACSS | dict[str, Any] | None = None) -> None:
+    """Speaks the given content, which can be a string or a list from the speech generator."""
 
     if settings.silenceSpeech:
-        return
-
-    valid_types = (str, list, speech_generator.Pause, ACSS)
-    error = "SPEECH: Bad content sent to speak():"
-    if not isinstance(content, valid_types):
-        debug.print_message(debug.LEVEL_INFO, error + str(content), True, True)
         return
 
     if isinstance(content, str):
         msg = f"SPEECH: Speak '{content}' acss: {acss}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-    else:
-        tokens = ["SPEECH: Speak", content, ", acss:", acss]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-    if isinstance(content, str):
-        _speak(content, acss, interrupt)
-    if not isinstance(content, list):
+        _speak(content, acss)
         return
 
-    _begin_monitor_group()
-    try:
-        _speak_list(content, acss, interrupt)
-    finally:
-        _end_monitor_group()
+    if isinstance(content, list):
+        tokens = ["SPEECH: Speak", content, ", acss:", acss]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        _begin_monitor_group()
+        try:
+            _speak_list(content, acss)
+        finally:
+            _end_monitor_group()
+        return
 
-
-_monitor_group_depth: int = 0
+    if not isinstance(content, (speech_generator.Pause, ACSS)):
+        msg = f"SPEECH: Bad content sent to speak(): {content}"
+        debug.print_message(debug.LEVEL_INFO, msg, True, True)
 
 
 def _begin_monitor_group() -> None:
     """Signals the start of a grouped utterance to the speech monitor."""
 
-    global _monitor_group_depth  # pylint: disable=global-statement
-    if _monitor_group_depth == 0 and _monitor_callbacks.begin_group is not None:
-        _monitor_callbacks.begin_group()
-    _monitor_group_depth += 1
+    if _state.monitor_group_depth == 0 and _state.begin_group is not None:
+        _state.begin_group()
+    _state.monitor_group_depth += 1
 
 
 def _end_monitor_group() -> None:
     """Signals the end of a grouped utterance to the speech monitor."""
 
-    global _monitor_group_depth  # pylint: disable=global-statement
-    _monitor_group_depth -= 1
-    if _monitor_group_depth == 0 and _monitor_callbacks.end_group is not None:
-        _monitor_callbacks.end_group()
+    _state.monitor_group_depth -= 1
+    if _state.monitor_group_depth == 0 and _state.end_group is not None:
+        _state.end_group()
 
 
-def _speak_list(content: list, acss: ACSS | dict[str, Any] | None, interrupt: bool) -> None:
+def _speak_list(content: list, acss: ACSS | dict[str, Any] | None) -> None:
     """Processes a list of speech content items."""
 
     valid_types = (str, list, speech_generator.Pause, ACSS)
-    error = "SPEECH: Bad content sent to speak():"
 
     to_speak: list[str] = []
-    active_voice = acss
-    if acss is not None:
-        active_voice = ACSS(acss)
+    active_voice = ACSS(acss) if acss is not None else acss
 
     for element in content:
         if not isinstance(element, valid_types):
-            debug.print_message(debug.LEVEL_INFO, error + str(element), True, True)
+            msg = f"SPEECH: Bad content sent to speak(): {element}"
+            debug.print_message(debug.LEVEL_INFO, msg, True, True)
         elif isinstance(element, list):
-            speak(element, acss, interrupt)
+            _speak_list(element, acss)
         elif isinstance(element, str):
-            if len(element):
+            if element:
                 to_speak.append(element)
         elif to_speak:
             new_voice = ACSS(acss)
@@ -290,14 +205,12 @@ def _speak_list(content: list, acss: ACSS | dict[str, Any] | None, interrupt: bo
                 new_items_to_speak.append(to_speak.pop())
 
             if to_speak:
-                string = " ".join(to_speak)
-                _speak(string, active_voice, interrupt)
+                _speak(" ".join(to_speak), active_voice)
             active_voice = new_voice
             to_speak = new_items_to_speak
 
     if to_speak:
-        string = " ".join(to_speak)
-        _speak(string, active_voice, interrupt)
+        _speak(" ".join(to_speak), active_voice)
 
 
 def speak_key_event(
@@ -309,14 +222,16 @@ def speak_key_event(
         return
 
     key_name = event.get_key_name()
-    acss = __resolve_acss(acss)
+    acss = _resolve_acss(acss)
     msg = f"{key_name} {event.get_locking_state_string()}"
     log_line = f"SPEECH OUTPUT: '{msg.strip()}' {acss}"
     debug.print_message(debug.LEVEL_INFO, log_line, True)
-    if _speechserver:
-        _speechserver.speak_key_event(event, acss)
-    if _monitor_callbacks.write_key is not None:
-        _monitor_callbacks.write_key(key_name)
+
+    server = _state.server
+    if server:
+        server.speak_key_event(event, acss)
+    if _state.write_key is not None:
+        _state.write_key(key_name)
 
 
 def speak_character(character: str, acss: ACSS | dict[str, Any] | None = None) -> None:
@@ -325,24 +240,13 @@ def speak_character(character: str, acss: ACSS | dict[str, Any] | None = None) -
     if settings.silenceSpeech:
         return
 
-    acss = __resolve_acss(acss)
+    acss = _resolve_acss(acss)
     log_line = f"SPEECH OUTPUT: '{character}'"
     tokens = [log_line, acss]
     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-    if _speechserver:
-        _speechserver.speak_character(character, acss=acss)
-    if _monitor_callbacks.write_character is not None:
-        _monitor_callbacks.write_character(character)
 
-
-def get_speech_server() -> speechserver.SpeechServer | None:
-    """Returns the current speech server."""
-
-    return _speechserver
-
-
-def deprecated_clear_server() -> None:
-    """This is a sad workaround for the current global _speechserver."""
-
-    global _speechserver
-    _speechserver = None
+    server = _state.server
+    if server:
+        server.speak_character(character, acss=acss)
+    if _state.write_character is not None:
+        _state.write_character(character)

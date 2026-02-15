@@ -186,6 +186,31 @@ class PresentationManager:
             text, voice=voice, interrupt=interrupt, reset_styles=reset_styles, force=force, obj=obj
         )
 
+    def present_object(
+        self,
+        script: default.Script,
+        obj: Atspi.Accessible,
+        *,
+        generate_speech: bool = True,
+        generate_braille: bool = True,
+        generate_sound: bool = False,
+        **args: Any,
+    ) -> None:
+        """Generates and presents an object via speech, braille, and sound."""
+
+        if obj is None:
+            return
+
+        if generate_speech:
+            speech_presenter.get_presenter().present_generated_speech(script, obj, **args)
+
+        if generate_braille:
+            braille_presenter.get_presenter().present_generated_braille(script, obj, **args)
+
+        if generate_sound:
+            sounds = script.sound_generator.generate_sound(obj, **args)
+            sound_presenter.get_presenter().play(sounds)
+
     def speak_contents(
         self, contents: list[tuple[Atspi.Accessible, int, int, str]], **args: Any
     ) -> None:
