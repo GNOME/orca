@@ -81,7 +81,6 @@ class TestSpeechManager:
         settings_manager_mock.get_manager.return_value = settings_manager_instance
 
         settings_mock.enableSpeech = True
-        settings_mock.silenceSpeech = False
 
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_manager_mock.get_manager.return_value = test_context.Mock()
@@ -99,6 +98,7 @@ class TestSpeechManager:
 
         speech_mock = essential_modules["orca.speech"]
         speech_mock.speak.return_value = None
+        speech_mock.get_mute_speech.return_value = False
 
         debug_mock = essential_modules["orca.debug"]
         debug_mock.print_message.return_value = None
@@ -543,7 +543,7 @@ class TestSpeechManager:
         """Test get_speech_is_muted method."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].silenceSpeech = case["setting_value"]
+        essential_modules["orca.speech"].get_mute_speech.return_value = case["setting_value"]
 
         from orca.speech_manager import SpeechManager
 
@@ -589,7 +589,7 @@ class TestSpeechManager:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.settings"].enableSpeech = case["enable_speech"]
-        essential_modules["orca.settings"].silenceSpeech = case["silence_speech"]
+        essential_modules["orca.speech"].get_mute_speech.return_value = case["silence_speech"]
 
         from orca.speech_manager import SpeechManager
 
@@ -710,10 +710,9 @@ class TestSpeechManager:
         ids=lambda case: case["id"],
     )
     def test_rate_adjustment_with_server(self, test_context: OrcaTestContext, case: dict) -> None:
-        """Test rate adjustment methods with valid server."""
+        """Test rate adjustment methods delegate to the speech server."""
 
         mock_server = test_context.Mock()
-        setattr(getattr(mock_server, case["server_method"]), "return_value", True)
         self._setup_dependencies(test_context)
         from orca.speech_manager import SpeechManager
 
@@ -740,10 +739,9 @@ class TestSpeechManager:
         ids=lambda case: case["id"],
     )
     def test_pitch_adjustment_with_server(self, test_context: OrcaTestContext, case: dict) -> None:
-        """Test pitch adjustment methods with valid server."""
+        """Test pitch adjustment methods delegate to the speech server."""
 
         mock_server = test_context.Mock()
-        setattr(getattr(mock_server, case["server_method"]), "return_value", True)
         self._setup_dependencies(test_context)
         from orca.speech_manager import SpeechManager
 
@@ -770,10 +768,9 @@ class TestSpeechManager:
         ids=lambda case: case["id"],
     )
     def test_volume_adjustment_with_server(self, test_context: OrcaTestContext, case: dict) -> None:
-        """Test volume adjustment methods with valid server."""
+        """Test volume adjustment methods delegate to the speech server."""
 
         mock_server = test_context.Mock()
-        setattr(getattr(mock_server, case["server_method"]), "return_value", True)
         self._setup_dependencies(test_context)
         from orca.speech_manager import SpeechManager
 
@@ -1073,8 +1070,9 @@ class TestSpeechManager:
         """Test toggle_speech unmutes when speech is currently muted."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        speech_mock = essential_modules["orca.speech"]
+        speech_mock.get_mute_speech.return_value = True
         settings_mock = essential_modules["orca.settings"]
-        settings_mock.silenceSpeech = True
         settings_mock.enableSpeech = True
 
         from orca.speech_manager import SpeechManager
@@ -1083,7 +1081,7 @@ class TestSpeechManager:
         script = test_context.Mock()
         manager.toggle_speech(script)
 
-        assert settings_mock.silenceSpeech is False
+        speech_mock.set_mute_speech.assert_called_with(False)
 
     def test_toggle_speech_enables_when_disabled(self, test_context: OrcaTestContext) -> None:
         """Test toggle_speech enables speech when enableSpeech is False."""
@@ -1091,7 +1089,6 @@ class TestSpeechManager:
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         settings_mock = essential_modules["orca.settings"]
         settings_mock.enableSpeech = False
-        settings_mock.silenceSpeech = False
 
         from orca.speech_manager import SpeechManager
 
@@ -1109,9 +1106,9 @@ class TestSpeechManager:
         """Test toggle_speech mutes when the app profile has enableSpeech=True."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        speech_mock = essential_modules["orca.speech"]
         settings_mock = essential_modules["orca.settings"]
         settings_mock.enableSpeech = True
-        settings_mock.silenceSpeech = False
 
         settings_manager_instance = essential_modules["orca.settings_manager"].get_manager()
         settings_manager_instance.get_app_setting.return_value = True
@@ -1122,7 +1119,7 @@ class TestSpeechManager:
         script = test_context.Mock()
         manager.toggle_speech(script)
 
-        assert settings_mock.silenceSpeech is True
+        speech_mock.set_mute_speech.assert_called_with(True)
         assert settings_mock.enableSpeech is True
 
     def test_toggle_speech_disables_when_app_profile_has_speech_disabled(
@@ -1133,7 +1130,6 @@ class TestSpeechManager:
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         settings_mock = essential_modules["orca.settings"]
         settings_mock.enableSpeech = True
-        settings_mock.silenceSpeech = False
 
         settings_manager_instance = essential_modules["orca.settings_manager"].get_manager()
         settings_manager_instance.get_app_setting.return_value = False
@@ -1145,7 +1141,6 @@ class TestSpeechManager:
         manager.toggle_speech(script)
 
         assert settings_mock.enableSpeech is False
-        assert settings_mock.silenceSpeech is False
 
 
 class TestVoicesPreferencesGridUI:  # pylint: disable=too-few-public-methods
@@ -1184,7 +1179,6 @@ class TestVoicesPreferencesGridUI:  # pylint: disable=too-few-public-methods
         settings_mock.verbalizePunctuationStyle = 2
         settings_mock.capitalizationStyle = "none"
         settings_mock.enableSpeech = True
-        settings_mock.silenceSpeech = False
         settings_mock.speakNumbersAsDigits = False
         settings_mock.useColorNames = True
         settings_mock.enablePauseBreaks = True

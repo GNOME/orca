@@ -64,7 +64,6 @@ class SettingsManager:
     _EXCLUDED_SETTINGS: set[str] = {
         "speechFactoryModules",
         "speechSystemOverride",
-        "silenceSpeech",
     }
 
     def __init__(self) -> None:

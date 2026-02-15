@@ -85,7 +85,6 @@ class TestSpeechPresenter:
         settings_mock.useColorNames = True
         settings_mock.enableAutoLanguageSwitching = True
         settings_mock.messagesAreDetailed = True
-        settings_mock.silenceSpeech = False
         settings_mock.enableSpeech = True
 
         # Table settings

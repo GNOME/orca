@@ -120,16 +120,19 @@ class SpeechServer(speechserver.SpeechServer):
         super().__init__()
         self._id = server_id
         self._client: Any = None
+        self._default_voice: dict[str, Any] = {}
         self._current_voice_properties: dict[str, Any] = {}
         self._current_synthesis_voice: str | None = None
+        self._current_punctuation_level: int = settings.PUNCTUATION_STYLE_MOST
+        self._current_capitalization_style: str = settings.CAPITALIZATION_STYLE_NONE
         self._voice_families_cache: dict[
             tuple[str, str, str | None, int | None], list[tuple[str, str, str | None]]
         ] = {}
         self._acss_manipulators = (
+            (ACSS.FAMILY, self._set_family),
             (ACSS.RATE, self._set_rate),
             (ACSS.AVERAGE_PITCH, self._set_pitch),
             (ACSS.GAIN, self._set_volume),
-            (ACSS.FAMILY, self._set_family),
         )
         if not _SPEECHD_AVAILABLE:
             msg = "ERROR: Speech Dispatcher is not available"
@@ -190,39 +193,41 @@ class SpeechServer(speechserver.SpeechServer):
             except (AttributeError, speechd.SSIPCommandError):
                 pass
         self._current_voice_properties = {}
-        mode = self._punctuation_mode_map[settings.verbalizePunctuationStyle]
+        mode = self._punctuation_mode_map[self._current_punctuation_level]
         client.set_punctuation(mode)
         client.set_data_mode(speechd.DataMode.SSML)
 
-    def update_capitalization_style(self) -> None:
+    def update_capitalization_style(self, style: str) -> None:
         """Updates the capitalization style used by the speech server."""
 
+        self._current_capitalization_style = style
         if self._client is None:
             return
 
-        if settings.capitalizationStyle == settings.CAPITALIZATION_STYLE_ICON:
-            style = "icon"
-        elif settings.capitalizationStyle == settings.CAPITALIZATION_STYLE_SPELL:
-            style = "spell"
+        if style == settings.CAPITALIZATION_STYLE_ICON:
+            sd_style = "icon"
+        elif style == settings.CAPITALIZATION_STYLE_SPELL:
+            sd_style = "spell"
         else:
-            style = "none"
+            sd_style = "none"
 
         try:
-            self._client.set_cap_let_recogn(style)
+            self._client.set_cap_let_recogn(sd_style)
         except speechd.SSIPCommunicationError:
             msg = "SPEECH DISPATCHER: Connection lost. Trying to reconnect."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self.reset()
             if self._client is not None:
-                self._client.set_cap_let_recogn(style)
+                self._client.set_cap_let_recogn(sd_style)
         except Exception:
             pass
 
-    def update_punctuation_level(self) -> None:
+    def update_punctuation_level(self, level: int) -> None:
         """Punctuation level changed, inform this speechServer."""
+        self._current_punctuation_level = level
         if self._client is None:
             return
-        mode = self._punctuation_mode_map[settings.verbalizePunctuationStyle]
+        mode = self._punctuation_mode_map[level]
         self._client.set_punctuation(mode)
 
     def _send_command(self, command: Callable[..., Any], *args: Any, **kwargs: Any) -> Any:
@@ -296,6 +301,11 @@ class SpeechServer(speechserver.SpeechServer):
                 self._send_command(self._client.set_synthesis_voice, name)
                 self._current_synthesis_voice = name
 
+    def set_default_voice(self, default_voice: dict[str, Any]) -> None:
+        """Sets the default voice ACSS properties for fallback use."""
+
+        self._default_voice = default_voice
+
     def _debug_sd_values(self, prefix: str = "") -> None:
         if debug.debugLevel > debug.LEVEL_INFO:
             return
@@ -320,7 +330,7 @@ class SpeechServer(speechserver.SpeechServer):
             settings.PUNCTUATION_STYLE_ALL: "ALL",
         }
 
-        punctuation_style = styles.get(settings.verbalizePunctuationStyle, "UNKNOWN")
+        punctuation_style = styles.get(self._current_punctuation_level, "UNKNOWN")
 
         msg = (
             f"SPEECH DISPATCHER: {prefix}\n"
@@ -334,11 +344,12 @@ class SpeechServer(speechserver.SpeechServer):
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _apply_acss(self, acss: dict[str, Any] | None) -> None:
-        if acss is None:
-            acss = settings.voices[settings.DEFAULT_VOICE]
+        merged: dict[str, Any] = dict(self._default_voice)
+        if acss is not None:
+            merged.update(acss)
         current = self._current_voice_properties
         for acss_property, method in self._acss_manipulators:
-            value = acss.get(acss_property)
+            value = merged.get(acss_property)
             if value is not None:
                 if current.get(acss_property) != value:
                     method(value)
@@ -424,36 +435,33 @@ class SpeechServer(speechserver.SpeechServer):
             self._send_command(self._client.cancel)
 
     def _change_default_speech_rate(self, step: int, decrease: bool = False) -> None:
-        acss = settings.voices[settings.DEFAULT_VOICE]
-        delta = step * (decrease and -1 or +1)
-        try:
-            rate = acss[ACSS.RATE]
-        except KeyError:
-            rate = 50
-        acss[ACSS.RATE] = max(0, min(99, rate + delta))
-        msg = f"SPEECH DISPATCHER: Rate set to {rate}"
+        delta = step * (-1 if decrease else 1)
+        rate = self._default_voice.get(ACSS.RATE, 50)
+        new_rate = max(0, min(99, rate + delta))
+        self._default_voice[ACSS.RATE] = new_rate
+        self._set_rate(new_rate)
+        self._current_voice_properties[ACSS.RATE] = new_rate
+        msg = f"SPEECH DISPATCHER: Rate set to {new_rate}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _change_default_speech_pitch(self, step: float, decrease: bool = False) -> None:
-        acss = settings.voices[settings.DEFAULT_VOICE]
-        delta = step * (decrease and -1 or +1)
-        try:
-            pitch = acss[ACSS.AVERAGE_PITCH]
-        except KeyError:
-            pitch = 5
-        acss[ACSS.AVERAGE_PITCH] = max(0, min(9, pitch + delta))
-        msg = f"SPEECH DISPATCHER: Pitch set to {pitch}"
+        delta = step * (-1 if decrease else 1)
+        pitch = self._default_voice.get(ACSS.AVERAGE_PITCH, 5)
+        new_pitch = max(0, min(9, pitch + delta))
+        self._default_voice[ACSS.AVERAGE_PITCH] = new_pitch
+        self._set_pitch(new_pitch)
+        self._current_voice_properties[ACSS.AVERAGE_PITCH] = new_pitch
+        msg = f"SPEECH DISPATCHER: Pitch set to {new_pitch}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _change_default_speech_volume(self, step: float, decrease: bool = False) -> None:
-        acss = settings.voices[settings.DEFAULT_VOICE]
-        delta = step * (decrease and -1 or +1)
-        try:
-            volume = acss[ACSS.GAIN]
-        except KeyError:
-            volume = 10
-        acss[ACSS.GAIN] = max(0, min(9, volume + delta))
-        msg = f"SPEECH DISPATCHER: Volume set to {volume}"
+        delta = step * (-1 if decrease else 1)
+        volume = self._default_voice.get(ACSS.GAIN, 10)
+        new_volume = max(0, min(9, volume + delta))
+        self._default_voice[ACSS.GAIN] = new_volume
+        self._set_volume(new_volume)
+        self._current_voice_properties[ACSS.GAIN] = new_volume
+        msg = f"SPEECH DISPATCHER: Volume set to {new_volume}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def get_info(self) -> list[str]:

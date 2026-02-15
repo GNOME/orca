@@ -170,6 +170,9 @@ class SpeechServer:
     ) -> None:
         """Iterates through the given utterance_iterator, speaking each utterance."""
 
+    def set_default_voice(self, default_voice: dict[str, Any]) -> None:
+        """Sets the default voice ACSS properties for fallback use."""
+
     def increase_speech_rate(self, step: int = 5) -> None:
         """Increases the speech rate."""
 
@@ -188,10 +191,10 @@ class SpeechServer:
     def decrease_speech_volume(self, step: float = 0.5) -> None:
         """Decreases the speech volume."""
 
-    def update_capitalization_style(self) -> None:
+    def update_capitalization_style(self, style: str) -> None:
         """Updates the capitalization style used by the speech server."""
 
-    def update_punctuation_level(self) -> None:
+    def update_punctuation_level(self, level: int) -> None:
         """Punctuation level changed, inform this speechServer."""
 
     def stop(self) -> None:

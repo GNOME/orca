@@ -25,7 +25,6 @@ from dataclasses import dataclass
 from typing import Any, Callable, TYPE_CHECKING
 
 from . import debug
-from . import settings
 from . import speech_generator
 from .acss import ACSS
 from .speechserver import VoiceFamily
@@ -36,10 +35,11 @@ if TYPE_CHECKING:
 
 
 @dataclass
-class _State:
+class _State:  # pylint: disable=too-many-instance-attributes
     """Mutable state for the speech module."""
 
     server: speechserver.SpeechServer | None = None
+    mute_speech: bool = False
     monitor_group_depth: int = 0
     write_text: Callable[[str], None] | None = None
     write_key: Callable[[str], None] | None = None
@@ -55,6 +55,18 @@ def set_server(server: speechserver.SpeechServer | None) -> None:
     """Sets the speech server, called by SpeechManager."""
 
     _state.server = server
+
+
+def get_mute_speech() -> bool:
+    """Returns whether speech output is temporarily muted."""
+
+    return _state.mute_speech
+
+
+def set_mute_speech(mute: bool) -> None:
+    """Sets whether speech should be muted, called by SpeechManager."""
+
+    _state.mute_speech = mute
 
 
 def set_monitor_callbacks(
@@ -76,23 +88,24 @@ def set_monitor_callbacks(
 def _resolve_acss(acss: ACSS | dict[str, Any] | list[dict[str, Any]] | None = None) -> ACSS:
     if isinstance(acss, ACSS):
         family = acss.get(acss.FAMILY)
-        try:
-            family = VoiceFamily(family)
-        except (TypeError, ValueError):
-            family = VoiceFamily({})
-        acss[acss.FAMILY] = family
+        if family is not None:
+            try:
+                family = VoiceFamily(family)
+            except (TypeError, ValueError):
+                family = VoiceFamily({})
+            acss[acss.FAMILY] = family
         return acss
     if isinstance(acss, list) and len(acss) == 1:
         return ACSS(acss[0])
     if isinstance(acss, dict):
         return ACSS(acss)
-    return ACSS(settings.voices[settings.DEFAULT_VOICE])
+    return ACSS({})
 
 
 def say_all(utterance_iterator: Any, progress_callback: Callable[..., Any]) -> None:
     """Speaks each item in the utterance_iterator."""
 
-    if settings.silenceSpeech:
+    if _state.mute_speech:
         return
 
     server = _state.server
@@ -113,14 +126,7 @@ def _speak(text: str, acss: ACSS | dict[str, Any] | None) -> None:
         debug.print_message(debug.LEVEL_INFO, log_line, True)
         return
 
-    voice = ACSS(settings.voices.get(settings.DEFAULT_VOICE))
-    try:
-        voice.update(_resolve_acss(acss))
-    except (TypeError, ValueError, AttributeError) as error:
-        msg = f"SPEECH: Exception updating voice with {acss}: {error}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    resolved_voice = _resolve_acss(voice)
+    resolved_voice = _resolve_acss(acss)
     msg = f"SPEECH OUTPUT: '{text}' {resolved_voice}"
     debug.print_message(debug.LEVEL_INFO, msg, True)
     server.speak(text, resolved_voice)
@@ -131,7 +137,7 @@ def _speak(text: str, acss: ACSS | dict[str, Any] | None) -> None:
 def speak(content: Any, acss: ACSS | dict[str, Any] | None = None) -> None:
     """Speaks the given content, which can be a string or a list from the speech generator."""
 
-    if settings.silenceSpeech:
+    if _state.mute_speech:
         return
 
     if isinstance(content, str):
@@ -171,6 +177,7 @@ def _end_monitor_group() -> None:
         _state.end_group()
 
 
+# pylint: disable-next=too-many-branches
 def _speak_list(content: list, acss: ACSS | dict[str, Any] | None) -> None:
     """Processes a list of speech content items."""
 
@@ -218,7 +225,7 @@ def speak_key_event(
 ) -> None:
     """Speaks event immediately using the voice specified by acss."""
 
-    if settings.silenceSpeech:
+    if _state.mute_speech:
         return
 
     key_name = event.get_key_name()
@@ -237,7 +244,7 @@ def speak_key_event(
 def speak_character(character: str, acss: ACSS | dict[str, Any] | None = None) -> None:
     """Speaks character immediately using the voice specified by acss."""
 
-    if settings.silenceSpeech:
+    if _state.mute_speech:
         return
 
     acss = _resolve_acss(acss)

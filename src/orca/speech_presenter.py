@@ -2058,7 +2058,7 @@ class SpeechPresenter:
         voices = settings.voices
         system_voice = voices.get(settings.SYSTEM_VOICE)
         if voice is None:
-            voice = self._get_voice(string=text)
+            voice = system_voice
         voice = voice or system_voice
         if voice == system_voice and reset_styles:
             cap_style = mgr.get_capitalization_style()

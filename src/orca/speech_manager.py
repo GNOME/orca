@@ -919,9 +919,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         local_voice, settings_key = voice_map[voice_type]
         settings.voices[settings_key] = ACSS(local_voice)
 
-        # Clear the speech server's cached voice properties so the new voice is applied
         server = self._manager.get_server()
         if server is not None:
+            if settings_key == settings.DEFAULT_VOICE:
+                server.set_default_voice(settings.voices[settings_key])
             server.clear_cached_voice_properties()
 
     def _on_rate_changed(
@@ -1633,7 +1634,7 @@ class SpeechManager:
     def check_speech_setting(self) -> None:
         """Checks the speech setting and initializes speech if necessary."""
 
-        if not settings.enableSpeech:
+        if not self.get_speech_is_enabled():
             msg = "SPEECH MANAGER: Speech is not enabled. Shutting down speech."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self.shutdown_speech()
@@ -1692,11 +1693,16 @@ class SpeechManager:
         if self._server:
             tokens = ["SPEECH MANAGER: Using speech server factory:", module_name]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            default_voice: dict[str, Any] = settings.voices.get(settings.DEFAULT_VOICE, {})
+            self._server.set_default_voice(default_voice)
+            self._server.update_punctuation_level(settings.verbalizePunctuationStyle)
+            self._server.update_capitalization_style(self.get_capitalization_style())
         else:
             msg = "SPEECH MANAGER: Speech not available"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
         speech.set_server(self._server)
+        speech.set_mute_speech(self.get_speech_is_muted())
         debug.print_message(debug.LEVEL_INFO, "SPEECH MANAGER: Server initialized", True)
 
     @staticmethod
@@ -2175,7 +2181,7 @@ class SpeechManager:
         return True
 
     def update_capitalization_style(self) -> bool:
-        """Updates the capitalization style based on the value in settings."""
+        """Updates the capitalization style on the speech server."""
 
         server = self._get_server()
         if server is None:
@@ -2183,7 +2189,7 @@ class SpeechManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.update_capitalization_style()
+        server.update_capitalization_style(self.get_capitalization_style())
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -2261,7 +2267,7 @@ class SpeechManager:
         return True
 
     def update_punctuation_level(self) -> bool:
-        """Updates the punctuation level based on the value in settings."""
+        """Updates the punctuation level on the speech server."""
 
         server = self._get_server()
         if server is None:
@@ -2269,7 +2275,7 @@ class SpeechManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.update_punctuation_level()
+        server.update_punctuation_level(settings.verbalizePunctuationStyle)
         return True
 
     def update_synthesizer(self, server_id: str | None = "") -> None:
@@ -2349,7 +2355,7 @@ class SpeechManager:
     def get_speech_is_muted(self) -> bool:
         """Returns whether speech output is temporarily muted."""
 
-        return settings.silenceSpeech
+        return speech.get_mute_speech()
 
     @dbus_service.setter
     def set_speech_is_muted(self, value: bool) -> bool:
@@ -2357,7 +2363,7 @@ class SpeechManager:
 
         msg = f"SPEECH MANAGER: Setting speech muted to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.silenceSpeech = value
+        speech.set_mute_speech(value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -2531,7 +2537,7 @@ class SpeechManager:
             self.set_speech_is_muted(False)
             if script is not None and notify_user:
                 presentation_manager.get_manager().present_message(messages.SPEECH_ENABLED)
-        elif not settings.enableSpeech:
+        elif not self.get_speech_is_enabled():
             settings.enableSpeech = True
             self._init_server()
             if script is not None and notify_user:

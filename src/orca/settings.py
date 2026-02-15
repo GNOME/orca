@@ -85,7 +85,6 @@ enableEchoBySentence: bool = False
 presentLockingKeys: bool | None = None
 
 # Managed by speech_manager.py
-silenceSpeech: bool = False
 enableSpeech: bool = True
 verbalizePunctuationStyle: int = PUNCTUATION_STYLE_MOST
 capitalizationStyle: str = CAPITALIZATION_STYLE_NONE

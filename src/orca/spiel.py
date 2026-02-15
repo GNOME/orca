@@ -164,8 +164,10 @@ class SpeechServer(speechserver.SpeechServer):
 
         self._id = server_id
         self._speaker: Any = None
+        self._default_voice: dict[str, Any] = {}
         self._current_voice_profiles = ()
         self._current_voice_properties: dict[str, Any] = {}
+        self._current_punctuation_level: int = settings.PUNCTUATION_STYLE_MOST
         self._provider: Any = None
         self._voices_id: int | None = None
         self._default_voice_name: str = ""
@@ -318,17 +320,28 @@ class SpeechServer(speechserver.SpeechServer):
             f"volume {self._current_voice_properties.get(ACSS.GAIN)}, "
             f"language {self._get_language_and_dialect(family)[0]}, "
             f"punctuation: "
-            f"{styles.get(settings.verbalizePunctuationStyle)}\n"
+            f"{styles.get(self._current_punctuation_level)}\n"
             f"SPIEL rate {rate}, pitch {pitch}, volume {volume}, language {language}"
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
+    def set_default_voice(self, default_voice: dict[str, Any]) -> None:
+        """Sets the default voice ACSS properties for fallback use."""
+
+        self._default_voice = default_voice
+
+    def update_punctuation_level(self, level: int) -> None:
+        """Stores the punctuation level for debug display."""
+
+        self._current_punctuation_level = level
+
     def _apply_acss(self, acss: ACSS | None) -> None:
-        if acss is None:
-            acss = settings.voices[settings.DEFAULT_VOICE]
+        merged: dict[str, Any] = dict(self._default_voice)
+        if acss is not None:
+            merged.update(acss)
         current = self._current_voice_properties
         for acss_property, default in self._acss_defaults:
-            value = acss.get(acss_property)
+            value = merged.get(acss_property)
             if value is not None:
                 current[acss_property] = value
             else:
@@ -376,10 +389,11 @@ class SpeechServer(speechserver.SpeechServer):
                 self.update_voices(provider.props.voices)
 
     def _create_utterance(self, text: str, acss: ACSS) -> Spiel.Utterance | None:
-        pitch = self._get_pitch(acss.get(ACSS.AVERAGE_PITCH, 5.0))
-        rate = self._get_rate(acss.get(ACSS.RATE, 50))
-        volume = self._get_volume(acss.get(ACSS.GAIN, 5.0))
-        voice = self._get_voice(acss.get(ACSS.FAMILY, VoiceFamily(None)))
+        default = self._default_voice
+        pitch = self._get_pitch(acss.get(ACSS.AVERAGE_PITCH, default.get(ACSS.AVERAGE_PITCH, 5.0)))
+        rate = self._get_rate(acss.get(ACSS.RATE, default.get(ACSS.RATE, 50)))
+        volume = self._get_volume(acss.get(ACSS.GAIN, default.get(ACSS.GAIN, 5.0)))
+        voice = self._get_voice(acss.get(ACSS.FAMILY, default.get(ACSS.FAMILY, VoiceFamily(None))))
 
         if voice is None:
             debug.print_message(debug.LEVEL_WARNING, "No available voices", True)
@@ -456,7 +470,7 @@ class SpeechServer(speechserver.SpeechServer):
         debug.print_message(debug.LEVEL_INFO, f"SPIEL Character: '{character}'")
 
         if not acss:
-            acss = settings.voices[settings.DEFAULT_VOICE]
+            acss = ACSS(self._default_voice)
 
         voice = self._get_voice(acss.get(ACSS.FAMILY, VoiceFamily(None)))
         if voice is None:
@@ -499,7 +513,7 @@ class SpeechServer(speechserver.SpeechServer):
             return
 
         if not acss:
-            acss = settings.voices[settings.DEFAULT_VOICE]
+            acss = ACSS(self._default_voice)
 
         if len(text) == 1:
             msg = f"SPIEL: Speaking '{text}' as char"
@@ -632,36 +646,30 @@ class SpeechServer(speechserver.SpeechServer):
             self._speak_utterance(spiel_utterance, acss)
 
     def _change_default_speech_rate(self, step: int, decrease: bool = False) -> None:
-        acss = settings.voices[settings.DEFAULT_VOICE]
-        delta = step * (decrease and -1 or +1)
-        try:
-            rate = acss[ACSS.RATE]
-        except KeyError:
-            rate = 50
-        acss[ACSS.RATE] = max(0, min(99, rate + delta))
-        msg = f"SPIEL: Rate set to {rate}"
+        delta = step * (-1 if decrease else 1)
+        rate = self._default_voice.get(ACSS.RATE, 50)
+        new_rate = max(0, min(99, rate + delta))
+        self._default_voice[ACSS.RATE] = new_rate
+        self._current_voice_properties[ACSS.RATE] = new_rate
+        msg = f"SPIEL: Rate set to {new_rate}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _change_default_speech_pitch(self, step: float, decrease: bool = False) -> None:
-        acss = settings.voices[settings.DEFAULT_VOICE]
-        delta = step * (decrease and -1 or +1)
-        try:
-            pitch = acss[ACSS.AVERAGE_PITCH]
-        except KeyError:
-            pitch = 5
-        acss[ACSS.AVERAGE_PITCH] = max(0, min(9, pitch + delta))
-        msg = f"SPIEL: Pitch set to {pitch}"
+        delta = step * (-1 if decrease else 1)
+        pitch = self._default_voice.get(ACSS.AVERAGE_PITCH, 5)
+        new_pitch = max(0, min(9, pitch + delta))
+        self._default_voice[ACSS.AVERAGE_PITCH] = new_pitch
+        self._current_voice_properties[ACSS.AVERAGE_PITCH] = new_pitch
+        msg = f"SPIEL: Pitch set to {new_pitch}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _change_default_speech_volume(self, step: float, decrease: bool = False) -> None:
-        acss = settings.voices[settings.DEFAULT_VOICE]
-        delta = step * (decrease and -1 or +1)
-        try:
-            volume = acss[ACSS.GAIN]
-        except KeyError:
-            volume = 10
-        acss[ACSS.GAIN] = max(0, min(9, volume + delta))
-        msg = f"SPIEL: Volume set to {volume}"
+        delta = step * (-1 if decrease else 1)
+        volume = self._default_voice.get(ACSS.GAIN, 10)
+        new_volume = max(0, min(9, volume + delta))
+        self._default_voice[ACSS.GAIN] = new_volume
+        self._current_voice_properties[ACSS.GAIN] = new_volume
+        msg = f"SPIEL: Volume set to {new_volume}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _maybe_shutdown(self) -> bool:

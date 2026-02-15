@@ -302,6 +302,8 @@ class SpeechGenerator(generator.Generator):
             override = voices.get(voicename)
             if override and override.get("established", True):
                 voice.update(override)
+                if acss.ACSS.FAMILY in override:
+                    family = override[acss.ACSS.FAMILY]
 
         voice[acss.ACSS.FAMILY] = family
         tokens = ["SPEECH GENERATOR: Final voice is", voice]
