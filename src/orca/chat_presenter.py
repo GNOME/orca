@@ -288,11 +288,6 @@ class Chat:
     def is_active_channel(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is in the active/selected channel."""
 
-        if AXUtilities.is_showing(obj):
-            tokens = ["CHAT:", obj, "is in active channel (showing)"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
         if page_tab := AXObject.find_ancestor(obj, AXUtilities.is_page_tab):
             tab_list = AXObject.get_parent(page_tab)
             selected = AXSelection.get_selected_child(tab_list, 0)
@@ -309,6 +304,11 @@ class Chat:
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return result
+
+        if AXUtilities.is_showing(obj):
+            tokens = ["CHAT:", obj, "is in active channel (showing)"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return True
 
         tokens = ["CHAT:", obj, "is not in active channel (not showing, no tab)"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
