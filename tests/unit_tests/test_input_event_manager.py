@@ -333,7 +333,7 @@ class TestInputEventManager:
             mock_kd2 = test_context.Mock()
             mock_binding.key_definitions.return_value = [mock_kd1, mock_kd2]
 
-        result = input_event_manager.add_grabs_for_keybinding(mock_binding)
+        result = input_event_manager.add_grabs_for_keybinding(mock_binding, ["Insert", "KP_Insert"])
 
         if case["scenario"] == "success":
             assert result == case["expected_result"]

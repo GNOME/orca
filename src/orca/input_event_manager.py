@@ -87,7 +87,9 @@ class InputEventManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._paused = pause
 
-    def add_grabs_for_keybinding(self, binding: keybindings.KeyBinding) -> list[int]:
+    def add_grabs_for_keybinding(
+        self, binding: keybindings.KeyBinding, orca_modifiers: list[str]
+    ) -> list[int]:
         """Adds grabs for binding, returns grab IDs."""
 
         if binding.has_grabs():
@@ -101,7 +103,7 @@ class InputEventManager:
             return []
 
         grab_ids = []
-        for kd in binding.key_definitions():
+        for kd in binding.key_definitions(orca_modifiers):
             grab_id = self._device.add_key_grab(kd, None)
             # When we have double/triple-click bindings, the single-click binding will be
             # registered first, and subsequent attempts to register what is externally the

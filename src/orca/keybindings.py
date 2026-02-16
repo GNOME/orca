@@ -36,7 +36,6 @@ from gi.repository import Gdk
 
 from . import input_event_manager
 from . import keynames
-from . import settings
 
 _keycode_cache = {}
 
@@ -176,7 +175,9 @@ class KeyBinding:
         )
 
     @staticmethod
-    def _create_key_definitions(keyval: int, modifiers: int) -> list[Atspi.KeyDefinition]:
+    def _create_key_definitions(
+        keyval: int, modifiers: int, orca_modifiers: list[str]
+    ) -> list[Atspi.KeyDefinition]:
         """Returns a list of Atspi key definitions for the given keyval and modifiers."""
 
         ret = []
@@ -184,7 +185,7 @@ class KeyBinding:
             modifier_list = []
             other_modifiers = modifiers & ~ORCA_MODIFIER_MASK
             manager = input_event_manager.get_manager()
-            for key in settings.orcaModifierKeys:
+            for key in orca_modifiers:
                 mod_keyval, mod_keycode = get_keycodes(key)
                 if mod_keycode == 0 and key == "Shift_Lock":
                     mod_keyval, mod_keycode = get_keycodes("Caps_Lock")
@@ -224,18 +225,20 @@ class KeyBinding:
         string = f"{mods}{keysym} {click_count}"
         return string.strip()
 
-    def key_definitions(self) -> list[Atspi.KeyDefinition]:
+    def key_definitions(self, orca_modifiers: list[str]) -> list[Atspi.KeyDefinition]:
         """return a list of Atspi key definitions for the given binding."""
 
         ret = []
         if not self.keycode:
             self.keyval, self.keycode = get_keycodes(self.keysymstring)
-        ret.extend(self._create_key_definitions(self.keyval, self.modifiers))
+        ret.extend(self._create_key_definitions(self.keyval, self.modifiers, orca_modifiers))
         # We need to bind the uppercase keysyms if requested, as well as the lowercase
         # ones, because keysyms represent characters, not key locations.
         if self.modifiers & SHIFT_MODIFIER_MASK:
             if (upper_keyval := Gdk.keyval_to_upper(self.keyval)) != self.keyval:
-                ret.extend(self._create_key_definitions(upper_keyval, self.modifiers))
+                ret.extend(
+                    self._create_key_definitions(upper_keyval, self.modifiers, orca_modifiers)
+                )
         return ret
 
     def get_grab_ids(self) -> list[int]:
@@ -253,10 +256,12 @@ class KeyBinding:
 
         return bool(self._grab_ids)
 
-    def add_grabs(self) -> None:
+    def add_grabs(self, orca_modifiers: list[str]) -> None:
         """Adds key grabs for this KeyBinding."""
 
-        self._grab_ids = input_event_manager.get_manager().add_grabs_for_keybinding(self)
+        self._grab_ids = input_event_manager.get_manager().add_grabs_for_keybinding(
+            self, orca_modifiers
+        )
 
     def remove_grabs(self) -> None:
         """Removes key grabs for this KeyBinding."""

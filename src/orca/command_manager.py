@@ -1294,6 +1294,8 @@ class CommandManager:
         msg = f"COMMAND MANAGER: Updating NumLock grabs. NumLock is on: {self._numlock_on}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
+        orca_modifiers = orca_modifier_manager.get_manager().get_orca_modifier_keys()
+
         def update_grabs() -> bool:
             for cmd in self._keyboard_commands.values():
                 if not cmd.is_active():
@@ -1305,7 +1307,7 @@ class CommandManager:
                 if self._numlock_on and kb.has_grabs():
                     kb.remove_grabs()
                 elif not self._numlock_on and not kb.has_grabs():
-                    kb.add_grabs()
+                    kb.add_grabs(orca_modifiers)
             return False
 
         GLib.idle_add(update_grabs)
@@ -1564,6 +1566,7 @@ class CommandManager:
     def set_group_enabled(self, group_label: str, enabled: bool) -> None:
         """Sets the enabled state for all commands in a group."""
 
+        orca_modifiers = orca_modifier_manager.get_manager().get_orca_modifier_keys()
         added_count = 0
         removed_count = 0
 
@@ -1585,7 +1588,7 @@ class CommandManager:
                 kb.remove_grabs()
                 removed_count += 1
             elif not was_active and is_active and not kb.has_grabs():
-                kb.add_grabs()
+                kb.add_grabs(orca_modifiers)
                 added_count += 1
 
         if removed_count or added_count:
@@ -1598,6 +1601,7 @@ class CommandManager:
     def set_group_suspended(self, group_label: str, suspended: bool) -> None:
         """Sets the suspended state for all commands in a group."""
 
+        orca_modifiers = orca_modifier_manager.get_manager().get_orca_modifier_keys()
         added_count = 0
         removed_count = 0
 
@@ -1614,7 +1618,7 @@ class CommandManager:
                 kb.remove_grabs()
                 removed_count += 1
             elif not was_active and is_active and not kb.has_grabs():
-                kb.add_grabs()
+                kb.add_grabs(orca_modifiers)
                 added_count += 1
 
         if removed_count or added_count:
@@ -1627,6 +1631,7 @@ class CommandManager:
     def set_all_suspended(self, suspended: bool, exceptions: frozenset[str] | None = None) -> None:
         """Sets the suspended state for all commands, optionally excluding exceptions."""
 
+        orca_modifiers = orca_modifier_manager.get_manager().get_orca_modifier_keys()
         added_count = 0
         removed_count = 0
 
@@ -1645,7 +1650,7 @@ class CommandManager:
                 kb.remove_grabs()
                 removed_count += 1
             elif not was_active and is_active and not kb.has_grabs():
-                kb.add_grabs()
+                kb.add_grabs(orca_modifiers)
                 added_count += 1
 
         if removed_count or added_count:
@@ -1681,6 +1686,7 @@ class CommandManager:
     ) -> None:
         """Updates grabs based on diff between old and new binding maps."""
 
+        orca_modifiers = orca_modifier_manager.get_manager().get_orca_modifier_keys()
         removed: list[tuple[str, int, int]] = []
         added: list[tuple[str, int, int]] = []
         transferred: list[tuple[str, int, int]] = []
@@ -1703,7 +1709,7 @@ class CommandManager:
             if key not in transferred_keys and not new_kb.has_grabs():
                 if self._is_desktop and self._numlock_on and key[0].startswith("KP_"):
                     continue
-                new_kb.add_grabs()
+                new_kb.add_grabs(orca_modifiers)
                 if new_kb.has_grabs():
                     added.append(key)
 
