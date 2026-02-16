@@ -64,6 +64,7 @@ class TestWhereAmIPresenter:
             "orca.flat_review_presenter",
             "orca.speech_presenter",
             "orca.spellcheck_presenter",
+            "orca.text_attribute_manager",
             "orca.ax_component",
             "orca.ax_text",
             "orca.ax_utilities",
@@ -116,8 +117,14 @@ class TestWhereAmIPresenter:
             return_value=settings_manager_instance
         )
 
+        text_attr_mgr = essential_modules["orca.text_attribute_manager"]
+        text_attr_mgr.get_manager.return_value.get_attributes_to_speak.return_value = [
+            "weight",
+            "style",
+            "underline",
+        ]
+
         settings_mock = essential_modules["orca.settings"]
-        settings_mock.textAttributesToSpeak = ["weight", "style", "underline"]
         settings_mock.repeatCharacterLimit = 4
 
         speech_verbosity_instance = test_context.Mock()
@@ -278,7 +285,13 @@ class TestWhereAmIPresenter:
             5,
         )
 
-        deps["orca.settings"].textAttributesToSpeak = ["weight", "style", "underline"]
+        deps[
+            "orca.text_attribute_manager"
+        ].get_manager.return_value.get_attributes_to_speak.return_value = [
+            "weight",
+            "style",
+            "underline",
+        ]
 
         pres_manager = deps["orca.presentation_manager"].get_manager()
         pres_manager.speak_message.reset_mock()
@@ -299,7 +312,9 @@ class TestWhereAmIPresenter:
         deps = self._setup_dependencies(test_context)
         from orca.where_am_i_presenter import WhereAmIPresenter
 
-        deps["orca.settings"].textAttributesToSpeak = []
+        deps[
+            "orca.text_attribute_manager"
+        ].get_manager.return_value.get_attributes_to_speak.return_value = []
 
         default_attr = test_context.Mock()
         default_attr.get_attribute_name.return_value = "weight"
