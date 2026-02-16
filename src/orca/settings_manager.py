@@ -170,34 +170,12 @@ class SettingsManager:
         if not os.path.exists(init_file):
             os.close(os.open(init_file, os.O_CREAT, 0o700))
 
-        app_settings_dir = os.path.join(orca_dir, "app-settings")
-        _create_dir(app_settings_dir)
-
         sounds_dir = os.path.join(orca_dir, "sounds")
         _create_dir(sounds_dir)
 
         customizations_file = os.path.join(orca_dir, "orca-customizations.py")
         if not os.path.exists(customizations_file):
             os.close(os.open(customizations_file, os.O_CREAT, 0o700))
-
-        if not os.path.exists(self._settings_file):
-            # Build legacy general dict with all default settings for backwards compatibility
-            legacy_general = self._default_settings.copy()
-            legacy_general["startingProfile"] = settings.profile
-            prefs = {
-                "startingProfile": settings.profile,
-                "profiles": {
-                    "default": {
-                        "profile": settings.profile,
-                    }
-                },
-                # Legacy keys for backwards compatibility with older Orca versions
-                "general": legacy_general,
-                "pronunciations": {},
-                "keybindings": {},
-            }
-            with open(self._settings_file, "w", encoding="utf-8") as settings_file:
-                dump(prefs, settings_file, indent=4)
 
         debug.print_message(debug.LEVEL_INFO, "SETTINGS MANAGER: Activated", True)
 
@@ -437,21 +415,24 @@ class SettingsManager:
         if profile is None:
             profile = settings.profile
 
-        with open(self._settings_file, "r+", encoding="utf-8") as settings_file:
-            try:
-                prefs = load(settings_file)
-            except ValueError:
-                prefs = {}
-            prefs.setdefault("profiles", {})
-            prefs["startingProfile"] = profile
-            # Update legacy general key for backwards compatibility with older Orca versions
-            if "general" not in prefs or not isinstance(prefs["general"], dict):
-                prefs["general"] = self._default_settings.copy()
-            prefs["general"]["startingProfile"] = profile
-            prefs.setdefault("pronunciations", {})
-            prefs.setdefault("keybindings", {})
-            settings_file.seek(0)
-            settings_file.truncate()
+        if gsettings_registry.get_registry().is_enabled():
+            return
+
+        prefs = {}
+        if os.path.exists(self._settings_file):
+            with open(self._settings_file, encoding="utf-8") as settings_file:
+                try:
+                    prefs = load(settings_file)
+                except ValueError:
+                    pass
+        prefs.setdefault("profiles", {})
+        prefs["startingProfile"] = profile
+        if "general" not in prefs or not isinstance(prefs["general"], dict):
+            prefs["general"] = self._default_settings.copy()
+        prefs["general"]["startingProfile"] = profile
+        prefs.setdefault("pronunciations", {})
+        prefs.setdefault("keybindings", {})
+        with open(self._settings_file, "w", encoding="utf-8") as settings_file:
             dump(prefs, settings_file, indent=4)
 
     def get_profile(self) -> str:
@@ -491,52 +472,53 @@ class SettingsManager:
     def remove_profile(self, internal_name: str) -> None:
         """Remove an existing profile."""
 
-        with open(self._settings_file, "r+", encoding="utf-8") as settings_file:
+        registry = gsettings_registry.get_registry()
+        if registry.is_enabled():
+            registry.reset_profile(internal_name)
+            return
+
+        if not os.path.exists(self._settings_file):
+            return
+        with open(self._settings_file, encoding="utf-8") as settings_file:
             try:
                 prefs = load(settings_file)
             except ValueError:
                 return
-            if "profiles" not in prefs or internal_name not in prefs["profiles"]:
-                return
+        if "profiles" not in prefs or internal_name not in prefs["profiles"]:
+            return
 
-            del prefs["profiles"][internal_name]
-            if not prefs["profiles"]:
-                prefs["profiles"]["default"] = {
-                    "profile": settings.profile,
-                }
-
-            settings_file.seek(0)
-            settings_file.truncate()
+        del prefs["profiles"][internal_name]
+        if not prefs["profiles"]:
+            prefs["profiles"]["default"] = {
+                "profile": settings.profile,
+            }
+        with open(self._settings_file, "w", encoding="utf-8") as settings_file:
             dump(prefs, settings_file, indent=4)
 
     def rename_profile(self, old_internal_name: str, new_profile: list[str]) -> None:
         """Rename profile with old_internal_name to new_profile (label, internal_name)."""
 
-        with open(self._settings_file, "r+", encoding="utf-8") as settings_file:
+        registry = gsettings_registry.get_registry()
+        if registry.is_enabled():
+            registry.reset_profile(old_internal_name)
+            return
+
+        if not os.path.exists(self._settings_file):
+            return
+        with open(self._settings_file, encoding="utf-8") as settings_file:
             try:
                 prefs = load(settings_file)
             except ValueError:
                 return
-            if "profiles" not in prefs or old_internal_name not in prefs["profiles"]:
-                return
+        if "profiles" not in prefs or old_internal_name not in prefs["profiles"]:
+            return
 
-            profile_data = prefs["profiles"][old_internal_name].copy()
-            profile_data["profile"] = new_profile
-            prefs["profiles"][new_profile[1]] = profile_data
-            del prefs["profiles"][old_internal_name]
-
-            settings_file.seek(0)
-            settings_file.truncate()
+        profile_data = prefs["profiles"][old_internal_name].copy()
+        profile_data["profile"] = new_profile
+        prefs["profiles"][new_profile[1]] = profile_data
+        del prefs["profiles"][old_internal_name]
+        with open(self._settings_file, "w", encoding="utf-8") as settings_file:
             dump(prefs, settings_file, indent=4)
-
-        registry = gsettings_registry.get_registry()
-        registry.reset_profile(old_internal_name)
-        new_internal_name = new_profile[1]
-        pronunciations = profile_data.get("pronunciations", {})
-        keybindings = profile_data.get("keybindings", {})
-        registry._write_profile_settings(  # pylint: disable=protected-access
-            new_internal_name, profile_data, pronunciations, keybindings
-        )
 
     def _set_settings_runtime(self, settings_dict: dict) -> None:
         """Apply settings to the runtime settings module."""
@@ -556,11 +538,15 @@ class SettingsManager:
     def get_general_settings(self, profile: str = "default") -> dict:
         """Return the current general settings."""
 
+        if not os.path.exists(self._settings_file):
+            return {}
         return self._get_general_from_file(profile)
 
     def _get_dict_from_file(self, profile: str, key: str) -> dict:
         """Returns a dict from the JSON settings file for the -u fallback path."""
 
+        if not os.path.exists(self._settings_file):
+            return {}
         with open(self._settings_file, encoding="utf-8") as settings_file:
             try:
                 prefs = load(settings_file)
@@ -620,19 +606,22 @@ class SettingsManager:
                 if value != current_keybindings.get(key):
                     app_keybindings[key] = value
 
-            prefs = self._get_app_settings_from_file(app_name)
-            profiles = prefs.get("profiles", {})
-            profiles[self._profile] = {
-                "general": app_general,
-                "pronunciations": app_pronunciations,
-                "keybindings": app_keybindings,
-            }
-            prefs["profiles"] = profiles
-            file_name = os.path.join(self._prefs_dir, "app-settings", f"{app_name}.conf")
-            with open(file_name, "w", encoding="utf-8") as settings_file:
-                dump(prefs, settings_file, indent=4)
             registry = gsettings_registry.get_registry()
-            if registry.is_enabled():
+            if not registry.is_enabled():
+                prefs = self._get_app_settings_from_file(app_name)
+                profiles = prefs.get("profiles", {})
+                profiles[self._profile] = {
+                    "general": app_general,
+                    "pronunciations": app_pronunciations,
+                    "keybindings": app_keybindings,
+                }
+                prefs["profiles"] = profiles
+                app_settings_dir = os.path.join(self._prefs_dir, "app-settings")
+                os.makedirs(app_settings_dir, exist_ok=True)
+                file_name = os.path.join(app_settings_dir, f"{app_name}.conf")
+                with open(file_name, "w", encoding="utf-8") as settings_file:
+                    dump(prefs, settings_file, indent=4)
+            else:
                 p = registry.sanitize_gsettings_path(self._profile)
                 metadata_gs = registry.get_settings("metadata", p, app_name=app_name)
                 if metadata_gs is not None:
@@ -671,18 +660,19 @@ class SettingsManager:
         tokens = ["SETTINGS MANAGER: Saving for profile", self._profile]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        with open(self._settings_file, "r+", encoding="utf-8") as settings_file:
-            try:
-                prefs = load(settings_file)
-            except ValueError:
-                prefs = {}
+        registry = gsettings_registry.get_registry()
+        if not registry.is_enabled():
+            prefs = {}
+            if os.path.exists(self._settings_file):
+                with open(self._settings_file, encoding="utf-8") as settings_file:
+                    try:
+                        prefs = load(settings_file)
+                    except ValueError:
+                        pass
             prefs.setdefault("profiles", {})
             prefs["profiles"][self._profile] = profile_general
-            # Always use Default as the starting profile for backwards compatibility
             default_profile = ["Default", "default"]
             prefs["startingProfile"] = default_profile
-            # Write legacy general with all settings for backwards compatibility
-            # with older Orca versions
             legacy_general = self._default_settings.copy()
             legacy_general.update(general)
             legacy_general["startingProfile"] = default_profile
@@ -690,11 +680,8 @@ class SettingsManager:
             prefs["general"] = legacy_general
             prefs.setdefault("pronunciations", {})
             prefs.setdefault("keybindings", {})
-            settings_file.seek(0)
-            settings_file.truncate()
-            dump(prefs, settings_file, indent=4)
-
-        registry = gsettings_registry.get_registry()
+            with open(self._settings_file, "w", encoding="utf-8") as settings_file:
+                dump(prefs, settings_file, indent=4)
         if registry.is_enabled():
             p = registry.sanitize_gsettings_path(self._profile)
             metadata_gs = registry.get_settings("metadata", p)
@@ -718,6 +705,8 @@ class SettingsManager:
     def available_profiles(self) -> list:
         """Get available profiles."""
 
+        if not os.path.exists(self._settings_file):
+            return [["Default", "default"]]
         with open(self._settings_file, encoding="utf-8") as settings_file:
             try:
                 prefs = load(settings_file)

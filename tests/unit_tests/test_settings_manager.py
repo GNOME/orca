@@ -283,7 +283,13 @@ class TestSettingsManagerFileIO:
         self._setup_dependencies(test_context)
 
         with tempfile.TemporaryDirectory() as temp_dir:
-            self._create_fresh_manager(test_context, temp_dir)
+            manager = self._create_fresh_manager(test_context, temp_dir)
+
+            mock_script = test_context.Mock()
+            mock_script.app = None
+            general_settings = manager.get_settings()
+            general_settings["profile"] = ["Default", "default"]
+            manager.save_settings(mock_script, general_settings, {}, {})
 
             settings_file = os.path.join(temp_dir, "user-settings.conf")
             assert os.path.exists(settings_file)
@@ -292,7 +298,6 @@ class TestSettingsManagerFileIO:
                 data = json.load(f)
             assert "startingProfile" in data
             assert "profiles" in data
-            # Legacy keys for backwards compatibility with older Orca versions
             assert "general" in data
             assert "pronunciations" in data
             assert "keybindings" in data
@@ -514,7 +519,13 @@ class TestSettingsManagerFileIO:
         self._setup_dependencies(test_context)
 
         with tempfile.TemporaryDirectory() as temp_dir:
-            self._create_fresh_manager(test_context, temp_dir)
+            manager = self._create_fresh_manager(test_context, temp_dir)
+
+            mock_script = test_context.Mock()
+            mock_script.app = None
+            general_settings = manager.get_settings()
+            general_settings["profile"] = ["Default", "default"]
+            manager.save_settings(mock_script, general_settings, {}, {})
 
             settings_file = os.path.join(temp_dir, "user-settings.conf")
             with open(settings_file, "r", encoding="utf-8") as f:
