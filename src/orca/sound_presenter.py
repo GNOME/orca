@@ -219,13 +219,20 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self._volume_scale.set_value(self._presenter.get_sound_volume())
         self._progress_bars_grid.reload()
 
-    def save_settings(self) -> dict:
+    def save_settings(self, profile: str = "", app_name: str = "") -> dict:
         """Persist staged values."""
 
         result: dict[str, Any] = {}
         result["enableSound"] = self._presenter.get_sound_is_enabled()
         result["soundVolume"] = self._presenter.get_sound_volume()
         result.update(self._progress_bars_grid.save_settings())
+
+        if profile:
+            registry = gsettings_registry.get_registry()
+            if registry.is_enabled():
+                skip = not app_name and profile == "default"
+                registry.save_schema_to_gsettings("sound", result, profile, app_name, skip)
+
         return result
 
     def refresh(self) -> None:

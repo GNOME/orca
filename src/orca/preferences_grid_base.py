@@ -1223,6 +1223,8 @@ ControlType = (
 class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-instance-attributes
     """Simplified preferences grid that automatically builds UI from control definitions."""
 
+    _gsettings_schema: str = ""
+
     # pylint: disable=no-member, c-extension-no-member
     def __init__(
         self,
@@ -1913,7 +1915,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         self._initializing = False
         self._update_sensitivity()
 
-    def save_settings(self) -> dict[str, Any]:
+    def save_settings(self, profile: str = "", app_name: str = "") -> dict[str, Any]:
         """Save all values using their setters and return a dict of changes."""
 
         result = {}
@@ -1978,7 +1980,23 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                         result[control.prefs_key] = value
 
         self._has_unsaved_changes = False
+        self._write_gsettings(result, profile, app_name)
         return result
+
+    def _write_gsettings(self, result: dict, profile: str, app_name: str) -> None:
+        """Writes this grid's settings to dconf if profile and schema are set."""
+
+        if not profile or not self._gsettings_schema:
+            return
+        from . import gsettings_registry  # pylint: disable=import-outside-toplevel
+
+        registry = gsettings_registry.get_registry()
+        if not registry.is_enabled():
+            return
+        skip_defaults = not app_name and profile == "default"
+        registry.save_schema_to_gsettings(
+            self._gsettings_schema, result, profile, app_name, skip_defaults
+        )
 
     def get_widget(self, index: int) -> Gtk.Widget | None:
         """Get the widget at the specified index, or None if out of range."""

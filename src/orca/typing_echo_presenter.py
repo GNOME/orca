@@ -77,6 +77,8 @@ class TypingEchoPreference:
 class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Typing Echo preferences page."""
 
+    _gsettings_schema = "typing-echo"
+
     def __init__(self, presenter: "TypingEchoPresenter") -> None:
         self._enable_key_echo_control = preferences_grid_base.BooleanPreferenceControl(
             label=guilabels.ECHO_ENABLE_KEY_ECHO,

@@ -31,6 +31,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
+from . import gsettings_migrator
 from . import gsettings_registry
 from . import guilabels
 from . import messages
@@ -365,7 +366,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         self._has_unsaved_changes = False
         self.refresh()
 
-    def save_settings(self) -> dict[str, list[str]]:
+    def save_settings(self, profile: str = "", app_name: str = "") -> dict[str, list[str]]:
         """Save settings and return a dictionary of the current values for those settings."""
 
         self._manager.set_dictionary({})
@@ -379,6 +380,16 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
                 result[phrase.lower()] = [phrase, substitution]
 
         self._has_unsaved_changes = False
+
+        if profile:
+            registry = gsettings_registry.get_registry()
+            if registry.is_enabled():
+                pron_gs = registry.get_settings(
+                    "pronunciations", profile, "pronunciations", app_name
+                )
+                if pron_gs is not None:
+                    gsettings_migrator.import_pronunciations(pron_gs, result)
+
         return result
 
     def refresh(self) -> None:

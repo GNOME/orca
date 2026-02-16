@@ -1763,8 +1763,8 @@ class TestEnabledFlag:
         registry.set_enabled(True)
         assert registry.is_enabled() is True
 
-    def test_get_gs_returns_none_when_disabled(self, test_context: OrcaTestContext) -> None:
-        """Test _get_gs returns None when registry is disabled."""
+    def test_get_settings_returns_none_when_disabled(self, test_context: OrcaTestContext) -> None:
+        """Test get_settings returns None when registry is disabled."""
 
         self._setup(test_context)
         from orca.gsettings_registry import GSettingsRegistry
@@ -1772,7 +1772,7 @@ class TestEnabledFlag:
         registry = GSettingsRegistry()
         registry._schemas["test"] = "org.gnome.Orca.Test"
         registry.set_enabled(False)
-        assert registry._get_gs("test", "default") is None
+        assert registry.get_settings("test", "default") is None
 
     def test_migrate_all_returns_false_when_disabled(self, test_context: OrcaTestContext) -> None:
         """Test migrate_all returns False immediately when disabled."""
@@ -1784,8 +1784,8 @@ class TestEnabledFlag:
         registry.set_enabled(False)
         assert registry.migrate_all("/tmp/test", []) is False
 
-    def test_save_all_to_gsettings_noop_when_disabled(self, test_context: OrcaTestContext) -> None:
-        """Test save_all_to_gsettings does nothing when disabled."""
+    def test_write_profile_settings_noop_when_disabled(self, test_context: OrcaTestContext) -> None:
+        """Test _write_profile_settings does nothing when disabled."""
 
         self._setup(test_context)
         from orca.gsettings_registry import GSettingsRegistry
@@ -1794,7 +1794,7 @@ class TestEnabledFlag:
         registry._schemas["speech"] = "org.gnome.Orca.Speech"
         registry.set_enabled(False)
         test_context.patch("orca.gsettings_registry.Gio.Settings.sync")
-        registry.save_all_to_gsettings("default", {"enableSpeech": True}, {}, {})
+        registry._write_profile_settings("default", {"enableSpeech": True}, {}, {})
 
     def test_sync_missing_profiles_noop_when_disabled(self, test_context: OrcaTestContext) -> None:
         """Test sync_missing_profiles does nothing when disabled."""

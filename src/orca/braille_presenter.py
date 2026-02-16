@@ -126,10 +126,10 @@ class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
 
         super().__init__(guilabels.VERBOSITY, controls)
 
-    def save_settings(self) -> dict[str, Any]:
+    def save_settings(self, profile: str = "", app_name: str = "") -> dict[str, Any]:
         """Save settings, adding integer value for rolename style."""
 
-        result = super().save_settings()
+        result = super().save_settings(profile, app_name)
         result["brailleRolenameStyle"] = settings.brailleRolenameStyle
         return result
 
@@ -297,10 +297,10 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
         widget = self.get_widget_for_control(self._flash_persistent_control)
         return not widget.get_active() if widget else True
 
-    def save_settings(self) -> dict:
+    def save_settings(self, profile: str = "", app_name: str = "") -> dict:
         """Persist staged values, including brailleFlashTime in milliseconds."""
 
-        result = super().save_settings()
+        result = super().save_settings(profile, app_name)
         result["brailleFlashTime"] = self._presenter.get_flash_message_duration()
         return result
 
@@ -447,7 +447,7 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._progress_bars_grid.reload()
         self._osd_grid.reload()
 
-    def save_settings(self) -> dict:
+    def save_settings(self, profile: str = "", app_name: str = "") -> dict:
         """Persist staged values."""
 
         result: dict[str, Any] = {}
@@ -457,6 +457,13 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         result.update(self._flash_messages_grid.save_settings())
         result.update(self._progress_bars_grid.save_settings())
         result.update(self._osd_grid.save_settings())
+
+        if profile:
+            registry = gsettings_registry.get_registry()
+            if registry.is_enabled():
+                skip = not app_name and profile == "default"
+                registry.save_schema_to_gsettings("braille", result, profile, app_name, skip)
+
         return result
 
     def refresh(self) -> None:

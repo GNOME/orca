@@ -374,7 +374,7 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
                 target_row.grab_focus()
             self._focus_target_index = None
 
-    def save_settings(self) -> dict[str, list[str]]:
+    def save_settings(self, profile: str = "", app_name: str = "") -> dict[str, list[str]]:
         """Save current settings and return dict of changed preferences."""
 
         spoken_attributes = []
@@ -389,10 +389,20 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
 
         self._has_unsaved_changes = False
 
-        return {
+        result = {
             "textAttributesToSpeak": spoken_attributes,
             "textAttributesToBraille": brailled_attributes,
         }
+
+        if profile:
+            registry = gsettings_registry.get_registry()
+            if registry.is_enabled():
+                skip = not app_name and profile == "default"
+                registry.save_schema_to_gsettings(
+                    "text-attributes", result, profile, app_name, skip
+                )
+
+        return result
 
     # pylint: enable=no-member, c-extension-no-member
 

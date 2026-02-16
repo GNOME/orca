@@ -909,6 +909,8 @@ class SpellCheckPresenter:
 class SpellCheckPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Spell Check preferences page."""
 
+    _gsettings_schema = "spellcheck"
+
     def __init__(self, presenter: SpellCheckPresenter) -> None:
         controls = [
             preferences_grid_base.BooleanPreferenceControl(

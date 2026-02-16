@@ -453,7 +453,7 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._pending_renames.clear()
         self._rebuild_ui()
 
-    def save_settings(self) -> dict:
+    def save_settings(self, _profile: str = "", _app_name: str = "") -> dict:
         """Save settings and return a dictionary of the current values for those settings."""
 
         result = {}

@@ -503,37 +503,43 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         msg = "PREFERENCES DIALOG: Apply button clicked"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
+        profile_data = self.prefs_dict.get("profile", settings.profile)
+        profile_name = profile_data[1] if isinstance(profile_data, list) else "default"
+        save_app = self._app_name or ""
+
         # Save profiles first so any renames happen before saving other settings
         # (profiles are global, not saved for app-specific preferences)
         if not self._app_name:
             profile_values = self.profiles_grid.save_settings()
             self.prefs_dict.update(profile_values)
 
-        speech_values = self.speech_grid.save_settings()
+        speech_values = self.speech_grid.save_settings(profile_name, save_app)
         self.prefs_dict.update(speech_values)
 
-        braille_values = self.braille_grid.save_settings()
+        braille_values = self.braille_grid.save_settings(profile_name, save_app)
         self.prefs_dict.update(braille_values)
-        sound_values = self.sound_grid.save_settings()
+        sound_values = self.sound_grid.save_settings(profile_name, save_app)
         self.prefs_dict.update(sound_values)
-        updated_values = self.typing_echo_grid.save_settings()
+        updated_values = self.typing_echo_grid.save_settings(profile_name, save_app)
         self.prefs_dict.update(updated_values)
-        say_all_values = self.say_all_grid.save_settings()
+        say_all_values = self.say_all_grid.save_settings(profile_name, save_app)
         self.prefs_dict.update(say_all_values)
-        spellcheck_values = self.spellcheck_grid.save_settings()
+        spellcheck_values = self.spellcheck_grid.save_settings(profile_name, save_app)
         self.prefs_dict.update(spellcheck_values)
-        chat_values = self.chat_grid.save_settings()
+        chat_values = self.chat_grid.save_settings(profile_name, save_app)
         self.prefs_dict.update(chat_values)
-        mouse_values = self.mouse_grid.save_settings()
+        mouse_values = self.mouse_grid.save_settings(profile_name, save_app)
         self.prefs_dict.update(mouse_values)
-        document_values = self.document_grid.save_settings()
+        document_values = self.document_grid.save_settings(profile_name, save_app)
         self.prefs_dict.update(document_values)
-        time_and_date_values = self.time_and_date_grid.save_settings()
+        time_and_date_values = self.time_and_date_grid.save_settings(profile_name, save_app)
         self.prefs_dict.update(time_and_date_values)
-        text_attr_values = self.text_attributes_grid.save_settings()
+        text_attr_values = self.text_attributes_grid.save_settings(profile_name, save_app)
         self.prefs_dict.update(text_attr_values)
-        pronunciation_dict = self.pronunciation_grid.save_settings()
-        keybindings_general, key_bindings_dict = self.keybindings_grid.save_settings()
+        pronunciation_dict = self.pronunciation_grid.save_settings(profile_name, save_app)
+        keybindings_general, key_bindings_dict = self.keybindings_grid.save_settings(
+            profile_name, save_app
+        )
         self.prefs_dict.update(keybindings_general)
 
         self.write_user_preferences(pronunciation_dict, key_bindings_dict)

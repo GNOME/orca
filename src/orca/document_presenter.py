@@ -99,7 +99,9 @@ class _AppModeState:
 class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """Sub-grid for caret navigation settings within the Documents page."""
 
-    def __init__(self, presenter: "DocumentPresenter") -> None:
+    _gsettings_schema = "caret-navigation"
+
+    def __init__(self, presenter: DocumentPresenter) -> None:
         nav = caret_navigator.get_navigator()
 
         # Child controls need to check the enabled switch's UI state (not runtime state)
@@ -145,6 +147,8 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 
 class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """Sub-grid for structural navigation settings within the Documents page."""
+
+    _gsettings_schema = "structural-navigation"
 
     def __init__(self) -> None:
         nav = structural_navigator.get_navigator()
@@ -202,6 +206,8 @@ class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesG
 class TableNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """Sub-grid for table navigation settings within the Documents page."""
 
+    _gsettings_schema = "table-navigation"
+
     def __init__(self) -> None:
         nav = table_navigator.get_navigator()
 
@@ -237,6 +243,8 @@ class TableNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 
 class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """Sub-grid for native navigation settings within the Documents page."""
+
+    _gsettings_schema = "document"
 
     def __init__(self, presenter: DocumentPresenter) -> None:
         controls: list[preferences_grid_base.ControlType] = [
@@ -354,14 +362,14 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._native_grid.reload()
         self._initializing = False
 
-    def save_settings(self) -> dict:
+    def save_settings(self, profile: str = "", app_name: str = "") -> dict:
         """Save all settings from child grids."""
 
         result = {}
-        result.update(self._caret_grid.save_settings())
-        result.update(self._structural_grid.save_settings())
-        result.update(self._table_grid.save_settings())
-        result.update(self._native_grid.save_settings())
+        result.update(self._caret_grid.save_settings(profile, app_name))
+        result.update(self._structural_grid.save_settings(profile, app_name))
+        result.update(self._table_grid.save_settings(profile, app_name))
+        result.update(self._native_grid.save_settings(profile, app_name))
 
         return result
 

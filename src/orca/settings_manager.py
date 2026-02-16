@@ -38,6 +38,7 @@ from json import load, dump
 from types import ModuleType
 from typing import TYPE_CHECKING
 
+from gi.repository import Gio
 from gi.repository import GLib
 
 from . import debug
@@ -533,7 +534,9 @@ class SettingsManager:
         new_internal_name = new_profile[1]
         pronunciations = profile_data.get("pronunciations", {})
         keybindings = profile_data.get("keybindings", {})
-        registry.save_all_to_gsettings(new_internal_name, profile_data, pronunciations, keybindings)
+        registry._write_profile_settings(  # pylint: disable=protected-access
+            new_internal_name, profile_data, pronunciations, keybindings
+        )
 
     def _set_settings_runtime(self, settings_dict: dict) -> None:
         """Apply settings to the runtime settings module."""
@@ -626,9 +629,14 @@ class SettingsManager:
             file_name = os.path.join(self._prefs_dir, "app-settings", f"{app_name}.conf")
             with open(file_name, "w", encoding="utf-8") as settings_file:
                 dump(prefs, settings_file, indent=4)
-            gsettings_registry.get_registry().save_all_to_gsettings(
-                self._profile, app_general, app_pronunciations, app_keybindings, app_name
-            )
+            registry = gsettings_registry.get_registry()
+            if registry.is_enabled():
+                p = registry.sanitize_gsettings_path(self._profile)
+                metadata_gs = registry.get_settings("metadata", p, app_name=app_name)
+                if metadata_gs is not None:
+                    metadata_gs.set_string("display-name", app_name)
+                    metadata_gs.set_string("internal-name", p)
+                Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
             return
 
         _profile = general.get("profile", settings.profile)
@@ -684,9 +692,16 @@ class SettingsManager:
             settings_file.truncate()
             dump(prefs, settings_file, indent=4)
 
-        gsettings_registry.get_registry().save_all_to_gsettings(
-            self._profile, general, pronunciations, keybindings
-        )
+        registry = gsettings_registry.get_registry()
+        if registry.is_enabled():
+            p = registry.sanitize_gsettings_path(self._profile)
+            metadata_gs = registry.get_settings("metadata", p)
+            if metadata_gs is not None:
+                profile_tuple = general.get("profile")
+                if isinstance(profile_tuple, list) and len(profile_tuple) >= 2:
+                    metadata_gs.set_string("display-name", profile_tuple[0])
+                    metadata_gs.set_string("internal-name", profile_tuple[1])
+            Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
 
         # Clear any cached app settings snapshots so they don't overwrite the
         # newly saved settings when focus returns to the original application.

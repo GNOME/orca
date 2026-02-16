@@ -43,6 +43,7 @@ from gi.repository import Gdk, GLib, Gtk
 from . import cmdnames
 from . import dbus_service
 from . import debug
+from . import gsettings_migrator
 from . import gsettings_registry
 from . import guilabels
 from . import input_event
@@ -944,7 +945,11 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
     # pylint: enable=no-member
 
-    def save_settings(self) -> tuple[dict[str, int | list[str]], dict[str, list[list[Any]]]]:
+    def save_settings(  # pylint: disable=too-many-locals
+        self,
+        profile: str = "",
+        app_name: str = "",
+    ) -> tuple[dict[str, int | list[str]], dict[str, list[list[Any]]]]:
         """Save settings and return (general_settings, keybindings) tuple."""
 
         general: dict[str, int | list[str]] = {}
@@ -991,6 +996,17 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self._modified_keybindings.clear()
         self._has_unsaved_changes = False
+
+        if profile:
+            registry = gsettings_registry.get_registry()
+            if registry.is_enabled():
+                skip = not app_name and profile == "default"
+                registry.save_schema_to_gsettings("keybindings", general, profile, app_name, skip)
+                if bindings:
+                    kb_gs = registry.get_settings("keybindings", profile, "keybindings", app_name)
+                    if kb_gs is not None:
+                        gsettings_migrator.import_keybindings(kb_gs, bindings)
+
         return general, bindings
 
     def refresh(self) -> None:

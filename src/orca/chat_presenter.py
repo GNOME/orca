@@ -360,6 +360,8 @@ class Chat:
 class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """Preferences grid for Chat settings."""
 
+    _gsettings_schema = "chat"
+
     def __init__(self, presenter: ChatPresenter) -> None:
         options = [
             guilabels.CHAT_SPEAK_MESSAGES_ALL,

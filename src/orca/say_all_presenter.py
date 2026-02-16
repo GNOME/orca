@@ -88,6 +88,8 @@ class SayAllStyle(Enum):
 class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Say All preferences page."""
 
+    _gsettings_schema = "say-all"
+
     def __init__(self, presenter: SayAllPresenter) -> None:
         controls: list[preferences_grid_base.ControlType] = [
             preferences_grid_base.EnumPreferenceControl(

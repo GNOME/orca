@@ -101,6 +101,8 @@ class TimeFormat(Enum):
 class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Time and Date preferences page."""
 
+    _gsettings_schema = "system-information"
+
     def __init__(self, presenter: "SystemInformationPresenter") -> None:
         """Initialize the preferences grid."""
 

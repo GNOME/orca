@@ -378,6 +378,8 @@ class _ItemContext:
 class MousePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Mouse preferences page."""
 
+    _gsettings_schema = "mouse-review"
+
     def __init__(self, reviewer: "MouseReviewer") -> None:
         """Initialize the preferences grid."""
 
