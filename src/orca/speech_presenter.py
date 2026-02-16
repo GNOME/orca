@@ -91,6 +91,12 @@ class VerbosityLevel(Enum):
         return self.name.lower()
 
 
+_PROGRESS_BAR_VERBOSITY_NICKS: dict[str, int] = {"all": 0, "application": 1, "window": 2}
+_PROGRESS_BAR_VERBOSITY_NAMES: dict[int, str] = {
+    v: k for k, v in _PROGRESS_BAR_VERBOSITY_NICKS.items()
+}
+
+
 @dataclass(frozen=True)
 class SpeechPreference:
     """Descriptor for a single preference."""
@@ -639,6 +645,15 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 class SpeechPresenter:
     """Configures verbosity settings and adjusts strings for speech presentation."""
 
+    _SCHEMA = "speech"
+
+    def _get_setting(self, key: str, gtype: str, fallback: Any) -> Any:
+        """Returns the dconf value for key, or fallback if not in dconf."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA, key, gtype, fallback=fallback
+        )
+
     def __init__(self) -> None:
         self._last_indentation_description: str = ""
         self._last_error_description: str = ""
@@ -742,7 +757,9 @@ class SpeechPresenter:
     def get_speak_misspelled_indicator(self) -> bool:
         """Returns whether the misspelled indicator is spoken."""
 
-        return settings.speakMisspelledIndicator
+        return self._get_setting(
+            "speak-misspelled-indicator", "b", settings.speakMisspelledIndicator
+        )
 
     @dbus_service.setter
     def set_speak_misspelled_indicator(self, value: bool) -> bool:
@@ -750,9 +767,8 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting speak misspelled indicator to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakMisspelledIndicator = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "speak-misspelled-indicator", value
+            self._SCHEMA, "speak-misspelled-indicator", value
         )
         return True
 
@@ -768,7 +784,7 @@ class SpeechPresenter:
     def get_speak_description(self) -> bool:
         """Returns whether object descriptions are spoken."""
 
-        return settings.speakDescription
+        return self._get_setting("speak-description", "b", settings.speakDescription)
 
     @dbus_service.setter
     def set_speak_description(self, value: bool) -> bool:
@@ -776,8 +792,9 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting speak description to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakDescription = value
-        gsettings_registry.get_registry().set_runtime_value("speech", "speak-description", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, "speak-description", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -792,7 +809,7 @@ class SpeechPresenter:
     def get_speak_position_in_set(self) -> bool:
         """Returns whether the position and set size of objects are spoken."""
 
-        return settings.enablePositionSpeaking
+        return self._get_setting("speak-position-in-set", "b", settings.enablePositionSpeaking)
 
     @dbus_service.setter
     def set_speak_position_in_set(self, value: bool) -> bool:
@@ -800,9 +817,8 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting speak position in set to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enablePositionSpeaking = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "speak-position-in-set", value
+            self._SCHEMA, "speak-position-in-set", value
         )
         return True
 
@@ -818,7 +834,7 @@ class SpeechPresenter:
     def get_speak_widget_mnemonic(self) -> bool:
         """Returns whether widget mnemonics are spoken."""
 
-        return settings.enableMnemonicSpeaking
+        return self._get_setting("speak-widget-mnemonic", "b", settings.enableMnemonicSpeaking)
 
     @dbus_service.setter
     def set_speak_widget_mnemonic(self, value: bool) -> bool:
@@ -826,9 +842,8 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting speak widget mnemonics to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableMnemonicSpeaking = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "speak-widget-mnemonic", value
+            self._SCHEMA, "speak-widget-mnemonic", value
         )
         return True
 
@@ -844,7 +859,7 @@ class SpeechPresenter:
     def get_speak_tutorial_messages(self) -> bool:
         """Returns whether tutorial messages are spoken."""
 
-        return settings.enableTutorialMessages
+        return self._get_setting("speak-tutorial-messages", "b", settings.enableTutorialMessages)
 
     @dbus_service.setter
     def set_speak_tutorial_messages(self, value: bool) -> bool:
@@ -852,9 +867,8 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting speak tutorial messages to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableTutorialMessages = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "speak-tutorial-messages", value
+            self._SCHEMA, "speak-tutorial-messages", value
         )
         return True
 
@@ -870,7 +884,7 @@ class SpeechPresenter:
     def get_repeated_character_limit(self) -> int:
         """Returns the count at which repeated, non-alphanumeric symbols will be described."""
 
-        return settings.repeatCharacterLimit
+        return self._get_setting("repeated-character-limit", "i", settings.repeatCharacterLimit)
 
     @dbus_service.setter
     def set_repeated_character_limit(self, value: int) -> bool:
@@ -878,9 +892,8 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting repeated character limit to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.repeatCharacterLimit = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "repeated-character-limit", value
+            self._SCHEMA, "repeated-character-limit", value
         )
         return True
 
@@ -896,7 +909,7 @@ class SpeechPresenter:
     def get_speak_blank_lines(self) -> bool:
         """Returns whether blank lines will be spoken."""
 
-        return settings.speakBlankLines
+        return self._get_setting("speak-blank-lines", "b", settings.speakBlankLines)
 
     @dbus_service.setter
     def set_speak_blank_lines(self, value: bool) -> bool:
@@ -904,8 +917,9 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting speak blank lines to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakBlankLines = value
-        gsettings_registry.get_registry().set_runtime_value("speech", "speak-blank-lines", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, "speak-blank-lines", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -920,7 +934,7 @@ class SpeechPresenter:
     def get_speak_row_in_gui_table(self) -> bool:
         """Returns whether Up/Down in GUI tables speaks the row or just the cell."""
 
-        return settings.readFullRowInGUITable
+        return self._get_setting("speak-row-in-gui-table", "b", settings.readFullRowInGUITable)
 
     @dbus_service.setter
     def set_speak_row_in_gui_table(self, value: bool) -> bool:
@@ -928,9 +942,8 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting speak row in GUI table to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.readFullRowInGUITable = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "speak-row-in-gui-table", value
+            self._SCHEMA, "speak-row-in-gui-table", value
         )
         return True
 
@@ -946,7 +959,9 @@ class SpeechPresenter:
     def get_speak_row_in_document_table(self) -> bool:
         """Returns whether Up/Down in text-document tables speaks the row or just the cell."""
 
-        return settings.readFullRowInDocumentTable
+        return self._get_setting(
+            "speak-row-in-document-table", "b", settings.readFullRowInDocumentTable
+        )
 
     @dbus_service.setter
     def set_speak_row_in_document_table(self, value: bool) -> bool:
@@ -954,9 +969,8 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting speak row in document table to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.readFullRowInDocumentTable = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "speak-row-in-document-table", value
+            self._SCHEMA, "speak-row-in-document-table", value
         )
         return True
 
@@ -972,7 +986,7 @@ class SpeechPresenter:
     def get_speak_row_in_spreadsheet(self) -> bool:
         """Returns whether Up/Down in spreadsheets speaks the row or just the cell."""
 
-        return settings.readFullRowInSpreadSheet
+        return self._get_setting("speak-row-in-spreadsheet", "b", settings.readFullRowInSpreadSheet)
 
     @dbus_service.setter
     def set_speak_row_in_spreadsheet(self, value: bool) -> bool:
@@ -980,9 +994,8 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting speak row in spreadsheet to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.readFullRowInSpreadSheet = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "speak-row-in-spreadsheet", value
+            self._SCHEMA, "speak-row-in-spreadsheet", value
         )
         return True
 
@@ -998,7 +1011,7 @@ class SpeechPresenter:
     def get_announce_cell_span(self) -> bool:
         """Returns whether cell spans are announced when greater than 1."""
 
-        return settings.speakCellSpan
+        return self._get_setting("announce-cell-span", "b", settings.speakCellSpan)
 
     @dbus_service.setter
     def set_announce_cell_span(self, value: bool) -> bool:
@@ -1006,8 +1019,9 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting announce cell spans to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakCellSpan = value
-        gsettings_registry.get_registry().set_runtime_value("speech", "announce-cell-span", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, "announce-cell-span", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1022,7 +1036,7 @@ class SpeechPresenter:
     def get_announce_cell_coordinates(self) -> bool:
         """Returns whether (non-spreadsheet) cell coordinates are announced."""
 
-        return settings.speakCellCoordinates
+        return self._get_setting("announce-cell-coordinates", "b", settings.speakCellCoordinates)
 
     @dbus_service.setter
     def set_announce_cell_coordinates(self, value: bool) -> bool:
@@ -1030,9 +1044,8 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting announce cell coordinates to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakCellCoordinates = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "announce-cell-coordinates", value
+            self._SCHEMA, "announce-cell-coordinates", value
         )
         return True
 
@@ -1048,7 +1061,9 @@ class SpeechPresenter:
     def get_announce_spreadsheet_cell_coordinates(self) -> bool:
         """Returns whether spreadsheet cell coordinates are announced."""
 
-        return settings.speakSpreadsheetCoordinates
+        return self._get_setting(
+            "announce-spreadsheet-cell-coordinates", "b", settings.speakSpreadsheetCoordinates
+        )
 
     @dbus_service.setter
     def set_announce_spreadsheet_cell_coordinates(self, value: bool) -> bool:
@@ -1056,9 +1071,8 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting announce spreadsheet cell coordinates to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakSpreadsheetCoordinates = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "announce-spreadsheet-cell-coordinates", value
+            self._SCHEMA, "announce-spreadsheet-cell-coordinates", value
         )
         return True
 
@@ -1074,7 +1088,11 @@ class SpeechPresenter:
     def get_always_announce_selected_range_in_spreadsheet(self) -> bool:
         """Returns whether the selected range in spreadsheets is always announced."""
 
-        return settings.alwaysSpeakSelectedSpreadsheetRange
+        return self._get_setting(
+            "always-announce-selected-range-in-spreadsheet",
+            "b",
+            settings.alwaysSpeakSelectedSpreadsheetRange,
+        )
 
     @dbus_service.setter
     def set_always_announce_selected_range_in_spreadsheet(self, value: bool) -> bool:
@@ -1082,9 +1100,8 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting always announce selected spreadsheet range to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.alwaysSpeakSelectedSpreadsheetRange = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "always-announce-selected-range-in-spreadsheet", value
+            self._SCHEMA, "always-announce-selected-range-in-spreadsheet", value
         )
         return True
 
@@ -1100,7 +1117,7 @@ class SpeechPresenter:
     def get_announce_cell_headers(self) -> bool:
         """Returns whether cell headers are announced."""
 
-        return settings.speakCellHeaders
+        return self._get_setting("announce-cell-headers", "b", settings.speakCellHeaders)
 
     @dbus_service.setter
     def set_announce_cell_headers(self, value: bool) -> bool:
@@ -1108,9 +1125,8 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting announce cell headers to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakCellHeaders = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "announce-cell-headers", value
+            self._SCHEMA, "announce-cell-headers", value
         )
         return True
 
@@ -1126,7 +1142,7 @@ class SpeechPresenter:
     def get_announce_blockquote(self) -> bool:
         """Returns whether blockquotes are announced when entered."""
 
-        return settings.speakContextBlockquote
+        return self._get_setting("announce-blockquote", "b", settings.speakContextBlockquote)
 
     @dbus_service.setter
     def set_announce_blockquote(self, value: bool) -> bool:
@@ -1134,8 +1150,9 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting announce blockquotes to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakContextBlockquote = value
-        gsettings_registry.get_registry().set_runtime_value("speech", "announce-blockquote", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, "announce-blockquote", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1150,7 +1167,7 @@ class SpeechPresenter:
     def get_announce_form(self) -> bool:
         """Returns whether non-landmark forms are announced when entered."""
 
-        return settings.speakContextNonLandmarkForm
+        return self._get_setting("announce-form", "b", settings.speakContextNonLandmarkForm)
 
     @dbus_service.setter
     def set_announce_form(self, value: bool) -> bool:
@@ -1158,8 +1175,7 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting announce forms to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakContextNonLandmarkForm = value
-        gsettings_registry.get_registry().set_runtime_value("speech", "announce-form", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "announce-form", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1174,7 +1190,7 @@ class SpeechPresenter:
     def get_announce_grouping(self) -> bool:
         """Returns whether groupings are announced when entered."""
 
-        return settings.speakContextPanel
+        return self._get_setting("announce-grouping", "b", settings.speakContextPanel)
 
     @dbus_service.setter
     def set_announce_grouping(self, value: bool) -> bool:
@@ -1182,8 +1198,9 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting announce groupings to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakContextPanel = value
-        gsettings_registry.get_registry().set_runtime_value("speech", "announce-grouping", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, "announce-grouping", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1198,7 +1215,7 @@ class SpeechPresenter:
     def get_announce_landmark(self) -> bool:
         """Returns whether landmarks are announced when entered."""
 
-        return settings.speakContextLandmark
+        return self._get_setting("announce-landmark", "b", settings.speakContextLandmark)
 
     @dbus_service.setter
     def set_announce_landmark(self, value: bool) -> bool:
@@ -1206,8 +1223,9 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting announce landmarks to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakContextLandmark = value
-        gsettings_registry.get_registry().set_runtime_value("speech", "announce-landmark", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, "announce-landmark", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1222,7 +1240,7 @@ class SpeechPresenter:
     def get_announce_list(self) -> bool:
         """Returns whether lists are announced when entered."""
 
-        return settings.speakContextList
+        return self._get_setting("announce-list", "b", settings.speakContextList)
 
     @dbus_service.setter
     def set_announce_list(self, value: bool) -> bool:
@@ -1230,8 +1248,7 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting announce lists to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakContextList = value
-        gsettings_registry.get_registry().set_runtime_value("speech", "announce-list", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "announce-list", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1246,7 +1263,7 @@ class SpeechPresenter:
     def get_announce_table(self) -> bool:
         """Returns whether tables are announced when entered."""
 
-        return settings.speakContextTable
+        return self._get_setting("announce-table", "b", settings.speakContextTable)
 
     @dbus_service.setter
     def set_announce_table(self, value: bool) -> bool:
@@ -1254,8 +1271,7 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting announce tables to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakContextTable = value
-        gsettings_registry.get_registry().set_runtime_value("speech", "announce-table", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "announce-table", value)
         return True
 
     @dbus_service.command
@@ -1305,7 +1321,7 @@ class SpeechPresenter:
     def get_only_speak_displayed_text(self) -> bool:
         """Returns whether only displayed text should be spoken."""
 
-        return settings.onlySpeakDisplayedText
+        return self._get_setting("only-speak-displayed-text", "b", settings.onlySpeakDisplayedText)
 
     @dbus_service.setter
     def set_only_speak_displayed_text(self, value: bool) -> bool:
@@ -1313,9 +1329,8 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting only speak displayed text to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.onlySpeakDisplayedText = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "only-speak-displayed-text", value
+            self._SCHEMA, "only-speak-displayed-text", value
         )
         return True
 
@@ -1331,7 +1346,9 @@ class SpeechPresenter:
     def get_speak_progress_bar_updates(self) -> bool:
         """Returns whether speech progress bar updates are enabled."""
 
-        return settings.speakProgressBarUpdates
+        return self._get_setting(
+            "speak-progress-bar-updates", "b", settings.speakProgressBarUpdates
+        )
 
     @dbus_service.setter
     def set_speak_progress_bar_updates(self, value: bool) -> bool:
@@ -1339,9 +1356,8 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting speak progress bar updates to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakProgressBarUpdates = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "speak-progress-bar-updates", value
+            self._SCHEMA, "speak-progress-bar-updates", value
         )
         return True
 
@@ -1357,7 +1373,9 @@ class SpeechPresenter:
     def get_progress_bar_speech_interval(self) -> int:
         """Returns the speech progress bar update interval in seconds."""
 
-        return settings.progressBarSpeechInterval
+        return self._get_setting(
+            "progress-bar-speech-interval", "i", settings.progressBarSpeechInterval
+        )
 
     @dbus_service.setter
     def set_progress_bar_speech_interval(self, value: int) -> bool:
@@ -1365,9 +1383,8 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting progress bar speech interval to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.progressBarSpeechInterval = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "progress-bar-speech-interval", value
+            self._SCHEMA, "progress-bar-speech-interval", value
         )
         return True
 
@@ -1383,6 +1400,14 @@ class SpeechPresenter:
     def get_progress_bar_speech_verbosity(self) -> int:
         """Returns the speech progress bar verbosity level."""
 
+        value = gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA,
+            "progress-bar-speech-verbosity",
+            "",
+            genum="org.gnome.Orca.ProgressBarVerbosity",
+        )
+        if value is not None:
+            return _PROGRESS_BAR_VERBOSITY_NICKS.get(value, settings.progressBarSpeechVerbosity)
         return settings.progressBarSpeechVerbosity
 
     @dbus_service.setter
@@ -1391,9 +1416,9 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting progress bar speech verbosity to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.progressBarSpeechVerbosity = value
+        nick = _PROGRESS_BAR_VERBOSITY_NAMES.get(value, "application")
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "progress-bar-speech-verbosity", value
+            self._SCHEMA, "progress-bar-speech-verbosity", nick
         )
         return True
 
@@ -1409,7 +1434,7 @@ class SpeechPresenter:
     def get_messages_are_detailed(self) -> bool:
         """Returns whether informative messages will be detailed or brief."""
 
-        return settings.messagesAreDetailed
+        return self._get_setting("messages-are-detailed", "b", settings.messagesAreDetailed)
 
     @dbus_service.setter
     def set_messages_are_detailed(self, value: bool) -> bool:
@@ -1417,16 +1442,15 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting messages are detailed to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.messagesAreDetailed = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "messages-are-detailed", value
+            self._SCHEMA, "messages-are-detailed", value
         )
         return True
 
     def use_verbose_speech(self) -> bool:
         """Returns whether the speech verbosity level is set to verbose."""
 
-        return settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_VERBOSE
+        return self.get_verbosity_level() == "verbose"
 
     @gsettings_registry.get_registry().gsetting(
         key="verbosity-level",
@@ -1440,6 +1464,14 @@ class SpeechPresenter:
     def get_verbosity_level(self) -> str:
         """Returns the current speech verbosity level for object presentation."""
 
+        value = gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA,
+            "verbosity-level",
+            "",
+            genum="org.gnome.Orca.VerbosityLevel",
+        )
+        if value is not None:
+            return value
         return VerbosityLevel(settings.speechVerbosityLevel).string_name
 
     @dbus_service.setter
@@ -1455,9 +1487,8 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting verbosity level to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speechVerbosityLevel = level.value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "verbosity-level", level.value
+            self._SCHEMA, "verbosity-level", level.string_name
         )
         return True
 
@@ -1504,22 +1535,16 @@ class SpeechPresenter:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if settings.speechVerbosityLevel == settings.VERBOSITY_LEVEL_BRIEF:
+        if self.get_verbosity_level() == VerbosityLevel.BRIEF.string_name:
             if script is not None and notify_user:
                 presentation_manager.get_manager().present_message(
                     messages.SPEECH_VERBOSITY_VERBOSE
                 )
-            settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_VERBOSE
-            gsettings_registry.get_registry().set_runtime_value(
-                "speech", "verbosity-level", settings.VERBOSITY_LEVEL_VERBOSE
-            )
+            self.set_verbosity_level(VerbosityLevel.VERBOSE.string_name)
         else:
             if script is not None and notify_user:
                 presentation_manager.get_manager().present_message(messages.SPEECH_VERBOSITY_BRIEF)
-            settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
-            gsettings_registry.get_registry().set_runtime_value(
-                "speech", "verbosity-level", settings.VERBOSITY_LEVEL_BRIEF
-            )
+            self.set_verbosity_level(VerbosityLevel.BRIEF.string_name)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1534,7 +1559,9 @@ class SpeechPresenter:
     def get_speak_indentation_and_justification(self) -> bool:
         """Returns whether speaking of indentation and justification is enabled."""
 
-        return settings.enableSpeechIndentation
+        return self._get_setting(
+            "speak-indentation-and-justification", "b", settings.enableSpeechIndentation
+        )
 
     @dbus_service.setter
     def set_speak_indentation_and_justification(self, value: bool) -> bool:
@@ -1542,9 +1569,8 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting speak indentation and justification to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableSpeechIndentation = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "speak-indentation-and-justification", value
+            self._SCHEMA, "speak-indentation-and-justification", value
         )
         return True
 
@@ -1560,7 +1586,9 @@ class SpeechPresenter:
     def get_speak_indentation_only_if_changed(self) -> bool:
         """Returns whether indentation will be announced only if it has changed."""
 
-        return settings.speakIndentationOnlyIfChanged
+        return self._get_setting(
+            "speak-indentation-only-if-changed", "b", settings.speakIndentationOnlyIfChanged
+        )
 
     @dbus_service.setter
     def set_speak_indentation_only_if_changed(self, value: bool) -> bool:
@@ -1568,9 +1596,8 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting speak indentation only if changed to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakIndentationOnlyIfChanged = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "speak-indentation-only-if-changed", value
+            self._SCHEMA, "speak-indentation-only-if-changed", value
         )
         return True
 
@@ -1636,16 +1663,18 @@ class SpeechPresenter:
             presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
-        # TODO - JD: Use the new getters and setters for this.
         if not script.utilities.get_document_for_object(table):
-            setting_name = "readFullRowInGUITable"
+            getter = self.get_speak_row_in_gui_table
+            setter = self.set_speak_row_in_gui_table
         elif script.utilities.is_spreadsheet_table(table):
-            setting_name = "readFullRowInSpreadSheet"
+            getter = self.get_speak_row_in_spreadsheet
+            setter = self.set_speak_row_in_spreadsheet
         else:
-            setting_name = "readFullRowInDocumentTable"
+            getter = self.get_speak_row_in_document_table
+            setter = self.set_speak_row_in_document_table
 
-        speak_row = getattr(settings, setting_name)
-        setattr(settings, setting_name, not speak_row)
+        speak_row = getter()
+        setter(not speak_row)
 
         if not speak_row:
             msg = messages.TABLE_MODE_ROW
@@ -1923,7 +1952,7 @@ class SpeechPresenter:
     def get_monitor_font_size(self) -> int:
         """Returns the speech monitor font size."""
 
-        return settings.speechMonitorFontSize
+        return self._get_setting("monitor-font-size", "i", settings.speechMonitorFontSize)
 
     @dbus_service.setter
     def set_monitor_font_size(self, value: int) -> bool:
@@ -1931,8 +1960,9 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting speech monitor font size to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speechMonitorFontSize = value
-        gsettings_registry.get_registry().set_runtime_value("speech", "monitor-font-size", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, "monitor-font-size", value
+        )
         if self._monitor is not None:
             self._monitor.set_font_size(value)
         return True
@@ -1949,7 +1979,7 @@ class SpeechPresenter:
     def get_monitor_foreground(self) -> str:
         """Returns the speech monitor foreground color."""
 
-        return settings.speechMonitorForeground
+        return self._get_setting("monitor-foreground", "s", settings.speechMonitorForeground)
 
     @dbus_service.setter
     def set_monitor_foreground(self, value: str) -> bool:
@@ -1957,8 +1987,9 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting speech monitor foreground to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speechMonitorForeground = value
-        gsettings_registry.get_registry().set_runtime_value("speech", "monitor-foreground", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, "monitor-foreground", value
+        )
         if self._monitor is not None:
             self._monitor.reapply_css()
         return True
@@ -1975,7 +2006,7 @@ class SpeechPresenter:
     def get_monitor_background(self) -> str:
         """Returns the speech monitor background color."""
 
-        return settings.speechMonitorBackground
+        return self._get_setting("monitor-background", "s", settings.speechMonitorBackground)
 
     @dbus_service.setter
     def set_monitor_background(self, value: str) -> bool:
@@ -1983,8 +2014,9 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting speech monitor background to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speechMonitorBackground = value
-        gsettings_registry.get_registry().set_runtime_value("speech", "monitor-background", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, "monitor-background", value
+        )
         if self._monitor is not None:
             self._monitor.reapply_css()
         return True

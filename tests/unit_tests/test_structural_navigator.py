@@ -77,6 +77,11 @@ class TestStructuralNavigator:
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
         self._setup_mocks(test_context, essential_modules)
+
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_enabled(False)
+
         return essential_modules
 
     def _setup_cycle_navigation_mode_mocks(
@@ -1462,11 +1467,10 @@ class TestStructuralNavigator:
         essential_modules["orca.settings"].structNavTriggersFocusMode = True
         from orca.structural_navigator import get_navigator
 
-        settings_mock = essential_modules["orca.settings"]
         nav = get_navigator()
         result = nav.set_triggers_focus_mode(False)
         assert result is True
-        assert settings_mock.structNavTriggersFocusMode is False
+        assert nav.get_triggers_focus_mode() is False
 
     def test_set_triggers_focus_mode_no_change(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.set_triggers_focus_mode returns early if unchanged."""
@@ -1574,7 +1578,7 @@ class TestStructuralNavigator:
 
         test_context.patch_object(nav, "get_mode", return_value=NavigationMode.DOCUMENT)
 
-        nav._present_object(mock_script, mock_obj, test_offset, notify_user=True)
+        nav._present_object(mock_script, mock_obj, offset=test_offset, notify_user=True)
 
         manager_instance.emit_region_changed.assert_called()
         call_kwargs = manager_instance.emit_region_changed.call_args

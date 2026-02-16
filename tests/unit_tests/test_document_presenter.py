@@ -83,6 +83,15 @@ class TestDocumentPresenter:
         guilabels.NATIVE_NAVIGATION_INFO = "Native navigation info"
         guilabels.AUTOMATIC_FOCUS_MODE_INFO = "Auto focus mode info"
 
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.FIND_SPEAK_NONE = 0
+        settings_mock.FIND_SPEAK_IF_LINE_CHANGED = 1
+        settings_mock.FIND_SPEAK_ALL = 2
+
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_enabled(False)
+
         # Import and return the module
         from orca import document_presenter
 
@@ -122,7 +131,7 @@ class TestDocumentPresenter:
         result = presenter.set_native_nav_triggers_focus_mode(False)
 
         assert result is True
-        assert settings.nativeNavTriggersFocusMode is False
+        assert presenter.get_native_nav_triggers_focus_mode() is False
 
     def test_set_native_nav_triggers_focus_mode_no_change(
         self, test_context: OrcaTestContext
@@ -161,7 +170,7 @@ class TestDocumentPresenter:
         result = presenter.set_say_all_on_load(False)
 
         assert result is True
-        assert settings.sayAllOnLoad is False
+        assert presenter.get_say_all_on_load() is False
 
     def test_set_say_all_on_load_no_change(self, test_context: OrcaTestContext) -> None:
         """Test set_say_all_on_load returns True when value unchanged."""
@@ -198,7 +207,7 @@ class TestDocumentPresenter:
         result = presenter.set_page_summary_on_load(False)
 
         assert result is True
-        assert settings.pageSummaryOnLoad is False
+        assert presenter.get_page_summary_on_load() is False
 
     def test_set_page_summary_on_load_no_change(self, test_context: OrcaTestContext) -> None:
         """Test set_page_summary_on_load returns True when value unchanged."""
@@ -252,7 +261,7 @@ class TestDocumentPresenter:
         result = presenter.set_speak_find_results(True)
 
         assert result is True
-        assert settings.findResultsVerbosity == settings.FIND_SPEAK_ALL
+        assert presenter.get_speak_find_results() is True
 
     def test_set_speak_find_results_disable(self, test_context: OrcaTestContext) -> None:
         """Test set_speak_find_results disables speech."""
@@ -267,7 +276,7 @@ class TestDocumentPresenter:
         result = presenter.set_speak_find_results(False)
 
         assert result is True
-        assert settings.findResultsVerbosity == settings.FIND_SPEAK_NONE
+        assert presenter.get_speak_find_results() is False
 
     def test_get_only_speak_changed_lines_true(self, test_context: OrcaTestContext) -> None:
         """Test get_only_speak_changed_lines returns True when set."""
@@ -309,7 +318,7 @@ class TestDocumentPresenter:
         result = presenter.set_only_speak_changed_lines(True)
 
         assert result is True
-        assert settings.findResultsVerbosity == settings.FIND_SPEAK_IF_LINE_CHANGED
+        assert presenter.get_only_speak_changed_lines() is True
 
     def test_set_only_speak_changed_lines_disable(self, test_context: OrcaTestContext) -> None:
         """Test set_only_speak_changed_lines disables the option."""
@@ -324,7 +333,7 @@ class TestDocumentPresenter:
         result = presenter.set_only_speak_changed_lines(False)
 
         assert result is True
-        assert settings.findResultsVerbosity == settings.FIND_SPEAK_ALL
+        assert presenter.get_only_speak_changed_lines() is False
 
     def test_get_find_results_minimum_length(self, test_context: OrcaTestContext) -> None:
         """Test get_find_results_minimum_length returns current value."""
@@ -349,7 +358,7 @@ class TestDocumentPresenter:
         result = presenter.set_find_results_minimum_length(10)
 
         assert result is True
-        assert settings.findResultsMinimumLength == 10
+        assert presenter.get_find_results_minimum_length() == 10
 
     def test_set_find_results_minimum_length_no_change(self, test_context: OrcaTestContext) -> None:
         """Test set_find_results_minimum_length returns True when value unchanged."""

@@ -1163,6 +1163,16 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 class SpeechManager:
     """Manages the speech engine: server, synthesizer, voice, and output parameters."""
 
+    _SPEECH_SCHEMA = "speech"
+    _VOICE_SCHEMA = "voice"
+
+    def _get_setting(self, key: str, gtype: str, fallback: Any) -> Any:
+        """Returns the dconf value for key, or fallback if not in dconf."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SPEECH_SCHEMA, key, gtype, fallback=fallback
+        )
+
     def __init__(self) -> None:
         self._families_sorted: bool = False
         self._initialized: bool = False
@@ -1396,7 +1406,7 @@ class SpeechManager:
     def get_speech_server_factory(self) -> str:
         """Returns the speech server factory module name."""
 
-        return settings.speechServerFactory
+        return self._get_setting("speech-server-factory", "s", settings.speechServerFactory)
 
     @gsettings_registry.get_registry().gsetting(
         key="synthesizer", schema="speech", gtype="s", default="", summary="Speech synthesizer"
@@ -1849,11 +1859,19 @@ class SpeechManager:
     def get_rate(self) -> int:
         """Returns the current speech rate."""
 
+        value = gsettings_registry.get_registry().layered_lookup(self._VOICE_SCHEMA, "rate", "i")
+        if value is not None:
+            msg = f"SPEECH MANAGER: Current rate is: {value}."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return value
+
         result = 50
         default_voice = settings.voices.get(settings.DEFAULT_VOICE)
         if default_voice and ACSS.RATE in default_voice:
             result = default_voice[ACSS.RATE]
 
+        msg = f"GSETTINGS REGISTRY: voice/rate using in-memory fallback = {result!r}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         msg = f"SPEECH MANAGER: Current rate is: {result}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
@@ -1865,9 +1883,7 @@ class SpeechManager:
         if not isinstance(value, (int, float)):
             return False
 
-        default_voice = settings.voices.get(settings.DEFAULT_VOICE)
-        if default_voice and ACSS.RATE in default_voice:
-            default_voice[ACSS.RATE] = value
+        gsettings_registry.get_registry().set_runtime_value(self._VOICE_SCHEMA, "rate", value)
 
         msg = f"SPEECH MANAGER: Set rate to: {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1942,11 +1958,19 @@ class SpeechManager:
     def get_pitch(self) -> float:
         """Returns the current speech pitch."""
 
+        value = gsettings_registry.get_registry().layered_lookup(self._VOICE_SCHEMA, "pitch", "d")
+        if value is not None:
+            msg = f"SPEECH MANAGER: Current pitch is: {value}."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return value
+
         result = 5.0
         default_voice = settings.voices.get(settings.DEFAULT_VOICE)
         if default_voice and ACSS.AVERAGE_PITCH in default_voice:
             result = default_voice[ACSS.AVERAGE_PITCH]
 
+        msg = f"GSETTINGS REGISTRY: voice/pitch using in-memory fallback = {result!r}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         msg = f"SPEECH MANAGER: Current pitch is: {result}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
@@ -1958,9 +1982,7 @@ class SpeechManager:
         if not isinstance(value, (int, float)):
             return False
 
-        default_voice = settings.voices.get(settings.DEFAULT_VOICE)
-        if default_voice and ACSS.AVERAGE_PITCH in default_voice:
-            default_voice[ACSS.AVERAGE_PITCH] = value
+        gsettings_registry.get_registry().set_runtime_value(self._VOICE_SCHEMA, "pitch", value)
 
         msg = f"SPEECH MANAGER: Set pitch to: {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -2035,11 +2057,19 @@ class SpeechManager:
     def get_volume(self) -> float:
         """Returns the current speech volume."""
 
+        value = gsettings_registry.get_registry().layered_lookup(self._VOICE_SCHEMA, "volume", "d")
+        if value is not None:
+            msg = f"SPEECH MANAGER: Current volume is: {value}."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return value
+
         result = 10.0
         default_voice = settings.voices.get(settings.DEFAULT_VOICE)
         if default_voice and ACSS.GAIN in default_voice:
             result = default_voice[ACSS.GAIN]
 
+        msg = f"GSETTINGS REGISTRY: voice/volume using in-memory fallback = {result!r}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         msg = f"SPEECH MANAGER: Current volume is: {result}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
@@ -2051,9 +2081,7 @@ class SpeechManager:
         if not isinstance(value, (int, float)):
             return False
 
-        default_voice = settings.voices.get(settings.DEFAULT_VOICE)
-        if default_voice and ACSS.GAIN in default_voice:
-            default_voice[ACSS.GAIN] = value
+        gsettings_registry.get_registry().set_runtime_value(self._VOICE_SCHEMA, "volume", value)
 
         msg = f"SPEECH MANAGER: Set volume to: {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -2133,7 +2161,20 @@ class SpeechManager:
     def get_capitalization_style(self) -> str:
         """Returns the current capitalization style."""
 
-        return settings.capitalizationStyle
+        value = gsettings_registry.get_registry().layered_lookup(
+            self._SPEECH_SCHEMA,
+            "capitalization-style",
+            "",
+            genum="org.gnome.Orca.CapitalizationStyle",
+        )
+        if value is not None:
+            return value
+        result = settings.capitalizationStyle
+        msg = (
+            f"GSETTINGS REGISTRY: speech/capitalization-style using in-memory fallback = {result!r}"
+        )
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return result
 
     @dbus_service.setter
     def set_capitalization_style(self, value: str) -> bool:
@@ -2148,9 +2189,8 @@ class SpeechManager:
 
         msg = f"SPEECH MANAGER: Setting capitalization style to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.capitalizationStyle = style.value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "capitalization-style", style.value
+            self._SPEECH_SCHEMA, "capitalization-style", style.string_name
         )
         self.update_capitalization_style()
         return True
@@ -2174,27 +2214,22 @@ class SpeechManager:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        current_style = settings.capitalizationStyle
-        if current_style == settings.CAPITALIZATION_STYLE_NONE:
-            new_style = settings.CAPITALIZATION_STYLE_SPELL
+        current_style = self.get_capitalization_style()
+        if current_style == "none":
+            self.set_capitalization_style("spell")
             full = messages.CAPITALIZATION_SPELL_FULL
             brief = messages.CAPITALIZATION_SPELL_BRIEF
-        elif current_style == settings.CAPITALIZATION_STYLE_SPELL:
-            new_style = settings.CAPITALIZATION_STYLE_ICON
+        elif current_style == "spell":
+            self.set_capitalization_style("icon")
             full = messages.CAPITALIZATION_ICON_FULL
             brief = messages.CAPITALIZATION_ICON_BRIEF
         else:
-            new_style = settings.CAPITALIZATION_STYLE_NONE
+            self.set_capitalization_style("none")
             full = messages.CAPITALIZATION_NONE_FULL
             brief = messages.CAPITALIZATION_NONE_BRIEF
 
-        settings.capitalizationStyle = new_style
-        gsettings_registry.get_registry().set_runtime_value(
-            "speech", "capitalization-style", new_style
-        )
         if script is not None and notify_user:
             presentation_manager.get_manager().present_message(full, brief)
-        self.update_capitalization_style()
         return True
 
     def update_capitalization_style(self) -> bool:
@@ -2221,7 +2256,18 @@ class SpeechManager:
     def get_punctuation_level(self) -> str:
         """Returns the current punctuation level."""
 
-        return PunctuationStyle(settings.verbalizePunctuationStyle).string_name
+        value = gsettings_registry.get_registry().layered_lookup(
+            self._SPEECH_SCHEMA,
+            "punctuation-level",
+            "",
+            genum="org.gnome.Orca.PunctuationStyle",
+        )
+        if value is not None:
+            return value
+        result = PunctuationStyle(settings.verbalizePunctuationStyle).string_name
+        msg = f"GSETTINGS REGISTRY: speech/punctuation-level using in-memory fallback = {result!r}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return result
 
     @dbus_service.setter
     def set_punctuation_level(self, value: str) -> bool:
@@ -2236,9 +2282,8 @@ class SpeechManager:
 
         msg = f"SPEECH MANAGER: Setting punctuation level to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.verbalizePunctuationStyle = style.value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "punctuation-level", style.value
+            self._SPEECH_SCHEMA, "punctuation-level", style.string_name
         )
         self.update_punctuation_level()
         return True
@@ -2262,31 +2307,26 @@ class SpeechManager:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        current_level = settings.verbalizePunctuationStyle
-        if current_level == settings.PUNCTUATION_STYLE_NONE:
-            new_level = settings.PUNCTUATION_STYLE_SOME
+        current_level = self.get_punctuation_level()
+        if current_level == "none":
+            self.set_punctuation_level("some")
             full = messages.PUNCTUATION_SOME_FULL
             brief = messages.PUNCTUATION_SOME_BRIEF
-        elif current_level == settings.PUNCTUATION_STYLE_SOME:
-            new_level = settings.PUNCTUATION_STYLE_MOST
+        elif current_level == "some":
+            self.set_punctuation_level("most")
             full = messages.PUNCTUATION_MOST_FULL
             brief = messages.PUNCTUATION_MOST_BRIEF
-        elif current_level == settings.PUNCTUATION_STYLE_MOST:
-            new_level = settings.PUNCTUATION_STYLE_ALL
+        elif current_level == "most":
+            self.set_punctuation_level("all")
             full = messages.PUNCTUATION_ALL_FULL
             brief = messages.PUNCTUATION_ALL_BRIEF
         else:
-            new_level = settings.PUNCTUATION_STYLE_NONE
+            self.set_punctuation_level("none")
             full = messages.PUNCTUATION_NONE_FULL
             brief = messages.PUNCTUATION_NONE_BRIEF
 
-        settings.verbalizePunctuationStyle = new_level
-        gsettings_registry.get_registry().set_runtime_value(
-            "speech", "punctuation-level", new_level
-        )
         if script is not None and notify_user:
             presentation_manager.get_manager().present_message(full, brief)
-        self.update_punctuation_level()
         return True
 
     def update_punctuation_level(self) -> bool:
@@ -2401,7 +2441,7 @@ class SpeechManager:
     def get_speech_is_enabled(self) -> bool:
         """Returns whether the speech server is enabled. See also is-muted."""
 
-        return settings.enableSpeech
+        return self._get_setting("enable", "b", settings.enableSpeech)
 
     @dbus_service.setter
     def set_speech_is_enabled(self, value: bool) -> bool:
@@ -2410,8 +2450,7 @@ class SpeechManager:
         msg = f"SPEECH MANAGER: Setting speech enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        settings.enableSpeech = value
-        gsettings_registry.get_registry().set_runtime_value("speech", "enable", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SPEECH_SCHEMA, "enable", value)
         if value:
             self.start_speech()
             presentation_manager.get_manager().present_message(messages.SPEECH_ENABLED)
@@ -2433,7 +2472,7 @@ class SpeechManager:
     def get_speak_numbers_as_digits(self) -> bool:
         """Returns whether numbers are spoken as digits."""
 
-        return settings.speakNumbersAsDigits
+        return self._get_setting("speak-numbers-as-digits", "b", settings.speakNumbersAsDigits)
 
     @dbus_service.setter
     def set_speak_numbers_as_digits(self, value: bool) -> bool:
@@ -2441,9 +2480,8 @@ class SpeechManager:
 
         msg = f"SPEECH MANAGER: Setting speak numbers as digits to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.speakNumbersAsDigits = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "speak-numbers-as-digits", value
+            self._SPEECH_SCHEMA, "speak-numbers-as-digits", value
         )
         return True
 
@@ -2459,7 +2497,7 @@ class SpeechManager:
     def get_use_color_names(self) -> bool:
         """Returns whether colors are announced by name or as RGB values."""
 
-        return settings.useColorNames
+        return self._get_setting("use-color-names", "b", settings.useColorNames)
 
     @dbus_service.setter
     def set_use_color_names(self, value: bool) -> bool:
@@ -2467,8 +2505,9 @@ class SpeechManager:
 
         msg = f"SPEECH MANAGER: Setting use color names to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.useColorNames = value
-        gsettings_registry.get_registry().set_runtime_value("speech", "use-color-names", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SPEECH_SCHEMA, "use-color-names", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -2483,7 +2522,9 @@ class SpeechManager:
     def get_insert_pauses_between_utterances(self) -> bool:
         """Returns whether pauses are inserted between utterances, e.g. between name and role."""
 
-        return settings.enablePauseBreaks
+        return self._get_setting(
+            "insert-pauses-between-utterances", "b", settings.enablePauseBreaks
+        )
 
     @dbus_service.setter
     def set_insert_pauses_between_utterances(self, value: bool) -> bool:
@@ -2491,9 +2532,8 @@ class SpeechManager:
 
         msg = f"SPEECH MANAGER: Setting insert pauses to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enablePauseBreaks = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "insert-pauses-between-utterances", value
+            self._SPEECH_SCHEMA, "insert-pauses-between-utterances", value
         )
         return True
 
@@ -2509,7 +2549,9 @@ class SpeechManager:
     def get_use_pronunciation_dictionary(self) -> bool:
         """Returns whether the user's pronunciation dictionary should be applied."""
 
-        return settings.usePronunciationDictionary
+        return self._get_setting(
+            "use-pronunciation-dictionary", "b", settings.usePronunciationDictionary
+        )
 
     @dbus_service.setter
     def set_use_pronunciation_dictionary(self, value: bool) -> bool:
@@ -2517,9 +2559,8 @@ class SpeechManager:
 
         msg = f"SPEECH MANAGER: Setting use pronunciation dictionary to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.usePronunciationDictionary = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "use-pronunciation-dictionary", value
+            self._SPEECH_SCHEMA, "use-pronunciation-dictionary", value
         )
         return True
 
@@ -2535,7 +2576,9 @@ class SpeechManager:
     def get_auto_language_switching(self) -> bool:
         """Returns whether automatic language switching is enabled."""
 
-        return settings.enableAutoLanguageSwitching
+        return self._get_setting(
+            "auto-language-switching", "b", settings.enableAutoLanguageSwitching
+        )
 
     @dbus_service.setter
     def set_auto_language_switching(self, value: bool) -> bool:
@@ -2543,9 +2586,8 @@ class SpeechManager:
 
         msg = f"SPEECH MANAGER: Setting auto language switching to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableAutoLanguageSwitching = value
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "auto-language-switching", value
+            self._SPEECH_SCHEMA, "auto-language-switching", value
         )
         return True
 
@@ -2575,8 +2617,7 @@ class SpeechManager:
             if script is not None and notify_user:
                 presentation_manager.get_manager().present_message(messages.SPEECH_ENABLED)
         elif not self.get_speech_is_enabled():
-            settings.enableSpeech = True
-            gsettings_registry.get_registry().set_runtime_value("speech", "enable", True)
+            gsettings_registry.get_registry().set_runtime_value(self._SPEECH_SCHEMA, "enable", True)
             self._init_server()
             if script is not None and notify_user:
                 presentation_manager.get_manager().present_message(messages.SPEECH_ENABLED)
@@ -2586,8 +2627,9 @@ class SpeechManager:
             app = script.app if script is not None else None
             app_enable = settings_manager.get_manager().get_app_setting(app, "enableSpeech")
             if app_enable is False:
-                settings.enableSpeech = False
-                gsettings_registry.get_registry().set_runtime_value("speech", "enable", False)
+                gsettings_registry.get_registry().set_runtime_value(
+                    self._SPEECH_SCHEMA, "enable", False
+                )
                 self.shutdown_speech()
             else:
                 self.set_speech_is_muted(True)

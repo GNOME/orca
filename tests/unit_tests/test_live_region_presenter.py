@@ -363,8 +363,10 @@ class TestLiveRegionMessageQueue:
 
         # Assertive should come out first
         first = queue.dequeue()
+        assert first is not None
         assert first.text == "Assertive"
         second = queue.dequeue()
+        assert second is not None
         assert second.text == "Polite"
 
     def test_max_size_enforcement(self, test_context: OrcaTestContext) -> None:
@@ -451,6 +453,7 @@ class TestLiveRegionMessageQueue:
         assert len(queue) == 1
 
         remaining = queue.dequeue()
+        assert remaining is not None
         assert remaining.text == "New"
 
     def test_purge_by_priority(self, test_context: OrcaTestContext) -> None:
@@ -483,6 +486,7 @@ class TestLiveRegionMessageQueue:
         assert len(queue) == 1
 
         remaining = queue.dequeue()
+        assert remaining is not None
         assert remaining.text == "Assertive"
 
 
@@ -621,6 +625,10 @@ class TestLiveRegionPresenter:
         axutilities_mock.get_focused_object = test_context.Mock(return_value=None)
         axutilities_mock.find_all_live_regions = test_context.Mock(return_value=[])
 
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_enabled(False)
+
         return essential_modules
 
     def test_init(self, test_context: OrcaTestContext) -> None:
@@ -679,10 +687,10 @@ class TestLiveRegionPresenter:
         """Test LiveRegionPresenter.reset."""
 
         self._setup_dependencies(test_context)
-        from orca.live_region_presenter import LiveRegionPresenter
+        from orca.live_region_presenter import LiveRegionPresenter, LivePoliteness
 
         presenter = LiveRegionPresenter()
-        presenter._politeness_overrides = {123: "test"}
+        presenter._politeness_overrides = {123: LivePoliteness.POLITE}
         presenter.reset()
         assert not presenter._politeness_overrides
 
@@ -701,17 +709,15 @@ class TestLiveRegionPresenter:
         """Test LiveRegionPresenter.set_is_enabled."""
 
         essential_modules = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
         from orca.live_region_presenter import LiveRegionPresenter
 
         essential_modules["orca.settings"].enableLiveRegions = False
-        essential_modules["orca.settings_manager"].get_manager.return_value
 
         presenter = LiveRegionPresenter()
         result = presenter.set_is_enabled(True)
 
         assert result is True
-        assert settings_mock.enableLiveRegions
+        assert presenter.get_is_enabled() is True
 
     def test_toggle_monitoring_enable(self, test_context: OrcaTestContext) -> None:
         """Test LiveRegionPresenter.toggle_monitoring enables monitoring."""
@@ -1012,6 +1018,10 @@ class TestLiveRegionPresenterModule:
         axutilities_mock.is_aria_alert = test_context.Mock(return_value=False)
         axutilities_mock.get_focused_object = test_context.Mock(return_value=None)
         axutilities_mock.find_all_live_regions = test_context.Mock(return_value=[])
+
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_enabled(False)
 
         return essential_modules
 

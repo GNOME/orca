@@ -21,15 +21,15 @@
 """Shared GSettings infrastructure for Orca modules."""
 
 # pylint: disable=too-many-arguments,too-many-positional-arguments
-# pylint: disable=too-many-locals,too-many-instance-attributes
-# pylint: disable=too-many-lines,too-many-public-methods,too-many-branches
+# pylint: disable=too-many-locals,too-many-instance-attributes,too-many-lines
+# pylint: disable=too-many-public-methods,too-many-branches
 
 from __future__ import annotations
 
 import json
 import os
 from dataclasses import dataclass
-from typing import Any, Callable
+from typing import Any, Callable, overload
 
 from gi.repository import Gio
 
@@ -56,6 +56,9 @@ class SettingDescriptor:
 SettingsMapping = gsettings_migrator.SettingsMapping
 
 
+_NOT_SET = object()
+
+
 class GSettingsRegistry:
     """Central registry for GSettings metadata, mappings, and active context."""
 
@@ -68,6 +71,7 @@ class GSettingsRegistry:
         self._enums: dict[str, dict[str, int]] = {}
         self._schemas: dict[str, str] = {}
         self._extras_migrated: set[str] = set()
+        self._handles: dict[str, GSettingsSchemaHandle] = {}
         self._runtime_values: dict[tuple[str, str, str | None], Any] = {}
 
     def set_enabled(self, enabled: bool) -> None:
@@ -81,6 +85,90 @@ class GSettingsRegistry:
         """Returns whether GSettings operations are enabled."""
 
         return self._enabled
+
+    def _get_handle(self, schema_name: str) -> GSettingsSchemaHandle | None:
+        """Returns a cached GSettingsSchemaHandle for a schema name."""
+
+        if schema_name in self._handles:
+            return self._handles[schema_name]
+        schema_id = self._schemas.get(schema_name)
+        if schema_id is None:
+            return None
+        handle = GSettingsSchemaHandle(schema_id, schema_name)
+        self._handles[schema_name] = handle
+        return handle
+
+    @overload
+    def layered_lookup(
+        self,
+        schema: str,
+        key: str,
+        gtype: str,
+        genum: str | None = None,
+        voice_type: str | None = None,
+        *,
+        fallback: Any,
+    ) -> Any: ...
+
+    @overload
+    def layered_lookup(
+        self,
+        schema: str,
+        key: str,
+        gtype: str,
+        genum: str | None = None,
+        voice_type: str | None = None,
+    ) -> Any | None: ...
+
+    def layered_lookup(
+        self,
+        schema: str,
+        key: str,
+        gtype: str,
+        genum: str | None = None,
+        voice_type: str | None = None,
+        fallback: Any = _NOT_SET,
+    ) -> Any | None:
+        """Returns a setting value via layered GSettings lookup, fallback, or None."""
+
+        runtime = self._runtime_values.get((schema, key, voice_type))
+        if runtime is not None:
+            msg = f"GSETTINGS REGISTRY: {schema}/{key} runtime override = {runtime!r}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return runtime
+
+        if not self._enabled:
+            return self._use_fallback(schema, key, fallback)
+        handle = self._get_handle(schema)
+        if handle is None:
+            return self._use_fallback(schema, key, fallback)
+
+        sub_path = ""
+        if schema == "voice":
+            vt = voice_type or "default"
+            sub_path = f"voices/{gsettings_migrator.sanitize_gsettings_path(vt)}"
+
+        accessors: dict[str, Callable[[str, str], Any | None]] = {
+            "b": handle.get_boolean,
+            "s": handle.get_string,
+            "i": handle.get_int,
+            "d": handle.get_double,
+        }
+        accessor = accessors.get("s" if genum else gtype)
+        result = accessor(key, sub_path) if accessor is not None else None
+        if result is not None:
+            return result
+        return self._use_fallback(schema, key, fallback)
+
+    @staticmethod
+    def _use_fallback(schema: str, key: str, fallback: Any) -> Any | None:
+        """Returns fallback value, or None if no fallback was provided."""
+
+        if fallback is _NOT_SET:
+            return None
+        msg = f"GSETTINGS REGISTRY: {schema}/{key} using settings module value = {fallback!r}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return fallback
 
     @staticmethod
     def sanitize_gsettings_path(name: str) -> str:
@@ -133,6 +221,26 @@ class GSettingsRegistry:
         """Clears all runtime value overrides."""
 
         self._runtime_values.clear()
+
+    def get_pronunciations(self, profile: str = "", app_name: str = "") -> dict:
+        """Returns the pronunciation dictionary from dconf for a profile/app."""
+
+        if not profile:
+            profile = self._profile
+        gs = self.get_settings("pronunciations", profile, "pronunciations", app_name)
+        if gs is None:
+            return {}
+        return gsettings_migrator.export_pronunciations(gs)
+
+    def get_keybindings(self, profile: str = "", app_name: str = "") -> dict:
+        """Returns the keybinding overrides from dconf for a profile/app."""
+
+        if not profile:
+            profile = self._profile
+        gs = self.get_settings("keybindings", profile, "keybindings", app_name)
+        if gs is None:
+            return {}
+        return gsettings_migrator.export_keybindings(gs)
 
     def set_active_app(self, app_name: str | None) -> None:
         """Sets the active app name for GSettings lookups."""
@@ -883,23 +991,50 @@ class GSettingsSchemaHandle:
         app_name = registry.get_active_app()
         profile = registry.get_active_profile()
 
+        suffix = self._path_suffix
+        checked: list[str] = []
+
         # Layer 1: App-specific override
         if app_name:
             gs = self.get_for_app(app_name, profile, sub_path)
             if gs is not None and gs.get_user_value(key) is not None:
-                return extractor(gs, key)
+                value = extractor(gs, key)
+                msg = (
+                    f"GSETTINGS SCHEMA HANDLE: {suffix}/{key}"
+                    f" = {value!r} (app:{app_name} profile:{profile})"
+                )
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return value
+            checked.append(f"app:{app_name}")
 
         # Layer 2: Current profile
         gs = self.get_for_profile(profile, sub_path)
         if gs is not None and gs.get_user_value(key) is not None:
-            return extractor(gs, key)
+            value = extractor(gs, key)
+            skipped = f" [{', '.join(checked)} not set]" if checked else ""
+            msg = (
+                f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} = {value!r} (profile:{profile}){skipped}"
+            )
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return value
+        checked.append(f"profile:{profile}")
 
         # Layer 3: Default profile (if current is not default)
         if profile != "default":
             gs = self.get_for_profile("default", sub_path)
             if gs is not None and gs.get_user_value(key) is not None:
-                return extractor(gs, key)
+                value = extractor(gs, key)
+                skipped = f" [{', '.join(checked)} not set]"
+                msg = (
+                    f"GSETTINGS SCHEMA HANDLE: {suffix}/{key}"
+                    f" = {value!r} (profile:default fallback){skipped}"
+                )
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return value
+            checked.append("profile:default")
 
+        msg = f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} not set [{', '.join(checked)}]"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         return None
 
     def get_boolean(self, key: str, sub_path: str = "") -> bool | None:

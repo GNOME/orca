@@ -1128,6 +1128,8 @@ class KeyboardLayout(Enum):
 class CommandManager:
     """Singleton manager for coordinating commands between scripts and UI."""
 
+    _SCHEMA = "keybindings"
+
     def __init__(self) -> None:
         """Initializes the command manager."""
 
@@ -1135,7 +1137,21 @@ class CommandManager:
         self._braille_commands: dict[str, BrailleCommand] = {}
         self._commands_by_keyval: dict[int, list[KeyboardCommand]] = {}
         self._commands_by_keycode: dict[int, list[KeyboardCommand]] = {}
-        self._is_desktop: bool = settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+        layout_value = gsettings_registry.get_registry().layered_lookup(
+            "keybindings",
+            "keyboard-layout",
+            "",
+            genum="org.gnome.Orca.KeyboardLayout",
+        )
+        if layout_value is not None:
+            self._is_desktop = layout_value == "desktop"
+        else:
+            self._is_desktop = settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+            msg = (
+                "GSETTINGS REGISTRY: keybindings/keyboard-layout"
+                f" using in-memory fallback = {self._is_desktop!r}"
+            )
+            debug.print_message(debug.LEVEL_INFO, msg, True)
         self._initialized: bool = False
         self._numlock_on: bool = False
         self._learn_mode_active: bool = False
@@ -1181,14 +1197,8 @@ class CommandManager:
         layout_changed = self._is_desktop != is_desktop
         if layout_changed:
             self._is_desktop = is_desktop
-            layout_value = (
-                settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
-                if is_desktop
-                else settings.GENERAL_KEYBOARD_LAYOUT_LAPTOP
-            )
-            settings.keyboardLayout = layout_value
             gsettings_registry.get_registry().set_runtime_value(
-                "keybindings", "keyboard-layout", "desktop" if is_desktop else "laptop"
+                self._SCHEMA, "keyboard-layout", "desktop" if is_desktop else "laptop"
             )
             orca_modifier_manager.get_manager().set_modifiers_for_layout(is_desktop)
 

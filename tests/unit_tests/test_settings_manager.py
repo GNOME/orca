@@ -254,6 +254,14 @@ class TestSettingsManagerFileIO:
         test_context.patch_module("orca.ax_object", ax_object_mock)
         essential_modules["orca.ax_object"] = ax_object_mock
 
+        # Mock gsettings_registry so file I/O tests use the JSON path
+        gsettings_registry_mock = test_context.Mock()
+        mock_registry = test_context.Mock()
+        mock_registry.is_enabled.return_value = False
+        gsettings_registry_mock.get_registry.return_value = mock_registry
+        test_context.patch_module("orca.gsettings_registry", gsettings_registry_mock)
+        essential_modules["orca.gsettings_registry"] = gsettings_registry_mock
+
         # Inject settings AFTER other mocks but BEFORE importing settings_manager
         sys.modules["orca.settings"] = settings_obj
         essential_modules["orca.settings"] = settings_obj

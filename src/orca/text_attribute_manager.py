@@ -26,6 +26,7 @@ from __future__ import annotations
 
 
 import enum
+from typing import Any
 
 import gi
 
@@ -414,6 +415,15 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
 class TextAttributeManager:
     """Manager for text attribute presentation settings."""
 
+    _SCHEMA = "text-attributes"
+
+    def _get_setting(self, key: str, gtype: str, fallback: Any) -> Any:
+        """Returns the dconf value for key, or fallback if not in dconf."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA, key, gtype, fallback=fallback
+        )
+
     def __init__(self) -> None:
         msg = "TEXT ATTRIBUTE MANAGER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -437,7 +447,7 @@ class TextAttributeManager:
     def get_attributes_to_speak(self) -> list[str]:
         """Returns the list of text attributes to speak."""
 
-        return settings.textAttributesToSpeak
+        return self._get_setting("attributes-to-speak", "as", settings.textAttributesToSpeak)
 
     @dbus_service.setter
     def set_attributes_to_speak(self, value: list[str]) -> bool:
@@ -448,9 +458,8 @@ class TextAttributeManager:
 
         msg = f"TEXT ATTRIBUTE MANAGER: Setting attributes to speak to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.textAttributesToSpeak = value
         gsettings_registry.get_registry().set_runtime_value(
-            "text-attributes", "attributes-to-speak", value
+            self._SCHEMA, "attributes-to-speak", value
         )
         return True
 
@@ -466,7 +475,7 @@ class TextAttributeManager:
     def get_attributes_to_braille(self) -> list[str]:
         """Returns the list of text attributes to mark in braille."""
 
-        return settings.textAttributesToBraille
+        return self._get_setting("attributes-to-braille", "as", settings.textAttributesToBraille)
 
     @dbus_service.setter
     def set_attributes_to_braille(self, value: list[str]) -> bool:
@@ -477,9 +486,8 @@ class TextAttributeManager:
 
         msg = f"TEXT ATTRIBUTE MANAGER: Setting attributes to braille to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.textAttributesToBraille = value
         gsettings_registry.get_registry().set_runtime_value(
-            "text-attributes", "attributes-to-braille", value
+            self._SCHEMA, "attributes-to-braille", value
         )
         return True
 

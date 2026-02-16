@@ -87,7 +87,7 @@ class OrcaModifierManager:
     def is_orca_modifier(self, modifier: str) -> bool:
         """Returns True if modifier is one of the user's Orca modifier keys."""
 
-        if modifier not in settings.orcaModifierKeys:
+        if modifier not in self.get_orca_modifier_keys():
             return False
 
         if modifier in ["Insert", "KP_Insert"]:
@@ -115,18 +115,14 @@ class OrcaModifierManager:
     def add_grabs_for_orca_modifiers(self) -> None:
         """Adds grabs for all of the user's Orca modifier keys."""
 
-        for modifier in settings.orcaModifierKeys:
-            # TODO - JD: We currently handle CapsLock one way and Insert a different way.
-            # Ideally that will stop being the case at some point.
+        for modifier in self.get_orca_modifier_keys():
             if modifier in ["Insert", "KP_Insert"]:
                 self.add_modifier_grab(modifier)
 
     def remove_grabs_for_orca_modifiers(self) -> None:
         """Removes grabs for all of the user's Orca modifier keys."""
 
-        for modifier in settings.orcaModifierKeys:
-            # TODO - JD: We currently handle CapsLock one way and Insert a different way.
-            # Ideally that will stop being the case at some point.
+        for modifier in self.get_orca_modifier_keys():
             if modifier in ["Insert", "KP_Insert"]:
                 self.remove_modifier_grab(modifier)
 
@@ -230,15 +226,21 @@ class OrcaModifierManager:
     def get_orca_modifier_keys(self) -> list[str]:
         """Returns the list of Orca modifier keys."""
 
-        return settings.orcaModifierKeys
+        return gsettings_registry.get_registry().layered_lookup(
+            "keybindings", "orca-modifier-keys", "as", fallback=settings.orcaModifierKeys
+        )
 
     def set_modifiers_for_layout(self, is_desktop: bool) -> None:
         """Sets the Orca modifier keys based on keyboard layout and refreshes."""
 
         if is_desktop:
-            settings.orcaModifierKeys = settings.DESKTOP_MODIFIER_KEYS
+            new_keys = settings.DESKTOP_MODIFIER_KEYS
         else:
-            settings.orcaModifierKeys = settings.LAPTOP_MODIFIER_KEYS
+            new_keys = settings.LAPTOP_MODIFIER_KEYS
+
+        gsettings_registry.get_registry().set_runtime_value(
+            "keybindings", "orca-modifier-keys", new_keys
+        )
 
         layout = "desktop" if is_desktop else "laptop"
         self.refresh_orca_modifiers(f"Keyboard layout changed to {layout}.")

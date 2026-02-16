@@ -132,6 +132,10 @@ class TestSystemInformationPresenter:
         essential_modules["memory"] = memory_mock
         essential_modules["key_bindings_instance"] = key_bindings_instance
 
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_enabled(False)
+
         return essential_modules
 
     def test_init(self, test_context: OrcaTestContext) -> None:
@@ -491,12 +495,12 @@ class TestSystemInformationPresenter:
         assert result == expected_success
 
         if expected_success:
-            assert settings_mock.presentDateFormat == expected_value
+            assert presenter._get_date_format_string() == expected_value
             essential_modules["orca.debug"].print_message.assert_any_call(
                 800, f"SYSTEM INFORMATION PRESENTER: Setting date format to {format_name}.", True
             )
         else:
-            assert settings_mock.presentDateFormat == original_format
+            assert presenter._get_date_format_string() == original_format
             debug_mock = essential_modules["orca.debug"].print_message
             assert any(
                 call[0][1] == f"SYSTEM INFORMATION PRESENTER: Invalid date format: {format_name}"
@@ -568,12 +572,12 @@ class TestSystemInformationPresenter:
         assert result == expected_success
 
         if expected_success:
-            assert settings_mock.presentTimeFormat == expected_value
+            assert presenter._get_time_format_string() == expected_value
             essential_modules["orca.debug"].print_message.assert_any_call(
                 800, f"SYSTEM INFORMATION PRESENTER: Setting time format to {format_name}.", True
             )
         else:
-            assert settings_mock.presentTimeFormat == original_format
+            assert presenter._get_time_format_string() == original_format
             debug_mock = essential_modules["orca.debug"].print_message
             assert any(
                 call[0][1] == f"SYSTEM INFORMATION PRESENTER: Invalid time format: {format_name}"

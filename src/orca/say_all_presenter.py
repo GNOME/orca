@@ -169,6 +169,15 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 class SayAllPresenter:
     """Module for commands related to the current accessible object."""
 
+    _SCHEMA = "say-all"
+
+    def _get_setting(self, key: str, fallback: bool) -> bool:
+        """Returns the dconf value for key, or fallback if not in dconf."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA, key, "b", fallback=fallback
+        )
+
     def __init__(self) -> None:
         self._script: default.Script | None = None
         self._contents: list[tuple[Atspi.Accessible, int, int, str]] = []
@@ -218,15 +227,16 @@ class SayAllPresenter:
     def get_style_as_int(self) -> int:
         """Returns the current Say All style as an integer value."""
 
-        return settings.sayAllStyle
+        style_name = self.get_style()
+        return SayAllStyle[style_name.upper()].value
 
     def set_style_from_int(self, value: int) -> bool:
         """Sets the Say All style from an integer value."""
 
         msg = f"SAY ALL PRESENTER: Setting style to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.sayAllStyle = value
-        gsettings_registry.get_registry().set_runtime_value("say-all", "style", value)
+        style_name = SayAllStyle(value).string_name
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "style", style_name)
         return True
 
     @dbus_service.command
@@ -357,8 +367,7 @@ class SayAllPresenter:
         assert self._script is not None, "Script must be set before calling _say_all_iter."
 
         prior_obj = obj
-        style = settings.sayAllStyle
-        say_all_by_sentence = style == settings.SAYALL_STYLE_SENTENCE
+        say_all_by_sentence = self.get_style() == "sentence"
 
         if offset is None:
             offset = self._script.utilities.get_caret_context()[-1] or 0
@@ -463,7 +472,7 @@ class SayAllPresenter:
     def _rewind(
         self, context: speechserver.SayAllContext | None, override_setting: bool = False
     ) -> bool:
-        if not (override_setting or settings.rewindAndFastForwardInSayAll):
+        if not (override_setting or self.get_rewind_and_fast_forward_enabled()):
             return False
 
         if context is None:
@@ -490,7 +499,7 @@ class SayAllPresenter:
     def _fast_forward(
         self, context: speechserver.SayAllContext | None, override_setting: bool = False
     ) -> bool:
-        if not (override_setting or settings.rewindAndFastForwardInSayAll):
+        if not (override_setting or self.get_rewind_and_fast_forward_enabled()):
             return False
 
         if context is None:
@@ -572,7 +581,7 @@ class SayAllPresenter:
     def get_announce_blockquote(self) -> bool:
         """Returns whether blockquotes are announced when entered."""
 
-        return settings.sayAllContextBlockquote
+        return self._get_setting("announce-blockquote", settings.sayAllContextBlockquote)
 
     @dbus_service.setter
     def set_announce_blockquote(self, value: bool) -> bool:
@@ -580,8 +589,9 @@ class SayAllPresenter:
 
         msg = f"SAY ALL PRESENTER: Setting announce blockquotes to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.sayAllContextBlockquote = value
-        gsettings_registry.get_registry().set_runtime_value("say-all", "announce-blockquote", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, "announce-blockquote", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -596,7 +606,7 @@ class SayAllPresenter:
     def get_announce_form(self) -> bool:
         """Returns whether non-landmark forms are announced when entered."""
 
-        return settings.sayAllContextNonLandmarkForm
+        return self._get_setting("announce-form", settings.sayAllContextNonLandmarkForm)
 
     @dbus_service.setter
     def set_announce_form(self, value: bool) -> bool:
@@ -604,8 +614,7 @@ class SayAllPresenter:
 
         msg = f"SAY ALL PRESENTER: Setting announce forms to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.sayAllContextNonLandmarkForm = value
-        gsettings_registry.get_registry().set_runtime_value("say-all", "announce-form", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "announce-form", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -620,7 +629,7 @@ class SayAllPresenter:
     def get_announce_grouping(self) -> bool:
         """Returns whether groupings are announced when entered."""
 
-        return settings.sayAllContextPanel
+        return self._get_setting("announce-grouping", settings.sayAllContextPanel)
 
     @dbus_service.setter
     def set_announce_grouping(self, value: bool) -> bool:
@@ -628,8 +637,9 @@ class SayAllPresenter:
 
         msg = f"SAY ALL PRESENTER: Setting announce groupings to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.sayAllContextPanel = value
-        gsettings_registry.get_registry().set_runtime_value("say-all", "announce-grouping", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, "announce-grouping", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -644,7 +654,7 @@ class SayAllPresenter:
     def get_announce_landmark(self) -> bool:
         """Returns whether landmarks are announced when entered."""
 
-        return settings.sayAllContextLandmark
+        return self._get_setting("announce-landmark", settings.sayAllContextLandmark)
 
     @dbus_service.setter
     def set_announce_landmark(self, value: bool) -> bool:
@@ -652,8 +662,9 @@ class SayAllPresenter:
 
         msg = f"SAY ALL PRESENTER: Setting announce landmarks to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.sayAllContextLandmark = value
-        gsettings_registry.get_registry().set_runtime_value("say-all", "announce-landmark", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, "announce-landmark", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -668,7 +679,7 @@ class SayAllPresenter:
     def get_announce_list(self) -> bool:
         """Returns whether lists are announced when entered."""
 
-        return settings.sayAllContextList
+        return self._get_setting("announce-list", settings.sayAllContextList)
 
     @dbus_service.setter
     def set_announce_list(self, value: bool) -> bool:
@@ -676,8 +687,7 @@ class SayAllPresenter:
 
         msg = f"SAY ALL PRESENTER: Setting announce lists to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.sayAllContextList = value
-        gsettings_registry.get_registry().set_runtime_value("say-all", "announce-list", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "announce-list", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -692,7 +702,7 @@ class SayAllPresenter:
     def get_announce_table(self) -> bool:
         """Returns whether tables are announced when entered."""
 
-        return settings.sayAllContextTable
+        return self._get_setting("announce-table", settings.sayAllContextTable)
 
     @dbus_service.setter
     def set_announce_table(self, value: bool) -> bool:
@@ -700,8 +710,7 @@ class SayAllPresenter:
 
         msg = f"SAY ALL PRESENTER: Setting announce tables to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.sayAllContextTable = value
-        gsettings_registry.get_registry().set_runtime_value("say-all", "announce-table", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "announce-table", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -716,6 +725,11 @@ class SayAllPresenter:
     def get_style(self) -> str:
         """Returns the current Say All style."""
 
+        value = gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA, "style", "", genum="org.gnome.Orca.SayAllStyle"
+        )
+        if value is not None:
+            return value
         int_value = settings.sayAllStyle
         return SayAllStyle(int_value).string_name
 
@@ -732,8 +746,9 @@ class SayAllPresenter:
 
         msg = f"SAY ALL PRESENTER: Setting style to {value} ({style.value})."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.sayAllStyle = style.value
-        gsettings_registry.get_registry().set_runtime_value("say-all", "style", style.value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, "style", style.string_name
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -748,7 +763,7 @@ class SayAllPresenter:
     def get_structural_navigation_enabled(self) -> bool:
         """Returns whether structural navigation keys can be used in Say All."""
 
-        return settings.structNavInSayAll
+        return self._get_setting("structural-navigation", settings.structNavInSayAll)
 
     @dbus_service.setter
     def set_structural_navigation_enabled(self, value: bool) -> bool:
@@ -756,9 +771,8 @@ class SayAllPresenter:
 
         msg = f"SAY ALL PRESENTER: Setting enable structural navigation to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.structNavInSayAll = value
         gsettings_registry.get_registry().set_runtime_value(
-            "say-all", "structural-navigation", value
+            self._SCHEMA, "structural-navigation", value
         )
         return True
 
@@ -774,7 +788,7 @@ class SayAllPresenter:
     def get_rewind_and_fast_forward_enabled(self) -> bool:
         """Returns whether Up and Down can be used in Say All."""
 
-        return settings.rewindAndFastForwardInSayAll
+        return self._get_setting("rewind-and-fast-forward", settings.rewindAndFastForwardInSayAll)
 
     @dbus_service.setter
     def set_rewind_and_fast_forward_enabled(self, value: bool) -> bool:
@@ -782,9 +796,8 @@ class SayAllPresenter:
 
         msg = f"SAY ALL PRESENTER: Setting enable rewind and fast forward to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.rewindAndFastForwardInSayAll = value
         gsettings_registry.get_registry().set_runtime_value(
-            "say-all", "rewind-and-fast-forward", value
+            self._SCHEMA, "rewind-and-fast-forward", value
         )
         return True
 

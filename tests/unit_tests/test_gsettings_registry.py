@@ -1963,3 +1963,385 @@ class TestRuntimeValues:
         assert found is True
         assert value == 42
         registry.clear_runtime_values()
+
+
+@pytest.mark.unit
+class TestLayeredLookup:
+    """Tests for GSettingsRegistry.layered_lookup."""
+
+    def _setup(self, test_context: OrcaTestContext):
+        """Set up dependencies."""
+
+        additional_modules = [
+            "orca.cmdnames",
+            "orca.messages",
+            "orca.object_properties",
+            "orca.orca_gui_navlist",
+            "orca.orca_i18n",
+            "orca.AXHypertext",
+            "orca.AXObject",
+            "orca.AXTable",
+            "orca.AXText",
+            "orca.AXUtilities",
+            "orca.input_event",
+        ]
+        test_context.setup_shared_dependencies(additional_modules)
+
+    def test_returns_none_when_disabled(self, test_context: OrcaTestContext) -> None:
+        """Test layered_lookup returns None when registry is disabled."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        registry.set_enabled(False)
+        assert registry.layered_lookup("speech", "enabled", "b") is None
+
+    def test_returns_none_when_schema_missing(self, test_context: OrcaTestContext) -> None:
+        """Test layered_lookup returns None for an unknown schema."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        assert registry.layered_lookup("nonexistent", "key", "b") is None
+
+    def test_returns_boolean(self, test_context: OrcaTestContext) -> None:
+        """Test layered_lookup returns boolean from handle."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry, GSettingsSchemaHandle
+
+        registry = GSettingsRegistry()
+        registry._schemas["speech"] = "org.gnome.Orca.Speech"
+
+        mock_handle = test_context.Mock(spec=GSettingsSchemaHandle)
+        mock_handle.get_boolean.return_value = True
+        registry._handles["speech"] = mock_handle
+
+        result = registry.layered_lookup("speech", "enabled", "b")
+        assert result is True
+        mock_handle.get_boolean.assert_called_once_with("enabled", "")
+
+    def test_returns_string(self, test_context: OrcaTestContext) -> None:
+        """Test layered_lookup returns string from handle."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry, GSettingsSchemaHandle
+
+        registry = GSettingsRegistry()
+        registry._schemas["speech"] = "org.gnome.Orca.Speech"
+
+        mock_handle = test_context.Mock(spec=GSettingsSchemaHandle)
+        mock_handle.get_string.return_value = "voxin"
+        registry._handles["speech"] = mock_handle
+
+        result = registry.layered_lookup("speech", "synthesizer", "s")
+        assert result == "voxin"
+        mock_handle.get_string.assert_called_once_with("synthesizer", "")
+
+    def test_returns_int(self, test_context: OrcaTestContext) -> None:
+        """Test layered_lookup returns int from handle."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry, GSettingsSchemaHandle
+
+        registry = GSettingsRegistry()
+        registry._schemas["typing-echo"] = "org.gnome.Orca.TypingEcho"
+
+        mock_handle = test_context.Mock(spec=GSettingsSchemaHandle)
+        mock_handle.get_int.return_value = 75
+        registry._handles["typing-echo"] = mock_handle
+
+        result = registry.layered_lookup("typing-echo", "rate", "i")
+        assert result == 75
+
+    def test_returns_double(self, test_context: OrcaTestContext) -> None:
+        """Test layered_lookup returns double from handle."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry, GSettingsSchemaHandle
+
+        registry = GSettingsRegistry()
+        registry._schemas["voice"] = "org.gnome.Orca.Voice"
+
+        mock_handle = test_context.Mock(spec=GSettingsSchemaHandle)
+        mock_handle.get_double.return_value = 7.5
+        registry._handles["voice"] = mock_handle
+
+        result = registry.layered_lookup("voice", "pitch", "d", voice_type="default")
+        assert result == 7.5
+        mock_handle.get_double.assert_called_once_with("pitch", "voices/default")
+
+    def test_voice_sub_path(self, test_context: OrcaTestContext) -> None:
+        """Test layered_lookup uses voices/{voice_type} sub_path for voice schema."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry, GSettingsSchemaHandle
+
+        registry = GSettingsRegistry()
+        registry._schemas["voice"] = "org.gnome.Orca.Voice"
+
+        mock_handle = test_context.Mock(spec=GSettingsSchemaHandle)
+        mock_handle.get_int.return_value = 56
+        registry._handles["voice"] = mock_handle
+
+        result = registry.layered_lookup("voice", "rate", "i", voice_type="uppercase")
+        assert result == 56
+        mock_handle.get_int.assert_called_once_with("rate", "voices/uppercase")
+
+    def test_enum_returns_string(self, test_context: OrcaTestContext) -> None:
+        """Test layered_lookup returns string nick for enum settings."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry, GSettingsSchemaHandle
+
+        registry = GSettingsRegistry()
+        registry._schemas["speech"] = "org.gnome.Orca.Speech"
+
+        mock_handle = test_context.Mock(spec=GSettingsSchemaHandle)
+        mock_handle.get_string.return_value = "verbose"
+        registry._handles["speech"] = mock_handle
+
+        result = registry.layered_lookup(
+            "speech", "verbosity-level", "", genum="org.gnome.Orca.Verbosity"
+        )
+        assert result == "verbose"
+        mock_handle.get_string.assert_called_once_with("verbosity-level", "")
+
+
+@pytest.mark.unit
+class TestGetPronunciations:
+    """Tests for GSettingsRegistry.get_pronunciations."""
+
+    def _setup(self, test_context: OrcaTestContext):
+        """Set up dependencies."""
+
+        additional_modules = [
+            "orca.cmdnames",
+            "orca.messages",
+            "orca.object_properties",
+            "orca.orca_gui_navlist",
+            "orca.orca_i18n",
+            "orca.AXHypertext",
+            "orca.AXObject",
+            "orca.AXTable",
+            "orca.AXText",
+            "orca.AXUtilities",
+            "orca.input_event",
+        ]
+        test_context.setup_shared_dependencies(additional_modules)
+
+    def test_returns_empty_dict_when_disabled(self, test_context: OrcaTestContext) -> None:
+        """Test get_pronunciations returns {} when registry is disabled."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import get_registry
+
+        registry = get_registry()
+        registry.set_enabled(False)
+        try:
+            assert not registry.get_pronunciations("default")
+        finally:
+            registry.set_enabled(True)
+
+    def test_returns_empty_dict_when_no_schema(self, test_context: OrcaTestContext) -> None:
+        """Test get_pronunciations returns {} when pronunciations schema is not registered."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        assert not registry.get_pronunciations("default")
+
+    def test_returns_exported_pronunciations(self, test_context: OrcaTestContext) -> None:
+        """Test get_pronunciations delegates to export_pronunciations."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import get_registry
+
+        registry = get_registry()
+        mock_gs = test_context.Mock()
+        expected = {"hello": ["hello", "hi"], "world": ["world", "earth"]}
+
+        test_context.patch_object(registry, "get_settings", return_value=mock_gs)
+        test_context.patch(
+            "orca.gsettings_registry.gsettings_migrator.export_pronunciations",
+            return_value=expected,
+        )
+
+        result = registry.get_pronunciations("default")
+        assert result == expected
+
+    def test_uses_active_profile_when_empty(self, test_context: OrcaTestContext) -> None:
+        """Test get_pronunciations uses active profile when profile arg is empty."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import get_registry
+
+        registry = get_registry()
+        registry.set_active_profile("spanish")
+        mock_gs = test_context.Mock()
+
+        mockget_settings = test_context.patch_object(registry, "get_settings", return_value=mock_gs)
+        test_context.patch(
+            "orca.gsettings_registry.gsettings_migrator.export_pronunciations",
+            return_value={},
+        )
+
+        registry.get_pronunciations()
+        mockget_settings.assert_called_once_with("pronunciations", "spanish", "pronunciations", "")
+        registry.set_active_profile("default")
+
+    def test_passes_app_name(self, test_context: OrcaTestContext) -> None:
+        """Test get_pronunciations passes app_name to get_settings."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import get_registry
+
+        registry = get_registry()
+        mock_gs = test_context.Mock()
+
+        mockget_settings = test_context.patch_object(registry, "get_settings", return_value=mock_gs)
+        test_context.patch(
+            "orca.gsettings_registry.gsettings_migrator.export_pronunciations",
+            return_value={},
+        )
+
+        registry.get_pronunciations("default", "Firefox")
+        mockget_settings.assert_called_once_with(
+            "pronunciations", "default", "pronunciations", "Firefox"
+        )
+
+    def test_returns_empty_when_get_settings_returns_none(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test get_pronunciations returns {} when get_settings returns None."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import get_registry
+
+        registry = get_registry()
+        test_context.patch_object(registry, "get_settings", return_value=None)
+
+        result = registry.get_pronunciations("default")
+        assert not result
+
+
+@pytest.mark.unit
+class TestGetKeybindings:
+    """Tests for GSettingsRegistry.get_keybindings."""
+
+    def _setup(self, test_context: OrcaTestContext):
+        """Set up dependencies."""
+
+        additional_modules = [
+            "orca.cmdnames",
+            "orca.messages",
+            "orca.object_properties",
+            "orca.orca_gui_navlist",
+            "orca.orca_i18n",
+            "orca.AXHypertext",
+            "orca.AXObject",
+            "orca.AXTable",
+            "orca.AXText",
+            "orca.AXUtilities",
+            "orca.input_event",
+        ]
+        test_context.setup_shared_dependencies(additional_modules)
+
+    def test_returns_empty_dict_when_disabled(self, test_context: OrcaTestContext) -> None:
+        """Test get_keybindings returns {} when registry is disabled."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import get_registry
+
+        registry = get_registry()
+        registry.set_enabled(False)
+        try:
+            assert not registry.get_keybindings("default")
+        finally:
+            registry.set_enabled(True)
+
+    def test_returns_empty_dict_when_no_schema(self, test_context: OrcaTestContext) -> None:
+        """Test get_keybindings returns {} when keybindings schema is not registered."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        assert not registry.get_keybindings("default")
+
+    def test_returns_exported_keybindings(self, test_context: OrcaTestContext) -> None:
+        """Test get_keybindings delegates to export_keybindings."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import get_registry
+
+        registry = get_registry()
+        mock_gs = test_context.Mock()
+        expected = {
+            "next_heading": [["h", "269", "0", "1"]],
+            "prev_heading": [["h", "269", "0", "2"]],
+        }
+
+        test_context.patch_object(registry, "get_settings", return_value=mock_gs)
+        test_context.patch(
+            "orca.gsettings_registry.gsettings_migrator.export_keybindings",
+            return_value=expected,
+        )
+
+        result = registry.get_keybindings("default")
+        assert result == expected
+
+    def test_uses_active_profile_when_empty(self, test_context: OrcaTestContext) -> None:
+        """Test get_keybindings uses active profile when profile arg is empty."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import get_registry
+
+        registry = get_registry()
+        registry.set_active_profile("spanish")
+        mock_gs = test_context.Mock()
+
+        mockget_settings = test_context.patch_object(registry, "get_settings", return_value=mock_gs)
+        test_context.patch(
+            "orca.gsettings_registry.gsettings_migrator.export_keybindings",
+            return_value={},
+        )
+
+        registry.get_keybindings()
+        mockget_settings.assert_called_once_with("keybindings", "spanish", "keybindings", "")
+        registry.set_active_profile("default")
+
+    def test_passes_app_name(self, test_context: OrcaTestContext) -> None:
+        """Test get_keybindings passes app_name to get_settings."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import get_registry
+
+        registry = get_registry()
+        mock_gs = test_context.Mock()
+
+        mockget_settings = test_context.patch_object(registry, "get_settings", return_value=mock_gs)
+        test_context.patch(
+            "orca.gsettings_registry.gsettings_migrator.export_keybindings",
+            return_value={},
+        )
+
+        registry.get_keybindings("default", "Firefox")
+        mockget_settings.assert_called_once_with("keybindings", "default", "keybindings", "Firefox")
+
+    def test_returns_empty_when_get_settings_returns_none(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test get_keybindings returns {} when get_settings returns None."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import get_registry
+
+        registry = get_registry()
+        test_context.patch_object(registry, "get_settings", return_value=None)
+
+        result = registry.get_keybindings("default")
+        assert not result

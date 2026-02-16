@@ -35,7 +35,7 @@ from __future__ import annotations
 
 
 from enum import Enum
-from typing import Callable, TYPE_CHECKING
+from typing import Any, Callable, TYPE_CHECKING
 
 import gi
 
@@ -83,6 +83,15 @@ class NavigationMode(Enum):
 )
 class StructuralNavigator:
     """Implements the structural navigation support available to scripts."""
+
+    _SCHEMA = "structural-navigation"
+
+    def _get_setting(self, key: str, gtype: str, fallback: Any) -> Any:
+        """Returns the dconf value for key, or fallback if not in dconf."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA, key, gtype, fallback=fallback
+        )
 
     def __init__(self) -> None:
         self._last_input_event: InputEvent | None = None
@@ -494,7 +503,7 @@ class StructuralNavigator:
     def get_navigation_wraps(self) -> bool:
         """Returns whether navigation wraps when reaching the top/bottom of the document."""
 
-        return settings.wrappedStructuralNavigation
+        return self._get_setting("wraps", "b", settings.wrappedStructuralNavigation)
 
     @dbus_service.setter
     def set_navigation_wraps(self, value: bool) -> bool:
@@ -502,7 +511,6 @@ class StructuralNavigator:
 
         msg = f"STRUCTURAL NAVIGATOR: Setting navigation wraps to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.wrappedStructuralNavigation = value
         gsettings_registry.get_registry().set_runtime_value("structural-navigation", "wraps", value)
         return True
 
@@ -518,7 +526,7 @@ class StructuralNavigator:
     def get_large_object_text_length(self) -> int:
         """Returns the minimum number of characters to be considered a 'large object'."""
 
-        return settings.largeObjectTextLength
+        return self._get_setting("large-object-text-length", "i", settings.largeObjectTextLength)
 
     @dbus_service.setter
     def set_large_object_text_length(self, value: int) -> bool:
@@ -526,7 +534,6 @@ class StructuralNavigator:
 
         msg = f"STRUCTURAL NAVIGATOR: Setting large object text length to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.largeObjectTextLength = value
         gsettings_registry.get_registry().set_runtime_value(
             "structural-navigation", "large-object-text-length", value
         )
@@ -544,7 +551,7 @@ class StructuralNavigator:
     def get_is_enabled(self) -> bool:
         """Returns whether structural navigation is enabled."""
 
-        return settings.structuralNavigationEnabled
+        return self._get_setting("enabled", "b", settings.structuralNavigationEnabled)
 
     @dbus_service.setter
     def set_is_enabled(self, value: bool) -> bool:
@@ -560,7 +567,6 @@ class StructuralNavigator:
 
         msg = f"STRUCTURAL NAVIGATOR: Setting enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.structuralNavigationEnabled = value
         gsettings_registry.get_registry().set_runtime_value(
             "structural-navigation", "enabled", value
         )
@@ -602,7 +608,7 @@ class StructuralNavigator:
     def get_triggers_focus_mode(self) -> bool:
         """Returns whether structural navigation triggers focus mode."""
 
-        return settings.structNavTriggersFocusMode
+        return self._get_setting("triggers-focus-mode", "b", settings.structNavTriggersFocusMode)
 
     @dbus_service.setter
     def set_triggers_focus_mode(self, value: bool) -> bool:
@@ -613,7 +619,6 @@ class StructuralNavigator:
 
         msg = f"STRUCTURAL NAVIGATOR: Setting triggers focus mode to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.structNavTriggersFocusMode = value
         gsettings_registry.get_registry().set_runtime_value(
             "structural-navigation", "triggers-focus-mode", value
         )

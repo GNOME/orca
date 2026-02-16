@@ -170,6 +170,10 @@ class TestSayAllPresenter:
         essential_modules["orca.AXObject"].supports_collection.return_value = True
         essential_modules["orca.AXUtilities"].is_heading.return_value = False
 
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_enabled(False)
+
         return essential_modules
 
     def test_say_all_should_skip_content(self, test_context: OrcaTestContext) -> None:

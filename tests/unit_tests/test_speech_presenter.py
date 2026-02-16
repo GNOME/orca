@@ -188,6 +188,11 @@ class TestSpeechPresenter:
         pron_manager_instance.get_pronunciation = test_context.Mock(side_effect=lambda x: x)
         pronunciation_dict_mock.get_manager = test_context.Mock(return_value=pron_manager_instance)
 
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_enabled(False)
+        gsettings_registry.get_registry().clear_runtime_values()
+
         orca_i18n_mock = essential_modules["orca.orca_i18n"]
         orca_i18n_mock._ = lambda x: x
         orca_i18n_mock.C_ = lambda c, x: x
@@ -307,19 +312,16 @@ class TestSpeechPresenter:
                 "id": "set_verbosity_brief",
                 "input_value": "brief",
                 "expected": True,
-                "setting_int": 0,
             },
             {
                 "id": "set_verbosity_verbose",
                 "input_value": "verbose",
                 "expected": True,
-                "setting_int": 1,
             },
             {
                 "id": "set_verbosity_invalid",
                 "input_value": "invalid",
                 "expected": False,
-                "setting_int": None,
             },
         ],
         ids=lambda case: case["id"],
@@ -327,8 +329,7 @@ class TestSpeechPresenter:
     def test_set_verbosity_level(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test set_verbosity_level method."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings_manager"].get_manager.return_value
+        self._setup_dependencies(test_context)
 
         from orca.speech_presenter import SpeechPresenter
 
@@ -337,9 +338,8 @@ class TestSpeechPresenter:
         result = presenter.set_verbosity_level(case["input_value"])
         assert result == case["expected"]
 
-        settings_mock = essential_modules["orca.settings"]
         if case["expected"]:
-            assert settings_mock.speechVerbosityLevel == case["setting_int"]
+            assert presenter.get_verbosity_level() == case["input_value"]
 
     @pytest.mark.parametrize(
         "case",
@@ -394,7 +394,7 @@ class TestSpeechPresenter:
     def test_set_only_speak_displayed_text(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test set_only_speak_displayed_text method."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
 
         from orca.speech_presenter import SpeechPresenter
 
@@ -402,8 +402,7 @@ class TestSpeechPresenter:
 
         result = presenter.set_only_speak_displayed_text(case["input_value"])
         assert result == case["expected"]
-        settings_mock = essential_modules["orca.settings"]
-        assert settings_mock.onlySpeakDisplayedText == case["input_value"]
+        assert presenter.get_only_speak_displayed_text() == case["input_value"]
 
     @pytest.mark.parametrize(
         "case",
@@ -441,7 +440,7 @@ class TestSpeechPresenter:
     ) -> None:
         """Test set_speak_indentation_and_justification method."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
 
         from orca.speech_presenter import SpeechPresenter
 
@@ -449,8 +448,7 @@ class TestSpeechPresenter:
 
         result = presenter.set_speak_indentation_and_justification(case["input_value"])
         assert result == case["expected"]
-        settings_mock = essential_modules["orca.settings"]
-        assert settings_mock.enableSpeechIndentation == case["input_value"]
+        assert presenter.get_speak_indentation_and_justification() == case["input_value"]
 
     def test_get_indentation_description_disabled(self, test_context: OrcaTestContext) -> None:
         """Test get_indentation_description method when disabled."""
@@ -753,7 +751,7 @@ class TestSpeechPresenter:
     def test_set_speak_blank_lines(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test set_speak_blank_lines method."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
 
         from orca.speech_presenter import SpeechPresenter
 
@@ -761,8 +759,7 @@ class TestSpeechPresenter:
 
         result = presenter.set_speak_blank_lines(case["input_value"])
         assert result == case["expected"]
-        settings_mock = essential_modules["orca.settings"]
-        assert settings_mock.speakBlankLines == case["input_value"]
+        assert presenter.get_speak_blank_lines() == case["input_value"]
 
     def test_get_presenter_singleton(self, test_context: OrcaTestContext) -> None:
         """Test get_presenter function returns the same instance."""

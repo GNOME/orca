@@ -56,6 +56,9 @@ class TestSoundPresenter:
         dbus_service_mock.setter = lambda func: func
 
         settings_mock = essential_modules["orca.settings"]
+        settings_mock.PROGRESS_BAR_ALL = 0
+        settings_mock.PROGRESS_BAR_APPLICATION = 1
+        settings_mock.PROGRESS_BAR_WINDOW = 2
         settings_mock.enableSound = True
         settings_mock.soundVolume = 0.5
         settings_mock.beepProgressBarUpdates = False
@@ -63,6 +66,10 @@ class TestSoundPresenter:
         settings_mock.progressBarBeepVerbosity = 1
 
         essential_modules["controller"] = controller_mock
+
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_enabled(False)
 
         return essential_modules
 
@@ -104,7 +111,7 @@ class TestSoundPresenter:
         result = presenter.set_sound_is_enabled(False)
 
         assert result is True
-        assert mocks["orca.settings"].enableSound is False
+        assert presenter.get_sound_is_enabled() is False
 
     def test_get_sound_volume_returns_setting(self, test_context: OrcaTestContext) -> None:
         """Test get_sound_volume returns the soundVolume setting."""
@@ -129,7 +136,7 @@ class TestSoundPresenter:
         result = presenter.set_sound_volume(0.8)
 
         assert result is True
-        assert mocks["orca.settings"].soundVolume == 0.8
+        assert presenter.get_sound_volume() == 0.8
 
     def test_get_beep_progress_bar_updates_returns_setting(
         self, test_context: OrcaTestContext
@@ -161,7 +168,7 @@ class TestSoundPresenter:
         result = presenter.set_beep_progress_bar_updates(True)
 
         assert result is True
-        assert mocks["orca.settings"].beepProgressBarUpdates is True
+        assert presenter.get_beep_progress_bar_updates() is True
 
     def test_get_progress_bar_beep_interval_returns_setting(
         self, test_context: OrcaTestContext
@@ -190,7 +197,7 @@ class TestSoundPresenter:
         result = presenter.set_progress_bar_beep_interval(15)
 
         assert result is True
-        assert mocks["orca.settings"].progressBarBeepInterval == 15
+        assert presenter.get_progress_bar_beep_interval() == 15
 
     def test_get_progress_bar_beep_verbosity_returns_setting(
         self, test_context: OrcaTestContext
@@ -216,10 +223,10 @@ class TestSoundPresenter:
         from orca.sound_presenter import SoundPresenter
 
         presenter = SoundPresenter()
-        result = presenter.set_progress_bar_beep_verbosity(3)
+        result = presenter.set_progress_bar_beep_verbosity(2)
 
         assert result is True
-        assert mocks["orca.settings"].progressBarBeepVerbosity == 3
+        assert presenter.get_progress_bar_beep_verbosity() == 2
 
     def test_get_presenter_returns_singleton(self, test_context: OrcaTestContext) -> None:
         """Test get_presenter returns the module-level presenter instance."""

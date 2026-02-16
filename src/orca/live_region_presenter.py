@@ -179,6 +179,15 @@ class LiveRegionMessageQueue:
 class LiveRegionPresenter:
     """Presents live region announcements."""
 
+    _SCHEMA = "live-regions"
+
+    def _get_setting(self, key: str, fallback: bool) -> bool:
+        """Returns the dconf value for key, or fallback if not in dconf."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA, key, "b", fallback=fallback
+        )
+
     # Maximum size for message queue and cache
     QUEUE_SIZE = 9
 
@@ -551,7 +560,7 @@ class LiveRegionPresenter:
     def get_is_enabled(self) -> bool:
         """Returns whether live region support is enabled."""
 
-        return settings.enableLiveRegions
+        return self._get_setting("enabled", settings.enableLiveRegions)
 
     def set_is_enabled(self, value: bool) -> bool:
         """Sets whether live region support is enabled."""
@@ -561,8 +570,7 @@ class LiveRegionPresenter:
 
         msg = f"LIVE REGION PRESENTER: Setting enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableLiveRegions = value
-        gsettings_registry.get_registry().set_runtime_value("live-regions", "enabled", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "enabled", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -576,7 +584,9 @@ class LiveRegionPresenter:
     def get_present_live_region_from_inactive_tab(self) -> bool:
         """Returns whether live region messages are presented from inactive tabs."""
 
-        return settings.presentLiveRegionFromInactiveTab
+        return self._get_setting(
+            "present-from-inactive-tab", settings.presentLiveRegionFromInactiveTab
+        )
 
     def set_present_live_region_from_inactive_tab(self, value: bool) -> bool:
         """Sets whether live region messages are presented from inactive tabs."""
@@ -586,9 +596,8 @@ class LiveRegionPresenter:
 
         msg = f"LIVE REGION PRESENTER: Setting presentLiveRegionFromInactiveTab to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.presentLiveRegionFromInactiveTab = value
         gsettings_registry.get_registry().set_runtime_value(
-            "live-regions", "present-from-inactive-tab", value
+            self._SCHEMA, "present-from-inactive-tab", value
         )
         return True
 

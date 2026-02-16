@@ -208,8 +208,6 @@ def main():
     )
     if os.path.realpath(prefs_dir) != os.path.realpath(default_prefs_dir):
         registry.set_enabled(False)
-    elif not settings.useGSettings:
-        registry.set_enabled(False)
 
     registry.migrate_all(prefs_dir, profiles)
     registry.sync_missing_profiles(prefs_dir, profiles)

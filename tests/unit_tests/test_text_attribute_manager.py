@@ -53,6 +53,10 @@ class TestTextAttributeManager:
         settings_mock.textAttributesToSpeak = []
         settings_mock.textAttributesToBraille = []
 
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_enabled(False)
+
         return essential_modules
 
     def test_init(self, test_context: OrcaTestContext) -> None:
@@ -103,7 +107,7 @@ class TestTextAttributeManager:
         result = manager.set_attributes_to_speak(new_value)
 
         assert result is True
-        assert essential_modules["orca.settings"].textAttributesToSpeak == new_value
+        assert manager.get_attributes_to_speak() == new_value
         essential_modules["orca.debug"].print_message.assert_called()
 
     def test_set_attributes_to_speak_same_value(self, test_context: OrcaTestContext) -> None:
@@ -160,7 +164,7 @@ class TestTextAttributeManager:
         result = manager.set_attributes_to_braille(new_value)
 
         assert result is True
-        assert essential_modules["orca.settings"].textAttributesToBraille == new_value
+        assert manager.get_attributes_to_braille() == new_value
         essential_modules["orca.debug"].print_message.assert_called()
 
     def test_set_attributes_to_braille_same_value(self, test_context: OrcaTestContext) -> None:

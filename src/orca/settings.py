@@ -254,4 +254,3 @@ spellcheckPresentContext: bool = True
 enableSadPidginHack: bool = False
 ignoreStatusBarProgressBars: bool = True
 enableExperimentalFeatures: bool = False
-useGSettings: bool = True

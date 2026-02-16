@@ -22,6 +22,9 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-branches
+# pylint: disable=too-many-nested-blocks
+
 """Generate GSettings schema XML files by parsing @gsetting decorators."""
 
 import argparse

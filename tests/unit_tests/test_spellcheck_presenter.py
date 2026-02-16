@@ -61,6 +61,11 @@ class TestSpellCheckPresenter:
         debug_mock.print_message = test_context.Mock()
         debug_mock.LEVEL_INFO = 800
 
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_enabled(False)
+        gsettings_registry.get_registry().clear_runtime_values()
+
         settings_mock = essential_modules["orca.settings"]
         settings_mock.spellcheckSpellError = True
         settings_mock.spellcheckSpellSuggestion = True
@@ -115,7 +120,7 @@ class TestSpellCheckPresenter:
         result = presenter.set_spell_error(False)
 
         assert result is True
-        assert essential_modules["orca.settings"].spellcheckSpellError is False
+        assert presenter.get_spell_error() is False
         essential_modules["orca.debug"].print_message.assert_called()
 
     def test_set_spell_error_same_value(self, test_context: OrcaTestContext) -> None:
@@ -168,7 +173,7 @@ class TestSpellCheckPresenter:
         result = presenter.set_spell_suggestion(False)
 
         assert result is True
-        assert essential_modules["orca.settings"].spellcheckSpellSuggestion is False
+        assert presenter.get_spell_suggestion() is False
         essential_modules["orca.debug"].print_message.assert_called()
 
     def test_set_spell_suggestion_same_value(self, test_context: OrcaTestContext) -> None:
@@ -221,7 +226,7 @@ class TestSpellCheckPresenter:
         result = presenter.set_present_context(False)
 
         assert result is True
-        assert essential_modules["orca.settings"].spellcheckPresentContext is False
+        assert presenter.get_present_context() is False
         essential_modules["orca.debug"].print_message.assert_called()
 
     def test_set_present_context_same_value(self, test_context: OrcaTestContext) -> None:

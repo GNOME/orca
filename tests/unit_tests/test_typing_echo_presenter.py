@@ -24,12 +24,14 @@
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-lines
 
 """Unit tests for typing_echo_presenter.py methods."""
 
 from __future__ import annotations
 
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING
+from unittest.mock import Mock
 
 import pytest
 
@@ -108,127 +110,91 @@ class _FakeCheckButton:  # noqa: D401 - simple test stub
 class TestTypingEchoPresenter:
     """Test TypingEchoPresenter and TypingEchoPreferencesGrid."""
 
-    def _setup_presenter(self, test_context: OrcaTestContext):
-        """Set up presenter and dependencies for testing."""
-        additional_modules = [
-            "gi",
-            "gi.repository",
-            "orca.cmdnames",
-            "orca.messages",
-            "orca.object_properties",
-            "orca.orca_gui_navlist",
-            "orca.orca_i18n",
-            "orca.AXHypertext",
-            "orca.AXObject",
-            "orca.AXTable",
-            "orca.AXText",
-            "orca.AXUtilities",
-            "orca.input_event",
-            "orca.braille_presenter",
-            "orca.presentation_manager",
-        ]
-        essential_modules = test_context.setup_shared_dependencies(additional_modules)
+    _CMDNAME_VALUES: dict[str, str] = {
+        "STRUCTURAL_NAVIGATION_MODE_CYCLE": "cycle_mode",
+        "BLOCKQUOTE_PREV": "previous_blockquote",
+        "BLOCKQUOTE_NEXT": "next_blockquote",
+        "BLOCKQUOTE_LIST": "list_blockquotes",
+        "BUTTON_PREV": "previous_button",
+        "BUTTON_NEXT": "next_button",
+        "BUTTON_LIST": "list_buttons",
+        "CHECK_BOX_PREV": "previous_checkbox",
+        "CHECK_BOX_NEXT": "next_checkbox",
+        "CHECK_BOX_LIST": "list_checkboxes",
+        "COMBO_BOX_PREV": "previous_combobox",
+        "COMBO_BOX_NEXT": "next_combobox",
+        "COMBO_BOX_LIST": "list_comboboxes",
+        "ENTRY_PREV": "previous_entry",
+        "ENTRY_NEXT": "next_entry",
+        "ENTRY_LIST": "list_entries",
+        "FORM_FIELD_PREV": "previous_form_field",
+        "FORM_FIELD_NEXT": "next_form_field",
+        "FORM_FIELD_LIST": "list_form_fields",
+        "HEADING_PREV": "previous_heading",
+        "HEADING_NEXT": "next_heading",
+        "HEADING_LIST": "list_headings",
+        "HEADING_AT_LEVEL_PREV": "previous_heading_level_%d",
+        "HEADING_AT_LEVEL_NEXT": "next_heading_level_%d",
+        "HEADING_AT_LEVEL_LIST": "list_headings_level_%d",
+        "IFRAME_PREV": "previous_iframe",
+        "IFRAME_NEXT": "next_iframe",
+        "IFRAME_LIST": "list_iframes",
+        "IMAGE_PREV": "previous_image",
+        "IMAGE_NEXT": "next_image",
+        "IMAGE_LIST": "list_images",
+        "LANDMARK_PREV": "previous_landmark",
+        "LANDMARK_NEXT": "next_landmark",
+        "LANDMARK_LIST": "list_landmarks",
+        "LIST_PREV": "previous_list",
+        "LIST_NEXT": "next_list",
+        "LIST_LIST": "list_lists",
+        "LIST_ITEM_PREV": "previous_list_item",
+        "LIST_ITEM_NEXT": "next_list_item",
+        "LIST_ITEM_LIST": "list_list_items",
+        "LIVE_REGION_PREV": "previous_live_region",
+        "LIVE_REGION_NEXT": "next_live_region",
+        "LIVE_REGION_LAST": "last_live_region",
+        "PARAGRAPH_PREV": "previous_paragraph",
+        "PARAGRAPH_NEXT": "next_paragraph",
+        "PARAGRAPH_LIST": "list_paragraphs",
+        "RADIO_BUTTON_PREV": "previous_radio_button",
+        "RADIO_BUTTON_NEXT": "next_radio_button",
+        "RADIO_BUTTON_LIST": "list_radio_buttons",
+        "SEPARATOR_PREV": "previous_separator",
+        "SEPARATOR_NEXT": "next_separator",
+        "TABLE_PREV": "previous_table",
+        "TABLE_NEXT": "next_table",
+        "TABLE_LIST": "list_tables",
+        "UNVISITED_LINK_PREV": "previous_unvisited_link",
+        "UNVISITED_LINK_NEXT": "next_unvisited_link",
+        "UNVISITED_LINK_LIST": "list_unvisited_links",
+        "VISITED_LINK_PREV": "previous_visited_link",
+        "VISITED_LINK_NEXT": "next_visited_link",
+        "VISITED_LINK_LIST": "list_visited_links",
+        "LINK_PREV": "previous_link",
+        "LINK_NEXT": "next_link",
+        "LINK_LIST": "list_links",
+        "CLICKABLE_PREV": "previous_clickable",
+        "CLICKABLE_NEXT": "next_clickable",
+        "CLICKABLE_LIST": "list_clickables",
+        "LARGE_OBJECT_PREV": "previous_large_object",
+        "LARGE_OBJECT_NEXT": "next_large_object",
+        "LARGE_OBJECT_LIST": "list_large_objects",
+        "CONTAINER_START": "container_start",
+        "CONTAINER_END": "container_end",
+    }
 
-        # Set up cmdnames with all required values for structural_navigator
-        cmdnames = essential_modules["orca.cmdnames"]
-        cmdnames.STRUCTURAL_NAVIGATION_MODE_CYCLE = "cycle_mode"
-        cmdnames.BLOCKQUOTE_PREV = "previous_blockquote"
-        cmdnames.BLOCKQUOTE_NEXT = "next_blockquote"
-        cmdnames.BLOCKQUOTE_LIST = "list_blockquotes"
-        cmdnames.BUTTON_PREV = "previous_button"
-        cmdnames.BUTTON_NEXT = "next_button"
-        cmdnames.BUTTON_LIST = "list_buttons"
-        cmdnames.CHECK_BOX_PREV = "previous_checkbox"
-        cmdnames.CHECK_BOX_NEXT = "next_checkbox"
-        cmdnames.CHECK_BOX_LIST = "list_checkboxes"
-        cmdnames.COMBO_BOX_PREV = "previous_combobox"
-        cmdnames.COMBO_BOX_NEXT = "next_combobox"
-        cmdnames.COMBO_BOX_LIST = "list_comboboxes"
-        cmdnames.ENTRY_PREV = "previous_entry"
-        cmdnames.ENTRY_NEXT = "next_entry"
-        cmdnames.ENTRY_LIST = "list_entries"
-        cmdnames.FORM_FIELD_PREV = "previous_form_field"
-        cmdnames.FORM_FIELD_NEXT = "next_form_field"
-        cmdnames.FORM_FIELD_LIST = "list_form_fields"
-        cmdnames.HEADING_PREV = "previous_heading"
-        cmdnames.HEADING_NEXT = "next_heading"
-        cmdnames.HEADING_LIST = "list_headings"
-        cmdnames.HEADING_AT_LEVEL_PREV = "previous_heading_level_%d"
-        cmdnames.HEADING_AT_LEVEL_NEXT = "next_heading_level_%d"
-        cmdnames.HEADING_AT_LEVEL_LIST = "list_headings_level_%d"
-        cmdnames.IFRAME_PREV = "previous_iframe"
-        cmdnames.IFRAME_NEXT = "next_iframe"
-        cmdnames.IFRAME_LIST = "list_iframes"
-        cmdnames.IMAGE_PREV = "previous_image"
-        cmdnames.IMAGE_NEXT = "next_image"
-        cmdnames.IMAGE_LIST = "list_images"
-        cmdnames.LANDMARK_PREV = "previous_landmark"
-        cmdnames.LANDMARK_NEXT = "next_landmark"
-        cmdnames.LANDMARK_LIST = "list_landmarks"
-        cmdnames.LIST_PREV = "previous_list"
-        cmdnames.LIST_NEXT = "next_list"
-        cmdnames.LIST_LIST = "list_lists"
-        cmdnames.LIST_ITEM_PREV = "previous_list_item"
-        cmdnames.LIST_ITEM_NEXT = "next_list_item"
-        cmdnames.LIST_ITEM_LIST = "list_list_items"
-        cmdnames.LIVE_REGION_PREV = "previous_live_region"
-        cmdnames.LIVE_REGION_NEXT = "next_live_region"
-        cmdnames.LIVE_REGION_LAST = "last_live_region"
-        cmdnames.PARAGRAPH_PREV = "previous_paragraph"
-        cmdnames.PARAGRAPH_NEXT = "next_paragraph"
-        cmdnames.PARAGRAPH_LIST = "list_paragraphs"
-        cmdnames.RADIO_BUTTON_PREV = "previous_radio_button"
-        cmdnames.RADIO_BUTTON_NEXT = "next_radio_button"
-        cmdnames.RADIO_BUTTON_LIST = "list_radio_buttons"
-        cmdnames.SEPARATOR_PREV = "previous_separator"
-        cmdnames.SEPARATOR_NEXT = "next_separator"
-        cmdnames.TABLE_PREV = "previous_table"
-        cmdnames.TABLE_NEXT = "next_table"
-        cmdnames.TABLE_LIST = "list_tables"
-        cmdnames.UNVISITED_LINK_PREV = "previous_unvisited_link"
-        cmdnames.UNVISITED_LINK_NEXT = "next_unvisited_link"
-        cmdnames.UNVISITED_LINK_LIST = "list_unvisited_links"
-        cmdnames.VISITED_LINK_PREV = "previous_visited_link"
-        cmdnames.VISITED_LINK_NEXT = "next_visited_link"
-        cmdnames.VISITED_LINK_LIST = "list_visited_links"
-        cmdnames.LINK_PREV = "previous_link"
-        cmdnames.LINK_NEXT = "next_link"
-        cmdnames.LINK_LIST = "list_links"
-        cmdnames.CLICKABLE_PREV = "previous_clickable"
-        cmdnames.CLICKABLE_NEXT = "next_clickable"
-        cmdnames.CLICKABLE_LIST = "list_clickables"
-        cmdnames.LARGE_OBJECT_PREV = "previous_large_object"
-        cmdnames.LARGE_OBJECT_NEXT = "next_large_object"
-        cmdnames.LARGE_OBJECT_LIST = "list_large_objects"
-        cmdnames.CONTAINER_START = "container_start"
-        cmdnames.CONTAINER_END = "container_end"
+    @staticmethod
+    def _setup_cmdnames(cmdnames) -> None:
+        """Set up cmdnames with all required values for structural_navigator."""
 
-        # Set up settings mock for structural_navigator
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.structuralNavigationEnabled = True
-        settings_mock.structNavTriggersFocusMode = True
-        settings_mock.wrappedStructuralNavigation = True
-        settings_mock.largeObjectTextLength = 75
+        for attr, value in TestTypingEchoPresenter._CMDNAME_VALUES.items():
+            setattr(cmdnames, attr, value)
 
-        essential_modules["orca.orca_i18n"]._ = lambda x: x
-        essential_modules["orca.debug"].print_message = test_context.Mock()
-        essential_modules["orca.debug"].LEVEL_INFO = 800
+    @staticmethod
+    def _setup_guilabels(guilabels_mock) -> None:
+        """Set up guilabels mock with typing echo label values."""
 
-        controller_mock = test_context.Mock()
-        controller_mock.register_decorated_module.return_value = None
-        essential_modules["orca.dbus_service"].get_remote_controller.return_value = controller_mock
-
-        focus_manager_instance = test_context.Mock()
-        focus_manager_instance.get_locus_of_focus.return_value = None
-        essential_modules["orca.focus_manager"].get_manager.return_value = focus_manager_instance
-
-        essential_modules["orca.AXObject"].supports_collection.return_value = True
-        essential_modules["orca.AXUtilities"].is_heading.return_value = False
-
-        test_context.patch("gi.repository.Gtk.Grid", new=_FakeGtkGrid)
-        test_context.patch("gi.repository.Gtk.CheckButton", new=_FakeCheckButton)
-
-        guilabels_mock = essential_modules["orca.guilabels"]
         guilabels_mock.ECHO_ENABLE_KEY_ECHO = "Enable _key echo"
         guilabels_mock.ECHO_ALPHABETIC_KEYS = "Enable _alphabetic keys"
         guilabels_mock.ECHO_NUMERIC_KEYS = "Enable n_umeric keys"
@@ -243,35 +209,9 @@ class TestTypingEchoPresenter:
         guilabels_mock.ECHO_WORD = "Enable echo by _word"
         guilabels_mock.ECHO_SENTENCE = "Enable echo by _sentence"
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        manager_instance = settings_manager_mock.get_manager.return_value
-        settings_mock = essential_modules["orca.settings"]
-
-        value_map = {
-            "enableKeyEcho": True,
-            "enableAlphabeticKeys": True,
-            "enableNumericKeys": False,
-            "enablePunctuationKeys": False,
-            "enableSpace": True,
-            "enableModifierKeys": False,
-            "enableFunctionKeys": True,
-            "enableActionKeys": False,
-            "enableNavigationKeys": True,
-            "enableDiacriticalKeys": False,
-            "enableEchoByCharacter": True,
-            "enableEchoByWord": False,
-            "enableEchoBySentence": True,
-        }
-
-        for key, value in value_map.items():
-            setattr(settings_mock, key, value)
-
-        def set_setting(key: str, value: bool) -> bool:
-            value_map[key] = value
-            setattr(settings_mock, key, value)
-            return True
-
-        manager_instance.set_setting.side_effect = set_setting
+    @staticmethod
+    def _setup_atspi_patches(test_context: OrcaTestContext) -> None:
+        """Set up Atspi type patches for testing."""
 
         from gi.repository import Atspi
 
@@ -293,7 +233,99 @@ class TestTypingEchoPresenter:
         )
         test_context.patch_object(Atspi, "Relation", new=type("Relation", (), {}))
 
+    _ADDITIONAL_MODULES = [
+        "gi",
+        "gi.repository",
+        "orca.cmdnames",
+        "orca.messages",
+        "orca.object_properties",
+        "orca.orca_gui_navlist",
+        "orca.orca_i18n",
+        "orca.AXHypertext",
+        "orca.AXObject",
+        "orca.AXTable",
+        "orca.AXText",
+        "orca.AXUtilities",
+        "orca.input_event",
+        "orca.braille_presenter",
+        "orca.presentation_manager",
+    ]
+
+    _DEFAULT_VALUES = {
+        "enableKeyEcho": True,
+        "enableAlphabeticKeys": True,
+        "enableNumericKeys": False,
+        "enablePunctuationKeys": False,
+        "enableSpace": True,
+        "enableModifierKeys": False,
+        "enableFunctionKeys": True,
+        "enableActionKeys": False,
+        "enableNavigationKeys": True,
+        "enableDiacriticalKeys": False,
+        "enableEchoByCharacter": True,
+        "enableEchoByWord": False,
+        "enableEchoBySentence": True,
+    }
+
+    @staticmethod
+    def _setup_essential_mocks(test_context: OrcaTestContext, essential_modules: dict) -> None:
+        """Set up essential mock objects for testing."""
+
+        essential_modules["orca.orca_i18n"]._ = lambda x: x
+        essential_modules["orca.debug"].print_message = test_context.Mock()
+        essential_modules["orca.debug"].LEVEL_INFO = 800
+        essential_modules["orca.debug"].LEVEL_SEVERE = 1000
+        essential_modules["orca.debug"].debugLevel = 1000
+
+        controller_mock = test_context.Mock()
+        controller_mock.register_decorated_module.return_value = None
+        essential_modules["orca.dbus_service"].get_remote_controller.return_value = controller_mock
+
+        focus_manager_instance = test_context.Mock()
+        focus_manager_instance.get_locus_of_focus.return_value = None
+        essential_modules["orca.focus_manager"].get_manager.return_value = focus_manager_instance
+
+        essential_modules["orca.AXObject"].supports_collection.return_value = True
+        essential_modules["orca.AXUtilities"].is_heading.return_value = False
+
+        settings_mock = essential_modules["orca.settings"]
+        settings_mock.structuralNavigationEnabled = True
+        settings_mock.structNavTriggersFocusMode = True
+        settings_mock.wrappedStructuralNavigation = True
+        settings_mock.largeObjectTextLength = 75
+
+        test_context.patch("gi.repository.Gtk.Grid", new=_FakeGtkGrid)
+        test_context.patch("gi.repository.Gtk.CheckButton", new=_FakeCheckButton)
+
+    def _setup_presenter(self, test_context: OrcaTestContext):
+        """Set up presenter and dependencies for testing."""
+
+        essential_modules = test_context.setup_shared_dependencies(self._ADDITIONAL_MODULES)
+
+        self._setup_cmdnames(essential_modules["orca.cmdnames"])
+        self._setup_essential_mocks(test_context, essential_modules)
+        self._setup_guilabels(essential_modules["orca.guilabels"])
+
+        settings_mock = essential_modules["orca.settings"]
+        manager_instance = essential_modules["orca.settings_manager"].get_manager.return_value
+        value_map = dict(self._DEFAULT_VALUES)
+
+        for key, value in value_map.items():
+            setattr(settings_mock, key, value)
+
+        def set_setting(key: str, value: bool) -> bool:
+            value_map[key] = value
+            setattr(settings_mock, key, value)
+            return True
+
+        manager_instance.set_setting.side_effect = set_setting
+
+        self._setup_atspi_patches(test_context)
+
+        from orca import gsettings_registry
         from orca.typing_echo_presenter import TypingEchoPresenter
+
+        gsettings_registry.get_registry().set_enabled(False)
 
         presenter = TypingEchoPresenter()
         return presenter, manager_instance, value_map, settings_mock
@@ -355,14 +387,16 @@ class TestTypingEchoPresenter:
         test_value: bool,
     ) -> None:
         """Test presenter getter and setter methods."""
-        presenter, manager_instance, value_map, _settings_mock = self._setup_presenter(test_context)
+        presenter, _manager_instance, value_map, _settings_mock = self._setup_presenter(
+            test_context
+        )
 
         getter = getattr(presenter, getter_name)
         setter = getattr(presenter, setter_name)
 
         assert getter() is value_map[setting_key]
         setter(test_value)
-        assert getattr(_settings_mock, setting_key) == test_value
+        assert getter() == test_value
 
     def test_locking_keys_presented_getter_and_setter(self, test_context: OrcaTestContext) -> None:
         """Test locking keys presented getter and setter with special logic."""
@@ -393,7 +427,9 @@ class TestTypingEchoPresenter:
 
     def test_cycle_key_echo_basic_transitions(self, test_context: OrcaTestContext) -> None:
         """Test cycle_key_echo method basic state transitions."""
-        presenter, manager_instance, value_map, _settings_mock = self._setup_presenter(test_context)
+        presenter, _manager_instance, value_map, _settings_mock = self._setup_presenter(
+            test_context
+        )
 
         script_mock = test_context.mocker.MagicMock()
 
@@ -406,26 +442,21 @@ class TestTypingEchoPresenter:
 
         result = presenter.cycle_key_echo(script_mock, None, True)
         assert result is True
-        assert _settings_mock.enableKeyEcho is True
-        assert _settings_mock.enableEchoByWord is False
-        assert _settings_mock.enableEchoBySentence is False
-
-        value_map["enableKeyEcho"] = True
-        value_map["enableEchoByWord"] = False
-        value_map["enableEchoBySentence"] = False
-        _settings_mock.enableKeyEcho = True
-        _settings_mock.enableEchoByWord = False
-        _settings_mock.enableEchoBySentence = False
+        assert presenter.get_key_echo_enabled() is True
+        assert presenter.get_word_echo_enabled() is False
+        assert presenter.get_sentence_echo_enabled() is False
 
         result = presenter.cycle_key_echo(script_mock, None, True)
         assert result is True
-        assert _settings_mock.enableKeyEcho is False
-        assert _settings_mock.enableEchoByWord is True
-        assert _settings_mock.enableEchoBySentence is False
+        assert presenter.get_key_echo_enabled() is False
+        assert presenter.get_word_echo_enabled() is True
+        assert presenter.get_sentence_echo_enabled() is False
 
     def test_cycle_key_echo_advanced_transitions(self, test_context: OrcaTestContext) -> None:
         """Test cycle_key_echo method advanced state transitions."""
-        presenter, manager_instance, value_map, _settings_mock = self._setup_presenter(test_context)
+        presenter, _manager_instance, value_map, _settings_mock = self._setup_presenter(
+            test_context
+        )
 
         script_mock = test_context.mocker.MagicMock()
 
@@ -438,48 +469,27 @@ class TestTypingEchoPresenter:
 
         result = presenter.cycle_key_echo(script_mock, None, True)
         assert result is True
-        assert _settings_mock.enableKeyEcho is False
-        assert _settings_mock.enableEchoByWord is False
-        assert _settings_mock.enableEchoBySentence is True
-
-        value_map["enableKeyEcho"] = False
-        value_map["enableEchoByWord"] = False
-        value_map["enableEchoBySentence"] = True
-        _settings_mock.enableKeyEcho = False
-        _settings_mock.enableEchoByWord = False
-        _settings_mock.enableEchoBySentence = True
+        assert presenter.get_key_echo_enabled() is False
+        assert presenter.get_word_echo_enabled() is False
+        assert presenter.get_sentence_echo_enabled() is True
 
         result = presenter.cycle_key_echo(script_mock, None, True)
         assert result is True
-        assert _settings_mock.enableKeyEcho is True
-        assert _settings_mock.enableEchoByWord is True
-        assert _settings_mock.enableEchoBySentence is False
-
-        value_map["enableKeyEcho"] = True
-        value_map["enableEchoByWord"] = True
-        value_map["enableEchoBySentence"] = False
-        _settings_mock.enableKeyEcho = True
-        _settings_mock.enableEchoByWord = True
-        _settings_mock.enableEchoBySentence = False
+        assert presenter.get_key_echo_enabled() is True
+        assert presenter.get_word_echo_enabled() is True
+        assert presenter.get_sentence_echo_enabled() is False
 
         result = presenter.cycle_key_echo(script_mock, None, True)
         assert result is True
-        assert _settings_mock.enableKeyEcho is False
-        assert _settings_mock.enableEchoByWord is True
-        assert _settings_mock.enableEchoBySentence is True
-
-        value_map["enableKeyEcho"] = True
-        value_map["enableEchoByWord"] = False
-        value_map["enableEchoBySentence"] = True
-        _settings_mock.enableKeyEcho = True
-        _settings_mock.enableEchoByWord = False
-        _settings_mock.enableEchoBySentence = True
+        assert presenter.get_key_echo_enabled() is False
+        assert presenter.get_word_echo_enabled() is True
+        assert presenter.get_sentence_echo_enabled() is True
 
         result = presenter.cycle_key_echo(script_mock, None, True)
         assert result is True
-        assert _settings_mock.enableKeyEcho is False
-        assert _settings_mock.enableEchoByWord is False
-        assert _settings_mock.enableEchoBySentence is False
+        assert presenter.get_key_echo_enabled() is False
+        assert presenter.get_word_echo_enabled() is False
+        assert presenter.get_sentence_echo_enabled() is False
 
     def test_cycle_key_echo_with_script_presentation(self, test_context: OrcaTestContext) -> None:
         """Test cycle_key_echo calls present_message when script is provided."""
@@ -498,15 +508,16 @@ class TestTypingEchoPresenter:
 
         from orca import presentation_manager
 
-        pres_manager: Any = presentation_manager.get_manager()
-        pres_manager.present_message.reset_mock()
+        present_msg = presentation_manager.get_manager().present_message
+        assert isinstance(present_msg, Mock)
+        present_msg.reset_mock()  # pylint: disable=no-member
 
         presenter.cycle_key_echo(script_mock, None, True)
-        pres_manager.present_message.assert_called_once()
+        assert present_msg.call_count == 1  # pylint: disable=no-member
 
-        pres_manager.present_message.reset_mock()
+        present_msg.reset_mock()  # pylint: disable=no-member
         presenter.cycle_key_echo(script_mock, None, False)
-        pres_manager.present_message.assert_not_called()
+        assert present_msg.call_count == 0  # pylint: disable=no-member
 
         presenter.cycle_key_echo(None, None, True)
 
@@ -847,12 +858,13 @@ class TestTypingEchoPresenter:
 
         from orca import presentation_manager
 
-        pres_manager: Any = presentation_manager.get_manager()
-        pres_manager.speak_message.reset_mock()
+        speak_msg = presentation_manager.get_manager().speak_message
+        assert isinstance(speak_msg, Mock)
+        speak_msg.reset_mock()  # pylint: disable=no-member
 
         result = presenter.echo_previous_word(script_mock, obj_mock)
         assert result is True
-        pres_manager.speak_message.assert_called_with("hello", ["voice"], obj=obj_mock)
+        speak_msg.assert_called_with("hello", ["voice"], obj=obj_mock)  # pylint: disable=no-member
 
         char_mock_4 = test_context.patch("orca.ax_text.AXText.get_character_at_offset")
         char_mock_4.side_effect = [(" ", 4, 5), ("a", 3, 4)]
@@ -891,12 +903,13 @@ class TestTypingEchoPresenter:
 
         from orca import presentation_manager
 
-        pres_manager: Any = presentation_manager.get_manager()
-        pres_manager.speak_message.reset_mock()
+        speak_msg = presentation_manager.get_manager().speak_message
+        assert isinstance(speak_msg, Mock)
+        speak_msg.reset_mock()  # pylint: disable=no-member
 
         result = presenter.echo_previous_sentence(script_mock, obj_mock)
         assert result is True
-        pres_manager.speak_message.assert_called_with("Hello world.", ["voice"], obj=obj_mock)
+        speak_msg.assert_called_with("Hello world.", ["voice"], obj=obj_mock)  # pylint: disable=no-member
 
         char_mock_3 = test_context.patch("orca.ax_text.AXText.get_character_at_offset")
         char_mock_3.side_effect = [(" ", 9, 10), (".", 8, 9)]
@@ -916,3 +929,109 @@ class TestTypingEchoPresenter:
         # Verify commands are registered in CommandManager
         cmd_manager = command_manager.get_manager()
         assert cmd_manager.get_keyboard_command("cycleKeyEchoHandler") is not None
+
+    @pytest.mark.parametrize(
+        "getter_name,gs_key,setting_key",
+        [
+            ("get_key_echo_enabled", "key-echo", "enableKeyEcho"),
+            ("get_character_echo_enabled", "character-echo", "enableEchoByCharacter"),
+            ("get_word_echo_enabled", "word-echo", "enableEchoByWord"),
+            ("get_sentence_echo_enabled", "sentence-echo", "enableEchoBySentence"),
+            ("get_alphabetic_keys_enabled", "alphabetic-keys", "enableAlphabeticKeys"),
+            ("get_numeric_keys_enabled", "numeric-keys", "enableNumericKeys"),
+            ("get_punctuation_keys_enabled", "punctuation-keys", "enablePunctuationKeys"),
+            ("get_space_enabled", "space", "enableSpace"),
+            ("get_modifier_keys_enabled", "modifier-keys", "enableModifierKeys"),
+            ("get_function_keys_enabled", "function-keys", "enableFunctionKeys"),
+            ("get_action_keys_enabled", "action-keys", "enableActionKeys"),
+            ("get_navigation_keys_enabled", "navigation-keys", "enableNavigationKeys"),
+            ("get_diacritical_keys_enabled", "diacritical-keys", "enableDiacriticalKeys"),
+        ],
+    )
+    def test_getter_returns_dconf_value_when_available(
+        self,
+        test_context: OrcaTestContext,
+        getter_name: str,
+        gs_key: str,
+        setting_key: str,
+    ) -> None:
+        """Test getter returns dconf value when layered_lookup returns a value."""
+        presenter, _manager, _value_map, settings_mock = self._setup_presenter(test_context)
+
+        from orca import gsettings_registry
+        from orca.gsettings_registry import GSettingsSchemaHandle
+
+        registry = gsettings_registry.get_registry()
+        registry.set_enabled(True)
+
+        mock_handle = test_context.Mock(spec=GSettingsSchemaHandle)
+        mock_handle.get_boolean.return_value = False
+        registry._handles["typing-echo"] = mock_handle
+
+        setattr(settings_mock, setting_key, True)
+        getter = getattr(presenter, getter_name)
+        assert getter() is False
+        mock_handle.get_boolean.assert_called_with(gs_key, "")
+
+        registry.set_enabled(False)
+        registry._handles.pop("typing-echo", None)
+
+    @pytest.mark.parametrize(
+        "getter_name,setting_key",
+        [
+            ("get_key_echo_enabled", "enableKeyEcho"),
+            ("get_character_echo_enabled", "enableEchoByCharacter"),
+            ("get_word_echo_enabled", "enableEchoByWord"),
+            ("get_sentence_echo_enabled", "enableEchoBySentence"),
+            ("get_alphabetic_keys_enabled", "enableAlphabeticKeys"),
+            ("get_numeric_keys_enabled", "enableNumericKeys"),
+            ("get_punctuation_keys_enabled", "enablePunctuationKeys"),
+            ("get_space_enabled", "enableSpace"),
+            ("get_modifier_keys_enabled", "enableModifierKeys"),
+            ("get_function_keys_enabled", "enableFunctionKeys"),
+            ("get_action_keys_enabled", "enableActionKeys"),
+            ("get_navigation_keys_enabled", "enableNavigationKeys"),
+            ("get_diacritical_keys_enabled", "enableDiacriticalKeys"),
+        ],
+    )
+    def test_getter_falls_back_to_settings_when_disabled(
+        self,
+        test_context: OrcaTestContext,
+        getter_name: str,
+        setting_key: str,
+    ) -> None:
+        """Test getter falls back to settings.py when registry is disabled."""
+        presenter, _manager, _value_map, settings_mock = self._setup_presenter(test_context)
+
+        setattr(settings_mock, setting_key, True)
+        getter = getattr(presenter, getter_name)
+        assert getter() is True
+
+        setattr(settings_mock, setting_key, False)
+        assert getter() is False
+
+    def test_get_setting_logs_dconf_layer(self, test_context: OrcaTestContext) -> None:
+        """Test that dconf lookup logs the source layer and value."""
+        presenter, _manager, _value_map, settings_mock = self._setup_presenter(test_context)
+
+        from orca import debug as debug_mock
+        from orca import gsettings_registry
+        from orca.gsettings_registry import GSettingsSchemaHandle
+
+        registry = gsettings_registry.get_registry()
+        registry.set_enabled(True)
+
+        mock_handle = test_context.Mock(spec=GSettingsSchemaHandle)
+        mock_handle.get_boolean.return_value = False
+        registry._handles["typing-echo"] = mock_handle
+
+        print_msg = debug_mock.print_message
+        assert isinstance(print_msg, Mock)
+        debug_mock.debugLevel = 800
+        print_msg.reset_mock()  # pylint: disable=no-member
+
+        settings_mock.enableKeyEcho = True
+        assert presenter.get_key_echo_enabled() is False
+
+        registry.set_enabled(False)
+        registry._handles.pop("typing-echo", None)

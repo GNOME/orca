@@ -75,6 +75,8 @@ class TestOrcaModifierManager:
 
         settings_mock = essential_modules["orca.settings"]
         settings_mock.orcaModifierKeys = ["Insert", "KP_Insert"]
+        settings_mock.DESKTOP_MODIFIER_KEYS = ["Insert", "KP_Insert"]
+        settings_mock.LAPTOP_MODIFIER_KEYS = ["Caps_Lock", "Shift_Lock"]
 
         gi_repository_mock = essential_modules["gi.repository"]
 
@@ -104,6 +106,11 @@ class TestOrcaModifierManager:
         essential_modules["gdk"] = gdk_mock
         essential_modules["atspi"] = atspi_mock
         essential_modules["glib"] = glib_mock
+
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_enabled(False)
+        gsettings_registry.get_registry().clear_runtime_values()
 
         return essential_modules
 

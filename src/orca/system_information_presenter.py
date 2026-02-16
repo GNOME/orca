@@ -29,7 +29,7 @@ from __future__ import annotations
 
 import time
 from enum import Enum
-from typing import TYPE_CHECKING
+from typing import Any, TYPE_CHECKING
 
 _PSUTIL_AVAILABLE = False
 try:
@@ -156,6 +156,15 @@ if TYPE_CHECKING:
 class SystemInformationPresenter:
     """Provides commands to present system information."""
 
+    _SCHEMA = "system-information"
+
+    def _get_setting(self, key: str, gtype: str, fallback: Any) -> Any:
+        """Returns the dconf value for key, or fallback if not in dconf."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA, key, gtype, fallback=fallback
+        )
+
     def __init__(self) -> None:
         self._initialized: bool = False
 
@@ -219,29 +228,23 @@ class SystemInformationPresenter:
     def _get_date_format_string(self) -> str:
         """Returns the current date format string for internal use."""
 
-        return settings.presentDateFormat
+        return self._get_setting("date-format", "s", settings.presentDateFormat)
 
     def _get_time_format_string(self) -> str:
         """Returns the current time format string for internal use."""
 
-        return settings.presentTimeFormat
+        return self._get_setting("time-format", "s", settings.presentTimeFormat)
 
     def _set_date_format_string(self, value: str) -> bool:
         """Sets the date format string directly for internal use."""
 
-        settings.presentDateFormat = value
-        gsettings_registry.get_registry().set_runtime_value(
-            "system-information", "date-format", value
-        )
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "date-format", value)
         return True
 
     def _set_time_format_string(self, value: str) -> bool:
         """Sets the time format string directly for internal use."""
 
-        settings.presentTimeFormat = value
-        gsettings_registry.get_registry().set_runtime_value(
-            "system-information", "time-format", value
-        )
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "time-format", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -256,7 +259,7 @@ class SystemInformationPresenter:
     def get_date_format(self) -> str:
         """Returns the current date format name."""
 
-        string_value = settings.presentDateFormat
+        string_value = self._get_date_format_string()
         for fmt in DateFormat:
             if fmt.value == string_value:
                 return fmt.string_name
@@ -275,10 +278,7 @@ class SystemInformationPresenter:
 
         msg = f"SYSTEM INFORMATION PRESENTER: Setting date format to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.presentDateFormat = fmt.value
-        gsettings_registry.get_registry().set_runtime_value(
-            "system-information", "date-format", fmt.value
-        )
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "date-format", fmt.value)
         return True
 
     @dbus_service.getter
@@ -299,7 +299,7 @@ class SystemInformationPresenter:
     def get_time_format(self) -> str:
         """Returns the current time format name."""
 
-        string_value = settings.presentTimeFormat
+        string_value = self._get_time_format_string()
         for fmt in TimeFormat:
             if fmt.value == string_value:
                 return fmt.string_name
@@ -318,10 +318,7 @@ class SystemInformationPresenter:
 
         msg = f"SYSTEM INFORMATION PRESENTER: Setting time format to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.presentTimeFormat = fmt.value
-        gsettings_registry.get_registry().set_runtime_value(
-            "system-information", "time-format", fmt.value
-        )
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "time-format", fmt.value)
         return True
 
     @dbus_service.getter

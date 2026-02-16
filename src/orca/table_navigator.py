@@ -69,6 +69,15 @@ if TYPE_CHECKING:
 class TableNavigator:
     """Provides Orca-controlled navigation for tabular content."""
 
+    _SCHEMA = "table-navigation"
+
+    def _get_setting(self, key: str, fallback: bool) -> bool:
+        """Returns the dconf value for key, or fallback if not in dconf."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA, key, "b", fallback=fallback
+        )
+
     def __init__(self) -> None:
         self._previous_reported_row: int | None = None
         self._previous_reported_col: int | None = None
@@ -934,7 +943,7 @@ class TableNavigator:
     def get_is_enabled(self) -> bool:
         """Returns whether table navigation is enabled."""
 
-        return settings.tableNavigationEnabled
+        return self._get_setting("enabled", settings.tableNavigationEnabled)
 
     @dbus_service.setter
     def set_is_enabled(self, value: bool) -> bool:
@@ -950,8 +959,7 @@ class TableNavigator:
 
         msg = f"TABLE NAVIGATOR: Setting enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.tableNavigationEnabled = value
-        gsettings_registry.get_registry().set_runtime_value("table-navigation", "enabled", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "enabled", value)
 
         self._last_input_event = None
         command_manager.get_manager().set_group_enabled(guilabels.KB_GROUP_TABLE_NAVIGATION, value)
@@ -970,7 +978,7 @@ class TableNavigator:
     def get_skip_blank_cells(self) -> bool:
         """Returns whether blank cells should be skipped during navigation."""
 
-        return settings.skipBlankCells
+        return self._get_setting("skip-blank-cells", settings.skipBlankCells)
 
     @dbus_service.setter
     def set_skip_blank_cells(self, value: bool) -> bool:
@@ -981,10 +989,7 @@ class TableNavigator:
 
         msg = f"TABLE NAVIGATOR: Setting skip blank cells to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.skipBlankCells = value
-        gsettings_registry.get_registry().set_runtime_value(
-            "table-navigation", "skip-blank-cells", value
-        )
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "skip-blank-cells", value)
         return True
 
 

@@ -167,6 +167,10 @@ class TestCaretNavigator:
         essential_modules["orca.AXObject"].supports_collection.return_value = True
         essential_modules["orca.AXUtilities"].is_heading.return_value = False
 
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_enabled(False)
+
         return essential_modules
 
     @pytest.mark.parametrize(
@@ -576,7 +580,7 @@ class TestCaretNavigator:
         """Test set_is_enabled updates setting and calls CommandManager."""
 
         essential_modules = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
+        essential_modules["orca.settings"]
         essential_modules["orca.settings"].caretNavigationEnabled = False
         essential_modules["orca.settings_manager"].get_manager.return_value
         mock_script = test_context.Mock()
@@ -591,7 +595,7 @@ class TestCaretNavigator:
 
         result = navigator.set_is_enabled(True)
         assert result is True
-        assert settings_mock.caretNavigationEnabled
+        assert navigator.get_is_enabled() is True
         assert navigator._last_input_event is None
         mock_cmd_mgr.set_group_enabled.assert_called_once()
 
@@ -628,7 +632,7 @@ class TestCaretNavigator:
         """Test set_triggers_focus_mode updates setting."""
 
         essential_modules = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
+        essential_modules["orca.settings"]
         essential_modules["orca.settings"].caretNavTriggersFocusMode = True
         essential_modules["orca.settings_manager"].get_manager.return_value
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
@@ -636,7 +640,7 @@ class TestCaretNavigator:
         navigator = CaretNavigator()
         result = navigator.set_triggers_focus_mode(False)
         assert result is True
-        assert not settings_mock.caretNavTriggersFocusMode
+        assert navigator.get_triggers_focus_mode() is False
 
     def test_set_triggers_focus_mode_no_change(self, test_context: OrcaTestContext) -> None:
         """Test set_triggers_focus_mode returns early if unchanged."""

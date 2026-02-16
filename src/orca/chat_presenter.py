@@ -422,6 +422,15 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 class ChatPresenter:
     """Presenter for chat preferences and commands."""
 
+    _SCHEMA = "chat"
+
+    def _get_setting(self, key: str, fallback: bool) -> bool:
+        """Returns the dconf value for key, or fallback if not in dconf."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA, key, "b", fallback=fallback
+        )
+
     def __init__(self) -> None:
         self._initialized: bool = False
         msg = "CHAT PRESENTER: Registering D-Bus commands."
@@ -708,14 +717,13 @@ class ChatPresenter:
             result = settings_manager.get_manager().get_app_setting(app, "chatSpeakRoomName")
             if isinstance(result, bool):
                 return result
-        return settings.chatSpeakRoomName
+        return self._get_setting("speak-room-name", settings.chatSpeakRoomName)
 
     @dbus_service.setter
     def set_speak_room_name(self, value: bool) -> bool:
         """Sets whether to speak the chat room name."""
 
-        settings.chatSpeakRoomName = value
-        gsettings_registry.get_registry().set_runtime_value("chat", "speak-room-name", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "speak-room-name", value)
         return value
 
     @gsettings_registry.get_registry().gsetting(
@@ -730,14 +738,15 @@ class ChatPresenter:
     def get_announce_buddy_typing(self) -> bool:
         """Returns whether to announce when buddies are typing."""
 
-        return settings.chatAnnounceBuddyTyping
+        return self._get_setting("announce-buddy-typing", settings.chatAnnounceBuddyTyping)
 
     @dbus_service.setter
     def set_announce_buddy_typing(self, value: bool) -> bool:
         """Sets whether to announce when buddies are typing."""
 
-        settings.chatAnnounceBuddyTyping = value
-        gsettings_registry.get_registry().set_runtime_value("chat", "announce-buddy-typing", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, "announce-buddy-typing", value
+        )
         return value
 
     @gsettings_registry.get_registry().gsetting(
@@ -752,14 +761,13 @@ class ChatPresenter:
     def get_room_histories(self) -> bool:
         """Returns whether to provide chat room specific message histories."""
 
-        return settings.chatRoomHistories
+        return self._get_setting("room-histories", settings.chatRoomHistories)
 
     @dbus_service.setter
     def set_room_histories(self, value: bool) -> bool:
         """Sets whether to provide chat room specific message histories."""
 
-        settings.chatRoomHistories = value
-        gsettings_registry.get_registry().set_runtime_value("chat", "room-histories", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "room-histories", value)
         return value
 
     @gsettings_registry.get_registry().gsetting(
@@ -778,14 +786,23 @@ class ChatPresenter:
             result = settings_manager.get_manager().get_app_setting(app, "chatMessageVerbosity")
             if isinstance(result, int):
                 return result
+        value = gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA,
+            "message-verbosity",
+            "",
+            genum="org.gnome.Orca.ChatMessageVerbosity",
+        )
+        if value is not None:
+            return ChatMessageVerbosity[value.upper().replace("-", "_")].value
         return settings.chatMessageVerbosity
 
     @dbus_service.setter
     def set_message_verbosity(self, value: int) -> int:
         """Sets the chat message verbosity setting."""
 
-        settings.chatMessageVerbosity = value
-        gsettings_registry.get_registry().set_runtime_value("chat", "message-verbosity", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, "message-verbosity", value
+        )
         return value
 
     @gsettings_registry.get_registry().gsetting(
@@ -800,14 +817,15 @@ class ChatPresenter:
     def get_speak_room_name_last(self) -> bool:
         """Returns whether to speak the chat room name after the message."""
 
-        return settings.presentChatRoomLast
+        return self._get_setting("speak-room-name-last", settings.presentChatRoomLast)
 
     @dbus_service.setter
     def set_speak_room_name_last(self, value: bool) -> bool:
         """Sets whether to speak the chat room name after the message."""
 
-        settings.presentChatRoomLast = value
-        gsettings_registry.get_registry().set_runtime_value("chat", "speak-room-name-last", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, "speak-room-name-last", value
+        )
         return value
 
     @dbus_service.command

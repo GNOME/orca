@@ -70,6 +70,15 @@ if TYPE_CHECKING:
 class FlatReviewPresenter:
     """Provides access to on-screen objects via flat-review."""
 
+    _SCHEMA = "flat-review"
+
+    def _get_setting(self, key: str, fallback: bool) -> bool:
+        """Returns the dconf value for key, or fallback if not in dconf."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA, key, "b", fallback=fallback
+        )
+
     def __init__(self) -> None:
         self._context: flat_review.Context | None = None
         self._current_contents: str = ""
@@ -1318,7 +1327,7 @@ class FlatReviewPresenter:
     def get_is_restricted(self) -> bool:
         """Returns whether flat review is restricted to the current object."""
 
-        return settings.flatReviewIsRestricted
+        return self._get_setting("restricted", settings.flatReviewIsRestricted)
 
     @dbus_service.setter
     def set_is_restricted(self, value: bool) -> bool:
@@ -1326,8 +1335,7 @@ class FlatReviewPresenter:
 
         msg = f"FLAT REVIEW PRESENTER: Setting is-restricted to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.flatReviewIsRestricted = value
-        gsettings_registry.get_registry().set_runtime_value("flat-review", "restricted", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "restricted", value)
         return True
 
     @dbus_service.command
@@ -1350,10 +1358,7 @@ class FlatReviewPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._restrict = not self._restrict
-        settings.flatReviewIsRestricted = self._restrict
-        gsettings_registry.get_registry().set_runtime_value(
-            "flat-review", "restricted", self._restrict
-        )
+        self.set_is_restricted(self._restrict)
 
         if self._restrict:
             if notify_user:

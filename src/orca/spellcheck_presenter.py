@@ -89,6 +89,15 @@ class _PresentationState:
 class SpellCheckPresenter:
     """Singleton presenter for spell check support and preferences."""
 
+    _SCHEMA = "spellcheck"
+
+    def _get_setting(self, key: str, fallback: bool) -> bool:
+        """Returns the dconf value for key, or fallback if not in dconf."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA, key, "b", fallback=fallback
+        )
+
     def __init__(self) -> None:
         self._script: default.Script | None = None
         self._widgets: _SpellCheckWidgets | None = None
@@ -112,7 +121,7 @@ class SpellCheckPresenter:
     def get_spell_error(self) -> bool:
         """Returns whether misspelled word should be spelled."""
 
-        return settings.spellcheckSpellError
+        return self._get_setting("spell-error", settings.spellcheckSpellError)
 
     @dbus_service.setter
     def set_spell_error(self, value: bool) -> bool:
@@ -123,8 +132,7 @@ class SpellCheckPresenter:
 
         msg = f"SPELLCHECK PRESENTER: Setting spell error to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.spellcheckSpellError = value
-        gsettings_registry.get_registry().set_runtime_value("spellcheck", "spell-error", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "spell-error", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -139,7 +147,7 @@ class SpellCheckPresenter:
     def get_spell_suggestion(self) -> bool:
         """Returns whether the suggested correction should be spelled."""
 
-        return settings.spellcheckSpellSuggestion
+        return self._get_setting("spell-suggestion", settings.spellcheckSpellSuggestion)
 
     @dbus_service.setter
     def set_spell_suggestion(self, value: bool) -> bool:
@@ -150,8 +158,7 @@ class SpellCheckPresenter:
 
         msg = f"SPELLCHECK PRESENTER: Setting spell suggestion to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.spellcheckSpellSuggestion = value
-        gsettings_registry.get_registry().set_runtime_value("spellcheck", "spell-suggestion", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "spell-suggestion", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -166,7 +173,7 @@ class SpellCheckPresenter:
     def get_present_context(self) -> bool:
         """Returns whether to present the context/surrounding sentence."""
 
-        return settings.spellcheckPresentContext
+        return self._get_setting("present-context", settings.spellcheckPresentContext)
 
     @dbus_service.setter
     def set_present_context(self, value: bool) -> bool:
@@ -177,8 +184,7 @@ class SpellCheckPresenter:
 
         msg = f"SPELLCHECK PRESENTER: Setting present context to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.spellcheckPresentContext = value
-        gsettings_registry.get_registry().set_runtime_value("spellcheck", "present-context", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "present-context", value)
         return True
 
     def create_preferences_grid(self) -> "SpellCheckPreferencesGrid":

@@ -408,6 +408,15 @@ class MousePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 class MouseReviewer:
     """Main class for the mouse-review feature."""
 
+    _SCHEMA = "mouse-review"
+
+    def _get_setting(self, key: str, fallback: bool) -> bool:
+        """Returns the dconf value for key, or fallback if not in dconf."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA, key, "b", fallback=fallback
+        )
+
     def __init__(self) -> None:
         self._active: bool = self.get_is_enabled()
         self._current_mouse_over: _ItemContext = _ItemContext()
@@ -555,7 +564,7 @@ class MouseReviewer:
     def get_present_tooltips(self) -> bool:
         """Returns whether tooltips displayed due to mouse hover are spoken (requires X11)."""
 
-        return settings.presentToolTips
+        return self._get_setting("present-tooltips", settings.presentToolTips)
 
     @dbus_service.setter
     def set_present_tooltips(self, value: bool) -> bool:
@@ -563,10 +572,7 @@ class MouseReviewer:
 
         msg = f"MOUSE REVIEW: Setting present tooltips to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.presentToolTips = value
-        gsettings_registry.get_registry().set_runtime_value(
-            "mouse-review", "present-tooltips", value
-        )
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "present-tooltips", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -581,7 +587,7 @@ class MouseReviewer:
     def get_is_enabled(self) -> bool:
         """Returns whether mouse review is enabled (requires Wnck)."""
 
-        return settings.enableMouseReview
+        return self._get_setting("enabled", settings.enableMouseReview)
 
     @dbus_service.setter
     def set_is_enabled(self, value: bool) -> bool:
@@ -597,8 +603,7 @@ class MouseReviewer:
         if value == self._active:
             return True
 
-        settings.enableMouseReview = value
-        gsettings_registry.get_registry().set_runtime_value("mouse-review", "enabled", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "enabled", value)
         if value:
             self.activate()
         else:

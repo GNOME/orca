@@ -64,6 +64,15 @@ if TYPE_CHECKING:
 class CaretNavigator:
     """Implements the caret navigation support available to scripts."""
 
+    _SCHEMA = "caret-navigation"
+
+    def _get_setting(self, key: str, fallback: bool) -> bool:
+        """Returns the dconf value for key, or fallback if not in dconf."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA, key, "b", fallback=fallback
+        )
+
     def __init__(self) -> None:
         # To make it possible for focus mode to suspend this navigation without
         # changing the user's preferred setting.
@@ -181,7 +190,7 @@ class CaretNavigator:
     def get_is_enabled(self) -> bool:
         """Returns whether caret navigation is enabled."""
 
-        return settings.caretNavigationEnabled
+        return self._get_setting("enabled", settings.caretNavigationEnabled)
 
     @dbus_service.setter
     def set_is_enabled(self, value: bool) -> bool:
@@ -197,8 +206,7 @@ class CaretNavigator:
 
         msg = f"CARET NAVIGATOR: Setting enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.caretNavigationEnabled = value
-        gsettings_registry.get_registry().set_runtime_value("caret-navigation", "enabled", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "enabled", value)
 
         self._last_input_event = None
         command_manager.get_manager().set_group_enabled(guilabels.KB_GROUP_CARET_NAVIGATION, value)
@@ -217,7 +225,7 @@ class CaretNavigator:
     def get_triggers_focus_mode(self) -> bool:
         """Returns whether caret navigation triggers focus mode."""
 
-        return settings.caretNavTriggersFocusMode
+        return self._get_setting("triggers-focus-mode", settings.caretNavTriggersFocusMode)
 
     @dbus_service.setter
     def set_triggers_focus_mode(self, value: bool) -> bool:
@@ -228,9 +236,8 @@ class CaretNavigator:
 
         msg = f"CARET NAVIGATOR: Setting triggers focus mode to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.caretNavTriggersFocusMode = value
         gsettings_registry.get_registry().set_runtime_value(
-            "caret-navigation", "triggers-focus-mode", value
+            self._SCHEMA, "triggers-focus-mode", value
         )
         return True
 

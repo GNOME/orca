@@ -19,6 +19,7 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-public-methods
+# pylint: disable=too-many-lines
 # pylint:disable=too-many-branches
 # pylint:disable=too-many-return-statements
 # pylint:disable=wrong-import-position
@@ -192,6 +193,15 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 class TypingEchoPresenter:
     """Provides typing echo support."""
 
+    _SCHEMA = "typing-echo"
+
+    def _get_setting(self, key: str, fallback: bool) -> bool:
+        """Returns the dconf value for key, or fallback if not in dconf."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA, key, "b", fallback=fallback
+        )
+
     def __init__(self) -> None:
         self._delayed_terminal_press: input_event.KeyboardEvent | None = None
         self._initialized: bool = False
@@ -357,9 +367,9 @@ class TypingEchoPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         (new_key, new_word, new_sentence) = (False, False, False)
-        key = settings.enableKeyEcho
-        word = settings.enableEchoByWord
-        sentence = settings.enableEchoBySentence
+        key = self.get_key_echo_enabled()
+        word = self.get_word_echo_enabled()
+        sentence = self.get_sentence_echo_enabled()
 
         if (key, word, sentence) == (False, False, False):
             (new_key, new_word, new_sentence) = (True, False, False)
@@ -386,14 +396,9 @@ class TypingEchoPresenter:
             full = messages.KEY_ECHO_NONE_FULL
             brief = messages.KEY_ECHO_NONE_BRIEF
 
-        settings.enableKeyEcho = new_key
-        gsettings_registry.get_registry().set_runtime_value("typing-echo", "key-echo", new_key)
-        settings.enableEchoByWord = new_word
-        gsettings_registry.get_registry().set_runtime_value("typing-echo", "word-echo", new_word)
-        settings.enableEchoBySentence = new_sentence
-        gsettings_registry.get_registry().set_runtime_value(
-            "typing-echo", "sentence-echo", new_sentence
-        )
+        self.set_key_echo_enabled(new_key)
+        self.set_word_echo_enabled(new_word)
+        self.set_sentence_echo_enabled(new_sentence)
         if script is not None and notify_user:
             presentation_manager.get_manager().present_message(full, brief)
         return True
@@ -410,7 +415,7 @@ class TypingEchoPresenter:
     def get_key_echo_enabled(self) -> bool:
         """Returns whether echo of key presses is enabled. See also get_character_echo_enabled."""
 
-        return settings.enableKeyEcho
+        return self._get_setting("key-echo", settings.enableKeyEcho)
 
     @dbus_service.setter
     def set_key_echo_enabled(self, value: bool) -> bool:
@@ -418,8 +423,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable key echo to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableKeyEcho = value
-        gsettings_registry.get_registry().set_runtime_value("typing-echo", "key-echo", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "key-echo", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -434,7 +438,7 @@ class TypingEchoPresenter:
     def get_character_echo_enabled(self) -> bool:
         """Returns whether echo of inserted characters is enabled."""
 
-        return settings.enableEchoByCharacter
+        return self._get_setting("character-echo", settings.enableEchoByCharacter)
 
     @dbus_service.setter
     def set_character_echo_enabled(self, value: bool) -> bool:
@@ -442,8 +446,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable character echo to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableEchoByCharacter = value
-        gsettings_registry.get_registry().set_runtime_value("typing-echo", "character-echo", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "character-echo", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -458,7 +461,7 @@ class TypingEchoPresenter:
     def get_word_echo_enabled(self) -> bool:
         """Returns whether word echo is enabled."""
 
-        return settings.enableEchoByWord
+        return self._get_setting("word-echo", settings.enableEchoByWord)
 
     @dbus_service.setter
     def set_word_echo_enabled(self, value: bool) -> bool:
@@ -466,8 +469,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable word echo to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableEchoByWord = value
-        gsettings_registry.get_registry().set_runtime_value("typing-echo", "word-echo", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "word-echo", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -482,7 +484,7 @@ class TypingEchoPresenter:
     def get_sentence_echo_enabled(self) -> bool:
         """Returns whether sentence echo is enabled."""
 
-        return settings.enableEchoBySentence
+        return self._get_setting("sentence-echo", settings.enableEchoBySentence)
 
     @dbus_service.setter
     def set_sentence_echo_enabled(self, value: bool) -> bool:
@@ -490,8 +492,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable sentence echo to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableEchoBySentence = value
-        gsettings_registry.get_registry().set_runtime_value("typing-echo", "sentence-echo", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "sentence-echo", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -506,7 +507,7 @@ class TypingEchoPresenter:
     def get_alphabetic_keys_enabled(self) -> bool:
         """Returns whether alphabetic keys will be echoed when key echo is enabled."""
 
-        return settings.enableAlphabeticKeys
+        return self._get_setting("alphabetic-keys", settings.enableAlphabeticKeys)
 
     @dbus_service.setter
     def set_alphabetic_keys_enabled(self, value: bool) -> bool:
@@ -514,8 +515,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable alphabetic keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableAlphabeticKeys = value
-        gsettings_registry.get_registry().set_runtime_value("typing-echo", "alphabetic-keys", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "alphabetic-keys", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -530,7 +530,7 @@ class TypingEchoPresenter:
     def get_numeric_keys_enabled(self) -> bool:
         """Returns whether numeric keys will be echoed when key echo is enabled."""
 
-        return settings.enableNumericKeys
+        return self._get_setting("numeric-keys", settings.enableNumericKeys)
 
     @dbus_service.setter
     def set_numeric_keys_enabled(self, value: bool) -> bool:
@@ -538,8 +538,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable numeric keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableNumericKeys = value
-        gsettings_registry.get_registry().set_runtime_value("typing-echo", "numeric-keys", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "numeric-keys", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -554,7 +553,7 @@ class TypingEchoPresenter:
     def get_punctuation_keys_enabled(self) -> bool:
         """Returns whether punctuation keys will be echoed when key echo is enabled."""
 
-        return settings.enablePunctuationKeys
+        return self._get_setting("punctuation-keys", settings.enablePunctuationKeys)
 
     @dbus_service.setter
     def set_punctuation_keys_enabled(self, value: bool) -> bool:
@@ -562,10 +561,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable punctuation keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enablePunctuationKeys = value
-        gsettings_registry.get_registry().set_runtime_value(
-            "typing-echo", "punctuation-keys", value
-        )
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "punctuation-keys", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -580,7 +576,7 @@ class TypingEchoPresenter:
     def get_space_enabled(self) -> bool:
         """Returns whether space key will be echoed when key echo is enabled."""
 
-        return settings.enableSpace
+        return self._get_setting("space", settings.enableSpace)
 
     @dbus_service.setter
     def set_space_enabled(self, value: bool) -> bool:
@@ -588,8 +584,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable space to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableSpace = value
-        gsettings_registry.get_registry().set_runtime_value("typing-echo", "space", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "space", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -604,7 +599,7 @@ class TypingEchoPresenter:
     def get_modifier_keys_enabled(self) -> bool:
         """Returns whether modifier keys will be echoed when key echo is enabled."""
 
-        return settings.enableModifierKeys
+        return self._get_setting("modifier-keys", settings.enableModifierKeys)
 
     @dbus_service.setter
     def set_modifier_keys_enabled(self, value: bool) -> bool:
@@ -612,8 +607,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable modifier keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableModifierKeys = value
-        gsettings_registry.get_registry().set_runtime_value("typing-echo", "modifier-keys", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "modifier-keys", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -628,7 +622,7 @@ class TypingEchoPresenter:
     def get_function_keys_enabled(self) -> bool:
         """Returns whether function keys will be echoed when key echo is enabled."""
 
-        return settings.enableFunctionKeys
+        return self._get_setting("function-keys", settings.enableFunctionKeys)
 
     @dbus_service.setter
     def set_function_keys_enabled(self, value: bool) -> bool:
@@ -636,8 +630,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable function keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableFunctionKeys = value
-        gsettings_registry.get_registry().set_runtime_value("typing-echo", "function-keys", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "function-keys", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -652,7 +645,7 @@ class TypingEchoPresenter:
     def get_action_keys_enabled(self) -> bool:
         """Returns whether action keys will be echoed when key echo is enabled."""
 
-        return settings.enableActionKeys
+        return self._get_setting("action-keys", settings.enableActionKeys)
 
     @dbus_service.setter
     def set_action_keys_enabled(self, value: bool) -> bool:
@@ -660,8 +653,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable action keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableActionKeys = value
-        gsettings_registry.get_registry().set_runtime_value("typing-echo", "action-keys", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "action-keys", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -676,7 +668,7 @@ class TypingEchoPresenter:
     def get_navigation_keys_enabled(self) -> bool:
         """Returns whether navigation keys will be echoed when key echo is enabled."""
 
-        return settings.enableNavigationKeys
+        return self._get_setting("navigation-keys", settings.enableNavigationKeys)
 
     @dbus_service.setter
     def set_navigation_keys_enabled(self, value: bool) -> bool:
@@ -684,8 +676,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable navigation keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableNavigationKeys = value
-        gsettings_registry.get_registry().set_runtime_value("typing-echo", "navigation-keys", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "navigation-keys", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -700,7 +691,7 @@ class TypingEchoPresenter:
     def get_diacritical_keys_enabled(self) -> bool:
         """Returns whether diacritical keys will be echoed when key echo is enabled."""
 
-        return settings.enableDiacriticalKeys
+        return self._get_setting("diacritical-keys", settings.enableDiacriticalKeys)
 
     @dbus_service.setter
     def set_diacritical_keys_enabled(self, value: bool) -> bool:
@@ -708,10 +699,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting enable diacritical keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.enableDiacriticalKeys = value
-        gsettings_registry.get_registry().set_runtime_value(
-            "typing-echo", "diacritical-keys", value
-        )
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "diacritical-keys", value)
         return True
 
     @dbus_service.getter

@@ -258,6 +258,10 @@ class TestFlatReviewPresenter:
         essential_modules["window"] = window_mock
         essential_modules["settings_manager_instance"] = settings_manager_instance
 
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_enabled(False)
+
         return essential_modules
 
     def test_init(self, test_context: OrcaTestContext) -> None:

@@ -558,29 +558,31 @@ class SettingsManager:
 
         return self._get_general_from_file(profile)
 
-    def get_pronunciations(self, profile: str = "default") -> dict:
-        """Return the current pronunciations settings."""
+    def _get_dict_from_file(self, profile: str, key: str) -> dict:
+        """Returns a dict from the JSON settings file for the -u fallback path."""
 
         with open(self._settings_file, encoding="utf-8") as settings_file:
             try:
                 prefs = load(settings_file)
             except ValueError:
                 return {}
+        return prefs["profiles"].get(profile, {}).get(key, {})
 
-        profile_settings = prefs["profiles"].get(profile, {})
-        return profile_settings.get("pronunciations", {})
+    def get_pronunciations(self, profile: str = "default") -> dict:
+        """Return the current pronunciations settings."""
+
+        registry = gsettings_registry.get_registry()
+        if registry.is_enabled():
+            return registry.get_pronunciations(profile)
+        return self._get_dict_from_file(profile, "pronunciations")
 
     def get_keybindings(self, profile: str = "default") -> dict:
         """Return the keybindings from the profile settings file."""
 
-        with open(self._settings_file, encoding="utf-8") as settings_file:
-            try:
-                prefs = load(settings_file)
-            except ValueError:
-                return {}
-
-        profile_settings = prefs["profiles"].get(profile, {})
-        return profile_settings.get("keybindings", {})
+        registry = gsettings_registry.get_registry()
+        if registry.is_enabled():
+            return registry.get_keybindings(profile)
+        return self._get_dict_from_file(profile, "keybindings")
 
     def get_active_keybindings(self) -> dict:
         """Return the active keybindings (merged profile + app settings)."""
@@ -759,13 +761,19 @@ class SettingsManager:
         if not (script and script.app):
             return
 
-        prefs = self._get_app_settings_from_file(AXObject.get_name(script.app))
+        app_name = AXObject.get_name(script.app)
+        prefs = self._get_app_settings_from_file(app_name)
         profiles = prefs.get("profiles", {})
         profile_prefs = profiles.get(self._profile, {})
-
         app_general = profile_prefs.get("general", {})
-        app_keybindings = profile_prefs.get("keybindings", {})
-        app_pronunciations = profile_prefs.get("pronunciations", {})
+
+        registry = gsettings_registry.get_registry()
+        if registry.is_enabled():
+            app_pronunciations = registry.get_pronunciations(self._profile, app_name)
+            app_keybindings = registry.get_keybindings(self._profile, app_name)
+        else:
+            app_pronunciations = profile_prefs.get("pronunciations", {})
+            app_keybindings = profile_prefs.get("keybindings", {})
 
         profile_general, profile_pronunciations, profile_keybindings = self._load_profile_settings()
         self._apply_profile_and_app_settings(
