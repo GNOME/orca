@@ -79,8 +79,7 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
 
     settings_manager.get_manager().load_app_settings(script)
 
-    is_desktop = settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
-    command_manager.get_manager().set_keyboard_layout(is_desktop)
+    command_manager.get_manager().set_keyboard_layout()
 
     presentation_manager.get_manager().start_presenters()
     if is_reload and not skip_reload_message:
@@ -196,7 +195,6 @@ def main():
         debug.print_message(debug.LEVEL_INFO, msg, True)
         proxy.Set("org.a11y.Status", "IsEnabled", GLib.Variant("b", True))
 
-    load_user_settings(is_reload=False)
     manager = settings_manager.get_manager()
     prefs_dir = manager.get_prefs_dir()
     profiles = manager.available_profiles()
@@ -213,6 +211,8 @@ def main():
     registry.sync_missing_profiles(prefs_dir, profiles)
     if registry.is_enabled():
         Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
+
+    load_user_settings(is_reload=False)
 
     if not systemd.get_manager().is_systemd_managed():
         # Legacy behavior, here for backwards-compatibility. You really should

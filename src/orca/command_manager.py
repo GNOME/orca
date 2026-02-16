@@ -1125,7 +1125,7 @@ class KeyboardLayout(Enum):
     "org.gnome.Orca.Keybindings",
     name="keybindings",
 )
-class CommandManager:
+class CommandManager:  # pylint: disable=too-many-instance-attributes
     """Singleton manager for coordinating commands between scripts and UI."""
 
     _SCHEMA = "keybindings"
@@ -1137,21 +1137,7 @@ class CommandManager:
         self._braille_commands: dict[str, BrailleCommand] = {}
         self._commands_by_keyval: dict[int, list[KeyboardCommand]] = {}
         self._commands_by_keycode: dict[int, list[KeyboardCommand]] = {}
-        layout_value = gsettings_registry.get_registry().layered_lookup(
-            "keybindings",
-            "keyboard-layout",
-            "",
-            genum="org.gnome.Orca.KeyboardLayout",
-        )
-        if layout_value is not None:
-            self._is_desktop = layout_value == "desktop"
-        else:
-            self._is_desktop = settings.keyboardLayout == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
-            msg = (
-                "GSETTINGS REGISTRY: keybindings/keyboard-layout"
-                f" using in-memory fallback = {self._is_desktop!r}"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+        self._is_desktop: bool = True
         self._initialized: bool = False
         self._numlock_on: bool = False
         self._learn_mode_active: bool = False
@@ -1200,7 +1186,6 @@ class CommandManager:
             gsettings_registry.get_registry().set_runtime_value(
                 self._SCHEMA, "keyboard-layout", "desktop" if is_desktop else "laptop"
             )
-            orca_modifier_manager.get_manager().set_modifiers_for_layout(is_desktop)
 
         has_device = input_event_manager.get_manager().has_device()
 
@@ -1225,9 +1210,18 @@ class CommandManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return True
 
-    def set_keyboard_layout(self, is_desktop: bool) -> None:
+    def set_keyboard_layout(self, is_desktop: bool | None = None) -> None:
         """Sets the keyboard layout and updates all command keybindings."""
 
+        if is_desktop is None:
+            layout = gsettings_registry.get_registry().layered_lookup(
+                self._SCHEMA,
+                "keyboard-layout",
+                "",
+                genum="org.gnome.Orca.KeyboardLayout",
+                fallback="desktop",
+            )
+            is_desktop = layout == "desktop"
         self.set_keyboard_layout_is_desktop(is_desktop)
 
     @dbus_service.command

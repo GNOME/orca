@@ -278,7 +278,8 @@ class OrcaModifierManager:
         msg = "ORCA MODIFIER MANAGER: Creating Orca xmodmap"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        if "Caps_Lock" in settings.orcaModifierKeys or "Shift_Lock" in settings.orcaModifierKeys:
+        orca_modifiers = self.get_orca_modifier_keys()
+        if "Caps_Lock" in orca_modifiers or "Shift_Lock" in orca_modifiers:
             self.set_caps_lock_as_orca_modifier(True)
             self._caps_lock_cleared = True
         elif self._caps_lock_cleared:
