@@ -817,12 +817,13 @@ class TestSpeechManager:
         manager = SpeechManager()
 
         test_context.patch_object(manager, "_get_server", return_value=mock_server)
-        test_context.patch(
-            "orca.speech_manager.settings.speechServerInfo",
-            new=["Test Server", "espeak-ng"],
-        )
+        from orca import gsettings_registry
+
+        registry = gsettings_registry.get_registry()
+        registry.set_runtime_value("speech", "synthesizer", "espeak-ng")
         manager.update_synthesizer()
         mock_server.set_output_module.assert_called_once_with("espeak-ng")
+        registry.clear_runtime_values()
 
     def test_get_manager_singleton(self, test_context: OrcaTestContext) -> None:
         """Test get_manager function returns the same instance."""

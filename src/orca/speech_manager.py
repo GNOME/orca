@@ -1718,6 +1718,13 @@ class SpeechManager:
         if self._server:
             tokens = ["SPEECH MANAGER: Using speech server factory:", module_name]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+            synth = gsettings_registry.get_registry().layered_lookup(
+                self._SPEECH_SCHEMA, "synthesizer", "s"
+            )
+            if synth:
+                self._server.set_output_module(synth)
+
             default_voice: dict[str, Any] = settings.voices.get(settings.DEFAULT_VOICE, {})
             self._server.set_default_voice(default_voice)
             self._server.update_punctuation_level(settings.verbalizePunctuationStyle)
@@ -2355,9 +2362,10 @@ class SpeechManager:
             return
 
         active_id = server.get_output_module()
-        info = settings.speechServerInfo or ["", ""]
-        if not server_id and len(info) == 2:
-            server_id = info[1]
+        if not server_id:
+            server_id = gsettings_registry.get_registry().layered_lookup(
+                self._SPEECH_SCHEMA, "synthesizer", "s"
+            )
 
         if server_id and server_id != active_id:
             msg = f"SPEECH MANAGER: Updating synthesizer from {active_id} to {server_id}."
