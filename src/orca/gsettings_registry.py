@@ -153,6 +153,7 @@ class GSettingsRegistry:
             "s": handle.get_string,
             "i": handle.get_int,
             "d": handle.get_double,
+            "as": handle.get_strv,
         }
         accessor = accessors.get("s" if genum else gtype)
         result = accessor(key, sub_path) if accessor is not None else None
@@ -1057,6 +1058,10 @@ class GSettingsSchemaHandle:
     def get_double(self, key: str, sub_path: str = "") -> float | None:
         """Returns a double via layered lookup, or None."""
         return self._layered_get(key, lambda gs, k: gs.get_double(k), sub_path)
+
+    def get_strv(self, key: str, sub_path: str = "") -> list[str] | None:
+        """Returns a string array via layered lookup, or None."""
+        return self._layered_get(key, lambda gs, k: gs.get_strv(k), sub_path)
 
     def _set_value(
         self,
