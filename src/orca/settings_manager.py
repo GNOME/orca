@@ -65,7 +65,6 @@ class SettingsManager:
     # Settings managed elsewhere or internal implementation details.
     _EXCLUDED_SETTINGS: set[str] = {
         "speechFactoryModules",
-        "speechSystemOverride",
     }
 
     def __init__(self) -> None:

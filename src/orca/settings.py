@@ -213,7 +213,6 @@ profile: list[str] = ["Default", "default"]
 speechFactoryModules: list[str] = ["speechdispatcherfactory", "spiel"]
 speechServerFactory: str = "speechdispatcherfactory"
 speechServerInfo: list[str] | None = None  # None means let the factory decide.
-speechSystemOverride: str | None = None
 
 # Managed by braille_presenter.py
 brailleMonitorCellCount: int = 32

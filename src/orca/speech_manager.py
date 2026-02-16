@@ -522,7 +522,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         server_name = self._manager.get_current_server()
         synthesizer_id = self._manager.get_current_synthesizer()
         result["speechServerInfo"] = [server_name, synthesizer_id]
-        result["speechServerFactory"] = settings.speechServerFactory
+        result["speechServerFactory"] = self._manager.get_speech_server_factory()
 
         result["verbalizePunctuationStyle"] = settings.verbalizePunctuationStyle
         result["capitalizationStyle"] = settings.capitalizationStyle
@@ -1355,7 +1355,6 @@ class SpeechManager:
             return False
 
         self.shutdown_speech()
-        settings.speechServerFactory = target_module
         gsettings_registry.get_registry().set_runtime_value(
             "speech", "speech-server-factory", target_module
         )
@@ -1698,25 +1697,19 @@ class SpeechManager:
             debug.print_message(debug.LEVEL_INFO, "SPEECH MANAGER: Already initialized", True)
             return
 
-        # HACK: Orca goes to incredible lengths to avoid a broken configuration, so this
-        #       last-chance override exists to get the speech system loaded, without risking
-        #       it being written to disk unintentionally.
-        if settings.speechSystemOverride:
-            setattr(settings, "speechServerFactory", settings.speechSystemOverride)
-            setattr(settings, "speechServerInfo", ["Default Synthesizer", "default"])
-
-        module_name = settings.speechServerFactory
-        self._server = self._init_server_from_module(module_name, settings.speechServerInfo)
+        factory = self.get_speech_server_factory()
+        self._server = self._init_server_from_module(factory, None)
 
         if not self._server:
             for module_name in settings.speechFactoryModules:
-                if module_name != settings.speechServerFactory:
+                if module_name != factory:
                     self._server = self._init_server_from_module(module_name, None)
                     if self._server:
+                        factory = module_name
                         break
 
         if self._server:
-            tokens = ["SPEECH MANAGER: Using speech server factory:", module_name]
+            tokens = ["SPEECH MANAGER: Using speech server factory:", factory]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             synth = gsettings_registry.get_registry().layered_lookup(
@@ -1760,16 +1753,15 @@ class SpeechManager:
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return None
 
-        speech_server_info = settings.speechServerInfo
         server = None
         if speech_server_info:
             server = factory.SpeechServer.get_speech_server(speech_server_info)
 
         if not server:
-            server = factory.SpeechServer.get_speech_server()
             if speech_server_info:
-                tokens = ["SPEECH MANAGER: Invalid speechServerInfo:", speech_server_info]
+                tokens = ["SPEECH MANAGER: Could not use server info:", speech_server_info]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            server = factory.SpeechServer.get_speech_server()
 
         if not server:
             msg = f"SPEECH MANAGER: No speech server for factory: {module_name}"

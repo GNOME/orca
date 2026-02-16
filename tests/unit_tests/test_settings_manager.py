@@ -652,11 +652,11 @@ class TestSettingsManagerFileIO:
         with tempfile.TemporaryDirectory() as temp_dir:
             manager = self._create_fresh_manager(test_context, temp_dir)
 
-            settings_obj.speechSystemOverride = {"foo": "bar"}
+            settings_obj.speechFactoryModules = ["foo", "bar"]
 
             snapshot = manager.snapshot_settings()
 
-            assert "speechSystemOverride" not in snapshot
+            assert "speechFactoryModules" not in snapshot
 
     def test_restore_settings_restores_values(self, test_context: OrcaTestContext) -> None:
         """Test that restore_settings restores values from a snapshot."""
@@ -690,11 +690,11 @@ class TestSettingsManagerFileIO:
         with tempfile.TemporaryDirectory() as temp_dir:
             manager = self._create_fresh_manager(test_context, temp_dir)
 
-            settings_obj.speechSystemOverride = {}
+            settings_obj.speechFactoryModules = ["original"]
             snapshot = manager.snapshot_settings()
 
-            settings_obj.speechSystemOverride = {"foo": "bar"}
+            settings_obj.speechFactoryModules = ["changed"]
 
             manager.restore_settings(snapshot)
 
-            assert settings_obj.speechSystemOverride == {"foo": "bar"}
+            assert settings_obj.speechFactoryModules == ["changed"]

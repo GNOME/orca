@@ -63,6 +63,7 @@ sys.path.insert(1, "@libdir@")
 
 from orca import debug
 from orca import debugging_tools_manager
+from orca import gsettings_registry
 from orca import messages
 from orca import settings
 from orca import script_manager
@@ -309,8 +310,9 @@ def main() -> int:
             if args.speech_system not in factories:
                 raise KeyError
 
-            settings.speechSystemOverride = args.speech_system
-            settings.speechServerFactory = args.speech_system
+            gsettings_registry.get_registry().set_runtime_value(
+                "speech", "speech-server-factory", args.speech_system
+            )
         except (KeyError, AttributeError):
             print(messages.CLI_SPEECH_SYSTEM_ERROR.format(args.speech_system, ", ".join(factories)))
 

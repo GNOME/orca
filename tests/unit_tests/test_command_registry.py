@@ -654,7 +654,6 @@ class TestCommandRegistry:
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         settings_mock = essential_modules["orca.settings"]
-        settings_mock.speechSystemOverride = "spiel"
         settings_mock.speechFactoryModules = ["spiel", "speechdispatcherfactory"]
         settings_mock.speechServerInfo = None
         settings_mock.voices = {}

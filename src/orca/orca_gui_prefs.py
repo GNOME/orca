@@ -414,7 +414,6 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             "progressBarSpeechVerbosity", settings.PROGRESS_BAR_APPLICATION
         )
 
-        settings.speechSystemOverride = None
         settings_manager.get_manager().save_settings(
             self.script, self.prefs_dict, pronunciation_dict, key_bindings_dict
         )
