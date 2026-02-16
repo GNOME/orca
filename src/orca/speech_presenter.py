@@ -652,7 +652,7 @@ class SpeechPresenter:
         # Common keybindings (same for desktop and laptop)
         kb_v = keybindings.KeyBinding("v", keybindings.ORCA_MODIFIER_MASK)
         kb_f11 = keybindings.KeyBinding("F11", keybindings.ORCA_MODIFIER_MASK)
-        kb_shift_s = keybindings.KeyBinding("s", keybindings.ORCA_SHIFT_MODIFIER_MASK)
+        kb_shift_d = keybindings.KeyBinding("d", keybindings.ORCA_SHIFT_MODIFIER_MASK)
 
         # (name, function, description, desktop_kb, laptop_kb)
         commands_data = [
@@ -692,8 +692,8 @@ class SpeechPresenter:
                     "toggle_speech_monitor",
                     self.toggle_monitor,
                     cmdnames.TOGGLE_SPEECH_MONITOR,
-                    kb_shift_s,
-                    kb_shift_s,
+                    kb_shift_d,
+                    kb_shift_d,
                 )
             )
 

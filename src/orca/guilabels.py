@@ -1818,7 +1818,7 @@ SPEECH_MONITOR_BACKGROUND = _("Background color")
 # speech display preferences page, briefly explaining the feature and how to toggle it.
 SPEECH_MONITOR_INFO = _(
     "The on-screen speech display is a window that shows what the screen reader "
-    "is speaking. The default keybinding to show or hide it is Orca+Shift+S. "
+    "is speaking. The default keybinding to show or hide it is Orca+Shift+d. "
     "This can be changed in Commands."
 )
 
