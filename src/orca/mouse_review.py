@@ -564,6 +564,9 @@ class MouseReviewer:
         msg = f"MOUSE REVIEW: Setting present tooltips to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.presentToolTips = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "mouse-review", "present-tooltips", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -595,6 +598,7 @@ class MouseReviewer:
             return True
 
         settings.enableMouseReview = value
+        gsettings_registry.get_registry().set_runtime_value("mouse-review", "enabled", value)
         if value:
             self.activate()
         else:

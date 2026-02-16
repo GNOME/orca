@@ -449,6 +449,9 @@ class TextAttributeManager:
         msg = f"TEXT ATTRIBUTE MANAGER: Setting attributes to speak to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.textAttributesToSpeak = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "text-attributes", "attributes-to-speak", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -475,6 +478,9 @@ class TextAttributeManager:
         msg = f"TEXT ATTRIBUTE MANAGER: Setting attributes to braille to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.textAttributesToBraille = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "text-attributes", "attributes-to-braille", value
+        )
         return True
 
 

@@ -198,6 +198,7 @@ class CaretNavigator:
         msg = f"CARET NAVIGATOR: Setting enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.caretNavigationEnabled = value
+        gsettings_registry.get_registry().set_runtime_value("caret-navigation", "enabled", value)
 
         self._last_input_event = None
         command_manager.get_manager().set_group_enabled(guilabels.KB_GROUP_CARET_NAVIGATION, value)
@@ -228,6 +229,9 @@ class CaretNavigator:
         msg = f"CARET NAVIGATOR: Setting triggers focus mode to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.caretNavTriggersFocusMode = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "caret-navigation", "triggers-focus-mode", value
+        )
         return True
 
     def get_enabled_for_script(self, script: default.Script) -> bool:

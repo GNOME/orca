@@ -1046,6 +1046,9 @@ class DocumentPresenter:
         msg = f"DOCUMENT PRESENTER: Setting native nav triggers focus mode to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.nativeNavTriggersFocusMode = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "document", "native-nav-triggers-focus-mode", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1072,6 +1075,9 @@ class DocumentPresenter:
         msg = f"DOCUMENT PRESENTER: Setting auto sticky focus mode for web apps to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.autoStickyFocusModeForWebApps = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "document", "auto-sticky-focus-mode", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1098,6 +1104,7 @@ class DocumentPresenter:
         msg = f"DOCUMENT PRESENTER: Setting say all on load to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.sayAllOnLoad = value
+        gsettings_registry.get_registry().set_runtime_value("document", "say-all-on-load", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1124,6 +1131,9 @@ class DocumentPresenter:
         msg = f"DOCUMENT PRESENTER: Setting page summary on load to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.pageSummaryOnLoad = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "document", "page-summary-on-load", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1151,8 +1161,14 @@ class DocumentPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         if value:
             settings.findResultsVerbosity = settings.FIND_SPEAK_ALL
+            gsettings_registry.get_registry().set_runtime_value(
+                "document", "find-results-verbosity", settings.FIND_SPEAK_ALL
+            )
         else:
             settings.findResultsVerbosity = settings.FIND_SPEAK_NONE
+            gsettings_registry.get_registry().set_runtime_value(
+                "document", "find-results-verbosity", settings.FIND_SPEAK_NONE
+            )
         return True
 
     @dbus_service.getter
@@ -1172,8 +1188,14 @@ class DocumentPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         if value:
             settings.findResultsVerbosity = settings.FIND_SPEAK_IF_LINE_CHANGED
+            gsettings_registry.get_registry().set_runtime_value(
+                "document", "find-results-verbosity", settings.FIND_SPEAK_IF_LINE_CHANGED
+            )
         else:
             settings.findResultsVerbosity = settings.FIND_SPEAK_ALL
+            gsettings_registry.get_registry().set_runtime_value(
+                "document", "find-results-verbosity", settings.FIND_SPEAK_ALL
+            )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1200,6 +1222,9 @@ class DocumentPresenter:
         msg = f"DOCUMENT PRESENTER: Setting find results minimum length to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.findResultsMinimumLength = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "document", "find-results-minimum-length", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1226,6 +1251,7 @@ class DocumentPresenter:
         msg = f"DOCUMENT PRESENTER: Setting layout mode to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.layoutMode = value
+        gsettings_registry.get_registry().set_runtime_value("document", "layout-mode", value)
         return True
 
     @dbus_service.command

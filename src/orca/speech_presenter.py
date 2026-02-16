@@ -751,6 +751,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak misspelled indicator to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speakMisspelledIndicator = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "speak-misspelled-indicator", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -774,6 +777,7 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak description to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speakDescription = value
+        gsettings_registry.get_registry().set_runtime_value("speech", "speak-description", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -797,6 +801,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak position in set to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enablePositionSpeaking = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "speak-position-in-set", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -820,6 +827,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak widget mnemonics to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableMnemonicSpeaking = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "speak-widget-mnemonic", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -843,6 +853,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak tutorial messages to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableTutorialMessages = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "speak-tutorial-messages", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -866,6 +879,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting repeated character limit to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.repeatCharacterLimit = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "repeated-character-limit", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -889,6 +905,7 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak blank lines to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speakBlankLines = value
+        gsettings_registry.get_registry().set_runtime_value("speech", "speak-blank-lines", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -912,6 +929,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak row in GUI table to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.readFullRowInGUITable = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "speak-row-in-gui-table", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -935,6 +955,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak row in document table to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.readFullRowInDocumentTable = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "speak-row-in-document-table", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -958,6 +981,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak row in spreadsheet to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.readFullRowInSpreadSheet = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "speak-row-in-spreadsheet", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -981,6 +1007,7 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting announce cell spans to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speakCellSpan = value
+        gsettings_registry.get_registry().set_runtime_value("speech", "announce-cell-span", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1004,6 +1031,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting announce cell coordinates to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speakCellCoordinates = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "announce-cell-coordinates", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1027,6 +1057,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting announce spreadsheet cell coordinates to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speakSpreadsheetCoordinates = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "announce-spreadsheet-cell-coordinates", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1050,6 +1083,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting always announce selected spreadsheet range to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.alwaysSpeakSelectedSpreadsheetRange = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "always-announce-selected-range-in-spreadsheet", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1073,6 +1109,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting announce cell headers to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speakCellHeaders = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "announce-cell-headers", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1096,6 +1135,7 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting announce blockquotes to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speakContextBlockquote = value
+        gsettings_registry.get_registry().set_runtime_value("speech", "announce-blockquote", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1119,6 +1159,7 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting announce forms to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speakContextNonLandmarkForm = value
+        gsettings_registry.get_registry().set_runtime_value("speech", "announce-form", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1142,6 +1183,7 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting announce groupings to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speakContextPanel = value
+        gsettings_registry.get_registry().set_runtime_value("speech", "announce-grouping", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1165,6 +1207,7 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting announce landmarks to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speakContextLandmark = value
+        gsettings_registry.get_registry().set_runtime_value("speech", "announce-landmark", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1188,6 +1231,7 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting announce lists to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speakContextList = value
+        gsettings_registry.get_registry().set_runtime_value("speech", "announce-list", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1211,6 +1255,7 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting announce tables to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speakContextTable = value
+        gsettings_registry.get_registry().set_runtime_value("speech", "announce-table", value)
         return True
 
     @dbus_service.command
@@ -1269,6 +1314,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting only speak displayed text to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.onlySpeakDisplayedText = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "only-speak-displayed-text", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1292,6 +1340,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak progress bar updates to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speakProgressBarUpdates = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "speak-progress-bar-updates", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1315,6 +1366,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting progress bar speech interval to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.progressBarSpeechInterval = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "progress-bar-speech-interval", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1338,6 +1392,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting progress bar speech verbosity to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.progressBarSpeechVerbosity = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "progress-bar-speech-verbosity", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1361,6 +1418,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting messages are detailed to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.messagesAreDetailed = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "messages-are-detailed", value
+        )
         return True
 
     def use_verbose_speech(self) -> bool:
@@ -1396,6 +1456,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting verbosity level to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speechVerbosityLevel = level.value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "verbosity-level", level.value
+        )
         return True
 
     def _get_verbosity_is_verbose(self) -> bool:
@@ -1447,10 +1510,16 @@ class SpeechPresenter:
                     messages.SPEECH_VERBOSITY_VERBOSE
                 )
             settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_VERBOSE
+            gsettings_registry.get_registry().set_runtime_value(
+                "speech", "verbosity-level", settings.VERBOSITY_LEVEL_VERBOSE
+            )
         else:
             if script is not None and notify_user:
                 presentation_manager.get_manager().present_message(messages.SPEECH_VERBOSITY_BRIEF)
             settings.speechVerbosityLevel = settings.VERBOSITY_LEVEL_BRIEF
+            gsettings_registry.get_registry().set_runtime_value(
+                "speech", "verbosity-level", settings.VERBOSITY_LEVEL_BRIEF
+            )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1474,6 +1543,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak indentation and justification to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableSpeechIndentation = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "speak-indentation-and-justification", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1497,6 +1569,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak indentation only if changed to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speakIndentationOnlyIfChanged = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "speak-indentation-only-if-changed", value
+        )
         return True
 
     @dbus_service.command
@@ -1857,6 +1932,7 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speech monitor font size to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speechMonitorFontSize = value
+        gsettings_registry.get_registry().set_runtime_value("speech", "monitor-font-size", value)
         if self._monitor is not None:
             self._monitor.set_font_size(value)
         return True
@@ -1882,6 +1958,7 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speech monitor foreground to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speechMonitorForeground = value
+        gsettings_registry.get_registry().set_runtime_value("speech", "monitor-foreground", value)
         if self._monitor is not None:
             self._monitor.reapply_css()
         return True
@@ -1907,6 +1984,7 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speech monitor background to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speechMonitorBackground = value
+        gsettings_registry.get_registry().set_runtime_value("speech", "monitor-background", value)
         if self._monitor is not None:
             self._monitor.reapply_css()
         return True

@@ -226,6 +226,7 @@ class SayAllPresenter:
         msg = f"SAY ALL PRESENTER: Setting style to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.sayAllStyle = value
+        gsettings_registry.get_registry().set_runtime_value("say-all", "style", value)
         return True
 
     @dbus_service.command
@@ -580,6 +581,7 @@ class SayAllPresenter:
         msg = f"SAY ALL PRESENTER: Setting announce blockquotes to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.sayAllContextBlockquote = value
+        gsettings_registry.get_registry().set_runtime_value("say-all", "announce-blockquote", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -603,6 +605,7 @@ class SayAllPresenter:
         msg = f"SAY ALL PRESENTER: Setting announce forms to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.sayAllContextNonLandmarkForm = value
+        gsettings_registry.get_registry().set_runtime_value("say-all", "announce-form", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -626,6 +629,7 @@ class SayAllPresenter:
         msg = f"SAY ALL PRESENTER: Setting announce groupings to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.sayAllContextPanel = value
+        gsettings_registry.get_registry().set_runtime_value("say-all", "announce-grouping", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -649,6 +653,7 @@ class SayAllPresenter:
         msg = f"SAY ALL PRESENTER: Setting announce landmarks to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.sayAllContextLandmark = value
+        gsettings_registry.get_registry().set_runtime_value("say-all", "announce-landmark", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -672,6 +677,7 @@ class SayAllPresenter:
         msg = f"SAY ALL PRESENTER: Setting announce lists to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.sayAllContextList = value
+        gsettings_registry.get_registry().set_runtime_value("say-all", "announce-list", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -695,6 +701,7 @@ class SayAllPresenter:
         msg = f"SAY ALL PRESENTER: Setting announce tables to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.sayAllContextTable = value
+        gsettings_registry.get_registry().set_runtime_value("say-all", "announce-table", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -726,6 +733,7 @@ class SayAllPresenter:
         msg = f"SAY ALL PRESENTER: Setting style to {value} ({style.value})."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.sayAllStyle = style.value
+        gsettings_registry.get_registry().set_runtime_value("say-all", "style", style.value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -749,6 +757,9 @@ class SayAllPresenter:
         msg = f"SAY ALL PRESENTER: Setting enable structural navigation to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.structNavInSayAll = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "say-all", "structural-navigation", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -772,6 +783,9 @@ class SayAllPresenter:
         msg = f"SAY ALL PRESENTER: Setting enable rewind and fast forward to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.rewindAndFastForwardInSayAll = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "say-all", "rewind-and-fast-forward", value
+        )
         return True
 
 

@@ -715,6 +715,7 @@ class ChatPresenter:
         """Sets whether to speak the chat room name."""
 
         settings.chatSpeakRoomName = value
+        gsettings_registry.get_registry().set_runtime_value("chat", "speak-room-name", value)
         return value
 
     @gsettings_registry.get_registry().gsetting(
@@ -736,6 +737,7 @@ class ChatPresenter:
         """Sets whether to announce when buddies are typing."""
 
         settings.chatAnnounceBuddyTyping = value
+        gsettings_registry.get_registry().set_runtime_value("chat", "announce-buddy-typing", value)
         return value
 
     @gsettings_registry.get_registry().gsetting(
@@ -757,6 +759,7 @@ class ChatPresenter:
         """Sets whether to provide chat room specific message histories."""
 
         settings.chatRoomHistories = value
+        gsettings_registry.get_registry().set_runtime_value("chat", "room-histories", value)
         return value
 
     @gsettings_registry.get_registry().gsetting(
@@ -782,6 +785,7 @@ class ChatPresenter:
         """Sets the chat message verbosity setting."""
 
         settings.chatMessageVerbosity = value
+        gsettings_registry.get_registry().set_runtime_value("chat", "message-verbosity", value)
         return value
 
     @gsettings_registry.get_registry().gsetting(
@@ -803,6 +807,7 @@ class ChatPresenter:
         """Sets whether to speak the chat room name after the message."""
 
         settings.presentChatRoomLast = value
+        gsettings_registry.get_registry().set_runtime_value("chat", "speak-room-name-last", value)
         return value
 
     @dbus_service.command

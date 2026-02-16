@@ -951,6 +951,7 @@ class TableNavigator:
         msg = f"TABLE NAVIGATOR: Setting enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.tableNavigationEnabled = value
+        gsettings_registry.get_registry().set_runtime_value("table-navigation", "enabled", value)
 
         self._last_input_event = None
         command_manager.get_manager().set_group_enabled(guilabels.KB_GROUP_TABLE_NAVIGATION, value)
@@ -981,6 +982,9 @@ class TableNavigator:
         msg = f"TABLE NAVIGATOR: Setting skip blank cells to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.skipBlankCells = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "table-navigation", "skip-blank-cells", value
+        )
         return True
 
 

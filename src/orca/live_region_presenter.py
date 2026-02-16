@@ -562,6 +562,7 @@ class LiveRegionPresenter:
         msg = f"LIVE REGION PRESENTER: Setting enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableLiveRegions = value
+        gsettings_registry.get_registry().set_runtime_value("live-regions", "enabled", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -586,6 +587,9 @@ class LiveRegionPresenter:
         msg = f"LIVE REGION PRESENTER: Setting presentLiveRegionFromInactiveTab to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.presentLiveRegionFromInactiveTab = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "live-regions", "present-from-inactive-tab", value
+        )
         return True
 
     def toggle_monitoring(self, script: default.Script, _event: input_event.InputEvent) -> bool:

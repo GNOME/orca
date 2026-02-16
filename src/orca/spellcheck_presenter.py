@@ -124,6 +124,7 @@ class SpellCheckPresenter:
         msg = f"SPELLCHECK PRESENTER: Setting spell error to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.spellcheckSpellError = value
+        gsettings_registry.get_registry().set_runtime_value("spellcheck", "spell-error", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -150,6 +151,7 @@ class SpellCheckPresenter:
         msg = f"SPELLCHECK PRESENTER: Setting spell suggestion to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.spellcheckSpellSuggestion = value
+        gsettings_registry.get_registry().set_runtime_value("spellcheck", "spell-suggestion", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -176,6 +178,7 @@ class SpellCheckPresenter:
         msg = f"SPELLCHECK PRESENTER: Setting present context to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.spellcheckPresentContext = value
+        gsettings_registry.get_registry().set_runtime_value("spellcheck", "present-context", value)
         return True
 
     def create_preferences_grid(self) -> "SpellCheckPreferencesGrid":

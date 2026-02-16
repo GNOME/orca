@@ -230,12 +230,18 @@ class SystemInformationPresenter:
         """Sets the date format string directly for internal use."""
 
         settings.presentDateFormat = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "system-information", "date-format", value
+        )
         return True
 
     def _set_time_format_string(self, value: str) -> bool:
         """Sets the time format string directly for internal use."""
 
         settings.presentTimeFormat = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "system-information", "time-format", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -270,6 +276,9 @@ class SystemInformationPresenter:
         msg = f"SYSTEM INFORMATION PRESENTER: Setting date format to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.presentDateFormat = fmt.value
+        gsettings_registry.get_registry().set_runtime_value(
+            "system-information", "date-format", fmt.value
+        )
         return True
 
     @dbus_service.getter
@@ -310,6 +319,9 @@ class SystemInformationPresenter:
         msg = f"SYSTEM INFORMATION PRESENTER: Setting time format to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.presentTimeFormat = fmt.value
+        gsettings_registry.get_registry().set_runtime_value(
+            "system-information", "time-format", fmt.value
+        )
         return True
 
     @dbus_service.getter

@@ -1816,3 +1816,150 @@ class TestEnabledFlag:
         registry._schemas["speech"] = "org.gnome.Orca.Speech"
         registry.set_enabled(False)
         registry.reset_profile("default")
+
+
+@pytest.mark.unit
+class TestRuntimeValues:
+    """Tests for runtime value storage (set/get/clear)."""
+
+    def _setup(self, test_context: OrcaTestContext):
+        """Set up dependencies."""
+
+        additional_modules = [
+            "orca.cmdnames",
+            "orca.messages",
+            "orca.object_properties",
+            "orca.orca_gui_navlist",
+            "orca.orca_i18n",
+            "orca.AXHypertext",
+            "orca.AXObject",
+            "orca.AXTable",
+            "orca.AXText",
+            "orca.AXUtilities",
+            "orca.input_event",
+        ]
+        test_context.setup_shared_dependencies(additional_modules)
+
+    def test_get_returns_false_for_unset_key(self, test_context: OrcaTestContext) -> None:
+        """Test get_runtime_value returns (False, None) for a key that was never set."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        found, value = registry.get_runtime_value("speech", "enable")
+        assert found is False
+        assert value is None
+
+    def test_set_and_get_boolean(self, test_context: OrcaTestContext) -> None:
+        """Test set_runtime_value stores a boolean retrievable by get_runtime_value."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        registry.set_runtime_value("speech", "enable", False)
+        found, value = registry.get_runtime_value("speech", "enable")
+        assert found is True
+        assert value is False
+
+    def test_set_and_get_int(self, test_context: OrcaTestContext) -> None:
+        """Test set_runtime_value stores an int value."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        registry.set_runtime_value("speech", "repeated-character-limit", 4)
+        found, value = registry.get_runtime_value("speech", "repeated-character-limit")
+        assert found is True
+        assert value == 4
+
+    def test_set_and_get_string(self, test_context: OrcaTestContext) -> None:
+        """Test set_runtime_value stores a string value."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        registry.set_runtime_value("speech", "capitalization-style", "spell")
+        found, value = registry.get_runtime_value("speech", "capitalization-style")
+        assert found is True
+        assert value == "spell"
+
+    def test_set_overwrites_previous_value(self, test_context: OrcaTestContext) -> None:
+        """Test set_runtime_value overwrites a previously stored value."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        registry.set_runtime_value("speech", "enable", True)
+        registry.set_runtime_value("speech", "enable", False)
+        found, value = registry.get_runtime_value("speech", "enable")
+        assert found is True
+        assert value is False
+
+    def test_clear_removes_all_values(self, test_context: OrcaTestContext) -> None:
+        """Test clear_runtime_values removes all stored runtime values."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        registry.set_runtime_value("speech", "enable", False)
+        registry.set_runtime_value("braille", "enabled", True)
+        registry.clear_runtime_values()
+        found_speech, _ = registry.get_runtime_value("speech", "enable")
+        found_braille, _ = registry.get_runtime_value("braille", "enabled")
+        assert found_speech is False
+        assert found_braille is False
+
+    def test_different_schemas_are_independent(self, test_context: OrcaTestContext) -> None:
+        """Test that the same key in different schemas stores independently."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        registry.set_runtime_value("speech", "enable", True)
+        registry.set_runtime_value("braille", "enable", False)
+        _, speech_val = registry.get_runtime_value("speech", "enable")
+        _, braille_val = registry.get_runtime_value("braille", "enable")
+        assert speech_val is True
+        assert braille_val is False
+
+    def test_voice_type_specific_values(self, test_context: OrcaTestContext) -> None:
+        """Test that voice-type-specific runtime values are stored independently."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        registry.set_runtime_value("voice", "rate", 50, voice_type="default")
+        registry.set_runtime_value("voice", "rate", 75, voice_type="uppercase")
+
+        found_default, val_default = registry.get_runtime_value(
+            "voice", "rate", voice_type="default"
+        )
+        found_upper, val_upper = registry.get_runtime_value("voice", "rate", voice_type="uppercase")
+        found_none, _ = registry.get_runtime_value("voice", "rate")
+
+        assert found_default is True
+        assert val_default == 50
+        assert found_upper is True
+        assert val_upper == 75
+        assert found_none is False
+
+    def test_singleton_set_and_get(self, test_context: OrcaTestContext) -> None:
+        """Test set/get via the global singleton registry."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import get_registry
+
+        registry = get_registry()
+        registry.set_runtime_value("speech", "test-singleton-key", 42)
+        found, value = registry.get_runtime_value("speech", "test-singleton-key")
+        assert found is True
+        assert value == 42
+        registry.clear_runtime_values()

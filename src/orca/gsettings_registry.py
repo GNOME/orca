@@ -68,6 +68,7 @@ class GSettingsRegistry:
         self._enums: dict[str, dict[str, int]] = {}
         self._schemas: dict[str, str] = {}
         self._extras_migrated: set[str] = set()
+        self._runtime_values: dict[tuple[str, str, str | None], Any] = {}
 
     def set_enabled(self, enabled: bool) -> None:
         """Sets whether GSettings operations are enabled."""
@@ -110,6 +111,28 @@ class GSettingsRegistry:
         else:
             path = f"{GSETTINGS_PATH_PREFIX}{profile}/{suffix}/"
         return Gio.Settings.new_with_path(schema_id, path)
+
+    def set_runtime_value(
+        self, schema: str, key: str, value: Any, voice_type: str | None = None
+    ) -> None:
+        """Stores a runtime value override."""
+
+        self._runtime_values[(schema, key, voice_type)] = value
+
+    def get_runtime_value(
+        self, schema: str, key: str, voice_type: str | None = None
+    ) -> tuple[bool, Any]:
+        """Returns (found, value) for a runtime override."""
+
+        rt_key = (schema, key, voice_type)
+        if rt_key in self._runtime_values:
+            return True, self._runtime_values[rt_key]
+        return False, None
+
+    def clear_runtime_values(self) -> None:
+        """Clears all runtime value overrides."""
+
+        self._runtime_values.clear()
 
     def set_active_app(self, app_name: str | None) -> None:
         """Sets the active app name for GSettings lookups."""

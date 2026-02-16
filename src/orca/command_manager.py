@@ -386,6 +386,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         if settings.orcaModifierKeys != self._original_orca_modifier_keys:
             settings.orcaModifierKeys = self._original_orca_modifier_keys
+            gsettings_registry.get_registry().set_runtime_value(
+                "keybindings", "orca-modifier-keys", self._original_orca_modifier_keys
+            )
 
     def _populate_keybindings(self) -> None:
         """Build categories dictionary and populate the categories list."""
@@ -1055,9 +1058,15 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 if is_desktop:
                     self._orca_modifier_combo.set_active(0)
                     settings.orcaModifierKeys = settings.DESKTOP_MODIFIER_KEYS
+                    gsettings_registry.get_registry().set_runtime_value(
+                        "keybindings", "orca-modifier-keys", settings.DESKTOP_MODIFIER_KEYS
+                    )
                 else:
                     self._orca_modifier_combo.set_active(3)
                     settings.orcaModifierKeys = settings.LAPTOP_MODIFIER_KEYS
+                    gsettings_registry.get_registry().set_runtime_value(
+                        "keybindings", "orca-modifier-keys", settings.LAPTOP_MODIFIER_KEYS
+                    )
 
         get_manager().apply_user_overrides()
         self._populate_keybindings()
@@ -1076,6 +1085,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         model = combo.get_model()
         orca_modifier = model.get_value(tree_iter, 0)
         settings.orcaModifierKeys = orca_modifier.split(", ")
+        gsettings_registry.get_registry().set_runtime_value(
+            "keybindings", "orca-modifier-keys", orca_modifier.split(", ")
+        )
         self._has_unsaved_changes = True
 
     def _format_keybinding_text(self, kb: keybindings.KeyBinding | None) -> str | None:
@@ -1101,7 +1113,8 @@ class KeyboardLayout(Enum):
     DESKTOP = settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
     LAPTOP = settings.GENERAL_KEYBOARD_LAYOUT_LAPTOP
 
-    def get_string_name(self) -> str:
+    @property
+    def string_name(self) -> str:
         """Returns the lowercase string name for this enum value."""
 
         return self.name.lower()
@@ -1168,6 +1181,15 @@ class CommandManager:
         layout_changed = self._is_desktop != is_desktop
         if layout_changed:
             self._is_desktop = is_desktop
+            layout_value = (
+                settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+                if is_desktop
+                else settings.GENERAL_KEYBOARD_LAYOUT_LAPTOP
+            )
+            settings.keyboardLayout = layout_value
+            gsettings_registry.get_registry().set_runtime_value(
+                "keybindings", "keyboard-layout", "desktop" if is_desktop else "laptop"
+            )
             orca_modifier_manager.get_manager().set_modifiers_for_layout(is_desktop)
 
         has_device = input_event_manager.get_manager().has_device()

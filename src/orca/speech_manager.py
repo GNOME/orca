@@ -76,6 +76,12 @@ class CapitalizationStyle(Enum):
     SPELL = settings.CAPITALIZATION_STYLE_SPELL
     ICON = settings.CAPITALIZATION_STYLE_ICON
 
+    @property
+    def string_name(self) -> str:
+        """Returns the lowercase string name for this enum value."""
+
+        return self.name.lower()
+
 
 @gsettings_registry.get_registry().gsettings_enum(
     "org.gnome.Orca.PunctuationStyle",
@@ -985,6 +991,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         level = model.get_value(tree_iter, 1)
 
         settings.verbalizePunctuationStyle = level
+        gsettings_registry.get_registry().set_runtime_value("speech", "punctuation-level", level)
         self._manager.update_punctuation_level()
         self._has_unsaved_changes = True
 
@@ -1003,6 +1010,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         style = model.get_value(tree_iter, 1)
 
         settings.capitalizationStyle = style
+        gsettings_registry.get_registry().set_runtime_value("speech", "capitalization-style", style)
         self._manager.update_capitalization_style()
         self._has_unsaved_changes = True
 
@@ -1334,6 +1342,9 @@ class SpeechManager:
 
         self.shutdown_speech()
         settings.speechServerFactory = target_module
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "speech-server-factory", target_module
+        )
         self.start_speech()
         return self.get_current_server() == target_server
 
@@ -2138,6 +2149,9 @@ class SpeechManager:
         msg = f"SPEECH MANAGER: Setting capitalization style to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.capitalizationStyle = style.value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "capitalization-style", style.value
+        )
         self.update_capitalization_style()
         return True
 
@@ -2175,6 +2189,9 @@ class SpeechManager:
             brief = messages.CAPITALIZATION_NONE_BRIEF
 
         settings.capitalizationStyle = new_style
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "capitalization-style", new_style
+        )
         if script is not None and notify_user:
             presentation_manager.get_manager().present_message(full, brief)
         self.update_capitalization_style()
@@ -2220,6 +2237,9 @@ class SpeechManager:
         msg = f"SPEECH MANAGER: Setting punctuation level to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.verbalizePunctuationStyle = style.value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "punctuation-level", style.value
+        )
         self.update_punctuation_level()
         return True
 
@@ -2261,6 +2281,9 @@ class SpeechManager:
             brief = messages.PUNCTUATION_NONE_BRIEF
 
         settings.verbalizePunctuationStyle = new_level
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "punctuation-level", new_level
+        )
         if script is not None and notify_user:
             presentation_manager.get_manager().present_message(full, brief)
         self.update_punctuation_level()
@@ -2388,6 +2411,7 @@ class SpeechManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         settings.enableSpeech = value
+        gsettings_registry.get_registry().set_runtime_value("speech", "enable", value)
         if value:
             self.start_speech()
             presentation_manager.get_manager().present_message(messages.SPEECH_ENABLED)
@@ -2418,6 +2442,9 @@ class SpeechManager:
         msg = f"SPEECH MANAGER: Setting speak numbers as digits to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.speakNumbersAsDigits = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "speak-numbers-as-digits", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -2441,6 +2468,7 @@ class SpeechManager:
         msg = f"SPEECH MANAGER: Setting use color names to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.useColorNames = value
+        gsettings_registry.get_registry().set_runtime_value("speech", "use-color-names", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -2464,6 +2492,9 @@ class SpeechManager:
         msg = f"SPEECH MANAGER: Setting insert pauses to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enablePauseBreaks = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "insert-pauses-between-utterances", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -2487,6 +2518,9 @@ class SpeechManager:
         msg = f"SPEECH MANAGER: Setting use pronunciation dictionary to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.usePronunciationDictionary = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "use-pronunciation-dictionary", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -2510,6 +2544,9 @@ class SpeechManager:
         msg = f"SPEECH MANAGER: Setting auto language switching to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableAutoLanguageSwitching = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "auto-language-switching", value
+        )
         return True
 
     @dbus_service.command
@@ -2539,6 +2576,7 @@ class SpeechManager:
                 presentation_manager.get_manager().present_message(messages.SPEECH_ENABLED)
         elif not self.get_speech_is_enabled():
             settings.enableSpeech = True
+            gsettings_registry.get_registry().set_runtime_value("speech", "enable", True)
             self._init_server()
             if script is not None and notify_user:
                 presentation_manager.get_manager().present_message(messages.SPEECH_ENABLED)
@@ -2549,6 +2587,7 @@ class SpeechManager:
             app_enable = settings_manager.get_manager().get_app_setting(app, "enableSpeech")
             if app_enable is False:
                 settings.enableSpeech = False
+                gsettings_registry.get_registry().set_runtime_value("speech", "enable", False)
                 self.shutdown_speech()
             else:
                 self.set_speech_is_muted(True)

@@ -288,6 +288,7 @@ class SoundPresenter:
         msg = f"SOUND PRESENTER: Setting enable sound to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableSound = value
+        gsettings_registry.get_registry().set_runtime_value("sound", "enabled", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -311,6 +312,7 @@ class SoundPresenter:
         msg = f"SOUND PRESENTER: Setting sound volume to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.soundVolume = value
+        gsettings_registry.get_registry().set_runtime_value("sound", "volume", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -334,6 +336,9 @@ class SoundPresenter:
         msg = f"SOUND PRESENTER: Setting beep progress bar updates to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.beepProgressBarUpdates = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "sound", "beep-progress-bar-updates", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -357,6 +362,9 @@ class SoundPresenter:
         msg = f"SOUND PRESENTER: Setting progress bar beep interval to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.progressBarBeepInterval = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "sound", "progress-bar-beep-interval", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -380,6 +388,9 @@ class SoundPresenter:
         msg = f"SOUND PRESENTER: Setting progress bar beep verbosity to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.progressBarBeepVerbosity = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "sound", "progress-bar-beep-verbosity", value
+        )
         return True
 
     def play(self, sounds: list[Icon | Tone] | Icon | Tone, interrupt: bool = True) -> None:

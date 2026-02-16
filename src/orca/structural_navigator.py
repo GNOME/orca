@@ -448,6 +448,9 @@ class StructuralNavigator:
 
         enabled = mode != NavigationMode.OFF
         settings.structuralNavigationEnabled = enabled
+        gsettings_registry.get_registry().set_runtime_value(
+            "structural-navigation", "enabled", enabled
+        )
         command_manager.get_manager().set_group_enabled(
             guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, enabled
         )
@@ -500,6 +503,7 @@ class StructuralNavigator:
         msg = f"STRUCTURAL NAVIGATOR: Setting navigation wraps to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.wrappedStructuralNavigation = value
+        gsettings_registry.get_registry().set_runtime_value("structural-navigation", "wraps", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -523,6 +527,9 @@ class StructuralNavigator:
         msg = f"STRUCTURAL NAVIGATOR: Setting large object text length to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.largeObjectTextLength = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "structural-navigation", "large-object-text-length", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -554,6 +561,9 @@ class StructuralNavigator:
         msg = f"STRUCTURAL NAVIGATOR: Setting enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.structuralNavigationEnabled = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "structural-navigation", "enabled", value
+        )
 
         script = script_manager.get_manager().get_active_script()
         if not script:
@@ -604,6 +614,9 @@ class StructuralNavigator:
         msg = f"STRUCTURAL NAVIGATOR: Setting triggers focus mode to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.structNavTriggersFocusMode = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "structural-navigation", "triggers-focus-mode", value
+        )
         return True
 
     @dbus_service.command

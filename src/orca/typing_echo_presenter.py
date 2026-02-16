@@ -387,8 +387,13 @@ class TypingEchoPresenter:
             brief = messages.KEY_ECHO_NONE_BRIEF
 
         settings.enableKeyEcho = new_key
+        gsettings_registry.get_registry().set_runtime_value("typing-echo", "key-echo", new_key)
         settings.enableEchoByWord = new_word
+        gsettings_registry.get_registry().set_runtime_value("typing-echo", "word-echo", new_word)
         settings.enableEchoBySentence = new_sentence
+        gsettings_registry.get_registry().set_runtime_value(
+            "typing-echo", "sentence-echo", new_sentence
+        )
         if script is not None and notify_user:
             presentation_manager.get_manager().present_message(full, brief)
         return True
@@ -414,6 +419,7 @@ class TypingEchoPresenter:
         msg = f"TYPING ECHO PRESENTER: Setting enable key echo to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableKeyEcho = value
+        gsettings_registry.get_registry().set_runtime_value("typing-echo", "key-echo", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -437,6 +443,7 @@ class TypingEchoPresenter:
         msg = f"TYPING ECHO PRESENTER: Setting enable character echo to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableEchoByCharacter = value
+        gsettings_registry.get_registry().set_runtime_value("typing-echo", "character-echo", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -460,6 +467,7 @@ class TypingEchoPresenter:
         msg = f"TYPING ECHO PRESENTER: Setting enable word echo to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableEchoByWord = value
+        gsettings_registry.get_registry().set_runtime_value("typing-echo", "word-echo", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -483,6 +491,7 @@ class TypingEchoPresenter:
         msg = f"TYPING ECHO PRESENTER: Setting enable sentence echo to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableEchoBySentence = value
+        gsettings_registry.get_registry().set_runtime_value("typing-echo", "sentence-echo", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -506,6 +515,7 @@ class TypingEchoPresenter:
         msg = f"TYPING ECHO PRESENTER: Setting enable alphabetic keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableAlphabeticKeys = value
+        gsettings_registry.get_registry().set_runtime_value("typing-echo", "alphabetic-keys", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -529,6 +539,7 @@ class TypingEchoPresenter:
         msg = f"TYPING ECHO PRESENTER: Setting enable numeric keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableNumericKeys = value
+        gsettings_registry.get_registry().set_runtime_value("typing-echo", "numeric-keys", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -552,6 +563,9 @@ class TypingEchoPresenter:
         msg = f"TYPING ECHO PRESENTER: Setting enable punctuation keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enablePunctuationKeys = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "typing-echo", "punctuation-keys", value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -575,6 +589,7 @@ class TypingEchoPresenter:
         msg = f"TYPING ECHO PRESENTER: Setting enable space to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableSpace = value
+        gsettings_registry.get_registry().set_runtime_value("typing-echo", "space", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -598,6 +613,7 @@ class TypingEchoPresenter:
         msg = f"TYPING ECHO PRESENTER: Setting enable modifier keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableModifierKeys = value
+        gsettings_registry.get_registry().set_runtime_value("typing-echo", "modifier-keys", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -621,6 +637,7 @@ class TypingEchoPresenter:
         msg = f"TYPING ECHO PRESENTER: Setting enable function keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableFunctionKeys = value
+        gsettings_registry.get_registry().set_runtime_value("typing-echo", "function-keys", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -644,6 +661,7 @@ class TypingEchoPresenter:
         msg = f"TYPING ECHO PRESENTER: Setting enable action keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableActionKeys = value
+        gsettings_registry.get_registry().set_runtime_value("typing-echo", "action-keys", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -667,6 +685,7 @@ class TypingEchoPresenter:
         msg = f"TYPING ECHO PRESENTER: Setting enable navigation keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableNavigationKeys = value
+        gsettings_registry.get_registry().set_runtime_value("typing-echo", "navigation-keys", value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -690,6 +709,9 @@ class TypingEchoPresenter:
         msg = f"TYPING ECHO PRESENTER: Setting enable diacritical keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.enableDiacriticalKeys = value
+        gsettings_registry.get_registry().set_runtime_value(
+            "typing-echo", "diacritical-keys", value
+        )
         return True
 
     @dbus_service.getter

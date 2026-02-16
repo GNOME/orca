@@ -1327,6 +1327,7 @@ class FlatReviewPresenter:
         msg = f"FLAT REVIEW PRESENTER: Setting is-restricted to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         settings.flatReviewIsRestricted = value
+        gsettings_registry.get_registry().set_runtime_value("flat-review", "restricted", value)
         return True
 
     @dbus_service.command
@@ -1350,6 +1351,9 @@ class FlatReviewPresenter:
 
         self._restrict = not self._restrict
         settings.flatReviewIsRestricted = self._restrict
+        gsettings_registry.get_registry().set_runtime_value(
+            "flat-review", "restricted", self._restrict
+        )
 
         if self._restrict:
             if notify_user:
