@@ -991,7 +991,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         level = model.get_value(tree_iter, 1)
 
         settings.verbalizePunctuationStyle = level
-        gsettings_registry.get_registry().set_runtime_value("speech", "punctuation-level", level)
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "punctuation-level", PunctuationStyle(level).string_name
+        )
         self._manager.update_punctuation_level()
         self._has_unsaved_changes = True
 
@@ -1010,7 +1012,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         style = model.get_value(tree_iter, 1)
 
         settings.capitalizationStyle = style
-        gsettings_registry.get_registry().set_runtime_value("speech", "capitalization-style", style)
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "capitalization-style", CapitalizationStyle(style).string_name
+        )
         self._manager.update_capitalization_style()
         self._has_unsaved_changes = True
 
