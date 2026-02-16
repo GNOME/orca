@@ -1012,6 +1012,62 @@ class TestScriptManager:
         settings_manager_instance.restore_settings.assert_not_called()
         assert settings_mock.testSetting1 == "modified_by_activate"
 
+    def test_set_active_script_restores_snapshot_after_deactivation(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that snapshot is restored after window deactivation sets active script to None."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        default_script = essential_modules["default_script"]
+        settings_mock = essential_modules["orca.settings"]
+        from orca.script_manager import ScriptManager
+
+        speech_patch = "orca.script_manager.speech_manager.get_manager"
+        mock_get_speech_manager = test_context.Mock()
+        test_context.patch(speech_patch, new=mock_get_speech_manager)
+
+        speech_manager_instance = test_context.Mock()
+        mock_get_speech_manager.return_value = speech_manager_instance
+
+        settings_mock.testSetting1 = "runtime_value"
+
+        settings_manager_instance = essential_modules["settings_manager_instance"]
+
+        def mock_snapshot():
+            return {"testSetting1": settings_mock.testSetting1}
+
+        def mock_restore(snapshot):
+            for key, value in snapshot.items():
+                setattr(settings_mock, key, value)
+
+        settings_manager_instance.snapshot_settings = test_context.Mock(side_effect=mock_snapshot)
+        settings_manager_instance.restore_settings = test_context.Mock(side_effect=mock_restore)
+
+        manager = ScriptManager()
+        app = test_context.Mock()
+
+        terminal_script = test_context.Mock()
+        terminal_script.app = app
+        terminal_script.deactivate = test_context.Mock()
+
+        manager._active_script = terminal_script
+        manager.set_active_script(None, "Window deactivated")
+
+        settings_manager_instance.snapshot_settings.assert_called_once()
+        assert manager._active_script is None
+
+        def modify_setting_on_activate():
+            settings_mock.testSetting1 = "overwritten_by_load_app_settings"
+
+        gtk_script = default_script
+        gtk_script.app = app
+        gtk_script.activate = test_context.Mock(side_effect=modify_setting_on_activate)
+
+        manager.set_active_script(gtk_script, "Focus on menu")
+
+        settings_manager_instance.restore_settings.assert_called_once()
+        assert settings_mock.testSetting1 == "runtime_value"
+
     @pytest.mark.parametrize(
         "case",
         [

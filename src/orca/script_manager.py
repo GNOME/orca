@@ -358,15 +358,11 @@ class ScriptManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         new_script.activate()
 
-        # Restore settings snapshot only for same-app script switches
-        # (e.g. terminal script <-> GTK script within mate-terminal).
-        # Cross-app switches rely on load_app_settings from activate().
-        if (
-            old_script
-            and new_script.app
-            and old_script.app == new_script.app
-            and new_script.app in self._app_settings_snapshots
-        ):
+        # Restore settings snapshot for this app if we have one. This preserves
+        # runtime state (e.g. speech enabled via Orca+S) across script switches
+        # within the same app, including after window deactivation/reactivation
+        # (where old_script is None because on_window_deactivated set it to None).
+        if new_script.app and new_script.app in self._app_settings_snapshots:
             settings_manager.get_manager().restore_settings(
                 self._app_settings_snapshots[new_script.app]
             )
