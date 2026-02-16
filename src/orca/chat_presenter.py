@@ -793,7 +793,11 @@ class ChatPresenter:
             genum="org.gnome.Orca.ChatMessageVerbosity",
         )
         if value is not None:
-            return ChatMessageVerbosity[value.upper().replace("-", "_")].value
+            enum_values = gsettings_registry.get_registry().get_enum_values(
+                "org.gnome.Orca.ChatMessageVerbosity"
+            )
+            if enum_values and value in enum_values:
+                return enum_values[value]
         return settings.chatMessageVerbosity
 
     @dbus_service.setter

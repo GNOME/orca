@@ -319,6 +319,11 @@ class GSettingsRegistry:
 
         return decorator
 
+    def get_enum_values(self, enum_id: str) -> dict[str, int] | None:
+        """Returns the nick-to-int mapping for a registered GSettings enum."""
+
+        return self._enums.get(enum_id)
+
     def register_settings_mappings(self, schema_name: str, mappings: list[SettingsMapping]) -> None:
         """Registers JSON-to-GSettings mappings for a schema."""
 
