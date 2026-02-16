@@ -20,6 +20,7 @@
 
 # pylint: disable=too-many-public-methods
 # pylint: disable=wrong-import-position
+# pylint: disable=too-many-lines
 
 """Provides braille presentation support."""
 
@@ -382,6 +383,7 @@ class BrailleOSDPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
         )
 
 
+# pylint: disable-next=too-many-instance-attributes
 class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
     """GtkGrid containing the Braille preferences page with nested stack navigation."""
 
@@ -415,9 +417,8 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
             (guilabels.BRAILLE_DISPLAY_SETTINGS, "display_settings", self._display_settings_grid),
             (guilabels.BRAILLE_FLASH_MESSAGES, "flash_messages", self._flash_messages_grid),
             (guilabels.PROGRESS_BARS, "progress-bars", self._progress_bars_grid),
+            (guilabels.ON_SCREEN_DISPLAY, "osd", self._osd_grid),
         ]
-        if settings.enableExperimentalFeatures:
-            categories.append((guilabels.ON_SCREEN_DISPLAY, "osd", self._osd_grid))
 
         enable_listbox, stack, _categories_listbox = self._create_multi_page_stack(
             enable_label=guilabels.BRAILLE_ENABLE_BRAILLE_SUPPORT,
@@ -505,15 +506,14 @@ class BraillePresenter:
         self._initialized = True
 
         manager = command_manager.get_manager()
-        if settings.enableExperimentalFeatures:
-            manager.add_command(
-                command_manager.KeyboardCommand(
-                    "toggle_braille_monitor",
-                    self.toggle_monitor,
-                    guilabels.BRAILLE,
-                    cmdnames.TOGGLE_BRAILLE_MONITOR,
-                )
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                "toggle_braille_monitor",
+                self.toggle_monitor,
+                guilabels.BRAILLE,
+                cmdnames.TOGGLE_BRAILLE_MONITOR,
             )
+        )
 
         msg = "BRAILLE PRESENTER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -808,6 +808,7 @@ class BraillePresenter:
             self._monitor.reapply_css()
         return True
 
+    # pylint: disable-next=too-many-arguments
     def present_regions(
         self,
         regions: list[braille.Region],

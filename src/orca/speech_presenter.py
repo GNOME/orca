@@ -535,9 +535,8 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             (guilabels.TABLES, "tables", self._tables_grid),
             (guilabels.PROGRESS_BARS, "progress-bars", self._progress_bars_grid),
             (guilabels.ANNOUNCEMENTS, "announcements", self._announcements_grid),
+            (guilabels.ON_SCREEN_DISPLAY, "osd", self._osd_grid),
         ]
-        if settings.enableExperimentalFeatures:
-            categories.append((guilabels.ON_SCREEN_DISPLAY, "osd", self._osd_grid))
 
         enable_listbox, stack, _categories_listbox = self._create_multi_page_stack(
             enable_label=guilabels.SPEECH_ENABLE_SPEECH,
@@ -684,18 +683,14 @@ class SpeechPresenter:
                 kb_f11,
                 kb_f11,
             ),
+            (
+                "toggle_speech_monitor",
+                self.toggle_monitor,
+                cmdnames.TOGGLE_SPEECH_MONITOR,
+                kb_shift_d,
+                kb_shift_d,
+            ),
         ]
-
-        if settings.enableExperimentalFeatures:
-            commands_data.append(
-                (
-                    "toggle_speech_monitor",
-                    self.toggle_monitor,
-                    cmdnames.TOGGLE_SPEECH_MONITOR,
-                    kb_shift_d,
-                    kb_shift_d,
-                )
-            )
 
         for name, function, description, desktop_kb, laptop_kb in commands_data:
             manager.add_command(
@@ -1794,11 +1789,11 @@ class SpeechPresenter:
 
         return script_manager.get_manager().get_active_script()
 
-    def _get_voice(self, string: str = "") -> list[ACSS]:
+    def _get_voice(self, text: str = "") -> list[ACSS]:
         """Returns the voice to use for the given string."""
 
         if active_script := self._get_active_script():
-            return active_script.speech_generator.voice(string=string)
+            return active_script.speech_generator.voice(string=text)
         return []
 
     @dbus_service.getter
@@ -2001,7 +1996,7 @@ class SpeechPresenter:
         """Presents a key event via speech."""
 
         key_name = event.get_key_name() if event.is_printable_key() else None
-        voice = self._get_voice(string=key_name or "")
+        voice = self._get_voice(text=key_name or "")
         speech.speak_key_event(event, voice[0] if voice else None)
 
     def present_message(
@@ -2196,7 +2191,7 @@ class SpeechPresenter:
     def speak_character(self, character: str) -> None:
         """Speaks a single character."""
 
-        voice = self._get_voice(string=character)
+        voice = self._get_voice(text=character)
         speech.speak_character(character, voice[0] if voice else None)
 
     def spell_item(self, text: str) -> None:
@@ -2209,7 +2204,7 @@ class SpeechPresenter:
         """Phonetically spell item_string."""
 
         for character in item_string:
-            voice = self._get_voice(string=character)
+            voice = self._get_voice(text=character)
             phonetic_string = phonnames.get_phonetic_name(character.lower())
             self.speak_message(phonetic_string, voice)
 

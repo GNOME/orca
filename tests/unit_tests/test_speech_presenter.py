@@ -831,7 +831,7 @@ class TestSpeechPresenter:
         from orca.speech_presenter import SpeechPresenter
 
         presenter = SpeechPresenter()
-        voice = presenter._get_voice(string="test")
+        voice = presenter._get_voice(text="test")
 
         script_manager = essential_modules["orca.script_manager"].get_manager()
         script = script_manager.get_active_script()
@@ -848,7 +848,7 @@ class TestSpeechPresenter:
         from orca.speech_presenter import SpeechPresenter
 
         presenter = SpeechPresenter()
-        voice = presenter._get_voice(string="test")
+        voice = presenter._get_voice(text="test")
 
         assert voice == []
 
