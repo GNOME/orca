@@ -418,7 +418,7 @@ class MouseReviewer:
         )
 
     def __init__(self) -> None:
-        self._active: bool = self.get_is_enabled()
+        self._active: bool = False
         self._current_mouse_over: _ItemContext = _ItemContext()
         self._workspace = None
         self._windows: list[Wnck.Window] = []
@@ -432,16 +432,12 @@ class MouseReviewer:
         if not _MOUSE_REVIEW_CAPABLE:
             msg = "MOUSE REVIEW ERROR: Wnck is not available"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._active = False
             return
 
         msg = "MOUSE REVIEW: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("MouseReviewer", self)
-
-        if self._active:
-            self.activate()
 
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""
