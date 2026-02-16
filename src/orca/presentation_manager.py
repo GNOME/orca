@@ -112,7 +112,7 @@ class PresentationManager:
         brief: str | None = None,
         voice: ACSS | None = None,
         reset_styles: bool = True,
-        force: bool = False,
+        obj: Atspi.Accessible | None = None,
     ) -> None:
         """Convenience method to speak a message and 'flash' it in braille."""
 
@@ -123,7 +123,7 @@ class PresentationManager:
             brief = full
 
         speech_presenter.get_presenter().present_message(
-            full, brief, voice=voice, reset_styles=reset_styles, force=force
+            full, brief, voice=voice, reset_styles=reset_styles, obj=obj
         )
 
         presenter = braille_presenter.get_presenter()
@@ -175,15 +175,13 @@ class PresentationManager:
         self,
         text: str,
         voice: ACSS | list[ACSS] | None = None,
-        interrupt: bool = True,
         reset_styles: bool = True,
-        force: bool = False,
         obj: Atspi.Accessible | None = None,
     ) -> None:
         """Speaks a single string."""
 
         speech_presenter.get_presenter().speak_message(
-            text, voice=voice, interrupt=interrupt, reset_styles=reset_styles, force=force, obj=obj
+            text, voice=voice, reset_styles=reset_styles, obj=obj
         )
 
     def present_object(

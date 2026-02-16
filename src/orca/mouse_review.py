@@ -181,7 +181,7 @@ class _StringContext:
             self._obj, self._start, self._end, focus_manager.MOUSE_REVIEW
         )
         presenter = presentation_manager.get_manager()
-        presenter.speak_message(string, voice=voice, interrupt=False)
+        presenter.speak_message(string, voice=voice)
         presenter.present_braille_message(self._string)
         return True
 

@@ -1521,7 +1521,7 @@ class Utilities:
             else:
                 self._script.say_phrase(obj, start, end)
                 if speak_message and not ends_with_child:
-                    presentation_manager.get_manager().speak_message(message, interrupt=False)
+                    presentation_manager.get_manager().speak_message(message)
 
             if ends_with_child:
                 child = AXHypertext.find_child_at_offset(obj, end)

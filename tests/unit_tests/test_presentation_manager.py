@@ -235,7 +235,7 @@ class TestPresentationManager:
             "This is a full message",
             voice=None,
             reset_styles=True,
-            force=False,
+            obj=None,
         )
         braille_presenter = essential_modules["orca.braille_presenter"].get_presenter()
         braille_presenter.present_message.assert_called()
@@ -251,7 +251,7 @@ class TestPresentationManager:
 
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
         speech_pres.present_message.assert_called_once_with(
-            "Full message", "Brief", voice=None, reset_styles=True, force=False
+            "Full message", "Brief", voice=None, reset_styles=True, obj=None
         )
 
     def test_present_message_empty_string(self, test_context: OrcaTestContext) -> None:
@@ -380,7 +380,7 @@ class TestPresentationManager:
 
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
         speech_pres.speak_message.assert_called_once_with(
-            "Hello world", voice=None, interrupt=True, reset_styles=True, force=False, obj=None
+            "Hello world", voice=None, reset_styles=True, obj=None
         )
 
     def test_speak_message_with_args_delegates(self, test_context: OrcaTestContext) -> None:
@@ -395,9 +395,7 @@ class TestPresentationManager:
         manager.speak_message(
             "Hello world",
             voice=mock_voice,
-            interrupt=False,
             reset_styles=False,
-            force=True,
             obj=mock_obj,
         )
 
@@ -405,9 +403,7 @@ class TestPresentationManager:
         speech_pres.speak_message.assert_called_once_with(
             "Hello world",
             voice=mock_voice,
-            interrupt=False,
             reset_styles=False,
-            force=True,
             obj=mock_obj,
         )
 

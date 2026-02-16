@@ -219,7 +219,7 @@ class Utilities(script_utilities.Utilities):
             presentation_manager.get_manager().interrupt_presentation()
 
         for msg in msgs:
-            presentation_manager.get_manager().speak_message(msg, interrupt=False)
+            presentation_manager.get_manager().speak_message(msg)
 
         return bool(msgs)
 
@@ -293,6 +293,6 @@ class Utilities(script_utilities.Utilities):
             presentation_manager.get_manager().interrupt_presentation()
 
         for msg in msgs:
-            presentation_manager.get_manager().speak_message(msg, interrupt=False)
+            presentation_manager.get_manager().speak_message(msg)
 
         return bool(msgs)

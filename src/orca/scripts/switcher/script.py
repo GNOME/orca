@@ -81,7 +81,7 @@ class Script(default.Script):
         focus_manager.get_manager().set_active_window(self.utilities.top_level_object(event.source))
         focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
         presentation_manager.get_manager().present_message(
-            self.utilities.get_selection_name(event.source), reset_styles=False, force=True
+            self.utilities.get_selection_name(event.source), reset_styles=False, obj=event.source
         )
         return True
 

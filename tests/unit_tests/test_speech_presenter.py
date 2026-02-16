@@ -902,19 +902,6 @@ class TestSpeechPresenter:
 
         essential_modules["orca.speech"].speak.assert_not_called()
 
-    def test_speak_message_forced(self, test_context: OrcaTestContext) -> None:
-        """Test speak_message with force=True bypasses only_speak_displayed_text."""
-
-        essential_modules = self._setup_speech_output_dependencies(test_context)
-        essential_modules["orca.settings"].onlySpeakDisplayedText = True
-
-        from orca.speech_presenter import SpeechPresenter
-
-        presenter = SpeechPresenter()
-        presenter.speak_message("Hello world", force=True)
-
-        essential_modules["orca.speech"].speak.assert_called()
-
     def test_speak_character(self, test_context: OrcaTestContext) -> None:
         """Test speak_character speaks a single character."""
 

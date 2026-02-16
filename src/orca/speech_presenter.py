@@ -2028,7 +2028,7 @@ class SpeechPresenter:
         brief: str | None = None,
         voice: ACSS | None = None,
         reset_styles: bool = True,
-        force: bool = False,
+        obj: Atspi.Accessible | None = None,
     ) -> None:
         """Speaks a message, choosing full or brief based on message detail setting."""
 
@@ -2046,15 +2046,13 @@ class SpeechPresenter:
         else:
             message = full
         if message:
-            self.speak_message(message, voice=voice, reset_styles=reset_styles, force=force)
+            self.speak_message(message, voice=voice, reset_styles=reset_styles, obj=obj)
 
     def speak_message(
         self,
         text: str,
         voice: ACSS | list[ACSS] | None = None,
-        interrupt: bool = True,
         reset_styles: bool = True,
-        force: bool = False,
         obj: Atspi.Accessible | None = None,
     ) -> None:
         """Speaks a single string."""
@@ -2070,7 +2068,7 @@ class SpeechPresenter:
             return
 
         mgr = speech_manager.get_manager()
-        if mgr.get_speech_is_muted() or (self.get_only_speak_displayed_text() and not force):
+        if mgr.get_speech_is_muted() or (self.get_only_speak_displayed_text() and obj is None):
             return
 
         voices = settings.voices
@@ -2183,12 +2181,12 @@ class SpeechPresenter:
             line_string = AXText.get_line_at_offset(obj, max(0, offset))[0]
             if not line_string or line_string == "\n":
                 if self.get_speak_blank_lines():
-                    self.speak_message(messages.BLANK, interrupt=False)
+                    self.speak_message(messages.BLANK)
                 return
 
         if character in ["\n", "\r\n"]:
             if self.get_speak_blank_lines():
-                self.speak_message(messages.BLANK, interrupt=False)
+                self.speak_message(messages.BLANK)
             return
 
         if error := self.get_error_description(obj, offset):

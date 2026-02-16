@@ -963,7 +963,7 @@ class Script(script.Script):
         self.present_object(event.source, alreadyFocused=True, interrupt=True)
         details = self.utilities.details_content_for_object(event.source)
         for detail in details:
-            presentation_manager.get_manager().speak_message(detail, interrupt=False)
+            presentation_manager.get_manager().speak_message(detail)
 
         return True
 
@@ -1059,13 +1059,9 @@ class Script(script.Script):
         # need to gain some smarts w.r.t. state changes.
 
         if event.detail1:
-            presentation_manager.get_manager().speak_message(
-                messages.TEXT_SELECTED, interrupt=False
-            )
+            presentation_manager.get_manager().speak_message(messages.TEXT_SELECTED)
         else:
-            presentation_manager.get_manager().speak_message(
-                messages.TEXT_UNSELECTED, interrupt=False
-            )
+            presentation_manager.get_manager().speak_message(messages.TEXT_UNSELECTED)
 
         return True
 

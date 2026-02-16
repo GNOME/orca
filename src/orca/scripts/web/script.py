@@ -163,7 +163,7 @@ class Script(default.Script):
         obj, start, _end, string = contents[0]
         if start > 0 and string == "\n":
             if speech_pres.get_speak_blank_lines():
-                presentation_manager.get_manager().speak_message(messages.BLANK, interrupt=False)
+                presentation_manager.get_manager().speak_message(messages.BLANK)
                 return
 
         presenter = presentation_manager.get_manager()
