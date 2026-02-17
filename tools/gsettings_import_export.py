@@ -55,6 +55,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=wrong-import-position
+
 """Standalone tool for importing/exporting Orca settings between JSON and GSettings."""
 
 import argparse
@@ -74,7 +76,7 @@ from gi.repository import Gio
 from generate_gsettings_schemas import _discover_schemas
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
-from orca.gsettings_migrator import (  # pylint: disable=wrong-import-position
+from orca.gsettings_migrator import (
     KEYBINDINGS_METADATA_KEYS,
     REVERSE_LEGACY_KEY_ALIASES,
     VOICE_FAMILY_FIELDS,
@@ -98,6 +100,12 @@ from orca.gsettings_migrator import (  # pylint: disable=wrong-import-position
     sanitize_gsettings_path,
     stamp_version,
 )
+
+_share_dir = os.path.join(sys.prefix, "share")
+if os.path.isdir(_share_dir):
+    _xdg = os.environ.get("XDG_DATA_DIRS", "/usr/local/share:/usr/share")
+    if _share_dir not in _xdg.split(":"):
+        os.environ["XDG_DATA_DIRS"] = f"{_share_dir}:{_xdg}"
 
 GSETTINGS_PATH_PREFIX = "/org/gnome/orca/"
 
