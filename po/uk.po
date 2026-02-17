@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2026-02-13 13:48+0000\n"
-"PO-Revision-Date: 2026-02-15 07:59+0200\n"
+"POT-Creation-Date: 2026-02-16 11:02+0000\n"
+"PO-Revision-Date: 2026-02-17 07:48+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3505,7 +3505,6 @@ msgstr "Вимовляти повідомлення з"
 #. whether or not the chat application currently has focus. This is the default
 #. behavior.
 #: src/orca/guilabels.py:244
-#| msgid "All channels when the application is active"
 msgid "All channels when using any application"
 msgstr "Усі канали, якщо використано будь-яку програму"
 
@@ -3521,7 +3520,6 @@ msgstr "Активний канал, якщо використано будь-я
 #. selected, Orca will speak all new chat messages as they appear if and only if the
 #. chat application has focus.
 #: src/orca/guilabels.py:255
-#| msgid "All channels when the application is active"
 msgid "All channels when using the application"
 msgstr "Усі канали, якщо використано програму"
 
@@ -3529,7 +3527,6 @@ msgstr "Усі канали, якщо використано програму"
 #. selected, Orca will only speak new chat messages for the currently active channel
 #. (the selected tab or focused chat window) when the chat application has focus.
 #: src/orca/guilabels.py:260
-#| msgid "All channels when the application is active"
 msgid "The active channel when using the application"
 msgstr "Активний канал, якщо використано програму"
 
@@ -5655,14 +5652,18 @@ msgid "Font size"
 msgstr "Розмір шрифту"
 
 #: src/orca/guilabels.py:1820
+#| msgid ""
+#| "The on-screen speech display is a window that shows what the screen "
+#| "reader is speaking. The default keybinding to show or hide it is "
+#| "Orca+Shift+S. This can be changed in Commands."
 msgid ""
 "The on-screen speech display is a window that shows what the screen reader "
-"is speaking. The default keybinding to show or hide it is Orca+Shift+S. This "
+"is speaking. The default keybinding to show or hide it is Orca+Shift+d. This "
 "can be changed in Commands."
 msgstr ""
 "Екранна панель озвучення – це вікно, яке показує, що озвучує програма "
 "зчитування з екрана. Типове клавіатурне скорочення для його показу або "
-"приховування – Orca+Shift+S. Це можна змінити у розділі «Команди»."
+"приховування – Orca+Shift+D. Це можна змінити у розділі «Команди»."
 
 #: src/orca/guilabels.py:1828
 msgid ""
