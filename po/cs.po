@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2026-02-13 13:48+0000\n"
-"PO-Revision-Date: 2026-02-15 19:26+0100\n"
+"POT-Creation-Date: 2026-02-17 14:40+0000\n"
+"PO-Revision-Date: 2026-02-17 16:52+0100\n"
 "Last-Translator: Dagobert Janota <janotadag@gmail.com>\n"
 "Language-Team: Czech\n"
 "Language: cs\n"
@@ -4858,7 +4858,7 @@ msgstr "Znak _konce řádku"
 msgid "Display Settings"
 msgstr "Nastavení zobrazení"
 
-#. Translators: This is the label for a setting in the prefernces dialog which
+#. Translators: This is the label for a setting in the preferences dialog which
 #. turns braille support on or off.
 #: src/orca/guilabels.py:1225
 msgid "Braille support"
@@ -5650,11 +5650,11 @@ msgstr "Velikost textu"
 #: src/orca/guilabels.py:1820
 msgid ""
 "The on-screen speech display is a window that shows what the screen reader "
-"is speaking. The default keybinding to show or hide it is Orca+Shift+S. This "
+"is speaking. The default keybinding to show or hide it is Orca+Shift+d. This "
 "can be changed in Commands."
 msgstr ""
 "Zobrazení čtení na obrazovce je okno, které zobrazuje co právě čte čtečka "
-"obrazovky. Výchozí zkratka pro zobrazení a skrytí je Orca+Shift+S. Toto může "
+"obrazovky. Výchozí zkratka pro zobrazení a skrytí je Orca+Shift+D. Toto může "
 "být změněno v Příkazech."
 
 #: src/orca/guilabels.py:1828
