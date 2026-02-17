@@ -262,11 +262,11 @@ class SoundPresenter:
 
     _SCHEMA = "sound"
 
-    def _get_setting(self, key: str, gtype: str, fallback: Any) -> Any:
-        """Returns the dconf value for key, or fallback if not in dconf."""
+    def _get_setting(self, key: str, gtype: str, default: Any) -> Any:
+        """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, gtype, fallback=fallback
+            self._SCHEMA, key, gtype, default=default
         )
 
     def __init__(self) -> None:
@@ -294,7 +294,7 @@ class SoundPresenter:
     def get_sound_is_enabled(self) -> bool:
         """Returns whether sound is enabled."""
 
-        return self._get_setting("enabled", "b", settings.enableSound)
+        return self._get_setting("enabled", "b", True)
 
     @dbus_service.setter
     def set_sound_is_enabled(self, value: bool) -> bool:
@@ -317,7 +317,7 @@ class SoundPresenter:
     def get_sound_volume(self) -> float:
         """Returns the sound volume (0.0 to 1.0)."""
 
-        return self._get_setting("volume", "d", settings.soundVolume)
+        return self._get_setting("volume", "d", 0.5)
 
     @dbus_service.setter
     def set_sound_volume(self, value: float) -> bool:
@@ -340,7 +340,7 @@ class SoundPresenter:
     def get_beep_progress_bar_updates(self) -> bool:
         """Returns whether beep progress bar updates are enabled."""
 
-        return self._get_setting("beep-progress-bar-updates", "b", settings.beepProgressBarUpdates)
+        return self._get_setting("beep-progress-bar-updates", "b", False)
 
     @dbus_service.setter
     def set_beep_progress_bar_updates(self, value: bool) -> bool:
@@ -365,9 +365,7 @@ class SoundPresenter:
     def get_progress_bar_beep_interval(self) -> int:
         """Returns the beep progress bar update interval in seconds."""
 
-        return self._get_setting(
-            "progress-bar-beep-interval", "i", settings.progressBarBeepInterval
-        )
+        return self._get_setting("progress-bar-beep-interval", "i", 0)
 
     @dbus_service.setter
     def set_progress_bar_beep_interval(self, value: int) -> bool:
@@ -392,15 +390,14 @@ class SoundPresenter:
     def get_progress_bar_beep_verbosity(self) -> int:
         """Returns the beep progress bar verbosity level."""
 
-        value = gsettings_registry.get_registry().layered_lookup(
+        nick = gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
             "progress-bar-beep-verbosity",
             "",
             genum="org.gnome.Orca.ProgressBarVerbosity",
+            default="application",
         )
-        if value is not None:
-            return ProgressBarVerbosity[value.upper()].value
-        return settings.progressBarBeepVerbosity
+        return ProgressBarVerbosity[nick.upper()].value
 
     @dbus_service.setter
     def set_progress_bar_beep_verbosity(self, value: int) -> bool:

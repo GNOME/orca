@@ -69,54 +69,8 @@ class TestSpeechPresenter:
         settings_mock = essential_modules["orca.settings"]
         settings_mock.VERBOSITY_LEVEL_BRIEF = 0
         settings_mock.VERBOSITY_LEVEL_VERBOSE = 1
-        settings_mock.speechVerbosityLevel = 1
         settings_mock.speakNumbersAsDigits = False
-        settings_mock.onlySpeakDisplayedText = False
-        settings_mock.enableSpeechIndentation = True
-        settings_mock.speakIndentationOnlyIfChanged = False
-        settings_mock.speakBlankLines = True
-        settings_mock.speakMisspelledIndicator = True
-        settings_mock.speakDescription = True
-        settings_mock.enablePositionSpeaking = True
-        settings_mock.enableMnemonicSpeaking = True
-        settings_mock.enableTutorialMessages = True
-        settings_mock.enablePauseBreaks = True
-        settings_mock.repeatCharacterLimit = 4
-        settings_mock.usePronunciationDictionary = True
-        settings_mock.useColorNames = True
-        settings_mock.enableAutoLanguageSwitching = True
-        settings_mock.messagesAreDetailed = True
-        settings_mock.enableSpeech = True
 
-        # Table settings
-        settings_mock.readFullRowInGUITable = True
-        settings_mock.readFullRowInDocumentTable = True
-        settings_mock.readFullRowInSpreadSheet = True
-        settings_mock.speakCellSpan = True
-        settings_mock.speakCellCoordinates = True
-        settings_mock.speakSpreadsheetCoordinates = True
-        settings_mock.alwaysSpeakSelectedSpreadsheetRange = True
-        settings_mock.speakCellHeaders = True
-
-        # Announcement settings
-        settings_mock.speakContextBlockquote = True
-        settings_mock.speakContextNonLandmarkForm = True
-        settings_mock.speakContextPanel = True
-        settings_mock.speakContextLandmark = True
-        settings_mock.speakContextList = True
-        settings_mock.speakContextTable = True
-
-        # Punctuation styles
-        settings_mock.PUNCTUATION_STYLE_NONE = 3
-        settings_mock.PUNCTUATION_STYLE_SOME = 2
-        settings_mock.PUNCTUATION_STYLE_MOST = 1
-        settings_mock.PUNCTUATION_STYLE_ALL = 0
-        settings_mock.verbalizePunctuationStyle = 2
-
-        # Progress bar settings
-        settings_mock.speakProgressBarUpdates = True
-        settings_mock.progressBarSpeechInterval = 10
-        settings_mock.progressBarSpeechVerbosity = 0
         settings_mock.PROGRESS_BAR_ALL = 0
         settings_mock.PROGRESS_BAR_APPLICATION = 1
         settings_mock.PROGRESS_BAR_WINDOW = 2
@@ -275,12 +229,14 @@ class TestSpeechPresenter:
     def test_use_verbose_speech(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test use_verbose_speech method."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].speechVerbosityLevel = case["setting_value"]
+        self._setup_dependencies(test_context)
 
+        from orca import gsettings_registry
         from orca.speech_presenter import SpeechPresenter
 
         presenter = SpeechPresenter()
+        nick = "verbose" if case["setting_value"] == 1 else "brief"
+        gsettings_registry.get_registry().set_runtime_value("speech", "verbosity-level", nick)
 
         result = presenter.use_verbose_speech()
         assert result == case["expected"]
@@ -296,12 +252,14 @@ class TestSpeechPresenter:
     def test_get_verbosity_level(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test get_verbosity_level method."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].speechVerbosityLevel = case["setting_value"]
+        self._setup_dependencies(test_context)
 
+        from orca import gsettings_registry
         from orca.speech_presenter import SpeechPresenter
 
         presenter = SpeechPresenter()
+        nick = "verbose" if case["setting_value"] == 1 else "brief"
+        gsettings_registry.get_registry().set_runtime_value("speech", "verbosity-level", nick)
 
         result = presenter.get_verbosity_level()
         assert result == case["expected"]
@@ -353,12 +311,15 @@ class TestSpeechPresenter:
     def test_get_speak_blank_lines(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test get_speak_blank_lines method."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].speakBlankLines = case["setting_value"]
+        self._setup_dependencies(test_context)
 
+        from orca import gsettings_registry
         from orca.speech_presenter import SpeechPresenter
 
         presenter = SpeechPresenter()
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "speak-blank-lines", case["setting_value"]
+        )
 
         result = presenter.get_speak_blank_lines()
         assert result == case["expected"]
@@ -374,12 +335,15 @@ class TestSpeechPresenter:
     def test_get_only_speak_displayed_text(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test get_only_speak_displayed_text method."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].onlySpeakDisplayedText = case["setting_value"]
+        self._setup_dependencies(test_context)
 
+        from orca import gsettings_registry
         from orca.speech_presenter import SpeechPresenter
 
         presenter = SpeechPresenter()
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "only-speak-displayed-text", case["setting_value"]
+        )
 
         result = presenter.get_only_speak_displayed_text()
         assert result == case["expected"]
@@ -418,12 +382,15 @@ class TestSpeechPresenter:
     ) -> None:
         """Test get_speak_indentation_and_justification method."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].enableSpeechIndentation = case["setting_value"]
+        self._setup_dependencies(test_context)
 
+        from orca import gsettings_registry
         from orca.speech_presenter import SpeechPresenter
 
         presenter = SpeechPresenter()
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "speak-indentation-and-justification", case["setting_value"]
+        )
 
         result = presenter.get_speak_indentation_and_justification()
         assert result == case["expected"]
@@ -454,11 +421,14 @@ class TestSpeechPresenter:
     def test_get_indentation_description_disabled(self, test_context: OrcaTestContext) -> None:
         """Test get_indentation_description method when disabled."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.onlySpeakDisplayedText = True
-        settings_mock.enableSpeechIndentation = False
+        self._setup_dependencies(test_context)
+
+        from orca import gsettings_registry
         from orca.speech_presenter import SpeechPresenter
+
+        registry = gsettings_registry.get_registry()
+        registry.set_runtime_value("speech", "only-speak-displayed-text", True)
+        registry.set_runtime_value("speech", "speak-indentation-and-justification", False)
 
         presenter = SpeechPresenter()
         line = "    Hello world"
@@ -468,12 +438,15 @@ class TestSpeechPresenter:
     def test_get_indentation_description_enabled(self, test_context: OrcaTestContext) -> None:
         """Test get_indentation_description method when enabled."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.onlySpeakDisplayedText = False
-        settings_mock.enableSpeechIndentation = True
-        settings_mock.speakIndentationOnlyIfChanged = False
+        self._setup_dependencies(test_context)
+
+        from orca import gsettings_registry
         from orca.speech_presenter import SpeechPresenter
+
+        registry = gsettings_registry.get_registry()
+        registry.set_runtime_value("speech", "only-speak-displayed-text", False)
+        registry.set_runtime_value("speech", "speak-indentation-and-justification", True)
+        registry.set_runtime_value("speech", "speak-indentation-only-if-changed", False)
 
         presenter = SpeechPresenter()
         line = "    Hello world"
@@ -485,12 +458,15 @@ class TestSpeechPresenter:
     ) -> None:
         """Test get_indentation_description with only-if-changed enabled."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.onlySpeakDisplayedText = False
-        settings_mock.enableSpeechIndentation = True
-        settings_mock.speakIndentationOnlyIfChanged = True
+        self._setup_dependencies(test_context)
+
+        from orca import gsettings_registry
         from orca.speech_presenter import SpeechPresenter
+
+        registry = gsettings_registry.get_registry()
+        registry.set_runtime_value("speech", "only-speak-displayed-text", False)
+        registry.set_runtime_value("speech", "speak-indentation-and-justification", True)
+        registry.set_runtime_value("speech", "speak-indentation-only-if-changed", True)
 
         presenter = SpeechPresenter()
         line = "    Hello world"
@@ -507,8 +483,6 @@ class TestSpeechPresenter:
         """Test get_error_description method with basic scenarios."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.speakMisspelledIndicator = True
 
         ax_text_mock = essential_modules["orca.ax_text"]
         ax_text_mock.AXText.get_character_at_offset = test_context.Mock(return_value=("a", 0))
@@ -525,11 +499,14 @@ class TestSpeechPresenter:
     def test_get_error_description_disabled(self, test_context: OrcaTestContext) -> None:
         """Test get_error_description method when misspelled indicator is disabled."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.speakMisspelledIndicator = False
+        self._setup_dependencies(test_context)
 
+        from orca import gsettings_registry
         from orca.speech_presenter import SpeechPresenter
+
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "speak-misspelled-indicator", False
+        )
 
         presenter = SpeechPresenter()
         mock_obj = test_context.Mock()
@@ -606,8 +583,7 @@ class TestSpeechPresenter:
     def test_adjust_for_repeats(self, test_context: OrcaTestContext) -> None:
         """Test _adjust_for_repeats with repeated characters."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].repeatCharacterLimit = 4
+        self._setup_dependencies(test_context)
 
         from orca.speech_presenter import SpeechPresenter
 
@@ -620,8 +596,7 @@ class TestSpeechPresenter:
     def test_adjust_for_repeats_short_text(self, test_context: OrcaTestContext) -> None:
         """Test _adjust_for_repeats with text shorter than limit."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].repeatCharacterLimit = 4
+        self._setup_dependencies(test_context)
 
         from orca.speech_presenter import SpeechPresenter
 
@@ -891,9 +866,13 @@ class TestSpeechPresenter:
         """Test speak_message when only_speak_displayed_text is true."""
 
         essential_modules = self._setup_speech_output_dependencies(test_context)
-        essential_modules["orca.settings"].onlySpeakDisplayedText = True
 
+        from orca import gsettings_registry
         from orca.speech_presenter import SpeechPresenter
+
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "only-speak-displayed-text", True
+        )
 
         presenter = SpeechPresenter()
         presenter.speak_message("Hello world")
@@ -1007,9 +986,13 @@ class TestSpeechPresenter:
         """Test present_message uses brief when messages not detailed."""
 
         essential_modules = self._setup_speech_output_dependencies(test_context)
-        essential_modules["orca.settings"].messagesAreDetailed = False
 
+        from orca import gsettings_registry
         from orca.speech_presenter import SpeechPresenter
+
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "messages-are-detailed", False
+        )
 
         presenter = SpeechPresenter()
         presenter.present_message("Full message", "Brief")

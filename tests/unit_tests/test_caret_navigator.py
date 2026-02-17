@@ -417,9 +417,9 @@ class TestCaretNavigator:
         manager_instance.in_say_all.return_value = in_say_all
 
         if in_say_all:
-            # Set settings that caret_navigator might check during say_all
-            essential_modules["orca.settings"].caretNavigationEnabled = True
-            essential_modules["orca.settings"].caretNavTriggersFocusMode = True
+            from orca import say_all_presenter  # pylint: disable=import-outside-toplevel
+
+            say_all_presenter.get_presenter().set_rewind_and_fast_forward_enabled(True)
 
         if navigation_type == "next_line" and not in_say_all:
             mock_script.utilities.get_caret_context.return_value = ("obj", 5)
@@ -769,11 +769,11 @@ class TestCaretNavigator:
     ) -> None:
         """Test last_command_prevents_focus_mode returns False if setting True."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].caretNavTriggersFocusMode = True
+        self._setup_dependencies(test_context)
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = CaretNavigator()
+        navigator.set_triggers_focus_mode(True)
         mock_event = test_context.Mock()
         navigator._last_input_event = mock_event
         test_context.patch_object(

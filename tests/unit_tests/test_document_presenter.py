@@ -94,7 +94,9 @@ class TestDocumentPresenter:
 
         from orca import gsettings_registry
 
-        gsettings_registry.get_registry().set_enabled(False)
+        registry = gsettings_registry.get_registry()
+        registry.clear_runtime_values()
+        registry.set_enabled(False)
 
         # Import and return the module
         from orca import document_presenter
@@ -115,9 +117,7 @@ class TestDocumentPresenter:
     ) -> None:
         """Test get_native_nav_triggers_focus_mode returns default value."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.nativeNavTriggersFocusMode = True
+        module, _mocks = self._setup_presenter(test_context)
 
         presenter = module.get_presenter()
         result = presenter.get_native_nav_triggers_focus_mode()
@@ -127,9 +127,7 @@ class TestDocumentPresenter:
     def test_set_native_nav_triggers_focus_mode(self, test_context: OrcaTestContext) -> None:
         """Test set_native_nav_triggers_focus_mode updates setting."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.nativeNavTriggersFocusMode = True
+        module, _mocks = self._setup_presenter(test_context)
 
         presenter = module.get_presenter()
         result = presenter.set_native_nav_triggers_focus_mode(False)
@@ -142,9 +140,7 @@ class TestDocumentPresenter:
     ) -> None:
         """Test set_native_nav_triggers_focus_mode returns True when value unchanged."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.nativeNavTriggersFocusMode = True
+        module, _mocks = self._setup_presenter(test_context)
 
         presenter = module.get_presenter()
         result = presenter.set_native_nav_triggers_focus_mode(True)
@@ -154,9 +150,7 @@ class TestDocumentPresenter:
     def test_get_say_all_on_load_default(self, test_context: OrcaTestContext) -> None:
         """Test get_say_all_on_load returns default value."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.sayAllOnLoad = True
+        module, _mocks = self._setup_presenter(test_context)
 
         presenter = module.get_presenter()
         result = presenter.get_say_all_on_load()
@@ -166,9 +160,7 @@ class TestDocumentPresenter:
     def test_set_say_all_on_load(self, test_context: OrcaTestContext) -> None:
         """Test set_say_all_on_load updates setting."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.sayAllOnLoad = True
+        module, _mocks = self._setup_presenter(test_context)
 
         presenter = module.get_presenter()
         result = presenter.set_say_all_on_load(False)
@@ -179,9 +171,7 @@ class TestDocumentPresenter:
     def test_set_say_all_on_load_no_change(self, test_context: OrcaTestContext) -> None:
         """Test set_say_all_on_load returns True when value unchanged."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.sayAllOnLoad = True
+        module, _mocks = self._setup_presenter(test_context)
 
         presenter = module.get_presenter()
         result = presenter.set_say_all_on_load(True)
@@ -191,9 +181,7 @@ class TestDocumentPresenter:
     def test_get_page_summary_on_load_default(self, test_context: OrcaTestContext) -> None:
         """Test get_page_summary_on_load returns default value."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.pageSummaryOnLoad = True
+        module, _mocks = self._setup_presenter(test_context)
 
         presenter = module.get_presenter()
         result = presenter.get_page_summary_on_load()
@@ -203,9 +191,7 @@ class TestDocumentPresenter:
     def test_set_page_summary_on_load(self, test_context: OrcaTestContext) -> None:
         """Test set_page_summary_on_load updates setting."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.pageSummaryOnLoad = True
+        module, _mocks = self._setup_presenter(test_context)
 
         presenter = module.get_presenter()
         result = presenter.set_page_summary_on_load(False)
@@ -216,9 +202,7 @@ class TestDocumentPresenter:
     def test_set_page_summary_on_load_no_change(self, test_context: OrcaTestContext) -> None:
         """Test set_page_summary_on_load returns True when value unchanged."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.pageSummaryOnLoad = True
+        module, _mocks = self._setup_presenter(test_context)
 
         presenter = module.get_presenter()
         result = presenter.set_page_summary_on_load(True)
@@ -228,11 +212,7 @@ class TestDocumentPresenter:
     def test_get_speak_find_results_true(self, test_context: OrcaTestContext) -> None:
         """Test get_speak_find_results returns True when verbosity is not NONE."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.FIND_SPEAK_NONE = 0
-        settings.FIND_SPEAK_ALL = 2
-        settings.findResultsVerbosity = settings.FIND_SPEAK_ALL
+        module, _mocks = self._setup_presenter(test_context)
 
         presenter = module.get_presenter()
         result = presenter.get_speak_find_results()
@@ -242,12 +222,13 @@ class TestDocumentPresenter:
     def test_get_speak_find_results_false(self, test_context: OrcaTestContext) -> None:
         """Test get_speak_find_results returns False when verbosity is NONE."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.FIND_SPEAK_NONE = 0
-        settings.findResultsVerbosity = settings.FIND_SPEAK_NONE
+        module, _mocks = self._setup_presenter(test_context)
+        from orca import gsettings_registry  # pylint: disable=import-outside-toplevel
 
         presenter = module.get_presenter()
+        gsettings_registry.get_registry().set_runtime_value(
+            "document", "find-results-verbosity", "none"
+        )
         result = presenter.get_speak_find_results()
 
         assert result is False
@@ -255,13 +236,13 @@ class TestDocumentPresenter:
     def test_set_speak_find_results_enable(self, test_context: OrcaTestContext) -> None:
         """Test set_speak_find_results enables speech."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.FIND_SPEAK_NONE = 0
-        settings.FIND_SPEAK_ALL = 2
-        settings.findResultsVerbosity = settings.FIND_SPEAK_NONE
+        module, _mocks = self._setup_presenter(test_context)
+        from orca import gsettings_registry  # pylint: disable=import-outside-toplevel
 
         presenter = module.get_presenter()
+        gsettings_registry.get_registry().set_runtime_value(
+            "document", "find-results-verbosity", "none"
+        )
         result = presenter.set_speak_find_results(True)
 
         assert result is True
@@ -270,11 +251,7 @@ class TestDocumentPresenter:
     def test_set_speak_find_results_disable(self, test_context: OrcaTestContext) -> None:
         """Test set_speak_find_results disables speech."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.FIND_SPEAK_NONE = 0
-        settings.FIND_SPEAK_ALL = 2
-        settings.findResultsVerbosity = settings.FIND_SPEAK_ALL
+        module, _mocks = self._setup_presenter(test_context)
 
         presenter = module.get_presenter()
         result = presenter.set_speak_find_results(False)
@@ -285,12 +262,13 @@ class TestDocumentPresenter:
     def test_get_only_speak_changed_lines_true(self, test_context: OrcaTestContext) -> None:
         """Test get_only_speak_changed_lines returns True when set."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.FIND_SPEAK_IF_LINE_CHANGED = 1
-        settings.findResultsVerbosity = settings.FIND_SPEAK_IF_LINE_CHANGED
+        module, _mocks = self._setup_presenter(test_context)
+        from orca import gsettings_registry  # pylint: disable=import-outside-toplevel
 
         presenter = module.get_presenter()
+        gsettings_registry.get_registry().set_runtime_value(
+            "document", "find-results-verbosity", "if-line-changed"
+        )
         result = presenter.get_only_speak_changed_lines()
 
         assert result is True
@@ -298,11 +276,7 @@ class TestDocumentPresenter:
     def test_get_only_speak_changed_lines_false(self, test_context: OrcaTestContext) -> None:
         """Test get_only_speak_changed_lines returns False when not set."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.FIND_SPEAK_IF_LINE_CHANGED = 1
-        settings.FIND_SPEAK_ALL = 2
-        settings.findResultsVerbosity = settings.FIND_SPEAK_ALL
+        module, _mocks = self._setup_presenter(test_context)
 
         presenter = module.get_presenter()
         result = presenter.get_only_speak_changed_lines()
@@ -312,11 +286,7 @@ class TestDocumentPresenter:
     def test_set_only_speak_changed_lines_enable(self, test_context: OrcaTestContext) -> None:
         """Test set_only_speak_changed_lines enables the option."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.FIND_SPEAK_IF_LINE_CHANGED = 1
-        settings.FIND_SPEAK_ALL = 2
-        settings.findResultsVerbosity = settings.FIND_SPEAK_ALL
+        module, _mocks = self._setup_presenter(test_context)
 
         presenter = module.get_presenter()
         result = presenter.set_only_speak_changed_lines(True)
@@ -327,13 +297,13 @@ class TestDocumentPresenter:
     def test_set_only_speak_changed_lines_disable(self, test_context: OrcaTestContext) -> None:
         """Test set_only_speak_changed_lines disables the option."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.FIND_SPEAK_IF_LINE_CHANGED = 1
-        settings.FIND_SPEAK_ALL = 2
-        settings.findResultsVerbosity = settings.FIND_SPEAK_IF_LINE_CHANGED
+        module, _mocks = self._setup_presenter(test_context)
+        from orca import gsettings_registry  # pylint: disable=import-outside-toplevel
 
         presenter = module.get_presenter()
+        gsettings_registry.get_registry().set_runtime_value(
+            "document", "find-results-verbosity", "if-line-changed"
+        )
         result = presenter.set_only_speak_changed_lines(False)
 
         assert result is True
@@ -342,11 +312,10 @@ class TestDocumentPresenter:
     def test_get_find_results_minimum_length(self, test_context: OrcaTestContext) -> None:
         """Test get_find_results_minimum_length returns current value."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.findResultsMinimumLength = 5
+        module, _mocks = self._setup_presenter(test_context)
 
         presenter = module.get_presenter()
+        presenter.set_find_results_minimum_length(5)
         result = presenter.get_find_results_minimum_length()
 
         assert result == 5
@@ -354,11 +323,10 @@ class TestDocumentPresenter:
     def test_set_find_results_minimum_length(self, test_context: OrcaTestContext) -> None:
         """Test set_find_results_minimum_length updates setting."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.findResultsMinimumLength = 5
+        module, _mocks = self._setup_presenter(test_context)
 
         presenter = module.get_presenter()
+        presenter.set_find_results_minimum_length(5)
         result = presenter.set_find_results_minimum_length(10)
 
         assert result is True
@@ -367,11 +335,10 @@ class TestDocumentPresenter:
     def test_set_find_results_minimum_length_no_change(self, test_context: OrcaTestContext) -> None:
         """Test set_find_results_minimum_length returns True when value unchanged."""
 
-        module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.findResultsMinimumLength = 5
+        module, _mocks = self._setup_presenter(test_context)
 
         presenter = module.get_presenter()
+        presenter.set_find_results_minimum_length(5)
         result = presenter.set_find_results_minimum_length(5)
 
         assert result is True
@@ -427,8 +394,11 @@ class TestDocumentPresenter:
         from unittest.mock import MagicMock
 
         module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.findResultsMinimumLength = 5
+        from orca import gsettings_registry  # pylint: disable=import-outside-toplevel
+
+        gsettings_registry.get_registry().set_runtime_value(
+            "document", "find-results-minimum-length", 5
+        )
 
         # Set up mock script
         mock_script = MagicMock()
@@ -454,10 +424,11 @@ class TestDocumentPresenter:
         from unittest.mock import MagicMock
 
         module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.findResultsMinimumLength = 3
-        settings.FIND_SPEAK_NONE = 0
-        settings.findResultsVerbosity = settings.FIND_SPEAK_NONE
+        from orca import gsettings_registry  # pylint: disable=import-outside-toplevel
+
+        registry = gsettings_registry.get_registry()
+        registry.set_runtime_value("document", "find-results-minimum-length", 3)
+        registry.set_runtime_value("document", "find-results-verbosity", "none")
 
         # Set up mock script
         mock_script = MagicMock()
@@ -483,11 +454,11 @@ class TestDocumentPresenter:
         from unittest.mock import MagicMock
 
         module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.findResultsMinimumLength = 3
-        settings.FIND_SPEAK_NONE = 0
-        settings.FIND_SPEAK_ALL = 2
-        settings.findResultsVerbosity = settings.FIND_SPEAK_ALL
+        from orca import gsettings_registry  # pylint: disable=import-outside-toplevel
+
+        gsettings_registry.get_registry().set_runtime_value(
+            "document", "find-results-minimum-length", 3
+        )
 
         # Set up mock script
         mock_script = MagicMock()
@@ -525,11 +496,11 @@ class TestDocumentPresenter:
         from unittest.mock import MagicMock
 
         module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.findResultsMinimumLength = 3
-        settings.FIND_SPEAK_NONE = 0
-        settings.FIND_SPEAK_IF_LINE_CHANGED = 1
-        settings.findResultsVerbosity = settings.FIND_SPEAK_IF_LINE_CHANGED
+        from orca import gsettings_registry  # pylint: disable=import-outside-toplevel
+
+        registry = gsettings_registry.get_registry()
+        registry.set_runtime_value("document", "find-results-minimum-length", 3)
+        registry.set_runtime_value("document", "find-results-verbosity", "if-line-changed")
 
         # Set up mock script
         mock_script = MagicMock()
@@ -730,9 +701,6 @@ class TestDocumentPresenter:
         from unittest.mock import MagicMock, patch
 
         module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.nativeNavTriggersFocusMode = True
-
         mock_app = MagicMock()
         mock_script = MagicMock()
         mock_script.app = mock_app
@@ -764,9 +732,6 @@ class TestDocumentPresenter:
         from unittest.mock import MagicMock, patch
 
         module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.nativeNavTriggersFocusMode = True
-
         mock_app = MagicMock()
         mock_script = MagicMock()
         mock_script.app = mock_app
@@ -807,9 +772,6 @@ class TestDocumentPresenter:
         from unittest.mock import MagicMock, patch
 
         module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.nativeNavTriggersFocusMode = True
-
         mock_app = MagicMock()
         mock_script = MagicMock()
         mock_script.app = mock_app
@@ -849,8 +811,6 @@ class TestDocumentPresenter:
         from unittest.mock import MagicMock
 
         module, mocks = self._setup_presenter(test_context)
-        settings = mocks["orca.settings"]
-        settings.nativeNavTriggersFocusMode = False
 
         mock_app = MagicMock()
         mock_script = MagicMock()
@@ -876,6 +836,7 @@ class TestDocumentPresenter:
         nav_mock.last_input_event_was_navigation_command.return_value = False
 
         presenter = module.get_presenter()
+        presenter.set_native_nav_triggers_focus_mode(False)
         presenter._app_states[hash(mock_app)] = module._AppModeState(
             in_focus_mode=True, focus_mode_is_sticky=False, browse_mode_is_sticky=False
         )

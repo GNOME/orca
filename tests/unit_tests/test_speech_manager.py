@@ -93,8 +93,6 @@ class TestSpeechManager:
         settings_manager_instance._load_user_customizations.return_value = True
         settings_manager_mock.get_manager.return_value = settings_manager_instance
 
-        settings_mock.enableSpeech = True
-
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_manager_mock.get_manager.return_value = test_context.Mock()
 
@@ -411,12 +409,15 @@ class TestSpeechManager:
     def test_get_capitalization_style(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test get_capitalization_style method."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].capitalizationStyle = case["setting_value"]
+        self._setup_dependencies(test_context)
 
+        from orca import gsettings_registry
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "capitalization-style", case["setting_value"]
+        )
 
         result = manager.get_capitalization_style()
         assert result == case["expected"]
@@ -554,12 +555,15 @@ class TestSpeechManager:
     def test_get_speech_is_enabled(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test get_speech_is_enabled method."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].enableSpeech = case["setting_value"]
+        self._setup_dependencies(test_context)
 
+        from orca import gsettings_registry
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "enable", case["setting_value"]
+        )
 
         result = manager.get_speech_is_enabled()
         assert result == case["expected"]
@@ -621,12 +625,15 @@ class TestSpeechManager:
         """Test get_speech_is_enabled_and_not_muted method."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].enableSpeech = case["enable_speech"]
         essential_modules["orca.speech"].get_mute_speech.return_value = case["silence_speech"]
 
+        from orca import gsettings_registry
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "enable", case["enable_speech"]
+        )
 
         result = manager.get_speech_is_enabled_and_not_muted()
         assert result == case["expected"]
@@ -646,11 +653,15 @@ class TestSpeechManager:
     def test_check_speech_setting(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test check_speech_setting method with various speech enabled settings."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].enableSpeech = case["speech_enabled"]
+        self._setup_dependencies(test_context)
+
+        from orca import gsettings_registry
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "enable", case["speech_enabled"]
+        )
         mock_method = test_context.Mock()
         test_context.patch_object(manager, case["expected_method"], new=mock_method)
         manager.check_speech_setting()
@@ -880,12 +891,15 @@ class TestSpeechManager:
     def test_get_speak_numbers_as_digits(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test get_speak_numbers_as_digits method."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].speakNumbersAsDigits = case["setting_value"]
+        self._setup_dependencies(test_context)
 
+        from orca import gsettings_registry
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "speak-numbers-as-digits", case["setting_value"]
+        )
 
         result = manager.get_speak_numbers_as_digits()
         assert result == case["expected"]
@@ -924,12 +938,15 @@ class TestSpeechManager:
     ) -> None:
         """Test get_use_pronunciation_dictionary method."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].usePronunciationDictionary = case["setting_value"]
+        self._setup_dependencies(test_context)
 
+        from orca import gsettings_registry
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "use-pronunciation-dictionary", case["setting_value"]
+        )
 
         result = manager.get_use_pronunciation_dictionary()
         assert result == case["expected"]
@@ -968,12 +985,15 @@ class TestSpeechManager:
     def test_get_use_color_names(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test get_use_color_names method."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].useColorNames = case["setting_value"]
+        self._setup_dependencies(test_context)
 
+        from orca import gsettings_registry
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "use-color-names", case["setting_value"]
+        )
 
         result = manager.get_use_color_names()
         assert result == case["expected"]
@@ -1012,12 +1032,15 @@ class TestSpeechManager:
     ) -> None:
         """Test get_insert_pauses_between_utterances method."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].enablePauseBreaks = case["setting_value"]
+        self._setup_dependencies(test_context)
 
+        from orca import gsettings_registry
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "insert-pauses-between-utterances", case["setting_value"]
+        )
 
         result = manager.get_insert_pauses_between_utterances()
         assert result == case["expected"]
@@ -1056,12 +1079,15 @@ class TestSpeechManager:
     def test_get_auto_language_switching(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test get_auto_language_switching method."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].enableAutoLanguageSwitching = case["setting_value"]
+        self._setup_dependencies(test_context)
 
+        from orca import gsettings_registry
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "auto-language-switching", case["setting_value"]
+        )
 
         result = manager.get_auto_language_switching()
         assert result == case["expected"]
@@ -1093,8 +1119,6 @@ class TestSpeechManager:
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         speech_mock = essential_modules["orca.speech"]
         speech_mock.get_mute_speech.return_value = True
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.enableSpeech = True
 
         from orca.speech_manager import SpeechManager
 
@@ -1107,13 +1131,13 @@ class TestSpeechManager:
     def test_toggle_speech_enables_when_disabled(self, test_context: OrcaTestContext) -> None:
         """Test toggle_speech enables speech when enableSpeech is False."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.enableSpeech = False
+        self._setup_dependencies(test_context)
 
+        from orca import gsettings_registry
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
+        gsettings_registry.get_registry().set_runtime_value("speech", "enable", False)
         mock_init = test_context.patch_object(manager, "_init_server")
         script = test_context.Mock()
         manager.toggle_speech(script)
@@ -1128,8 +1152,6 @@ class TestSpeechManager:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         speech_mock = essential_modules["orca.speech"]
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.enableSpeech = True
 
         settings_manager_instance = essential_modules["orca.settings_manager"].get_manager()
         settings_manager_instance.get_app_setting.return_value = True
@@ -1149,8 +1171,6 @@ class TestSpeechManager:
         """Test toggle_speech restores enableSpeech=False when app profile disables speech."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.enableSpeech = True
 
         settings_manager_instance = essential_modules["orca.settings_manager"].get_manager()
         settings_manager_instance.get_app_setting.return_value = False
@@ -1191,17 +1211,8 @@ class TestVoicesPreferencesGridUI:  # pylint: disable=too-few-public-methods
         settings_mock.CAPITALIZATION_STYLE_NONE = "none"
         settings_mock.CAPITALIZATION_STYLE_SPELL = "spell"
         settings_mock.CAPITALIZATION_STYLE_ICON = "icon"
-        settings_mock.CAPITALIZATION_STYLE_NONE = "none"
-        settings_mock.CAPITALIZATION_STYLE_SPELL = "spell"
-        settings_mock.CAPITALIZATION_STYLE_ICON = "icon"
 
         settings_mock.capitalizationStyle = "none"
-        settings_mock.enableSpeech = True
-        settings_mock.speakNumbersAsDigits = False
-        settings_mock.useColorNames = True
-        settings_mock.enablePauseBreaks = True
-        settings_mock.usePronunciationDictionary = True
-        settings_mock.enableAutoLanguageSwitching = False
 
         speechserver_mock = essential_modules["orca.speechserver"]
         speechserver_mock.PunctuationStyle = PunctuationStyle
@@ -1224,11 +1235,14 @@ class TestVoicesPreferencesGridUI:  # pylint: disable=too-few-public-methods
     ) -> None:
         """Test save_settings includes speechServerFactory."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.speechServerFactory = "spiel"
+        self._setup_dependencies(test_context)
 
+        from orca import gsettings_registry
         from orca.speech_manager import SpeechManager, VoicesPreferencesGrid
+
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "speech-server-factory", "spiel"
+        )
 
         manager = SpeechManager()
         mock_server = test_context.Mock()

@@ -107,7 +107,7 @@ class GSettingsRegistry:
         genum: str | None = None,
         voice_type: str | None = None,
         *,
-        fallback: Any,
+        default: Any,
     ) -> Any: ...
 
     @overload
@@ -127,9 +127,9 @@ class GSettingsRegistry:
         gtype: str,
         genum: str | None = None,
         voice_type: str | None = None,
-        fallback: Any = _NOT_SET,
+        default: Any = _NOT_SET,
     ) -> Any | None:
-        """Returns a setting value via layered GSettings lookup, fallback, or None."""
+        """Returns a setting value via layered GSettings lookup, default, or None."""
 
         runtime = self._runtime_values.get((schema, key, voice_type))
         if runtime is not None:
@@ -138,10 +138,10 @@ class GSettingsRegistry:
             return runtime
 
         if not self._enabled:
-            return self._use_fallback(schema, key, fallback)
+            return self._use_default(schema, key, default)
         handle = self._get_handle(schema)
         if handle is None:
-            return self._use_fallback(schema, key, fallback)
+            return self._use_default(schema, key, default)
 
         sub_path = ""
         if schema == "voice":
@@ -159,17 +159,17 @@ class GSettingsRegistry:
         result = accessor(key, sub_path) if accessor is not None else None
         if result is not None:
             return result
-        return self._use_fallback(schema, key, fallback)
+        return self._use_default(schema, key, default)
 
     @staticmethod
-    def _use_fallback(schema: str, key: str, fallback: Any) -> Any | None:
-        """Returns fallback value, or None if no fallback was provided."""
+    def _use_default(schema: str, key: str, default: Any) -> Any | None:
+        """Returns default value, or None if no default was provided."""
 
-        if fallback is _NOT_SET:
+        if default is _NOT_SET:
             return None
-        msg = f"GSETTINGS REGISTRY: {schema}/{key} using settings module value = {fallback!r}"
+        msg = f"GSETTINGS REGISTRY: {schema}/{key} using default value = {default!r}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        return fallback
+        return default
 
     @staticmethod
     def sanitize_gsettings_path(name: str) -> str:

@@ -594,11 +594,6 @@ class TestLiveRegionPresenter:
         )
         settings_manager_mock.get_manager = test_context.Mock(return_value=settings_instance)
 
-        # Set live region settings
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.inferLiveRegions = True
-        settings_mock.presentLiveRegionFromInactiveTab = True
-
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_instance = test_context.Mock()
         focus_instance.get_locus_of_focus = test_context.Mock(return_value=None)
@@ -627,7 +622,9 @@ class TestLiveRegionPresenter:
 
         from orca import gsettings_registry
 
-        gsettings_registry.get_registry().set_enabled(False)
+        registry = gsettings_registry.get_registry()
+        registry.clear_runtime_values()
+        registry.set_enabled(False)
 
         return essential_modules
 
@@ -697,10 +694,8 @@ class TestLiveRegionPresenter:
     def test_get_is_enabled(self, test_context: OrcaTestContext) -> None:
         """Test LiveRegionPresenter.get_is_enabled."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.live_region_presenter import LiveRegionPresenter
-
-        essential_modules["orca.settings"].enableLiveRegions = True
 
         presenter = LiveRegionPresenter()
         assert presenter.get_is_enabled() is True
@@ -708,12 +703,11 @@ class TestLiveRegionPresenter:
     def test_set_is_enabled(self, test_context: OrcaTestContext) -> None:
         """Test LiveRegionPresenter.set_is_enabled."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.live_region_presenter import LiveRegionPresenter
 
-        essential_modules["orca.settings"].enableLiveRegions = False
-
         presenter = LiveRegionPresenter()
+        presenter.set_is_enabled(False)
         result = presenter.set_is_enabled(True)
 
         assert result is True
@@ -725,9 +719,8 @@ class TestLiveRegionPresenter:
         essential_modules = self._setup_dependencies(test_context)
         from orca.live_region_presenter import LiveRegionPresenter
 
-        essential_modules["orca.settings"].enableLiveRegions = False
-
         presenter = LiveRegionPresenter()
+        presenter.set_is_enabled(False)
         mock_script = test_context.Mock()
         mock_script.present_message = test_context.Mock()
         mock_event = test_context.Mock()
@@ -743,8 +736,6 @@ class TestLiveRegionPresenter:
 
         essential_modules = self._setup_dependencies(test_context)
         from orca.live_region_presenter import LiveRegionPresenter
-
-        essential_modules["orca.settings"].enableLiveRegions = True
 
         presenter = LiveRegionPresenter()
         mock_script = test_context.Mock()
@@ -802,9 +793,8 @@ class TestLiveRegionPresenter:
         essential_modules = self._setup_dependencies(test_context)
         from orca.live_region_presenter import LiveRegionPresenter
 
-        essential_modules["orca.settings"].enableLiveRegions = False
-
         presenter = LiveRegionPresenter()
+        presenter.set_is_enabled(False)
         mock_script = test_context.Mock()
         mock_script.present_message = test_context.Mock()
 
@@ -864,12 +854,11 @@ class TestLiveRegionPresenter:
     def test_is_presentable_live_region_event_disabled(self, test_context: OrcaTestContext) -> None:
         """Test is_presentable_live_region_event when presenter is disabled."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.live_region_presenter import LiveRegionPresenter
 
-        essential_modules["orca.settings"].enableLiveRegions = False
-
         presenter = LiveRegionPresenter()
+        presenter.set_is_enabled(False)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         mock_event.type = "object:text-changed:insert"
@@ -990,11 +979,6 @@ class TestLiveRegionPresenterModule:
         )
         settings_manager_mock.get_manager = test_context.Mock(return_value=settings_instance)
 
-        # Set live region settings
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.inferLiveRegions = True
-        settings_mock.presentLiveRegionFromInactiveTab = True
-
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_instance = test_context.Mock()
         focus_instance.get_locus_of_focus = test_context.Mock(return_value=None)
@@ -1021,7 +1005,9 @@ class TestLiveRegionPresenterModule:
 
         from orca import gsettings_registry
 
-        gsettings_registry.get_registry().set_enabled(False)
+        registry = gsettings_registry.get_registry()
+        registry.clear_runtime_values()
+        registry.set_enabled(False)
 
         return essential_modules
 

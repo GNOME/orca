@@ -101,11 +101,13 @@ class TestSpellCheckPresenter:
     def test_get_spell_error_false(self, test_context: OrcaTestContext) -> None:
         """Test get_spell_error returns False when setting is False."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].spellcheckSpellError = False
+        self._setup_dependencies(test_context)
+
+        from orca import gsettings_registry
         from orca.spellcheck_presenter import SpellCheckPresenter
 
         presenter = SpellCheckPresenter()
+        gsettings_registry.get_registry().set_runtime_value("spellcheck", "spell-error", False)
         result = presenter.get_spell_error()
         assert result is False
 
@@ -154,11 +156,13 @@ class TestSpellCheckPresenter:
     def test_get_spell_suggestion_false(self, test_context: OrcaTestContext) -> None:
         """Test get_spell_suggestion returns False when setting is False."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].spellcheckSpellSuggestion = False
+        self._setup_dependencies(test_context)
+
+        from orca import gsettings_registry
         from orca.spellcheck_presenter import SpellCheckPresenter
 
         presenter = SpellCheckPresenter()
+        gsettings_registry.get_registry().set_runtime_value("spellcheck", "spell-suggestion", False)
         result = presenter.get_spell_suggestion()
         assert result is False
 
@@ -207,11 +211,13 @@ class TestSpellCheckPresenter:
     def test_get_present_context_false(self, test_context: OrcaTestContext) -> None:
         """Test get_present_context returns False when setting is False."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].spellcheckPresentContext = False
+        self._setup_dependencies(test_context)
+
+        from orca import gsettings_registry
         from orca.spellcheck_presenter import SpellCheckPresenter
 
         presenter = SpellCheckPresenter()
+        gsettings_registry.get_registry().set_runtime_value("spellcheck", "present-context", False)
         result = presenter.get_present_context()
         assert result is False
 

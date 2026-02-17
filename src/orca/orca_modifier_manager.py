@@ -227,7 +227,7 @@ class OrcaModifierManager:
         """Returns the list of Orca modifier keys."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            "keybindings", "orca-modifier-keys", "as", fallback=settings.orcaModifierKeys
+            "keybindings", "orca-modifier-keys", "as", default=["Insert", "KP_Insert"]
         )
 
     def set_modifiers_for_layout(self, is_desktop: bool) -> None:

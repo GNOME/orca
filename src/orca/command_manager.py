@@ -38,7 +38,7 @@ import gi
 gi.require_version("Atk", "1.0")
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gdk, GLib, Gtk
+from gi.repository import Gdk, GLib, Gtk  # pylint: disable=no-name-in-module
 
 from . import cmdnames
 from . import dbus_service
@@ -1221,7 +1221,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
                 "keyboard-layout",
                 "",
                 genum="org.gnome.Orca.KeyboardLayout",
-                fallback="desktop",
+                default="desktop",
             )
             is_desktop = layout == "desktop"
         self.set_keyboard_layout_is_desktop(is_desktop)

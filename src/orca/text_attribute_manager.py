@@ -418,11 +418,11 @@ class TextAttributeManager:
 
     _SCHEMA = "text-attributes"
 
-    def _get_setting(self, key: str, gtype: str, fallback: Any) -> Any:
-        """Returns the dconf value for key, or fallback if not in dconf."""
+    def _get_setting(self, key: str, gtype: str, default: Any) -> Any:
+        """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, gtype, fallback=fallback
+            self._SCHEMA, key, gtype, default=default
         )
 
     def __init__(self) -> None:
@@ -448,7 +448,7 @@ class TextAttributeManager:
     def get_attributes_to_speak(self) -> list[str]:
         """Returns the list of text attributes to speak."""
 
-        return self._get_setting("attributes-to-speak", "as", settings.textAttributesToSpeak)
+        return self._get_setting("attributes-to-speak", "as", [])
 
     @dbus_service.setter
     def set_attributes_to_speak(self, value: list[str]) -> bool:
@@ -476,7 +476,7 @@ class TextAttributeManager:
     def get_attributes_to_braille(self) -> list[str]:
         """Returns the list of text attributes to mark in braille."""
 
-        return self._get_setting("attributes-to-braille", "as", settings.textAttributesToBraille)
+        return self._get_setting("attributes-to-braille", "as", [])
 
     @dbus_service.setter
     def set_attributes_to_braille(self, value: list[str]) -> bool:

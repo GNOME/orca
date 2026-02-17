@@ -52,7 +52,6 @@ from . import keybindings
 from . import messages
 from . import presentation_manager
 from . import script_manager
-from . import settings
 from . import speech_presenter
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
@@ -71,11 +70,11 @@ class FlatReviewPresenter:
 
     _SCHEMA = "flat-review"
 
-    def _get_setting(self, key: str, fallback: bool) -> bool:
-        """Returns the dconf value for key, or fallback if not in dconf."""
+    def _get_setting(self, key: str, default: bool) -> bool:
+        """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, "b", fallback=fallback
+            self._SCHEMA, key, "b", default=default
         )
 
     def __init__(self) -> None:
@@ -1327,7 +1326,7 @@ class FlatReviewPresenter:
     def get_is_restricted(self) -> bool:
         """Returns whether flat review is restricted to the current object."""
 
-        return self._get_setting("restricted", settings.flatReviewIsRestricted)
+        return self._get_setting("restricted", False)
 
     @dbus_service.setter
     def set_is_restricted(self, value: bool) -> bool:

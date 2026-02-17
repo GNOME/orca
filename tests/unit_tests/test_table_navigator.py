@@ -235,8 +235,9 @@ class TestTableNavigator:
         )
         from orca.table_navigator import TableNavigator
 
-        # Override the default True set in _setup_dependencies
-        essential_modules["orca.settings"].tableNavigationEnabled = False
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_runtime_value("table-navigation", "enabled", False)
         navigator = TableNavigator()
         assert navigator.get_is_enabled() is False
 
@@ -985,9 +986,6 @@ class TestTableNavigator:
         test_context.patch("orca.table_navigator.AXTable.get_cell_spans", return_value=(1, 1))
         mock_focus_manager = test_context.Mock()
         essential_modules["orca.focus_manager"].get_manager.return_value = mock_focus_manager
-        essential_modules["orca.settings"].skipBlankCells = False
-        essential_modules["orca.settings"].speakCellCoordinates = False
-        essential_modules["orca.settings"].speakCellSpan = False
         mock_controller = test_context.Mock()
         essential_modules["orca.dbus_service"].get_remote_controller.return_value = mock_controller
         mock_keybindings_class = test_context.Mock()
@@ -996,7 +994,13 @@ class TestTableNavigator:
         test_context.patch(
             "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
         )
+
+        from orca import gsettings_registry
         from orca.table_navigator import TableNavigator
+
+        registry = gsettings_registry.get_registry()
+        registry.set_runtime_value("speech", "announce-cell-coordinates", False)
+        registry.set_runtime_value("speech", "announce-cell-span", False)
 
         navigator = TableNavigator()
         mock_script = test_context.Mock()
@@ -1073,7 +1077,12 @@ class TestTableNavigator:
         """Test TableNavigator.move_left skipping blank cells when setting is enabled."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].skipBlankCells = True
+
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_runtime_value(
+            "table-navigation", "skip-blank-cells", True
+        )
         mock_script = test_context.Mock()
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_blank_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -1925,10 +1934,6 @@ class TestTableNavigator:
         test_context.patch("orca.table_navigator.AXTable.get_cell_spans", return_value=(2, 3))
         mock_focus_manager = test_context.Mock()
         essential_modules["orca.focus_manager"].get_manager.return_value = mock_focus_manager
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.speakCellCoordinates = True
-        settings_mock.speakCellSpan = True
-        settings_mock.skipBlankCells = False
         essential_modules["orca.messages"].TABLE_CELL_COORDINATES = "Row %(row)s, column %(column)s"
         essential_modules["orca.messages"].cell_span.return_value = "spans 2 rows and 3 columns"
         mock_controller = test_context.Mock()
@@ -1980,9 +1985,6 @@ class TestTableNavigator:
         test_context.patch("orca.table_navigator.AXTable.get_cell_spans", return_value=(1, 1))
         mock_focus_manager = test_context.Mock()
         essential_modules["orca.focus_manager"].get_manager.return_value = mock_focus_manager
-        essential_modules["orca.settings"].skipBlankCells = False
-        essential_modules["orca.settings"].speakCellCoordinates = False
-        essential_modules["orca.settings"].speakCellSpan = False
         mock_controller = test_context.Mock()
         essential_modules["orca.dbus_service"].get_remote_controller.return_value = mock_controller
         mock_keybindings_class = test_context.Mock()
@@ -1991,7 +1993,13 @@ class TestTableNavigator:
         test_context.patch(
             "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
         )
+
+        from orca import gsettings_registry
         from orca.table_navigator import TableNavigator
+
+        registry = gsettings_registry.get_registry()
+        registry.set_runtime_value("speech", "announce-cell-coordinates", False)
+        registry.set_runtime_value("speech", "announce-cell-span", False)
 
         navigator = TableNavigator()
         mock_script = test_context.Mock()
@@ -2009,10 +2017,14 @@ class TestTableNavigator:
     def test_get_skip_blank_cells(self, test_context: OrcaTestContext) -> None:
         """Test TableNavigator.get_skip_blank_cells returns setting value."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].skipBlankCells = True
+        self._setup_dependencies(test_context)
+
+        from orca import gsettings_registry
         from orca.table_navigator import get_navigator
 
+        gsettings_registry.get_registry().set_runtime_value(
+            "table-navigation", "skip-blank-cells", True
+        )
         nav = get_navigator()
         result = nav.get_skip_blank_cells()
         assert result is True
@@ -2032,10 +2044,14 @@ class TestTableNavigator:
     def test_set_skip_blank_cells_no_change(self, test_context: OrcaTestContext) -> None:
         """Test TableNavigator.set_skip_blank_cells returns early if value unchanged."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].skipBlankCells = True
+        self._setup_dependencies(test_context)
+
+        from orca import gsettings_registry
         from orca.table_navigator import get_navigator
 
+        gsettings_registry.get_registry().set_runtime_value(
+            "table-navigation", "skip-blank-cells", True
+        )
         nav = get_navigator()
         result = nav.set_skip_blank_cells(True)
         assert result is True
@@ -2053,13 +2069,13 @@ class TestTableNavigator:
         test_context.patch("orca.table_navigator.AXTable.get_cell_spans", return_value=(1, 1))
         mock_focus_manager = test_context.Mock()
         essential_modules["orca.focus_manager"].get_manager.return_value = mock_focus_manager
-        essential_modules["orca.settings"].skipBlankCells = False
-        essential_modules["orca.settings"].speakCellCoordinates = False
-        essential_modules["orca.settings"].speakCellSpan = False
 
-        from orca import focus_manager
+        from orca import focus_manager, gsettings_registry
 
         essential_modules["orca.focus_manager"].TABLE_NAVIGATOR = focus_manager.TABLE_NAVIGATOR
+        registry = gsettings_registry.get_registry()
+        registry.set_runtime_value("speech", "announce-cell-coordinates", False)
+        registry.set_runtime_value("speech", "announce-cell-span", False)
 
         mock_controller = test_context.Mock()
         essential_modules["orca.dbus_service"].get_remote_controller.return_value = mock_controller

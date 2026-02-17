@@ -108,10 +108,6 @@ class TestSystemInformationPresenter:
         settings_instance = test_context.Mock()
         settings_manager_mock.get_manager = test_context.Mock(return_value=settings_instance)
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.presentTimeFormat = "%I:%M %p"
-        settings_mock.presentDateFormat = "%A, %B %d, %Y"
-
         psutil_mock = essential_modules["psutil"]
         battery_mock = test_context.Mock()
         battery_mock.percent = 85
@@ -194,7 +190,7 @@ class TestSystemInformationPresenter:
             assert manager.get_keyboard_command(command_name) is not None
 
     def test_setup_commands(self, test_context: OrcaTestContext) -> None:
-        """Test SystemInformationPresenter._setup_commands registers with CommandManager."""
+        """Test _setup_commands registers with CommandManager."""
 
         self._setup_dependencies(test_context)
         from orca.system_information_presenter import SystemInformationPresenter
@@ -240,7 +236,14 @@ class TestSystemInformationPresenter:
     ) -> None:
         """Test SystemInformationPresenter time and date presentation methods."""
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+
+        from orca import gsettings_registry
         from orca.system_information_presenter import SystemInformationPresenter
+
+        gsettings_key = "time-format" if _setting_key == "presentTimeFormat" else "date-format"
+        gsettings_registry.get_registry().set_runtime_value(
+            "system-information", gsettings_key, format_string
+        )
 
         mock_script = test_context.Mock()
         mock_script.present_message = test_context.Mock()
@@ -445,8 +448,13 @@ class TestSystemInformationPresenter:
     ) -> None:
         """Test SystemInformationPresenter.get_date_format returns correct enum name."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].presentDateFormat = format_value
+        self._setup_dependencies(test_context)
+
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_runtime_value(
+            "system-information", "date-format", format_value
+        )
 
         test_context.patch(
             "orca.system_information_presenter.dbus_service.getter", new=lambda func: func
@@ -480,8 +488,6 @@ class TestSystemInformationPresenter:
         """Test SystemInformationPresenter.set_date_format validates and sets format."""
 
         essential_modules = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
-        original_format = settings_mock.presentDateFormat
 
         test_context.patch(
             "orca.system_information_presenter.dbus_service.setter", new=lambda func: func
@@ -490,6 +496,7 @@ class TestSystemInformationPresenter:
         from orca.system_information_presenter import SystemInformationPresenter
 
         presenter = SystemInformationPresenter()
+        original_format = presenter._get_date_format_string()
         result = presenter.set_date_format(format_name)
 
         assert result == expected_success
@@ -522,8 +529,13 @@ class TestSystemInformationPresenter:
     ) -> None:
         """Test SystemInformationPresenter.get_time_format returns correct enum name."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].presentTimeFormat = format_value
+        self._setup_dependencies(test_context)
+
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_runtime_value(
+            "system-information", "time-format", format_value
+        )
 
         test_context.patch(
             "orca.system_information_presenter.dbus_service.getter", new=lambda func: func
@@ -557,8 +569,6 @@ class TestSystemInformationPresenter:
         """Test SystemInformationPresenter.set_time_format validates and sets format."""
 
         essential_modules = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
-        original_format = settings_mock.presentTimeFormat
 
         test_context.patch(
             "orca.system_information_presenter.dbus_service.setter", new=lambda func: func
@@ -567,6 +577,7 @@ class TestSystemInformationPresenter:
         from orca.system_information_presenter import SystemInformationPresenter
 
         presenter = SystemInformationPresenter()
+        original_format = presenter._get_time_format_string()
         result = presenter.set_time_format(format_name)
 
         assert result == expected_success
@@ -629,11 +640,15 @@ class TestSystemInformationPresenter:
     def test_internal_get_date_format_string(self, test_context: OrcaTestContext) -> None:
         """Test SystemInformationPresenter._get_date_format_string returns raw format."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        expected_format = "%A, %B %-d"
-        essential_modules["orca.settings"].presentDateFormat = expected_format
+        self._setup_dependencies(test_context)
 
+        from orca import gsettings_registry
         from orca.system_information_presenter import SystemInformationPresenter
+
+        expected_format = "%A, %B %-d"
+        gsettings_registry.get_registry().set_runtime_value(
+            "system-information", "date-format", expected_format
+        )
 
         presenter = SystemInformationPresenter()
         result = presenter._get_date_format_string()
@@ -643,11 +658,15 @@ class TestSystemInformationPresenter:
     def test_internal_get_time_format_string(self, test_context: OrcaTestContext) -> None:
         """Test SystemInformationPresenter._get_time_format_string returns raw format."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        expected_format = "%I:%M %p"
-        essential_modules["orca.settings"].presentTimeFormat = expected_format
+        self._setup_dependencies(test_context)
 
+        from orca import gsettings_registry
         from orca.system_information_presenter import SystemInformationPresenter
+
+        expected_format = "%I:%M %p"
+        gsettings_registry.get_registry().set_runtime_value(
+            "system-information", "time-format", expected_format
+        )
 
         presenter = SystemInformationPresenter()
         result = presenter._get_time_format_string()

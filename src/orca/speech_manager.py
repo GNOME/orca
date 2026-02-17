@@ -1175,11 +1175,11 @@ class SpeechManager:
     _SPEECH_SCHEMA = "speech"
     _VOICE_SCHEMA = "voice"
 
-    def _get_setting(self, key: str, gtype: str, fallback: Any) -> Any:
-        """Returns the dconf value for key, or fallback if not in dconf."""
+    def _get_setting(self, key: str, gtype: str, default: Any) -> Any:
+        """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SPEECH_SCHEMA, key, gtype, fallback=fallback
+            self._SPEECH_SCHEMA, key, gtype, default=default
         )
 
     def get_voice_properties(self, voice_type: str = "") -> ACSS:
@@ -1451,7 +1451,7 @@ class SpeechManager:
     def get_speech_server_factory(self) -> str:
         """Returns the speech server factory module name."""
 
-        return self._get_setting("speech-server-factory", "s", settings.speechServerFactory)
+        return self._get_setting("speech-server-factory", "s", "speechdispatcherfactory")
 
     @gsettings_registry.get_registry().gsetting(
         key="synthesizer", schema="speech", gtype="s", default="", summary="Speech synthesizer"
@@ -1905,7 +1905,7 @@ class SpeechManager:
         """Returns the current speech rate."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._VOICE_SCHEMA, "rate", "i", fallback=50
+            self._VOICE_SCHEMA, "rate", "i", default=50
         )
 
     @dbus_service.setter
@@ -1991,7 +1991,7 @@ class SpeechManager:
         """Returns the current speech pitch."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._VOICE_SCHEMA, "pitch", "d", fallback=5.0
+            self._VOICE_SCHEMA, "pitch", "d", default=5.0
         )
 
     @dbus_service.setter
@@ -2077,7 +2077,7 @@ class SpeechManager:
         """Returns the current speech volume."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._VOICE_SCHEMA, "volume", "d", fallback=10.0
+            self._VOICE_SCHEMA, "volume", "d", default=10.0
         )
 
     @dbus_service.setter
@@ -2172,15 +2172,9 @@ class SpeechManager:
             "capitalization-style",
             "",
             genum="org.gnome.Orca.CapitalizationStyle",
+            default="none",
         )
-        if value is not None:
-            return value
-        result = settings.capitalizationStyle
-        msg = (
-            f"GSETTINGS REGISTRY: speech/capitalization-style using in-memory fallback = {result!r}"
-        )
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return result
+        return value
 
     @dbus_service.setter
     def set_capitalization_style(self, value: str) -> bool:
@@ -2267,13 +2261,9 @@ class SpeechManager:
             "punctuation-level",
             "",
             genum="org.gnome.Orca.PunctuationStyle",
+            default="most",
         )
-        if value is not None:
-            return value
-        result = PunctuationStyle.MOST.string_name
-        msg = f"GSETTINGS REGISTRY: speech/punctuation-level using in-memory fallback = {result!r}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return result
+        return value
 
     @dbus_service.setter
     def set_punctuation_level(self, value: str) -> bool:
@@ -2449,7 +2439,7 @@ class SpeechManager:
     def get_speech_is_enabled(self) -> bool:
         """Returns whether the speech server is enabled. See also is-muted."""
 
-        return self._get_setting("enable", "b", settings.enableSpeech)
+        return self._get_setting("enable", "b", True)
 
     @dbus_service.setter
     def set_speech_is_enabled(self, value: bool) -> bool:
@@ -2480,7 +2470,7 @@ class SpeechManager:
     def get_speak_numbers_as_digits(self) -> bool:
         """Returns whether numbers are spoken as digits."""
 
-        return self._get_setting("speak-numbers-as-digits", "b", settings.speakNumbersAsDigits)
+        return self._get_setting("speak-numbers-as-digits", "b", False)
 
     @dbus_service.setter
     def set_speak_numbers_as_digits(self, value: bool) -> bool:
@@ -2505,7 +2495,7 @@ class SpeechManager:
     def get_use_color_names(self) -> bool:
         """Returns whether colors are announced by name or as RGB values."""
 
-        return self._get_setting("use-color-names", "b", settings.useColorNames)
+        return self._get_setting("use-color-names", "b", True)
 
     @dbus_service.setter
     def set_use_color_names(self, value: bool) -> bool:
@@ -2530,9 +2520,7 @@ class SpeechManager:
     def get_insert_pauses_between_utterances(self) -> bool:
         """Returns whether pauses are inserted between utterances, e.g. between name and role."""
 
-        return self._get_setting(
-            "insert-pauses-between-utterances", "b", settings.enablePauseBreaks
-        )
+        return self._get_setting("insert-pauses-between-utterances", "b", True)
 
     @dbus_service.setter
     def set_insert_pauses_between_utterances(self, value: bool) -> bool:
@@ -2557,9 +2545,7 @@ class SpeechManager:
     def get_use_pronunciation_dictionary(self) -> bool:
         """Returns whether the user's pronunciation dictionary should be applied."""
 
-        return self._get_setting(
-            "use-pronunciation-dictionary", "b", settings.usePronunciationDictionary
-        )
+        return self._get_setting("use-pronunciation-dictionary", "b", True)
 
     @dbus_service.setter
     def set_use_pronunciation_dictionary(self, value: bool) -> bool:
@@ -2584,9 +2570,7 @@ class SpeechManager:
     def get_auto_language_switching(self) -> bool:
         """Returns whether automatic language switching is enabled."""
 
-        return self._get_setting(
-            "auto-language-switching", "b", settings.enableAutoLanguageSwitching
-        )
+        return self._get_setting("auto-language-switching", "b", True)
 
     @dbus_service.setter
     def set_auto_language_switching(self, value: bool) -> bool:

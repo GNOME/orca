@@ -1369,14 +1369,18 @@ class TestStructuralNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
-        essential_modules["orca.settings"].structuralNavigationEnabled = False
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = mock_script
         mock_cmd_mgr = test_context.Mock()
         essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
+
+        from orca import gsettings_registry
         from orca.structural_navigator import get_navigator, NavigationMode
 
+        gsettings_registry.get_registry().set_runtime_value(
+            "structural-navigation", "enabled", False
+        )
         nav = get_navigator()
         nav._previous_mode_for_script[mock_script] = NavigationMode.DOCUMENT
         test_context.patch_object(nav, "_is_active_script", return_value=True)
@@ -1391,14 +1395,18 @@ class TestStructuralNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
-        essential_modules["orca.settings"].structuralNavigationEnabled = False
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = mock_script
         mock_cmd_mgr = test_context.Mock()
         essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
+
+        from orca import gsettings_registry
         from orca.structural_navigator import get_navigator
 
+        gsettings_registry.get_registry().set_runtime_value(
+            "structural-navigation", "enabled", False
+        )
         nav = get_navigator()
         test_context.patch_object(nav, "_is_active_script", return_value=True)
 
@@ -1517,10 +1525,14 @@ class TestStructuralNavigator:
     ) -> None:
         """Test last_command_prevents_focus_mode returns False if setting True."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].structNavTriggersFocusMode = True
+        self._setup_dependencies(test_context)
+
+        from orca import gsettings_registry
         from orca.structural_navigator import get_navigator
 
+        gsettings_registry.get_registry().set_runtime_value(
+            "structural-navigation", "triggers-focus-mode", True
+        )
         nav = get_navigator()
         mock_event = test_context.Mock()
         nav._last_input_event = mock_event

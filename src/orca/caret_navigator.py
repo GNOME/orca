@@ -44,7 +44,6 @@ from . import messages
 from . import presentation_manager
 from . import say_all_presenter
 from . import script_manager
-from . import settings
 from .ax_object import AXObject
 from .ax_text import AXText
 
@@ -66,11 +65,11 @@ class CaretNavigator:
 
     _SCHEMA = "caret-navigation"
 
-    def _get_setting(self, key: str, fallback: bool) -> bool:
-        """Returns the dconf value for key, or fallback if not in dconf."""
+    def _get_setting(self, key: str, default: bool) -> bool:
+        """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, "b", fallback=fallback
+            self._SCHEMA, key, "b", default=default
         )
 
     def __init__(self) -> None:
@@ -190,7 +189,7 @@ class CaretNavigator:
     def get_is_enabled(self) -> bool:
         """Returns whether caret navigation is enabled."""
 
-        return self._get_setting("enabled", settings.caretNavigationEnabled)
+        return self._get_setting("enabled", True)
 
     @dbus_service.setter
     def set_is_enabled(self, value: bool) -> bool:
@@ -225,7 +224,7 @@ class CaretNavigator:
     def get_triggers_focus_mode(self) -> bool:
         """Returns whether caret navigation triggers focus mode."""
 
-        return self._get_setting("triggers-focus-mode", settings.caretNavTriggersFocusMode)
+        return self._get_setting("triggers-focus-mode", False)
 
     @dbus_service.setter
     def set_triggers_focus_mode(self, value: bool) -> bool:

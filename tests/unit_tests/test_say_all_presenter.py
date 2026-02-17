@@ -173,7 +173,9 @@ class TestSayAllPresenter:
 
         from orca import gsettings_registry
 
-        gsettings_registry.get_registry().set_enabled(False)
+        registry = gsettings_registry.get_registry()
+        registry.clear_runtime_values()
+        registry.set_enabled(False)
 
         return essential_modules
 
@@ -316,8 +318,7 @@ class TestSayAllPresenter:
         mock_script = test_context.Mock()
         presenter._script = mock_script
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.rewindAndFastForwardInSayAll = enabled
+        presenter.set_rewind_and_fast_forward_enabled(enabled)
 
         mock_context = test_context.Mock(spec=speechserver.SayAllContext)
         mock_context.obj = "context_obj" if obj_valid else None
@@ -501,8 +502,7 @@ class TestSayAllPresenter:
         mock_script = test_context.Mock()
         presenter._script = mock_script
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.rewindAndFastForwardInSayAll = setting_enabled
+        presenter.set_rewind_and_fast_forward_enabled(setting_enabled)
 
         mock_context = (
             test_context.Mock(spec=speechserver.SayAllContext) if context_provided else None

@@ -403,11 +403,11 @@ class DocumentPresenter:
 
     _SCHEMA = "document"
 
-    def _get_setting(self, key: str, gtype: str, fallback: Any) -> Any:
-        """Returns the dconf value for key, or fallback if not in dconf."""
+    def _get_setting(self, key: str, gtype: str, default: Any) -> Any:
+        """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, gtype, fallback=fallback
+            self._SCHEMA, key, gtype, default=default
         )
 
     def __init__(self) -> None:
@@ -1045,9 +1045,7 @@ class DocumentPresenter:
     def get_native_nav_triggers_focus_mode(self) -> bool:
         """Returns whether native navigation triggers focus mode."""
 
-        return self._get_setting(
-            "native-nav-triggers-focus-mode", "b", settings.nativeNavTriggersFocusMode
-        )
+        return self._get_setting("native-nav-triggers-focus-mode", "b", True)
 
     @dbus_service.setter
     def set_native_nav_triggers_focus_mode(self, value: bool) -> bool:
@@ -1075,9 +1073,7 @@ class DocumentPresenter:
     def get_auto_sticky_focus_mode_for_web_apps(self) -> bool:
         """Returns whether to auto-detect web apps and enable sticky focus mode."""
 
-        return self._get_setting(
-            "auto-sticky-focus-mode", "b", settings.autoStickyFocusModeForWebApps
-        )
+        return self._get_setting("auto-sticky-focus-mode", "b", True)
 
     @dbus_service.setter
     def set_auto_sticky_focus_mode_for_web_apps(self, value: bool) -> bool:
@@ -1105,7 +1101,7 @@ class DocumentPresenter:
     def get_say_all_on_load(self) -> bool:
         """Returns whether to perform say all when a document loads."""
 
-        return self._get_setting("say-all-on-load", "b", settings.sayAllOnLoad)
+        return self._get_setting("say-all-on-load", "b", True)
 
     @dbus_service.setter
     def set_say_all_on_load(self, value: bool) -> bool:
@@ -1131,7 +1127,7 @@ class DocumentPresenter:
     def get_page_summary_on_load(self) -> bool:
         """Returns whether to present a page summary when a document loads."""
 
-        return self._get_setting("page-summary-on-load", "b", settings.pageSummaryOnLoad)
+        return self._get_setting("page-summary-on-load", "b", True)
 
     @dbus_service.setter
     def set_page_summary_on_load(self, value: bool) -> bool:
@@ -1158,15 +1154,13 @@ class DocumentPresenter:
     def _get_find_results_verbosity_name(self) -> str:
         """Returns the find results verbosity level as a string name."""
 
-        value = gsettings_registry.get_registry().layered_lookup(
+        return gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
             "find-results-verbosity",
             "",
             genum="org.gnome.Orca.FindResultsVerbosity",
+            default="all",
         )
-        if value is not None:
-            return value
-        return FindResultsVerbosity(settings.findResultsVerbosity).string_name
 
     @dbus_service.getter
     def get_speak_find_results(self) -> bool:
@@ -1222,9 +1216,7 @@ class DocumentPresenter:
     def get_find_results_minimum_length(self) -> int:
         """Returns the minimum length for find results to be spoken."""
 
-        return self._get_setting(
-            "find-results-minimum-length", "i", settings.findResultsMinimumLength
-        )
+        return self._get_setting("find-results-minimum-length", "i", 4)
 
     @dbus_service.setter
     def set_find_results_minimum_length(self, value: int) -> bool:
@@ -1252,7 +1244,7 @@ class DocumentPresenter:
     def get_layout_mode(self) -> bool:
         """Returns whether layout mode is enabled."""
 
-        return self._get_setting("layout-mode", "b", settings.layoutMode)
+        return self._get_setting("layout-mode", "b", True)
 
     @dbus_service.setter
     def set_layout_mode(self, value: bool) -> bool:

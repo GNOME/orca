@@ -45,7 +45,6 @@ from . import input_event_manager
 from . import keybindings
 from . import messages
 from . import presentation_manager
-from . import settings
 from . import speech_presenter
 from .ax_object import AXObject
 from .ax_table import AXTable
@@ -71,11 +70,11 @@ class TableNavigator:
 
     _SCHEMA = "table-navigation"
 
-    def _get_setting(self, key: str, fallback: bool) -> bool:
-        """Returns the dconf value for key, or fallback if not in dconf."""
+    def _get_setting(self, key: str, default: bool) -> bool:
+        """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, "b", fallback=fallback
+            self._SCHEMA, key, "b", default=default
         )
 
     def __init__(self) -> None:
@@ -944,7 +943,7 @@ class TableNavigator:
     def get_is_enabled(self) -> bool:
         """Returns whether table navigation is enabled."""
 
-        return self._get_setting("enabled", settings.tableNavigationEnabled)
+        return self._get_setting("enabled", True)
 
     @dbus_service.setter
     def set_is_enabled(self, value: bool) -> bool:
@@ -979,7 +978,7 @@ class TableNavigator:
     def get_skip_blank_cells(self) -> bool:
         """Returns whether blank cells should be skipped during navigation."""
 
-        return self._get_setting("skip-blank-cells", settings.skipBlankCells)
+        return self._get_setting("skip-blank-cells", False)
 
     @dbus_service.setter
     def set_skip_blank_cells(self, value: bool) -> bool:

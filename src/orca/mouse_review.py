@@ -66,7 +66,6 @@ from . import messages
 from . import preferences_grid_base
 from . import presentation_manager
 from . import script_manager
-from . import settings
 from . import speech_presenter
 from .ax_component import AXComponent
 from .ax_object import AXObject
@@ -410,11 +409,11 @@ class MouseReviewer:
 
     _SCHEMA = "mouse-review"
 
-    def _get_setting(self, key: str, fallback: bool) -> bool:
-        """Returns the dconf value for key, or fallback if not in dconf."""
+    def _get_setting(self, key: str, default: bool) -> bool:
+        """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, "b", fallback=fallback
+            self._SCHEMA, key, "b", default=default
         )
 
     def __init__(self) -> None:
@@ -560,7 +559,7 @@ class MouseReviewer:
     def get_present_tooltips(self) -> bool:
         """Returns whether tooltips displayed due to mouse hover are spoken (requires X11)."""
 
-        return self._get_setting("present-tooltips", settings.presentToolTips)
+        return self._get_setting("present-tooltips", False)
 
     @dbus_service.setter
     def set_present_tooltips(self, value: bool) -> bool:
@@ -583,7 +582,7 @@ class MouseReviewer:
     def get_is_enabled(self) -> bool:
         """Returns whether mouse review is enabled (requires Wnck)."""
 
-        return self._get_setting("enabled", settings.enableMouseReview)
+        return self._get_setting("enabled", False)
 
     @dbus_service.setter
     def set_is_enabled(self, value: bool) -> bool:

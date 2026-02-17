@@ -59,17 +59,14 @@ class TestSoundPresenter:
         settings_mock.PROGRESS_BAR_ALL = 0
         settings_mock.PROGRESS_BAR_APPLICATION = 1
         settings_mock.PROGRESS_BAR_WINDOW = 2
-        settings_mock.enableSound = True
-        settings_mock.soundVolume = 0.5
-        settings_mock.beepProgressBarUpdates = False
-        settings_mock.progressBarBeepInterval = 5
-        settings_mock.progressBarBeepVerbosity = 1
 
         essential_modules["controller"] = controller_mock
 
         from orca import gsettings_registry
 
-        gsettings_registry.get_registry().set_enabled(False)
+        registry = gsettings_registry.get_registry()
+        registry.clear_runtime_values()
+        registry.set_enabled(False)
 
         return essential_modules
 
@@ -88,22 +85,20 @@ class TestSoundPresenter:
     def test_get_sound_is_enabled_returns_setting(self, test_context: OrcaTestContext) -> None:
         """Test get_sound_is_enabled returns the enableSound setting."""
 
-        mocks = self._setup_dependencies(test_context)
-        mocks["orca.settings"].enableSound = True
+        self._setup_dependencies(test_context)
 
         from orca.sound_presenter import SoundPresenter
 
         presenter = SoundPresenter()
         assert presenter.get_sound_is_enabled() is True
 
-        mocks["orca.settings"].enableSound = False
+        presenter.set_sound_is_enabled(False)
         assert presenter.get_sound_is_enabled() is False
 
     def test_set_sound_is_enabled_updates_setting(self, test_context: OrcaTestContext) -> None:
         """Test set_sound_is_enabled updates the enableSound setting."""
 
-        mocks = self._setup_dependencies(test_context)
-        mocks["orca.settings"].enableSound = True
+        self._setup_dependencies(test_context)
 
         from orca.sound_presenter import SoundPresenter
 
@@ -116,19 +111,18 @@ class TestSoundPresenter:
     def test_get_sound_volume_returns_setting(self, test_context: OrcaTestContext) -> None:
         """Test get_sound_volume returns the soundVolume setting."""
 
-        mocks = self._setup_dependencies(test_context)
-        mocks["orca.settings"].soundVolume = 0.75
+        self._setup_dependencies(test_context)
 
         from orca.sound_presenter import SoundPresenter
 
         presenter = SoundPresenter()
+        presenter.set_sound_volume(0.75)
         assert presenter.get_sound_volume() == 0.75
 
     def test_set_sound_volume_updates_setting(self, test_context: OrcaTestContext) -> None:
         """Test set_sound_volume updates the soundVolume setting."""
 
-        mocks = self._setup_dependencies(test_context)
-        mocks["orca.settings"].soundVolume = 0.5
+        self._setup_dependencies(test_context)
 
         from orca.sound_presenter import SoundPresenter
 
@@ -143,15 +137,15 @@ class TestSoundPresenter:
     ) -> None:
         """Test get_beep_progress_bar_updates returns the beepProgressBarUpdates setting."""
 
-        mocks = self._setup_dependencies(test_context)
-        mocks["orca.settings"].beepProgressBarUpdates = True
+        self._setup_dependencies(test_context)
 
         from orca.sound_presenter import SoundPresenter
 
         presenter = SoundPresenter()
+        presenter.set_beep_progress_bar_updates(True)
         assert presenter.get_beep_progress_bar_updates() is True
 
-        mocks["orca.settings"].beepProgressBarUpdates = False
+        presenter.set_beep_progress_bar_updates(False)
         assert presenter.get_beep_progress_bar_updates() is False
 
     def test_set_beep_progress_bar_updates_updates_setting(
@@ -159,8 +153,7 @@ class TestSoundPresenter:
     ) -> None:
         """Test set_beep_progress_bar_updates updates the beepProgressBarUpdates setting."""
 
-        mocks = self._setup_dependencies(test_context)
-        mocks["orca.settings"].beepProgressBarUpdates = False
+        self._setup_dependencies(test_context)
 
         from orca.sound_presenter import SoundPresenter
 
@@ -175,12 +168,12 @@ class TestSoundPresenter:
     ) -> None:
         """Test get_progress_bar_beep_interval returns the progressBarBeepInterval setting."""
 
-        mocks = self._setup_dependencies(test_context)
-        mocks["orca.settings"].progressBarBeepInterval = 10
+        self._setup_dependencies(test_context)
 
         from orca.sound_presenter import SoundPresenter
 
         presenter = SoundPresenter()
+        presenter.set_progress_bar_beep_interval(10)
         assert presenter.get_progress_bar_beep_interval() == 10
 
     def test_set_progress_bar_beep_interval_updates_setting(
@@ -188,8 +181,7 @@ class TestSoundPresenter:
     ) -> None:
         """Test set_progress_bar_beep_interval updates the progressBarBeepInterval setting."""
 
-        mocks = self._setup_dependencies(test_context)
-        mocks["orca.settings"].progressBarBeepInterval = 5
+        self._setup_dependencies(test_context)
 
         from orca.sound_presenter import SoundPresenter
 
@@ -204,12 +196,12 @@ class TestSoundPresenter:
     ) -> None:
         """Test get_progress_bar_beep_verbosity returns the progressBarBeepVerbosity setting."""
 
-        mocks = self._setup_dependencies(test_context)
-        mocks["orca.settings"].progressBarBeepVerbosity = 2
+        self._setup_dependencies(test_context)
 
         from orca.sound_presenter import SoundPresenter
 
         presenter = SoundPresenter()
+        presenter.set_progress_bar_beep_verbosity(2)
         assert presenter.get_progress_bar_beep_verbosity() == 2
 
     def test_set_progress_bar_beep_verbosity_updates_setting(
@@ -217,8 +209,7 @@ class TestSoundPresenter:
     ) -> None:
         """Test set_progress_bar_beep_verbosity updates the progressBarBeepVerbosity setting."""
 
-        mocks = self._setup_dependencies(test_context)
-        mocks["orca.settings"].progressBarBeepVerbosity = 1
+        self._setup_dependencies(test_context)
 
         from orca.sound_presenter import SoundPresenter
 

@@ -46,7 +46,6 @@ from . import keybindings
 from . import messages
 from . import presentation_manager
 from . import script_manager
-from . import settings
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
@@ -181,11 +180,11 @@ class LiveRegionPresenter:
 
     _SCHEMA = "live-regions"
 
-    def _get_setting(self, key: str, fallback: bool) -> bool:
-        """Returns the dconf value for key, or fallback if not in dconf."""
+    def _get_setting(self, key: str, default: bool) -> bool:
+        """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, "b", fallback=fallback
+            self._SCHEMA, key, "b", default=default
         )
 
     # Maximum size for message queue and cache
@@ -560,7 +559,7 @@ class LiveRegionPresenter:
     def get_is_enabled(self) -> bool:
         """Returns whether live region support is enabled."""
 
-        return self._get_setting("enabled", settings.enableLiveRegions)
+        return self._get_setting("enabled", True)
 
     def set_is_enabled(self, value: bool) -> bool:
         """Sets whether live region support is enabled."""
@@ -584,9 +583,7 @@ class LiveRegionPresenter:
     def get_present_live_region_from_inactive_tab(self) -> bool:
         """Returns whether live region messages are presented from inactive tabs."""
 
-        return self._get_setting(
-            "present-from-inactive-tab", settings.presentLiveRegionFromInactiveTab
-        )
+        return self._get_setting("present-from-inactive-tab", False)
 
     def set_present_live_region_from_inactive_tab(self, value: bool) -> bool:
         """Sets whether live region messages are presented from inactive tabs."""

@@ -50,7 +50,6 @@ from . import keybindings
 from . import messages
 from . import preferences_grid_base
 from . import presentation_manager
-from . import settings
 
 
 class DateFormat(Enum):
@@ -158,11 +157,11 @@ class SystemInformationPresenter:
 
     _SCHEMA = "system-information"
 
-    def _get_setting(self, key: str, gtype: str, fallback: Any) -> Any:
-        """Returns the dconf value for key, or fallback if not in dconf."""
+    def _get_setting(self, key: str, gtype: str, default: Any) -> Any:
+        """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, gtype, fallback=fallback
+            self._SCHEMA, key, gtype, default=default
         )
 
     def __init__(self) -> None:
@@ -228,12 +227,12 @@ class SystemInformationPresenter:
     def _get_date_format_string(self) -> str:
         """Returns the current date format string for internal use."""
 
-        return self._get_setting("date-format", "s", settings.presentDateFormat)
+        return self._get_setting("date-format", "s", "%x")
 
     def _get_time_format_string(self) -> str:
         """Returns the current time format string for internal use."""
 
-        return self._get_setting("time-format", "s", settings.presentTimeFormat)
+        return self._get_setting("time-format", "s", "%X")
 
     def _set_date_format_string(self, value: str) -> bool:
         """Sets the date format string directly for internal use."""

@@ -383,15 +383,11 @@ class TestChat:
         manager_instance.override_key_bindings = test_context.Mock(side_effect=lambda h, b, d: b)
         settings_manager_mock.get_manager = test_context.Mock(return_value=manager_instance)
 
-        # Set chat-related settings
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.chatSpeakRoomName = False
-        settings_mock.chatAnnounceBuddyTyping = False
-        settings_mock.chatRoomHistories = False
-
         from orca import gsettings_registry
 
-        gsettings_registry.get_registry().set_enabled(False)
+        registry = gsettings_registry.get_registry()
+        registry.clear_runtime_values()
+        registry.set_enabled(False)
 
         return essential_modules
 
@@ -483,16 +479,11 @@ class TestChatPresenter:
         manager_instance.override_key_bindings = test_context.Mock(side_effect=lambda h, b, d: b)
         settings_manager_mock.get_manager = test_context.Mock(return_value=manager_instance)
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.chatSpeakRoomName = False
-        settings_mock.chatAnnounceBuddyTyping = False
-        settings_mock.chatRoomHistories = False
-        settings_mock.chatMessageVerbosity = 0
-        settings_mock.presentChatRoomLast = False
-
         from orca import gsettings_registry
 
-        gsettings_registry.get_registry().set_enabled(False)
+        registry = gsettings_registry.get_registry()
+        registry.clear_runtime_values()
+        registry.set_enabled(False)
 
         return essential_modules
 
@@ -517,13 +508,12 @@ class TestChatPresenter:
         """Test toggle_prefix from on to off."""
 
         essential_modules = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
         from orca.chat_presenter import get_presenter
 
-        settings_mock.chatSpeakRoomName = True
         mock_script = test_context.Mock()
 
         presenter = get_presenter()
+        presenter.set_speak_room_name(True)
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         pres_manager.present_message.reset_mock()
         result = presenter.toggle_prefix(mock_script, None)
@@ -538,7 +528,6 @@ class TestChatPresenter:
         """Test toggle_prefix from off to on."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].chatSpeakRoomName = False
         from orca.chat_presenter import get_presenter
 
         mock_script = test_context.Mock()
@@ -558,13 +547,12 @@ class TestChatPresenter:
         """Test toggle_buddy_typing from on to off."""
 
         essential_modules = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
         from orca.chat_presenter import get_presenter
 
-        settings_mock.chatAnnounceBuddyTyping = True
         mock_script = test_context.Mock()
 
         presenter = get_presenter()
+        presenter.set_announce_buddy_typing(True)
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         pres_manager.present_message.reset_mock()
         result = presenter.toggle_buddy_typing(mock_script, None)
@@ -579,7 +567,6 @@ class TestChatPresenter:
         """Test toggle_buddy_typing from off to on."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].chatAnnounceBuddyTyping = False
         from orca.chat_presenter import get_presenter
 
         mock_script = test_context.Mock()
@@ -599,13 +586,12 @@ class TestChatPresenter:
         """Test toggle_message_histories from on to off."""
 
         essential_modules = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
         from orca.chat_presenter import get_presenter
 
-        settings_mock.chatRoomHistories = True
         mock_script = test_context.Mock()
 
         presenter = get_presenter()
+        presenter.set_room_histories(True)
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         pres_manager.present_message.reset_mock()
         result = presenter.toggle_message_histories(mock_script, None)
@@ -620,7 +606,6 @@ class TestChatPresenter:
         """Test toggle_message_histories from off to on."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].chatRoomHistories = False
         from orca.chat_presenter import get_presenter
 
         mock_script = test_context.Mock()

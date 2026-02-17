@@ -648,11 +648,11 @@ class SpeechPresenter:
 
     _SCHEMA = "speech"
 
-    def _get_setting(self, key: str, gtype: str, fallback: Any) -> Any:
-        """Returns the dconf value for key, or fallback if not in dconf."""
+    def _get_setting(self, key: str, gtype: str, default: Any) -> Any:
+        """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, gtype, fallback=fallback
+            self._SCHEMA, key, gtype, default=default
         )
 
     def __init__(self) -> None:
@@ -758,9 +758,7 @@ class SpeechPresenter:
     def get_speak_misspelled_indicator(self) -> bool:
         """Returns whether the misspelled indicator is spoken."""
 
-        return self._get_setting(
-            "speak-misspelled-indicator", "b", settings.speakMisspelledIndicator
-        )
+        return self._get_setting("speak-misspelled-indicator", "b", True)
 
     @dbus_service.setter
     def set_speak_misspelled_indicator(self, value: bool) -> bool:
@@ -785,7 +783,7 @@ class SpeechPresenter:
     def get_speak_description(self) -> bool:
         """Returns whether object descriptions are spoken."""
 
-        return self._get_setting("speak-description", "b", settings.speakDescription)
+        return self._get_setting("speak-description", "b", True)
 
     @dbus_service.setter
     def set_speak_description(self, value: bool) -> bool:
@@ -810,7 +808,7 @@ class SpeechPresenter:
     def get_speak_position_in_set(self) -> bool:
         """Returns whether the position and set size of objects are spoken."""
 
-        return self._get_setting("speak-position-in-set", "b", settings.enablePositionSpeaking)
+        return self._get_setting("speak-position-in-set", "b", False)
 
     @dbus_service.setter
     def set_speak_position_in_set(self, value: bool) -> bool:
@@ -835,7 +833,7 @@ class SpeechPresenter:
     def get_speak_widget_mnemonic(self) -> bool:
         """Returns whether widget mnemonics are spoken."""
 
-        return self._get_setting("speak-widget-mnemonic", "b", settings.enableMnemonicSpeaking)
+        return self._get_setting("speak-widget-mnemonic", "b", True)
 
     @dbus_service.setter
     def set_speak_widget_mnemonic(self, value: bool) -> bool:
@@ -860,7 +858,7 @@ class SpeechPresenter:
     def get_speak_tutorial_messages(self) -> bool:
         """Returns whether tutorial messages are spoken."""
 
-        return self._get_setting("speak-tutorial-messages", "b", settings.enableTutorialMessages)
+        return self._get_setting("speak-tutorial-messages", "b", True)
 
     @dbus_service.setter
     def set_speak_tutorial_messages(self, value: bool) -> bool:
@@ -885,7 +883,7 @@ class SpeechPresenter:
     def get_repeated_character_limit(self) -> int:
         """Returns the count at which repeated, non-alphanumeric symbols will be described."""
 
-        return self._get_setting("repeated-character-limit", "i", settings.repeatCharacterLimit)
+        return self._get_setting("repeated-character-limit", "i", 4)
 
     @dbus_service.setter
     def set_repeated_character_limit(self, value: int) -> bool:
@@ -910,7 +908,7 @@ class SpeechPresenter:
     def get_speak_blank_lines(self) -> bool:
         """Returns whether blank lines will be spoken."""
 
-        return self._get_setting("speak-blank-lines", "b", settings.speakBlankLines)
+        return self._get_setting("speak-blank-lines", "b", True)
 
     @dbus_service.setter
     def set_speak_blank_lines(self, value: bool) -> bool:
@@ -935,7 +933,7 @@ class SpeechPresenter:
     def get_speak_row_in_gui_table(self) -> bool:
         """Returns whether Up/Down in GUI tables speaks the row or just the cell."""
 
-        return self._get_setting("speak-row-in-gui-table", "b", settings.readFullRowInGUITable)
+        return self._get_setting("speak-row-in-gui-table", "b", True)
 
     @dbus_service.setter
     def set_speak_row_in_gui_table(self, value: bool) -> bool:
@@ -960,9 +958,7 @@ class SpeechPresenter:
     def get_speak_row_in_document_table(self) -> bool:
         """Returns whether Up/Down in text-document tables speaks the row or just the cell."""
 
-        return self._get_setting(
-            "speak-row-in-document-table", "b", settings.readFullRowInDocumentTable
-        )
+        return self._get_setting("speak-row-in-document-table", "b", True)
 
     @dbus_service.setter
     def set_speak_row_in_document_table(self, value: bool) -> bool:
@@ -987,7 +983,7 @@ class SpeechPresenter:
     def get_speak_row_in_spreadsheet(self) -> bool:
         """Returns whether Up/Down in spreadsheets speaks the row or just the cell."""
 
-        return self._get_setting("speak-row-in-spreadsheet", "b", settings.readFullRowInSpreadSheet)
+        return self._get_setting("speak-row-in-spreadsheet", "b", False)
 
     @dbus_service.setter
     def set_speak_row_in_spreadsheet(self, value: bool) -> bool:
@@ -1012,7 +1008,7 @@ class SpeechPresenter:
     def get_announce_cell_span(self) -> bool:
         """Returns whether cell spans are announced when greater than 1."""
 
-        return self._get_setting("announce-cell-span", "b", settings.speakCellSpan)
+        return self._get_setting("announce-cell-span", "b", True)
 
     @dbus_service.setter
     def set_announce_cell_span(self, value: bool) -> bool:
@@ -1037,7 +1033,7 @@ class SpeechPresenter:
     def get_announce_cell_coordinates(self) -> bool:
         """Returns whether (non-spreadsheet) cell coordinates are announced."""
 
-        return self._get_setting("announce-cell-coordinates", "b", settings.speakCellCoordinates)
+        return self._get_setting("announce-cell-coordinates", "b", True)
 
     @dbus_service.setter
     def set_announce_cell_coordinates(self, value: bool) -> bool:
@@ -1062,9 +1058,7 @@ class SpeechPresenter:
     def get_announce_spreadsheet_cell_coordinates(self) -> bool:
         """Returns whether spreadsheet cell coordinates are announced."""
 
-        return self._get_setting(
-            "announce-spreadsheet-cell-coordinates", "b", settings.speakSpreadsheetCoordinates
-        )
+        return self._get_setting("announce-spreadsheet-cell-coordinates", "b", True)
 
     @dbus_service.setter
     def set_announce_spreadsheet_cell_coordinates(self, value: bool) -> bool:
@@ -1092,7 +1086,7 @@ class SpeechPresenter:
         return self._get_setting(
             "always-announce-selected-range-in-spreadsheet",
             "b",
-            settings.alwaysSpeakSelectedSpreadsheetRange,
+            False,
         )
 
     @dbus_service.setter
@@ -1118,7 +1112,7 @@ class SpeechPresenter:
     def get_announce_cell_headers(self) -> bool:
         """Returns whether cell headers are announced."""
 
-        return self._get_setting("announce-cell-headers", "b", settings.speakCellHeaders)
+        return self._get_setting("announce-cell-headers", "b", True)
 
     @dbus_service.setter
     def set_announce_cell_headers(self, value: bool) -> bool:
@@ -1143,7 +1137,7 @@ class SpeechPresenter:
     def get_announce_blockquote(self) -> bool:
         """Returns whether blockquotes are announced when entered."""
 
-        return self._get_setting("announce-blockquote", "b", settings.speakContextBlockquote)
+        return self._get_setting("announce-blockquote", "b", True)
 
     @dbus_service.setter
     def set_announce_blockquote(self, value: bool) -> bool:
@@ -1168,7 +1162,7 @@ class SpeechPresenter:
     def get_announce_form(self) -> bool:
         """Returns whether non-landmark forms are announced when entered."""
 
-        return self._get_setting("announce-form", "b", settings.speakContextNonLandmarkForm)
+        return self._get_setting("announce-form", "b", True)
 
     @dbus_service.setter
     def set_announce_form(self, value: bool) -> bool:
@@ -1191,7 +1185,7 @@ class SpeechPresenter:
     def get_announce_grouping(self) -> bool:
         """Returns whether groupings are announced when entered."""
 
-        return self._get_setting("announce-grouping", "b", settings.speakContextPanel)
+        return self._get_setting("announce-grouping", "b", True)
 
     @dbus_service.setter
     def set_announce_grouping(self, value: bool) -> bool:
@@ -1216,7 +1210,7 @@ class SpeechPresenter:
     def get_announce_landmark(self) -> bool:
         """Returns whether landmarks are announced when entered."""
 
-        return self._get_setting("announce-landmark", "b", settings.speakContextLandmark)
+        return self._get_setting("announce-landmark", "b", True)
 
     @dbus_service.setter
     def set_announce_landmark(self, value: bool) -> bool:
@@ -1241,7 +1235,7 @@ class SpeechPresenter:
     def get_announce_list(self) -> bool:
         """Returns whether lists are announced when entered."""
 
-        return self._get_setting("announce-list", "b", settings.speakContextList)
+        return self._get_setting("announce-list", "b", True)
 
     @dbus_service.setter
     def set_announce_list(self, value: bool) -> bool:
@@ -1264,7 +1258,7 @@ class SpeechPresenter:
     def get_announce_table(self) -> bool:
         """Returns whether tables are announced when entered."""
 
-        return self._get_setting("announce-table", "b", settings.speakContextTable)
+        return self._get_setting("announce-table", "b", True)
 
     @dbus_service.setter
     def set_announce_table(self, value: bool) -> bool:
@@ -1322,7 +1316,7 @@ class SpeechPresenter:
     def get_only_speak_displayed_text(self) -> bool:
         """Returns whether only displayed text should be spoken."""
 
-        return self._get_setting("only-speak-displayed-text", "b", settings.onlySpeakDisplayedText)
+        return self._get_setting("only-speak-displayed-text", "b", False)
 
     @dbus_service.setter
     def set_only_speak_displayed_text(self, value: bool) -> bool:
@@ -1347,9 +1341,7 @@ class SpeechPresenter:
     def get_speak_progress_bar_updates(self) -> bool:
         """Returns whether speech progress bar updates are enabled."""
 
-        return self._get_setting(
-            "speak-progress-bar-updates", "b", settings.speakProgressBarUpdates
-        )
+        return self._get_setting("speak-progress-bar-updates", "b", True)
 
     @dbus_service.setter
     def set_speak_progress_bar_updates(self, value: bool) -> bool:
@@ -1374,9 +1366,7 @@ class SpeechPresenter:
     def get_progress_bar_speech_interval(self) -> int:
         """Returns the speech progress bar update interval in seconds."""
 
-        return self._get_setting(
-            "progress-bar-speech-interval", "i", settings.progressBarSpeechInterval
-        )
+        return self._get_setting("progress-bar-speech-interval", "i", 10)
 
     @dbus_service.setter
     def set_progress_bar_speech_interval(self, value: int) -> bool:
@@ -1406,10 +1396,9 @@ class SpeechPresenter:
             "progress-bar-speech-verbosity",
             "",
             genum="org.gnome.Orca.ProgressBarVerbosity",
+            default="application",
         )
-        if value is not None:
-            return _PROGRESS_BAR_VERBOSITY_NICKS.get(value, settings.progressBarSpeechVerbosity)
-        return settings.progressBarSpeechVerbosity
+        return _PROGRESS_BAR_VERBOSITY_NICKS.get(value, 1)
 
     @dbus_service.setter
     def set_progress_bar_speech_verbosity(self, value: int) -> bool:
@@ -1435,7 +1424,7 @@ class SpeechPresenter:
     def get_messages_are_detailed(self) -> bool:
         """Returns whether informative messages will be detailed or brief."""
 
-        return self._get_setting("messages-are-detailed", "b", settings.messagesAreDetailed)
+        return self._get_setting("messages-are-detailed", "b", True)
 
     @dbus_service.setter
     def set_messages_are_detailed(self, value: bool) -> bool:
@@ -1465,15 +1454,13 @@ class SpeechPresenter:
     def get_verbosity_level(self) -> str:
         """Returns the current speech verbosity level for object presentation."""
 
-        value = gsettings_registry.get_registry().layered_lookup(
+        return gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
             "verbosity-level",
             "",
             genum="org.gnome.Orca.VerbosityLevel",
+            default="verbose",
         )
-        if value is not None:
-            return value
-        return VerbosityLevel(settings.speechVerbosityLevel).string_name
 
     @dbus_service.setter
     def set_verbosity_level(self, value: str) -> bool:
@@ -1560,9 +1547,7 @@ class SpeechPresenter:
     def get_speak_indentation_and_justification(self) -> bool:
         """Returns whether speaking of indentation and justification is enabled."""
 
-        return self._get_setting(
-            "speak-indentation-and-justification", "b", settings.enableSpeechIndentation
-        )
+        return self._get_setting("speak-indentation-and-justification", "b", False)
 
     @dbus_service.setter
     def set_speak_indentation_and_justification(self, value: bool) -> bool:
@@ -1587,9 +1572,7 @@ class SpeechPresenter:
     def get_speak_indentation_only_if_changed(self) -> bool:
         """Returns whether indentation will be announced only if it has changed."""
 
-        return self._get_setting(
-            "speak-indentation-only-if-changed", "b", settings.speakIndentationOnlyIfChanged
-        )
+        return self._get_setting("speak-indentation-only-if-changed", "b", False)
 
     @dbus_service.setter
     def set_speak_indentation_only_if_changed(self, value: bool) -> bool:
@@ -1953,7 +1936,7 @@ class SpeechPresenter:
     def get_monitor_font_size(self) -> int:
         """Returns the speech monitor font size."""
 
-        return self._get_setting("monitor-font-size", "i", settings.speechMonitorFontSize)
+        return self._get_setting("monitor-font-size", "i", 14)
 
     @dbus_service.setter
     def set_monitor_font_size(self, value: int) -> bool:
@@ -1980,7 +1963,7 @@ class SpeechPresenter:
     def get_monitor_foreground(self) -> str:
         """Returns the speech monitor foreground color."""
 
-        return self._get_setting("monitor-foreground", "s", settings.speechMonitorForeground)
+        return self._get_setting("monitor-foreground", "s", "#ffffff")
 
     @dbus_service.setter
     def set_monitor_foreground(self, value: str) -> bool:
@@ -2007,7 +1990,7 @@ class SpeechPresenter:
     def get_monitor_background(self) -> str:
         """Returns the speech monitor background color."""
 
-        return self._get_setting("monitor-background", "s", settings.speechMonitorBackground)
+        return self._get_setting("monitor-background", "s", "#000000")
 
     @dbus_service.setter
     def set_monitor_background(self, value: str) -> bool:

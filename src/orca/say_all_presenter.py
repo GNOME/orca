@@ -171,11 +171,11 @@ class SayAllPresenter:
 
     _SCHEMA = "say-all"
 
-    def _get_setting(self, key: str, fallback: bool) -> bool:
-        """Returns the dconf value for key, or fallback if not in dconf."""
+    def _get_setting(self, key: str, default: bool) -> bool:
+        """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, "b", fallback=fallback
+            self._SCHEMA, key, "b", default=default
         )
 
     def __init__(self) -> None:
@@ -552,7 +552,7 @@ class SayAllPresenter:
                     return
                 navigator = structural_navigator.get_navigator()
                 if (
-                    settings.structNavInSayAll
+                    self.get_structural_navigation_enabled()
                     and navigator.last_input_event_was_navigation_command()
                 ):
                     return
@@ -582,7 +582,7 @@ class SayAllPresenter:
     def get_announce_blockquote(self) -> bool:
         """Returns whether blockquotes are announced when entered."""
 
-        return self._get_setting("announce-blockquote", settings.sayAllContextBlockquote)
+        return self._get_setting("announce-blockquote", True)
 
     @dbus_service.setter
     def set_announce_blockquote(self, value: bool) -> bool:
@@ -607,7 +607,7 @@ class SayAllPresenter:
     def get_announce_form(self) -> bool:
         """Returns whether non-landmark forms are announced when entered."""
 
-        return self._get_setting("announce-form", settings.sayAllContextNonLandmarkForm)
+        return self._get_setting("announce-form", True)
 
     @dbus_service.setter
     def set_announce_form(self, value: bool) -> bool:
@@ -630,7 +630,7 @@ class SayAllPresenter:
     def get_announce_grouping(self) -> bool:
         """Returns whether groupings are announced when entered."""
 
-        return self._get_setting("announce-grouping", settings.sayAllContextPanel)
+        return self._get_setting("announce-grouping", True)
 
     @dbus_service.setter
     def set_announce_grouping(self, value: bool) -> bool:
@@ -655,7 +655,7 @@ class SayAllPresenter:
     def get_announce_landmark(self) -> bool:
         """Returns whether landmarks are announced when entered."""
 
-        return self._get_setting("announce-landmark", settings.sayAllContextLandmark)
+        return self._get_setting("announce-landmark", True)
 
     @dbus_service.setter
     def set_announce_landmark(self, value: bool) -> bool:
@@ -680,7 +680,7 @@ class SayAllPresenter:
     def get_announce_list(self) -> bool:
         """Returns whether lists are announced when entered."""
 
-        return self._get_setting("announce-list", settings.sayAllContextList)
+        return self._get_setting("announce-list", True)
 
     @dbus_service.setter
     def set_announce_list(self, value: bool) -> bool:
@@ -703,7 +703,7 @@ class SayAllPresenter:
     def get_announce_table(self) -> bool:
         """Returns whether tables are announced when entered."""
 
-        return self._get_setting("announce-table", settings.sayAllContextTable)
+        return self._get_setting("announce-table", True)
 
     @dbus_service.setter
     def set_announce_table(self, value: bool) -> bool:
@@ -726,13 +726,9 @@ class SayAllPresenter:
     def get_style(self) -> str:
         """Returns the current Say All style."""
 
-        value = gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, "style", "", genum="org.gnome.Orca.SayAllStyle"
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA, "style", "", genum="org.gnome.Orca.SayAllStyle", default="sentence"
         )
-        if value is not None:
-            return value
-        int_value = settings.sayAllStyle
-        return SayAllStyle(int_value).string_name
 
     @dbus_service.setter
     def set_style(self, value: str) -> bool:
@@ -764,7 +760,7 @@ class SayAllPresenter:
     def get_structural_navigation_enabled(self) -> bool:
         """Returns whether structural navigation keys can be used in Say All."""
 
-        return self._get_setting("structural-navigation", settings.structNavInSayAll)
+        return self._get_setting("structural-navigation", False)
 
     @dbus_service.setter
     def set_structural_navigation_enabled(self, value: bool) -> bool:
@@ -789,7 +785,7 @@ class SayAllPresenter:
     def get_rewind_and_fast_forward_enabled(self) -> bool:
         """Returns whether Up and Down can be used in Say All."""
 
-        return self._get_setting("rewind-and-fast-forward", settings.rewindAndFastForwardInSayAll)
+        return self._get_setting("rewind-and-fast-forward", False)
 
     @dbus_service.setter
     def set_rewind_and_fast_forward_enabled(self, value: bool) -> bool:

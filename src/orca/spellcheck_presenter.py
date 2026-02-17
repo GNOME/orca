@@ -46,7 +46,6 @@ from orca import messages
 from orca import object_properties
 from orca import preferences_grid_base
 from orca import presentation_manager
-from orca import settings
 from orca import speech_presenter
 from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
@@ -91,11 +90,11 @@ class SpellCheckPresenter:
 
     _SCHEMA = "spellcheck"
 
-    def _get_setting(self, key: str, fallback: bool) -> bool:
-        """Returns the dconf value for key, or fallback if not in dconf."""
+    def _get_setting(self, key: str, default: bool) -> bool:
+        """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, "b", fallback=fallback
+            self._SCHEMA, key, "b", default=default
         )
 
     def __init__(self) -> None:
@@ -121,7 +120,7 @@ class SpellCheckPresenter:
     def get_spell_error(self) -> bool:
         """Returns whether misspelled word should be spelled."""
 
-        return self._get_setting("spell-error", settings.spellcheckSpellError)
+        return self._get_setting("spell-error", True)
 
     @dbus_service.setter
     def set_spell_error(self, value: bool) -> bool:
@@ -147,7 +146,7 @@ class SpellCheckPresenter:
     def get_spell_suggestion(self) -> bool:
         """Returns whether the suggested correction should be spelled."""
 
-        return self._get_setting("spell-suggestion", settings.spellcheckSpellSuggestion)
+        return self._get_setting("spell-suggestion", True)
 
     @dbus_service.setter
     def set_spell_suggestion(self, value: bool) -> bool:
@@ -173,7 +172,7 @@ class SpellCheckPresenter:
     def get_present_context(self) -> bool:
         """Returns whether to present the context/surrounding sentence."""
 
-        return self._get_setting("present-context", settings.spellcheckPresentContext)
+        return self._get_setting("present-context", True)
 
     @dbus_service.setter
     def set_present_context(self, value: bool) -> bool:

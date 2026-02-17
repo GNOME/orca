@@ -87,11 +87,11 @@ class StructuralNavigator:
 
     _SCHEMA = "structural-navigation"
 
-    def _get_setting(self, key: str, gtype: str, fallback: Any) -> Any:
-        """Returns the dconf value for key, or fallback if not in dconf."""
+    def _get_setting(self, key: str, gtype: str, default: Any) -> Any:
+        """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, gtype, fallback=fallback
+            self._SCHEMA, key, gtype, default=default
         )
 
     def __init__(self) -> None:
@@ -505,7 +505,7 @@ class StructuralNavigator:
     def get_navigation_wraps(self) -> bool:
         """Returns whether navigation wraps when reaching the top/bottom of the document."""
 
-        return self._get_setting("wraps", "b", settings.wrappedStructuralNavigation)
+        return self._get_setting("wraps", "b", True)
 
     @dbus_service.setter
     def set_navigation_wraps(self, value: bool) -> bool:
@@ -528,7 +528,7 @@ class StructuralNavigator:
     def get_large_object_text_length(self) -> int:
         """Returns the minimum number of characters to be considered a 'large object'."""
 
-        return self._get_setting("large-object-text-length", "i", settings.largeObjectTextLength)
+        return self._get_setting("large-object-text-length", "i", 75)
 
     @dbus_service.setter
     def set_large_object_text_length(self, value: int) -> bool:
@@ -553,7 +553,7 @@ class StructuralNavigator:
     def get_is_enabled(self) -> bool:
         """Returns whether structural navigation is enabled."""
 
-        return self._get_setting("enabled", "b", settings.structuralNavigationEnabled)
+        return self._get_setting("enabled", "b", True)
 
     @dbus_service.setter
     def set_is_enabled(self, value: bool) -> bool:
@@ -610,7 +610,7 @@ class StructuralNavigator:
     def get_triggers_focus_mode(self) -> bool:
         """Returns whether structural navigation triggers focus mode."""
 
-        return self._get_setting("triggers-focus-mode", "b", settings.structNavTriggersFocusMode)
+        return self._get_setting("triggers-focus-mode", "b", False)
 
     @dbus_service.setter
     def set_triggers_focus_mode(self, value: bool) -> bool:

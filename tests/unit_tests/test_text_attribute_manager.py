@@ -49,13 +49,11 @@ class TestTextAttributeManager:
         debug_mock.print_message = test_context.Mock()
         debug_mock.LEVEL_INFO = 800
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.textAttributesToSpeak = []
-        settings_mock.textAttributesToBraille = []
-
         from orca import gsettings_registry
 
-        gsettings_registry.get_registry().set_enabled(False)
+        registry = gsettings_registry.get_registry()
+        registry.clear_runtime_values()
+        registry.set_enabled(False)
 
         return essential_modules
 
@@ -75,8 +73,7 @@ class TestTextAttributeManager:
     def test_get_attributes_to_speak_empty(self, test_context: OrcaTestContext) -> None:
         """Test get_attributes_to_speak returns empty list by default."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].textAttributesToSpeak = []
+        self._setup_dependencies(test_context)
         from orca.text_attribute_manager import TextAttributeManager
 
         manager = TextAttributeManager()
@@ -86,12 +83,12 @@ class TestTextAttributeManager:
     def test_get_attributes_to_speak_with_values(self, test_context: OrcaTestContext) -> None:
         """Test get_attributes_to_speak returns configured attributes."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         expected = ["bold", "italic", "underline"]
-        essential_modules["orca.settings"].textAttributesToSpeak = expected
         from orca.text_attribute_manager import TextAttributeManager
 
         manager = TextAttributeManager()
+        manager.set_attributes_to_speak(expected)
         result = manager.get_attributes_to_speak()
         assert result == expected
 
@@ -99,7 +96,6 @@ class TestTextAttributeManager:
         """Test set_attributes_to_speak updates settings."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].textAttributesToSpeak = []
         from orca.text_attribute_manager import TextAttributeManager
 
         manager = TextAttributeManager()
@@ -115,16 +111,14 @@ class TestTextAttributeManager:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         existing = ["bold", "italic"]
-        essential_modules["orca.settings"].textAttributesToSpeak = existing
         from orca.text_attribute_manager import TextAttributeManager
 
         manager = TextAttributeManager()
+        manager.set_attributes_to_speak(existing)
         essential_modules["orca.debug"].print_message.reset_mock()
 
         result = manager.set_attributes_to_speak(existing)
         assert result is True
-        # Debug message for the setting change should NOT be called
-        # (only the init message was called before reset)
         calls = essential_modules["orca.debug"].print_message.call_args_list
         setting_calls = [c for c in calls if "Setting attributes to speak" in str(c)]
         assert len(setting_calls) == 0
@@ -132,8 +126,7 @@ class TestTextAttributeManager:
     def test_get_attributes_to_braille_empty(self, test_context: OrcaTestContext) -> None:
         """Test get_attributes_to_braille returns empty list by default."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].textAttributesToBraille = []
+        self._setup_dependencies(test_context)
         from orca.text_attribute_manager import TextAttributeManager
 
         manager = TextAttributeManager()
@@ -143,12 +136,12 @@ class TestTextAttributeManager:
     def test_get_attributes_to_braille_with_values(self, test_context: OrcaTestContext) -> None:
         """Test get_attributes_to_braille returns configured attributes."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         expected = ["bold", "strikethrough"]
-        essential_modules["orca.settings"].textAttributesToBraille = expected
         from orca.text_attribute_manager import TextAttributeManager
 
         manager = TextAttributeManager()
+        manager.set_attributes_to_braille(expected)
         result = manager.get_attributes_to_braille()
         assert result == expected
 
@@ -156,7 +149,6 @@ class TestTextAttributeManager:
         """Test set_attributes_to_braille updates settings."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].textAttributesToBraille = []
         from orca.text_attribute_manager import TextAttributeManager
 
         manager = TextAttributeManager()
@@ -172,15 +164,14 @@ class TestTextAttributeManager:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         existing = ["bold"]
-        essential_modules["orca.settings"].textAttributesToBraille = existing
         from orca.text_attribute_manager import TextAttributeManager
 
         manager = TextAttributeManager()
+        manager.set_attributes_to_braille(existing)
         essential_modules["orca.debug"].print_message.reset_mock()
 
         result = manager.set_attributes_to_braille(existing)
         assert result is True
-        # Debug message for the setting change should NOT be called
         calls = essential_modules["orca.debug"].print_message.call_args_list
         setting_calls = [c for c in calls if "Setting attributes to braille" in str(c)]
         assert len(setting_calls) == 0
