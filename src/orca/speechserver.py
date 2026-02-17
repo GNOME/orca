@@ -26,9 +26,31 @@
 from __future__ import annotations
 
 
+from enum import Enum
 from typing import Any, Callable, Iterator, TYPE_CHECKING
 
+from . import gsettings_registry
 from .ax_utilities_debugging import AXUtilitiesDebugging
+
+
+@gsettings_registry.get_registry().gsettings_enum(
+    "org.gnome.Orca.PunctuationStyle",
+    values={"all": 0, "most": 1, "some": 2, "none": 3},
+)
+class PunctuationStyle(Enum):
+    """Punctuation style enumeration."""
+
+    NONE = 3
+    SOME = 2
+    MOST = 1
+    ALL = 0
+
+    @property
+    def string_name(self) -> str:
+        """Returns the lowercase string name for this enum value."""
+
+        return self.name.lower()
+
 
 if TYPE_CHECKING:
     import gi
@@ -194,7 +216,7 @@ class SpeechServer:
     def update_capitalization_style(self, style: str) -> None:
         """Updates the capitalization style used by the speech server."""
 
-    def update_punctuation_level(self, level: int) -> None:
+    def update_punctuation_level(self, level: PunctuationStyle) -> None:
         """Punctuation level changed, inform this speechServer."""
 
     def stop(self) -> None:

@@ -42,6 +42,7 @@ from . import mathsymbols
 from . import speechserver
 from . import settings
 from .acss import ACSS
+from .speechserver import PunctuationStyle
 from .ax_utilities import AXUtilities
 from .ssml import SSML, SSMLCapabilities
 
@@ -123,7 +124,7 @@ class SpeechServer(speechserver.SpeechServer):
         self._default_voice: dict[str, Any] = {}
         self._current_voice_properties: dict[str, Any] = {}
         self._current_synthesis_voice: str | None = None
-        self._current_punctuation_level: int = settings.PUNCTUATION_STYLE_MOST
+        self._current_punctuation_level: PunctuationStyle = PunctuationStyle.MOST
         self._current_capitalization_style: str = settings.CAPITALIZATION_STYLE_NONE
         self._voice_families_cache: dict[
             tuple[str, str, str | None, int | None], list[tuple[str, str, str | None]]
@@ -149,10 +150,10 @@ class SpeechServer(speechserver.SpeechServer):
         except Exception:
             most = speechd.PunctuationMode.SOME
         self._punctuation_mode_map = {
-            settings.PUNCTUATION_STYLE_ALL: speechd.PunctuationMode.ALL,
-            settings.PUNCTUATION_STYLE_MOST: most,
-            settings.PUNCTUATION_STYLE_SOME: speechd.PunctuationMode.SOME,
-            settings.PUNCTUATION_STYLE_NONE: speechd.PunctuationMode.NONE,
+            PunctuationStyle.ALL: speechd.PunctuationMode.ALL,
+            PunctuationStyle.MOST: most,
+            PunctuationStyle.SOME: speechd.PunctuationMode.SOME,
+            PunctuationStyle.NONE: speechd.PunctuationMode.NONE,
         }
         self._callback_type_map = {
             speechd.CallbackType.BEGIN: speechserver.SayAllContext.PROGRESS,
@@ -222,7 +223,7 @@ class SpeechServer(speechserver.SpeechServer):
         except Exception:
             pass
 
-    def update_punctuation_level(self, level: int) -> None:
+    def update_punctuation_level(self, level: PunctuationStyle) -> None:
         """Punctuation level changed, inform this speechServer."""
         self._current_punctuation_level = level
         if self._client is None:
@@ -323,14 +324,7 @@ class SpeechServer(speechserver.SpeechServer):
 
         family = self._current_voice_properties.get(ACSS.FAMILY) or {}
 
-        styles = {
-            settings.PUNCTUATION_STYLE_NONE: "NONE",
-            settings.PUNCTUATION_STYLE_SOME: "SOME",
-            settings.PUNCTUATION_STYLE_MOST: "MOST",
-            settings.PUNCTUATION_STYLE_ALL: "ALL",
-        }
-
-        punctuation_style = styles.get(self._current_punctuation_level, "UNKNOWN")
+        punctuation_style = self._current_punctuation_level.name
 
         msg = (
             f"SPEECH DISPATCHER: {prefix}\n"

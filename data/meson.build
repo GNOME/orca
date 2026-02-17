@@ -3,6 +3,7 @@ schema_generator = files('../tools/generate_gsettings_schemas.py')
 # Source files with @gsettings_schema decorators. For meson dependency tracking only;
 # the Python script discovers schemas by scanning src/orca/*.py at build time.
 schema_sources = files(
+  '../src/orca/speechserver.py',
   '../src/orca/speech_manager.py',
   '../src/orca/speech_presenter.py',
   '../src/orca/braille_presenter.py',

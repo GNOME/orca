@@ -49,9 +49,8 @@ except Exception:
 from . import debug
 from . import guilabels
 from . import speechserver
-from . import settings
 from .acss import ACSS
-from .speechserver import VoiceFamily
+from .speechserver import PunctuationStyle, VoiceFamily
 from .ssml import SSML, SSMLCapabilities
 
 if TYPE_CHECKING:
@@ -167,7 +166,7 @@ class SpeechServer(speechserver.SpeechServer):
         self._default_voice: dict[str, Any] = {}
         self._current_voice_profiles = ()
         self._current_voice_properties: dict[str, Any] = {}
-        self._current_punctuation_level: int = settings.PUNCTUATION_STYLE_MOST
+        self._current_punctuation_level: PunctuationStyle = PunctuationStyle.MOST
         self._provider: Any = None
         self._voices_id: int | None = None
         self._default_voice_name: str = ""
@@ -306,12 +305,7 @@ class SpeechServer(speechserver.SpeechServer):
 
         family = self._current_voice_properties.get(ACSS.FAMILY)
 
-        styles = {
-            settings.PUNCTUATION_STYLE_NONE: "NONE",
-            settings.PUNCTUATION_STYLE_SOME: "SOME",
-            settings.PUNCTUATION_STYLE_MOST: "MOST",
-            settings.PUNCTUATION_STYLE_ALL: "ALL",
-        }
+        punctuation_style = self._current_punctuation_level.name
 
         msg = (
             f"SPIEL: {prefix}\n"
@@ -319,8 +313,7 @@ class SpeechServer(speechserver.SpeechServer):
             f"pitch {self._current_voice_properties.get(ACSS.AVERAGE_PITCH)}, "
             f"volume {self._current_voice_properties.get(ACSS.GAIN)}, "
             f"language {self._get_language_and_dialect(family)[0]}, "
-            f"punctuation: "
-            f"{styles.get(self._current_punctuation_level)}\n"
+            f"punctuation: {punctuation_style}\n"
             f"SPIEL rate {rate}, pitch {pitch}, volume {volume}, language {language}"
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -330,7 +323,7 @@ class SpeechServer(speechserver.SpeechServer):
 
         self._default_voice = default_voice
 
-    def update_punctuation_level(self, level: int) -> None:
+    def update_punctuation_level(self, level: PunctuationStyle) -> None:
         """Stores the punctuation level for debug display."""
 
         self._current_punctuation_level = level

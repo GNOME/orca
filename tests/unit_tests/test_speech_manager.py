@@ -26,15 +26,33 @@
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=too-many-locals
+# pylint: disable=too-many-lines
 
 """Unit tests for speech_manager.py methods."""
 
 from __future__ import annotations
 
 import queue
+from enum import Enum
 from typing import TYPE_CHECKING
 
 import pytest
+
+
+class PunctuationStyle(Enum):
+    """Test-local copy of PunctuationStyle for mocking."""
+
+    NONE = 3
+    SOME = 2
+    MOST = 1
+    ALL = 0
+
+    @property
+    def string_name(self) -> str:
+        """Returns the lowercase string name for this enum value."""
+
+        return self.name.lower()
+
 
 if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
@@ -68,10 +86,6 @@ class TestSpeechManager:
         settings_mock.CAPITALIZATION_STYLE_NONE = "none"
         settings_mock.CAPITALIZATION_STYLE_SPELL = "spell"
         settings_mock.CAPITALIZATION_STYLE_ICON = "icon"
-        settings_mock.PUNCTUATION_STYLE_NONE = 3
-        settings_mock.PUNCTUATION_STYLE_SOME = 2
-        settings_mock.PUNCTUATION_STYLE_MOST = 1
-        settings_mock.PUNCTUATION_STYLE_ALL = 0
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
         settings_manager_instance = test_context.Mock()
@@ -118,6 +132,7 @@ class TestSpeechManager:
         speechserver_mock.VoiceFamily.LANG = "lang"
         speechserver_mock.VoiceFamily.DIALECT = "dialect"
         speechserver_mock.VoiceFamily.VARIANT = "variant"
+        speechserver_mock.PunctuationStyle = PunctuationStyle
 
         orca_i18n_mock = essential_modules["orca.orca_i18n"]
         orca_i18n_mock._ = lambda x: x
@@ -436,21 +451,39 @@ class TestSpeechManager:
         else:
             mock_update.assert_not_called()
 
+    def test_get_punctuation_level_default(self, test_context: OrcaTestContext) -> None:
+        """Test get_punctuation_level returns 'most' as default fallback."""
+
+        self._setup_dependencies(test_context)
+
+        from orca.speech_manager import SpeechManager
+
+        manager = SpeechManager()
+
+        result = manager.get_punctuation_level()
+        assert result == "most"
+
     @pytest.mark.parametrize(
         "case",
         [
-            {"id": "punctuation_none", "setting_value": 3, "expected": "none"},
-            {"id": "punctuation_some", "setting_value": 2, "expected": "some"},
-            {"id": "punctuation_most", "setting_value": 1, "expected": "most"},
-            {"id": "punctuation_all", "setting_value": 0, "expected": "all"},
+            {"id": "punctuation_none", "lookup_value": "none", "expected": "none"},
+            {"id": "punctuation_some", "lookup_value": "some", "expected": "some"},
+            {"id": "punctuation_most", "lookup_value": "most", "expected": "most"},
+            {"id": "punctuation_all", "lookup_value": "all", "expected": "all"},
         ],
         ids=lambda case: case["id"],
     )
-    def test_get_punctuation_level(self, test_context: OrcaTestContext, case: dict) -> None:
-        """Test get_punctuation_level method."""
+    def test_get_punctuation_level_from_dconf(
+        self, test_context: OrcaTestContext, case: dict
+    ) -> None:
+        """Test get_punctuation_level reads from layered_lookup."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].verbalizePunctuationStyle = case["setting_value"]
+        self._setup_dependencies(test_context)
+
+        from orca import gsettings_registry
+
+        registry = gsettings_registry.get_registry()
+        registry.set_runtime_value("speech", "punctuation-level", case["lookup_value"])
 
         from orca.speech_manager import SpeechManager
 
@@ -1158,12 +1191,10 @@ class TestVoicesPreferencesGridUI:  # pylint: disable=too-few-public-methods
         settings_mock.CAPITALIZATION_STYLE_NONE = "none"
         settings_mock.CAPITALIZATION_STYLE_SPELL = "spell"
         settings_mock.CAPITALIZATION_STYLE_ICON = "icon"
-        settings_mock.PUNCTUATION_STYLE_NONE = 3
-        settings_mock.PUNCTUATION_STYLE_SOME = 2
-        settings_mock.PUNCTUATION_STYLE_MOST = 1
-        settings_mock.PUNCTUATION_STYLE_ALL = 0
+        settings_mock.CAPITALIZATION_STYLE_NONE = "none"
+        settings_mock.CAPITALIZATION_STYLE_SPELL = "spell"
+        settings_mock.CAPITALIZATION_STYLE_ICON = "icon"
 
-        settings_mock.verbalizePunctuationStyle = 2
         settings_mock.capitalizationStyle = "none"
         settings_mock.enableSpeech = True
         settings_mock.speakNumbersAsDigits = False
@@ -1171,6 +1202,9 @@ class TestVoicesPreferencesGridUI:  # pylint: disable=too-few-public-methods
         settings_mock.enablePauseBreaks = True
         settings_mock.usePronunciationDictionary = True
         settings_mock.enableAutoLanguageSwitching = False
+
+        speechserver_mock = essential_modules["orca.speechserver"]
+        speechserver_mock.PunctuationStyle = PunctuationStyle
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
         settings_manager_instance = test_context.Mock()

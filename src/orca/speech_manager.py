@@ -48,6 +48,7 @@ from . import command_manager
 from . import dbus_service
 from . import debug
 from . import guilabels
+from . import gsettings_registry
 from . import input_event
 from . import keybindings
 from . import messages
@@ -58,7 +59,7 @@ from . import settings_manager
 from . import speech
 from . import speechserver
 from .acss import ACSS
-from . import gsettings_registry
+from .speechserver import PunctuationStyle
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -75,25 +76,6 @@ class CapitalizationStyle(Enum):
     NONE = settings.CAPITALIZATION_STYLE_NONE
     SPELL = settings.CAPITALIZATION_STYLE_SPELL
     ICON = settings.CAPITALIZATION_STYLE_ICON
-
-    @property
-    def string_name(self) -> str:
-        """Returns the lowercase string name for this enum value."""
-
-        return self.name.lower()
-
-
-@gsettings_registry.get_registry().gsettings_enum(
-    "org.gnome.Orca.PunctuationStyle",
-    values={"all": 0, "most": 1, "some": 2, "none": 3},
-)
-class PunctuationStyle(Enum):
-    """Punctuation style enumeration with int values from settings."""
-
-    NONE = settings.PUNCTUATION_STYLE_NONE
-    SOME = settings.PUNCTUATION_STYLE_SOME
-    MOST = settings.PUNCTUATION_STYLE_MOST
-    ALL = settings.PUNCTUATION_STYLE_ALL
 
     @property
     def string_name(self) -> str:
@@ -185,16 +167,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         )
 
         punctuation_model = Gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_INT)
-        punctuation_model.append(
-            [guilabels.PUNCTUATION_STYLE_NONE, settings.PUNCTUATION_STYLE_NONE]
-        )
-        punctuation_model.append(
-            [guilabels.PUNCTUATION_STYLE_SOME, settings.PUNCTUATION_STYLE_SOME]
-        )
-        punctuation_model.append(
-            [guilabels.PUNCTUATION_STYLE_MOST, settings.PUNCTUATION_STYLE_MOST]
-        )
-        punctuation_model.append([guilabels.PUNCTUATION_STYLE_ALL, settings.PUNCTUATION_STYLE_ALL])
+        punctuation_model.append([guilabels.PUNCTUATION_STYLE_NONE, PunctuationStyle.NONE.value])
+        punctuation_model.append([guilabels.PUNCTUATION_STYLE_SOME, PunctuationStyle.SOME.value])
+        punctuation_model.append([guilabels.PUNCTUATION_STYLE_MOST, PunctuationStyle.MOST.value])
+        punctuation_model.append([guilabels.PUNCTUATION_STYLE_ALL, PunctuationStyle.ALL.value])
 
         capitalization_model = Gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_STRING)
         capitalization_model.append(
@@ -525,7 +501,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         result["speechServerInfo"] = [server_name, synthesizer_id]
         result["speechServerFactory"] = self._manager.get_speech_server_factory()
 
-        result["verbalizePunctuationStyle"] = settings.verbalizePunctuationStyle
+        result["verbalizePunctuationStyle"] = PunctuationStyle[
+            self._manager.get_punctuation_level().upper()
+        ].value
         result["capitalizationStyle"] = settings.capitalizationStyle
 
         result["speakNumbersAsDigits"] = self._manager.get_speak_numbers_as_digits()
@@ -547,8 +525,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         model = self._punctuation_combo.get_model()
         if model:
+            current_level = PunctuationStyle[self._manager.get_punctuation_level().upper()].value
             for i, row in enumerate(model):
-                if row[1] == settings.verbalizePunctuationStyle:
+                if row[1] == current_level:
                     self._punctuation_combo.set_active(i)
                     break
 
@@ -1017,7 +996,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         tree_iter = model.get_iter(active)
         level = model.get_value(tree_iter, 1)
 
-        settings.verbalizePunctuationStyle = level
         gsettings_registry.get_registry().set_runtime_value(
             "speech", "punctuation-level", PunctuationStyle(level).string_name
         )
@@ -1783,7 +1761,8 @@ class SpeechManager:
                 self._server.set_output_module(synth)
 
             self._server.set_default_voice(self.get_voice_properties())
-            self._server.update_punctuation_level(settings.verbalizePunctuationStyle)
+            level_str = self.get_punctuation_level()
+            self._server.update_punctuation_level(PunctuationStyle[level_str.upper()])
             self._server.update_capitalization_style(self.get_capitalization_style())
         else:
             msg = "SPEECH MANAGER: Speech not available"
@@ -2291,7 +2270,7 @@ class SpeechManager:
         )
         if value is not None:
             return value
-        result = PunctuationStyle(settings.verbalizePunctuationStyle).string_name
+        result = PunctuationStyle.MOST.string_name
         msg = f"GSETTINGS REGISTRY: speech/punctuation-level using in-memory fallback = {result!r}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
@@ -2365,7 +2344,8 @@ class SpeechManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        server.update_punctuation_level(settings.verbalizePunctuationStyle)
+        level_str = self.get_punctuation_level()
+        server.update_punctuation_level(PunctuationStyle[level_str.upper()])
         return True
 
     def update_synthesizer(self, server_id: str | None = "") -> None:

@@ -1784,10 +1784,10 @@ class SpeechPresenter:
         # If the user has set their punctuation level to All, then the synthesizer will
         # do the work for us. If the user has set their punctuation level to None, then
         # they really don't want punctuation and we mustn't override that.
-        if settings.verbalizePunctuationStyle in [
-            settings.PUNCTUATION_STYLE_ALL,
-            settings.PUNCTUATION_STYLE_NONE,
-        ]:
+        from . import speech_manager  # pylint: disable=import-outside-toplevel
+
+        punct_level = speech_manager.get_manager().get_punctuation_level()
+        if punct_level in ("all", "none"):
             return False
 
         return True
