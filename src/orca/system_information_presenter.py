@@ -396,11 +396,10 @@ class SystemInformationPresenter:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if not (_PSUTIL_AVAILABLE and psutil.sensors_battery()):
+        battery = psutil.sensors_battery() if _PSUTIL_AVAILABLE else None
+        if battery is None:
             presentation_manager.get_manager().present_message(messages.BATTERY_STATUS_UNKNOWN)
             return True
-
-        battery = psutil.sensors_battery()
         if battery.power_plugged:
             msg = f"{messages.BATTERY_LEVEL % battery.percent} {messages.BATTERY_PLUGGED_IN_TRUE}"
         else:
