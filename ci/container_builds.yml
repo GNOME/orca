@@ -7,7 +7,7 @@ include:
 variables:
   # When branching change the suffix to avoid conflicts with images
   # from the main branch
-  BASE_TAG: "2026-02-17.0-main"
+  BASE_TAG: "2026-02-17.1-main"
   FDO_UPSTREAM_REPO: "gnome/orca"
 
 .orca_opensuse_tumbleweed_x86_64:

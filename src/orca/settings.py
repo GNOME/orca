@@ -17,6 +17,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint:disable=invalid-name
+
 """Settings managed by Orca."""
 
 GENERAL_KEYBOARD_LAYOUT_DESKTOP: int = 1

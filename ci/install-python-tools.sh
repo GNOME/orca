@@ -11,7 +11,7 @@
 
 set -eux -o pipefail
 
-python3 -m venv /usr/local/python
+python3 -m venv --system-site-packages /usr/local/python
 source /usr/local/python/bin/activate
 pip3 install --upgrade pip
 pip3 install -r ci/requirements.txt

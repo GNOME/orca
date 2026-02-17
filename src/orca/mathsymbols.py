@@ -1081,33 +1081,33 @@ _alnum["\U0001d7ff"] = "9"
 
 _bold = range(0x1D400, 0x1D434)
 _italic = range(0x1D434, 0x1D468)
-_boldItalic = range(0x1D468, 0x1D49C)
+_bold_italic = range(0x1D468, 0x1D49C)
 _script = range(0x1D49C, 0x1D4D0)
-_boldScript = range(0x1D4D0, 0x1D504)
+_bold_script = range(0x1D4D0, 0x1D504)
 _fraktur = range(0x1D504, 0x1D538)
-_doubleStruck = range(0x1D538, 0x1D56C)
-_boldFraktur = range(0x1D56C, 0x1D5A0)
-_sansSerif = range(0x1D5A0, 0x1D5D4)
-_sansSerifBold = range(0x1D5D4, 0x1D608)
-_sansSerifItalic = range(0x1D608, 0x1D63C)
-_sansSerifBoldItalic = range(0x1D63C, 0x1D670)
+_double_struck = range(0x1D538, 0x1D56C)
+_bold_fraktur = range(0x1D56C, 0x1D5A0)
+_sans_serif = range(0x1D5A0, 0x1D5D4)
+_sans_serif_bold = range(0x1D5D4, 0x1D608)
+_sans_serif_italic = range(0x1D608, 0x1D63C)
+_sans_serif_bold_italic = range(0x1D63C, 0x1D670)
 _monospace = range(0x1D670, 0x1D6A4)
 _dotless = range(0x1D6A4, 0x1D6A8)
-_boldGreek = range(0x1D6A8, 0x1D6E2)
-_italicGreek = range(0x1D6E2, 0x1D71C)
-_boldItalicGreek = range(0x1D71C, 0x1D756)
-_sansSerifBoldGreek = range(0x1D756, 0x1D790)
-_sansSerifBoldItalicGreek = range(0x1D790, 0x1D7CA)
-_boldGreekDigamma = range(0x1D7CA, 0x1D7CC)
-_boldDigits = range(0x1D7CE, 0x1D7D8)
-_doubleStruckDigits = range(0x1D7D8, 0x1D7E2)
-_sansSerifDigits = range(0x1D7E2, 0x1D7EC)
-_sansSerifBoldDigits = range(0x1D7EC, 0x1D7F6)
-_monospaceDigits = range(0x1D7F6, 0x1D800)
-_otherDoubleStruck = [0x2102, 0x210D, 0x2115, 0x2119, 0x211A, 0x211D, 0x2124]
-_otherFraktur = [0x212D, 0x210C, 0x2111, 0x211C, 0x2128]
-_otherItalic = [0x210E]
-_otherScript = [
+_bold_greek = range(0x1D6A8, 0x1D6E2)
+_italic_greek = range(0x1D6E2, 0x1D71C)
+_bold_italic_greek = range(0x1D71C, 0x1D756)
+_sans_serif_bold_greek = range(0x1D756, 0x1D790)
+_sans_serif_bold_italic_greek = range(0x1D790, 0x1D7CA)
+_bold_greek_digamma = range(0x1D7CA, 0x1D7CC)
+_bold_digits = range(0x1D7CE, 0x1D7D8)
+_double_struck_digits = range(0x1D7D8, 0x1D7E2)
+_sans_serif_digits = range(0x1D7E2, 0x1D7EC)
+_sans_serif_bold_digits = range(0x1D7EC, 0x1D7F6)
+_monospace_digits = range(0x1D7F6, 0x1D800)
+_other_double_struck = [0x2102, 0x210D, 0x2115, 0x2119, 0x211A, 0x211D, 0x2124]
+_other_fraktur = [0x212D, 0x210C, 0x2111, 0x211C, 0x2128]
+_other_italic = [0x210E]
+_other_script = [
     0x212C,
     0x2130,
     0x2131,
@@ -2237,31 +2237,31 @@ _all.update(_shapes)
 
 def _get_style_string(symbol):
     o = ord(symbol)
-    if o in _bold or o in _boldGreek or o in _boldDigits:
+    if o in _bold or o in _bold_greek or o in _bold_digits:
         return BOLD
-    if o in _italic or o in _italicGreek or o in _otherItalic:
+    if o in _italic or o in _italic_greek or o in _other_italic:
         return ITALIC
-    if o in _boldItalic or o in _boldItalicGreek:
+    if o in _bold_italic or o in _bold_italic_greek:
         return BOLD_ITALIC
-    if o in _script or o in _otherScript:
+    if o in _script or o in _other_script:
         return SCRIPT
-    if o in _boldScript:
+    if o in _bold_script:
         return BOLD_SCRIPT
-    if o in _fraktur or o in _otherFraktur:
+    if o in _fraktur or o in _other_fraktur:
         return FRAKTUR
-    if o in _doubleStruck or o in _doubleStruckDigits or o in _otherDoubleStruck:
+    if o in _double_struck or o in _double_struck_digits or o in _other_double_struck:
         return DOUBLE_STRUCK
-    if o in _boldFraktur:
+    if o in _bold_fraktur:
         return BOLD_FRAKTUR
-    if o in _sansSerif or o in _sansSerifDigits:
+    if o in _sans_serif or o in _sans_serif_digits:
         return SANS_SERIF
-    if o in _sansSerifBold or o in _sansSerifBoldGreek or o in _sansSerifBoldDigits:
+    if o in _sans_serif_bold or o in _sans_serif_bold_greek or o in _sans_serif_bold_digits:
         return SANS_SERIF_BOLD
-    if o in _sansSerifItalic:
+    if o in _sans_serif_italic:
         return SANS_SERIF_ITALIC
-    if o in _sansSerifBoldItalic or o in _sansSerifBoldItalicGreek:
+    if o in _sans_serif_bold_italic or o in _sans_serif_bold_italic_greek:
         return SANS_SERIF_BOLD_ITALIC
-    if o in _monospace or o in _monospaceDigits:
+    if o in _monospace or o in _monospace_digits:
         return MONOSPACE
     if o in _dotless:
         return DOTLESS
@@ -2273,7 +2273,7 @@ def _update_symbols(symbol_dict):
     _all.update(symbol_dict)
 
 
-def _get_spokent_name(symbol, include_style):
+def _get_spoken_name(symbol, include_style):
     if symbol not in _all:
         return ""
 
@@ -2292,7 +2292,7 @@ def _get_spokent_name(symbol, include_style):
 def get_character_name(symbol):
     """Returns the character name of symbol."""
 
-    result = _get_spokent_name(symbol, speak_style != SPEAK_NEVER)
+    result = _get_spoken_name(symbol, speak_style != SPEAK_NEVER)
     msg = f"MATHSYMBOLS: Name of '{symbol}' is '{result}'"
     debug.print_message(debug.LEVEL_INFO, msg, True, True)
     return result
@@ -2321,7 +2321,7 @@ def adjust_for_speech(string):
     include_style = speak_style == SPEAK_ALWAYS
     for char in _all:
         if char in result:
-            name = _get_spokent_name(char, include_style)
+            name = _get_spoken_name(char, include_style)
             if name:
                 result = result.replace(char, f" {name} ")
 
