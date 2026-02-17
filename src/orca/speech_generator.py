@@ -211,8 +211,8 @@ class SpeechGenerator(generator.Generator):
         """Returns an array containing a voice."""
 
         voicename = voiceType.get(key or DEFAULT, voiceType[DEFAULT])
-        voices = settings.voices
-        voice = acss.ACSS(voices.get(voiceType[DEFAULT], acss.ACSS()))
+        mgr = speech_manager.get_manager()
+        voice = mgr.get_voice_properties(voiceType[DEFAULT])
 
         obj = args.get("obj")
         language = args.get("language", "")
@@ -241,7 +241,7 @@ class SpeechGenerator(generator.Generator):
         elif len(dialect) <= 1 or not dialect.isalpha():
             dialect = ""
 
-        server = speech_manager.get_manager().get_server()
+        server = mgr.get_server()
         # TODO - JD: We probably never should have gotten to this point if there is no speech
         # server. Thus we should probably return early in generate_speech() instead. For now,
         # this check is in place of an assertion that was being reached on a user's system.
@@ -261,9 +261,9 @@ class SpeechGenerator(generator.Generator):
             string = args.get("string", "")
             voice_override: acss.ACSS | None = None
             if AXUtilities.is_link(obj):
-                voice_override = voices.get(voiceType[HYPERLINK])
+                voice_override = mgr.get_voice_properties(voiceType[HYPERLINK])
             elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
-                voice_override = voices.get(voiceType[UPPERCASE])
+                voice_override = mgr.get_voice_properties(voiceType[UPPERCASE])
 
             if voice_override:
                 voice.update(voice_override)
@@ -273,7 +273,7 @@ class SpeechGenerator(generator.Generator):
             if settings_manager.get_manager().is_configuring():
                 auto_lang_switching = False
             else:
-                auto_lang_switching = speech_manager.get_manager().get_auto_language_switching()
+                auto_lang_switching = mgr.get_auto_language_switching()
             if auto_lang_switching:
                 # Only update the language if it has changed from the user's preferred voice.
                 # If that occurred, changing the dialect should not be problematic/bothersome.
@@ -299,8 +299,8 @@ class SpeechGenerator(generator.Generator):
                     tokens = ["SPEECH GENERATOR: Family updated to", family]
                     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         else:
-            override = voices.get(voicename)
-            if override and override.get("established", True):
+            override = mgr.get_voice_properties(voicename)
+            if override:
                 voice.update(override)
                 if acss.ACSS.FAMILY in override:
                     family = override[acss.ACSS.FAMILY]

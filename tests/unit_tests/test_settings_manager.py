@@ -258,6 +258,7 @@ class TestSettingsManagerFileIO:
         gsettings_registry_mock = test_context.Mock()
         mock_registry = test_context.Mock()
         mock_registry.is_enabled.return_value = False
+        mock_registry.layered_lookup.return_value = None
         gsettings_registry_mock.get_registry.return_value = mock_registry
         test_context.patch_module("orca.gsettings_registry", gsettings_registry_mock)
         essential_modules["orca.gsettings_registry"] = gsettings_registry_mock

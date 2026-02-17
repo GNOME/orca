@@ -105,6 +105,8 @@ class PunctuationStyle(Enum):
 class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     """GtkGrid containing the Voice settings page."""
 
+    _VOICE_SCHEMA = "voice"
+
     class VoiceType(Enum):
         """Voice type enumeration for voice settings."""
 
@@ -118,11 +120,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._manager = manager
         self._initializing = True
 
-        voices = settings.voices
-        self._default_voice = ACSS(voices.get(settings.DEFAULT_VOICE, {}))
-        self._uppercase_voice = ACSS(voices.get(settings.UPPERCASE_VOICE, {}))
-        self._hyperlink_voice = ACSS(voices.get(settings.HYPERLINK_VOICE, {}))
-        self._system_voice = ACSS(voices.get(settings.SYSTEM_VOICE, {}))
+        self._default_voice = manager.get_voice_properties(settings.DEFAULT_VOICE)
+        self._uppercase_voice = manager.get_voice_properties(settings.UPPERCASE_VOICE)
+        self._hyperlink_voice = manager.get_voice_properties(settings.HYPERLINK_VOICE)
+        self._system_voice = manager.get_voice_properties(settings.SYSTEM_VOICE)
 
         # All voice family dicts from server
         self._voice_families: list[speechserver.VoiceFamily] = []
@@ -459,7 +460,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         def on_response(dlg, response_id):
             if response_id in (Gtk.ResponseType.CANCEL, Gtk.ResponseType.DELETE_EVENT):
-                # User cancelled - revert local copy and sync to settings.voices
+                # User cancelled - revert local copy and sync runtime values
                 voice_acss.clear()
                 voice_acss.update(saved_acss)
                 self._sync_voice_to_settings(voice_type)
@@ -495,11 +496,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def reload(self) -> None:
         """Reload settings from manager and refresh the UI."""
 
-        voices = settings.voices
-        self._default_voice = ACSS(voices.get(settings.DEFAULT_VOICE, {}))
-        self._uppercase_voice = ACSS(voices.get(settings.UPPERCASE_VOICE, {}))
-        self._hyperlink_voice = ACSS(voices.get(settings.HYPERLINK_VOICE, {}))
-        self._system_voice = ACSS(voices.get(settings.SYSTEM_VOICE, {}))
+        self._default_voice = self._manager.get_voice_properties(settings.DEFAULT_VOICE)
+        self._uppercase_voice = self._manager.get_voice_properties(settings.UPPERCASE_VOICE)
+        self._hyperlink_voice = self._manager.get_voice_properties(settings.HYPERLINK_VOICE)
+        self._system_voice = self._manager.get_voice_properties(settings.SYSTEM_VOICE)
 
         self._voice_families = self._manager.get_voice_families()
         self._families_sorted = False
@@ -903,7 +903,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 voice_acss[ACSS.FAMILY] = family
                 voice_acss["established"] = True
 
-                # Sync to settings.voices so the voice change is heard immediately
+                # Sync runtime values so the voice change is heard immediately
                 self._sync_voice_to_settings(voice_type)
 
                 # Only set as current voice if this is the default voice type
@@ -913,7 +913,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._initializing = False
 
     def _sync_voice_to_settings(self, voice_type: VoicesPreferencesGrid.VoiceType) -> None:
-        """Sync local voice copy to settings.voices for immediate preview."""
+        """Sync local voice copy to runtime values for immediate preview."""
 
         voice_map = {
             self.VoiceType.DEFAULT: (self._default_voice, settings.DEFAULT_VOICE),
@@ -923,12 +923,35 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         }
 
         local_voice, settings_key = voice_map[voice_type]
-        settings.voices[settings_key] = ACSS(local_voice)
+        voice = ACSS(local_voice)
+        registry = gsettings_registry.get_registry()
+        schema = self._VOICE_SCHEMA
+
+        if ACSS.RATE in voice:
+            registry.set_runtime_value(schema, "rate", voice[ACSS.RATE], voice_type=settings_key)
+        if ACSS.AVERAGE_PITCH in voice:
+            registry.set_runtime_value(
+                schema, "pitch", voice[ACSS.AVERAGE_PITCH], voice_type=settings_key
+            )
+        if ACSS.GAIN in voice:
+            registry.set_runtime_value(schema, "volume", voice[ACSS.GAIN], voice_type=settings_key)
+        family = voice.get(ACSS.FAMILY, {})
+        for dconf_key, family_key in (
+            ("family-name", speechserver.VoiceFamily.NAME),
+            ("family-lang", speechserver.VoiceFamily.LANG),
+            ("family-dialect", speechserver.VoiceFamily.DIALECT),
+            ("family-gender", speechserver.VoiceFamily.GENDER),
+            ("family-variant", speechserver.VoiceFamily.VARIANT),
+        ):
+            if family_key in family:
+                registry.set_runtime_value(
+                    schema, dconf_key, family[family_key], voice_type=settings_key
+                )
 
         server = self._manager.get_server()
         if server is not None:
             if settings_key == settings.DEFAULT_VOICE:
-                server.set_default_voice(settings.voices[settings_key])
+                server.set_default_voice(voice)
             server.clear_cached_voice_properties()
 
     def _on_rate_changed(
@@ -1176,6 +1199,39 @@ class SpeechManager:
         return gsettings_registry.get_registry().layered_lookup(
             self._SPEECH_SCHEMA, key, gtype, fallback=fallback
         )
+
+    def get_voice_properties(self, voice_type: str = "") -> ACSS:
+        """Returns voice properties from dconf for the given voice type."""
+
+        vtype = voice_type or settings.DEFAULT_VOICE
+        lookup = gsettings_registry.get_registry().layered_lookup
+        voice: dict[str, Any] = {}
+
+        rate = lookup(self._VOICE_SCHEMA, "rate", "i", voice_type=vtype)
+        if rate is not None:
+            voice[ACSS.RATE] = rate
+        pitch = lookup(self._VOICE_SCHEMA, "pitch", "d", voice_type=vtype)
+        if pitch is not None:
+            voice[ACSS.AVERAGE_PITCH] = pitch
+        volume = lookup(self._VOICE_SCHEMA, "volume", "d", voice_type=vtype)
+        if volume is not None:
+            voice[ACSS.GAIN] = volume
+
+        family: dict[str, str] = {}
+        for dconf_key, family_key in (
+            ("family-name", speechserver.VoiceFamily.NAME),
+            ("family-lang", speechserver.VoiceFamily.LANG),
+            ("family-dialect", speechserver.VoiceFamily.DIALECT),
+            ("family-gender", speechserver.VoiceFamily.GENDER),
+            ("family-variant", speechserver.VoiceFamily.VARIANT),
+        ):
+            value = lookup(self._VOICE_SCHEMA, dconf_key, "s", voice_type=vtype)
+            if value:
+                family[family_key] = value
+        if family:
+            voice[ACSS.FAMILY] = family
+
+        return ACSS(voice)
 
     def __init__(self) -> None:
         self._families_sorted: bool = False
@@ -1718,8 +1774,7 @@ class SpeechManager:
             if synth:
                 self._server.set_output_module(synth)
 
-            default_voice: dict[str, Any] = settings.voices.get(settings.DEFAULT_VOICE, {})
-            self._server.set_default_voice(default_voice)
+            self._server.set_default_voice(self.get_voice_properties())
             self._server.update_punctuation_level(settings.verbalizePunctuationStyle)
             self._server.update_capitalization_style(self.get_capitalization_style())
         else:
@@ -1862,22 +1917,9 @@ class SpeechManager:
     def get_rate(self) -> int:
         """Returns the current speech rate."""
 
-        value = gsettings_registry.get_registry().layered_lookup(self._VOICE_SCHEMA, "rate", "i")
-        if value is not None:
-            msg = f"SPEECH MANAGER: Current rate is: {value}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return value
-
-        result = 50
-        default_voice = settings.voices.get(settings.DEFAULT_VOICE)
-        if default_voice and ACSS.RATE in default_voice:
-            result = default_voice[ACSS.RATE]
-
-        msg = f"GSETTINGS REGISTRY: voice/rate using in-memory fallback = {result!r}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        msg = f"SPEECH MANAGER: Current rate is: {result}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return result
+        return gsettings_registry.get_registry().layered_lookup(
+            self._VOICE_SCHEMA, "rate", "i", fallback=50
+        )
 
     @dbus_service.setter
     def set_rate(self, value: int) -> bool:
@@ -1961,22 +2003,9 @@ class SpeechManager:
     def get_pitch(self) -> float:
         """Returns the current speech pitch."""
 
-        value = gsettings_registry.get_registry().layered_lookup(self._VOICE_SCHEMA, "pitch", "d")
-        if value is not None:
-            msg = f"SPEECH MANAGER: Current pitch is: {value}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return value
-
-        result = 5.0
-        default_voice = settings.voices.get(settings.DEFAULT_VOICE)
-        if default_voice and ACSS.AVERAGE_PITCH in default_voice:
-            result = default_voice[ACSS.AVERAGE_PITCH]
-
-        msg = f"GSETTINGS REGISTRY: voice/pitch using in-memory fallback = {result!r}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        msg = f"SPEECH MANAGER: Current pitch is: {result}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return result
+        return gsettings_registry.get_registry().layered_lookup(
+            self._VOICE_SCHEMA, "pitch", "d", fallback=5.0
+        )
 
     @dbus_service.setter
     def set_pitch(self, value: float) -> bool:
@@ -2060,22 +2089,9 @@ class SpeechManager:
     def get_volume(self) -> float:
         """Returns the current speech volume."""
 
-        value = gsettings_registry.get_registry().layered_lookup(self._VOICE_SCHEMA, "volume", "d")
-        if value is not None:
-            msg = f"SPEECH MANAGER: Current volume is: {value}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return value
-
-        result = 10.0
-        default_voice = settings.voices.get(settings.DEFAULT_VOICE)
-        if default_voice and ACSS.GAIN in default_voice:
-            result = default_voice[ACSS.GAIN]
-
-        msg = f"GSETTINGS REGISTRY: voice/volume using in-memory fallback = {result!r}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        msg = f"SPEECH MANAGER: Current volume is: {result}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return result
+        return gsettings_registry.get_registry().layered_lookup(
+            self._VOICE_SCHEMA, "volume", "d", fallback=10.0
+        )
 
     @dbus_service.setter
     def set_volume(self, value: float) -> bool:

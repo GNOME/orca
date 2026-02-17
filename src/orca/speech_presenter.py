@@ -2181,8 +2181,7 @@ class SpeechPresenter:
         if mgr.get_speech_is_muted() or (self.get_only_speak_displayed_text() and obj is None):
             return
 
-        voices = settings.voices
-        system_voice = voices.get(settings.SYSTEM_VOICE)
+        system_voice = mgr.get_voice_properties(settings.SYSTEM_VOICE)
         if voice is None:
             voice = system_voice
         voice = voice or system_voice

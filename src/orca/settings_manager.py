@@ -36,7 +36,7 @@ import importlib.util
 import os
 from json import load, dump
 from types import ModuleType
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 from gi.repository import Gio
 from gi.repository import GLib
@@ -48,7 +48,6 @@ from . import settings
 from . import pronunciation_dictionary_manager
 from .acss import ACSS
 from .ax_object import AXObject
-from .speechserver import VoiceFamily
 
 if TYPE_CHECKING:
     import gi
@@ -337,11 +336,10 @@ class SettingsManager:
     def get_voice_locale(self, voice: str = "default") -> str:
         """Returns the locale for the specified voice."""
 
-        voices = settings.voices
-        v = ACSS(voices.get(voice, {}))
-        lang = v.getLocale()
-        dialect = v.getDialect()
-        if dialect and len(str(dialect)) == 2:
+        lookup = gsettings_registry.get_registry().layered_lookup
+        lang = lookup("voice", "family-lang", "s", voice_type=voice) or ""
+        dialect = lookup("voice", "family-dialect", "s", voice_type=voice) or ""
+        if dialect and len(dialect) == 2:
             lang = f"{lang}_{dialect.upper()}"
         return lang
 
@@ -550,49 +548,6 @@ class SettingsManager:
         modifier_keys = lookup("keybindings", "orca-modifier-keys", "as")
         if modifier_keys is not None:
             settings.orcaModifierKeys = modifier_keys
-
-        settings.voices = self._build_voices_from_dconf()
-
-    # TODO - JD: See _sync_settings_from_dconf.
-    def _build_voices_from_dconf(self) -> dict[str, ACSS]:
-        """Builds the voices dict from dconf for all voice types."""
-
-        lookup = gsettings_registry.get_registry().layered_lookup
-        voices: dict[str, ACSS] = {}
-        for voice_type in (
-            settings.DEFAULT_VOICE,
-            settings.UPPERCASE_VOICE,
-            settings.HYPERLINK_VOICE,
-            settings.SYSTEM_VOICE,
-        ):
-            voice: dict[str, Any] = {}
-
-            rate = lookup("voice", "rate", "i", voice_type=voice_type)
-            if rate is not None:
-                voice[ACSS.RATE] = rate
-            pitch = lookup("voice", "pitch", "d", voice_type=voice_type)
-            if pitch is not None:
-                voice[ACSS.AVERAGE_PITCH] = pitch
-            volume = lookup("voice", "volume", "d", voice_type=voice_type)
-            if volume is not None:
-                voice[ACSS.GAIN] = volume
-
-            family: dict[str, str] = {}
-            for dconf_key, family_key in (
-                ("family-name", VoiceFamily.NAME),
-                ("family-lang", VoiceFamily.LANG),
-                ("family-dialect", VoiceFamily.DIALECT),
-                ("family-gender", VoiceFamily.GENDER),
-                ("family-variant", VoiceFamily.VARIANT),
-            ):
-                value = lookup("voice", dconf_key, "s", voice_type=voice_type)
-                if value:
-                    family[family_key] = value
-            if family:
-                voice[ACSS.FAMILY] = family
-
-            voices[voice_type] = ACSS(voice)
-        return voices
 
     def get_general_settings(self, profile: str = "default") -> dict:
         """Return the current general settings."""

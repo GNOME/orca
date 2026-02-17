@@ -19,8 +19,6 @@
 
 """Settings managed by Orca."""
 
-from .acss import ACSS
-
 GENERAL_KEYBOARD_LAYOUT_DESKTOP: int = 1
 GENERAL_KEYBOARD_LAYOUT_LAPTOP: int = 2
 
@@ -60,13 +58,6 @@ DEFAULT_VOICE: str = "default"
 UPPERCASE_VOICE: str = "uppercase"
 HYPERLINK_VOICE: str = "hyperlink"
 SYSTEM_VOICE: str = "system"
-
-voices: dict[str, ACSS] = {
-    DEFAULT_VOICE: ACSS({}),
-    UPPERCASE_VOICE: ACSS({ACSS.AVERAGE_PITCH: 7.0}),
-    HYPERLINK_VOICE: ACSS({}),
-    SYSTEM_VOICE: ACSS({}),
-}
 
 # Managed by typing_echo_presenter.py
 enableKeyEcho: bool = True
