@@ -212,12 +212,17 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def reload(self) -> None:
         """Fetch fresh values and update UI."""
 
+        self._initializing = True
+        self._has_unsaved_changes = False
+
         enabled = self._presenter.get_sound_is_enabled()
         if self._volume_listbox is not None:
             self._volume_listbox.set_sensitive(enabled)
         if self._volume_scale is not None:
             self._volume_scale.set_value(self._presenter.get_sound_volume())
         self._progress_bars_grid.reload()
+
+        self._initializing = False
 
     def save_settings(self, profile: str = "", app_name: str = "") -> dict:
         """Persist staged values."""

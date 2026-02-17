@@ -498,7 +498,7 @@ class SettingsManager:
 
         registry = gsettings_registry.get_registry()
         if registry.is_enabled():
-            registry.reset_profile(old_internal_name)
+            registry.rename_profile(old_internal_name, new_profile[0], new_profile[1])
             return
 
         if not os.path.exists(self._settings_file):
@@ -716,8 +716,8 @@ class SettingsManager:
         tokens = ["SETTINGS MANAGER: Settings for", script, "(app:", script.app, ") saved"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-    def available_profiles(self) -> list:
-        """Get available profiles."""
+    def profiles_from_json(self) -> list:
+        """Get available profiles from user-settings.conf (for migration)."""
 
         if not os.path.exists(self._settings_file):
             return [["Default", "default"]]

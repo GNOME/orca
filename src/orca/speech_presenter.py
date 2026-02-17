@@ -567,6 +567,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         """Reload all child grids."""
 
         self._initializing = True
+        self._has_unsaved_changes = False
         self._voices_grid.reload()
         self._verbosity_grid.reload()
         self._tables_grid.reload()

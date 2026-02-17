@@ -56,7 +56,7 @@ class TestProfileManager:
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_manager_mock.get_manager.return_value.available_profiles.return_value = [
+        settings_manager_mock.get_manager.return_value.profiles_from_json.return_value = [
             ["Default", "default"],
             ["Spanish", "spanish"],
             ["Work", "work"],
@@ -65,6 +65,10 @@ class TestProfileManager:
         settings_manager_mock.get_manager.return_value.get_general_settings.return_value = {
             "startingProfile": ["Default", "default"],
         }
+
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_enabled(False)
 
         speech_manager_mock = essential_modules["orca.speech_manager"]
         speech_manager_mock.get_manager.return_value.refresh_speech.return_value = None
@@ -97,7 +101,7 @@ class TestProfileManager:
         assert profiles == [["Default", "default"], ["Spanish", "spanish"], ["Work", "work"]]
         essential_modules[
             "orca.settings_manager"
-        ].get_manager.return_value.available_profiles.assert_called_once()
+        ].get_manager.return_value.profiles_from_json.assert_called_once()
 
     def test_get_active_profile(self, test_context: OrcaTestContext) -> None:
         """Test getting active profile."""
@@ -196,8 +200,10 @@ class TestProfileManager:
         """Test removing a profile."""
 
         essential_modules = self._setup_dependencies(test_context)
+        from orca import gsettings_registry
         from orca.profile_manager import ProfileManager
 
+        gsettings_registry.get_registry().set_enabled(True)
         mock_run = test_context.patch("subprocess.run")
         manager = ProfileManager()
         manager.remove_profile("spanish")
@@ -215,8 +221,10 @@ class TestProfileManager:
         import subprocess
 
         essential_modules = self._setup_dependencies(test_context)
+        from orca import gsettings_registry
         from orca.profile_manager import ProfileManager
 
+        gsettings_registry.get_registry().set_enabled(True)
         mock_run = test_context.patch("subprocess.run")
         mock_run.side_effect = subprocess.CalledProcessError(1, "dconf")
         manager = ProfileManager()
@@ -231,8 +239,10 @@ class TestProfileManager:
         """Test removing a profile when dconf is not installed."""
 
         essential_modules = self._setup_dependencies(test_context)
+        from orca import gsettings_registry
         from orca.profile_manager import ProfileManager
 
+        gsettings_registry.get_registry().set_enabled(True)
         mock_run = test_context.patch("subprocess.run")
         mock_run.side_effect = FileNotFoundError("dconf not found")
         manager = ProfileManager()
@@ -247,8 +257,10 @@ class TestProfileManager:
         """Test removing a profile sanitizes the name for the dconf path."""
 
         self._setup_dependencies(test_context)
+        from orca import gsettings_registry
         from orca.profile_manager import ProfileManager
 
+        gsettings_registry.get_registry().set_enabled(True)
         mock_run = test_context.patch("subprocess.run")
         manager = ProfileManager()
         manager.remove_profile("My Profile")
@@ -383,7 +395,7 @@ class TestProfilePreferencesGridUI:
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_manager_mock.get_manager.return_value.available_profiles.return_value = [
+        settings_manager_mock.get_manager.return_value.profiles_from_json.return_value = [
             ["Default", "default"],
             ["Spanish", "spanish"],
         ]
@@ -391,6 +403,10 @@ class TestProfilePreferencesGridUI:
         settings_manager_mock.get_manager.return_value.get_general_settings.return_value = {
             "startingProfile": ["Default", "default"],
         }
+
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_enabled(False)
 
         guilabels_mock = essential_modules["orca.guilabels"]
         guilabels_mock.GENERAL_PROFILES = "Profiles"
@@ -422,7 +438,7 @@ class TestProfilePreferencesGridUI:
 
         manager = ProfileManager()
 
-        def callback(profile):
+        def callback(_profile):
             return None
 
         grid = ProfilePreferencesGrid(manager, callback)
@@ -437,7 +453,7 @@ class TestProfilePreferencesGridUI:
 
         manager = ProfileManager()
 
-        def callback(profile):
+        def callback(_profile):
             return None
 
         grid = ProfilePreferencesGrid(manager, callback)
@@ -452,7 +468,7 @@ class TestProfilePreferencesGridUI:
 
         manager = ProfileManager()
 
-        def callback(profile):
+        def callback(_profile):
             return None
 
         grid = ProfilePreferencesGrid(manager, callback)
@@ -469,7 +485,7 @@ class TestProfilePreferencesGridUI:
 
         manager = ProfileManager()
 
-        def callback(profile):
+        def callback(_profile):
             return None
 
         grid = ProfilePreferencesGrid(manager, callback)
@@ -484,7 +500,7 @@ class TestProfilePreferencesGridUI:
 
         manager = ProfileManager()
 
-        def callback(profile):
+        def callback(_profile):
             return None
 
         grid = ProfilePreferencesGrid(manager, callback)
@@ -504,7 +520,7 @@ class TestProfilePreferencesGridUI:
 
         manager = ProfileManager()
 
-        def callback(profile):
+        def callback(_profile):
             return None
 
         grid = ProfilePreferencesGrid(manager, callback, is_app_specific=True)
@@ -519,7 +535,7 @@ class TestProfilePreferencesGridUI:
 
         manager = ProfileManager()
 
-        def callback(profile):
+        def callback(_profile):
             return None
 
         grid = ProfilePreferencesGrid(manager, callback)
@@ -537,7 +553,7 @@ class TestProfilePreferencesGridUI:
 
         manager = ProfileManager()
 
-        def callback(profile):
+        def callback(_profile):
             return None
 
         grid = ProfilePreferencesGrid(manager, callback)
@@ -557,7 +573,7 @@ class TestProfilePreferencesGridUI:
 
         manager = ProfileManager()
 
-        def callback(profile):
+        def callback(_profile):
             return None
 
         grid = ProfilePreferencesGrid(manager, callback)

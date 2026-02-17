@@ -356,6 +356,7 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         """Reload all child grids."""
 
         self._initializing = True
+        self._has_unsaved_changes = False
         self._caret_grid.reload()
         self._structural_grid.reload()
         self._table_grid.reload()

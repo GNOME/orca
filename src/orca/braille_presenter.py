@@ -447,11 +447,14 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def reload(self) -> None:
         """Fetch fresh values and update UI."""
 
+        self._initializing = True
+        self._has_unsaved_changes = False
         self._verbosity_grid.reload()
         self._display_settings_grid.reload()
         self._flash_messages_grid.reload()
         self._progress_bars_grid.reload()
         self._osd_grid.reload()
+        self._initializing = False
 
     def save_settings(self, profile: str = "", app_name: str = "") -> dict:
         """Persist staged values."""
@@ -1772,7 +1775,7 @@ class BraillePresenter:
                 cell_count,
                 on_close=lambda: self.set_monitor_is_enabled(False),
             )
-            self._monitor.show_all()
+            self._monitor.show_all()  # pylint: disable=no-member
 
         if self.get_monitor_show_dots():
             substring = self._to_unicode_braille(substring)

@@ -1504,8 +1504,10 @@ class TestMigrateAll:
         try:
             test_context.patch_object(registry, "_is_migration_done", return_value=False)
             test_context.patch_object(registry, "_stamp_migration_done")
+            test_context.patch_object(registry, "_sync_missing_profiles")
+            test_context.patch_object(registry, "_read_profiles_from_json", return_value=[])
             test_context.patch_object(registry, "migrate_schema", side_effect=tracking_migrate)
-            registry.migrate_all("/tmp/test", [])
+            registry.migrate_all("/tmp/test")
             assert "test-alpha" in migrated_schemas
             assert "test-beta" in migrated_schemas
         finally:
@@ -1531,8 +1533,10 @@ class TestMigrateAll:
         try:
             test_context.patch_object(registry, "_is_migration_done", return_value=False)
             test_context.patch_object(registry, "_stamp_migration_done")
+            test_context.patch_object(registry, "_sync_missing_profiles")
+            test_context.patch_object(registry, "_read_profiles_from_json", return_value=[])
             test_context.patch_object(registry, "migrate_schema", side_effect=selective_migrate)
-            assert registry.migrate_all("/tmp/test", []) is True
+            assert registry.migrate_all("/tmp/test") is True
         finally:
             registry._schemas.pop("test-m1", None)
             registry._schemas.pop("test-m2", None)
@@ -1552,8 +1556,10 @@ class TestMigrateAll:
         try:
             test_context.patch_object(registry, "_is_migration_done", return_value=False)
             test_context.patch_object(registry, "_stamp_migration_done")
+            test_context.patch_object(registry, "_sync_missing_profiles")
+            test_context.patch_object(registry, "_read_profiles_from_json", return_value=[])
             test_context.patch_object(registry, "migrate_schema", return_value=False)
-            assert registry.migrate_all("/tmp/test", []) is False
+            assert registry.migrate_all("/tmp/test") is False
         finally:
             registry._schemas.pop("test-n1", None)
 
@@ -1578,8 +1584,10 @@ class TestMigrateAll:
         try:
             test_context.patch_object(registry, "_is_migration_done", return_value=False)
             test_context.patch_object(registry, "_stamp_migration_done")
+            test_context.patch_object(registry, "_sync_missing_profiles")
+            test_context.patch_object(registry, "_read_profiles_from_json", return_value=[])
             test_context.patch_object(registry, "migrate_schema", side_effect=capture_migrate)
-            registry.migrate_all("/tmp/test", [])
+            registry.migrate_all("/tmp/test")
             assert len(captured_handles) >= 1
             found = [h for h in captured_handles if h[1] == "typing-echo"]
             assert len(found) == 1
@@ -1782,7 +1790,7 @@ class TestEnabledFlag:
 
         registry = GSettingsRegistry()
         registry.set_enabled(False)
-        assert registry.migrate_all("/tmp/test", []) is False
+        assert registry.migrate_all("/tmp/test") is False
 
     def test_write_profile_settings_noop_when_disabled(self, test_context: OrcaTestContext) -> None:
         """Test _write_profile_settings does nothing when disabled."""
@@ -1797,14 +1805,14 @@ class TestEnabledFlag:
         registry._write_profile_settings("default", {"enableSpeech": True}, {}, {})
 
     def test_sync_missing_profiles_noop_when_disabled(self, test_context: OrcaTestContext) -> None:
-        """Test sync_missing_profiles does nothing when disabled."""
+        """Test _sync_missing_profiles does nothing when disabled."""
 
         self._setup(test_context)
         from orca.gsettings_registry import GSettingsRegistry
 
         registry = GSettingsRegistry()
         registry.set_enabled(False)
-        registry.sync_missing_profiles("/tmp/test", [["Default", "default"]])
+        registry._sync_missing_profiles("/tmp/test", [["Default", "default"]])
 
     def test_reset_profile_noop_when_disabled(self, test_context: OrcaTestContext) -> None:
         """Test reset_profile does nothing when disabled."""

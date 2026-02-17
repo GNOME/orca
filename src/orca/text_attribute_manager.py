@@ -304,6 +304,7 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
         """Reload settings from the settings manager and update UI."""
 
         self._initializing = True
+        self._has_unsaved_changes = False
 
         spoken_attrs = settings.textAttributesToSpeak
         if not spoken_attrs:

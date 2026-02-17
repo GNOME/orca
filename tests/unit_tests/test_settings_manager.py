@@ -367,7 +367,7 @@ class TestSettingsManagerFileIO:
             loaded_keybindings = manager2.get_keybindings("default")
             assert loaded_keybindings.get("someHandler") == [["a", 1, 0, 1]]
 
-    def test_available_profiles_default(self, test_context: OrcaTestContext) -> None:
+    def test_profiles_from_json_default(self, test_context: OrcaTestContext) -> None:
         """Test that a fresh start has the 'default' profile available."""
 
         self._setup_dependencies(test_context)
@@ -375,7 +375,7 @@ class TestSettingsManagerFileIO:
         with tempfile.TemporaryDirectory() as temp_dir:
             manager = self._create_fresh_manager(test_context, temp_dir)
 
-            profiles = manager.available_profiles()
+            profiles = manager.profiles_from_json()
             assert any("default" in str(p).lower() for p in profiles)
 
     def test_get_profile_returns_current(self, test_context: OrcaTestContext) -> None:
@@ -464,13 +464,13 @@ class TestSettingsManagerFileIO:
             general_temp["profile"] = ["Temporary", "temporary"]
             manager.save_settings(mock_script, general_temp, {}, {})
 
-            profiles_before = manager.available_profiles()
+            profiles_before = manager.profiles_from_json()
             assert any("temporary" in str(p).lower() for p in profiles_before)
 
             manager.remove_profile("temporary")
 
             manager2 = self._create_fresh_manager(test_context, temp_dir)
-            profiles_after = manager2.available_profiles()
+            profiles_after = manager2.profiles_from_json()
             assert not any("temporary" in str(p).lower() for p in profiles_after)
 
     def test_save_app_settings_creates_app_file(self, test_context: OrcaTestContext) -> None:
@@ -593,13 +593,13 @@ class TestSettingsManagerFileIO:
             general_old["enableEchoByWord"] = True
             manager.save_settings(mock_script, general_old, {}, {})
 
-            profiles_before = manager.available_profiles()
+            profiles_before = manager.profiles_from_json()
             assert any("old_name" in str(p) for p in profiles_before)
 
             manager.rename_profile("old_name", ["New Name", "new_name"])
 
             manager2 = self._create_fresh_manager(test_context, temp_dir)
-            profiles_after = manager2.available_profiles()
+            profiles_after = manager2.profiles_from_json()
 
             assert not any("old_name" in str(p) for p in profiles_after)
             assert any("new_name" in str(p) for p in profiles_after)
@@ -616,12 +616,12 @@ class TestSettingsManagerFileIO:
         with tempfile.TemporaryDirectory() as temp_dir:
             manager = self._create_fresh_manager(test_context, temp_dir)
 
-            profiles_before = manager.available_profiles()
+            profiles_before = manager.profiles_from_json()
 
             manager.rename_profile("nonexistent", ["New Name", "new_name"])
 
             manager2 = self._create_fresh_manager(test_context, temp_dir)
-            profiles_after = manager2.available_profiles()
+            profiles_after = manager2.profiles_from_json()
 
             assert profiles_before == profiles_after
 

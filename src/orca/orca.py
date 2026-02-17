@@ -52,7 +52,6 @@ from . import mouse_review
 from . import orca_modifier_manager
 from . import presentation_manager
 from . import script_manager
-from . import settings
 from . import settings_manager
 from . import speech_manager
 from . import systemd
@@ -70,7 +69,7 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
 
     event_manager.get_manager().pause_queuing(True, True, "Loading user settings.")
     if is_reload:
-        _profile = settings.activeProfile[1]
+        _profile = settings_manager.get_manager().get_profile()
         settings_manager.get_manager().set_profile(_profile)
         gsettings_registry.get_registry().set_active_profile(_profile)
 
@@ -197,7 +196,6 @@ def main():
 
     manager = settings_manager.get_manager()
     prefs_dir = manager.get_prefs_dir()
-    profiles = manager.available_profiles()
     registry = gsettings_registry.get_registry()
 
     default_prefs_dir = os.path.join(
@@ -207,10 +205,7 @@ def main():
     if os.path.realpath(prefs_dir) != os.path.realpath(default_prefs_dir):
         registry.set_enabled(False)
 
-    registry.migrate_all(prefs_dir, profiles)
-    registry.sync_missing_profiles(prefs_dir, profiles)
-    if registry.is_enabled():
-        Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
+    registry.migrate_all(prefs_dir)
 
     load_user_settings(is_reload=False)
 

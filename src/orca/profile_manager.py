@@ -33,6 +33,7 @@ from __future__ import annotations
 
 import subprocess
 import time
+import unicodedata
 from json import dump, load
 from typing import Callable, TYPE_CHECKING
 
@@ -237,6 +238,12 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
             ),
         ]
 
+    @staticmethod
+    def _sanitize_profile_label(name: str) -> str:
+        """Strip control characters and surrounding whitespace from a profile label."""
+
+        return "".join(c for c in name if unicodedata.category(c)[0] != "C").strip()
+
     def _validate_profile_name(
         self, name: str, exclude_internal_name: str | None = None
     ) -> tuple[bool, str]:
@@ -349,7 +356,10 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         entry.set_text(profile[0])
         entry.set_hexpand(True)
         entry.set_activates_default(True)
-        entry.connect("changed", lambda e: ok_button.set_sensitive(bool(e.get_text().strip())))
+        entry.connect(
+            "changed",
+            lambda e: ok_button.set_sensitive(bool(self._sanitize_profile_label(e.get_text()))),
+        )
         label.set_mnemonic_widget(entry)
         hbox.pack_start(entry, True, True, 0)
 
@@ -361,7 +371,7 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         entry.grab_focus()
 
         response = dialog.run()
-        new_name = entry.get_text().strip()
+        new_name = self._sanitize_profile_label(entry.get_text())
         dialog.destroy()
 
         if response != Gtk.ResponseType.OK or not new_name:
@@ -410,7 +420,10 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         entry = Gtk.Entry()
         entry.set_hexpand(True)
         entry.set_activates_default(True)
-        entry.connect("changed", lambda e: ok_button.set_sensitive(bool(e.get_text().strip())))
+        entry.connect(
+            "changed",
+            lambda e: ok_button.set_sensitive(bool(self._sanitize_profile_label(e.get_text()))),
+        )
         label.set_mnemonic_widget(entry)
         hbox.pack_start(entry, True, True, 0)
 
@@ -422,7 +435,7 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         entry.grab_focus()
 
         response = dialog.run()
-        new_name = entry.get_text().strip()
+        new_name = self._sanitize_profile_label(entry.get_text())
         dialog.destroy()
 
         if response != Gtk.ResponseType.OK or not new_name:
@@ -599,11 +612,59 @@ class ProfileManager:
     def get_available_profiles(self) -> list[list[str]]:
         """Returns list of available profiles as [display_name, internal_name] pairs."""
 
-        profiles = settings_manager.get_manager().available_profiles()
+        registry = gsettings_registry.get_registry()
+        if registry.is_enabled():
+            profiles = self._get_stored_profiles(registry)
+        else:
+            profiles = settings_manager.get_manager().profiles_from_json()
+
         for profile in profiles:
             if profile[1] == "default":
                 profile[0] = guilabels.PROFILE_DEFAULT
                 break
+        return profiles
+
+    @staticmethod
+    def _get_stored_profiles(
+        registry: gsettings_registry.GSettingsRegistry,
+    ) -> list[list[str]]:
+        """Returns available profiles by enumerating stored metadata."""
+
+        try:
+            result = subprocess.run(
+                ["dconf", "list", gsettings_registry.GSETTINGS_PATH_PREFIX],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            return [["Default", "default"]]
+
+        default_profile: list[str] | None = None
+        profiles: list[list[str]] = []
+        for entry in result.stdout.strip().split("\n"):
+            if not entry.endswith("/"):
+                continue
+            sanitized_name = entry.rstrip("/")
+            gs = registry.get_settings("metadata", sanitized_name)
+            if gs is None:
+                continue
+            display_variant = gs.get_user_value("display-name")
+            internal_variant = gs.get_user_value("internal-name")
+            if display_variant is None or internal_variant is None:
+                continue
+            display_name = display_variant.get_string()
+            internal_name = internal_variant.get_string()
+            profile = [display_name, internal_name]
+            if internal_name == "default":
+                default_profile = profile
+            else:
+                profiles.append(profile)
+
+        if default_profile is not None:
+            profiles.insert(0, default_profile)
+        elif not profiles:
+            profiles.append(["Default", "default"])
         return profiles
 
     @dbus_service.getter
@@ -616,8 +677,10 @@ class ProfileManager:
     def set_active_profile(self, internal_name: str, update_locale: bool = False) -> bool:
         """Sets the active profile by internal name."""
 
+        registry = gsettings_registry.get_registry()
+        registry.clear_runtime_values()
         settings_manager.get_manager().set_profile(internal_name, update_locale)
-        gsettings_registry.get_registry().set_active_profile(internal_name)
+        registry.set_active_profile(internal_name)
         return True
 
     def load_profile(self, internal_name: str, update_locale: bool = False) -> None:
@@ -653,7 +716,17 @@ class ProfileManager:
             f.seek(0)
             f.truncate()
             dump(prefs, f, indent=4)
-            return True
+
+        registry = gsettings_registry.get_registry()
+        if registry.is_enabled():
+            pronunciations = profile_data.get("pronunciations", {})
+            keybindings_data = profile_data.get("keybindings", {})
+            # pylint: disable-next=protected-access
+            registry._write_profile_settings(
+                new_profile[1], profile_data, pronunciations, keybindings_data
+            )
+
+        return True
 
     @dbus_service.getter
     def get_starting_profile(self) -> list[str]:

@@ -542,6 +542,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._initializing = True
 
         self._populate_speech_systems()
+        self._initializing = True
 
         model = self._punctuation_combo.get_model()
         if model:
@@ -1206,6 +1207,10 @@ class SpeechManager:
         vtype = voice_type or settings.DEFAULT_VOICE
         lookup = gsettings_registry.get_registry().layered_lookup
         voice: dict[str, Any] = {}
+
+        established = lookup(self._VOICE_SCHEMA, "established", "b", voice_type=vtype)
+        if established is not None:
+            voice["established"] = established
 
         rate = lookup(self._VOICE_SCHEMA, "rate", "i", voice_type=vtype)
         if rate is not None:
