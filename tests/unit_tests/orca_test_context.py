@@ -147,7 +147,7 @@ class OrcaTestContext:
         self.configure_shared_module_behaviors(essential_modules)
         return essential_modules
 
-    # pylint: disable-next=too-many-locals, too-many-statements
+    # pylint: disable-next=too-many-locals, too-many-statements, too-many-branches
     def configure_shared_module_behaviors(self, essential_modules: dict[str, MagicMock]) -> None:
         """Configure standard behaviors for shared modules to reduce duplication."""
 

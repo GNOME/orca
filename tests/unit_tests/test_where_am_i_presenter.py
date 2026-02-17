@@ -210,7 +210,7 @@ class TestWhereAmIPresenter:
         controller.register_decorated_module.assert_called_with("WhereAmIPresenter", presenter)
 
     @pytest.mark.parametrize(
-        "refresh",
+        "_refresh",
         [
             pytest.param(True, id="with_refresh"),
             pytest.param(False, id="without_refresh"),
@@ -219,7 +219,7 @@ class TestWhereAmIPresenter:
     def test_get_handlers(
         self,
         test_context: OrcaTestContext,
-        refresh: bool,
+        _refresh: bool,
     ) -> None:
         """Test WhereAmIPresenter commands are registered in CommandManager."""
 

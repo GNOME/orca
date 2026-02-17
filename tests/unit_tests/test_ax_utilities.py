@@ -1020,7 +1020,10 @@ class TestAXUtilities:
         essential_modules[
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.get_widget_roles = test_context.Mock(
-            return_value=[Atspi.Role.PUSH_BUTTON, Atspi.Role.CHECK_BOX]
+            return_value=[
+                Atspi.Role.BUTTON,
+                Atspi.Role.CHECK_BOX,
+            ]
         )
         sys.modules[
             "orca.ax_utilities_collection"
@@ -1044,7 +1047,10 @@ class TestAXUtilities:
         essential_modules[
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.get_widget_roles = test_context.Mock(
-            return_value=[Atspi.Role.PUSH_BUTTON, Atspi.Role.CHECK_BOX]
+            return_value=[
+                Atspi.Role.BUTTON,
+                Atspi.Role.CHECK_BOX,
+            ]
         )
         sys.modules[
             "orca.ax_utilities_collection"
@@ -1054,7 +1060,7 @@ class TestAXUtilities:
         from orca.ax_utilities import AXUtilities
 
         result = AXUtilities.get_all_widgets(mock_obj, exclude_push_button=True)
-        # Should call with CHECK_BOX only (PUSH_BUTTON removed)
+        # Should call with CHECK_BOX only (BUTTON removed)
         collection_module = sys.modules["orca.ax_utilities_collection"]
         find_all_method = collection_module.AXUtilitiesCollection.find_all_with_role_and_all_states
         find_all_method.assert_called_with(
@@ -1552,7 +1558,7 @@ class TestAXUtilities:
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.is_menu_related = test_context.Mock(return_value=False)
         essential_modules["orca.ax_object"].AXObject.get_role = test_context.Mock(
-            return_value=Atspi.Role.PUSH_BUTTON
+            return_value=Atspi.Role.BUTTON
         )
         essential_modules["orca.ax_object"].AXObject.iter_children = test_context.Mock(
             return_value=[mock_same_role1, mock_same_role2]

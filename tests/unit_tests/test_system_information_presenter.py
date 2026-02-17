@@ -194,7 +194,7 @@ class TestSystemInformationPresenter:
             assert manager.get_keyboard_command(command_name) is not None
 
     def test_setup_commands(self, test_context: OrcaTestContext) -> None:
-        """Test SystemInformationPresenter._setup_commands registers commands with CommandManager."""
+        """Test SystemInformationPresenter._setup_commands registers with CommandManager."""
 
         self._setup_dependencies(test_context)
         from orca.system_information_presenter import SystemInformationPresenter
@@ -215,7 +215,7 @@ class TestSystemInformationPresenter:
             assert cmd_manager.get_keyboard_command(cmd_name) is not None
 
     @pytest.mark.parametrize(
-        "method_name,setting_key,format_string,expected_output",
+        "method_name,_setting_key,format_string,expected_output",
         [
             ("present_time", "presentTimeFormat", "%I:%M %p", "2:30 PM"),
             ("present_date", "presentDateFormat", "%A, %B %d, %Y", "Monday, July 28, 2025"),
@@ -232,7 +232,7 @@ class TestSystemInformationPresenter:
         self,
         test_context: OrcaTestContext,
         method_name: str,
-        setting_key: str,
+        _setting_key: str,
         format_string: str,
         expected_output: str,
         has_event: bool,

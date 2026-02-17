@@ -20,6 +20,7 @@
 
 # pylint: disable=wrong-import-position
 # pylint: disable=protected-access
+# pylint: disable=import-outside-toplevel
 
 """Unit tests for pronunciation_dictionary_manager.py."""
 

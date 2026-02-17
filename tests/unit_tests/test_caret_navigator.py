@@ -566,7 +566,6 @@ class TestCaretNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         essential_modules["orca.settings"].caretNavigationEnabled = True
-        essential_modules["orca.settings_manager"].get_manager.return_value
         mock_cmd_mgr = test_context.Mock()
         essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
@@ -580,9 +579,7 @@ class TestCaretNavigator:
         """Test set_is_enabled updates setting and calls CommandManager."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"]
         essential_modules["orca.settings"].caretNavigationEnabled = False
-        essential_modules["orca.settings_manager"].get_manager.return_value
         mock_script = test_context.Mock()
         essential_modules[
             "orca.script_manager"
@@ -632,9 +629,7 @@ class TestCaretNavigator:
         """Test set_triggers_focus_mode updates setting."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"]
         essential_modules["orca.settings"].caretNavTriggersFocusMode = True
-        essential_modules["orca.settings_manager"].get_manager.return_value
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = CaretNavigator()
@@ -647,7 +642,6 @@ class TestCaretNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         essential_modules["orca.settings"].caretNavTriggersFocusMode = True
-        essential_modules["orca.settings_manager"].get_manager.return_value
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = CaretNavigator()

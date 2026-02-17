@@ -80,7 +80,7 @@ linters:
     - ruff format --check src/orca
     - ruff check src/orca
     - mypy src/orca
-    - pylint src/orca
+    - pylint src/orca src/orca/orca_bin.py.in
   allow_failure: true
 
 # Auto-format code with ruff and commit back to the branch.

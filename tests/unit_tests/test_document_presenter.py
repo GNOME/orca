@@ -20,7 +20,11 @@
 
 # pylint: disable=wrong-import-position
 # pylint: disable=protected-access
+# pylint: disable=import-outside-toplevel
+# pylint: disable=too-many-public-methods
+# pylint: disable=too-many-locals
 
+# pylint: disable=too-many-lines
 """Unit tests for document_presenter.py."""
 
 from __future__ import annotations
@@ -677,7 +681,8 @@ class TestDocumentPresenter:
         struct_nav.get_navigator.return_value.last_command_prevents_focus_mode.return_value = False
 
         table_nav = mocks["orca.table_navigator"]
-        table_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = True
+        nav_mock = table_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = True
 
         presenter = module.get_presenter()
         result = presenter.use_focus_mode(MagicMock())
@@ -704,7 +709,8 @@ class TestDocumentPresenter:
         struct_nav.get_navigator.return_value.last_command_prevents_focus_mode.return_value = False
 
         table_nav = mocks["orca.table_navigator"]
-        table_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = table_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
 
         caret_nav = mocks["orca.caret_navigator"]
         caret_nav.get_navigator.return_value.last_command_prevents_focus_mode.return_value = True
@@ -740,7 +746,8 @@ class TestDocumentPresenter:
         struct_nav.get_navigator.return_value.last_command_prevents_focus_mode.return_value = False
 
         table_nav = mocks["orca.table_navigator"]
-        table_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = table_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
 
         caret_nav = mocks["orca.caret_navigator"]
         caret_nav.get_navigator.return_value.last_command_prevents_focus_mode.return_value = False
@@ -773,7 +780,8 @@ class TestDocumentPresenter:
         struct_nav.get_navigator.return_value.last_command_prevents_focus_mode.return_value = False
 
         table_nav = mocks["orca.table_navigator"]
-        table_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = table_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
 
         caret_nav = mocks["orca.caret_navigator"]
         caret_nav.get_navigator.return_value.last_command_prevents_focus_mode.return_value = False
@@ -815,7 +823,8 @@ class TestDocumentPresenter:
         struct_nav.get_navigator.return_value.last_command_prevents_focus_mode.return_value = False
 
         table_nav = mocks["orca.table_navigator"]
-        table_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = table_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
 
         caret_nav = mocks["orca.caret_navigator"]
         caret_nav.get_navigator.return_value.last_command_prevents_focus_mode.return_value = False
@@ -854,14 +863,17 @@ class TestDocumentPresenter:
 
         struct_nav = mocks["orca.structural_navigator"]
         struct_nav.get_navigator.return_value.last_command_prevents_focus_mode.return_value = False
-        struct_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = struct_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
 
         table_nav = mocks["orca.table_navigator"]
-        table_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = table_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
 
         caret_nav = mocks["orca.caret_navigator"]
         caret_nav.get_navigator.return_value.last_command_prevents_focus_mode.return_value = False
-        caret_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = caret_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
 
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(
@@ -1107,11 +1119,14 @@ class TestDocumentPresenter:
         mock_script.utilities.get_caret_context.return_value = (MagicMock(), 0)
 
         caret_nav = mocks["orca.caret_navigator"]
-        caret_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = caret_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
         struct_nav = mocks["orca.structural_navigator"]
-        struct_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = struct_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
         table_nav = mocks["orca.table_navigator"]
-        table_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = table_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
 
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(
@@ -1137,11 +1152,14 @@ class TestDocumentPresenter:
         mock_script.utilities.get_caret_context.return_value = (MagicMock(), 0)
 
         caret_nav = mocks["orca.caret_navigator"]
-        caret_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = caret_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
         struct_nav = mocks["orca.structural_navigator"]
-        struct_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = struct_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
         table_nav = mocks["orca.table_navigator"]
-        table_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = table_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.is_dead.return_value = True
@@ -1262,11 +1280,14 @@ class TestDocumentPresenter:
         mock_script.utilities.get_caret_context.return_value = (MagicMock(), 0)
 
         caret_nav = mocks["orca.caret_navigator"]
-        caret_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = caret_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
         struct_nav = mocks["orca.structural_navigator"]
-        struct_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = struct_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
         table_nav = mocks["orca.table_navigator"]
-        table_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = table_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
 
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(
@@ -1409,8 +1430,6 @@ class TestDocumentPresenter:
         mock_doc = MagicMock()
         mock_script.utilities.get_top_level_document_for_object.side_effect = [None, mock_doc]
 
-        mocks["orca.caret_navigator"]
-
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(
             in_focus_mode=True, focus_mode_is_sticky=True, browse_mode_is_sticky=False
@@ -1469,13 +1488,16 @@ class TestDocumentPresenter:
         mock_script.utilities.get_top_level_document_for_object.side_effect = [None, mock_doc]
 
         caret_nav = mocks["orca.caret_navigator"]
-        caret_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = caret_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
         caret_nav.get_navigator.return_value.last_command_prevents_focus_mode.return_value = False
         struct_nav = mocks["orca.structural_navigator"]
-        struct_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = struct_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
         struct_nav.get_navigator.return_value.last_command_prevents_focus_mode.return_value = False
         table_nav = mocks["orca.table_navigator"]
-        table_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = table_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
         focus_manager = mocks["orca.focus_manager"]
         focus_manager.get_manager.return_value.in_say_all.return_value = False
 
@@ -1554,7 +1576,7 @@ class TestDocumentPresenter:
 
         from unittest.mock import MagicMock, patch
 
-        module, mocks = self._setup_presenter(test_context)
+        module, _mocks = self._setup_presenter(test_context)
 
         mock_app = MagicMock()
         mock_script = MagicMock()
@@ -1661,7 +1683,7 @@ class TestDocumentPresenter:
 
         from unittest.mock import MagicMock, patch
 
-        module, mocks = self._setup_presenter(test_context)
+        module, _mocks = self._setup_presenter(test_context)
 
         mock_app = MagicMock()
         mock_script = MagicMock()
@@ -1881,7 +1903,7 @@ class TestDocumentPresenter:
         ax_utilities.AXUtilities.is_button_with_popup.return_value = True
 
         ax_object = mocks["orca.ax_object"]
-        ax_object.AXObject.get_role.return_value = Atspi.Role.PUSH_BUTTON
+        ax_object.AXObject.get_role.return_value = Atspi.Role.BUTTON
 
         ax_table = mocks["orca.ax_table"]
         ax_table.AXTable.is_layout_table.return_value = False
@@ -2225,13 +2247,16 @@ class TestDocumentPresenter:
         mock_script.utilities.get_caret_context.return_value = (MagicMock(), 0)
 
         caret_nav = mocks["orca.caret_navigator"]
-        caret_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = caret_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
         caret_nav.get_navigator.return_value.last_command_prevents_focus_mode.return_value = False
         struct_nav = mocks["orca.structural_navigator"]
-        struct_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = struct_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
         struct_nav.get_navigator.return_value.last_command_prevents_focus_mode.return_value = False
         table_nav = mocks["orca.table_navigator"]
-        table_nav.get_navigator.return_value.last_input_event_was_navigation_command.return_value = False
+        nav_mock = table_nav.get_navigator.return_value
+        nav_mock.last_input_event_was_navigation_command.return_value = False
         focus_manager = mocks["orca.focus_manager"]
         focus_manager.get_manager.return_value.in_say_all.return_value = False
 

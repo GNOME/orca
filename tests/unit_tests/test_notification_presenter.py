@@ -44,7 +44,7 @@ if TYPE_CHECKING:
 
 
 class Fake:
-    pass
+    """Stub used as a stand-in for objects that need an identity."""
 
 
 @pytest.mark.unit
@@ -211,14 +211,14 @@ class TestNotificationPresenter:
         mock_controller.register_decorated_module.assert_called()
 
     @pytest.mark.parametrize(
-        "refresh,check_handler_names",
+        "_refresh,check_handler_names",
         [
             pytest.param(True, True, id="refresh_true"),
             pytest.param(False, False, id="no_refresh"),
         ],
     )
     def test_get_handlers(
-        self, test_context: OrcaTestContext, refresh: bool, check_handler_names: bool
+        self, test_context: OrcaTestContext, _refresh: bool, check_handler_names: bool
     ) -> None:
         """Test NotificationPresenter.get_handlers returns empty dict.
 

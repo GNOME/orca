@@ -21,6 +21,9 @@
 # pylint: disable=wrong-import-position
 # pylint: disable=import-outside-toplevel
 # pylint: disable=protected-access
+# pylint: disable=too-many-lines
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-positional-arguments
 
 """Unit tests for command_manager.py methods."""
 
@@ -448,7 +451,7 @@ class TestCommandManager:
     def _create_mock_function(
         self,
         test_context: OrcaTestContext,
-        description: str = "Test function",
+        _description: str = "Test function",
     ) -> Mock:
         """Creates a mock function for a Command."""
 
@@ -474,8 +477,8 @@ class TestCommandManager:
         from orca.command_manager import CommandManager
 
         manager = CommandManager()
-        assert manager.get_all_keyboard_commands() == ()
-        assert manager.get_all_braille_commands() == ()
+        assert not manager.get_all_keyboard_commands()
+        assert not manager.get_all_braille_commands()
 
     def test_add_and_get_keyboard_command(self, test_context: OrcaTestContext) -> None:
         """Test CommandManager.add_command and get_keyboard_command."""

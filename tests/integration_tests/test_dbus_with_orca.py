@@ -22,6 +22,7 @@
 # pylint: disable=too-many-statements
 # pylint: disable=too-many-return-statements
 # pylint: disable=too-many-lines
+# pylint: disable=too-many-branches
 
 """Integration tests for Orca's D-Bus service."""
 

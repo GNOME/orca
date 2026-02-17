@@ -131,7 +131,7 @@ class TestLearnModePresenter:
         input_event_mock = essential_modules["orca.input_event"]
         input_event_handler_mock = test_context.Mock()
 
-        class MockKeyboardEvent:
+        class MockKeyboardEvent:  # pylint: disable=too-many-instance-attributes
             """Mock keyboard event class for testing."""
 
             def __init__(self):

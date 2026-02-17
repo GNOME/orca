@@ -1515,7 +1515,7 @@ class TestStructuralNavigator:
     def test_last_command_prevents_focus_mode_false_setting_true(
         self, test_context: OrcaTestContext
     ) -> None:
-        """Test StructuralNavigator.last_command_prevents_focus_mode returns False if setting True."""
+        """Test last_command_prevents_focus_mode returns False if setting True."""
 
         essential_modules = self._setup_dependencies(test_context)
         essential_modules["orca.settings"].structNavTriggersFocusMode = True

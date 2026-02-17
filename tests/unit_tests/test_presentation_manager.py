@@ -23,6 +23,7 @@
 # pylint: disable=protected-access
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-public-methods
+# pylint: disable=too-many-statements
 
 """Unit tests for presentation_manager.py methods."""
 
@@ -69,7 +70,7 @@ class TestPresentationManager:
         braille_mock.clear = test_context.Mock()
         mock_line = test_context.Mock()
         mock_line.regions = []
-        mock_line.add_regions = test_context.Mock(side_effect=lambda r: mock_line.regions.append(r))
+        mock_line.add_regions = test_context.Mock(side_effect=mock_line.regions.append)
         braille_mock.Line = test_context.Mock(return_value=mock_line)
         braille_mock.add_line = test_context.Mock()
         braille_mock.setFocus = test_context.Mock()
@@ -321,7 +322,7 @@ class TestPresentationManager:
         )
 
     def test_present_braille_message_braille_disabled(self, test_context: OrcaTestContext) -> None:
-        """Test present_braille_message delegates to braille_presenter even when braille is disabled."""
+        """Test present_braille_message delegates even when braille is disabled."""
 
         essential_modules = self._setup_dependencies(test_context)
         braille_presenter_instance = essential_modules["orca.braille_presenter"].get_presenter()

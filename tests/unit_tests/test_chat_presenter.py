@@ -320,7 +320,7 @@ class TestConversationList:
         conv_list.add_message("Hello", None)
 
         # Valid index works
-        message, name = conv_list.get_message_and_name(-1)
+        message, _ = conv_list.get_message_and_name(-1)
         assert message == "Hello"
 
         # Out of bounds still raises

@@ -20,6 +20,7 @@
 
 # pylint: disable=wrong-import-position
 # pylint: disable=protected-access
+# pylint: disable=import-outside-toplevel
 
 """Unit tests for preferences_grid_base.py."""
 
@@ -39,6 +40,7 @@ from orca.preferences_grid_base import (
     BooleanPreferenceControl,
     CategoryListBoxRow,
     CommandListBoxRow,
+    ControlType,
     EnumPreferenceControl,
     FloatRangePreferenceControl,
     FocusManagedListBox,
@@ -137,7 +139,7 @@ class TestPreferenceControlDataclasses:
     def test_selection_preference_control_creation(self) -> None:
         """Test SelectionPreferenceControl can be created with actions callback."""
 
-        def get_actions(value: Any) -> list[tuple[str, str, Any]]:
+        def get_actions(_value: Any) -> list[tuple[str, str, Any]]:
             return [("Edit", "edit-symbolic", lambda: None)]
 
         control = SelectionPreferenceControl(
@@ -196,7 +198,7 @@ class TestHelperClasses:
         """Test RadioButtonWithActions stores action buttons list."""
 
         radio = RadioButtonWithActions(label="Test Option")
-        assert radio.action_buttons == []
+        assert not radio.action_buttons
 
         button1 = Gtk.Button()
         button2 = Gtk.Button()
@@ -218,7 +220,7 @@ class TestHelperClasses:
         assert helper.stack is None
         assert helper.categories_listbox is None
         assert helper.detail_listbox is None
-        assert helper.disable_widgets == []
+        assert not helper.disable_widgets
         assert helper.on_category_activated_callback is None
 
     def test_stacked_preferences_helper_register_widgets(self) -> None:
@@ -243,7 +245,7 @@ class TestHelperClasses:
         helper.stack.add_named(det_label, "detail")
 
         # Show the stack to ensure children are realized
-        helper.stack.show_all()
+        helper.stack.show_all()  # pylint: disable=no-member
         helper.stack.set_visible_child_name("detail")
 
         button = Gtk.Button()
@@ -266,7 +268,7 @@ class TestHelperClasses:
         helper.stack.add_named(det_label, "detail")
 
         # Show the stack to ensure children are realized
-        helper.stack.show_all()
+        helper.stack.show_all()  # pylint: disable=no-member
         helper.stack.set_visible_child_name("categories")
 
         button = Gtk.Button()
@@ -322,7 +324,7 @@ class TestFocusManagedListBox:
 
         listbox = FocusManagedListBox()
 
-        for i in range(5):
+        for _i in range(5):
             row = Gtk.ListBoxRow()
             switch = Gtk.Switch()
             listbox.add_row_with_widget(row, switch)
@@ -341,7 +343,7 @@ class TestPreferencesGridBase:
         grid = PreferencesGridBase("Test Tab")
         assert grid._tab_label == "Test Tab"
         assert grid._has_unsaved_changes is False
-        assert grid.get_border_width() == 24
+        assert grid.get_border_width() == 24  # pylint: disable=no-member
 
     def test_preferences_grid_base_get_label(self) -> None:
         """Test PreferencesGridBase.get_label returns Gtk.Label."""
@@ -463,7 +465,7 @@ class TestAutoPreferencesGrid:
             values["enum_setting"] = x
             return True
 
-        controls = [
+        controls: list[ControlType] = [
             BooleanPreferenceControl(
                 label="Enable Feature",
                 getter=lambda: values["bool_setting"],
@@ -557,11 +559,11 @@ class TestAutoPreferencesGrid:
 
         grid = AutoPreferencesGrid("Test", controls)
         switch = grid.get_widget(0)
-        assert switch.get_active() is True
+        assert switch and switch.get_active()
 
         current_value[0] = False
         grid.refresh()
-        assert switch.get_active() is False
+        assert switch and not switch.get_active()
 
     def test_auto_preferences_grid_save_settings_calls_setters(self) -> None:
         """Test AutoPreferencesGrid.save_settings calls all setters."""
@@ -685,12 +687,13 @@ class TestAutoPreferencesGrid:
         primary_switch = grid.get_widget(0)
         dependent_switch = grid.get_widget(1)
 
-        assert dependent_switch.get_sensitive() is True
+        assert dependent_switch and dependent_switch.get_sensitive()
 
         grid._initializing = False  # Allow change handlers to run
+        assert primary_switch
         primary_switch.set_active(False)
 
-        assert dependent_switch.get_sensitive() is False
+        assert dependent_switch and not dependent_switch.get_sensitive()
 
     def test_auto_preferences_grid_with_info_message(self) -> None:
         """Test AutoPreferencesGrid displays info message when provided."""
@@ -726,7 +729,7 @@ class TestAutoPreferencesGridSelectionControl:
     def test_selection_control_creates_radio_buttons_with_actions(self) -> None:
         """Test SelectionPreferenceControl with actions creates RadioButtons."""
 
-        def get_actions(value):
+        def get_actions(_value):
             return [("Edit", "edit-symbolic", lambda: None)]
 
         controls = [
@@ -767,7 +770,7 @@ class TestAutoPreferencesGridSelectionControl:
         grid = AutoPreferencesGrid("Test", controls)
         widget = grid.get_widget(0)
 
-        assert widget.get_active() == 1
+        assert widget and widget.get_active() == 1
 
         widget.set_active(2)
         result = grid.save_settings()
@@ -784,6 +787,8 @@ class TestPreferencesGridBaseMultiPageStack:
         """Test _create_multi_page_stack creates stack with categories."""
 
         class TestGrid(PreferencesGridBase):
+            """Test grid."""
+
             def __init__(self):
                 super().__init__("Test")
                 self._initializing = True
@@ -817,13 +822,15 @@ class TestPreferencesGridBaseMultiPageStack:
         """Test _create_multi_page_stack without enable switch."""
 
         class TestGrid(PreferencesGridBase):
+            """Test grid."""
+
             def __init__(self):
                 super().__init__("Test")
                 self._initializing = True
 
                 child = PreferencesGridBase("Child")
 
-                enable_listbox, stack, categories = self._create_multi_page_stack(
+                enable_listbox, stack, _categories = self._create_multi_page_stack(
                     enable_label=None,
                     enable_getter=None,
                     enable_setter=None,
@@ -849,6 +856,8 @@ class TestPreferencesGridBaseStackedPreferences:
         """Test _create_stacked_preferences creates stack with categories and detail."""
 
         class TestGrid(PreferencesGridBase):
+            """Test grid."""
+
             def __init__(self):
                 super().__init__("Test")
                 self.activated_row = None
@@ -876,9 +885,11 @@ class TestPreferencesGridBaseStackedPreferences:
         """Test _add_stack_category_row adds category with correct properties."""
 
         class TestGrid(PreferencesGridBase):
+            """Test grid."""
+
             def __init__(self):
                 super().__init__("Test")
-                stack, categories, _detail = self._create_stacked_preferences(
+                _stack, categories, _detail = self._create_stacked_preferences(
                     on_category_activated=lambda r: None
                 )
                 self.my_categories = categories
@@ -897,9 +908,11 @@ class TestPreferencesGridBaseStackedPreferences:
         from gi.repository import Atk
 
         class TestGrid(PreferencesGridBase):
+            """Test grid."""
+
             def __init__(self):
                 super().__init__("Test")
-                stack, categories, _detail = self._create_stacked_preferences(
+                _stack, categories, _detail = self._create_stacked_preferences(
                     on_category_activated=lambda r: None
                 )
                 self.my_categories = categories
@@ -926,6 +939,8 @@ class TestPreferencesGridBaseStackedPreferences:
         """Test _show_stack_categories and _show_stack_detail switch views."""
 
         class TestGrid(PreferencesGridBase):
+            """Test grid."""
+
             def __init__(self):
                 super().__init__("Test")
                 stack, categories, detail = self._create_stacked_preferences(
@@ -937,7 +952,7 @@ class TestPreferencesGridBaseStackedPreferences:
 
         grid = TestGrid()
 
-        grid.my_stack.show_all()
+        grid.my_stack.show_all()  # pylint: disable=no-member
 
         cat_scrolled = grid.my_stack.get_child_by_name("categories")
         det_scrolled = grid.my_stack.get_child_by_name("detail")

@@ -22,6 +22,7 @@
 # pylint: disable=import-outside-toplevel
 # pylint: disable=protected-access
 # pylint: disable=too-many-lines
+# pylint: disable=too-many-public-methods
 
 """Unit tests for verifying all Orca commands are properly registered."""
 
@@ -410,8 +411,9 @@ EXPECTED_TOTAL_COMMANDS = (
 )
 
 
+# pylint: disable=too-few-public-methods
 class Fake:
-    pass
+    """A simple class to use as a mock for Atspi constants and classes."""
 
 
 @pytest.mark.unit
@@ -484,16 +486,21 @@ class TestCommandRegistry:
         gio_wnck = essential_modules["gi.repository.Wnck"]
 
         class Screen:
+            """Docstring for Screen."""
+
             @staticmethod
             def get_windows_stacked():
+                """Docstring for get_windows_stacked."""
                 return []
 
             @staticmethod
             def get_active_workspace():
+                """Docstring for get_active_workspace."""
                 return None
 
             @staticmethod
-            def connect(fill1, fill2):
+            def connect(_fill1, _fill2):
+                """Docstring for connect."""
                 return None
 
         gio_wnck.Screen.get_default = test_context.Mock(return_value=Screen)
@@ -507,6 +514,7 @@ class TestCommandRegistry:
 
         return essential_modules
 
+    # pylint: disable-next=too-many-statements
     def _setup_structural_navigator_dependencies(
         self, test_context: OrcaTestContext
     ) -> dict[str, MagicMock]:
@@ -769,7 +777,7 @@ class TestCommandRegistry:
     def test_system_information_presenter_handlers_exist(
         self, test_context: OrcaTestContext
     ) -> None:
-        """Test that all system information presenter commands are registered with CommandManager."""
+        """Test that all system info presenter commands are registered with CommandManager."""
 
         self._setup_dependencies(test_context)
         from orca.system_information_presenter import get_presenter

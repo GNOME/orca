@@ -22,6 +22,8 @@
 # pylint: disable=import-outside-toplevel
 # pylint: disable=protected-access
 # pylint: disable=too-many-statements
+# pylint: disable=too-few-public-methods
+# pylint: disable=too-many-locals
 
 """Unit tests for settings_manager.py with real file I/O.
 
@@ -197,11 +199,7 @@ class TestSettingsManagerFileIO:
         acss_mock = test_context.Mock()
 
         class MockACSS(dict):
-            def getLocale(self) -> str:
-                return "en_US"
-
-            def getDialect(self) -> str | None:
-                return None
+            """Minimal ACSS stand-in that behaves like a dict."""
 
         acss_mock.ACSS = MockACSS
         test_context.patch_module("orca.acss", acss_mock)
@@ -269,7 +267,7 @@ class TestSettingsManagerFileIO:
 
         return essential_modules
 
-    def _create_fresh_manager(self, test_context: OrcaTestContext, prefs_dir: str) -> Any:
+    def _create_fresh_manager(self, _test_context: OrcaTestContext, prefs_dir: str) -> Any:
         """Create a fresh SettingsManager instance for testing."""
 
         from orca import settings_manager

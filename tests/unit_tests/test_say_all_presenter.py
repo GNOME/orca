@@ -19,6 +19,7 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=wrong-import-position
+# pylint: disable=import-outside-toplevel
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-statements
 # pylint: disable=protected-access
@@ -180,7 +181,7 @@ class TestSayAllPresenter:
         """Test SayAllPresenter._say_all_should_skip_content empty content handling."""
 
         self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
+        from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -194,8 +195,8 @@ class TestSayAllPresenter:
         """Test SayAllPresenter._parse_utterances with various input formats."""
 
         self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
-        from orca import speech  # pylint: disable=import-outside-toplevel
+        from orca.say_all_presenter import SayAllPresenter
+        from orca import speech
 
         presenter = SayAllPresenter()
 
@@ -224,7 +225,7 @@ class TestSayAllPresenter:
         """Test that get_presenter returns a singleton instance."""
 
         self._setup_dependencies(test_context)
-        from orca.say_all_presenter import get_presenter  # pylint: disable=import-outside-toplevel
+        from orca.say_all_presenter import get_presenter
 
         presenter1 = get_presenter()
         presenter2 = get_presenter()
@@ -235,7 +236,7 @@ class TestSayAllPresenter:
         """Test SayAllPresenter initialization sets up required attributes."""
 
         self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
+        from orca.say_all_presenter import SayAllPresenter
         from orca import command_manager
 
         presenter = SayAllPresenter()
@@ -250,7 +251,7 @@ class TestSayAllPresenter:
         """Test SayAllPresenter.say_all with no focus object scenario."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
+        from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
@@ -308,8 +309,8 @@ class TestSayAllPresenter:
         """Test _rewind and _fast_forward navigation controls with various conditions."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
-        from orca import speechserver  # pylint: disable=import-outside-toplevel
+        from orca.say_all_presenter import SayAllPresenter
+        from orca import speechserver
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
@@ -374,7 +375,7 @@ class TestSayAllPresenter:
         """Test D-Bus navigation commands delegate to private methods."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
+        from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
@@ -493,8 +494,8 @@ class TestSayAllPresenter:
         expected_result = case["expected_result"]
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
-        from orca import speechserver  # pylint: disable=import-outside-toplevel
+        from orca.say_all_presenter import SayAllPresenter
+        from orca import speechserver
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
@@ -552,8 +553,8 @@ class TestSayAllPresenter:
         """Test say_all method clears contexts, contents, and current_context at start."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
-        from orca import speechserver  # pylint: disable=import-outside-toplevel
+        from orca.say_all_presenter import SayAllPresenter
+        from orca import speechserver
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
@@ -571,7 +572,7 @@ class TestSayAllPresenter:
         debug_mock.LEVEL_INFO = 800
         debug_mock.print_tokens = test_context.Mock()
 
-        from orca import speech  # pylint: disable=import-outside-toplevel
+        from orca import speech
 
         test_context.patch_object(speech, "say_all", return_value=None)
 
@@ -588,8 +589,8 @@ class TestSayAllPresenter:
         """Test that _progress_callback sets the current context."""
 
         self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
-        from orca import speechserver  # pylint: disable=import-outside-toplevel
+        from orca.say_all_presenter import SayAllPresenter
+        from orca import speechserver
 
         presenter = SayAllPresenter()
 
@@ -603,7 +604,7 @@ class TestSayAllPresenter:
         """Test that _say_all_is_running is initialized to False."""
 
         self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
+        from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
         assert presenter._say_all_is_running is False
@@ -612,7 +613,7 @@ class TestSayAllPresenter:
         """Test that say_all resets _say_all_is_running to False."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
+        from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
@@ -636,9 +637,9 @@ class TestSayAllPresenter:
         """Test that _progress_callback sets _say_all_is_running to True."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
-        from orca import speechserver  # pylint: disable=import-outside-toplevel
-        from orca.ax_text import AXText  # pylint: disable=import-outside-toplevel
+        from orca.say_all_presenter import SayAllPresenter
+        from orca import speechserver
+        from orca.ax_text import AXText
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
@@ -668,9 +669,9 @@ class TestSayAllPresenter:
         """Test that _progress_callback uses SAY_ALL mode when _say_all_is_running is True."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
-        from orca import speechserver  # pylint: disable=import-outside-toplevel
-        from orca.ax_text import AXText  # pylint: disable=import-outside-toplevel
+        from orca.say_all_presenter import SayAllPresenter
+        from orca import speechserver
+        from orca.ax_text import AXText
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
@@ -703,11 +704,11 @@ class TestSayAllPresenter:
         """Test that _progress_callback uses FOCUS_TRACKING mode when interrupted by keyboard."""
 
         self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
-        from orca import speechserver  # pylint: disable=import-outside-toplevel
-        from orca.ax_text import AXText  # pylint: disable=import-outside-toplevel
-        from orca import input_event_manager  # pylint: disable=import-outside-toplevel
-        from orca import focus_manager as fm  # pylint: disable=import-outside-toplevel
+        from orca.say_all_presenter import SayAllPresenter
+        from orca import speechserver
+        from orca.ax_text import AXText
+        from orca import input_event_manager
+        from orca import focus_manager as fm
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
@@ -767,8 +768,8 @@ class TestSayAllPresenter:
         """
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
-        from orca import settings  # pylint: disable=import-outside-toplevel
+        from orca.say_all_presenter import SayAllPresenter
+        from orca import settings
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
@@ -783,7 +784,7 @@ class TestSayAllPresenter:
         # Mock utilities - return contents once, then return empty to exit loop
         call_count = [0]
 
-        def mock_get_sentence_contents(obj, offset):
+        def mock_get_sentence_contents(_obj, _offset):
             call_count[0] += 1
             if call_count[0] == 1:
                 return [(mock_obj, 0, end_offset, "Test sentence.")]
@@ -848,8 +849,8 @@ class TestSayAllPresenter:
         """Test SayAllPresenter.stop clears contexts, contents, current_context and running flag."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
-        from orca import speechserver  # pylint: disable=import-outside-toplevel
+        from orca.say_all_presenter import SayAllPresenter
+        from orca import speechserver
 
         presenter = SayAllPresenter()
         presenter._contexts = [test_context.Mock(spec=speechserver.SayAllContext)]
@@ -863,8 +864,8 @@ class TestSayAllPresenter:
 
         presenter.stop()
 
-        assert presenter._contexts == []
-        assert presenter._contents == []
+        assert not presenter._contexts
+        assert not presenter._contents
         assert presenter._current_context is None
         assert presenter._say_all_is_running is False
         manager_instance.reset_active_mode.assert_called_once_with(
@@ -875,11 +876,11 @@ class TestSayAllPresenter:
         """Test SayAllPresenter.stop works correctly when already in empty state."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter  # pylint: disable=import-outside-toplevel
+        from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
-        assert presenter._contexts == []
-        assert presenter._contents == []
+        assert not presenter._contexts
+        assert not presenter._contents
         assert presenter._current_context is None
         assert presenter._say_all_is_running is False
 
@@ -889,8 +890,8 @@ class TestSayAllPresenter:
 
         presenter.stop()
 
-        assert presenter._contexts == []
-        assert presenter._contents == []
+        assert not presenter._contexts
+        assert not presenter._contents
         assert presenter._current_context is None
         assert presenter._say_all_is_running is False
         manager_instance.reset_active_mode.assert_called_once()

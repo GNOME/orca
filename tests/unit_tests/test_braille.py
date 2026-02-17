@@ -243,7 +243,8 @@ class TestBrailleLineRanges:
         self._setup_dependencies(test_context)
         from orca import braille, braille_presenter
 
-        braille_presenter.get_presenter.return_value.use_braille.return_value = False  # type: ignore[attr-defined]
+        mock_presenter = braille_presenter.get_presenter.return_value  # type: ignore[attr-defined] # pylint: disable=no-member
+        mock_presenter.use_braille.return_value = False
         braille._STATE.brlapi_running = True
         braille._STATE.last_text_info = braille._TextInfo(object(), 1, 2, 3)
         braille.shutdown = test_context.Mock()

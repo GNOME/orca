@@ -21,6 +21,7 @@
 # pylint: disable=import-outside-toplevel
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-statements
+# pylint: disable=too-few-public-methods
 # pylint: disable=protected-access
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-arguments
@@ -40,7 +41,7 @@ if TYPE_CHECKING:
 
 
 class Fake:
-    pass
+    """Stub used as a stand-in for objects that need an identity."""
 
 
 @pytest.mark.unit
@@ -384,13 +385,13 @@ class TestFlatReviewPresenter:
         assert len(braille_cmds) == 0 or braille_cmds[0].get_braille_bindings() is not None
 
     @pytest.mark.parametrize(
-        "refresh",
+        "_refresh",
         [
             pytest.param(False, id="cached"),
             pytest.param(True, id="refresh"),
         ],
     )
-    def test_get_handlers(self, test_context: OrcaTestContext, refresh: bool) -> None:
+    def test_get_handlers(self, test_context: OrcaTestContext, _refresh: bool) -> None:
         """Test FlatReviewPresenter.get_handlers returns empty dict (commands in CommandManager)."""
 
         self._setup_dependencies(test_context)

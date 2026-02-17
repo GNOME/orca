@@ -44,7 +44,7 @@ if TYPE_CHECKING:
 
 
 class Fake:
-    pass
+    """Stub used as a stand-in for objects that need an identity."""
 
 
 @pytest.mark.unit
