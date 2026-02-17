@@ -529,23 +529,8 @@ class SettingsManager:
         for key, value in (self._customized_settings or {}).items():
             setattr(settings, str(key), value)
 
-        registry = gsettings_registry.get_registry()
-        if registry.is_enabled():
-            self._sync_settings_from_dconf()
-
         msg = "SETTINGS MANAGER: Runtime settings set."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    # TODO - JD: This method exists because command_manager.py still reads
-    # settings.orcaModifierKeys directly instead of using layered_lookup().
-    def _sync_settings_from_dconf(self) -> None:
-        """Populates settings.py attributes from dconf for modules that read them directly."""
-
-        lookup = gsettings_registry.get_registry().layered_lookup
-
-        modifier_keys = lookup("keybindings", "orca-modifier-keys", "as")
-        if modifier_keys is not None:
-            settings.orcaModifierKeys = modifier_keys
 
     def get_general_settings(self, profile: str = "default") -> dict:
         """Return the current general settings."""

@@ -305,7 +305,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._original_keyboard_layout_is_desktop: bool = (
             get_manager().get_keyboard_layout_is_desktop()
         )
-        self._original_orca_modifier_keys: list[str] = list(settings.orcaModifierKeys)
+        self._original_orca_modifier_keys: list[str] = list(
+            orca_modifier_manager.get_manager().get_orca_modifier_keys()
+        )
 
         self.keyboard_layout_combo: Gtk.ComboBox | None = None
         self._orca_modifier_combo: Gtk.ComboBox | None = None
@@ -387,8 +389,8 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if current_is_desktop != self._original_keyboard_layout_is_desktop:
             get_manager().set_keyboard_layout(self._original_keyboard_layout_is_desktop)
 
-        if settings.orcaModifierKeys != self._original_orca_modifier_keys:
-            settings.orcaModifierKeys = self._original_orca_modifier_keys
+        current_keys = orca_modifier_manager.get_manager().get_orca_modifier_keys()
+        if current_keys != self._original_orca_modifier_keys:
             gsettings_registry.get_registry().set_runtime_value(
                 "keybindings", "orca-modifier-keys", self._original_orca_modifier_keys
             )
@@ -757,7 +759,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         event_string = Gdk.keyval_name(entries[0])
         event_state = event.state
 
-        orca_mods = settings.orcaModifierKeys
+        orca_mods = orca_modifier_manager.get_manager().get_orca_modifier_keys()
         if event_string in orca_mods:
             self._captured_key = ("", keybindings.ORCA_MODIFIER_MASK, 0)
             return False
@@ -1030,7 +1032,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         break
 
         if self._orca_modifier_combo is not None:
-            orca_modifier_keys = settings.orcaModifierKeys
+            orca_modifier_keys = orca_modifier_manager.get_manager().get_orca_modifier_keys()
             key_string = ", ".join(orca_modifier_keys)
             orca_model = self._orca_modifier_combo.get_model()
             if orca_model:
@@ -1060,13 +1062,11 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             if self._orca_modifier_combo is not None:
                 if is_desktop:
                     self._orca_modifier_combo.set_active(0)
-                    settings.orcaModifierKeys = settings.DESKTOP_MODIFIER_KEYS
                     gsettings_registry.get_registry().set_runtime_value(
                         "keybindings", "orca-modifier-keys", settings.DESKTOP_MODIFIER_KEYS
                     )
                 else:
                     self._orca_modifier_combo.set_active(3)
-                    settings.orcaModifierKeys = settings.LAPTOP_MODIFIER_KEYS
                     gsettings_registry.get_registry().set_runtime_value(
                         "keybindings", "orca-modifier-keys", settings.LAPTOP_MODIFIER_KEYS
                     )
@@ -1087,7 +1087,6 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         model = combo.get_model()
         orca_modifier = model.get_value(tree_iter, 0)
-        settings.orcaModifierKeys = orca_modifier.split(", ")
         gsettings_registry.get_registry().set_runtime_value(
             "keybindings", "orca-modifier-keys", orca_modifier.split(", ")
         )
