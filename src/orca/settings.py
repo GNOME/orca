@@ -62,83 +62,17 @@ HYPERLINK_VOICE: str = "hyperlink"
 SYSTEM_VOICE: str = "system"
 
 # Managed by typing_echo_presenter.py
-enableKeyEcho: bool = True
-enableAlphabeticKeys: bool = True
-enableNumericKeys: bool = True
-enablePunctuationKeys: bool = True
-enableSpace: bool = True
-enableModifierKeys: bool = True
-enableFunctionKeys: bool = True
-enableActionKeys: bool = True
-enableNavigationKeys: bool = False
-enableDiacriticalKeys: bool = False
-enableEchoByCharacter: bool = False
-enableEchoByWord: bool = False
-enableEchoBySentence: bool = False
 presentLockingKeys: bool | None = None
 
 # Managed by speech_manager.py
-enableSpeech: bool = True
-verbalizePunctuationStyle: int = PUNCTUATION_STYLE_MOST
 capitalizationStyle: str = CAPITALIZATION_STYLE_NONE
 speakNumbersAsDigits: bool = False
-useColorNames: bool = True
-enablePauseBreaks: bool = True
-usePronunciationDictionary: bool = True
-enableAutoLanguageSwitching: bool = True
-
-# Managed by speech_presenter.py
-speakMisspelledIndicator: bool = True
-enableSpeechIndentation: bool = False
-speakIndentationOnlyIfChanged: bool = False
-speakBlankLines: bool = True
-onlySpeakDisplayedText: bool = False
-enableTutorialMessages: bool = True
-speakDescription: bool = True
-enablePositionSpeaking: bool = False
-enableMnemonicSpeaking: bool = True
-speakContextNonLandmarkForm: bool = True
-speakContextBlockquote: bool = True
-speakContextPanel: bool = True
-speakContextLandmark: bool = True
-speakContextList: bool = True
-speakContextTable: bool = True
-readFullRowInGUITable: bool = True
-readFullRowInDocumentTable: bool = True
-readFullRowInSpreadSheet: bool = False
-speakCellSpan: bool = True
-speakCellCoordinates: bool = True
-speakCellHeaders: bool = True
-speakSpreadsheetCoordinates: bool = True
-alwaysSpeakSelectedSpreadsheetRange: bool = False
-messagesAreDetailed: bool = True
-repeatCharacterLimit: int = 4
-speechVerbosityLevel: int = VERBOSITY_LEVEL_VERBOSE
-speakProgressBarUpdates: bool = True
-progressBarSpeechInterval: int = 10
-progressBarSpeechVerbosity: int = PROGRESS_BAR_APPLICATION
 
 # Managed by say_all_presenter.py
-sayAllContextBlockquote: bool = True
-sayAllContextPanel: bool = True
-sayAllContextNonLandmarkForm: bool = True
-sayAllContextLandmark: bool = True
-sayAllContextList: bool = True
-sayAllContextTable: bool = True
 sayAllStyle: int = SAYALL_STYLE_SENTENCE
-structNavInSayAll: bool = False
-rewindAndFastForwardInSayAll: bool = False
-
-# Managed by flat_review_presenter.py
-flatReviewIsRestricted: bool = False
 
 # Managed by braille_presenter.py
 enableBraille: bool = True
-enableBrailleContext: bool = True
-enableFlashMessages: bool = True
-brailleFlashTime: int = 5000
-flashIsPersistent: bool = False
-flashIsDetailed: bool = True
 enableBrailleWordWrap: bool = False
 enableContractedBraille: bool = False
 brailleContractionTable: str = ""
@@ -150,52 +84,27 @@ brailleSelectorIndicator: int = BRAILLE_UNDERLINE_BOTH
 brailleLinkIndicator: int = BRAILLE_UNDERLINE_BOTH
 textAttributesBrailleIndicator: int = BRAILLE_UNDERLINE_NONE
 brailleVerbosityLevel: int = VERBOSITY_LEVEL_VERBOSE
-brailleProgressBarUpdates: bool = False
-progressBarBrailleInterval: int = 10
-progressBarBrailleVerbosity: int = PROGRESS_BAR_APPLICATION
-displayObjectMnemonic: bool = True
-
-# Managed by mouse_review.py
-enableMouseReview: bool = False
-presentToolTips: bool = False
 
 # Managed by document_presenter.py
-nativeNavTriggersFocusMode: bool = True
-autoStickyFocusModeForWebApps: bool = True
-layoutMode: bool = True
-sayAllOnLoad: bool = True
-pageSummaryOnLoad: bool = True
 FIND_SPEAK_NONE: int = 0
 FIND_SPEAK_IF_LINE_CHANGED: int = 1
 FIND_SPEAK_ALL: int = 2
-findResultsVerbosity: int = FIND_SPEAK_ALL
-findResultsMinimumLength: int = 4
 
 # Managed by text_attribute_manager.py
 textAttributesToSpeak: list[str] = []
 textAttributesToBraille: list[str] = []
 
 # Managed by structural_navigator.py
-largeObjectTextLength: int = 75
-wrappedStructuralNavigation: bool = True
-structNavTriggersFocusMode: bool = False
 structuralNavigationEnabled: bool = True
 
 # Managed by caret_navigator.py
-caretNavTriggersFocusMode: bool = False
 caretNavigationEnabled: bool = True
 
 # Managed by table_navigator.py
 tableNavigationEnabled: bool = True
-skipBlankCells: bool = False
 
 # Managed by live_region_presenter.py
 enableLiveRegions: bool = True
-presentLiveRegionFromInactiveTab: bool = False
-
-# Managed by system_information_presenter.py
-presentDateFormat: str = "%x"
-presentTimeFormat: str = "%X"
 
 # Profiles
 startingProfile: list[str] = ["Default", "default"]
@@ -219,10 +128,6 @@ speechMonitorForeground: str = "#ffffff"
 speechMonitorBackground: str = "#000000"
 
 # Managed by sound_presenter.py
-beepProgressBarUpdates: bool = False
-progressBarBeepInterval: int = 0
-progressBarBeepVerbosity: int = PROGRESS_BAR_APPLICATION
-enableSound: bool = True
 soundVolume: float = 0.5
 
 # Keyboard
@@ -232,17 +137,7 @@ doubleClickTimeout: float = 0.5
 
 # Managed by chat_presenter.py
 chatMessageVerbosity: int = CHAT_SPEAK_ALL_ANY_APP
-chatSpeakRoomName: bool = False
-chatAnnounceBuddyTyping: bool = False
-chatRoomHistories: bool = False
-presentChatRoomLast: bool = False
-
-# Managed by spellcheck_presenter.py
-spellcheckSpellError: bool = True
-spellcheckSpellSuggestion: bool = True
-spellcheckPresentContext: bool = True
 
 # N.B. The following are experimental and may change or go away at any time.
 enableSadPidginHack: bool = False
 ignoreStatusBarProgressBars: bool = True
-enableExperimentalFeatures: bool = False
