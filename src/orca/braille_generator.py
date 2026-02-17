@@ -47,7 +47,7 @@ from . import table_navigator
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from .braille_rolenames import shortRoleNames
+from .braille_rolenames import short_role_names
 
 if TYPE_CHECKING:
     from . import script
@@ -214,7 +214,7 @@ class BrailleGenerator(generator.Generator):
 
     def get_localized_role_name(self, obj: Atspi.Accessible, **args) -> str:
         if not braille_presenter.get_presenter().use_full_rolenames():
-            rv = shortRoleNames.get(args.get("role", AXObject.get_role(obj)))
+            rv = short_role_names.get(args.get("role", AXObject.get_role(obj)))
             if rv:
                 return rv
 

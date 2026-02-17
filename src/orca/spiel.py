@@ -40,7 +40,7 @@ import gi
 
 try:
     gi.require_version("Spiel", "1.0")
-    from gi.repository import Spiel
+    from gi.repository import Spiel  # pylint: disable=no-name-in-module
 
     _SPIEL_AVAILABLE = True
 except Exception:

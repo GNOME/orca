@@ -31,11 +31,11 @@ import time
 from enum import Enum
 from typing import Any, TYPE_CHECKING
 
-_PSUTIL_AVAILABLE = False
+_PSUTIL_AVAILABLE = False  # pylint: disable=invalid-name
 try:
     import psutil  # type: ignore
 
-    _PSUTIL_AVAILABLE = True
+    _PSUTIL_AVAILABLE = True  # pylint: disable=invalid-name
 except ModuleNotFoundError:
     pass
 

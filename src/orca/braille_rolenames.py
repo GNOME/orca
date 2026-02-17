@@ -28,7 +28,7 @@ from gi.repository import Atspi
 
 from .orca_i18n import _, C_  # pylint: disable=import-error
 
-shortRoleNames = {
+short_role_names = {
     # Translators: short braille for the rolename of an invalid GUI object.
     # We strive to keep it under three characters to preserve real estate.
     Atspi.Role.INVALID: _("???"),

@@ -280,6 +280,8 @@ class BrailleCommand(Command):
 class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     """Grid widget for keybindings preferences."""
 
+    # pylint: disable=no-member
+
     def __init__(
         self, script: default.Script, title_change_callback: Callable[[str], None] | None = None
     ) -> None:

@@ -81,7 +81,7 @@ except (ImportError, OSError):
 else:
     # TODO: Can we get the tablesdir info at runtime?
     if not tablesdir:
-        LOUIS = None
+        LOUIS = None  # pylint: disable=invalid-name
 
 if TYPE_CHECKING:
     from .input_event import BrailleEvent, InputEvent

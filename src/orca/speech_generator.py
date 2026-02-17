@@ -89,7 +89,7 @@ SYSTEM = "system"
 STATE = "state"  # Candidate for sound
 VALUE = "value"  # Candidate for sound
 
-voiceType = {
+voice_type = {
     DEFAULT: settings.DEFAULT_VOICE,
     UPPERCASE: settings.UPPERCASE_VOICE,
     HYPERLINK: settings.HYPERLINK_VOICE,
@@ -210,9 +210,9 @@ class SpeechGenerator(generator.Generator):
     def voice(self, key: str | None = None, **args) -> list[acss.ACSS]:
         """Returns an array containing a voice."""
 
-        voicename = voiceType.get(key or DEFAULT, voiceType[DEFAULT])
+        voicename = voice_type.get(key or DEFAULT, voice_type[DEFAULT])
         mgr = speech_manager.get_manager()
-        voice = mgr.get_voice_properties(voiceType[DEFAULT])
+        voice = mgr.get_voice_properties(voice_type[DEFAULT])
 
         obj = args.get("obj")
         language = args.get("language", "")
@@ -261,9 +261,9 @@ class SpeechGenerator(generator.Generator):
             string = args.get("string", "")
             voice_override: acss.ACSS | None = None
             if AXUtilities.is_link(obj):
-                voice_override = mgr.get_voice_properties(voiceType[HYPERLINK])
+                voice_override = mgr.get_voice_properties(voice_type[HYPERLINK])
             elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
-                voice_override = mgr.get_voice_properties(voiceType[UPPERCASE])
+                voice_override = mgr.get_voice_properties(voice_type[UPPERCASE])
 
             if voice_override:
                 voice.update(voice_override)
