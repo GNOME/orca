@@ -11,7 +11,7 @@ lint.ignore = [
 
 [tool.pylint.master]
 #extension-pkg-allow-list = ["brlapi"] # this makes cli pylint crash.
-init-hook = "import sys, os; sys.path.insert(0, os.path.join(os.getcwd(), 'src'))"
+init-hook = "import sys, os, warnings; sys.path.insert(0, os.path.join(os.getcwd(), 'src')); warnings.filterwarnings('ignore', message=r'.*(gobject|GstBus|g_param_spec|validate_pspec).*')"
 
 [tool.pylint.typecheck]
 ignored-classes = ["AXUtilities"]
@@ -20,6 +20,8 @@ ignored-classes = ["AXUtilities"]
 disable = [
     "fixme",
     "duplicate-code",
+    "cyclic-import",
+    "c-extension-no-member",
 ]
 
 [tool.mypy]

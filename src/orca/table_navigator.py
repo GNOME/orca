@@ -116,6 +116,7 @@ class TableNavigator:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
+    # pylint: disable-next=too-many-locals
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""
 
@@ -265,7 +266,7 @@ class TableNavigator:
         )
         return True
 
-    def suspend_commands(self, script: default.Script, suspended: bool, reason: str = "") -> None:
+    def suspend_commands(self, _script: default.Script, suspended: bool, reason: str = "") -> None:
         """Suspends table navigation independent of the enabled setting."""
 
         if suspended == self._suspended:

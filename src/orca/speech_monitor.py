@@ -44,8 +44,11 @@ class SpeechMonitor(Gtk.Window):
 
     _shared_css_provider: Gtk.CssProvider | None = None
 
+    # pylint: disable-next=too-many-statements
     def __init__(self, on_close: Callable[[], None] | None = None) -> None:
         """Create a new SpeechMonitor."""
+
+        # pylint: disable=no-member
 
         super().__init__()
         self._on_close = on_close
@@ -107,7 +110,7 @@ class SpeechMonitor(Gtk.Window):
         if SpeechMonitor._shared_css_provider is None:
             SpeechMonitor._shared_css_provider = Gtk.CssProvider()
             Gtk.StyleContext.add_provider_for_screen(
-                Gdk.Screen.get_default(),
+                Gdk.Screen.get_default(),  # pylint: disable=no-value-for-parameter
                 SpeechMonitor._shared_css_provider,
                 Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
             )
@@ -137,6 +140,7 @@ class SpeechMonitor(Gtk.Window):
     def _on_drag_bar_press(self, _widget: Gtk.Widget, event: Gdk.EventButton) -> bool:
         """Initiate a window move when the drag bar is clicked."""
 
+        # pylint: disable=no-member
         if event.button == 1:
             self.begin_move_drag(event.button, int(event.x_root), int(event.y_root), event.time)
             return True
@@ -152,7 +156,7 @@ class SpeechMonitor(Gtk.Window):
     def _on_key_press(self, _window: Gtk.Window, event: Gdk.EventKey) -> bool:
         """Handle Ctrl+Plus/Minus/0 for zoom."""
 
-        if not (event.state & Gdk.ModifierType.CONTROL_MASK):
+        if not event.state & Gdk.ModifierType.CONTROL_MASK:
             return False
 
         if event.keyval in (Gdk.KEY_plus, Gdk.KEY_equal, Gdk.KEY_KP_Add):

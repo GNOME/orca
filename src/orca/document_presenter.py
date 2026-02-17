@@ -307,6 +307,7 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
         super().__init__(guilabels.NATIVE_NAVIGATION, controls, info_message=info)
 
 
+# pylint: disable-next=too-many-instance-attributes
 class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     """Main document preferences grid with categorized navigation settings."""
 

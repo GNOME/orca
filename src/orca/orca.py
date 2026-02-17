@@ -35,7 +35,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi
-from gi.repository import Gdk  # pylint: disable=no-name-in-module
+from gi.repository import Gdk
 from gi.repository import Gio
 from gi.repository import GLib
 
@@ -199,8 +199,8 @@ def main():
     registry = gsettings_registry.get_registry()
 
     default_prefs_dir = os.path.join(
-        GLib.get_user_data_dir(),
-        "orca",  # pylint: disable=no-value-for-parameter
+        GLib.get_user_data_dir(),  # pylint: disable=no-value-for-parameter
+        "orca",
     )
     if os.path.realpath(prefs_dir) != os.path.realpath(default_prefs_dir):
         registry.set_enabled(False)

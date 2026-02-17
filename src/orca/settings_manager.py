@@ -26,9 +26,7 @@
 
 """Settings manager."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
-
 
 import ast
 import importlib
@@ -233,6 +231,7 @@ class SettingsManager:
             if value != custom_value:
                 self._customized_settings[key] = custom_value
 
+    # pylint: disable-next=too-many-locals
     def _get_general_from_file(self, profile: str | None = None) -> dict:
         """Get settings from file, merging defaults with profile values."""
 
@@ -758,6 +757,7 @@ class SettingsManager:
 
         return app_setting
 
+    # pylint: disable-next=too-many-locals
     def load_app_settings(self, script: Script | None) -> None:
         """Load the users application specific settings for an app."""
 

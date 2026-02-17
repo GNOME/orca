@@ -47,6 +47,7 @@ DOT_8 = "\x80"  # 10000000
 DOTS_78 = "\xc0"  # 11000000
 
 
+# pylint: disable-next=no-member
 class BrailleDot(Gtk.Alignment):
     """A single braille dot."""
 
@@ -116,7 +117,7 @@ class BrailleCell(Gtk.Button):
         grid.attach(self._displayed_char, 0, 0, 2, 3)
         grid.attach(self._dot7, 0, 3, 1, 1)
         grid.attach(self._dot8, 1, 3, 1, 1)
-        self.add(grid)
+        self.add(grid)  # pylint: disable=no-member
 
         self.connect("clicked", self._on_cell_clicked)
 
@@ -182,6 +183,8 @@ class BrailleMonitor(Gtk.Window):
 
     def __init__(self, num_cells: int = 32, on_close: Callable[[], None] | None = None) -> None:
         """Create a new BrailleMonitor."""
+
+        # pylint: disable=no-member
 
         super().__init__()
         self._on_close = on_close

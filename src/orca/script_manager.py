@@ -95,7 +95,10 @@ class ScriptManager:
         """
 
         if self._app_settings_snapshots:
-            msg = f"SCRIPT MANAGER: Clearing {len(self._app_settings_snapshots)} app settings snapshots"
+            msg = (
+                f"SCRIPT MANAGER: Clearing {len(self._app_settings_snapshots)} "
+                "app settings snapshots"
+            )
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._app_settings_snapshots.clear()
 

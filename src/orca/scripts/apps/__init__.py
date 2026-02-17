@@ -9,7 +9,6 @@ __all__ = [
     "notification-daemon",
     "pidgin",
     "soffice",
-    "SeaMonkey",
     "smuxi-frontend-gnome",
     "Thunderbird",
     "xfwm4",

@@ -342,7 +342,7 @@ def _create_brlapi_connection() -> Any | None:
         _log_brlapi_unavailable("Connection")
         return None
     try:
-        return BRLAPI.Connection()  # pylint: disable=c-extension-no-member
+        return BRLAPI.Connection()
     except BRLAPI_ERRORS as error:
         _log_brlapi_unavailable("Connection", error)
         return None

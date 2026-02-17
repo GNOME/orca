@@ -57,7 +57,7 @@ class PresentationMode(enum.IntEnum):
 class TextAttributePreferencesGrid(PreferencesGridBase):
     """Preferences grid for text attribute presentation settings."""
 
-    # pylint: disable=no-member, c-extension-no-member
+    # pylint: disable=no-member
     def __init__(self) -> None:
         super().__init__(guilabels.TEXT_ATTRIBUTES)
         self._initializing: bool = True
@@ -406,7 +406,7 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
 
         return result
 
-    # pylint: enable=no-member, c-extension-no-member
+    # pylint: enable=no-member
 
 
 @gsettings_registry.get_registry().gsettings_schema(

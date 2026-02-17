@@ -286,7 +286,7 @@ class LiveRegionPresenter:
         msg = f"LIVE REGION PRESENTER: Commands set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def suspend_commands(self, script: default.Script, suspended: bool, reason: str = "") -> None:
+    def suspend_commands(self, _script: default.Script, suspended: bool, reason: str = "") -> None:
         """Suspends live region commands independent of the enabled setting."""
 
         if suspended == self._suspended:
@@ -412,7 +412,7 @@ class LiveRegionPresenter:
         return len(self.msg_queue) > 0
 
     def _advance_politeness_level(
-        self, script: default.Script, _event: input_event.InputEvent
+        self, _script: default.Script, _event: input_event.InputEvent
     ) -> bool:
         """Advance the politeness level of the given object"""
 
@@ -601,7 +601,7 @@ class LiveRegionPresenter:
         )
         return True
 
-    def toggle_monitoring(self, script: default.Script, _event: input_event.InputEvent) -> bool:
+    def toggle_monitoring(self, _script: default.Script, _event: input_event.InputEvent) -> bool:
         """Toggles live region monitoring on and off."""
 
         if not self.get_is_enabled():

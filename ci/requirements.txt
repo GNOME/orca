@@ -7,4 +7,5 @@
 
 ruff
 mypy
+pylint
 types-psutil

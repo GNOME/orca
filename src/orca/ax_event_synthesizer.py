@@ -102,7 +102,7 @@ class AXEventSynthesizer:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         try:
-            device = Atspi.Device.new()
+            device = Atspi.Device.new()  # pylint: disable=no-value-for-parameter
             Atspi.Device.generate_mouse_event(device, obj, relative_x, relative_y, event)
         except GLib.GError as error:
             message = f"AXEventSynthesizer: Exception in _generate_mouse_event_new: {error}"

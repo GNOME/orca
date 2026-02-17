@@ -23,6 +23,7 @@
 # pylint: disable=too-many-return-statements
 # pylint: disable=too-many-statements
 # pylint: disable=wrong-import-position
+# pylint: disable=too-many-lines
 
 """Utilities for performing tasks related to accessibility inspection."""
 
@@ -562,8 +563,9 @@ class AXUtilities:
             result = AXUtilities._get_set_members(obj, container)
             AXUtilities.SET_MEMBERS[hash(container)] = result
 
-        # In a collapsed combobox, one can arrow to change the selection without showing the items.
-        # In a listbox, items scrolled out of view lose the showing state but are still valid members.
+        # In a collapsed combobox, one can arrow to change the selection without showing
+        # the items. In a listbox, items scrolled out of view lose the showing state but
+        # are still valid members.
         def is_combo_box_or_list_box(x):
             return AXUtilitiesRole.is_combo_box(x) or AXUtilitiesRole.is_list_box(x)
 

@@ -48,7 +48,7 @@ _MOUSE_REVIEW_CAPABLE = False
 try:
     if os.environ.get("XDG_SESSION_TYPE", "").lower() != "wayland":
         gi.require_version("Wnck", "3.0")
-        from gi.repository import Wnck
+        from gi.repository import Wnck  # pylint: disable=no-name-in-module
 
         _MOUSE_REVIEW_CAPABLE = Wnck.Screen.get_default() is not None  # pylint: disable=no-value-for-parameter
 except Exception:

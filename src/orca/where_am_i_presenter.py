@@ -66,6 +66,7 @@ class WhereAmIPresenter:
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("WhereAmIPresenter", self)
 
+    # pylint: disable-next=too-many-locals
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""
 

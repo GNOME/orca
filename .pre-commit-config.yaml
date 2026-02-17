@@ -9,11 +9,17 @@ repos:
     hooks:
       - id: mypy
         name: mypy
-        entry: mypy
+        entry: mypy src/orca
         language: python
+        pass_filenames: false
         types: [python]
         args: [--no-incremental]
         additional_dependencies:
           - mypy
           - pytest
           - pytest-mock
+      - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]

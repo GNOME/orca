@@ -99,11 +99,6 @@ class Script(Gecko.Script):
 
         return super().on_text_inserted(event)
 
-    def on_text_selection_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:text-selection-changed accessibility events."""
-
-        return super().on_text_selection_changed(event)
-
     def on_window_deactivated(self, event: Atspi.Event) -> bool:
         """Callback for window:deactivate accessibility events."""
 

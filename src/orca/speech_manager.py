@@ -102,6 +102,7 @@ class PunctuationStyle(Enum):
         return self.name.lower()
 
 
+# pylint: disable-next=too-many-instance-attributes
 class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     """GtkGrid containing the Voice settings page."""
 
@@ -333,7 +334,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         voice_types_content.add(voice_types_listbox)  # pylint: disable=no-member
         self.attach(self._voice_types_frame, 0, row, 1, 1)
 
-        self.show_all()
+        self.show_all()  # pylint: disable=no-member
 
     def _show_voice_settings_dialog(self, voice_type: VoicesPreferencesGrid.VoiceType) -> None:
         """Show a dialog for editing settings for a specific voice type."""
@@ -733,6 +734,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._initializing = False
         # Note: Voice widgets are created on-demand in dialogs, so we don't populate them here
 
+    # pylint: disable-next=too-many-branches
     def _populate_languages_for_voice_type(
         self, voice_type: VoicesPreferencesGrid.VoiceType
     ) -> None:
@@ -828,6 +830,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self._initializing = False
 
+    # pylint: disable-next=too-many-branches
     def _populate_families_for_voice_type(
         self, voice_type: VoicesPreferencesGrid.VoiceType, apply_changes: bool = True
     ) -> None:

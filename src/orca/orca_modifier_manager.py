@@ -66,7 +66,7 @@ class OrcaModifierManager:
         self._need_to_restore_orca_modifier: bool = False
 
         # Event handlers for input devices being plugged in/unplugged.
-        display = Gdk.Display.get_default()
+        display = Gdk.Display.get_default()  # pylint: disable=no-value-for-parameter
         if display is not None:
             device_manager = display.get_device_manager()
             device_manager.connect("device-added", self._on_device_changed)

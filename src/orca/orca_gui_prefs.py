@@ -19,7 +19,6 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=wrong-import-position
-# pylint: disable=c-extension-no-member
 # pylint: disable=no-member
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-statements

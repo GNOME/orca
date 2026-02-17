@@ -51,7 +51,7 @@ class Icon:
         return os.path.isfile(self.path)
 
 
-class Tone:
+class Tone:  # pylint: disable=too-few-public-methods
     """Tone representing a particular aspect of an object."""
 
     SINE_WAVE = 0
@@ -113,7 +113,7 @@ class Player:
             msg = f"SOUND ERROR: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _on_pipleline_message(self, _bus: Gst.Bus, message: Gst.Message) -> None:
+    def _on_pipeline_message(self, _bus: Gst.Bus, message: Gst.Message) -> None:
         assert self._pipeline is not None
         if message.type == Gst.MessageType.EOS:
             self._pipeline.set_state(Gst.State.NULL)
@@ -176,7 +176,7 @@ class Player:
         self._pipeline = Gst.Pipeline(name="orca-pipeline")
         bus = self._pipeline.get_bus()
         bus.add_signal_watch()
-        bus.connect("message", self._on_pipleline_message)
+        bus.connect("message", self._on_pipeline_message)
 
         self._source = Gst.ElementFactory.make("audiotestsrc", "src")
         self._sink = Gst.ElementFactory.make("autoaudiosink", "output")

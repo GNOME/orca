@@ -63,6 +63,8 @@ if TYPE_CHECKING:
 class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
     """GtkGrid containing the Profile management preferences page."""
 
+    # pylint: disable=no-member
+
     def __init__(
         self,
         manager: ProfileManager,

@@ -1220,7 +1220,7 @@ BRAILLE_ENABLE_END_OF_LINE_SYMBOL = _("_End of line symbol")
 # braille display.
 BRAILLE_DISPLAY_SETTINGS = _("Display Settings")
 
-# Translators: This is the label for a setting in the prefernces dialog which
+# Translators: This is the label for a setting in the preferences dialog which
 # turns braille support on or off.
 BRAILLE_ENABLE_BRAILLE_SUPPORT = _("Braille support")
 

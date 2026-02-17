@@ -21,7 +21,7 @@
 # pylint: disable=wrong-import-position
 # pylint: disable=too-many-statements
 # pylint: disable=too-many-lines
-# pylint: disable=c-extension-no-member
+# pylint: disable=too-many-public-methods
 
 """Manager for script commands and keybindings."""
 
@@ -312,6 +312,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._build()
         self._initializing = False
 
+    # pylint: disable-next=too-many-locals
     def _build(self) -> None:
         """Build the keybindings UI."""
 
@@ -948,7 +949,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
     # pylint: enable=no-member
 
-    def save_settings(  # pylint: disable=too-many-locals
+    def save_settings(  # pylint: disable=too-many-locals, too-many-branches
         self,
         profile: str = "",
         app_name: str = "",
@@ -1432,6 +1433,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             cmd for cmd in self._keyboard_commands.values() if cmd.get_group_label() == group_label
         )
 
+    # pylint: disable-next=too-many-locals
     def apply_user_overrides(self) -> None:
         """Applies user-customized keybindings from settings to Commands."""
 

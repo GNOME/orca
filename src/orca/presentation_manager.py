@@ -106,6 +106,7 @@ class PresentationManager:
 
         speech_presenter.get_presenter().present_key_event(event)
 
+    # pylint: disable-next=too-many-arguments, too-many-positional-arguments
     def present_message(
         self,
         full: str,
@@ -184,6 +185,7 @@ class PresentationManager:
             text, voice=voice, reset_styles=reset_styles, obj=obj
         )
 
+    # pylint: disable-next=too-many-arguments
     def present_object(
         self,
         script: default.Script,

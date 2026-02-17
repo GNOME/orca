@@ -20,7 +20,6 @@
 
 # pylint: disable=too-many-lines
 # pylint: disable=wrong-import-position
-# pylint: disable=c-extension-no-member
 # pylint: disable=too-many-public-methods
 
 """Module for flat-review commands"""
@@ -91,6 +90,7 @@ class FlatReviewPresenter:
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("FlatReviewPresenter", self)
 
+    # pylint: disable-next=too-many-locals
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""
 

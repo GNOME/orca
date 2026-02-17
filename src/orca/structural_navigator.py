@@ -51,6 +51,7 @@ from . import focus_manager
 from . import guilabels
 from . import input_event_manager
 from . import keybindings
+from . import live_region_presenter
 from . import messages
 from . import object_properties
 from . import orca_gui_navlist
@@ -108,6 +109,7 @@ class StructuralNavigator:
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("StructuralNavigator", self)
 
+    # pylint: disable-next=too-many-locals
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""
 
@@ -2675,8 +2677,6 @@ class StructuralNavigator:
         self, script: default.Script, event: InputEvent | None = None, notify_user: bool = True
     ) -> bool:
         """Goes to the last live region."""
-
-        from . import live_region_presenter
 
         tokens = [
             "STRUCTURAL NAVIGATOR: last_live_region. Script:",

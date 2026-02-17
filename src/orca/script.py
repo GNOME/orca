@@ -21,10 +21,9 @@
 # pylint:disable=too-many-public-methods
 # pylint:disable=unused-argument
 
-# This has to be the first non-docstring line in the module to make linters happy.
+"""The base Script class."""
+
 from __future__ import annotations
-
-
 from typing import TYPE_CHECKING
 
 from . import braille_generator

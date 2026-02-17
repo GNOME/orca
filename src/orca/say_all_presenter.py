@@ -550,9 +550,10 @@ class SayAllPresenter:
                     return
                 if manager.last_event_was_up() and self._rewind(context):
                     return
+                navigator = structural_navigator.get_navigator()
                 if (
                     settings.structNavInSayAll
-                    and structural_navigator.get_navigator().last_input_event_was_navigation_command()
+                    and navigator.last_input_event_was_navigation_command()
                 ):
                     return
                 presentation_manager.get_manager().interrupt_presentation()

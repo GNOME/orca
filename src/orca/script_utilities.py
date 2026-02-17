@@ -530,7 +530,7 @@ class Utilities:
         ]
         return roles
 
-    def _find_window_witih_descendant(self, child: Atspi.Accessible) -> Atspi.Accessible | None:
+    def _find_window_with_descendant(self, child: Atspi.Accessible) -> Atspi.Accessible | None:
         """A terrible, non-performant workaround for broken ancestry."""
 
         if not AXObject.is_valid(child):
@@ -570,7 +570,7 @@ class Utilities:
         if rv is None and use_fallback_search:
             msg = "SCRIPT UTILITIES: Attempting to find top-level object via fallback search"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            rv = self._find_window_witih_descendant(obj)
+            rv = self._find_window_with_descendant(obj)
 
         return rv
 
@@ -623,7 +623,7 @@ class Utilities:
         # Don't bother if the root is a 'pre' or 'code' element. Those often have
         # nothing but a TON of static text leaf nodes, which we want to ignore.
         if AXUtilities.is_code(root):
-            tokens = ["SCRIPUT UTILITIES: Returning 0 descendants for pre/code", root]
+            tokens = ["SCRIPT UTILITIES: Returning 0 descendants for pre/code", root]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
@@ -1593,6 +1593,7 @@ class Utilities:
 
         return True
 
+    # pylint: disable=unused-argument
     def is_text_block_element(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is a text block element like a paragraph or heading."""
 
@@ -1607,3 +1608,5 @@ class Utilities:
         """Returns True if obj is content editable with embedded objects."""
 
         return False
+
+    # pylint: enable=unused-argument

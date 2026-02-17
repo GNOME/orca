@@ -97,7 +97,7 @@ class CommandListBoxRow(Gtk.ListBoxRow):
         self._binding_label = value
 
 
-# pylint: disable-next=too-few-public-methods, c-extension-no-member
+# pylint: disable-next=too-few-public-methods
 class RadioButtonWithActions(Gtk.RadioButton):
     """RadioButton with associated action buttons for navigation."""
 
@@ -353,7 +353,7 @@ class FocusManagedListBox(Gtk.ListBox):
 class PreferencesGridBase(Gtk.Grid):
     """Base class for all preferences grid widgets with common UI helpers."""
 
-    # pylint: disable=no-member, c-extension-no-member
+    # pylint: disable=no-member
     def __init__(self, tab_label: str) -> None:
         """Initialize the preferences grid with a tab label."""
 
@@ -1225,7 +1225,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
 
     _gsettings_schema: str = ""
 
-    # pylint: disable=no-member, c-extension-no-member
+    # pylint: disable=no-member
     def __init__(
         self,
         tab_label: str,
@@ -1915,6 +1915,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         self._initializing = False
         self._update_sensitivity()
 
+    # pylint: disable-next=too-many-statements
     def save_settings(self, profile: str = "", app_name: str = "") -> dict[str, Any]:
         """Save all values using their setters and return a dict of changes."""
 

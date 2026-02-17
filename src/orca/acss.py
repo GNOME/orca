@@ -39,10 +39,8 @@ class ACSS(dict):
     RICHNESS = "richness"
     PUNCTUATIONS = "punctuations"
 
-    # A value of None means use the engine's default value.
-    #
     settings = {
-        FAMILY: None,
+        FAMILY: None,  # None means use the engine's default value.
         RATE: 50,
         GAIN: 10,
         AVERAGE_PITCH: 5,
@@ -52,26 +50,16 @@ class ACSS(dict):
         PUNCTUATIONS: "all",
     }
 
-    def __init__(self, props=None):
+    def __init__(self, props: dict | None = None):
         """Create and initialize ACSS structure."""
-        dict.__init__(self)
-        props = props or {}
-        if props:
-            for k in props:
-                if k == "established" or k in ACSS.settings:
-                    # Do a 'deep copy' of the family.  Otherwise,
-                    # the new ACSS shares the actual data with the
-                    # props passed in.  This can cause unexpected
-                    # side effects.
-                    #
-                    if k == ACSS.FAMILY:
-                        self[k] = {}
-                        for j in props[k].keys():
-                            self[k][j] = props[k][j]
-                    else:
-                        self[k] = props[k]
-        else:
+
+        super().__init__()
+        if not props:
             self["established"] = False
+            return
+        for key, value in props.items():
+            if key == "established" or key in ACSS.settings:
+                self[key] = dict(value) if key == ACSS.FAMILY else value
 
     def __eq__(self, other):
         if not isinstance(other, ACSS):
@@ -84,35 +72,9 @@ class ACSS(dict):
             return False
         return True
 
-    def __setitem__(self, key, value):
-        """Update name when we change values."""
-        dict.__setitem__(self, key, value)
-
-    def __delitem__(self, key):
-        """Update name if we delete a key."""
-        dict.__delitem__(self, key)
-
-    def name(self):
-        _name = "acss-"
-        names = list(self.keys())
-        if names:
-            names.sort()
-            for k in names:
-                _name += f"{k}-{self[k]}:"
-        _name = _name[:-1]
-        return _name
-
-    def getLocale(self):
-        family = self.get(ACSS.FAMILY, {})
-        return family.get("locale")
-
-    def getDialect(self):
-        family = self.get(ACSS.FAMILY, {})
-        return family.get("dialect")
-
-    def update(self, newDict):
-        family = newDict.get(ACSS.FAMILY)
+    def update(self, new_dict):
+        family = new_dict.get(ACSS.FAMILY)
         if isinstance(family, dict) and family.get("name") is None:
-            newDict.pop(ACSS.FAMILY)
+            new_dict.pop(ACSS.FAMILY)
 
-        return super().update(newDict)
+        return super().update(new_dict)

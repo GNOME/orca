@@ -104,7 +104,7 @@ class DebuggingToolsManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _cycle_debug_level(
-        self, script: default.Script, _event: input_event.InputEvent | None = None
+        self, _script: default.Script, _event: input_event.InputEvent | None = None
     ) -> bool:
         """Cycles through the existing debug levels."""
 
@@ -128,7 +128,7 @@ class DebuggingToolsManager:
         return True
 
     def _clear_atspi_app_cache(
-        self, script: default.Script, _event: input_event.InputEvent | None = None
+        self, _script: default.Script, _event: input_event.InputEvent | None = None
     ) -> bool:
         """Clears the AT-SPI cache for the current application."""
 
@@ -151,7 +151,7 @@ class DebuggingToolsManager:
         return True
 
     def _capture_snapshot(
-        self, script: default.Script, _event: input_event.InputEvent | None = None
+        self, _script: default.Script, _event: input_event.InputEvent | None = None
     ) -> bool:
         """Clears the AT-SPI cache for the current application."""
 
@@ -233,7 +233,7 @@ class DebuggingToolsManager:
         if orca_platform.revision:
             msg += f" (rev {orca_platform.revision})"
 
-        atspi_version = Atspi.get_version()
+        atspi_version = Atspi.get_version()  # pylint: disable=no-value-for-parameter
         msg += f", AT-SPI2 version: {atspi_version[0]}.{atspi_version[1]}.{atspi_version[2]}"
         session_type = os.environ.get("XDG_SESSION_TYPE") or ""
         session_desktop = os.environ.get("XDG_SESSION_DESKTOP") or ""

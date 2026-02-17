@@ -49,6 +49,8 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
 ):
     """GtkGrid containing the Pronunciation Dictionary preferences page."""
 
+    # pylint: disable=no-member
+
     def __init__(self, manager: "PronunciationDictionaryManager", script: default.Script) -> None:
         super().__init__(guilabels.PRONUNCIATION)
         self._manager: PronunciationDictionaryManager = manager

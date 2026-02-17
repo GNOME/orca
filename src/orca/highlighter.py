@@ -24,9 +24,7 @@
 
 """Module for drawing highlights over an area of interest."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
-
 
 from typing import TYPE_CHECKING
 
@@ -140,6 +138,7 @@ class GtkHighlighter(Highlighter):
     def _create_gui(self) -> Any:
         """Creates the gui for the overlay."""
 
+        # pylint: disable=no-member
         gui = Gtk.Window()
         gui.set_decorated(False)
         gui.set_accept_focus(False)

@@ -2037,7 +2037,7 @@ class SpeechPresenter:
             self._monitor = speech_monitor.SpeechMonitor(
                 on_close=lambda: self.set_monitor_is_enabled(False)
             )
-            self._monitor.show_all()
+            self._monitor.show_all()  # pylint: disable=no-member
             self._replay_history()
 
         return self._monitor
@@ -2075,7 +2075,7 @@ class SpeechPresenter:
         monitor = self._ensure_monitor()
         if monitor is None:
             return None
-        if monitor.has_toplevel_focus():
+        if monitor.has_toplevel_focus():  # pylint: disable=no-member
             return None
         return monitor
 
