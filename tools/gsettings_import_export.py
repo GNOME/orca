@@ -101,12 +101,6 @@ from orca.gsettings_migrator import (
     stamp_version,
 )
 
-_share_dir = os.path.join(sys.prefix, "share")
-if os.path.isdir(_share_dir):
-    _xdg = os.environ.get("XDG_DATA_DIRS", "/usr/local/share:/usr/share")
-    if _share_dir not in _xdg.split(":"):
-        os.environ["XDG_DATA_DIRS"] = f"{_share_dir}:{_xdg}"
-
 GSETTINGS_PATH_PREFIX = "/org/gnome/orca/"
 
 
@@ -182,10 +176,9 @@ class SchemaSource:
             print(
                 f"Error: {schema_id} not found in the default GSettings schema "
                 "directories. \nIf you built Orca with a custom prefix "
-                "(e.g. `meson setup -Dprefix=/my/prefix`),"
-                "\ntry adding its `share` directory via: "
-                "\n\n`export XDG_DATA_DIRS=/my/prefix/share:$XDG_DATA_DIRS`"
-                "\n\nbefore re-running this (experimental and currently unsupported) tool.",
+                "(e.g. `meson setup -Dprefix=/my/prefix`), re-run with:"
+                "\n\n  python tools/gsettings_import_export.py --prefix=/my/prefix ..."
+                "\n\nNote: This is an experimental and currently unsupported tool.",
                 file=sys.stderr,
             )
             sys.exit(1)
@@ -1046,6 +1039,10 @@ def roundtrip(settings_dir: str, output_dir: str, verbose: bool = False) -> None
 def main() -> None:
     """CLI entry point for import, export, roundtrip, and diff commands."""
     parser = argparse.ArgumentParser(description="Orca GSettings tool: import/export settings")
+    parser.add_argument(
+        "--prefix",
+        help="Orca install prefix (e.g. /usr/local). Adds <prefix>/share to XDG_DATA_DIRS.",
+    )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     imp = subparsers.add_parser("import", help="Import JSON settings into GSettings/dconf")
@@ -1077,6 +1074,13 @@ def main() -> None:
     di.add_argument("-v", "--verbose", action="store_true", help="Show expected/known losses too")
 
     args = parser.parse_args()
+
+    if args.prefix:
+        share_dir = os.path.join(args.prefix, "share")
+        if os.path.isdir(share_dir):
+            xdg = os.environ.get("XDG_DATA_DIRS", "/usr/local/share:/usr/share")
+            if share_dir not in xdg.split(":"):
+                os.environ["XDG_DATA_DIRS"] = f"{share_dir}:{xdg}"
 
     if args.command == "import":
         source = SchemaSource()
