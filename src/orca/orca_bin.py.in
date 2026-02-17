@@ -57,6 +57,12 @@ except ImportError:
 sys.prefix = "@prefix@"
 sys.path.insert(1, "@libdir@")
 
+_share_dir = os.path.join(sys.prefix, "share")
+if os.path.isdir(_share_dir):
+    _xdg = os.environ.get("XDG_DATA_DIRS", "/usr/local/share:/usr/share")
+    if _share_dir not in _xdg.split(":"):
+        os.environ["XDG_DATA_DIRS"] = f"{_share_dir}:{_xdg}"
+
 # Do not import Orca here. It is imported in main(). The reason why is that
 # start-up failures due to imports in orca.py are not getting output, making
 # them challenging to debug when they cannot be reproduced locally.

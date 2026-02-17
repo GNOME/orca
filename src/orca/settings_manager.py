@@ -536,9 +536,8 @@ class SettingsManager:
         msg = "SETTINGS MANAGER: Runtime settings set."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    # TODO - JD: This method and _build_voices_from_dconf() exist because some modules
-    # still read settings.py attributes directly instead of using layered_lookup(). This
-    # blocks removal of settings_manager.py and the use of JSON.
+    # TODO - JD: This method exists because command_manager.py still reads
+    # settings.orcaModifierKeys directly instead of using layered_lookup().
     def _sync_settings_from_dconf(self) -> None:
         """Populates settings.py attributes from dconf for modules that read them directly."""
 
