@@ -32,27 +32,35 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, Gtk
 
 from . import guilabels
-from . import settings
 
 MIN_FONT_SIZE = 8
 MAX_FONT_SIZE = 72
 ZOOM_STEP = 2
 
 
-class SpeechMonitor(Gtk.Window):
+class SpeechMonitor(Gtk.Window):  # pylint: disable=too-many-instance-attributes
     """Displays a GUI speech monitor showing a scrolling log of spoken text."""
 
     _shared_css_provider: Gtk.CssProvider | None = None
 
     # pylint: disable-next=too-many-statements
-    def __init__(self, on_close: Callable[[], None] | None = None) -> None:
+    def __init__(
+        self,
+        font_size: int = 14,
+        foreground: str = "#ffffff",
+        background: str = "#000000",
+        on_close: Callable[[], None] | None = None,
+    ) -> None:
         """Create a new SpeechMonitor."""
 
         # pylint: disable=no-member
 
         super().__init__()
         self._on_close = on_close
-        self._font_size: int = settings.speechMonitorFontSize
+        self._font_size = font_size
+        self._default_font_size = font_size
+        self._foreground = foreground
+        self._background = background
         self.set_title(guilabels.SPEECH_MONITOR)
         self.set_default_size(1000, 400)
         self.set_icon_name("orca")
@@ -168,7 +176,7 @@ class SpeechMonitor(Gtk.Window):
             self._apply_css()
             return True
         if event.keyval in (Gdk.KEY_0, Gdk.KEY_KP_0):
-            self._font_size = settings.speechMonitorFontSize
+            self._font_size = self._default_font_size
             self._apply_css()
             return True
 
@@ -180,16 +188,24 @@ class SpeechMonitor(Gtk.Window):
         self._font_size = size
         self._apply_css()
 
-    def reapply_css(self) -> None:
+    def reapply_css(
+        self,
+        foreground: str | None = None,
+        background: str | None = None,
+    ) -> None:
         """Reapplies CSS styling (e.g. after color changes)."""
 
+        if foreground is not None:
+            self._foreground = foreground
+        if background is not None:
+            self._background = background
         self._apply_css()
 
     def _apply_css(self) -> None:
         """Apply CSS styling for background color, text color, font size, and border."""
 
-        bg = settings.speechMonitorBackground
-        fg = settings.speechMonitorForeground
+        bg = self._background
+        fg = self._foreground
         close_px = max(16, self._font_size * 2)
         css = (
             f".speech-monitor {{ background-color: {bg}; }}\n"

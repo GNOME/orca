@@ -50,15 +50,6 @@ profile: list[str] = ["Default", "default"]
 # Speech
 speechFactoryModules: list[str] = ["speechdispatcherfactory", "spiel"]
 
-# Managed by braille_presenter.py
-brailleMonitorForeground: str = "#000000"
-brailleMonitorBackground: str = "#ffffff"
-
-# Managed by speech_presenter.py
-speechMonitorFontSize: int = 14
-speechMonitorForeground: str = "#ffffff"
-speechMonitorBackground: str = "#000000"
-
 # Managed by sound_presenter.py
 soundVolume: float = 0.5
 

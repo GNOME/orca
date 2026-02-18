@@ -803,6 +803,8 @@ class TestBraillePresenter:
         braille_monitor_mock.BrailleMonitor.assert_called_once_with(
             40,
             on_close=unittest.mock.ANY,
+            foreground=unittest.mock.ANY,
+            background=unittest.mock.ANY,
         )
         mock_monitor.show_all.assert_called_once()
         mock_monitor.write_text.assert_called_once_with(1, "hello", None)
@@ -825,6 +827,8 @@ class TestBraillePresenter:
         braille_monitor_mock.BrailleMonitor.assert_called_once_with(
             20,
             on_close=unittest.mock.ANY,
+            foreground=unittest.mock.ANY,
+            background=unittest.mock.ANY,
         )
 
     def test_update_monitor_skips_when_disabled(self, test_context: OrcaTestContext):

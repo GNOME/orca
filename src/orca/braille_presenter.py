@@ -807,7 +807,7 @@ class BraillePresenter:
             self._SCHEMA, "monitor-foreground", value
         )
         if self._monitor is not None:
-            self._monitor.reapply_css()
+            self._monitor.reapply_css(foreground=value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -834,7 +834,7 @@ class BraillePresenter:
             self._SCHEMA, "monitor-background", value
         )
         if self._monitor is not None:
-            self._monitor.reapply_css()
+            self._monitor.reapply_css(background=value)
         return True
 
     # pylint: disable-next=too-many-arguments
@@ -1746,6 +1746,8 @@ class BraillePresenter:
             self._monitor = braille_monitor.BrailleMonitor(
                 cell_count,
                 on_close=lambda: self.set_monitor_is_enabled(False),
+                foreground=self.get_monitor_foreground(),
+                background=self.get_monitor_background(),
             )
             self._monitor.show_all()  # pylint: disable=no-member
 

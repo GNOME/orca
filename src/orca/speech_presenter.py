@@ -2017,7 +2017,7 @@ class SpeechPresenter:
             self._SCHEMA, "monitor-foreground", value
         )
         if self._monitor is not None:
-            self._monitor.reapply_css()
+            self._monitor.reapply_css(foreground=value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -2044,7 +2044,7 @@ class SpeechPresenter:
             self._SCHEMA, "monitor-background", value
         )
         if self._monitor is not None:
-            self._monitor.reapply_css()
+            self._monitor.reapply_css(background=value)
         return True
 
     def init_monitor(self) -> None:
@@ -2060,7 +2060,10 @@ class SpeechPresenter:
 
         if self._monitor is None:
             self._monitor = speech_monitor.SpeechMonitor(
-                on_close=lambda: self.set_monitor_is_enabled(False)
+                font_size=self.get_monitor_font_size(),
+                foreground=self.get_monitor_foreground(),
+                background=self.get_monitor_background(),
+                on_close=lambda: self.set_monitor_is_enabled(False),
             )
             self._monitor.show_all()  # pylint: disable=no-member
             self._replay_history()

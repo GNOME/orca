@@ -39,7 +39,6 @@ from gi.repository import Gdk, Gtk
 
 from . import guilabels
 from . import script_manager
-from . import settings
 
 # Attribute/Selection mask strings:
 DOT_7 = "\x40"  # 01000000
@@ -181,13 +180,21 @@ class BrailleMonitor(Gtk.Window):
 
     _shared_css_provider: Gtk.CssProvider | None = None
 
-    def __init__(self, num_cells: int = 32, on_close: Callable[[], None] | None = None) -> None:
+    def __init__(
+        self,
+        num_cells: int = 32,
+        on_close: Callable[[], None] | None = None,
+        foreground: str = "#000000",
+        background: str = "#ffffff",
+    ) -> None:
         """Create a new BrailleMonitor."""
 
         # pylint: disable=no-member
 
         super().__init__()
         self._on_close = on_close
+        self._foreground = foreground
+        self._background = background
         self.set_title(guilabels.BRAILLE_MONITOR)
         self.set_icon_name("orca")
 
@@ -235,16 +242,24 @@ class BrailleMonitor(Gtk.Window):
 
         self.connect("delete-event", self._on_delete_event)
 
-    def reapply_css(self) -> None:
+    def reapply_css(
+        self,
+        foreground: str | None = None,
+        background: str | None = None,
+    ) -> None:
         """Reapplies CSS styling (e.g. after color changes)."""
 
+        if foreground is not None:
+            self._foreground = foreground
+        if background is not None:
+            self._background = background
         self._apply_css()
 
     def _apply_css(self) -> None:
         """Apply CSS styling for colors and minimal titlebar."""
 
-        bg = settings.brailleMonitorBackground
-        fg = settings.brailleMonitorForeground
+        bg = self._background
+        fg = self._foreground
         css = (
             f".braille-monitor {{ background-color: {bg}; }}\n"
             f".braille-monitor-titlebar {{ min-height: 0; padding: 0; margin: 0; "
