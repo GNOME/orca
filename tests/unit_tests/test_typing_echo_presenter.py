@@ -873,7 +873,7 @@ class TestTypingEchoPresenter:
 
         getter = getattr(presenter, getter_name)
         assert getter() is False
-        mock_handle.get_boolean.assert_called_with(gs_key, "")
+        mock_handle.get_boolean.assert_called_with(gs_key, "", None)
 
         registry.set_enabled(False)
         registry._handles.pop("typing-echo", None)

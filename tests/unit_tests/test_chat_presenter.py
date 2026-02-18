@@ -626,10 +626,6 @@ class TestChatPresenter:
     ) -> Mock:
         """Setup additional mocks needed for navigation tests. Returns mock_script."""
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        manager_instance = settings_manager_mock.get_manager.return_value
-        manager_instance.get_app_setting = test_context.Mock(return_value=0)
-
         script_manager_mock = essential_modules["orca.script_manager"]
         script_manager_instance = script_manager_mock.get_manager.return_value
         script_manager_instance.get_active_script = test_context.Mock(return_value=None)
@@ -769,9 +765,13 @@ class TestChatPresenter:
 
         essential_modules = self._setup_dependencies(test_context)
         mock_script = self._setup_navigation_mocks(test_context, essential_modules)
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        manager_instance = settings_manager_mock.get_manager.return_value
-        manager_instance.get_app_setting = test_context.Mock(return_value=verbosity)
+
+        nick_map = {0: "all", 1: "all-if-focused", 2: "focused-channel", 3: "active-channel"}
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_runtime_value(
+            "chat", "message-verbosity", nick_map[verbosity]
+        )
         return essential_modules, mock_script
 
     def test_utter_message_all_speaks_regardless(self, test_context: OrcaTestContext) -> None:

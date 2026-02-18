@@ -2023,7 +2023,7 @@ class TestLayeredLookup:
 
         result = registry.layered_lookup("speech", "enabled", "b")
         assert result is True
-        mock_handle.get_boolean.assert_called_once_with("enabled", "")
+        mock_handle.get_boolean.assert_called_once_with("enabled", "", None)
 
     def test_returns_string(self, test_context: OrcaTestContext) -> None:
         """Test layered_lookup returns string from handle."""
@@ -2040,7 +2040,7 @@ class TestLayeredLookup:
 
         result = registry.layered_lookup("speech", "synthesizer", "s")
         assert result == "voxin"
-        mock_handle.get_string.assert_called_once_with("synthesizer", "")
+        mock_handle.get_string.assert_called_once_with("synthesizer", "", None)
 
     def test_returns_int(self, test_context: OrcaTestContext) -> None:
         """Test layered_lookup returns int from handle."""
@@ -2073,7 +2073,7 @@ class TestLayeredLookup:
 
         result = registry.layered_lookup("voice", "pitch", "d", voice_type="default")
         assert result == 7.5
-        mock_handle.get_double.assert_called_once_with("pitch", "voices/default")
+        mock_handle.get_double.assert_called_once_with("pitch", "voices/default", None)
 
     def test_voice_sub_path(self, test_context: OrcaTestContext) -> None:
         """Test layered_lookup uses voices/{voice_type} sub_path for voice schema."""
@@ -2090,7 +2090,7 @@ class TestLayeredLookup:
 
         result = registry.layered_lookup("voice", "rate", "i", voice_type="uppercase")
         assert result == 56
-        mock_handle.get_int.assert_called_once_with("rate", "voices/uppercase")
+        mock_handle.get_int.assert_called_once_with("rate", "voices/uppercase", None)
 
     def test_enum_returns_string(self, test_context: OrcaTestContext) -> None:
         """Test layered_lookup returns string nick for enum settings."""
@@ -2109,7 +2109,42 @@ class TestLayeredLookup:
             "speech", "verbosity-level", "", genum="org.gnome.Orca.Verbosity"
         )
         assert result == "verbose"
-        mock_handle.get_string.assert_called_once_with("verbosity-level", "")
+        mock_handle.get_string.assert_called_once_with("verbosity-level", "", None)
+
+    def test_passes_app_name_to_handle(self, test_context: OrcaTestContext) -> None:
+        """Test layered_lookup passes explicit app_name to handle accessor."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry, GSettingsSchemaHandle
+
+        registry = GSettingsRegistry()
+        registry._schemas["chat"] = "org.gnome.Orca.Chat"
+
+        mock_handle = test_context.Mock(spec=GSettingsSchemaHandle)
+        mock_handle.get_boolean.return_value = True
+        registry._handles["chat"] = mock_handle
+
+        result = registry.layered_lookup("chat", "speak-room-name", "b", app_name="Firefox")
+        assert result is True
+        mock_handle.get_boolean.assert_called_once_with("speak-room-name", "", "Firefox")
+
+    def test_app_name_none_uses_active_app(self, test_context: OrcaTestContext) -> None:
+        """Test layered_lookup with app_name=None passes None (active app fallback)."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry, GSettingsSchemaHandle
+
+        registry = GSettingsRegistry()
+        registry._schemas["chat"] = "org.gnome.Orca.Chat"
+        registry.set_active_app("Pidgin")
+
+        mock_handle = test_context.Mock(spec=GSettingsSchemaHandle)
+        mock_handle.get_boolean.return_value = False
+        registry._handles["chat"] = mock_handle
+
+        result = registry.layered_lookup("chat", "speak-room-name", "b")
+        assert result is False
+        mock_handle.get_boolean.assert_called_once_with("speak-room-name", "", None)
 
 
 @pytest.mark.unit

@@ -106,6 +106,7 @@ class GSettingsRegistry:
         gtype: str,
         genum: str | None = None,
         voice_type: str | None = None,
+        app_name: str | None = None,
         *,
         default: Any,
     ) -> Any: ...
@@ -118,6 +119,7 @@ class GSettingsRegistry:
         gtype: str,
         genum: str | None = None,
         voice_type: str | None = None,
+        app_name: str | None = None,
     ) -> Any | None: ...
 
     def layered_lookup(
@@ -127,6 +129,7 @@ class GSettingsRegistry:
         gtype: str,
         genum: str | None = None,
         voice_type: str | None = None,
+        app_name: str | None = None,
         default: Any = _NOT_SET,
     ) -> Any | None:
         """Returns a setting value via layered GSettings lookup, default, or None."""
@@ -148,7 +151,7 @@ class GSettingsRegistry:
             vt = voice_type or "default"
             sub_path = f"voices/{gsettings_migrator.sanitize_gsettings_path(vt)}"
 
-        accessors: dict[str, Callable[[str, str], Any | None]] = {
+        accessors: dict[str, Callable[..., Any | None]] = {
             "b": handle.get_boolean,
             "s": handle.get_string,
             "i": handle.get_int,
@@ -156,7 +159,7 @@ class GSettingsRegistry:
             "as": handle.get_strv,
         }
         accessor = accessors.get("s" if genum else gtype)
-        result = accessor(key, sub_path) if accessor is not None else None
+        result = accessor(key, sub_path, app_name) if accessor is not None else None
         if result is not None:
             return result
         return self._use_default(schema, key, default)
@@ -1057,6 +1060,7 @@ class GSettingsSchemaHandle:
         key: str,
         extractor: Callable[[Gio.Settings, str], Any],
         sub_path: str = "",
+        app_name: str | None = None,
     ) -> Any | None:
         """Returns the value from layered lookup (app -> profile -> default), or None."""
 
@@ -1064,7 +1068,8 @@ class GSettingsSchemaHandle:
             return None
 
         registry = get_registry()
-        app_name = registry.get_active_app()
+        if app_name is None:
+            app_name = registry.get_active_app()
         profile = registry.get_active_profile()
 
         suffix = self._path_suffix
@@ -1113,25 +1118,27 @@ class GSettingsSchemaHandle:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return None
 
-    def get_boolean(self, key: str, sub_path: str = "") -> bool | None:
+    def get_boolean(self, key: str, sub_path: str = "", app_name: str | None = None) -> bool | None:
         """Returns a boolean via layered lookup, or None."""
-        return self._layered_get(key, lambda gs, k: gs.get_boolean(k), sub_path)
+        return self._layered_get(key, lambda gs, k: gs.get_boolean(k), sub_path, app_name)
 
-    def get_string(self, key: str, sub_path: str = "") -> str | None:
+    def get_string(self, key: str, sub_path: str = "", app_name: str | None = None) -> str | None:
         """Returns a string via layered lookup, or None."""
-        return self._layered_get(key, lambda gs, k: gs.get_string(k), sub_path)
+        return self._layered_get(key, lambda gs, k: gs.get_string(k), sub_path, app_name)
 
-    def get_int(self, key: str, sub_path: str = "") -> int | None:
+    def get_int(self, key: str, sub_path: str = "", app_name: str | None = None) -> int | None:
         """Returns an int via layered lookup, or None."""
-        return self._layered_get(key, lambda gs, k: gs.get_int(k), sub_path)
+        return self._layered_get(key, lambda gs, k: gs.get_int(k), sub_path, app_name)
 
-    def get_double(self, key: str, sub_path: str = "") -> float | None:
+    def get_double(self, key: str, sub_path: str = "", app_name: str | None = None) -> float | None:
         """Returns a double via layered lookup, or None."""
-        return self._layered_get(key, lambda gs, k: gs.get_double(k), sub_path)
+        return self._layered_get(key, lambda gs, k: gs.get_double(k), sub_path, app_name)
 
-    def get_strv(self, key: str, sub_path: str = "") -> list[str] | None:
+    def get_strv(
+        self, key: str, sub_path: str = "", app_name: str | None = None
+    ) -> list[str] | None:
         """Returns a string array via layered lookup, or None."""
-        return self._layered_get(key, lambda gs, k: gs.get_strv(k), sub_path)
+        return self._layered_get(key, lambda gs, k: gs.get_strv(k), sub_path, app_name)
 
     def _set_value(
         self,

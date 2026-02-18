@@ -43,7 +43,6 @@ from . import messages
 from . import preferences_grid_base
 from . import presentation_manager
 from . import script_manager
-from . import settings_manager
 from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_text import AXText
@@ -712,11 +711,10 @@ class ChatPresenter:
     def get_speak_room_name(self, app: Atspi.Accessible | None = None) -> bool:
         """Returns whether to speak the chat room name."""
 
-        if app:
-            result = settings_manager.get_manager().get_app_setting(app, "chatSpeakRoomName")
-            if isinstance(result, bool):
-                return result
-        return self._get_setting("speak-room-name", False)
+        app_name = AXObject.get_name(app) if app else None
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA, "speak-room-name", "b", app_name=app_name, default=False
+        )
 
     @dbus_service.setter
     def set_speak_room_name(self, value: bool) -> bool:
@@ -781,15 +779,13 @@ class ChatPresenter:
     def get_message_verbosity(self, app: Atspi.Accessible | None = None) -> int:
         """Returns the chat message verbosity setting."""
 
-        if app:
-            result = settings_manager.get_manager().get_app_setting(app, "chatMessageVerbosity")
-            if isinstance(result, int):
-                return result
+        app_name = AXObject.get_name(app) if app else None
         nick = gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
             "message-verbosity",
             "",
             genum="org.gnome.Orca.ChatMessageVerbosity",
+            app_name=app_name,
             default="all",
         )
         enum_values = gsettings_registry.get_registry().get_enum_values(
