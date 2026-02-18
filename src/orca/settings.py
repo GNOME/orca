@@ -28,18 +28,5 @@ presentLockingKeys: bool | None = None
 capitalizationStyle: str = "none"
 speakNumbersAsDigits: bool = False
 
-# Managed by text_attribute_manager.py
-textAttributesToSpeak: list[str] = []
-textAttributesToBraille: list[str] = []
-
-# Profiles
-profile: list[str] = ["Default", "default"]
-
-# Speech
-speechFactoryModules: list[str] = ["speechdispatcherfactory", "spiel"]
-
 # Managed by sound_presenter.py
 soundVolume: float = 0.5
-
-# Keyboard
-doubleClickTimeout: float = 0.5

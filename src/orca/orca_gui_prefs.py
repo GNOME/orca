@@ -58,7 +58,6 @@ from . import presentation_manager
 from . import profile_manager
 from . import pronunciation_dictionary_manager
 from . import say_all_presenter
-from . import settings
 from . import settings_manager
 from . import sound_presenter
 from . import speech_presenter
@@ -514,7 +513,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         msg = "PREFERENCES DIALOG: Apply button clicked"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
-        profile_data = self.prefs_dict.get("profile", settings.profile)
+        profile_data = self.prefs_dict.get("profile", settings_manager.DEFAULT_PROFILE)
         profile_name = profile_data[1] if isinstance(profile_data, list) else "default"
         save_app = self._app_name or ""
 

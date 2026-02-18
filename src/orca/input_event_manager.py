@@ -40,12 +40,13 @@ from . import debug
 from . import focus_manager
 from . import input_event
 from . import script_manager
-from . import settings
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     from . import keybindings
+
+_DOUBLE_CLICK_TIMEOUT: float = 0.5
 
 
 class InputEventManager:
@@ -316,7 +317,7 @@ class InputEventManager:
 
         assert isinstance(last_event, input_event.KeyboardEvent)
         if (
-            (event.time - last_event.time > settings.doubleClickTimeout)
+            (event.time - last_event.time > _DOUBLE_CLICK_TIMEOUT)
             or (event.keyval_name != last_event.keyval_name)
             or (event.get_object() != last_event.get_object())
         ):
@@ -358,7 +359,7 @@ class InputEventManager:
             return self._last_input_event.get_click_count()
         if self._last_input_event.button != event.button:
             return 1
-        if event.time - self._last_input_event.time > settings.doubleClickTimeout:
+        if event.time - self._last_input_event.time > _DOUBLE_CLICK_TIMEOUT:
             return 1
 
         return self._last_input_event.get_click_count() + 1

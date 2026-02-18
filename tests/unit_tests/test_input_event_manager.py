@@ -146,9 +146,6 @@ class TestInputEventManager:
         input_event_mock.BrailleEvent = MockBrailleEvent
         input_event_mock.MouseButtonEvent = MockMouseButtonEvent
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.doubleClickTimeout = 500
-
         ax_object_mock = essential_modules["orca.ax_object"]
         ax_object_class = test_context.Mock()
         ax_object_class.get_action_key_binding = test_context.Mock(return_value="Alt+F")
@@ -204,9 +201,6 @@ class TestInputEventManager:
         )
         test_context.patch(
             "orca.input_event_manager.input_event", new=essential_modules["orca.input_event"]
-        )
-        test_context.patch(
-            "orca.input_event_manager.settings", new=essential_modules["orca.settings"]
         )
         test_context.patch(
             "orca.input_event_manager.AXObject", new=essential_modules["ax_object_class"]

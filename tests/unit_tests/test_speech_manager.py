@@ -90,7 +90,6 @@ class TestSpeechManager:
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         settings_mock = essential_modules["orca.settings"]
-        settings_mock.speechFactoryModules = ["spiel", "speechdispatcherfactory"]
         settings_mock.speechServerInfo = None
         settings_mock.speechServerFactory = "spiel"
         settings_mock.voices = {}
@@ -226,10 +225,11 @@ class TestSpeechManager:
     def test_get_server_module_map_import_errors(self, test_context: OrcaTestContext) -> None:
         """Test _get_server_module_map method with import errors."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
+        from orca import speech_manager as sm_module
         from orca.speech_manager import SpeechManager
 
-        essential_modules["orca.settings"].speechFactoryModules = ["nonexistent_module"]
+        test_context.patch_object(sm_module, "SPEECH_FACTORY_MODULES", new=["nonexistent_module"])
 
         def mock_import_module(name) -> None:
             raise ImportError("Module not found")
@@ -1218,7 +1218,6 @@ class TestVoicesPreferencesGridUI:  # pylint: disable=too-few-public-methods
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         settings_mock = essential_modules["orca.settings"]
-        settings_mock.speechFactoryModules = ["spiel", "speechdispatcherfactory"]
         settings_mock.speechServerInfo = None
         settings_mock.speechServerFactory = "spiel"
         settings_mock.voices = {}

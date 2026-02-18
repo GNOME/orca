@@ -64,6 +64,8 @@ if TYPE_CHECKING:
     from .scripts import default
     from .speechserver import SpeechServer
 
+SPEECH_FACTORY_MODULES: list[str] = ["speechdispatcherfactory", "spiel"]
+
 
 # pylint: disable-next=too-many-instance-attributes
 class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
@@ -1349,7 +1351,7 @@ class SpeechManager:
         """Returns a mapping of server names to module names."""
 
         result = {}
-        for module_name in settings.speechFactoryModules:
+        for module_name in SPEECH_FACTORY_MODULES:
             try:
                 factory = importlib.import_module(f"orca.{module_name}")
             except ImportError:
@@ -1724,7 +1726,7 @@ class SpeechManager:
         self._server = self._init_server_from_module(factory, None)
 
         if not self._server:
-            for module_name in settings.speechFactoryModules:
+            for module_name in SPEECH_FACTORY_MODULES:
                 if module_name != factory:
                     self._server = self._init_server_from_module(module_name, None)
                     if self._server:

@@ -109,7 +109,6 @@ class TestSettingsManagerFileIO:
         settings_obj.UPPERCASE_VOICE = "uppercase"
         settings_obj.HYPERLINK_VOICE = "hyperlink"
         settings_obj.SYSTEM_VOICE = "system"
-        settings_obj.profile = ["Default", "default"]
         settings_obj.startingProfile = ["Default", "default"]
         settings_obj.activeProfile = ["Default", "default"]
         settings_obj.enableSpeech = True
@@ -648,23 +647,6 @@ class TestSettingsManagerFileIO:
             assert snapshot.get("enableEchoByWord") is True
             assert snapshot.get("enableKeyEcho") is False
 
-    def test_snapshot_settings_excludes_excluded_settings(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test that snapshot_settings excludes settings in _EXCLUDED_SETTINGS."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        settings_obj = essential_modules["orca.settings"]
-
-        with tempfile.TemporaryDirectory() as temp_dir:
-            manager = self._create_fresh_manager(test_context, temp_dir)
-
-            settings_obj.speechFactoryModules = ["foo", "bar"]
-
-            snapshot = manager.snapshot_settings()
-
-            assert "speechFactoryModules" not in snapshot
-
     def test_restore_settings_restores_values(self, test_context: OrcaTestContext) -> None:
         """Test that restore_settings restores values from a snapshot."""
 
@@ -685,23 +667,3 @@ class TestSettingsManagerFileIO:
 
             assert settings_obj.enableEchoByWord is True
             assert settings_obj.enableKeyEcho is False
-
-    def test_snapshot_restore_preserves_excluded_settings(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test that excluded settings are not affected by snapshot/restore."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        settings_obj = essential_modules["orca.settings"]
-
-        with tempfile.TemporaryDirectory() as temp_dir:
-            manager = self._create_fresh_manager(test_context, temp_dir)
-
-            settings_obj.speechFactoryModules = ["original"]
-            snapshot = manager.snapshot_settings()
-
-            settings_obj.speechFactoryModules = ["changed"]
-
-            manager.restore_settings(snapshot)
-
-            assert settings_obj.speechFactoryModules == ["changed"]

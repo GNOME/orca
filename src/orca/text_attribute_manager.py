@@ -40,7 +40,6 @@ from . import dbus_service
 from . import debug
 from . import gsettings_registry
 from . import guilabels
-from . import settings
 from .ax_text import AXText, AXTextAttribute
 from .preferences_grid_base import PreferencesGridBase
 
@@ -306,7 +305,7 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
         self._initializing = True
         self._has_unsaved_changes = False
 
-        spoken_attrs = settings.textAttributesToSpeak
+        spoken_attrs = _manager.get_attributes_to_speak()
         if not spoken_attrs:
             spoken_attrs = [
                 attr.get_attribute_name()
@@ -314,7 +313,7 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
                 if attr.should_present_by_default()
             ]
 
-        brailled_attrs = settings.textAttributesToBraille
+        brailled_attrs = _manager.get_attributes_to_braille()
         if not brailled_attrs:
             brailled_attrs = []
 

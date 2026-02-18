@@ -44,6 +44,7 @@ from . import gsettings_registry
 from . import orca_i18n  # pylint: disable=no-name-in-module
 from . import settings
 from . import pronunciation_dictionary_manager
+from . import speech_manager
 from . import speechserver
 from .acss import ACSS
 from .ax_object import AXObject
@@ -57,13 +58,11 @@ if TYPE_CHECKING:
     from .script import Script
 
 
+DEFAULT_PROFILE: list[str] = ["Default", "default"]
+
+
 class SettingsManager:
     """Settings manager"""
-
-    # Settings managed elsewhere or internal implementation details.
-    _EXCLUDED_SETTINGS: set[str] = {
-        "speechFactoryModules",
-    }
 
     def __init__(self) -> None:
         debug.print_message(debug.LEVEL_INFO, "SETTINGS MANAGER: Initializing", True)
@@ -106,8 +105,6 @@ class SettingsManager:
         for name in dir(settings):
             if name.startswith("_") or name[0].isupper():
                 continue
-            if name in self._EXCLUDED_SETTINGS:
-                continue
             value = getattr(settings, name)
             if isinstance(value, (bool, int, float, str, list, dict, tuple, type(None))):
                 snapshot[name] = value
@@ -138,7 +135,7 @@ class SettingsManager:
 
         self._default_settings = {}
         for key in dir(settings):
-            if key.startswith("_") or key[0].isupper() or key in self._EXCLUDED_SETTINGS:
+            if key.startswith("_") or key[0].isupper():
                 continue
             value = getattr(settings, key)
             if callable(value) or isinstance(value, ModuleType):
@@ -203,7 +200,7 @@ class SettingsManager:
         self._customized_settings = {}
         original_settings = {}
         for key, value in settings.__dict__.items():
-            if key.startswith("_") or key[0].isupper() or key in self._EXCLUDED_SETTINGS:
+            if key.startswith("_") or key[0].isupper():
                 continue
             if callable(value):
                 continue
@@ -347,7 +344,7 @@ class SettingsManager:
         """Imports all known SpeechServer factory modules."""
 
         factories: list[ModuleType] = []
-        for module_name in settings.speechFactoryModules:
+        for module_name in speech_manager.SPEECH_FACTORY_MODULES:
             try:
                 module = importlib.import_module(f"orca.{module_name}")
                 factories.append(module)
@@ -411,7 +408,7 @@ class SettingsManager:
         """Set the profile that will be used on next start of Orca."""
 
         if profile is None:
-            profile = settings.profile
+            profile = DEFAULT_PROFILE
 
         if gsettings_registry.get_registry().is_enabled():
             return
@@ -488,7 +485,7 @@ class SettingsManager:
         del prefs["profiles"][internal_name]
         if not prefs["profiles"]:
             prefs["profiles"]["default"] = {
-                "profile": settings.profile,
+                "profile": DEFAULT_PROFILE,
             }
         with open(self._settings_file, "w", encoding="utf-8") as settings_file:
             dump(prefs, settings_file, indent=4)
@@ -628,7 +625,7 @@ class SettingsManager:
                 Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
             return
 
-        _profile = general.get("profile", settings.profile)
+        _profile = general.get("profile", DEFAULT_PROFILE)
         self._profile = _profile[1]
 
         if "enableBrailleEOL" in general:
