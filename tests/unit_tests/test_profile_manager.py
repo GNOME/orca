@@ -49,6 +49,7 @@ class TestProfileManager:
         additional_modules = [
             "orca.braille",
             "orca.orca",
+            "orca.orca_modifier_manager",
             "orca.speech_manager",
             "orca.braille_presenter",
             "orca.presentation_manager",

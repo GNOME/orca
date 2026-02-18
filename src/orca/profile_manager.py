@@ -51,6 +51,7 @@ from . import guilabels
 from . import input_event
 from . import messages
 from . import orca
+from . import orca_modifier_manager
 from . import preferences_grid_base
 from . import presentation_manager
 from . import script_manager
@@ -806,6 +807,7 @@ class ProfileManager:
 
         self.set_active_profile(profile_id, update_locale=True)
 
+        orca_modifier_manager.get_manager().refresh_orca_modifiers("Profile changed.")
         presentation_manager.get_manager().refresh_presenters()
 
         if script is not None:
