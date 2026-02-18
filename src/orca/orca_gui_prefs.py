@@ -30,6 +30,7 @@ from __future__ import annotations
 
 
 import time
+from dataclasses import dataclass
 from typing import Any, TYPE_CHECKING
 
 import gi
@@ -69,6 +70,15 @@ from .ax_object import AXObject
 
 if TYPE_CHECKING:
     from .scripts import default
+
+
+@dataclass
+class _AppearanceProviders:
+    """CSS providers for conditional appearance settings."""
+
+    hc: Gtk.CssProvider
+    dark: Gtk.CssProvider
+    shapes: Gtk.CssProvider
 
 
 class NavigationRow(Gtk.ListBoxRow):
@@ -722,6 +732,22 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         }
     """
 
+    _DARK_MODE_CSS = b"""
+        @define-color theme_selected_bg_color #3584e4;
+        switch slider {
+            background-image: image(white);
+        }
+    """
+
+    _STATUS_SHAPES_CSS = b"""
+        switch image {
+            color: @theme_fg_color;
+        }
+        switch:checked image {
+            color: white;
+        }
+    """
+
     @staticmethod
     def _sync_appearance() -> tuple | None:
         """Bridges GNOME's color-scheme and high-contrast gsettings to GTK3."""
@@ -737,25 +763,40 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             screen, base_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
         )
 
-        hc_provider = Gtk.CssProvider()
-        hc_provider.load_from_data(OrcaSetupGUI._HIGH_CONTRAST_CSS)
+        providers = _AppearanceProviders(
+            hc=Gtk.CssProvider(),
+            dark=Gtk.CssProvider(),
+            shapes=Gtk.CssProvider(),
+        )
+        providers.hc.load_from_data(OrcaSetupGUI._HIGH_CONTRAST_CSS)
+        providers.dark.load_from_data(OrcaSetupGUI._DARK_MODE_CSS)
+        providers.shapes.load_from_data(OrcaSetupGUI._STATUS_SHAPES_CSS)
 
         try:
             interface_settings = Gio.Settings(schema_id="org.gnome.desktop.interface")
             a11y_settings = Gio.Settings(schema_id="org.gnome.desktop.a11y.interface")
             OrcaSetupGUI._apply_appearance(
-                interface_settings, a11y_settings, gtk_settings, screen, hc_provider
+                interface_settings,
+                a11y_settings,
+                gtk_settings,
+                screen,
+                providers,
             )
 
             def on_setting_changed(*_args):
                 OrcaSetupGUI._apply_appearance(
-                    interface_settings, a11y_settings, gtk_settings, screen, hc_provider
+                    interface_settings,
+                    a11y_settings,
+                    gtk_settings,
+                    screen,
+                    providers,
                 )
 
             interface_settings.connect("changed::color-scheme", on_setting_changed)
             a11y_settings.connect("changed::high-contrast", on_setting_changed)
+            a11y_settings.connect("changed::show-status-shapes", on_setting_changed)
             gtk_settings.connect("notify::gtk-theme-name", on_setting_changed)
-            return interface_settings, a11y_settings, base_provider, hc_provider
+            return interface_settings, a11y_settings, base_provider, providers
         except GLib.Error as error:
             msg = f"PREFERENCES WINDOW: Exception syncing appearance: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -767,9 +808,9 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         a11y_settings: Gio.Settings,
         gtk_settings: Gtk.Settings,
         screen: Gdk.Screen,
-        hc_provider: Gtk.CssProvider,
+        providers: _AppearanceProviders,
     ) -> None:
-        """Applies color-scheme and high-contrast settings together."""
+        """Applies color-scheme, high-contrast, and status-shapes settings."""
 
         prefer_dark = interface_settings.get_string("color-scheme") == "prefer-dark"
         gtk_settings.set_property("gtk-application-prefer-dark-theme", prefer_dark)
@@ -780,12 +821,16 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         elif not prefer_dark and theme == "HighContrastInverse":
             gtk_settings.set_property("gtk-theme-name", "HighContrast")
 
-        if a11y_settings.get_boolean("high-contrast"):
-            Gtk.StyleContext.add_provider_for_screen(
-                screen, hc_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION + 1
-            )
-        else:
-            Gtk.StyleContext.remove_provider_for_screen(screen, hc_provider)
+        priority = Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION + 1
+        for provider, enabled in (
+            (providers.hc, a11y_settings.get_boolean("high-contrast")),
+            (providers.dark, prefer_dark),
+            (providers.shapes, a11y_settings.get_boolean("show-status-shapes")),
+        ):
+            if enabled:
+                Gtk.StyleContext.add_provider_for_screen(screen, provider, priority)
+            else:
+                Gtk.StyleContext.remove_provider_for_screen(screen, provider)
 
     def window_destroyed(self, _widget: Gtk.Widget) -> None:
         """Handle window destroyed signal by clearing window reference."""
