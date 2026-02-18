@@ -1172,9 +1172,6 @@ class TestSpeechManager:
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         speech_mock = essential_modules["orca.speech"]
 
-        settings_manager_instance = essential_modules["orca.settings_manager"].get_manager()
-        settings_manager_instance.get_app_setting.return_value = True
-
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
@@ -1187,20 +1184,23 @@ class TestSpeechManager:
     def test_toggle_speech_disables_when_app_profile_has_speech_disabled(
         self, test_context: OrcaTestContext
     ) -> None:
-        """Test toggle_speech restores enableSpeech=False when app profile disables speech."""
+        """Test toggle_speech shuts down when underlying setting disables speech."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-
-        settings_manager_instance = essential_modules["orca.settings_manager"].get_manager()
-        settings_manager_instance.get_app_setting.return_value = False
+        self._setup_dependencies(test_context)
 
         from orca.speech_manager import SpeechManager
+        from orca import gsettings_registry
 
         manager = SpeechManager()
+        test_context.patch_object(manager, "get_speech_is_enabled", side_effect=[True, False])
+        mock_shutdown = test_context.patch_object(manager, "shutdown_speech")
+
         script = test_context.Mock()
         manager.toggle_speech(script)
 
-        assert manager.get_speech_is_enabled() is False
+        found, _value = gsettings_registry.get_registry().get_runtime_value("speech", "enable")
+        assert found is False
+        mock_shutdown.assert_called_once()
 
 
 class TestVoicesPreferencesGridUI:  # pylint: disable=too-few-public-methods

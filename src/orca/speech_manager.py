@@ -55,7 +55,6 @@ from . import messages
 from . import preferences_grid_base
 from . import presentation_manager
 from . import settings
-from . import settings_manager
 from . import speech
 from . import speechserver
 from .acss import ACSS
@@ -2601,12 +2600,8 @@ class SpeechManager:
         else:
             if script is not None and notify_user:
                 presentation_manager.get_manager().present_message(messages.SPEECH_DISABLED)
-            app = script.app if script is not None else None
-            app_enable = settings_manager.get_manager().get_app_setting(app, "enableSpeech")
-            if app_enable is False:
-                gsettings_registry.get_registry().set_runtime_value(
-                    self._SPEECH_SCHEMA, "enable", False
-                )
+            gsettings_registry.get_registry().remove_runtime_value(self._SPEECH_SCHEMA, "enable")
+            if not self.get_speech_is_enabled():
                 self.shutdown_speech()
             else:
                 self.set_speech_is_muted(True)

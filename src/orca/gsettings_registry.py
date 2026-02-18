@@ -218,6 +218,11 @@ class GSettingsRegistry:
             return True, self._runtime_values[rt_key]
         return False, None
 
+    def remove_runtime_value(self, schema: str, key: str, voice_type: str | None = None) -> None:
+        """Removes a single runtime value override."""
+
+        self._runtime_values.pop((schema, key, voice_type), None)
+
     def clear_runtime_values(self) -> None:
         """Clears all runtime value overrides."""
 
