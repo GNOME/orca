@@ -51,11 +51,6 @@ from .acss import ACSS
 from .ax_object import AXObject
 
 if TYPE_CHECKING:
-    import gi
-
-    gi.require_version("Atspi", "2.0")
-    from gi.repository import Atspi
-
     from .script import Script
 
 
@@ -678,25 +673,6 @@ class SettingsManager:
                 profile = [label, profile_name]
             profiles.append(profile)
         return profiles
-
-    def get_app_setting(
-        self, app: Atspi.Accessible | None, setting_name: str
-    ) -> bool | str | int | float | list | dict | None:
-        """Returns the specified setting for app, or None if not found."""
-
-        if not app:
-            return None
-
-        app_prefs = self._get_app_settings_from_file(AXObject.get_name(app))
-        profiles = app_prefs.get("profiles", {})
-        profile_prefs = profiles.get(self._profile, {})
-        general = profile_prefs.get("general", {})
-        app_setting = general.get(setting_name)
-        if app_setting is None:
-            general = self._get_general_from_file(self._profile)
-            app_setting = general.get(setting_name)
-
-        return app_setting
 
     # pylint: disable-next=too-many-locals
     def load_app_settings(self, script: Script | None) -> None:
