@@ -120,6 +120,7 @@ class SpeechServer(speechserver.SpeechServer):
         super().__init__()
         self._id = server_id
         self._client: Any = None
+        self._output_module: str | None = None
         self._default_voice: dict[str, Any] = {}
         self._current_voice_properties: dict[str, Any] = {}
         self._current_synthesis_voice: str | None = None
@@ -185,11 +186,16 @@ class SpeechServer(speechserver.SpeechServer):
         # The speechServerInfo setting is not connected to the speechServerFactory. As a result,
         # the user's chosen server (synthesizer) might be from spiel. Don't mutate self._id
         # here because it must stay consistent with the _active_servers key for proper cleanup.
-        if self._id and self._id != self.DEFAULT_SERVER_ID:
+        # _output_module (set via set_output_module) takes precedence because it reflects
+        # what was explicitly configured; fall back to self._id for non-default servers.
+        module = self._output_module
+        if not module and self._id and self._id != self.DEFAULT_SERVER_ID:
+            module = self._id
+        if module:
             try:
                 available_modules = client.list_output_modules()
-                if self._id in available_modules:
-                    client.set_output_module(self._id)
+                if module in available_modules:
+                    client.set_output_module(module)
             except (AttributeError, speechd.SSIPCommandError):
                 pass
         self._current_voice_properties = {}
@@ -736,6 +742,7 @@ class SpeechServer(speechserver.SpeechServer):
         # TODO - JD: This updates the output module, but not the the value of self._id.
         # That might be desired (e.g. self._id impacts what is shown in Orca preferences),
         # but it can be confusing.
+        self._output_module = module_id
         if self._client is not None:
             self._send_command(self._client.set_output_module, module_id)
             self.clear_voice_families_cache()

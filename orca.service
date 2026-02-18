@@ -9,6 +9,11 @@ After=graphical-session.target
 # We're going to need this, so instead of waiting for it to
 # dbus activate later, let's start it in parallel with Orca
 Wants=at-spi-dbus-bus.service
+# Use systemd's speech-dispatcher socket so the speech server runs in its
+# own cgroup and is not killed alongside Orca during shutdown.
+Wants=speech-dispatcher.socket
+After=speech-dispatcher.socket
+
 
 [Service]
 Type=notify-reload

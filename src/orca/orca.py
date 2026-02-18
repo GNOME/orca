@@ -53,7 +53,6 @@ from . import orca_modifier_manager
 from . import presentation_manager
 from . import script_manager
 from . import settings_manager
-from . import speech_manager
 from . import systemd
 from .ax_utilities import AXUtilities
 
@@ -107,8 +106,6 @@ def shutdown(_event=None, _signum=None):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
 
-    systemd.get_manager().notify_stopping()
-
     shutdown.in_progress = True
 
     def _timeout(_signum=None, _frame=None):
@@ -121,13 +118,12 @@ def shutdown(_event=None, _signum=None):
     signal.signal(signal.SIGALRM, _timeout)
     signal.alarm(5)
 
-    dbus_service.get_remote_controller().shutdown()
+    manager = presentation_manager.get_manager()
+    manager.interrupt_presentation()
+    manager.present_message(messages.STOP_ORCA, reset_styles=False)
 
+    dbus_service.get_remote_controller().shutdown()
     orca_modifier_manager.get_manager().unset_orca_modifiers("Shutting down.")
-    if speech_manager.get_manager().get_current_server():
-        manager = presentation_manager.get_manager()
-        manager.interrupt_presentation()
-        manager.present_message(messages.STOP_ORCA, reset_styles=False)
 
     # Pause event queuing first so that it clears its queue and will not accept new
     # events. Then let the script manager unregister script event listeners as well
@@ -143,6 +139,7 @@ def shutdown(_event=None, _signum=None):
 
     presentation_manager.get_manager().shutdown_presenters()
 
+    systemd.get_manager().notify_stopping()
     signal.alarm(0)
     debug.print_message(debug.LEVEL_INFO, "ORCA: Quitting Atspi main event loop", True)
     Atspi.event_quit()  # pylint: disable=no-value-for-parameter
@@ -182,6 +179,24 @@ def main():
     signal.signal(signal.SIGQUIT, _shutdown_on_signal)
     signal.signal(signal.SIGUSR1, _show_preferences_on_signal)
 
+    def _glib_shutdown_handler():
+        msg = "ORCA: GLib handler received shutdown signal"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        shutdown()
+        return GLib.SOURCE_REMOVE
+
+    def _glib_reload_handler():
+        msg = "ORCA: GLib handler received reload signal"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        systemd.get_manager().notify_reloading()
+        load_user_settings()
+        systemd.get_manager().notify_ready()
+        return GLib.SOURCE_REMOVE
+
+    GLib.unix_signal_add(GLib.PRIORITY_HIGH, signal.SIGTERM, _glib_shutdown_handler)
+    GLib.unix_signal_add(GLib.PRIORITY_HIGH, signal.SIGINT, _glib_shutdown_handler)
+    GLib.unix_signal_add(GLib.PRIORITY_HIGH, signal.SIGHUP, _glib_reload_handler)
+
     systemd.get_manager().start_watchdog()
 
     bus = SessionMessageBus()
@@ -209,7 +224,11 @@ def main():
 
     load_user_settings(is_reload=False)
 
-    if not systemd.get_manager().is_systemd_managed():
+    is_systemd_managed = systemd.get_manager().is_systemd_managed()
+    msg = f"ORCA: Running under systemd: {is_systemd_managed}"
+    debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    if not is_systemd_managed:
         # Legacy behavior, here for backwards-compatibility. You really should
         # never rely on this. Run git blame and read the commit message!
 
