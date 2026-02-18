@@ -19,6 +19,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-few-public-methods
 # pylint: disable=too-many-instance-attributes
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-statements
@@ -32,6 +33,7 @@ import ast
 import importlib
 import importlib.util
 import os
+import sys
 from json import load, dump
 from types import ModuleType
 from typing import TYPE_CHECKING
@@ -42,7 +44,6 @@ from gi.repository import GLib
 from . import debug
 from . import gsettings_registry
 from . import orca_i18n  # pylint: disable=no-name-in-module
-from . import settings
 from . import pronunciation_dictionary_manager
 from . import speech_manager
 from . import speechserver
@@ -59,6 +60,23 @@ if TYPE_CHECKING:
 
 
 DEFAULT_PROFILE: list[str] = ["Default", "default"]
+
+
+# TODO - JD: Remove _DeprecatedSettingsStub in Orca v51.
+class _DeprecatedSettingsStub(ModuleType):
+    """Stub for the removed orca.settings module."""
+
+    _has_warned: bool = False
+
+    def __setattr__(self, name: str, value: object) -> None:
+        if not name.startswith("_") and not _DeprecatedSettingsStub._has_warned:
+            _DeprecatedSettingsStub._has_warned = True
+            msg = (
+                "WARNING: orca.settings has been removed. "
+                "Please update your orca-customizations.py to remove references to it."
+            )
+            debug.print_message(debug.LEVEL_SEVERE, msg, True)
+        super().__setattr__(name, value)
 
 
 class SettingsManager:
@@ -101,31 +119,13 @@ class SettingsManager:
     def snapshot_settings(self) -> dict:
         """Capture current runtime settings values for later restoration."""
 
-        snapshot = {}
-        for name in dir(settings):
-            if name.startswith("_") or name[0].isupper():
-                continue
-            value = getattr(settings, name)
-            if isinstance(value, (bool, int, float, str, list, dict, tuple, type(None))):
-                snapshot[name] = value
-        return snapshot
+        return {}
 
     def restore_settings(self, snapshot: dict) -> None:
         """Restore runtime settings from a previously captured snapshot."""
 
-        restored = []
-        for name, value in snapshot.items():
-            current = getattr(settings, name, None)
-            if current != value:
-                restored.append(f"{name}: {current} -> {value}")
-                setattr(settings, name, value)
-
-        if restored:
-            msg = f"SETTINGS MANAGER: Restored {len(restored)} runtime settings: {restored}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-
     # pylint: disable-next=too-many-locals
-    def activate(self, prefs_dir: str | None = None, custom_settings: dict | None = None) -> None:
+    def activate(self, prefs_dir: str | None = None) -> None:
         """Activates this manager."""
 
         debug.print_message(debug.LEVEL_INFO, "SETTINGS MANAGER: Activating", True)
@@ -134,16 +134,7 @@ class SettingsManager:
         self._settings_file = os.path.join(self._prefs_dir, "user-settings.conf")
 
         self._default_settings = {}
-        for key in dir(settings):
-            if key.startswith("_") or key[0].isupper():
-                continue
-            value = getattr(settings, key)
-            if callable(value) or isinstance(value, ModuleType):
-                continue
-            self._default_settings[key] = value
         self._load_customizations()
-        if custom_settings and self._customized_settings is not None:
-            self._customized_settings.update(custom_settings)
 
         self._settings = self._default_settings.copy()
         if os.path.exists(self._settings_file):
@@ -192,26 +183,22 @@ class SettingsManager:
         self.set_profile(self._profile)
 
     def _load_customizations(self) -> None:
-        """Load user's orca-customizations.py and track any settings changes."""
+        """Load user's orca-customizations.py."""
 
         if self._customized_settings is not None:
             return
 
         self._customized_settings = {}
-        original_settings = {}
-        for key, value in settings.__dict__.items():
-            if key.startswith("_") or key[0].isupper():
-                continue
-            if callable(value):
-                continue
-            original_settings[key] = value
-
         module_path = os.path.join(self._prefs_dir, "orca-customizations.py")
         tokens = ["SETTINGS MANAGER: Attempt to load orca-customizations"]
 
         try:
             spec = importlib.util.spec_from_file_location("orca-customizations", module_path)
             if spec is not None and spec.loader is not None:
+                if "orca.settings" not in sys.modules:
+                    settings_stub = _DeprecatedSettingsStub("orca.settings")
+                    sys.modules["orca.settings"] = settings_stub
+                    sys.modules["orca"].settings = settings_stub  # type: ignore[attr-defined]
                 module = importlib.util.module_from_spec(spec)
                 spec.loader.exec_module(module)
                 tokens.extend(["from", module_path, "succeeded."])
@@ -223,11 +210,6 @@ class SettingsManager:
             tokens.extend(["failed due to:", str(error), ". Not loading customizations."])
 
         debug.print_tokens(debug.LEVEL_ALL, tokens, True)
-
-        for key, value in original_settings.items():
-            custom_value = settings.__dict__.get(key)
-            if value != custom_value:
-                self._customized_settings[key] = custom_value
 
     # pylint: disable-next=too-many-locals
     def _get_general_from_file(self, profile: str | None = None) -> dict:
@@ -450,7 +432,6 @@ class SettingsManager:
         self._profile = profile
         profile_settings = self._load_profile_settings(profile)
         self._apply_profile_and_app_settings(*profile_settings)
-        self._set_settings_runtime(self._settings)
 
         if not update_locale:
             return
@@ -514,21 +495,6 @@ class SettingsManager:
         del prefs["profiles"][old_internal_name]
         with open(self._settings_file, "w", encoding="utf-8") as settings_file:
             dump(prefs, settings_file, indent=4)
-
-    def _set_settings_runtime(self, settings_dict: dict) -> None:
-        """Apply settings to the runtime settings module."""
-
-        msg = "SETTINGS MANAGER: Setting runtime settings."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        for key, value in settings_dict.items():
-            setattr(settings, str(key), value)
-        self._load_customizations()
-        for key, value in (self._customized_settings or {}).items():
-            setattr(settings, str(key), value)
-
-        msg = "SETTINGS MANAGER: Runtime settings set."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def get_general_settings(self, profile: str = "default") -> dict:
         """Return the current general settings."""
@@ -687,13 +653,6 @@ class SettingsManager:
                     metadata_gs.set_string("internal-name", profile_tuple[1])
             Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
 
-        # Clear any cached app settings snapshots so they don't overwrite the
-        # newly saved settings when focus returns to the original application.
-        # Use late import to avoid circular dependency.
-        from . import script_manager  # pylint: disable=import-outside-toplevel
-
-        script_manager.get_manager().clear_app_settings_snapshots()
-
         tokens = ["SETTINGS MANAGER: Settings for", script, "(app:", script.app, ") saved"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -744,7 +703,6 @@ class SettingsManager:
         """Load the users application specific settings for an app."""
 
         if not (script and script.app):
-            self._set_settings_runtime(self._settings)
             return
 
         app_name = AXObject.get_name(script.app)
@@ -770,7 +728,6 @@ class SettingsManager:
             app_pronunciations,
             app_keybindings,
         )
-        self._set_settings_runtime(self._settings)
 
         manager = pronunciation_dictionary_manager.get_manager()
         manager.set_dictionary({})

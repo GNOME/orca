@@ -54,7 +54,6 @@ from . import orca
 from . import orca_modifier_manager
 from . import preferences_grid_base
 from . import presentation_manager
-from . import script_manager
 from . import settings_manager
 
 if TYPE_CHECKING:
@@ -693,7 +692,6 @@ class ProfileManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         self.set_active_profile(internal_name, update_locale)
-        script_manager.get_manager().clear_app_settings_snapshots()
         orca.load_user_settings(skip_reload_message=True)
 
     def create_profile(self, new_profile: list[str]) -> bool:

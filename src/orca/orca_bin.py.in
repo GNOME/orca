@@ -71,7 +71,6 @@ from orca import debug
 from orca import debugging_tools_manager
 from orca import gsettings_registry
 from orca import messages
-from orca import settings
 from orca import script_manager
 from orca import settings_manager
 
@@ -100,35 +99,6 @@ class PrintVersion(argparse.Action):
     ) -> None:
         debugging_tools_manager.get_manager().print_session_details(is_command_line=True)
         parser.exit()
-
-class Settings(argparse.Action):
-    """Action to enable or disable a setting."""
-
-    def __call__(
-        self,
-        parser: argparse.ArgumentParser,
-        namespace: argparse.Namespace,
-        values: str | Sequence[Any] | None,
-        option_string: str | None = None
-    ) -> None:
-        settings_dict: dict[str, bool] = getattr(namespace, "settings", {})
-        invalid: list[str] = getattr(namespace, "invalid", [])
-        if isinstance(values, str):
-            for value in values.split(","):
-                item = str.title(value).replace("-", "")
-                # Try enable version first
-                test = f"enable{item}"
-                if hasattr(settings, test):
-                    settings_dict[test] = self.const
-                else:
-                    # Try show version
-                    test = f"show{item}"
-                    if hasattr(settings, test):
-                        settings_dict[test] = self.const
-                    else:
-                        invalid.append(value)
-        setattr(namespace, "settings", settings_dict)
-        setattr(namespace, "invalid", invalid)
 
 class HelpFormatter(argparse.HelpFormatter):
     """Lists the available actions and usage."""
@@ -168,12 +138,6 @@ class Parser(argparse.ArgumentParser):
             "-l", "--list-apps", action=ListApps, nargs=0,
             help=messages.CLI_LIST_APPS)
         self.add_argument(
-            "-e", "--enable", action=Settings, const=True,
-            help=messages.CLI_ENABLE_OPTION, metavar=messages.CLI_OPTION)
-        self.add_argument(
-            "-d", "--disable", action=Settings, const=False,
-            help=messages.CLI_DISABLE_OPTION, metavar=messages.CLI_OPTION)
-        self.add_argument(
             "-p", "--profile", action="store",
             help=messages.CLI_LOAD_PROFILE, metavar=messages.CLI_PROFILE_NAME)
         self.add_argument(
@@ -192,10 +156,6 @@ class Parser(argparse.ArgumentParser):
 
     def parse_known_args(self, args: Any = None, namespace: Any = None) -> Any:
         opts, invalid = super().parse_known_args(args, namespace)
-        try:
-            invalid.extend(opts.invalid)
-        except AttributeError:
-            pass
         if invalid:
             print((messages.CLI_INVALID_OPTIONS + " ".join(invalid)))
 
@@ -289,15 +249,13 @@ def main() -> int:
     if args.replace:
         cleanup(signal.SIGKILL)
 
-    settings_dict = getattr(args, "settings", {})
-
     if not in_graphical_desktop():
         print(messages.CLI_NO_DESKTOP_ERROR)
         return 1
 
     debug.print_message(debug.LEVEL_INFO, "INFO: Preparing to launch.", True)
     manager = settings_manager.get_manager()
-    manager.activate(args.user_prefs, settings_dict)
+    manager.activate(args.user_prefs)
     sys.path.insert(0, manager.get_prefs_dir())
 
     if args.profile:

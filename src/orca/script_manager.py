@@ -32,7 +32,6 @@ from gi.repository import Atspi
 
 from . import debug
 from . import gsettings_registry
-from . import settings_manager
 from . import sleep_mode_manager
 from . import speech_manager
 from .ax_object import AXObject
@@ -52,7 +51,6 @@ class ScriptManager:
         self._default_script: default.Script | None = None
         self._active_script: default.Script | None = None
         self._active: bool = False
-        self._app_settings_snapshots: dict = {}
         debug.print_message(debug.LEVEL_INFO, "SCRIPT MANAGER: Initialized", True)
 
     def activate(self) -> None:
@@ -86,21 +84,6 @@ class ScriptManager:
         self.custom_scripts = {}
         self._active = False
         debug.print_message(debug.LEVEL_INFO, "SCRIPT MANAGER: Deactivated", True)
-
-    def clear_app_settings_snapshots(self) -> None:
-        """Clear all cached app settings snapshots.
-
-        This should be called when global preferences are saved to ensure
-        stale snapshots don't overwrite the newly saved settings.
-        """
-
-        if self._app_settings_snapshots:
-            msg = (
-                f"SCRIPT MANAGER: Clearing {len(self._app_settings_snapshots)} "
-                "app settings snapshots"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._app_settings_snapshots.clear()
 
     def get_module_name(self, app: Atspi.Accessible | None) -> str | None:
         """Returns the module name of the script to use for application app."""
@@ -337,14 +320,6 @@ class ScriptManager:
         if self._active_script == new_script:
             return
 
-        old_script = self._active_script
-
-        # Save settings snapshot for the old app before deactivating.
-        if old_script and old_script.app:
-            self._app_settings_snapshots[old_script.app] = (
-                settings_manager.get_manager().snapshot_settings()
-            )
-
         if self._active_script is not None:
             tokens = ["SCRIPT MANAGER: Deactivating", self._active_script, "reason:", reason]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -360,15 +335,6 @@ class ScriptManager:
         tokens = ["SCRIPT MANAGER: Setting active script to", new_script, "reason:", reason]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         new_script.activate()
-
-        # Restore settings snapshot for this app if we have one. This preserves
-        # runtime state (e.g. speech enabled via Orca+S) across script switches
-        # within the same app, including after window deactivation/reactivation
-        # (where old_script is None because on_window_deactivated set it to None).
-        if new_script.app and new_script.app in self._app_settings_snapshots:
-            settings_manager.get_manager().restore_settings(
-                self._app_settings_snapshots[new_script.app]
-            )
 
         speech_manager.get_manager().check_speech_setting()
 

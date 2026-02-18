@@ -113,11 +113,7 @@ class TestScriptManager:
         debug_mock.LEVEL_INFO = 800
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_manager_instance = test_context.Mock()
-        settings_manager_instance.set_setting = test_context.Mock()
-        settings_manager_mock.get_manager = test_context.Mock(
-            return_value=settings_manager_instance
-        )
+        settings_manager_mock.get_manager = test_context.Mock()
 
         speech_verbosity_mock = essential_modules["orca.speech_manager"]
         speech_manager_instance = test_context.Mock()
@@ -159,7 +155,6 @@ class TestScriptManager:
         scripts_mock.sleepmode = sleepmode_mock
         scripts_mock.toolkits = toolkits_mock
 
-        essential_modules["settings_manager_instance"] = settings_manager_instance
         essential_modules["speech_manager_instance"] = speech_manager_instance
 
         default_script = test_context.Mock()
@@ -904,168 +899,6 @@ class TestScriptManager:
             if case["expects_deactivate"]:
                 old_script.deactivate.assert_called_once()
             assert manager._active_script is None
-
-    def test_set_active_script_preserves_settings_for_same_app(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test ScriptManager.set_active_script preserves settings for same app."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        default_script = essential_modules["default_script"]
-        from orca.script_manager import ScriptManager
-
-        speech_patch = "orca.script_manager.speech_manager.get_manager"
-        mock_get_speech_manager = test_context.Mock()
-        test_context.patch(speech_patch, new=mock_get_speech_manager)
-
-        speech_manager_instance = test_context.Mock()
-        mock_get_speech_manager.return_value = speech_manager_instance
-
-        state = test_context.Mock()
-        state.testSetting1 = "original_value1"
-        state.testSetting2 = "original_value2"
-
-        settings_manager_instance = essential_modules["settings_manager_instance"]
-
-        def mock_snapshot():
-            return {
-                "testSetting1": state.testSetting1,
-                "testSetting2": state.testSetting2,
-            }
-
-        def mock_restore(snapshot):
-            for key, value in snapshot.items():
-                setattr(state, key, value)
-
-        settings_manager_instance.snapshot_settings = test_context.Mock(side_effect=mock_snapshot)
-        settings_manager_instance.restore_settings = test_context.Mock(side_effect=mock_restore)
-
-        manager = ScriptManager()
-        same_app = test_context.Mock()
-        old_script = test_context.Mock()
-        old_script.app = same_app
-        old_script.deactivate = test_context.Mock()
-
-        def modify_setting_on_activate():
-            state.testSetting1 = "modified_by_activate"
-
-        new_script = default_script
-        new_script.app = same_app
-        new_script.activate = test_context.Mock(side_effect=modify_setting_on_activate)
-
-        manager._active_script = old_script
-        manager.set_active_script(new_script)
-
-        assert state.testSetting1 == "original_value1"
-        assert state.testSetting2 == "original_value2"
-
-    def test_set_active_script_does_not_restore_snapshot_for_different_app(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test that snapshot is not restored when switching between different apps."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        default_script = essential_modules["default_script"]
-        from orca.script_manager import ScriptManager
-
-        speech_patch = "orca.script_manager.speech_manager.get_manager"
-        mock_get_speech_manager = test_context.Mock()
-        test_context.patch(speech_patch, new=mock_get_speech_manager)
-
-        speech_manager_instance = test_context.Mock()
-        mock_get_speech_manager.return_value = speech_manager_instance
-
-        state = test_context.Mock()
-        state.testSetting1 = "original_value1"
-
-        settings_manager_instance = essential_modules["settings_manager_instance"]
-
-        def mock_snapshot():
-            return {"testSetting1": state.testSetting1}
-
-        def mock_restore(snapshot):
-            for key, value in snapshot.items():
-                setattr(state, key, value)
-
-        settings_manager_instance.snapshot_settings = test_context.Mock(side_effect=mock_snapshot)
-        settings_manager_instance.restore_settings = test_context.Mock(side_effect=mock_restore)
-
-        manager = ScriptManager()
-        app_a = test_context.Mock()
-        app_b = test_context.Mock()
-
-        old_script = test_context.Mock()
-        old_script.app = app_a
-        old_script.deactivate = test_context.Mock()
-
-        def modify_setting_on_activate():
-            state.testSetting1 = "modified_by_activate"
-
-        new_script = default_script
-        new_script.app = app_b
-        new_script.activate = test_context.Mock(side_effect=modify_setting_on_activate)
-
-        manager._active_script = old_script
-        manager.set_active_script(new_script)
-
-        settings_manager_instance.restore_settings.assert_not_called()
-        assert state.testSetting1 == "modified_by_activate"
-
-    def test_set_active_script_restores_snapshot_after_deactivation(
-        self, test_context: OrcaTestContext
-    ) -> None:
-        """Test that snapshot is restored after window deactivation sets active script to None."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        default_script = essential_modules["default_script"]
-        from orca.script_manager import ScriptManager
-
-        speech_patch = "orca.script_manager.speech_manager.get_manager"
-        mock_get_speech_manager = test_context.Mock()
-        test_context.patch(speech_patch, new=mock_get_speech_manager)
-
-        speech_manager_instance = test_context.Mock()
-        mock_get_speech_manager.return_value = speech_manager_instance
-
-        state = test_context.Mock()
-        state.testSetting1 = "runtime_value"
-
-        settings_manager_instance = essential_modules["settings_manager_instance"]
-
-        def mock_snapshot():
-            return {"testSetting1": state.testSetting1}
-
-        def mock_restore(snapshot):
-            for key, value in snapshot.items():
-                setattr(state, key, value)
-
-        settings_manager_instance.snapshot_settings = test_context.Mock(side_effect=mock_snapshot)
-        settings_manager_instance.restore_settings = test_context.Mock(side_effect=mock_restore)
-
-        manager = ScriptManager()
-        app = test_context.Mock()
-
-        terminal_script = test_context.Mock()
-        terminal_script.app = app
-        terminal_script.deactivate = test_context.Mock()
-
-        manager._active_script = terminal_script
-        manager.set_active_script(None, "Window deactivated")
-
-        settings_manager_instance.snapshot_settings.assert_called_once()
-        assert manager._active_script is None
-
-        def modify_setting_on_activate():
-            state.testSetting1 = "overwritten_by_load_app_settings"
-
-        gtk_script = default_script
-        gtk_script.app = app
-        gtk_script.activate = test_context.Mock(side_effect=modify_setting_on_activate)
-
-        manager.set_active_script(gtk_script, "Focus on menu")
-
-        settings_manager_instance.restore_settings.assert_called_once()
-        assert state.testSetting1 == "runtime_value"
 
     @pytest.mark.parametrize(
         "case",

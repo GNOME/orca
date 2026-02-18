@@ -170,18 +170,6 @@ CELL_RANGE_UNSELECTED = C_("cell", "%s through %s unselected")
 # will be something like "B3".
 CELL_UNSELECTED = C_("cell", "%s unselected")
 
-# Translators: This is the description of command line option '-d, --disable'
-# which allows the user to specify an option to disable as Orca is started.
-CLI_DISABLE_OPTION = _("Prevent use of option")
-
-# Translators: this is the description of command line option '-e, --enable'
-# which allows the user to specify an option to enable as Orca is started.
-CLI_ENABLE_OPTION = _("Force use of option")
-
-# Translators: This string indicates to the user what should be provided when
-# using the '-e, --enable' or '-d, --disable' command line options.
-CLI_OPTION = _("OPTION")
-
 # Translators: This string appears when using 'Orca -h' at the command line.
 # It serves as a sort of title and is followed by a detailed list of Orca's
 # optional command-line arguments.

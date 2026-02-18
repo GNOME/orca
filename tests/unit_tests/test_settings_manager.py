@@ -37,7 +37,6 @@ from __future__ import annotations
 import json
 import os
 import tempfile
-from types import ModuleType
 from typing import TYPE_CHECKING, Any
 
 import pytest
@@ -89,90 +88,6 @@ class TestSettingsManagerFileIO:
         itself. We allow the real settings_manager and json_backend to execute
         since we're testing actual file I/O.
         """
-
-        import sys
-
-        # ModuleType allows settings_manager to set attributes on it dynamically
-        settings_obj: Any = ModuleType("orca.settings")
-        settings_obj.enableEchoByWord = False
-        settings_obj.enableEchoByCharacter = False
-        settings_obj.enableKeyEcho = True
-        settings_obj.speechServerFactory = None
-        settings_obj.speechServerInfo = None
-        settings_obj.voices = {
-            "default": {},
-            "uppercase": {"average-pitch": 7.0},
-            "hyperlink": {},
-            "system": {},
-        }
-        settings_obj.DEFAULT_VOICE = "default"
-        settings_obj.UPPERCASE_VOICE = "uppercase"
-        settings_obj.HYPERLINK_VOICE = "hyperlink"
-        settings_obj.SYSTEM_VOICE = "system"
-        settings_obj.startingProfile = ["Default", "default"]
-        settings_obj.activeProfile = ["Default", "default"]
-        settings_obj.enableSpeech = True
-        settings_obj.onlySpeakDisplayedText = False
-        settings_obj.orcaModifierKeys = ["Insert", "KP_Insert"]
-        settings_obj.presentTimeFormat = "%X"
-        # Voice type constants
-        settings_obj.DEFAULT_VOICE = "default"
-        settings_obj.UPPERCASE_VOICE = "uppercase"
-        settings_obj.HYPERLINK_VOICE = "hyperlink"
-        settings_obj.SYSTEM_VOICE = "system"
-        # Navigator enabled states
-        settings_obj.structuralNavigationEnabled = True
-        settings_obj.tableNavigationEnabled = True
-        settings_obj.caretNavigationEnabled = True
-        # Say all style constants
-        settings_obj.SAYALL_STYLE_LINE = 0
-        settings_obj.SAYALL_STYLE_SENTENCE = 1
-        settings_obj.sayAllStyle = 1
-        # Verbosity constants
-        settings_obj.VERBOSITY_LEVEL_BRIEF = 0
-        settings_obj.VERBOSITY_LEVEL_VERBOSE = 1
-        # Braille constants
-        settings_obj.enableBraille = False
-        settings_obj.BRAILLE_UNDERLINE_NONE = 0x00
-        settings_obj.BRAILLE_UNDERLINE_7 = 0x40
-        settings_obj.BRAILLE_UNDERLINE_8 = 0x80
-        settings_obj.BRAILLE_UNDERLINE_BOTH = 0xC0
-        settings_obj.brailleContractionTable = ""
-        # Punctuation constants
-        settings_obj.PUNCTUATION_STYLE_NONE = 3
-        settings_obj.PUNCTUATION_STYLE_SOME = 2
-        settings_obj.PUNCTUATION_STYLE_MOST = 1
-        settings_obj.PUNCTUATION_STYLE_ALL = 0
-        # Progress bar constants
-        settings_obj.PROGRESS_BAR_ALL = 0
-        settings_obj.PROGRESS_BAR_APPLICATION = 1
-        settings_obj.PROGRESS_BAR_WINDOW = 2
-        # Keyboard layout constants
-        settings_obj.GENERAL_KEYBOARD_LAYOUT_DESKTOP = 1
-        settings_obj.GENERAL_KEYBOARD_LAYOUT_LAPTOP = 2
-        settings_obj.DESKTOP_MODIFIER_KEYS = ["Insert", "KP_Insert"]
-        settings_obj.LAPTOP_MODIFIER_KEYS = ["Caps_Lock", "Shift_Lock"]
-        settings_obj.keyboardLayout = 1
-        # Capitalization constants
-        settings_obj.CAPITALIZATION_STYLE_NONE = "none"
-        settings_obj.CAPITALIZATION_STYLE_SPELL = "spell"
-        settings_obj.CAPITALIZATION_STYLE_ICON = "icon"
-        # Chat constants
-        settings_obj.CHAT_SPEAK_ALL_ANY_APP = 0
-        settings_obj.CHAT_SPEAK_ALL_ACTIVE_APP = 1
-        settings_obj.CHAT_SPEAK_CURRENT_ACTIVE_APP = 2
-        # Find constants
-        settings_obj.FIND_SPEAK_NONE = 0
-        settings_obj.FIND_SPEAK_IF_LINE_CHANGED = 1
-        settings_obj.FIND_SPEAK_ALL = 2
-        # Various other settings
-        settings_obj.wrappedStructuralNavigation = True
-        settings_obj.structNavTriggersFocusMode = True
-        settings_obj.largeObjectTextLength = 75
-        settings_obj.enableEchoBySentence = False
-        settings_obj.flatReviewIsRestricted = False
-        settings_obj.enableMouseReview = False
-        settings_obj.mouseDwellDelay = 0
 
         essential_modules: dict[str, Any] = {}
 
@@ -267,10 +182,6 @@ class TestSettingsManagerFileIO:
         gsettings_registry_mock.get_registry.return_value = mock_registry
         test_context.patch_module("orca.gsettings_registry", gsettings_registry_mock)
         essential_modules["orca.gsettings_registry"] = gsettings_registry_mock
-
-        # Inject settings AFTER other mocks but BEFORE importing settings_manager
-        sys.modules["orca.settings"] = settings_obj
-        essential_modules["orca.settings"] = settings_obj
 
         return essential_modules
 
@@ -544,9 +455,6 @@ class TestSettingsManagerFileIO:
             assert "general" in data
             assert "pronunciations" in data
             assert "keybindings" in data
-            # Legacy general must contain all default settings for backwards compatibility
-            assert "orcaModifierKeys" in data["general"]
-            assert "presentTimeFormat" in data["general"]
 
     def test_starting_profile_persistence(self, test_context: OrcaTestContext) -> None:
         """Test that the starting profile setting is persisted correctly."""
@@ -630,40 +538,11 @@ class TestSettingsManagerFileIO:
 
             assert profiles_before == profiles_after
 
-    def test_snapshot_settings_captures_values(self, test_context: OrcaTestContext) -> None:
-        """Test that snapshot_settings captures current runtime settings."""
+    def test_snapshot_settings_returns_empty_dict(self, test_context: OrcaTestContext) -> None:
+        """Test that snapshot_settings returns an empty dict."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        settings_obj = essential_modules["orca.settings"]
-
-        with tempfile.TemporaryDirectory() as temp_dir:
-            manager = self._create_fresh_manager(test_context, temp_dir)
-
-            settings_obj.enableEchoByWord = True
-            settings_obj.enableKeyEcho = False
-
-            snapshot = manager.snapshot_settings()
-
-            assert snapshot.get("enableEchoByWord") is True
-            assert snapshot.get("enableKeyEcho") is False
-
-    def test_restore_settings_restores_values(self, test_context: OrcaTestContext) -> None:
-        """Test that restore_settings restores values from a snapshot."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        settings_obj = essential_modules["orca.settings"]
+        self._setup_dependencies(test_context)
 
         with tempfile.TemporaryDirectory() as temp_dir:
             manager = self._create_fresh_manager(test_context, temp_dir)
-
-            settings_obj.enableEchoByWord = True
-            settings_obj.enableKeyEcho = False
-            snapshot = manager.snapshot_settings()
-
-            settings_obj.enableEchoByWord = False
-            settings_obj.enableKeyEcho = True
-
-            manager.restore_settings(snapshot)
-
-            assert settings_obj.enableEchoByWord is True
-            assert settings_obj.enableKeyEcho is False
+            assert not manager.snapshot_settings()
