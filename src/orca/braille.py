@@ -184,6 +184,8 @@ BRLAPI_PRIORITY_IDLE = 0
 BRLAPI_PRIORITY_DEFAULT = 50
 BRLAPI_PRIORITY_HIGH = 70
 
+INDICATOR_NONE: int = 0x00
+
 
 @dataclass(frozen=True)
 class _LineInfo:
@@ -1185,13 +1187,13 @@ class Text(Region):
 
         string_length = len(self._raw_line) - len(self._label)
         line_end_offset = self.line_offset + string_length
-        region_mask = [settings.BRAILLE_UNDERLINE_NONE] * string_length
+        region_mask = [INDICATOR_NONE] * string_length
 
         attr_indicator = settings.textAttributesBrailleIndicator
         selection_indicator = settings.brailleSelectorIndicator
         link_indicator = settings.brailleLinkIndicator
 
-        if indicate_links and link_indicator != settings.BRAILLE_UNDERLINE_NONE:
+        if indicate_links and link_indicator != INDICATOR_NONE:
             links = AXHypertext.get_all_links(self.accessible)
             for link in links:
                 start_offset = AXHypertext.get_link_start_offset(link)
@@ -1210,7 +1212,7 @@ class Text(Region):
                 )
                 if end_offset <= offset:
                     break
-                mask = settings.BRAILLE_UNDERLINE_NONE
+                mask = INDICATOR_NONE
                 offset = end_offset
                 for attrib in attributes:
                     if attrib not in enabled:
@@ -1219,7 +1221,7 @@ class Text(Region):
                     if ax_text_attr and not ax_text_attr.value_is_default(attributes[attrib]):
                         mask = attr_indicator
                         break
-                if mask != settings.BRAILLE_UNDERLINE_NONE:
+                if mask != INDICATOR_NONE:
                     mask_start = max(start_offset - self.line_offset, 0)
                     mask_end = min(end_offset - self.line_offset, string_length)
                     for i in range(mask_start, mask_end):

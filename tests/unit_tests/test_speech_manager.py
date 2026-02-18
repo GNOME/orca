@@ -54,6 +54,20 @@ class PunctuationStyle(Enum):
         return self.name.lower()
 
 
+class CapitalizationStyle(Enum):
+    """Test-local copy of CapitalizationStyle for mocking."""
+
+    NONE = "none"
+    SPELL = "spell"
+    ICON = "icon"
+
+    @property
+    def string_name(self) -> str:
+        """Returns the lowercase string name for this enum value."""
+
+        return self.name.lower()
+
+
 if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
@@ -131,6 +145,11 @@ class TestSpeechManager:
         speechserver_mock.VoiceFamily.DIALECT = "dialect"
         speechserver_mock.VoiceFamily.VARIANT = "variant"
         speechserver_mock.PunctuationStyle = PunctuationStyle
+        speechserver_mock.CapitalizationStyle = CapitalizationStyle
+        speechserver_mock.DEFAULT_VOICE = "default"
+        speechserver_mock.UPPERCASE_VOICE = "uppercase"
+        speechserver_mock.HYPERLINK_VOICE = "hyperlink"
+        speechserver_mock.SYSTEM_VOICE = "system"
 
         orca_i18n_mock = essential_modules["orca.orca_i18n"]
         orca_i18n_mock._ = lambda x: x
@@ -1216,6 +1235,11 @@ class TestVoicesPreferencesGridUI:  # pylint: disable=too-few-public-methods
 
         speechserver_mock = essential_modules["orca.speechserver"]
         speechserver_mock.PunctuationStyle = PunctuationStyle
+        speechserver_mock.CapitalizationStyle = CapitalizationStyle
+        speechserver_mock.DEFAULT_VOICE = "default"
+        speechserver_mock.UPPERCASE_VOICE = "uppercase"
+        speechserver_mock.HYPERLINK_VOICE = "hyperlink"
+        speechserver_mock.SYSTEM_VOICE = "system"
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
         settings_manager_instance = test_context.Mock()

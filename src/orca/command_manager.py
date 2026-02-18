@@ -55,7 +55,6 @@ from . import orca_modifier_manager
 from . import preferences_grid_base
 from . import presentation_manager
 from . import script_manager
-from . import settings
 from . import settings_manager
 from .ax_object import AXObject
 
@@ -324,10 +323,10 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         keyboard_layout_model = Gtk.ListStore(str, int)
         keyboard_layout_model.append(
-            [guilabels.KEYBOARD_LAYOUT_DESKTOP, settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP]
+            [guilabels.KEYBOARD_LAYOUT_DESKTOP, KeyboardLayout.DESKTOP.value]
         )
         keyboard_layout_model.append(
-            [guilabels.KEYBOARD_LAYOUT_LAPTOP, settings.GENERAL_KEYBOARD_LAYOUT_LAPTOP]
+            [guilabels.KEYBOARD_LAYOUT_LAPTOP, KeyboardLayout.LAPTOP.value]
         )
 
         orca_model = Gtk.ListStore(str)
@@ -1057,19 +1056,23 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             model = combo.get_model()
             layout_value = model.get_value(tree_iter, 1)
 
-            is_desktop = layout_value == settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
+            is_desktop = layout_value == KeyboardLayout.DESKTOP.value
             get_manager().set_keyboard_layout(is_desktop)
 
             if self._orca_modifier_combo is not None:
                 if is_desktop:
                     self._orca_modifier_combo.set_active(0)
                     gsettings_registry.get_registry().set_runtime_value(
-                        "keybindings", "orca-modifier-keys", settings.DESKTOP_MODIFIER_KEYS
+                        "keybindings",
+                        "orca-modifier-keys",
+                        orca_modifier_manager.DESKTOP_MODIFIER_KEYS,
                     )
                 else:
                     self._orca_modifier_combo.set_active(3)
                     gsettings_registry.get_registry().set_runtime_value(
-                        "keybindings", "orca-modifier-keys", settings.LAPTOP_MODIFIER_KEYS
+                        "keybindings",
+                        "orca-modifier-keys",
+                        orca_modifier_manager.LAPTOP_MODIFIER_KEYS,
                     )
 
         get_manager().apply_user_overrides()
@@ -1113,8 +1116,8 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 class KeyboardLayout(Enum):
     """Keyboard layout enumeration."""
 
-    DESKTOP = settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
-    LAPTOP = settings.GENERAL_KEYBOARD_LAYOUT_LAPTOP
+    DESKTOP = 1
+    LAPTOP = 2
 
     @property
     def string_name(self) -> str:
@@ -1173,8 +1176,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         """Returns the keyboard layout as an integer value for saving."""
 
         if self._is_desktop:
-            return settings.GENERAL_KEYBOARD_LAYOUT_DESKTOP
-        return settings.GENERAL_KEYBOARD_LAYOUT_LAPTOP
+            return KeyboardLayout.DESKTOP.value
+        return KeyboardLayout.LAPTOP.value
 
     @dbus_service.setter
     def set_keyboard_layout_is_desktop(self, is_desktop: bool) -> bool:

@@ -33,6 +33,12 @@ from . import gsettings_registry
 from .ax_utilities_debugging import AXUtilitiesDebugging
 
 
+DEFAULT_VOICE: str = "default"
+UPPERCASE_VOICE: str = "uppercase"
+HYPERLINK_VOICE: str = "hyperlink"
+SYSTEM_VOICE: str = "system"
+
+
 @gsettings_registry.get_registry().gsettings_enum(
     "org.gnome.Orca.PunctuationStyle",
     values={"all": 0, "most": 1, "some": 2, "none": 3},
@@ -44,6 +50,24 @@ class PunctuationStyle(Enum):
     SOME = 2
     MOST = 1
     ALL = 0
+
+    @property
+    def string_name(self) -> str:
+        """Returns the lowercase string name for this enum value."""
+
+        return self.name.lower()
+
+
+@gsettings_registry.get_registry().gsettings_enum(
+    "org.gnome.Orca.CapitalizationStyle",
+    values={"none": 0, "spell": 1, "icon": 2},
+)
+class CapitalizationStyle(Enum):
+    """Capitalization style enumeration with string values from settings."""
+
+    NONE = "none"
+    SPELL = "spell"
+    ICON = "icon"
 
     @property
     def string_name(self) -> str:

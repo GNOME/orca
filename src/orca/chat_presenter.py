@@ -43,7 +43,6 @@ from . import messages
 from . import preferences_grid_base
 from . import presentation_manager
 from . import script_manager
-from . import settings
 from . import settings_manager
 from .ax_object import AXObject
 from .ax_selection import AXSelection
@@ -63,10 +62,10 @@ if TYPE_CHECKING:
 class ChatMessageVerbosity(Enum):
     """Chat message verbosity level enumeration."""
 
-    ALL_ANY_APP = settings.CHAT_SPEAK_ALL_ANY_APP
-    ALL_ACTIVE_APP = settings.CHAT_SPEAK_ALL_ACTIVE_APP
-    CURRENT_ACTIVE_APP = settings.CHAT_SPEAK_CURRENT_ACTIVE_APP
-    CURRENT_ANY_APP = settings.CHAT_SPEAK_CURRENT_ANY_APP
+    ALL_ANY_APP = 0
+    ALL_ACTIVE_APP = 1
+    CURRENT_ACTIVE_APP = 2
+    CURRENT_ANY_APP = 3
 
     @property
     def string_name(self) -> str:
@@ -370,10 +369,10 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             guilabels.CHAT_SPEAK_MESSAGES_ACTIVE,
         ]
         values = [
-            settings.CHAT_SPEAK_ALL_ANY_APP,
-            settings.CHAT_SPEAK_CURRENT_ANY_APP,
-            settings.CHAT_SPEAK_ALL_ACTIVE_APP,
-            settings.CHAT_SPEAK_CURRENT_ACTIVE_APP,
+            ChatMessageVerbosity.ALL_ANY_APP.value,
+            ChatMessageVerbosity.CURRENT_ANY_APP.value,
+            ChatMessageVerbosity.ALL_ACTIVE_APP.value,
+            ChatMessageVerbosity.CURRENT_ACTIVE_APP.value,
         ]
 
         controls: list[
@@ -507,12 +506,12 @@ class ChatPresenter:
         if (
             active_script is not None
             and active_script.name != script.name
-            and verbosity == settings.CHAT_SPEAK_ALL_ACTIVE_APP
+            and verbosity == ChatMessageVerbosity.ALL_ACTIVE_APP.value
         ):
             return
-        if not focused and verbosity == settings.CHAT_SPEAK_CURRENT_ACTIVE_APP:
+        if not focused and verbosity == ChatMessageVerbosity.CURRENT_ACTIVE_APP.value:
             return
-        if not active_channel and verbosity == settings.CHAT_SPEAK_CURRENT_ANY_APP:
+        if not active_channel and verbosity == ChatMessageVerbosity.CURRENT_ANY_APP.value:
             return
 
         text = ""

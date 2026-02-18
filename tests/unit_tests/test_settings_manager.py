@@ -205,6 +205,14 @@ class TestSettingsManagerFileIO:
         test_context.patch_module("orca.acss", acss_mock)
         essential_modules["orca.acss"] = acss_mock
 
+        speechserver_mock = test_context.Mock()
+        speechserver_mock.DEFAULT_VOICE = "default"
+        speechserver_mock.UPPERCASE_VOICE = "uppercase"
+        speechserver_mock.HYPERLINK_VOICE = "hyperlink"
+        speechserver_mock.SYSTEM_VOICE = "system"
+        test_context.patch_module("orca.speechserver", speechserver_mock)
+        essential_modules["orca.speechserver"] = speechserver_mock
+
         pronun_manager_mock = test_context.Mock()
         pronun_manager_mock.set_dictionary = test_context.Mock()
         pronun_manager_mock.set_pronunciation = test_context.Mock()

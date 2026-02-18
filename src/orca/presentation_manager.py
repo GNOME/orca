@@ -29,13 +29,17 @@ from typing import Any, TYPE_CHECKING
 
 from . import braille_presenter
 from . import debug
+from . import focus_manager
 from . import live_region_presenter
+from . import script_manager
 from . import sound_presenter
 from . import speech_manager
 from . import speech_presenter
 from . import typing_echo_presenter
 
 from .acss import ACSS
+from .ax_utilities import AXUtilities
+from .ax_value import AXValue
 
 if TYPE_CHECKING:
     import gi
@@ -53,8 +57,6 @@ class PresentationManager:
 
     def _get_active_script(self) -> default.Script | None:
         """Returns the active script."""
-
-        from . import script_manager  # pylint: disable=import-outside-toplevel
 
         return script_manager.get_manager().get_active_script()
 
@@ -200,6 +202,33 @@ class PresentationManager:
 
         if obj is None:
             return
+
+        if args.get("isProgressBarUpdate"):
+            percent = AXValue.get_value_as_percent(obj)
+            is_same_app = (
+                AXUtilities.get_application(obj)
+                == script_manager.get_manager().get_active_script_app()
+            )
+            is_same_window = (
+                script.utilities.top_level_object(obj)
+                == focus_manager.get_manager().get_active_window()
+            )
+            if generate_speech:
+                generate_speech = (
+                    speech_presenter.get_presenter().should_present_progress_bar_update(
+                        obj, percent, is_same_app, is_same_window
+                    )
+                )
+            if generate_braille:
+                generate_braille = (
+                    braille_presenter.get_presenter().should_present_progress_bar_update(
+                        obj, percent, is_same_app, is_same_window
+                    )
+                )
+            if generate_sound:
+                generate_sound = sound_presenter.get_presenter().should_present_progress_bar_update(
+                    obj, percent, is_same_app, is_same_window
+                )
 
         if generate_speech:
             speech_presenter.get_presenter().present_generated_speech(script, obj, **args)

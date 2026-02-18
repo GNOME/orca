@@ -423,7 +423,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             "progressBarSpeechInterval", 10
         )
         self.prefs_dict["progressBarVerbosity"] = self.prefs_dict.get(
-            "progressBarSpeechVerbosity", settings.PROGRESS_BAR_APPLICATION
+            "progressBarSpeechVerbosity", sound_presenter.ProgressBarVerbosity.APPLICATION.value
         )
 
         settings_manager.get_manager().save_settings(

@@ -43,7 +43,8 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import acss
+from . import speechserver
+from .acss import ACSS
 from . import debug
 from . import focus_manager
 from . import generator
@@ -52,7 +53,6 @@ from . import mathsymbols
 from . import messages
 from . import object_properties
 from . import say_all_presenter
-from . import settings
 from . import settings_manager
 from . import speech_manager
 from . import speech_presenter
@@ -90,12 +90,12 @@ STATE = "state"  # Candidate for sound
 VALUE = "value"  # Candidate for sound
 
 voice_type = {
-    DEFAULT: settings.DEFAULT_VOICE,
-    UPPERCASE: settings.UPPERCASE_VOICE,
-    HYPERLINK: settings.HYPERLINK_VOICE,
-    SYSTEM: settings.SYSTEM_VOICE,
-    STATE: settings.SYSTEM_VOICE,  # Users may prefer DEFAULT_VOICE here
-    VALUE: settings.SYSTEM_VOICE,  # Users may prefer DEFAULT_VOICE here
+    DEFAULT: speechserver.DEFAULT_VOICE,
+    UPPERCASE: speechserver.UPPERCASE_VOICE,
+    HYPERLINK: speechserver.HYPERLINK_VOICE,
+    SYSTEM: speechserver.SYSTEM_VOICE,
+    STATE: speechserver.SYSTEM_VOICE,  # Users may prefer DEFAULT_VOICE here
+    VALUE: speechserver.SYSTEM_VOICE,  # Users may prefer DEFAULT_VOICE here
 }
 
 
@@ -207,7 +207,7 @@ class SpeechGenerator(generator.Generator):
 
         return PAUSE
 
-    def voice(self, key: str | None = None, **args) -> list[acss.ACSS]:
+    def voice(self, key: str | None = None, **args) -> list[ACSS]:
         """Returns an array containing a voice."""
 
         voicename = voice_type.get(key or DEFAULT, voice_type[DEFAULT])
@@ -217,7 +217,7 @@ class SpeechGenerator(generator.Generator):
         obj = args.get("obj")
         language = args.get("language", "")
         dialect = args.get("dialect", "")
-        family = voice.get(acss.ACSS.FAMILY, {}).copy()
+        family = voice.get(ACSS.FAMILY, {}).copy()
         tokens = [
             f"SPEECH GENERATOR: {key} voice requested for",
             obj,
@@ -259,7 +259,7 @@ class SpeechGenerator(generator.Generator):
 
         if key in [None, DEFAULT]:
             string = args.get("string", "")
-            voice_override: acss.ACSS | None = None
+            voice_override: ACSS | None = None
             if AXUtilities.is_link(obj):
                 voice_override = mgr.get_voice_properties(voice_type[HYPERLINK])
             elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
@@ -267,8 +267,8 @@ class SpeechGenerator(generator.Generator):
 
             if voice_override:
                 voice.update(voice_override)
-                if acss.ACSS.FAMILY in voice_override:
-                    family.update(voice_override[acss.ACSS.FAMILY])
+                if ACSS.FAMILY in voice_override:
+                    family.update(voice_override[ACSS.FAMILY])
 
             if settings_manager.get_manager().is_configuring():
                 auto_lang_switching = False
@@ -302,10 +302,10 @@ class SpeechGenerator(generator.Generator):
             override = mgr.get_voice_properties(voicename)
             if override:
                 voice.update(override)
-                if acss.ACSS.FAMILY in override:
-                    family = override[acss.ACSS.FAMILY]
+                if ACSS.FAMILY in override:
+                    family = override[ACSS.FAMILY]
 
-        voice[acss.ACSS.FAMILY] = family
+        voice[ACSS.FAMILY] = family
         tokens = ["SPEECH GENERATOR: Final voice is", voice]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return [voice]
@@ -1989,9 +1989,7 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_progress_bar_index(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if not args.get("isProgressBarUpdate") or not self._should_present_progress_bar_update(
-            obj, **args
-        ):
+        if not args.get("isProgressBarUpdate"):
             return []
 
         result = []
@@ -2005,11 +2003,6 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_progress_bar_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if args.get("isProgressBarUpdate") and not self._should_present_progress_bar_update(
-            obj, **args
-        ):
-            return [""]
-
         result = []
         percent = AXValue.get_value_as_percent(obj)
         if percent is not None:
@@ -2017,19 +2010,6 @@ class SpeechGenerator(generator.Generator):
             result.extend(self.voice(SYSTEM, obj=obj, **args))
 
         return result
-
-    def _get_progress_bar_update_interval(self):
-        interval = speech_presenter.get_presenter().get_progress_bar_speech_interval()
-        return int(interval)
-
-    def _get_progress_bar_verbosity(self):
-        return speech_presenter.get_presenter().get_progress_bar_speech_verbosity()
-
-    def _should_present_progress_bar_update(self, obj, **args):
-        if not speech_presenter.get_presenter().get_speak_progress_bar_updates():
-            return False
-
-        return super()._should_present_progress_bar_update(obj, **args)
 
     ##################################### TABLE #####################################
 

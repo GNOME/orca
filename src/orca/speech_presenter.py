@@ -34,6 +34,7 @@ from __future__ import annotations
 
 import re
 import string
+import time
 from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Callable, Iterable, TYPE_CHECKING
@@ -60,6 +61,7 @@ from . import pronunciation_dictionary_manager
 from . import settings
 from . import speech
 from . import speech_monitor
+from . import speechserver
 from .acss import ACSS
 from .ax_document import AXDocument
 from .ax_hypertext import AXHypertext
@@ -79,10 +81,10 @@ if TYPE_CHECKING:
 
 
 class VerbosityLevel(Enum):
-    """Verbosity level enumeration with int values from settings."""
+    """Verbosity level enumeration."""
 
-    BRIEF = settings.VERBOSITY_LEVEL_BRIEF
-    VERBOSE = settings.VERBOSITY_LEVEL_VERBOSE
+    BRIEF = 0
+    VERBOSE = 1
 
     @property
     def string_name(self) -> str:
@@ -91,10 +93,16 @@ class VerbosityLevel(Enum):
         return self.name.lower()
 
 
-_PROGRESS_BAR_VERBOSITY_NICKS: dict[str, int] = {"all": 0, "application": 1, "window": 2}
-_PROGRESS_BAR_VERBOSITY_NAMES: dict[int, str] = {
-    v: k for k, v in _PROGRESS_BAR_VERBOSITY_NICKS.items()
-}
+@gsettings_registry.get_registry().gsettings_enum(
+    "org.gnome.Orca.ProgressBarVerbosity",
+    values={"all": 0, "application": 1, "window": 2},
+)
+class ProgressBarVerbosity(Enum):
+    """Progress bar verbosity level enumeration."""
+
+    ALL = 0
+    APPLICATION = 1
+    WINDOW = 2
 
 
 @dataclass(frozen=True)
@@ -195,9 +203,9 @@ class ProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     guilabels.PROGRESS_BAR_WINDOW,
                 ],
                 values=[
-                    settings.PROGRESS_BAR_ALL,
-                    settings.PROGRESS_BAR_APPLICATION,
-                    settings.PROGRESS_BAR_WINDOW,
+                    ProgressBarVerbosity.ALL.value,
+                    ProgressBarVerbosity.APPLICATION.value,
+                    ProgressBarVerbosity.WINDOW.value,
                 ],
             ),
         ]
@@ -663,6 +671,7 @@ class SpeechPresenter:
         self._monitor_enabled_override: bool | None = None
         self._speech_history: list[tuple[str, str]] = []
         self._group_buffer: list[str] | None = None
+        self._progress_bar_cache: dict = {}
 
         msg = "SPEECH PRESENTER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1398,7 +1407,7 @@ class SpeechPresenter:
             genum="org.gnome.Orca.ProgressBarVerbosity",
             default="application",
         )
-        return _PROGRESS_BAR_VERBOSITY_NICKS.get(value, 1)
+        return ProgressBarVerbosity[value.upper()].value
 
     @dbus_service.setter
     def set_progress_bar_speech_verbosity(self, value: int) -> bool:
@@ -1406,11 +1415,47 @@ class SpeechPresenter:
 
         msg = f"SPEECH PRESENTER: Setting progress bar speech verbosity to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        nick = _PROGRESS_BAR_VERBOSITY_NAMES.get(value, "application")
+        level = ProgressBarVerbosity(value)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "progress-bar-speech-verbosity", nick
+            self._SCHEMA, "progress-bar-speech-verbosity", level.name.lower()
         )
         return True
+
+    def should_present_progress_bar_update(
+        self,
+        obj: Atspi.Accessible,
+        percent: int | None,
+        is_same_app: bool,
+        is_same_window: bool,
+    ) -> bool:
+        """Returns True if the progress bar update should be spoken."""
+
+        if not self.get_speak_progress_bar_updates():
+            return False
+
+        last_time, last_value = self._progress_bar_cache.get(id(obj), (0.0, None))
+        if percent == last_value:
+            return False
+
+        if percent != 100:
+            interval = int(time.time() - last_time)
+            if interval < self.get_progress_bar_speech_interval():
+                return False
+
+        verbosity = self.get_progress_bar_speech_verbosity()
+        if verbosity == ProgressBarVerbosity.ALL.value:
+            present = True
+        elif verbosity == ProgressBarVerbosity.APPLICATION.value:
+            present = is_same_app
+        elif verbosity == ProgressBarVerbosity.WINDOW.value:
+            present = is_same_window
+        else:
+            present = True
+
+        if present:
+            self._progress_bar_cache[id(obj)] = (time.time(), percent)
+
+        return present
 
     @gsettings_registry.get_registry().gsetting(
         key="messages-are-detailed",
@@ -2165,7 +2210,7 @@ class SpeechPresenter:
         if mgr.get_speech_is_muted() or (self.get_only_speak_displayed_text() and obj is None):
             return
 
-        system_voice = mgr.get_voice_properties(settings.SYSTEM_VOICE)
+        system_voice = mgr.get_voice_properties(speechserver.SYSTEM_VOICE)
         if voice is None:
             voice = system_voice
         voice = voice or system_voice

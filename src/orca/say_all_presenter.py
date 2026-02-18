@@ -50,7 +50,6 @@ from . import keybindings
 from . import messages
 from . import preferences_grid_base
 from . import presentation_manager
-from . import settings
 from . import speech_presenter
 from . import speechserver
 from . import structural_navigator
@@ -75,8 +74,8 @@ if TYPE_CHECKING:
 class SayAllStyle(Enum):
     """Style enumeration with int values from settings."""
 
-    SENTENCE = settings.SAYALL_STYLE_SENTENCE
-    LINE = settings.SAYALL_STYLE_LINE
+    SENTENCE = 1
+    LINE = 0
 
     @property
     def string_name(self) -> str:

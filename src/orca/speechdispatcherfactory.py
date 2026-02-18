@@ -40,9 +40,8 @@ from . import focus_manager
 from . import guilabels
 from . import mathsymbols
 from . import speechserver
-from . import settings
 from .acss import ACSS
-from .speechserver import PunctuationStyle
+from .speechserver import CapitalizationStyle, PunctuationStyle
 from .ax_utilities import AXUtilities
 from .ssml import SSML, SSMLCapabilities
 
@@ -125,7 +124,7 @@ class SpeechServer(speechserver.SpeechServer):
         self._current_voice_properties: dict[str, Any] = {}
         self._current_synthesis_voice: str | None = None
         self._current_punctuation_level: PunctuationStyle = PunctuationStyle.MOST
-        self._current_capitalization_style: str = settings.CAPITALIZATION_STYLE_NONE
+        self._current_capitalization_style: str = CapitalizationStyle.NONE.value
         self._voice_families_cache: dict[
             tuple[str, str, str | None, int | None], list[tuple[str, str, str | None]]
         ] = {}
@@ -205,9 +204,9 @@ class SpeechServer(speechserver.SpeechServer):
         if self._client is None:
             return
 
-        if style == settings.CAPITALIZATION_STYLE_ICON:
+        if style == CapitalizationStyle.ICON.value:
             sd_style = "icon"
-        elif style == settings.CAPITALIZATION_STYLE_SPELL:
+        elif style == CapitalizationStyle.SPELL.value:
             sd_style = "spell"
         else:
             sd_style = "none"

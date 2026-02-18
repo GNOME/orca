@@ -731,11 +731,6 @@ class TestSayAllPresenter:
         iem_instance.last_event_was_up.return_value = False
         test_context.patch_object(input_event_manager, "get_manager", return_value=iem_instance)
 
-        from orca import settings as orca_settings
-
-        test_context.patch_object(orca_settings, "sayAllStyle", new=0)
-        test_context.patch_object(orca_settings, "structNavInSayAll", new=False)
-
         presenter._progress_callback(mock_context, speechserver.SayAllContext.INTERRUPTED)
 
         assert presenter._say_all_is_running is False
@@ -769,7 +764,7 @@ class TestSayAllPresenter:
 
         essential_modules = self._setup_dependencies(test_context)
         from orca.say_all_presenter import SayAllPresenter
-        from orca import settings
+        from orca import gsettings_registry
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
@@ -779,7 +774,7 @@ class TestSayAllPresenter:
         presenter._script = mock_script
 
         # Set up settings for sentence-by-sentence say all
-        test_context.patch_object(settings, "sayAllStyle", new=settings.SAYALL_STYLE_SENTENCE)
+        gsettings_registry.get_registry().set_runtime_value("say-all", "style", "sentence")
 
         # Mock utilities - return contents once, then return empty to exit loop
         call_count = [0]

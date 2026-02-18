@@ -44,6 +44,7 @@ from . import gsettings_registry
 from . import orca_i18n  # pylint: disable=no-name-in-module
 from . import settings
 from . import pronunciation_dictionary_manager
+from . import speechserver
 from .acss import ACSS
 from .ax_object import AXObject
 
@@ -281,10 +282,10 @@ class SettingsManager:
 
         if "voices" in result:
             for voice_type in (
-                settings.DEFAULT_VOICE,
-                settings.UPPERCASE_VOICE,
-                settings.HYPERLINK_VOICE,
-                settings.SYSTEM_VOICE,
+                speechserver.DEFAULT_VOICE,
+                speechserver.UPPERCASE_VOICE,
+                speechserver.HYPERLINK_VOICE,
+                speechserver.SYSTEM_VOICE,
             ):
                 if voice_type not in result["voices"]:
                     result["voices"][voice_type] = ACSS({})

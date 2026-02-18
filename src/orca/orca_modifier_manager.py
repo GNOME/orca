@@ -46,7 +46,9 @@ from . import debug
 from . import gsettings_registry
 from . import keybindings
 from . import input_event_manager
-from . import settings
+
+DESKTOP_MODIFIER_KEYS: list[str] = ["Insert", "KP_Insert"]
+LAPTOP_MODIFIER_KEYS: list[str] = ["Caps_Lock", "Shift_Lock"]
 
 if TYPE_CHECKING:
     from .input_event import KeyboardEvent
@@ -234,9 +236,9 @@ class OrcaModifierManager:
         """Sets the Orca modifier keys based on keyboard layout and refreshes."""
 
         if is_desktop:
-            new_keys = settings.DESKTOP_MODIFIER_KEYS
+            new_keys = DESKTOP_MODIFIER_KEYS
         else:
-            new_keys = settings.LAPTOP_MODIFIER_KEYS
+            new_keys = LAPTOP_MODIFIER_KEYS
 
         gsettings_registry.get_registry().set_runtime_value(
             "keybindings", "orca-modifier-keys", new_keys

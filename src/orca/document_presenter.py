@@ -54,7 +54,6 @@ from . import messages
 from . import preferences_grid_base
 from . import presentation_manager
 from . import script_manager
-from . import settings
 from . import structural_navigator
 from . import table_navigator
 from .ax_component import AXComponent
@@ -75,9 +74,9 @@ if TYPE_CHECKING:
 class FindResultsVerbosity(Enum):
     """Find results verbosity level enumeration."""
 
-    NONE = settings.FIND_SPEAK_NONE
-    IF_LINE_CHANGED = settings.FIND_SPEAK_IF_LINE_CHANGED
-    ALL = settings.FIND_SPEAK_ALL
+    NONE = 0
+    IF_LINE_CHANGED = 1
+    ALL = 2
 
     @property
     def string_name(self) -> str:

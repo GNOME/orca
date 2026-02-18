@@ -27,6 +27,7 @@
 from __future__ import annotations
 
 
+import time
 from enum import Enum
 from typing import Any, TYPE_CHECKING
 
@@ -40,7 +41,6 @@ from . import debug
 from . import gsettings_registry
 from . import guilabels
 from . import preferences_grid_base
-from . import settings
 from . import sound
 
 if TYPE_CHECKING:
@@ -54,9 +54,9 @@ if TYPE_CHECKING:
 class ProgressBarVerbosity(Enum):
     """Progress bar verbosity level enumeration."""
 
-    ALL = settings.PROGRESS_BAR_ALL
-    APPLICATION = settings.PROGRESS_BAR_APPLICATION
-    WINDOW = settings.PROGRESS_BAR_WINDOW
+    ALL = 0
+    APPLICATION = 1
+    WINDOW = 2
 
     @property
     def string_name(self) -> str:
@@ -95,9 +95,9 @@ class SoundProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid
                     guilabels.PROGRESS_BAR_WINDOW,
                 ],
                 values=[
-                    settings.PROGRESS_BAR_ALL,
-                    settings.PROGRESS_BAR_APPLICATION,
-                    settings.PROGRESS_BAR_WINDOW,
+                    ProgressBarVerbosity.ALL.value,
+                    ProgressBarVerbosity.APPLICATION.value,
+                    ProgressBarVerbosity.WINDOW.value,
                 ],
             ),
         ]
@@ -274,6 +274,7 @@ class SoundPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("SoundPresenter", self)
+        self._progress_bar_cache: dict = {}
 
     def create_preferences_grid(
         self, title_change_callback: preferences_grid_base.Callable[[str], None] | None = None
@@ -410,6 +411,42 @@ class SoundPresenter:
             self._SCHEMA, "progress-bar-beep-verbosity", level.name.lower()
         )
         return True
+
+    def should_present_progress_bar_update(
+        self,
+        obj: object,
+        percent: int | None,
+        is_same_app: bool,
+        is_same_window: bool,
+    ) -> bool:
+        """Returns True if the progress bar update should be beeped."""
+
+        if not self.get_beep_progress_bar_updates():
+            return False
+
+        last_time, last_value = self._progress_bar_cache.get(id(obj), (0.0, None))
+        if percent == last_value:
+            return False
+
+        if percent != 100:
+            interval = int(time.time() - last_time)
+            if interval < self.get_progress_bar_beep_interval():
+                return False
+
+        verbosity = self.get_progress_bar_beep_verbosity()
+        if verbosity == ProgressBarVerbosity.ALL.value:
+            present = True
+        elif verbosity == ProgressBarVerbosity.APPLICATION.value:
+            present = is_same_app
+        elif verbosity == ProgressBarVerbosity.WINDOW.value:
+            present = is_same_window
+        else:
+            present = True
+
+        if present:
+            self._progress_bar_cache[id(obj)] = (time.time(), percent)
+
+        return present
 
     def play(self, sounds: list[Icon | Tone] | Icon | Tone, interrupt: bool = True) -> None:
         """Plays the specified sound(s)."""

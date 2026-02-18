@@ -251,12 +251,6 @@ class BrailleGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_accessible_role(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if (
-            args.get("isProgressBarUpdate")
-            and not braille_presenter.get_presenter().get_braille_progress_bar_updates()
-        ):
-            return []
-
         result = []
         role = args.get("role", AXObject.get_role(obj))
         do_not_present = [
@@ -355,19 +349,6 @@ class BrailleGenerator(generator.Generator):
             return [""]
 
         return result
-
-    def _get_progress_bar_update_interval(self) -> int:
-        interval = braille_presenter.get_presenter().get_progress_bar_braille_interval()
-        return int(interval)
-
-    def _get_progress_bar_verbosity(self) -> int:
-        return braille_presenter.get_presenter().get_progress_bar_braille_verbosity()
-
-    def _should_present_progress_bar_update(self, obj: Atspi.Accessible, **args) -> bool:
-        if not braille_presenter.get_presenter().get_braille_progress_bar_updates():
-            return False
-
-        return super()._should_present_progress_bar_update(obj, **args)
 
     ##################################### TEXT ######################################
 
@@ -1399,9 +1380,7 @@ class BrailleGenerator(generator.Generator):
     def _generate_progress_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the progress-bar role."""
 
-        if not args.get("isProgressBarUpdate") or not self._should_present_progress_bar_update(
-            obj, **args
-        ):
+        if not args.get("isProgressBarUpdate"):
             return []
 
         value = self._generate_progress_bar_value(obj, **args)

@@ -59,29 +59,11 @@ from . import settings_manager
 from . import speech
 from . import speechserver
 from .acss import ACSS
-from .speechserver import PunctuationStyle
+from .speechserver import CapitalizationStyle, PunctuationStyle
 
 if TYPE_CHECKING:
     from .scripts import default
     from .speechserver import SpeechServer
-
-
-@gsettings_registry.get_registry().gsettings_enum(
-    "org.gnome.Orca.CapitalizationStyle",
-    values={"none": 0, "spell": 1, "icon": 2},
-)
-class CapitalizationStyle(Enum):
-    """Capitalization style enumeration with string values from settings."""
-
-    NONE = settings.CAPITALIZATION_STYLE_NONE
-    SPELL = settings.CAPITALIZATION_STYLE_SPELL
-    ICON = settings.CAPITALIZATION_STYLE_ICON
-
-    @property
-    def string_name(self) -> str:
-        """Returns the lowercase string name for this enum value."""
-
-        return self.name.lower()
 
 
 # pylint: disable-next=too-many-instance-attributes
@@ -103,10 +85,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._manager = manager
         self._initializing = True
 
-        self._default_voice = manager.get_voice_properties(settings.DEFAULT_VOICE)
-        self._uppercase_voice = manager.get_voice_properties(settings.UPPERCASE_VOICE)
-        self._hyperlink_voice = manager.get_voice_properties(settings.HYPERLINK_VOICE)
-        self._system_voice = manager.get_voice_properties(settings.SYSTEM_VOICE)
+        self._default_voice = manager.get_voice_properties(speechserver.DEFAULT_VOICE)
+        self._uppercase_voice = manager.get_voice_properties(speechserver.UPPERCASE_VOICE)
+        self._hyperlink_voice = manager.get_voice_properties(speechserver.HYPERLINK_VOICE)
+        self._system_voice = manager.get_voice_properties(speechserver.SYSTEM_VOICE)
 
         # All voice family dicts from server
         self._voice_families: list[speechserver.VoiceFamily] = []
@@ -174,13 +156,13 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         capitalization_model = Gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_STRING)
         capitalization_model.append(
-            [guilabels.CAPITALIZATION_STYLE_NONE, settings.CAPITALIZATION_STYLE_NONE]
+            [guilabels.CAPITALIZATION_STYLE_NONE, CapitalizationStyle.NONE.value]
         )
         capitalization_model.append(
-            [guilabels.CAPITALIZATION_STYLE_ICON, settings.CAPITALIZATION_STYLE_ICON]
+            [guilabels.CAPITALIZATION_STYLE_ICON, CapitalizationStyle.ICON.value]
         )
         capitalization_model.append(
-            [guilabels.CAPITALIZATION_STYLE_SPELL, settings.CAPITALIZATION_STYLE_SPELL]
+            [guilabels.CAPITALIZATION_STYLE_SPELL, CapitalizationStyle.SPELL.value]
         )
 
         global_listbox = preferences_grid_base.FocusManagedListBox()
@@ -473,10 +455,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def reload(self) -> None:
         """Reload settings from manager and refresh the UI."""
 
-        self._default_voice = self._manager.get_voice_properties(settings.DEFAULT_VOICE)
-        self._uppercase_voice = self._manager.get_voice_properties(settings.UPPERCASE_VOICE)
-        self._hyperlink_voice = self._manager.get_voice_properties(settings.HYPERLINK_VOICE)
-        self._system_voice = self._manager.get_voice_properties(settings.SYSTEM_VOICE)
+        self._default_voice = self._manager.get_voice_properties(speechserver.DEFAULT_VOICE)
+        self._uppercase_voice = self._manager.get_voice_properties(speechserver.UPPERCASE_VOICE)
+        self._hyperlink_voice = self._manager.get_voice_properties(speechserver.HYPERLINK_VOICE)
+        self._system_voice = self._manager.get_voice_properties(speechserver.SYSTEM_VOICE)
 
         self._voice_families = self._manager.get_voice_families()
         self._families_sorted = False
@@ -489,10 +471,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         result: dict[str, dict | list | int | str | bool] = {
             "voices": {
-                settings.DEFAULT_VOICE: dict(self._default_voice),
-                settings.UPPERCASE_VOICE: dict(self._uppercase_voice),
-                settings.HYPERLINK_VOICE: dict(self._hyperlink_voice),
-                settings.SYSTEM_VOICE: dict(self._system_voice),
+                speechserver.DEFAULT_VOICE: dict(self._default_voice),
+                speechserver.UPPERCASE_VOICE: dict(self._uppercase_voice),
+                speechserver.HYPERLINK_VOICE: dict(self._hyperlink_voice),
+                speechserver.SYSTEM_VOICE: dict(self._system_voice),
             }
         }
 
@@ -899,10 +881,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         """Sync local voice copy to runtime values for immediate preview."""
 
         voice_map = {
-            self.VoiceType.DEFAULT: (self._default_voice, settings.DEFAULT_VOICE),
-            self.VoiceType.UPPERCASE: (self._uppercase_voice, settings.UPPERCASE_VOICE),
-            self.VoiceType.HYPERLINK: (self._hyperlink_voice, settings.HYPERLINK_VOICE),
-            self.VoiceType.SYSTEM: (self._system_voice, settings.SYSTEM_VOICE),
+            self.VoiceType.DEFAULT: (self._default_voice, speechserver.DEFAULT_VOICE),
+            self.VoiceType.UPPERCASE: (self._uppercase_voice, speechserver.UPPERCASE_VOICE),
+            self.VoiceType.HYPERLINK: (self._hyperlink_voice, speechserver.HYPERLINK_VOICE),
+            self.VoiceType.SYSTEM: (self._system_voice, speechserver.SYSTEM_VOICE),
         }
 
         local_voice, settings_key = voice_map[voice_type]
@@ -933,7 +915,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         server = self._manager.get_server()
         if server is not None:
-            if settings_key == settings.DEFAULT_VOICE:
+            if settings_key == speechserver.DEFAULT_VOICE:
                 server.set_default_voice(voice)
             server.clear_cached_voice_properties()
 
@@ -1185,7 +1167,7 @@ class SpeechManager:
     def get_voice_properties(self, voice_type: str = "") -> ACSS:
         """Returns voice properties from dconf for the given voice type."""
 
-        vtype = voice_type or settings.DEFAULT_VOICE
+        vtype = voice_type or speechserver.DEFAULT_VOICE
         lookup = gsettings_registry.get_registry().layered_lookup
         voice: dict[str, Any] = {}
 

@@ -29,6 +29,7 @@ from __future__ import annotations
 
 
 import os
+import time
 from enum import Enum
 from typing import Any, TYPE_CHECKING
 
@@ -62,10 +63,10 @@ if TYPE_CHECKING:
     values={"brief": 0, "verbose": 1},
 )
 class VerbosityLevel(Enum):
-    """Verbosity level enumeration with int values from settings."""
+    """Verbosity level enumeration."""
 
-    BRIEF = settings.VERBOSITY_LEVEL_BRIEF
-    VERBOSE = settings.VERBOSITY_LEVEL_VERBOSE
+    BRIEF = 0
+    VERBOSE = 1
 
     @property
     def string_name(self) -> str:
@@ -79,12 +80,12 @@ class VerbosityLevel(Enum):
     values={"none": 0, "dot7": 64, "dot8": 128, "dots78": 192},
 )
 class BrailleIndicator(Enum):
-    """Braille indicator enumeration with int values from settings."""
+    """Braille indicator enumeration."""
 
-    NONE = settings.BRAILLE_UNDERLINE_NONE
-    DOT7 = settings.BRAILLE_UNDERLINE_7
-    DOT8 = settings.BRAILLE_UNDERLINE_8
-    DOTS78 = settings.BRAILLE_UNDERLINE_BOTH
+    NONE = 0x00
+    DOT7 = 0x40
+    DOT8 = 0x80
+    DOTS78 = 0xC0
 
     @property
     def string_name(self) -> str:
@@ -93,10 +94,16 @@ class BrailleIndicator(Enum):
         return self.name.lower()
 
 
-_PROGRESS_BAR_VERBOSITY_NICKS: dict[str, int] = {"all": 0, "application": 1, "window": 2}
-_PROGRESS_BAR_VERBOSITY_NAMES: dict[int, str] = {
-    v: k for k, v in _PROGRESS_BAR_VERBOSITY_NICKS.items()
-}
+@gsettings_registry.get_registry().gsettings_enum(
+    "org.gnome.Orca.ProgressBarVerbosity",
+    values={"all": 0, "application": 1, "window": 2},
+)
+class ProgressBarVerbosity(Enum):
+    """Progress bar verbosity level enumeration."""
+
+    ALL = 0
+    APPLICATION = 1
+    WINDOW = 2
 
 
 class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
@@ -197,10 +204,10 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                     guilabels.BRAILLE_DOT_7_8,
                 ],
                 values=[
-                    settings.BRAILLE_UNDERLINE_NONE,
-                    settings.BRAILLE_UNDERLINE_7,
-                    settings.BRAILLE_UNDERLINE_8,
-                    settings.BRAILLE_UNDERLINE_BOTH,
+                    BrailleIndicator.NONE.value,
+                    BrailleIndicator.DOT7.value,
+                    BrailleIndicator.DOT8.value,
+                    BrailleIndicator.DOTS78.value,
                 ],
                 getter=presenter._get_link_indicator_as_int,
                 setter=presenter.set_link_indicator_from_int,
@@ -216,10 +223,10 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                     guilabels.BRAILLE_DOT_7_8,
                 ],
                 values=[
-                    settings.BRAILLE_UNDERLINE_NONE,
-                    settings.BRAILLE_UNDERLINE_7,
-                    settings.BRAILLE_UNDERLINE_8,
-                    settings.BRAILLE_UNDERLINE_BOTH,
+                    BrailleIndicator.NONE.value,
+                    BrailleIndicator.DOT7.value,
+                    BrailleIndicator.DOT8.value,
+                    BrailleIndicator.DOTS78.value,
                 ],
                 getter=presenter._get_selector_indicator_as_int,
                 setter=presenter.set_selector_indicator_from_int,
@@ -235,10 +242,10 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                     guilabels.BRAILLE_DOT_7_8,
                 ],
                 values=[
-                    settings.BRAILLE_UNDERLINE_NONE,
-                    settings.BRAILLE_UNDERLINE_7,
-                    settings.BRAILLE_UNDERLINE_8,
-                    settings.BRAILLE_UNDERLINE_BOTH,
+                    BrailleIndicator.NONE.value,
+                    BrailleIndicator.DOT7.value,
+                    BrailleIndicator.DOT8.value,
+                    BrailleIndicator.DOTS78.value,
                 ],
                 getter=presenter._get_text_attributes_indicator_as_int,
                 setter=presenter.set_text_attributes_indicator_from_int,
@@ -341,9 +348,9 @@ class BrailleProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGr
                     guilabels.PROGRESS_BAR_WINDOW,
                 ],
                 values=[
-                    settings.PROGRESS_BAR_ALL,
-                    settings.PROGRESS_BAR_APPLICATION,
-                    settings.PROGRESS_BAR_WINDOW,
+                    ProgressBarVerbosity.ALL.value,
+                    ProgressBarVerbosity.APPLICATION.value,
+                    ProgressBarVerbosity.WINDOW.value,
                 ],
             ),
         ]
@@ -522,6 +529,7 @@ class BraillePresenter:
         self._monitor: braille_monitor.BrailleMonitor | None = None
         self._monitor_enabled_override: bool | None = None
         self._initialized = False
+        self._progress_bar_cache: dict = {}
 
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""
@@ -1106,7 +1114,7 @@ class BraillePresenter:
             genum="org.gnome.Orca.ProgressBarVerbosity",
             default="application",
         )
-        return _PROGRESS_BAR_VERBOSITY_NICKS.get(nick, 1)
+        return ProgressBarVerbosity[nick.upper()].value
 
     @dbus_service.setter
     def set_progress_bar_braille_verbosity(self, value: int) -> bool:
@@ -1114,11 +1122,47 @@ class BraillePresenter:
 
         msg = f"BRAILLE PRESENTER: Setting progress bar braille verbosity to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        nick = _PROGRESS_BAR_VERBOSITY_NAMES.get(value, "application")
+        level = ProgressBarVerbosity(value)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "progress-bar-braille-verbosity", nick
+            self._SCHEMA, "progress-bar-braille-verbosity", level.name.lower()
         )
         return True
+
+    def should_present_progress_bar_update(
+        self,
+        obj: Atspi.Accessible,
+        percent: int | None,
+        is_same_app: bool,
+        is_same_window: bool,
+    ) -> bool:
+        """Returns True if the progress bar update should be brailled."""
+
+        if not self.get_braille_progress_bar_updates():
+            return False
+
+        last_time, last_value = self._progress_bar_cache.get(id(obj), (0.0, None))
+        if percent == last_value:
+            return False
+
+        if percent != 100:
+            interval = int(time.time() - last_time)
+            if interval < self.get_progress_bar_braille_interval():
+                return False
+
+        verbosity = self.get_progress_bar_braille_verbosity()
+        if verbosity == ProgressBarVerbosity.ALL.value:
+            present = True
+        elif verbosity == ProgressBarVerbosity.APPLICATION.value:
+            present = is_same_app
+        elif verbosity == ProgressBarVerbosity.WINDOW.value:
+            present = is_same_window
+        else:
+            present = True
+
+        if present:
+            self._progress_bar_cache[id(obj)] = (time.time(), percent)
+
+        return present
 
     @gsettings_registry.get_registry().gsetting(
         key="contracted-braille",

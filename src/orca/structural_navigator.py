@@ -58,7 +58,6 @@ from . import orca_gui_navlist
 from . import presentation_manager
 from . import say_all_presenter
 from . import script_manager
-from . import settings
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
@@ -458,7 +457,6 @@ class StructuralNavigator:
             return
 
         enabled = mode != NavigationMode.OFF
-        settings.structuralNavigationEnabled = enabled
         gsettings_registry.get_registry().set_runtime_value(
             "structural-navigation", "enabled", enabled
         )

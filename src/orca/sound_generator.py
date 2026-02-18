@@ -226,10 +226,6 @@ class SoundGenerator(generator.Generator):
     def _generate_progress_bar_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns an array of sounds representing the progress bar value."""
 
-        if args.get("isProgressBarUpdate"):
-            if not self._should_present_progress_bar_update(obj, **args):
-                return []
-
         percent = AXValue.get_value_as_percent(obj)
         if percent is None:
             return []
@@ -251,16 +247,6 @@ class SoundGenerator(generator.Generator):
 
         volume = settings.soundVolume * volume_multiplier
         return [Tone(duration, frequency, volume, Tone.SINE_WAVE)]
-
-    def _get_progress_bar_update_interval(self) -> int:
-        interval = sound_presenter.get_presenter().get_progress_bar_beep_interval()
-        return int(interval)
-
-    def _should_present_progress_bar_update(self, obj: Atspi.Accessible, **args) -> bool:
-        if not sound_presenter.get_presenter().get_beep_progress_bar_updates():
-            return False
-
-        return super()._should_present_progress_bar_update(obj, **args)
 
     def _generate_position_in_set(self, _obj: Atspi.Accessible, **_args) -> list[Any]:
         """Returns an array of sounds reflecting the set position of obj."""
