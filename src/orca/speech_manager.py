@@ -2427,6 +2427,9 @@ class SpeechManager:
     def set_speech_is_enabled(self, value: bool) -> bool:
         """Sets whether the speech server is enabled. See also is-muted."""
 
+        if value == self.get_speech_is_enabled():
+            return True
+
         msg = f"SPEECH MANAGER: Setting speech enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 

@@ -466,8 +466,9 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def save_settings(self, profile: str = "", app_name: str = "") -> dict:
         """Persist staged values."""
 
+        assert self._multipage_enable_switch is not None
         result: dict[str, Any] = {}
-        result["enableBraille"] = self._presenter.get_braille_is_enabled()
+        result["enableBraille"] = self._multipage_enable_switch.get_active()
         result.update(self._verbosity_grid.save_settings())
         result.update(self._display_settings_grid.save_settings())
         result.update(self._flash_messages_grid.save_settings())
@@ -897,6 +898,9 @@ class BraillePresenter:
     @dbus_service.setter
     def set_braille_is_enabled(self, value: bool) -> bool:
         """Sets whether braille is enabled."""
+
+        if value == self.get_braille_is_enabled():
+            return True
 
         msg = f"BRAILLE PRESENTER: Setting enable braille to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)

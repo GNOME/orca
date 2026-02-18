@@ -587,12 +587,9 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def save_settings(self, profile: str = "", app_name: str = "") -> dict:
         """Save all settings from child grids."""
 
-        from . import speech_manager  # pylint: disable=import-outside-toplevel
-
-        manager = speech_manager.get_manager()
-
+        assert self._multipage_enable_switch is not None
         result: dict[str, Any] = {}
-        result["enableSpeech"] = manager.get_speech_is_enabled()
+        result["enableSpeech"] = self._multipage_enable_switch.get_active()
         result.update(self._voices_grid.save_settings())
         result.update(self._verbosity_grid.save_settings())
         result.update(self._tables_grid.save_settings())

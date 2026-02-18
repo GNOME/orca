@@ -23,6 +23,7 @@
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-nested-blocks
+# pylint: disable=too-many-statements
 
 """Base class for preference grid UI components."""
 
@@ -376,6 +377,8 @@ class PreferencesGridBase(Gtk.Grid):
         self._multipage_categories: list[tuple[str, str, PreferencesGridBase]] | None = None
         self._multipage_category_map: dict[str, tuple[str, PreferencesGridBase]] | None = None
         self._multipage_enable_listbox: FocusManagedListBox | None = None
+        self._multipage_enable_switch: Gtk.Switch | None = None
+        self._multipage_enable_initial: bool = False
         self._multipage_categories_listbox: Gtk.ListBox | None = None
         self._multipage_last_activated_row: Gtk.ListBoxRow | None = None
 
@@ -955,6 +958,8 @@ class PreferencesGridBase(Gtk.Grid):
                 include_top_separator=False,
             )
             enable_listbox.add_row_with_widget(enable_row, enable_switch)
+            self._multipage_enable_switch = enable_switch
+            self._multipage_enable_initial = enable_getter()
         self._multipage_enable_listbox = enable_listbox
 
         stack = Gtk.Stack()
@@ -1024,22 +1029,13 @@ class PreferencesGridBase(Gtk.Grid):
             return
 
         enabled = switch.get_active()
-
-        def call_setter():
-            setter(enabled)
-            if self._multipage_stack:
-                self._multipage_stack.set_sensitive(enabled)
-            return False
+        if self._multipage_stack:
+            self._multipage_stack.set_sensitive(enabled)
 
         if enabled:
-            # The main use case for the delay is presentation. For instance, if the user toggles
-            # speech on, we don't want to present the custom message ("speech enabled") followed
-            # by "on" (switch state).
-            GLib.timeout_add(50, call_setter)
-        else:
-            call_setter()
+            setter(True)
 
-        self._has_unsaved_changes = True
+        self._has_unsaved_changes = enabled != self._multipage_enable_initial
 
     def _on_multipage_categories_key_press(self, _widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
         """Handle key press in multi-page categories - Right arrow activates focused row."""
