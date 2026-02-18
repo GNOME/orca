@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2026-02-13 13:48+0000\n"
-"PO-Revision-Date: 2026-02-14 15:49+0800\n"
+"POT-Creation-Date: 2026-02-17 14:40+0000\n"
+"PO-Revision-Date: 2026-02-18 08:10+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -4841,7 +4841,7 @@ msgstr "行尾符号(_E)"
 msgid "Display Settings"
 msgstr "显示设置"
 
-#. Translators: This is the label for a setting in the prefernces dialog which
+#. Translators: This is the label for a setting in the preferences dialog which
 #. turns braille support on or off.
 #: src/orca/guilabels.py:1225
 msgid "Braille support"
@@ -5629,11 +5629,11 @@ msgstr "字体大小"
 #: src/orca/guilabels.py:1820
 msgid ""
 "The on-screen speech display is a window that shows what the screen reader "
-"is speaking. The default keybinding to show or hide it is Orca+Shift+S. This "
+"is speaking. The default keybinding to show or hide it is Orca+Shift+d. This "
 "can be changed in Commands."
 msgstr ""
 "屏上语音显示是一个显示屏幕阅读器朗读内容的窗口。显示或隐藏该窗口的默认按键绑"
-"定是 Orca+Shift+S。此绑定可在命令中修改。"
+"定是 Orca+Shift+d。此绑定可在命令中修改。"
 
 #: src/orca/guilabels.py:1828
 msgid ""
