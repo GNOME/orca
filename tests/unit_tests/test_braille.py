@@ -44,10 +44,6 @@ class TestBrailleLineRanges:
 
         settings_mock = test_context.Mock()
         settings_mock.BRAILLE_UNDERLINE_NONE = 0
-        settings_mock.enableContractedBraille = False
-        settings_mock.enableBrailleEOL = True
-        settings_mock.enableBraille = True
-        settings_mock.enableBrailleWordWrap = False
 
         ax_event_synthesizer_mock = test_context.Mock()
         ax_event_synthesizer_mock.AXEventSynthesizer = test_context.Mock()
@@ -277,14 +273,14 @@ class TestBrailleLineRanges:
         self._setup_dependencies(test_context)
         from orca import braille
 
-        braille.settings.enableContractedBraille = False
+        braille._STATE.enable_contracted_braille = False
         braille.refresh = test_context.Mock()
         event = test_context.Mock()
         event.type = "keyboard"
 
         braille.toggle_contracted_braille(event)
 
-        assert braille.settings.enableContractedBraille is True
+        assert braille._STATE.enable_contracted_braille is True
 
     def test_set_contracted_braille_uses_braille_flags(self, test_context: OrcaTestContext) -> None:
         """Braille events should use the BrlAPI toggle flag."""
@@ -301,6 +297,6 @@ class TestBrailleLineRanges:
 
         try:
             braille.toggle_contracted_braille(event)
-            assert braille.settings.enableContractedBraille is True
+            assert braille._STATE.enable_contracted_braille is True
         finally:
             braille.BRLAPI_KEY_FLG_TOGGLE_ON = original_toggle

@@ -28,18 +28,6 @@ presentLockingKeys: bool | None = None
 capitalizationStyle: str = "none"
 speakNumbersAsDigits: bool = False
 
-# Managed by braille_presenter.py
-enableBraille: bool = True
-enableBrailleWordWrap: bool = False
-enableContractedBraille: bool = False
-brailleContractionTable: str = ""
-enableComputerBrailleAtCursor: bool = True
-enableBrailleEOL: bool = True
-brailleRolenameStyle: int = 1
-brailleSelectorIndicator: int = 0xC0
-brailleLinkIndicator: int = 0xC0
-textAttributesBrailleIndicator: int = 0x00
-
 # Managed by text_attribute_manager.py
 textAttributesToSpeak: list[str] = []
 textAttributesToBraille: list[str] = []

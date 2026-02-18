@@ -43,7 +43,6 @@ from gi.repository import GLib
 
 from . import debug
 from . import script_manager
-from . import settings
 from . import text_attribute_manager
 
 from .ax_event_synthesizer import AXEventSynthesizer
@@ -303,6 +302,15 @@ class _BrailleState:
     default_contraction_table: str | None = None
     pending_key_ranges: list[int] = field(default_factory=list)
     monitor_callback: Callable[[int, str, str | None, int], None] | None = None
+    enable_braille: bool = True
+    enable_contracted_braille: bool = False
+    contraction_table: str = ""
+    enable_computer_braille_at_cursor: bool = True
+    enable_eol: bool = True
+    enable_word_wrap: bool = False
+    selector_indicator: int = 0xC0  # dots 7 and 8
+    link_indicator: int = 0xC0  # dots 7 and 8
+    text_attributes_indicator: int = 0x00  # none
 
 
 _STATE = _BrailleState(brlapi_available=_BRLAPI_AVAILABLE)
@@ -312,6 +320,60 @@ def set_monitor_callback(callback: Callable[[int, str, str | None, int], None] |
     """Sets the callback for updating the braille monitor display."""
 
     _STATE.monitor_callback = callback
+
+
+def set_enable_braille(value: bool) -> None:
+    """Sets whether braille output is enabled."""
+
+    _STATE.enable_braille = value
+
+
+def set_enable_contracted_braille(value: bool) -> None:
+    """Sets whether contracted braille is enabled."""
+
+    _STATE.enable_contracted_braille = value
+
+
+def set_contraction_table(value: str) -> None:
+    """Sets the contraction table path."""
+
+    _STATE.contraction_table = value
+
+
+def set_enable_computer_braille_at_cursor(value: bool) -> None:
+    """Sets whether computer braille at cursor is enabled."""
+
+    _STATE.enable_computer_braille_at_cursor = value
+
+
+def set_enable_eol(value: bool) -> None:
+    """Sets whether the end-of-line indicator is enabled."""
+
+    _STATE.enable_eol = value
+
+
+def set_enable_word_wrap(value: bool) -> None:
+    """Sets whether braille word wrap is enabled."""
+
+    _STATE.enable_word_wrap = value
+
+
+def set_selector_indicator(value: int) -> None:
+    """Sets the braille selector indicator value."""
+
+    _STATE.selector_indicator = value
+
+
+def set_link_indicator(value: int) -> None:
+    """Sets the braille link indicator value."""
+
+    _STATE.link_indicator = value
+
+
+def set_text_attributes_indicator(value: int) -> None:
+    """Sets the braille text attributes indicator value."""
+
+    _STATE.text_attributes_indicator = value
 
 
 def _log_brlapi_unavailable(resource: str, error: BaseException | None = None) -> None:
@@ -606,7 +668,7 @@ def _brlapi_connect_timeout() -> bool:
 def _schedule_brlapi_retry() -> None:
     """Schedule a reconnect attempt with backoff."""
 
-    if _STATE.brlapi_retry_source_id or not settings.enableBraille:
+    if _STATE.brlapi_retry_source_id or not _STATE.enable_braille:
         return
     delay_ms = _STATE.brlapi_retry_delay_ms
     msg = f"BRAILLE: Scheduling BrlAPI retry in {delay_ms} ms."
@@ -618,7 +680,7 @@ def _retry_brlapi_connection() -> bool:
     """Retry connecting to BrlAPI if conditions permit."""
 
     _STATE.brlapi_retry_source_id = 0
-    if not settings.enableBraille or _STATE.brlapi_running or _STATE.brlapi_connecting:
+    if not _STATE.enable_braille or _STATE.brlapi_running or _STATE.brlapi_connecting:
         return False
     _STATE.brlapi_retry_delay_ms = min(_STATE.brlapi_retry_delay_ms * 2, _BRLAPI_RETRY_MAX_DELAY_MS)
     _start_brlapi_connection()
@@ -628,7 +690,7 @@ def _retry_brlapi_connection() -> bool:
 def _start_brlapi_connection() -> None:
     """Kick off asynchronous BrlAPI connection setup."""
 
-    if _STATE.brlapi_running or _STATE.brlapi_connecting or not settings.enableBraille:
+    if _STATE.brlapi_running or _STATE.brlapi_connecting or not _STATE.enable_braille:
         return
     _cancel_brlapi_retry()
     _schedule_brlapi_connect_timeout()
@@ -833,16 +895,14 @@ class Region:
             string = ""
 
         # If LOUIS is None, then we don't go into contracted mode.
-        self._contracted = settings.enableContractedBraille and LOUIS is not None
+        self._contracted = _STATE.enable_contracted_braille and LOUIS is not None
         self._expand_on_cursor = expand_on_cursor
 
         # The uncontracted string for the line.
         self._raw_line = string.strip("\n")
 
         if self._contracted:
-            self._contraction_table = (
-                settings.brailleContractionTable or _STATE.default_contraction_table
-            )
+            self._contraction_table = _STATE.contraction_table or _STATE.default_contraction_table
             if string.strip():
                 tokens = ["BRAILLE: Contracting '", string, "' with table", self._contraction_table]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -852,7 +912,7 @@ class Region:
             )
         else:
             if string.strip():
-                if not settings.enableContractedBraille:
+                if not _STATE.enable_contracted_braille:
                     msg = (
                         f"BRAILLE: Not contracting '{string}' "
                         f"because contracted braille is not enabled."
@@ -907,7 +967,7 @@ class Region:
         if not expand_on_cursor or cursor_on_space:
             mode = 0
         else:
-            if settings.enableComputerBrailleAtCursor:
+            if _STATE.enable_computer_braille_at_cursor:
                 mode = LOUIS.compbrlAtCursor
             else:
                 mode = 0
@@ -950,9 +1010,7 @@ class Region:
         """Apply contracted or uncontracted mode to this region."""
 
         if contracted:
-            self._contraction_table = (
-                settings.brailleContractionTable or _STATE.default_contraction_table
-            )
+            self._contraction_table = _STATE.contraction_table or _STATE.default_contraction_table
             self._contract_region()
         else:
             self._expand_region()
@@ -1044,7 +1102,7 @@ class Link(Component):
     def get_attribute_mask(self, _indicate_links: bool = True) -> str:
         """Return an attrOr mask that marks link cells."""
 
-        return chr(settings.brailleLinkIndicator) * len(self.string)
+        return chr(_STATE.link_indicator) * len(self.string)
 
 
 class Text(Region):
@@ -1107,9 +1165,9 @@ class Text(Region):
         cursor_offset += len(self._label)
         super().__init__(string, cursor_offset, True)
 
-        if not self._contracted and settings.enableBrailleEOL:
+        if not self._contracted and _STATE.enable_eol:
             self.string += self._eol
-        elif not settings.enableBrailleEOL:
+        elif not _STATE.enable_eol:
             # Ensure there is a place to click on at the end of a line so the user can route the
             # caret there.
             self.string += " "
@@ -1189,9 +1247,9 @@ class Text(Region):
         line_end_offset = self.line_offset + string_length
         region_mask = [INDICATOR_NONE] * string_length
 
-        attr_indicator = settings.textAttributesBrailleIndicator
-        selection_indicator = settings.brailleSelectorIndicator
-        link_indicator = settings.brailleLinkIndicator
+        attr_indicator = _STATE.text_attributes_indicator
+        selection_indicator = _STATE.selector_indicator
+        link_indicator = _STATE.link_indicator
 
         if indicate_links and link_indicator != INDICATOR_NONE:
             links = AXHypertext.get_all_links(self.accessible)
@@ -1721,7 +1779,7 @@ def disable_braille() -> None:
     tokens = ["BRAILLE: Disabling braille. BrlAPI running:", _STATE.brlapi_running]
     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-    if not settings.enableBraille:
+    if not _STATE.enable_braille:
         _cancel_brlapi_retry()
         if _STATE.brlapi_connecting:
             _STATE.brlapi_connect_token += 1
@@ -1733,7 +1791,7 @@ def disable_braille() -> None:
         msg = "BRAILLE: BrlApi running and not idle."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        if not _idle_braille() and not settings.enableBraille:
+        if not _idle_braille() and not _STATE.enable_braille:
             # BrlAPI before 0.8 and we really want to shut down
             msg = "BRAILLE: could not go idle, completely shut down"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1746,7 +1804,7 @@ def check_braille_setting() -> None:
     msg = "BRAILLE: Checking braille setting."
     debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    if not settings.enableBraille:
+    if not _STATE.enable_braille:
         disable_braille()
 
 
@@ -1944,10 +2002,10 @@ def _paint_display(line_info: _LineInfo, start_position: int, end_position: int)
 
     submask += "\x00" * (len(substring) - len(submask))
 
-    if settings.enableBraille:
+    if _STATE.enable_braille:
         _enable_braille()
 
-    if settings.enableBraille and _STATE.brlapi_running and _STATE.brlapi_ready:
+    if _STATE.enable_braille and _STATE.brlapi_running and _STATE.brlapi_ready:
         region_size = len(substring)
         cursor_cell = _STATE.cursor_cell
         has_attr_mask = bool(line_info.attribute_mask)
@@ -2149,7 +2207,7 @@ def _adjust_for_word_wrap(target_cursor_cell: int, ranges: Sequence[list[int]]) 
     )
     debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    if not _STATE.lines or not settings.enableBrailleWordWrap:
+    if not _STATE.lines or not _STATE.enable_word_wrap:
         return start_position, end_position
 
     ranges = list(filter(lambda x: x[0] <= start_position + target_cursor_cell < x[1], ranges))
@@ -2229,7 +2287,7 @@ def return_to_region_with_focus(_input_event: Any | None = None) -> bool:
 def _next_contracted_braille_setting(event: InputEvent | None) -> bool:
     """Derive the contracted braille setting from event flags or toggle."""
 
-    current = settings.enableContractedBraille
+    current = _STATE.enable_contracted_braille
     if event is None or event.type != "braille":
         msg = (
             "BRAILLE: Toggling contracted braille from non-braille event. "
@@ -2261,9 +2319,9 @@ def _next_contracted_braille_setting(event: InputEvent | None) -> bool:
 def toggle_contracted_braille(event: InputEvent | None) -> None:
     """Toggle contracted braille based on the incoming event."""
 
-    settings.enableContractedBraille = _next_contracted_braille_setting(event)
+    _STATE.enable_contracted_braille = _next_contracted_braille_setting(event)
     for line in _STATE.lines:
-        line.set_contracted_braille(settings.enableContractedBraille)
+        line.set_contracted_braille(_STATE.enable_contracted_braille)
     refresh()
 
 
@@ -2389,7 +2447,7 @@ def setup_key_ranges(keys: Iterable[int]) -> None:
 def set_brlapi_priority(level: int = BRLAPI_PRIORITY_DEFAULT) -> None:
     """Set the current BrlAPI priority level."""
 
-    if not _STATE.brlapi_available or not _STATE.brlapi_running or not settings.enableBraille:
+    if not _STATE.brlapi_available or not _STATE.brlapi_running or not _STATE.enable_braille:
         return
 
     if _STATE.idle:
@@ -2430,7 +2488,7 @@ def set_brlapi_priority(level: int = BRLAPI_PRIORITY_DEFAULT) -> None:
 def init(callback: Callable[[Any], bool] | None = None) -> bool:
     """Initialize braille and start an asynchronous BrlAPI connection."""
 
-    if not settings.enableBraille:
+    if not _STATE.enable_braille:
         return False
 
     tokens = ["BRAILLE: Initializing. Callback:", callback]

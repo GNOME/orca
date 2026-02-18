@@ -45,7 +45,6 @@ from . import input_event
 from . import input_event_manager
 from . import messages
 from . import preferences_grid_base
-from . import settings
 from . import gsettings_registry
 from .orca_platform import tablesdir  # pylint: disable=import-error
 
@@ -143,7 +142,9 @@ class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
         """Save settings, adding integer value for rolename style."""
 
         result = super().save_settings(profile, app_name)
-        result["brailleRolenameStyle"] = settings.brailleRolenameStyle
+        result["brailleRolenameStyle"] = VerbosityLevel[
+            self._presenter.get_rolename_style().upper()
+        ].value
         return result
 
 
@@ -905,6 +906,7 @@ class BraillePresenter:
         msg = f"BRAILLE PRESENTER: Setting enable braille to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "enabled", value)
+        braille.set_enable_braille(value)
 
         if value:
             braille.init(input_event_manager.get_manager().process_braille_event)
@@ -1191,6 +1193,7 @@ class BraillePresenter:
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, "contracted-braille", value
         )
+        braille.set_enable_contracted_braille(value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1216,6 +1219,7 @@ class BraillePresenter:
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, "computer-braille-at-cursor", value
         )
+        braille.set_enable_computer_braille_at_cursor(value)
         return True
 
     def get_contraction_table_path(self) -> str:
@@ -1304,6 +1308,7 @@ class BraillePresenter:
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, "contraction-table", file_path
         )
+        braille.set_contraction_table(file_path)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1329,6 +1334,7 @@ class BraillePresenter:
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, "end-of-line-indicator", value
         )
+        braille.set_enable_eol(value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1352,6 +1358,7 @@ class BraillePresenter:
         msg = f"BRAILLE PRESENTER: Setting enable word wrap to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "word-wrap", value)
+        braille.set_enable_word_wrap(value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1418,6 +1425,7 @@ class BraillePresenter:
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, "selector-indicator", indicator.string_name
         )
+        braille.set_selector_indicator(value)
         return True
 
     def set_link_indicator_from_int(self, value: int) -> bool:
@@ -1429,6 +1437,7 @@ class BraillePresenter:
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, "link-indicator", indicator.string_name
         )
+        braille.set_link_indicator(value)
         return True
 
     def set_text_attributes_indicator_from_int(self, value: int) -> bool:
@@ -1440,6 +1449,7 @@ class BraillePresenter:
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, "text-attributes-indicator", indicator.string_name
         )
+        braille.set_text_attributes_indicator(value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1543,6 +1553,7 @@ class BraillePresenter:
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, "selector-indicator", indicator.string_name
         )
+        braille.set_selector_indicator(indicator.value)
         return True
 
     def _get_link_indicator_as_int(self) -> int:
@@ -1596,6 +1607,7 @@ class BraillePresenter:
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, "link-indicator", indicator.string_name
         )
+        braille.set_link_indicator(indicator.value)
         return True
 
     def _get_text_attributes_indicator_as_int(self) -> int:
@@ -1649,6 +1661,7 @@ class BraillePresenter:
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, "text-attributes-indicator", indicator.string_name
         )
+        braille.set_text_attributes_indicator(indicator.value)
         return True
 
     def kill_flash(self, restore_saved: bool = True) -> None:
