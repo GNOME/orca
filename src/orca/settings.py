@@ -43,7 +43,3 @@ soundVolume: float = 0.5
 
 # Keyboard
 doubleClickTimeout: float = 0.5
-
-# N.B. The following are experimental and may change or go away at any time.
-enableSadPidginHack: bool = False
-ignoreStatusBarProgressBars: bool = True

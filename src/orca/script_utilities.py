@@ -41,7 +41,6 @@ from . import input_event_manager
 from . import messages
 from . import object_properties
 from . import presentation_manager
-from . import settings
 from . import sound_presenter
 from . import speech_presenter
 from . import spellcheck_presenter
@@ -243,9 +242,8 @@ class Utilities:
         if AXComponent.has_no_size(obj):
             return False, "Has no size"
 
-        if settings.ignoreStatusBarProgressBars:
-            if AXObject.find_ancestor(obj, AXUtilities.is_status_bar):
-                return False, "Is status bar descendant"
+        if AXObject.find_ancestor(obj, AXUtilities.is_status_bar):
+            return False, "Is status bar descendant"
 
         return True, "Is valid progress bar update"
 

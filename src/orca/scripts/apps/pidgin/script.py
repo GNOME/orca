@@ -30,7 +30,6 @@ from orca import chat_presenter
 from orca import debug
 from orca import messages
 from orca import presentation_manager
-from orca import settings
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.scripts.toolkits import gtk
@@ -92,6 +91,18 @@ class Script(gtk.Script):
         presentation_manager.get_manager().speak_message(line, voice=voice)
         return True
 
+    def on_expanded_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:state-changed:expanded accessibility events."""
+
+        # Overridden here because the event.source is in a hidden column.
+        obj = event.source
+        if self.chat.is_in_buddy_list(obj):
+            obj = AXObject.get_next_sibling(obj)
+            self.present_object(obj, alreadyFocused=True)
+            return True
+
+        return super().on_expanded_changed(event)
+
     def on_name_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:property-change:accessible-name events."""
 
@@ -123,35 +134,3 @@ class Script(gtk.Script):
             return True
 
         return super().on_value_changed(event)
-
-    def on_window_activated(self, event: Atspi.Event) -> bool:
-        """Callback for window:activate accessibility events."""
-
-        if not settings.enableSadPidginHack:
-            msg = "PIDGIN: Hack for missing events disabled"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return super().on_window_activated(event)
-
-        msg = "PIDGIN: Starting hack for missing events"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        # Hack to "tickle" the accessible hierarchy. Otherwise, the
-        # events we need to present text added to the chatroom are
-        # missing.
-        AXUtilities.find_all_page_tabs(event.source)
-
-        msg = "PIDGIN: Hack to work around missing events complete"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return super().on_window_activated(event)
-
-    def on_expanded_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:state-changed:expanded accessibility events."""
-
-        # Overridden here because the event.source is in a hidden column.
-        obj = event.source
-        if self.chat.is_in_buddy_list(obj):
-            obj = AXObject.get_next_sibling(obj)
-            self.present_object(obj, alreadyFocused=True)
-            return True
-
-        return super().on_expanded_changed(event)
