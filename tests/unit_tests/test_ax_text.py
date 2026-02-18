@@ -100,10 +100,6 @@ class TestAXTextAttribute:
             side_effect=lambda count: f"{count} pixel{'s' if count != 1.0 else ''}"
         )
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.speakTextAttributes = True
-        settings_mock.useColorNames = True
-
         text_attribute_names_mock = essential_modules["orca.text_attribute_names"]
         text_attribute_names_mock.attribute_names = {
             "bg-color": "Background Color",
@@ -390,10 +386,6 @@ class TestAXText:
         messages_mock.pixel_count = test_context.Mock(
             side_effect=lambda count: f"{count} pixel{'s' if count != 1.0 else ''}"
         )
-
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.speakTextAttributes = True
-        settings_mock.useColorNames = True
 
         text_attribute_names_mock = essential_modules["orca.text_attribute_names"]
         text_attribute_names_mock.attribute_names = {

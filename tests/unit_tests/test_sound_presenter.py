@@ -55,11 +55,6 @@ class TestSoundPresenter:
         dbus_service_mock.getter = lambda func: func
         dbus_service_mock.setter = lambda func: func
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.PROGRESS_BAR_ALL = 0
-        settings_mock.PROGRESS_BAR_APPLICATION = 1
-        settings_mock.PROGRESS_BAR_WINDOW = 2
-
         essential_modules["controller"] = controller_mock
 
         from orca import gsettings_registry

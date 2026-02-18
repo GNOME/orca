@@ -89,17 +89,6 @@ class TestSpeechManager:
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.speechServerInfo = None
-        settings_mock.speechServerFactory = "spiel"
-        settings_mock.voices = {}
-        settings_mock.DEFAULT_VOICE = "default"
-
-        # Set up constants for enum testing
-        settings_mock.CAPITALIZATION_STYLE_NONE = "none"
-        settings_mock.CAPITALIZATION_STYLE_SPELL = "spell"
-        settings_mock.CAPITALIZATION_STYLE_ICON = "icon"
-
         settings_manager_mock = essential_modules["orca.settings_manager"]
         settings_manager_instance = test_context.Mock()
         settings_manager_instance._prefs_dir = "/tmp/orca-test"
@@ -1216,21 +1205,6 @@ class TestVoicesPreferencesGridUI:  # pylint: disable=too-few-public-methods
             "orca.presentation_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
-
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.speechServerInfo = None
-        settings_mock.speechServerFactory = "spiel"
-        settings_mock.voices = {}
-        settings_mock.DEFAULT_VOICE = "default"
-        settings_mock.UPPERCASE_VOICE = "uppercase"
-        settings_mock.HYPERLINK_VOICE = "hyperlink"
-        settings_mock.SYSTEM_VOICE = "system"
-
-        settings_mock.CAPITALIZATION_STYLE_NONE = "none"
-        settings_mock.CAPITALIZATION_STYLE_SPELL = "spell"
-        settings_mock.CAPITALIZATION_STYLE_ICON = "icon"
-
-        settings_mock.capitalizationStyle = "none"
 
         speechserver_mock = essential_modules["orca.speechserver"]
         speechserver_mock.PunctuationStyle = PunctuationStyle

@@ -145,13 +145,6 @@ class TestCaretNavigator:
         cmdnames.CONTAINER_START = "container_start"
         cmdnames.CONTAINER_END = "container_end"
 
-        # Set up settings mock
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.structuralNavigationEnabled = True
-        settings_mock.structNavTriggersFocusMode = True
-        settings_mock.wrappedStructuralNavigation = True
-        settings_mock.largeObjectTextLength = 75
-
         essential_modules["orca.orca_i18n"]._ = lambda x: x
         essential_modules["orca.debug"].print_message = test_context.Mock()
         essential_modules["orca.debug"].LEVEL_INFO = 800
@@ -553,8 +546,7 @@ class TestCaretNavigator:
     def test_get_is_enabled(self, test_context: OrcaTestContext) -> None:
         """Test get_is_enabled returns setting value."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].caretNavigationEnabled = True
+        self._setup_dependencies(test_context)
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = CaretNavigator()
@@ -565,7 +557,6 @@ class TestCaretNavigator:
         """Test set_is_enabled still calls set_group_enabled even if value unchanged."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].caretNavigationEnabled = True
         mock_cmd_mgr = test_context.Mock()
         essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
@@ -579,7 +570,9 @@ class TestCaretNavigator:
         """Test set_is_enabled updates setting and calls CommandManager."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].caretNavigationEnabled = False
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_runtime_value("caret-navigation", "enabled", False)
         mock_script = test_context.Mock()
         essential_modules[
             "orca.script_manager"
@@ -600,7 +593,9 @@ class TestCaretNavigator:
         """Test set_is_enabled updates state even with no active script."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].caretNavigationEnabled = False
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_runtime_value("caret-navigation", "enabled", False)
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = None
@@ -617,8 +612,7 @@ class TestCaretNavigator:
     def test_get_triggers_focus_mode(self, test_context: OrcaTestContext) -> None:
         """Test get_triggers_focus_mode returns setting value."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].caretNavTriggersFocusMode = False
+        self._setup_dependencies(test_context)
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = CaretNavigator()
@@ -628,8 +622,12 @@ class TestCaretNavigator:
     def test_set_triggers_focus_mode(self, test_context: OrcaTestContext) -> None:
         """Test set_triggers_focus_mode updates setting."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].caretNavTriggersFocusMode = True
+        self._setup_dependencies(test_context)
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_runtime_value(
+            "caret-navigation", "triggers-focus-mode", True
+        )
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = CaretNavigator()
@@ -640,8 +638,12 @@ class TestCaretNavigator:
     def test_set_triggers_focus_mode_no_change(self, test_context: OrcaTestContext) -> None:
         """Test set_triggers_focus_mode returns early if unchanged."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].caretNavTriggersFocusMode = True
+        self._setup_dependencies(test_context)
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_runtime_value(
+            "caret-navigation", "triggers-focus-mode", True
+        )
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = CaretNavigator()
@@ -677,7 +679,9 @@ class TestCaretNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
-        essential_modules["orca.settings"].caretNavigationEnabled = False
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_runtime_value("caret-navigation", "enabled", False)
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = mock_script
@@ -720,7 +724,6 @@ class TestCaretNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
-        essential_modules["orca.settings"].caretNavigationEnabled = True
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = mock_script
@@ -738,8 +741,7 @@ class TestCaretNavigator:
     def test_last_command_prevents_focus_mode_true(self, test_context: OrcaTestContext) -> None:
         """Test last_command_prevents_focus_mode returns True."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].caretNavTriggersFocusMode = False
+        self._setup_dependencies(test_context)
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
         navigator = CaretNavigator()

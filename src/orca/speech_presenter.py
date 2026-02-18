@@ -58,7 +58,6 @@ from . import phonnames
 from . import preferences_grid_base
 from . import presentation_manager
 from . import pronunciation_dictionary_manager
-from . import settings
 from . import speech
 from . import speech_monitor
 from . import speechserver
@@ -1749,7 +1748,10 @@ class SpeechPresenter:
                 word = " ".join(list(word))
             return word
 
-        if not (settings.speakNumbersAsDigits or AXUtilities.is_text_input_telephone(obj)):
+        speak_digits = gsettings_registry.get_registry().layered_lookup(
+            "speech", "speak-numbers-as-digits", "b", default=False
+        )
+        if not (speak_digits or AXUtilities.is_text_input_telephone(obj)):
             return text
 
         return " ".join(map(_convert, text.split()))

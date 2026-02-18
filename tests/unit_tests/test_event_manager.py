@@ -136,10 +136,6 @@ class TestEventManager:
         script_mgr_instance.reclaim_scripts = test_context.Mock()
         script_manager_mock.get_manager = test_context.Mock(return_value=script_mgr_instance)
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.progressBarVerbosity = 1
-        settings_mock.PROGRESS_BAR_ALL = 2
-
         ax_utils_debugging_mock = essential_modules["orca.ax_utilities_debugging"]
         ax_utils_debugging_mock.object_event_details_as_string = test_context.Mock(
             return_value="mock details"

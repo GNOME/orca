@@ -54,7 +54,6 @@ from . import keybindings
 from . import messages
 from . import preferences_grid_base
 from . import presentation_manager
-from . import settings
 from . import speech
 from . import speechserver
 from .acss import ACSS
@@ -487,7 +486,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         result["verbalizePunctuationStyle"] = PunctuationStyle[
             self._manager.get_punctuation_level().upper()
         ].value
-        result["capitalizationStyle"] = settings.capitalizationStyle
+        result["capitalizationStyle"] = self._manager.get_capitalization_style()
 
         result["speakNumbersAsDigits"] = self._manager.get_speak_numbers_as_digits()
         result["useColorNames"] = self._manager.get_use_color_names()
@@ -517,7 +516,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         model = self._capitalization_combo.get_model()
         if model:
             for i, row in enumerate(model):
-                if row[1] == settings.capitalizationStyle:
+                if row[1] == self._manager.get_capitalization_style():
                     self._capitalization_combo.set_active(i)
                     break
 
@@ -999,7 +998,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         tree_iter = model.get_iter(active)
         style = model.get_value(tree_iter, 1)
 
-        settings.capitalizationStyle = style
         gsettings_registry.get_registry().set_runtime_value(
             "speech", "capitalization-style", CapitalizationStyle(style).string_name
         )

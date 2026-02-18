@@ -87,11 +87,6 @@ class TestDocumentPresenter:
         guilabels.NATIVE_NAVIGATION_INFO = "Native navigation info"
         guilabels.AUTOMATIC_FOCUS_MODE_INFO = "Auto focus mode info"
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.FIND_SPEAK_NONE = 0
-        settings_mock.FIND_SPEAK_IF_LINE_CHANGED = 1
-        settings_mock.FIND_SPEAK_ALL = 2
-
         from orca import gsettings_registry
 
         registry = gsettings_registry.get_registry()

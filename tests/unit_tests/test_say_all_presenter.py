@@ -149,13 +149,6 @@ class TestSayAllPresenter:
         cmdnames.CONTAINER_START = "container_start"
         cmdnames.CONTAINER_END = "container_end"
 
-        # Set up settings mock for structural_navigator
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.structuralNavigationEnabled = True
-        settings_mock.structNavTriggersFocusMode = True
-        settings_mock.wrappedStructuralNavigation = True
-        settings_mock.largeObjectTextLength = 75
-
         essential_modules["orca.orca_i18n"]._ = lambda x: x
         essential_modules["orca.debug"].print_message = test_context.Mock()
         essential_modules["orca.debug"].LEVEL_INFO = 800

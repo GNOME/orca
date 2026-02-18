@@ -94,7 +94,6 @@ class TestFocusManager:
             "orca.debug",
             "orca.messages",
             "orca.input_event",
-            "orca.settings",
             "orca.keybindings",
             "orca.cmdnames",
             "orca.ax_object",

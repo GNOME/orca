@@ -44,7 +44,6 @@ from . import input_event
 from . import messages
 from . import preferences_grid_base
 from . import presentation_manager
-from . import settings
 from . import speech_presenter
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
@@ -205,6 +204,7 @@ class TypingEchoPresenter:
     def __init__(self) -> None:
         self._delayed_terminal_press: input_event.KeyboardEvent | None = None
         self._initialized: bool = False
+        self._present_locking_keys: bool | None = None
         msg = "TYPING ECHO PRESENTER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
@@ -708,9 +708,8 @@ class TypingEchoPresenter:
 
         # TODO - JD: It turns out there's no UI for this setting, so it defaults to None.
 
-        result = settings.presentLockingKeys
-        if result is not None:
-            return result
+        if self._present_locking_keys is not None:
+            return self._present_locking_keys
 
         return not speech_presenter.get_presenter().get_only_speak_displayed_text()
 
@@ -720,7 +719,7 @@ class TypingEchoPresenter:
 
         msg = f"TYPING ECHO PRESENTER: Setting present locking keys to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        settings.presentLockingKeys = value
+        self._present_locking_keys = value
         return True
 
     def echo_previous_sentence(self, script: default.Script, obj: Atspi.Accessible) -> bool:

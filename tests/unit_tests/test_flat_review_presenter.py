@@ -177,11 +177,6 @@ class TestFlatReviewPresenter:
             return_value=settings_manager_instance
         )
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.VERBOSITY_LEVEL_BRIEF = 0
-        settings_mock.speechVerbosityLevel = 1
-        settings_mock.flatReviewIsRestricted = False
-
         keybindings_mock = essential_modules["orca.keybindings"]
         bindings_instance = test_context.Mock()
         bindings_instance.add = test_context.Mock()
@@ -412,11 +407,11 @@ class TestFlatReviewPresenter:
             assert cmd_manager.get_keyboard_command(cmd_name) is not None
 
     @pytest.mark.parametrize(
-        "has_context,provides_script,provides_event,verbose_mode",
+        "has_context,provides_script,provides_event",
         [
-            (True, False, False, False),
-            (False, True, False, False),
-            (False, True, True, True),
+            (True, False, False),
+            (False, True, False),
+            (False, True, True),
         ],
     )
     def test_start_scenarios(
@@ -425,7 +420,6 @@ class TestFlatReviewPresenter:
         has_context: bool,
         provides_script: bool,
         provides_event: bool,
-        verbose_mode: bool,
     ) -> None:
         """Test FlatReviewPresenter.start under different scenarios."""
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
@@ -435,9 +429,6 @@ class TestFlatReviewPresenter:
         presenter._context = test_context.Mock() if has_context else None
         script_mock = test_context.Mock() if provides_script else None
         event_mock = test_context.Mock() if provides_event else None
-        if verbose_mode:
-            settings_mock = essential_modules["orca.settings"]
-            settings_mock.speechVerbosityLevel = 1
         presenter.start(script=script_mock, event=event_mock)
         if has_context:
             essential_modules["orca.flat_review"].Context.assert_not_called()

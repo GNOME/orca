@@ -42,9 +42,6 @@ class TestBrailleLineRanges:
         debug_mock.print_message = test_context.Mock()
         debug_mock.print_tokens = test_context.Mock()
 
-        settings_mock = test_context.Mock()
-        settings_mock.BRAILLE_UNDERLINE_NONE = 0
-
         ax_event_synthesizer_mock = test_context.Mock()
         ax_event_synthesizer_mock.AXEventSynthesizer = test_context.Mock()
 
@@ -72,7 +69,6 @@ class TestBrailleLineRanges:
                 "orca.cmdnames": test_context.Mock(),
                 "orca.debug": debug_mock,
                 "orca.script_manager": test_context.Mock(),
-                "orca.settings": settings_mock,
                 "orca.text_attribute_manager": test_context.Mock(),
                 "orca.ax_event_synthesizer": ax_event_synthesizer_mock,
                 "orca.ax_hypertext": ax_hypertext_mock,

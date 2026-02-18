@@ -143,13 +143,6 @@ class TestAXUtilitiesEvent:
         cmdnames.CONTAINER_START = "container_start"
         cmdnames.CONTAINER_END = "container_end"
 
-        # Set up settings mock
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.structuralNavigationEnabled = True
-        settings_mock.structNavTriggersFocusMode = True
-        settings_mock.wrappedStructuralNavigation = True
-        settings_mock.largeObjectTextLength = 75
-
         essential_modules["orca.orca_i18n"]._ = lambda x: x
 
         controller_mock = test_context.Mock()
@@ -1137,13 +1130,12 @@ class TestAXUtilitiesEvent:
             input_event_manager, "get_manager", return_value=mock_input_manager
         )
 
-        from orca import settings, typing_echo_presenter
-
-        test_context.patch_object(settings, "presentLockingKeys", new=True)
+        from orca import typing_echo_presenter
 
         mock_presenter = test_context.Mock()
         mock_presenter.get_character_echo_enabled.return_value = True
         mock_presenter.get_key_echo_enabled.return_value = True
+        mock_presenter.get_locking_keys_presented.return_value = True
         test_context.patch_object(
             typing_echo_presenter, "get_presenter", return_value=mock_presenter
         )
@@ -3411,13 +3403,12 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesRole, "is_password_text", return_value=True)
         test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
 
-        from orca import settings, typing_echo_presenter
-
-        test_context.patch_object(settings, "presentLockingKeys", new=True)
+        from orca import typing_echo_presenter
 
         mock_presenter = test_context.Mock()
         mock_presenter.get_key_echo_enabled.return_value = True
         mock_presenter.get_character_echo_enabled.return_value = False
+        mock_presenter.get_locking_keys_presented.return_value = True
         test_context.patch_object(
             typing_echo_presenter, "get_presenter", return_value=mock_presenter
         )
@@ -3427,7 +3418,7 @@ class TestAXUtilitiesEvent:
 
         mock_event.any_data = "multi-char"
         test_context.patch_object(AXUtilitiesRole, "is_password_text", return_value=False)
-        test_context.patch_object(settings, "presentLockingKeys", new=False)
+        mock_presenter.get_locking_keys_presented.return_value = False
 
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == TextEventReason.TYPING

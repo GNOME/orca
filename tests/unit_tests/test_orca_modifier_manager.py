@@ -73,10 +73,6 @@ class TestOrcaModifierManager:
             return_value=settings_manager_instance
         )
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.DESKTOP_MODIFIER_KEYS = ["Insert", "KP_Insert"]
-        settings_mock.LAPTOP_MODIFIER_KEYS = ["Caps_Lock", "Shift_Lock"]
-
         gi_repository_mock = essential_modules["gi.repository"]
 
         gdk_mock = test_context.Mock()

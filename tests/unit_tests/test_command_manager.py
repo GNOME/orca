@@ -435,12 +435,6 @@ class TestCommandManager:
         keybindings_mock.KeyBinding = test_context.Mock
         keybindings_mock.KeyBindings = test_context.Mock
 
-        # Configure settings mock so _is_desktop is True (uses desktop keybindings)
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.GENERAL_KEYBOARD_LAYOUT_DESKTOP = 1
-        settings_mock.GENERAL_KEYBOARD_LAYOUT_LAPTOP = 2
-        settings_mock.keyboardLayout = 1
-
         from orca import gsettings_registry
 
         gsettings_registry.get_registry().set_enabled(False)
@@ -949,11 +943,6 @@ class TestGetManager:
         keybindings_mock.KeyBinding = test_context.Mock
         keybindings_mock.KeyBindings = test_context.Mock
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.GENERAL_KEYBOARD_LAYOUT_DESKTOP = 1
-        settings_mock.GENERAL_KEYBOARD_LAYOUT_LAPTOP = 2
-        settings_mock.keyboardLayout = 1
-
         from orca import gsettings_registry
 
         gsettings_registry.get_registry().set_enabled(False)
@@ -1012,12 +1001,6 @@ class TestDiffBasedGrabUpdates:
         settings_manager_mock.get_manager = test_context.Mock(
             return_value=settings_manager_instance
         )
-
-        # Configure settings mock so _is_desktop is True (uses desktop keybindings)
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.GENERAL_KEYBOARD_LAYOUT_DESKTOP = 1
-        settings_mock.GENERAL_KEYBOARD_LAYOUT_LAPTOP = 2
-        settings_mock.keyboardLayout = 1
 
         from orca import gsettings_registry
 

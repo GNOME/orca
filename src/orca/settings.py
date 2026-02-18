@@ -20,13 +20,3 @@
 # pylint:disable=invalid-name
 
 """Settings managed by Orca."""
-
-# Managed by typing_echo_presenter.py
-presentLockingKeys: bool | None = None
-
-# Managed by speech_manager.py
-capitalizationStyle: str = "none"
-speakNumbersAsDigits: bool = False
-
-# Managed by sound_presenter.py
-soundVolume: float = 0.5

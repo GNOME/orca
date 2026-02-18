@@ -146,14 +146,6 @@ class TestTableNavigator:
         cmdnames.CONTAINER_START = "container_start"
         cmdnames.CONTAINER_END = "container_end"
 
-        # Set up settings mock for structural_navigator and table_navigator
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.structuralNavigationEnabled = True
-        settings_mock.structNavTriggersFocusMode = True
-        settings_mock.wrappedStructuralNavigation = True
-        settings_mock.largeObjectTextLength = 75
-        settings_mock.tableNavigationEnabled = True
-
         essential_modules["orca.orca_i18n"]._ = lambda x: x
         essential_modules["orca.debug"].print_message = test_context.Mock()
         essential_modules["orca.debug"].LEVEL_INFO = 800
@@ -321,8 +313,6 @@ class TestTableNavigator:
         essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
         from orca.table_navigator import TableNavigator
 
-        essential_modules["orca.settings"].tableNavigationEnabled = initial_enabled
-
         guilabels_mock = essential_modules["orca.guilabels"]
         guilabels_mock.KB_GROUP_TABLE_NAVIGATION = "Table navigation"
 
@@ -355,8 +345,6 @@ class TestTableNavigator:
         mock_cmd_mgr = test_context.Mock()
         essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
         from orca.table_navigator import TableNavigator
-
-        essential_modules["orca.settings"].tableNavigationEnabled = False
 
         guilabels_mock = essential_modules["orca.guilabels"]
         guilabels_mock.KB_GROUP_TABLE_NAVIGATION = "Table navigation"
@@ -685,7 +673,6 @@ class TestTableNavigator:
         test_context.patch(
             f"orca.table_navigator.AXTable.{get_next_cell_method}", return_value=mock_next_cell
         )
-        essential_modules["orca.settings"].skipBlankCells = False
         setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
         setattr(navigator, "_get_cell_coordinates", test_context.Mock(return_value=(1, 2)))
         mock_present_cell = test_context.Mock()
@@ -718,7 +705,6 @@ class TestTableNavigator:
         test_context.patch(
             "orca.table_navigator.AXTable.get_cell_on_left", return_value=mock_left_cell
         )
-        essential_modules["orca.settings"].skipBlankCells = False
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
@@ -752,7 +738,6 @@ class TestTableNavigator:
         test_context.patch(
             "orca.table_navigator.AXTable.get_cell_on_right", return_value=mock_right_cell
         )
-        essential_modules["orca.settings"].skipBlankCells = False
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
@@ -839,7 +824,6 @@ class TestTableNavigator:
         mock_up_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch("orca.table_navigator.AXTable.is_top_of_column", return_value=False)
         test_context.patch("orca.table_navigator.AXTable.get_cell_above", return_value=mock_up_cell)
-        essential_modules["orca.settings"].skipBlankCells = False
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
@@ -873,7 +857,6 @@ class TestTableNavigator:
         test_context.patch(
             "orca.table_navigator.AXTable.get_cell_below", return_value=mock_down_cell
         )
-        essential_modules["orca.settings"].skipBlankCells = False
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
@@ -1130,7 +1113,6 @@ class TestTableNavigator:
         """Test TableNavigator.move_right when at end of row returns True and notifies user."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].skipBlankCells = False
         mock_script = test_context.Mock()
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch("orca.table_navigator.AXTable.get_cell_coordinates", return_value=(1, 5))
@@ -2032,8 +2014,7 @@ class TestTableNavigator:
     def test_set_skip_blank_cells(self, test_context: OrcaTestContext) -> None:
         """Test TableNavigator.set_skip_blank_cells updates setting."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].skipBlankCells = False
+        self._setup_dependencies(test_context)
         from orca.table_navigator import get_navigator
 
         nav = get_navigator()

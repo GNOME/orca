@@ -768,11 +768,6 @@ class TestChatPresenter:
         """Sets up mocks for utter_message verbosity tests. Returns (modules, script)."""
 
         essential_modules = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.CHAT_SPEAK_ALL_ANY_APP = 0
-        settings_mock.CHAT_SPEAK_ALL_ACTIVE_APP = 1
-        settings_mock.CHAT_SPEAK_CURRENT_ACTIVE_APP = 2
-        settings_mock.CHAT_SPEAK_CURRENT_ANY_APP = 3
         mock_script = self._setup_navigation_mocks(test_context, essential_modules)
         settings_manager_mock = essential_modules["orca.settings_manager"]
         manager_instance = settings_manager_mock.get_manager.return_value

@@ -96,7 +96,6 @@ class OrcaTestContext:
             "orca.keybindings",
             "orca.messages",
             "orca.text_attribute_names",
-            "orca.settings",
         ]
 
         for module_name in required_modules:
@@ -125,7 +124,6 @@ class OrcaTestContext:
             "orca.debug",
             "orca.messages",
             "orca.input_event",
-            "orca.settings",
             "orca.keybindings",
             "orca.cmdnames",
             "orca.ax_object",

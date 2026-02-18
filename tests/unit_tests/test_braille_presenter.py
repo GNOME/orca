@@ -56,18 +56,6 @@ class TestBraillePresenter:
         platform_mock = essential_modules["orca.orca_platform"]
         platform_mock.tablesdir = "/usr/share/liblouis/tables"
 
-        # Mock the settings constants to avoid enum issues
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.BRAILLE_UNDERLINE_NONE = 0x00
-        settings_mock.BRAILLE_UNDERLINE_7 = 0x40
-        settings_mock.BRAILLE_UNDERLINE_8 = 0x80
-        settings_mock.BRAILLE_UNDERLINE_BOTH = 0xC0
-        settings_mock.VERBOSITY_LEVEL_BRIEF = 0
-        settings_mock.VERBOSITY_LEVEL_VERBOSE = 1
-        settings_mock.PROGRESS_BAR_ALL = 0
-        settings_mock.PROGRESS_BAR_APPLICATION = 1
-        settings_mock.PROGRESS_BAR_WINDOW = 2
-
         from orca import gsettings_registry
 
         registry = gsettings_registry.get_registry()
@@ -921,17 +909,6 @@ class TestBraillePreferencesGridUI:
         platform_mock = essential_modules["orca.orca_platform"]
         platform_mock.tablesdir = "/usr/share/liblouis/tables"
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.BRAILLE_UNDERLINE_NONE = 0x00
-        settings_mock.BRAILLE_UNDERLINE_7 = 0x40
-        settings_mock.BRAILLE_UNDERLINE_8 = 0x80
-        settings_mock.BRAILLE_UNDERLINE_BOTH = 0xC0
-        settings_mock.VERBOSITY_LEVEL_BRIEF = 0
-        settings_mock.VERBOSITY_LEVEL_VERBOSE = 1
-        settings_mock.PROGRESS_BAR_ALL = 0
-        settings_mock.PROGRESS_BAR_APPLICATION = 1
-        settings_mock.PROGRESS_BAR_WINDOW = 2
-
         from orca import gsettings_registry
 
         registry = gsettings_registry.get_registry()
@@ -1163,9 +1140,7 @@ class TestBraillePreferencesGridUI:
     ) -> None:
         """Test verbosity grid switch shows correct initial value."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.brailleVerbosityLevel = settings_mock.VERBOSITY_LEVEL_VERBOSE
+        self._setup_dependencies(test_context)
 
         from orca.braille_presenter import (
             BraillePresenter,
@@ -1173,6 +1148,7 @@ class TestBraillePreferencesGridUI:
         )
 
         presenter = BraillePresenter()
+        presenter.set_verbosity_level("verbose")
         grid = BrailleVerbosityPreferencesGrid(presenter)
 
         detailed_switch = grid.get_widget(0)

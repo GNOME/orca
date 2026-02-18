@@ -288,12 +288,6 @@ class TestTypingEchoPresenter:
         essential_modules["orca.AXObject"].supports_collection.return_value = True
         essential_modules["orca.AXUtilities"].is_heading.return_value = False
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.structuralNavigationEnabled = True
-        settings_mock.structNavTriggersFocusMode = True
-        settings_mock.wrappedStructuralNavigation = True
-        settings_mock.largeObjectTextLength = 75
-
         test_context.patch("gi.repository.Gtk.Grid", new=_FakeGtkGrid)
         test_context.patch("gi.repository.Gtk.CheckButton", new=_FakeCheckButton)
 
@@ -306,8 +300,6 @@ class TestTypingEchoPresenter:
         self._setup_essential_mocks(test_context, essential_modules)
         self._setup_guilabels(essential_modules["orca.guilabels"])
 
-        settings_mock = essential_modules["orca.settings"]
-
         self._setup_atspi_patches(test_context)
 
         from orca import gsettings_registry
@@ -318,7 +310,7 @@ class TestTypingEchoPresenter:
         registry.set_enabled(False)
 
         presenter = TypingEchoPresenter()
-        return presenter, settings_mock
+        return presenter
 
     @pytest.mark.parametrize(
         "getter_name,setter_name,setting_key,test_value",
@@ -377,7 +369,7 @@ class TestTypingEchoPresenter:
         test_value: bool,
     ) -> None:
         """Test presenter getter and setter methods."""
-        presenter, _settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
         getter = getattr(presenter, getter_name)
         setter = getattr(presenter, setter_name)
@@ -388,15 +380,15 @@ class TestTypingEchoPresenter:
 
     def test_locking_keys_presented_getter_and_setter(self, test_context: OrcaTestContext) -> None:
         """Test locking keys presented getter and setter with special logic."""
-        presenter, settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
-        settings_mock.presentLockingKeys = True
+        presenter._present_locking_keys = True
         assert presenter.get_locking_keys_presented() is True
 
-        settings_mock.presentLockingKeys = False
+        presenter._present_locking_keys = False
         assert presenter.get_locking_keys_presented() is False
 
-        settings_mock.presentLockingKeys = None
+        presenter._present_locking_keys = None
 
         speech_presenter_patch = test_context.patch("orca.speech_presenter.get_presenter")
         speech_presenter_instance = speech_presenter_patch.return_value
@@ -408,14 +400,14 @@ class TestTypingEchoPresenter:
         assert presenter.get_locking_keys_presented() is False
 
         presenter.set_locking_keys_presented(True)
-        assert settings_mock.presentLockingKeys is True
+        assert presenter._present_locking_keys is True
 
         presenter.set_locking_keys_presented(None)
-        assert settings_mock.presentLockingKeys is None
+        assert presenter._present_locking_keys is None
 
     def test_cycle_key_echo_basic_transitions(self, test_context: OrcaTestContext) -> None:
         """Test cycle_key_echo method basic state transitions."""
-        presenter, _settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
         script_mock = test_context.mocker.MagicMock()
 
@@ -435,7 +427,7 @@ class TestTypingEchoPresenter:
 
     def test_cycle_key_echo_advanced_transitions(self, test_context: OrcaTestContext) -> None:
         """Test cycle_key_echo method advanced state transitions."""
-        presenter, _settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
         script_mock = test_context.mocker.MagicMock()
 
@@ -468,7 +460,7 @@ class TestTypingEchoPresenter:
 
     def test_cycle_key_echo_with_script_presentation(self, test_context: OrcaTestContext) -> None:
         """Test cycle_key_echo calls present_message when script is provided."""
-        presenter, _settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
         script_mock = test_context.mocker.MagicMock()
 
@@ -491,7 +483,7 @@ class TestTypingEchoPresenter:
 
     def test_should_echo_keyboard_event_basic_cases(self, test_context: OrcaTestContext) -> None:
         """Test should_echo_keyboard_event for basic cases."""
-        presenter, _settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
         event_mock = test_context.mocker.MagicMock()
         event_mock.should_obscure.return_value = False
@@ -510,7 +502,7 @@ class TestTypingEchoPresenter:
 
     def test_should_echo_keyboard_event_orca_modifier(self, test_context: OrcaTestContext) -> None:
         """Test should_echo_keyboard_event for Orca modifier keys."""
-        presenter, _settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
         event_mock = test_context.mocker.MagicMock()
         event_mock.should_obscure.return_value = False
@@ -529,7 +521,7 @@ class TestTypingEchoPresenter:
 
     def test_should_echo_keyboard_event_modified_keys(self, test_context: OrcaTestContext) -> None:
         """Test should_echo_keyboard_event for modified keys."""
-        presenter, _settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
         event_mock = test_context.mocker.MagicMock()
         event_mock.should_obscure.return_value = False
@@ -544,7 +536,7 @@ class TestTypingEchoPresenter:
         self, test_context: OrcaTestContext
     ) -> None:
         """Test should_echo_keyboard_event when character is echoable."""
-        presenter, _settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
         event_mock = test_context.mocker.MagicMock()
         event_mock.should_obscure.return_value = False
@@ -583,7 +575,7 @@ class TestTypingEchoPresenter:
         self, test_context: OrcaTestContext, key_type: str, _setting_key: str, expected_result: bool
     ) -> None:
         """Test should_echo_keyboard_event for different key types."""
-        presenter, _settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
         from orca import gsettings_registry
 
@@ -620,7 +612,7 @@ class TestTypingEchoPresenter:
         self, test_context: OrcaTestContext
     ) -> None:
         """Test should_echo_keyboard_event for space key with different settings."""
-        presenter, _settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
         event_mock = test_context.mocker.MagicMock()
         event_mock.should_obscure.return_value = False
@@ -656,7 +648,7 @@ class TestTypingEchoPresenter:
 
     def test_should_echo_keyboard_event_locking_keys(self, test_context: OrcaTestContext) -> None:
         """Test should_echo_keyboard_event for locking keys."""
-        presenter, settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
         event_mock = test_context.mocker.MagicMock()
         event_mock.should_obscure.return_value = False
@@ -668,18 +660,18 @@ class TestTypingEchoPresenter:
         presenter.is_character_echoable = test_context.mocker.MagicMock(return_value=False)
 
         # Test locking key when locking keys are presented
-        settings_mock.presentLockingKeys = True
+        presenter._present_locking_keys = True
         assert presenter.should_echo_keyboard_event(event_mock) is True
 
         # Test locking key when locking keys are not presented
-        settings_mock.presentLockingKeys = False
+        presenter._present_locking_keys = False
         assert presenter.should_echo_keyboard_event(event_mock) is False
 
     def test_should_echo_keyboard_event_password_text_obscuring(
         self, test_context: OrcaTestContext
     ) -> None:
         """Test should_echo_keyboard_event with password text that should be obscured."""
-        presenter, _settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
         event_mock = test_context.mocker.MagicMock()
         event_mock.get_key_name.return_value = "a"
@@ -708,7 +700,7 @@ class TestTypingEchoPresenter:
 
     def test_is_character_echoable(self, test_context: OrcaTestContext) -> None:
         """Test is_character_echoable method."""
-        presenter, _settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
         event_mock = test_context.mocker.MagicMock()
 
@@ -744,7 +736,7 @@ class TestTypingEchoPresenter:
 
     def test_echo_previous_word(self, test_context: OrcaTestContext) -> None:
         """Test echo_previous_word method."""
-        presenter, _settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
         script_mock = test_context.mocker.MagicMock()
         obj_mock = test_context.mocker.MagicMock()
@@ -791,7 +783,7 @@ class TestTypingEchoPresenter:
 
     def test_echo_previous_sentence(self, test_context: OrcaTestContext) -> None:
         """Test echo_previous_sentence method."""
-        presenter, _settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
         script_mock = test_context.mocker.MagicMock()
         obj_mock = test_context.mocker.MagicMock()
@@ -831,7 +823,7 @@ class TestTypingEchoPresenter:
 
     def test_commands_and_bindings(self, test_context: OrcaTestContext) -> None:
         """Test commands are registered in CommandManager."""
-        presenter, _settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
         from orca import command_manager
 
         # Commands are registered during setup()
@@ -867,7 +859,7 @@ class TestTypingEchoPresenter:
         _setting_key: str,
     ) -> None:
         """Test getter returns dconf value when layered_lookup returns a value."""
-        presenter, _settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
         from orca import gsettings_registry
         from orca.gsettings_registry import GSettingsSchemaHandle
@@ -911,14 +903,14 @@ class TestTypingEchoPresenter:
         setting_key: str,
     ) -> None:
         """Test getter returns module-owned default when registry is disabled."""
-        presenter, _settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
         getter = getattr(presenter, getter_name)
         assert getter() is self._DEFAULT_VALUES[setting_key]
 
     def test_get_setting_logs_dconf_layer(self, test_context: OrcaTestContext) -> None:
         """Test that dconf lookup logs the source layer and value."""
-        presenter, _settings_mock = self._setup_presenter(test_context)
+        presenter = self._setup_presenter(test_context)
 
         from orca import debug as debug_mock
         from orca import gsettings_registry

@@ -97,7 +97,6 @@ class TestAXObject:
             "orca.debug",
             "orca.messages",
             "orca.input_event",
-            "orca.settings",
             "orca.keybindings",
             "orca.cmdnames",
             "orca.settings_manager",

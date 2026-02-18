@@ -617,13 +617,6 @@ class TestCommandRegistry:
         cmdnames.CONTAINER_START = "container_start"
         cmdnames.CONTAINER_END = "container_end"
 
-        # Set up other required mocks
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.structuralNavigationEnabled = True
-        settings_mock.structNavTriggersFocusMode = True
-        settings_mock.wrappedStructuralNavigation = True
-        settings_mock.largeObjectTextLength = 75
-
         essential_modules["orca.orca_i18n"]._ = lambda x: x
         essential_modules["orca.debug"].print_message = test_context.Mock()
         essential_modules["orca.debug"].LEVEL_INFO = 800
@@ -660,21 +653,6 @@ class TestCommandRegistry:
             "orca.ax_document",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
-
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.speechServerInfo = None
-        settings_mock.voices = {}
-        settings_mock.DEFAULT_VOICE = "default"
-        settings_mock.enableSpeech = True
-        settings_mock.CAPITALIZATION_STYLE_NONE = "none"
-        settings_mock.CAPITALIZATION_STYLE_SPELL = "spell"
-        settings_mock.CAPITALIZATION_STYLE_ICON = "icon"
-        settings_mock.PUNCTUATION_STYLE_NONE = 3
-        settings_mock.PUNCTUATION_STYLE_SOME = 2
-        settings_mock.PUNCTUATION_STYLE_MOST = 1
-        settings_mock.PUNCTUATION_STYLE_ALL = 0
-        settings_mock.VERBOSITY_LEVEL_BRIEF = 0
-        settings_mock.VERBOSITY_LEVEL_VERBOSE = 1
 
         essential_modules["orca.orca_i18n"]._ = lambda x: x
         essential_modules["orca.orca_i18n"].C_ = lambda c, x: x

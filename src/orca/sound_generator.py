@@ -40,7 +40,6 @@ from gi.repository import Atspi
 from . import debug
 from . import generator
 from . import object_properties
-from . import settings
 from . import settings_manager
 from . import sound_presenter
 from .ax_object import AXObject
@@ -245,7 +244,7 @@ class SoundGenerator(generator.Generator):
         else:
             frequency = int(percent * 22)
 
-        volume = settings.soundVolume * volume_multiplier
+        volume = sound_presenter.get_presenter().get_sound_volume() * volume_multiplier
         return [Tone(duration, frequency, volume, Tone.SINE_WAVE)]
 
     def _generate_position_in_set(self, _obj: Atspi.Accessible, **_args) -> list[Any]:

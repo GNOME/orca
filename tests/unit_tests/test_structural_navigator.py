@@ -120,11 +120,6 @@ class TestStructuralNavigator:
         essential_modules[
             "orca.settings_manager"
         ].get_manager.return_value = settings_manager_instance
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.structuralNavigationEnabled = True
-        settings_mock.structNavTriggersFocusMode = True
-        settings_mock.wrappedStructuralNavigation = True
-        settings_mock.largeObjectTextLength = 75
         controller_mock = test_context.Mock()
         controller_mock.register_decorated_module.return_value = None
         essential_modules["orca.dbus_service"].get_remote_controller.return_value = controller_mock
@@ -518,8 +513,7 @@ class TestStructuralNavigator:
     def test_get_object_in_direction_wrap_to_beginning(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator._get_object_in_direction wraps to beginning when at end."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].wrappedStructuralNavigation = True
+        self._setup_dependencies(test_context)
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
@@ -534,8 +528,7 @@ class TestStructuralNavigator:
     def test_get_object_in_direction_wrap_to_end(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator._get_object_in_direction wraps to end when at beginning."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].wrappedStructuralNavigation = True
+        self._setup_dependencies(test_context)
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
@@ -1345,8 +1338,7 @@ class TestStructuralNavigator:
     def test_get_is_enabled(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.get_is_enabled returns setting value."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].structuralNavigationEnabled = True
+        self._setup_dependencies(test_context)
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
@@ -1356,8 +1348,7 @@ class TestStructuralNavigator:
     def test_set_is_enabled_no_change(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.set_is_enabled returns early if value unchanged."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].structuralNavigationEnabled = True
+        self._setup_dependencies(test_context)
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
@@ -1419,7 +1410,6 @@ class TestStructuralNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
-        essential_modules["orca.settings"].structuralNavigationEnabled = True
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = mock_script
@@ -1442,7 +1432,6 @@ class TestStructuralNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
-        essential_modules["orca.settings"].structuralNavigationEnabled = True
         essential_modules[
             "orca.script_manager"
         ].get_manager.return_value.get_active_script.return_value = mock_script
@@ -1460,8 +1449,7 @@ class TestStructuralNavigator:
     def test_get_triggers_focus_mode(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.get_triggers_focus_mode returns setting value."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].structNavTriggersFocusMode = False
+        self._setup_dependencies(test_context)
         from orca.structural_navigator import get_navigator
 
         nav = get_navigator()
@@ -1471,9 +1459,13 @@ class TestStructuralNavigator:
     def test_set_triggers_focus_mode(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.set_triggers_focus_mode updates setting."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].structNavTriggersFocusMode = True
+        self._setup_dependencies(test_context)
+        from orca import gsettings_registry
         from orca.structural_navigator import get_navigator
+
+        gsettings_registry.get_registry().set_runtime_value(
+            "structural-navigation", "triggers-focus-mode", True
+        )
 
         nav = get_navigator()
         result = nav.set_triggers_focus_mode(False)
@@ -1483,9 +1475,13 @@ class TestStructuralNavigator:
     def test_set_triggers_focus_mode_no_change(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator.set_triggers_focus_mode returns early if unchanged."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].structNavTriggersFocusMode = True
+        self._setup_dependencies(test_context)
+        from orca import gsettings_registry
         from orca.structural_navigator import get_navigator
+
+        gsettings_registry.get_registry().set_runtime_value(
+            "structural-navigation", "triggers-focus-mode", True
+        )
 
         nav = get_navigator()
         result = nav.set_triggers_focus_mode(True)
@@ -1495,7 +1491,6 @@ class TestStructuralNavigator:
         """Test StructuralNavigator.last_command_prevents_focus_mode returns True."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].structNavTriggersFocusMode = False
         essential_modules[
             "orca.input_event_manager"
         ].get_manager.return_value.last_event_equals_or_is_release_for_event.return_value = True

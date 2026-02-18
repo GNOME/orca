@@ -66,15 +66,6 @@ class TestSpeechPresenter:
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.VERBOSITY_LEVEL_BRIEF = 0
-        settings_mock.VERBOSITY_LEVEL_VERBOSE = 1
-        settings_mock.speakNumbersAsDigits = False
-
-        settings_mock.PROGRESS_BAR_ALL = 0
-        settings_mock.PROGRESS_BAR_APPLICATION = 1
-        settings_mock.PROGRESS_BAR_WINDOW = 2
-
         settings_manager_mock = essential_modules["orca.settings_manager"]
         settings_manager_instance = test_context.Mock()
         settings_manager_instance._prefs_dir = "/tmp/orca-test"
@@ -569,7 +560,13 @@ class TestSpeechPresenter:
         """Test adjust_for_digits method with speakNumbersAsDigits on/off."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].speakNumbersAsDigits = case["speak_digits"]
+
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech", "speak-numbers-as-digits", case["speak_digits"]
+        )
+
         essential_modules[
             "orca.ax_utilities"
         ].AXUtilities.is_text_input_telephone = test_context.Mock(return_value=case["is_telephone"])
@@ -789,11 +786,6 @@ class TestSpeechPresenter:
         script_manager_instance = test_context.Mock()
         script_manager_instance.get_active_script = test_context.Mock(return_value=mock_script)
         script_manager_mock.get_manager = test_context.Mock(return_value=script_manager_instance)
-
-        # Settings for voice resolution
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.voices = {"default": {}, "system": {}}
-        settings_mock.SYSTEM_VOICE = "system"
 
         return essential_modules
 

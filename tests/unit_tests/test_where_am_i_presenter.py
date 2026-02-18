@@ -124,9 +124,6 @@ class TestWhereAmIPresenter:
             "underline",
         ]
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.repeatCharacterLimit = 4
-
         speech_verbosity_instance = test_context.Mock()
         speech_verbosity_instance.get_indentation_description = test_context.Mock(return_value="")
         speech_verbosity_instance.adjust_for_presentation = test_context.Mock(

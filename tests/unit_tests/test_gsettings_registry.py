@@ -419,8 +419,7 @@ class TestGSettingsSchemaHandle:
     def test_layered_get_app_override_wins(self, test_context: OrcaTestContext) -> None:
         """Test layered getter returns app-specific value when set."""
 
-        essential = self._setup(test_context)
-        essential["orca.settings"].activeProfile = ["Default", "default"]
+        self._setup(test_context)
 
         from orca.gsettings_registry import GSettingsSchemaHandle
         from orca import gsettings_registry
@@ -457,8 +456,7 @@ class TestGSettingsSchemaHandle:
     def test_layered_get_profile_fallback(self, test_context: OrcaTestContext) -> None:
         """Test layered getter falls back to profile when app has no user value."""
 
-        essential = self._setup(test_context)
-        essential["orca.settings"].activeProfile = ["Default", "default"]
+        self._setup(test_context)
 
         from orca.gsettings_registry import GSettingsSchemaHandle
         from orca import gsettings_registry
@@ -492,8 +490,7 @@ class TestGSettingsSchemaHandle:
     def test_layered_get_default_profile_fallback(self, test_context: OrcaTestContext) -> None:
         """Test layered getter falls back to default profile for non-default profiles."""
 
-        essential = self._setup(test_context)
-        essential["orca.settings"].activeProfile = ["Spanish", "spanish"]
+        self._setup(test_context)
 
         from orca.gsettings_registry import GSettingsSchemaHandle
         from orca import gsettings_registry
@@ -533,8 +530,7 @@ class TestGSettingsSchemaHandle:
     def test_layered_get_returns_none_when_nothing_set(self, test_context: OrcaTestContext) -> None:
         """Test layered getter returns None when no layer has a user value."""
 
-        essential = self._setup(test_context)
-        essential["orca.settings"].activeProfile = ["Default", "default"]
+        self._setup(test_context)
 
         from orca.gsettings_registry import GSettingsSchemaHandle
         from orca import gsettings_registry
@@ -558,8 +554,7 @@ class TestGSettingsSchemaHandle:
     def test_set_boolean_stamps_version(self, test_context: OrcaTestContext) -> None:
         """Test set_boolean stamps version on first write."""
 
-        essential = self._setup(test_context)
-        essential["orca.settings"].activeProfile = ["Default", "default"]
+        self._setup(test_context)
 
         from orca.gsettings_registry import GSettingsSchemaHandle
         from orca import gsettings_registry
@@ -606,8 +601,7 @@ class TestGSettingsSchemaHandle:
     def test_get_string_layered(self, test_context: OrcaTestContext) -> None:
         """Test get_string uses layered lookup."""
 
-        essential = self._setup(test_context)
-        essential["orca.settings"].activeProfile = ["Default", "default"]
+        self._setup(test_context)
 
         from orca.gsettings_registry import GSettingsSchemaHandle
         from orca import gsettings_registry

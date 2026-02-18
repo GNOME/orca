@@ -1806,6 +1806,21 @@ class BraillePresenter:
             return
 
         braille.init(input_event_manager.get_manager().process_braille_event)
+        self._sync_state_to_braille()
+
+    def _sync_state_to_braille(self) -> None:
+        """Pushes persisted dconf settings into the braille module's runtime state."""
+
+        braille.set_enable_contracted_braille(self.get_contracted_braille_is_enabled())
+        braille.set_contraction_table(self.get_contraction_table_path())
+        braille.set_enable_computer_braille_at_cursor(
+            self.get_computer_braille_at_cursor_is_enabled()
+        )
+        braille.set_enable_eol(self.get_end_of_line_indicator_is_enabled())
+        braille.set_enable_word_wrap(self.get_word_wrap_is_enabled())
+        braille.set_selector_indicator(self._get_selector_indicator_as_int())
+        braille.set_link_indicator(self._get_link_indicator_as_int())
+        braille.set_text_attributes_indicator(self._get_text_attributes_indicator_as_int())
 
     def shutdown_braille(self) -> None:
         """Shuts down braille."""

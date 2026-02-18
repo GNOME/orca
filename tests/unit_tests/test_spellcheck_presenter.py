@@ -66,11 +66,6 @@ class TestSpellCheckPresenter:
         gsettings_registry.get_registry().set_enabled(False)
         gsettings_registry.get_registry().clear_runtime_values()
 
-        settings_mock = essential_modules["orca.settings"]
-        settings_mock.spellcheckSpellError = True
-        settings_mock.spellcheckSpellSuggestion = True
-        settings_mock.spellcheckPresentContext = True
-
         return essential_modules
 
     def test_get_presenter(self, test_context: OrcaTestContext) -> None:
@@ -90,8 +85,7 @@ class TestSpellCheckPresenter:
     def test_get_spell_error_true(self, test_context: OrcaTestContext) -> None:
         """Test get_spell_error returns True when setting is True."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].spellcheckSpellError = True
+        self._setup_dependencies(test_context)
         from orca.spellcheck_presenter import SpellCheckPresenter
 
         presenter = SpellCheckPresenter()
@@ -115,7 +109,6 @@ class TestSpellCheckPresenter:
         """Test set_spell_error updates settings."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].spellcheckSpellError = True
         from orca.spellcheck_presenter import SpellCheckPresenter
 
         presenter = SpellCheckPresenter()
@@ -129,7 +122,6 @@ class TestSpellCheckPresenter:
         """Test set_spell_error returns early when value unchanged."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].spellcheckSpellError = True
         from orca.spellcheck_presenter import SpellCheckPresenter
 
         presenter = SpellCheckPresenter()
@@ -145,8 +137,7 @@ class TestSpellCheckPresenter:
     def test_get_spell_suggestion_true(self, test_context: OrcaTestContext) -> None:
         """Test get_spell_suggestion returns True when setting is True."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].spellcheckSpellSuggestion = True
+        self._setup_dependencies(test_context)
         from orca.spellcheck_presenter import SpellCheckPresenter
 
         presenter = SpellCheckPresenter()
@@ -170,7 +161,6 @@ class TestSpellCheckPresenter:
         """Test set_spell_suggestion updates settings."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].spellcheckSpellSuggestion = True
         from orca.spellcheck_presenter import SpellCheckPresenter
 
         presenter = SpellCheckPresenter()
@@ -184,7 +174,6 @@ class TestSpellCheckPresenter:
         """Test set_spell_suggestion returns early when value unchanged."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].spellcheckSpellSuggestion = True
         from orca.spellcheck_presenter import SpellCheckPresenter
 
         presenter = SpellCheckPresenter()
@@ -200,8 +189,7 @@ class TestSpellCheckPresenter:
     def test_get_present_context_true(self, test_context: OrcaTestContext) -> None:
         """Test get_present_context returns True when setting is True."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].spellcheckPresentContext = True
+        self._setup_dependencies(test_context)
         from orca.spellcheck_presenter import SpellCheckPresenter
 
         presenter = SpellCheckPresenter()
@@ -225,7 +213,6 @@ class TestSpellCheckPresenter:
         """Test set_present_context updates settings."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].spellcheckPresentContext = True
         from orca.spellcheck_presenter import SpellCheckPresenter
 
         presenter = SpellCheckPresenter()
@@ -239,7 +226,6 @@ class TestSpellCheckPresenter:
         """Test set_present_context returns early when value unchanged."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules["orca.settings"].spellcheckPresentContext = True
         from orca.spellcheck_presenter import SpellCheckPresenter
 
         presenter = SpellCheckPresenter()
