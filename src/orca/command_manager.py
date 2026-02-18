@@ -526,8 +526,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             binding = cmd.get_keybinding()
             binding_text = self._format_keybinding_text(binding) or ""
 
-            binding_label = Gtk.Label(label=binding_text, xalign=0)
-            binding_label.set_opacity(0.5)
+            binding_label = Gtk.Label(xalign=0)
+            binding_label.set_markup(f"<small>{GLib.markup_escape_text(binding_text, -1)}</small>")
+            binding_label.get_style_context().add_class("dim-label")
             vbox.pack_start(binding_label, False, False, 0)
 
             outer_vbox.pack_start(vbox, False, False, 0)

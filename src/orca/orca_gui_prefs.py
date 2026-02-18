@@ -36,6 +36,7 @@ import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk
+from gi.repository import Gio
 from gi.repository import GLib
 from gi.repository import Gtk
 from gi.repository import GObject
@@ -87,7 +88,9 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         if OrcaSetupGUI.WINDOW is not None:
             return
 
+        appearance_refs = self._sync_appearance()
         super().__init__(title=guilabels.DIALOG_SCREEN_READER_PREFERENCES)
+        self._appearance_refs = appearance_refs
 
         self.connect("destroy", self.window_destroyed)
         self.connect("delete-event", self.window_closed)
@@ -700,6 +703,89 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
         return False
+
+    _BASE_CSS = b"""
+        list.frame {
+            border-color: alpha(@theme_fg_color, 0.15);
+        }
+    """
+
+    _HIGH_CONTRAST_CSS = b"""
+        list.frame {
+            border-color: alpha(@theme_fg_color, 0.4);
+        }
+        list separator {
+            background-color: alpha(@theme_fg_color, 0.4);
+        }
+        .dim-label {
+            opacity: 1.0;
+        }
+    """
+
+    @staticmethod
+    def _sync_appearance() -> tuple | None:
+        """Bridges GNOME's color-scheme and high-contrast gsettings to GTK3."""
+
+        gtk_settings = Gtk.Settings.get_default()  # pylint: disable=no-value-for-parameter
+        screen = Gdk.Screen.get_default()  # pylint: disable=no-value-for-parameter
+        if gtk_settings is None or screen is None:
+            return None
+
+        base_provider = Gtk.CssProvider()
+        base_provider.load_from_data(OrcaSetupGUI._BASE_CSS)
+        Gtk.StyleContext.add_provider_for_screen(
+            screen, base_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        )
+
+        hc_provider = Gtk.CssProvider()
+        hc_provider.load_from_data(OrcaSetupGUI._HIGH_CONTRAST_CSS)
+
+        try:
+            interface_settings = Gio.Settings(schema_id="org.gnome.desktop.interface")
+            a11y_settings = Gio.Settings(schema_id="org.gnome.desktop.a11y.interface")
+            OrcaSetupGUI._apply_appearance(
+                interface_settings, a11y_settings, gtk_settings, screen, hc_provider
+            )
+
+            def on_setting_changed(*_args):
+                OrcaSetupGUI._apply_appearance(
+                    interface_settings, a11y_settings, gtk_settings, screen, hc_provider
+                )
+
+            interface_settings.connect("changed::color-scheme", on_setting_changed)
+            a11y_settings.connect("changed::high-contrast", on_setting_changed)
+            gtk_settings.connect("notify::gtk-theme-name", on_setting_changed)
+            return interface_settings, a11y_settings, base_provider, hc_provider
+        except GLib.Error as error:
+            msg = f"PREFERENCES WINDOW: Exception syncing appearance: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return None
+
+    @staticmethod
+    def _apply_appearance(
+        interface_settings: Gio.Settings,
+        a11y_settings: Gio.Settings,
+        gtk_settings: Gtk.Settings,
+        screen: Gdk.Screen,
+        hc_provider: Gtk.CssProvider,
+    ) -> None:
+        """Applies color-scheme and high-contrast settings together."""
+
+        prefer_dark = interface_settings.get_string("color-scheme") == "prefer-dark"
+        gtk_settings.set_property("gtk-application-prefer-dark-theme", prefer_dark)
+
+        theme = gtk_settings.get_property("gtk-theme-name")
+        if prefer_dark and theme == "HighContrast":
+            gtk_settings.set_property("gtk-theme-name", "HighContrastInverse")
+        elif not prefer_dark and theme == "HighContrastInverse":
+            gtk_settings.set_property("gtk-theme-name", "HighContrast")
+
+        if a11y_settings.get_boolean("high-contrast"):
+            Gtk.StyleContext.add_provider_for_screen(
+                screen, hc_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION + 1
+            )
+        else:
+            Gtk.StyleContext.remove_provider_for_screen(screen, hc_provider)
 
     def window_destroyed(self, _widget: Gtk.Widget) -> None:
         """Handle window destroyed signal by clearing window reference."""
