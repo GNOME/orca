@@ -411,24 +411,6 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
         self._current_panel_id = panel_id
 
-    def write_user_preferences(
-        self, pronunciation_dict: dict[str, Any], key_bindings_dict: dict[str, Any]
-    ) -> None:
-        """Write out the user's generic Orca preferences."""
-
-        # For backwards compatibility (These settings no longer exist, but older versions of
-        # Orca assume these key exist in the prefs dict.)
-        self.prefs_dict["progressBarUpdateInterval"] = self.prefs_dict.get(
-            "progressBarSpeechInterval", 10
-        )
-        self.prefs_dict["progressBarVerbosity"] = self.prefs_dict.get(
-            "progressBarSpeechVerbosity", sound_presenter.ProgressBarVerbosity.APPLICATION.value
-        )
-
-        settings_manager.get_manager().save_settings(
-            self.script, self.prefs_dict, pronunciation_dict, key_bindings_dict
-        )
-
     def _init_gui_state(self, include_profiles: bool = False) -> None:
         """Adjust the settings of the various widgets based on user settings."""
 
@@ -546,13 +528,12 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self.prefs_dict.update(time_and_date_values)
         text_attr_values = self.text_attributes_grid.save_settings(profile_name, save_app)
         self.prefs_dict.update(text_attr_values)
-        pronunciation_dict = self.pronunciation_grid.save_settings(profile_name, save_app)
-        keybindings_general, key_bindings_dict = self.keybindings_grid.save_settings(
+        self.pronunciation_grid.save_settings(profile_name, save_app)
+        keybindings_general, _key_bindings_dict = self.keybindings_grid.save_settings(
             profile_name, save_app
         )
         self.prefs_dict.update(keybindings_general)
 
-        self.write_user_preferences(pronunciation_dict, key_bindings_dict)
         orca.load_user_settings(self.script, skip_reload_message=True)
 
         # Speak the settings reloaded message after a delay to ensure speech has fully started.
