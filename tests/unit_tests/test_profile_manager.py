@@ -63,7 +63,6 @@ class TestProfileManager:
             ["Work", "work"],
         ]
         settings_manager_mock.get_manager.return_value.get_profile.return_value = "default"
-        settings_manager_mock.get_manager.return_value.get_general_settings.return_value = {}
 
         from orca import gsettings_registry
 
@@ -161,7 +160,7 @@ class TestProfileManager:
     def test_remove_profile(self, test_context: OrcaTestContext) -> None:
         """Test removing a profile."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca import gsettings_registry
         from orca.profile_manager import ProfileManager
 
@@ -170,9 +169,6 @@ class TestProfileManager:
         manager = ProfileManager()
         manager.remove_profile("spanish")
 
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.remove_profile.assert_called_once_with("spanish")
         mock_run.assert_called_once_with(
             ["dconf", "reset", "-f", "/org/gnome/orca/spanish/"], check=True
         )
@@ -182,7 +178,7 @@ class TestProfileManager:
 
         import subprocess
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca import gsettings_registry
         from orca.profile_manager import ProfileManager
 
@@ -192,15 +188,12 @@ class TestProfileManager:
         manager = ProfileManager()
         manager.remove_profile("spanish")
 
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.remove_profile.assert_called_once_with("spanish")
         mock_run.assert_called_once()
 
     def test_remove_profile_dconf_not_found(self, test_context: OrcaTestContext) -> None:
         """Test removing a profile when dconf is not installed."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca import gsettings_registry
         from orca.profile_manager import ProfileManager
 
@@ -210,9 +203,6 @@ class TestProfileManager:
         manager = ProfileManager()
         manager.remove_profile("spanish")
 
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.remove_profile.assert_called_once_with("spanish")
         mock_run.assert_called_once()
 
     def test_remove_profile_sanitizes_name(self, test_context: OrcaTestContext) -> None:
@@ -234,17 +224,18 @@ class TestProfileManager:
     def test_rename_profile(self, test_context: OrcaTestContext) -> None:
         """Test renaming a profile."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
+        from orca import gsettings_registry
         from orca.profile_manager import ProfileManager
+
+        registry = gsettings_registry.get_registry()
+        registry.set_enabled(True)
+        mock_rename = test_context.patch_object(registry, "rename_profile")
 
         manager = ProfileManager()
         manager.rename_profile("spanish", ["Espanol", "espanol"])
 
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.rename_profile.assert_called_once_with(
-            "spanish", ["Espanol", "espanol"]
-        )
+        mock_rename.assert_called_once_with("spanish", "Espanol", "espanol")
 
     def test_commands_registered(self, test_context: OrcaTestContext) -> None:
         """Test that profile manager commands are registered with CommandManager."""
@@ -362,7 +353,6 @@ class TestProfilePreferencesGridUI:
             ["Spanish", "spanish"],
         ]
         settings_manager_mock.get_manager.return_value.get_profile.return_value = "default"
-        settings_manager_mock.get_manager.return_value.get_general_settings.return_value = {}
 
         from orca import gsettings_registry
 

@@ -20,10 +20,6 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-few-public-methods
-# pylint: disable=too-many-instance-attributes
-# pylint: disable=too-many-public-methods
-# pylint: disable=too-many-statements
-# pylint: disable=too-many-branches
 
 """Settings manager."""
 
@@ -44,8 +40,6 @@ from . import gsettings_registry
 from . import orca_i18n  # pylint: disable=no-name-in-module
 from . import pronunciation_dictionary_manager
 from . import speech_manager
-from . import speechserver
-from .acss import ACSS
 from .ax_object import AXObject
 
 if TYPE_CHECKING:
@@ -81,8 +75,6 @@ class SettingsManager:
         self._profile: str = "default"
         self._prefs_dir: str = ""
         self._settings_file: str = ""
-        self._default_settings: dict = {}
-        self._settings: dict = {}
         self._pronunciations: dict = {}
         self._keybindings: dict = {}
         self._customized_settings: dict | None = None
@@ -90,34 +82,6 @@ class SettingsManager:
 
         debug.print_message(debug.LEVEL_INFO, "SETTINGS MANAGER: Initialized", True)
 
-    def get_overridden_settings_for_debugging(self) -> dict:
-        """Returns overridden settings for the purpose of debugging."""
-
-        changed = {}
-        for key, value in self._default_settings.items():
-            if value != self._settings.get(key) and key not in (self._customized_settings or {}):
-                changed[key] = self._settings.get(key)
-        return changed
-
-    def get_customized_settings_for_debugging(self) -> dict:
-        """Returns customized settings for the purpose of debugging."""
-
-        return (self._customized_settings or {}).copy()
-
-    def get_settings(self) -> dict:
-        """Returns a copy of the active settings."""
-
-        return self._settings.copy()
-
-    def snapshot_settings(self) -> dict:
-        """Capture current runtime settings values for later restoration."""
-
-        return {}
-
-    def restore_settings(self, snapshot: dict) -> None:
-        """Restore runtime settings from a previously captured snapshot."""
-
-    # pylint: disable-next=too-many-locals
     def activate(self, prefs_dir: str | None = None) -> None:
         """Activates this manager."""
 
@@ -126,12 +90,7 @@ class SettingsManager:
         self._prefs_dir = prefs_dir or os.path.join(GLib.get_user_data_dir(), "orca")  # pylint: disable=no-value-for-parameter
         self._settings_file = os.path.join(self._prefs_dir, "user-settings.conf")
 
-        self._default_settings = {}
         self._load_customizations()
-
-        self._settings = self._default_settings.copy()
-        if os.path.exists(self._settings_file):
-            self._settings.update(self._get_general_from_file())
 
         def _create_dir(dir_name: str) -> None:
             if not os.path.isdir(dir_name):
@@ -193,48 +152,6 @@ class SettingsManager:
 
         debug.print_tokens(debug.LEVEL_ALL, tokens, True)
 
-    # pylint: disable-next=too-many-locals
-    def _get_general_from_file(self, profile: str | None = None) -> dict:
-        """Get settings from file, merging defaults with profile values."""
-
-        with open(self._settings_file, encoding="utf-8") as settings_file:
-            try:
-                prefs = load(settings_file)
-            except ValueError:
-                return {}
-
-        result = self._default_settings.copy()
-        if profile is None:
-            profile = "default"
-
-        # First apply the default profile's settings as a base, then overlay
-        # the current profile's settings. This ensures that non-default profiles
-        # inherit settings from the default profile that they don't override.
-        profiles_to_apply = ["default"]
-        if profile != "default":
-            profiles_to_apply.append(profile)
-
-        for profile_name in profiles_to_apply:
-            profile_settings = prefs["profiles"].get(profile_name, {}).copy()
-            for key, value in profile_settings.items():
-                if key == "voices":
-                    for voice_type, voice_def in value.items():
-                        value[voice_type] = ACSS(voice_def)
-                if key != "activeProfile":
-                    result[key] = value
-
-        if "voices" in result:
-            for voice_type in (
-                speechserver.DEFAULT_VOICE,
-                speechserver.UPPERCASE_VOICE,
-                speechserver.HYPERLINK_VOICE,
-                speechserver.SYSTEM_VOICE,
-            ):
-                if voice_type not in result["voices"]:
-                    result["voices"][voice_type] = ACSS({})
-
-        return result
-
     def _get_app_settings_from_file(self, app_name: str) -> dict:
         """Load app-specific settings from file."""
 
@@ -292,8 +209,8 @@ class SettingsManager:
 
         return factories
 
-    def _load_profile_settings(self, profile: str | None = None) -> tuple[dict, dict, dict]:
-        """Load settings for profile from file. Returns (general, pronunciations, keybindings)."""
+    def _load_profile_settings(self, profile: str | None = None) -> tuple[dict, dict]:
+        """Load settings for profile. Returns (pronunciations, keybindings)."""
 
         if profile is None:
             profile = self._profile
@@ -301,22 +218,18 @@ class SettingsManager:
         msg = f"SETTINGS MANAGER: Loading settings for '{profile}' profile"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        profile_general = self.get_general_settings(profile) or {}
         profile_pronunciations = self.get_pronunciations(profile) or {}
         profile_keybindings = self.get_keybindings(profile) or {}
 
         msg = f"SETTINGS MANAGER: Settings for '{profile}' profile loaded"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        return profile_general, profile_pronunciations, profile_keybindings
+        return profile_pronunciations, profile_keybindings
 
-    # pylint: disable-next=too-many-arguments, too-many-positional-arguments
     def _apply_profile_and_app_settings(
         self,
-        profile_general: dict,
         profile_pronunciations: dict,
         profile_keybindings: dict,
-        app_general: dict | None = None,
         app_pronunciations: dict | None = None,
         app_keybindings: dict | None = None,
     ) -> None:
@@ -324,9 +237,6 @@ class SettingsManager:
 
         msg = "SETTINGS MANAGER: Merging settings."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        self._settings.update(profile_general)
-        self._settings.update(app_general or {})
 
         self._pronunciations = profile_pronunciations.copy()
         self._pronunciations.update(app_pronunciations or {})
@@ -358,8 +268,8 @@ class SettingsManager:
 
         old_voice_locale = self.get_voice_locale("default")
         self._profile = profile
-        profile_settings = self._load_profile_settings(profile)
-        self._apply_profile_and_app_settings(*profile_settings)
+        pronunciations, keybindings = self._load_profile_settings(profile)
+        self._apply_profile_and_app_settings(pronunciations, keybindings)
 
         if not update_locale:
             return
@@ -372,32 +282,6 @@ class SettingsManager:
 
         tokens = ["SETTINGS MANAGER: Profile set to:", profile]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-    def remove_profile(self, internal_name: str) -> None:
-        """Remove an existing profile."""
-
-        registry = gsettings_registry.get_registry()
-        if registry.is_enabled():
-            registry.reset_profile(internal_name)
-
-    def rename_profile(self, old_internal_name: str, new_profile: list[str]) -> None:
-        """Rename profile with old_internal_name to new_profile (label, internal_name)."""
-
-        registry = gsettings_registry.get_registry()
-        if registry.is_enabled():
-            registry.rename_profile(old_internal_name, new_profile[0], new_profile[1])
-
-    def get_general_settings(self, profile: str = "default") -> dict:
-        """Return the current general settings."""
-
-        registry = gsettings_registry.get_registry()
-        if registry.is_enabled():
-            label = profile.replace("_", " ").title()
-            return {"profile": [label, profile], "activeProfile": [label, profile]}
-
-        if not os.path.exists(self._settings_file):
-            return {}
-        return self._get_general_from_file(profile)
 
     def _get_dict_from_file(self, profile: str, key: str) -> dict:
         """Returns a dict from the JSON settings file for the -u fallback path."""
@@ -455,7 +339,6 @@ class SettingsManager:
             profiles.append(profile)
         return profiles
 
-    # pylint: disable-next=too-many-locals
     def load_app_settings(self, script: Script | None) -> None:
         """Load the users application specific settings for an app."""
 
@@ -465,23 +348,19 @@ class SettingsManager:
         app_name = AXObject.get_name(script.app)
         registry = gsettings_registry.get_registry()
         if registry.is_enabled():
-            app_general: dict = {}
             app_pronunciations = registry.get_pronunciations(self._profile, app_name)
             app_keybindings = registry.get_keybindings(self._profile, app_name)
         else:
             prefs = self._get_app_settings_from_file(app_name)
             profiles = prefs.get("profiles", {})
             profile_prefs = profiles.get(self._profile, {})
-            app_general = profile_prefs.get("general", {})
             app_pronunciations = profile_prefs.get("pronunciations", {})
             app_keybindings = profile_prefs.get("keybindings", {})
 
-        profile_general, profile_pronunciations, profile_keybindings = self._load_profile_settings()
+        profile_pronunciations, profile_keybindings = self._load_profile_settings()
         self._apply_profile_and_app_settings(
-            profile_general,
             profile_pronunciations,
             profile_keybindings,
-            app_general,
             app_pronunciations,
             app_keybindings,
         )

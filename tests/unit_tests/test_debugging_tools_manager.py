@@ -108,12 +108,6 @@ class TestDebuggingToolsManager:
         settings_manager_instance.override_key_bindings = test_context.Mock(
             return_value=key_bindings_instance
         )
-        settings_manager_instance.get_overridden_settings_for_debugging = test_context.Mock(
-            return_value={}
-        )
-        settings_manager_instance.get_customized_settings_for_debugging = test_context.Mock(
-            return_value={}
-        )
         settings_manager_mock.get_manager = test_context.Mock(
             return_value=settings_manager_instance
         )

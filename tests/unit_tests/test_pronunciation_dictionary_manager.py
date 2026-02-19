@@ -75,7 +75,6 @@ class TestPronunciationDictionaryManager:
         settings_manager = essential_modules["orca.settings_manager"]
         manager_instance = settings_manager.get_manager.return_value
         manager_instance.get_pronunciations.return_value = {}
-        manager_instance.get_general_settings.return_value = {"profile": ["Default", "default"]}
 
         # Set up speech_manager
         speech_manager_mock = essential_modules["orca.speech_manager"]
@@ -245,7 +244,6 @@ class TestPronunciationDictionaryManagerIntegration:
         settings_manager = essential_modules["orca.settings_manager"]
         manager_instance = settings_manager.get_manager.return_value
         manager_instance.get_pronunciations.return_value = {}
-        manager_instance.get_general_settings.return_value = {"profile": ["Default", "default"]}
 
         # Set up speech_manager
         speech_manager_mock = essential_modules["orca.speech_manager"]

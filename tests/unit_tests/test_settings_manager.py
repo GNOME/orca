@@ -18,11 +18,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
 # pylint: disable=import-outside-toplevel
-# pylint: disable=protected-access
 # pylint: disable=too-many-statements
-# pylint: disable=too-few-public-methods
 # pylint: disable=too-many-locals
 
 """Unit tests for settings_manager.py with real file I/O.
@@ -41,38 +38,6 @@ import pytest
 
 if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
-
-
-class FakeKeyBinding:
-    """Minimal KeyBinding used by override_key_bindings tests."""
-
-    def __init__(
-        self,
-        keysymstring: str,
-        modifiers: int,
-        click_count: int = 1,
-    ) -> None:
-        self.keysymstring = keysymstring
-        self.modifiers = modifiers
-        self.click_count = click_count
-
-
-class FakeKeyBindings:
-    """Minimal KeyBindings container for tests."""
-
-    def __init__(self, bindings: list[FakeKeyBinding] | None = None) -> None:
-        self.key_bindings = list(bindings or [])
-
-    def add(self, binding: FakeKeyBinding) -> None:
-        """Add a binding."""
-
-        self.key_bindings.append(binding)
-
-    def remove(self, binding: FakeKeyBinding, include_grabs: bool = False) -> None:
-        """Remove a binding."""
-
-        del include_grabs
-        self.key_bindings.remove(binding)
 
 
 @pytest.mark.unit
@@ -107,23 +72,6 @@ class TestSettingsManagerFileIO:
         i18n_mock.setLocaleForGUI = test_context.Mock()
         test_context.patch_module("orca.orca_i18n", i18n_mock)
         essential_modules["orca.orca_i18n"] = i18n_mock
-
-        acss_mock = test_context.Mock()
-
-        class MockACSS(dict):
-            """Minimal ACSS stand-in that behaves like a dict."""
-
-        acss_mock.ACSS = MockACSS
-        test_context.patch_module("orca.acss", acss_mock)
-        essential_modules["orca.acss"] = acss_mock
-
-        speechserver_mock = test_context.Mock()
-        speechserver_mock.DEFAULT_VOICE = "default"
-        speechserver_mock.UPPERCASE_VOICE = "uppercase"
-        speechserver_mock.HYPERLINK_VOICE = "hyperlink"
-        speechserver_mock.SYSTEM_VOICE = "system"
-        test_context.patch_module("orca.speechserver", speechserver_mock)
-        essential_modules["orca.speechserver"] = speechserver_mock
 
         pronun_manager_mock = test_context.Mock()
         pronun_manager_mock.set_dictionary = test_context.Mock()
@@ -253,12 +201,3 @@ class TestSettingsManagerFileIO:
 
             manager.set_configuring(False)
             assert manager.is_configuring() is False
-
-    def test_snapshot_settings_returns_empty_dict(self, test_context: OrcaTestContext) -> None:
-        """Test that snapshot_settings returns an empty dict."""
-
-        self._setup_dependencies(test_context)
-
-        with tempfile.TemporaryDirectory() as temp_dir:
-            manager = self._create_fresh_manager(test_context, temp_dir)
-            assert not manager.snapshot_settings()

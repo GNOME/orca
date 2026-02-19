@@ -48,10 +48,8 @@ from . import input_event
 from . import messages
 from . import orca_platform
 from . import presentation_manager
-from . import settings_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
-from .ax_utilities_debugging import AXUtilitiesDebugging
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -161,15 +159,6 @@ class DebuggingToolsManager:
         debug.debugLevel = debug.LEVEL_SEVERE
         debug.print_message(debug.debugLevel, "DEBUGGING SNAPSHOT STARTING", True)
         self.print_running_applications()
-
-        manager = settings_manager.get_manager()
-        info = AXUtilitiesDebugging.as_string(manager.get_overridden_settings_for_debugging())
-        msg = f"OVERRIDDEN SETTINGS: {info}"
-        debug.print_message(debug.debugLevel, msg, True)
-
-        info = AXUtilitiesDebugging.as_string(manager.get_customized_settings_for_debugging())
-        msg = f"CUSTOMIZED SETTINGS: {info}"
-        debug.print_message(debug.debugLevel, msg, True)
 
         debug.print_message(debug.debugLevel, "DEBUGGING SNAPSHOT FINISHED", True)
         presentation_manager.get_manager().present_message(messages.DEBUG_CAPTURE_SNAPSHOT_END)

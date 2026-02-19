@@ -744,12 +744,11 @@ class ProfileManager:
     def remove_profile(self, internal_name: str) -> None:
         """Removes a profile by internal name."""
 
-        settings_manager.get_manager().remove_profile(internal_name)
-
-        if not gsettings_registry.get_registry().is_enabled():
+        registry = gsettings_registry.get_registry()
+        if not registry.is_enabled():
             return
 
-        sanitized_name = gsettings_registry.get_registry().sanitize_gsettings_path(internal_name)
+        sanitized_name = registry.sanitize_gsettings_path(internal_name)
         path = f"{gsettings_registry.GSETTINGS_PATH_PREFIX}{sanitized_name}/"
         try:
             subprocess.run(["dconf", "reset", "-f", path], check=True)
@@ -762,7 +761,9 @@ class ProfileManager:
     def rename_profile(self, old_internal_name: str, new_profile: list[str]) -> None:
         """Renames a profile."""
 
-        settings_manager.get_manager().rename_profile(old_internal_name, new_profile)
+        registry = gsettings_registry.get_registry()
+        if registry.is_enabled():
+            registry.rename_profile(old_internal_name, new_profile[0], new_profile[1])
 
     @dbus_service.command
     def cycle_settings_profile(
