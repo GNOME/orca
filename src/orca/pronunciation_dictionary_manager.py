@@ -411,9 +411,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
             if self._script and self._script.app:
                 pronunciation_dict = manager.get_pronunciations()
             else:
-                prefs_dict = manager.get_general_settings()
-                profile = prefs_dict.get("profile", ["Default", "default"])[1]
-                pronunciation_dict = manager.get_pronunciations(profile)
+                pronunciation_dict = manager.get_pronunciations(manager.get_profile())
 
             for key in sorted(pronunciation_dict.keys()):
                 value = pronunciation_dict[key]

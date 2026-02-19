@@ -494,6 +494,11 @@ class SettingsManager:
     def get_general_settings(self, profile: str = "default") -> dict:
         """Return the current general settings."""
 
+        registry = gsettings_registry.get_registry()
+        if registry.is_enabled():
+            label = profile.replace("_", " ").title()
+            return {"profile": [label, profile], "activeProfile": [label, profile]}
+
         if not os.path.exists(self._settings_file):
             return {}
         return self._get_general_from_file(profile)
@@ -542,6 +547,15 @@ class SettingsManager:
         app = script.app
         if app:
             app_name = AXObject.get_name(app)
+            registry = gsettings_registry.get_registry()
+            if registry.is_enabled():
+                p = registry.sanitize_gsettings_path(self._profile)
+                metadata_gs = registry.get_settings("metadata", p, app_name=app_name)
+                if metadata_gs is not None:
+                    metadata_gs.set_string("display-name", app_name)
+                    metadata_gs.set_string("internal-name", p)
+                Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
+                return
 
             # Compare against current profile settings to find app-specific differences
             current_general = self.get_general_settings(self._profile)
@@ -562,28 +576,19 @@ class SettingsManager:
                 if value != current_keybindings.get(key):
                     app_keybindings[key] = value
 
-            registry = gsettings_registry.get_registry()
-            if not registry.is_enabled():
-                prefs = self._get_app_settings_from_file(app_name)
-                profiles = prefs.get("profiles", {})
-                profiles[self._profile] = {
-                    "general": app_general,
-                    "pronunciations": app_pronunciations,
-                    "keybindings": app_keybindings,
-                }
-                prefs["profiles"] = profiles
-                app_settings_dir = os.path.join(self._prefs_dir, "app-settings")
-                os.makedirs(app_settings_dir, exist_ok=True)
-                file_name = os.path.join(app_settings_dir, f"{app_name}.conf")
-                with open(file_name, "w", encoding="utf-8") as settings_file:
-                    dump(prefs, settings_file, indent=4)
-            else:
-                p = registry.sanitize_gsettings_path(self._profile)
-                metadata_gs = registry.get_settings("metadata", p, app_name=app_name)
-                if metadata_gs is not None:
-                    metadata_gs.set_string("display-name", app_name)
-                    metadata_gs.set_string("internal-name", p)
-                Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
+            prefs = self._get_app_settings_from_file(app_name)
+            profiles = prefs.get("profiles", {})
+            profiles[self._profile] = {
+                "general": app_general,
+                "pronunciations": app_pronunciations,
+                "keybindings": app_keybindings,
+            }
+            prefs["profiles"] = profiles
+            app_settings_dir = os.path.join(self._prefs_dir, "app-settings")
+            os.makedirs(app_settings_dir, exist_ok=True)
+            file_name = os.path.join(app_settings_dir, f"{app_name}.conf")
+            with open(file_name, "w", encoding="utf-8") as settings_file:
+                dump(prefs, settings_file, indent=4)
             return
 
         _profile = general.get("profile", DEFAULT_PROFILE)
@@ -682,16 +687,16 @@ class SettingsManager:
             return
 
         app_name = AXObject.get_name(script.app)
-        prefs = self._get_app_settings_from_file(app_name)
-        profiles = prefs.get("profiles", {})
-        profile_prefs = profiles.get(self._profile, {})
-        app_general = profile_prefs.get("general", {})
-
         registry = gsettings_registry.get_registry()
         if registry.is_enabled():
+            app_general: dict = {}
             app_pronunciations = registry.get_pronunciations(self._profile, app_name)
             app_keybindings = registry.get_keybindings(self._profile, app_name)
         else:
+            prefs = self._get_app_settings_from_file(app_name)
+            profiles = prefs.get("profiles", {})
+            profile_prefs = profiles.get(self._profile, {})
+            app_general = profile_prefs.get("general", {})
             app_pronunciations = profile_prefs.get("pronunciations", {})
             app_keybindings = profile_prefs.get("keybindings", {})
 
