@@ -76,8 +76,6 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
     if script is None:
         script = script_manager.get_manager().get_default_script()
 
-    settings_manager.get_manager().load_app_settings(script)
-
     command_manager.get_manager().set_keyboard_layout()
 
     presentation_manager.get_manager().start_presenters()

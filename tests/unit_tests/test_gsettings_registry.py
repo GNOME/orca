@@ -2031,6 +2031,167 @@ class TestLayeredLookup:
 
 
 @pytest.mark.unit
+class TestLayeredGetDict:
+    """Tests for GSettingsSchemaHandle._layered_get_dict merge semantics."""
+
+    def _setup(self, test_context: OrcaTestContext):
+        """Set up dependencies."""
+
+        additional_modules = [
+            "orca.cmdnames",
+            "orca.messages",
+            "orca.object_properties",
+            "orca.orca_gui_navlist",
+            "orca.orca_i18n",
+            "orca.AXHypertext",
+            "orca.AXObject",
+            "orca.AXTable",
+            "orca.AXText",
+            "orca.AXUtilities",
+            "orca.input_event",
+        ]
+        test_context.setup_shared_dependencies(additional_modules)
+
+    def _make_gs_with_entries(self, test_context, entries):
+        """Creates a mock Gio.Settings with user_value for 'entries'."""
+
+        gs = test_context.Mock()
+        if entries is None:
+            gs.get_user_value.return_value = None
+        else:
+            variant = test_context.Mock()
+            variant.unpack.return_value = entries
+            gs.get_user_value.return_value = variant
+        return gs
+
+    def test_non_default_profile_does_not_inherit_default(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that dict lookup does not merge entries from the default profile."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsSchemaHandle
+        from orca import gsettings_registry
+
+        handle = GSettingsSchemaHandle("org.gnome.Orca.Test", "test")
+        mock_schema = test_context.Mock()
+        mock_schema.has_key.return_value = True
+        test_context.patch_object(handle, "get_schema", return_value=mock_schema)
+
+        gsettings_registry.get_registry().set_active_app(None)
+        gsettings_registry.get_registry().set_active_profile("spanish")
+
+        default_gs = self._make_gs_with_entries(test_context, {"a": "1", "b": "2"})
+        spanish_gs = self._make_gs_with_entries(test_context, {"b": "3", "c": "4"})
+
+        def get_for_profile(profile, _sub_path=""):
+            if profile == "default":
+                return default_gs
+            return spanish_gs
+
+        test_context.patch_object(handle, "get_for_profile", side_effect=get_for_profile)
+
+        result = handle.get_dict("entries")
+        assert result == {"b": "3", "c": "4"}
+        gsettings_registry.get_registry().set_active_profile("default")
+
+    def test_merges_profile_and_app(self, test_context: OrcaTestContext) -> None:
+        """Test dict merge: profile | app (no default profile layer)."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsSchemaHandle
+        from orca import gsettings_registry
+
+        handle = GSettingsSchemaHandle("org.gnome.Orca.Test", "test")
+        mock_schema = test_context.Mock()
+        mock_schema.has_key.return_value = True
+        test_context.patch_object(handle, "get_schema", return_value=mock_schema)
+
+        gsettings_registry.get_registry().set_active_app("Firefox")
+        gsettings_registry.get_registry().set_active_profile("spanish")
+
+        spanish_gs = self._make_gs_with_entries(test_context, {"b": "3"})
+        app_gs = self._make_gs_with_entries(test_context, {"a": "5"})
+
+        test_context.patch_object(handle, "get_for_profile", return_value=spanish_gs)
+        test_context.patch_object(handle, "get_for_app", return_value=app_gs)
+
+        result = handle.get_dict("entries")
+        assert result == {"a": "5", "b": "3"}
+
+        gsettings_registry.get_registry().set_active_app(None)
+        gsettings_registry.get_registry().set_active_profile("default")
+
+    def test_returns_none_when_no_layer_set(self, test_context: OrcaTestContext) -> None:
+        """Test dict merge returns None when no layer has a value."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsSchemaHandle
+        from orca import gsettings_registry
+
+        handle = GSettingsSchemaHandle("org.gnome.Orca.Test", "test")
+        mock_schema = test_context.Mock()
+        mock_schema.has_key.return_value = True
+        test_context.patch_object(handle, "get_schema", return_value=mock_schema)
+
+        gsettings_registry.get_registry().set_active_app(None)
+        gsettings_registry.get_registry().set_active_profile("default")
+
+        empty_gs = self._make_gs_with_entries(test_context, None)
+        test_context.patch_object(handle, "get_for_profile", return_value=empty_gs)
+
+        result = handle.get_dict("entries")
+        assert result is None
+
+    def test_app_layer_wins_over_profile(self, test_context: OrcaTestContext) -> None:
+        """Test dict merge: app-specific entries override profile entries."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsSchemaHandle
+        from orca import gsettings_registry
+
+        handle = GSettingsSchemaHandle("org.gnome.Orca.Test", "test")
+        mock_schema = test_context.Mock()
+        mock_schema.has_key.return_value = True
+        test_context.patch_object(handle, "get_schema", return_value=mock_schema)
+
+        gsettings_registry.get_registry().set_active_app("Firefox")
+        gsettings_registry.get_registry().set_active_profile("default")
+
+        profile_gs = self._make_gs_with_entries(test_context, {"word": "old"})
+        app_gs = self._make_gs_with_entries(test_context, {"word": "new"})
+
+        test_context.patch_object(handle, "get_for_profile", return_value=profile_gs)
+        test_context.patch_object(handle, "get_for_app", return_value=app_gs)
+
+        result = handle.get_dict("entries")
+        assert result == {"word": "new"}
+
+        gsettings_registry.get_registry().set_active_app(None)
+
+    def test_default_profile_only(self, test_context: OrcaTestContext) -> None:
+        """Test dict merge with only default profile having entries."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsSchemaHandle
+        from orca import gsettings_registry
+
+        handle = GSettingsSchemaHandle("org.gnome.Orca.Test", "test")
+        mock_schema = test_context.Mock()
+        mock_schema.has_key.return_value = True
+        test_context.patch_object(handle, "get_schema", return_value=mock_schema)
+
+        gsettings_registry.get_registry().set_active_app(None)
+        gsettings_registry.get_registry().set_active_profile("default")
+
+        profile_gs = self._make_gs_with_entries(test_context, {"hello": "hi"})
+        test_context.patch_object(handle, "get_for_profile", return_value=profile_gs)
+
+        result = handle.get_dict("entries")
+        assert result == {"hello": "hi"}
+
+
+@pytest.mark.unit
 class TestGetPronunciations:
     """Tests for GSettingsRegistry.get_pronunciations."""
 
@@ -2061,21 +2222,20 @@ class TestGetPronunciations:
         registry = GSettingsRegistry()
         assert not registry.get_pronunciations("default")
 
-    def test_returns_exported_pronunciations(self, test_context: OrcaTestContext) -> None:
-        """Test get_pronunciations delegates to export_pronunciations."""
+    def test_returns_raw_dconf_pronunciations(self, test_context: OrcaTestContext) -> None:
+        """Test get_pronunciations returns raw dconf format {word: replacement}."""
 
         self._setup(test_context)
         from orca.gsettings_registry import get_registry
 
         registry = get_registry()
         mock_gs = test_context.Mock()
-        expected = {"hello": ["hello", "hi"], "world": ["world", "earth"]}
+        expected = {"hello": "hi", "world": "earth"}
+        mock_variant = test_context.Mock()
+        mock_variant.unpack.return_value = expected
+        mock_gs.get_user_value.return_value = mock_variant
 
         test_context.patch_object(registry, "get_settings", return_value=mock_gs)
-        test_context.patch(
-            "orca.gsettings_registry.gsettings_migrator.export_pronunciations",
-            return_value=expected,
-        )
 
         result = registry.get_pronunciations("default")
         assert result == expected
@@ -2089,12 +2249,9 @@ class TestGetPronunciations:
         registry = get_registry()
         registry.set_active_profile("spanish")
         mock_gs = test_context.Mock()
+        mock_gs.get_user_value.return_value = None
 
         mockget_settings = test_context.patch_object(registry, "get_settings", return_value=mock_gs)
-        test_context.patch(
-            "orca.gsettings_registry.gsettings_migrator.export_pronunciations",
-            return_value={},
-        )
 
         registry.get_pronunciations()
         mockget_settings.assert_called_once_with("pronunciations", "spanish", "pronunciations", "")
@@ -2108,12 +2265,9 @@ class TestGetPronunciations:
 
         registry = get_registry()
         mock_gs = test_context.Mock()
+        mock_gs.get_user_value.return_value = None
 
         mockget_settings = test_context.patch_object(registry, "get_settings", return_value=mock_gs)
-        test_context.patch(
-            "orca.gsettings_registry.gsettings_migrator.export_pronunciations",
-            return_value={},
-        )
 
         registry.get_pronunciations("default", "Firefox")
         mockget_settings.assert_called_once_with(
@@ -2130,6 +2284,20 @@ class TestGetPronunciations:
 
         registry = get_registry()
         test_context.patch_object(registry, "get_settings", return_value=None)
+
+        result = registry.get_pronunciations("default")
+        assert not result
+
+    def test_returns_empty_when_no_user_value(self, test_context: OrcaTestContext) -> None:
+        """Test get_pronunciations returns {} when entries have no user value."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import get_registry
+
+        registry = get_registry()
+        mock_gs = test_context.Mock()
+        mock_gs.get_user_value.return_value = None
+        test_context.patch_object(registry, "get_settings", return_value=mock_gs)
 
         result = registry.get_pronunciations("default")
         assert not result
@@ -2166,8 +2334,8 @@ class TestGetKeybindings:
         registry = GSettingsRegistry()
         assert not registry.get_keybindings("default")
 
-    def test_returns_exported_keybindings(self, test_context: OrcaTestContext) -> None:
-        """Test get_keybindings delegates to export_keybindings."""
+    def test_returns_raw_dconf_keybindings(self, test_context: OrcaTestContext) -> None:
+        """Test get_keybindings returns raw dconf format."""
 
         self._setup(test_context)
         from orca.gsettings_registry import get_registry
@@ -2178,12 +2346,11 @@ class TestGetKeybindings:
             "next_heading": [["h", "269", "0", "1"]],
             "prev_heading": [["h", "269", "0", "2"]],
         }
+        mock_variant = test_context.Mock()
+        mock_variant.unpack.return_value = expected
+        mock_gs.get_user_value.return_value = mock_variant
 
         test_context.patch_object(registry, "get_settings", return_value=mock_gs)
-        test_context.patch(
-            "orca.gsettings_registry.gsettings_migrator.export_keybindings",
-            return_value=expected,
-        )
 
         result = registry.get_keybindings("default")
         assert result == expected
@@ -2197,12 +2364,9 @@ class TestGetKeybindings:
         registry = get_registry()
         registry.set_active_profile("spanish")
         mock_gs = test_context.Mock()
+        mock_gs.get_user_value.return_value = None
 
         mockget_settings = test_context.patch_object(registry, "get_settings", return_value=mock_gs)
-        test_context.patch(
-            "orca.gsettings_registry.gsettings_migrator.export_keybindings",
-            return_value={},
-        )
 
         registry.get_keybindings()
         mockget_settings.assert_called_once_with("keybindings", "spanish", "keybindings", "")
@@ -2216,12 +2380,9 @@ class TestGetKeybindings:
 
         registry = get_registry()
         mock_gs = test_context.Mock()
+        mock_gs.get_user_value.return_value = None
 
         mockget_settings = test_context.patch_object(registry, "get_settings", return_value=mock_gs)
-        test_context.patch(
-            "orca.gsettings_registry.gsettings_migrator.export_keybindings",
-            return_value={},
-        )
 
         registry.get_keybindings("default", "Firefox")
         mockget_settings.assert_called_once_with("keybindings", "default", "keybindings", "Firefox")
@@ -2236,6 +2397,20 @@ class TestGetKeybindings:
 
         registry = get_registry()
         test_context.patch_object(registry, "get_settings", return_value=None)
+
+        result = registry.get_keybindings("default")
+        assert not result
+
+    def test_returns_empty_when_no_user_value(self, test_context: OrcaTestContext) -> None:
+        """Test get_keybindings returns {} when entries have no user value."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import get_registry
+
+        registry = get_registry()
+        mock_gs = test_context.Mock()
+        mock_gs.get_user_value.return_value = None
+        test_context.patch_object(registry, "get_settings", return_value=mock_gs)
 
         result = registry.get_keybindings("default")
         assert not result

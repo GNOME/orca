@@ -142,6 +142,8 @@ class GSettingsRegistry:
             "i": handle.get_int,
             "d": handle.get_double,
             "as": handle.get_strv,
+            "a{ss}": handle.get_dict,
+            "a{saas}": handle.get_dict,
         }
         accessor = accessors.get("s" if genum else gtype)
         result = accessor(key, sub_path, app_name) if accessor is not None else None
@@ -215,24 +217,30 @@ class GSettingsRegistry:
         self._runtime_values.clear()
 
     def get_pronunciations(self, profile: str = "", app_name: str = "") -> dict:
-        """Returns the pronunciation dictionary from dconf for a profile/app."""
+        """Returns the pronunciation dictionary from dconf for a single profile/app layer."""
 
         if not profile:
             profile = self._profile
         gs = self.get_settings("pronunciations", profile, "pronunciations", app_name)
         if gs is None:
             return {}
-        return gsettings_migrator.export_pronunciations(gs)
+        user_value = gs.get_user_value("entries")
+        if user_value is None:
+            return {}
+        return user_value.unpack()
 
     def get_keybindings(self, profile: str = "", app_name: str = "") -> dict:
-        """Returns the keybinding overrides from dconf for a profile/app."""
+        """Returns the keybinding overrides from dconf for a single profile/app layer."""
 
         if not profile:
             profile = self._profile
         gs = self.get_settings("keybindings", profile, "keybindings", app_name)
         if gs is None:
             return {}
-        return gsettings_migrator.export_keybindings(gs)
+        user_value = gs.get_user_value("entries")
+        if user_value is None:
+            return {}
+        return user_value.unpack()
 
     def set_active_app(self, app_name: str | None) -> None:
         """Sets the active app name for GSettings lookups."""
@@ -1127,6 +1135,60 @@ class GSettingsSchemaHandle:
     ) -> list[str] | None:
         """Returns a string array via layered lookup, or None."""
         return self._layered_get(key, lambda gs, k: gs.get_strv(k), sub_path, app_name)
+
+    def _layered_get_dict(
+        self,
+        key: str,
+        sub_path: str = "",
+        app_name: str | None = None,
+    ) -> dict | None:
+        """Returns a merged dict from profile and app layers, or None if neither has a value."""
+
+        # Unlike scalar lookups, dicts do NOT inherit from the default profile.
+        # Profile creation copies the default's dict entries into new profiles,
+        # so at runtime each profile already has everything it needs. Merging
+        # with default would make it impossible to delete inherited entries.
+
+        if not self.has_key(key):
+            return None
+
+        registry = get_registry()
+        if app_name is None:
+            app_name = registry.get_active_app()
+        profile = registry.get_active_profile()
+
+        suffix = self._path_suffix
+        result: dict = {}
+        found_any = False
+
+        gs = self.get_for_profile(profile, sub_path)
+        if gs is not None:
+            variant = gs.get_user_value(key)
+            if variant is not None:
+                result |= variant.unpack()
+                found_any = True
+
+        if app_name:
+            gs = self.get_for_app(app_name, profile, sub_path)
+            if gs is not None:
+                variant = gs.get_user_value(key)
+                if variant is not None:
+                    result |= variant.unpack()
+                    found_any = True
+
+        if not found_any:
+            msg = f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} no dict values set"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return None
+
+        msg = f"GSETTINGS SCHEMA HANDLE: {suffix}/{key} merged dict ({len(result)} entries)"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return result
+
+    def get_dict(self, key: str, sub_path: str = "", app_name: str | None = None) -> dict | None:
+        """Returns a merged dict via layered lookup, or None."""
+
+        return self._layered_get_dict(key, sub_path, app_name)
 
     def _set_value(
         self,

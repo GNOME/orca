@@ -38,7 +38,6 @@ from . import messages
 from . import preferences_grid_base
 from . import presentation_manager
 from . import script_manager
-from . import settings_manager
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -404,20 +403,17 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
 
         if not self._loaded_from_settings:
             self._loaded_from_settings = True
-            manager = settings_manager.get_manager()
+            registry = gsettings_registry.get_registry()
+            profile = registry.get_active_profile()
+            app_name = ""
             if self._script and self._script.app:
-                pronunciation_dict = manager.get_pronunciations()
-            else:
-                pronunciation_dict = manager.get_pronunciations(manager.get_profile())
+                from .ax_object import AXObject  # pylint: disable=import-outside-toplevel
+
+                app_name = AXObject.get_name(self._script.app)
+            pronunciation_dict = registry.get_pronunciations(profile, app_name)
 
             for key in sorted(pronunciation_dict.keys()):
-                value = pronunciation_dict[key]
-                if isinstance(value, list):
-                    replacement = value[1] if len(value) > 1 else value[0]
-                else:
-                    replacement = value
-
-                self._pronunciations.append((key, replacement))
+                self._pronunciations.append((key, pronunciation_dict[key]))
 
         if self._pronunciations:
             for index, (phrase, substitution) in enumerate(self._pronunciations):
@@ -439,7 +435,9 @@ class PronunciationDictionaryManager:
     """Manager for the pronunciation dictionary."""
 
     def __init__(self) -> None:
-        self._dictionary: dict[str, str] = {}
+        self._dictionary: dict[str, str] | None = None
+        self._cached_app: str | None = None
+        self._cached_profile: str = "default"
         self._suppressed: bool = False
 
     def create_preferences_grid(
@@ -464,6 +462,20 @@ class PronunciationDictionaryManager:
 
         if self._suppressed:
             return word
+
+        registry = gsettings_registry.get_registry()
+        current_app = registry.get_active_app()
+        current_profile = registry.get_active_profile()
+        if self._cached_app != current_app or self._cached_profile != current_profile:
+            self._dictionary = None
+            self._cached_app = current_app
+            self._cached_profile = current_profile
+
+        if self._dictionary is None:
+            self._dictionary = registry.layered_lookup(
+                "pronunciations", "entries", "a{ss}", default={}
+            )
+
         return self._dictionary.get(word.lower(), word)
 
     def set_pronunciation(self, word: str, replacement: str) -> None:
@@ -475,6 +487,8 @@ class PronunciationDictionaryManager:
         # to the UI to allow users to choose case sensitivity for individual entries.
 
         key = word.lower()
+        if self._dictionary is None:
+            self._dictionary = {}
         self._dictionary[key] = replacement
 
     @gsettings_registry.get_registry().gsetting(
@@ -487,12 +501,14 @@ class PronunciationDictionaryManager:
     def get_dictionary(self) -> dict[str, str]:
         """Returns the pronunciation dictionary."""
 
+        if self._dictionary is None:
+            return {}
         return self._dictionary
 
     def set_dictionary(self, value: dict[str, str]) -> None:
-        """Sets the pronunciation dictionary."""
+        """Sets the pronunciation dictionary, or invalidates the cache if empty."""
 
-        self._dictionary = value
+        self._dictionary = value or None
 
 
 _manager = PronunciationDictionaryManager()

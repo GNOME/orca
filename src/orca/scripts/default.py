@@ -450,12 +450,7 @@ class Script(script.Script):
         tokens = ["DEFAULT: Activating script for", self.app]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        # Don't reload settings from disk while the preferences dialog is open,
-        # as this would overwrite any unsaved changes the user is making.
         if not settings_manager.get_manager().is_configuring():
-            settings_manager.get_manager().load_app_settings(self)
-
-            # TODO - JD: Should these be moved into check_speech_setting?
             speech_manager.get_manager().update_punctuation_level()
             speech_manager.get_manager().update_capitalization_style()
             speech_manager.get_manager().update_synthesizer()
@@ -512,7 +507,6 @@ class Script(script.Script):
         """Shows the app Preferences dialog."""
 
         current_script = current_script or self
-        settings_manager.get_manager().load_app_settings(current_script)
         ui = orca_gui_prefs.OrcaSetupGUI(current_script)
         ui.show_gui()
         return True

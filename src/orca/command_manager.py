@@ -55,7 +55,6 @@ from . import orca_modifier_manager
 from . import preferences_grid_base
 from . import presentation_manager
 from . import script_manager
-from . import settings_manager
 from .ax_object import AXObject
 
 if TYPE_CHECKING:
@@ -1446,7 +1445,9 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         # don't persist when switching to a different app.
         self._apply_layout_to_commands()
 
-        keybindings_dict = settings_manager.get_manager().get_active_keybindings()
+        keybindings_dict = gsettings_registry.get_registry().layered_lookup(
+            "keybindings", "entries", "a{saas}", default={}
+        )
         if keybindings_dict:
             msg = f"COMMAND MANAGER: Applying {len(keybindings_dict)} user overrides"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1837,7 +1838,9 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
     def get_keybinding_overrides(self) -> dict:
         """Returns the user's keybinding overrides."""
 
-        return settings_manager.get_manager().get_active_keybindings()
+        return gsettings_registry.get_registry().layered_lookup(
+            "keybindings", "entries", "a{saas}", default={}
+        )
 
     # pylint: disable-next=too-many-arguments, too-many-positional-arguments
     def register_command(

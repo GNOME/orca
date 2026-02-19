@@ -71,11 +71,6 @@ class TestPronunciationDictionaryManager:
         messages = essential_modules["orca.messages"]
         messages.PRONUNCIATION_DELETED = "Pronunciation %s deleted"
 
-        # Set up settings_manager
-        settings_manager = essential_modules["orca.settings_manager"]
-        manager_instance = settings_manager.get_manager.return_value
-        manager_instance.get_pronunciations.return_value = {}
-
         # Set up speech_manager
         speech_manager_mock = essential_modules["orca.speech_manager"]
         speech_instance = speech_manager_mock.get_manager.return_value
@@ -239,11 +234,6 @@ class TestPronunciationDictionaryManagerIntegration:
         # Set up messages
         messages = essential_modules["orca.messages"]
         messages.PRONUNCIATION_DELETED = "Pronunciation %s deleted"
-
-        # Set up settings_manager
-        settings_manager = essential_modules["orca.settings_manager"]
-        manager_instance = settings_manager.get_manager.return_value
-        manager_instance.get_pronunciations.return_value = {}
 
         # Set up speech_manager
         speech_manager_mock = essential_modules["orca.speech_manager"]

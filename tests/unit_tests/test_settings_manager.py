@@ -74,16 +74,6 @@ class TestSettingsManagerFileIO:
         test_context.patch_module("orca.orca_i18n", i18n_mock)
         essential_modules["orca.orca_i18n"] = i18n_mock
 
-        pronun_manager_mock = test_context.Mock()
-        pronun_manager_mock.set_dictionary = test_context.Mock()
-        pronun_manager_mock.set_pronunciation = test_context.Mock()
-        pronun_manager_mock.get_pronunciation = test_context.Mock(side_effect=lambda w: w)
-        pronun_manager_mock.get_dictionary = test_context.Mock(return_value={})
-        pronun_module_mock = test_context.Mock()
-        pronun_module_mock.get_manager = test_context.Mock(return_value=pronun_manager_mock)
-        test_context.patch_module("orca.pronunciation_dictionary_manager", pronun_module_mock)
-        essential_modules["orca.pronunciation_dictionary_manager"] = pronun_module_mock
-
         # Mock orca_platform (generated at build time)
         platform_mock = test_context.Mock()
         platform_mock.version = "test_version"
@@ -96,36 +86,9 @@ class TestSettingsManagerFileIO:
         test_context.patch_module("orca.messages", messages_mock)
         essential_modules["orca.messages"] = messages_mock
 
-        # Mock pronunciation_dictionary_manager (uses messages)
-        pronun_dict_manager_mock = test_context.Mock()
-        pronun_dict_manager_mock.get_manager = test_context.Mock(return_value=test_context.Mock())
-        test_context.patch_module("orca.pronunciation_dictionary_manager", pronun_dict_manager_mock)
-        essential_modules["orca.pronunciation_dictionary_manager"] = pronun_dict_manager_mock
-
-        keybindings_mock = test_context.Mock()
-        keybindings_mock.KeyBinding = test_context.Mock()
-        test_context.patch_module("orca.keybindings", keybindings_mock)
-        essential_modules["orca.keybindings"] = keybindings_mock
-
-        # Mock script_manager to avoid cascading dependencies
-        script_manager_mock = test_context.Mock()
-        script_manager_mock.get_manager = test_context.Mock(return_value=test_context.Mock())
-        test_context.patch_module("orca.script_manager", script_manager_mock)
-        essential_modules["orca.script_manager"] = script_manager_mock
-
-        ax_object_mock = test_context.Mock()
-        ax_object_mock.get_name = test_context.Mock(return_value="TestApp")
-        ax_object_class = test_context.Mock()
-        ax_object_class.get_name = test_context.Mock(return_value="TestApp")
-        ax_object_mock.AXObject = ax_object_class
-        test_context.patch_module("orca.ax_object", ax_object_mock)
-        essential_modules["orca.ax_object"] = ax_object_mock
-
         gsettings_registry_mock = test_context.Mock()
         mock_registry = test_context.Mock()
         mock_registry.layered_lookup.return_value = None
-        mock_registry.get_pronunciations.return_value = {}
-        mock_registry.get_keybindings.return_value = {}
         gsettings_registry_mock.get_registry.return_value = mock_registry
         test_context.patch_module("orca.gsettings_registry", gsettings_registry_mock)
         essential_modules["orca.gsettings_registry"] = gsettings_registry_mock

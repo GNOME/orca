@@ -992,20 +992,11 @@ class TestDiffBasedGrabUpdates:
             return_value=modifier_manager_instance
         )
 
-        # Mock settings_manager for apply_user_overrides
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_manager_instance = test_context.Mock()
-        settings_manager_instance.get_active_keybindings = test_context.Mock(return_value={})
-        settings_manager_mock.get_manager = test_context.Mock(
-            return_value=settings_manager_instance
-        )
-
         from orca import gsettings_registry
 
         gsettings_registry.get_registry().clear_runtime_values()
 
         essential_modules["modifier_manager_instance"] = modifier_manager_instance
-        essential_modules["settings_manager_instance"] = settings_manager_instance
         return essential_modules
 
     def _create_mock_function(self, test_context: OrcaTestContext) -> Mock:
@@ -1191,7 +1182,7 @@ class TestDiffBasedGrabUpdates:
     def test_activate_commands_applies_overrides(self, test_context: OrcaTestContext) -> None:
         """Test activate_commands applies user overrides."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.command_manager import KeyboardCommand, CommandManager
 
         manager = CommandManager()
@@ -1203,14 +1194,12 @@ class TestDiffBasedGrabUpdates:
         cmd.set_keybinding(kb)
         manager.add_command(cmd)
 
-        # Activate commands should apply user overrides
-        settings_manager = essential_modules["settings_manager_instance"]
-        settings_manager.get_active_keybindings.return_value = {}
-
+        # activate_commands reads overrides via layered_lookup on the registry.
+        # With no user values in the memory backend, no overrides are applied.
         manager.activate_commands("test")
 
-        # Should call get_active_keybindings to apply overrides
-        settings_manager.get_active_keybindings.assert_called()
+        # The command should still have its original keybinding unchanged.
+        assert cmd.get_keybinding() is kb
 
     def test_diff_skips_inactive_commands(self, test_context: OrcaTestContext) -> None:
         """Test that diff skips inactive commands."""
