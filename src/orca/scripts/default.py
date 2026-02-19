@@ -513,8 +513,7 @@ class Script(script.Script):
 
         current_script = current_script or self
         settings_manager.get_manager().load_app_settings(current_script)
-        prefs = settings_manager.get_manager().get_settings()
-        ui = orca_gui_prefs.OrcaSetupGUI(current_script, prefs)
+        ui = orca_gui_prefs.OrcaSetupGUI(current_script)
         ui.show_gui()
         return True
 
@@ -523,9 +522,7 @@ class Script(script.Script):
     ) -> bool:
         """Displays the Preferences dialog."""
 
-        manager = settings_manager.get_manager()
-        prefs = manager.get_general_settings(manager.get_profile())
-        ui = orca_gui_prefs.OrcaSetupGUI(script_manager.get_manager().get_default_script(), prefs)
+        ui = orca_gui_prefs.OrcaSetupGUI(script_manager.get_manager().get_default_script())
         ui.show_gui()
         return True
 

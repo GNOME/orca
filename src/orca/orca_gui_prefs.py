@@ -25,9 +25,7 @@
 
 """Displays a GUI for the user to set Orca preferences."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
-
 
 import time
 from dataclasses import dataclass
@@ -93,7 +91,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
     WINDOW: OrcaSetupGUI | None = None
 
-    def __init__(self, script: "default.Script", prefs_dict: dict[str, Any]) -> None:
+    def __init__(self, script: default.Script) -> None:
         if OrcaSetupGUI.WINDOW is not None:
             return
 
@@ -104,7 +102,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self.connect("destroy", self.window_destroyed)
         self.connect("delete-event", self.window_closed)
 
-        self.prefs_dict = prefs_dict
+        self._profile_name: str = settings_manager.get_manager().get_profile()
         self.script = script
         self._settings_applied = False
         self._app_name: str | None = None
@@ -495,44 +493,26 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         msg = "PREFERENCES DIALOG: Apply button clicked"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
-        profile_data = self.prefs_dict.get("profile", settings_manager.DEFAULT_PROFILE)
-        profile_name = profile_data[1] if isinstance(profile_data, list) else "default"
         save_app = self._app_name or ""
 
         # Save profiles first so any renames happen before saving other settings
         # (profiles are global, not saved for app-specific preferences)
         if not self._app_name:
-            profile_values = self.profiles_grid.save_settings()
-            self.prefs_dict.update(profile_values)
+            self.profiles_grid.save_settings()
 
-        speech_values = self.speech_grid.save_settings(profile_name, save_app)
-        self.prefs_dict.update(speech_values)
-
-        braille_values = self.braille_grid.save_settings(profile_name, save_app)
-        self.prefs_dict.update(braille_values)
-        sound_values = self.sound_grid.save_settings(profile_name, save_app)
-        self.prefs_dict.update(sound_values)
-        updated_values = self.typing_echo_grid.save_settings(profile_name, save_app)
-        self.prefs_dict.update(updated_values)
-        say_all_values = self.say_all_grid.save_settings(profile_name, save_app)
-        self.prefs_dict.update(say_all_values)
-        spellcheck_values = self.spellcheck_grid.save_settings(profile_name, save_app)
-        self.prefs_dict.update(spellcheck_values)
-        chat_values = self.chat_grid.save_settings(profile_name, save_app)
-        self.prefs_dict.update(chat_values)
-        mouse_values = self.mouse_grid.save_settings(profile_name, save_app)
-        self.prefs_dict.update(mouse_values)
-        document_values = self.document_grid.save_settings(profile_name, save_app)
-        self.prefs_dict.update(document_values)
-        time_and_date_values = self.time_and_date_grid.save_settings(profile_name, save_app)
-        self.prefs_dict.update(time_and_date_values)
-        text_attr_values = self.text_attributes_grid.save_settings(profile_name, save_app)
-        self.prefs_dict.update(text_attr_values)
-        self.pronunciation_grid.save_settings(profile_name, save_app)
-        keybindings_general, _key_bindings_dict = self.keybindings_grid.save_settings(
-            profile_name, save_app
-        )
-        self.prefs_dict.update(keybindings_general)
+        self.speech_grid.save_settings(self._profile_name, save_app)
+        self.braille_grid.save_settings(self._profile_name, save_app)
+        self.sound_grid.save_settings(self._profile_name, save_app)
+        self.typing_echo_grid.save_settings(self._profile_name, save_app)
+        self.say_all_grid.save_settings(self._profile_name, save_app)
+        self.spellcheck_grid.save_settings(self._profile_name, save_app)
+        self.chat_grid.save_settings(self._profile_name, save_app)
+        self.mouse_grid.save_settings(self._profile_name, save_app)
+        self.document_grid.save_settings(self._profile_name, save_app)
+        self.time_and_date_grid.save_settings(self._profile_name, save_app)
+        self.text_attributes_grid.save_settings(self._profile_name, save_app)
+        self.pronunciation_grid.save_settings(self._profile_name, save_app)
+        self.keybindings_grid.save_settings(self._profile_name, save_app)
 
         orca.load_user_settings(self.script, skip_reload_message=True)
 
@@ -585,9 +565,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         if new_profile is None:
             return
 
-        # Set the new profile and save using existing methods
-        self.prefs_dict["profile"] = new_profile
-        self.prefs_dict["activeProfile"] = new_profile
+        self._profile_name = new_profile[1]
         self.apply_button_clicked(None)
         self._on_profile_loaded(new_profile)
 
@@ -922,6 +900,6 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         if not self.get_realized():
             return
 
-        self.prefs_dict = settings_manager.get_manager().get_general_settings(profile[1])
+        self._profile_name = profile[1]
         self._init_gui_state(include_profiles=False)
         self.update_menu_labels()
