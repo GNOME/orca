@@ -29,7 +29,6 @@
 
 from __future__ import annotations
 
-import ast
 import importlib
 import importlib.util
 import os
@@ -159,18 +158,7 @@ class SettingsManager:
 
         debug.print_message(debug.LEVEL_INFO, "SETTINGS MANAGER: Activated", True)
 
-        starting_profile = self._settings.get("startingProfile", ["Default", "default"])
-
-        # Handle corrupted data where list was saved as string representation
-        if isinstance(starting_profile, str):
-            msg = f"SETTINGS MANAGER: startingProfile is string '{starting_profile}', fixing."
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
-            try:
-                starting_profile = ast.literal_eval(starting_profile)
-            except (ValueError, SyntaxError):
-                starting_profile = ["Default", "default"]
-
-        self._profile = starting_profile[1]
+        self._profile = "default"
         tokens = ["SETTINGS MANAGER: Current profile is", self._profile]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -216,32 +204,14 @@ class SettingsManager:
                 return {}
 
         result = self._default_settings.copy()
-        # Handle both new format (root level) and old format (inside "general")
-        starting_profile = prefs.get("startingProfile")
-        if starting_profile is None:
-            starting_profile = prefs.get("general", {}).get(
-                "startingProfile", ["Default", "default"]
-            )
-
-        # Handle corrupted data where list was saved as string representation
-        if isinstance(starting_profile, str):
-            msg = f"SETTINGS MANAGER: startingProfile is string '{starting_profile}', fixing."
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
-            try:
-                starting_profile = ast.literal_eval(starting_profile)
-            except (ValueError, SyntaxError):
-                starting_profile = ["Default", "default"]
-
-        result["startingProfile"] = starting_profile
-        default_profile = starting_profile
         if profile is None:
-            profile = default_profile[1]
+            profile = "default"
 
         # First apply the default profile's settings as a base, then overlay
         # the current profile's settings. This ensures that non-default profiles
         # inherit settings from the default profile that they don't override.
-        profiles_to_apply = [default_profile[1]]
-        if profile != default_profile[1]:
+        profiles_to_apply = ["default"]
+        if profile != "default":
             profiles_to_apply.append(profile)
 
         for profile_name in profiles_to_apply:
@@ -250,7 +220,7 @@ class SettingsManager:
                 if key == "voices":
                     for voice_type, voice_def in value.items():
                         value[voice_type] = ACSS(voice_def)
-                if key not in ["startingProfile", "activeProfile"]:
+                if key != "activeProfile":
                     result[key] = value
 
         if "voices" in result:
@@ -262,16 +232,6 @@ class SettingsManager:
             ):
                 if voice_type not in result["voices"]:
                     result["voices"][voice_type] = ACSS({})
-
-        try:
-            result["activeProfile"] = profile_settings["profile"]
-        except KeyError:
-            result["activeProfile"] = default_profile
-
-        # Ensure "profile" key is set for saving back to file
-        if "profile" not in result and profile is not None:
-            label = profile.replace("_", " ").title()
-            result["profile"] = [label, profile]
 
         return result
 
@@ -379,9 +339,6 @@ class SettingsManager:
 
         msg = "SETTINGS MANAGER: Settings merged."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def set_starting_profile(self, _profile: list[str] | None = None) -> None:
-        """No-op. Starting profile is always Default."""
 
     def get_profile(self) -> str:
         """Returns the active profile."""

@@ -746,7 +746,7 @@ def export_settings(source: SchemaSource, output_dir: str) -> None:
         _export_apps(source, sanitized_name, output_dir, original_name)
 
 
-_LEGACY_ROOT_KEYS = {"general", "keybindings", "pronunciations", "startingProfile"}
+_LEGACY_ROOT_KEYS = {"general", "keybindings", "pronunciations"}
 
 _KNOWN_UNMIGRATED_KEYS: set[str] = set()
 

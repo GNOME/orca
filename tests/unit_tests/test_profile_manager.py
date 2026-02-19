@@ -63,9 +63,7 @@ class TestProfileManager:
             ["Work", "work"],
         ]
         settings_manager_mock.get_manager.return_value.get_profile.return_value = "default"
-        settings_manager_mock.get_manager.return_value.get_general_settings.return_value = {
-            "startingProfile": ["Default", "default"],
-        }
+        settings_manager_mock.get_manager.return_value.get_general_settings.return_value = {}
 
         from orca import gsettings_registry
 
@@ -159,43 +157,6 @@ class TestProfileManager:
         essential_modules["orca.orca"].load_user_settings.assert_called_once_with(
             skip_reload_message=True
         )
-
-    def test_get_starting_profile(self, test_context: OrcaTestContext) -> None:
-        """Test getting starting profile."""
-
-        self._setup_dependencies(test_context)
-        from orca.profile_manager import ProfileManager
-
-        manager = ProfileManager()
-        profile = manager.get_starting_profile()
-
-        assert profile == ["Default", "default"]
-
-    def test_get_starting_profile_default_fallback(self, test_context: OrcaTestContext) -> None:
-        """Test getting starting profile falls back to default."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.get_general_settings.return_value = {}
-        from orca.profile_manager import ProfileManager
-
-        manager = ProfileManager()
-        profile = manager.get_starting_profile()
-
-        assert profile == ["Default", "default"]
-
-    def test_set_starting_profile(self, test_context: OrcaTestContext) -> None:
-        """Test setting starting profile is a no-op for backwards compatibility."""
-
-        self._setup_dependencies(test_context)
-        from orca.profile_manager import ProfileManager
-
-        manager = ProfileManager()
-        # set_starting_profile is a no-op - it returns True without doing anything
-        result = manager.set_starting_profile(["Spanish", "spanish"])
-
-        assert result is True
 
     def test_remove_profile(self, test_context: OrcaTestContext) -> None:
         """Test removing a profile."""
@@ -401,9 +362,7 @@ class TestProfilePreferencesGridUI:
             ["Spanish", "spanish"],
         ]
         settings_manager_mock.get_manager.return_value.get_profile.return_value = "default"
-        settings_manager_mock.get_manager.return_value.get_general_settings.return_value = {
-            "startingProfile": ["Default", "default"],
-        }
+        settings_manager_mock.get_manager.return_value.get_general_settings.return_value = {}
 
         from orca import gsettings_registry
 
