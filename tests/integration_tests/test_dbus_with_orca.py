@@ -91,7 +91,6 @@ MODULE_CONFIG = {
         "commands": [
             "EnableStickyBrowseMode",
             "EnableStickyFocusMode",
-            "ToggleLayoutMode",
             "TogglePresentationMode",
         ],
         "parameterized_commands": [],
@@ -101,7 +100,6 @@ MODULE_CONFIG = {
             "FindResultsMinimumLength",
             "FocusModeIsSticky",
             "InFocusMode",
-            "LayoutMode",
             "NativeNavTriggersFocusMode",
             "OnlySpeakChangedLines",
             "PageSummaryOnLoad",
@@ -111,7 +109,6 @@ MODULE_CONFIG = {
         "setters": [
             "AutoStickyFocusModeForWebApps",
             "FindResultsMinimumLength",
-            "LayoutMode",
             "NativeNavTriggersFocusMode",
             "OnlySpeakChangedLines",
             "PageSummaryOnLoad",
@@ -119,7 +116,7 @@ MODULE_CONFIG = {
             "SpeakFindResults",
         ],
         "ui_commands": [],
-        "toggle_commands": ["ToggleLayoutMode", "TogglePresentationMode"],
+        "toggle_commands": ["TogglePresentationMode"],
         "skip": [],
     },
     "MouseReviewer": {
@@ -643,6 +640,7 @@ MODULE_CONFIG = {
     "CaretNavigator": {
         "commands": [
             "ToggleEnabled",
+            "ToggleLayoutMode",
             "NextCharacter",
             "PreviousCharacter",
             "NextWord",
@@ -655,10 +653,10 @@ MODULE_CONFIG = {
             "EndOfFile",
         ],
         "parameterized_commands": [],
-        "getters": ["IsEnabled", "TriggersFocusMode"],
-        "setters": ["IsEnabled", "TriggersFocusMode"],
+        "getters": ["IsEnabled", "LayoutMode", "TriggersFocusMode"],
+        "setters": ["IsEnabled", "LayoutMode", "TriggersFocusMode"],
         "ui_commands": [],
-        "toggle_commands": ["ToggleEnabled"],
+        "toggle_commands": ["ToggleEnabled", "ToggleLayoutMode"],
         "skip": [],
     },
     "ChatPresenter": {

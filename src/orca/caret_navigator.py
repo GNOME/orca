@@ -165,6 +165,16 @@ class CaretNavigator:
                 )
             )
 
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                "toggle_layout_mode",
+                self.toggle_layout_mode,
+                group_label,
+                cmdnames.TOGGLE_LAYOUT_MODE,
+                enabled=enabled,
+            )
+        )
+
         msg = f"CARET NAVIGATOR: Commands set up. Suspended: {self._suspended}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -238,6 +248,60 @@ class CaretNavigator:
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, "triggers-focus-mode", value
         )
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key="layout-mode",
+        schema="caret-navigation",
+        gtype="b",
+        default=True,
+        summary="Use document layout mode",
+        settings_key="layoutMode",
+    )
+    @dbus_service.getter
+    def get_layout_mode(self) -> bool:
+        """Returns whether layout mode is enabled."""
+
+        return self._get_setting("layout-mode", True)
+
+    @dbus_service.setter
+    def set_layout_mode(self, value: bool) -> bool:
+        """Sets whether layout mode is enabled."""
+
+        if self.get_layout_mode() == value:
+            return True
+
+        msg = f"CARET NAVIGATOR: Setting layout mode to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "layout-mode", value)
+        return True
+
+    @dbus_service.command
+    def toggle_layout_mode(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Switches between object mode and layout mode for line presentation."""
+
+        tokens = [
+            "CARET NAVIGATOR: toggle_layout_mode. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        layout_mode = not self.get_layout_mode()
+        if notify_user:
+            if layout_mode:
+                presentation_manager.get_manager().present_message(messages.MODE_LAYOUT)
+            else:
+                presentation_manager.get_manager().present_message(messages.MODE_OBJECT)
+        self.set_layout_mode(layout_mode)
         return True
 
     def get_enabled_for_script(self, script: default.Script) -> bool:

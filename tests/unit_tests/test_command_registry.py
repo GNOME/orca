@@ -198,6 +198,7 @@ CARET_NAVIGATOR_HANDLERS = frozenset(
         "start_of_file",
         "start_of_line",
         "toggle_enabled",
+        "toggle_layout_mode",
     }
 )
 
@@ -377,7 +378,6 @@ DOCUMENT_PRESENTER_HANDLERS = frozenset(
     {
         "enable_sticky_browse_mode",
         "enable_sticky_focus_mode",
-        "toggle_layout_mode",
         "toggle_presentation_mode",
     }
 )
