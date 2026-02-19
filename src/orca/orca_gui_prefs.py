@@ -22,11 +22,14 @@
 # pylint: disable=no-member
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-statements
+# pylint: disable=too-many-lines
 
 """Displays a GUI for the user to set Orca preferences."""
 
 from __future__ import annotations
 
+
+import os
 import time
 from dataclasses import dataclass
 from typing import Any, TYPE_CHECKING
@@ -117,6 +120,10 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self.left_headerbar = Gtk.HeaderBar()
         self.left_headerbar.set_show_close_button(True)
         self.left_headerbar.set_title(guilabels.DIALOG_SCREEN_READER_PREFERENCES)
+        self.left_headerbar.get_style_context().add_class("orca-left-headerbar")
+
+        self._app_icon = Gtk.Image.new_from_icon_name("orca", Gtk.IconSize.MENU)
+        self._app_icon.set_margin_start(2)
 
         self.menu_button = Gtk.MenuButton()
         menu_image = Gtk.Image.new_from_icon_name("open-menu-symbolic", Gtk.IconSize.BUTTON)
@@ -165,10 +172,19 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         titlebar_box.pack_start(titlebar_separator, False, False, 0)
 
         self.panel_headerbar = Gtk.HeaderBar()
-        self.panel_headerbar.set_show_close_button(False)
+        self.panel_headerbar.set_show_close_button(True)
         self.panel_headerbar.set_title("")
+        self.panel_headerbar.get_style_context().add_class("orca-panel-headerbar")
 
         titlebar_box.pack_start(self.panel_headerbar, True, True, 0)
+
+        self._apply_decoration_layout()
+        gtk_settings = Gtk.Settings.get_default()  # pylint: disable=no-value-for-parameter
+        if gtk_settings is not None:
+            gtk_settings.connect(
+                "notify::gtk-decoration-layout",
+                lambda *_: self._apply_decoration_layout(),
+            )
 
         self.set_titlebar(titlebar_box)
 
@@ -177,6 +193,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self.hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
 
         self.sidebar_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+        self.sidebar_vbox.get_style_context().add_class("orca-sidebar")
 
         self.sidebar_scrolled = Gtk.ScrolledWindow()
         self.sidebar_scrolled.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
@@ -325,6 +342,32 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             self.listbox.select_row(first_row)
 
         self._init_gui_state()
+
+    def _apply_decoration_layout(self) -> None:
+        """Syncs headerbar button placement and app icon with the system layout."""
+
+        gtk_settings = Gtk.Settings.get_default()  # pylint: disable=no-value-for-parameter
+        if gtk_settings is None:
+            return
+
+        layout = gtk_settings.get_property("gtk-decoration-layout") or ":minimize,maximize,close"
+        left_layout, _, right_layout = layout.partition(":")
+
+        self.left_headerbar.set_decoration_layout(f"{left_layout}:")
+        self.panel_headerbar.set_decoration_layout(f":{right_layout}")
+
+        parent = self._app_icon.get_parent()
+        if parent:
+            parent.remove(self._app_icon)
+
+        if "close" in left_layout:
+            self.panel_headerbar.pack_end(self._app_icon)
+        else:
+            self.left_headerbar.pack_start(self._app_icon)
+        self._app_icon.show()
+
+        if self.get_visible():
+            GLib.idle_add(self._sync_headerbar_widths)
 
     def _sync_headerbar_widths(self) -> None:
         headerbar_width = self.left_headerbar.get_allocated_width()
@@ -673,8 +716,58 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         return False
 
     _BASE_CSS = b"""
+        decoration {
+            border-radius: 15px;
+        }
+        @define-color orca_sidebar_bg shade(@theme_bg_color, 0.98);
         list.frame {
             border-color: alpha(@theme_fg_color, 0.15);
+        }
+        .orca-left-headerbar {
+            background-color: @orca_sidebar_bg;
+            background-image: none;
+            border-bottom-width: 0;
+        }
+        .orca-panel-headerbar {
+            background-color: @theme_bg_color;
+            background-image: none;
+            border-bottom-width: 0;
+        }
+        .orca-sidebar {
+            background-color: @orca_sidebar_bg;
+        }
+        .orca-sidebar scrolledwindow,
+        .orca-sidebar list {
+            background-color: transparent;
+        }
+        .orca-sidebar list {
+            padding: 6px 0;
+        }
+        .orca-sidebar list row {
+            border-radius: 9px;
+            min-height: 36px;
+            padding: 0 8px;
+            margin: 0 6px 2px;
+        }
+        .orca-sidebar list row:selected {
+            background-color: alpha(@theme_fg_color, 0.10);
+        }
+        .orca-sidebar list row:selected,
+        .orca-sidebar list row:selected label {
+            color: @theme_fg_color;
+        }
+        .orca-sidebar list row:hover {
+            background-color: alpha(@theme_fg_color, 0.07);
+        }
+        .orca-sidebar list row:selected:hover {
+            background-color: alpha(@theme_fg_color, 0.13);
+        }
+        .orca-sidebar list row:active,
+        .orca-sidebar list row:selected:active {
+            background-color: alpha(@theme_fg_color, 0.19);
+        }
+        list.frame row:focus {
+            box-shadow: inset 0 0 0 2px alpha(@theme_selected_bg_color, 0.5);
         }
     """
 
@@ -691,10 +784,22 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
     """
 
     _DARK_MODE_CSS = b"""
-        @define-color theme_selected_bg_color #3584e4;
+        @define-color orca_sidebar_bg @theme_bg_color;
+        window.background {
+            background-color: @theme_base_color;
+        }
+        .orca-panel-headerbar {
+            background-color: @theme_base_color;
+        }
         switch slider {
             background-image: image(white);
         }
+    """
+
+    _GNOME_DARK_CSS = b"""
+        @define-color theme_bg_color #303030;
+        @define-color theme_base_color #242424;
+        @define-color orca_sidebar_bg #2e2e32;
     """
 
     _STATUS_SHAPES_CSS = b"""
@@ -727,7 +832,10 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             shapes=Gtk.CssProvider(),
         )
         providers.hc.load_from_data(OrcaSetupGUI._HIGH_CONTRAST_CSS)
-        providers.dark.load_from_data(OrcaSetupGUI._DARK_MODE_CSS)
+        dark_css = OrcaSetupGUI._DARK_MODE_CSS
+        if "GNOME" in os.environ.get("XDG_CURRENT_DESKTOP", ""):
+            dark_css += OrcaSetupGUI._GNOME_DARK_CSS
+        providers.dark.load_from_data(dark_css)
         providers.shapes.load_from_data(OrcaSetupGUI._STATUS_SHAPES_CSS)
 
         try:
