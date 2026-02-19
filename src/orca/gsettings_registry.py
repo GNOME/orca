@@ -420,9 +420,8 @@ class GSettingsRegistry:
 
             if migrated_any:
                 self._migrate_display_names(prefs_dir, profiles)
+            self._sync_missing_profiles(prefs_dir, profiles)
             self._stamp_migration_done()
-
-        self._sync_missing_profiles(prefs_dir, profiles)
         Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
         return migrated_any
 
