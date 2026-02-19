@@ -100,8 +100,8 @@ class PrintVersion(argparse.Action):
         debugging_tools_manager.get_manager().print_session_details(is_command_line=True)
         parser.exit()
 
-class HelpFormatter(argparse.HelpFormatter):
-    """Lists the available actions and usage."""
+class HelpFormatter(argparse.RawTextHelpFormatter):
+    """Lists the available actions and usage, preserving newlines in help text."""
 
     def __init__(
         self,
@@ -141,8 +141,8 @@ class Parser(argparse.ArgumentParser):
             "-p", "--profile", action="store",
             help=messages.CLI_LOAD_PROFILE, metavar=messages.CLI_PROFILE_NAME)
         self.add_argument(
-            "-u", "--user-prefs", action="store",
-            help=messages.CLI_LOAD_PREFS, metavar=messages.CLI_PREFS_DIR)
+            "-i", "--import-dir", action="store",
+            help=messages.CLI_IMPORT_SETTINGS, metavar=messages.CLI_IMPORT_DIR)
         self.add_argument(
             "--speech-system", action="store",
             help=messages.CLI_SPEECH_SYSTEM, metavar=messages.CLI_SPEECH_SYSTEM_NAME)
@@ -255,7 +255,7 @@ def main() -> int:
 
     debug.print_message(debug.LEVEL_INFO, "INFO: Preparing to launch.", True)
     manager = settings_manager.get_manager()
-    manager.activate(args.user_prefs)
+    manager.activate()
     sys.path.insert(0, manager.get_prefs_dir())
 
     if args.profile:
@@ -295,7 +295,7 @@ def main() -> int:
 
     from orca import orca  # pylint: disable=import-outside-toplevel
     debug.print_message(debug.LEVEL_INFO, "INFO: About to launch Orca.", True)
-    return orca.main()
+    return orca.main(args.import_dir)
 
 if __name__ == "__main__":
     sys.exit(main())

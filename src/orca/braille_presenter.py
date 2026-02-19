@@ -477,10 +477,10 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         result.update(self._osd_grid.save_settings())
 
         if profile:
-            registry = gsettings_registry.get_registry()
-            if registry.is_enabled():
-                skip = not app_name and profile == "default"
-                registry.save_schema_to_gsettings("braille", result, profile, app_name, skip)
+            skip = not app_name and profile == "default"
+            gsettings_registry.get_registry().save_schema_to_gsettings(
+                "braille", result, profile, app_name, skip
+            )
 
         return result
 

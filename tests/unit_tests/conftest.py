@@ -31,6 +31,8 @@ from .orca_test_fixtures import test_context  # noqa: F401  # pylint: disable=un
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../src"))
 
+os.environ["GSETTINGS_BACKEND"] = "memory"
+
 
 def clean_all_orca_modules() -> None:
     """Aggressively clean all orca modules from sys.modules."""

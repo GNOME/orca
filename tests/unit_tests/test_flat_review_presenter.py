@@ -57,7 +57,6 @@ class TestFlatReviewPresenter:
             "gi.repository.Atspi",
             "gi.repository.Gtk",
             "gi.repository.GLib",
-            "gi.repository.Gio",
             "dasbus",
             "dasbus.connection",
             "dasbus.error",
@@ -93,9 +92,6 @@ class TestFlatReviewPresenter:
         glib_mock = essential_modules["gi.repository.GLib"]
         glib_error_mock = type("GError", (Exception,), {})
         glib_mock.GError = glib_error_mock
-
-        gio_mock = essential_modules["gi.repository.Gio"]
-        gi_repository_mock.Gio = gio_mock
 
         flat_review_mock = essential_modules["orca.flat_review"]
         flat_review_context_mock = test_context.Mock()
@@ -253,10 +249,6 @@ class TestFlatReviewPresenter:
         essential_modules["controller"] = controller_mock
         essential_modules["window"] = window_mock
         essential_modules["settings_manager_instance"] = settings_manager_instance
-
-        from orca import gsettings_registry
-
-        gsettings_registry.get_registry().set_enabled(False)
 
         return essential_modules
 

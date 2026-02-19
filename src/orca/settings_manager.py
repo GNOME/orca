@@ -29,7 +29,6 @@ import importlib
 import importlib.util
 import os
 import sys
-from json import load
 from types import ModuleType
 from typing import TYPE_CHECKING
 
@@ -74,7 +73,6 @@ class SettingsManager:
 
         self._profile: str = "default"
         self._prefs_dir: str = ""
-        self._settings_file: str = ""
         self._pronunciations: dict = {}
         self._keybindings: dict = {}
         self._customized_settings: dict | None = None
@@ -82,13 +80,12 @@ class SettingsManager:
 
         debug.print_message(debug.LEVEL_INFO, "SETTINGS MANAGER: Initialized", True)
 
-    def activate(self, prefs_dir: str | None = None) -> None:
+    def activate(self) -> None:
         """Activates this manager."""
 
         debug.print_message(debug.LEVEL_INFO, "SETTINGS MANAGER: Activating", True)
 
-        self._prefs_dir = prefs_dir or os.path.join(GLib.get_user_data_dir(), "orca")  # pylint: disable=no-value-for-parameter
-        self._settings_file = os.path.join(self._prefs_dir, "user-settings.conf")
+        self._prefs_dir = os.path.join(GLib.get_user_data_dir(), "orca")  # pylint: disable=no-value-for-parameter
 
         self._load_customizations()
 
@@ -151,20 +148,6 @@ class SettingsManager:
             tokens.extend(["failed due to:", str(error), ". Not loading customizations."])
 
         debug.print_tokens(debug.LEVEL_ALL, tokens, True)
-
-    def _get_app_settings_from_file(self, app_name: str) -> dict:
-        """Load app-specific settings from file."""
-
-        file_name = os.path.join(self._prefs_dir, "app-settings", f"{app_name}.conf")
-        if os.path.exists(file_name):
-            with open(file_name, "r", encoding="utf-8") as settings_file:
-                try:
-                    prefs = load(settings_file)
-                except ValueError:
-                    prefs = {}
-        else:
-            prefs = {}
-        return prefs
 
     def get_prefs_dir(self) -> str:
         """Returns the preferences directory."""
@@ -255,11 +238,6 @@ class SettingsManager:
 
         return self._profile
 
-    def get_settings_file_path(self) -> str:
-        """Returns the path to the settings file."""
-
-        return self._settings_file
-
     def set_profile(self, profile: str = "default", update_locale: bool = False) -> None:
         """Set a specific profile as the active one and update settings accordingly."""
 
@@ -283,61 +261,20 @@ class SettingsManager:
         tokens = ["SETTINGS MANAGER: Profile set to:", profile]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-    def _get_dict_from_file(self, profile: str, key: str) -> dict:
-        """Returns a dict from the JSON settings file for the -u fallback path."""
-
-        if not os.path.exists(self._settings_file):
-            return {}
-        with open(self._settings_file, encoding="utf-8") as settings_file:
-            try:
-                prefs = load(settings_file)
-            except ValueError:
-                return {}
-        return prefs["profiles"].get(profile, {}).get(key, {})
-
     def get_pronunciations(self, profile: str = "default") -> dict:
         """Return the current pronunciations settings."""
 
-        registry = gsettings_registry.get_registry()
-        if registry.is_enabled():
-            return registry.get_pronunciations(profile)
-        return self._get_dict_from_file(profile, "pronunciations")
+        return gsettings_registry.get_registry().get_pronunciations(profile)
 
     def get_keybindings(self, profile: str = "default") -> dict:
         """Return the keybindings from the profile settings file."""
 
-        registry = gsettings_registry.get_registry()
-        if registry.is_enabled():
-            return registry.get_keybindings(profile)
-        return self._get_dict_from_file(profile, "keybindings")
+        return gsettings_registry.get_registry().get_keybindings(profile)
 
     def get_active_keybindings(self) -> dict:
         """Return the active keybindings (merged profile + app settings)."""
 
         return self._keybindings
-
-    def profiles_from_json(self) -> list:
-        """Get available profiles from user-settings.conf (for migration)."""
-
-        if not os.path.exists(self._settings_file):
-            return [["Default", "default"]]
-        with open(self._settings_file, encoding="utf-8") as settings_file:
-            try:
-                prefs = load(settings_file)
-            except ValueError:
-                return []
-
-        if "profiles" not in prefs:
-            return []
-
-        profiles = []
-        for profile_name, profile_data in prefs["profiles"].items():
-            profile = profile_data.get("profile")
-            if profile is None:
-                label = profile_name.replace("_", " ").title()
-                profile = [label, profile_name]
-            profiles.append(profile)
-        return profiles
 
     def load_app_settings(self, script: Script | None) -> None:
         """Load the users application specific settings for an app."""
@@ -347,15 +284,8 @@ class SettingsManager:
 
         app_name = AXObject.get_name(script.app)
         registry = gsettings_registry.get_registry()
-        if registry.is_enabled():
-            app_pronunciations = registry.get_pronunciations(self._profile, app_name)
-            app_keybindings = registry.get_keybindings(self._profile, app_name)
-        else:
-            prefs = self._get_app_settings_from_file(app_name)
-            profiles = prefs.get("profiles", {})
-            profile_prefs = profiles.get(self._profile, {})
-            app_pronunciations = profile_prefs.get("pronunciations", {})
-            app_keybindings = profile_prefs.get("keybindings", {})
+        app_pronunciations = registry.get_pronunciations(self._profile, app_name)
+        app_keybindings = registry.get_keybindings(self._profile, app_name)
 
         profile_pronunciations, profile_keybindings = self._load_profile_settings()
         self._apply_profile_and_app_settings(

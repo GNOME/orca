@@ -1714,113 +1714,6 @@ class TestStringArraySupport:
 
 
 @pytest.mark.unit
-class TestEnabledFlag:
-    """Tests for the _enabled flag and set_enabled/is_enabled."""
-
-    def _setup(self, test_context: OrcaTestContext):
-        """Set up dependencies."""
-
-        additional_modules = [
-            "orca.cmdnames",
-            "orca.messages",
-            "orca.object_properties",
-            "orca.orca_gui_navlist",
-            "orca.orca_i18n",
-            "orca.AXHypertext",
-            "orca.AXObject",
-            "orca.AXTable",
-            "orca.AXText",
-            "orca.AXUtilities",
-            "orca.input_event",
-        ]
-        test_context.setup_shared_dependencies(additional_modules)
-
-    def test_enabled_by_default(self, test_context: OrcaTestContext) -> None:
-        """Test that a new GSettingsRegistry is enabled by default."""
-
-        self._setup(test_context)
-        from orca.gsettings_registry import GSettingsRegistry
-
-        registry = GSettingsRegistry()
-        assert registry.is_enabled() is True
-
-    def test_set_enabled_false(self, test_context: OrcaTestContext) -> None:
-        """Test set_enabled(False) disables the registry."""
-
-        self._setup(test_context)
-        from orca.gsettings_registry import GSettingsRegistry
-
-        registry = GSettingsRegistry()
-        registry.set_enabled(False)
-        assert registry.is_enabled() is False
-
-    def test_set_enabled_true_after_false(self, test_context: OrcaTestContext) -> None:
-        """Test set_enabled(True) re-enables after disable."""
-
-        self._setup(test_context)
-        from orca.gsettings_registry import GSettingsRegistry
-
-        registry = GSettingsRegistry()
-        registry.set_enabled(False)
-        registry.set_enabled(True)
-        assert registry.is_enabled() is True
-
-    def test_get_settings_returns_none_when_disabled(self, test_context: OrcaTestContext) -> None:
-        """Test get_settings returns None when registry is disabled."""
-
-        self._setup(test_context)
-        from orca.gsettings_registry import GSettingsRegistry
-
-        registry = GSettingsRegistry()
-        registry._schemas["test"] = "org.gnome.Orca.Test"
-        registry.set_enabled(False)
-        assert registry.get_settings("test", "default") is None
-
-    def test_migrate_all_returns_false_when_disabled(self, test_context: OrcaTestContext) -> None:
-        """Test migrate_all returns False immediately when disabled."""
-
-        self._setup(test_context)
-        from orca.gsettings_registry import GSettingsRegistry
-
-        registry = GSettingsRegistry()
-        registry.set_enabled(False)
-        assert registry.migrate_all("/tmp/test") is False
-
-    def test_write_profile_settings_noop_when_disabled(self, test_context: OrcaTestContext) -> None:
-        """Test _write_profile_settings does nothing when disabled."""
-
-        self._setup(test_context)
-        from orca.gsettings_registry import GSettingsRegistry
-
-        registry = GSettingsRegistry()
-        registry._schemas["speech"] = "org.gnome.Orca.Speech"
-        registry.set_enabled(False)
-        test_context.patch("orca.gsettings_registry.Gio.Settings.sync")
-        registry._write_profile_settings("default", {"enableSpeech": True}, {}, {})
-
-    def test_sync_missing_profiles_noop_when_disabled(self, test_context: OrcaTestContext) -> None:
-        """Test _sync_missing_profiles does nothing when disabled."""
-
-        self._setup(test_context)
-        from orca.gsettings_registry import GSettingsRegistry
-
-        registry = GSettingsRegistry()
-        registry.set_enabled(False)
-        registry._sync_missing_profiles("/tmp/test", [["Default", "default"]])
-
-    def test_reset_profile_noop_when_disabled(self, test_context: OrcaTestContext) -> None:
-        """Test reset_profile does nothing when disabled."""
-
-        self._setup(test_context)
-        from orca.gsettings_registry import GSettingsRegistry
-
-        registry = GSettingsRegistry()
-        registry._schemas["speech"] = "org.gnome.Orca.Speech"
-        registry.set_enabled(False)
-        registry.reset_profile("default")
-
-
-@pytest.mark.unit
 class TestRuntimeValues:
     """Tests for runtime value storage (set/get/clear)."""
 
@@ -1988,16 +1881,6 @@ class TestLayeredLookup:
             "orca.input_event",
         ]
         test_context.setup_shared_dependencies(additional_modules)
-
-    def test_returns_none_when_disabled(self, test_context: OrcaTestContext) -> None:
-        """Test layered_lookup returns None when registry is disabled."""
-
-        self._setup(test_context)
-        from orca.gsettings_registry import GSettingsRegistry
-
-        registry = GSettingsRegistry()
-        registry.set_enabled(False)
-        assert registry.layered_lookup("speech", "enabled", "b") is None
 
     def test_returns_none_when_schema_missing(self, test_context: OrcaTestContext) -> None:
         """Test layered_lookup returns None for an unknown schema."""
@@ -2169,19 +2052,6 @@ class TestGetPronunciations:
         ]
         test_context.setup_shared_dependencies(additional_modules)
 
-    def test_returns_empty_dict_when_disabled(self, test_context: OrcaTestContext) -> None:
-        """Test get_pronunciations returns {} when registry is disabled."""
-
-        self._setup(test_context)
-        from orca.gsettings_registry import get_registry
-
-        registry = get_registry()
-        registry.set_enabled(False)
-        try:
-            assert not registry.get_pronunciations("default")
-        finally:
-            registry.set_enabled(True)
-
     def test_returns_empty_dict_when_no_schema(self, test_context: OrcaTestContext) -> None:
         """Test get_pronunciations returns {} when pronunciations schema is not registered."""
 
@@ -2286,19 +2156,6 @@ class TestGetKeybindings:
             "orca.input_event",
         ]
         test_context.setup_shared_dependencies(additional_modules)
-
-    def test_returns_empty_dict_when_disabled(self, test_context: OrcaTestContext) -> None:
-        """Test get_keybindings returns {} when registry is disabled."""
-
-        self._setup(test_context)
-        from orca.gsettings_registry import get_registry
-
-        registry = get_registry()
-        registry.set_enabled(False)
-        try:
-            assert not registry.get_keybindings("default")
-        finally:
-            registry.set_enabled(True)
 
     def test_returns_empty_dict_when_no_schema(self, test_context: OrcaTestContext) -> None:
         """Test get_keybindings returns {} when keybindings schema is not registered."""

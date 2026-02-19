@@ -307,7 +307,6 @@ class TestTypingEchoPresenter:
 
         registry = gsettings_registry.get_registry()
         registry.clear_runtime_values()
-        registry.set_enabled(False)
 
         presenter = TypingEchoPresenter()
         return presenter
@@ -865,7 +864,6 @@ class TestTypingEchoPresenter:
         from orca.gsettings_registry import GSettingsSchemaHandle
 
         registry = gsettings_registry.get_registry()
-        registry.set_enabled(True)
 
         mock_handle = test_context.Mock(spec=GSettingsSchemaHandle)
         mock_handle.get_boolean.return_value = False
@@ -875,7 +873,6 @@ class TestTypingEchoPresenter:
         assert getter() is False
         mock_handle.get_boolean.assert_called_with(gs_key, "", None)
 
-        registry.set_enabled(False)
         registry._handles.pop("typing-echo", None)
 
     @pytest.mark.parametrize(
@@ -917,7 +914,6 @@ class TestTypingEchoPresenter:
         from orca.gsettings_registry import GSettingsSchemaHandle
 
         registry = gsettings_registry.get_registry()
-        registry.set_enabled(True)
 
         mock_handle = test_context.Mock(spec=GSettingsSchemaHandle)
         mock_handle.get_boolean.return_value = False
@@ -930,5 +926,4 @@ class TestTypingEchoPresenter:
 
         assert presenter.get_key_echo_enabled() is False
 
-        registry.set_enabled(False)
         registry._handles.pop("typing-echo", None)

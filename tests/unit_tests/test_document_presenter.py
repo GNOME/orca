@@ -91,7 +91,6 @@ class TestDocumentPresenter:
 
         registry = gsettings_registry.get_registry()
         registry.clear_runtime_values()
-        registry.set_enabled(False)
 
         # Import and return the module
         from orca import document_presenter

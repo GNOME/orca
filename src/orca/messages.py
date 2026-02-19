@@ -219,14 +219,18 @@ CLI_OTHER_ORCAS_ERROR = _(
 # using the '-p, --profile' command line option.
 CLI_PROFILE_NAME = _("NAME")
 
-# Translators: This is the description of command line option '-u, --user-prefs'
-# that allows you to specify an alternate location from which to load the user
-# preferences.
-CLI_LOAD_PREFS = _("Use alternate directory for user preferences")
+# Translators: This is the description of command line option '-i, --import-dir'
+# that allows you to specify a directory from which to import settings into dconf.
+CLI_IMPORT_SETTINGS = _(
+    "Import settings from DIR into dconf (overwrites current settings).\n"
+    "To back up first: dconf dump /org/gnome/orca/ > backup.ini\n"
+    "To restore: dconf reset -f /org/gnome/orca/ && "
+    "dconf load /org/gnome/orca/ < backup.ini"
+)
 
 # Translators: This string indicates to the user what should be provided when
-# using the '-u, --user-prefs' command line option.
-CLI_PREFS_DIR = _("DIR")
+# using the '-i, --import-dir' command line option.
+CLI_IMPORT_DIR = _("DIR")
 
 # Translators: This is the description of command line option '--speech-system'
 # which allows you to specify a speech system to use. A speech system provides

@@ -160,10 +160,6 @@ class TestCaretNavigator:
         essential_modules["orca.AXObject"].supports_collection.return_value = True
         essential_modules["orca.AXUtilities"].is_heading.return_value = False
 
-        from orca import gsettings_registry
-
-        gsettings_registry.get_registry().set_enabled(False)
-
         return essential_modules
 
     @pytest.mark.parametrize(

@@ -1987,11 +1987,8 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
             return
         from . import gsettings_registry  # pylint: disable=import-outside-toplevel
 
-        registry = gsettings_registry.get_registry()
-        if not registry.is_enabled():
-            return
         skip_defaults = not app_name and profile == "default"
-        registry.save_schema_to_gsettings(
+        gsettings_registry.get_registry().save_schema_to_gsettings(
             self._gsettings_schema, result, profile, app_name, skip_defaults
         )
 

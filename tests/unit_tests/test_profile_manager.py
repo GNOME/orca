@@ -57,16 +57,16 @@ class TestProfileManager:
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_manager_mock.get_manager.return_value.profiles_from_json.return_value = [
-            ["Default", "default"],
-            ["Spanish", "spanish"],
-            ["Work", "work"],
-        ]
         settings_manager_mock.get_manager.return_value.get_profile.return_value = "default"
 
-        from orca import gsettings_registry
-
-        gsettings_registry.get_registry().set_enabled(False)
+        test_context.patch(
+            "orca.profile_manager.ProfileManager._get_stored_profiles",
+            return_value=[
+                ["Default", "default"],
+                ["Spanish", "spanish"],
+                ["Work", "work"],
+            ],
+        )
 
         speech_manager_mock = essential_modules["orca.speech_manager"]
         speech_manager_mock.get_manager.return_value.refresh_speech.return_value = None
@@ -86,20 +86,6 @@ class TestProfileManager:
         guilabels_mock.PROFILE_DEFAULT = "Default"
 
         return essential_modules
-
-    def test_get_available_profiles(self, test_context: OrcaTestContext) -> None:
-        """Test getting available profiles."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        from orca.profile_manager import ProfileManager
-
-        manager = ProfileManager()
-        profiles = manager.get_available_profiles()
-
-        assert profiles == [["Default", "default"], ["Spanish", "spanish"], ["Work", "work"]]
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.profiles_from_json.assert_called_once()
 
     def test_get_active_profile(self, test_context: OrcaTestContext) -> None:
         """Test getting active profile."""
@@ -161,10 +147,8 @@ class TestProfileManager:
         """Test removing a profile."""
 
         self._setup_dependencies(test_context)
-        from orca import gsettings_registry
         from orca.profile_manager import ProfileManager
 
-        gsettings_registry.get_registry().set_enabled(True)
         mock_run = test_context.patch("subprocess.run")
         manager = ProfileManager()
         manager.remove_profile("spanish")
@@ -179,10 +163,8 @@ class TestProfileManager:
         import subprocess
 
         self._setup_dependencies(test_context)
-        from orca import gsettings_registry
         from orca.profile_manager import ProfileManager
 
-        gsettings_registry.get_registry().set_enabled(True)
         mock_run = test_context.patch("subprocess.run")
         mock_run.side_effect = subprocess.CalledProcessError(1, "dconf")
         manager = ProfileManager()
@@ -194,10 +176,8 @@ class TestProfileManager:
         """Test removing a profile when dconf is not installed."""
 
         self._setup_dependencies(test_context)
-        from orca import gsettings_registry
         from orca.profile_manager import ProfileManager
 
-        gsettings_registry.get_registry().set_enabled(True)
         mock_run = test_context.patch("subprocess.run")
         mock_run.side_effect = FileNotFoundError("dconf not found")
         manager = ProfileManager()
@@ -209,10 +189,8 @@ class TestProfileManager:
         """Test removing a profile sanitizes the name for the dconf path."""
 
         self._setup_dependencies(test_context)
-        from orca import gsettings_registry
         from orca.profile_manager import ProfileManager
 
-        gsettings_registry.get_registry().set_enabled(True)
         mock_run = test_context.patch("subprocess.run")
         manager = ProfileManager()
         manager.remove_profile("My Profile")
@@ -229,7 +207,6 @@ class TestProfileManager:
         from orca.profile_manager import ProfileManager
 
         registry = gsettings_registry.get_registry()
-        registry.set_enabled(True)
         mock_rename = test_context.patch_object(registry, "rename_profile")
 
         manager = ProfileManager()
@@ -348,15 +325,15 @@ class TestProfilePreferencesGridUI:
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_manager_mock.get_manager.return_value.profiles_from_json.return_value = [
-            ["Default", "default"],
-            ["Spanish", "spanish"],
-        ]
         settings_manager_mock.get_manager.return_value.get_profile.return_value = "default"
 
-        from orca import gsettings_registry
-
-        gsettings_registry.get_registry().set_enabled(False)
+        test_context.patch(
+            "orca.profile_manager.ProfileManager._get_stored_profiles",
+            return_value=[
+                ["Default", "default"],
+                ["Spanish", "spanish"],
+            ],
+        )
 
         guilabels_mock = essential_modules["orca.guilabels"]
         guilabels_mock.GENERAL_PROFILES = "Profiles"
@@ -381,7 +358,7 @@ class TestProfilePreferencesGridUI:
     def test_grid_creates_successfully(self, test_context: OrcaTestContext) -> None:
         """Test ProfilePreferencesGrid creates without error."""
 
-        from gi.repository import Gtk
+        from gi.repository import Gtk  # pylint: disable=no-name-in-module
 
         self._setup_dependencies(test_context)
         from orca.profile_manager import ProfileManager, ProfilePreferencesGrid

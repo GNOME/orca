@@ -429,7 +429,6 @@ class TestCommandRegistry:
             "gi.repository.Atspi",
             "gi.repository.Gtk",
             "gi.repository.GLib",
-            "gi.repository.Gio",
             "gi.repository.Wnck",
             "dasbus",
             "dasbus.connection",
@@ -479,9 +478,6 @@ class TestCommandRegistry:
         glib_mock = essential_modules["gi.repository.GLib"]
         glib_error_mock = type("GError", (Exception,), {})
         glib_mock.GError = glib_error_mock
-
-        gio_mock = essential_modules["gi.repository.Gio"]
-        gi_repository_mock.Gio = gio_mock
 
         gio_wnck = essential_modules["gi.repository.Wnck"]
 

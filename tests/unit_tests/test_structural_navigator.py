@@ -78,10 +78,6 @@ class TestStructuralNavigator:
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
         self._setup_mocks(test_context, essential_modules)
 
-        from orca import gsettings_registry
-
-        gsettings_registry.get_registry().set_enabled(False)
-
         return essential_modules
 
     def _setup_cycle_navigation_mode_mocks(

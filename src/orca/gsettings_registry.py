@@ -65,7 +65,6 @@ class GSettingsRegistry:
     def __init__(self) -> None:
         self._app_name: str | None = None
         self._profile: str = "default"
-        self._enabled: bool = True
         self._descriptors: dict[tuple[str, str], SettingDescriptor] = {}
         self._mappings: dict[str, list[SettingsMapping]] = {}
         self._enums: dict[str, dict[str, int]] = {}
@@ -73,18 +72,6 @@ class GSettingsRegistry:
         self._extras_migrated: set[str] = set()
         self._handles: dict[str, GSettingsSchemaHandle] = {}
         self._runtime_values: dict[tuple[str, str, str | None], Any] = {}
-
-    def set_enabled(self, enabled: bool) -> None:
-        """Sets whether GSettings operations are enabled."""
-
-        self._enabled = enabled
-        msg = f"GSETTINGS REGISTRY: GSettings operations {'enabled' if enabled else 'disabled'}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def is_enabled(self) -> bool:
-        """Returns whether GSettings operations are enabled."""
-
-        return self._enabled
 
     def _get_handle(self, schema_name: str) -> GSettingsSchemaHandle | None:
         """Returns a cached GSettingsSchemaHandle for a schema name."""
@@ -140,8 +127,6 @@ class GSettingsRegistry:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return runtime
 
-        if not self._enabled:
-            return self._use_default(schema, key, default)
         handle = self._get_handle(schema)
         if handle is None:
             return self._use_default(schema, key, default)
@@ -185,8 +170,6 @@ class GSettingsRegistry:
     ) -> Gio.Settings | None:
         """Creates Gio.Settings for a sub-schema at the correct dconf path."""
 
-        if not self._enabled:
-            return None
         schema_id = self._schemas.get(schema_name)
         if schema_id is None:
             return None
@@ -418,9 +401,6 @@ class GSettingsRegistry:
     def migrate_all(self, prefs_dir: str) -> bool:
         """Migrates all registered schemas from JSON to GSettings."""
 
-        if not self._enabled:
-            return False
-
         profiles = self._read_profiles_from_json(prefs_dir)
         migrated_any = False
 
@@ -437,6 +417,28 @@ class GSettingsRegistry:
         self._sync_missing_profiles(prefs_dir, profiles)
         Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
         return migrated_any
+
+    def import_from_dir(self, import_dir: str) -> None:
+        """Imports settings from a directory by resetting dconf and re-migrating."""
+
+        import subprocess  # pylint: disable=import-outside-toplevel
+
+        msg = f"GSETTINGS REGISTRY: Importing settings from '{import_dir}'."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        try:
+            subprocess.run(
+                ["dconf", "reset", "-f", GSETTINGS_PATH_PREFIX],
+                check=True,
+            )
+        except (subprocess.CalledProcessError, FileNotFoundError) as e:
+            msg = f"GSETTINGS REGISTRY: Failed to reset dconf: {e}"
+            debug.print_message(debug.LEVEL_SEVERE, msg, True)
+            return
+
+        self._extras_migrated.clear()
+        self._handles.clear()
+        self.migrate_all(import_dir)
 
     @staticmethod
     def _read_profiles_from_json(prefs_dir: str) -> list:
@@ -521,8 +523,6 @@ class GSettingsRegistry:
     ) -> None:
         """Writes one schema's mapped settings to dconf."""
 
-        if not self._enabled:
-            return
         gs = self.get_settings(schema_name, profile, app_name=app_name)
         if gs is None:
             return
@@ -540,9 +540,6 @@ class GSettingsRegistry:
         app_name: str = "",
     ) -> None:
         """Writes all settings for a profile to dconf. Internal admin/migration utility."""
-
-        if not self._enabled:
-            return
 
         general = dict(general)
         gsettings_migrator.apply_legacy_aliases(general)
@@ -606,9 +603,6 @@ class GSettingsRegistry:
     def _sync_missing_profiles(self, prefs_dir: str, profiles: list) -> None:
         """Syncs profiles that exist in JSON but have no dconf entries."""
 
-        if not self._enabled:
-            return
-
         settings_file = os.path.join(prefs_dir, "user-settings.conf")
         try:
             with open(settings_file, encoding="utf-8") as f:
@@ -637,9 +631,6 @@ class GSettingsRegistry:
     def rename_profile(self, old_name: str, new_label: str, new_internal_name: str) -> None:
         """Renames a profile by copying all keys to the new path and resetting the old."""
 
-        if not self._enabled:
-            return
-
         old_profile = gsettings_migrator.sanitize_gsettings_path(old_name)
         new_profile = gsettings_migrator.sanitize_gsettings_path(new_internal_name)
 
@@ -649,11 +640,11 @@ class GSettingsRegistry:
                     vt = gsettings_migrator.sanitize_gsettings_path(voice_type)
                     old_gs = self.get_settings("voice", old_profile, f"voices/{vt}")
                     new_gs = self.get_settings("voice", new_profile, f"voices/{vt}")
-                    self._copy_user_keys(old_gs, new_gs)
+                    self.copy_user_keys(old_gs, new_gs)
                 continue
             old_gs = self.get_settings(schema_name, old_profile)
             new_gs = self.get_settings(schema_name, new_profile)
-            self._copy_user_keys(old_gs, new_gs)
+            self.copy_user_keys(old_gs, new_gs)
 
         metadata_gs = self.get_settings("metadata", new_profile)
         if metadata_gs is not None:
@@ -664,9 +655,6 @@ class GSettingsRegistry:
 
     def reset_profile(self, profile_name: str) -> None:
         """Resets all dconf keys for a profile."""
-
-        if not self._enabled:
-            return
 
         profile = gsettings_migrator.sanitize_gsettings_path(profile_name)
         for schema_name in self._schemas:
@@ -683,7 +671,7 @@ class GSettingsRegistry:
         Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
 
     @staticmethod
-    def _copy_user_keys(source: Gio.Settings | None, dest: Gio.Settings | None) -> None:
+    def copy_user_keys(source: Gio.Settings | None, dest: Gio.Settings | None) -> None:
         """Copies all user-set keys from source to dest."""
 
         if source is None or dest is None:

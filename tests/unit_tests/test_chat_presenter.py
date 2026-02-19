@@ -61,10 +61,6 @@ class TestConversation:
         debug_mock.print_message = test_context.Mock()
         debug_mock.print_tokens = test_context.Mock()
 
-        from orca import gsettings_registry
-
-        gsettings_registry.get_registry().set_enabled(False)
-
         return essential_modules
 
     def test_init(self, test_context: OrcaTestContext) -> None:
@@ -210,10 +206,6 @@ class TestConversationList:
                 "orca.presentation_manager",
             ]
         )
-
-        from orca import gsettings_registry
-
-        gsettings_registry.get_registry().set_enabled(False)
 
         return essential_modules
 
@@ -387,7 +379,6 @@ class TestChat:
 
         registry = gsettings_registry.get_registry()
         registry.clear_runtime_values()
-        registry.set_enabled(False)
 
         return essential_modules
 
@@ -483,7 +474,6 @@ class TestChatPresenter:
 
         registry = gsettings_registry.get_registry()
         registry.clear_runtime_values()
-        registry.set_enabled(False)
 
         return essential_modules
 

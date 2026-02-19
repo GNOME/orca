@@ -146,7 +146,6 @@ class TestSpeechManager:
 
         from orca import gsettings_registry
 
-        gsettings_registry.get_registry().set_enabled(False)
         gsettings_registry.get_registry().clear_runtime_values()
 
         return essential_modules
@@ -1222,7 +1221,6 @@ class TestVoicesPreferencesGridUI:  # pylint: disable=too-few-public-methods
 
         from orca import gsettings_registry
 
-        gsettings_registry.get_registry().set_enabled(False)
         gsettings_registry.get_registry().clear_runtime_values()
 
         return essential_modules

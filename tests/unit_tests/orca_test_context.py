@@ -29,7 +29,8 @@ from unittest.mock import MagicMock
 import gi
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi  # pylint: disable=wrong-import-position
+gi.require_version("Gio", "2.0")
+from gi.repository import Atspi, Gio, GLib  # pylint: disable=wrong-import-position
 
 if TYPE_CHECKING:
     from pytest_mock import MockerFixture
@@ -274,6 +275,11 @@ class OrcaTestContext:
             manager_instance.speak_contents = self.mocker.Mock()
             manager_instance.display_contents = self.mocker.Mock()
             presentation_manager_mock.get_manager = self.mocker.Mock(return_value=manager_instance)
+
+        if "gi.repository" in essential_modules:
+            gi_repo_mock = essential_modules["gi.repository"]
+            gi_repo_mock.Gio = Gio
+            gi_repo_mock.GLib = GLib
 
     def get_mock(self, name: str) -> MagicMock | None:
         """Returns mock object if it exists, None otherwise."""

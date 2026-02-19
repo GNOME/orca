@@ -60,7 +60,6 @@ class TestBraillePresenter:
 
         registry = gsettings_registry.get_registry()
         registry.clear_runtime_values()
-        registry.set_enabled(False)
 
         test_context.patch(
             "orca.braille_presenter.BraillePresenter._get_table_files",
@@ -913,7 +912,6 @@ class TestBraillePreferencesGridUI:
 
         registry = gsettings_registry.get_registry()
         registry.clear_runtime_values()
-        registry.set_enabled(False)
 
         test_context.patch(
             "orca.braille_presenter.BraillePresenter._get_table_files",

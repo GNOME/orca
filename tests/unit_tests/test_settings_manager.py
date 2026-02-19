@@ -31,6 +31,7 @@ saved and loaded.
 
 from __future__ import annotations
 
+import os
 import tempfile
 from typing import TYPE_CHECKING, Any
 
@@ -120,36 +121,29 @@ class TestSettingsManagerFileIO:
         test_context.patch_module("orca.ax_object", ax_object_mock)
         essential_modules["orca.ax_object"] = ax_object_mock
 
-        # Mock gsettings_registry so file I/O tests use the JSON path
         gsettings_registry_mock = test_context.Mock()
         mock_registry = test_context.Mock()
-        mock_registry.is_enabled.return_value = False
         mock_registry.layered_lookup.return_value = None
+        mock_registry.get_pronunciations.return_value = {}
+        mock_registry.get_keybindings.return_value = {}
         gsettings_registry_mock.get_registry.return_value = mock_registry
         test_context.patch_module("orca.gsettings_registry", gsettings_registry_mock)
         essential_modules["orca.gsettings_registry"] = gsettings_registry_mock
 
         return essential_modules
 
-    def _create_fresh_manager(self, _test_context: OrcaTestContext, prefs_dir: str) -> Any:
+    @staticmethod
+    def _create_fresh_manager(test_context: OrcaTestContext, prefs_dir: str) -> Any:
         """Create a fresh SettingsManager instance for testing."""
 
         from orca import settings_manager
 
         manager = settings_manager.SettingsManager()
-        manager.activate(prefs_dir=prefs_dir)
+        test_context.patch_object(
+            settings_manager.GLib, "get_user_data_dir", return_value=prefs_dir
+        )
+        manager.activate()
         return manager
-
-    def test_profiles_from_json_default(self, test_context: OrcaTestContext) -> None:
-        """Test that a fresh start has the 'default' profile available."""
-
-        self._setup_dependencies(test_context)
-
-        with tempfile.TemporaryDirectory() as temp_dir:
-            manager = self._create_fresh_manager(test_context, temp_dir)
-
-            profiles = manager.profiles_from_json()
-            assert any("default" in str(p).lower() for p in profiles)
 
     def test_get_profile_returns_current(self, test_context: OrcaTestContext) -> None:
         """Test that get_profile returns the current profile name."""
@@ -184,7 +178,7 @@ class TestSettingsManagerFileIO:
         with tempfile.TemporaryDirectory() as temp_dir:
             manager = self._create_fresh_manager(test_context, temp_dir)
 
-            assert manager.get_prefs_dir() == temp_dir
+            assert manager.get_prefs_dir() == os.path.join(temp_dir, "orca")
 
     def test_configuring_mode(self, test_context: OrcaTestContext) -> None:
         """Test that set_configuring and is_configuring work correctly."""

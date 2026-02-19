@@ -1007,13 +1007,12 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         if profile:
             registry = gsettings_registry.get_registry()
-            if registry.is_enabled():
-                skip = not app_name and profile == "default"
-                registry.save_schema_to_gsettings("keybindings", general, profile, app_name, skip)
-                if bindings:
-                    kb_gs = registry.get_settings("keybindings", profile, "keybindings", app_name)
-                    if kb_gs is not None:
-                        gsettings_migrator.import_keybindings(kb_gs, bindings)
+            skip = not app_name and profile == "default"
+            registry.save_schema_to_gsettings("keybindings", general, profile, app_name, skip)
+            if bindings:
+                kb_gs = registry.get_settings("keybindings", profile, "keybindings", app_name)
+                if kb_gs is not None:
+                    gsettings_migrator.import_keybindings(kb_gs, bindings)
 
         return general, bindings
 

@@ -34,7 +34,6 @@ from __future__ import annotations
 import subprocess
 import time
 import unicodedata
-from json import dump, load
 from typing import Callable, TYPE_CHECKING
 
 import gi
@@ -614,12 +613,7 @@ class ProfileManager:
     def get_available_profiles(self) -> list[list[str]]:
         """Returns list of available profiles as [display_name, internal_name] pairs."""
 
-        registry = gsettings_registry.get_registry()
-        if registry.is_enabled():
-            profiles = self._get_stored_profiles(registry)
-        else:
-            profiles = settings_manager.get_manager().profiles_from_json()
-
+        profiles = self._get_stored_profiles(gsettings_registry.get_registry())
         for profile in profiles:
             if profile[1] == "default":
                 profile[0] = guilabels.PROFILE_DEFAULT
@@ -695,37 +689,34 @@ class ProfileManager:
         orca.load_user_settings(skip_reload_message=True)
 
     def create_profile(self, new_profile: list[str]) -> bool:
-        """Create a new profile by copying the current active profile."""
+        """Create a new profile by copying the current active profile to dconf."""
 
         current_profile = self.get_active_profile()
         msg = f"PROFILE MANAGER: Creating profile '{new_profile[1]}' from '{current_profile}'."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        settings_file = settings_manager.get_manager().get_settings_file_path()
-        with open(settings_file, "r+", encoding="utf-8") as f:
-            try:
-                prefs = load(f)
-            except ValueError:
-                return False
-            if "profiles" not in prefs or current_profile not in prefs["profiles"]:
-                return False
-
-            profile_data = prefs["profiles"][current_profile].copy()
-            profile_data["profile"] = new_profile
-            prefs["profiles"][new_profile[1]] = profile_data
-
-            f.seek(0)
-            f.truncate()
-            dump(prefs, f, indent=4)
-
         registry = gsettings_registry.get_registry()
-        if registry.is_enabled():
-            pronunciations = profile_data.get("pronunciations", {})
-            keybindings_data = profile_data.get("keybindings", {})
-            # pylint: disable-next=protected-access
-            registry._write_profile_settings(
-                new_profile[1], profile_data, pronunciations, keybindings_data
-            )
+        old_profile = registry.sanitize_gsettings_path(current_profile)
+        new_name = registry.sanitize_gsettings_path(new_profile[1])
+
+        for schema_name in registry.get_schema_names():
+            if schema_name == "voice":
+                from . import gsettings_migrator  # pylint: disable=import-outside-toplevel
+
+                for voice_type in gsettings_migrator.VOICE_TYPES:
+                    vt = gsettings_migrator.sanitize_gsettings_path(voice_type)
+                    old_gs = registry.get_settings("voice", old_profile, f"voices/{vt}")
+                    new_gs = registry.get_settings("voice", new_name, f"voices/{vt}")
+                    registry.copy_user_keys(old_gs, new_gs)
+                continue
+            old_gs = registry.get_settings(schema_name, old_profile)
+            new_gs = registry.get_settings(schema_name, new_name)
+            registry.copy_user_keys(old_gs, new_gs)
+
+        metadata_gs = registry.get_settings("metadata", new_name)
+        if metadata_gs is not None:
+            metadata_gs.set_string("display-name", new_profile[0])
+            metadata_gs.set_string("internal-name", new_profile[1])
 
         return True
 
@@ -745,9 +736,6 @@ class ProfileManager:
         """Removes a profile by internal name."""
 
         registry = gsettings_registry.get_registry()
-        if not registry.is_enabled():
-            return
-
         sanitized_name = registry.sanitize_gsettings_path(internal_name)
         path = f"{gsettings_registry.GSETTINGS_PATH_PREFIX}{sanitized_name}/"
         try:
@@ -761,9 +749,9 @@ class ProfileManager:
     def rename_profile(self, old_internal_name: str, new_profile: list[str]) -> None:
         """Renames a profile."""
 
-        registry = gsettings_registry.get_registry()
-        if registry.is_enabled():
-            registry.rename_profile(old_internal_name, new_profile[0], new_profile[1])
+        gsettings_registry.get_registry().rename_profile(
+            old_internal_name, new_profile[0], new_profile[1]
+        )
 
     @dbus_service.command
     def cycle_settings_profile(

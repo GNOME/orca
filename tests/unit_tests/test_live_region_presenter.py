@@ -624,7 +624,6 @@ class TestLiveRegionPresenter:
 
         registry = gsettings_registry.get_registry()
         registry.clear_runtime_values()
-        registry.set_enabled(False)
 
         return essential_modules
 
@@ -1007,7 +1006,6 @@ class TestLiveRegionPresenterModule:
 
         registry = gsettings_registry.get_registry()
         registry.clear_runtime_values()
-        registry.set_enabled(False)
 
         return essential_modules
 

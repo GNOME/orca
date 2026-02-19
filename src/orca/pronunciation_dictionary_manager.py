@@ -29,7 +29,7 @@ from typing import Callable, TYPE_CHECKING
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk  # pylint: disable=no-name-in-module
 
 from . import gsettings_migrator
 from . import gsettings_registry
@@ -385,12 +385,9 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
 
         if profile:
             registry = gsettings_registry.get_registry()
-            if registry.is_enabled():
-                pron_gs = registry.get_settings(
-                    "pronunciations", profile, "pronunciations", app_name
-                )
-                if pron_gs is not None:
-                    gsettings_migrator.import_pronunciations(pron_gs, result)
+            pron_gs = registry.get_settings("pronunciations", profile, "pronunciations", app_name)
+            if pron_gs is not None:
+                gsettings_migrator.import_pronunciations(pron_gs, result)
 
         return result
 

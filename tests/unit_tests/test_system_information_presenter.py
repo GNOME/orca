@@ -128,10 +128,6 @@ class TestSystemInformationPresenter:
         essential_modules["memory"] = memory_mock
         essential_modules["key_bindings_instance"] = key_bindings_instance
 
-        from orca import gsettings_registry
-
-        gsettings_registry.get_registry().set_enabled(False)
-
         return essential_modules
 
     def test_init(self, test_context: OrcaTestContext) -> None:

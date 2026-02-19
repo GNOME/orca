@@ -35,7 +35,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi
-from gi.repository import Gdk
+from gi.repository import Gdk  # pylint: disable=no-name-in-module
 from gi.repository import Gio
 from gi.repository import GLib
 
@@ -67,10 +67,11 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
         mouse_review.get_reviewer().deactivate()
 
     event_manager.get_manager().pause_queuing(True, True, "Loading user settings.")
+
+    _profile = settings_manager.get_manager().get_profile()
     if is_reload:
-        _profile = settings_manager.get_manager().get_profile()
         settings_manager.get_manager().set_profile(_profile)
-        gsettings_registry.get_registry().set_active_profile(_profile)
+    gsettings_registry.get_registry().set_active_profile(_profile)
 
     if script is None:
         script = script_manager.get_manager().get_default_script()
@@ -147,7 +148,7 @@ def shutdown(_event=None, _signum=None):
     return True
 
 
-def main():
+def main(import_dir: str | None = None):
     """The main entry point for Orca."""
 
     def _reload_on_signal(signum, frame):
@@ -209,18 +210,13 @@ def main():
         debug.print_message(debug.LEVEL_INFO, msg, True)
         proxy.Set("org.a11y.Status", "IsEnabled", GLib.Variant("b", True))
 
-    manager = settings_manager.get_manager()
-    prefs_dir = manager.get_prefs_dir()
+    prefs_dir = settings_manager.get_manager().get_prefs_dir()
     registry = gsettings_registry.get_registry()
 
-    default_prefs_dir = os.path.join(
-        GLib.get_user_data_dir(),  # pylint: disable=no-value-for-parameter
-        "orca",
-    )
-    if os.path.realpath(prefs_dir) != os.path.realpath(default_prefs_dir):
-        registry.set_enabled(False)
-
-    registry.migrate_all(prefs_dir)
+    if import_dir:
+        registry.import_from_dir(import_dir)
+    else:
+        registry.migrate_all(prefs_dir)
 
     load_user_settings(is_reload=False)
 

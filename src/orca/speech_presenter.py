@@ -598,25 +598,24 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         if profile:
             registry = gsettings_registry.get_registry()
-            if registry.is_enabled():
-                aliased = dict(result)
-                gsettings_migrator.apply_legacy_aliases(aliased)
-                p = registry.sanitize_gsettings_path(profile)
-                skip = not app_name and profile == "default"
-                registry.save_schema_to_gsettings("speech", aliased, p, app_name, skip)
-                voices = aliased.get("voices", {})
-                for voice_type in gsettings_migrator.VOICE_TYPES:
-                    voice_data = voices.get(voice_type, {})
-                    if not voice_data:
-                        continue
-                    vt = gsettings_migrator.sanitize_gsettings_path(voice_type)
-                    voice_gs = registry.get_settings("voice", p, f"voices/{vt}", app_name)
-                    if voice_gs is not None:
-                        gsettings_migrator.import_voice(voice_gs, voice_data, skip)
+            aliased = dict(result)
+            gsettings_migrator.apply_legacy_aliases(aliased)
+            p = registry.sanitize_gsettings_path(profile)
+            skip = not app_name and profile == "default"
+            registry.save_schema_to_gsettings("speech", aliased, p, app_name, skip)
+            voices = aliased.get("voices", {})
+            for voice_type in gsettings_migrator.VOICE_TYPES:
+                voice_data = voices.get(voice_type, {})
+                if not voice_data:
+                    continue
+                vt = gsettings_migrator.sanitize_gsettings_path(voice_type)
+                voice_gs = registry.get_settings("voice", p, f"voices/{vt}", app_name)
+                if voice_gs is not None:
+                    gsettings_migrator.import_voice(voice_gs, voice_data, skip)
 
-                speech_gs = registry.get_settings("speech", p, "speech", app_name)
-                if speech_gs is not None:
-                    gsettings_migrator.import_synthesizer(speech_gs, aliased)
+            speech_gs = registry.get_settings("speech", p, "speech", app_name)
+            if speech_gs is not None:
+                gsettings_migrator.import_synthesizer(speech_gs, aliased)
 
         return result
 
