@@ -322,7 +322,12 @@ class CaretNavigator:
         if not (script and self._is_active_script(script)):
             return
 
-        self.set_is_enabled(enabled)
+        # Use the per-script state combined with the user's preference to determine
+        # whether commands should be active, without overwriting the preference.
+        effective = enabled and self.get_is_enabled()
+        command_manager.get_manager().set_group_enabled(
+            guilabels.KB_GROUP_CARET_NAVIGATION, effective
+        )
 
     def last_input_event_was_navigation_command(self) -> bool:
         """Returns true if the last input event was a navigation command."""

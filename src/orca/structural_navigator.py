@@ -456,12 +456,11 @@ class StructuralNavigator:
         if not (script and self._is_active_script(script)):
             return
 
-        enabled = mode != NavigationMode.OFF
-        gsettings_registry.get_registry().set_runtime_value(
-            "structural-navigation", "enabled", enabled
-        )
+        # Use the per-script mode combined with the user's preference to determine
+        # whether commands should be active, without overwriting the preference.
+        effective = mode != NavigationMode.OFF and self.get_is_enabled()
         command_manager.get_manager().set_group_enabled(
-            guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, enabled
+            guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, effective
         )
 
     def last_input_event_was_navigation_command(self) -> bool:
