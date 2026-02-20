@@ -745,7 +745,8 @@ class AXUtilitiesEvent:
         if not AXUtilitiesState.is_showing(event.source):
             msg = "AXUtilitiesEvent: The event source is not showing."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
+            if event.source != focus_manager.get_manager().get_locus_of_focus():
+                return False
 
         if AXUtilitiesRole.is_frame(event.source):
             if event.source != focus_manager.get_manager().get_active_window():
