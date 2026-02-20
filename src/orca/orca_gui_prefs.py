@@ -78,7 +78,7 @@ class _AppearanceProviders:
 
     hc: Gtk.CssProvider
     dark: Gtk.CssProvider
-    shapes: Gtk.CssProvider
+    shapes: Gtk.CssProvider | None = None
 
 
 # pylint: disable-next=too-few-public-methods
@@ -828,18 +828,20 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         providers = _AppearanceProviders(
             hc=Gtk.CssProvider(),
             dark=Gtk.CssProvider(),
-            shapes=Gtk.CssProvider(),
         )
         providers.hc.load_from_data(OrcaSetupGUI._HIGH_CONTRAST_CSS)
         dark_css = OrcaSetupGUI._DARK_MODE_CSS
         if "GNOME" in os.environ.get("XDG_CURRENT_DESKTOP", ""):
             dark_css += OrcaSetupGUI._GNOME_DARK_CSS
         providers.dark.load_from_data(dark_css)
-        providers.shapes.load_from_data(OrcaSetupGUI._STATUS_SHAPES_CSS)
 
         try:
             interface_settings = Gio.Settings(schema_id="org.gnome.desktop.interface")
             a11y_settings = Gio.Settings(schema_id="org.gnome.desktop.a11y.interface")
+            if "show-status-shapes" in a11y_settings.list_keys():
+                shapes_provider = Gtk.CssProvider()
+                shapes_provider.load_from_data(OrcaSetupGUI._STATUS_SHAPES_CSS)
+                providers.shapes = shapes_provider
             OrcaSetupGUI._apply_appearance(
                 interface_settings,
                 a11y_settings,
@@ -859,7 +861,8 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
             interface_settings.connect("changed::color-scheme", on_setting_changed)
             a11y_settings.connect("changed::high-contrast", on_setting_changed)
-            a11y_settings.connect("changed::show-status-shapes", on_setting_changed)
+            if providers.shapes is not None:
+                a11y_settings.connect("changed::show-status-shapes", on_setting_changed)
             gtk_settings.connect("notify::gtk-theme-name", on_setting_changed)
             return interface_settings, a11y_settings, base_provider, providers
         except GLib.Error as error:
@@ -887,11 +890,15 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             gtk_settings.set_property("gtk-theme-name", "HighContrast")
 
         priority = Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION + 1
-        for provider, enabled in (
+        conditional_providers: list[tuple[Gtk.CssProvider, bool]] = [
             (providers.hc, a11y_settings.get_boolean("high-contrast")),
             (providers.dark, prefer_dark),
-            (providers.shapes, a11y_settings.get_boolean("show-status-shapes")),
-        ):
+        ]
+        if providers.shapes is not None:
+            conditional_providers.append(
+                (providers.shapes, a11y_settings.get_boolean("show-status-shapes"))
+            )
+        for provider, enabled in conditional_providers:
             if enabled:
                 Gtk.StyleContext.add_provider_for_screen(screen, provider, priority)
             else:
