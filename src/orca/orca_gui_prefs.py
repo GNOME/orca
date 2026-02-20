@@ -95,9 +95,23 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
     WINDOW: OrcaSetupGUI | None = None
 
+    _EVENTS_TO_SUSPEND: tuple[str, ...] = (
+        "object:state-changed:checked",
+        "object:state-changed:sensitive",
+        "object:state-changed:showing",
+        "object:children-changed:add",
+        "object:children-changed:remove",
+        "object:selection-changed",
+        "object:property-change:accessible-name",
+        "object:property-change:accessible-description",
+    )
+
     def __init__(self, script: default.Script) -> None:
         if OrcaSetupGUI.WINDOW is not None:
             return
+
+        msg = "PREFERENCES: Initializing UI"
+        debug.print_message(debug.LEVEL_ALL, msg, True)
 
         appearance_refs = self._sync_appearance()
         super().__init__(title=guilabels.DIALOG_SCREEN_READER_PREFERENCES)
@@ -342,7 +356,8 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         if first_row:
             self.listbox.select_row(first_row)
 
-        self._init_gui_state()
+        msg = "PREFERENCES: Initializing UI complete"
+        debug.print_message(debug.LEVEL_ALL, msg, True)
 
     def _apply_decoration_layout(self) -> None:
         """Syncs headerbar button placement and app icon with the system layout."""
@@ -488,12 +503,14 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             self._set_page_title(title)
             self.stack.set_visible_child_name(panel_id)
 
+        self.suspend_events("Window being shown.")
         OrcaSetupGUI.WINDOW.show_all()
         self._sync_headerbar_widths()
         self._set_height_from_sidebar()
         self.stack.set_transition_type(Gtk.StackTransitionType.CROSSFADE)
         self.stack.set_transition_duration(150)
         OrcaSetupGUI.WINDOW.present_with_time(time.time())
+        GLib.timeout_add(500, self.resume_events)
 
         # Set accessible name after window is realized
         def set_accessible_name() -> bool:
@@ -521,7 +538,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
     def apply_button_clicked(self, _widget: Gtk.Button) -> None:
         """Handle Apply button click to save and apply preferences."""
 
-        msg = "PREFERENCES DIALOG: Apply button clicked"
+        msg = "PREFERENCES: Apply button clicked"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
         save_app = self._app_name or ""
@@ -551,32 +568,32 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
         self._settings_applied = True
 
-        msg = "PREFERENCES DIALOG: Handling Apply button click complete"
+        msg = "PREFERENCES: Handling Apply button click complete"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
     def cancel_button_clicked(self, _widget: Gtk.Button) -> None:
         """Handle Cancel button click to close window without saving."""
 
-        msg = "PREFERENCES DIALOG: Cancel button clicked"
+        msg = "PREFERENCES: Cancel button clicked"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
         for grid in self._page_to_grid.values():
             grid.revert_changes()
         self.destroy()
 
-        msg = "PREFERENCES DIALOG: Handling Cancel button click complete"
+        msg = "PREFERENCES: Handling Cancel button click complete"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
     def ok_button_clicked(self, widget: Gtk.Button | None = None) -> None:
         """Handle OK button click to save preferences and close window."""
 
-        msg = "PREFERENCES DIALOG: OK button clicked"
+        msg = "PREFERENCES: OK button clicked"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
         self.apply_button_clicked(widget)  # type: ignore[arg-type]
         self.destroy()
 
-        msg = "PREFERENCES DIALOG: Handling OK button click complete"
+        msg = "PREFERENCES: Handling OK button click complete"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
     def _on_save_profile_as(self) -> None:
@@ -593,7 +610,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
     def window_closed(self, _widget: Gtk.Widget, _event: Any) -> bool:
         """Handle window close signal by suspending events temporarily."""
 
-        msg = "PREFERENCES DIALOG: Window is being closed"
+        msg = "PREFERENCES: Window is being closed"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
         has_unsaved_changes = not self._settings_applied and self._has_unsaved_changes(
@@ -672,10 +689,10 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             if response == Gtk.ResponseType.NO:
                 profile_manager.get_manager().load_profile(self._original_profile)
 
-        self.suspend_events()
+        self.suspend_events("Window being closed.")
         GObject.timeout_add(1000, self.resume_events)
 
-        msg = "PREFERENCES DIALOG: Window closure complete"
+        msg = "PREFERENCES: Window closure complete"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
         return False
@@ -892,30 +909,26 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             if grid is not self.profiles_grid or include_profiles
         )
 
-    def resume_events(self) -> bool:
-        """Re-register event listeners after window closure."""
+    def resume_events(self, reason: str = "") -> bool:
+        """Re-register event listeners suspended during UI creation and teardown."""
 
-        msg = "PREFERENCES DIALOG: Re-registering floody events."
+        msg = f"PREFERENCES: Re-registering events. {reason}"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
         manager = event_manager.get_manager()
-        manager.register_listener("object:state-changed:showing")
-        manager.register_listener("object:children-changed:remove")
-        manager.register_listener("object:selection-changed")
-        manager.register_listener("object:property-change:accessible-name")
+        for event in self._EVENTS_TO_SUSPEND:
+            manager.register_listener(event)
         return False
 
-    def suspend_events(self) -> None:
-        """Deregister event listeners to prevent interference during closure."""
+    def suspend_events(self, reason: str = "") -> None:
+        """Deregister event listeners that flood Orca during UI creation and teardown."""
 
-        msg = "PREFERENCES DIALOG: Deregistering floody events."
+        msg = f"PREFERENCES: Suspending events. {reason}"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
         manager = event_manager.get_manager()
-        manager.deregister_listener("object:state-changed:showing")
-        manager.deregister_listener("object:children-changed:remove")
-        manager.deregister_listener("object:selection-changed")
-        manager.deregister_listener("object:property-change:accessible-name")
+        for event in self._EVENTS_TO_SUSPEND:
+            manager.deregister_listener(event)
 
     def _get_current_profile_label(self) -> str:
         """Get the display label for the current profile, including pending renames."""

@@ -1823,20 +1823,25 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
     def _update_sensitivity(self) -> None:
         """Update widget and row sensitivity based on determine_sensitivity callbacks."""
 
+        sensitivity_cache: dict[int, bool] = {}
+        callback_results: dict[Callable[[], bool], bool] = {}
         for i, control in enumerate(self._controls):
-            if control.determine_sensitivity is not None:
-                sensitive = control.determine_sensitivity()
+            callback = control.determine_sensitivity
+            if callback is not None:
+                if callback not in callback_results:
+                    callback_results[callback] = callback()
+                sensitive = callback_results[callback]
+                sensitivity_cache[i] = sensitive
                 self._widgets[i].set_sensitive(sensitive)
                 self._rows[i].set_sensitive(sensitive)
 
         for group_name, label in self._group_labels.items():
-            group_controls = [c for c in self._controls if c.member_of == group_name]
-            if not group_controls:
+            group_indices = [i for i, c in enumerate(self._controls) if c.member_of == group_name]
+            if not group_indices:
                 continue
 
             all_insensitive = all(
-                c.determine_sensitivity is not None and not c.determine_sensitivity()
-                for c in group_controls
+                i in sensitivity_cache and not sensitivity_cache[i] for i in group_indices
             )
             label.set_sensitive(not all_insensitive)
 

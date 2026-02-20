@@ -124,7 +124,6 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self._build()
         self._initializing = False
-        self.refresh()
 
     def _build(self) -> None:
         """Build the nested stack UI."""
