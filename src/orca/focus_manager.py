@@ -67,6 +67,7 @@ class FocusManager:
         self._last_cell_coordinates: tuple[int, int] = (-1, -1)
         self._last_cursor_position: tuple[Atspi.Accessible | None, int] = (None, -1)
         self._penultimate_cursor_position: tuple[Atspi.Accessible | None, int] = (None, -1)
+        self._in_preferences_window: bool = False
 
     def clear_state(self, reason: str = "") -> None:
         """Clears everything we're tracking."""
@@ -79,6 +80,16 @@ class FocusManager:
         self._window = None
         self._object_of_interest = None
         self._active_mode = None
+
+    def is_in_preferences_window(self) -> bool:
+        """Returns True if the Orca preferences window is open."""
+
+        return self._in_preferences_window
+
+    def set_in_preferences_window(self, in_prefs: bool) -> None:
+        """Sets whether the Orca preferences window is open."""
+
+        self._in_preferences_window = in_prefs
 
     def find_focused_object(self) -> Atspi.Accessible | None:
         """Returns the focused object in the active window."""

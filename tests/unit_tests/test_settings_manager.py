@@ -42,7 +42,7 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.unit
-class TestSettingsManagerFileIO:
+class TestSettingsManagerFileIO:  # pylint: disable=too-few-public-methods
     """Test SettingsManager file I/O operations with real files."""
 
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, Any]:
@@ -117,19 +117,3 @@ class TestSettingsManagerFileIO:
             manager = self._create_fresh_manager(test_context, temp_dir)
 
             assert manager.get_prefs_dir() == os.path.join(temp_dir, "orca")
-
-    def test_configuring_mode(self, test_context: OrcaTestContext) -> None:
-        """Test that set_configuring and is_configuring work correctly."""
-
-        self._setup_dependencies(test_context)
-
-        with tempfile.TemporaryDirectory() as temp_dir:
-            manager = self._create_fresh_manager(test_context, temp_dir)
-
-            assert manager.is_configuring() is False
-
-            manager.set_configuring(True)
-            assert manager.is_configuring() is True
-
-            manager.set_configuring(False)
-            assert manager.is_configuring() is False

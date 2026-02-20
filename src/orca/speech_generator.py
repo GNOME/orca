@@ -53,7 +53,6 @@ from . import mathsymbols
 from . import messages
 from . import object_properties
 from . import say_all_presenter
-from . import settings_manager
 from . import speech_manager
 from . import speech_presenter
 from .ax_document import AXDocument
@@ -270,7 +269,7 @@ class SpeechGenerator(generator.Generator):
                 if ACSS.FAMILY in voice_override:
                     family.update(voice_override[ACSS.FAMILY])
 
-            if settings_manager.get_manager().is_configuring():
+            if focus_manager.get_manager().is_in_preferences_window():
                 auto_lang_switching = False
             else:
                 auto_lang_switching = mgr.get_auto_language_switching()

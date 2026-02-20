@@ -70,7 +70,6 @@ from orca import profile_manager
 from orca import say_all_presenter
 from orca import script
 from orca import script_manager
-from orca import settings_manager
 from orca import sleep_mode_manager
 from orca import speech_manager
 from orca import speech_presenter
@@ -450,7 +449,7 @@ class Script(script.Script):
         tokens = ["DEFAULT: Activating script for", self.app]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if not settings_manager.get_manager().is_configuring():
+        if not focus_manager.get_manager().is_in_preferences_window():
             speech_manager.get_manager().update_punctuation_level()
             speech_manager.get_manager().update_capitalization_style()
             speech_manager.get_manager().update_synthesizer()

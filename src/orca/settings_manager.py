@@ -65,7 +65,6 @@ class SettingsManager:
 
         self._prefs_dir: str = ""
         self._customized_settings: dict | None = None
-        self._configuring: bool = False
 
         debug.print_message(debug.LEVEL_INFO, "SETTINGS MANAGER: Initialized", True)
 
@@ -136,18 +135,6 @@ class SettingsManager:
         """Returns the preferences directory."""
 
         return self._prefs_dir
-
-    def set_configuring(self, configuring: bool) -> None:
-        """Set whether preferences are currently being configured."""
-
-        self._configuring = configuring
-        msg = f"SETTINGS MANAGER: Configuring mode set to {configuring}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def is_configuring(self) -> bool:
-        """Return whether preferences are currently being configured."""
-
-        return self._configuring
 
     def get_speech_server_factories(self) -> list[ModuleType]:
         """Imports all known SpeechServer factory modules."""

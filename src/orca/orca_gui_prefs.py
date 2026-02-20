@@ -49,6 +49,7 @@ from . import command_manager
 from . import debug
 from . import document_presenter
 from . import event_manager
+from . import focus_manager
 from . import guilabels
 from . import learn_mode_presenter
 from . import messages
@@ -59,7 +60,6 @@ from . import presentation_manager
 from . import profile_manager
 from . import pronunciation_dictionary_manager
 from . import say_all_presenter
-from . import settings_manager
 from . import sound_presenter
 from . import speech_presenter
 from . import spellcheck_presenter
@@ -461,10 +461,8 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
     def show_gui(self) -> None:
         """Show the Orca configuration GUI window."""
 
-        # Helper to enable configuring mode after a brief delay
         def enable_configuring_mode():
-            settings_manager.get_manager().set_configuring(True)
-
+            focus_manager.get_manager().set_in_preferences_window(True)
             return False
 
         if OrcaSetupGUI.WINDOW is not None:
@@ -910,7 +908,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         msg = "PREFERENCES WINDOW: Window destruction complete"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
-        settings_manager.get_manager().set_configuring(False)
+        focus_manager.get_manager().set_in_preferences_window(False)
 
     def _has_unsaved_changes_in_grids(self) -> bool:
         """Check if any preference grid (except profiles) has unsaved changes."""

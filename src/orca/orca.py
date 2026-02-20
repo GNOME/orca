@@ -52,7 +52,6 @@ from . import mouse_review
 from . import orca_modifier_manager
 from . import presentation_manager
 from . import script_manager
-from . import settings_manager
 from . import systemd
 from .ax_utilities import AXUtilities
 
@@ -141,7 +140,7 @@ def shutdown(_event=None, _signum=None):
     return True
 
 
-def main(import_dir: str | None = None):
+def main(import_dir: str | None = None, prefs_dir: str = ""):
     """The main entry point for Orca."""
 
     def _reload_on_signal(signum, frame):
@@ -203,7 +202,6 @@ def main(import_dir: str | None = None):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         proxy.Set("org.a11y.Status", "IsEnabled", GLib.Variant("b", True))
 
-    prefs_dir = settings_manager.get_manager().get_prefs_dir()
     registry = gsettings_registry.get_registry()
 
     if import_dir:
