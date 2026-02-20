@@ -115,13 +115,13 @@ class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 label=guilabels.OBJECT_PRESENTATION_IS_DETAILED,
                 getter=presenter._get_verbosity_is_detailed,
                 setter=presenter._set_verbosity_is_detailed,
-                prefs_key="brailleVerbosityLevel",
+                prefs_key="verbosity-level",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.BRAILLE_SHOW_CONTEXT,
                 getter=presenter.get_display_ancestors,
                 setter=presenter.set_display_ancestors,
-                prefs_key="enableBrailleContext",
+                prefs_key="display-ancestors",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.BRAILLE_ABBREVIATED_ROLE_NAMES,
@@ -132,7 +132,7 @@ class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 label=guilabels.PRESENT_OBJECT_MNEMONICS,
                 getter=presenter.get_present_mnemonics,
                 setter=presenter.set_present_mnemonics,
-                prefs_key="displayObjectMnemonic",
+                prefs_key="present-mnemonics",
             ),
         ]
 
@@ -142,7 +142,7 @@ class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
         """Save settings, adding integer value for rolename style."""
 
         result = super().save_settings(profile, app_name)
-        result["brailleRolenameStyle"] = VerbosityLevel[
+        result["rolename-style"] = VerbosityLevel[
             self._presenter.get_rolename_style().upper()
         ].value
         return result
@@ -160,7 +160,7 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
             label=guilabels.BRAILLE_ENABLE_CONTRACTED_BRAILLE,
             getter=presenter.get_contracted_braille_is_enabled,
             setter=presenter.set_contracted_braille_is_enabled,
-            prefs_key="enableContractedBraille",
+            prefs_key="contracted-braille",
         )
 
         controls: list[
@@ -171,20 +171,20 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                 label=guilabels.BRAILLE_ENABLE_END_OF_LINE_SYMBOL,
                 getter=presenter.get_end_of_line_indicator_is_enabled,
                 setter=presenter.set_end_of_line_indicator_is_enabled,
-                prefs_key="enableBrailleEOL",
+                prefs_key="end-of-line-indicator",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.BRAILLE_ENABLE_WORD_WRAP,
                 getter=presenter.get_word_wrap_is_enabled,
                 setter=presenter.set_word_wrap_is_enabled,
-                prefs_key="enableBrailleWordWrap",
+                prefs_key="word-wrap",
             ),
             self._enable_contracted_control,
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.BRAILLE_COMPUTER_BRAILLE_AT_CURSOR,
                 getter=presenter.get_computer_braille_at_cursor_is_enabled,
                 setter=presenter.set_computer_braille_at_cursor_is_enabled,
-                prefs_key="enableComputerBrailleAtCursor",
+                prefs_key="computer-braille-at-cursor",
                 determine_sensitivity=self._contracted_enabled,
             ),
             preferences_grid_base.EnumPreferenceControl(
@@ -193,7 +193,7 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                 values=table_paths,
                 getter=presenter.get_contraction_table_path,
                 setter=presenter.set_contraction_table_from_path,
-                prefs_key="brailleContractionTable",
+                prefs_key="contraction-table",
                 determine_sensitivity=self._contracted_enabled,
             ),
             preferences_grid_base.EnumPreferenceControl(
@@ -212,7 +212,7 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                 ],
                 getter=presenter._get_link_indicator_as_int,
                 setter=presenter.set_link_indicator_from_int,
-                prefs_key="brailleLinkIndicator",
+                prefs_key="link-indicator",
                 member_of=guilabels.BRAILLE_INDICATORS,
             ),
             preferences_grid_base.EnumPreferenceControl(
@@ -231,7 +231,7 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                 ],
                 getter=presenter._get_selector_indicator_as_int,
                 setter=presenter.set_selector_indicator_from_int,
-                prefs_key="brailleSelectorIndicator",
+                prefs_key="selector-indicator",
                 member_of=guilabels.BRAILLE_INDICATORS,
             ),
             preferences_grid_base.EnumPreferenceControl(
@@ -250,7 +250,7 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                 ],
                 getter=presenter._get_text_attributes_indicator_as_int,
                 setter=presenter.set_text_attributes_indicator_from_int,
-                prefs_key="textAttributesBrailleIndicator",
+                prefs_key="text-attributes-indicator",
                 member_of=guilabels.BRAILLE_INDICATORS,
             ),
         ]
@@ -273,7 +273,7 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
             label=guilabels.BRAILLE_MESSAGES_ARE_PERSISTENT,
             getter=presenter.get_flash_messages_are_persistent,
             setter=presenter.set_flash_messages_are_persistent,
-            prefs_key="flashIsPersistent",
+            prefs_key="flash-messages-persistent",
         )
 
         controls: list[
@@ -284,13 +284,13 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
                 label=guilabels.BRAILLE_ENABLE_FLASH_MESSAGES,
                 getter=presenter.get_flash_messages_are_enabled,
                 setter=presenter.set_flash_messages_are_enabled,
-                prefs_key="enableFlashMessages",
+                prefs_key="flash-messages",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.BRAILLE_MESSAGES_ARE_DETAILED,
                 getter=presenter.get_flash_messages_are_detailed,
                 setter=presenter.set_flash_messages_are_detailed,
-                prefs_key="flashIsDetailed",
+                prefs_key="flash-messages-detailed",
             ),
             self._flash_persistent_control,
             preferences_grid_base.IntRangePreferenceControl(
@@ -312,10 +312,10 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
         return not widget.get_active() if widget else True
 
     def save_settings(self, profile: str = "", app_name: str = "") -> dict:
-        """Persist staged values, including brailleFlashTime in milliseconds."""
+        """Persist staged values, including flash-message-duration in milliseconds."""
 
         result = super().save_settings(profile, app_name)
-        result["brailleFlashTime"] = self._presenter.get_flash_message_duration()
+        result["flash-message-duration"] = self._presenter.get_flash_message_duration()
         return result
 
 
@@ -328,13 +328,13 @@ class BrailleProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGr
                 label=guilabels.GENERAL_BRAILLE_UPDATES,
                 getter=presenter.get_braille_progress_bar_updates,
                 setter=presenter.set_braille_progress_bar_updates,
-                prefs_key="brailleProgressBarUpdates",
+                prefs_key="braille-progress-bar-updates",
             ),
             preferences_grid_base.IntRangePreferenceControl(
                 label=guilabels.GENERAL_FREQUENCY_SECS,
                 getter=presenter.get_progress_bar_braille_interval,
                 setter=presenter.set_progress_bar_braille_interval,
-                prefs_key="progressBarBrailleInterval",
+                prefs_key="progress-bar-braille-interval",
                 minimum=0,
                 maximum=100,
             ),
@@ -342,7 +342,7 @@ class BrailleProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGr
                 label=guilabels.GENERAL_APPLIES_TO,
                 getter=presenter.get_progress_bar_braille_verbosity,
                 setter=presenter.set_progress_bar_braille_verbosity,
-                prefs_key="progressBarBrailleVerbosity",
+                prefs_key="progress-bar-braille-verbosity",
                 options=[
                     guilabels.PROGRESS_BAR_ALL,
                     guilabels.PROGRESS_BAR_APPLICATION,
@@ -368,7 +368,7 @@ class BrailleOSDPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.BRAILLE_MONITOR_CELL_COUNT,
                 getter=presenter.get_monitor_cell_count,
                 setter=presenter.set_monitor_cell_count,
-                prefs_key="brailleMonitorCellCount",
+                prefs_key="monitor-cell-count",
                 minimum=1,
                 maximum=80,
             ),
@@ -376,19 +376,19 @@ class BrailleOSDPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.BRAILLE_MONITOR_SHOW_DOTS,
                 getter=presenter.get_monitor_show_dots,
                 setter=presenter.set_monitor_show_dots,
-                prefs_key="brailleMonitorShowDots",
+                prefs_key="monitor-show-dots",
             ),
             preferences_grid_base.ColorPreferenceControl(
                 label=guilabels.BRAILLE_MONITOR_FOREGROUND,
                 getter=presenter.get_monitor_foreground,
                 setter=presenter.set_monitor_foreground,
-                prefs_key="brailleMonitorForeground",
+                prefs_key="monitor-foreground",
             ),
             preferences_grid_base.ColorPreferenceControl(
                 label=guilabels.BRAILLE_MONITOR_BACKGROUND,
                 getter=presenter.get_monitor_background,
                 setter=presenter.set_monitor_background,
-                prefs_key="brailleMonitorBackground",
+                prefs_key="monitor-background",
             ),
         ]
 
@@ -469,7 +469,7 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         assert self._multipage_enable_switch is not None
         result: dict[str, Any] = {}
-        result["enableBraille"] = self._multipage_enable_switch.get_active()
+        result["enabled"] = self._multipage_enable_switch.get_active()
         result.update(self._verbosity_grid.save_settings())
         result.update(self._display_settings_grid.save_settings())
         result.update(self._flash_messages_grid.save_settings())
@@ -478,7 +478,7 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         if profile:
             skip = not app_name and profile == "default"
-            gsettings_registry.get_registry().save_schema_to_gsettings(
+            gsettings_registry.get_registry().save_schema(
                 "braille", result, profile, app_name, skip
             )
 
@@ -739,7 +739,7 @@ class BraillePresenter:
         gtype="i",
         default=32,
         summary="Braille monitor cell count",
-        settings_key="brailleMonitorCellCount",
+        migration_key="brailleMonitorCellCount",
     )
     @dbus_service.getter
     def get_monitor_cell_count(self) -> int:
@@ -765,7 +765,7 @@ class BraillePresenter:
         gtype="b",
         default=False,
         summary="Show Unicode braille dots in braille monitor",
-        settings_key="brailleMonitorShowDots",
+        migration_key="brailleMonitorShowDots",
     )
     @dbus_service.getter
     def get_monitor_show_dots(self) -> bool:
@@ -790,7 +790,7 @@ class BraillePresenter:
         gtype="s",
         default="#000000",
         summary="Braille monitor foreground color",
-        settings_key="brailleMonitorForeground",
+        migration_key="brailleMonitorForeground",
     )
     @dbus_service.getter
     def get_monitor_foreground(self) -> str:
@@ -817,7 +817,7 @@ class BraillePresenter:
         gtype="s",
         default="#ffffff",
         summary="Braille monitor background color",
-        settings_key="brailleMonitorBackground",
+        migration_key="brailleMonitorBackground",
     )
     @dbus_service.getter
     def get_monitor_background(self) -> str:
@@ -888,7 +888,7 @@ class BraillePresenter:
         gtype="b",
         default=True,
         summary="Enable braille output",
-        settings_key="enableBraille",
+        migration_key="enableBraille",
     )
     @dbus_service.getter
     def get_braille_is_enabled(self) -> bool:
@@ -926,7 +926,7 @@ class BraillePresenter:
         genum="org.gnome.Orca.VerbosityLevel",
         default="verbose",
         summary="Braille verbosity level (brief, verbose)",
-        settings_key="brailleVerbosityLevel",
+        migration_key="brailleVerbosityLevel",
     )
     @dbus_service.getter
     def get_verbosity_level(self) -> str:
@@ -969,7 +969,7 @@ class BraillePresenter:
         genum="org.gnome.Orca.VerbosityLevel",
         default="verbose",
         summary="Braille rolename style (brief, verbose)",
-        settings_key="brailleRolenameStyle",
+        migration_key="brailleRolenameStyle",
     )
     @dbus_service.getter
     def get_rolename_style(self) -> str:
@@ -1007,7 +1007,7 @@ class BraillePresenter:
         gtype="b",
         default=True,
         summary="Present mnemonics on braille display",
-        settings_key="displayObjectMnemonic",
+        migration_key="displayObjectMnemonic",
     )
     @dbus_service.getter
     def get_present_mnemonics(self) -> bool:
@@ -1032,7 +1032,7 @@ class BraillePresenter:
         gtype="b",
         default=True,
         summary="Display ancestors of current object",
-        settings_key="enableBrailleContext",
+        migration_key="enableBrailleContext",
     )
     @dbus_service.getter
     def get_display_ancestors(self) -> bool:
@@ -1057,7 +1057,7 @@ class BraillePresenter:
         gtype="b",
         default=False,
         summary="Show progress bar updates in braille",
-        settings_key="brailleProgressBarUpdates",
+        migration_key="brailleProgressBarUpdates",
     )
     @dbus_service.getter
     def get_braille_progress_bar_updates(self) -> bool:
@@ -1082,7 +1082,7 @@ class BraillePresenter:
         gtype="i",
         default=10,
         summary="Progress bar braille update interval in seconds",
-        settings_key="progressBarBrailleInterval",
+        migration_key="progressBarBrailleInterval",
     )
     @dbus_service.getter
     def get_progress_bar_braille_interval(self) -> int:
@@ -1107,7 +1107,7 @@ class BraillePresenter:
         genum="org.gnome.Orca.ProgressBarVerbosity",
         default="application",
         summary="Progress bar braille verbosity (all, application, window)",
-        settings_key="progressBarBrailleVerbosity",
+        migration_key="progressBarBrailleVerbosity",
     )
     @dbus_service.getter
     def get_progress_bar_braille_verbosity(self) -> int:
@@ -1176,7 +1176,7 @@ class BraillePresenter:
         gtype="b",
         default=False,
         summary="Enable contracted braille",
-        settings_key="enableContractedBraille",
+        migration_key="enableContractedBraille",
     )
     @dbus_service.getter
     def get_contracted_braille_is_enabled(self) -> bool:
@@ -1202,7 +1202,7 @@ class BraillePresenter:
         gtype="b",
         default=True,
         summary="Use computer braille at cursor position",
-        settings_key="enableComputerBrailleAtCursor",
+        migration_key="enableComputerBrailleAtCursor",
     )
     @dbus_service.getter
     def get_computer_braille_at_cursor_is_enabled(self) -> bool:
@@ -1236,7 +1236,7 @@ class BraillePresenter:
         gtype="s",
         default="",
         summary="Braille contraction table name",
-        settings_key="brailleContractionTable",
+        migration_key="brailleContractionTable",
     )
     @dbus_service.getter
     def get_contraction_table(self) -> str:
@@ -1317,7 +1317,7 @@ class BraillePresenter:
         gtype="b",
         default=True,
         summary="Show end-of-line indicator",
-        settings_key="enableBrailleEOL",
+        migration_key="enableBrailleEOL",
     )
     @dbus_service.getter
     def get_end_of_line_indicator_is_enabled(self) -> bool:
@@ -1343,7 +1343,7 @@ class BraillePresenter:
         gtype="b",
         default=False,
         summary="Enable braille word wrap",
-        settings_key="enableBrailleWordWrap",
+        migration_key="enableBrailleWordWrap",
     )
     @dbus_service.getter
     def get_word_wrap_is_enabled(self) -> bool:
@@ -1367,7 +1367,7 @@ class BraillePresenter:
         gtype="b",
         default=True,
         summary="Enable braille flash messages",
-        settings_key="enableFlashMessages",
+        migration_key="enableFlashMessages",
     )
     @dbus_service.getter
     def get_flash_messages_are_enabled(self) -> bool:
@@ -1397,7 +1397,7 @@ class BraillePresenter:
         gtype="i",
         default=5000,
         summary="Flash message duration in milliseconds",
-        settings_key="brailleFlashTime",
+        migration_key="brailleFlashTime",
     )
     @dbus_service.getter
     def get_flash_message_duration(self) -> int:
@@ -1458,7 +1458,7 @@ class BraillePresenter:
         gtype="b",
         default=False,
         summary="Make flash messages persistent",
-        settings_key="flashIsPersistent",
+        migration_key="flashIsPersistent",
     )
     @dbus_service.getter
     def get_flash_messages_are_persistent(self) -> bool:
@@ -1483,7 +1483,7 @@ class BraillePresenter:
         gtype="b",
         default=True,
         summary="Use detailed flash messages",
-        settings_key="flashIsDetailed",
+        migration_key="flashIsDetailed",
     )
     @dbus_service.getter
     def get_flash_messages_are_detailed(self) -> bool:
@@ -1523,7 +1523,7 @@ class BraillePresenter:
         genum="org.gnome.Orca.BrailleIndicator",
         default="dots78",
         summary="Braille selector indicator style (none, dot7, dot8, dots78)",
-        settings_key="brailleSelectorIndicator",
+        migration_key="brailleSelectorIndicator",
     )
     @dbus_service.getter
     def get_selector_indicator(self) -> str:
@@ -1577,7 +1577,7 @@ class BraillePresenter:
         genum="org.gnome.Orca.BrailleIndicator",
         default="dots78",
         summary="Braille link indicator style (none, dot7, dot8, dots78)",
-        settings_key="brailleLinkIndicator",
+        migration_key="brailleLinkIndicator",
     )
     @dbus_service.getter
     def get_link_indicator(self) -> str:
@@ -1631,7 +1631,7 @@ class BraillePresenter:
         genum="org.gnome.Orca.BrailleIndicator",
         default="none",
         summary="Braille text attributes indicator style (none, dot7, dot8, dots78)",
-        settings_key="textAttributesBrailleIndicator",
+        migration_key="textAttributesBrailleIndicator",
     )
     @dbus_service.getter
     def get_text_attributes_indicator(self) -> str:

@@ -97,62 +97,62 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 values=[SayAllStyle.SENTENCE.value, SayAllStyle.LINE.value],
                 getter=presenter.get_style_as_int,
                 setter=presenter.set_style_from_int,
-                prefs_key="sayAllStyle",
+                prefs_key="style",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.SAY_ALL_UP_AND_DOWN_ARROW,
                 getter=presenter.get_rewind_and_fast_forward_enabled,
                 setter=presenter.set_rewind_and_fast_forward_enabled,
-                prefs_key="rewindAndFastForwardInSayAll",
+                prefs_key="rewind-and-fast-forward",
                 member_of=guilabels.SAY_ALL_REWIND_AND_FAST_FORWARD_BY,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.SAY_ALL_STRUCTURAL_NAVIGATION,
                 getter=presenter.get_structural_navigation_enabled,
                 setter=presenter.set_structural_navigation_enabled,
-                prefs_key="structNavInSayAll",
+                prefs_key="structural-navigation",
                 member_of=guilabels.SAY_ALL_REWIND_AND_FAST_FORWARD_BY,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_BLOCKQUOTES,
                 getter=presenter.get_announce_blockquote,
                 setter=presenter.set_announce_blockquote,
-                prefs_key="sayAllContextBlockquote",
+                prefs_key="announce-blockquote",
                 member_of=guilabels.ANNOUNCEMENTS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_FORMS,
                 getter=presenter.get_announce_form,
                 setter=presenter.set_announce_form,
-                prefs_key="sayAllContextNonLandmarkForm",
+                prefs_key="announce-form",
                 member_of=guilabels.ANNOUNCEMENTS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_LANDMARKS,
                 getter=presenter.get_announce_landmark,
                 setter=presenter.set_announce_landmark,
-                prefs_key="sayAllContextLandmark",
+                prefs_key="announce-landmark",
                 member_of=guilabels.ANNOUNCEMENTS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_LISTS,
                 getter=presenter.get_announce_list,
                 setter=presenter.set_announce_list,
-                prefs_key="sayAllContextList",
+                prefs_key="announce-list",
                 member_of=guilabels.ANNOUNCEMENTS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_PANELS,
                 getter=presenter.get_announce_grouping,
                 setter=presenter.set_announce_grouping,
-                prefs_key="sayAllContextPanel",
+                prefs_key="announce-grouping",
                 member_of=guilabels.ANNOUNCEMENTS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_TABLES,
                 getter=presenter.get_announce_table,
                 setter=presenter.set_announce_table,
-                prefs_key="sayAllContextTable",
+                prefs_key="announce-table",
                 member_of=guilabels.ANNOUNCEMENTS,
             ),
         ]
@@ -575,7 +575,7 @@ class SayAllPresenter:
         gtype="b",
         default=True,
         summary="Announce blockquotes",
-        settings_key="sayAllContextBlockquote",
+        migration_key="sayAllContextBlockquote",
     )
     @dbus_service.getter
     def get_announce_blockquote(self) -> bool:
@@ -600,7 +600,7 @@ class SayAllPresenter:
         gtype="b",
         default=True,
         summary="Announce non-landmark forms",
-        settings_key="sayAllContextNonLandmarkForm",
+        migration_key="sayAllContextNonLandmarkForm",
     )
     @dbus_service.getter
     def get_announce_form(self) -> bool:
@@ -623,7 +623,7 @@ class SayAllPresenter:
         gtype="b",
         default=True,
         summary="Announce groupings",
-        settings_key="sayAllContextPanel",
+        migration_key="sayAllContextPanel",
     )
     @dbus_service.getter
     def get_announce_grouping(self) -> bool:
@@ -648,7 +648,7 @@ class SayAllPresenter:
         gtype="b",
         default=True,
         summary="Announce landmarks",
-        settings_key="sayAllContextLandmark",
+        migration_key="sayAllContextLandmark",
     )
     @dbus_service.getter
     def get_announce_landmark(self) -> bool:
@@ -673,7 +673,7 @@ class SayAllPresenter:
         gtype="b",
         default=True,
         summary="Announce lists",
-        settings_key="sayAllContextList",
+        migration_key="sayAllContextList",
     )
     @dbus_service.getter
     def get_announce_list(self) -> bool:
@@ -696,7 +696,7 @@ class SayAllPresenter:
         gtype="b",
         default=True,
         summary="Announce tables",
-        settings_key="sayAllContextTable",
+        migration_key="sayAllContextTable",
     )
     @dbus_service.getter
     def get_announce_table(self) -> bool:
@@ -719,7 +719,7 @@ class SayAllPresenter:
         genum="org.gnome.Orca.SayAllStyle",
         default="sentence",
         summary="Say All style (line, sentence)",
-        settings_key="sayAllStyle",
+        migration_key="sayAllStyle",
     )
     @dbus_service.getter
     def get_style(self) -> str:
@@ -753,7 +753,7 @@ class SayAllPresenter:
         gtype="b",
         default=False,
         summary="Enable structural navigation in Say All",
-        settings_key="structNavInSayAll",
+        migration_key="structNavInSayAll",
     )
     @dbus_service.getter
     def get_structural_navigation_enabled(self) -> bool:
@@ -778,7 +778,7 @@ class SayAllPresenter:
         gtype="b",
         default=False,
         summary="Enable rewind and fast forward in Say All",
-        settings_key="rewindAndFastForwardInSayAll",
+        migration_key="rewindAndFastForwardInSayAll",
     )
     @dbus_service.getter
     def get_rewind_and_fast_forward_enabled(self) -> bool:

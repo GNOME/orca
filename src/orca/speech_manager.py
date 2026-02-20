@@ -1427,7 +1427,7 @@ class SpeechManager:
         gtype="s",
         default="speechdispatcherfactory",
         summary="Speech server factory module",
-        settings_key="speechServerFactory",
+        migration_key="speechServerFactory",
     )
     def get_speech_server_factory(self) -> str:
         """Returns the speech server factory module name."""
@@ -1870,7 +1870,7 @@ class SpeechManager:
         schema="voice",
         gtype="b",
         default=False,
-        settings_key="established",
+        migration_key="established",
         summary="Whether this voice type has been user-customized",
     )
     def get_established(self) -> bool:
@@ -2142,7 +2142,7 @@ class SpeechManager:
         genum="org.gnome.Orca.CapitalizationStyle",
         default="none",
         summary="Capitalization style (none, spell, icon)",
-        settings_key="capitalizationStyle",
+        migration_key="capitalizationStyle",
     )
     @dbus_service.getter
     def get_capitalization_style(self) -> str:
@@ -2231,7 +2231,7 @@ class SpeechManager:
         genum="org.gnome.Orca.PunctuationStyle",
         default="most",
         summary="Punctuation verbosity level (none, some, most, all)",
-        settings_key="verbalizePunctuationStyle",
+        migration_key="verbalizePunctuationStyle",
     )
     @dbus_service.getter
     def get_punctuation_level(self) -> str:
@@ -2414,7 +2414,7 @@ class SpeechManager:
         gtype="b",
         default=True,
         summary="Enable speech output",
-        settings_key="enableSpeech",
+        migration_key="enableSpeech",
     )
     @dbus_service.getter
     def get_speech_is_enabled(self) -> bool:
@@ -2448,7 +2448,7 @@ class SpeechManager:
         gtype="b",
         default=False,
         summary="Speak numbers as individual digits",
-        settings_key="speakNumbersAsDigits",
+        migration_key="speakNumbersAsDigits",
     )
     @dbus_service.getter
     def get_speak_numbers_as_digits(self) -> bool:
@@ -2473,7 +2473,7 @@ class SpeechManager:
         gtype="b",
         default=True,
         summary="Use color names instead of values",
-        settings_key="useColorNames",
+        migration_key="useColorNames",
     )
     @dbus_service.getter
     def get_use_color_names(self) -> bool:
@@ -2498,7 +2498,7 @@ class SpeechManager:
         gtype="b",
         default=True,
         summary="Insert pauses between utterances",
-        settings_key="enablePauseBreaks",
+        migration_key="enablePauseBreaks",
     )
     @dbus_service.getter
     def get_insert_pauses_between_utterances(self) -> bool:
@@ -2523,7 +2523,7 @@ class SpeechManager:
         gtype="b",
         default=True,
         summary="Apply user pronunciation dictionary",
-        settings_key="usePronunciationDictionary",
+        migration_key="usePronunciationDictionary",
     )
     @dbus_service.getter
     def get_use_pronunciation_dictionary(self) -> bool:
@@ -2548,7 +2548,7 @@ class SpeechManager:
         gtype="b",
         default=True,
         summary="Automatically switch voice based on text language",
-        settings_key="enableAutoLanguageSwitching",
+        migration_key="enableAutoLanguageSwitching",
     )
     @dbus_service.getter
     def get_auto_language_switching(self) -> bool:

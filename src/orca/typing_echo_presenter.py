@@ -84,7 +84,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             label=guilabels.ECHO_ENABLE_KEY_ECHO,
             getter=presenter.get_key_echo_enabled,
             setter=presenter.set_key_echo_enabled,
-            prefs_key="enableKeyEcho",
+            prefs_key="key-echo",
         )
 
         controls = [
@@ -93,7 +93,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_ALPHABETIC_KEYS,
                 getter=presenter.get_alphabetic_keys_enabled,
                 setter=presenter.set_alphabetic_keys_enabled,
-                prefs_key="enableAlphabeticKeys",
+                prefs_key="alphabetic-keys",
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
                 determine_sensitivity=presenter.get_key_echo_enabled,
             ),
@@ -101,7 +101,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_NUMERIC_KEYS,
                 getter=presenter.get_numeric_keys_enabled,
                 setter=presenter.set_numeric_keys_enabled,
-                prefs_key="enableNumericKeys",
+                prefs_key="numeric-keys",
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
                 determine_sensitivity=presenter.get_key_echo_enabled,
             ),
@@ -109,7 +109,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_PUNCTUATION_KEYS,
                 getter=presenter.get_punctuation_keys_enabled,
                 setter=presenter.set_punctuation_keys_enabled,
-                prefs_key="enablePunctuationKeys",
+                prefs_key="punctuation-keys",
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
                 determine_sensitivity=presenter.get_key_echo_enabled,
             ),
@@ -117,7 +117,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_SPACE,
                 getter=presenter.get_space_enabled,
                 setter=presenter.set_space_enabled,
-                prefs_key="enableSpace",
+                prefs_key="space",
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
                 determine_sensitivity=presenter.get_key_echo_enabled,
             ),
@@ -125,7 +125,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_MODIFIER_KEYS,
                 getter=presenter.get_modifier_keys_enabled,
                 setter=presenter.set_modifier_keys_enabled,
-                prefs_key="enableModifierKeys",
+                prefs_key="modifier-keys",
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
                 determine_sensitivity=presenter.get_key_echo_enabled,
             ),
@@ -133,7 +133,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_FUNCTION_KEYS,
                 getter=presenter.get_function_keys_enabled,
                 setter=presenter.set_function_keys_enabled,
-                prefs_key="enableFunctionKeys",
+                prefs_key="function-keys",
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
                 determine_sensitivity=presenter.get_key_echo_enabled,
             ),
@@ -141,7 +141,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_ACTION_KEYS,
                 getter=presenter.get_action_keys_enabled,
                 setter=presenter.set_action_keys_enabled,
-                prefs_key="enableActionKeys",
+                prefs_key="action-keys",
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
                 determine_sensitivity=presenter.get_key_echo_enabled,
             ),
@@ -149,7 +149,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_NAVIGATION_KEYS,
                 getter=presenter.get_navigation_keys_enabled,
                 setter=presenter.set_navigation_keys_enabled,
-                prefs_key="enableNavigationKeys",
+                prefs_key="navigation-keys",
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
                 determine_sensitivity=presenter.get_key_echo_enabled,
             ),
@@ -157,7 +157,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_DIACRITICAL_KEYS,
                 getter=presenter.get_diacritical_keys_enabled,
                 setter=presenter.set_diacritical_keys_enabled,
-                prefs_key="enableDiacriticalKeys",
+                prefs_key="diacritical-keys",
                 member_of=guilabels.ECHO_KEYS_TO_ECHO,
                 determine_sensitivity=presenter.get_key_echo_enabled,
             ),
@@ -165,21 +165,21 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.ECHO_CHARACTER,
                 getter=presenter.get_character_echo_enabled,
                 setter=presenter.set_character_echo_enabled,
-                prefs_key="enableEchoByCharacter",
+                prefs_key="character-echo",
                 member_of=guilabels.ECHO_TYPING_ECHO,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ECHO_WORD,
                 getter=presenter.get_word_echo_enabled,
                 setter=presenter.set_word_echo_enabled,
-                prefs_key="enableEchoByWord",
+                prefs_key="word-echo",
                 member_of=guilabels.ECHO_TYPING_ECHO,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ECHO_SENTENCE,
                 getter=presenter.get_sentence_echo_enabled,
                 setter=presenter.set_sentence_echo_enabled,
-                prefs_key="enableEchoBySentence",
+                prefs_key="sentence-echo",
                 member_of=guilabels.ECHO_TYPING_ECHO,
             ),
         ]
@@ -409,7 +409,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=True,
         summary="Enable key echo",
-        settings_key="enableKeyEcho",
+        migration_key="enableKeyEcho",
     )
     @dbus_service.getter
     def get_key_echo_enabled(self) -> bool:
@@ -432,7 +432,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=False,
         summary="Echo inserted characters",
-        settings_key="enableEchoByCharacter",
+        migration_key="enableEchoByCharacter",
     )
     @dbus_service.getter
     def get_character_echo_enabled(self) -> bool:
@@ -455,7 +455,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=False,
         summary="Echo completed words",
-        settings_key="enableEchoByWord",
+        migration_key="enableEchoByWord",
     )
     @dbus_service.getter
     def get_word_echo_enabled(self) -> bool:
@@ -478,7 +478,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=False,
         summary="Echo completed sentences",
-        settings_key="enableEchoBySentence",
+        migration_key="enableEchoBySentence",
     )
     @dbus_service.getter
     def get_sentence_echo_enabled(self) -> bool:
@@ -501,7 +501,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=True,
         summary="Echo alphabetic keys",
-        settings_key="enableAlphabeticKeys",
+        migration_key="enableAlphabeticKeys",
     )
     @dbus_service.getter
     def get_alphabetic_keys_enabled(self) -> bool:
@@ -524,7 +524,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=True,
         summary="Echo numeric keys",
-        settings_key="enableNumericKeys",
+        migration_key="enableNumericKeys",
     )
     @dbus_service.getter
     def get_numeric_keys_enabled(self) -> bool:
@@ -547,7 +547,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=True,
         summary="Echo punctuation keys",
-        settings_key="enablePunctuationKeys",
+        migration_key="enablePunctuationKeys",
     )
     @dbus_service.getter
     def get_punctuation_keys_enabled(self) -> bool:
@@ -570,7 +570,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=True,
         summary="Echo space key",
-        settings_key="enableSpace",
+        migration_key="enableSpace",
     )
     @dbus_service.getter
     def get_space_enabled(self) -> bool:
@@ -593,7 +593,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=True,
         summary="Echo modifier keys",
-        settings_key="enableModifierKeys",
+        migration_key="enableModifierKeys",
     )
     @dbus_service.getter
     def get_modifier_keys_enabled(self) -> bool:
@@ -616,7 +616,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=True,
         summary="Echo function keys",
-        settings_key="enableFunctionKeys",
+        migration_key="enableFunctionKeys",
     )
     @dbus_service.getter
     def get_function_keys_enabled(self) -> bool:
@@ -639,7 +639,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=True,
         summary="Echo action keys",
-        settings_key="enableActionKeys",
+        migration_key="enableActionKeys",
     )
     @dbus_service.getter
     def get_action_keys_enabled(self) -> bool:
@@ -662,7 +662,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=False,
         summary="Echo navigation keys",
-        settings_key="enableNavigationKeys",
+        migration_key="enableNavigationKeys",
     )
     @dbus_service.getter
     def get_navigation_keys_enabled(self) -> bool:
@@ -685,7 +685,7 @@ class TypingEchoPresenter:
         gtype="b",
         default=False,
         summary="Echo diacritical keys",
-        settings_key="enableDiacriticalKeys",
+        migration_key="enableDiacriticalKeys",
     )
     @dbus_service.getter
     def get_diacritical_keys_enabled(self) -> bool:

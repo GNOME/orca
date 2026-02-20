@@ -127,7 +127,7 @@ class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 values=date_values,
                 getter=presenter._get_date_format_string,
                 setter=presenter._set_date_format_string,
-                prefs_key="presentDateFormat",
+                prefs_key="date-format",
                 member_of=guilabels.TIME_AND_DATE,
             ),
             preferences_grid_base.EnumPreferenceControl(
@@ -136,7 +136,7 @@ class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 values=time_values,
                 getter=presenter._get_time_format_string,
                 setter=presenter._set_time_format_string,
-                prefs_key="presentTimeFormat",
+                prefs_key="time-format",
                 member_of=guilabels.TIME_AND_DATE,
             ),
         ]
@@ -252,7 +252,7 @@ class SystemInformationPresenter:
         gtype="s",
         default="%x",
         summary="Date format string",
-        settings_key="presentDateFormat",
+        migration_key="presentDateFormat",
     )
     @dbus_service.getter
     def get_date_format(self) -> str:
@@ -292,7 +292,7 @@ class SystemInformationPresenter:
         gtype="s",
         default="%X",
         summary="Time format string",
-        settings_key="presentTimeFormat",
+        migration_key="presentTimeFormat",
     )
     @dbus_service.getter
     def get_time_format(self) -> str:

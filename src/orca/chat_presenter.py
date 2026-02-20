@@ -382,26 +382,26 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.CHAT_SPEAK_ROOM_NAME,
                 getter=presenter.get_speak_room_name,
                 setter=presenter.set_speak_room_name,
-                prefs_key="chatSpeakRoomName",
+                prefs_key="speak-room-name",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.CHAT_SPEAK_ROOM_NAME_LAST,
                 getter=presenter.get_speak_room_name_last,
                 setter=presenter.set_speak_room_name_last,
-                prefs_key="presentChatRoomLast",
+                prefs_key="speak-room-name-last",
                 determine_sensitivity=presenter.get_speak_room_name,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.CHAT_ANNOUNCE_BUDDY_TYPING,
                 getter=presenter.get_announce_buddy_typing,
                 setter=presenter.set_announce_buddy_typing,
-                prefs_key="chatAnnounceBuddyTyping",
+                prefs_key="announce-buddy-typing",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.CHAT_SEPARATE_MESSAGE_HISTORIES,
                 getter=presenter.get_room_histories,
                 setter=presenter.set_room_histories,
-                prefs_key="chatRoomHistories",
+                prefs_key="room-histories",
             ),
             preferences_grid_base.SelectionPreferenceControl(
                 label=guilabels.CHAT_SPEAK_MESSAGES_FROM,
@@ -409,7 +409,7 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 values=values,
                 getter=presenter.get_message_verbosity,
                 setter=presenter.set_message_verbosity,
-                prefs_key="chatMessageVerbosity",
+                prefs_key="message-verbosity",
             ),
         ]
 
@@ -705,7 +705,7 @@ class ChatPresenter:
         gtype="b",
         default=False,
         summary="Speak chat room name",
-        settings_key="chatSpeakRoomName",
+        migration_key="chatSpeakRoomName",
     )
     @dbus_service.getter
     def get_speak_room_name(self, app: Atspi.Accessible | None = None) -> bool:
@@ -729,7 +729,7 @@ class ChatPresenter:
         gtype="b",
         default=False,
         summary="Announce when buddies are typing",
-        settings_key="chatAnnounceBuddyTyping",
+        migration_key="chatAnnounceBuddyTyping",
     )
     @dbus_service.getter
     def get_announce_buddy_typing(self) -> bool:
@@ -752,7 +752,7 @@ class ChatPresenter:
         gtype="b",
         default=False,
         summary="Provide chat room specific message histories",
-        settings_key="chatRoomHistories",
+        migration_key="chatRoomHistories",
     )
     @dbus_service.getter
     def get_room_histories(self) -> bool:
@@ -773,7 +773,7 @@ class ChatPresenter:
         genum="org.gnome.Orca.ChatMessageVerbosity",
         default="all",
         summary="Chat message verbosity (all, all-if-focused, focused-channel, active-channel)",
-        settings_key="chatMessageVerbosity",
+        migration_key="chatMessageVerbosity",
     )
     @dbus_service.getter
     def get_message_verbosity(self, app: Atspi.Accessible | None = None) -> int:
@@ -810,7 +810,7 @@ class ChatPresenter:
         gtype="b",
         default=False,
         summary="Speak chat room name after message",
-        settings_key="presentChatRoomLast",
+        migration_key="presentChatRoomLast",
     )
     @dbus_service.getter
     def get_speak_room_name_last(self) -> bool:

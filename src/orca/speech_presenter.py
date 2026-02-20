@@ -181,13 +181,13 @@ class ProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.GENERAL_SPEAK_UPDATES,
                 getter=presenter.get_speak_progress_bar_updates,
                 setter=presenter.set_speak_progress_bar_updates,
-                prefs_key="speakProgressBarUpdates",
+                prefs_key="speak-progress-bar-updates",
             ),
             preferences_grid_base.IntRangePreferenceControl(
                 label=guilabels.GENERAL_FREQUENCY_SECS,
                 getter=presenter.get_progress_bar_speech_interval,
                 setter=presenter.set_progress_bar_speech_interval,
-                prefs_key="progressBarSpeechInterval",
+                prefs_key="progress-bar-speech-interval",
                 minimum=0,
                 maximum=100,
             ),
@@ -195,7 +195,7 @@ class ProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.GENERAL_APPLIES_TO,
                 getter=presenter.get_progress_bar_speech_verbosity,
                 setter=presenter.set_progress_bar_speech_verbosity,
-                prefs_key="progressBarSpeechVerbosity",
+                prefs_key="progress-bar-speech-verbosity",
                 options=[
                     guilabels.PROGRESS_BAR_ALL,
                     guilabels.PROGRESS_BAR_APPLICATION,
@@ -224,25 +224,25 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
         ) = presenter.get_speech_preferences()
 
         text_speak_blank_lines = SpeechPreference(
-            "speakBlankLines",
+            "speak-blank-lines",
             guilabels.SPEECH_SPEAK_BLANK_LINES,
             presenter.get_speak_blank_lines,
             presenter.set_speak_blank_lines,
         )
         text_speak_misspelled = SpeechPreference(
-            "speakMisspelledIndicator",
+            "speak-misspelled-indicator",
             guilabels.SPEECH_SPEAK_MISSPELLED_WORD_INDICATOR,
             presenter.get_speak_misspelled_indicator,
             presenter.set_speak_misspelled_indicator,
         )
         text_speak_indentation = SpeechPreference(
-            "enableSpeechIndentation",
+            "speak-indentation-and-justification",
             guilabels.SPEECH_SPEAK_INDENTATION_AND_JUSTIFICATION,
             presenter.get_speak_indentation_and_justification,
             presenter.set_speak_indentation_and_justification,
         )
         text_indentation_only_if_changed = SpeechPreference(
-            "speakIndentationOnlyIfChanged",
+            "speak-indentation-only-if-changed",
             guilabels.SPEECH_INDENTATION_ONLY_IF_CHANGED,
             presenter.get_speak_indentation_only_if_changed,
             presenter.set_speak_indentation_only_if_changed,
@@ -277,7 +277,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.OBJECT_PRESENTATION_IS_DETAILED,
                 getter=presenter._get_verbosity_is_verbose,
                 setter=presenter._set_verbosity_from_bool,
-                prefs_key="speechVerbosityLevel",
+                prefs_key="verbosity-level",
                 member_of=guilabels.GENERAL,
             ),
             self._only_speak_displayed_control,
@@ -365,49 +365,49 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     def __init__(self, presenter: SpeechPresenter) -> None:
         # Table preferences
         table_gui_rows = SpeechPreference(
-            "readFullRowInGUITable",
+            "speak-row-in-gui-table",
             guilabels.SPEECH_SPEAK_FULL_ROW_IN_GUI_TABLES,
             presenter.get_speak_row_in_gui_table,
             presenter.set_speak_row_in_gui_table,
         )
         table_doc_rows = SpeechPreference(
-            "readFullRowInDocumentTable",
+            "speak-row-in-document-table",
             guilabels.SPEECH_SPEAK_FULL_ROW_IN_DOCUMENT_TABLES,
             presenter.get_speak_row_in_document_table,
             presenter.set_speak_row_in_document_table,
         )
         table_spreadsheet_rows = SpeechPreference(
-            "readFullRowInSpreadSheet",
+            "speak-row-in-spreadsheet",
             guilabels.SPEECH_SPEAK_FULL_ROW_IN_SPREADSHEETS,
             presenter.get_speak_row_in_spreadsheet,
             presenter.set_speak_row_in_spreadsheet,
         )
         table_cell_headers = SpeechPreference(
-            "speakCellHeaders",
+            "announce-cell-headers",
             guilabels.TABLE_SPEAK_CELL_HEADER,
             presenter.get_announce_cell_headers,
             presenter.set_announce_cell_headers,
         )
         table_cell_coords = SpeechPreference(
-            "speakCellCoordinates",
+            "announce-cell-coordinates",
             guilabels.TABLE_SPEAK_CELL_COORDINATES,
             presenter.get_announce_cell_coordinates,
             presenter.set_announce_cell_coordinates,
         )
         table_spreadsheet_coords = SpeechPreference(
-            "speakSpreadsheetCoordinates",
+            "announce-spreadsheet-cell-coordinates",
             guilabels.SPREADSHEET_SPEAK_CELL_COORDINATES,
             presenter.get_announce_spreadsheet_cell_coordinates,
             presenter.set_announce_spreadsheet_cell_coordinates,
         )
         table_cell_span = SpeechPreference(
-            "speakCellSpan",
+            "announce-cell-span",
             guilabels.TABLE_SPEAK_CELL_SPANS,
             presenter.get_announce_cell_span,
             presenter.set_announce_cell_span,
         )
         table_selected_range = SpeechPreference(
-            "alwaysSpeakSelectedSpreadsheetRange",
+            "always-announce-selected-range-in-spreadsheet",
             guilabels.SPREADSHEET_SPEAK_SELECTED_RANGE,
             presenter.get_always_announce_selected_range_in_spreadsheet,
             presenter.set_always_announce_selected_range_in_spreadsheet,
@@ -484,7 +484,7 @@ class SpeechOSDPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.SPEECH_MONITOR_FONT_SIZE,
                 getter=presenter.get_monitor_font_size,
                 setter=presenter.set_monitor_font_size,
-                prefs_key="speechMonitorFontSize",
+                prefs_key="monitor-font-size",
                 minimum=8,
                 maximum=72,
                 apply_immediately=True,
@@ -493,13 +493,13 @@ class SpeechOSDPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.SPEECH_MONITOR_FOREGROUND,
                 getter=presenter.get_monitor_foreground,
                 setter=presenter.set_monitor_foreground,
-                prefs_key="speechMonitorForeground",
+                prefs_key="monitor-foreground",
             ),
             preferences_grid_base.ColorPreferenceControl(
                 label=guilabels.SPEECH_MONITOR_BACKGROUND,
                 getter=presenter.get_monitor_background,
                 setter=presenter.set_monitor_background,
-                prefs_key="speechMonitorBackground",
+                prefs_key="monitor-background",
             ),
         ]
 
@@ -588,7 +588,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         assert self._multipage_enable_switch is not None
         result: dict[str, Any] = {}
-        result["enableSpeech"] = self._multipage_enable_switch.get_active()
+        result["enable"] = self._multipage_enable_switch.get_active()
         result.update(self._voices_grid.save_settings())
         result.update(self._verbosity_grid.save_settings())
         result.update(self._tables_grid.save_settings())
@@ -598,12 +598,10 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         if profile:
             registry = gsettings_registry.get_registry()
-            aliased = dict(result)
-            gsettings_migrator.apply_legacy_aliases(aliased)
             p = registry.sanitize_gsettings_path(profile)
             skip = not app_name and profile == "default"
-            registry.save_schema_to_gsettings("speech", aliased, p, app_name, skip)
-            voices = aliased.get("voices", {})
+            registry.save_schema("speech", result, p, app_name, skip)
+            voices = result.get("voices", {})
             for voice_type in gsettings_migrator.VOICE_TYPES:
                 voice_data = voices.get(voice_type, {})
                 if not voice_data:
@@ -615,7 +613,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
             speech_gs = registry.get_settings("speech", p, "speech", app_name)
             if speech_gs is not None:
-                gsettings_migrator.import_synthesizer(speech_gs, aliased)
+                gsettings_migrator.import_synthesizer(speech_gs, result)
 
         return result
 
@@ -756,7 +754,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Speak misspelled word indicator",
-        settings_key="speakMisspelledIndicator",
+        migration_key="speakMisspelledIndicator",
     )
     @dbus_service.getter
     def get_speak_misspelled_indicator(self) -> bool:
@@ -781,7 +779,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Speak object descriptions",
-        settings_key="speakDescription",
+        migration_key="speakDescription",
     )
     @dbus_service.getter
     def get_speak_description(self) -> bool:
@@ -806,7 +804,7 @@ class SpeechPresenter:
         gtype="b",
         default=False,
         summary="Speak position in set",
-        settings_key="enablePositionSpeaking",
+        migration_key="enablePositionSpeaking",
     )
     @dbus_service.getter
     def get_speak_position_in_set(self) -> bool:
@@ -831,7 +829,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Speak widget mnemonics",
-        settings_key="enableMnemonicSpeaking",
+        migration_key="enableMnemonicSpeaking",
     )
     @dbus_service.getter
     def get_speak_widget_mnemonic(self) -> bool:
@@ -856,7 +854,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Speak tutorial messages",
-        settings_key="enableTutorialMessages",
+        migration_key="enableTutorialMessages",
     )
     @dbus_service.getter
     def get_speak_tutorial_messages(self) -> bool:
@@ -881,7 +879,7 @@ class SpeechPresenter:
         gtype="i",
         default=4,
         summary="Threshold for repeated character compression",
-        settings_key="repeatCharacterLimit",
+        migration_key="repeatCharacterLimit",
     )
     @dbus_service.getter
     def get_repeated_character_limit(self) -> int:
@@ -906,7 +904,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Speak blank lines",
-        settings_key="speakBlankLines",
+        migration_key="speakBlankLines",
     )
     @dbus_service.getter
     def get_speak_blank_lines(self) -> bool:
@@ -931,7 +929,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Speak full row in GUI tables",
-        settings_key="readFullRowInGUITable",
+        migration_key="readFullRowInGUITable",
     )
     @dbus_service.getter
     def get_speak_row_in_gui_table(self) -> bool:
@@ -956,7 +954,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Speak full row in document tables",
-        settings_key="readFullRowInDocumentTable",
+        migration_key="readFullRowInDocumentTable",
     )
     @dbus_service.getter
     def get_speak_row_in_document_table(self) -> bool:
@@ -981,7 +979,7 @@ class SpeechPresenter:
         gtype="b",
         default=False,
         summary="Speak full row in spreadsheets",
-        settings_key="readFullRowInSpreadSheet",
+        migration_key="readFullRowInSpreadSheet",
     )
     @dbus_service.getter
     def get_speak_row_in_spreadsheet(self) -> bool:
@@ -1006,7 +1004,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Announce cell span",
-        settings_key="speakCellSpan",
+        migration_key="speakCellSpan",
     )
     @dbus_service.getter
     def get_announce_cell_span(self) -> bool:
@@ -1031,7 +1029,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Announce cell coordinates",
-        settings_key="speakCellCoordinates",
+        migration_key="speakCellCoordinates",
     )
     @dbus_service.getter
     def get_announce_cell_coordinates(self) -> bool:
@@ -1056,7 +1054,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Announce spreadsheet cell coordinates",
-        settings_key="speakSpreadsheetCoordinates",
+        migration_key="speakSpreadsheetCoordinates",
     )
     @dbus_service.getter
     def get_announce_spreadsheet_cell_coordinates(self) -> bool:
@@ -1081,7 +1079,7 @@ class SpeechPresenter:
         gtype="b",
         default=False,
         summary="Always announce selected range in spreadsheets",
-        settings_key="alwaysSpeakSelectedSpreadsheetRange",
+        migration_key="alwaysSpeakSelectedSpreadsheetRange",
     )
     @dbus_service.getter
     def get_always_announce_selected_range_in_spreadsheet(self) -> bool:
@@ -1110,7 +1108,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Announce cell headers",
-        settings_key="speakCellHeaders",
+        migration_key="speakCellHeaders",
     )
     @dbus_service.getter
     def get_announce_cell_headers(self) -> bool:
@@ -1135,7 +1133,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Announce blockquotes",
-        settings_key="speakContextBlockquote",
+        migration_key="speakContextBlockquote",
     )
     @dbus_service.getter
     def get_announce_blockquote(self) -> bool:
@@ -1160,7 +1158,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Announce forms",
-        settings_key="speakContextNonLandmarkForm",
+        migration_key="speakContextNonLandmarkForm",
     )
     @dbus_service.getter
     def get_announce_form(self) -> bool:
@@ -1183,7 +1181,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Announce groupings/panels",
-        settings_key="speakContextPanel",
+        migration_key="speakContextPanel",
     )
     @dbus_service.getter
     def get_announce_grouping(self) -> bool:
@@ -1208,7 +1206,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Announce landmarks",
-        settings_key="speakContextLandmark",
+        migration_key="speakContextLandmark",
     )
     @dbus_service.getter
     def get_announce_landmark(self) -> bool:
@@ -1233,7 +1231,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Announce lists",
-        settings_key="speakContextList",
+        migration_key="speakContextList",
     )
     @dbus_service.getter
     def get_announce_list(self) -> bool:
@@ -1256,7 +1254,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Announce tables",
-        settings_key="speakContextTable",
+        migration_key="speakContextTable",
     )
     @dbus_service.getter
     def get_announce_table(self) -> bool:
@@ -1314,7 +1312,7 @@ class SpeechPresenter:
         gtype="b",
         default=False,
         summary="Only speak displayed text",
-        settings_key="onlySpeakDisplayedText",
+        migration_key="onlySpeakDisplayedText",
     )
     @dbus_service.getter
     def get_only_speak_displayed_text(self) -> bool:
@@ -1339,7 +1337,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Speak progress bar updates",
-        settings_key="speakProgressBarUpdates",
+        migration_key="speakProgressBarUpdates",
     )
     @dbus_service.getter
     def get_speak_progress_bar_updates(self) -> bool:
@@ -1364,7 +1362,7 @@ class SpeechPresenter:
         gtype="i",
         default=10,
         summary="Progress bar speech update interval in seconds",
-        settings_key="progressBarSpeechInterval",
+        migration_key="progressBarSpeechInterval",
     )
     @dbus_service.getter
     def get_progress_bar_speech_interval(self) -> int:
@@ -1389,7 +1387,7 @@ class SpeechPresenter:
         genum="org.gnome.Orca.ProgressBarVerbosity",
         default="application",
         summary="Progress bar speech verbosity (all, application, window)",
-        settings_key="progressBarSpeechVerbosity",
+        migration_key="progressBarSpeechVerbosity",
     )
     @dbus_service.getter
     def get_progress_bar_speech_verbosity(self) -> int:
@@ -1458,7 +1456,7 @@ class SpeechPresenter:
         gtype="b",
         default=True,
         summary="Use detailed informative messages",
-        settings_key="messagesAreDetailed",
+        migration_key="messagesAreDetailed",
     )
     @dbus_service.getter
     def get_messages_are_detailed(self) -> bool:
@@ -1488,7 +1486,7 @@ class SpeechPresenter:
         genum="org.gnome.Orca.VerbosityLevel",
         default="verbose",
         summary="Speech verbosity level (brief, verbose)",
-        settings_key="speechVerbosityLevel",
+        migration_key="speechVerbosityLevel",
     )
     @dbus_service.getter
     def get_verbosity_level(self) -> str:
@@ -1581,7 +1579,7 @@ class SpeechPresenter:
         gtype="b",
         default=False,
         summary="Speak indentation and justification",
-        settings_key="enableSpeechIndentation",
+        migration_key="enableSpeechIndentation",
     )
     @dbus_service.getter
     def get_speak_indentation_and_justification(self) -> bool:
@@ -1606,7 +1604,7 @@ class SpeechPresenter:
         gtype="b",
         default=False,
         summary="Speak indentation only if changed",
-        settings_key="speakIndentationOnlyIfChanged",
+        migration_key="speakIndentationOnlyIfChanged",
     )
     @dbus_service.getter
     def get_speak_indentation_only_if_changed(self) -> bool:
@@ -1973,7 +1971,7 @@ class SpeechPresenter:
         gtype="i",
         default=14,
         summary="Speech monitor font size",
-        settings_key="speechMonitorFontSize",
+        migration_key="speechMonitorFontSize",
     )
     @dbus_service.getter
     def get_monitor_font_size(self) -> int:
@@ -2000,7 +1998,7 @@ class SpeechPresenter:
         gtype="s",
         default="#ffffff",
         summary="Speech monitor foreground color",
-        settings_key="speechMonitorForeground",
+        migration_key="speechMonitorForeground",
     )
     @dbus_service.getter
     def get_monitor_foreground(self) -> str:
@@ -2027,7 +2025,7 @@ class SpeechPresenter:
         gtype="s",
         default="#000000",
         summary="Speech monitor background color",
-        settings_key="speechMonitorBackground",
+        migration_key="speechMonitorBackground",
     )
     @dbus_service.getter
     def get_monitor_background(self) -> str:
@@ -2386,7 +2384,7 @@ class SpeechPresenter:
 
         general = (
             SpeechPreference(
-                "messagesAreDetailed",
+                "messages-are-detailed",
                 guilabels.SPEECH_SYSTEM_MESSAGES_ARE_DETAILED,
                 self.get_messages_are_detailed,
                 self.set_messages_are_detailed,
@@ -2395,31 +2393,31 @@ class SpeechPresenter:
 
         object_details = (
             SpeechPreference(
-                "onlySpeakDisplayedText",
+                "only-speak-displayed-text",
                 guilabels.SPEECH_ONLY_SPEAK_DISPLAYED_TEXT,
                 self.get_only_speak_displayed_text,
                 self.set_only_speak_displayed_text,
             ),
             SpeechPreference(
-                "speakDescription",
+                "speak-description",
                 guilabels.SPEECH_SPEAK_DESCRIPTION,
                 self.get_speak_description,
                 self.set_speak_description,
             ),
             SpeechPreference(
-                "enablePositionSpeaking",
+                "speak-position-in-set",
                 guilabels.SPEECH_SPEAK_CHILD_POSITION,
                 self.get_speak_position_in_set,
                 self.set_speak_position_in_set,
             ),
             SpeechPreference(
-                "enableMnemonicSpeaking",
+                "speak-widget-mnemonic",
                 guilabels.PRESENT_OBJECT_MNEMONICS,
                 self.get_speak_widget_mnemonic,
                 self.set_speak_widget_mnemonic,
             ),
             SpeechPreference(
-                "enableTutorialMessages",
+                "speak-tutorial-messages",
                 guilabels.SPEECH_SPEAK_TUTORIAL_MESSAGES,
                 self.get_speak_tutorial_messages,
                 self.set_speak_tutorial_messages,
@@ -2428,37 +2426,37 @@ class SpeechPresenter:
 
         announcements = (
             SpeechPreference(
-                "speakContextBlockquote",
+                "announce-blockquote",
                 guilabels.ANNOUNCE_BLOCKQUOTES,
                 self.get_announce_blockquote,
                 self.set_announce_blockquote,
             ),
             SpeechPreference(
-                "speakContextNonLandmarkForm",
+                "announce-form",
                 guilabels.ANNOUNCE_FORMS,
                 self.get_announce_form,
                 self.set_announce_form,
             ),
             SpeechPreference(
-                "speakContextLandmark",
+                "announce-landmark",
                 guilabels.ANNOUNCE_LANDMARKS,
                 self.get_announce_landmark,
                 self.set_announce_landmark,
             ),
             SpeechPreference(
-                "speakContextList",
+                "announce-list",
                 guilabels.ANNOUNCE_LISTS,
                 self.get_announce_list,
                 self.set_announce_list,
             ),
             SpeechPreference(
-                "speakContextPanel",
+                "announce-grouping",
                 guilabels.ANNOUNCE_PANELS,
                 self.get_announce_grouping,
                 self.set_announce_grouping,
             ),
             SpeechPreference(
-                "speakContextTable",
+                "announce-table",
                 guilabels.ANNOUNCE_TABLES,
                 self.get_announce_table,
                 self.set_announce_table,

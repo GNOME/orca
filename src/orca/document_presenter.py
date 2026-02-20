@@ -117,21 +117,21 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.KB_GROUP_CARET_NAVIGATION,
                 getter=nav.get_is_enabled,
                 setter=nav.set_is_enabled,
-                prefs_key="caretNavigationEnabled",
+                prefs_key="enabled",
                 apply_immediately=False,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.AUTOMATIC_FOCUS_MODE,
                 getter=nav.get_triggers_focus_mode,
                 setter=nav.set_triggers_focus_mode,
-                prefs_key="caretNavTriggersFocusMode",
+                prefs_key="triggers-focus-mode",
                 determine_sensitivity=is_enabled,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.CONTENT_LAYOUT_MODE,
                 getter=nav.get_layout_mode,
                 setter=nav.set_layout_mode,
-                prefs_key="layoutMode",
+                prefs_key="layout-mode",
                 determine_sensitivity=is_enabled,
             ),
         ]
@@ -166,21 +166,21 @@ class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesG
                 label=guilabels.KB_GROUP_STRUCTURAL_NAVIGATION,
                 getter=nav.get_is_enabled,
                 setter=nav.set_is_enabled,
-                prefs_key="structuralNavigationEnabled",
+                prefs_key="enabled",
                 apply_immediately=False,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.AUTOMATIC_FOCUS_MODE,
                 getter=nav.get_triggers_focus_mode,
                 setter=nav.set_triggers_focus_mode,
-                prefs_key="structNavTriggersFocusMode",
+                prefs_key="triggers-focus-mode",
                 determine_sensitivity=is_enabled,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.STRUCTURAL_NAVIGATION_WRAP_AROUND,
                 getter=nav.get_navigation_wraps,
                 setter=nav.set_navigation_wraps,
-                prefs_key="wrappedStructuralNavigation",
+                prefs_key="wraps",
                 determine_sensitivity=is_enabled,
             ),
             preferences_grid_base.IntRangePreferenceControl(
@@ -189,7 +189,7 @@ class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesG
                 maximum=500,
                 getter=nav.get_large_object_text_length,
                 setter=nav.set_large_object_text_length,
-                prefs_key="largeObjectTextLength",
+                prefs_key="large-object-text-length",
                 determine_sensitivity=is_enabled,
             ),
         ]
@@ -224,14 +224,14 @@ class TableNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.KB_GROUP_TABLE_NAVIGATION,
                 getter=nav.get_is_enabled,
                 setter=nav.set_is_enabled,
-                prefs_key="tableNavigationEnabled",
+                prefs_key="enabled",
                 apply_immediately=False,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.TABLE_SKIP_BLANK_CELLS,
                 getter=nav.get_skip_blank_cells,
                 setter=nav.set_skip_blank_cells,
-                prefs_key="skipBlankCells",
+                prefs_key="skip-blank-cells",
                 determine_sensitivity=is_enabled,
             ),
         ]
@@ -251,26 +251,26 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 label=guilabels.AUTOMATIC_FOCUS_MODE,
                 getter=presenter.get_native_nav_triggers_focus_mode,
                 setter=presenter.set_native_nav_triggers_focus_mode,
-                prefs_key="nativeNavTriggersFocusMode",
+                prefs_key="native-nav-triggers-focus-mode",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.AUTO_STICKY_FOCUS_MODE,
                 getter=presenter.get_auto_sticky_focus_mode_for_web_apps,
                 setter=presenter.set_auto_sticky_focus_mode_for_web_apps,
-                prefs_key="autoStickyFocusModeForWebApps",
+                prefs_key="auto-sticky-focus-mode",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.FIND_SPEAK_RESULTS,
                 getter=presenter.get_speak_find_results,
                 setter=presenter.set_speak_find_results,
-                prefs_key="findResultsVerbosity",
+                prefs_key="find-results-verbosity",
                 member_of=guilabels.FIND_OPTIONS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.FIND_ONLY_SPEAK_CHANGED_LINES,
                 getter=presenter.get_only_speak_changed_lines,
                 setter=presenter.set_only_speak_changed_lines,
-                prefs_key="findResultsVerbosity",
+                prefs_key="find-results-verbosity",
                 determine_sensitivity=presenter.get_speak_find_results,
                 member_of=guilabels.FIND_OPTIONS,
             ),
@@ -280,21 +280,21 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 maximum=20,
                 getter=presenter.get_find_results_minimum_length,
                 setter=presenter.set_find_results_minimum_length,
-                prefs_key="findResultsMinimumLength",
+                prefs_key="find-results-minimum-length",
                 member_of=guilabels.FIND_OPTIONS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.READ_PAGE_UPON_LOAD,
                 getter=presenter.get_say_all_on_load,
                 setter=presenter.set_say_all_on_load,
-                prefs_key="sayAllOnLoad",
+                prefs_key="say-all-on-load",
                 member_of=guilabels.PAGE_LOAD,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.PAGE_SUMMARY_UPON_LOAD,
                 getter=presenter.get_page_summary_on_load,
                 setter=presenter.set_page_summary_on_load,
-                prefs_key="pageSummaryOnLoad",
+                prefs_key="page-summary-on-load",
                 member_of=guilabels.PAGE_LOAD,
             ),
         ]
@@ -1037,7 +1037,7 @@ class DocumentPresenter:
         gtype="b",
         default=True,
         summary="Native navigation triggers focus mode",
-        settings_key="nativeNavTriggersFocusMode",
+        migration_key="nativeNavTriggersFocusMode",
     )
     @dbus_service.getter
     def get_native_nav_triggers_focus_mode(self) -> bool:
@@ -1065,7 +1065,7 @@ class DocumentPresenter:
         gtype="b",
         default=True,
         summary="Auto-detect sticky focus mode for web apps",
-        settings_key="autoStickyFocusModeForWebApps",
+        migration_key="autoStickyFocusModeForWebApps",
     )
     @dbus_service.getter
     def get_auto_sticky_focus_mode_for_web_apps(self) -> bool:
@@ -1093,7 +1093,7 @@ class DocumentPresenter:
         gtype="b",
         default=True,
         summary="Perform say all when document loads",
-        settings_key="sayAllOnLoad",
+        migration_key="sayAllOnLoad",
     )
     @dbus_service.getter
     def get_say_all_on_load(self) -> bool:
@@ -1119,7 +1119,7 @@ class DocumentPresenter:
         gtype="b",
         default=True,
         summary="Present page summary when document loads",
-        settings_key="pageSummaryOnLoad",
+        migration_key="pageSummaryOnLoad",
     )
     @dbus_service.getter
     def get_page_summary_on_load(self) -> bool:
@@ -1147,7 +1147,7 @@ class DocumentPresenter:
         genum="org.gnome.Orca.FindResultsVerbosity",
         default="all",
         summary="Find results verbosity (none, if-line-changed, all)",
-        settings_key="findResultsVerbosity",
+        migration_key="findResultsVerbosity",
     )
     def _get_find_results_verbosity_name(self) -> str:
         """Returns the find results verbosity level as a string name."""
@@ -1208,7 +1208,7 @@ class DocumentPresenter:
         gtype="i",
         default=4,
         summary="Minimum length for find results to be spoken",
-        settings_key="findResultsMinimumLength",
+        migration_key="findResultsMinimumLength",
     )
     @dbus_service.getter
     def get_find_results_minimum_length(self) -> int:

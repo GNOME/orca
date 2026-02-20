@@ -223,7 +223,7 @@ class OrcaModifierManager:
         gtype="as",
         default=["Insert", "KP_Insert"],
         summary="Keys used as the Orca modifier",
-        settings_key="orcaModifierKeys",
+        migration_key="orcaModifierKeys",
     )
     def get_orca_modifier_keys(self) -> list[str]:
         """Returns the list of Orca modifier keys."""

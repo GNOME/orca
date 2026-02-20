@@ -391,13 +391,13 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
         self._has_unsaved_changes = False
 
         result = {
-            "textAttributesToSpeak": spoken_attributes,
-            "textAttributesToBraille": brailled_attributes,
+            "attributes-to-speak": spoken_attributes,
+            "attributes-to-braille": brailled_attributes,
         }
 
         if profile:
             skip = not app_name and profile == "default"
-            gsettings_registry.get_registry().save_schema_to_gsettings(
+            gsettings_registry.get_registry().save_schema(
                 "text-attributes", result, profile, app_name, skip
             )
 
@@ -439,7 +439,7 @@ class TextAttributeManager:
         gtype="as",
         default=[],
         summary="Text attributes to speak",
-        settings_key="textAttributesToSpeak",
+        migration_key="textAttributesToSpeak",
     )
     @dbus_service.getter
     def get_attributes_to_speak(self) -> list[str]:
@@ -467,7 +467,7 @@ class TextAttributeManager:
         gtype="as",
         default=[],
         summary="Text attributes to mark in braille",
-        settings_key="textAttributesToBraille",
+        migration_key="textAttributesToBraille",
     )
     @dbus_service.getter
     def get_attributes_to_braille(self) -> list[str]:

@@ -193,7 +193,7 @@ class CaretNavigator:
         gtype="b",
         default=True,
         summary="Enable caret navigation",
-        settings_key="caretNavigationEnabled",
+        migration_key="caretNavigationEnabled",
     )
     @dbus_service.getter
     def get_is_enabled(self) -> bool:
@@ -228,7 +228,7 @@ class CaretNavigator:
         gtype="b",
         default=False,
         summary="Caret navigation triggers focus mode",
-        settings_key="caretNavTriggersFocusMode",
+        migration_key="caretNavTriggersFocusMode",
     )
     @dbus_service.getter
     def get_triggers_focus_mode(self) -> bool:
@@ -256,7 +256,7 @@ class CaretNavigator:
         gtype="b",
         default=True,
         summary="Use document layout mode",
-        settings_key="layoutMode",
+        migration_key="layoutMode",
     )
     @dbus_service.getter
     def get_layout_mode(self) -> bool:

@@ -554,7 +554,7 @@ class LiveRegionPresenter:
         gtype="b",
         default=True,
         summary="Enable live region support",
-        settings_key="enableLiveRegions",
+        migration_key="enableLiveRegions",
     )
     def get_is_enabled(self) -> bool:
         """Returns whether live region support is enabled."""
@@ -578,7 +578,7 @@ class LiveRegionPresenter:
         gtype="b",
         default=False,
         summary="Present live regions from inactive tabs",
-        settings_key="presentLiveRegionFromInactiveTab",
+        migration_key="presentLiveRegionFromInactiveTab",
     )
     def get_present_live_region_from_inactive_tab(self) -> bool:
         """Returns whether live region messages are presented from inactive tabs."""

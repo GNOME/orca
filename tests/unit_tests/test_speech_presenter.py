@@ -618,15 +618,15 @@ class TestSpeechPresenter:
 
         # general should have 1 preference
         assert len(general) == 1
-        assert general[0].prefs_key == "messagesAreDetailed"
+        assert general[0].prefs_key == "messages-are-detailed"
 
         # object_details should have 5 preferences
         assert len(object_details) == 5
-        assert object_details[0].prefs_key == "onlySpeakDisplayedText"
+        assert object_details[0].prefs_key == "only-speak-displayed-text"
 
         # announcements should have 6 preferences
         assert len(announcements) == 6
-        assert announcements[0].prefs_key == "speakContextBlockquote"
+        assert announcements[0].prefs_key == "announce-blockquote"
 
     def test_apply_speech_preferences(self, test_context: OrcaTestContext) -> None:
         """Test apply_speech_preferences applies values correctly."""

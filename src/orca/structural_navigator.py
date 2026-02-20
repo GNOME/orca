@@ -496,7 +496,7 @@ class StructuralNavigator:
         gtype="b",
         default=True,
         summary="Wrap when reaching top/bottom",
-        settings_key="wrappedStructuralNavigation",
+        migration_key="wrappedStructuralNavigation",
     )
     @dbus_service.getter
     def get_navigation_wraps(self) -> bool:
@@ -519,7 +519,7 @@ class StructuralNavigator:
         gtype="i",
         default=75,
         summary="Minimum text length for large objects",
-        settings_key="largeObjectTextLength",
+        migration_key="largeObjectTextLength",
     )
     @dbus_service.getter
     def get_large_object_text_length(self) -> int:
@@ -544,7 +544,7 @@ class StructuralNavigator:
         gtype="b",
         default=True,
         summary="Enable structural navigation",
-        settings_key="structuralNavigationEnabled",
+        migration_key="structuralNavigationEnabled",
     )
     @dbus_service.getter
     def get_is_enabled(self) -> bool:
@@ -601,7 +601,7 @@ class StructuralNavigator:
         gtype="b",
         default=False,
         summary="Structural navigation triggers focus mode",
-        settings_key="structNavTriggersFocusMode",
+        migration_key="structNavTriggersFocusMode",
     )
     @dbus_service.getter
     def get_triggers_focus_mode(self) -> bool:

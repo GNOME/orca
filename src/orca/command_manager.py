@@ -962,14 +962,14 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         general: dict[str, int | list[str]] = {}
         bindings: dict[str, list[list[Any]]] = {}
 
-        general["keyboardLayout"] = get_manager().get_keyboard_layout_value()
+        general["keyboard-layout"] = get_manager().get_keyboard_layout_value()
 
         if self._orca_modifier_combo is not None:
             tree_iter = self._orca_modifier_combo.get_active_iter()
             if tree_iter is not None:
                 model = self._orca_modifier_combo.get_model()
                 orca_modifier = model.get_value(tree_iter, 0)
-                general["orcaModifierKeys"] = orca_modifier.split(", ")
+                general["orca-modifier-keys"] = orca_modifier.split(", ")
 
         for category_commands in self._categories.values():
             for cmd in category_commands:
@@ -1007,7 +1007,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if profile:
             registry = gsettings_registry.get_registry()
             skip = not app_name and profile == "default"
-            registry.save_schema_to_gsettings("keybindings", general, profile, app_name, skip)
+            registry.save_schema("keybindings", general, profile, app_name, skip)
             if bindings:
                 kb_gs = registry.get_settings("keybindings", profile, "keybindings", app_name)
                 if kb_gs is not None:
@@ -1162,7 +1162,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         genum="org.gnome.Orca.KeyboardLayout",
         default="desktop",
         summary="Keyboard layout (desktop, laptop)",
-        settings_key="keyboardLayout",
+        migration_key="keyboardLayout",
     )
     @dbus_service.getter
     def get_keyboard_layout_is_desktop(self) -> bool:

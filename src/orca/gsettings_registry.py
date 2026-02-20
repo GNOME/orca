@@ -50,7 +50,7 @@ class SettingDescriptor:
     getter: Callable[[], Any] | None = None
     voice_type: str | None = None
     genum: str | None = None
-    settings_key: str | None = None
+    migration_key: str | None = None
 
 
 SettingsMapping = gsettings_migrator.SettingsMapping
@@ -271,7 +271,7 @@ class GSettingsRegistry:
         gtype: str = "",
         genum: str | None = None,
         voice_type: str | None = None,
-        settings_key: str | None = None,
+        migration_key: str | None = None,
     ) -> Callable[[Callable], Callable]:
         """Decorator marking a method's associated GSettings key."""
 
@@ -284,7 +284,7 @@ class GSettingsRegistry:
                 getter=None,
                 voice_type=voice_type,
                 genum=genum,
-                settings_key=settings_key,
+                migration_key=migration_key,
             )
             func.gsetting_key = key  # type: ignore[attr-defined]
             return func
@@ -325,7 +325,7 @@ class GSettingsRegistry:
         return self._enums.get(enum_id)
 
     def register_settings_mappings(self, schema_name: str, mappings: list[SettingsMapping]) -> None:
-        """Registers JSON-to-GSettings mappings for a schema."""
+        """Registers prefs-to-GSettings mappings for a schema."""
 
         self._mappings[schema_name] = mappings
 
@@ -334,14 +334,14 @@ class GSettingsRegistry:
 
         mappings: list[SettingsMapping] = []
         for (schema, _key), desc in self._descriptors.items():
-            if schema != schema_name or desc.settings_key is None:
+            if schema != schema_name or desc.migration_key is None:
                 continue
             enum_map: dict[int, str] | None = None
             if desc.genum and desc.genum in self._enums:
                 enum_map = {v: k for k, v in self._enums[desc.genum].items()}
             mappings.append(
                 SettingsMapping(
-                    desc.settings_key, desc.gsettings_key, desc.gtype, desc.default, enum_map
+                    desc.migration_key, desc.gsettings_key, desc.gtype, desc.default, enum_map
                 )
             )
         return mappings
@@ -353,31 +353,19 @@ class GSettingsRegistry:
             return self._mappings[schema_name]
         return self._build_mappings_from_descriptors(schema_name)
 
-    def _json_to_gsettings(
+    def _write_mapped_settings(
         self,
-        json_dict: dict,
+        prefs_dict: dict,
         gs: Gio.Settings,
         schema_name: str,
         skip_defaults: bool = True,
     ) -> bool:
-        """Writes JSON settings to a Gio.Settings object. Returns True if any value was written."""
+        """Writes mapped settings to a Gio.Settings object."""
 
         mappings = self._get_settings_mappings(schema_name)
         if not mappings:
             return False
-        return gsettings_migrator.json_to_gsettings(json_dict, gs, mappings, skip_defaults)
-
-    def _gsettings_to_json(
-        self,
-        gs: Gio.Settings,
-        schema_name: str,
-    ) -> dict:
-        """Reads explicitly-set GSettings values into a JSON-compatible dict."""
-
-        mappings = self._get_settings_mappings(schema_name)
-        if not mappings:
-            return {}
-        return gsettings_migrator.gsettings_to_json(gs, mappings)
+        return gsettings_migrator.json_to_gsettings(prefs_dict, gs, mappings, skip_defaults)
 
     def _is_migration_done(self) -> bool:
         """Returns True if JSON-to-GSettings migration has already been completed."""
@@ -520,22 +508,68 @@ class GSettingsRegistry:
 
         return list(self._schemas.keys())
 
-    def save_schema_to_gsettings(
+    def save_schema(
         self,
         schema_name: str,
-        json_dict: dict,
+        settings: dict,
         profile: str,
         app_name: str = "",
         skip_defaults: bool = False,
     ) -> None:
-        """Writes one schema's mapped settings to dconf."""
+        """Writes settings keyed by GSettings keys directly to dconf."""
+
+        gs = self.get_settings(schema_name, profile, app_name=app_name)
+        if gs is None:
+            return
+
+        for (schema, _key), desc in self._descriptors.items():
+            if schema == schema_name and gs.get_user_value(desc.gsettings_key) is not None:
+                gs.reset(desc.gsettings_key)
+
+        writers: dict[str, Callable[..., None]] = {
+            "b": gs.set_boolean,
+            "s": gs.set_string,
+            "i": gs.set_int,
+            "d": gs.set_double,
+            "as": gs.set_strv,
+        }
+
+        for key, value in settings.items():
+            setting = self._descriptors.get((schema_name, key))
+            if setting is None:
+                continue
+            if skip_defaults and value == setting.default:
+                continue
+            if setting.genum:
+                if not isinstance(value, str):
+                    enum_data = self._enums.get(setting.genum, {})
+                    reverse = {v: k for k, v in enum_data.items()}
+                    value = reverse.get(int(value))
+                    if value is None:
+                        continue
+                gs.set_string(key, value)
+                continue
+            writer = writers.get(setting.gtype)
+            if writer is not None:
+                writer(key, value)
+
+    # TODO - JD: Delete this when we remove JSON support.
+    def save_schema_to_gsettings(
+        self,
+        schema_name: str,
+        prefs_dict: dict,
+        profile: str,
+        app_name: str = "",
+        skip_defaults: bool = False,
+    ) -> None:
+        """Writes one schema's mapped settings to dconf. Migration-only."""
 
         gs = self.get_settings(schema_name, profile, app_name=app_name)
         if gs is None:
             return
         mappings = self._get_settings_mappings(schema_name)
         self._reset_mapped_keys(gs, mappings)
-        self._json_to_gsettings(json_dict, gs, schema_name, skip_defaults)
+        self._write_mapped_settings(prefs_dict, gs, schema_name, skip_defaults)
 
     # TODO - JD: Delete this when we remove JSON support.
     def _write_profile_settings(
@@ -698,7 +732,7 @@ class GSettingsRegistry:
 
     @staticmethod
     def _reset_mapped_keys(gs: Gio.Settings, mappings: list[SettingsMapping]) -> None:
-        """Resets all user-set mapped keys so _json_to_gsettings writes a clean slate."""
+        """Resets all user-set mapped keys so _write_mapped_settings writes a clean slate."""
 
         for m in mappings:
             if gs.get_user_value(m.gs_key) is not None:
@@ -757,7 +791,7 @@ class GSettingsRegistry:
 
         skip_defaults = profile_name == "default"
 
-        wrote = self._json_to_gsettings(profile_prefs, gs, schema_name, skip_defaults)
+        wrote = self._write_mapped_settings(profile_prefs, gs, schema_name, skip_defaults)
         if wrote:
             msg = f"GSETTINGS REGISTRY: Migrated {schema_name} profile:{profile_name}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -886,7 +920,7 @@ class GSettingsRegistry:
             gs = handle.get_for_app(app_name, profile_name)
             if gs is None:
                 continue
-            wrote = self._json_to_gsettings(general, gs, schema_name, skip_defaults=False)
+            wrote = self._write_mapped_settings(general, gs, schema_name, skip_defaults=False)
             if wrote:
                 msg = (
                     f"GSETTINGS REGISTRY: Migrated {schema_name}"

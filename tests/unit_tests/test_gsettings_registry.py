@@ -197,13 +197,13 @@ class TestGsettingDecorator:
         assert desc.schema == "test-schema"
         assert desc.gtype == "b"
         assert desc.default is True
-        assert desc.settings_key is None
+        assert desc.migration_key is None
 
         # Clean up
         del registry._descriptors[("test-schema", "test-key")]
 
-    def test_decorator_registers_settings_key(self, test_context: OrcaTestContext) -> None:
-        """Test @gsetting decorator stores settings_key in the descriptor."""
+    def test_decorator_registers_migration_key(self, test_context: OrcaTestContext) -> None:
+        """Test @gsetting decorator stores migration_key in the descriptor."""
 
         self._setup(test_context)
         from orca.gsettings_registry import get_registry
@@ -216,18 +216,18 @@ class TestGsettingDecorator:
             gtype="b",
             default=True,
             summary="Test",
-            settings_key="enableTestSetting",
+            migration_key="enableTestSetting",
         )
         def some_getter():
             return True
 
         desc = registry._descriptors[("test", "test-sk")]
-        assert desc.settings_key == "enableTestSetting"
+        assert desc.migration_key == "enableTestSetting"
 
         del registry._descriptors[("test", "test-sk")]
 
-    def test_decorator_settings_key_defaults_to_none(self, test_context: OrcaTestContext) -> None:
-        """Test @gsetting decorator defaults settings_key to None when omitted."""
+    def test_decorator_migration_key_defaults_to_none(self, test_context: OrcaTestContext) -> None:
+        """Test @gsetting decorator defaults migration_key to None when omitted."""
 
         self._setup(test_context)
         from orca.gsettings_registry import get_registry
@@ -239,7 +239,7 @@ class TestGsettingDecorator:
             return ""
 
         desc = registry._descriptors[("test", "test-no-sk")]
-        assert desc.settings_key is None
+        assert desc.migration_key is None
 
         del registry._descriptors[("test", "test-no-sk")]
 
@@ -665,8 +665,8 @@ class TestSettingsMappings:
 
         del registry._mappings["test-schema"]
 
-    def test_json_to_gsettings_boolean(self, test_context: OrcaTestContext) -> None:
-        """Test _json_to_gsettings writes boolean values."""
+    def test_write_mapped_settings_boolean(self, test_context: OrcaTestContext) -> None:
+        """Test _write_mapped_settings writes boolean values."""
 
         self._setup(test_context)
         from orca.gsettings_registry import SettingsMapping, get_registry
@@ -682,14 +682,14 @@ class TestSettingsMappings:
 
         mock_gs = test_context.Mock()
         # Value differs from default
-        result = registry._json_to_gsettings({"enableFoo": False}, mock_gs, "test-b")
+        result = registry._write_mapped_settings({"enableFoo": False}, mock_gs, "test-b")
         assert result is True
         mock_gs.set_boolean.assert_called_once_with("foo-enabled", False)
 
         del registry._mappings["test-b"]
 
-    def test_json_to_gsettings_skips_defaults(self, test_context: OrcaTestContext) -> None:
-        """Test _json_to_gsettings skips values matching schema defaults."""
+    def test_write_mapped_settings_skips_defaults(self, test_context: OrcaTestContext) -> None:
+        """Test _write_mapped_settings skips values matching schema defaults."""
 
         self._setup(test_context)
         from orca.gsettings_registry import SettingsMapping, get_registry
@@ -705,14 +705,14 @@ class TestSettingsMappings:
 
         mock_gs = test_context.Mock()
         # Value matches default — should be skipped
-        result = registry._json_to_gsettings({"enableFoo": True}, mock_gs, "test-skip")
+        result = registry._write_mapped_settings({"enableFoo": True}, mock_gs, "test-skip")
         assert result is False
         mock_gs.set_boolean.assert_not_called()
 
         del registry._mappings["test-skip"]
 
-    def test_json_to_gsettings_enum(self, test_context: OrcaTestContext) -> None:
-        """Test _json_to_gsettings handles enum (int->string) conversions."""
+    def test_write_mapped_settings_enum(self, test_context: OrcaTestContext) -> None:
+        """Test _write_mapped_settings handles enum (int->string) conversions."""
 
         self._setup(test_context)
         from orca.gsettings_registry import SettingsMapping, get_registry
@@ -730,14 +730,14 @@ class TestSettingsMappings:
 
         mock_gs = test_context.Mock()
         # Value 0 differs from default 1
-        result = registry._json_to_gsettings({"verbLevel": 0}, mock_gs, "test-enum")
+        result = registry._write_mapped_settings({"verbLevel": 0}, mock_gs, "test-enum")
         assert result is True
         mock_gs.set_string.assert_called_once_with("verbosity-level", "brief")
 
         del registry._mappings["test-enum"]
 
-    def test_json_to_gsettings_enum_skips_default(self, test_context: OrcaTestContext) -> None:
-        """Test _json_to_gsettings enum skips value matching default int."""
+    def test_write_mapped_settings_enum_skips_default(self, test_context: OrcaTestContext) -> None:
+        """Test _write_mapped_settings enum skips value matching default int."""
 
         self._setup(test_context)
         from orca.gsettings_registry import SettingsMapping, get_registry
@@ -754,17 +754,18 @@ class TestSettingsMappings:
         )
 
         mock_gs = test_context.Mock()
-        result = registry._json_to_gsettings({"verbLevel": 1}, mock_gs, "test-enum-skip")
+        result = registry._write_mapped_settings({"verbLevel": 1}, mock_gs, "test-enum-skip")
         assert result is False
         mock_gs.set_string.assert_not_called()
 
         del registry._mappings["test-enum-skip"]
 
-    def test_gsettings_to_json_boolean(self, test_context: OrcaTestContext) -> None:
-        """Test _gsettings_to_json reads boolean values."""
+    def test_read_mapped_settings_boolean(self, test_context: OrcaTestContext) -> None:
+        """Test gsettings_to_json reads boolean values."""
 
         self._setup(test_context)
         from orca.gsettings_registry import SettingsMapping, get_registry
+        from orca import gsettings_migrator
 
         registry = get_registry()
 
@@ -788,17 +789,19 @@ class TestSettingsMappings:
 
         mock_gs.get_user_value.side_effect = get_user_value_side_effect
 
-        result = registry._gsettings_to_json(mock_gs, "test-read")
+        mappings = registry._get_settings_mappings("test-read")
+        result = gsettings_migrator.gsettings_to_json(mock_gs, mappings)
         assert result == {"enableFoo": False}
         assert "enableBar" not in result
 
         del registry._mappings["test-read"]
 
-    def test_gsettings_to_json_enum(self, test_context: OrcaTestContext) -> None:
-        """Test _gsettings_to_json reverses enum mapping (string->int)."""
+    def test_read_mapped_settings_enum(self, test_context: OrcaTestContext) -> None:
+        """Test gsettings_to_json reverses enum mapping (string->int)."""
 
         self._setup(test_context)
         from orca.gsettings_registry import SettingsMapping, get_registry
+        from orca import gsettings_migrator
 
         registry = get_registry()
 
@@ -816,16 +819,18 @@ class TestSettingsMappings:
         mock_variant.get_string.return_value = "brief"
         mock_gs.get_user_value.return_value = mock_variant
 
-        result = registry._gsettings_to_json(mock_gs, "test-read-enum")
+        mappings = registry._get_settings_mappings("test-read-enum")
+        result = gsettings_migrator.gsettings_to_json(mock_gs, mappings)
         assert result == {"verbLevel": 0}
 
         del registry._mappings["test-read-enum"]
 
     def test_roundtrip(self, test_context: OrcaTestContext) -> None:
-        """Test _json_to_gsettings followed by _gsettings_to_json preserves values."""
+        """Test _write_mapped_settings followed by gsettings_to_json preserves values."""
 
         self._setup(test_context)
         from orca.gsettings_registry import SettingsMapping, get_registry
+        from orca import gsettings_migrator
 
         registry = get_registry()
 
@@ -871,15 +876,16 @@ class TestSettingsMappings:
         mock_gs.get_user_value.side_effect = get_user_value
 
         original = {"enableFoo": False, "punctStyle": 2}
-        registry._json_to_gsettings(original, mock_gs, "test-rt")
+        registry._write_mapped_settings(original, mock_gs, "test-rt")
 
-        recovered = registry._gsettings_to_json(mock_gs, "test-rt")
+        mappings = registry._get_settings_mappings("test-rt")
+        recovered = gsettings_migrator.gsettings_to_json(mock_gs, mappings)
         assert recovered == original
 
         del registry._mappings["test-rt"]
 
-    def test_json_to_gsettings_missing_keys(self, test_context: OrcaTestContext) -> None:
-        """Test _json_to_gsettings ignores keys not present in json_dict."""
+    def test_write_mapped_settings_missing_keys(self, test_context: OrcaTestContext) -> None:
+        """Test _write_mapped_settings ignores keys not present in json_dict."""
 
         self._setup(test_context)
         from orca.gsettings_registry import SettingsMapping, get_registry
@@ -896,14 +902,14 @@ class TestSettingsMappings:
 
         mock_gs = test_context.Mock()
         # Only enableBar in the dict, and it matches default
-        result = registry._json_to_gsettings({"enableBar": False}, mock_gs, "test-miss")
+        result = registry._write_mapped_settings({"enableBar": False}, mock_gs, "test-miss")
         assert result is False
         mock_gs.set_boolean.assert_not_called()
 
         del registry._mappings["test-miss"]
 
-    def test_json_to_gsettings_int_and_double(self, test_context: OrcaTestContext) -> None:
-        """Test _json_to_gsettings handles int and double types."""
+    def test_write_mapped_settings_int_and_double(self, test_context: OrcaTestContext) -> None:
+        """Test _write_mapped_settings handles int and double types."""
 
         self._setup(test_context)
         from orca.gsettings_registry import SettingsMapping, get_registry
@@ -919,7 +925,7 @@ class TestSettingsMappings:
         )
 
         mock_gs = test_context.Mock()
-        result = registry._json_to_gsettings({"rate": 75, "pitch": 7.5}, mock_gs, "test-id")
+        result = registry._write_mapped_settings({"rate": 75, "pitch": 7.5}, mock_gs, "test-id")
         assert result is True
         mock_gs.set_int.assert_called_once_with("rate", 75)
         mock_gs.set_double.assert_called_once_with("pitch", 7.5)
@@ -995,6 +1001,7 @@ class TestBidirectionalConversionMultiKey:
 
         self._setup(test_context)
         from orca.gsettings_registry import SettingsMapping, get_registry
+        from orca import gsettings_migrator
 
         registry = get_registry()
 
@@ -1023,10 +1030,11 @@ class TestBidirectionalConversionMultiKey:
                 "verbalizePunctuationStyle": 2,
             }
             mock_gs, _ = self._make_mock_gs(test_context)
-            wrote = registry._json_to_gsettings(json_dict, mock_gs, "test-multi")
+            wrote = registry._write_mapped_settings(json_dict, mock_gs, "test-multi")
             assert wrote is True
 
-            recovered = registry._gsettings_to_json(mock_gs, "test-multi")
+            mappings = registry._get_settings_mappings("test-multi")
+            recovered = gsettings_migrator.gsettings_to_json(mock_gs, mappings)
             assert recovered == json_dict
         finally:
             registry._mappings.pop("test-multi", None)
@@ -1036,6 +1044,7 @@ class TestBidirectionalConversionMultiKey:
 
         self._setup(test_context)
         from orca.gsettings_registry import SettingsMapping, get_registry
+        from orca import gsettings_migrator
 
         registry = get_registry()
 
@@ -1062,7 +1071,7 @@ class TestBidirectionalConversionMultiKey:
                 "speechVerbosityLevel": 1,  # matches default — should be skipped
             }
             mock_gs, store = self._make_mock_gs(test_context)
-            registry._json_to_gsettings(json_dict, mock_gs, "test-defaults")
+            registry._write_mapped_settings(json_dict, mock_gs, "test-defaults")
 
             # Only non-defaults should have been written
             assert "key-echo" in store
@@ -1070,7 +1079,8 @@ class TestBidirectionalConversionMultiKey:
             assert "character-echo" not in store
             assert "verbosity-level" not in store
 
-            recovered = registry._gsettings_to_json(mock_gs, "test-defaults")
+            mappings = registry._get_settings_mappings("test-defaults")
+            recovered = gsettings_migrator.gsettings_to_json(mock_gs, mappings)
             assert recovered == {
                 "enableKeyEcho": False,
                 "enableNavigationKeys": True,
@@ -1083,6 +1093,7 @@ class TestBidirectionalConversionMultiKey:
 
         self._setup(test_context)
         from orca.gsettings_registry import SettingsMapping, get_registry
+        from orca import gsettings_migrator
 
         registry = get_registry()
 
@@ -1095,9 +1106,10 @@ class TestBidirectionalConversionMultiKey:
         )
         try:
             mock_gs, _ = self._make_mock_gs(test_context)
-            wrote = registry._json_to_gsettings({}, mock_gs, "test-empty")
+            wrote = registry._write_mapped_settings({}, mock_gs, "test-empty")
             assert wrote is False
-            assert not registry._gsettings_to_json(mock_gs, "test-empty")
+            mappings = registry._get_settings_mappings("test-empty")
+            assert not gsettings_migrator.gsettings_to_json(mock_gs, mappings)
         finally:
             registry._mappings.pop("test-empty", None)
 
@@ -1106,6 +1118,7 @@ class TestBidirectionalConversionMultiKey:
 
         self._setup(test_context)
         from orca.gsettings_registry import SettingsMapping, get_registry
+        from orca import gsettings_migrator
 
         registry = get_registry()
 
@@ -1123,12 +1136,13 @@ class TestBidirectionalConversionMultiKey:
                 "voices": {"default": {"rate": 56}},
             }
             mock_gs, store = self._make_mock_gs(test_context)
-            registry._json_to_gsettings(json_dict, mock_gs, "test-ignore")
+            registry._write_mapped_settings(json_dict, mock_gs, "test-ignore")
 
             assert len(store) == 1
             assert "key-echo" in store
 
-            recovered = registry._gsettings_to_json(mock_gs, "test-ignore")
+            mappings = registry._get_settings_mappings("test-ignore")
+            recovered = gsettings_migrator.gsettings_to_json(mock_gs, mappings)
             assert recovered == {"enableKeyEcho": False}
         finally:
             registry._mappings.pop("test-ignore", None)
@@ -1138,6 +1152,7 @@ class TestBidirectionalConversionMultiKey:
 
         self._setup(test_context)
         from orca.gsettings_registry import SettingsMapping, get_registry
+        from orca import gsettings_migrator
 
         registry = get_registry()
 
@@ -1153,8 +1168,9 @@ class TestBidirectionalConversionMultiKey:
                 if int_val == 1:
                     continue  # skip default
                 mock_gs, _ = self._make_mock_gs(test_context)
-                registry._json_to_gsettings({"punctStyle": int_val}, mock_gs, "test-all-enums")
-                recovered = registry._gsettings_to_json(mock_gs, "test-all-enums")
+                registry._write_mapped_settings({"punctStyle": int_val}, mock_gs, "test-all-enums")
+                mappings = registry._get_settings_mappings("test-all-enums")
+                recovered = gsettings_migrator.gsettings_to_json(mock_gs, mappings)
                 assert recovered == {"punctStyle": int_val}
         finally:
             registry._mappings.pop("test-all-enums", None)
@@ -1195,14 +1211,14 @@ class TestBuildMappingsFromDescriptors:
             schema="my-schema",
             gtype="b",
             default=True,
-            settings_key="enableFoo",
+            migration_key="enableFoo",
         )
         registry._descriptors[("my-schema", "bar-level")] = SettingDescriptor(
             gsettings_key="bar-level",
             schema="my-schema",
             gtype="i",
             default=50,
-            settings_key="barLevel",
+            migration_key="barLevel",
         )
         try:
             mappings = registry._build_mappings_from_descriptors("my-schema")
@@ -1210,21 +1226,21 @@ class TestBuildMappingsFromDescriptors:
 
             by_gs_key = {m.gs_key: m for m in mappings}
             assert "foo-enabled" in by_gs_key
-            assert by_gs_key["foo-enabled"].json_key == "enableFoo"
+            assert by_gs_key["foo-enabled"].migration_key == "enableFoo"
             assert by_gs_key["foo-enabled"].gtype == "b"
             assert by_gs_key["foo-enabled"].default is True
             assert by_gs_key["foo-enabled"].enum_map is None
 
             assert "bar-level" in by_gs_key
-            assert by_gs_key["bar-level"].json_key == "barLevel"
+            assert by_gs_key["bar-level"].migration_key == "barLevel"
             assert by_gs_key["bar-level"].gtype == "i"
             assert by_gs_key["bar-level"].default == 50
         finally:
             registry._descriptors.pop(("my-schema", "foo-enabled"), None)
             registry._descriptors.pop(("my-schema", "bar-level"), None)
 
-    def test_skips_descriptors_without_settings_key(self, test_context: OrcaTestContext) -> None:
-        """Test _build_mappings_from_descriptors skips descriptors with settings_key=None."""
+    def test_skips_descriptors_without_migration_key(self, test_context: OrcaTestContext) -> None:
+        """Test _build_mappings_from_descriptors skips descriptors with migration_key=None."""
 
         self._setup(test_context)
         from orca.gsettings_registry import SettingDescriptor, get_registry
@@ -1236,19 +1252,19 @@ class TestBuildMappingsFromDescriptors:
             schema="my-schema",
             gtype="b",
             default=True,
-            settings_key="enableHasKey",
+            migration_key="enableHasKey",
         )
         registry._descriptors[("my-schema", "no-key")] = SettingDescriptor(
             gsettings_key="no-key",
             schema="my-schema",
             gtype="b",
             default=False,
-            settings_key=None,
+            migration_key=None,
         )
         try:
             mappings = registry._build_mappings_from_descriptors("my-schema")
             assert len(mappings) == 1
-            assert mappings[0].json_key == "enableHasKey"
+            assert mappings[0].migration_key == "enableHasKey"
         finally:
             registry._descriptors.pop(("my-schema", "has-key"), None)
             registry._descriptors.pop(("my-schema", "no-key"), None)
@@ -1266,23 +1282,23 @@ class TestBuildMappingsFromDescriptors:
             schema="schema-a",
             gtype="b",
             default=True,
-            settings_key="enableA",
+            migration_key="enableA",
         )
         registry._descriptors[("schema-b", "enabled")] = SettingDescriptor(
             gsettings_key="enabled",
             schema="schema-b",
             gtype="b",
             default=False,
-            settings_key="enableB",
+            migration_key="enableB",
         )
         try:
             mappings_a = registry._build_mappings_from_descriptors("schema-a")
             assert len(mappings_a) == 1
-            assert mappings_a[0].json_key == "enableA"
+            assert mappings_a[0].migration_key == "enableA"
 
             mappings_b = registry._build_mappings_from_descriptors("schema-b")
             assert len(mappings_b) == 1
-            assert mappings_b[0].json_key == "enableB"
+            assert mappings_b[0].migration_key == "enableB"
         finally:
             registry._descriptors.pop(("schema-a", "enabled"), None)
             registry._descriptors.pop(("schema-b", "enabled"), None)
@@ -1301,7 +1317,7 @@ class TestBuildMappingsFromDescriptors:
             schema="my-schema",
             gtype="",
             default=1,
-            settings_key="verbosityLevel",
+            migration_key="verbosityLevel",
             genum="org.gnome.Orca.Verbosity",
         )
         try:
@@ -1361,7 +1377,7 @@ class TestGetSettingsMappingsFallback:
             schema="test-pref",
             gtype="b",
             default=False,
-            settings_key="enableFoo",
+            migration_key="enableFoo",
         )
         try:
             result = registry._get_settings_mappings("test-pref")
@@ -1383,12 +1399,12 @@ class TestGetSettingsMappingsFallback:
             schema="test-fb",
             gtype="s",
             default="",
-            settings_key="barSetting",
+            migration_key="barSetting",
         )
         try:
             result = registry._get_settings_mappings("test-fb")
             assert len(result) == 1
-            assert result[0].json_key == "barSetting"
+            assert result[0].migration_key == "barSetting"
             assert result[0].gs_key == "bar"
         finally:
             registry._descriptors.pop(("test-fb", "bar"), None)
@@ -1430,7 +1446,7 @@ class TestDescriptorKeyCollision:
             gtype="b",
             default=True,
             summary="Test",
-            settings_key="enableBraille",
+            migration_key="enableBraille",
         )
         def get_braille_enabled():
             return True
@@ -1441,7 +1457,7 @@ class TestDescriptorKeyCollision:
             gtype="b",
             default=True,
             summary="Test",
-            settings_key="enableSound",
+            migration_key="enableSound",
         )
         def get_sound_enabled():
             return True
@@ -1449,8 +1465,8 @@ class TestDescriptorKeyCollision:
         try:
             assert ("braille", "enabled") in registry._descriptors
             assert ("sound", "enabled") in registry._descriptors
-            assert registry._descriptors[("braille", "enabled")].settings_key == "enableBraille"
-            assert registry._descriptors[("sound", "enabled")].settings_key == "enableSound"
+            assert registry._descriptors[("braille", "enabled")].migration_key == "enableBraille"
+            assert registry._descriptors[("sound", "enabled")].migration_key == "enableSound"
         finally:
             registry._descriptors.pop(("braille", "enabled"), None)
             registry._descriptors.pop(("sound", "enabled"), None)
@@ -1605,7 +1621,7 @@ class TestMigrateAll:
             schema="test-nomaps",
             gtype="a{ss}",
             default={},
-            settings_key=None,
+            migration_key=None,
         )
 
         try:
@@ -1638,8 +1654,8 @@ class TestStringArraySupport:
         ]
         test_context.setup_shared_dependencies(additional_modules)
 
-    def test_json_to_gsettings_string_array(self, test_context: OrcaTestContext) -> None:
-        """Test _json_to_gsettings writes string array values."""
+    def test_write_mapped_settings_string_array(self, test_context: OrcaTestContext) -> None:
+        """Test _write_mapped_settings writes string array values."""
 
         self._setup(test_context)
         from orca.gsettings_registry import SettingsMapping, get_registry
@@ -1654,7 +1670,7 @@ class TestStringArraySupport:
         mock_gs = test_context.Mock()
         attrs = ["size", "weight", "style"]
         try:
-            result = registry._json_to_gsettings(
+            result = registry._write_mapped_settings(
                 {"textAttributesToSpeak": attrs}, mock_gs, "test-as"
             )
             assert result is True
@@ -1662,10 +1678,10 @@ class TestStringArraySupport:
         finally:
             registry._mappings.pop("test-as", None)
 
-    def test_json_to_gsettings_string_array_skips_default(
+    def test_write_mapped_settings_string_array_skips_default(
         self, test_context: OrcaTestContext
     ) -> None:
-        """Test _json_to_gsettings skips string array when it matches default."""
+        """Test _write_mapped_settings skips string array when it matches default."""
 
         self._setup(test_context)
         from orca.gsettings_registry import SettingsMapping, get_registry
@@ -1680,7 +1696,7 @@ class TestStringArraySupport:
 
         mock_gs = test_context.Mock()
         try:
-            result = registry._json_to_gsettings(
+            result = registry._write_mapped_settings(
                 {"textAttributesToSpeak": ["size", "weight"]}, mock_gs, "test-as-skip"
             )
             assert result is False
@@ -1688,11 +1704,12 @@ class TestStringArraySupport:
         finally:
             registry._mappings.pop("test-as-skip", None)
 
-    def test_gsettings_to_json_string_array(self, test_context: OrcaTestContext) -> None:
-        """Test _gsettings_to_json reads string array values."""
+    def test_read_mapped_settings_string_array(self, test_context: OrcaTestContext) -> None:
+        """Test gsettings_to_json reads string array values."""
 
         self._setup(test_context)
         from orca.gsettings_registry import SettingsMapping, get_registry
+        from orca import gsettings_migrator
 
         registry = get_registry()
 
@@ -1707,7 +1724,8 @@ class TestStringArraySupport:
         mock_gs.get_user_value.return_value = mock_variant
 
         try:
-            result = registry._gsettings_to_json(mock_gs, "test-as-read")
+            mappings = registry._get_settings_mappings("test-as-read")
+            result = gsettings_migrator.gsettings_to_json(mock_gs, mappings)
             assert result == {"textAttributesToSpeak": ["size", "weight", "style"]}
         finally:
             registry._mappings.pop("test-as-read", None)

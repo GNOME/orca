@@ -622,7 +622,7 @@ class TestBraillePresenter:
         assert presenter.get_end_of_line_indicator_is_enabled() is False
 
     def test_set_eol_enabled(self, test_context: OrcaTestContext):
-        """Test set_end_of_line_indicator_is_enabled sets enableBrailleEOL."""
+        """Test set_end_of_line_indicator_is_enabled sets end-of-line-indicator."""
 
         self._setup_dependencies(test_context)
         from orca.braille_presenter import get_presenter
@@ -1112,10 +1112,10 @@ class TestBraillePreferencesGridUI:
         result = grid.save_settings()
 
         assert isinstance(result, dict)
-        assert "brailleVerbosityLevel" in result
-        assert "enableBrailleEOL" in result
-        assert "enableFlashMessages" in result
-        assert "brailleProgressBarUpdates" in result
+        assert "verbosity-level" in result
+        assert "end-of-line-indicator" in result
+        assert "flash-messages" in result
+        assert "braille-progress-bar-updates" in result
 
     def test_braille_preferences_grid_title_callback(self, test_context: OrcaTestContext) -> None:
         """Test BraillePreferencesGrid stores title change callback."""
@@ -1177,7 +1177,7 @@ class TestBraillePreferencesGridUI:
         detailed_switch.set_active(True)
 
         result = grid.save_settings()
-        assert result["brailleVerbosityLevel"] == 1
+        assert result["verbosity-level"] == 1
 
     def test_flash_messages_duration_initial_value(self, test_context: OrcaTestContext) -> None:
         """Test flash duration spinbutton shows correct initial value."""

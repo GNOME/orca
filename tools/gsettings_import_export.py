@@ -127,8 +127,8 @@ def _build_schemas_and_mappings() -> tuple[dict[str, str], dict[str, list[Settin
     mappings: dict[str, list[SettingsMapping]] = {}
 
     for setting in all_settings:
-        settings_key = setting.get("settings_key")
-        if settings_key is None:
+        migration_key = setting.get("migration_key")
+        if migration_key is None:
             continue
         schema = setting["schema"]
         genum = setting.get("genum")
@@ -136,10 +136,10 @@ def _build_schemas_and_mappings() -> tuple[dict[str, str], dict[str, list[Settin
         string_enum = False
         if genum and genum in all_enums:
             enum_map = {v: k for k, v in all_enums[genum].items()}
-            string_enum = settings_types.get(settings_key) == "str"
+            string_enum = settings_types.get(migration_key) == "str"
         gtype = setting.get("gtype", "")
         mapping = SettingsMapping(
-            settings_key, setting["key"], gtype, setting["default"], enum_map, string_enum
+            migration_key, setting["key"], gtype, setting["default"], enum_map, string_enum
         )
         mappings.setdefault(schema, []).append(mapping)
 
@@ -214,9 +214,9 @@ def _import_mapped_settings(
 
     if dry_run:
         for m in mappings:
-            if m.json_key not in json_dict:
+            if m.migration_key not in json_dict:
                 continue
-            value = json_dict[m.json_key]
+            value = json_dict[m.migration_key]
             if m.enum_map is not None:
                 nick = resolve_enum_nick(value, m.enum_map)
                 if nick is None:
@@ -756,11 +756,11 @@ _LEGACY_ALIAS_KEYS = {"progressBarVerbosity", "progressBarUpdateInterval"}
 
 
 def _build_default_info() -> dict[str, tuple[Any, dict[int, str] | None]]:
-    """Build a map of settings_key → (default_value, enum_map) from all known mappings."""
+    """Build a map of migration_key → (default_value, enum_map) from all known mappings."""
     defaults: dict[str, tuple[Any, dict[int, str] | None]] = {}
     for mappings in ALL_MAPPINGS.values():
         for m in mappings:
-            defaults[m.json_key] = (m.default, m.enum_map)
+            defaults[m.migration_key] = (m.default, m.enum_map)
     return defaults
 
 

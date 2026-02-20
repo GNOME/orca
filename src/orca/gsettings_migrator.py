@@ -62,9 +62,9 @@ KEYBINDINGS_METADATA_KEYS: frozenset[str] = frozenset({"keyboardLayout", "orcaMo
 
 @dataclass
 class SettingsMapping:
-    """Describes a mapping between a JSON settings key and a GSettings key."""
+    """Describes a mapping between a preferences key and a GSettings key."""
 
-    json_key: str
+    migration_key: str
     gs_key: str
     gtype: str  # "b", "s", "i", "d", "as"
     default: Any
@@ -163,9 +163,9 @@ def json_to_gsettings(
 
     wrote_any = False
     for m in mappings:
-        if m.json_key not in json_dict:
+        if m.migration_key not in json_dict:
             continue
-        if _write_one_mapping(gs, m, json_dict[m.json_key], skip_defaults):
+        if _write_one_mapping(gs, m, json_dict[m.migration_key], skip_defaults):
             wrote_any = True
     return wrote_any
 
@@ -181,22 +181,22 @@ def gsettings_to_json(gs: Gio.Settings, mappings: list[SettingsMapping]) -> dict
         if m.enum_map is not None:
             gs_str = user_value.get_string()
             if m.string_enum:
-                result[m.json_key] = gs_str
+                result[m.migration_key] = gs_str
             else:
                 reverse_map = {v: k for k, v in m.enum_map.items()}
                 json_value = reverse_map.get(gs_str)
                 if json_value is not None:
-                    result[m.json_key] = json_value
+                    result[m.migration_key] = json_value
         elif m.gtype == "b":
-            result[m.json_key] = user_value.get_boolean()
+            result[m.migration_key] = user_value.get_boolean()
         elif m.gtype == "s":
-            result[m.json_key] = user_value.get_string()
+            result[m.migration_key] = user_value.get_string()
         elif m.gtype == "i":
-            result[m.json_key] = user_value.get_int32()
+            result[m.migration_key] = user_value.get_int32()
         elif m.gtype == "d":
-            result[m.json_key] = user_value.get_double()
+            result[m.migration_key] = user_value.get_double()
         elif m.gtype == "as":
-            result[m.json_key] = list(user_value.unpack())
+            result[m.migration_key] = list(user_value.unpack())
     return result
 
 

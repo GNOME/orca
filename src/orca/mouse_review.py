@@ -387,13 +387,13 @@ class MousePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.GENERAL_PRESENT_TOOLTIPS,
                 getter=reviewer.get_present_tooltips,
                 setter=reviewer.set_present_tooltips,
-                prefs_key="presentToolTips",
+                prefs_key="present-tooltips",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.GENERAL_SPEAK_OBJECT_UNDER_MOUSE,
                 getter=reviewer.get_is_enabled,
                 setter=reviewer.set_is_enabled,
-                prefs_key="enableMouseReview",
+                prefs_key="enabled",
             ),
         ]
 
@@ -553,7 +553,7 @@ class MouseReviewer:
         gtype="b",
         default=False,
         summary="Present tooltips on mouse hover",
-        settings_key="presentToolTips",
+        migration_key="presentToolTips",
     )
     @dbus_service.getter
     def get_present_tooltips(self) -> bool:
@@ -576,7 +576,7 @@ class MouseReviewer:
         gtype="b",
         default=False,
         summary="Enable mouse review",
-        settings_key="enableMouseReview",
+        migration_key="enableMouseReview",
     )
     @dbus_service.getter
     def get_is_enabled(self) -> bool:

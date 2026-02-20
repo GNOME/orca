@@ -114,7 +114,7 @@ class SpellCheckPresenter:
         gtype="b",
         default=True,
         summary="Spell misspelled word",
-        settings_key="spellcheckSpellError",
+        migration_key="spellcheckSpellError",
     )
     @dbus_service.getter
     def get_spell_error(self) -> bool:
@@ -140,7 +140,7 @@ class SpellCheckPresenter:
         gtype="b",
         default=True,
         summary="Spell suggested correction",
-        settings_key="spellcheckSpellSuggestion",
+        migration_key="spellcheckSpellSuggestion",
     )
     @dbus_service.getter
     def get_spell_suggestion(self) -> bool:
@@ -166,7 +166,7 @@ class SpellCheckPresenter:
         gtype="b",
         default=True,
         summary="Present context/surrounding sentence",
-        settings_key="spellcheckPresentContext",
+        migration_key="spellcheckPresentContext",
     )
     @dbus_service.getter
     def get_present_context(self) -> bool:
@@ -925,19 +925,19 @@ class SpellCheckPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.SPELL_CHECK_SPELL_ERROR,
                 getter=presenter.get_spell_error,
                 setter=presenter.set_spell_error,
-                prefs_key="spellcheckSpellError",
+                prefs_key="spell-error",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.SPELL_CHECK_SPELL_SUGGESTION,
                 getter=presenter.get_spell_suggestion,
                 setter=presenter.set_spell_suggestion,
-                prefs_key="spellcheckSpellSuggestion",
+                prefs_key="spell-suggestion",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.SPELL_CHECK_PRESENT_CONTEXT,
                 getter=presenter.get_present_context,
                 setter=presenter.set_present_context,
-                prefs_key="spellcheckPresentContext",
+                prefs_key="present-context",
             ),
         ]
 
