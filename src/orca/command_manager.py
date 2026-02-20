@@ -1143,6 +1143,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         self._commands_by_keycode: dict[int, list[KeyboardCommand]] = {}
         self._is_desktop: bool = True
         self._initialized: bool = False
+        self._group_enabled: dict[str, bool | None] = {}
         self._numlock_on: bool = False
         self._learn_mode_active: bool = False
 
@@ -1564,8 +1565,21 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
                 return True
         return False
 
+    def is_group_enabled(self, group_label: str) -> bool:
+        """Returns the enabled state of the specified command group."""
+
+        stored = self._group_enabled.get(group_label)
+        if stored is not None:
+            return stored
+        for cmd in self._get_keyboard_commands_by_group_label(group_label):
+            if not cmd.is_group_toggle():
+                return cmd.is_enabled()
+        return False
+
     def set_group_enabled(self, group_label: str, enabled: bool) -> None:
         """Sets the enabled state for all commands in a group."""
+
+        self._group_enabled[group_label] = enabled
 
         orca_modifiers = orca_modifier_manager.get_manager().get_orca_modifier_keys()
         added_count = 0

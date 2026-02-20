@@ -787,6 +787,7 @@ class GSettingsRegistry:
             return False
 
         gsettings_migrator.apply_legacy_aliases(profile_prefs)
+        gsettings_migrator.force_navigation_enabled(profile_prefs)
         gsettings_migrator.hoist_keybindings_metadata(profile_prefs)
 
         skip_defaults = profile_name == "default"
@@ -912,6 +913,7 @@ class GSettingsRegistry:
         for profile_name, profile_data in prefs.get("profiles", {}).items():
             general = profile_data.get("general", {})
             gsettings_migrator.apply_legacy_aliases(general)
+            gsettings_migrator.force_navigation_enabled(general)
             pronunciations = profile_data.get("pronunciations", {})
             app_keybindings = profile_data.get("keybindings", {})
             if not general and not pronunciations and not app_keybindings:

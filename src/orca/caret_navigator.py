@@ -373,7 +373,9 @@ class CaretNavigator:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        enabled = not self.get_is_enabled()
+        enabled = not command_manager.get_manager().is_group_enabled(
+            guilabels.KB_GROUP_CARET_NAVIGATION
+        )
         if enabled:
             string = messages.CARET_CONTROL_ORCA
         else:

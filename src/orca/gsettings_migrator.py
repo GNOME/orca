@@ -89,6 +89,24 @@ def resolve_enum_nick(value: Any, enum_map: dict[int, str]) -> str | None:
     return enum_map.get(value)
 
 
+_NAVIGATION_ENABLED_KEYS = (
+    "caretNavigationEnabled",
+    "structuralNavigationEnabled",
+    "tableNavigationEnabled",
+)
+
+
+def force_navigation_enabled(json_dict: dict) -> None:
+    """Force navigation-enabled keys to True during migration."""
+
+    # In the old system these defaulted to False because per-script logic controlled
+    # activation. In the new system they represent the user's preference and default
+    # to True. Migrating the old False would disable navigation for all scripts.
+    for key in _NAVIGATION_ENABLED_KEYS:
+        if key in json_dict:
+            json_dict[key] = True
+
+
 def apply_legacy_aliases(json_dict: dict) -> None:
     """Copy legacy key names to their modern equivalents if modern key is absent."""
 
