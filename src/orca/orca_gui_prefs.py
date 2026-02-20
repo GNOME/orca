@@ -235,7 +235,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             profile_loaded_callback=self._on_profile_loaded,
             is_app_specific=bool(self._app_name),
             labels_update_callback=self.update_menu_labels,
-            unsaved_changes_checker=self._has_unsaved_changes_in_grids,
+            unsaved_changes_checker=self._has_unsaved_changes,
         )
         self.stack.add_named(self.profiles_grid, "profiles")
         self._add_navigation_row("profiles", self.profiles_grid.get_label().get_text())
@@ -513,21 +513,10 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
     def _reload_all_grids(self, include_profiles: bool = False) -> None:
         """Reload all preference grids from settings."""
 
-        self.speech_grid.reload()
-        self.braille_grid.reload()
-        self.sound_grid.reload()
-        self.mouse_grid.reload()
-        self.document_grid.reload()
-        self.pronunciation_grid.reload()
-        if include_profiles:
-            self.profiles_grid.reload()
-        self.time_and_date_grid.reload()
-        self.text_attributes_grid.reload()
-        self.typing_echo_grid.reload()
-        self.say_all_grid.reload()
-        self.spellcheck_grid.reload()
-        self.chat_grid.reload()
-        self.keybindings_grid.reload()
+        for grid in self._page_to_grid.values():
+            if grid is self.profiles_grid and not include_profiles:
+                continue
+            grid.reload()
 
     def apply_button_clicked(self, _widget: Gtk.Button) -> None:
         """Handle Apply button click to save and apply preferences."""
@@ -542,19 +531,9 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         if not self._app_name:
             self.profiles_grid.save_settings()
 
-        self.speech_grid.save_settings(self._profile_name, save_app)
-        self.braille_grid.save_settings(self._profile_name, save_app)
-        self.sound_grid.save_settings(self._profile_name, save_app)
-        self.typing_echo_grid.save_settings(self._profile_name, save_app)
-        self.say_all_grid.save_settings(self._profile_name, save_app)
-        self.spellcheck_grid.save_settings(self._profile_name, save_app)
-        self.chat_grid.save_settings(self._profile_name, save_app)
-        self.mouse_grid.save_settings(self._profile_name, save_app)
-        self.document_grid.save_settings(self._profile_name, save_app)
-        self.time_and_date_grid.save_settings(self._profile_name, save_app)
-        self.text_attributes_grid.save_settings(self._profile_name, save_app)
-        self.pronunciation_grid.save_settings(self._profile_name, save_app)
-        self.keybindings_grid.save_settings(self._profile_name, save_app)
+        for grid in self._page_to_grid.values():
+            if grid is not self.profiles_grid:
+                grid.save_settings(self._profile_name, save_app)
 
         orca.load_user_settings(self.script, skip_reload_message=True)
 
@@ -617,21 +596,8 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         msg = "PREFERENCES DIALOG: Window is being closed"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
-        has_unsaved_changes = not self._settings_applied and (
-            self.speech_grid.has_changes()
-            or self.braille_grid.has_changes()
-            or self.sound_grid.has_changes()
-            or self.typing_echo_grid.has_changes()
-            or self.say_all_grid.has_changes()
-            or self.spellcheck_grid.has_changes()
-            or self.chat_grid.has_changes()
-            or self.mouse_grid.has_changes()
-            or self.document_grid.has_changes()
-            or self.time_and_date_grid.has_changes()
-            or self.text_attributes_grid.has_changes()
-            or (not self._app_name and self.profiles_grid.has_changes())
-            or self.pronunciation_grid.has_changes()
-            or self.keybindings_grid.has_changes()
+        has_unsaved_changes = not self._settings_applied and self._has_unsaved_changes(
+            include_profiles=not self._app_name
         )
 
         # Check if profile was switched during this session
@@ -917,23 +883,13 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
         focus_manager.get_manager().set_in_preferences_window(False)
 
-    def _has_unsaved_changes_in_grids(self) -> bool:
-        """Check if any preference grid (except profiles) has unsaved changes."""
+    def _has_unsaved_changes(self, include_profiles: bool = False) -> bool:
+        """Returns True if any preference grid has unsaved changes."""
 
-        return (
-            self.speech_grid.has_changes()
-            or self.braille_grid.has_changes()
-            or self.sound_grid.has_changes()
-            or self.typing_echo_grid.has_changes()
-            or self.say_all_grid.has_changes()
-            or self.spellcheck_grid.has_changes()
-            or self.chat_grid.has_changes()
-            or self.mouse_grid.has_changes()
-            or self.document_grid.has_changes()
-            or self.time_and_date_grid.has_changes()
-            or self.text_attributes_grid.has_changes()
-            or self.pronunciation_grid.has_changes()
-            or self.keybindings_grid.has_changes()
+        return any(
+            grid.has_changes()
+            for grid in self._page_to_grid.values()
+            if grid is not self.profiles_grid or include_profiles
         )
 
     def resume_events(self) -> bool:
