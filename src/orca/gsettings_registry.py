@@ -523,8 +523,9 @@ class GSettingsRegistry:
             return
 
         for (schema, _key), desc in self._descriptors.items():
-            if schema == schema_name and gs.get_user_value(desc.gsettings_key) is not None:
-                gs.reset(desc.gsettings_key)
+            if schema == schema_name and _key in settings:
+                if gs.get_user_value(desc.gsettings_key) is not None:
+                    gs.reset(desc.gsettings_key)
 
         writers: dict[str, Callable[..., None]] = {
             "b": gs.set_boolean,
