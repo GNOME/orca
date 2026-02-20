@@ -192,15 +192,21 @@ def main(import_dir: str | None = None, prefs_dir: str = ""):
 
     systemd.get_manager().start_watchdog()
 
-    bus = SessionMessageBus()
-    proxy = bus.get_proxy("org.a11y.Bus", "/org/a11y/bus", "org.freedesktop.DBus.Properties")
-    enabled = proxy.Get("org.a11y.Status", "IsEnabled")
-    msg = f"ORCA: Accessibility enabled: {enabled}"
-    debug.print_message(debug.LEVEL_INFO, msg, True)
-    if not enabled:
-        msg = "ORCA: Enabling accessibility."
+    try:
+        bus = SessionMessageBus()
+        proxy = bus.get_proxy("org.a11y.Bus", "/org/a11y/bus", "org.freedesktop.DBus.Properties")
+        enabled = proxy.Get("org.a11y.Status", "IsEnabled")
+        msg = f"ORCA: Accessibility enabled: {enabled}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        proxy.Set("org.a11y.Status", "IsEnabled", GLib.Variant("b", True))
+        if not enabled:
+            msg = "ORCA: Enabling accessibility."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            proxy.Set("org.a11y.Status", "IsEnabled", GLib.Variant("b", True))
+    except GLib.GError as error:
+        msg = f"ORCA: Could not connect to D-Bus session bus: {error}"
+        debug.print_message(debug.LEVEL_SEVERE, msg, True)
+        print(msg, file=sys.stderr)
+        return 1
 
     registry = gsettings_registry.get_registry()
 
