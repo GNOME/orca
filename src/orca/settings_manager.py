@@ -34,8 +34,6 @@ from types import ModuleType
 from gi.repository import GLib
 
 from . import debug
-from . import gsettings_registry
-from . import orca_i18n  # pylint: disable=no-name-in-module
 from . import speech_manager
 
 
@@ -65,7 +63,6 @@ class SettingsManager:
     def __init__(self) -> None:
         debug.print_message(debug.LEVEL_INFO, "SETTINGS MANAGER: Initializing", True)
 
-        self._profile: str = "default"
         self._prefs_dir: str = ""
         self._customized_settings: dict | None = None
         self._configuring: bool = False
@@ -105,12 +102,6 @@ class SettingsManager:
             os.close(os.open(customizations_file, os.O_CREAT, 0o700))
 
         debug.print_message(debug.LEVEL_INFO, "SETTINGS MANAGER: Activated", True)
-
-        self._profile = "default"
-        tokens = ["SETTINGS MANAGER: Current profile is", self._profile]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        self.set_profile(self._profile)
 
     def _load_customizations(self) -> None:
         """Load user's orca-customizations.py."""
@@ -158,16 +149,6 @@ class SettingsManager:
 
         return self._configuring
 
-    def get_voice_locale(self, voice: str = "default") -> str:
-        """Returns the locale for the specified voice."""
-
-        lookup = gsettings_registry.get_registry().layered_lookup
-        lang = lookup("voice", "family-lang", "s", voice_type=voice) or ""
-        dialect = lookup("voice", "family-dialect", "s", voice_type=voice) or ""
-        if dialect and len(dialect) == 2:
-            lang = f"{lang}_{dialect.upper()}"
-        return lang
-
     def get_speech_server_factories(self) -> list[ModuleType]:
         """Imports all known SpeechServer factory modules."""
 
@@ -183,32 +164,6 @@ class SettingsManager:
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return factories
-
-    def get_profile(self) -> str:
-        """Returns the active profile."""
-
-        return self._profile
-
-    def set_profile(self, profile: str = "default", update_locale: bool = False) -> None:
-        """Set a specific profile as the active one."""
-
-        tokens = ["SETTINGS MANAGER: Setting profile to:", profile]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        old_voice_locale = self.get_voice_locale("default")
-        self._profile = profile
-
-        if not update_locale:
-            return
-
-        new_voice_locale = self.get_voice_locale("default")
-        if old_voice_locale != new_voice_locale:
-            orca_i18n.setLocaleForNames(new_voice_locale)
-            orca_i18n.setLocaleForMessages(new_voice_locale)
-            orca_i18n.setLocaleForGUI(new_voice_locale)
-
-        tokens = ["SETTINGS MANAGER: Profile set to:", profile]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
 
 _manager: SettingsManager = SettingsManager()

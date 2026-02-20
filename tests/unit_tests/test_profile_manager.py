@@ -56,8 +56,10 @@ class TestProfileManager:
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_manager_mock.get_manager.return_value.get_profile.return_value = "default"
+        from orca import gsettings_registry
+
+        registry = gsettings_registry.get_registry()
+        registry.set_active_profile("default")
 
         test_context.patch(
             "orca.profile_manager.ProfileManager._get_stored_profiles",
@@ -90,55 +92,37 @@ class TestProfileManager:
     def test_get_active_profile(self, test_context: OrcaTestContext) -> None:
         """Test getting active profile."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.profile_manager import ProfileManager
 
         manager = ProfileManager()
         profile = manager.get_active_profile()
 
         assert profile == "default"
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.get_profile.assert_called_once()
 
     def test_set_active_profile(self, test_context: OrcaTestContext) -> None:
         """Test setting active profile."""
 
-        essential_modules = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
+        from orca import gsettings_registry
         from orca.profile_manager import ProfileManager
 
         manager = ProfileManager()
         manager.set_active_profile("spanish")
 
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.set_profile.assert_called_once_with("spanish", False)
-
-    def test_set_active_profile_with_locale_update(self, test_context: OrcaTestContext) -> None:
-        """Test setting active profile with locale update."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        from orca.profile_manager import ProfileManager
-
-        manager = ProfileManager()
-        manager.set_active_profile("spanish", update_locale=True)
-
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.set_profile.assert_called_once_with("spanish", True)
+        assert gsettings_registry.get_registry().get_active_profile() == "spanish"
 
     def test_load_profile(self, test_context: OrcaTestContext) -> None:
         """Test loading a profile calls set_active_profile and load_user_settings."""
 
         essential_modules = self._setup_dependencies(test_context)
+        from orca import gsettings_registry
         from orca.profile_manager import ProfileManager
 
         manager = ProfileManager()
         manager.load_profile("spanish")
 
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.set_profile.assert_called_once_with("spanish", False)
+        assert gsettings_registry.get_registry().get_active_profile() == "spanish"
         essential_modules["orca.orca"].load_user_settings.assert_called_once_with(
             skip_reload_message=True
         )
@@ -232,6 +216,7 @@ class TestProfileManager:
         """Test cycle_settings_profile cycles to next profile."""
 
         essential_modules = self._setup_dependencies(test_context)
+        from orca import gsettings_registry
         from orca.profile_manager import ProfileManager
         from unittest.mock import MagicMock
 
@@ -243,20 +228,18 @@ class TestProfileManager:
         result = manager.cycle_settings_profile(script=mock_script)
 
         assert result is True
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.set_profile.assert_called_with("spanish", True)
+        assert gsettings_registry.get_registry().get_active_profile() == "spanish"
         pres_manager.present_message.assert_called()
 
     def test_cycle_settings_profile_wraps_around(self, test_context: OrcaTestContext) -> None:
         """Test cycle_settings_profile wraps to first profile at end."""
 
-        essential_modules = self._setup_dependencies(test_context)
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.get_profile.return_value = "work"
+        self._setup_dependencies(test_context)
+        from orca import gsettings_registry
         from orca.profile_manager import ProfileManager
         from unittest.mock import MagicMock
+
+        gsettings_registry.get_registry().set_active_profile("work")
 
         manager = ProfileManager()
         mock_script = MagicMock()
@@ -264,17 +247,12 @@ class TestProfileManager:
         result = manager.cycle_settings_profile(script=mock_script)
 
         assert result is True
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.set_profile.assert_called_with("default", True)
+        assert gsettings_registry.get_registry().get_active_profile() == "default"
 
     def test_cycle_settings_profile_no_profiles(self, test_context: OrcaTestContext) -> None:
         """Test cycle_settings_profile handles no profiles."""
 
         essential_modules = self._setup_dependencies(test_context)
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value.available_profiles.return_value = []
         from orca.profile_manager import ProfileManager
         from unittest.mock import MagicMock
 
@@ -324,8 +302,10 @@ class TestProfilePreferencesGridUI:
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_manager_mock.get_manager.return_value.get_profile.return_value = "default"
+        from orca import gsettings_registry
+
+        registry = gsettings_registry.get_registry()
+        registry.set_active_profile("default")
 
         test_context.patch(
             "orca.profile_manager.ProfileManager._get_stored_profiles",

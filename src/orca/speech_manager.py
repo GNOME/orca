@@ -483,16 +483,16 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         result["speechServerInfo"] = [server_name, synthesizer_id]
         result["speechServerFactory"] = self._manager.get_speech_server_factory()
 
-        result["verbalizePunctuationStyle"] = PunctuationStyle[
-            self._manager.get_punctuation_level().upper()
-        ].value
-        result["capitalizationStyle"] = self._manager.get_capitalization_style()
+        result["punctuation-level"] = self._manager.get_punctuation_level()
+        result["capitalization-style"] = self._manager.get_capitalization_style()
 
-        result["speakNumbersAsDigits"] = self._manager.get_speak_numbers_as_digits()
-        result["useColorNames"] = self._manager.get_use_color_names()
-        result["enablePauseBreaks"] = self._manager.get_insert_pauses_between_utterances()
-        result["usePronunciationDictionary"] = self._manager.get_use_pronunciation_dictionary()
-        result["enableAutoLanguageSwitching"] = self._manager.get_auto_language_switching()
+        result["speak-numbers-as-digits"] = self._manager.get_speak_numbers_as_digits()
+        result["use-color-names"] = self._manager.get_use_color_names()
+        result["insert-pauses-between-utterances"] = (
+            self._manager.get_insert_pauses_between_utterances()
+        )
+        result["use-pronunciation-dictionary"] = self._manager.get_use_pronunciation_dictionary()
+        result["auto-language-switching"] = self._manager.get_auto_language_switching()
 
         self._has_unsaved_changes = False
         return result

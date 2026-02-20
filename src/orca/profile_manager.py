@@ -53,7 +53,6 @@ from . import orca
 from . import orca_modifier_manager
 from . import preferences_grid_base
 from . import presentation_manager
-from . import settings_manager
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -667,25 +666,24 @@ class ProfileManager:
     def get_active_profile(self) -> str:
         """Returns the internal name of the currently active profile."""
 
-        return settings_manager.get_manager().get_profile()
+        return gsettings_registry.get_registry().get_active_profile()
 
     @dbus_service.setter
-    def set_active_profile(self, internal_name: str, update_locale: bool = False) -> bool:
+    def set_active_profile(self, internal_name: str) -> bool:
         """Sets the active profile by internal name."""
 
         registry = gsettings_registry.get_registry()
         registry.clear_runtime_values()
-        settings_manager.get_manager().set_profile(internal_name, update_locale)
         registry.set_active_profile(internal_name)
         return True
 
-    def load_profile(self, internal_name: str, update_locale: bool = False) -> None:
+    def load_profile(self, internal_name: str) -> None:
         """Loads a profile by setting it active and reloading user settings."""
 
         msg = f"PROFILE MANAGER: Loading profile '{internal_name}'."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        self.set_active_profile(internal_name, update_locale)
+        self.set_active_profile(internal_name)
         orca.load_user_settings(skip_reload_message=True)
 
     def create_profile(self, new_profile: list[str]) -> bool:
@@ -792,7 +790,7 @@ class ProfileManager:
         except IndexError:
             name, profile_id = profiles[0]
 
-        self.set_active_profile(profile_id, update_locale=True)
+        self.set_active_profile(profile_id)
 
         orca_modifier_manager.get_manager().refresh_orca_modifiers("Profile changed.")
         presentation_manager.get_manager().refresh_presenters()

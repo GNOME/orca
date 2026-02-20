@@ -37,10 +37,10 @@ from typing import Any, TYPE_CHECKING
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gdk
+from gi.repository import Gdk  # pylint: disable=no-name-in-module
 from gi.repository import Gio
 from gi.repository import GLib
-from gi.repository import Gtk
+from gi.repository import Gtk  # pylint: disable=no-name-in-module
 from gi.repository import GObject
 
 from . import braille_presenter
@@ -81,6 +81,7 @@ class _AppearanceProviders:
     shapes: Gtk.CssProvider
 
 
+# pylint: disable-next=too-few-public-methods
 class NavigationRow(Gtk.ListBoxRow):
     """ListBoxRow with a panel_id attribute for navigation."""
 
@@ -105,7 +106,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self.connect("destroy", self.window_destroyed)
         self.connect("delete-event", self.window_closed)
 
-        self._profile_name: str = settings_manager.get_manager().get_profile()
+        self._profile_name: str = profile_manager.get_manager().get_active_profile()
         self.script = script
         self._settings_applied = False
         self._app_name: str | None = None

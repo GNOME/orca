@@ -108,31 +108,6 @@ class TestSettingsManagerFileIO:
         manager.activate()
         return manager
 
-    def test_get_profile_returns_current(self, test_context: OrcaTestContext) -> None:
-        """Test that get_profile returns the current profile name."""
-
-        self._setup_dependencies(test_context)
-
-        with tempfile.TemporaryDirectory() as temp_dir:
-            manager = self._create_fresh_manager(test_context, temp_dir)
-
-            profile = manager.get_profile()
-            assert profile == "default"
-
-    def test_set_profile_switches_context(self, test_context: OrcaTestContext) -> None:
-        """Test that set_profile switches to the specified profile."""
-
-        self._setup_dependencies(test_context)
-
-        with tempfile.TemporaryDirectory() as temp_dir:
-            manager = self._create_fresh_manager(test_context, temp_dir)
-
-            manager.set_profile("work")
-            assert manager.get_profile() == "work"
-
-            manager.set_profile("default")
-            assert manager.get_profile() == "default"
-
     def test_get_prefs_dir(self, test_context: OrcaTestContext) -> None:
         """Test that get_prefs_dir returns the configured preferences directory."""
 

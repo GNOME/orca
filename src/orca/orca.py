@@ -68,11 +68,6 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
 
     event_manager.get_manager().pause_queuing(True, True, "Loading user settings.")
 
-    _profile = settings_manager.get_manager().get_profile()
-    if is_reload:
-        settings_manager.get_manager().set_profile(_profile)
-    gsettings_registry.get_registry().set_active_profile(_profile)
-
     if script is None:
         script = script_manager.get_manager().get_default_script()
 

@@ -260,10 +260,10 @@ def main() -> int:
 
     if args.profile:
         try:
-            manager.set_profile(args.profile)
+            gsettings_registry.get_registry().set_active_profile(args.profile)
         except (ValueError, KeyError, OSError):
             print(messages.CLI_LOAD_PROFILE_ERROR.format(args.profile))
-            manager.set_profile()
+            gsettings_registry.get_registry().set_active_profile("default")
 
     if args.speech_system:
         try:
