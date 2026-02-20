@@ -39,6 +39,7 @@ from gi.repository import Gdk  # pylint: disable=no-name-in-module
 from gi.repository import Gio
 from gi.repository import GLib
 
+from . import ax_device_manager
 from . import clipboard
 from . import command_manager
 from . import dbus_service
@@ -120,8 +121,8 @@ def shutdown(_event=None, _signum=None):
 
     # Pause event queuing first so that it clears its queue and will not accept new
     # events. Then let the script manager unregister script event listeners as well
-    # as key grabs. Finally deactivate the event manager, which will also cause the
-    # Atspi.Device to be set to None.
+    # as key grabs. Finally deactivate the event manager and the device
+    # manager, which will cause the Atspi.Device to be set to None.
     event_manager.get_manager().pause_queuing(True, True, "Shutting down.")
     script_manager.get_manager().deactivate()
     event_manager.get_manager().deactivate()
@@ -132,6 +133,7 @@ def shutdown(_event=None, _signum=None):
 
     presentation_manager.get_manager().shutdown_presenters()
 
+    ax_device_manager.get_manager().deactivate()
     systemd.get_manager().notify_stopping()
     signal.alarm(0)
     debug.print_message(debug.LEVEL_INFO, "ORCA: Quitting Atspi main event loop", True)
@@ -253,6 +255,7 @@ def main(import_dir: str | None = None, prefs_dir: str = ""):
     dbus_service.get_remote_controller().start()
     presentation_manager.get_manager().present_message(messages.START_ORCA)
 
+    ax_device_manager.get_manager().activate()
     event_manager.get_manager().activate()
     script_manager.get_manager().activate()
     window = AXUtilities.find_active_window()

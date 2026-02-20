@@ -30,6 +30,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Atspi
 from gi.repository import GLib
 
+from . import ax_device_manager
 from . import debug
 from .ax_component import AXComponent
 from .ax_object import AXObject
@@ -102,7 +103,7 @@ class AXEventSynthesizer:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         try:
-            device = Atspi.Device.new()  # pylint: disable=no-value-for-parameter
+            device = ax_device_manager.get_manager().get_device()
             Atspi.Device.generate_mouse_event(device, obj, relative_x, relative_y, event)
         except GLib.GError as error:
             message = f"AXEventSynthesizer: Exception in _generate_mouse_event_new: {error}"

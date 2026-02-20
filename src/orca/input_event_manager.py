@@ -36,6 +36,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from . import ax_device_manager
 from . import debug
 from . import focus_manager
 from . import input_event
@@ -66,15 +67,26 @@ class InputEventManager:
 
         msg = "INPUT EVENT MANAGER: Starting key watcher."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        self._device = Atspi.Device.new_full("org.gnome.Orca")
-        self._device.add_key_watcher(self.process_keyboard_event)
+        self._device = ax_device_manager.get_manager().get_device()
+
+        atspi_version = Atspi.get_version()  # pylint: disable=no-value-for-parameter
+        if atspi_version[0] > 2 or atspi_version[1] >= 60:
+            self._key_pressed_id = self._device.connect("key-pressed", self._on_key_pressed)
+            self._key_released_id = self._device.connect("key-released", self._on_key_released)
+        else:
+            self._device.add_key_watcher(self.process_keyboard_event)
 
     def stop_key_watcher(self) -> None:
         """Stops the watcher for keyboard input events."""
 
         msg = "INPUT EVENT MANAGER: Stopping key watcher."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        self._device = None
+        atspi_version = Atspi.get_version()  # pylint: disable=no-value-for-parameter
+        if atspi_version[0] > 2 or atspi_version[1] >= 60:
+            self._device.disconnect(self._key_pressed_id)
+            self._device.disconnect(self._key_released_id)
+        else:
+            self._device = None
 
     def has_device(self) -> bool:
         """Returns True if there is an active input device."""
@@ -235,6 +247,26 @@ class InputEventManager:
         # than just updating state.
         self._last_input_event = event
         self._last_non_modifier_key_event = None
+
+    def _on_key_pressed(
+        self,
+        _device: Atspi.Device,
+        keycode: int,
+        keysym: int,
+        modifiers: int,
+        text: str,
+    ) -> None:
+        self.process_keyboard_event(_device, True, keycode, keysym, modifiers, text)
+
+    def _on_key_released(
+        self,
+        _device: Atspi.Device,
+        keycode: int,
+        keysym: int,
+        modifiers: int,
+        text: str,
+    ) -> None:
+        self.process_keyboard_event(_device, False, keycode, keysym, modifiers, text)
 
     # pylint: disable=too-many-arguments
     # pylint: disable=too-many-positional-arguments

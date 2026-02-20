@@ -52,6 +52,7 @@ lib_sources = [
   'action_presenter.py',
   'ax_collection.py',
   'ax_component.py',
+  'ax_device_manager.py',
   'ax_document.py',
   'ax_event_synthesizer.py',
   'ax_hypertext.py',
