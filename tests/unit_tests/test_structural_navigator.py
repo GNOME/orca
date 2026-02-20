@@ -65,7 +65,6 @@ class TestStructuralNavigator:
             "orca.orca_gui_navlist",
             "orca.orca_i18n",
             "orca.script_manager",
-            "orca.settings_manager",
             "orca.AXHypertext",
             "orca.AXObject",
             "orca.AXTable",
@@ -112,10 +111,6 @@ class TestStructuralNavigator:
         essential_modules["orca.keybindings"].KeyBindings = test_context.Mock(
             return_value=key_bindings_instance
         )
-        settings_manager_instance = test_context.Mock()
-        essential_modules[
-            "orca.settings_manager"
-        ].get_manager.return_value = settings_manager_instance
         controller_mock = test_context.Mock()
         controller_mock.register_decorated_module.return_value = None
         essential_modules["orca.dbus_service"].get_remote_controller.return_value = controller_mock
@@ -1253,7 +1248,6 @@ class TestStructuralNavigator:
         essential_modules = test_context.setup_shared_dependencies(
             [
                 "orca.keybindings",
-                "orca.settings_manager",
                 "orca.dbus_service",
                 "orca.debug",
                 "orca.focus_manager",
@@ -1289,7 +1283,6 @@ class TestStructuralNavigator:
         essential_modules = test_context.setup_shared_dependencies(
             [
                 "orca.keybindings",
-                "orca.settings_manager",
                 "orca.dbus_service",
                 "orca.debug",
                 "orca.focus_manager",
@@ -1314,7 +1307,6 @@ class TestStructuralNavigator:
         essential_modules = test_context.setup_shared_dependencies(
             [
                 "orca.keybindings",
-                "orca.settings_manager",
                 "orca.dbus_service",
                 "orca.debug",
                 "orca.focus_manager",

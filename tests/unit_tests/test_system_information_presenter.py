@@ -104,10 +104,6 @@ class TestSystemInformationPresenter:
         messages_mock.TIME_FORMAT_24_HMS_WITH_WORDS = "%H hours, %M minutes and %S seconds"
         messages_mock.TIME_FORMAT_24_HM_WITH_WORDS = "%H hours and %M minutes"
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_instance = test_context.Mock()
-        settings_manager_mock.get_manager = test_context.Mock(return_value=settings_instance)
-
         psutil_mock = essential_modules["psutil"]
         battery_mock = test_context.Mock()
         battery_mock.percent = 85
@@ -123,7 +119,6 @@ class TestSystemInformationPresenter:
 
         essential_modules["controller"] = controller_mock
         essential_modules["input_event_handler"] = input_event_handler_class
-        essential_modules["settings_instance"] = settings_instance
         essential_modules["battery"] = battery_mock
         essential_modules["memory"] = memory_mock
         essential_modules["key_bindings_instance"] = key_bindings_instance

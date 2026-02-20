@@ -95,18 +95,9 @@ class TestBypassModeManager:
         command_manager_instance.get_command = test_context.Mock(return_value=None)
         command_manager_mock.get_manager = test_context.Mock(return_value=command_manager_instance)
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_manager_instance = test_context.Mock()
-        override_method = test_context.Mock(return_value=key_bindings_instance)
-        settings_manager_instance.override_key_bindings = override_method
-        settings_manager_mock.get_manager = test_context.Mock(
-            return_value=settings_manager_instance
-        )
-
         essential_modules["input_event_handler"] = input_event_handler_mock
         essential_modules["key_bindings_instance"] = key_bindings_instance
         essential_modules["modifier_manager_instance"] = modifier_manager_instance
-        essential_modules["settings_manager_instance"] = settings_manager_instance
         essential_modules["command_manager_instance"] = command_manager_instance
 
         return essential_modules

@@ -67,12 +67,18 @@ if os.path.isdir(_share_dir):
 # start-up failures due to imports in orca.py are not getting output, making
 # them challenging to debug when they cannot be reproduced locally.
 
+import importlib
+import importlib.util
+from types import ModuleType
+
+from gi.repository import GLib
+
 from orca import debug
 from orca import debugging_tools_manager
 from orca import gsettings_registry
 from orca import messages
 from orca import script_manager
-from orca import settings_manager
+from orca import speech_manager
 
 class ListApps(argparse.Action):
     """Action to list all the running accessible applications."""
@@ -233,6 +239,80 @@ def cleanup(sigval: int) -> None:
     while other_orcas():
         time.sleep(0.5)
 
+# TODO - JD: Remove _DeprecatedSettingsStub in Orca v51.
+class _DeprecatedSettingsStub(ModuleType):  # pylint: disable=too-few-public-methods
+    """Stub for the removed orca.settings module."""
+
+    _has_warned: bool = False
+
+    def __setattr__(self, name: str, value: object) -> None:
+        if not name.startswith("_") and not _DeprecatedSettingsStub._has_warned:
+            _DeprecatedSettingsStub._has_warned = True
+            msg = (
+                "WARNING: orca.settings has been removed. "
+                "Please update your orca-customizations.py to remove references to it."
+            )
+            debug.print_message(debug.LEVEL_SEVERE, msg, True)
+        super().__setattr__(name, value)
+
+def _create_prefs_dirs(prefs_dir: str) -> None:
+    """Creates the preferences directory structure."""
+
+    scripts_dir = os.path.join(prefs_dir, "orca-scripts")
+    sounds_dir = os.path.join(prefs_dir, "sounds")
+    for dir_path in [prefs_dir, scripts_dir, sounds_dir]:
+        os.makedirs(dir_path, exist_ok=True)
+
+    for init_path in [os.path.join(prefs_dir, "__init__.py"),
+                      os.path.join(scripts_dir, "__init__.py")]:
+        if not os.path.exists(init_path):
+            os.close(os.open(init_path, os.O_CREAT, 0o700))
+
+    customizations_file = os.path.join(prefs_dir, "orca-customizations.py")
+    if not os.path.exists(customizations_file):
+        os.close(os.open(customizations_file, os.O_CREAT, 0o700))
+
+def _load_customizations(prefs_dir: str) -> None:
+    """Loads the user's orca-customizations.py."""
+
+    module_path = os.path.join(prefs_dir, "orca-customizations.py")
+    tokens: list[str] = ["ORCA: Attempt to load orca-customizations"]
+
+    try:
+        spec = importlib.util.spec_from_file_location("orca-customizations", module_path)
+        if spec is not None and spec.loader is not None:
+            if "orca.settings" not in sys.modules:
+                settings_stub = _DeprecatedSettingsStub("orca.settings")
+                sys.modules["orca.settings"] = settings_stub
+                sys.modules["orca"].settings = settings_stub  # type: ignore[attr-defined]
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            tokens.extend(["from", module_path, "succeeded."])
+        else:
+            tokens.extend(["from", module_path, "failed. Spec not found."])
+    except FileNotFoundError:
+        tokens.extend(["from", module_path, "failed. File not found."])
+    except Exception as error:  # pylint: disable=broad-exception-caught
+        tokens.extend(["failed due to:", str(error), ". Not loading customizations."])
+
+    debug.print_tokens(debug.LEVEL_ALL, tokens, True)
+
+def _get_speech_server_factory_names() -> list[str]:
+    """Returns the names of valid speech server factory modules."""
+
+    names: list[str] = []
+    for module_name in speech_manager.SPEECH_FACTORY_MODULES:
+        try:
+            importlib.import_module(f"orca.{module_name}")
+            names.append(module_name)
+            tokens = ["ORCA: Valid speech server factory:", module_name]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        except ImportError:
+            tokens = ["ORCA: Invalid speech server factory:", module_name]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+    return names
+
 def main() -> int:
     """Launches Orca."""
 
@@ -254,9 +334,10 @@ def main() -> int:
         return 1
 
     debug.print_message(debug.LEVEL_INFO, "INFO: Preparing to launch.", True)
-    manager = settings_manager.get_manager()
-    manager.activate()
-    sys.path.insert(0, manager.get_prefs_dir())
+    prefs_dir = os.path.join(GLib.get_user_data_dir(), "orca")  # pylint: disable=no-value-for-parameter
+    _create_prefs_dirs(prefs_dir)
+    sys.path.insert(0, prefs_dir)
+    _load_customizations(prefs_dir)
 
     if args.profile:
         try:
@@ -268,9 +349,7 @@ def main() -> int:
     if args.speech_system:
         try:
             # Check successfully loaded factory modules ("orca.<speech system>") and get their names
-            factories = [
-                f.__name__.removeprefix("orca.") for f in manager.get_speech_server_factories()
-            ]
+            factories = _get_speech_server_factory_names()
             if args.speech_system not in factories:
                 raise KeyError
 
@@ -295,7 +374,7 @@ def main() -> int:
 
     from orca import orca  # pylint: disable=import-outside-toplevel
     debug.print_message(debug.LEVEL_INFO, "INFO: About to launch Orca.", True)
-    return orca.main(args.import_dir, manager.get_prefs_dir())
+    return orca.main(args.import_dir, prefs_dir)
 
 if __name__ == "__main__":
     sys.exit(main())

@@ -53,7 +53,6 @@ unit_tests = [
   'unit_tests/test_profile_manager.py',
   'unit_tests/test_say_all_presenter.py',
   'unit_tests/test_script_manager.py',
-  'unit_tests/test_settings_manager.py',
   'unit_tests/test_sleep_mode_manager.py',
   'unit_tests/test_sound_presenter.py',
   'unit_tests/test_speech_manager.py',

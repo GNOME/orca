@@ -121,7 +121,6 @@ lib_sources = [
   'script.py',
   'script_manager.py',
   'script_utilities.py',
-  'settings_manager.py',
   'sleep_mode_manager.py',
   'sound.py',
   'sound_generator.py',

@@ -510,7 +510,6 @@ class TestLiveRegionPresenter:
             "orca.keybindings",
             "orca.messages",
             "orca.script_manager",
-            "orca.settings_manager",
             "orca.AXObject",
             "orca.AXUtilities",
             "orca.braille_presenter",
@@ -585,14 +584,6 @@ class TestLiveRegionPresenter:
         messages_mock.LIVE_REGIONS_DISABLED = "Live regions monitoring disabled"
         messages_mock.LIVE_REGIONS_ALL_OFF = "Live regions all off"
         messages_mock.LIVE_REGIONS_ALL_RESTORED = "Live regions restored"
-
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_instance = test_context.Mock()
-        settings_instance.set_setting = test_context.Mock()
-        settings_instance.override_key_bindings = test_context.Mock(
-            side_effect=lambda handlers, bindings, is_desktop: bindings
-        )
-        settings_manager_mock.get_manager = test_context.Mock(return_value=settings_instance)
 
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_instance = test_context.Mock()
@@ -907,7 +898,6 @@ class TestLiveRegionPresenterModule:
             "orca.keybindings",
             "orca.messages",
             "orca.script_manager",
-            "orca.settings_manager",
             "orca.AXObject",
             "orca.AXUtilities",
             "orca.braille_presenter",
@@ -969,14 +959,6 @@ class TestLiveRegionPresenterModule:
         keybindings_mock.ORCA_MODIFIER_MASK = 8
 
         essential_modules["orca.messages"].LIVE_REGIONS_SUPPORT_DISABLED = "test"
-
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_instance = test_context.Mock()
-        settings_instance.set_setting = test_context.Mock()
-        settings_instance.override_key_bindings = test_context.Mock(
-            side_effect=lambda handlers, bindings, is_desktop: bindings
-        )
-        settings_manager_mock.get_manager = test_context.Mock(return_value=settings_instance)
 
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_instance = test_context.Mock()

@@ -529,7 +529,6 @@ class TestCommandRegistry:
             "orca.orca_gui_navlist",
             "orca.orca_i18n",
             "orca.script_manager",
-            "orca.settings_manager",
             "orca.AXHypertext",
             "orca.AXObject",
             "orca.AXTable",

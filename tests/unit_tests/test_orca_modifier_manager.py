@@ -67,12 +67,6 @@ class TestOrcaModifierManager:
             return_value=input_manager_instance
         )
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_manager_instance = test_context.Mock()
-        settings_manager_mock.get_manager = test_context.Mock(
-            return_value=settings_manager_instance
-        )
-
         gi_repository_mock = essential_modules["gi.repository"]
 
         gdk_mock = test_context.Mock()
@@ -97,7 +91,6 @@ class TestOrcaModifierManager:
         gi_repository_mock.GLib = glib_mock
 
         essential_modules["input_manager_instance"] = input_manager_instance
-        essential_modules["settings_manager_instance"] = settings_manager_instance
         essential_modules["gdk"] = gdk_mock
         essential_modules["atspi"] = atspi_mock
         essential_modules["glib"] = glib_mock

@@ -89,12 +89,6 @@ class TestSpeechManager:
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_manager_instance = test_context.Mock()
-        settings_manager_instance._prefs_dir = "/tmp/orca-test"
-        settings_manager_instance._load_user_customizations.return_value = True
-        settings_manager_mock.get_manager.return_value = settings_manager_instance
-
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_manager_mock.get_manager.return_value = test_context.Mock()
 
@@ -1212,12 +1206,6 @@ class TestVoicesPreferencesGridUI:  # pylint: disable=too-few-public-methods
         speechserver_mock.UPPERCASE_VOICE = "uppercase"
         speechserver_mock.HYPERLINK_VOICE = "hyperlink"
         speechserver_mock.SYSTEM_VOICE = "system"
-
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_manager_instance = test_context.Mock()
-        settings_manager_instance._prefs_dir = "/tmp/orca-test"
-        settings_manager_instance._load_user_customizations.return_value = True
-        settings_manager_mock.get_manager.return_value = settings_manager_instance
 
         from orca import gsettings_registry
 

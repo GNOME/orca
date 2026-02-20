@@ -97,7 +97,6 @@ class TestFocusManager:
             "orca.keybindings",
             "orca.cmdnames",
             "orca.ax_object",
-            "orca.settings_manager",
             "orca.dbus_service",
             "orca.script_manager",
             "orca.orca_i18n",
@@ -129,11 +128,6 @@ class TestFocusManager:
         bindings_instance.add = test_context.Mock()
         keybindings_mock.KeyBindings = test_context.Mock(return_value=bindings_instance)
         keybindings_mock.KeyBinding = test_context.Mock(return_value=test_context.Mock())
-
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        manager_instance = test_context.Mock()
-        manager_instance.set_setting = test_context.Mock(return_value=True)
-        settings_manager_mock.get_manager = test_context.Mock(return_value=manager_instance)
 
         braille_presenter_mock = essential_modules["orca.braille_presenter"]
         presenter_instance = test_context.Mock()

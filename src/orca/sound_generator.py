@@ -35,12 +35,11 @@ from typing import TYPE_CHECKING, Any
 import gi
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
+from gi.repository import Atspi, GLib
 
 from . import debug
 from . import generator
 from . import object_properties
-from . import settings_manager
 from . import sound_presenter
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
@@ -56,8 +55,8 @@ class SoundGenerator(generator.Generator):
 
     def __init__(self, script: script.Script) -> None:
         super().__init__(script, "sound")
-        prefs_dir = settings_manager.get_manager().get_prefs_dir()
-        self._sounds = os.path.join(prefs_dir or "", "sounds")
+        prefs_dir = os.path.join(GLib.get_user_data_dir(), "orca")  # pylint: disable=no-value-for-parameter
+        self._sounds = os.path.join(prefs_dir, "sounds")
 
     def _convert_filename_to_icon(self, filename: str) -> Icon | None:
         icon = Icon(self._sounds, filename)

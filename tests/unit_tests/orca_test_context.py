@@ -128,7 +128,6 @@ class OrcaTestContext:
             "orca.keybindings",
             "orca.cmdnames",
             "orca.ax_object",
-            "orca.settings_manager",
             "orca.dbus_service",
             "orca.script_manager",
             "orca.orca_i18n",
@@ -173,12 +172,6 @@ class OrcaTestContext:
             keybindings_mock.KeyBinding = self.mocker.Mock(return_value=self.mocker.Mock())
             keybindings_mock.DEFAULT_MODIFIER_MASK = 1
             keybindings_mock.ORCA_SHIFT_MODIFIER_MASK = 2
-
-        if "orca.settings_manager" in essential_modules:
-            settings_manager_mock = essential_modules["orca.settings_manager"]
-            manager_instance = self.mocker.Mock()
-            manager_instance.set_setting = self.mocker.Mock(return_value=True)
-            settings_manager_mock.get_manager = self.mocker.Mock(return_value=manager_instance)
 
         if "orca.focus_manager" in essential_modules:
             focus_manager_mock = essential_modules["orca.focus_manager"]

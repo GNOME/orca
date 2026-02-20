@@ -103,15 +103,6 @@ class TestDebuggingToolsManager:
         orca_platform_mock.version = "3.50.0"
         orca_platform_mock.revision = "abc123"
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_manager_instance = test_context.Mock()
-        settings_manager_instance.override_key_bindings = test_context.Mock(
-            return_value=key_bindings_instance
-        )
-        settings_manager_mock.get_manager = test_context.Mock(
-            return_value=settings_manager_instance
-        )
-
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_manager_instance = test_context.Mock()
         focus_manager_instance.get_active_mode_and_object_of_interest = test_context.Mock(
@@ -147,7 +138,6 @@ class TestDebuggingToolsManager:
 
         essential_modules["input_event_handler"] = input_event_handler_mock
         essential_modules["key_bindings_instance"] = key_bindings_instance
-        essential_modules["settings_manager_instance"] = settings_manager_instance
         essential_modules["focus_manager_instance"] = focus_manager_instance
 
         return essential_modules

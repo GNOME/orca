@@ -112,9 +112,6 @@ class TestScriptManager:
         debug_mock.print_message = test_context.Mock()
         debug_mock.LEVEL_INFO = 800
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_manager_mock.get_manager = test_context.Mock()
-
         speech_verbosity_mock = essential_modules["orca.speech_manager"]
         speech_manager_instance = test_context.Mock()
         speech_manager_instance.check_speech_setting = test_context.Mock()
@@ -190,13 +187,6 @@ class TestScriptManager:
         sleepmode_module = test_context.Mock()
         sleepmode_module.Script = test_context.Mock(return_value=test_context.Mock())
 
-        deps_settings_manager = test_context.Mock()
-        deps_settings_manager_instance = test_context.Mock()
-        deps_settings_manager_instance.set_setting = test_context.Mock()
-        deps_settings_manager.get_manager = test_context.Mock(
-            return_value=deps_settings_manager_instance
-        )
-
         deps_speech_manager = test_context.Mock()
         deps_speech_manager_instance = test_context.Mock()
         deps_speech_manager_instance.check_speech_setting = test_context.Mock()
@@ -210,7 +200,6 @@ class TestScriptManager:
 
         essential_modules["default_module"] = default_module
         essential_modules["sleepmode_module"] = sleepmode_module
-        essential_modules["deps_settings_manager"] = deps_settings_manager
         essential_modules["deps_speech_manager"] = deps_speech_manager
         essential_modules["braille_module"] = braille_module
 
@@ -825,7 +814,6 @@ class TestScriptManager:
 
         essential_modules = self._setup_dependencies(test_context)
         default_script = essential_modules["default_script"]
-        settings_manager = essential_modules["deps_settings_manager"]
         from orca.script_manager import ScriptManager
 
         mock_get_speech_manager = test_context.Mock()
@@ -843,9 +831,6 @@ class TestScriptManager:
         new_script = default_script
         new_script.app = test_context.Mock()
         new_script.activate = test_context.Mock()
-        manager_instance = test_context.Mock()
-        manager_instance.set_setting = test_context.Mock()
-        settings_manager.get_manager = test_context.Mock(return_value=manager_instance)
 
         manager._active_script = old_script
         manager.set_active_script(new_script, "test reason")

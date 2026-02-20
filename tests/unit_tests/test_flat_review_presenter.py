@@ -167,12 +167,6 @@ class TestFlatReviewPresenter:
         dbus_service_mock.get_remote_controller = test_context.Mock(return_value=controller_mock)
         dbus_service_mock.command = lambda func: func
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_manager_instance = test_context.Mock()
-        settings_manager_mock.get_manager = test_context.Mock(
-            return_value=settings_manager_instance
-        )
-
         keybindings_mock = essential_modules["orca.keybindings"]
         bindings_instance = test_context.Mock()
         bindings_instance.add = test_context.Mock()
@@ -248,7 +242,6 @@ class TestFlatReviewPresenter:
         essential_modules["script_instance"] = script_instance
         essential_modules["controller"] = controller_mock
         essential_modules["window"] = window_mock
-        essential_modules["settings_manager_instance"] = settings_manager_instance
 
         return essential_modules
 

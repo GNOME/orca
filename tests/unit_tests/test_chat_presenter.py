@@ -369,12 +369,6 @@ class TestChat:
         keybindings_mock.NO_MODIFIER_MASK = 0
         keybindings_mock.ORCA_MODIFIER_MASK = 4
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        manager_instance = test_context.Mock()
-        manager_instance.set_setting = test_context.Mock()
-        manager_instance.override_key_bindings = test_context.Mock(side_effect=lambda h, b, d: b)
-        settings_manager_mock.get_manager = test_context.Mock(return_value=manager_instance)
-
         from orca import gsettings_registry
 
         registry = gsettings_registry.get_registry()
@@ -463,12 +457,6 @@ class TestChatPresenter:
         keybindings_mock.NO_MODIFIER_MASK = 0
         keybindings_mock.ORCA_MODIFIER_MASK = 4
         keybindings_mock.DEFAULT_MODIFIER_MASK = 8
-
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        manager_instance = test_context.Mock()
-        manager_instance.set_setting = test_context.Mock()
-        manager_instance.override_key_bindings = test_context.Mock(side_effect=lambda h, b, d: b)
-        settings_manager_mock.get_manager = test_context.Mock(return_value=manager_instance)
 
         from orca import gsettings_registry
 

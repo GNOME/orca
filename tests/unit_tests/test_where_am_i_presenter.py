@@ -112,11 +112,6 @@ class TestWhereAmIPresenter:
         )
         essential_modules["orca.input_event"].InputEvent = test_context.Mock()
 
-        settings_manager_instance = test_context.Mock()
-        essential_modules["orca.settings_manager"].get_manager = test_context.Mock(
-            return_value=settings_manager_instance
-        )
-
         text_attr_mgr = essential_modules["orca.text_attribute_manager"]
         text_attr_mgr.get_manager.return_value.get_attributes_to_speak.return_value = [
             "weight",

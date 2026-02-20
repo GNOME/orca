@@ -99,7 +99,6 @@ class TestAXObject:
             "orca.input_event",
             "orca.keybindings",
             "orca.cmdnames",
-            "orca.settings_manager",
             "orca.dbus_service",
             "orca.script_manager",
             "orca.orca_i18n",

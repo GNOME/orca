@@ -46,7 +46,6 @@ class TestPronunciationDictionaryManager:
             "orca.messages",
             "orca.preferences_grid_base",
             "orca.script_manager",
-            "orca.settings_manager",
             "orca.speech_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
@@ -210,7 +209,6 @@ class TestPronunciationDictionaryManagerIntegration:
             "orca.messages",
             "orca.preferences_grid_base",
             "orca.script_manager",
-            "orca.settings_manager",
             "orca.speech_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)

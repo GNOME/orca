@@ -54,7 +54,6 @@ class TestAXUtilitiesEvent:
         additional_modules = [
             "orca.focus_manager",
             "orca.input_event_manager",
-            "orca.settings_manager",
             "orca.cmdnames",
             "orca.messages",
             "orca.object_properties",

@@ -238,12 +238,6 @@ class TestLearnModePresenter:
             return_value=script_instance
         )
 
-        settings_manager_mock = essential_modules["orca.settings_manager"]
-        settings_manager_instance = test_context.Mock()
-        settings_manager_mock.get_manager = test_context.Mock(
-            return_value=settings_manager_instance
-        )
-
         debug_mock = essential_modules["orca.debug"]
         debug_mock.print_message = test_context.Mock()
         debug_mock.LEVEL_INFO = 800
