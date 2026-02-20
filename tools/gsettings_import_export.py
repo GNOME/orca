@@ -60,7 +60,6 @@
 """Standalone tool for importing/exporting Orca settings between JSON and GSettings."""
 
 import argparse
-import ast
 import io
 import json
 import os
@@ -104,16 +103,8 @@ from orca.gsettings_migrator import (
 GSETTINGS_PATH_PREFIX = "/org/gnome/orca/"
 
 
-def _parse_settings_types(src_dir: Path) -> dict[str, str]:
-    """Parse settings.py to get type annotations for module-level attributes."""
-    settings_file = src_dir / "orca" / "settings.py"
-    tree = ast.parse(settings_file.read_text())
-    types: dict[str, str] = {}
-    for node in ast.walk(tree):
-        if isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name):
-            if isinstance(node.annotation, ast.Name):
-                types[node.target.id] = node.annotation.id
-    return types
+# Enum settings where the legacy JSON format used string nicks rather than integers.
+_JSON_STRING_ENUMS: frozenset[str] = frozenset({"capitalizationStyle"})
 
 
 def _build_schemas_and_mappings() -> tuple[dict[str, str], dict[str, list[SettingsMapping]]]:
@@ -121,7 +112,6 @@ def _build_schemas_and_mappings() -> tuple[dict[str, str], dict[str, list[Settin
 
     src_dir = Path(__file__).resolve().parent.parent / "src"
     schemas_raw, all_settings, all_enums = _discover_schemas(src_dir)
-    settings_types = _parse_settings_types(src_dir)
 
     schemas: dict[str, str] = dict(schemas_raw)
     mappings: dict[str, list[SettingsMapping]] = {}
@@ -136,7 +126,7 @@ def _build_schemas_and_mappings() -> tuple[dict[str, str], dict[str, list[Settin
         string_enum = False
         if genum and genum in all_enums:
             enum_map = {v: k for k, v in all_enums[genum].items()}
-            string_enum = settings_types.get(migration_key) == "str"
+            string_enum = migration_key in _JSON_STRING_ENUMS
         gtype = setting.get("gtype", "")
         mapping = SettingsMapping(
             migration_key, setting["key"], gtype, setting["default"], enum_map, string_enum
