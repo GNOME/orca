@@ -4,6 +4,7 @@ lib_sources = [
   'script.py',
   'script_utilities.py',
   'speech_generator.py',
+  'toolkit_bridge.py',
 ]
 
 python3.install_sources(

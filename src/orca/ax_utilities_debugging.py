@@ -111,9 +111,8 @@ class AXUtilitiesDebugging:
             return f"{obj.__module__}.{obj.__name__}"
 
         if isinstance(obj, types.MethodType):
-            if hasattr(obj, "__self__"):
-                return f"{obj.__self__.__class__.__name__}.{obj.__name__}"
-            return f"{obj.__name__}"
+            module = obj.__func__.__module__.rsplit(".", 1)[-1]
+            return f"{module}.{obj.__func__.__qualname__}"
 
         if isinstance(obj, types.FrameType):
             module_name = inspect.getmodulename(obj.f_code.co_filename)

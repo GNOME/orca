@@ -83,6 +83,7 @@ class Script(default.Script):
     def __init__(self, app: Atspi.Accessible) -> None:
         super().__init__(app)
 
+        self.present_if_inactive: bool = False
         self._default_sn_mode = NavigationMode.DOCUMENT
         self._default_caret_navigation_enabled: bool = True
 
@@ -1154,6 +1155,11 @@ class Script(default.Script):
     def on_document_load_stopped(self, event: Atspi.Event) -> bool:
         """Callback for document:load-stopped accessibility events."""
 
+        if not AXDocument.get_uri(event.source):
+            msg = "WEB: Ignoring event from page with no URI."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         if self.utilities.get_document_for_object(AXObject.get_parent(event.source)):
             msg = "WEB: Ignoring: Event source is nested document"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1166,6 +1172,11 @@ class Script(default.Script):
 
     def on_document_reload(self, event: Atspi.Event) -> bool:
         """Callback for document:reload accessibility events."""
+
+        if not AXDocument.get_uri(event.source):
+            msg = "WEB: Ignoring event from page with no URI."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
 
         if self.utilities.get_document_for_object(AXObject.get_parent(event.source)):
             msg = "WEB: Ignoring: Event source is nested document"

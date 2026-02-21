@@ -28,7 +28,7 @@ from typing import TYPE_CHECKING
 
 from orca import input_event_manager
 from orca import focus_manager
-from orca.scripts.toolkits import WebKitGTK
+from orca.scripts import web
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
@@ -40,7 +40,7 @@ if TYPE_CHECKING:
     from gi.repository import Atspi
 
 
-class Utilities(WebKitGTK.Utilities):
+class Utilities(web.Utilities):
     """Custom script utilities for Evolution."""
 
     def is_message_list_status_cell(self, obj: Atspi.Accessible) -> bool:
@@ -58,7 +58,7 @@ class Utilities(WebKitGTK.Utilities):
     def is_message_list_toggle_cell(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is a message list toggle cell."""
 
-        if self.is_webkit_gtk(obj):
+        if self.in_document_content(obj):
             return False
 
         if not AXObject.get_name(obj):
@@ -76,7 +76,7 @@ class Utilities(WebKitGTK.Utilities):
             return False
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if self.is_webkit_gtk(focus):
+        if self.in_document_content(focus):
             return False
         if not AXUtilities.is_table_cell(focus):
             return False
@@ -88,7 +88,7 @@ class Utilities(WebKitGTK.Utilities):
     def is_document_preview(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is or descends from the preview document."""
 
-        if not self.is_webkit_gtk(obj):
+        if not self.in_document_content(obj):
             return False
 
         if AXUtilities.is_document(obj):
