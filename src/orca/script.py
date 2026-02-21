@@ -24,7 +24,7 @@
 """The base Script class."""
 
 from __future__ import annotations
-from typing import TYPE_CHECKING
+from typing import Callable, TYPE_CHECKING
 
 from . import braille_generator
 from . import chat_presenter
@@ -81,10 +81,49 @@ class Script:
     def __str__(self) -> str:
         return f"{self.name}"
 
-    def get_listeners(self) -> dict:
+    def get_listeners(self) -> dict[str, Callable]:
         """Returns a dictionary of the event listeners for this script."""
 
-        return {}
+        return {
+            "document:attributes-changed": self.on_document_attributes_changed,
+            "document:load-complete": self.on_document_load_complete,
+            "document:load-stopped": self.on_document_load_stopped,
+            "document:page-changed": self.on_document_page_changed,
+            "document:reload": self.on_document_reload,
+            "mouse:button": self.on_mouse_button,
+            "object:active-descendant-changed": self.on_active_descendant_changed,
+            "object:announcement": self.on_announcement,
+            "object:attributes-changed": self.on_object_attributes_changed,
+            "object:children-changed:add": self.on_children_added,
+            "object:children-changed:remove": self.on_children_removed,
+            "object:column-reordered": self.on_column_reordered,
+            "object:property-change:accessible-description": self.on_description_changed,
+            "object:property-change:accessible-name": self.on_name_changed,
+            "object:property-change:accessible-value": self.on_value_changed,
+            "object:row-reordered": self.on_row_reordered,
+            "object:selection-changed": self.on_selection_changed,
+            "object:state-changed:active": self.on_active_changed,
+            "object:state-changed:busy": self.on_busy_changed,
+            "object:state-changed:checked": self.on_checked_changed,
+            "object:state-changed:expanded": self.on_expanded_changed,
+            "object:state-changed:focused": self.on_focused_changed,
+            "object:state-changed:indeterminate": self.on_indeterminate_changed,
+            "object:state-changed:invalid-entry": self.on_invalid_entry_changed,
+            "object:state-changed:pressed": self.on_pressed_changed,
+            "object:state-changed:selected": self.on_selected_changed,
+            "object:state-changed:sensitive": self.on_sensitive_changed,
+            "object:state-changed:showing": self.on_showing_changed,
+            "object:text-attributes-changed": self.on_text_attributes_changed,
+            "object:text-caret-moved": self.on_caret_moved,
+            "object:text-changed:delete": self.on_text_deleted,
+            "object:text-changed:insert": self.on_text_inserted,
+            "object:text-selection-changed": self.on_text_selection_changed,
+            "object:value-changed": self.on_value_changed,
+            "window:activate": self.on_window_activated,
+            "window:create": self.on_window_created,
+            "window:deactivate": self.on_window_deactivated,
+            "window:destroy": self.on_window_destroyed,
+        }
 
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""
@@ -120,49 +159,6 @@ class Script:
 
         return None
 
-    def _get_queued_event(
-        self, event_type: str, detail1: int | None = None, detail2: int | None = None, any_data=None
-    ) -> Atspi.Event | None:
-        cached_event = self.event_cache.get(event_type, [None, 0])[0]
-        if not cached_event:
-            tokens = ["SCRIPT: No queued event of type", event_type]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return None
-
-        if detail1 is not None and detail1 != cached_event.detail1:
-            tokens = [
-                "SCRIPT: Queued event's detail1 (",
-                str(cached_event.detail1),
-                ") doesn't match",
-                str(detail1),
-            ]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return None
-
-        if detail2 is not None and detail2 != cached_event.detail2:
-            tokens = [
-                "SCRIPT: Queued event's detail2 (",
-                str(cached_event.detail2),
-                ") doesn't match",
-                str(detail2),
-            ]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return None
-
-        if any_data is not None and any_data != cached_event.any_data:
-            tokens = [
-                "SCRIPT: Queued event's any_data (",
-                cached_event.any_data,
-                ") doesn't match",
-                any_data,
-            ]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return None
-
-        tokens = ["SCRIPT: Found matching queued event:", cached_event]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return cached_event
-
     def locus_of_focus_changed(
         self,
         event: Atspi.Event | None,
@@ -188,3 +184,157 @@ class Script:
 
     def deactivate(self) -> None:
         """Called when this script is deactivated."""
+
+    def on_active_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:state-changed:active accessibility events."""
+        return True
+
+    def on_active_descendant_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:active-descendant-changed accessibility events."""
+        return True
+
+    def on_announcement(self, event: Atspi.Event) -> bool:
+        """Callback for object:announcement events."""
+        return True
+
+    def on_busy_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:state-changed:busy accessibility events."""
+        return True
+
+    def on_caret_moved(self, event: Atspi.Event) -> bool:
+        """Callback for object:text-caret-moved accessibility events."""
+        return True
+
+    def on_checked_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:state-changed:checked accessibility events."""
+        return True
+
+    def on_children_added(self, event: Atspi.Event) -> bool:
+        """Callback for object:children-changed:add accessibility events."""
+        return True
+
+    def on_children_removed(self, event: Atspi.Event) -> bool:
+        """Callback for object:children-changed:remove accessibility events."""
+        return True
+
+    def on_column_reordered(self, event: Atspi.Event) -> bool:
+        """Callback for object:column-reordered accessibility events."""
+        return True
+
+    def on_description_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:property-change:accessible-description events."""
+        return True
+
+    def on_document_attributes_changed(self, event: Atspi.Event) -> bool:
+        """Callback for document:attributes-changed accessibility events."""
+        return True
+
+    def on_document_load_complete(self, event: Atspi.Event) -> bool:
+        """Callback for document:load-complete accessibility events."""
+        return True
+
+    def on_document_load_stopped(self, event: Atspi.Event) -> bool:
+        """Callback for document:load-stopped accessibility events."""
+        return True
+
+    def on_document_page_changed(self, event: Atspi.Event) -> bool:
+        """Callback for document:page-changed accessibility events."""
+        return True
+
+    def on_document_reload(self, event: Atspi.Event) -> bool:
+        """Callback for document:reload accessibility events."""
+        return True
+
+    def on_expanded_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:state-changed:expanded accessibility events."""
+        return True
+
+    def on_focused_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:state-changed:focused accessibility events."""
+        return True
+
+    def on_indeterminate_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:state-changed:indeterminate accessibility events."""
+        return True
+
+    def on_invalid_entry_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:state-changed:invalid-entry accessibility events."""
+        return True
+
+    def on_mouse_button(self, event: Atspi.Event) -> bool:
+        """Callback for mouse:button events."""
+        return True
+
+    def on_name_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:property-change:accessible-name events."""
+        return True
+
+    def on_object_attributes_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:attributes-changed accessibility events."""
+        return True
+
+    def on_pressed_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:state-changed:pressed accessibility events."""
+        return True
+
+    def on_row_reordered(self, event: Atspi.Event) -> bool:
+        """Callback for object:row-reordered accessibility events."""
+        return True
+
+    def on_selected_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:state-changed:selected accessibility events."""
+        return True
+
+    def on_selection_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:selection-changed accessibility events."""
+        return True
+
+    def on_sensitive_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:state-changed:sensitive accessibility events."""
+        return True
+
+    def on_showing_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:state-changed:showing accessibility events."""
+        return True
+
+    def on_text_attributes_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:text-attributes-changed accessibility events."""
+        return True
+
+    def on_text_deleted(self, event: Atspi.Event) -> bool:
+        """Callback for object:text-changed:delete accessibility events."""
+        return True
+
+    def on_text_inserted(self, event: Atspi.Event) -> bool:
+        """Callback for object:text-changed:insert accessibility events."""
+        return True
+
+    def on_text_selection_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:text-selection-changed accessibility events."""
+        return True
+
+    def on_value_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:property-change:accessible-value accessibility events."""
+        return True
+
+    def on_window_activated(self, event: Atspi.Event) -> bool:
+        """Callback for window:activate accessibility events."""
+        return True
+
+    def on_window_created(self, event: Atspi.Event) -> bool:
+        """Callback for window:create accessibility events."""
+        return True
+
+    def on_window_deactivated(self, event: Atspi.Event) -> bool:
+        """Callback for window:deactivate accessibility events."""
+        return True
+
+    def on_window_destroyed(self, event: Atspi.Event) -> bool:
+        """Callback for window:destroy accessibility events."""
+        return True
+
+    def present_object(self, obj: Atspi.Accessible, **args) -> None:
+        """Presents the current object."""
+
+    def update_braille(self, obj: Atspi.Accessible, **args) -> None:
+        """Updates the braille display to show obj."""

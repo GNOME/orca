@@ -102,50 +102,6 @@ class Script(script.Script):
 
     _commands_initialized: bool = False
 
-    def get_listeners(self) -> dict[str, Callable]:
-        """Sets up the AT-SPI event listeners for this script."""
-
-        listeners = script.Script.get_listeners(self)
-        listeners["document:attributes-changed"] = self.on_document_attributes_changed
-        listeners["document:reload"] = self.on_document_reload
-        listeners["document:load-complete"] = self.on_document_load_complete
-        listeners["document:load-stopped"] = self.on_document_load_stopped
-        listeners["document:page-changed"] = self.on_document_page_changed
-        listeners["mouse:button"] = self.on_mouse_button
-        listeners["object:announcement"] = self.on_announcement
-        listeners["object:active-descendant-changed"] = self.on_active_descendant_changed
-        listeners["object:attributes-changed"] = self.on_object_attributes_changed
-        listeners["object:children-changed:add"] = self.on_children_added
-        listeners["object:children-changed:remove"] = self.on_children_removed
-        listeners["object:column-reordered"] = self.on_column_reordered
-        listeners["object:property-change:accessible-description"] = self.on_description_changed
-        listeners["object:property-change:accessible-name"] = self.on_name_changed
-        listeners["object:property-change:accessible-value"] = self.on_value_changed
-        listeners["object:row-reordered"] = self.on_row_reordered
-        listeners["object:selection-changed"] = self.on_selection_changed
-        listeners["object:state-changed:active"] = self.on_active_changed
-        listeners["object:state-changed:busy"] = self.on_busy_changed
-        listeners["object:state-changed:checked"] = self.on_checked_changed
-        listeners["object:state-changed:expanded"] = self.on_expanded_changed
-        listeners["object:state-changed:focused"] = self.on_focused_changed
-        listeners["object:state-changed:indeterminate"] = self.on_indeterminate_changed
-        listeners["object:state-changed:invalid-entry"] = self.on_invalid_entry_changed
-        listeners["object:state-changed:pressed"] = self.on_pressed_changed
-        listeners["object:state-changed:selected"] = self.on_selected_changed
-        listeners["object:state-changed:sensitive"] = self.on_sensitive_changed
-        listeners["object:state-changed:showing"] = self.on_showing_changed
-        listeners["object:text-attributes-changed"] = self.on_text_attributes_changed
-        listeners["object:text-caret-moved"] = self.on_caret_moved
-        listeners["object:text-changed:delete"] = self.on_text_deleted
-        listeners["object:text-changed:insert"] = self.on_text_inserted
-        listeners["object:text-selection-changed"] = self.on_text_selection_changed
-        listeners["object:value-changed"] = self.on_value_changed
-        listeners["window:activate"] = self.on_window_activated
-        listeners["window:create"] = self.on_window_created
-        listeners["window:deactivate"] = self.on_window_deactivated
-        listeners["window:destroy"] = self.on_window_destroyed
-        return listeners
-
     def _get_all_extensions(self) -> list[tuple[Callable, str]]:
         """Returns (extension_getter, localized_name) for each extension."""
 
@@ -400,6 +356,49 @@ class Script(script.Script):
         """De-registers the listeners needed by this script."""
 
         event_manager.get_manager().deregister_script_listeners(self)
+
+    def _get_queued_event(
+        self, event_type: str, detail1: int | None = None, detail2: int | None = None, any_data=None
+    ) -> Atspi.Event | None:
+        cached_event = self.event_cache.get(event_type, [None, 0])[0]
+        if not cached_event:
+            tokens = ["SCRIPT: No queued event of type", event_type]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return None
+
+        if detail1 is not None and detail1 != cached_event.detail1:
+            tokens = [
+                "SCRIPT: Queued event's detail1 (",
+                str(cached_event.detail1),
+                ") doesn't match",
+                str(detail1),
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return None
+
+        if detail2 is not None and detail2 != cached_event.detail2:
+            tokens = [
+                "SCRIPT: Queued event's detail2 (",
+                str(cached_event.detail2),
+                ") doesn't match",
+                str(detail2),
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return None
+
+        if any_data is not None and any_data != cached_event.any_data:
+            tokens = [
+                "SCRIPT: Queued event's any_data (",
+                cached_event.any_data,
+                ") doesn't match",
+                any_data,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return None
+
+        tokens = ["SCRIPT: Found matching queued event:", cached_event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return cached_event
 
     def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Called when the visual object with focus changes."""

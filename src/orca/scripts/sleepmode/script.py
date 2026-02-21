@@ -18,8 +18,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=too-many-public-methods
-
 """
 A script which has no commands, has no presentation, and ignores events.
 The main use cases for this script are self-voicing apps and VMs which
@@ -28,7 +26,7 @@ should be usable without having to quit Orca entirely.
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 
 from orca import command_manager
@@ -37,8 +35,8 @@ from orca import focus_manager
 from orca import messages
 from orca import orca_modifier_manager
 from orca import presentation_manager
+from orca import script
 from orca import sleep_mode_manager
-from orca.scripts import default
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
@@ -52,7 +50,7 @@ if TYPE_CHECKING:
     from gi.repository import Atspi
 
 
-class Script(default.Script):
+class Script(script.Script):
     """The sleep-mode script."""
 
     def activate(self) -> None:
@@ -82,15 +80,6 @@ class Script(default.Script):
 
         return SpeechGenerator(self)
 
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-    def update_braille(self, obj: Atspi.Accessible, **args: Any) -> None:
-        """Updates the braille display to show the give object."""
-
-        msg = "SLEEP MODE: Not updating braille."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
     def locus_of_focus_changed(
         self,
         event: Atspi.Event | None,
@@ -115,160 +104,6 @@ class Script(default.Script):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return True
 
-    def on_active_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:state-changed:active accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_active_descendant_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:active-descendant-changed accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_busy_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:state-changed:busy accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_caret_moved(self, event: Atspi.Event) -> bool:
-        """Callback for object:text-caret-moved accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_checked_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:state-changed:checked accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_column_reordered(self, event: Atspi.Event) -> bool:
-        """Callback for object:column-reordered accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_children_added(self, event: Atspi.Event) -> bool:
-        """Callback for object:children-changed:add accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_children_removed(self, event: Atspi.Event) -> bool:
-        """Callback for object:children-changed:removed accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_document_load_complete(self, event: Atspi.Event) -> bool:
-        """Callback for document:load-complete accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_document_load_stopped(self, event: Atspi.Event) -> bool:
-        """Callback for document:load-stopped accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_document_reload(self, event: Atspi.Event) -> bool:
-        """Callback for document:reload accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_expanded_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:state-changed:expanded accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_focused_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:state-changed:focused accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_mouse_button(self, event: Atspi.Event) -> bool:
-        """Callback for mouse:button accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_name_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:property-change:accessible-name events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_selected_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:state-changed:selected accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_selection_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:selection-changed accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_showing_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:state-changed:showing accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_text_attributes_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:text-attributes-changed accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_text_deleted(self, event: Atspi.Event) -> bool:
-        """Callback for object:text-changed:delete accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_text_inserted(self, event: Atspi.Event) -> bool:
-        """Callback for object:text-changed:insert accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def on_text_selection_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:text-selection-changed accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
     def on_window_activated(self, event: Atspi.Event) -> bool:
         """Callback for window:activate accessibility events."""
 
@@ -279,11 +114,4 @@ class Script(default.Script):
 
         # Don't restore previous braille content because Orca is no longer active.
         manager.present_braille_message(msg, restore_previous=False)
-        return True
-
-    def on_window_deactivated(self, event: Atspi.Event) -> bool:
-        """Callback for window:deactivate accessibility events."""
-
-        msg = "SLEEP MODE: Ignoring event."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
         return True

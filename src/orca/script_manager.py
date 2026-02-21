@@ -275,7 +275,7 @@ class ScriptManager:
         if sleep_mode_manager.get_manager().is_active_for_app(app):
             tokens = ["SCRIPT MANAGER: Sleep-mode toggled on for", app_script, app]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return self.get_or_create_sleep_mode_script(app)
+            return self.get_or_create_sleep_mode_script(app)  # type: ignore[return-value]
 
         if custom_script:
             tokens = ["SCRIPT MANAGER: Script is custom script", custom_script]
