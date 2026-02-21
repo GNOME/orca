@@ -76,7 +76,7 @@ def _format_key_row(
     )
 
 
-# pylint: disable-next=too-many-locals
+# pylint: disable-next=too-many-locals, too-many-statements
 def generate_documentation(
     src_dir: Path,
     include_enum_allowed: bool = False,
@@ -124,6 +124,63 @@ def generate_documentation(
     )
     lines.append("- `<app>`: app ID used for app-specific overrides.")
     lines.append("- `<voice-type>`: voice type (`default`, `uppercase`, `hyperlink`, `system`).")
+    lines.append("")
+    lines.append("Lookup precedence (highest to lowest):")
+    lines.append(
+        "- Scalars and enums: runtime override -> app override -> active profile -> "
+        "`default` profile (if active profile is not `default`) -> schema default"
+    )
+    lines.append(
+        "- Dict settings (`a{ss}`, `a{saas}`): runtime override -> profile dictionary with app "
+        "dictionary overlaid on top -> schema default"
+    )
+    lines.append("")
+    lines.append("Why dict settings do not inherit from `default` profile:")
+    lines.append("- New profiles copy dict entries from the source profile when created.")
+    lines.append(
+        "- Primary use case: pronunciation dictionaries should be independently editable per "
+        "profile. Entries in `default` that do not apply to another profile should be removable "
+        "there without runtime fallback to `default`."
+    )
+    lines.append(
+        "- This also applies to keybinding overrides: each profile/app layer should use only its "
+        "own override dictionary instead of inheriting override entries from `default`."
+    )
+    lines.append("")
+    lines.append("Migration paths:")
+    lines.append(
+        "- Automatic startup migration: Orca runs JSON -> GSettings migration at startup if "
+        "migration has not been stamped yet."
+    )
+    lines.append(
+        "- Manual import at startup: `orca -i DIR` / `orca --import-dir DIR` imports "
+        "settings from `DIR` into dconf. WARNING: this replaces current "
+        "`/org/gnome/orca/` settings."
+    )
+    lines.append(
+        "  - Most users should not need this; automatic migration handles normal upgrades."
+    )
+    lines.append("  - Backup first: `dconf dump /org/gnome/orca/ > backup.ini`")
+    lines.append(
+        "  - Restore backup: "
+        "`dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < backup.ini`"
+    )
+    lines.append(
+        "- Stand-alone import/export/diff tool: "
+        "`python tools/gsettings_import_export.py <import|export|roundtrip|diff> ...`"
+    )
+    lines.append("  - `import DIR`: import JSON settings from `DIR` into dconf.")
+    lines.append("  - `export DIR`: export dconf settings to JSON files in `DIR`.")
+    lines.append(
+        "  - `diff SRC_DIR OUT_DIR`: export dconf to `OUT_DIR` and diff against `SRC_DIR`."
+    )
+    lines.append(
+        "  - `roundtrip SRC_DIR OUT_DIR`: import from `SRC_DIR`, export to `OUT_DIR`, then diff."
+    )
+    lines.append("  - Use `import --dry-run` to preview writes without changing dconf.")
+    lines.append(
+        "  - Use `--prefix <orca-prefix>` if schemas are installed in a non-default prefix."
+    )
     lines.append("")
     lines.append("---")
     lines.append("")

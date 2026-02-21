@@ -15,6 +15,9 @@ Make sure you are up to date:
   git pull
   git status
 
+Run the `generate_gsettings_documentation.py` and `generate_dbus_documentation.py` tools.
+Note that the latter requires that Orca is running.
+
 Update ./NEWS with changes from the last tagged release. You can use
 commands like the following:
 

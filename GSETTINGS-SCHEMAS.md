@@ -12,6 +12,29 @@ Path variables:
 - `<app>`: app ID used for app-specific overrides.
 - `<voice-type>`: voice type (`default`, `uppercase`, `hyperlink`, `system`).
 
+Lookup precedence (highest to lowest):
+- Scalars and enums: runtime override -> app override -> active profile -> `default` profile (if active profile is not `default`) -> schema default
+- Dict settings (`a{ss}`, `a{saas}`): runtime override -> profile dictionary with app dictionary overlaid on top -> schema default
+
+Why dict settings do not inherit from `default` profile:
+- New profiles copy dict entries from the source profile when created.
+- Primary use case: pronunciation dictionaries should be independently editable per profile. Entries in `default` that do not apply to another profile should be removable there without runtime fallback to `default`.
+- This also applies to keybinding overrides: each profile/app layer should use only its own override dictionary instead of inheriting override entries from `default`.
+
+Migration paths:
+- Automatic startup migration: Orca runs JSON -> GSettings migration at startup if migration has not been stamped yet.
+- Manual import at startup: `orca -i DIR` / `orca --import-dir DIR` imports settings from `DIR` into dconf. WARNING: this replaces current `/org/gnome/orca/` settings.
+  - Most users should not need this; automatic migration handles normal upgrades.
+  - Backup first: `dconf dump /org/gnome/orca/ > backup.ini`
+  - Restore backup: `dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < backup.ini`
+- Stand-alone import/export/diff tool: `python tools/gsettings_import_export.py <import|export|roundtrip|diff> ...`
+  - `import DIR`: import JSON settings from `DIR` into dconf.
+  - `export DIR`: export dconf settings to JSON files in `DIR`.
+  - `diff SRC_DIR OUT_DIR`: export dconf to `OUT_DIR` and diff against `SRC_DIR`.
+  - `roundtrip SRC_DIR OUT_DIR`: import from `SRC_DIR`, export to `OUT_DIR`, then diff.
+  - Use `import --dry-run` to preview writes without changing dconf.
+  - Use `--prefix <orca-prefix>` if schemas are installed in a non-default prefix.
+
 ---
 
 ## Schemas
