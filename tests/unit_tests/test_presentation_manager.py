@@ -115,17 +115,21 @@ class TestPresentationManager:
         speech_manager_instance.start_speech = test_context.Mock()
         speech_manager_instance.shutdown_speech = test_context.Mock()
         speech_manager_instance.refresh_speech = test_context.Mock()
+        speech_manager_instance.get_speech_is_enabled_and_not_muted = test_context.Mock(
+            return_value=True
+        )
+        speech_manager_instance.get_speech_is_muted = test_context.Mock(return_value=False)
         speech_manager_mock.get_manager = test_context.Mock(return_value=speech_manager_instance)
 
         speech_presenter_mock = essential_modules["orca.speech_presenter"]
         speech_presenter_instance = test_context.Mock()
         speech_presenter_instance.present_key_event = test_context.Mock()
-        speech_presenter_instance.present_message = test_context.Mock()
         speech_presenter_instance.speak_message = test_context.Mock()
         speech_presenter_instance.speak_contents = test_context.Mock()
         speech_presenter_instance.speak_character = test_context.Mock()
         speech_presenter_instance.spell_item = test_context.Mock()
         speech_presenter_instance.spell_phonetically = test_context.Mock()
+        speech_presenter_instance.get_messages_are_detailed = test_context.Mock(return_value=True)
         speech_presenter_mock.get_presenter = test_context.Mock(
             return_value=speech_presenter_instance
         )
@@ -139,13 +143,16 @@ class TestPresentationManager:
 
         script_manager_mock = essential_modules["orca.script_manager"]
         mock_script = test_context.Mock()
-        mock_script.speech_generator.voice = test_context.Mock(return_value=[{"family": "default"}])
-        mock_script.speech_generator.generate_contents = test_context.Mock(
-            return_value=["generated speech"]
-        )
-        mock_script.braille_generator.generate_contents = test_context.Mock(
+        speech_gen = test_context.Mock()
+        speech_gen.voice = test_context.Mock(return_value=[{"family": "default"}])
+        speech_gen.generate_contents = test_context.Mock(return_value=["generated speech"])
+        mock_script.get_speech_generator = test_context.Mock(return_value=speech_gen)
+
+        braille_gen = test_context.Mock()
+        braille_gen.generate_contents = test_context.Mock(
             return_value=([test_context.Mock()], test_context.Mock())
         )
+        mock_script.get_braille_generator = test_context.Mock(return_value=braille_gen)
         script_manager_instance = test_context.Mock()
         script_manager_instance.get_active_script = test_context.Mock(return_value=mock_script)
         script_manager_mock.get_manager = test_context.Mock(return_value=script_manager_instance)
@@ -231,8 +238,7 @@ class TestPresentationManager:
         manager.present_message("This is a full message")
 
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
-        speech_pres.present_message.assert_called_once_with(
-            "This is a full message",
+        speech_pres.speak_message.assert_called_once_with(
             "This is a full message",
             voice=None,
             reset_styles=True,
@@ -242,7 +248,7 @@ class TestPresentationManager:
         braille_presenter.present_message.assert_called()
 
     def test_present_message_with_brief(self, test_context: OrcaTestContext) -> None:
-        """Test present_message with both full and brief messages."""
+        """Test present_message uses full when messages_are_detailed is True."""
 
         essential_modules = self._setup_dependencies(test_context)
         from orca.presentation_manager import get_manager
@@ -251,8 +257,8 @@ class TestPresentationManager:
         manager.present_message("Full message", brief="Brief")
 
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
-        speech_pres.present_message.assert_called_once_with(
-            "Full message", "Brief", voice=None, reset_styles=True, obj=None
+        speech_pres.speak_message.assert_called_once_with(
+            "Full message", voice=None, reset_styles=True, obj=None
         )
 
     def test_present_message_empty_string(self, test_context: OrcaTestContext) -> None:
@@ -265,7 +271,7 @@ class TestPresentationManager:
         manager.present_message("")
 
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
-        speech_pres.present_message.assert_not_called()
+        speech_pres.speak_message.assert_not_called()
         essential_modules["orca.braille"].displayMessage.assert_not_called()
 
     def test_present_message_braille_disabled(self, test_context: OrcaTestContext) -> None:
@@ -281,8 +287,70 @@ class TestPresentationManager:
         manager.present_message("Test message")
 
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
-        speech_pres.present_message.assert_called()
+        speech_pres.speak_message.assert_called()
         essential_modules["orca.braille"].displayMessage.assert_not_called()
+
+    def test_present_message_uses_brief(self, test_context: OrcaTestContext) -> None:
+        """Test present_message uses brief when messages_are_detailed is False."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
+        speech_pres.get_messages_are_detailed.return_value = False
+
+        from orca.presentation_manager import get_manager
+
+        manager = get_manager()
+        manager.present_message("Full message", brief="Brief")
+
+        speech_pres.speak_message.assert_called_once_with(
+            "Brief", voice=None, reset_styles=True, obj=None
+        )
+
+    def test_present_message_speech_disabled(self, test_context: OrcaTestContext) -> None:
+        """Test present_message skips speech when speech is disabled."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        speech_mgr = essential_modules["orca.speech_manager"].get_manager()
+        speech_mgr.get_speech_is_enabled_and_not_muted.return_value = False
+
+        from orca.presentation_manager import get_manager
+
+        manager = get_manager()
+        manager.present_message("Test message")
+
+        speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
+        speech_pres.speak_message.assert_not_called()
+
+    def test_speak_message_muted(self, test_context: OrcaTestContext) -> None:
+        """Test speak_message skips speech when muted."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        speech_mgr = essential_modules["orca.speech_manager"].get_manager()
+        speech_mgr.get_speech_is_muted.return_value = True
+
+        from orca.presentation_manager import get_manager
+
+        manager = get_manager()
+        manager.speak_message("Hello world")
+
+        speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
+        speech_pres.speak_message.assert_not_called()
+
+    def test_speak_accessible_text_muted(self, test_context: OrcaTestContext) -> None:
+        """Test speak_accessible_text skips speech when muted."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        speech_mgr = essential_modules["orca.speech_manager"].get_manager()
+        speech_mgr.get_speech_is_muted.return_value = True
+
+        from orca.presentation_manager import get_manager
+
+        manager = get_manager()
+        mock_obj = test_context.Mock()
+        manager.speak_accessible_text(mock_obj, "Hello")
+
+        speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
+        speech_pres.speak_accessible_text.assert_not_called()
 
     def test_play_sound(self, test_context: OrcaTestContext) -> None:
         """Test play_sound delegates to sound_presenter."""
@@ -436,16 +504,12 @@ class TestPresentationManager:
         speech_pres.speak_contents.assert_called_once_with(mock_contents, priorObj=mock_prior)
 
     def test_display_contents(self, test_context: OrcaTestContext) -> None:
-        """Test display_contents generates and displays braille."""
+        """Test display_contents delegates to braille presenter."""
 
         essential_modules = self._setup_dependencies(test_context)
 
-        # Set up a proper regions list structure (list of lists of regions)
-        mock_region = test_context.Mock()
-        mock_region.string = "test "
         script_manager = essential_modules["orca.script_manager"].get_manager()
         script = script_manager.get_active_script()
-        script.braille_generator.generate_contents.return_value = ([[mock_region]], mock_region)
 
         from orca.presentation_manager import get_manager
 
@@ -453,16 +517,15 @@ class TestPresentationManager:
         mock_contents = [(test_context.Mock(), 0, 10, "test text")]
         manager.display_contents(mock_contents)
 
-        script.braille_generator.generate_contents.assert_called_once()
-        braille_presenter = essential_modules["orca.braille_presenter"].get_presenter()
-        braille_presenter.present_regions.assert_called()
+        braille_presenter_instance = essential_modules["orca.braille_presenter"].get_presenter()
+        braille_presenter_instance.display_generated_contents.assert_called_once_with(
+            script, mock_contents
+        )
 
     def test_display_contents_braille_disabled(self, test_context: OrcaTestContext) -> None:
-        """Test display_contents returns early when braille is disabled."""
+        """Test display_contents still delegates to braille presenter (which checks internally)."""
 
         essential_modules = self._setup_dependencies(test_context)
-        braille_presenter_instance = essential_modules["orca.braille_presenter"].get_presenter()
-        braille_presenter_instance.use_braille.return_value = False
 
         from orca.presentation_manager import get_manager
 
@@ -470,7 +533,8 @@ class TestPresentationManager:
         mock_contents = [(test_context.Mock(), 0, 10, "test text")]
         manager.display_contents(mock_contents)
 
-        braille_presenter_instance.present_regions.assert_not_called()
+        braille_presenter_instance = essential_modules["orca.braille_presenter"].get_presenter()
+        braille_presenter_instance.display_generated_contents.assert_called_once()
 
     def test_display_contents_no_active_script(self, test_context: OrcaTestContext) -> None:
         """Test display_contents returns early when no active script."""
@@ -485,25 +549,22 @@ class TestPresentationManager:
         mock_contents = [(test_context.Mock(), 0, 10, "test text")]
         manager.display_contents(mock_contents)
 
-        braille_presenter = essential_modules["orca.braille_presenter"].get_presenter()
-        braille_presenter.present_regions.assert_not_called()
+        braille_presenter_instance = essential_modules["orca.braille_presenter"].get_presenter()
+        braille_presenter_instance.display_generated_contents.assert_not_called()
 
     def test_display_contents_empty_regions(self, test_context: OrcaTestContext) -> None:
-        """Test display_contents handles empty regions list."""
+        """Test display_contents delegates even with empty contents."""
 
         essential_modules = self._setup_dependencies(test_context)
-        script_manager = essential_modules["orca.script_manager"].get_manager()
-        script = script_manager.get_active_script()
-        script.braille_generator.generate_contents.return_value = ([], None)
 
         from orca.presentation_manager import get_manager
 
         manager = get_manager()
-        mock_contents = [(test_context.Mock(), 0, 10, "test text")]
+        mock_contents: list = []
         manager.display_contents(mock_contents)
 
-        braille_presenter = essential_modules["orca.braille_presenter"].get_presenter()
-        braille_presenter.present_regions.assert_not_called()
+        braille_presenter_instance = essential_modules["orca.braille_presenter"].get_presenter()
+        braille_presenter_instance.display_generated_contents.assert_called_once()
 
     @pytest.mark.parametrize(
         "flash_enabled,use_braille,expected_flash_called",

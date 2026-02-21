@@ -415,7 +415,8 @@ class SayAllPresenter:
                     debug.print_message(debug.LEVEL_INFO, msg, True)
                     continue
 
-                utterances = self._script.speech_generator.generate_contents(
+                utterances = speech_presenter.get_presenter().generate_speech_contents(
+                    self._script,
                     [content],
                     eliminatePauses=True,
                     priorObj=prior_obj,

@@ -66,7 +66,6 @@ from . import messages
 from . import preferences_grid_base
 from . import presentation_manager
 from . import script_manager
-from . import speech_presenter
 from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -172,15 +171,11 @@ class _StringContext:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        voice = self._script.speech_generator.voice(obj=self._obj, string=self._string)
-        manager = speech_presenter.get_presenter()
-        string = manager.adjust_for_presentation(self._obj, self._string)
-
         focus_manager.get_manager().emit_region_changed(
             self._obj, self._start, self._end, focus_manager.MOUSE_REVIEW
         )
         presenter = presentation_manager.get_manager()
-        presenter.speak_message(string, voice=voice)
+        presenter.speak_accessible_text(self._obj, self._string)
         presenter.present_braille_message(self._string)
         return True
 

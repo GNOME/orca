@@ -48,13 +48,13 @@ class Script(WebKitGTK.Script, gtk.Script):
     # For the no-such-function when the function is only in the subclass.
     utilities: Utilities
 
-    def get_braille_generator(self) -> BrailleGenerator:
-        """Returns the braille generator for this script."""
+    def _create_braille_generator(self) -> BrailleGenerator:
+        """Creates and returns the braille generator for this script."""
 
         return BrailleGenerator(self)
 
-    def get_speech_generator(self) -> SpeechGenerator:
-        """Returns the speech generator for this script."""
+    def _create_speech_generator(self) -> SpeechGenerator:
+        """Creates and returns the speech generator for this script."""
 
         return SpeechGenerator(self)
 

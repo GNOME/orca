@@ -202,10 +202,9 @@ class TestLearnModePresenter:
         script_instance.getDefaultKeyBindings = test_context.Mock(
             return_value=key_bindings_instance
         )
-        script_instance.speech_generator = test_context.Mock()
-        script_instance.speech_generator.voice = test_context.Mock(
-            return_value=[test_context.Mock()]
-        )
+        speech_gen = test_context.Mock()
+        speech_gen.voice = test_context.Mock(return_value=[test_context.Mock()])
+        script_instance.get_speech_generator = test_context.Mock(return_value=speech_gen)
 
         for method_name in [
             "get_learn_mode_presenter",

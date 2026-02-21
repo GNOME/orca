@@ -772,10 +772,10 @@ class TestSpeechPresenter:
         # Add script_manager mock for _get_active_script / _get_voice
         script_manager_mock = essential_modules["orca.script_manager"]
         mock_script = test_context.Mock()
-        mock_script.speech_generator.voice = test_context.Mock(return_value=[{"family": "default"}])
-        mock_script.speech_generator.generate_contents = test_context.Mock(
-            return_value=["generated speech"]
-        )
+        speech_gen = test_context.Mock()
+        speech_gen.voice = test_context.Mock(return_value=[{"family": "default"}])
+        speech_gen.generate_contents = test_context.Mock(return_value=["generated speech"])
+        mock_script.get_speech_generator = test_context.Mock(return_value=speech_gen)
         script_manager_instance = test_context.Mock()
         script_manager_instance.get_active_script = test_context.Mock(return_value=mock_script)
         script_manager_mock.get_manager = test_context.Mock(return_value=script_manager_instance)
@@ -793,7 +793,7 @@ class TestSpeechPresenter:
 
         script_manager = essential_modules["orca.script_manager"].get_manager()
         script = script_manager.get_active_script()
-        script.speech_generator.voice.assert_called_with(string="test")
+        script.get_speech_generator().voice.assert_called_with(obj=None, string="test")
         assert voice == [{"family": "default"}]
 
     def test_get_voice_no_active_script(self, test_context: OrcaTestContext) -> None:
@@ -831,20 +831,6 @@ class TestSpeechPresenter:
         presenter.speak_message(123)  # type: ignore
 
         essential_modules["orca.debug"].print_exception.assert_called()
-        essential_modules["orca.speech"].speak.assert_not_called()
-
-    def test_speak_message_muted(self, test_context: OrcaTestContext) -> None:
-        """Test speak_message when speech is muted."""
-
-        essential_modules = self._setup_speech_output_dependencies(test_context)
-        speech_manager = essential_modules["orca.speech_manager"].get_manager()
-        speech_manager.get_speech_is_muted.return_value = True
-
-        from orca.speech_presenter import SpeechPresenter
-
-        presenter = SpeechPresenter()
-        presenter.speak_message("Hello world")
-
         essential_modules["orca.speech"].speak.assert_not_called()
 
     def test_speak_message_only_displayed_text(self, test_context: OrcaTestContext) -> None:
@@ -910,7 +896,7 @@ class TestSpeechPresenter:
 
         script_manager = essential_modules["orca.script_manager"].get_manager()
         script = script_manager.get_active_script()
-        script.speech_generator.generate_contents.assert_called_once()
+        script.get_speech_generator().generate_contents.assert_called_once()
         essential_modules["orca.speech"].speak.assert_called()
 
     def test_speak_contents_no_active_script(self, test_context: OrcaTestContext) -> None:
@@ -941,51 +927,6 @@ class TestSpeechPresenter:
         presenter.present_key_event(mock_event)
 
         essential_modules["orca.speech"].speak_key_event.assert_called_once()
-
-    def test_present_message_speaks(self, test_context: OrcaTestContext) -> None:
-        """Test present_message delegates to speak_message when enabled."""
-
-        essential_modules = self._setup_speech_output_dependencies(test_context)
-        from orca.speech_presenter import SpeechPresenter
-
-        presenter = SpeechPresenter()
-        presenter.present_message("Full message", "Brief")
-
-        essential_modules["orca.speech"].speak.assert_called()
-
-    def test_present_message_disabled(self, test_context: OrcaTestContext) -> None:
-        """Test present_message does nothing when speech disabled."""
-
-        essential_modules = self._setup_speech_output_dependencies(test_context)
-        speech_manager = essential_modules["orca.speech_manager"].get_manager()
-        speech_manager.get_speech_is_enabled_and_not_muted.return_value = False
-
-        from orca.speech_presenter import SpeechPresenter
-
-        presenter = SpeechPresenter()
-        presenter.present_message("Full message", "Brief")
-
-        essential_modules["orca.speech"].speak.assert_not_called()
-
-    def test_present_message_uses_brief(self, test_context: OrcaTestContext) -> None:
-        """Test present_message uses brief when messages not detailed."""
-
-        essential_modules = self._setup_speech_output_dependencies(test_context)
-
-        from orca import gsettings_registry
-        from orca.speech_presenter import SpeechPresenter
-
-        gsettings_registry.get_registry().set_runtime_value(
-            "speech", "messages-are-detailed", False
-        )
-
-        presenter = SpeechPresenter()
-        presenter.present_message("Full message", "Brief")
-
-        # The speech.speak call should contain "Brief" not "Full message"
-        call_args = essential_modules["orca.speech"].speak.call_args
-        assert call_args is not None
-        assert "Brief" in str(call_args)
 
     def test_get_set_monitor_is_enabled(self, test_context: OrcaTestContext) -> None:
         """Test getting and setting speech monitor enabled status."""

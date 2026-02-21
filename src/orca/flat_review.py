@@ -487,7 +487,7 @@ class StateZone(Zone):
         if script is None:
             return None
 
-        result = script.braille_generator.get_state_indicator(self._obj)
+        result = script.get_braille_generator().get_state_indicator(self._obj)
         if result and result[0]:
             if isinstance(result[0], str):
                 return braille.ReviewComponent(self._obj, result[0], 0, self)
@@ -501,7 +501,7 @@ class StateZone(Zone):
         if script is None:
             return ""
 
-        result = script.speech_generator.get_state_indicator(self._obj)
+        result = script.get_speech_generator().get_state_indicator(self._obj)
         return " ".join([r for r in result if isinstance(r, str)])
 
 
@@ -527,8 +527,8 @@ class ValueZone(Zone):
         if script is None:
             return None
 
-        rolename = script.braille_generator.get_localized_role_name(self._obj)
-        value = script.braille_generator.get_value(self._obj)
+        rolename = script.get_braille_generator().get_localized_role_name(self._obj)
+        value = script.get_braille_generator().get_value(self._obj)
         if rolename and value:
             result = f"{rolename} {value[0]}"
             return braille.ReviewComponent(self._obj, result, 0, self)
@@ -541,8 +541,8 @@ class ValueZone(Zone):
         if script is None:
             return ""
 
-        rolename = script.speech_generator.get_localized_role_name(self._obj)
-        value = script.speech_generator.get_value(self._obj)
+        rolename = script.get_speech_generator().get_localized_role_name(self._obj)
+        value = script.get_speech_generator().get_value(self._obj)
         result = ""
         if rolename and value:
             result = f"{rolename} {value[0]}"
@@ -748,9 +748,9 @@ class Context:
             else:
                 string = ""
                 if not AXUtilities.is_table_row(obj):
-                    string = self._script.speech_generator.get_name(obj, inFlatReview=True)
+                    string = self._script.get_speech_generator().get_name(obj, inFlatReview=True)
                 if not string:
-                    string = self._script.speech_generator.get_role_name(obj)
+                    string = self._script.get_speech_generator().get_role_name(obj)
                 if string:
                     zones.append(Zone(obj, string, rect))
 

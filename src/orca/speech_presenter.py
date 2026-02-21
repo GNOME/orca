@@ -1908,7 +1908,7 @@ class SpeechPresenter:
         return msg
 
     def adjust_for_presentation(
-        self, obj: Atspi.Accessible, text: str, start_offset: int | None = None
+        self, obj: Atspi.Accessible | None, text: str, start_offset: int | None = None
     ) -> str:
         """Adjusts text for spoken presentation."""
 
@@ -1919,15 +1919,17 @@ class SpeechPresenter:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if AXUtilities.is_math_related(obj):
+        if obj is not None and AXUtilities.is_math_related(obj):
             text = mathsymbols.adjust_for_speech(text)
 
-        if start_offset is not None:
+        if start_offset is not None and obj is not None:
             text = self._adjust_for_links(obj, text, start_offset)
 
-        text = self.adjust_for_digits(obj, text)
+        if obj is not None:
+            text = self.adjust_for_digits(obj, text)
         text = self._adjust_for_repeats(text)
-        text = self._adjust_for_verbalized_punctuation(obj, text)
+        if obj is not None:
+            text = self._adjust_for_verbalized_punctuation(obj, text)
         text = self._apply_pronunciation_dictionary(text)
 
         msg = f"SPEECH PRESENTER: Adjusted text: '{text}'"
@@ -1941,11 +1943,11 @@ class SpeechPresenter:
 
         return script_manager.get_manager().get_active_script()
 
-    def _get_voice(self, text: str = "") -> list[ACSS]:
+    def _get_voice(self, text: str = "", obj: Atspi.Accessible | None = None) -> list[ACSS]:
         """Returns the voice to use for the given string."""
 
         if active_script := self._get_active_script():
-            return active_script.speech_generator.voice(string=text)
+            return active_script.get_speech_generator().voice(obj=obj, string=text)
         return []
 
     @dbus_service.getter
@@ -2160,31 +2162,12 @@ class SpeechPresenter:
         voice = self._get_voice(text=key_name or "")
         speech.speak_key_event(event, voice[0] if voice else None)
 
-    def present_message(
-        self,
-        full: str,
-        brief: str | None = None,
-        voice: ACSS | None = None,
-        reset_styles: bool = True,
-        obj: Atspi.Accessible | None = None,
-    ) -> None:
-        """Speaks a message, choosing full or brief based on message detail setting."""
+    def speak_accessible_text(self, obj: Atspi.Accessible | None, text: str) -> None:
+        """Speaks text from an accessible object, determining voice automatically."""
 
-        from . import speech_manager  # pylint: disable=import-outside-toplevel
-
-        mgr = speech_manager.get_manager()
-        if not mgr.get_speech_is_enabled_and_not_muted():
-            return
-
-        if brief is None:
-            brief = full
-
-        if not self.get_messages_are_detailed():
-            message = brief
-        else:
-            message = full
-        if message:
-            self.speak_message(message, voice=voice, reset_styles=reset_styles, obj=obj)
+        voice = self._get_voice(text, obj)
+        text = self.adjust_for_presentation(obj, text)
+        speech.speak(text, voice[0] if voice else None)
 
     def speak_message(
         self,
@@ -2205,10 +2188,10 @@ class SpeechPresenter:
             debug.print_exception(debug.LEVEL_WARNING)
             return
 
-        mgr = speech_manager.get_manager()
-        if mgr.get_speech_is_muted() or (self.get_only_speak_displayed_text() and obj is None):
+        if self.get_only_speak_displayed_text() and obj is None:
             return
 
+        mgr = speech_manager.get_manager()
         system_voice = mgr.get_voice_properties(speechserver.SYSTEM_VOICE)
         if voice is None:
             voice = system_voice
@@ -2232,6 +2215,30 @@ class SpeechPresenter:
             mgr.set_capitalization_style(cap_style)
             mgr.set_punctuation_level(punct_style)
 
+    def generate_speech_contents(
+        self,
+        script: default.Script,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+        **args: Any,
+    ) -> list:
+        """Generates speech utterances for contents without speaking them."""
+
+        return script.get_speech_generator().generate_contents(contents, **args)
+
+    def generate_speech_string(self, script: default.Script, obj: Atspi.Accessible) -> str:
+        """Generates speech for obj and returns it as a string."""
+
+        generator = script.get_speech_generator()
+        utterances = generator.generate_speech(obj)
+        return generator.utterances_to_string(utterances)
+
+    def generate_window_title_strings(
+        self, script: default.Script, obj: Atspi.Accessible
+    ) -> list[str]:
+        """Returns the window title as a list of strings."""
+
+        return [s for s, _ in script.get_speech_generator().generate_window_title(obj)]
+
     def speak_contents(
         self, contents: list[tuple[Atspi.Accessible, int, int, str]], **args: Any
     ) -> None:
@@ -2243,7 +2250,7 @@ class SpeechPresenter:
         if not (active_script := self._get_active_script()):
             return
 
-        utterances = active_script.speech_generator.generate_contents(contents, **args)
+        utterances = active_script.get_speech_generator().generate_contents(contents, **args)
         speech.speak(utterances)
 
     def present_generated_speech(
@@ -2251,7 +2258,7 @@ class SpeechPresenter:
     ) -> None:
         """Generates speech for obj using the script's speech generator and speaks it."""
 
-        utterances = script.speech_generator.generate_speech(obj, **args)
+        utterances = script.get_speech_generator().generate_speech(obj, **args)
         speech.speak(utterances)
 
     def speak_line(
@@ -2268,7 +2275,8 @@ class SpeechPresenter:
         if indentation:
             self.speak_message(indentation)
 
-        utterances = script.speech_generator.generate_line(obj, start_offset, end_offset, line)
+        generator = script.get_speech_generator()
+        utterances = generator.generate_line(obj, start_offset, end_offset, line)
         speech.speak(utterances)
 
     def speak_phrase(
@@ -2289,7 +2297,8 @@ class SpeechPresenter:
         if indentation:
             self.speak_message(indentation)
 
-        utterances = script.speech_generator.generate_phrase(obj, start_offset, end_offset, phrase)
+        generator = script.get_speech_generator()
+        utterances = generator.generate_phrase(obj, start_offset, end_offset, phrase)
         speech.speak(utterances)
 
     def speak_word(
@@ -2300,7 +2309,7 @@ class SpeechPresenter:
     ) -> None:
         """Generates and speaks a word using the script's speech generator."""
 
-        utterances = script.speech_generator.generate_word(obj, offset)
+        utterances = script.get_speech_generator().generate_word(obj, offset)
         speech.speak(utterances)
 
     def speak_character_at_offset(

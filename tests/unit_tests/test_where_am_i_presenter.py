@@ -388,14 +388,15 @@ class TestWhereAmIPresenter:
         deps["orca.ax_object"].AXObject.is_dead.return_value = False
 
         mock_script = test_context.Mock()
-        mock_script.speech_generator = test_context.Mock()
-        mock_script.speech_generator.generate_window_title.return_value = [("Test Window", None)]
+        speech_gen = test_context.Mock()
+        speech_gen.generate_window_title.return_value = [("Test Window", None)]
+        mock_script.get_speech_generator = test_context.Mock(return_value=speech_gen)
         pres_manager = deps["orca.presentation_manager"].get_manager()
         pres_manager.present_message.reset_mock()
         presenter = WhereAmIPresenter()
         result = presenter.present_title(mock_script)
         assert result is True
-        pres_manager.present_message.assert_called_with("Test Window", voice=None)
+        pres_manager.present_window_title.assert_called_once_with(mock_script, focus_obj)
 
     def test_present_title_dead_focus(self, test_context: OrcaTestContext) -> None:
         """Test WhereAmIPresenter.present_title with dead focus object."""
@@ -415,14 +416,15 @@ class TestWhereAmIPresenter:
         deps["orca.ax_object"].AXObject.is_dead.side_effect = [True, False]
 
         mock_script = test_context.Mock()
-        mock_script.speech_generator = test_context.Mock()
-        mock_script.speech_generator.generate_window_title.return_value = [("Active Window", None)]
+        speech_gen = test_context.Mock()
+        speech_gen.generate_window_title.return_value = [("Active Window", None)]
+        mock_script.get_speech_generator = test_context.Mock(return_value=speech_gen)
         pres_manager = deps["orca.presentation_manager"].get_manager()
         pres_manager.present_message.reset_mock()
         presenter = WhereAmIPresenter()
         result = presenter.present_title(mock_script)
         assert result is True
-        pres_manager.present_message.assert_called_with("Active Window", voice=None)
+        pres_manager.present_window_title.assert_called_once_with(mock_script, active_window)
 
     def test_present_title_no_valid_object(self, test_context: OrcaTestContext) -> None:
         """Test WhereAmIPresenter.present_title with no valid object."""

@@ -89,6 +89,11 @@ class Conversation:
 
         return self._name
 
+    def get_log(self) -> Atspi.Accessible:
+        """Returns the conversation log accessible."""
+
+        return self._log
+
     def is_log(self, obj: Atspi.Accessible) -> bool:
         """Returns true if obj is the conversation log."""
 
@@ -154,12 +159,13 @@ class ConversationList:
         msg = Message(text=message, conversation=conversation)
         self._messages.append(msg)
 
-    def get_message_and_name(self, index: int) -> tuple[str, str]:
-        """Returns the indexed message, room-name tuple from the message history."""
+    def get_message_and_name(self, index: int) -> tuple[str, str, Atspi.Accessible | None]:
+        """Returns the indexed message, room-name, and log from the message history."""
 
         msg = self._messages[index]
-        name = msg.conversation.get_name() if msg.conversation else ""
-        return msg.text, name
+        if msg.conversation:
+            return msg.text, msg.conversation.get_name(), msg.conversation.get_log()
+        return msg.text, "", None
 
     def has_messages(self) -> bool:
         """Returns True if there are any messages in the history."""
@@ -202,8 +208,8 @@ class Chat:
             return 0
         return self._conversation_list.get_message_count()
 
-    def get_message_and_name(self, index: int) -> tuple[str, str]:
-        """Returns the indexed message and room name from the conversation list."""
+    def get_message_and_name(self, index: int) -> tuple[str, str, Atspi.Accessible | None]:
+        """Returns the indexed message, room name, and log from the conversation list."""
 
         return self._conversation_list.get_message_and_name(index)
 
@@ -493,6 +499,7 @@ class ChatPresenter:
     def utter_message(  # pylint: disable=too-many-arguments,too-many-positional-arguments
         self,
         script: default.Script,
+        obj: Atspi.Accessible,
         room_name: str,
         message: str,
         focused: bool = True,
@@ -523,28 +530,27 @@ class ChatPresenter:
             text = f"{message} {text}"
 
         if text.strip():
-            voice = script.speech_generator.voice(string=text)
-            presentation_manager.get_manager().speak_message(text, voice=voice)
+            presentation_manager.get_manager().speak_accessible_text(obj, text)
         presentation_manager.get_manager().present_braille_message(text)
 
     def present_message_at_index(self, script: default.Script, index: int) -> None:
         """Presents the chat message at the specified index."""
 
         chat = script.chat
-        message, chat_room_name = None, None
-
         if self.get_room_histories():
             conversation = chat.get_conversation_for_object(
                 focus_manager.get_manager().get_locus_of_focus()
             )
-            if conversation:
-                message = conversation.get_message(index)
-                chat_room_name = conversation.get_name()
+            if not conversation:
+                return
+            message = conversation.get_message(index)
+            chat_room_name = conversation.get_name()
+            log: Atspi.Accessible | None = conversation.get_log()
         else:
-            message, chat_room_name = chat.get_message_and_name(index)
+            message, chat_room_name, log = chat.get_message_and_name(index)
 
-        if message and chat_room_name:
-            self.utter_message(script, chat_room_name, message, True)
+        if message and chat_room_name and log:
+            self.utter_message(script, log, chat_room_name, message, True)
 
     def present_inserted_text(self, script: default.Script, event: Atspi.Event) -> bool:
         """Presents text inserted into a chat application."""
@@ -576,13 +582,12 @@ class ChatPresenter:
             if focused:
                 name = ""
             if message:
-                self.utter_message(script, name, message, focused, active_channel)
+                self.utter_message(script, event.source, name, message, focused, active_channel)
             return True
 
         if chat.is_auto_completed_text_event(event):
             text = event.any_data
-            voice = script.speech_generator.voice(string=text)
-            presentation_manager.get_manager().speak_message(text, voice=voice)
+            presentation_manager.get_manager().speak_accessible_text(event.source, text)
             return True
 
         return False
@@ -598,8 +603,7 @@ class ChatPresenter:
         chat = script.chat
         conversation = chat.get_conversation_for_object(event.source)
         if conversation and status != conversation.get_typing_status():
-            voice = script.speech_generator.voice(string=status)
-            presentation_manager.get_manager().speak_message(status, voice=voice)
+            presentation_manager.get_manager().speak_accessible_text(event.source, status)
             conversation.set_typing_status(status)
             return True
 

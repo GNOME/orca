@@ -722,7 +722,7 @@ class TypingEchoPresenter:
         self._present_locking_keys = value
         return True
 
-    def echo_previous_sentence(self, script: default.Script, obj: Atspi.Accessible) -> bool:
+    def echo_previous_sentence(self, obj: Atspi.Accessible) -> bool:
         """Speaks the sentence prior to the caret if at a sentence boundary."""
 
         if not self.get_sentence_echo_enabled():
@@ -740,11 +740,10 @@ class TypingEchoPresenter:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        voice = script.speech_generator.voice(obj=obj, string=sentence)
-        presentation_manager.get_manager().speak_message(sentence, voice, obj=obj)
+        presentation_manager.get_manager().speak_accessible_text(obj, sentence)
         return True
 
-    def echo_previous_word(self, script: default.Script, obj: Atspi.Accessible) -> bool:
+    def echo_previous_word(self, obj: Atspi.Accessible) -> bool:
         """Speaks the word prior to the caret if at a word boundary."""
 
         if not self.get_word_echo_enabled():
@@ -771,8 +770,7 @@ class TypingEchoPresenter:
         if not word:
             return False
 
-        voice = script.speech_generator.voice(obj=obj, string=word)
-        presentation_manager.get_manager().speak_message(word, voice, obj=obj)
+        presentation_manager.get_manager().speak_accessible_text(obj, word)
         return True
 
     # pylint: disable-next=too-many-statements

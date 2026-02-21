@@ -67,6 +67,7 @@ class TestSayAllPresenter:
             "orca.orca_i18n",
             "orca.AXHypertext",
             "orca.AXObject",
+            "orca.speech_presenter",
             "orca.AXTable",
             "orca.AXText",
             "orca.AXUtilities",
@@ -785,8 +786,9 @@ class TestSayAllPresenter:
         # next_context returns None to end the loop
         mock_script.utilities.next_context.return_value = (None, -1)
 
-        # Mock speech generator to return something so the content is processed
-        mock_script.speech_generator.generate_contents.return_value = [["Test"], []]
+        # Mock speech presenter to return something so the content is processed
+        speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
+        speech_pres.generate_speech_contents.return_value = [["Test"], []]
 
         # Mock AXUtilities
         ax_utilities_mock = essential_modules["orca.ax_utilities"]

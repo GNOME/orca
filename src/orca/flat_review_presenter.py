@@ -1188,16 +1188,17 @@ class FlatReviewPresenter:
 
     def _get_all_lines(
         self, script: default.Script, _event: input_event.InputEvent | None = None
-    ) -> tuple[list[str], tuple[int, int, int, int]]:
-        """Returns a (textual lines, current location) tuple."""
+    ) -> tuple[list[tuple[str, Atspi.Accessible | None]], tuple[int, int, int, int]]:
+        """Returns a (list of (line_string, obj) tuples, current location) tuple."""
 
-        lines = []
+        lines: list[tuple[str, Atspi.Accessible | None]] = []
         self._context = self.get_or_create_context(script)
         location = self._context.get_current_location()
         self._context.go_to_start_of(flat_review.Context.WINDOW)
         string = self._context.get_current_line_string()
         while string is not None:
-            lines.append(string.rstrip("\n"))
+            obj = self._context.get_current_object()
+            lines.append((string.rstrip("\n"), obj))
             if not self._context.go_next_line():
                 break
             string = self._context.get_current_line_string()
@@ -1222,11 +1223,9 @@ class FlatReviewPresenter:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        for string in self._get_all_lines(script, event)[0]:
+        for string, obj in self._get_all_lines(script, event)[0]:
             if not string.isspace():
-                presentation_manager.get_manager().speak_message(
-                    string, script.speech_generator.voice(string=string)
-                )
+                presentation_manager.get_manager().speak_accessible_text(obj, string)
 
         return True
 
@@ -1249,8 +1248,8 @@ class FlatReviewPresenter:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        lines, location = self._get_all_lines(script, event)
-        text = "\n".join(lines)
+        line_tuples, location = self._get_all_lines(script, event)
+        text = "\n".join(string for string, _obj in line_tuples)
         title = guilabels.FLAT_REVIEW_CONTENTS
         self._gui = FlatReviewContextGUI(script, title, text, location)
         self._gui.show_gui()
@@ -1384,7 +1383,6 @@ class FlatReviewPresenter:
 
         self._context = self.get_or_create_context(script)
         line_string = self._context.get_current_line_string()
-        voice = script.speech_generator.voice(string=line_string)
 
         if not isinstance(event, input_event.BrailleEvent):
             presenter = presentation_manager.get_manager()
@@ -1393,17 +1391,13 @@ class FlatReviewPresenter:
             elif line_string.isspace():
                 presenter.speak_message(messages.WHITE_SPACE)
             elif line_string.isupper() and (speech_type < 2 or speech_type > 3):
-                presenter.speak_message(line_string, voice)
+                presenter.speak_accessible_text(self._context.get_current_object(), line_string)
             elif speech_type == 2:
                 presenter.spell_item(line_string)
             elif speech_type == 3:
                 presenter.spell_phonetically(line_string)
             else:
-                manager = speech_presenter.get_presenter()
-                line_string = manager.adjust_for_presentation(
-                    self._context.get_current_object(), line_string
-                )
-                presenter.speak_message(line_string, voice)
+                presenter.speak_accessible_text(self._context.get_current_object(), line_string)
 
         focus_manager.get_manager().emit_region_changed(
             self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW
@@ -1422,7 +1416,6 @@ class FlatReviewPresenter:
 
         self._context = self.get_or_create_context(script)
         word_string = self._context.get_current_word_string()
-        voice = script.speech_generator.voice(string=word_string)
         if not isinstance(event, input_event.BrailleEvent):
             presenter = presentation_manager.get_manager()
             if not word_string or word_string == "\n":
@@ -1434,17 +1427,13 @@ class FlatReviewPresenter:
                 elif word_string.isspace():
                     presenter.speak_message(messages.WHITE_SPACE)
                 elif word_string.isupper() and speech_type == 1:
-                    presenter.speak_message(word_string, voice)
+                    presenter.speak_accessible_text(self._context.get_current_object(), word_string)
                 elif speech_type == 2:
                     presenter.spell_item(word_string)
                 elif speech_type == 3:
                     presenter.spell_phonetically(word_string)
                 elif speech_type == 1:
-                    manager = speech_presenter.get_presenter()
-                    word_string = manager.adjust_for_presentation(
-                        self._context.get_current_object(), word_string
-                    )
-                    presenter.speak_message(word_string, voice)
+                    presenter.speak_accessible_text(self._context.get_current_object(), word_string)
 
         focus_manager.get_manager().emit_region_changed(
             self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW

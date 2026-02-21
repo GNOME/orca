@@ -476,22 +476,9 @@ class Script(script.Script):
     def update_braille(self, obj: Atspi.Accessible, **args) -> None:
         """Updates the braille display to show obj."""
 
-        if not braille_presenter.get_presenter().use_braille():
-            return
-
         if not obj:
             return
-
-        result, focused_region = self.braille_generator.generate_braille(obj, **args)
-        if not result:
-            return
-
-        extra_region = args.get("extraRegion")
-        braille_presenter.get_presenter().present_regions(
-            list(result),
-            focused_region,
-            extra_region=extra_region,
-        )
+        braille_presenter.get_presenter().present_generated_braille(self, obj, **args)
 
     ########################################################################
     #                                                                      #
@@ -971,7 +958,7 @@ class Script(script.Script):
             return True
 
         if event.detail1:
-            msg = self.speech_generator.get_error_message(event.source)
+            msg = self.get_speech_generator().get_error_message(event.source)
         else:
             msg = messages.INVALID_ENTRY_FIXED
         presentation_manager.get_manager().speak_message(msg)
@@ -1188,7 +1175,7 @@ class Script(script.Script):
                 return True
 
             presentation_manager.get_manager().speak_message(
-                self.speech_generator.get_localized_role_name(obj)
+                self.get_speech_generator().get_localized_role_name(obj)
             )
             msg = self.utilities.get_notification_content(obj)
             presentation_manager.get_manager().present_message(msg, reset_styles=False)
@@ -1261,10 +1248,7 @@ class Script(script.Script):
         if len(text) == 1:
             presentation_manager.get_manager().speak_character(text)
         else:
-            voice = self.speech_generator.voice(string=text)
-            speech_pres = speech_presenter.get_presenter()
-            text = speech_pres.adjust_for_presentation(event.source, text)
-            presentation_manager.get_manager().speak_message(text, voice)
+            presentation_manager.get_manager().speak_accessible_text(event.source, text)
 
         return True
 
@@ -1326,10 +1310,7 @@ class Script(script.Script):
             if len(text) == 1:
                 presentation_manager.get_manager().speak_character(text)
             else:
-                voice = self.speech_generator.voice(obj=event.source, string=text)
-                speech_pres = speech_presenter.get_presenter()
-                text = speech_pres.adjust_for_presentation(event.source, text)
-                presentation_manager.get_manager().speak_message(text, voice)
+                presentation_manager.get_manager().speak_accessible_text(event.source, text)
 
         if len(text) != 1 or reason not in [
             TextEventReason.TYPING,
@@ -1338,10 +1319,10 @@ class Script(script.Script):
             return True
 
         presenter = typing_echo_presenter.get_presenter()
-        if presenter.echo_previous_sentence(self, event.source):
+        if presenter.echo_previous_sentence(event.source):
             return True
 
-        presenter.echo_previous_word(self, event.source)
+        presenter.echo_previous_word(event.source)
         return True
 
     def on_text_selection_changed(self, event: Atspi.Event) -> bool:

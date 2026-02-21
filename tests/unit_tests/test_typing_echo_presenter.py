@@ -737,10 +737,9 @@ class TestTypingEchoPresenter:
         """Test echo_previous_word method."""
         presenter = self._setup_presenter(test_context)
 
-        script_mock = test_context.mocker.MagicMock()
         obj_mock = test_context.mocker.MagicMock()
 
-        assert presenter.echo_previous_word(script_mock, obj_mock) is False
+        assert presenter.echo_previous_word(obj_mock) is False
 
         presenter.set_word_echo_enabled(True)
 
@@ -748,46 +747,43 @@ class TestTypingEchoPresenter:
         test_context.patch("orca.ax_text.AXText.get_character_count", return_value=10)
 
         test_context.patch("orca.ax_text.AXText.get_caret_offset", return_value=0)
-        assert presenter.echo_previous_word(script_mock, obj_mock) is False
+        assert presenter.echo_previous_word(obj_mock) is False
 
         test_context.patch("orca.ax_text.AXText.get_caret_offset", return_value=5)
         char_mock_1 = test_context.patch("orca.ax_text.AXText.get_character_at_offset")
         char_mock_1.side_effect = [("a", 4, 5), ("b", 3, 4)]
-        assert presenter.echo_previous_word(script_mock, obj_mock) is False
+        assert presenter.echo_previous_word(obj_mock) is False
 
         char_mock_2 = test_context.patch("orca.ax_text.AXText.get_character_at_offset")
         char_mock_2.side_effect = [(" ", 4, 5), (" ", 3, 4)]
-        assert presenter.echo_previous_word(script_mock, obj_mock) is False
+        assert presenter.echo_previous_word(obj_mock) is False
 
         char_mock_3 = test_context.patch("orca.ax_text.AXText.get_character_at_offset")
         char_mock_3.side_effect = [(" ", 4, 5), ("a", 3, 4)]
         test_context.patch("orca.ax_text.AXText.get_word_at_offset", return_value=("hello", 0, 5))
 
-        script_mock.speech_generator.voice.return_value = ["voice"]
-
         from orca import presentation_manager
 
-        speak_msg = presentation_manager.get_manager().speak_message
-        assert isinstance(speak_msg, Mock)
-        speak_msg.reset_mock()  # pylint: disable=no-member
+        speak_text = presentation_manager.get_manager().speak_accessible_text
+        assert isinstance(speak_text, Mock)
+        speak_text.reset_mock()  # pylint: disable=no-member
 
-        result = presenter.echo_previous_word(script_mock, obj_mock)
+        result = presenter.echo_previous_word(obj_mock)
         assert result is True
-        speak_msg.assert_called_with("hello", ["voice"], obj=obj_mock)  # pylint: disable=no-member
+        speak_text.assert_called_with(obj_mock, "hello")  # pylint: disable=no-member
 
         char_mock_4 = test_context.patch("orca.ax_text.AXText.get_character_at_offset")
         char_mock_4.side_effect = [(" ", 4, 5), ("a", 3, 4)]
         test_context.patch("orca.ax_text.AXText.get_word_at_offset", return_value=("", 0, 0))
-        assert presenter.echo_previous_word(script_mock, obj_mock) is False
+        assert presenter.echo_previous_word(obj_mock) is False
 
     def test_echo_previous_sentence(self, test_context: OrcaTestContext) -> None:
         """Test echo_previous_sentence method."""
         presenter = self._setup_presenter(test_context)
 
-        script_mock = test_context.mocker.MagicMock()
         obj_mock = test_context.mocker.MagicMock()
 
-        assert presenter.echo_previous_sentence(script_mock, obj_mock) is False
+        assert presenter.echo_previous_sentence(obj_mock) is False
 
         presenter.set_sentence_echo_enabled(True)
 
@@ -795,7 +791,7 @@ class TestTypingEchoPresenter:
 
         char_mock_1 = test_context.patch("orca.ax_text.AXText.get_character_at_offset")
         char_mock_1.side_effect = [("a", 9, 10), ("b", 8, 9)]
-        assert presenter.echo_previous_sentence(script_mock, obj_mock) is False
+        assert presenter.echo_previous_sentence(obj_mock) is False
 
         char_mock_2 = test_context.patch("orca.ax_text.AXText.get_character_at_offset")
         char_mock_2.side_effect = [(" ", 9, 10), (".", 8, 9)]
@@ -803,22 +799,20 @@ class TestTypingEchoPresenter:
             "orca.ax_text.AXText.get_sentence_at_offset", return_value=("Hello world.", 0, 12)
         )
 
-        script_mock.speech_generator.voice.return_value = ["voice"]
-
         from orca import presentation_manager
 
-        speak_msg = presentation_manager.get_manager().speak_message
-        assert isinstance(speak_msg, Mock)
-        speak_msg.reset_mock()  # pylint: disable=no-member
+        speak_text = presentation_manager.get_manager().speak_accessible_text
+        assert isinstance(speak_text, Mock)
+        speak_text.reset_mock()  # pylint: disable=no-member
 
-        result = presenter.echo_previous_sentence(script_mock, obj_mock)
+        result = presenter.echo_previous_sentence(obj_mock)
         assert result is True
-        speak_msg.assert_called_with("Hello world.", ["voice"], obj=obj_mock)  # pylint: disable=no-member
+        speak_text.assert_called_with(obj_mock, "Hello world.")  # pylint: disable=no-member
 
         char_mock_3 = test_context.patch("orca.ax_text.AXText.get_character_at_offset")
         char_mock_3.side_effect = [(" ", 9, 10), (".", 8, 9)]
         test_context.patch("orca.ax_text.AXText.get_sentence_at_offset", return_value=("", 0, 0))
-        assert presenter.echo_previous_sentence(script_mock, obj_mock) is False
+        assert presenter.echo_previous_sentence(obj_mock) is False
 
     def test_commands_and_bindings(self, test_context: OrcaTestContext) -> None:
         """Test commands are registered in CommandManager."""

@@ -386,8 +386,7 @@ class Utilities(script_utilities.Utilities):
             return ""
 
         if AXUtilities.is_math(obj) and AXObject.get_child_count(obj):
-            utterances = self._script.speech_generator.generate_speech(obj)
-            return self._script.speech_generator.utterances_to_string(utterances)
+            return speech_presenter.get_presenter().generate_speech_string(self._script, obj)
 
         return super().expand_eocs(obj, start_offset, end_offset)
 

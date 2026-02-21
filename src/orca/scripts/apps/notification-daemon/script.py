@@ -49,6 +49,7 @@ class Script(default.Script):
         texts = [AXText.get_all_text(acc) for acc in AXUtilities.find_all_labels(event.source)]
         text = f"{messages.NOTIFICATION} {' '.join(texts)}"
 
-        voice = self.speech_generator.voice(obj=event.source, string=text)
-        presentation_manager.get_manager().present_message(text, voice=voice)
+        presenter = presentation_manager.get_manager()
+        presenter.speak_accessible_text(event.source, text)
+        presenter.present_braille_message(text)
         notification_presenter.get_presenter().save_notification(text)

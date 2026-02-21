@@ -232,9 +232,10 @@ class TestConversationList:
         assert conv_list.has_messages()
         assert conv_list.get_message_count() == 1
 
-        message, name = conv_list.get_message_and_name(-1)
+        message, name, log = conv_list.get_message_and_name(-1)
         assert message == "Hello"
         assert name == ""
+        assert log is None
 
     def test_add_message_with_conversation(self, test_context: OrcaTestContext) -> None:
         """Test ConversationList.add_message with a conversation."""
@@ -248,9 +249,10 @@ class TestConversationList:
         conv_list = ConversationList()
         conv_list.add_message("Hello from room", conversation)
 
-        message, name = conv_list.get_message_and_name(-1)
+        message, name, log = conv_list.get_message_and_name(-1)
         assert message == "Hello from room"
         assert name == "TestRoom"
+        assert log is mock_log
 
     def test_iteration(self, test_context: OrcaTestContext) -> None:
         """Test ConversationList iteration."""
@@ -312,7 +314,7 @@ class TestConversationList:
         conv_list.add_message("Hello", None)
 
         # Valid index works
-        message, _ = conv_list.get_message_and_name(-1)
+        message, _, _ = conv_list.get_message_and_name(-1)
         assert message == "Hello"
 
         # Out of bounds still raises
@@ -609,8 +611,9 @@ class TestChatPresenter:
         script_manager_instance.get_active_script = test_context.Mock(return_value=None)
 
         mock_script = test_context.Mock()
-        mock_script.speech_generator = test_context.Mock()
-        mock_script.speech_generator.voice = test_context.Mock(return_value=None)
+        speech_gen = test_context.Mock()
+        speech_gen.voice = test_context.Mock(return_value=None)
+        mock_script.get_speech_generator = test_context.Mock(return_value=speech_gen)
         mock_script.speak_message = test_context.Mock()
         mock_script.display_message = test_context.Mock()
         mock_script.app = test_context.Mock()
@@ -760,10 +763,13 @@ class TestChatPresenter:
 
         presenter = get_presenter()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
-        pres_manager.speak_message.reset_mock()
-        presenter.utter_message(mock_script, "Room", "Hello", focused=False, active_channel=False)
+        pres_manager.speak_accessible_text.reset_mock()
+        mock_obj = test_context.Mock()
+        presenter.utter_message(
+            mock_script, mock_obj, "Room", "Hello", focused=False, active_channel=False
+        )
 
-        pres_manager.speak_message.assert_called_once()
+        pres_manager.speak_accessible_text.assert_called_once()
 
     def test_utter_message_active_channel_speaks_when_active(
         self, test_context: OrcaTestContext
@@ -775,10 +781,13 @@ class TestChatPresenter:
 
         presenter = get_presenter()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
-        pres_manager.speak_message.reset_mock()
-        presenter.utter_message(mock_script, "Room", "Hello", focused=False, active_channel=True)
+        pres_manager.speak_accessible_text.reset_mock()
+        mock_obj = test_context.Mock()
+        presenter.utter_message(
+            mock_script, mock_obj, "Room", "Hello", focused=False, active_channel=True
+        )
 
-        pres_manager.speak_message.assert_called_once()
+        pres_manager.speak_accessible_text.assert_called_once()
 
     def test_utter_message_active_channel_silent_when_inactive(
         self, test_context: OrcaTestContext
@@ -790,10 +799,13 @@ class TestChatPresenter:
 
         presenter = get_presenter()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
-        pres_manager.speak_message.reset_mock()
-        presenter.utter_message(mock_script, "Room", "Hello", focused=False, active_channel=False)
+        pres_manager.speak_accessible_text.reset_mock()
+        mock_obj = test_context.Mock()
+        presenter.utter_message(
+            mock_script, mock_obj, "Room", "Hello", focused=False, active_channel=False
+        )
 
-        pres_manager.speak_message.assert_not_called()
+        pres_manager.speak_accessible_text.assert_not_called()
 
     def test_utter_message_focused_channel_silent_when_unfocused(
         self, test_context: OrcaTestContext
@@ -805,10 +817,13 @@ class TestChatPresenter:
 
         presenter = get_presenter()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
-        pres_manager.speak_message.reset_mock()
-        presenter.utter_message(mock_script, "Room", "Hello", focused=False, active_channel=True)
+        pres_manager.speak_accessible_text.reset_mock()
+        mock_obj = test_context.Mock()
+        presenter.utter_message(
+            mock_script, mock_obj, "Room", "Hello", focused=False, active_channel=True
+        )
 
-        pres_manager.speak_message.assert_not_called()
+        pres_manager.speak_accessible_text.assert_not_called()
 
     def test_utter_message_focused_channel_speaks_when_focused(
         self, test_context: OrcaTestContext
@@ -820,7 +835,10 @@ class TestChatPresenter:
 
         presenter = get_presenter()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
-        pres_manager.speak_message.reset_mock()
-        presenter.utter_message(mock_script, "", "Hello", focused=True, active_channel=True)
+        pres_manager.speak_accessible_text.reset_mock()
+        mock_obj = test_context.Mock()
+        presenter.utter_message(
+            mock_script, mock_obj, "", "Hello", focused=True, active_channel=True
+        )
 
-        pres_manager.speak_message.assert_called_once()
+        pres_manager.speak_accessible_text.assert_called_once()

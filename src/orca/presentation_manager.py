@@ -125,15 +125,17 @@ class PresentationManager:
         if brief is None:
             brief = full
 
-        speech_presenter.get_presenter().present_message(
-            full, brief, voice=voice, reset_styles=reset_styles, obj=obj
-        )
+        if speech_manager.get_manager().get_speech_is_enabled_and_not_muted():
+            speech_pres = speech_presenter.get_presenter()
+            message = full if speech_pres.get_messages_are_detailed() else brief
+            if message:
+                speech_pres.speak_message(message, voice=voice, reset_styles=reset_styles, obj=obj)
 
-        presenter = braille_presenter.get_presenter()
-        if not (presenter.use_braille() and presenter.get_flash_messages_are_enabled()):
+        braille_pres = braille_presenter.get_presenter()
+        if not (braille_pres.use_braille() and braille_pres.get_flash_messages_are_enabled()):
             return
 
-        message = full if presenter.get_flash_messages_are_detailed() else brief
+        message = full if braille_pres.get_flash_messages_are_detailed() else brief
         if not message:
             return
 
@@ -143,7 +145,7 @@ class PresentationManager:
             message = [i for i in message if isinstance(i, str)]
             message = " ".join(message)
 
-        presenter.present_message(message)
+        braille_pres.present_message(message)
 
     @staticmethod
     def play_sound(sounds: list[Icon | Tone] | Icon | Tone, interrupt: bool = True) -> None:
@@ -174,6 +176,13 @@ class PresentationManager:
 
         speech_presenter.get_presenter().speak_character(character)
 
+    def speak_accessible_text(self, obj: Atspi.Accessible | None, text: str) -> None:
+        """Speaks text from an accessible object."""
+
+        if speech_manager.get_manager().get_speech_is_muted():
+            return
+        speech_presenter.get_presenter().speak_accessible_text(obj, text)
+
     def speak_message(
         self,
         text: str,
@@ -183,6 +192,8 @@ class PresentationManager:
     ) -> None:
         """Speaks a single string."""
 
+        if speech_manager.get_manager().get_speech_is_muted():
+            return
         speech_presenter.get_presenter().speak_message(
             text, voice=voice, reset_styles=reset_styles, obj=obj
         )
@@ -237,7 +248,7 @@ class PresentationManager:
             braille_presenter.get_presenter().present_generated_braille(script, obj, **args)
 
         if generate_sound:
-            sounds = script.sound_generator.generate_sound(obj, **args)
+            sounds = script.get_sound_generator().generate_sound(obj, **args)
             sound_presenter.get_presenter().play(sounds)
 
     def speak_contents(
@@ -255,37 +266,18 @@ class PresentationManager:
         tokens = ["PRESENTATION MANAGER: Displaying", contents, args]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
 
-        presenter = braille_presenter.get_presenter()
-        if not presenter.use_braille():
-            return
-
         if not (active_script := self._get_active_script()):
             return
 
-        regions_list, focused_region = active_script.braille_generator.generate_contents(
-            contents, **args
+        braille_presenter.get_presenter().display_generated_contents(
+            active_script, contents, **args
         )
-        if not regions_list:
-            msg = "PRESENTATION MANAGER: Generating braille contents failed"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
 
-        tokens = [
-            "PRESENTATION MANAGER: Generated result",
-            regions_list,
-            "focused region",
-            focused_region or "None",
-        ]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+    def present_window_title(self, script: default.Script, obj: Atspi.Accessible) -> None:
+        """Generates and presents the window title."""
 
-        flattened_regions: list = []
-        for regions in regions_list:
-            flattened_regions.extend(regions)
-
-        if flattened_regions:
-            flattened_regions[-1].string = flattened_regions[-1].string.rstrip(" ")
-
-        presenter.present_regions(flattened_regions, focused_region, indicate_links=False)
+        for string in speech_presenter.get_presenter().generate_window_title_strings(script, obj):
+            self.present_message(string)
 
 
 _manager: PresentationManager = PresentationManager()

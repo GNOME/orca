@@ -75,12 +75,6 @@ class TestActionPresenter:
         )
         essential_modules["orca.input_event"].InputEvent = test_context.mocker.MagicMock
 
-        script_manager_instance = essential_modules["orca.script_manager"].get_manager()
-        script_mock = script_manager_instance.get_active_script()
-        script_mock.speech_generator.get_localized_role_name = test_context.Mock(
-            return_value="button"
-        )
-
         essential_modules["orca.messages"].LOCATION_NOT_FOUND_FULL = LOCATION_NOT_FOUND_FULL_MSG
         essential_modules["orca.messages"].LOCATION_NOT_FOUND_BRIEF = LOCATION_NOT_FOUND_BRIEF_MSG
         essential_modules["orca.messages"].NO_ACTIONS_FOUND_ON = "No actions found on %s"

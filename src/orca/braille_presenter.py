@@ -865,6 +865,30 @@ class BraillePresenter:
             stop_flash=stop_flash,
         )
 
+    def display_generated_contents(
+        self,
+        script: default.Script,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+        **args: Any,
+    ) -> None:
+        """Generates braille for contents and displays the flattened regions."""
+
+        if not self.use_braille():
+            return
+
+        regions_list, focused_region = script.get_braille_generator().generate_contents(
+            contents, **args
+        )
+        if not regions_list:
+            return
+
+        flattened_regions: list = []
+        for regions in regions_list:
+            flattened_regions.extend(regions)
+        if flattened_regions:
+            flattened_regions[-1].string = flattened_regions[-1].string.rstrip(" ")
+        self.present_regions(flattened_regions, focused_region, indicate_links=False)
+
     def present_generated_braille(
         self, script: default.Script, obj: Atspi.Accessible, **args: Any
     ) -> None:
@@ -873,7 +897,7 @@ class BraillePresenter:
         if not self.use_braille():
             return
 
-        result, focused_region = script.braille_generator.generate_braille(obj, **args)
+        result, focused_region = script.get_braille_generator().generate_braille(obj, **args)
         if result:
             self.present_regions(
                 list(result),

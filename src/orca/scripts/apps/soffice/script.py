@@ -62,13 +62,13 @@ class Script(default.Script):
     # Override the base class type annotations
     utilities: Utilities
 
-    def get_braille_generator(self) -> BrailleGenerator:
-        """Returns the braille generator for this script."""
+    def _create_braille_generator(self) -> BrailleGenerator:
+        """Creates and returns the braille generator for this script."""
 
         return BrailleGenerator(self)
 
-    def get_speech_generator(self) -> SpeechGenerator:
-        """Returns the speech generator for this script."""
+    def _create_speech_generator(self) -> SpeechGenerator:
+        """Creates and returns the speech generator for this script."""
 
         return SpeechGenerator(self)
 
@@ -155,7 +155,7 @@ class Script(default.Script):
             and AXUtilities.is_paragraph(old_focus)
         ):
             if input_event_manager.get_manager().last_event_was_return():
-                typing_echo_presenter.get_presenter().echo_previous_word(self, old_focus)
+                typing_echo_presenter.get_presenter().echo_previous_word(old_focus)
                 return True
 
             # TODO - JD: And this hack is another one that needs to be done better.
@@ -164,8 +164,7 @@ class Script(default.Script):
             if input_event_manager.get_manager().last_event_was_paragraph_navigation():
                 string = AXText.get_all_text(new_focus)
                 if string:
-                    voice = self.speech_generator.voice(obj=new_focus, string=string)
-                    presentation_manager.get_manager().speak_message(string, voice=voice)
+                    presentation_manager.get_manager().speak_accessible_text(new_focus, string)
                     self.update_braille(new_focus)
                     offset = AXText.get_caret_offset(new_focus)
                     focus_manager.get_manager().set_last_cursor_position(new_focus, offset)

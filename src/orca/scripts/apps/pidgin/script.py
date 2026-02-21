@@ -50,8 +50,8 @@ class Script(gtk.Script):
     # Override the base class type annotation
     utilities: Utilities
 
-    def get_speech_generator(self) -> SpeechGenerator:
-        """Returns the speech generator for this script."""
+    def _create_speech_generator(self) -> SpeechGenerator:
+        """Creates and returns the speech generator for this script."""
 
         return SpeechGenerator(self)
 
@@ -87,8 +87,7 @@ class Script(gtk.Script):
             return True
 
         line = messages.CHAT_NEW_TAB % AXObject.get_name(event.any_data)
-        voice = self.speech_generator.voice(obj=event.any_data, string=line)
-        presentation_manager.get_manager().speak_message(line, voice=voice)
+        presentation_manager.get_manager().speak_accessible_text(event.any_data, line)
         return True
 
     def on_expanded_changed(self, event: Atspi.Event) -> bool:

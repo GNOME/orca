@@ -59,9 +59,9 @@ class Script:
         self.listeners = self.get_listeners()
         self.utilities = self.get_utilities()
 
-        self.braille_generator = self.get_braille_generator()
-        self.sound_generator = self.get_sound_generator()
-        self.speech_generator = self.get_speech_generator()
+        self._braille_generator = self._create_braille_generator()
+        self._sound_generator = self._create_sound_generator()
+        self._speech_generator = self._create_speech_generator()
 
         # pylint:disable=assignment-from-none
         self.label_inference = self.get_label_inference()
@@ -128,20 +128,35 @@ class Script:
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""
 
+    def _create_braille_generator(self) -> braille_generator.BrailleGenerator:
+        """Creates and returns the braille generator for this script."""
+
+        return braille_generator.BrailleGenerator(self)
+
+    def _create_sound_generator(self) -> sound_generator.SoundGenerator:
+        """Creates and returns the sound generator for this script."""
+
+        return sound_generator.SoundGenerator(self)
+
+    def _create_speech_generator(self) -> speech_generator.SpeechGenerator:
+        """Creates and returns the speech generator for this script."""
+
+        return speech_generator.SpeechGenerator(self)
+
     def get_braille_generator(self) -> braille_generator.BrailleGenerator:
         """Returns the braille generator for this script."""
 
-        return braille_generator.BrailleGenerator(self)
+        return self._braille_generator
 
     def get_sound_generator(self) -> sound_generator.SoundGenerator:
         """Returns the sound generator for this script."""
 
-        return sound_generator.SoundGenerator(self)
+        return self._sound_generator
 
     def get_speech_generator(self) -> speech_generator.SpeechGenerator:
         """Returns the speech generator for this script."""
 
-        return speech_generator.SpeechGenerator(self)
+        return self._speech_generator
 
     def get_chat(self) -> chat_presenter.Chat:
         """Returns the Chat object for this script."""

@@ -156,7 +156,7 @@ class TestFlatReviewPresenter:
 
         speech_generator_mock = test_context.Mock()
         speech_generator_mock.voice = test_context.Mock(return_value="voice")
-        script_instance.speech_generator = speech_generator_mock
+        script_instance.get_speech_generator = test_context.Mock(return_value=speech_generator_mock)
 
         script_manager_instance.get_active_script = test_context.Mock(return_value=script_instance)
         script_manager_mock.get_manager = test_context.Mock(return_value=script_manager_instance)

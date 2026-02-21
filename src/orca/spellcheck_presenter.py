@@ -600,8 +600,7 @@ class SpellCheckPresenter:
             return False
 
         msg = messages.MISSPELLED_WORD_CONTEXT % string.strip()
-        voice = self._script.speech_generator.voice(string=msg)
-        presentation_manager.get_manager().speak_message(msg, voice=voice)
+        presentation_manager.get_manager().speak_message(msg)
         return True
 
     def _get_context_string(self, word: str) -> str:
@@ -699,8 +698,7 @@ class SpellCheckPresenter:
             return False
 
         msg = messages.MISSPELLED_WORD % word
-        voice = self._script.speech_generator.voice(string=msg)
-        presentation_manager.get_manager().speak_message(msg, voice=voice)
+        presentation_manager.get_manager().speak_message(msg)
         if detailed or self.get_spell_error():
             presentation_manager.get_manager().spell_item(word)
 
@@ -725,8 +723,7 @@ class SpellCheckPresenter:
         )
         string = AXText.get_substring(self._widgets.change_to_entry, 0, -1)
         msg = f"{label} {string}"
-        voice = self._script.speech_generator.voice(string=msg)
-        presentation_manager.get_manager().speak_message(msg, voice=voice)
+        presentation_manager.get_manager().speak_message(msg)
         if detailed or self.get_spell_suggestion():
             presentation_manager.get_manager().spell_item(string)
 
@@ -766,8 +763,7 @@ class SpellCheckPresenter:
         string = AXObject.get_name(items[0])
 
         msg = f"{label} {string}"
-        voice = self._script.speech_generator.voice(string=msg)
-        presentation_manager.get_manager().speak_message(msg.strip(), voice=voice)
+        presentation_manager.get_manager().speak_message(msg.strip())
         if detailed or self.get_spell_suggestion():
             presentation_manager.get_manager().spell_item(string)
 

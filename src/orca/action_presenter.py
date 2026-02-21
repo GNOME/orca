@@ -173,7 +173,7 @@ class ActionPresenter:
             actions[name] = localized_name or description or name
 
         if not actions.items():
-            name = AXObject.get_name(obj) or script.speech_generator.get_localized_role_name(obj)
+            name = AXObject.get_name(obj) or AXUtilities.get_localized_role_name(obj)
             presentation_manager.get_manager().present_message(messages.NO_ACTIONS_FOUND_ON % name)
             return True
 

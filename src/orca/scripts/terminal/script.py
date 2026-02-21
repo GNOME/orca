@@ -54,13 +54,13 @@ class Script(default.Script):
         super().__init__(app)
         self.present_if_inactive: bool = False
 
-    def get_braille_generator(self) -> BrailleGenerator:
-        """Returns the braille generator for this script."""
+    def _create_braille_generator(self) -> BrailleGenerator:
+        """Creates and returns the braille generator for this script."""
 
         return BrailleGenerator(self)
 
-    def get_speech_generator(self) -> SpeechGenerator:
-        """Returns the speech generator for this script."""
+    def _create_speech_generator(self) -> SpeechGenerator:
+        """Creates and returns the speech generator for this script."""
 
         return SpeechGenerator(self)
 
@@ -98,8 +98,7 @@ class Script(default.Script):
         if len(new_string) == 1:
             presentation_manager.get_manager().speak_character(new_string)
         else:
-            voice = self.speech_generator.voice(obj=event.source, string=new_string)
-            presentation_manager.get_manager().speak_message(new_string, voice)
+            presentation_manager.get_manager().speak_accessible_text(event.source, new_string)
 
         if flat_review_presenter.get_presenter().is_active():
             msg = "TERMINAL: Flat review presenter is active. Ignoring insertion"

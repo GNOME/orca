@@ -308,9 +308,7 @@ class WhereAmIPresenter:
             presentation_manager.get_manager().present_message(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
-        title = script.speech_generator.generate_window_title(obj)
-        for string, voice in title:
-            presentation_manager.get_manager().present_message(string, voice=voice)
+        presentation_manager.get_manager().present_window_title(script, obj)
         return True
 
     @dbus_service.command

@@ -99,8 +99,8 @@ class Script(default.Script):
         self.utilities.clear_cached_objects()
         super().deactivate()
 
-    def get_braille_generator(self) -> BrailleGenerator:
-        """Returns the braille generator for this script."""
+    def _create_braille_generator(self) -> BrailleGenerator:
+        """Creates and returns the braille generator for this script."""
 
         return BrailleGenerator(self)
 
@@ -109,8 +109,8 @@ class Script(default.Script):
 
         return label_inference.LabelInference(self)
 
-    def get_speech_generator(self) -> SpeechGenerator:
-        """Returns the speech generator for this script."""
+    def _create_speech_generator(self) -> SpeechGenerator:
+        """Creates and returns the speech generator for this script."""
 
         return SpeechGenerator(self)
 
