@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-02-19 11:34+0000\n"
-"PO-Revision-Date: 2026-02-20 20:41+0100\n"
-"Last-Translator: Dagobert Janota <janotadag@gmail.com>\n"
+"PO-Revision-Date: 2026-02-21 23:54+0100\n"
+"Last-Translator: Daniel Rusek <mail@asciiwolf.com>\n"
 "Language-Team: Czech\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -1287,7 +1287,7 @@ msgstr "Přejít na další styl čtení velkých písmen"
 #. choose which type of echo is being used.
 #: src/orca/cmdnames.py:544
 msgid "Cycle to the next key echo level"
-msgstr "Přejít na další úroveň oznamování kláves"
+msgstr "Přejít na další úroveň odezvy kláves"
 
 #. Translators: this is a debug message that Orca users will not normally see. It
 #. describes a debug routine that allows the user to adjust the level of debug
@@ -5034,7 +5034,7 @@ msgstr "Uložit j_ako"
 #. hear. See the strings which follow this one.
 #: src/orca/guilabels.py:1348
 msgid "Key echo"
-msgstr "Oznamování kláves"
+msgstr "Odezva kláves"
 
 #. Translators: Orca has a feature to "echo" keys as they are pressed. This is
 #. the label for the setting which controls whether or not alphabetic keys will
@@ -5103,13 +5103,13 @@ msgstr "Akční klávesy"
 #. page. It groups the types of keys that will be spoken when pressed.
 #: src/orca/guilabels.py:1397
 msgid "Keys to Echo"
-msgstr "Oznamované klávesy"
+msgstr "Oznamované klávesy při odezvě"
 
 #. Translators: This is the label for a group of settings on the Echo preferences
 #. page. It groups the text echo options (character, word, sentence).
 #: src/orca/guilabels.py:1401
 msgid "Typing Echo"
-msgstr "Oznamování psaní"
+msgstr "Odezva psaní"
 
 #. Translators: Orca has an "echo" feature to present text as it is being written
 #. by the user. While Orca's "key echo" options present the actual keyboard keys
@@ -5623,7 +5623,7 @@ msgstr "Počet buněk"
 #. braille monitor shows Unicode braille dot patterns instead of text characters.
 #: src/orca/guilabels.py:1795
 msgid "Show braille dot patterns"
-msgstr "Zobrazit vzory braillských teček"
+msgstr "Zobrazit vzory braillských bodů"
 
 #. Translators: This is the label of a color button that controls the text color
 #. in the on-screen braille monitor.
@@ -5704,14 +5704,14 @@ msgstr "Oznamovat při vstupu"
 #. as the user types on the keyboard.
 #: src/orca/guilabels.py:1863
 msgid "Echo"
-msgstr "Ozvěna"
+msgstr "Odezva"
 
 #: src/orca/guilabels.py:1869
 msgid ""
 "Key echo speaks the key you pressed. Typing echo speaks what was inserted "
 "into the document as a result of your typing."
 msgstr ""
-"Klávesová ozvěna čte klávesy, které stisknete. Ozvěna psaní čte to, co bylo "
+"Odezva kláves čte klávesy, které stisknete. Odezva psaní čte to, co bylo "
 "vloženo do dokumentu, jako vaše vlastní psaní."
 
 #. Translators: This is the label of the General page in the Orca Preferences
@@ -9417,7 +9417,7 @@ msgstr "klávesa"
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:743
 msgid "Echo set to key."
-msgstr "Oznamování je nastavené na klávesu."
+msgstr "Odezva je nastavena na klávesu."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -9448,7 +9448,7 @@ msgstr "nic"
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:769
 msgid "Echo set to None."
-msgstr "Oznamování není nastavené na nic."
+msgstr "Odezva není nastavena na nic."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -9479,7 +9479,7 @@ msgstr "klávesa a slovo"
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:795
 msgid "Echo set to key and word."
-msgstr "Oznamování je nastavené na klávesu a slovo."
+msgstr "Odezva je nastavena na klávesu a slovo."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -9510,7 +9510,7 @@ msgstr "věta"
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:821
 msgid "Echo set to sentence."
-msgstr "Oznamování je nastavené na větu."
+msgstr "Odezva je nastavena na větu."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -9541,7 +9541,7 @@ msgstr "slovo"
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:847
 msgid "Echo set to word."
-msgstr "Oznamování je nastavené na slovo."
+msgstr "Odezva je nastavena na slovo."
 
 #. Translators: Orca has an "echo" setting which allows the user to configure
 #. what is spoken in response to a key press. Given a user who typed "Hello
@@ -9572,7 +9572,7 @@ msgstr "slovo a věta"
 #. echo and can cycle through the various levels quickly via a command.
 #: src/orca/messages.py:873
 msgid "Echo set to word and sentence."
-msgstr "Oznamování je nastavené na slovo a větu."
+msgstr "Odezva je nastavena na slovo a větu."
 
 #. Translators: This phrase is spoken to inform the user of all of the MathML
 #. enclosure notations associated with a given mathematical expression. For
