@@ -14,7 +14,7 @@ Path variables:
 
 Lookup precedence (highest to lowest):
 - Scalars and enums: runtime override -> app override -> active profile -> `default` profile (if active profile is not `default`) -> schema default
-- Dict settings (`a{ss}`, `a{saas}`): runtime override -> profile dictionary with app dictionary overlaid on top -> schema default
+- Dictionary settings (for example pronunciation entries and keybinding overrides): runtime override -> profile dictionary with app dictionary overlaid on top -> schema default
 
 Why dict settings do not inherit from `default` profile:
 - New profiles copy dict entries from the source profile when created.

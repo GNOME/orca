@@ -131,8 +131,9 @@ def generate_documentation(
         "`default` profile (if active profile is not `default`) -> schema default"
     )
     lines.append(
-        "- Dict settings (`a{ss}`, `a{saas}`): runtime override -> profile dictionary with app "
-        "dictionary overlaid on top -> schema default"
+        "- Dictionary settings (for example pronunciation entries and keybinding overrides): "
+        "runtime override -> profile dictionary with app dictionary overlaid on top -> "
+        "schema default"
     )
     lines.append("")
     lines.append("Why dict settings do not inherit from `default` profile:")
