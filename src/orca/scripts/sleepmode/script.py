@@ -40,9 +40,6 @@ from orca import sleep_mode_manager
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
-from .braille_generator import BrailleGenerator
-from .speech_generator import SpeechGenerator
-
 if TYPE_CHECKING:
     import gi
 
@@ -69,16 +66,6 @@ class Script(script.Script):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         command_manager.get_manager().set_all_suspended(False)
         orca_modifier_manager.get_manager().refresh_orca_modifiers("Leaving sleep mode.")
-
-    def get_braille_generator(self) -> BrailleGenerator:
-        """Returns the braille generator for this script."""
-
-        return BrailleGenerator(self)
-
-    def get_speech_generator(self) -> SpeechGenerator:
-        """Returns the speech generator for this script."""
-
-        return SpeechGenerator(self)
 
     def locus_of_focus_changed(
         self,
