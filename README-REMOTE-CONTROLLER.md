@@ -1,11 +1,5 @@
 # Orca Remote Controller (D-Bus Interface)
 
-> **⚠️⚠️ WORK IN PROGRESS**: This D-Bus interface is brand new and not yet feature complete.
-Low-risk feature additions will continue to be made in version 49 point releases. More involved
-features will be added only in version 50 and later. The API present in version 49.0 may be
-modified beyond bug fixes in version 50 or later based on feedback from consumers of this support.
-Such changes will be documented here.
-
 [TOC]
 
 ## Overview
@@ -339,5 +333,3 @@ changed via keyboard command, it is not a Remote Controller bug. (It may be a ge
 bug or feature request, and you are encouraged to file it as such.) On the other hand, if the
 behavior of the Remote Controller differs from that of the corresponding or related keyboard
 command, please report that Remote Controller failure as a new bug in Orca's gitlab.
-
-\* *Note: Remote Controller support for profile management is still pending.*

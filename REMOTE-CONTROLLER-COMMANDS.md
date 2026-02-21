@@ -1,8 +1,5 @@
 # Orca D-Bus Service Commands Reference
 
-This document lists all commands (215), runtime getters (143), and runtime setters (133) available
-via Orca's D-Bus Remote Controller interface.
-
 The service can be accessed at:
 
 - **Service Name:** `org.gnome.Orca.Service`

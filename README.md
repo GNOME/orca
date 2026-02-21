@@ -39,16 +39,14 @@ Orca has the following dependencies:
 * py-setproctitle  - Python library to set the process title (optional)
 * gstreamer-1.0    - GStreamer - Streaming media framework (optional)
 * python3-psutil   - Process and system utilities (optional)
-* libwnck3         - Used for mouse review (optional)
+* libwnck3         - Used for mouse review in X11 (optional)
 
 You are strongly encouraged to also have the latest stable versions
 of AT-SPI2 and ATK for the GNOME 50.x release.
 
 ## Note for Braille Users
 
-Orca depends upon the Python bindings for BrlAPI available in BrlTTY v4.5
-or better.  You can determine if the Python bindings for BrlAPI are
-installed by running the following command:
+You can determine if the Python bindings for BrlAPI are installed by running the following command:
 
 ```sh
 python -c "import brlapi"
@@ -107,34 +105,25 @@ solution. (The correct solution might instead be to fix a bug in Orca and/or the
 application.) To see examples of scripts, look in `src/orca/scripts` of the
 source tree.
 
-Scripts can also import features, but the features themselves should not live
-inside the script. Some examples of features imported by scripts include:
+Scripts can also import features, but the features themselves do not live inside the script;
+they live in navigators, presenters, and other such modules.
 
-* `src/orca/system_information_presenter.py`
-* `src/orca/flat_review_presenter.py`
-* `src/orca/notification_presenter.py`
-* `src/orca/object_navigator.py`
+## Remote Controller (D-Bus Interface)
 
-Please note: Historically features were implemented directly inside the scripts.
-Moving features outside of scripts is still a work in progress. Thus if you're
-wondering why some features are inside `src/orca/scripts/default.py` and others
-are not, the answer is that we haven't yet gotten around to migrating the features
-outside of `default.py`.
+Orca provides a D-Bus interface that allows external applications to remotely control Orca's
+functionality and present messages to users. For detailed usage instructions, examples, and
+API documentation, see [README-REMOTE-CONTROLLER.md](README-REMOTE-CONTROLLER.md).
 
-## Experimental Features
+## GSettings Support
 
-### Remote Controller (D-Bus Interface)
+Starting with Orca v50, Orca uses GSettings for its configuration. A list of Orca's
+schemas, keys, defaults, and enums is available in [GSETTINGS-SCHEMAS.md](GSETTINGS-SCHEMAS.md).
 
-**New in Orca v49.0:** Orca now provides a D-Bus interface that allows external applications
-to remotely control Orca's functionality and present messages to users. This feature is
-currently experimental. For detailed usage instructions, examples, and API documentation, see
-[README-REMOTE-CONTROLLER.md](README-REMOTE-CONTROLLER.md).
+## Spiel Text-to-Speech Support
 
-### Spiel Text-to-Speech Support
-
-By default, Orca uses speech-dispatcher for its TTS support. In addition, there is
-basic support for [Spiel](https://github.com/project-spiel) which allows choosing
-voices from multiple synthesizers, currently including eSpeak and Piper.
+By default, Orca uses speech-dispatcher for its TTS support. There is also basic support for
+[Spiel](https://github.com/project-spiel) which allows choosing voices from multiple synthesizers,
+currently including eSpeak and Piper.
 
 To test Spiel, configure Orca to build from the latest source. Once compiled,
 `meson devenv` will be used to run Orca.
