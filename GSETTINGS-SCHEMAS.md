@@ -28,11 +28,19 @@ Migration paths:
   - Backup first: `dconf dump /org/gnome/orca/ > backup.ini`
   - Restore backup: `dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < backup.ini`
 - Stand-alone import/export/diff tool: `python tools/gsettings_import_export.py <import|export|roundtrip|diff> ...`
-  - `import DIR`: import JSON settings from `DIR` into dconf.
-  - `export DIR`: export dconf settings to JSON files in `DIR`.
-  - `diff SRC_DIR OUT_DIR`: export dconf to `OUT_DIR` and diff against `SRC_DIR`.
-  - `roundtrip SRC_DIR OUT_DIR`: import from `SRC_DIR`, export to `OUT_DIR`, then diff.
-  - Use `import --dry-run` to preview writes without changing dconf.
+  - `import DIR`:
+    - What it does: import JSON settings from `DIR` into dconf (use `import --dry-run` to preview writes without changing dconf).
+    - Why use it: manually load settings from a JSON directory into the current dconf.
+  - `export DIR`:
+    - What it does: export current dconf settings to JSON files in `DIR`.
+    - Why use it: create a portable JSON backup or source directory for comparison.
+  - `diff SRC_DIR OUT_DIR`:
+    - What it does: export current dconf to JSON in `OUT_DIR`, then compare those exported JSON files to `SRC_DIR` (`user-settings.conf` and `app-settings/*.conf`). This does not import `SRC_DIR`.
+    - Why use it: non-destructive validation of current dconf against original JSON (for example, to check migration results).
+  - `roundtrip SRC_DIR OUT_DIR`:
+    - What it does: reset `/org/gnome/orca/`, import from `SRC_DIR`, export to `OUT_DIR`, then diff.
+    - Why use it: reset-based end-to-end validation of import/export behavior from a known JSON source.
+  - `diff` and `roundtrip` support `-v` / `--verbose` for fuller diff output.
   - Use `--prefix <orca-prefix>` if schemas are installed in a non-default prefix.
 
 ---

@@ -170,15 +170,39 @@ def generate_documentation(
         "- Stand-alone import/export/diff tool: "
         "`python tools/gsettings_import_export.py <import|export|roundtrip|diff> ...`"
     )
-    lines.append("  - `import DIR`: import JSON settings from `DIR` into dconf.")
-    lines.append("  - `export DIR`: export dconf settings to JSON files in `DIR`.")
+    lines.append("  - `import DIR`:")
     lines.append(
-        "  - `diff SRC_DIR OUT_DIR`: export dconf to `OUT_DIR` and diff against `SRC_DIR`."
+        "    - What it does: import JSON settings from `DIR` into dconf "
+        "(use `import --dry-run` to preview writes without changing dconf)."
     )
     lines.append(
-        "  - `roundtrip SRC_DIR OUT_DIR`: import from `SRC_DIR`, export to `OUT_DIR`, then diff."
+        "    - Why use it: manually load settings from a JSON directory into the current dconf."
     )
-    lines.append("  - Use `import --dry-run` to preview writes without changing dconf.")
+    lines.append("  - `export DIR`:")
+    lines.append("    - What it does: export current dconf settings to JSON files in `DIR`.")
+    lines.append(
+        "    - Why use it: create a portable JSON backup or source directory for comparison."
+    )
+    lines.append("  - `diff SRC_DIR OUT_DIR`:")
+    lines.append(
+        "    - What it does: export current dconf to JSON in `OUT_DIR`, then compare those "
+        "exported JSON files to `SRC_DIR` (`user-settings.conf` and `app-settings/*.conf`). "
+        "This does not import `SRC_DIR`."
+    )
+    lines.append(
+        "    - Why use it: non-destructive validation of current dconf against original JSON "
+        "(for example, to check migration results)."
+    )
+    lines.append("  - `roundtrip SRC_DIR OUT_DIR`:")
+    lines.append(
+        "    - What it does: reset `/org/gnome/orca/`, import from `SRC_DIR`, export to "
+        "`OUT_DIR`, then diff."
+    )
+    lines.append(
+        "    - Why use it: reset-based end-to-end validation of import/export behavior from a "
+        "known JSON source."
+    )
+    lines.append("  - `diff` and `roundtrip` support `-v` / `--verbose` for fuller diff output.")
     lines.append(
         "  - Use `--prefix <orca-prefix>` if schemas are installed in a non-default prefix."
     )
