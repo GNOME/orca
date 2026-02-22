@@ -2,6 +2,7 @@
 # pylint: disable=too-many-arguments,too-many-positional-arguments,too-many-locals
 # pylint: disable=too-many-branches,too-many-statements,too-many-return-statements
 # pylint: disable=too-many-lines
+# ruff: noqa: T201, PERF203
 # gsettings_import_export.py
 #
 # Standalone tool for importing/exporting Orca settings between JSON and GSettings.
@@ -329,10 +330,9 @@ def _import_keybindings_for_path(
             if key in KEYBINDINGS_METADATA_KEYS:
                 continue
             if isinstance(value, list):
-                bindings: list[list[str]] = []
-                for binding in value:
-                    if isinstance(binding, list):
-                        bindings.append([str(v) for v in binding])
+                bindings = [
+                    [str(v) for v in binding] for binding in value if isinstance(binding, list)
+                ]
                 converted[key] = bindings
         if not converted:
             return
@@ -495,7 +495,7 @@ def _import_app(
 
 
 def import_settings(settings_dir: str, source: SchemaSource, dry_run: bool = False) -> None:
-    """Import JSON settings from a directory into GSettings/dconf."""
+    """Import JSON settings into GSettings/dconf additively (overlay, no dconf reset first)."""
     settings_file = os.path.join(settings_dir, "user-settings.conf")
     if not os.path.isfile(settings_file):
         print(f"Error: {settings_file} not found", file=sys.stderr)
@@ -950,7 +950,7 @@ def _diff_json_files(
 def _format_diff_value(path: str, value: Any) -> str:
     """Format a diff value, resolving enum nicks when possible."""
     raw = _truncate(json.dumps(value, default=str))
-    leaf = path.split(".")[-1]
+    leaf = path.rsplit(".", maxsplit=1)[-1]
     info = _get_default_info()
     if leaf not in info:
         return raw

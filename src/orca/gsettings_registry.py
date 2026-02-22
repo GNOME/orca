@@ -387,17 +387,25 @@ class GSettingsRegistry:
     def _is_migration_done(self) -> bool:
         """Returns True if JSON-to-GSettings migration has already been completed."""
 
+        checked = 0
         for name, schema_id in self._schemas.items():
             handle = GSettingsSchemaHandle(schema_id, name)
-            if handle.is_current_version():
-                msg = f"GSETTINGS REGISTRY: Migration already done (found version on '{name}')."
+            if not handle.has_key("version"):
+                continue
+            checked += 1
+            if not handle.is_current_version():
+                msg = f"GSETTINGS REGISTRY: Schema '{name}' not at current version."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
-                return True
+                return False
 
-        count = len(self._schemas)
-        msg = f"GSETTINGS REGISTRY: No migration version found. {count} schema(s) to migrate."
+        if checked == 0:
+            msg = "GSETTINGS REGISTRY: No schemas with version key found."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        msg = f"GSETTINGS REGISTRY: Migration already done ({checked} schema(s) verified)."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        return False
+        return True
 
     def _stamp_migration_done(self) -> None:
         """Stamps version on all schemas to mark migration as complete."""

@@ -59,6 +59,9 @@ lint.ignore = [
   "SIM108", # Ternary operator — can harm readability for complex conditions
 ]
 
+[tool.ruff.lint.isort]
+known-first-party = ["orca", "generate_gsettings_schemas"]
+
 [tool.ruff.lint.per-file-ignores]
 "src/orca/dbus_service.py" = ["FA100", "TC002"]  # dasbus needs runtime type hints; future annotations breaks it
 "tests/integration_tests/*" = ["T201"]  # print used for test output

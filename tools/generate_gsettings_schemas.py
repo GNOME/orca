@@ -101,15 +101,14 @@ def _extract_gsetting_decorators(tree: ast.Module, source_path: str) -> list[dic
                     setting[keyword.arg] = keyword.value.value
                 elif isinstance(keyword.value, ast.Dict):
                     d = {}
-                    for k, v in zip(keyword.value.keys, keyword.value.values):
+                    for k, v in zip(keyword.value.keys, keyword.value.values, strict=True):
                         if isinstance(k, ast.Constant) and isinstance(v, ast.Constant):
                             d[k.value] = v.value
                     setting[keyword.arg] = d
                 elif isinstance(keyword.value, ast.List):
-                    items = []
-                    for elt in keyword.value.elts:
-                        if isinstance(elt, ast.Constant):
-                            items.append(elt.value)
+                    items = [
+                        elt.value for elt in keyword.value.elts if isinstance(elt, ast.Constant)
+                    ]
                     setting[keyword.arg] = items
 
             missing = REQUIRED_SETTING_FIELDS - set(setting)
@@ -153,7 +152,7 @@ def _extract_gsettings_enums(tree: ast.Module) -> dict[str, dict[str, int]]:
                 if keyword.arg == "enum_id" and isinstance(keyword.value, ast.Constant):
                     enum_id = str(keyword.value.value)
                 elif keyword.arg == "values" and isinstance(keyword.value, ast.Dict):
-                    for k, v in zip(keyword.value.keys, keyword.value.values):
+                    for k, v in zip(keyword.value.keys, keyword.value.values, strict=True):
                         if (
                             isinstance(k, ast.Constant)
                             and isinstance(v, ast.Constant)
