@@ -35,9 +35,7 @@ from orca import (
 from orca.ax_text import AXText
 from orca.scripts import default
 
-from .braille_generator import BrailleGenerator
 from .script_utilities import Utilities
-from .speech_generator import SpeechGenerator
 
 if TYPE_CHECKING:
     import gi
@@ -54,16 +52,6 @@ class Script(default.Script):
     def __init__(self, app: Atspi.Accessible) -> None:
         super().__init__(app)
         self.present_if_inactive: bool = False
-
-    def _create_braille_generator(self) -> BrailleGenerator:
-        """Creates and returns the braille generator for this script."""
-
-        return BrailleGenerator(self)
-
-    def _create_speech_generator(self) -> SpeechGenerator:
-        """Creates and returns the speech generator for this script."""
-
-        return SpeechGenerator(self)
 
     def get_utilities(self) -> Utilities:
         """Returns the utilities for this script."""

@@ -353,6 +353,9 @@ class Generator:
         if args.get("omitDescription"):
             return []
 
+        if AXUtilities.is_terminal(obj):
+            return []
+
         if hash(obj) in Generator.CACHED_DESCRIPTION:
             return Generator.CACHED_DESCRIPTION.get(hash(obj), [])
 
