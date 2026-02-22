@@ -207,7 +207,12 @@ class KeyBinding:
         if not self.keycode:
             self.keyval, self.keycode = get_keycodes(self.keysymstring)
 
-        if self.keycode == keycode or self.keyval == keyval:
+        # Prefer keyval matching (layout-correct for QWERTZ, AZERTY, Dvorak, etc.).
+        # Fall back to keycode when Shift changes the keyval (e.g., 'h' vs 'H')
+        # or for non-Latin layouts where the keyval is outside the Latin range.
+        if self.keyval == keyval or (
+            self.keycode == keycode and (keyval > 0xFF or modifiers & SHIFT_MODIFIER_MASK)
+        ):
             result = modifiers & self.modifier_mask
             return result == self.modifiers
 
