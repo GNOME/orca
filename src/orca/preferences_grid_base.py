@@ -1859,7 +1859,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                     if isinstance(widget, Gtk.ComboBoxText):
                         active = widget.get_active()
                         if active >= 0:
-                            value_list = control.values if control.values else control.options
+                            value_list = control.values or control.options
                             control.setter(value_list[active])
                     elif isinstance(widget, Gtk.RadioButton):
                         if widget in self._radio_to_selection_value:
@@ -1935,7 +1935,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
             elif isinstance(control, EnumPreferenceControl):
                 assert isinstance(widget, Gtk.ComboBoxText)
                 current_value = control.getter()
-                value_list = control.values if control.values else control.options
+                value_list = control.values or control.options
                 try:
                     index = value_list.index(current_value)
                     widget.set_active(index)
@@ -1950,7 +1950,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                 current_value = control.getter()
                 if isinstance(widget, Gtk.ComboBoxText):
                     # Combo box variant
-                    value_list = control.values if control.values else control.options
+                    value_list = control.values or control.options
                     try:
                         index = value_list.index(current_value)
                         widget.set_active(index)
@@ -2000,7 +2000,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                 assert isinstance(widget, Gtk.ComboBoxText)
                 active = widget.get_active()
                 if active >= 0:
-                    value_list = control.values if control.values else control.options
+                    value_list = control.values or control.options
                     value = value_list[active]
                     control.setter(value)
                     if control.prefs_key:
@@ -2018,7 +2018,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                 if isinstance(widget, Gtk.ComboBoxText):
                     active = widget.get_active()
                     if active >= 0:
-                        value_list = control.values if control.values else control.options
+                        value_list = control.values or control.options
                         value = value_list[active]
                 elif isinstance(widget, Gtk.RadioButton):
                     for radio in widget.get_group():

@@ -22,7 +22,6 @@
 # pylint: disable=unused-argument
 # pylint: disable=too-many-lines
 # pylint: disable=missing-class-docstring
-# pylint: disable=wrong-import-position
 # pylint: disable=too-many-public-methods
 
 # Stub file that contains all public methods of AXUtilities, including

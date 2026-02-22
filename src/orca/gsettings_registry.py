@@ -187,7 +187,7 @@ class GSettingsRegistry:
         if source.lookup(schema_id, True) is None:
             return None
         profile = gsettings_migrator.sanitize_gsettings_path(profile)
-        suffix = sub_path if sub_path else schema_name
+        suffix = sub_path or schema_name
         if app_name:
             app = gsettings_migrator.sanitize_gsettings_path(app_name)
             path = f"{GSETTINGS_PATH_PREFIX}{profile}/apps/{app}/{suffix}/"
@@ -1070,7 +1070,7 @@ class GSettingsSchemaHandle:
     def _build_profile_path(self, profile: str, sub_path: str = "") -> str:
         """Returns the dconf path for a profile."""
         profile = GSettingsRegistry.sanitize_gsettings_path(profile)
-        suffix = sub_path if sub_path else self._path_suffix
+        suffix = sub_path or self._path_suffix
         return f"{GSETTINGS_PATH_PREFIX}{profile}/{suffix}/"
 
     def _build_app_path(self, app_name: str, profile: str, sub_path: str = "") -> str:
@@ -1078,7 +1078,7 @@ class GSettingsSchemaHandle:
 
         profile = GSettingsRegistry.sanitize_gsettings_path(profile)
         app_name = GSettingsRegistry.sanitize_gsettings_path(app_name)
-        suffix = sub_path if sub_path else self._path_suffix
+        suffix = sub_path or self._path_suffix
         return f"{GSETTINGS_PATH_PREFIX}{profile}/apps/{app_name}/{suffix}/"
 
     def _get_for_path(self, path: str) -> Gio.Settings | None:

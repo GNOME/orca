@@ -19,7 +19,6 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-public-methods
-# pylint: disable=wrong-import-position
 # pylint: disable=too-many-lines
 
 """Provides braille presentation support."""

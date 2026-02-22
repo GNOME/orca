@@ -19,10 +19,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
-# pylint: disable=too-many-branches
 # pylint: disable=too-many-public-methods
-# pylint: disable=too-many-return-statements
 
 """Utilities for obtaining accessibility information for debugging."""
 
@@ -58,30 +55,43 @@ class AXUtilitiesDebugging:
         return string
 
     @staticmethod
+    def _accessible_as_string(obj: Atspi.Accessible) -> str:
+        """Returns a human-consumable string for an accessible object."""
+
+        result = AXObject.get_role_name(obj)
+        name = AXObject.get_name(obj)
+        if name:
+            result += f": '{AXUtilitiesDebugging._format_string(name)}'"
+        if not result:
+            result = "DEAD"
+        return f"[{result} ({hex(id(obj))})] "
+
+    @staticmethod
+    def _function_as_string(obj: types.FunctionType) -> str:
+        """Returns a human-consumable string for a function."""
+
+        if hasattr(obj, "__self__"):
+            return f"{obj.__module__}.{obj.__self__.__class__.__name__}.{obj.__name__}"
+        return f"{obj.__module__}.{obj.__name__}"
+
+    @staticmethod
     def as_string(obj: Any) -> str:
         """Turns obj into a human-consumable string."""
 
         if isinstance(obj, Atspi.Accessible):
-            result = AXObject.get_role_name(obj)
-            name = AXObject.get_name(obj)
-            if name:
-                result += f": '{AXUtilitiesDebugging._format_string(name)}'"
-            if not result:
-                result = "DEAD"
+            string = AXUtilitiesDebugging._accessible_as_string(obj)
 
-            return f"[{result} ({hex(id(obj))})] "
-
-        if isinstance(obj, Atspi.Event):
+        elif isinstance(obj, Atspi.Event):
             any_data = AXUtilitiesDebugging._format_string(
                 AXUtilitiesDebugging.as_string(obj.any_data),
             )
-            return (
+            string = (
                 f"{obj.type} for {AXUtilitiesDebugging.as_string(obj.source)} in "
                 f"{AXUtilitiesApplication.application_as_string(obj.source)} "
                 f"({obj.detail1}, {obj.detail2}, {any_data})"
             )
 
-        if isinstance(
+        elif isinstance(
             obj,
             (
                 Atspi.Role,
@@ -91,37 +101,38 @@ class AXUtilitiesDebugging:
                 Atspi.ScrollType,
             ),
         ):
-            return obj.value_nick
+            string = obj.value_nick
 
-        if isinstance(obj, Atspi.Rect):
-            return f"(x:{obj.x}, y:{obj.y}, width:{obj.width}, height:{obj.height})"
+        elif isinstance(obj, Atspi.Rect):
+            string = f"(x:{obj.x}, y:{obj.y}, width:{obj.width}, height:{obj.height})"
 
-        if isinstance(obj, (list, set)):
-            return f"[{', '.join(map(AXUtilitiesDebugging.as_string, obj))}]"
+        elif isinstance(obj, (list, set)):
+            string = f"[{', '.join(map(AXUtilitiesDebugging.as_string, obj))}]"
 
-        if isinstance(obj, dict):
+        elif isinstance(obj, dict):
             stringified = {key: AXUtilitiesDebugging.as_string(value) for key, value in obj.items()}
             formatter = pprint.PrettyPrinter(width=150)
-            return f"{formatter.pformat(stringified)}"
+            string = f"{formatter.pformat(stringified)}"
 
-        if isinstance(obj, types.FunctionType):
-            if hasattr(obj, "__self__"):
-                return f"{obj.__module__}.{obj.__self__.__class__.__name__}.{obj.__name__}"
-            return f"{obj.__module__}.{obj.__name__}"
+        elif isinstance(obj, types.FunctionType):
+            string = AXUtilitiesDebugging._function_as_string(obj)
 
-        if isinstance(obj, types.MethodType):
+        elif isinstance(obj, types.MethodType):
             module = obj.__func__.__module__.rsplit(".", 1)[-1]
-            return f"{module}.{obj.__func__.__qualname__}"
+            string = f"{module}.{obj.__func__.__qualname__}"
 
-        if isinstance(obj, types.FrameType):
+        elif isinstance(obj, types.FrameType):
             module_name = inspect.getmodulename(obj.f_code.co_filename)
-            return f"{module_name}.{obj.f_code.co_name}"
+            string = f"{module_name}.{obj.f_code.co_name}"
 
-        if isinstance(obj, inspect.FrameInfo):
+        elif isinstance(obj, inspect.FrameInfo):
             module_name = inspect.getmodulename(obj.filename) or "<unknown>"
-            return f"{module_name}.{obj.function}:{obj.lineno}"
+            string = f"{module_name}.{obj.function}:{obj.lineno}"
 
-        return str(obj)
+        else:
+            string = str(obj)
+
+        return string
 
     @staticmethod
     def actions_as_string(obj: Atspi.Accessible) -> str:

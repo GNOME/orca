@@ -19,15 +19,11 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
-# pylint: disable=too-many-locals
 # pylint: disable=too-many-public-methods
-# pylint: disable=too-many-branches
 # pylint: disable=too-many-lines
 
 """Utilities for obtaining information about accessible text."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import enum
@@ -1416,8 +1412,7 @@ class AXText:
         """Returns the first (string, start, end) visible line of obj inside clip_rect."""
 
         result = "", 0, 0
-        length = AXText.get_character_count(obj)
-        low, high = 0, length
+        low, high = 0, AXText.get_character_count(obj)
         while low < high:
             mid = (low + high) // 2
             line, start, end = AXText.get_line_at_offset(obj, mid)
@@ -1431,8 +1426,8 @@ class AXText:
                 continue
 
             result = line, start, end
-            previous_line, previous_start, previous_end = AXText.get_line_at_offset(obj, start - 1)
-            if previous_start <= 0 and previous_end <= 0:
+            prev_result = AXText.get_line_at_offset(obj, start - 1)
+            if prev_result[1] <= 0 and prev_result[2] <= 0:
                 return result
 
             text_rect = AXText.get_range_rect(obj, start, end)
@@ -1444,11 +1439,11 @@ class AXText:
                 high = mid
                 continue
 
-            previous_rect = AXText.get_range_rect(obj, previous_start, previous_end)
+            previous_rect = AXText.get_range_rect(obj, prev_result[1], prev_result[2])
             if AXText._line_comparison(previous_rect, clip_rect) != 0:
                 return result
 
-            result = previous_line, previous_start, previous_end
+            result = prev_result
             high = mid
 
         return result
@@ -1476,8 +1471,8 @@ class AXText:
                 continue
 
             result = line, start, end
-            next_line, next_start, next_end = AXText.get_line_at_offset(obj, end)
-            if next_start <= 0 and next_end <= 0:
+            next_result = AXText.get_line_at_offset(obj, end)
+            if next_result[1] <= 0 and next_result[2] <= 0:
                 return result
 
             text_rect = AXText.get_range_rect(obj, start, end)
@@ -1489,11 +1484,11 @@ class AXText:
                 high = mid
                 continue
 
-            next_rect = AXText.get_range_rect(obj, next_start, next_end)
+            next_rect = AXText.get_range_rect(obj, next_result[1], next_result[2])
             if AXText._line_comparison(next_rect, clip_rect) != 0:
                 return result
 
-            result = next_line, next_start, next_end
+            result = next_result
             low = mid + 1
 
         return result

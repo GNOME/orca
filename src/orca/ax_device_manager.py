@@ -18,8 +18,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
-
 """Handle activating and providing access to the AT-SPI device."""
 
 import gi

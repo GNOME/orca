@@ -466,7 +466,7 @@ class EventManager:
                     return True
                 return False
             if "selected" in event_type:
-                if not event.detail1 and role in [Atspi.Role.BUTTON]:
+                if not event.detail1 and role == Atspi.Role.BUTTON:
                     msg = f"EVENT MANAGER: Ignoring {event_type} due to role of source and detail1"
                     debug.print_message(debug.LEVEL_INFO, msg, True)
                     return True
@@ -496,7 +496,7 @@ class EventManager:
 
         if event_type.startswith("object:text-caret-moved"):
             role = AXObject.get_role(event.source)
-            if role in [Atspi.Role.LABEL]:
+            if role == Atspi.Role.LABEL:
                 msg = f"EVENT MANAGER: Ignoring {event_type} due to role of unfocused source"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True

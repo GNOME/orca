@@ -769,7 +769,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             else:
                 language = lang
 
-            msg = language if language else "default language"
+            msg = language or "default language"
             languages.append(language)
             model.append([msg])
 

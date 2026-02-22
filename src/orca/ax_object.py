@@ -18,9 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
 # pylint: disable=too-many-lines
-# pylint: disable=too-many-return-statements
 # pylint: disable=too-many-public-methods
 
 """Utilities for obtaining information about accessible objects."""
@@ -253,20 +251,19 @@ class AXObject:
 
         app_name = AXObject.get_name(app)
         if app_name != "soffice":
-            return iface is not None
-
-        if AXObject.find_ancestor_inclusive(
+            result = iface is not None
+        elif AXObject.find_ancestor_inclusive(
             obj,
             lambda x: AXObject.get_role(x) == Atspi.Role.DOCUMENT_TEXT,
         ):
-            return True
-
-        if AXObject._has_document_spreadsheet(obj):
+            result = True
+        elif AXObject._has_document_spreadsheet(obj):
             msg = "AXObject: Treating soffice as not supporting collection due to spreadsheet."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        return True
+            result = False
+        else:
+            result = True
+        return result
 
     @staticmethod
     def supports_component(obj: Atspi.Accessible) -> bool:
@@ -512,21 +509,14 @@ class AXObject:
     def get_parent_checked(obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the parent of obj, doing checks for tree validity"""
 
-        if not AXObject.is_valid(obj):
-            return None
-
-        role = AXObject.get_role(obj)
-        if role in [Atspi.Role.INVALID, Atspi.Role.APPLICATION]:
+        if AXObject.get_role(obj) in (Atspi.Role.INVALID, Atspi.Role.APPLICATION):
             return None
 
         parent = AXObject.get_parent(obj)
         if parent is None:
             return None
 
-        if debug.debugLevel > debug.LEVEL_INFO:
-            return parent
-
-        if AXObject.is_dead(obj):
+        if debug.debugLevel > debug.LEVEL_INFO or AXObject.is_dead(obj):
             return parent
 
         index = AXObject.get_index_in_parent(obj)
@@ -544,10 +534,10 @@ class AXObject:
                 "children",
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return parent
+        else:
+            # This performs our check and includes any errors.
+            AXObject.get_active_descendant_checked(parent, obj)
 
-        # This performs our check and includes any errors. We don't need the return value here.
-        AXObject.get_active_descendant_checked(parent, obj)
         return parent
 
     @staticmethod

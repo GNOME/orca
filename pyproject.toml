@@ -76,6 +76,7 @@ disable = [
     "duplicate-code",
     "cyclic-import",
     "c-extension-no-member",
+    "wrong-import-position",
 ]
 
 [tool.mypy]

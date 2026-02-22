@@ -18,15 +18,11 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=too-many-instance-attributes
-# pylint: disable=too-many-arguments
-# pylint: disable=too-many-positional-arguments
-
 """Module for drawing highlights over an area of interest."""
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, NamedTuple
 
 from . import debug
 
@@ -52,6 +48,15 @@ if TYPE_CHECKING:
         GtkType = Any
 
 
+class HighlightColor(NamedTuple):
+    """An RGBA color for use with highlighters."""
+
+    red: float
+    green: float
+    blue: float
+    alpha: float = 1.0
+
+
 class Highlighter:
     """Base class of all highlighters supported by Orca."""
 
@@ -59,38 +64,35 @@ class Highlighter:
     RECTANGLE = "rectangle"
     UNDERLINE = "underline"
 
-    RED = (1, 0, 0)
-    BLUE = (0, 0, 1)
-    GREEN = (0, 1, 0)
-    YELLOW = (1, 1, 0)
-    PURPLE = (0.5, 0, 0.5)
-    ORANGE = (1, 0.5, 0)
-    PINK = (1, 0.75, 0.8)
-    CYAN = (0, 1, 1)
-    MAGENTA = (1, 0, 1)
-    LIME = (0.5, 1, 0)
-    NAVY = (0, 0, 0.5)
-    TEAL = (0, 0.5, 0.5)
-    BLACK = (0, 0, 0)
-    WHITE = (1, 1, 1)
+    RED = HighlightColor(1, 0, 0)
+    BLUE = HighlightColor(0, 0, 1)
+    GREEN = HighlightColor(0, 1, 0)
+    YELLOW = HighlightColor(1, 1, 0)
+    PURPLE = HighlightColor(0.5, 0, 0.5)
+    ORANGE = HighlightColor(1, 0.5, 0)
+    PINK = HighlightColor(1, 0.75, 0.8)
+    CYAN = HighlightColor(0, 1, 1)
+    MAGENTA = HighlightColor(1, 0, 1)
+    LIME = HighlightColor(0.5, 1, 0)
+    NAVY = HighlightColor(0, 0, 0.5)
+    TEAL = HighlightColor(0, 0.5, 0.5)
+    BLACK = HighlightColor(0, 0, 0)
+    WHITE = HighlightColor(1, 1, 1)
 
     def __init__(
         self,
         highlight_type: str,
-        color: tuple[float, float, float],
-        alpha: float,
+        color: HighlightColor,
         thickness: int,
         padding: int,
-        fill_color: tuple[float, float, float] | None,
-        fill_alpha: float | None,
+        *,
+        fill_color: HighlightColor | None = None,
     ) -> None:
         self._highlight_type = highlight_type
         self._color = color
-        self._alpha = alpha
         self._thickness = thickness
         self._padding = padding
         self._fill_color = fill_color
-        self._fill_alpha = fill_alpha
         self._gui = self._create_gui()  # pylint: disable=assignment-from-none
 
     def _create_gui(self) -> Any:
@@ -120,19 +122,18 @@ class GtkHighlighter(Highlighter):
     def __init__(
         self,
         highlight_type: str = Highlighter.UNDERLINE,
-        color: tuple[float, float, float] = Highlighter.GREEN,
-        alpha: float = 1.0,
+        color: HighlightColor = Highlighter.GREEN,
         thickness: int = 5,
         padding: int = 5,
-        fill_color: tuple[float, float, float] | None = None,
-        fill_alpha: float | None = None,
+        *,
+        fill_color: HighlightColor | None = None,
     ) -> None:
         if not CAIRO_AVAILABLE:
             msg = "GTK HIGHLIGHTER: Unavailable. Is Cairo installed?"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        super().__init__(highlight_type, color, alpha, thickness, padding, fill_color, fill_alpha)
+        super().__init__(highlight_type, color, thickness, padding, fill_color=fill_color)
         self._drawing_area: Any = None
 
     def _create_gui(self) -> Any:
@@ -169,12 +170,7 @@ class GtkHighlighter(Highlighter):
     def _draw_highlight(self, painter: Any) -> None:
         """Called by highlight to draw a highlight over the item."""
 
-        if self._fill_color is None:
-            self._fill_color = self.YELLOW
-        if self._fill_alpha is None:
-            self._fill_alpha = 0.3
-
-        fill = (*self._fill_color, self._fill_alpha)
+        fill = self._fill_color or HighlightColor(1, 1, 0, 0.3)
         painter.set_source_rgba(*fill)
         painter.set_operator(cairo.OPERATOR_SOURCE)  # pylint: disable=no-member
         painter.paint()
@@ -188,14 +184,12 @@ class GtkHighlighter(Highlighter):
         width = self._gui.get_allocated_width() - 2 * self._padding
         height = self._gui.get_allocated_height() - 2 * self._padding
 
-        if self._fill_color is not None and self._fill_alpha is not None:
-            fill = (*self._fill_color, self._fill_alpha * 255)
-            painter.set_source_rgba(*fill)
+        if self._fill_color is not None:
+            painter.set_source_rgba(*self._fill_color)
             painter.rectangle(x, y, width, height)
             painter.fill()
 
-        line = (*self._color, self._alpha)
-        painter.set_source_rgba(*line)
+        painter.set_source_rgba(*self._color)
         painter.set_line_width(self._thickness)
         painter.rectangle(x, y, width, height)
         painter.stroke()
@@ -203,8 +197,7 @@ class GtkHighlighter(Highlighter):
     def _draw_underline(self, painter: Any) -> None:
         """Called by highlight to draw an underline under the item."""
 
-        line = (*self._color, self._alpha)
-        painter.set_source_rgba(*line)
+        painter.set_source_rgba(*self._color)
         painter.set_line_width(self._thickness)
         painter.move_to(0, self._gui.get_allocated_height() - 5)
         painter.line_to(self._gui.get_allocated_width(), self._gui.get_allocated_height() - 5)

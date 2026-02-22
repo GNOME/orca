@@ -19,10 +19,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-public-methods
-# pylint: disable=too-many-return-statements
 
 """Utilities for obtaining information about accessible tables."""
 
@@ -422,27 +420,12 @@ class AXTable:
         return row_span, col_span
 
     @staticmethod
-    def _get_cell_spans_from_table(cell: Atspi.Accessible) -> tuple[int, int]:
-        """Returns the row and column spans of cell via the table interface."""
-
-        if hash(cell) in AXTable.PHYSICAL_SPANS_FROM_TABLE:
-            return AXTable.PHYSICAL_SPANS_FROM_TABLE.get(hash(cell), (-1, -1))
-
-        index = AXTable._get_cell_index(cell)
-        if index < 0:
-            return -1, -1
-
-        table = AXTable.get_table(cell)
-        if table is None:
-            return -1, -1
-
-        if not AXObject.supports_table(table):
-            return -1, -1
-
-        # Cells in a tree are expected to not span multiple rows or columns.
-        # Also this: https://bugreports.qt.io/browse/QTBUG-119167
-        if AXUtilitiesRole.is_tree(table):
-            return 1, 1
+    def _get_row_column_extents(
+        cell: Atspi.Accessible,
+        table: Atspi.Accessible,
+        index: int,
+    ) -> tuple[int, int]:
+        """Returns the validated row and column extents for cell, or (-1, -1) on failure."""
 
         try:
             result = Atspi.Table.get_row_column_extents_at_index(table, index)
@@ -486,6 +469,29 @@ class AXTable:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             col_span = 1
 
+        return row_span, col_span
+
+    @staticmethod
+    def _get_cell_spans_from_table(cell: Atspi.Accessible) -> tuple[int, int]:
+        """Returns the row and column spans of cell via the table interface."""
+
+        if hash(cell) in AXTable.PHYSICAL_SPANS_FROM_TABLE:
+            return AXTable.PHYSICAL_SPANS_FROM_TABLE.get(hash(cell), (-1, -1))
+
+        index = AXTable._get_cell_index(cell)
+        if index < 0:
+            return -1, -1
+
+        table = AXTable.get_table(cell)
+        if table is None or not AXObject.supports_table(table):
+            return -1, -1
+
+        # Cells in a tree are expected to not span multiple rows or columns.
+        # Also this: https://bugreports.qt.io/browse/QTBUG-119167
+        if AXUtilitiesRole.is_tree(table):
+            return 1, 1
+
+        row_span, col_span = AXTable._get_row_column_extents(cell, table, index)
         tokens = [
             "AXTable: Table iface spans for",
             cell,

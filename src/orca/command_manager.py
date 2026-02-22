@@ -529,7 +529,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             vbox.set_margin_top(12)
             vbox.set_margin_bottom(12)
 
-            description = cmd.get_description() if cmd.get_description() else cmd.get_name()
+            description = cmd.get_description() or cmd.get_name()
             desc_label = Gtk.Label(label=description, xalign=0)
             desc_label.set_line_wrap(True)
             desc_label.set_hexpand(True)

@@ -22,7 +22,6 @@
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-return-statements
 # pylint: disable=too-many-statements
-# pylint: disable=wrong-import-position
 # pylint: disable=too-many-lines
 
 """Utilities for performing tasks related to accessibility inspection."""

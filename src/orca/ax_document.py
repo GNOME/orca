@@ -19,8 +19,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
-
 """Utilities for obtaining document-related information about accessible objects."""
 
 from __future__ import annotations

@@ -175,7 +175,7 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 result.append(self._default_profile)
             else:
                 result.append(profile)
-        return result if result else [self._default_profile]
+        return result or [self._default_profile]
 
     def _get_active_profile(self) -> str:
         return self._manager.get_active_profile()

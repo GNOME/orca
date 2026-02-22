@@ -19,7 +19,6 @@
 
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-locals
-# pylint: disable=wrong-import-position
 # pylint: disable=too-few-public-methods
 # pylint: disable=unused-argument
 

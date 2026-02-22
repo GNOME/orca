@@ -18,7 +18,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-return-statements
 
