@@ -381,6 +381,7 @@ def _import_profile(
     apply_legacy_aliases(profile_prefs)
     hoist_keybindings_metadata(profile_prefs)
     profile = sanitize_gsettings_path(profile_name)
+    skip_defaults = profile_name == "default"
 
     for schema_name in ALL_MAPPINGS:
         path = _build_profile_path(profile, schema_name)
@@ -391,7 +392,7 @@ def _import_profile(
             profile_prefs,
             f"profile:{profile_name}",
             dry_run,
-            skip_defaults=True,
+            skip_defaults=skip_defaults,
         )
 
     _import_synthesizer_for_profile(
@@ -411,7 +412,7 @@ def _import_profile(
             path,
             f"voice:{voice_type}/profile:{profile_name}",
             dry_run,
-            skip_defaults=True,
+            skip_defaults=skip_defaults,
         )
 
     pronunciations = profile_prefs.get("pronunciations", {})
