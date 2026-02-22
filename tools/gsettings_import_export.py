@@ -472,7 +472,14 @@ def _import_app(
                 continue
             vt = sanitize_gsettings_path(voice_type)
             path = _build_app_path(app_name, profile_name, f"voices/{vt}")
-            _import_voice_for_path(source, voice_data, path, f"voice:{voice_type}/{label}", dry_run)
+            _import_voice_for_path(
+                source,
+                voice_data,
+                path,
+                f"voice:{voice_type}/{label}",
+                dry_run,
+                skip_defaults=False,
+            )
 
         if pronunciations:
             path = _build_app_path(app_name, profile_name, "pronunciations")
