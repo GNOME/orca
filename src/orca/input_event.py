@@ -28,33 +28,38 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import inspect
 import math
 import time
 import unicodedata
-from typing import Callable, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 import gi
 
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
-from gi.repository import Atspi
-from gi.repository import Gdk  # pylint: disable=no-name-in-module
-from gi.repository import GLib
+from gi.repository import (
+    Atspi,
+    Gdk,  # pylint: disable=no-name-in-module
+    GLib,
+)
 
-from . import command_manager
-from . import debug
-from . import focus_manager
-from . import keybindings
-from . import keynames
-from . import messages
-from . import orca_modifier_manager
-from . import presentation_manager
-from . import script_manager
+from . import (
+    command_manager,
+    debug,
+    focus_manager,
+    keybindings,
+    keynames,
+    messages,
+    orca_modifier_manager,
+    presentation_manager,
+    script_manager,
+)
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from .scripts import default
 
 KEYBOARD_EVENT = "keyboard"
@@ -147,6 +152,9 @@ class KeyboardEvent(InputEvent):
 
         return False
 
+    def __hash__(self) -> int:
+        return hash((self.type, self.hw_code, self.timestamp))
+
     def __str__(self) -> str:
         if self.should_obscure():
             keyid = hw_code = modifiers = text = keyval_name = "*"
@@ -159,13 +167,13 @@ class KeyboardEvent(InputEvent):
 
         return (
             f"KEYBOARD_EVENT:  type={self.type.value_name.upper()}\n"
-            + f"                 id={keyid}\n"
-            + f"                 hw_code={hw_code}\n"
-            + f"                 modifiers={modifiers}\n"
-            + f"                 text='{text}'\n"
-            + f"                 keyval_name='{keyval_name}'\n"
-            + f"                 timestamp={self.timestamp}\n"
-            + f"                 clickCount={self._click_count}"
+            f"                 id={keyid}\n"
+            f"                 hw_code={hw_code}\n"
+            f"                 modifiers={modifiers}\n"
+            f"                 text='{text}'\n"
+            f"                 keyval_name='{keyval_name}'\n"
+            f"                 timestamp={self.timestamp}\n"
+            f"                 clickCount={self._click_count}"
         )
 
     def as_single_line_string(self) -> str:
@@ -181,14 +189,11 @@ class KeyboardEvent(InputEvent):
     def is_alt_control_or_orca_modified(self) -> bool:
         """Return True if this key is Alt, Control, or Orca modified."""
 
-        if (
+        return bool(
             self.modifiers & keybindings.CTRL_MODIFIER_MASK
             or self.modifiers & keybindings.ALT_MODIFIER_MASK
-            or self.modifiers & keybindings.ORCA_MODIFIER_MASK
-        ):
-            return True
-
-        return False
+            or self.modifiers & keybindings.ORCA_MODIFIER_MASK,
+        )
 
     def should_obscure(self) -> bool:
         """Returns True if we should obscure the details of this event."""
@@ -199,10 +204,7 @@ class KeyboardEvent(InputEvent):
         if not self.is_printable_key() and not self.is_space():
             return False
 
-        if self.is_alt_control_or_orca_modified():
-            return False
-
-        return True
+        return not self.is_alt_control_or_orca_modified()
 
     def is_navigation_key(self) -> bool:
         """Return True if this is a navigation key."""
@@ -236,7 +238,7 @@ class KeyboardEvent(InputEvent):
         """Return True if this is an alphabetic key."""
 
         name = self.get_key_name()
-        if not len(name) == 1:
+        if len(name) != 1:
             return False
 
         return name.isalpha()
@@ -420,7 +422,7 @@ class KeyboardEvent(InputEvent):
         """Return True if this is a printable key."""
 
         name = self.get_key_name()
-        if not len(name) == 1:
+        if len(name) != 1:
             return False
 
         return name.isprintable()
@@ -602,8 +604,7 @@ class KeyboardEvent(InputEvent):
             presentation_manager.get_manager().interrupt_presentation()
 
         # pylint: disable=import-outside-toplevel
-        from . import learn_mode_presenter
-        from . import sleep_mode_manager
+        from . import learn_mode_presenter, sleep_mode_manager
 
         if learn_mode_presenter.get_presenter().is_active():
             return
@@ -652,7 +653,8 @@ class KeyboardEvent(InputEvent):
                 tokens = ["KEYBOARD EVENT: Learn mode is active"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 self._handler = lambda: learn_mode_presenter.get_presenter().handle_event(
-                    self, command
+                    self,
+                    command,
                 )
             elif command is not None and command.is_enabled():
                 self._handler = lambda: command.execute(script, self)

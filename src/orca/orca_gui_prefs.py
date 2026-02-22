@@ -28,44 +28,47 @@
 
 from __future__ import annotations
 
-
 import os
 import time
 from dataclasses import dataclass
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gdk  # pylint: disable=no-name-in-module
-from gi.repository import Gio
-from gi.repository import GLib
-from gi.repository import Gtk  # pylint: disable=no-name-in-module
-from gi.repository import GObject
+from gi.repository import (
+    Gdk,  # pylint: disable=no-name-in-module
+    Gio,
+    GLib,
+    GObject,
+    Gtk,  # pylint: disable=no-name-in-module
+)
 
-from . import braille_presenter
-from . import chat_presenter
-from . import command_manager
-from . import debug
-from . import document_presenter
-from . import event_manager
-from . import focus_manager
-from . import guilabels
-from . import learn_mode_presenter
-from . import messages
-from . import mouse_review
-from . import orca
-from . import preferences_grid_base
-from . import presentation_manager
-from . import profile_manager
-from . import pronunciation_dictionary_manager
-from . import say_all_presenter
-from . import sound_presenter
-from . import speech_presenter
-from . import spellcheck_presenter
-from . import system_information_presenter
-from . import text_attribute_manager
-from . import typing_echo_presenter
+from . import (
+    braille_presenter,
+    chat_presenter,
+    command_manager,
+    debug,
+    document_presenter,
+    event_manager,
+    focus_manager,
+    guilabels,
+    learn_mode_presenter,
+    messages,
+    mouse_review,
+    orca,
+    preferences_grid_base,
+    presentation_manager,
+    profile_manager,
+    pronunciation_dictionary_manager,
+    say_all_presenter,
+    sound_presenter,
+    speech_presenter,
+    spellcheck_presenter,
+    system_information_presenter,
+    text_attribute_manager,
+    typing_echo_presenter,
+)
 from .ax_object import AXObject
 
 if TYPE_CHECKING:
@@ -263,7 +266,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             self._set_page_title(title)
 
         self.speech_grid = presenter.create_speech_preferences_grid(
-            title_change_callback=update_title
+            title_change_callback=update_title,
         )
         self.stack.add_named(self.speech_grid, "speech")
         self._add_navigation_row("speech", self.speech_grid.get_label().get_text())
@@ -280,7 +283,8 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
         cmd_manager = command_manager.get_manager()
         self.keybindings_grid = cmd_manager.create_preferences_grid(
-            self.script, title_change_callback=update_title
+            self.script,
+            title_change_callback=update_title,
         )
         self.stack.add_named(self.keybindings_grid, "keybindings")
         self._add_navigation_row("keybindings", self.keybindings_grid.get_label().get_text())
@@ -324,7 +328,8 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self.text_attributes_grid = text_attr_mgr.create_preferences_grid()
         self.stack.add_named(self.text_attributes_grid, "text_attributes")
         self._add_navigation_row(
-            "text_attributes", self.text_attributes_grid.get_label().get_text()
+            "text_attributes",
+            self.text_attributes_grid.get_label().get_text(),
         )
 
         system_info_presenter = system_information_presenter.get_presenter()
@@ -614,7 +619,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
         has_unsaved_changes = not self._settings_applied and self._has_unsaved_changes(
-            include_profiles=not self._app_name
+            include_profiles=not self._app_name,
         )
 
         # Check if profile was switched during this session
@@ -633,7 +638,8 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
             profile_label = self._get_current_profile_label()
             save_button = dialog.add_button(
-                guilabels.MENU_SAVE_PROFILE % profile_label, Gtk.ResponseType.YES
+                guilabels.MENU_SAVE_PROFILE % profile_label,
+                Gtk.ResponseType.YES,
             )
             save_button.get_style_context().add_class("suggested-action")
 
@@ -673,11 +679,13 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             )
 
             use_button = dialog.add_button(
-                guilabels.PROFILE_USE % current_label, Gtk.ResponseType.YES
+                guilabels.PROFILE_USE % current_label,
+                Gtk.ResponseType.YES,
             )
             use_button.get_style_context().add_class("suggested-action")
             dialog.add_button(
-                guilabels.PROFILE_SWITCH_BACK_TO % original_label, Gtk.ResponseType.NO
+                guilabels.PROFILE_SWITCH_BACK_TO % original_label,
+                Gtk.ResponseType.NO,
             )
 
             dialog.show_all()
@@ -805,7 +813,9 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         base_provider = Gtk.CssProvider()
         base_provider.load_from_data(OrcaSetupGUI._BASE_CSS)
         Gtk.StyleContext.add_provider_for_screen(
-            screen, base_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            screen,
+            base_provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
         )
 
         providers = _AppearanceProviders(
@@ -879,7 +889,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         ]
         if providers.shapes is not None:
             conditional_providers.append(
-                (providers.shapes, a11y_settings.get_boolean("show-status-shapes"))
+                (providers.shapes, a11y_settings.get_boolean("show-status-shapes")),
             )
         for provider, enabled in conditional_providers:
             if enabled:

@@ -30,9 +30,10 @@
 
 """Provides a D-Bus interface for remotely controlling Orca."""
 
+import contextlib
 import enum
 import inspect
-from typing import Callable
+from collections.abc import Callable
 
 from dasbus.connection import SessionMessageBus
 from dasbus.error import DBusError
@@ -41,8 +42,10 @@ from dasbus.server.interface import dbus_interface
 from dasbus.server.publishable import Publishable
 from gi.repository import GLib
 
-from . import debug
-from . import orca_platform  # pylint: disable=no-name-in-module
+from . import (  # pylint: disable=no-name-in-module
+    debug,
+    orca_platform,
+)
 
 
 class HandlerType(enum.Enum):
@@ -273,7 +276,10 @@ class OrcaModuleDBusInterface(Publishable):
         return result
 
     def ExecuteParameterizedCommand(  # pylint: disable=invalid-name
-        self, command_name: str, parameters: dict[str, GLib.Variant], notify_user: bool
+        self,
+        command_name: str,
+        parameters: dict[str, GLib.Variant],
+        notify_user: bool,
     ) -> GLib.Variant:
         """Executes the named command with parameters and returns the result."""
 
@@ -302,13 +308,14 @@ class OrcaModuleDBusInterface(Publishable):
 
     @staticmethod
     def _normalize_handler_name(
-        function_name: str, handler_type: HandlerType = HandlerType.COMMAND
+        function_name: str,
+        handler_type: HandlerType = HandlerType.COMMAND,
     ) -> str:
         """Normalizes a Python function name for D-Bus exposure (getter/setter/command)."""
 
         # Only strip prefixes for getters and setters, not for commands
         if handler_type in (HandlerType.GETTER, HandlerType.SETTER):
-            if function_name.startswith("get_") or function_name.startswith("set_"):
+            if function_name.startswith(("get_", "set_")):
                 function_name = function_name[4:]
         return "".join(word.capitalize() for word in function_name.split("_"))
 
@@ -392,7 +399,10 @@ class OrcaDBusServiceInterface(Publishable):
             debug.print_message(debug.LEVEL_SEVERE, msg, True)
 
     def remove_module_interface(
-        self, module_name: str, bus: SessionMessageBus, object_path_base: str
+        self,
+        module_name: str,
+        bus: SessionMessageBus,
+        object_path_base: str,
     ) -> bool:
         """Removes and unpublishes a D-Bus interface for an Orca module."""
 
@@ -560,10 +570,8 @@ class OrcaRemoteController:
             msg = f"REMOTE CONTROLLER: Failed to publish service or request name: {e}"
             debug.print_message(debug.LEVEL_SEVERE, msg, True)
             if self._dbus_service_interface and self._bus:
-                try:
+                with contextlib.suppress(DBusError):
                     self._bus.unpublish_object(self.OBJECT_PATH)
-                except DBusError:
-                    pass
             self._dbus_service_interface = None
             self._bus = None
             return False
@@ -620,9 +628,11 @@ class OrcaRemoteController:
             debug.print_message(debug.LEVEL_SEVERE, msg, True)
             return
 
-        from . import input_event  # pylint: disable=import-outside-toplevel
-        from . import input_event_manager  # pylint: disable=import-outside-toplevel
-        from . import script_manager  # pylint: disable=import-outside-toplevel
+        from . import (  # pylint: disable=import-outside-toplevel
+            input_event,
+            input_event_manager,
+            script_manager,
+        )
 
         handlers_info = []
         commands_count = 0
@@ -730,7 +740,10 @@ class OrcaRemoteController:
         self._total_modules += 1
 
         self._dbus_service_interface.add_module_interface(
-            module_name, handlers_info, self._bus, self.OBJECT_PATH
+            module_name,
+            handlers_info,
+            self._bus,
+            self.OBJECT_PATH,
         )
         msg = (
             f"REMOTE CONTROLLER: Successfully registered {len(handlers_info)} "
@@ -756,7 +769,9 @@ class OrcaRemoteController:
             return False
 
         return self._dbus_service_interface.remove_module_interface(
-            module_name, self._bus, self.OBJECT_PATH
+            module_name,
+            self._bus,
+            self.OBJECT_PATH,
         )
 
     def shutdown(self) -> None:

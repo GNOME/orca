@@ -102,7 +102,8 @@ class TestPronunciationDictionaryManager:
         assert manager.get_dictionary() == {}
 
     def test_get_pronunciation_returns_word_when_not_found(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test get_pronunciation returns the original word when not in dictionary."""
 
@@ -115,7 +116,8 @@ class TestPronunciationDictionaryManager:
         assert result == "hello"
 
     def test_get_pronunciation_returns_replacement_when_found(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test get_pronunciation returns replacement when word is in dictionary."""
 

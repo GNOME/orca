@@ -29,8 +29,7 @@ from urllib.parse import urlparse
 import gi
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
 from . import debug
 from .ax_object import AXObject
@@ -75,7 +74,9 @@ class AXHypertext:
 
     @staticmethod
     def get_all_links_in_range(
-        obj: Atspi.Accessible, start_offset: int, end_offset: int
+        obj: Atspi.Accessible,
+        start_offset: int,
+        end_offset: int,
     ) -> list[Atspi.Hyperlink]:
         """Returns all the hyperlinks in obj who started within the specified range."""
 
@@ -180,7 +181,9 @@ class AXHypertext:
 
     @staticmethod
     def get_link_basename(
-        obj: Atspi.Accessible, index: int = 0, remove_extension: bool = False
+        obj: Atspi.Accessible,
+        index: int = 0,
+        remove_extension: bool = False,
     ) -> str:
         """Strip directory and suffix off of the URL associated with obj."""
 

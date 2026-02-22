@@ -141,7 +141,10 @@ def sink_keybindings_metadata(profile_data: dict, keybindings: dict) -> None:
 
 
 def _write_one_mapping(
-    gs: Gio.Settings, m: SettingsMapping, value: Any, skip_defaults: bool
+    gs: Gio.Settings,
+    m: SettingsMapping,
+    value: Any,
+    skip_defaults: bool,
 ) -> bool:
     """Write a single mapping value to GSettings. Returns True if written."""
 
@@ -360,10 +363,9 @@ def import_keybindings(gs: Gio.Settings, keybindings_dict: dict) -> bool:
         if key in KEYBINDINGS_METADATA_KEYS:
             continue
         if isinstance(value, list):
-            bindings: list[list[str]] = []
-            for binding in value:
-                if isinstance(binding, list):
-                    bindings.append([str(v) for v in binding])
+            bindings: list[list[str]] = [
+                [str(v) for v in binding] for binding in value if isinstance(binding, list)
+            ]
             converted[key] = bindings
     if not converted:
         return False

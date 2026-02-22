@@ -38,8 +38,9 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -876,7 +877,9 @@ class TestAXUtilitiesRole:
         test_context.patch_object(AXUtilitiesRole, "is_comment", return_value=False)
         if hasattr(Atspi, "role_get_localized_name"):
             test_context.patch_object(
-                Atspi, "role_get_localized_name", return_value="LocalizedRole"
+                Atspi,
+                "role_get_localized_name",
+                return_value="LocalizedRole",
             )
         else:
             test_context.patch_object(Atspi, "role_get_name", return_value="LocalizedRole")
@@ -885,7 +888,8 @@ class TestAXUtilitiesRole:
         )
 
     def test_get_localized_role_name_with_non_atspi_role(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilitiesRole.get_localized_role_name with non-Atspi.Role value."""
 
@@ -906,8 +910,8 @@ class TestAXUtilitiesRole:
         mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
         mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
         mock_ax_object_class.supports_value = test_context.Mock(return_value=False)
-        from orca.ax_utilities_role import AXUtilitiesRole
         from orca import object_properties
+        from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=True)
@@ -979,7 +983,9 @@ class TestAXUtilitiesRole:
         ids=lambda case: case["id"],
     )
     def test_get_localized_role_name_value_based_roles(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test AXUtilitiesRole.get_localized_role_name for value-based roles."""
 
@@ -987,8 +993,8 @@ class TestAXUtilitiesRole:
         mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
         mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
         mock_ax_object_class.supports_value = test_context.Mock(return_value=case["supports_value"])
-        from orca.ax_utilities_role import AXUtilitiesRole
         from orca import object_properties
+        from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         role_methods = [
@@ -1044,7 +1050,9 @@ class TestAXUtilitiesRole:
         ids=lambda case: case["id"],
     )
     def test_get_localized_role_name_split_pane_orientation(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test AXUtilitiesRole.get_localized_role_name for split pane orientation."""
 
@@ -1054,14 +1062,12 @@ class TestAXUtilitiesRole:
         mock_ax_object_class.supports_value = test_context.Mock(return_value=True)
         mock_ax_object_class.has_state = test_context.Mock(
             side_effect=lambda obj, state: (
-                state == Atspi.StateType.HORIZONTAL
-                and case["has_horizontal_state"]
-                or state == Atspi.StateType.VERTICAL
-                and case["has_vertical_state"]
-            )
+                (state == Atspi.StateType.HORIZONTAL and case["has_horizontal_state"])
+                or (state == Atspi.StateType.VERTICAL and case["has_vertical_state"])
+            ),
         )
-        from orca.ax_utilities_role import AXUtilitiesRole
         from orca import object_properties
+        from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXUtilitiesRole, "is_split_pane", return_value=True)
@@ -1115,7 +1121,9 @@ class TestAXUtilitiesRole:
         ids=lambda case: case["id"],
     )
     def test_get_localized_role_name_simple_roles(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test AXUtilitiesRole.get_localized_role_name for simple role mappings."""
 
@@ -1123,8 +1131,8 @@ class TestAXUtilitiesRole:
         mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
         mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
         mock_ax_object_class.supports_value = test_context.Mock(return_value=False)
-        from orca.ax_utilities_role import AXUtilitiesRole
         from orca import object_properties
+        from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         simple_methods = ["is_suggestion", "is_feed", "is_figure", "is_switch"]
@@ -1190,7 +1198,9 @@ class TestAXUtilitiesRole:
         ids=lambda case: case["id"],
     )
     def test_get_localized_role_name_landmark_roles(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test AXUtilitiesRole.get_localized_role_name for landmark roles."""
 
@@ -1198,8 +1208,8 @@ class TestAXUtilitiesRole:
         mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
         mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
         mock_ax_object_class.supports_value = test_context.Mock(return_value=False)
-        from orca.ax_utilities_role import AXUtilitiesRole
         from orca import object_properties
+        from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=True)
@@ -1238,7 +1248,8 @@ class TestAXUtilitiesRole:
                 assert result == expected
 
     def test_get_localized_role_name_landmark_form_fallback(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilitiesRole.get_localized_role_name landmark form fallback to FORM role."""
 
@@ -1289,7 +1300,9 @@ class TestAXUtilitiesRole:
         test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_landmark", return_value=False)
         test_context.patch_object(
-            Atspi, "role_get_localized_name", return_value="comment_localized"
+            Atspi,
+            "role_get_localized_name",
+            return_value="comment_localized",
         )
 
         result = AXUtilitiesRole.get_localized_role_name(mock_obj, Atspi.Role.SECTION)
@@ -1494,7 +1507,9 @@ class TestAXUtilitiesRole:
         ids=lambda case: case["id"],
     )
     def test_get_localized_role_name_dpub_roles_comprehensive(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test AXUtilitiesRole.get_localized_role_name for all DPUB role types."""
 
@@ -1502,8 +1517,8 @@ class TestAXUtilitiesRole:
         mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
         mock_ax_object_class.get_attributes_dict = test_context.Mock(return_value={})
         mock_ax_object_class.supports_value = test_context.Mock(return_value=False)
-        from orca.ax_utilities_role import AXUtilitiesRole
         from orca import object_properties
+        from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXUtilitiesRole, "is_dpub", return_value=True)
@@ -1576,7 +1591,8 @@ class TestAXUtilitiesRole:
         assert result == expected
 
     def test_get_localized_role_name_no_role_provided_uses_ax_object_get_role(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilitiesRole.get_localized_role_name without role parameter."""
 
@@ -1819,12 +1835,12 @@ class TestAXUtilitiesRole:
 
         test_context.patch_object(AXUtilitiesRole, "is_frame", return_value=True)
         mock_ax_object_class.get_attributes_dict = test_context.Mock(
-            return_value={"window-type": "normal"}
+            return_value={"window-type": "normal"},
         )
         assert not AXUtilitiesRole.is_docked_frame(mock_obj)
 
         mock_ax_object_class.get_attributes_dict = test_context.Mock(
-            return_value={"window-type": "dock"}
+            return_value={"window-type": "dock"},
         )
         assert AXUtilitiesRole.is_docked_frame(mock_obj)
 
@@ -1843,12 +1859,12 @@ class TestAXUtilitiesRole:
 
         mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.FRAME)
         mock_ax_object_class.get_attributes_dict = test_context.Mock(
-            return_value={"is-desktop": "true"}
+            return_value={"is-desktop": "true"},
         )
         assert AXUtilitiesRole.is_desktop_frame(mock_obj)
 
         mock_ax_object_class.get_attributes_dict = test_context.Mock(
-            return_value={"is-desktop": "false"}
+            return_value={"is-desktop": "false"},
         )
         assert not AXUtilitiesRole.is_desktop_frame(mock_obj)
 
@@ -1868,7 +1884,7 @@ class TestAXUtilitiesRole:
         assert not AXUtilitiesRole.is_live_region(mock_obj)
 
         mock_ax_object_class.get_attributes_dict = test_context.Mock(
-            return_value={"container-live": "polite"}
+            return_value={"container-live": "polite"},
         )
         assert AXUtilitiesRole.is_live_region(mock_obj)
 
@@ -1900,11 +1916,15 @@ class TestAXUtilitiesRole:
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            AXUtilitiesRole, "_get_xml_roles", side_effect=lambda obj: case["xml_roles"]
+            AXUtilitiesRole,
+            "_get_xml_roles",
+            side_effect=lambda obj: case["xml_roles"],
         )
         if case["tag"] is not None:
             test_context.patch_object(
-                AXUtilitiesRole, "_get_tag", side_effect=lambda obj: case["tag"]
+                AXUtilitiesRole,
+                "_get_tag",
+                side_effect=lambda obj: case["tag"],
             )
 
         result = AXUtilitiesRole.is_code(mock_obj)
@@ -2167,7 +2187,7 @@ class TestAXUtilitiesRole:
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_ax_object_class.get_attributes_dict = test_context.Mock(
-            return_value={"xml-roles": "button"}
+            return_value={"xml-roles": "button"},
         )
         assert AXUtilitiesRole.has_role_from_aria(mock_obj)
 
@@ -2186,12 +2206,12 @@ class TestAXUtilitiesRole:
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_ax_object_class.get_attributes_dict = test_context.Mock(
-            return_value={"xml-roles": "button"}
+            return_value={"xml-roles": "button"},
         )
         assert not AXUtilitiesRole.is_aria_alert(mock_obj)
 
         mock_ax_object_class.get_attributes_dict = test_context.Mock(
-            return_value={"xml-roles": "alert"}
+            return_value={"xml-roles": "alert"},
         )
         mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.NOTIFICATION)
         assert AXUtilitiesRole.is_aria_alert(mock_obj)
@@ -2250,7 +2270,7 @@ class TestAXUtilitiesRole:
 
         test_context.patch_object(AXUtilitiesRole, "is_single_line_entry", return_value=True)
         mock_ax_utilities_state_class.supports_autocompletion = test_context.Mock(
-            return_value=False
+            return_value=False,
         )
         assert not AXUtilitiesRole.is_single_line_autocomplete_entry(mock_obj)
 
@@ -2648,7 +2668,9 @@ class TestAXUtilitiesRole:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         method = getattr(AXUtilitiesRole, case["method_name"])
         test_context.patch_object(
-            AXUtilitiesRole, "_get_xml_roles", side_effect=lambda obj: [case["expected_xml_role"]]
+            AXUtilitiesRole,
+            "_get_xml_roles",
+            side_effect=lambda obj: [case["expected_xml_role"]],
         )
         assert method(mock_obj)
 
@@ -2662,12 +2684,14 @@ class TestAXUtilitiesRole:
         """Test AXUtilitiesRole._get_display_style method."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_role import AXUtilitiesRole
         from orca import ax_utilities_role
+        from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            ax_utilities_role.AXObject, "get_attributes_dict", return_value={"display": "inline"}
+            ax_utilities_role.AXObject,
+            "get_attributes_dict",
+            return_value={"display": "inline"},
         )
         result = AXUtilitiesRole._get_display_style(mock_obj)  # pylint: disable=protected-access
         assert result == "inline"
@@ -2676,12 +2700,14 @@ class TestAXUtilitiesRole:
         """Test AXUtilitiesRole._get_display_style when display attribute is missing."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_role import AXUtilitiesRole
         from orca import ax_utilities_role
+        from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            ax_utilities_role.AXObject, "get_attributes_dict", return_value={}
+            ax_utilities_role.AXObject,
+            "get_attributes_dict",
+            return_value={},
         )
         result = AXUtilitiesRole._get_display_style(mock_obj)  # pylint: disable=protected-access
         assert result == ""
@@ -2690,12 +2716,14 @@ class TestAXUtilitiesRole:
         """Test AXUtilitiesRole._get_tag method."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_role import AXUtilitiesRole
         from orca import ax_utilities_role
+        from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            ax_utilities_role.AXObject, "get_attributes_dict", return_value={"tag": "button"}
+            ax_utilities_role.AXObject,
+            "get_attributes_dict",
+            return_value={"tag": "button"},
         )
         result = AXUtilitiesRole._get_tag(mock_obj)  # pylint: disable=protected-access
         assert result == "button"
@@ -2704,12 +2732,14 @@ class TestAXUtilitiesRole:
         """Test AXUtilitiesRole._get_tag when tag attribute is missing."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_role import AXUtilitiesRole
         from orca import ax_utilities_role
+        from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            ax_utilities_role.AXObject, "get_attributes_dict", return_value={}
+            ax_utilities_role.AXObject,
+            "get_attributes_dict",
+            return_value={},
         )
         result = AXUtilitiesRole._get_tag(mock_obj)  # pylint: disable=protected-access
         assert result is None
@@ -2718,8 +2748,8 @@ class TestAXUtilitiesRole:
         """Test AXUtilitiesRole._get_xml_roles method."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_role import AXUtilitiesRole
         from orca import ax_utilities_role
+        from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
@@ -2734,12 +2764,14 @@ class TestAXUtilitiesRole:
         """Test AXUtilitiesRole._get_xml_roles when xml-roles is empty."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_role import AXUtilitiesRole
         from orca import ax_utilities_role
+        from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            ax_utilities_role.AXObject, "get_attributes_dict", return_value={"xml-roles": ""}
+            ax_utilities_role.AXObject,
+            "get_attributes_dict",
+            return_value={"xml-roles": ""},
         )
         result = AXUtilitiesRole._get_xml_roles(mock_obj)  # pylint: disable=protected-access
         assert result == []

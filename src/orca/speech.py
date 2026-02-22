@@ -22,16 +22,16 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Callable, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
-from . import debug
-from . import speech_generator
+from . import debug, speech_generator
 from .acss import ACSS
 from .speechserver import VoiceFamily
 
 if TYPE_CHECKING:
-    from . import input_event
-    from . import speechserver
+    from collections.abc import Callable
+
+    from . import input_event, speechserver
 
 
 @dataclass
@@ -221,7 +221,8 @@ def _speak_list(content: list, acss: ACSS | dict[str, Any] | None) -> None:
 
 
 def speak_key_event(
-    event: input_event.KeyboardEvent, acss: ACSS | dict[str, Any] | None = None
+    event: input_event.KeyboardEvent,
+    acss: ACSS | dict[str, Any] | None = None,
 ) -> None:
     """Speaks event immediately using the voice specified by acss."""
 

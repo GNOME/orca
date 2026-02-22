@@ -29,20 +29,19 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
 
-import gi
-
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
-from . import braille_presenter
-from . import debug
-from . import script_manager
+from . import braille_presenter, debug, script_manager
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    import gi
+
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
 
 CARET_TRACKING = "caret-tracking"
 CARET_NAVIGATOR = "caret-navigator"

@@ -26,7 +26,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from .orca_i18n import _, C_  # pylint: disable=import-error
+from .orca_i18n import C_, _  # pylint: disable=import-error
 
 short_role_names = {
     # Translators: short braille for the rolename of an invalid GUI object.

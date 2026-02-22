@@ -26,22 +26,16 @@
 # This must be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import time
 from enum import Enum
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
-from . import dbus_service
-from . import debug
-from . import gsettings_registry
-from . import guilabels
-from . import preferences_grid_base
-from . import sound
+from . import dbus_service, debug, gsettings_registry, guilabels, preferences_grid_base, sound
 
 if TYPE_CHECKING:
     from .sound import Icon, Tone
@@ -263,7 +257,10 @@ class SoundPresenter:
         """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, gtype, default=default
+            self._SCHEMA,
+            key,
+            gtype,
+            default=default,
         )
 
     def __init__(self) -> None:
@@ -274,7 +271,8 @@ class SoundPresenter:
         self._progress_bar_cache: dict = {}
 
     def create_preferences_grid(
-        self, title_change_callback: preferences_grid_base.Callable[[str], None] | None = None
+        self,
+        title_change_callback: preferences_grid_base.Callable[[str], None] | None = None,
     ) -> SoundPreferencesGrid:
         """Returns the GtkGrid containing the preferences UI."""
 
@@ -347,7 +345,9 @@ class SoundPresenter:
         msg = f"SOUND PRESENTER: Setting beep progress bar updates to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "beep-progress-bar-updates", value
+            self._SCHEMA,
+            "beep-progress-bar-updates",
+            value,
         )
         return True
 
@@ -372,7 +372,9 @@ class SoundPresenter:
         msg = f"SOUND PRESENTER: Setting progress bar beep interval to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "progress-bar-beep-interval", value
+            self._SCHEMA,
+            "progress-bar-beep-interval",
+            value,
         )
         return True
 
@@ -405,7 +407,9 @@ class SoundPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         level = ProgressBarVerbosity(value)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "progress-bar-beep-verbosity", level.name.lower()
+            self._SCHEMA,
+            "progress-bar-beep-verbosity",
+            level.name.lower(),
         )
         return True
 

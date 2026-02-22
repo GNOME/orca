@@ -24,20 +24,9 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING, Any
 
-import gi
-
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
-from orca import debug
-from orca import focus_manager
-from orca import messages
-from orca import speech_presenter
-from orca import speech_generator
-from orca import table_navigator
+from orca import debug, focus_manager, messages, speech_generator, speech_presenter, table_navigator
 from orca.ax_component import AXComponent
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
@@ -45,6 +34,11 @@ from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
+    import gi
+
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+
     from . import script
 
 
@@ -160,7 +154,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             or args.get("formatType") == "basicWhereAmI"
         ):
             label = AXTable.get_label_for_cell_coordinates(
-                obj
+                obj,
             ) or self._script.utilities.spreadsheet_cell_name(obj)
             result.append(label)
 
@@ -182,7 +176,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     @log_generator_output
     def _generate_new_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if self._script.utilities.is_spreadsheet_cell(
-            obj
+            obj,
         ) and self._script.utilities.is_document_panel(AXObject.get_parent(args.get("priorObj"))):
             return []
 

@@ -34,8 +34,7 @@ from typing import Any
 import gi
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
 from .ax_object import AXObject
 from .ax_utilities_application import AXUtilitiesApplication
@@ -74,7 +73,7 @@ class AXUtilitiesDebugging:
 
         if isinstance(obj, Atspi.Event):
             any_data = AXUtilitiesDebugging._format_string(
-                AXUtilitiesDebugging.as_string(obj.any_data)
+                AXUtilitiesDebugging.as_string(obj.any_data),
             )
             return (
                 f"{obj.type} for {AXUtilitiesDebugging.as_string(obj.source)} in "
@@ -196,7 +195,8 @@ class AXUtilitiesDebugging:
         for rel in AXUtilitiesRelation.get_relations(obj):
             type_string = as_string(rel.get_relation_type())
             targets = AXUtilitiesRelation.get_relation_targets_for_debugging(
-                obj, rel.get_relation_type()
+                obj,
+                rel.get_relation_type(),
             )
             target_string = ",".join(map(obj_as_string, targets))
             results.append(f"{type_string}: {target_string}")
@@ -231,7 +231,9 @@ class AXUtilitiesDebugging:
 
     @staticmethod
     def object_details_as_string(
-        obj: Atspi.Accessible, indent: str = "", include_app: bool = True
+        obj: Atspi.Accessible,
+        indent: str = "",
+        include_app: bool = True,
     ) -> str:
         """Returns a string, suitable for printing, that describes details about obj."""
 

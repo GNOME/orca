@@ -2105,7 +2105,8 @@ _operators["\u22f3"] = C_("math symbol", "element of with vertical bar at end of
 
 # Translators: this is the spoken representation for the character '⋴' (U+22f4)
 _operators["\u22f4"] = C_(
-    "math symbol", "small element of with vertical bar at end of horizontal stroke"
+    "math symbol",
+    "small element of with vertical bar at end of horizontal stroke",
 )
 
 # Translators: this is the spoken representation for the character '⋵' (U+22f5)
@@ -2131,7 +2132,8 @@ _operators["\u22fb"] = C_("math symbol", "contains with vertical bar at end of h
 
 # Translators: this is the spoken representation for the character '⋼' (U+22fc)
 _operators["\u22fc"] = C_(
-    "math symbol", "small contains with vertical bar at end of horizontal stroke"
+    "math symbol",
+    "small contains with vertical bar at end of horizontal stroke",
 )
 
 # Translators: this is the spoken representation for the character '⋽' (U+22fd)

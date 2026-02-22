@@ -25,15 +25,10 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import re
 from typing import TYPE_CHECKING
 
-from orca import clipboard
-from orca import debug
-from orca import focus_manager
-from orca import input_event_manager
-from orca import script_utilities
+from orca import clipboard, debug, focus_manager, input_event_manager, script_utilities
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_event import TextEventReason

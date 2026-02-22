@@ -36,11 +36,13 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 from unittest.mock import call
+
 import pytest
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -126,6 +128,9 @@ class TestInputEventManager:
                     and self.text == other.text
                 )
 
+            def __hash__(self):
+                return hash((self.pressed, self.keycode, self.keysym, self.modifiers, self.text))
+
         class MockBrailleEvent:
             """Mock BrailleEvent class for testing."""
 
@@ -157,7 +162,7 @@ class TestInputEventManager:
         ax_utilities_class.find_active_window = test_context.Mock(return_value=None)
         ax_utilities_class.is_single_line = test_context.Mock(return_value=False)
         ax_utilities_class.is_widget_controlled_by_line_navigation = test_context.Mock(
-            return_value=False
+            return_value=False,
         )
         ax_utilities_class.is_table_header = test_context.Mock(return_value=False)
         ax_utilities_class.is_terminal = test_context.Mock(return_value=False)
@@ -194,19 +199,24 @@ class TestInputEventManager:
 
         test_context.patch("orca.input_event_manager.debug", new=essential_modules["orca.debug"])
         test_context.patch(
-            "orca.input_event_manager.focus_manager", new=essential_modules["orca.focus_manager"]
+            "orca.input_event_manager.focus_manager",
+            new=essential_modules["orca.focus_manager"],
         )
         test_context.patch(
-            "orca.input_event_manager.script_manager", new=essential_modules["orca.script_manager"]
+            "orca.input_event_manager.script_manager",
+            new=essential_modules["orca.script_manager"],
         )
         test_context.patch(
-            "orca.input_event_manager.input_event", new=essential_modules["orca.input_event"]
+            "orca.input_event_manager.input_event",
+            new=essential_modules["orca.input_event"],
         )
         test_context.patch(
-            "orca.input_event_manager.AXObject", new=essential_modules["ax_object_class"]
+            "orca.input_event_manager.AXObject",
+            new=essential_modules["ax_object_class"],
         )
         test_context.patch(
-            "orca.input_event_manager.AXUtilities", new=essential_modules["ax_utilities_class"]
+            "orca.input_event_manager.AXUtilities",
+            new=essential_modules["ax_utilities_class"],
         )
         test_context.patch("orca.input_event_manager.Atspi", new=essential_modules["atspi"])
 
@@ -241,7 +251,7 @@ class TestInputEventManager:
 
         ax_device_mgr.get_manager.return_value.get_device.assert_called_once()
         mock_device.add_key_watcher.assert_called_once_with(
-            input_event_manager.process_keyboard_event
+            input_event_manager.process_keyboard_event,
         )
         assert input_event_manager._device is mock_device
 
@@ -312,7 +322,9 @@ class TestInputEventManager:
         ids=lambda case: case["id"],
     )
     def test_add_grabs_for_keybinding_scenarios(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test InputEventManager.add_grabs_for_keybinding with various scenarios."""
 
@@ -392,7 +404,9 @@ class TestInputEventManager:
         ids=lambda case: case["id"],
     )
     def test_remove_grabs_for_keybinding_scenarios(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test InputEventManager.remove_grabs_for_keybinding with various scenarios."""
 
@@ -452,7 +466,9 @@ class TestInputEventManager:
         ids=lambda case: case["id"],
     )
     def test_map_keysym_to_modifier_scenarios(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test InputEventManager.map_keysym_to_modifier with various scenarios."""
 
@@ -729,7 +745,7 @@ class TestInputEventManager:
         ]
         essential_modules["ax_utilities_class"].find_active_window.return_value = new_window_found
         input_event_manager._determine_keyboard_event_click_count = test_context.Mock(
-            return_value=1
+            return_value=1,
         )
         result = input_event_manager.process_keyboard_event(
             mock_device,
@@ -752,7 +768,11 @@ class TestInputEventManager:
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         mock_device = test_context.Mock()
         keyboard_event_instance = essential_modules["orca.input_event"].KeyboardEvent(
-            True, 65, 97, 0, "a"
+            True,
+            65,
+            97,
+            0,
+            "a",
         )
         input_event_manager._last_input_event = keyboard_event_instance
         result = input_event_manager.process_keyboard_event(mock_device, True, 65, 97, 0, "a")
@@ -790,7 +810,9 @@ class TestInputEventManager:
         ids=lambda case: case["id"],
     )
     def test_last_event_was_basic_event_types(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test InputEventManager basic event type detection methods."""
 
@@ -942,7 +964,8 @@ class TestInputEventManager:
             assert result == case["expected_result"]
 
     def test_last_event_equals_or_is_release_for_event_no_last_event(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test InputEventManager.last_event_equals_or_is_release_for_event with no last event."""
 
@@ -952,7 +975,8 @@ class TestInputEventManager:
         assert result is False
 
     def test_last_event_equals_or_is_release_for_event_equal(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test InputEventManager.last_event_equals_or_is_release_for_event with equal events."""
 
@@ -964,7 +988,8 @@ class TestInputEventManager:
         assert result is True
 
     def test_last_event_equals_or_is_release_for_event_is_release(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test InputEventManager.last_event_equals_or_is_release_for_event with release event."""
 
@@ -1025,7 +1050,7 @@ class TestInputEventManager:
             mock_last_event.modifiers = 4
             input_event_manager._last_input_event = mock_last_event
         input_event_manager.last_event_was_keyboard = test_context.Mock(
-            return_value=case["last_event_keyboard"]
+            return_value=case["last_event_keyboard"],
         )
         result = input_event_manager._last_key_and_modifiers()
         assert result == (case["expected_key"], case["expected_modifiers"])
@@ -1059,7 +1084,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=case["key_modifiers"]
+            return_value=case["key_modifiers"],
         )
         method = getattr(input_event_manager, case["method_name"])
         result = method()
@@ -1110,10 +1135,10 @@ class TestInputEventManager:
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         mock_obj = test_context.Mock()
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], 0)
+            return_value=(case["key_string"], 0),
         )
         essential_modules["ax_object_class"].get_action_key_binding.return_value = ";".join(
-            case["action_key_bindings"]
+            case["action_key_bindings"],
         )
         result = input_event_manager.last_event_was_shortcut_for(mock_obj)
         assert result == case["expected_result"]
@@ -1156,7 +1181,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager.last_event_was_keyboard = test_context.Mock(
-            return_value=case["is_keyboard"]
+            return_value=case["is_keyboard"],
         )
 
         if case["is_keyboard"] and case["is_printable"] is not None:
@@ -1177,15 +1202,15 @@ class TestInputEventManager:
 
         input_event_manager, _essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager.last_event_was_character_navigation = test_context.Mock(
-            return_value=False
+            return_value=False,
         )
         input_event_manager.last_event_was_word_navigation = test_context.Mock(return_value=True)
         input_event_manager.last_event_was_line_navigation = test_context.Mock(return_value=False)
         input_event_manager.last_event_was_line_boundary_navigation = test_context.Mock(
-            return_value=False
+            return_value=False,
         )
         input_event_manager.last_event_was_file_boundary_navigation = test_context.Mock(
-            return_value=False
+            return_value=False,
         )
         input_event_manager.last_event_was_page_navigation = test_context.Mock(return_value=False)
         result = input_event_manager.last_event_was_caret_navigation()
@@ -1242,7 +1267,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], case["modifiers"])
+            return_value=(case["key_string"], case["modifiers"]),
         )
         result = input_event_manager.last_event_was_caret_selection()
         assert result == case["expected_result"]
@@ -1290,7 +1315,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], case["modifiers"])
+            return_value=(case["key_string"], case["modifiers"]),
         )
         result = input_event_manager.last_event_was_backward_caret_navigation()
         assert result == case["expected_result"]
@@ -1343,7 +1368,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], case["modifiers"])
+            return_value=(case["key_string"], case["modifiers"]),
         )
         result = input_event_manager.last_event_was_forward_caret_navigation()
         assert result == case["expected_result"]
@@ -1396,7 +1421,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], case["modifiers"])
+            return_value=(case["key_string"], case["modifiers"]),
         )
         result = input_event_manager.last_event_was_forward_caret_selection()
         assert result == case["expected_result"]
@@ -1449,7 +1474,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], case["modifiers"])
+            return_value=(case["key_string"], case["modifiers"]),
         )
         result = input_event_manager.last_event_was_character_navigation()
         assert result == case["expected_result"]
@@ -1497,7 +1522,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], case["modifiers"])
+            return_value=(case["key_string"], case["modifiers"]),
         )
         result = input_event_manager.last_event_was_word_navigation()
         assert result == case["expected_result"]
@@ -1533,7 +1558,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], case["modifiers"])
+            return_value=(case["key_string"], case["modifiers"]),
         )
         result = input_event_manager.last_event_was_previous_word_navigation()
         assert result == case["expected_result"]
@@ -1574,7 +1599,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], case["modifiers"])
+            return_value=(case["key_string"], case["modifiers"]),
         )
         result = input_event_manager.last_event_was_next_word_navigation()
         assert result == case["expected_result"]
@@ -1644,7 +1669,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], case["modifiers"])
+            return_value=(case["key_string"], case["modifiers"]),
         )
         mock_focus = test_context.Mock()
         essential_modules["orca.focus_manager"].get_locus_of_focus.return_value = mock_focus
@@ -1697,7 +1722,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], case["modifiers"])
+            return_value=(case["key_string"], case["modifiers"]),
         )
         result = input_event_manager.last_event_was_paragraph_navigation()
         assert result == case["expected_result"]
@@ -1739,7 +1764,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], case["modifiers"])
+            return_value=(case["key_string"], case["modifiers"]),
         )
         result = input_event_manager.last_event_was_line_boundary_navigation()
         assert result == case["expected_result"]
@@ -1781,7 +1806,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], case["modifiers"])
+            return_value=(case["key_string"], case["modifiers"]),
         )
         result = input_event_manager.last_event_was_file_boundary_navigation()
         assert result == case["expected_result"]
@@ -1851,7 +1876,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], case["modifiers"])
+            return_value=(case["key_string"], case["modifiers"]),
         )
         mock_focus = test_context.Mock()
         essential_modules["orca.focus_manager"].get_locus_of_focus.return_value = mock_focus
@@ -1916,7 +1941,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], case["modifiers"])
+            return_value=(case["key_string"], case["modifiers"]),
         )
         result = input_event_manager.last_event_was_page_switch()
         assert result == case["expected_result"]
@@ -1963,7 +1988,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], case["modifiers"])
+            return_value=(case["key_string"], case["modifiers"]),
         )
         result = input_event_manager.last_event_was_tab_navigation()
         assert result == case["expected_result"]
@@ -2044,16 +2069,16 @@ class TestInputEventManager:
             "is_table_header"
         ]
         input_event_manager.last_event_was_mouse_button = test_context.Mock(
-            return_value=case["is_mouse_button"]
+            return_value=case["is_mouse_button"],
         )
         input_event_manager.last_event_was_primary_click = test_context.Mock(
-            return_value=case["is_primary_click"]
+            return_value=case["is_primary_click"],
         )
         input_event_manager.last_event_was_keyboard = test_context.Mock(
-            return_value=case["is_keyboard"]
+            return_value=case["is_keyboard"],
         )
         input_event_manager.last_event_was_return_or_space = test_context.Mock(
-            return_value=case["is_return_or_space"]
+            return_value=case["is_return_or_space"],
         )
         result = input_event_manager.last_event_was_table_sort()
         assert result == case["expected_result"]
@@ -2119,7 +2144,7 @@ class TestInputEventManager:
 
         input_event_manager, _essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], case["modifiers"])
+            return_value=(case["key_string"], case["modifiers"]),
         )
         result = input_event_manager.last_event_was_unmodified_arrow()
         assert result == case["expected_result"]
@@ -2146,7 +2171,7 @@ class TestInputEventManager:
 
         input_event_manager, _essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=("a", case["modifiers"])
+            return_value=("a", case["modifiers"]),
         )
         result = input_event_manager.last_event_was_alt_modified()
         assert result == case["expected_result"]
@@ -2165,7 +2190,7 @@ class TestInputEventManager:
 
         input_event_manager, _essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], 0)
+            return_value=(case["key_string"], 0),
         )
         result = input_event_manager.last_event_was_backspace()
         assert result == case["expected_result"]
@@ -2184,7 +2209,7 @@ class TestInputEventManager:
 
         input_event_manager, _essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], 0)
+            return_value=(case["key_string"], 0),
         )
         result = input_event_manager.last_event_was_down()
         assert result == case["expected_result"]
@@ -2203,7 +2228,7 @@ class TestInputEventManager:
 
         input_event_manager, _essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], 0)
+            return_value=(case["key_string"], 0),
         )
         result = input_event_manager.last_event_was_f1()
         assert result == case["expected_result"]
@@ -2222,7 +2247,7 @@ class TestInputEventManager:
 
         input_event_manager, _essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], 0)
+            return_value=(case["key_string"], 0),
         )
         result = input_event_manager.last_event_was_left()
         assert result == case["expected_result"]
@@ -2298,7 +2323,7 @@ class TestInputEventManager:
 
         input_event_manager, _essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], 0)
+            return_value=(case["key_string"], 0),
         )
         method = getattr(input_event_manager, case["method_name"])
         result = method()
@@ -2429,7 +2454,7 @@ class TestInputEventManager:
 
         input_event_manager, _essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["key_string"], 0)
+            return_value=(case["key_string"], 0),
         )
         method = getattr(input_event_manager, case["method_name"])
         result = method()
@@ -2513,7 +2538,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["keynames"][0] if case["keynames"] else "", case["modifiers"])
+            return_value=(case["keynames"][0] if case["keynames"] else "", case["modifiers"]),
         )
         method = getattr(input_event_manager, case["method_name"])
         result = method()
@@ -2620,7 +2645,7 @@ class TestInputEventManager:
         mock_last_event.get_object.return_value = mock_object
         input_event_manager._last_input_event = mock_last_event
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["keynames"][0] if case["keynames"] else "", case["modifiers"])
+            return_value=(case["keynames"][0] if case["keynames"] else "", case["modifiers"]),
         )
         essential_modules["ax_utilities_class"].is_terminal.return_value = case["is_terminal"]
         method = getattr(input_event_manager, case["method_name"])
@@ -2742,7 +2767,7 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         input_event_manager._last_key_and_modifiers = test_context.Mock(
-            return_value=(case["keynames"][0] if case["keynames"] else "", case["modifiers"])
+            return_value=(case["keynames"][0] if case["keynames"] else "", case["modifiers"]),
         )
         method = getattr(input_event_manager, case["method_name"])
         result = method()
@@ -2833,7 +2858,7 @@ class TestInputEventManager:
         mock_last_event.pressed = case["pressed"]
         input_event_manager._last_input_event = mock_last_event
         input_event_manager.last_event_was_mouse_button = test_context.Mock(
-            return_value=case["is_mouse_button"]
+            return_value=case["is_mouse_button"],
         )
         method = getattr(input_event_manager, case["method_name"])
         result = method()
@@ -2883,7 +2908,7 @@ class TestInputEventManager:
         mock_last_event.button = case["button"]
         input_event_manager._last_input_event = mock_last_event
         input_event_manager.last_event_was_mouse_button = test_context.Mock(
-            return_value=case["is_mouse_button"]
+            return_value=case["is_mouse_button"],
         )
         result = input_event_manager.last_event_was_primary_click_or_release()
         assert result == case["expected_result"]
@@ -3037,7 +3062,7 @@ class TestInputEventManager:
         mock_last_event.pressed = case["pressed"]
         input_event_manager._last_input_event = mock_last_event
         input_event_manager.last_event_was_mouse_button = test_context.Mock(
-            return_value=case["is_mouse_button"]
+            return_value=case["is_mouse_button"],
         )
         method = getattr(input_event_manager, case["method_name"])
         result = method()
@@ -3070,7 +3095,8 @@ class TestInputEventManager:
         assert input_event_manager._paused is False
 
     def test_determine_click_count_no_multi_click_bindings(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test click count stays at 1 when no multi-click bindings exist for the key."""
 
@@ -3080,12 +3106,17 @@ class TestInputEventManager:
         command_manager_instance = test_context.Mock()
         command_manager_instance.has_multi_click_bindings = test_context.Mock(return_value=False)
         test_context.patch(
-            "orca.command_manager.get_manager", return_value=command_manager_instance
+            "orca.command_manager.get_manager",
+            return_value=command_manager_instance,
         )
 
         # Create first event (press)
         first_event = essential_modules["orca.input_event"].KeyboardEvent(
-            pressed=True, keycode=79, keysym=65429, modifiers=0, text="KP_Home"
+            pressed=True,
+            keycode=79,
+            keysym=65429,
+            modifiers=0,
+            text="KP_Home",
         )
         first_event.keyval_name = "KP_Home"
         first_event.time = 1000.0
@@ -3100,7 +3131,11 @@ class TestInputEventManager:
 
         # Create release event
         release_event = essential_modules["orca.input_event"].KeyboardEvent(
-            pressed=False, keycode=79, keysym=65429, modifiers=0, text="KP_Home"
+            pressed=False,
+            keycode=79,
+            keysym=65429,
+            modifiers=0,
+            text="KP_Home",
         )
         release_event.keyval_name = "KP_Home"
         release_event.time = 1000.1
@@ -3115,7 +3150,11 @@ class TestInputEventManager:
 
         # Create second press event within doubleClickTimeout
         second_event = essential_modules["orca.input_event"].KeyboardEvent(
-            pressed=True, keycode=79, keysym=65429, modifiers=0, text="KP_Home"
+            pressed=True,
+            keycode=79,
+            keysym=65429,
+            modifiers=0,
+            text="KP_Home",
         )
         second_event.keyval_name = "KP_Home"
         second_event.id = 65429  # keyval for has_multi_click_bindings call
@@ -3134,7 +3173,8 @@ class TestInputEventManager:
         command_manager_instance.has_multi_click_bindings.assert_called_with(65429, 79, 0)
 
     def test_determine_click_count_with_multi_click_bindings(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test click count increments when multi-click bindings exist for the key."""
 
@@ -3144,12 +3184,17 @@ class TestInputEventManager:
         command_manager_instance = test_context.Mock()
         command_manager_instance.has_multi_click_bindings = test_context.Mock(return_value=True)
         test_context.patch(
-            "orca.command_manager.get_manager", return_value=command_manager_instance
+            "orca.command_manager.get_manager",
+            return_value=command_manager_instance,
         )
 
         # Create first event (press)
         first_event = essential_modules["orca.input_event"].KeyboardEvent(
-            pressed=True, keycode=80, keysym=65431, modifiers=0, text="KP_Up"
+            pressed=True,
+            keycode=80,
+            keysym=65431,
+            modifiers=0,
+            text="KP_Up",
         )
         first_event.keyval_name = "KP_Up"
         first_event.time = 1000.0
@@ -3164,7 +3209,11 @@ class TestInputEventManager:
 
         # Create release event
         release_event = essential_modules["orca.input_event"].KeyboardEvent(
-            pressed=False, keycode=80, keysym=65431, modifiers=0, text="KP_Up"
+            pressed=False,
+            keycode=80,
+            keysym=65431,
+            modifiers=0,
+            text="KP_Up",
         )
         release_event.keyval_name = "KP_Up"
         release_event.time = 1000.1
@@ -3179,7 +3228,11 @@ class TestInputEventManager:
 
         # Create second press event within doubleClickTimeout
         second_event = essential_modules["orca.input_event"].KeyboardEvent(
-            pressed=True, keycode=80, keysym=65431, modifiers=0, text="KP_Up"
+            pressed=True,
+            keycode=80,
+            keysym=65431,
+            modifiers=0,
+            text="KP_Up",
         )
         second_event.keyval_name = "KP_Up"
         second_event.id = 65431  # keyval for has_multi_click_bindings call

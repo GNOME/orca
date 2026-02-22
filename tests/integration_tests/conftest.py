@@ -24,7 +24,8 @@
 
 import os
 import threading
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
 import pytest
 from dasbus.connection import SessionMessageBus
@@ -41,7 +42,7 @@ def _dbus_service_proxy() -> Any:
         proxy.GetVersion()
         return proxy
     except (DBusError, AttributeError, TypeError) as error:
-        pytest.skip(f"Orca D-Bus service not available: {str(error)}")
+        pytest.skip(f"Orca D-Bus service not available: {error!s}")
         return None
 
 
@@ -55,7 +56,7 @@ def _module_proxy_factory(dbus_service_proxy: Any) -> Callable[[str], Any]:
             bus = SessionMessageBus()
             return bus.get_proxy("org.gnome.Orca.Service", f"/org/gnome/Orca/Service/{module_name}")
         except (DBusError, AttributeError, TypeError) as error:
-            pytest.skip(f"Could not create proxy for {module_name}: {str(error)}")
+            pytest.skip(f"Could not create proxy for {module_name}: {error!s}")
             return None
 
     return _create_proxy

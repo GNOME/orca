@@ -29,31 +29,35 @@ import os
 import signal
 import sys
 
-from dasbus.connection import SessionMessageBus
 import gi
+from dasbus.connection import SessionMessageBus
 
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
-from gi.repository import Atspi
-from gi.repository import Gdk  # pylint: disable=no-name-in-module
-from gi.repository import Gio
-from gi.repository import GLib
+from gi.repository import (
+    Atspi,
+    Gdk,  # pylint: disable=no-name-in-module
+    Gio,
+    GLib,
+)
 
-from . import ax_device_manager
-from . import clipboard
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import debugging_tools_manager
-from . import event_manager
-from . import focus_manager
-from . import gsettings_registry
-from . import messages
-from . import mouse_review
-from . import orca_modifier_manager
-from . import presentation_manager
-from . import script_manager
-from . import systemd
+from . import (
+    ax_device_manager,
+    clipboard,
+    command_manager,
+    dbus_service,
+    debug,
+    debugging_tools_manager,
+    event_manager,
+    focus_manager,
+    gsettings_registry,
+    messages,
+    mouse_review,
+    orca_modifier_manager,
+    presentation_manager,
+    script_manager,
+    systemd,
+)
 from .ax_utilities import AXUtilities
 
 
@@ -207,7 +211,7 @@ def main(import_dir: str | None = None, prefs_dir: str = ""):
     except GLib.GError as error:
         msg = f"ORCA: Could not connect to D-Bus session bus: {error}"
         debug.print_message(debug.LEVEL_SEVERE, msg, True)
-        print(msg, file=sys.stderr)
+        print(msg, file=sys.stderr)  # noqa: T201
         return 1
 
     registry = gsettings_registry.get_registry()
@@ -236,7 +240,7 @@ def main(import_dir: str | None = None, prefs_dir: str = ""):
 
         try:
             _a11y_applications_gsetting = Gio.Settings(
-                schema_id="org.gnome.desktop.a11y.applications"
+                schema_id="org.gnome.desktop.a11y.applications",
             )
             connection = _a11y_applications_gsetting.connect("changed", _on_enabled_changed)
             msg = f"ORCA: Connected to a11y applications gsetting: {bool(connection)}"
@@ -262,7 +266,10 @@ def main(import_dir: str | None = None, prefs_dir: str = ""):
     if window and not focus_manager.get_manager().get_locus_of_focus():
         app = AXUtilities.get_application(window)
         focus_manager.get_manager().set_active_window(
-            window, app, set_window_as_focus=True, notify_script=True
+            window,
+            app,
+            set_window_as_focus=True,
+            notify_script=True,
         )
 
         focused_object = focus_manager.get_manager().find_focused_object()

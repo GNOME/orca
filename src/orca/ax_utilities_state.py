@@ -29,8 +29,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import debug
-from . import messages
+from . import debug, messages
 from .ax_object import AXObject
 
 

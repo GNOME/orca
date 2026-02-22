@@ -107,7 +107,8 @@ class TestDocumentPresenter:
         assert presenter1 is presenter2
 
     def test_get_native_nav_triggers_focus_mode_default(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test get_native_nav_triggers_focus_mode returns default value."""
 
@@ -130,7 +131,8 @@ class TestDocumentPresenter:
         assert presenter.get_native_nav_triggers_focus_mode() is False
 
     def test_set_native_nav_triggers_focus_mode_no_change(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test set_native_nav_triggers_focus_mode returns True when value unchanged."""
 
@@ -221,7 +223,9 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         gsettings_registry.get_registry().set_runtime_value(
-            "document", "find-results-verbosity", "none"
+            "document",
+            "find-results-verbosity",
+            "none",
         )
         result = presenter.get_speak_find_results()
 
@@ -235,7 +239,9 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         gsettings_registry.get_registry().set_runtime_value(
-            "document", "find-results-verbosity", "none"
+            "document",
+            "find-results-verbosity",
+            "none",
         )
         result = presenter.set_speak_find_results(True)
 
@@ -261,7 +267,9 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         gsettings_registry.get_registry().set_runtime_value(
-            "document", "find-results-verbosity", "if-line-changed"
+            "document",
+            "find-results-verbosity",
+            "if-line-changed",
         )
         result = presenter.get_only_speak_changed_lines()
 
@@ -296,7 +304,9 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         gsettings_registry.get_registry().set_runtime_value(
-            "document", "find-results-verbosity", "if-line-changed"
+            "document",
+            "find-results-verbosity",
+            "if-line-changed",
         )
         result = presenter.set_only_speak_changed_lines(False)
 
@@ -391,7 +401,9 @@ class TestDocumentPresenter:
         from orca import gsettings_registry  # pylint: disable=import-outside-toplevel
 
         gsettings_registry.get_registry().set_runtime_value(
-            "document", "find-results-minimum-length", 5
+            "document",
+            "find-results-minimum-length",
+            5,
         )
 
         # Set up mock script
@@ -451,7 +463,9 @@ class TestDocumentPresenter:
         from orca import gsettings_registry  # pylint: disable=import-outside-toplevel
 
         gsettings_registry.get_registry().set_runtime_value(
-            "document", "find-results-minimum-length", 3
+            "document",
+            "find-results-minimum-length",
+            3,
         )
 
         # Set up mock script
@@ -483,7 +497,8 @@ class TestDocumentPresenter:
         pres_manager.present_message.assert_called_once_with("1 of 5")
 
     def test_present_find_results_skips_same_line_when_only_changed(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test present_find_results skips when same line and only_speak_changed_lines."""
 
@@ -551,7 +566,9 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=True, focus_mode_is_sticky=True, browse_mode_is_sticky=False
+            in_focus_mode=True,
+            focus_mode_is_sticky=True,
+            browse_mode_is_sticky=False,
         )
 
         result = presenter.use_focus_mode(MagicMock())
@@ -573,7 +590,9 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=False, focus_mode_is_sticky=False, browse_mode_is_sticky=True
+            in_focus_mode=False,
+            focus_mode_is_sticky=False,
+            browse_mode_is_sticky=True,
         )
 
         result = presenter.use_focus_mode(MagicMock())
@@ -832,7 +851,9 @@ class TestDocumentPresenter:
         presenter = module.get_presenter()
         presenter.set_native_nav_triggers_focus_mode(False)
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=True, focus_mode_is_sticky=False, browse_mode_is_sticky=False
+            in_focus_mode=True,
+            focus_mode_is_sticky=False,
+            browse_mode_is_sticky=False,
         )
 
         result = presenter.use_focus_mode(MagicMock())
@@ -862,7 +883,9 @@ class TestDocumentPresenter:
         mock_app = MagicMock()
 
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=True, focus_mode_is_sticky=False, browse_mode_is_sticky=False
+            in_focus_mode=True,
+            focus_mode_is_sticky=False,
+            browse_mode_is_sticky=False,
         )
 
         result = presenter.in_focus_mode(mock_app)
@@ -892,7 +915,9 @@ class TestDocumentPresenter:
         mock_app = MagicMock()
 
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=True, focus_mode_is_sticky=True, browse_mode_is_sticky=False
+            in_focus_mode=True,
+            focus_mode_is_sticky=True,
+            browse_mode_is_sticky=False,
         )
 
         result = presenter.focus_mode_is_sticky(mock_app)
@@ -922,7 +947,9 @@ class TestDocumentPresenter:
         mock_app = MagicMock()
 
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=False, focus_mode_is_sticky=False, browse_mode_is_sticky=True
+            in_focus_mode=False,
+            focus_mode_is_sticky=False,
+            browse_mode_is_sticky=True,
         )
 
         result = presenter.browse_mode_is_sticky(mock_app)
@@ -956,7 +983,9 @@ class TestDocumentPresenter:
         mock_app = MagicMock()
 
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=False, focus_mode_is_sticky=False, browse_mode_is_sticky=True
+            in_focus_mode=False,
+            focus_mode_is_sticky=False,
+            browse_mode_is_sticky=True,
         )
 
         presenter.clear_state_for_app(mock_app)
@@ -976,10 +1005,14 @@ class TestDocumentPresenter:
         app2 = MagicMock()
 
         presenter._app_states[hash(app1)] = module._AppModeState(
-            in_focus_mode=True, focus_mode_is_sticky=True, browse_mode_is_sticky=False
+            in_focus_mode=True,
+            focus_mode_is_sticky=True,
+            browse_mode_is_sticky=False,
         )
         presenter._app_states[hash(app2)] = module._AppModeState(
-            in_focus_mode=False, focus_mode_is_sticky=False, browse_mode_is_sticky=True
+            in_focus_mode=False,
+            focus_mode_is_sticky=False,
+            browse_mode_is_sticky=True,
         )
 
         assert presenter.in_focus_mode(app1) is True
@@ -1025,7 +1058,9 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=True, focus_mode_is_sticky=False, browse_mode_is_sticky=False
+            in_focus_mode=True,
+            focus_mode_is_sticky=False,
+            browse_mode_is_sticky=False,
         )
 
         result = presenter._set_presentation_mode(mock_script, True, obj=MagicMock())
@@ -1050,7 +1085,9 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=True, focus_mode_is_sticky=False, browse_mode_is_sticky=False
+            in_focus_mode=True,
+            focus_mode_is_sticky=False,
+            browse_mode_is_sticky=False,
         )
 
         result = presenter._set_presentation_mode(mock_script, False, obj=MagicMock())
@@ -1085,7 +1122,9 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=False, focus_mode_is_sticky=False, browse_mode_is_sticky=False
+            in_focus_mode=False,
+            focus_mode_is_sticky=False,
+            browse_mode_is_sticky=False,
         )
 
         result = presenter._set_presentation_mode(mock_script, True, obj=MagicMock())
@@ -1121,7 +1160,9 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=False, focus_mode_is_sticky=False, browse_mode_is_sticky=False
+            in_focus_mode=False,
+            focus_mode_is_sticky=False,
+            browse_mode_is_sticky=False,
         )
 
         dead_obj = MagicMock()
@@ -1150,13 +1191,19 @@ class TestDocumentPresenter:
 
         assert result is True
         caret_nav.get_navigator.return_value.suspend_commands.assert_called_with(
-            mock_script, True, "test"
+            mock_script,
+            True,
+            "test",
         )
         struct_nav.get_navigator.return_value.suspend_commands.assert_called_with(
-            mock_script, True, "test"
+            mock_script,
+            True,
+            "test",
         )
         table_nav.get_navigator.return_value.suspend_commands.assert_called_with(
-            mock_script, True, "test"
+            mock_script,
+            True,
+            "test",
         )
 
     def test_enable_sticky_focus_mode(self, test_context: OrcaTestContext) -> None:
@@ -1246,7 +1293,9 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=False, focus_mode_is_sticky=False, browse_mode_is_sticky=False
+            in_focus_mode=False,
+            focus_mode_is_sticky=False,
+            browse_mode_is_sticky=False,
         )
 
         result = presenter.toggle_presentation_mode(mock_script)
@@ -1295,7 +1344,9 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=True, focus_mode_is_sticky=False, browse_mode_is_sticky=False
+            in_focus_mode=True,
+            focus_mode_is_sticky=False,
+            browse_mode_is_sticky=False,
         )
 
         presenter.restore_mode_for_script(mock_script)
@@ -1303,7 +1354,8 @@ class TestDocumentPresenter:
         caret_nav.get_navigator.return_value.suspend_commands.assert_called()
 
     def test_restore_mode_for_script_browse_mode_enables_navigators(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test restore_mode_for_script re-enables navigators when restoring browse mode."""
 
@@ -1320,14 +1372,17 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=False, focus_mode_is_sticky=False, browse_mode_is_sticky=False
+            in_focus_mode=False,
+            focus_mode_is_sticky=False,
+            browse_mode_is_sticky=False,
         )
 
         presenter.restore_mode_for_script(mock_script)
 
         struct_nav.get_navigator.return_value.set_mode.assert_called_once()
         caret_nav.get_navigator.return_value.set_enabled_for_script.assert_called_once_with(
-            mock_script, True
+            mock_script,
+            True,
         )
 
     def test_update_mode_if_needed_not_in_doc(self, test_context: OrcaTestContext) -> None:
@@ -1387,7 +1442,9 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=True, focus_mode_is_sticky=True, browse_mode_is_sticky=False
+            in_focus_mode=True,
+            focus_mode_is_sticky=True,
+            browse_mode_is_sticky=False,
         )
 
         pres_manager = mocks["orca.presentation_manager"].get_manager()
@@ -1415,7 +1472,9 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=False, focus_mode_is_sticky=False, browse_mode_is_sticky=True
+            in_focus_mode=False,
+            focus_mode_is_sticky=False,
+            browse_mode_is_sticky=True,
         )
 
         pres_manager = mocks["orca.presentation_manager"].get_manager()
@@ -1428,7 +1487,8 @@ class TestDocumentPresenter:
         caret_nav.get_navigator.return_value.set_enabled_for_script.assert_called()
 
     def test_handle_entering_document_refreshes_commands(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test entering document refreshes commands even when mode unchanged."""
 
@@ -1462,7 +1522,9 @@ class TestDocumentPresenter:
         presenter = module.get_presenter()
         # Already in browse mode - entering document should still refresh commands
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=False, focus_mode_is_sticky=False, browse_mode_is_sticky=False
+            in_focus_mode=False,
+            focus_mode_is_sticky=False,
+            browse_mode_is_sticky=False,
         )
 
         with patch.object(presenter, "is_focus_mode_widget", return_value=False):
@@ -1508,7 +1570,8 @@ class TestDocumentPresenter:
         assert result is False
 
     def test_is_likely_electron_app_false_for_non_chromium(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _is_likely_electron_app returns False for non-Chromium toolkit."""
 
@@ -1632,7 +1695,8 @@ class TestDocumentPresenter:
         assert result is False
 
     def test_update_mode_top_level_web_app_sticky_focus(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test update_mode_if_needed enables sticky focus for top-level web apps when entering."""
 
@@ -1718,11 +1782,13 @@ class TestDocumentPresenter:
         assert result is True
 
     def test_is_focus_mode_widget_expandable_link_false(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test is_focus_mode_widget returns False for expandable focusable links."""
 
         from unittest.mock import MagicMock
+
         import gi
 
         gi.require_version("Atspi", "2.0")
@@ -1758,6 +1824,7 @@ class TestDocumentPresenter:
         """Test is_focus_mode_widget returns True for always-focus-mode roles."""
 
         from unittest.mock import MagicMock
+
         import gi
 
         gi.require_version("Atspi", "2.0")
@@ -1784,6 +1851,7 @@ class TestDocumentPresenter:
         """Test is_focus_mode_widget returns False for layout tables."""
 
         from unittest.mock import MagicMock
+
         import gi
 
         gi.require_version("Atspi", "2.0")
@@ -1814,6 +1882,7 @@ class TestDocumentPresenter:
         """Test is_focus_mode_widget returns True for list box items."""
 
         from unittest.mock import MagicMock
+
         import gi
 
         gi.require_version("Atspi", "2.0")
@@ -1844,6 +1913,7 @@ class TestDocumentPresenter:
         """Test is_focus_mode_widget returns True for buttons with popup."""
 
         from unittest.mock import MagicMock
+
         import gi
 
         gi.require_version("Atspi", "2.0")
@@ -1872,11 +1942,13 @@ class TestDocumentPresenter:
         assert result is True
 
     def test_is_focus_mode_widget_table_cell_not_layout(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test is_focus_mode_widget returns True for non-layout table cells."""
 
         from unittest.mock import MagicMock
+
         import gi
 
         gi.require_version("Atspi", "2.0")
@@ -1914,6 +1986,7 @@ class TestDocumentPresenter:
         """Test is_focus_mode_widget returns True for grid descendants."""
 
         from unittest.mock import MagicMock
+
         import gi
 
         gi.require_version("Atspi", "2.0")
@@ -1948,6 +2021,7 @@ class TestDocumentPresenter:
         """Test is_focus_mode_widget returns True for menu descendants."""
 
         from unittest.mock import MagicMock
+
         import gi
 
         gi.require_version("Atspi", "2.0")
@@ -1983,6 +2057,7 @@ class TestDocumentPresenter:
         """Test is_focus_mode_widget returns True for toolbar descendants."""
 
         from unittest.mock import MagicMock
+
         import gi
 
         gi.require_version("Atspi", "2.0")
@@ -2019,6 +2094,7 @@ class TestDocumentPresenter:
         """Test is_focus_mode_widget returns True for content editable with embedded."""
 
         from unittest.mock import MagicMock
+
         import gi
 
         gi.require_version("Atspi", "2.0")
@@ -2056,6 +2132,7 @@ class TestDocumentPresenter:
         """Test is_focus_mode_widget returns False by default."""
 
         from unittest.mock import MagicMock
+
         import gi
 
         gi.require_version("Atspi", "2.0")
@@ -2093,6 +2170,7 @@ class TestDocumentPresenter:
         """Test is_focus_mode_widget returns False for table cells in PDFs."""
 
         from unittest.mock import MagicMock
+
         import gi
 
         gi.require_version("Atspi", "2.0")
@@ -2220,7 +2298,9 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=False, focus_mode_is_sticky=False, browse_mode_is_sticky=False
+            in_focus_mode=False,
+            focus_mode_is_sticky=False,
+            browse_mode_is_sticky=False,
         )
 
         with patch.object(presenter, "is_focus_mode_widget", return_value=False):
@@ -2243,7 +2323,9 @@ class TestDocumentPresenter:
 
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(
-            in_focus_mode=True, focus_mode_is_sticky=True, browse_mode_is_sticky=False
+            in_focus_mode=True,
+            focus_mode_is_sticky=True,
+            browse_mode_is_sticky=False,
         )
 
         result = presenter.update_mode_if_needed(mock_script, MagicMock(), MagicMock())

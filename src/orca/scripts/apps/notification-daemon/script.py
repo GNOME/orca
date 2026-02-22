@@ -23,15 +23,12 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
-from orca import messages
-from orca import notification_presenter
-from orca import presentation_manager
-from orca.scripts import default
+from orca import messages, notification_presenter, presentation_manager
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
+from orca.scripts import default
 
 if TYPE_CHECKING:
     import gi

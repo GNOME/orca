@@ -37,8 +37,9 @@ from typing import TYPE_CHECKING
 import pytest
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -105,7 +106,7 @@ class TestSpeechPresenter:
         ax_utilities_mock.AXUtilities = test_context.Mock()
         ax_utilities_mock.AXUtilities.is_math_related = test_context.Mock(return_value=False)
         ax_utilities_mock.AXUtilities.is_text_input_telephone = test_context.Mock(
-            return_value=False
+            return_value=False,
         )
         ax_utilities_mock.AXUtilities.is_code = test_context.Mock(return_value=False)
 
@@ -141,7 +142,7 @@ class TestSpeechPresenter:
         messages_mock.LINK = "link"
         messages_mock.MISSPELLED = "misspelled"
         messages_mock.repeated_char_count = test_context.Mock(
-            side_effect=lambda char, count: f"{char} repeated {count} times"
+            side_effect=lambda char, count: f"{char} repeated {count} times",
         )
         messages_mock.spaces_count = test_context.Mock(side_effect=lambda count: f"{count} spaces")
         messages_mock.tabs_count = test_context.Mock(side_effect=lambda count: f"{count} tabs")
@@ -167,8 +168,8 @@ class TestSpeechPresenter:
         """Test that set_up_commands registers commands in CommandManager."""
 
         self._setup_dependencies(test_context)
-        from orca.speech_presenter import SpeechPresenter
         from orca import command_manager
+        from orca.speech_presenter import SpeechPresenter
 
         presenter = SpeechPresenter()
         presenter.set_up_commands()
@@ -181,7 +182,8 @@ class TestSpeechPresenter:
         assert cmd_manager.get_command("toggleTableCellReadModeHandler") is not None
 
     def test_set_up_commands_registers_monitor_callbacks(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test that set_up_commands registers speech monitor callbacks."""
 
@@ -302,7 +304,9 @@ class TestSpeechPresenter:
 
         presenter = SpeechPresenter()
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "speak-blank-lines", case["setting_value"]
+            "speech",
+            "speak-blank-lines",
+            case["setting_value"],
         )
 
         result = presenter.get_speak_blank_lines()
@@ -326,7 +330,9 @@ class TestSpeechPresenter:
 
         presenter = SpeechPresenter()
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "only-speak-displayed-text", case["setting_value"]
+            "speech",
+            "only-speak-displayed-text",
+            case["setting_value"],
         )
 
         result = presenter.get_only_speak_displayed_text()
@@ -362,7 +368,9 @@ class TestSpeechPresenter:
         ids=lambda case: case["id"],
     )
     def test_get_speak_indentation_and_justification(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test get_speak_indentation_and_justification method."""
 
@@ -373,7 +381,9 @@ class TestSpeechPresenter:
 
         presenter = SpeechPresenter()
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "speak-indentation-and-justification", case["setting_value"]
+            "speech",
+            "speak-indentation-and-justification",
+            case["setting_value"],
         )
 
         result = presenter.get_speak_indentation_and_justification()
@@ -388,7 +398,9 @@ class TestSpeechPresenter:
         ids=lambda case: case["id"],
     )
     def test_set_speak_indentation_and_justification(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test set_speak_indentation_and_justification method."""
 
@@ -438,7 +450,8 @@ class TestSpeechPresenter:
         assert result != ""
 
     def test_get_indentation_description_only_if_changed(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test get_indentation_description with only-if-changed enabled."""
 
@@ -489,7 +502,9 @@ class TestSpeechPresenter:
         from orca.speech_presenter import SpeechPresenter
 
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "speak-misspelled-indicator", False
+            "speech",
+            "speak-misspelled-indicator",
+            False,
         )
 
         presenter = SpeechPresenter()
@@ -515,7 +530,9 @@ class TestSpeechPresenter:
             return_value=return_text,
         )
         test_context.patch_object(
-            presenter, "_apply_pronunciation_dictionary", return_value=return_text
+            presenter,
+            "_apply_pronunciation_dictionary",
+            return_value=return_text,
         )
 
         mock_obj = test_context.Mock()
@@ -557,7 +574,9 @@ class TestSpeechPresenter:
         from orca import gsettings_registry
 
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "speak-numbers-as-digits", case["speak_digits"]
+            "speech",
+            "speak-numbers-as-digits",
+            case["speak_digits"],
         )
 
         essential_modules[
@@ -626,7 +645,7 @@ class TestSpeechPresenter:
         """Test apply_speech_preferences applies values correctly."""
 
         self._setup_dependencies(test_context)
-        from orca.speech_presenter import SpeechPresenter, SpeechPreference
+        from orca.speech_presenter import SpeechPreference, SpeechPresenter
 
         presenter = SpeechPresenter()
 
@@ -740,7 +759,8 @@ class TestSpeechPresenter:
         assert isinstance(presenter1, speech_presenter.SpeechPresenter)
 
     def _setup_speech_output_dependencies(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> dict[str, MagicMock]:
         """Set up additional mocks needed for speech output method testing."""
 
@@ -761,7 +781,7 @@ class TestSpeechPresenter:
         speech_manager_instance = test_context.Mock()
         speech_manager_instance.get_speech_is_muted = test_context.Mock(return_value=False)
         speech_manager_instance.get_speech_is_enabled_and_not_muted = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         speech_manager_instance.get_capitalization_style = test_context.Mock(return_value="icon")
         speech_manager_instance.set_capitalization_style = test_context.Mock()
@@ -842,7 +862,9 @@ class TestSpeechPresenter:
         from orca.speech_presenter import SpeechPresenter
 
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "only-speak-displayed-text", True
+            "speech",
+            "only-speak-displayed-text",
+            True,
         )
 
         presenter = SpeechPresenter()

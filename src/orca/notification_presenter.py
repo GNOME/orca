@@ -31,26 +31,28 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import time
-from typing import Callable, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import GObject
-from gi.repository import Gtk
+from gi.repository import GObject, Gtk
 
-from . import cmdnames
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import guilabels
-from . import input_event
-from . import messages
-from . import presentation_manager
+from . import (
+    cmdnames,
+    command_manager,
+    dbus_service,
+    debug,
+    guilabels,
+    input_event,
+    messages,
+    presentation_manager,
+)
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from .scripts import default
 
 
@@ -116,7 +118,7 @@ class NotificationPresenter:
                     description,
                     desktop_keybinding=None,
                     laptop_keybinding=None,
-                )
+                ),
             )
 
         msg = "NOTIFICATION PRESENTER: Commands set up."
@@ -177,7 +179,7 @@ class NotificationPresenter:
         if not self._notifications:
             if notify_user:
                 presentation_manager.get_manager().present_message(
-                    messages.NOTIFICATION_NO_MESSAGES
+                    messages.NOTIFICATION_NO_MESSAGES,
                 )
             return True
 
@@ -211,7 +213,7 @@ class NotificationPresenter:
         if not self._notifications:
             if notify_user:
                 presentation_manager.get_manager().present_message(
-                    messages.NOTIFICATION_NO_MESSAGES
+                    messages.NOTIFICATION_NO_MESSAGES,
                 )
             return True
 
@@ -258,7 +260,7 @@ class NotificationPresenter:
         if not self._notifications:
             if notify_user:
                 presentation_manager.get_manager().present_message(
-                    messages.NOTIFICATION_NO_MESSAGES
+                    messages.NOTIFICATION_NO_MESSAGES,
                 )
             return True
 
@@ -275,7 +277,7 @@ class NotificationPresenter:
                 msg = "NOTIFICATION PRESENTER: Handling IndexError exception."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 presentation_manager.get_manager().present_message(
-                    messages.NOTIFICATION_LIST_BOTTOM
+                    messages.NOTIFICATION_LIST_BOTTOM,
                 )
                 message, timestamp = self._notifications[self._current_index]
 
@@ -305,7 +307,7 @@ class NotificationPresenter:
         if not self._notifications:
             if notify_user:
                 presentation_manager.get_manager().present_message(
-                    messages.NOTIFICATION_NO_MESSAGES
+                    messages.NOTIFICATION_NO_MESSAGES,
                 )
             return True
 
@@ -325,7 +327,11 @@ class NotificationPresenter:
             guilabels.NOTIFICATIONS_RECEIVED_TIME,
         ]
         self._gui = NotificationListGUI(
-            script, title, column_headers, rows, self.on_dialog_destroyed
+            script,
+            title,
+            column_headers,
+            rows,
+            self.on_dialog_destroyed,
         )
         self._gui.show_gui()
         return True
@@ -353,7 +359,10 @@ class NotificationListGUI:
         self._gui.connect("destroy", destroyed_callback)
 
     def _create_dialog(
-        self, title: str, column_headers: list[str], rows: list[tuple[str, str]]
+        self,
+        title: str,
+        column_headers: list[str],
+        rows: list[tuple[str, str]],
     ) -> Gtk.Dialog:
         dialog = Gtk.Dialog(
             title,

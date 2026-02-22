@@ -36,10 +36,12 @@ from unittest.mock import Mock
 import pytest
 
 if TYPE_CHECKING:
+    from typing import ClassVar
+
     from .orca_test_context import OrcaTestContext
 
 
-class _FakeGtkGrid:  # noqa: D401 - simple test stub
+class _FakeGtkGrid:
     """Minimal stub used in unit tests."""
 
     def __init__(self, *_args, **_kwargs):
@@ -63,7 +65,7 @@ class _FakeGtkGrid:  # noqa: D401 - simple test stub
         return None
 
 
-class _FakeCheckButton:  # noqa: D401 - simple test stub
+class _FakeCheckButton:
     """Minimal stub emulating Gtk.CheckButton for unit tests."""
 
     def __init__(self, label: str):
@@ -73,7 +75,7 @@ class _FakeCheckButton:  # noqa: D401 - simple test stub
         self._signal_handlers: dict[str, tuple] = {}
 
     @classmethod
-    def new_with_mnemonic(cls, label: str) -> "_FakeCheckButton":
+    def new_with_mnemonic(cls, label: str) -> _FakeCheckButton:
         """Create new check button with mnemonic."""
         return cls(label)
 
@@ -110,7 +112,7 @@ class _FakeCheckButton:  # noqa: D401 - simple test stub
 class TestTypingEchoPresenter:
     """Test TypingEchoPresenter and TypingEchoPreferencesGrid."""
 
-    _CMDNAME_VALUES: dict[str, str] = {
+    _CMDNAME_VALUES: ClassVar[dict[str, str]] = {
         "STRUCTURAL_NAVIGATION_MODE_CYCLE": "cycle_mode",
         "BLOCKQUOTE_PREV": "previous_blockquote",
         "BLOCKQUOTE_NEXT": "next_blockquote",
@@ -218,7 +220,9 @@ class TestTypingEchoPresenter:
         test_context.patch_object(Atspi, "Accessible", new=type("Accessible", (), {}))
         test_context.patch_object(Atspi, "Hyperlink", new=type("Hyperlink", (), {}))
         test_context.patch_object(
-            Atspi, "Role", new=type("Role", (), {"PASSWORD_TEXT": 42, "PANEL": 36})
+            Atspi,
+            "Role",
+            new=type("Role", (), {"PASSWORD_TEXT": 42, "PANEL": 36}),
         )
         test_context.patch_object(
             Atspi,
@@ -233,7 +237,7 @@ class TestTypingEchoPresenter:
         )
         test_context.patch_object(Atspi, "Relation", new=type("Relation", (), {}))
 
-    _ADDITIONAL_MODULES = [
+    _ADDITIONAL_MODULES: ClassVar[list[str]] = [
         "gi",
         "gi.repository",
         "orca.cmdnames",
@@ -251,7 +255,7 @@ class TestTypingEchoPresenter:
         "orca.presentation_manager",
     ]
 
-    _DEFAULT_VALUES = {
+    _DEFAULT_VALUES: ClassVar[dict[str, bool]] = {
         "enableKeyEcho": True,
         "enableAlphabeticKeys": True,
         "enableNumericKeys": True,
@@ -532,7 +536,8 @@ class TestTypingEchoPresenter:
         assert presenter.should_echo_keyboard_event(event_mock) is False
 
     def test_should_echo_keyboard_event_character_echoable(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test should_echo_keyboard_event when character is echoable."""
         presenter = self._setup_presenter(test_context)
@@ -571,7 +576,11 @@ class TestTypingEchoPresenter:
         ],
     )
     def test_should_echo_keyboard_event_key_types(
-        self, test_context: OrcaTestContext, key_type: str, _setting_key: str, expected_result: bool
+        self,
+        test_context: OrcaTestContext,
+        key_type: str,
+        _setting_key: str,
+        expected_result: bool,
     ) -> None:
         """Test should_echo_keyboard_event for different key types."""
         presenter = self._setup_presenter(test_context)
@@ -608,7 +617,8 @@ class TestTypingEchoPresenter:
         assert result is expected_result
 
     def test_should_echo_keyboard_event_space_key_scenarios(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test should_echo_keyboard_event for space key with different settings."""
         presenter = self._setup_presenter(test_context)
@@ -667,7 +677,8 @@ class TestTypingEchoPresenter:
         assert presenter.should_echo_keyboard_event(event_mock) is False
 
     def test_should_echo_keyboard_event_password_text_obscuring(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test should_echo_keyboard_event with password text that should be obscured."""
         presenter = self._setup_presenter(test_context)
@@ -796,7 +807,8 @@ class TestTypingEchoPresenter:
         char_mock_2 = test_context.patch("orca.ax_text.AXText.get_character_at_offset")
         char_mock_2.side_effect = [(" ", 9, 10), (".", 8, 9)]
         test_context.patch(
-            "orca.ax_text.AXText.get_sentence_at_offset", return_value=("Hello world.", 0, 12)
+            "orca.ax_text.AXText.get_sentence_at_offset",
+            return_value=("Hello world.", 0, 12),
         )
 
         from orca import presentation_manager

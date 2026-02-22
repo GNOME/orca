@@ -37,8 +37,9 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -176,7 +177,9 @@ class TestAXUtilitiesRelation:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_targets = [test_context.Mock(spec=Atspi.Accessible)]
         test_context.patch_object(
-            AXUtilitiesRelation, "_get_relation_targets", return_value=mock_targets
+            AXUtilitiesRelation,
+            "_get_relation_targets",
+            return_value=mock_targets,
         )
         method = getattr(AXUtilitiesRelation, case["method_name"])
         if case["method_name"] == "get_relation_targets_for_debugging":
@@ -227,14 +230,16 @@ class TestAXUtilitiesRelation:
         """Test AXUtilitiesRelation.get_relations with various scenarios."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_relation import AXUtilitiesRelation
         from gi.repository import GLib
+
+        from orca.ax_utilities_relation import AXUtilitiesRelation
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_relations = [test_context.Mock(spec=Atspi.Relation)]
 
         test_context.patch(
-            "orca.ax_utilities_relation.AXObject.is_valid", return_value=case["is_valid"]
+            "orca.ax_utilities_relation.AXObject.is_valid",
+            return_value=case["is_valid"],
         )
 
         AXUtilitiesRelation.RELATIONS.clear()
@@ -247,11 +252,15 @@ class TestAXUtilitiesRelation:
                 raise GLib.GError("Test error")
 
             test_context.patch_object(
-                Atspi.Accessible, "get_relation_set", side_effect=raise_glib_error
+                Atspi.Accessible,
+                "get_relation_set",
+                side_effect=raise_glib_error,
             )
         else:
             test_context.patch_object(
-                Atspi.Accessible, "get_relation_set", return_value=mock_relations
+                Atspi.Accessible,
+                "get_relation_set",
+                return_value=mock_relations,
             )
 
         result = AXUtilitiesRelation.get_relations(mock_obj)
@@ -292,7 +301,9 @@ class TestAXUtilitiesRelation:
         mock_relation = test_context.Mock(spec=Atspi.Relation)
         mock_relation.get_relation_type.return_value = case["relation_type_available"]
         test_context.patch_object(
-            AXUtilitiesRelation, "get_relations", return_value=[mock_relation]
+            AXUtilitiesRelation,
+            "get_relations",
+            return_value=[mock_relation],
         )
 
         result = AXUtilitiesRelation._get_relation(mock_obj, case["relation_type_to_find"])
@@ -373,7 +384,9 @@ class TestAXUtilitiesRelation:
                 mock_relation.get_n_targets.return_value = 2
                 mock_relation.get_target.side_effect = [mock_target1, mock_target2]
             test_context.patch_object(
-                AXUtilitiesRelation, "_get_relation", return_value=mock_relation
+                AXUtilitiesRelation,
+                "_get_relation",
+                return_value=mock_relation,
             )
 
         result = AXUtilitiesRelation._get_relation_targets(mock_obj, case["relation_type"])
@@ -418,7 +431,9 @@ class TestAXUtilitiesRelation:
         mock_targets = [mock_ancestor, mock_non_ancestor]
 
         test_context.patch_object(
-            AXUtilitiesRelation, "_get_relation_targets", return_value=mock_targets
+            AXUtilitiesRelation,
+            "_get_relation_targets",
+            return_value=mock_targets,
         )
 
         if case["exclude_ancestors"]:
@@ -428,7 +443,8 @@ class TestAXUtilitiesRelation:
             )
 
         result = AXUtilitiesRelation.get_is_labelled_by(
-            mock_obj, exclude_ancestors=case["exclude_ancestors"]
+            mock_obj,
+            exclude_ancestors=case["exclude_ancestors"],
         )
 
         if case["expected_result"] == "all_targets":
@@ -455,7 +471,9 @@ class TestAXUtilitiesRelation:
         mock_obj3 = test_context.Mock(spec=Atspi.Accessible)
         targets = [mock_obj2] if case["is_controlled"] else [mock_obj3]
         test_context.patch_object(
-            AXUtilitiesRelation, "_get_relation_targets", return_value=targets
+            AXUtilitiesRelation,
+            "_get_relation_targets",
+            return_value=targets,
         )
         result = AXUtilitiesRelation.object_is_controlled_by(mock_obj1, mock_obj2)
         assert result is case["expected"]

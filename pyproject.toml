@@ -5,9 +5,63 @@
 # Documentation: https://beta.ruff.rs/docs/
 [tool.ruff]
 line-length = 100  # same as rustfmt
-lint.ignore = [
-  "E402", # Module level import not at top of file
+target-version = "py310"
+lint.select = [
+  "A",      # flake8-builtins: don't shadow builtins
+  "B",      # flake8-bugbear: common bug sources
+  "C4",     # flake8-comprehensions: unnecessary list/dict/set calls
+  "COM",    # flake8-commas: trailing commas
+  "DTZ",    # flake8-datetimez: naive datetime usage
+  "E",      # pycodestyle errors
+  "F",      # pyflakes
+  "FA",     # flake8-future-annotations: enforce from __future__ import annotations
+  "FLY",    # flynt: use f-strings instead of .join()
+  "FURB",   # refurb: modernize and simplify code
+  "G",      # flake8-logging-format: logging string formatting
+  "I",      # isort: import sorting
+  "ICN",    # flake8-import-conventions
+  "INP",    # flake8-no-pep420: implicit namespace packages
+  "INT",    # flake8-gettext
+  "ISC",    # flake8-implicit-str-concat
+  "N",      # pep8-naming
+  "PERF",   # perflint: performance anti-patterns
+  "PIE",    # flake8-pie: misc lints
+  "PL",     # pylint
+  "PYI",    # flake8-pyi: type stub and annotation best practices
+  "Q",      # flake8-quotes: consistent quote style
+  "RET",    # flake8-return: return statement checks
+  "RUF",    # ruff-specific rules
+  "SIM",    # flake8-simplify: simplifiable code patterns
+  "T20",    # flake8-print: no stray print statements
+  "TC",     # flake8-type-checking: move imports behind TYPE_CHECKING
+  "TID",    # flake8-tidy-imports
+  "UP",     # pyupgrade: catch deprecated syntax for Python 3.10+
+  "W",      # pycodestyle warnings
+  "YTT",    # flake8-2020: sys.version checks
 ]
+lint.ignore = [
+  "E402",   # Module level import not at top of file
+  "N802",   # PascalCase D-Bus method names are required by the interface
+  "N812",   # Uppercase import aliases for optional libraries (BRLAPI, LOUIS)
+  "N816",   # camelCase debugLevel/debugFile preserved for orca-customizations.py compat
+  "PLC0415",# Import outside toplevel — used for circular import workarounds
+  "PLR0911",# Too many return statements
+  "PLR0912",# Too many branches
+  "PLR0913",# Too many arguments
+  "PLR0915",# Too many statements
+  "PLR2004",# Magic value used in comparison
+  "RET501", # Explicit return None — often intentional for clarity
+  "RET504", # Assignment before return — aids debugging and readability
+  "RUF001", # Ambiguous unicode in strings — intentional in mathsymbols.py
+  "RUF003", # Ambiguous unicode in comments — intentional in mathsymbols.py
+  "SIM102", # Collapsible if — often split deliberately for readability
+  "COM812", # Trailing comma — handled by ruff format; conflicts with formatter
+  "SIM108", # Ternary operator — can harm readability for complex conditions
+]
+
+[tool.ruff.lint.per-file-ignores]
+"src/orca/dbus_service.py" = ["FA100", "TC002"]  # dasbus needs runtime type hints; future annotations breaks it
+"tests/integration_tests/*" = ["T201"]  # print used for test output
 
 [tool.pylint.master]
 #extension-pkg-allow-list = ["brlapi"] # this makes cli pylint crash.
@@ -77,3 +131,7 @@ ignore_missing_imports = true
 [[tool.mypy.overrides]]
 module = "dasbus.*"
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disable_error_code = ["method-assign", "attr-defined"]

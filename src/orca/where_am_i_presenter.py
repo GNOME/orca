@@ -23,23 +23,24 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
-from . import cmdnames
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import flat_review_presenter
-from . import focus_manager
-from . import guilabels
-from . import input_event
-from . import keybindings
-from . import messages
-from . import presentation_manager
-from . import speech_presenter
-from . import spellcheck_presenter
-from . import text_attribute_manager
+from . import (
+    cmdnames,
+    command_manager,
+    dbus_service,
+    debug,
+    flat_review_presenter,
+    focus_manager,
+    guilabels,
+    input_event,
+    keybindings,
+    messages,
+    presentation_manager,
+    speech_presenter,
+    spellcheck_presenter,
+    text_attribute_manager,
+)
 from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_table import AXTable
@@ -86,11 +87,15 @@ class WhereAmIPresenter:
         kb_equal = keybindings.KeyBinding("equal", keybindings.ORCA_MODIFIER_MASK)
         kb_kp_enter_orca = keybindings.KeyBinding("KP_Enter", keybindings.ORCA_MODIFIER_MASK)
         kb_kp_enter_orca_2 = keybindings.KeyBinding(
-            "KP_Enter", keybindings.ORCA_MODIFIER_MASK, click_count=2
+            "KP_Enter",
+            keybindings.ORCA_MODIFIER_MASK,
+            click_count=2,
         )
         kb_kp_enter = keybindings.KeyBinding("KP_Enter", keybindings.NO_MODIFIER_MASK)
         kb_kp_enter_2 = keybindings.KeyBinding(
-            "KP_Enter", keybindings.NO_MODIFIER_MASK, click_count=2
+            "KP_Enter",
+            keybindings.NO_MODIFIER_MASK,
+            click_count=2,
         )
 
         # Laptop-specific keybindings
@@ -98,7 +103,9 @@ class WhereAmIPresenter:
         kb_slash_2 = keybindings.KeyBinding("slash", keybindings.ORCA_MODIFIER_MASK, click_count=2)
         kb_return = keybindings.KeyBinding("Return", keybindings.ORCA_MODIFIER_MASK)
         kb_return_2 = keybindings.KeyBinding(
-            "Return", keybindings.ORCA_MODIFIER_MASK, click_count=2
+            "Return",
+            keybindings.ORCA_MODIFIER_MASK,
+            click_count=2,
         )
 
         # (name, function, description, desktop_kb, laptop_kb)
@@ -178,7 +185,7 @@ class WhereAmIPresenter:
                     description,
                     desktop_keybinding=desktop_kb,
                     laptop_keybinding=laptop_kb,
-                )
+                ),
             )
 
         msg = "WHERE AM I PRESENTER: Commands set up."
@@ -230,7 +237,7 @@ class WhereAmIPresenter:
                     AXTextAttribute.from_string,
                     text_attribute_manager.get_manager().get_attributes_to_speak(),
                 ),
-            )
+            ),
         )
         if not attr_list:
             attr_list = AXText.get_all_supported_text_attributes()
@@ -240,7 +247,7 @@ class WhereAmIPresenter:
             value = attrs.get(key)
             if not ax_text_attr.value_is_default(value):
                 presentation_manager.get_manager().speak_message(
-                    self._localize_text_attribute(key, value)
+                    self._localize_text_attribute(key, value),
                 )
 
         return True
@@ -343,14 +350,14 @@ class WhereAmIPresenter:
         if button is None:
             if notify_user:
                 presentation_manager.get_manager().present_message(
-                    messages.DEFAULT_BUTTON_NOT_FOUND
+                    messages.DEFAULT_BUTTON_NOT_FOUND,
                 )
             return True
 
         name = AXObject.get_name(button)
         if not AXUtilities.is_sensitive(button):
             presentation_manager.get_manager().present_message(
-                messages.DEFAULT_BUTTON_IS_GRAYED % name
+                messages.DEFAULT_BUTTON_IS_GRAYED % name,
             )
             return True
 
@@ -556,7 +563,7 @@ class WhereAmIPresenter:
         selected_count = script.utilities.selected_child_count(container)
         child_count = script.utilities.selectable_child_count(container)
         presentation_manager.get_manager().present_message(
-            messages.selected_items_count(selected_count, child_count)
+            messages.selected_items_count(selected_count, child_count),
         )
         if not selected_count:
             return True
@@ -603,7 +610,7 @@ class WhereAmIPresenter:
 
             ancestor = AXObject.find_ancestor(acc, pred)
             if ancestor is not None and not AXUtilities.is_layout_only(
-                AXObject.get_parent(ancestor)
+                AXObject.get_parent(ancestor),
             ):
                 acc = ancestor
 

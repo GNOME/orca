@@ -37,8 +37,9 @@ from typing import TYPE_CHECKING
 import pytest
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 GTK_STOCK_CLOSE = "gtk-close"
 TEST_COMMAND_DESCRIPTION = "Test Command"
@@ -145,7 +146,7 @@ class TestLearnModePresenter:
                 self.modifiers = 0
 
         input_event_mock.InputEventHandler = test_context.Mock(
-            return_value=input_event_handler_mock
+            return_value=input_event_handler_mock,
         )
         input_event_mock.KeyboardEvent = MockKeyboardEvent
 
@@ -157,7 +158,7 @@ class TestLearnModePresenter:
         manager_instance.ungrab_keyboard = test_context.Mock()
         input_event_manager_mock.get_manager = test_context.Mock(return_value=manager_instance)
         input_event_manager_mock.InputEventManager = test_context.Mock(
-            return_value=manager_instance
+            return_value=manager_instance,
         )
 
         keybindings_mock = essential_modules["orca.keybindings"]
@@ -184,10 +185,10 @@ class TestLearnModePresenter:
         messages_mock.LEARN_MODE_STOP = "Exiting learn mode"
         messages_mock.APPLICATION_NO_NAME = "application with no name"
         messages_mock.shortcuts_found_orca = test_context.Mock(
-            return_value="Found 25 Orca shortcuts"
+            return_value="Found 25 Orca shortcuts",
         )
         messages_mock.shortcuts_found_app = test_context.Mock(
-            return_value="Found 5 application shortcuts"
+            return_value="Found 5 application shortcuts",
         )
 
         script_manager_mock = essential_modules["orca.script_manager"]
@@ -200,7 +201,7 @@ class TestLearnModePresenter:
         script_instance.spell_phonetically = test_context.Mock()
         script_instance.app = test_context.Mock()
         script_instance.getDefaultKeyBindings = test_context.Mock(
-            return_value=key_bindings_instance
+            return_value=key_bindings_instance,
         )
         speech_gen = test_context.Mock()
         speech_gen.voice = test_context.Mock(return_value=[test_context.Mock()])
@@ -234,7 +235,7 @@ class TestLearnModePresenter:
 
         script_manager_mock.get_manager = test_context.Mock(return_value=test_context.Mock())
         script_manager_mock.get_manager.return_value.get_active_script = test_context.Mock(
-            return_value=script_instance
+            return_value=script_instance,
         )
 
         debug_mock = essential_modules["orca.debug"]
@@ -266,8 +267,8 @@ class TestLearnModePresenter:
         """Test that commands are registered with CommandManager during setup."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.learn_mode_presenter import LearnModePresenter
         from orca import command_manager
+        from orca.learn_mode_presenter import LearnModePresenter
 
         presenter = LearnModePresenter()
         presenter.set_up_commands()
@@ -334,7 +335,7 @@ class TestLearnModePresenter:
         if script_provided and script is not None:
             pres_manager = essential_modules["orca.presentation_manager"].get_manager()
             pres_manager.present_message.assert_called_with(
-                essential_modules["orca.messages"].VERSION
+                essential_modules["orca.messages"].VERSION,
             )
 
     def test_quit_when_active(self, test_context: OrcaTestContext) -> None:
@@ -385,14 +386,14 @@ class TestLearnModePresenter:
             script.present_message = test_context.Mock()
         result = presenter.quit(_script=script)
         assert result is True
-        expected_final_state = False if is_active else False
+        expected_final_state = False
         assert presenter._is_active == expected_final_state
         if expected_debug_called:
             essential_modules["orca.debug"].print_message.assert_called()
         if script_provided and script is not None:
             pres_manager = essential_modules["orca.presentation_manager"].get_manager()
             pres_manager.present_message.assert_called_with(
-                essential_modules["orca.messages"].LEARN_MODE_STOP
+                essential_modules["orca.messages"].LEARN_MODE_STOP,
             )
 
     def test_handle_event_no_script(self, test_context: OrcaTestContext) -> None:
@@ -454,7 +455,11 @@ class TestLearnModePresenter:
         ],
     )
     def test_handle_event_special_keys(
-        self, test_context: OrcaTestContext, key_name: str, method_name: str, has_modifiers: bool
+        self,
+        test_context: OrcaTestContext,
+        key_name: str,
+        method_name: str,
+        has_modifiers: bool,
     ) -> None:
         """Test LearnModePresenter.handle_event with special function keys."""
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)

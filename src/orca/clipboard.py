@@ -28,35 +28,38 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import re
 import time
-from typing import Any, Callable, TYPE_CHECKING
-
-from dasbus.connection import SessionMessageBus
-from dasbus.error import DBusError
-from dasbus.client.proxy import InterfaceProxy
+from typing import TYPE_CHECKING, Any
 
 import gi
+from dasbus.connection import SessionMessageBus
+from dasbus.error import DBusError
 
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Atspi, Gdk, Gtk
 
-from . import cmdnames
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import guilabels
-from . import input_event
-from . import input_event_manager
-from . import messages
-from . import presentation_manager
-from . import script_manager
+from . import (
+    cmdnames,
+    command_manager,
+    dbus_service,
+    debug,
+    guilabels,
+    input_event,
+    input_event_manager,
+    messages,
+    presentation_manager,
+    script_manager,
+)
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from dasbus.client.proxy import InterfaceProxy
+
     from .scripts import default
 
 
@@ -179,7 +182,9 @@ class _ClipboardManagerGPaste(_ClipboardManager):
 
             # Test if the service is actually available by checking properties
             self._props_proxy = self._bus.get_proxy(
-                "org.gnome.GPaste", "/org/gnome/GPaste", "org.freedesktop.DBus.Properties"
+                "org.gnome.GPaste",
+                "/org/gnome/GPaste",
+                "org.freedesktop.DBus.Properties",
             )
             self._original_active_state = self._props_proxy.Get("org.gnome.GPaste2", "Active")
         except DBusError as error:
@@ -277,7 +282,7 @@ class _ClipboardManagerKlipper(_ClipboardManager):
 
         try:
             self._signal_subscription = self._klipper_proxy.clipboardHistoryUpdated.connect(
-                self._on_contents_changed
+                self._on_contents_changed,
             )
             self._is_active = True
         except DBusError as error:
@@ -352,7 +357,7 @@ class ClipboardPresenter:
                 cmdnames.CLIPBOARD_PRESENT_CONTENTS,
                 desktop_keybinding=None,
                 laptop_keybinding=None,
-            )
+            ),
         )
 
         msg = "CLIPBOARD PRESENTER: Commands set up."
@@ -386,7 +391,8 @@ class ClipboardPresenter:
         if not contents or len(contents) > 5000:
             contents = messages.character_count(len(contents))
         presentation_manager.get_manager().present_message(
-            messages.CLIPBOARD_CONTAINS % contents, contents
+            messages.CLIPBOARD_CONTAINS % contents,
+            contents,
         )
         return True
 
@@ -516,10 +522,7 @@ class ClipboardPresenter:
             return False
 
         # Some applications send multiple text insertion events for part of a given paste.
-        if contents.startswith(event.any_data.rstrip()):
-            return True
-
-        return False
+        return bool(contents.startswith(event.any_data.rstrip()))
 
     def _present_clipboard_contents_change(self, string: str) -> None:
         """Presents the clipboard contents change."""
@@ -544,19 +547,22 @@ class ClipboardPresenter:
         manager = input_event_manager.get_manager()
         if manager.last_event_was_cut():
             presentation_manager.get_manager().present_message(
-                messages.CLIPBOARD_CUT_FULL, messages.CLIPBOARD_CUT_BRIEF
+                messages.CLIPBOARD_CUT_FULL,
+                messages.CLIPBOARD_CUT_BRIEF,
             )
             return
 
         if manager.last_event_was_copy():
             presentation_manager.get_manager().present_message(
-                messages.CLIPBOARD_COPIED_FULL, messages.CLIPBOARD_COPIED_BRIEF
+                messages.CLIPBOARD_COPIED_FULL,
+                messages.CLIPBOARD_COPIED_BRIEF,
             )
             return
 
         if manager.last_event_was_paste():
             presentation_manager.get_manager().present_message(
-                messages.CLIPBOARD_PASTED_FULL, messages.CLIPBOARD_PASTED_BRIEF
+                messages.CLIPBOARD_PASTED_FULL,
+                messages.CLIPBOARD_PASTED_BRIEF,
             )
             return
 

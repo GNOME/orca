@@ -32,54 +32,54 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import re
-from typing import Callable, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
-from orca import action_presenter
-from orca import ax_event_synthesizer
-from orca import braille
-from orca import braille_presenter
-from orca import bypass_mode_manager
-from orca import caret_navigator
-from orca import chat_presenter
-from orca import clipboard
-from orca import cmdnames
-from orca import command_manager
-from orca import debug
-from orca import debugging_tools_manager
-from orca import document_presenter
-from orca import event_manager
-from orca import flat_review_finder
-from orca import flat_review_presenter
-from orca import focus_manager
-from orca import guilabels
-from orca import input_event_manager
-from orca import input_event
-from orca import keybindings
-from orca import learn_mode_presenter
-from orca import live_region_presenter
-from orca import messages
-from orca import mouse_review
-from orca import notification_presenter
-from orca import object_navigator
-from orca import orca
-from orca import orca_gui_prefs
-from orca import presentation_manager
-from orca import profile_manager
-from orca import say_all_presenter
-from orca import script
-from orca import script_manager
-from orca import sleep_mode_manager
-from orca import speech_manager
-from orca import speech_presenter
-from orca import spellcheck_presenter
-from orca import structural_navigator
-from orca import system_information_presenter
-from orca import table_navigator
-from orca import typing_echo_presenter
-from orca import where_am_i_presenter
-
+from orca import (
+    action_presenter,
+    ax_event_synthesizer,
+    braille,
+    braille_presenter,
+    bypass_mode_manager,
+    caret_navigator,
+    chat_presenter,
+    clipboard,
+    cmdnames,
+    command_manager,
+    debug,
+    debugging_tools_manager,
+    document_presenter,
+    event_manager,
+    flat_review_finder,
+    flat_review_presenter,
+    focus_manager,
+    guilabels,
+    input_event,
+    input_event_manager,
+    keybindings,
+    learn_mode_presenter,
+    live_region_presenter,
+    messages,
+    mouse_review,
+    notification_presenter,
+    object_navigator,
+    orca,
+    orca_gui_prefs,
+    presentation_manager,
+    profile_manager,
+    say_all_presenter,
+    script,
+    script_manager,
+    sleep_mode_manager,
+    speech_manager,
+    speech_presenter,
+    spellcheck_presenter,
+    structural_navigator,
+    system_information_presenter,
+    table_navigator,
+    typing_echo_presenter,
+    where_am_i_presenter,
+)
 from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
@@ -90,6 +90,8 @@ from orca.ax_utilities_event import TextEventReason
 from orca.ax_value import AXValue
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     import gi
 
     gi.require_version("Atspi", "2.0")
@@ -242,7 +244,7 @@ class Script(script.Script):
                     description,
                     desktop_keybinding=desktop_kb,
                     laptop_keybinding=laptop_kb,
-                )
+                ),
             )
 
         braille_bindings: dict[str, tuple[int, ...]] = {}
@@ -322,7 +324,7 @@ class Script(script.Script):
                     description,
                     braille_bindings=bb,
                     executes_in_learn_mode=executes_in_learn_mode,
-                )
+                ),
             )
 
         for extension_getter, _localized_name in self._get_all_extensions():
@@ -358,7 +360,11 @@ class Script(script.Script):
         event_manager.get_manager().deregister_script_listeners(self)
 
     def _get_queued_event(
-        self, event_type: str, detail1: int | None = None, detail2: int | None = None, any_data=None
+        self,
+        event_type: str,
+        detail1: int | None = None,
+        detail2: int | None = None,
+        any_data=None,
     ) -> Atspi.Event | None:
         cached_event = self.event_cache.get(event_type, [None, 0])[0]
         if not cached_event:
@@ -461,7 +467,8 @@ class Script(script.Script):
             presenter.suspend_navigators(self, False, reason)
             structural_navigator.get_navigator().set_mode(self, self._default_sn_mode)
             caret_navigator.get_navigator().set_enabled_for_script(
-                self, self._default_caret_navigation_enabled
+                self,
+                self._default_caret_navigation_enabled,
             )
 
         command_manager.get_manager().activate_commands(f"activated {self.name}")
@@ -487,7 +494,9 @@ class Script(script.Script):
     ########################################################################
 
     def show_app_preferences_gui(
-        self, current_script: Script | None = None, _event: input_event.InputEvent | None = None
+        self,
+        current_script: Script | None = None,
+        _event: input_event.InputEvent | None = None,
     ) -> bool:
         """Shows the app Preferences dialog."""
 
@@ -497,7 +506,9 @@ class Script(script.Script):
         return True
 
     def show_preferences_gui(
-        self, _script: Script | None = None, _event: input_event.InputEvent | None = None
+        self,
+        _script: Script | None = None,
+        _event: input_event.InputEvent | None = None,
     ) -> bool:
         """Displays the Preferences dialog."""
 
@@ -506,7 +517,9 @@ class Script(script.Script):
         return True
 
     def quit_orca(
-        self, _script: Script | None = None, _event: input_event.InputEvent | None = None
+        self,
+        _script: Script | None = None,
+        _event: input_event.InputEvent | None = None,
     ) -> bool:
         """Quit Orca."""
 
@@ -612,7 +625,9 @@ class Script(script.Script):
         return True
 
     def go_braille_home(
-        self, _script: Script | None = None, event: input_event.InputEvent | None = None
+        self,
+        _script: Script | None = None,
+        event: input_event.InputEvent | None = None,
     ) -> bool:
         """Returns to the component with focus."""
 
@@ -624,7 +639,9 @@ class Script(script.Script):
         return braille.return_to_region_with_focus(event)
 
     def set_contracted_braille(
-        self, _script: Script | None = None, event: input_event.InputEvent | None = None
+        self,
+        _script: Script | None = None,
+        event: input_event.InputEvent | None = None,
     ) -> bool:
         """Toggles contracted braille."""
 
@@ -632,7 +649,9 @@ class Script(script.Script):
         return True
 
     def process_routing_key(
-        self, _script: Script | None = None, event: input_event.BrailleEvent | None = None
+        self,
+        _script: Script | None = None,
+        event: input_event.BrailleEvent | None = None,
     ) -> bool:
         """Processes a cursor routing key."""
 
@@ -646,7 +665,9 @@ class Script(script.Script):
         return True
 
     def process_braille_cut_begin(
-        self, _script: Script | None = None, event: input_event.BrailleEvent | None = None
+        self,
+        _script: Script | None = None,
+        event: input_event.BrailleEvent | None = None,
     ) -> bool:
         """Clears the selection and moves the caret offset in the currently
         active text area.
@@ -664,7 +685,9 @@ class Script(script.Script):
         return True
 
     def process_braille_cut_line(
-        self, _script: Script | None = None, event: input_event.BrailleEvent | None = None
+        self,
+        _script: Script | None = None,
+        event: input_event.BrailleEvent | None = None,
     ) -> bool:
         """Extends the text selection in the currently active text
         area and also copies the selected text to the system clipboard."""
@@ -689,7 +712,9 @@ class Script(script.Script):
         return True
 
     def route_pointer_to_item(
-        self, _script: Script | None = None, event: input_event.InputEvent | None = None
+        self,
+        _script: Script | None = None,
+        event: input_event.InputEvent | None = None,
     ) -> bool:
         """Moves the mouse pointer to the current item."""
 
@@ -699,7 +724,7 @@ class Script(script.Script):
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if ax_event_synthesizer.get_synthesizer().route_to_character(
-            focus
+            focus,
         ) or ax_event_synthesizer.get_synthesizer().route_to_object(focus):
             presentation_manager.get_manager().present_message(messages.MOUSE_MOVED_SUCCESS)
             return True
@@ -710,7 +735,9 @@ class Script(script.Script):
         return False
 
     def left_click_item(
-        self, _script: Script | None = None, event: input_event.InputEvent | None = None
+        self,
+        _script: Script | None = None,
+        event: input_event.InputEvent | None = None,
     ) -> bool:
         """Performs a left mouse button click on the current item."""
 
@@ -737,7 +764,9 @@ class Script(script.Script):
         return False
 
     def right_click_item(
-        self, _script: Script | None = None, event: input_event.InputEvent | None = None
+        self,
+        _script: Script | None = None,
+        event: input_event.InputEvent | None = None,
     ) -> bool:
         """Performs a right mouse button click on the current item."""
 
@@ -793,7 +822,9 @@ class Script(script.Script):
                 msg = "DEFAULT: Updating active window."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 focus_manager.get_manager().set_active_window(
-                    window, set_window_as_focus=True, notify_script=True
+                    window,
+                    set_window_as_focus=True,
+                    notify_script=True,
                 )
 
         return True
@@ -1048,9 +1079,9 @@ class Script(script.Script):
         if self.utilities.handle_paste_locus_of_focus_change():
             if self.utilities.top_level_object_is_active_and_current(event.source):
                 focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-        elif self.utilities.handle_container_selection_change(event.source):
-            return True
-        elif AXUtilities.manages_descendants(event.source):
+        elif self.utilities.handle_container_selection_change(
+            event.source,
+        ) or AXUtilities.manages_descendants(event.source):
             return True
         elif event.source == focus:
             # There is a bug in (at least) Pidgin in which a newly-expanded submenu lacks the
@@ -1085,7 +1116,7 @@ class Script(script.Script):
 
         if AXUtilities.is_combo_box(event.source) and not AXUtilities.is_expanded(event.source):
             if AXUtilities.is_focused(
-                AXObject.find_descendant(event.source, AXUtilities.is_text_input)
+                AXObject.find_descendant(event.source, AXUtilities.is_text_input),
             ):
                 return True
         elif (
@@ -1175,7 +1206,7 @@ class Script(script.Script):
                 return True
 
             presentation_manager.get_manager().speak_message(
-                self.get_speech_generator().get_localized_role_name(obj)
+                self.get_speech_generator().get_localized_role_name(obj),
             )
             msg = self.utilities.get_notification_content(obj)
             presentation_manager.get_manager().present_message(msg, reset_styles=False)
@@ -1583,7 +1614,10 @@ class Script(script.Script):
 
         character, start_offset, end_offset = AXText.get_character_at_offset(obj, offset)
         focus_manager.get_manager().emit_region_changed(
-            obj, start_offset, end_offset, focus_manager.CARET_TRACKING
+            obj,
+            start_offset,
+            end_offset,
+            focus_manager.CARET_TRACKING,
         )
 
         speech_presenter.get_presenter().speak_character_at_offset(obj, offset, character)
@@ -1601,11 +1635,18 @@ class Script(script.Script):
         if line and line != "\n":
             end_offset = start_offset + len(line)
             focus_manager.get_manager().emit_region_changed(
-                obj, start_offset, end_offset, focus_manager.CARET_TRACKING
+                obj,
+                start_offset,
+                end_offset,
+                focus_manager.CARET_TRACKING,
             )
 
         speech_presenter.get_presenter().speak_line(
-            self, obj, start_offset, start_offset + len(line), line
+            self,
+            obj,
+            start_offset,
+            start_offset + len(line),
+            line,
         )
 
         self.point_of_reference["lastTextUnitSpoken"] = "line"
@@ -1619,7 +1660,10 @@ class Script(script.Script):
 
         if len(phrase) > 1 or phrase.isalnum():
             focus_manager.get_manager().emit_region_changed(
-                obj, start_offset, end_offset, focus_manager.CARET_TRACKING
+                obj,
+                start_offset,
+                end_offset,
+                focus_manager.CARET_TRACKING,
             )
 
         speech_presenter.get_presenter().speak_phrase(self, obj, start_offset, end_offset, phrase)
@@ -1635,7 +1679,8 @@ class Script(script.Script):
             offset = AXText.get_caret_offset(obj)
 
         word, start_offset, end_offset = self.utilities.get_word_at_offset_adjusted_for_navigation(
-            obj, offset
+            obj,
+            offset,
         )
 
         speech_pres = speech_presenter.get_presenter()
@@ -1683,5 +1728,8 @@ class Script(script.Script):
 
         speech_only = args.pop("speechonly", False)
         presentation_manager.get_manager().present_object(
-            self, obj, generate_braille=not speech_only, **args
+            self,
+            obj,
+            generate_braille=not speech_only,
+            **args,
         )

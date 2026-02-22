@@ -24,11 +24,9 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
+from typing import TYPE_CHECKING, Any
 
-from typing import Any, TYPE_CHECKING
-
-from orca import debug
-from orca import speech_generator
+from orca import debug, speech_generator
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.scripts import web
@@ -81,7 +79,7 @@ class SpeechGenerator(web.SpeechGenerator, speech_generator.SpeechGenerator):
     @log_generator_output
     def _generate_accessible_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if self._script.utilities.is_message_list_toggle_cell(
-            obj
+            obj,
         ) and not self._script.utilities.is_message_list_status_cell(obj):
             return []
 
@@ -89,10 +87,12 @@ class SpeechGenerator(web.SpeechGenerator, speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_real_active_descendant_displayed_text(
-        self, obj: Atspi.Accessible, **args
+        self,
+        obj: Atspi.Accessible,
+        **args,
     ) -> list[Any]:
         if self._script.utilities.is_message_list_toggle_cell(
-            obj
+            obj,
         ) and not self._script.utilities.is_message_list_status_cell(obj):
             if not AXUtilities.is_checked(obj):
                 return []
@@ -104,7 +104,7 @@ class SpeechGenerator(web.SpeechGenerator, speech_generator.SpeechGenerator):
     @log_generator_output
     def _generate_accessible_role(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if self._script.utilities.is_message_list_toggle_cell(obj) and not AXUtilities.is_focused(
-            obj
+            obj,
         ):
             return []
 
@@ -113,7 +113,7 @@ class SpeechGenerator(web.SpeechGenerator, speech_generator.SpeechGenerator):
     @log_generator_output
     def _generate_state_unselected(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if self._script.utilities.is_message_list_toggle_cell(obj) or AXUtilities.is_tree_table(
-            AXObject.get_parent(obj)
+            AXObject.get_parent(obj),
         ):
             return []
 

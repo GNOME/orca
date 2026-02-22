@@ -27,7 +27,6 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import re
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
@@ -37,16 +36,18 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from orca import dbus_service
-from orca import debug
-from orca import gsettings_registry
-from orca import focus_manager
-from orca import guilabels
-from orca import messages
-from orca import object_properties
-from orca import preferences_grid_base
-from orca import presentation_manager
-from orca import speech_presenter
+from orca import (
+    dbus_service,
+    debug,
+    focus_manager,
+    gsettings_registry,
+    guilabels,
+    messages,
+    object_properties,
+    preferences_grid_base,
+    presentation_manager,
+    speech_presenter,
+)
 from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
 from orca.ax_text import AXText
@@ -94,7 +95,10 @@ class SpellCheckPresenter:
         """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, "b", default=default
+            self._SCHEMA,
+            key,
+            "b",
+            default=default,
         )
 
     def __init__(self) -> None:
@@ -186,7 +190,7 @@ class SpellCheckPresenter:
         gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "present-context", value)
         return True
 
-    def create_preferences_grid(self) -> "SpellCheckPreferencesGrid":
+    def create_preferences_grid(self) -> SpellCheckPreferencesGrid:
         """Create and return the spell check preferences grid."""
 
         return SpellCheckPreferencesGrid(self)
@@ -203,7 +207,7 @@ class SpellCheckPresenter:
             return
 
         if AXUtilities.get_application(event.source) != AXUtilities.get_application(
-            self._widgets.window
+            self._widgets.window,
         ):
             return
 
@@ -222,9 +226,9 @@ class SpellCheckPresenter:
             and self._widgets.change_to_entry
         ):
             self._handle_change_to_entry_sensitive_changed(event)
-        elif event.type.startswith("object:selection-changed"):
-            self._handle_suggestions_list_change(event)
-        elif event.type.startswith("object:active-descendant-changed"):
+        elif event.type.startswith("object:selection-changed") or event.type.startswith(
+            "object:active-descendant-changed",
+        ):
             self._handle_suggestions_list_change(event)
         debug.print_message(debug.LEVEL_INFO, "^^^^^ PROCESS SPELL CHECK EVENT ^^^^^\n")
 
@@ -293,7 +297,8 @@ class SpellCheckPresenter:
         self._clear_state()
 
     def _get_document_from_cursor_history(
-        self, window: Atspi.Accessible
+        self,
+        window: Atspi.Accessible,
     ) -> Atspi.Accessible | None:
         """Gets the document object from the focus manager's cursor history."""
 
@@ -306,11 +311,9 @@ class SpellCheckPresenter:
                 return False
             if not AXObject.supports_text(obj):
                 return False
-            if not AXUtilities.is_editable(obj) and not AXObject.find_ancestor(
-                obj, AXUtilities.is_editable
-            ):
-                return False
-            return True
+            return AXUtilities.is_editable(obj) or bool(
+                AXObject.find_ancestor(obj, AXUtilities.is_editable),
+            )
 
         last_obj, _ = manager.get_last_cursor_position()
         if is_valid_document(last_obj):
@@ -329,7 +332,7 @@ class SpellCheckPresenter:
             return ""
 
         text = AXText.get_all_text(self._widgets.error_widget) or AXObject.get_name(
-            self._widgets.error_widget
+            self._widgets.error_widget,
         )
         if not text:
             return ""
@@ -471,7 +474,9 @@ class SpellCheckPresenter:
                 if not AXObject.is_ancestor(current_focus, self._widgets.suggestions_list):
                     self._state.last_presented_suggestion = None
                 focus_manager.get_manager().set_locus_of_focus(
-                    None, selected_item, notify_script=False
+                    None,
+                    selected_item,
+                    notify_script=False,
                 )
                 self._script.update_braille(selected_item)
                 self._present_suggestion_list_item()
@@ -516,7 +521,7 @@ class SpellCheckPresenter:
 
         # Check full error widget text first - if it changed, we have a new error
         error_widget_text = AXText.get_all_text(self._widgets.error_widget) or AXObject.get_name(
-            self._widgets.error_widget
+            self._widgets.error_widget,
         )
         error_text_changed = error_widget_text != self._state.error_widget_text
 
@@ -528,7 +533,7 @@ class SpellCheckPresenter:
 
         # Multi-word content in non-editable widget is not a misspelled word (may be completion msg)
         if len(current_word.split()) > 1 and not AXUtilities.is_editable(
-            self._widgets.error_widget
+            self._widgets.error_widget,
         ):
             return self._present_completion_message()
 
@@ -577,7 +582,9 @@ class SpellCheckPresenter:
         if self._widgets is not None and self._widgets.change_to_entry is not None:
             assert self._script is not None
             focus_manager.get_manager().set_locus_of_focus(
-                None, self._widgets.change_to_entry, False
+                None,
+                self._widgets.change_to_entry,
+                False,
             )
             self._script.update_braille(self._widgets.change_to_entry)
         return True
@@ -649,7 +656,7 @@ class SpellCheckPresenter:
             return False
 
         msg = AXText.get_all_text(self._widgets.error_widget) or AXObject.get_name(
-            self._widgets.error_widget
+            self._widgets.error_widget,
         )
         manager = presentation_manager.get_manager()
         manager.speak_message(msg)
@@ -660,7 +667,9 @@ class SpellCheckPresenter:
         return True
 
     def present_error_details(
-        self, detailed: bool = False, script: default.Script | None = None
+        self,
+        detailed: bool = False,
+        script: default.Script | None = None,
     ) -> bool:
         """Presents the details of the error."""
 
@@ -719,7 +728,7 @@ class SpellCheckPresenter:
             return False
 
         label = AXUtilities.get_displayed_label(self._widgets.change_to_entry) or AXObject.get_name(
-            self._widgets.change_to_entry
+            self._widgets.change_to_entry,
         )
         string = AXText.get_substring(self._widgets.change_to_entry, 0, -1)
         msg = f"{label} {string}"
@@ -734,7 +743,9 @@ class SpellCheckPresenter:
         return True
 
     def _present_suggestion_list_item(
-        self, detailed: bool = False, include_label: bool = False
+        self,
+        detailed: bool = False,
+        include_label: bool = False,
     ) -> bool:
         """Presents the current item from the suggestions list."""
 
@@ -756,7 +767,7 @@ class SpellCheckPresenter:
 
         if include_label:
             label = AXUtilities.get_displayed_label(
-                self._widgets.suggestions_list
+                self._widgets.suggestions_list,
             ) or AXObject.get_name(self._widgets.suggestions_list)
         else:
             label = ""
@@ -787,11 +798,10 @@ class SpellCheckPresenter:
     def _has_id(self, obj: Atspi.Accessible, target_id: str) -> bool:
         """Returns True if obj has target_id as accessible ID or object attribute 'id'."""
 
-        if AXObject.get_accessible_id(obj) == target_id:
-            return True
-        if AXObject.get_attribute(obj, "id") == target_id:
-            return True
-        return False
+        return (
+            AXObject.get_accessible_id(obj) == target_id
+            or AXObject.get_attribute(obj, "id") == target_id
+        )
 
     def _could_be_spellcheck_window(self, window: Atspi.Accessible, app_name: str) -> bool:
         """Returns True if window could be the spellcheck window."""
@@ -869,7 +879,8 @@ class SpellCheckPresenter:
         return False
 
     def _find_spellcheck_widgets(
-        self, window: Atspi.Accessible
+        self,
+        window: Atspi.Accessible,
     ) -> tuple[Atspi.Accessible | None, Atspi.Accessible | None, Atspi.Accessible | None]:
         """Finds spellcheck widgets. Returns (error_widget, suggestions_list, change_to_entry)."""
 
@@ -880,16 +891,19 @@ class SpellCheckPresenter:
             return None, None, None
 
         error_widget = AXObject.find_descendant(
-            window, lambda obj: self._could_be_error_widget(obj, app_name)
+            window,
+            lambda obj: self._could_be_error_widget(obj, app_name),
         )
         suggestions_list = AXObject.find_descendant(
-            window, lambda obj: self._could_be_suggestions_list(obj, app_name)
+            window,
+            lambda obj: self._could_be_suggestions_list(obj, app_name),
         )
         change_to_entry = (
             None
             if app_name == "soffice"
             else AXObject.find_descendant(
-                window, lambda obj: self._could_be_change_to_entry(obj, app_name)
+                window,
+                lambda obj: self._could_be_change_to_entry(obj, app_name),
             )
         )
 
@@ -938,7 +952,9 @@ class SpellCheckPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
         ]
 
         super().__init__(
-            guilabels.SPELL_CHECK, controls, info_message=guilabels.SPELL_CHECK_DESCRIPTION
+            guilabels.SPELL_CHECK,
+            controls,
+            info_message=guilabels.SPELL_CHECK_DESCRIPTION,
         )
 
 

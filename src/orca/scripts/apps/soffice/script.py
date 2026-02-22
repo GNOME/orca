@@ -27,21 +27,22 @@
 
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
-from orca import braille_presenter
-from orca import debug
-from orca import flat_review_presenter
-from orca import focus_manager
-from orca import input_event_manager
-from orca import input_event
-from orca import messages
-from orca import presentation_manager
-from orca import speech_presenter
-from orca import structural_navigator
-from orca import table_navigator
-from orca import typing_echo_presenter
+from orca import (
+    braille_presenter,
+    debug,
+    flat_review_presenter,
+    focus_manager,
+    input_event,
+    input_event_manager,
+    messages,
+    presentation_manager,
+    speech_presenter,
+    structural_navigator,
+    table_navigator,
+    typing_echo_presenter,
+)
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
@@ -93,7 +94,7 @@ class Script(default.Script):
 
         # At edge of a paragraph. Try to move caret to previous line.
         start_offset = AXText.get_line_at_offset(focus)[1]
-        if 0 < start_offset:
+        if start_offset > 0:
             AXText.set_caret_offset(focus, start_offset - 1)
             return True
 
@@ -222,7 +223,9 @@ class Script(default.Script):
         if AXUtilities.is_paragraph(event.source) and not AXUtilities.is_focused(event.source):
             # TODO - JD: Can we remove this?
             AXObject.clear_cache(
-                event.source, False, "Caret-moved event from object which lacks focused state."
+                event.source,
+                False,
+                "Caret-moved event from object which lacks focused state.",
             )
             if AXUtilities.is_focused(event.source):
                 msg = "SOFFICE: Clearing cache was needed due to missing state-changed event."

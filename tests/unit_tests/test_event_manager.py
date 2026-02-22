@@ -45,8 +45,9 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -88,7 +89,7 @@ class TestEventManager:
         braille_presenter_instance = test_context.Mock()
         braille_presenter_instance.disable_braille = test_context.Mock()
         braille_presenter_mock.get_presenter = test_context.Mock(
-            return_value=braille_presenter_instance
+            return_value=braille_presenter_instance,
         )
 
         focus_manager_mock = essential_modules["orca.focus_manager"]
@@ -138,7 +139,7 @@ class TestEventManager:
 
         ax_utils_debugging_mock = essential_modules["orca.ax_utilities_debugging"]
         ax_utils_debugging_mock.object_event_details_as_string = test_context.Mock(
-            return_value="mock details"
+            return_value="mock details",
         )
 
         ax_object_mock = essential_modules["orca.ax_object"]
@@ -237,7 +238,8 @@ class TestEventManager:
 
         mock_get_input_mgr = test_context.Mock()
         test_context.patch(
-            "orca.event_manager.input_event_manager.get_manager", new=mock_get_input_mgr
+            "orca.event_manager.input_event_manager.get_manager",
+            new=mock_get_input_mgr,
         )
         mock_input_mgr = test_context.Mock()
         mock_get_input_mgr.return_value = mock_input_mgr
@@ -456,7 +458,9 @@ class TestEventManager:
         ids=lambda case: case["id"],
     )
     def test_ignore_inactive_or_paused_manager(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test EventManager._ignore when manager is inactive or paused."""
         self._setup_dependencies(test_context)
@@ -550,7 +554,8 @@ class TestEventManager:
         test_context.patch("orca.event_manager.AXUtilities.is_window", return_value=False)
         test_context.patch("orca.event_manager.AXUtilities.is_frame", return_value=True)
         test_context.patch(
-            "orca.event_manager.AXUtilities.get_application", return_value=regular_app
+            "orca.event_manager.AXUtilities.get_application",
+            return_value=regular_app,
         )
         test_context.patch("orca.event_manager.AXObject.get_name", return_value="regular-app")
         assert manager._ignore(mock_event) is False
@@ -1669,7 +1674,8 @@ class TestEventManager:
         mock_get_script_mgr = test_context.Mock()
         test_context.patch("orca.event_manager.script_manager.get_manager", new=mock_get_script_mgr)
         test_context.patch(
-            "orca.event_manager.input_event.MouseButtonEvent", return_value=mock_mouse_event
+            "orca.event_manager.input_event.MouseButtonEvent",
+            return_value=mock_mouse_event,
         )
         mock_script_mgr = test_context.Mock()
         mock_get_script_mgr.return_value = mock_script_mgr
@@ -1890,7 +1896,8 @@ class TestEventManager:
 
         mock_focus_mgr.clear_state.assert_called_once()
         mock_script_mgr.set_active_script.assert_called_once_with(
-            None, "Active window is dead or defunct"
+            None,
+            "Active window is dead or defunct",
         )
 
     def test_process_object_event_no_listener(self, test_context: OrcaTestContext) -> None:
@@ -1935,7 +1942,8 @@ class TestEventManager:
         assert isinstance(manager1, event_manager.EventManager)
 
     def test_enqueue_with_comprehensive_gidle_management(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test EventManager._enqueue_object_event with comprehensive GLib idle management."""
 

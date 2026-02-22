@@ -24,7 +24,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Callable
+from typing import TYPE_CHECKING, Any
 
 import gi
 
@@ -32,6 +32,9 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, Gtk
 
 from . import guilabels
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 MIN_FONT_SIZE = 8
 MAX_FONT_SIZE = 72
@@ -69,7 +72,8 @@ class SpeechMonitor(Gtk.Window):  # pylint: disable=too-many-instance-attributes
         self.set_titlebar(titlebar)
 
         self._close_icon = Gtk.Image.new_from_icon_name(
-            "window-close-symbolic", Gtk.IconSize.LARGE_TOOLBAR
+            "window-close-symbolic",
+            Gtk.IconSize.LARGE_TOOLBAR,
         )
         close_btn = Gtk.Button()
         close_btn.set_image(self._close_icon)

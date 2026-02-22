@@ -24,10 +24,12 @@ from __future__ import annotations
 
 import os
 import sys
-
-import pytest
+from typing import TYPE_CHECKING
 
 from .orca_test_fixtures import test_context  # noqa: F401  # pylint: disable=unused-import
+
+if TYPE_CHECKING:
+    import pytest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../src"))
 
@@ -37,10 +39,11 @@ os.environ["GSETTINGS_BACKEND"] = "memory"
 def clean_all_orca_modules() -> None:
     """Aggressively clean all orca modules from sys.modules."""
 
-    modules_to_remove = []
-    for module_name in sys.modules:
-        if module_name.startswith("orca.") or module_name == "orca":
-            modules_to_remove.append(module_name)
+    modules_to_remove = [
+        module_name
+        for module_name in sys.modules
+        if module_name.startswith("orca.") or module_name == "orca"
+    ]
 
     for module_name in modules_to_remove:
         sys.modules.pop(module_name, None)

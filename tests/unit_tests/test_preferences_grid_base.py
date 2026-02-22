@@ -28,9 +28,8 @@ from __future__ import annotations
 
 from typing import Any
 
-import pytest
-
 import gi
+import pytest
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -71,7 +70,10 @@ class TestPreferenceControlDataclasses:
             return True
 
         control = BooleanPreferenceControl(
-            label="Test Label", getter=getter, setter=setter, prefs_key="testKey"
+            label="Test Label",
+            getter=getter,
+            setter=setter,
+            prefs_key="testKey",
         )
 
         assert control.label == "Test Label"
@@ -112,7 +114,11 @@ class TestPreferenceControlDataclasses:
         """Test FloatRangePreferenceControl can be created with all fields."""
 
         control = FloatRangePreferenceControl(
-            label="Rate", minimum=0.0, maximum=1.0, getter=lambda: 0.5, setter=lambda x: True
+            label="Rate",
+            minimum=0.0,
+            maximum=1.0,
+            getter=lambda: 0.5,
+            setter=lambda x: True,
         )
 
         assert control.label == "Rate"
@@ -404,7 +410,11 @@ class TestPreferencesGridBase:
 
         grid = PreferencesGridBase("Test")
         adjustment = Gtk.Adjustment(
-            value=50, lower=0, upper=100, step_increment=1, page_increment=10
+            value=50,
+            lower=0,
+            upper=100,
+            step_increment=1,
+            page_increment=10,
         )
 
         row, scale, label = grid._create_slider_row("Volume", adjustment)
@@ -553,7 +563,9 @@ class TestAutoPreferencesGrid:
 
         controls = [
             BooleanPreferenceControl(
-                label="Test", getter=lambda: current_value[0], setter=lambda x: True
+                label="Test",
+                getter=lambda: current_value[0],
+                setter=lambda x: True,
             ),
         ]
 
@@ -623,7 +635,9 @@ class TestAutoPreferencesGrid:
 
         # Non-existent control should return None
         other_control = BooleanPreferenceControl(
-            label="Other", getter=lambda: True, setter=lambda x: True
+            label="Other",
+            getter=lambda: True,
+            setter=lambda x: True,
         )
         assert grid.get_widget_for_control(other_control) is None
 
@@ -716,7 +730,10 @@ class TestAutoPreferencesGridSelectionControl:
 
         controls = [
             SelectionPreferenceControl(
-                label="Choose", options=["A", "B", "C"], getter=lambda: "B", setter=lambda x: True
+                label="Choose",
+                options=["A", "B", "C"],
+                getter=lambda: "B",
+                setter=lambda x: True,
             ),
         ]
 
@@ -863,7 +880,8 @@ class TestPreferencesGridBaseStackedPreferences:
                 self.activated_row = None
 
                 stack, categories, detail = self._create_stacked_preferences(
-                    on_category_activated=self._on_category, on_detail_row_activated=None
+                    on_category_activated=self._on_category,
+                    on_detail_row_activated=None,
                 )
                 self.my_stack = stack
                 self.my_categories = categories
@@ -890,7 +908,7 @@ class TestPreferencesGridBaseStackedPreferences:
             def __init__(self):
                 super().__init__("Test")
                 _stack, categories, _detail = self._create_stacked_preferences(
-                    on_category_activated=lambda r: None
+                    on_category_activated=lambda r: None,
                 )
                 self.my_categories = categories
 
@@ -913,7 +931,7 @@ class TestPreferencesGridBaseStackedPreferences:
             def __init__(self):
                 super().__init__("Test")
                 _stack, categories, _detail = self._create_stacked_preferences(
-                    on_category_activated=lambda r: None
+                    on_category_activated=lambda r: None,
                 )
                 self.my_categories = categories
 
@@ -944,7 +962,7 @@ class TestPreferencesGridBaseStackedPreferences:
             def __init__(self):
                 super().__init__("Test")
                 stack, categories, detail = self._create_stacked_preferences(
-                    on_category_activated=lambda r: None
+                    on_category_activated=lambda r: None,
                 )
                 self.my_stack = stack
                 self.my_categories = categories

@@ -25,28 +25,31 @@
 
 """Utilities for obtaining information about accessible objects."""
 
+from __future__ import annotations
+
 import re
 import threading
 import time
-from typing import Callable, Generator
+from typing import TYPE_CHECKING
 
 import gi
 
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gtk", "3.0")
-from gi.repository import Atspi
-from gi.repository import GLib
-from gi.repository import Gtk
+from gi.repository import Atspi, GLib, Gtk
 
-from . import debug
-from . import keynames
+from . import debug, keynames
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Generator
+    from typing import ClassVar
 
 
 class AXObject:
     """Utilities for obtaining information about accessible objects."""
 
-    KNOWN_DEAD: dict[int, bool] = {}
-    OBJECT_ATTRIBUTES: dict[int, dict[str, str]] = {}
+    KNOWN_DEAD: ClassVar[dict[int, bool]] = {}
+    OBJECT_ATTRIBUTES: ClassVar[dict[int, dict[str, str]]] = {}
 
     _lock = threading.Lock()
 
@@ -218,12 +221,13 @@ class AXObject:
             return False
 
         frame = AXObject.find_ancestor_inclusive(
-            obj, lambda x: AXObject.get_role(x) == Atspi.Role.FRAME
+            obj,
+            lambda x: AXObject.get_role(x) == Atspi.Role.FRAME,
         )
         if frame is None:
             return False
         return bool(
-            Atspi.Collection.get_matches(frame, rule, Atspi.CollectionSortOrder.CANONICAL, 1, True)
+            Atspi.Collection.get_matches(frame, rule, Atspi.CollectionSortOrder.CANONICAL, 1, True),
         )
 
     @staticmethod
@@ -252,7 +256,8 @@ class AXObject:
             return iface is not None
 
         if AXObject.find_ancestor_inclusive(
-            obj, lambda x: AXObject.get_role(x) == Atspi.Role.DOCUMENT_TEXT
+            obj,
+            lambda x: AXObject.get_role(x) == Atspi.Role.DOCUMENT_TEXT,
         ):
             return True
 
@@ -518,7 +523,7 @@ class AXObject:
         if parent is None:
             return None
 
-        if debug.LEVEL_INFO < debug.debugLevel:
+        if debug.debugLevel > debug.LEVEL_INFO:
             return parent
 
         if AXObject.is_dead(obj):
@@ -559,7 +564,8 @@ class AXObject:
 
     @staticmethod
     def get_common_ancestor(
-        obj1: Atspi.Accessible, obj2: Atspi.Accessible
+        obj1: Atspi.Accessible,
+        obj2: Atspi.Accessible,
     ) -> Atspi.Accessible | None:
         """Returns the common ancestor of obj1 and obj2."""
 
@@ -571,10 +577,10 @@ class AXObject:
         if obj1 == obj2:
             return obj1
 
-        obj1_ancestors = AXObject._get_ancestors(obj1) + [obj1]
-        obj2_ancestors = AXObject._get_ancestors(obj2) + [obj2]
+        obj1_ancestors = [*AXObject._get_ancestors(obj1), obj1]
+        obj2_ancestors = [*AXObject._get_ancestors(obj2), obj2]
         result = None
-        for a1, a2 in zip(obj1_ancestors, obj2_ancestors):
+        for a1, a2 in zip(obj1_ancestors, obj2_ancestors, strict=False):
             if a1 == a2:
                 result = a1
             else:
@@ -586,7 +592,8 @@ class AXObject:
 
     @staticmethod
     def find_ancestor_inclusive(
-        obj: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool]
+        obj: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool],
     ) -> Atspi.Accessible | None:
         """Returns obj, or the ancestor of obj, for which the function pred is true"""
 
@@ -597,7 +604,8 @@ class AXObject:
 
     @staticmethod
     def find_ancestor(
-        obj: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool]
+        obj: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool],
     ) -> Atspi.Accessible | None:
         """Returns the ancestor of obj if the function pred is true"""
 
@@ -628,7 +636,9 @@ class AXObject:
 
     @staticmethod
     def is_ancestor(
-        obj: Atspi.Accessible, ancestor: Atspi.Accessible, inclusive: bool = False
+        obj: Atspi.Accessible,
+        ancestor: Atspi.Accessible,
+        inclusive: bool = False,
     ) -> bool:
         """Returns true if ancestor is an ancestor of obj or, if inclusive, obj is ancestor."""
 
@@ -682,7 +692,7 @@ class AXObject:
             return None
 
         child = AXObject.get_child(obj, index)
-        if debug.LEVEL_INFO < debug.debugLevel:
+        if debug.debugLevel > debug.LEVEL_INFO:
             return child
 
         parent = AXObject.get_parent(child)
@@ -694,7 +704,8 @@ class AXObject:
 
     @staticmethod
     def get_active_descendant_checked(
-        container: Atspi.Accessible, reported_child: Atspi.Accessible
+        container: Atspi.Accessible,
+        reported_child: Atspi.Accessible,
     ) -> Atspi.Accessible | None:
         """Checks the reported active descendant and return the real/valid one."""
 
@@ -724,7 +735,8 @@ class AXObject:
 
     @staticmethod
     def _find_descendant(
-        obj: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool]
+        obj: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool],
     ) -> Atspi.Accessible | None:
         """Returns the descendant of obj if the function pred is true"""
 
@@ -745,7 +757,8 @@ class AXObject:
 
     @staticmethod
     def find_descendant(
-        obj: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool]
+        obj: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool],
     ) -> Atspi.Accessible | None:
         """Returns the descendant of obj if the function pred is true"""
 
@@ -983,7 +996,8 @@ class AXObject:
 
     @staticmethod
     def iter_children(
-        obj: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        obj: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> Generator[Atspi.Accessible, None, None]:
         """Generator to iterate through obj's children. If the function pred is
         specified, children for which pred is False will be skipped."""
@@ -1469,7 +1483,7 @@ class AXObject:
             AXObject.handle_error(obj, error, msg)
             return False
 
-        if debug.LEVEL_INFO < debug.debugLevel:
+        if debug.debugLevel > debug.LEVEL_INFO:
             return result
 
         if result and not AXObject.has_state(obj, Atspi.StateType.FOCUSED):

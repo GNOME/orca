@@ -26,47 +26,50 @@
 
 """Utilities for obtaining information about accessible tables."""
 
+from __future__ import annotations
+
 import threading
 import time
-from typing import Generator
+from typing import TYPE_CHECKING
 
 import gi
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
-from . import debug
-from . import messages
-from . import object_properties
-from .ax_object import AXObject
+from . import debug, messages, object_properties
 from .ax_component import AXComponent
+from .ax_object import AXObject
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
+
+if TYPE_CHECKING:
+    from collections.abc import Generator
+    from typing import ClassVar
 
 
 class AXTable:
     """Utilities for obtaining information about accessible tables."""
 
     # Things we cache.
-    CAPTIONS: dict[int, Atspi.Accessible] = {}
-    PHYSICAL_COORDINATES_FROM_CELL: dict[int, tuple[int, int]] = {}
-    PHYSICAL_COORDINATES_FROM_TABLE: dict[int, tuple[int, int]] = {}
-    PHYSICAL_SPANS_FROM_CELL: dict[int, tuple[int, int]] = {}
-    PHYSICAL_SPANS_FROM_TABLE: dict[int, tuple[int, int]] = {}
-    PHYSICAL_COLUMN_COUNT: dict[int, int] = {}
-    PHYSICAL_ROW_COUNT: dict[int, int] = {}
-    PRESENTABLE_COORDINATES: dict[int, tuple[str | None, str | None]] = {}
-    PRESENTABLE_COORDINATES_LABELS: dict[int, str] = {}
-    PRESENTABLE_SPANS: dict[int, tuple[str | None, str | None]] = {}
-    PRESENTABLE_COLUMN_COUNT: dict[int, int | None] = {}
-    PRESENTABLE_ROW_COUNT: dict[int, int | None] = {}
-    COLUMN_HEADERS_FOR_CELL: dict[int, list[Atspi.Accessible]] = {}
-    ROW_HEADERS_FOR_CELL: dict[int, list[Atspi.Accessible]] = {}
+    CAPTIONS: ClassVar[dict[int, Atspi.Accessible]] = {}
+    PHYSICAL_COORDINATES_FROM_CELL: ClassVar[dict[int, tuple[int, int]]] = {}
+    PHYSICAL_COORDINATES_FROM_TABLE: ClassVar[dict[int, tuple[int, int]]] = {}
+    PHYSICAL_SPANS_FROM_CELL: ClassVar[dict[int, tuple[int, int]]] = {}
+    PHYSICAL_SPANS_FROM_TABLE: ClassVar[dict[int, tuple[int, int]]] = {}
+    PHYSICAL_COLUMN_COUNT: ClassVar[dict[int, int]] = {}
+    PHYSICAL_ROW_COUNT: ClassVar[dict[int, int]] = {}
+    PRESENTABLE_COORDINATES: ClassVar[dict[int, tuple[str | None, str | None]]] = {}
+    PRESENTABLE_COORDINATES_LABELS: ClassVar[dict[int, str]] = {}
+    PRESENTABLE_SPANS: ClassVar[dict[int, tuple[str | None, str | None]]] = {}
+    PRESENTABLE_COLUMN_COUNT: ClassVar[dict[int, int | None]] = {}
+    PRESENTABLE_ROW_COUNT: ClassVar[dict[int, int | None]] = {}
+    COLUMN_HEADERS_FOR_CELL: ClassVar[dict[int, list[Atspi.Accessible]]] = {}
+    ROW_HEADERS_FOR_CELL: ClassVar[dict[int, list[Atspi.Accessible]]] = {}
 
     # Things which have to be explicitly cleared.
-    DYNAMIC_COLUMN_HEADERS_ROW: dict[int, int] = {}
-    DYNAMIC_ROW_HEADERS_COLUMN: dict[int, int] = {}
+    DYNAMIC_COLUMN_HEADERS_ROW: ClassVar[dict[int, int]] = {}
+    DYNAMIC_ROW_HEADERS_COLUMN: ClassVar[dict[int, int]] = {}
 
     _lock = threading.Lock()
 
@@ -230,21 +233,23 @@ class AXTable:
 
     @staticmethod
     def is_non_uniform_table(
-        table: Atspi.Accessible, max_rows: int = 25, max_cols: int = 25
+        table: Atspi.Accessible,
+        max_rows: int = 25,
+        max_cols: int = 25,
     ) -> bool:
         """Returns True if table has at least one cell with a span > 1."""
 
-        for row in range(min(max_rows, AXTable.get_row_count(table, False))):
-            for col in range(min(max_cols, AXTable.get_column_count(table, False))):
-                try:
+        try:
+            for row in range(min(max_rows, AXTable.get_row_count(table, False))):
+                for col in range(min(max_cols, AXTable.get_column_count(table, False))):
                     if Atspi.Table.get_row_extent_at(table, row, col) > 1:
                         return True
                     if Atspi.Table.get_column_extent_at(table, row, col) > 1:
                         return True
-                except GLib.GError as error:
-                    msg = f"AXTable: Exception in is_non_uniform_table: {error}"
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
-                    return False
+        except GLib.GError as error:
+            msg = f"AXTable: Exception in is_non_uniform_table: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
 
         return False
 
@@ -521,7 +526,8 @@ class AXTable:
 
     @staticmethod
     def _get_column_headers_from_table(
-        table: Atspi.Accessible, column: int
+        table: Atspi.Accessible,
+        column: int,
     ) -> list[Atspi.Accessible]:
         """Returns the column headers of the indexed column via the table interface."""
 
@@ -617,7 +623,8 @@ class AXTable:
 
     @staticmethod
     def get_new_row_headers(
-        cell: Atspi.Accessible, old_cell: Atspi.Accessible | None
+        cell: Atspi.Accessible,
+        old_cell: Atspi.Accessible | None,
     ) -> list[Atspi.Accessible]:
         """Returns row headers of cell that are not also headers of old_cell."""
 
@@ -633,7 +640,8 @@ class AXTable:
 
     @staticmethod
     def get_new_column_headers(
-        cell: Atspi.Accessible, old_cell: Atspi.Accessible | None
+        cell: Atspi.Accessible,
+        old_cell: Atspi.Accessible | None,
     ) -> list[Atspi.Accessible]:
         """Returns column headers of cell that are not also headers of old_cell."""
 
@@ -718,11 +726,7 @@ class AXTable:
             return False
 
         stop_after = min(stop_after + 1, AXTable.get_row_count(table))
-        for i in range(stop_after):
-            if AXTable._get_row_headers_from_table(table, i):
-                return True
-
-        return False
+        return any(AXTable._get_row_headers_from_table(table, i) for i in range(stop_after))
 
     @staticmethod
     def get_column_headers(cell: Atspi.Accessible) -> list[Atspi.Accessible]:
@@ -795,15 +799,13 @@ class AXTable:
             return False
 
         stop_after = min(stop_after + 1, AXTable.get_column_count(table))
-        for i in range(stop_after):
-            if AXTable._get_column_headers_from_table(table, i):
-                return True
-
-        return False
+        return any(AXTable._get_column_headers_from_table(table, i) for i in range(stop_after))
 
     @staticmethod
     def get_cell_coordinates(
-        cell: Atspi.Accessible, prefer_attribute: bool = True, find_cell: bool = False
+        cell: Atspi.Accessible,
+        prefer_attribute: bool = True,
+        find_cell: bool = False,
     ) -> tuple[int, int]:
         """Returns the 0-based row and column indices."""
 
@@ -922,7 +924,8 @@ class AXTable:
 
     @staticmethod
     def get_presentable_sort_order_from_header(
-        obj: Atspi.Accessible, include_name: bool = False
+        obj: Atspi.Accessible,
+        include_name: bool = False,
     ) -> str:
         """Returns the end-user-consumable row/column sort order from its header."""
 
@@ -1095,7 +1098,8 @@ class AXTable:
             return False
 
         return row + 1 == AXTable.get_row_count(
-            table, prefer_attribute=False
+            table,
+            prefer_attribute=False,
         ) and col + 1 == AXTable.get_column_count(table, prefer_attribute=False)
 
     @staticmethod
@@ -1282,7 +1286,9 @@ class AXTable:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         last_cell = AXComponent.get_descendant_at_point(
-            table, rect.x + rect.width - 1, rect.y + rect.height - 1
+            table,
+            rect.x + rect.width - 1,
+            rect.y + rect.height - 1,
         )
         tokens = ["AXTable: Last visible cell for", table, "is", last_cell]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1301,7 +1307,7 @@ class AXTable:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if AXUtilitiesRole.is_table_cell(last_cell) and not AXUtilitiesRole.is_table_cell_or_header(
-            first_cell
+            first_cell,
         ):
             candidate = AXTable.get_cell_above(last_cell)
             while candidate and AXComponent.object_intersects_rect(candidate, rect):
@@ -1343,7 +1349,8 @@ class AXTable:
 
     @staticmethod
     def get_showing_cells_in_same_row(
-        cell: Atspi.Accessible, clip_to_window: bool = False
+        cell: Atspi.Accessible,
+        clip_to_window: bool = False,
     ) -> list[Atspi.Accessible]:
         """Returns a list of all the cells in the same row as obj that are showing."""
 

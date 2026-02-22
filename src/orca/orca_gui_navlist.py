@@ -28,7 +28,6 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import time
 from typing import TYPE_CHECKING, Any
 
@@ -38,9 +37,7 @@ gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GObject, Gtk
 
-from . import debug
-from . import guilabels
-from . import script_manager
+from . import debug, guilabels, script_manager
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 
@@ -55,7 +52,11 @@ class OrcaNavListGUI:
     """A GUI for displaying navigation lists in Orca."""
 
     def __init__(
-        self, title: str, column_headers: list[str], rows: list[tuple[Any, ...]], selected_row: int
+        self,
+        title: str,
+        column_headers: list[str],
+        rows: list[tuple[Any, ...]],
+        selected_row: int,
     ) -> None:
         """Initialize the navigation list GUI."""
         self._tree: Gtk.TreeView | None = None
@@ -71,7 +72,10 @@ class OrcaNavListGUI:
         self._document: Atspi.Accessible | None = None
 
     def _create_nav_list_dialog(
-        self, column_headers: list[str], rows: list[tuple[Any, ...]], selected_row: int
+        self,
+        column_headers: list[str],
+        rows: list[tuple[Any, ...]],
+        selected_row: int,
     ) -> Gtk.Dialog:
         """Create the navigation list dialog."""
         dialog = Gtk.Dialog()
@@ -153,7 +157,7 @@ class OrcaNavListGUI:
     def _on_key_release(self, _widget: Gtk.Widget, event: Gdk.EventKey) -> None:
         """Handle key release events in the tree view."""
         keycode = event.hardware_keycode
-        keymap = Gdk.Keymap.get_default()
+        keymap = Gdk.Keymap.get_default()  # pylint: disable=no-value-for-parameter
         entries_for_keycode = keymap.get_entries_for_keycode(keycode)
         entries = entries_for_keycode[-1]
         event_string = Gdk.keyval_name(entries[0])

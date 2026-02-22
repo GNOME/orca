@@ -41,8 +41,9 @@ from unittest.mock import Mock
 import pytest
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -174,7 +175,7 @@ class TestScriptManager:
         # Set up the module-level get_manager mock
         sleep_mode_manager_mock = essential_modules["orca.sleep_mode_manager"]
         sleep_mode_manager_mock.get_manager = test_context.Mock(
-            return_value=sleep_mode_manager_instance
+            return_value=sleep_mode_manager_instance,
         )
 
         essential_modules["default_script"] = default_script
@@ -191,7 +192,7 @@ class TestScriptManager:
         deps_speech_manager_instance = test_context.Mock()
         deps_speech_manager_instance.check_speech_setting = test_context.Mock()
         deps_speech_manager.get_manager = test_context.Mock(
-            return_value=deps_speech_manager_instance
+            return_value=deps_speech_manager_instance,
         )
 
         braille_module = test_context.Mock()
@@ -524,7 +525,9 @@ class TestScriptManager:
         ids=lambda case: case["id"],
     )
     def test_new_named_script_error_handling(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test ScriptManager._new_named_script handles various errors."""
 
@@ -543,7 +546,7 @@ class TestScriptManager:
         else:
             mock_module = type("MockModule", (), {})()
             mock_module.Script = test_context.Mock(
-                side_effect=AttributeError("Script class not found")
+                side_effect=AttributeError("Script class not found"),
             )
             mock_import.return_value = mock_module
             result = manager._new_named_script(mock_app, "test")
@@ -718,7 +721,7 @@ class TestScriptManager:
         mock_toolkit_script = test_context.Mock(spec=ToolkitScript)
         mock_app_script = test_context.Mock(spec=AppScript)
         sleep_mode_manager.is_active_for_app = test_context.Mock(
-            return_value=case["sleep_mode_active"]
+            return_value=case["sleep_mode_active"],
         )
         test_context.patch_object(
             manager,
@@ -859,7 +862,9 @@ class TestScriptManager:
         ids=lambda case: case["id"],
     )
     def test_set_active_script_special_cases(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test ScriptManager.set_active_script special cases."""
         essential_modules = self._setup_dependencies(test_context)

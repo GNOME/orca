@@ -97,7 +97,10 @@ class TestAXUtilitiesDebugging:
         ],
     )
     def test_format_string(  # pylint: disable=too-many-arguments,too-many-positional-arguments
-        self, input_string, expected_result, test_context
+        self,
+        input_string,
+        expected_result,
+        test_context,
     ) -> None:
         """Test AXUtilitiesDebugging._format_string."""
 
@@ -116,7 +119,8 @@ class TestAXUtilitiesDebugging:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
         test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_role_name", return_value="button"
+            "orca.ax_utilities_debugging.AXObject.get_role_name",
+            return_value="button",
         )
         test_context.patch("orca.ax_utilities_debugging.AXObject.get_name", return_value="OK")
         result = AXUtilitiesDebugging.as_string(mock_obj)
@@ -150,7 +154,8 @@ class TestAXUtilitiesDebugging:
         mock_event.any_data = None
 
         test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_role_name", return_value="button"
+            "orca.ax_utilities_debugging.AXObject.get_role_name",
+            return_value="button",
         )
         test_context.patch("orca.ax_utilities_debugging.AXObject.get_name", return_value="OK")
         test_context.patch(
@@ -178,7 +183,8 @@ class TestAXUtilitiesDebugging:
             return ["Return", ""][index]
 
         test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_action_name", new=mock_get_action_name
+            "orca.ax_utilities_debugging.AXObject.get_action_name",
+            new=mock_get_action_name,
         )
         test_context.patch(
             "orca.ax_utilities_debugging.AXObject.get_action_key_binding",
@@ -199,7 +205,8 @@ class TestAXUtilitiesDebugging:
 
         attributes_dict = {"level": "2", "placeholder-text": "Enter name"}
         test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_attributes_dict", return_value=attributes_dict
+            "orca.ax_utilities_debugging.AXObject.get_attributes_dict",
+            return_value=attributes_dict,
         )
         result = AXUtilitiesDebugging.attributes_as_string(mock_obj)
         assert "level:2" in result
@@ -235,7 +242,8 @@ class TestAXUtilitiesDebugging:
         }
         for method_name, return_value in interface_support.items():
             test_context.patch(
-                f"orca.ax_utilities_debugging.AXObject.{method_name}", return_value=return_value
+                f"orca.ax_utilities_debugging.AXObject.{method_name}",
+                return_value=return_value,
             )
         result = AXUtilitiesDebugging.interfaces_as_string(mock_obj)
         assert "Action" in result
@@ -263,7 +271,8 @@ class TestAXUtilitiesDebugging:
         mock_state2.value_name = "ATSPI_STATE_VISIBLE"
         mock_state_set.get_states.return_value = [mock_state1, mock_state2]
         test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_state_set", return_value=mock_state_set
+            "orca.ax_utilities_debugging.AXObject.get_state_set",
+            return_value=mock_state_set,
         )
         result = AXUtilitiesDebugging.state_set_as_string(mock_obj)
         assert "focused" in result
@@ -293,7 +302,8 @@ class TestAXUtilitiesDebugging:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
         test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.supports_text", return_value=supports_text
+            "orca.ax_utilities_debugging.AXObject.supports_text",
+            return_value=supports_text,
         )
 
         if supports_text:
@@ -312,7 +322,9 @@ class TestAXUtilitiesDebugging:
 
             character_count = 10 if should_raise_error else 20
             test_context.patch_object(
-                Atspi.Text, "get_character_count", return_value=character_count
+                Atspi.Text,
+                "get_character_count",
+                return_value=character_count,
             )
 
         result = AXUtilitiesDebugging.text_for_debugging(mock_obj)
@@ -395,7 +407,9 @@ class TestAXUtilitiesDebugging:
             return ""
 
         test_context.patch_object(
-            AXUtilitiesDebugging, "object_details_as_string", new=mock_object_details
+            AXUtilitiesDebugging,
+            "object_details_as_string",
+            new=mock_object_details,
         )
         result = AXUtilitiesDebugging.object_event_details_as_string(mock_event)
         assert "EVENT SOURCE:" in result
@@ -411,7 +425,9 @@ class TestAXUtilitiesDebugging:
             return ""
 
         test_context.patch_object(
-            AXUtilitiesDebugging, "object_details_as_string", new=mock_object_details_no_any_data
+            AXUtilitiesDebugging,
+            "object_details_as_string",
+            new=mock_object_details_no_any_data,
         )
         result = AXUtilitiesDebugging.object_event_details_as_string(mock_event)
         assert "EVENT SOURCE:" in result
@@ -447,7 +463,8 @@ class TestAXUtilitiesDebugging:
             side_effect=lambda obj, rel_type: [mock_target],
         )
         test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_role_name", return_value="label"
+            "orca.ax_utilities_debugging.AXObject.get_role_name",
+            return_value="label",
         )
         test_context.patch("orca.ax_utilities_debugging.AXObject.get_name", return_value="Username")
         result = AXUtilitiesDebugging.relations_as_string(mock_obj)
@@ -475,39 +492,56 @@ class TestAXUtilitiesDebugging:
             return_value="TestApp",
         )
         test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_name", return_value="button name"
+            "orca.ax_utilities_debugging.AXObject.get_name",
+            return_value="button name",
         )
         test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_role_name", return_value="button"
+            "orca.ax_utilities_debugging.AXObject.get_role_name",
+            return_value="button",
         )
         test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_description", return_value="button desc"
+            "orca.ax_utilities_debugging.AXObject.get_description",
+            return_value="button desc",
         )
         test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_help_text", return_value="button help"
+            "orca.ax_utilities_debugging.AXObject.get_help_text",
+            return_value="button help",
         )
         test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_accessible_id", return_value="btn1"
+            "orca.ax_utilities_debugging.AXObject.get_accessible_id",
+            return_value="btn1",
         )
         test_context.patch("orca.ax_utilities_debugging.AXObject.get_path", return_value=[0, 1, 2])
 
         test_context.patch_object(
-            AXUtilitiesDebugging, "state_set_as_string", return_value="focused, visible"
+            AXUtilitiesDebugging,
+            "state_set_as_string",
+            return_value="focused, visible",
         )
         test_context.patch_object(
-            AXUtilitiesDebugging, "relations_as_string", return_value="labelled-by: [label]"
+            AXUtilitiesDebugging,
+            "relations_as_string",
+            return_value="labelled-by: [label]",
         )
         test_context.patch_object(
-            AXUtilitiesDebugging, "actions_as_string", return_value="click, focus"
+            AXUtilitiesDebugging,
+            "actions_as_string",
+            return_value="click, focus",
         )
         test_context.patch_object(
-            AXUtilitiesDebugging, "interfaces_as_string", return_value="Action, Component"
+            AXUtilitiesDebugging,
+            "interfaces_as_string",
+            return_value="Action, Component",
         )
         test_context.patch_object(
-            AXUtilitiesDebugging, "attributes_as_string", return_value="level:1"
+            AXUtilitiesDebugging,
+            "attributes_as_string",
+            return_value="level:1",
         )
         test_context.patch_object(
-            AXUtilitiesDebugging, "text_for_debugging", return_value="button text"
+            AXUtilitiesDebugging,
+            "text_for_debugging",
+            return_value="button text",
         )
 
         result = AXUtilitiesDebugging.object_details_as_string(mock_obj)

@@ -25,29 +25,30 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
-import gi
-
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
-from . import cmdnames
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import focus_manager
-from . import guilabels
-from . import input_event
-from . import keybindings
-from . import messages
-from . import presentation_manager
+from . import (
+    cmdnames,
+    command_manager,
+    dbus_service,
+    debug,
+    focus_manager,
+    guilabels,
+    input_event,
+    keybindings,
+    messages,
+    presentation_manager,
+)
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
+    import gi
+
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+
     from .scripts import default
 
 
@@ -133,7 +134,7 @@ class ObjectNavigator:
                     description,
                     desktop_keybinding=kb,
                     laptop_keybinding=kb,
-                )
+                ),
             )
 
         msg = "OBJECT NAVIGATOR: Commands set up."
@@ -145,7 +146,9 @@ class ObjectNavigator:
         return AXUtilities.is_paragraph(obj)
 
     def _exclude_from_simple_navigation(
-        self, _script: default.Script, obj: Atspi.Accessible
+        self,
+        _script: default.Script,
+        obj: Atspi.Accessible,
     ) -> bool:
         """Returns True if obj should be excluded from simple navigation."""
 
@@ -228,7 +231,8 @@ class ObjectNavigator:
         tokens = ["OBJECT NAVIGATOR: Presenting", self._navigator_focus]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         focus_manager.get_manager().emit_region_changed(
-            self._navigator_focus, mode=focus_manager.OBJECT_NAVIGATOR
+            self._navigator_focus,
+            mode=focus_manager.OBJECT_NAVIGATOR,
         )
         if not notify_user:
             msg = "OBJECT NAVIGATOR: _present called with notify_user=False"
@@ -396,11 +400,11 @@ class ObjectNavigator:
         if notify_user:
             if self._simplify:
                 presentation_manager.get_manager().present_message(
-                    messages.NAVIGATOR_SIMPLIFIED_ENABLED
+                    messages.NAVIGATOR_SIMPLIFIED_ENABLED,
                 )
             else:
                 presentation_manager.get_manager().present_message(
-                    messages.NAVIGATOR_SIMPLIFIED_DISABLED
+                    messages.NAVIGATOR_SIMPLIFIED_DISABLED,
                 )
         return True
 

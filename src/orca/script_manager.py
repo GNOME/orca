@@ -23,6 +23,7 @@
 
 """Manages Orca's scripts."""
 
+import contextlib
 import importlib
 
 import gi
@@ -30,10 +31,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import debug
-from . import gsettings_registry
-from . import sleep_mode_manager
-from . import speech_manager
+from . import debug, gsettings_registry, sleep_mode_manager, speech_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .scripts import apps, default, sleepmode, toolkits
@@ -152,7 +150,7 @@ class ScriptManager:
         packages = ["orca-scripts", "orca.scripts", "orca.scripts.apps", "orca.scripts.toolkits"]
         script = None
         for package in packages:
-            module_name = ".".join((package, name))
+            module_name = f"{package}.{name}"
             try:
                 module = importlib.import_module(module_name)
             except ImportError:
@@ -176,7 +174,9 @@ class ScriptManager:
         return script
 
     def _create_script(
-        self, app: Atspi.Accessible, obj: Atspi.Accessible | None = None
+        self,
+        app: Atspi.Accessible,
+        obj: Atspi.Accessible | None = None,
     ) -> default.Script:
         """For the given application, create a new script instance."""
 
@@ -225,7 +225,9 @@ class ScriptManager:
         return script
 
     def get_script(
-        self, app: Atspi.Accessible | None, obj: Atspi.Accessible | None = None
+        self,
+        app: Atspi.Accessible | None,
+        obj: Atspi.Accessible | None = None,
     ) -> default.Script:
         """Get a script for an app (and make it if necessary)."""
 
@@ -361,20 +363,14 @@ class ScriptManager:
             tokens = ["SCRIPT MANAGER: Old script for app found:", app_script, app_script.app]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-            try:
+            with contextlib.suppress(KeyError):
                 self._sleep_mode_scripts.pop(app)
-            except KeyError:
-                pass
 
-            try:
+            with contextlib.suppress(KeyError):
                 self.toolkit_scripts.pop(app)
-            except KeyError:
-                pass
 
-            try:
+            with contextlib.suppress(KeyError):
                 self.custom_scripts.pop(app)
-            except KeyError:
-                pass
 
 
 _manager: ScriptManager = ScriptManager()

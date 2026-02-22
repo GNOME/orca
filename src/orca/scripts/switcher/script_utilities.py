@@ -24,7 +24,6 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
 from orca import script_utilities
@@ -49,10 +48,7 @@ class Utilities(script_utilities.Utilities):
             return True
 
         # Budgie
-        if AXUtilities.is_table(obj) and AXObject.supports_selection(obj):
-            return True
-
-        return False
+        return AXUtilities.is_table(obj) and AXObject.supports_selection(obj)
 
     def is_switcher_selection_change_event_type(self, event: Atspi.Event) -> bool:
         """Returns True if this event is the one we use to present changes."""
@@ -63,10 +59,7 @@ class Utilities(script_utilities.Utilities):
         if event.type.startswith("object:state-changed:showing"):
             return event.detail1
 
-        if event.type.startswith("object:selection-changed"):
-            return True
-
-        return False
+        return event.type.startswith("object:selection-changed")
 
     def get_selection_name(self, container: Atspi.Accessible | None = None) -> str:
         """Returns the name of the currently-selected item."""

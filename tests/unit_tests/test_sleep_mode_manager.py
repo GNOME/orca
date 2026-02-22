@@ -36,8 +36,9 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -48,7 +49,7 @@ class TestSleepModeManager:
         """Returns dependencies for sleep_mode_manager module testing."""
 
         essential_modules = test_context.setup_shared_dependencies(
-            ["orca.braille_presenter", "orca.presentation_manager"]
+            ["orca.braille_presenter", "orca.presentation_manager"],
         )
 
         debug_mock = essential_modules["orca.debug"]
@@ -65,7 +66,7 @@ class TestSleepModeManager:
         braille_presenter_instance.use_braille = test_context.Mock(return_value=True)
         braille_presenter_instance.present_message = test_context.Mock()
         braille_presenter_mock.get_presenter = test_context.Mock(
-            return_value=braille_presenter_instance
+            return_value=braille_presenter_instance,
         )
 
         cmdnames_mock = essential_modules["orca.cmdnames"]
@@ -80,7 +81,7 @@ class TestSleepModeManager:
         input_event_mock = essential_modules["orca.input_event"]
         input_event_handler_mock = test_context.Mock()
         input_event_mock.InputEventHandler = test_context.Mock(
-            return_value=input_event_handler_mock
+            return_value=input_event_handler_mock,
         )
 
         keybindings_mock = essential_modules["orca.keybindings"]
@@ -115,8 +116,8 @@ class TestSleepModeManager:
         """Test SleepModeManager.__init__ with default parameters."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.sleep_mode_manager import SleepModeManager
         from orca import command_manager
+        from orca.sleep_mode_manager import SleepModeManager
 
         manager = SleepModeManager()
         assert not manager._apps
@@ -132,8 +133,8 @@ class TestSleepModeManager:
         """Test that commands are registered with CommandManager during setup."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.sleep_mode_manager import SleepModeManager
         from orca import command_manager
+        from orca.sleep_mode_manager import SleepModeManager
 
         manager = SleepModeManager()
         manager.set_up_commands()
@@ -166,8 +167,8 @@ class TestSleepModeManager:
         """Test that commands are registered with CommandManager during setup."""
 
         self._setup_dependencies(test_context)
-        from orca.sleep_mode_manager import SleepModeManager
         from orca import command_manager
+        from orca.sleep_mode_manager import SleepModeManager
 
         manager = SleepModeManager()
         manager.set_up_commands()
@@ -180,8 +181,8 @@ class TestSleepModeManager:
         """Test that keybindings are created via Command.set_keybinding."""
 
         self._setup_dependencies(test_context)
-        from orca.sleep_mode_manager import SleepModeManager
         from orca import command_manager
+        from orca.sleep_mode_manager import SleepModeManager
 
         manager = SleepModeManager()
         manager.set_up_commands()
@@ -253,7 +254,7 @@ class TestSleepModeManager:
         else:
             sleep_script = test_context.Mock()
             script_manager_instance.get_or_create_sleep_mode_script = test_context.Mock(
-                return_value=sleep_script
+                return_value=sleep_script,
             )
 
         test_context.patch(
@@ -287,10 +288,12 @@ class TestSleepModeManager:
         if initially_active:
             script_manager_instance.get_script.assert_called_with(mock_app)
             script_manager_instance.set_active_script.assert_called_with(
-                new_script, "Sleep mode toggled off"
+                new_script,
+                "Sleep mode toggled off",
             )
         else:
             script_manager_instance.get_or_create_sleep_mode_script.assert_called_with(mock_app)
             script_manager_instance.set_active_script.assert_called_with(
-                sleep_script, "Sleep mode toggled on"
+                sleep_script,
+                "Sleep mode toggled on",
             )

@@ -38,8 +38,9 @@ from unittest.mock import call
 import pytest
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -64,7 +65,7 @@ class TestOrcaModifierManager:
         input_manager_instance.add_grab_for_modifier = test_context.Mock(return_value=123)
         input_manager_instance.remove_grab_for_modifier = test_context.Mock()
         input_event_manager_mock.get_manager = test_context.Mock(
-            return_value=input_manager_instance
+            return_value=input_manager_instance,
         )
 
         gi_repository_mock = essential_modules["gi.repository"]
@@ -275,7 +276,9 @@ class TestOrcaModifierManager:
         from orca import gsettings_registry  # pylint: disable=import-outside-toplevel
 
         gsettings_registry.get_registry().set_runtime_value(
-            "keybindings", "orca-modifier-keys", case["orca_modifier_keys"]
+            "keybindings",
+            "orca-modifier-keys",
+            case["orca_modifier_keys"],
         )
         result = manager.is_orca_modifier(case["modifier"])
         assert result == case["expected_result"]
@@ -387,13 +390,18 @@ class TestOrcaModifierManager:
             pytest.param(["Insert", "KP_Insert"], ["Insert", "KP_Insert"], id="insert_keys"),
             pytest.param(["Caps_Lock"], [], id="caps_lock_no_grab"),
             pytest.param(
-                ["Insert", "Caps_Lock", "KP_Insert"], ["Insert", "KP_Insert"], id="mixed_keys"
+                ["Insert", "Caps_Lock", "KP_Insert"],
+                ["Insert", "KP_Insert"],
+                id="mixed_keys",
             ),
             pytest.param([], [], id="no_keys"),
         ],
     )
     def test_add_grabs_for_orca_modifiers(
-        self, test_context, orca_modifier_keys, expected_calls
+        self,
+        test_context,
+        orca_modifier_keys,
+        expected_calls,
     ) -> None:
         """Test OrcaModifierManager.add_grabs_for_orca_modifiers."""
 
@@ -405,7 +413,9 @@ class TestOrcaModifierManager:
         from orca import gsettings_registry  # pylint: disable=import-outside-toplevel
 
         gsettings_registry.get_registry().set_runtime_value(
-            "keybindings", "orca-modifier-keys", orca_modifier_keys
+            "keybindings",
+            "orca-modifier-keys",
+            orca_modifier_keys,
         )
         mock_add_grab = test_context.Mock()
         test_context.patch_object(manager, "add_modifier_grab", new=mock_add_grab)
@@ -420,13 +430,18 @@ class TestOrcaModifierManager:
             pytest.param(["Insert", "KP_Insert"], ["Insert", "KP_Insert"], id="insert_keys"),
             pytest.param(["Caps_Lock"], [], id="caps_lock_no_ungrab"),
             pytest.param(
-                ["Insert", "Caps_Lock", "KP_Insert"], ["Insert", "KP_Insert"], id="mixed_keys"
+                ["Insert", "Caps_Lock", "KP_Insert"],
+                ["Insert", "KP_Insert"],
+                id="mixed_keys",
             ),
             pytest.param([], [], id="no_keys"),
         ],
     )
     def test_remove_grabs_for_orca_modifiers(
-        self, test_context, orca_modifier_keys, expected_calls
+        self,
+        test_context,
+        orca_modifier_keys,
+        expected_calls,
     ) -> None:
         """Test OrcaModifierManager.remove_grabs_for_orca_modifiers."""
 
@@ -438,7 +453,9 @@ class TestOrcaModifierManager:
         from orca import gsettings_registry  # pylint: disable=import-outside-toplevel
 
         gsettings_registry.get_registry().set_runtime_value(
-            "keybindings", "orca-modifier-keys", orca_modifier_keys
+            "keybindings",
+            "orca-modifier-keys",
+            orca_modifier_keys,
         )
         mock_remove_grab = test_context.Mock()
         test_context.patch_object(manager, "remove_modifier_grab", new=mock_remove_grab)
@@ -479,11 +496,13 @@ class TestOrcaModifierManager:
         if scenario != "existing":
             mock_get_keycodes = test_context.Mock()
             test_context.patch(
-                "orca.orca_modifier_manager.keybindings.get_keycodes", new=mock_get_keycodes
+                "orca.orca_modifier_manager.keybindings.get_keycodes",
+                new=mock_get_keycodes,
             )
             mock_iem = test_context.Mock()
             test_context.patch(
-                "orca.orca_modifier_manager.input_event_manager.get_manager", new=mock_iem
+                "orca.orca_modifier_manager.input_event_manager.get_manager",
+                new=mock_iem,
             )
             mock_get_keycodes.return_value = (65379, 110)
             mock_input_manager = test_context.Mock()
@@ -503,9 +522,7 @@ class TestOrcaModifierManager:
             essential_modules["input_manager_instance"].add_grab_for_modifier.assert_not_called()
 
         if expects_in_dict:
-            if scenario == "new":
-                assert manager._grabbed_modifiers["Insert"] == 123
-            elif scenario == "existing":
+            if scenario in ("new", "existing"):
                 assert manager._grabbed_modifiers["Insert"] == 123
         else:
             assert "Insert" not in manager._grabbed_modifiers
@@ -534,7 +551,8 @@ class TestOrcaModifierManager:
             manager._grabbed_modifiers["Insert"] = 123
             mock_iem = test_context.Mock()
             test_context.patch(
-                "orca.orca_modifier_manager.input_event_manager.get_manager", new=mock_iem
+                "orca.orca_modifier_manager.input_event_manager.get_manager",
+                new=mock_iem,
             )
             mock_input_manager = test_context.Mock()
             mock_iem.return_value = mock_input_manager
@@ -703,7 +721,9 @@ class TestOrcaModifierManager:
         manager.refresh_orca_modifiers("test reason")
         mock_restore.assert_called_once()
         mock_popen.assert_called_once_with(
-            ["xkbcomp", ":0", "-"], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL
+            ["xkbcomp", ":0", "-"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL,
         )
         assert manager._original_xmodmap == b"xmodmap_content"
         assert manager._modifiers_are_set is True
@@ -716,7 +736,11 @@ class TestOrcaModifierManager:
             pytest.param(False, True, False, [("set_caps", True)], id="shift_lock_enable"),
             pytest.param(True, True, False, [("set_caps", True)], id="both_enable"),
             pytest.param(
-                False, False, True, [("set_caps", False)], id="disable_previously_cleared"
+                False,
+                False,
+                True,
+                [("set_caps", False)],
+                id="disable_previously_cleared",
             ),
             pytest.param(False, False, False, [], id="no_changes"),
         ],
@@ -745,7 +769,9 @@ class TestOrcaModifierManager:
         from orca import gsettings_registry  # pylint: disable=import-outside-toplevel
 
         gsettings_registry.get_registry().set_runtime_value(
-            "keybindings", "orca-modifier-keys", orca_modifier_keys
+            "keybindings",
+            "orca-modifier-keys",
+            orca_modifier_keys,
         )
         mock_set_caps = test_context.Mock()
         test_context.patch_object(manager, "set_caps_lock_as_orca_modifier", new=mock_set_caps)
@@ -767,7 +793,10 @@ class TestOrcaModifierManager:
         ],
     )
     def test_unset_orca_modifiers(
-        self, test_context: OrcaTestContext, has_xmodmap, expects_popen_call
+        self,
+        test_context: OrcaTestContext,
+        has_xmodmap,
+        expects_popen_call,
     ) -> None:
         """Test OrcaModifierManager.unset_orca_modifiers with and without xmodmap."""
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
@@ -789,7 +818,8 @@ class TestOrcaModifierManager:
         mock_iem = test_context.Mock()
         mock_iem.unmap_all_modifiers = mock_unmap
         test_context.patch(
-            "orca.orca_modifier_manager.input_event_manager.get_manager", return_value=mock_iem
+            "orca.orca_modifier_manager.input_event_manager.get_manager",
+            return_value=mock_iem,
         )
 
         if has_xmodmap:
@@ -805,7 +835,10 @@ class TestOrcaModifierManager:
         mock_unmap.assert_called_once()
         if expects_popen_call:
             mock_popen.assert_called_once_with(
-                ["xkbcomp", "-w0", "-", ":0"], stdin=subprocess.PIPE, stdout=None, stderr=None
+                ["xkbcomp", "-w0", "-", ":0"],
+                stdin=subprocess.PIPE,
+                stdout=None,
+                stderr=None,
             )
             mock_process.communicate.assert_called_once_with(b"original_xmodmap_content")
             assert manager._caps_lock_cleared is False
@@ -874,7 +907,10 @@ class TestOrcaModifierManager:
 
         if expects_popen_call:
             mock_popen.assert_called_once_with(
-                ["xkbcomp", "-w0", "-", ":0"], stdin=subprocess.PIPE, stdout=None, stderr=None
+                ["xkbcomp", "-w0", "-", ":0"],
+                stdin=subprocess.PIPE,
+                stdout=None,
+                stderr=None,
             )
             called_data = mock_process.communicate.call_args[0][0]
             assert expected_content in called_data

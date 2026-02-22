@@ -29,7 +29,6 @@
 from __future__ import annotations
 
 import unittest.mock
-
 from typing import TYPE_CHECKING
 
 import gi
@@ -39,8 +38,9 @@ gi.require_version("Gtk", "3.0")
 import pytest
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -982,7 +982,8 @@ class TestBraillePreferencesGridUI:
         assert len(grid._widgets) == 4
 
     def test_braille_display_settings_grid_creates_widgets(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test BrailleDisplaySettingsPreferencesGrid creates correct widgets."""
 
@@ -990,8 +991,8 @@ class TestBraillePreferencesGridUI:
 
         self._setup_dependencies(test_context)
         from orca.braille_presenter import (
-            BraillePresenter,
             BrailleDisplaySettingsPreferencesGrid,
+            BraillePresenter,
         )
 
         presenter = BraillePresenter()
@@ -1001,14 +1002,15 @@ class TestBraillePreferencesGridUI:
         assert len(grid._widgets) == 8
 
     def test_braille_display_settings_grid_has_contracted_control(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test BrailleDisplaySettingsPreferencesGrid has contracted control."""
 
         self._setup_dependencies(test_context)
         from orca.braille_presenter import (
-            BraillePresenter,
             BrailleDisplaySettingsPreferencesGrid,
+            BraillePresenter,
         )
 
         presenter = BraillePresenter()
@@ -1024,7 +1026,8 @@ class TestBraillePreferencesGridUI:
         assert contraction_table_combo is not None
 
     def test_braille_flash_messages_grid_creates_widgets(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test BrailleFlashMessagesPreferencesGrid creates correct widgets."""
 
@@ -1032,8 +1035,8 @@ class TestBraillePreferencesGridUI:
 
         self._setup_dependencies(test_context)
         from orca.braille_presenter import (
-            BraillePresenter,
             BrailleFlashMessagesPreferencesGrid,
+            BraillePresenter,
         )
 
         presenter = BraillePresenter()
@@ -1043,14 +1046,15 @@ class TestBraillePreferencesGridUI:
         assert len(grid._widgets) == 4
 
     def test_braille_flash_messages_grid_has_persistent_control(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test BrailleFlashMessagesPreferencesGrid has persistent control."""
 
         self._setup_dependencies(test_context)
         from orca.braille_presenter import (
-            BraillePresenter,
             BrailleFlashMessagesPreferencesGrid,
+            BraillePresenter,
         )
 
         presenter = BraillePresenter()
@@ -1063,7 +1067,8 @@ class TestBraillePreferencesGridUI:
         assert duration_spinbutton is not None
 
     def test_braille_progress_bars_grid_creates_widgets(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test BrailleProgressBarsPreferencesGrid creates correct widgets."""
 
@@ -1082,14 +1087,15 @@ class TestBraillePreferencesGridUI:
         assert len(grid._widgets) == 3
 
     def test_braille_preferences_grid_creates_multi_page_stack(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test BraillePreferencesGrid creates multi-page stack."""
 
         from gi.repository import Gtk
 
         self._setup_dependencies(test_context)
-        from orca.braille_presenter import BraillePresenter, BraillePreferencesGrid
+        from orca.braille_presenter import BraillePreferencesGrid, BraillePresenter
 
         presenter = BraillePresenter()
         grid = BraillePreferencesGrid(presenter)
@@ -1104,7 +1110,7 @@ class TestBraillePreferencesGridUI:
         """Test BraillePreferencesGrid save_settings returns combined dict."""
 
         self._setup_dependencies(test_context)
-        from orca.braille_presenter import BraillePresenter, BraillePreferencesGrid
+        from orca.braille_presenter import BraillePreferencesGrid, BraillePresenter
 
         presenter = BraillePresenter()
         grid = BraillePreferencesGrid(presenter)
@@ -1121,7 +1127,7 @@ class TestBraillePreferencesGridUI:
         """Test BraillePreferencesGrid stores title change callback."""
 
         self._setup_dependencies(test_context)
-        from orca.braille_presenter import BraillePresenter, BraillePreferencesGrid
+        from orca.braille_presenter import BraillePreferencesGrid, BraillePresenter
 
         presenter = BraillePresenter()
         callback_calls: list[str] = []
@@ -1134,7 +1140,8 @@ class TestBraillePreferencesGridUI:
         assert grid._title_change_callback is title_callback
 
     def test_verbosity_grid_switch_reflects_initial_value(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test verbosity grid switch shows correct initial value."""
 
@@ -1154,7 +1161,8 @@ class TestBraillePreferencesGridUI:
         assert detailed_switch.get_active() is True
 
     def test_verbosity_grid_switch_toggle_updates_setting(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test toggling verbosity switch updates the setting."""
 
@@ -1185,8 +1193,8 @@ class TestBraillePreferencesGridUI:
         self._setup_dependencies(test_context)
 
         from orca.braille_presenter import (
-            BraillePresenter,
             BrailleFlashMessagesPreferencesGrid,
+            BraillePresenter,
         )
 
         presenter = BraillePresenter()
@@ -1203,8 +1211,8 @@ class TestBraillePreferencesGridUI:
         self._setup_dependencies(test_context)
 
         from orca.braille_presenter import (
-            BraillePresenter,
             BrailleDisplaySettingsPreferencesGrid,
+            BraillePresenter,
         )
 
         presenter = BraillePresenter()

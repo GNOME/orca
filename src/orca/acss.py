@@ -26,6 +26,13 @@ ACSS definitions into engine-specific markup codes.
 
 """
 
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from typing import ClassVar
+
 
 class ACSS(dict):
     """Holds ACSS representation of a voice."""
@@ -39,7 +46,7 @@ class ACSS(dict):
     RICHNESS = "richness"
     PUNCTUATIONS = "punctuations"
 
-    settings = {
+    settings: ClassVar[dict[str, str | int | None]] = {
         FAMILY: None,  # None means use the engine's default value.
         RATE: 50,
         GAIN: 10,
@@ -68,9 +75,10 @@ class ACSS(dict):
             return False
         if self.get(ACSS.RATE) != other.get(ACSS.RATE):
             return False
-        if self.get(ACSS.AVERAGE_PITCH) != other.get(ACSS.AVERAGE_PITCH):
-            return False
-        return True
+        return self.get(ACSS.AVERAGE_PITCH) == other.get(ACSS.AVERAGE_PITCH)
+
+    # Mutable: dict items are modified after construction.
+    __hash__ = dict.__hash__
 
     def update(self, new_dict):
         family = new_dict.get(ACSS.FAMILY)

@@ -27,23 +27,24 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
-from . import cmdnames
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import gsettings_registry
-from . import focus_manager
-from . import guilabels
-from . import input_event
-from . import input_event_manager
-from . import keybindings
-from . import messages
-from . import presentation_manager
-from . import say_all_presenter
-from . import script_manager
+from . import (
+    cmdnames,
+    command_manager,
+    dbus_service,
+    debug,
+    focus_manager,
+    gsettings_registry,
+    guilabels,
+    input_event,
+    input_event_manager,
+    keybindings,
+    messages,
+    presentation_manager,
+    say_all_presenter,
+    script_manager,
+)
 from .ax_object import AXObject
 from .ax_text import AXText
 
@@ -69,7 +70,10 @@ class CaretNavigator:
         """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, "b", default=default
+            self._SCHEMA,
+            key,
+            "b",
+            default=default,
         )
 
     def __init__(self) -> None:
@@ -118,7 +122,7 @@ class CaretNavigator:
                 laptop_keybinding=kb_f12,
                 enabled=not self._suspended,
                 is_group_toggle=True,
-            )
+            ),
         )
 
         enabled = self.get_is_enabled() and not self._suspended
@@ -162,7 +166,7 @@ class CaretNavigator:
                     desktop_keybinding=kb,
                     laptop_keybinding=kb,
                     enabled=enabled,
-                )
+                ),
             )
 
         manager.add_command(
@@ -172,7 +176,7 @@ class CaretNavigator:
                 group_label,
                 cmdnames.TOGGLE_LAYOUT_MODE,
                 enabled=enabled,
-            )
+            ),
         )
 
         msg = f"CARET NAVIGATOR: Commands set up. Suspended: {self._suspended}"
@@ -209,7 +213,8 @@ class CaretNavigator:
             msg = f"CARET NAVIGATOR: Enabled already {value}. Refreshing command group."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             command_manager.get_manager().set_group_enabled(
-                guilabels.KB_GROUP_CARET_NAVIGATION, value
+                guilabels.KB_GROUP_CARET_NAVIGATION,
+                value,
             )
             return True
 
@@ -246,7 +251,9 @@ class CaretNavigator:
         msg = f"CARET NAVIGATOR: Setting triggers focus mode to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "triggers-focus-mode", value
+            self._SCHEMA,
+            "triggers-focus-mode",
+            value,
         )
         return True
 
@@ -326,7 +333,8 @@ class CaretNavigator:
         # whether commands should be active, without overwriting the preference.
         effective = enabled and self.get_is_enabled()
         command_manager.get_manager().set_group_enabled(
-            guilabels.KB_GROUP_CARET_NAVIGATION, effective
+            guilabels.KB_GROUP_CARET_NAVIGATION,
+            effective,
         )
 
     def last_input_event_was_navigation_command(self) -> bool:
@@ -374,7 +382,7 @@ class CaretNavigator:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         enabled = not command_manager.get_manager().is_group_enabled(
-            guilabels.KB_GROUP_CARET_NAVIGATION
+            guilabels.KB_GROUP_CARET_NAVIGATION,
         )
         if enabled:
             string = messages.CARET_CONTROL_ORCA
@@ -401,11 +409,14 @@ class CaretNavigator:
 
         self._suspended = suspended
         command_manager.get_manager().set_group_suspended(
-            guilabels.KB_GROUP_CARET_NAVIGATION, suspended
+            guilabels.KB_GROUP_CARET_NAVIGATION,
+            suspended,
         )
 
     def _get_root_object(
-        self, script: default.Script, obj: Atspi.Accessible | None = None
+        self,
+        script: default.Script,
+        obj: Atspi.Accessible | None = None,
     ) -> Atspi.Accessible | None:
         """Returns the object which should be treated as the root/container for navigation."""
 
@@ -421,7 +432,10 @@ class CaretNavigator:
         return root
 
     def _is_navigable_object(
-        self, script: default.Script, obj: Atspi.Accessible, root: Atspi.Accessible | None = None
+        self,
+        script: default.Script,
+        obj: Atspi.Accessible,
+        root: Atspi.Accessible | None = None,
     ) -> bool:
         """Returns True if obj is a valid location for navigation."""
 
@@ -512,7 +526,9 @@ class CaretNavigator:
         presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, offset)
         focus_manager.get_manager().emit_region_changed(
-            obj, start_offset=offset, mode=focus_manager.CARET_NAVIGATOR
+            obj,
+            start_offset=offset,
+            mode=focus_manager.CARET_NAVIGATOR,
         )
         if not notify_user:
             return True
@@ -548,7 +564,9 @@ class CaretNavigator:
         presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, offset)
         focus_manager.get_manager().emit_region_changed(
-            obj, start_offset=offset, mode=focus_manager.CARET_NAVIGATOR
+            obj,
+            start_offset=offset,
+            mode=focus_manager.CARET_NAVIGATOR,
         )
         if not notify_user:
             return True
@@ -604,7 +622,10 @@ class CaretNavigator:
         presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, end)
         focus_manager.get_manager().emit_region_changed(
-            obj, start, end, focus_manager.CARET_NAVIGATOR
+            obj,
+            start,
+            end,
+            focus_manager.CARET_NAVIGATOR,
         )
         if not notify_user:
             return True
@@ -648,7 +669,10 @@ class CaretNavigator:
         presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
         focus_manager.get_manager().emit_region_changed(
-            obj, start, end, focus_manager.CARET_NAVIGATOR
+            obj,
+            start,
+            end,
+            focus_manager.CARET_NAVIGATOR,
         )
 
         if not notify_user:
@@ -717,7 +741,10 @@ class CaretNavigator:
 
         script.utilities.set_caret_position(obj, offset)
         focus_manager.get_manager().emit_region_changed(
-            obj, offset, end, focus_manager.CARET_NAVIGATOR
+            obj,
+            offset,
+            end,
+            focus_manager.CARET_NAVIGATOR,
         )
 
         if not notify_user:
@@ -783,7 +810,10 @@ class CaretNavigator:
         presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
         focus_manager.get_manager().emit_region_changed(
-            obj, start, end, focus_manager.CARET_NAVIGATOR
+            obj,
+            start,
+            end,
+            focus_manager.CARET_NAVIGATOR,
         )
 
         if not notify_user:
@@ -824,7 +854,10 @@ class CaretNavigator:
         presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
         focus_manager.get_manager().emit_region_changed(
-            obj, start, end, focus_manager.CARET_NAVIGATOR
+            obj,
+            start,
+            end,
+            focus_manager.CARET_NAVIGATOR,
         )
 
         if not notify_user:
@@ -866,7 +899,10 @@ class CaretNavigator:
         presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, end)
         focus_manager.get_manager().emit_region_changed(
-            obj, start, end, focus_manager.CARET_NAVIGATOR
+            obj,
+            start,
+            end,
+            focus_manager.CARET_NAVIGATOR,
         )
 
         if not notify_user:
@@ -908,7 +944,10 @@ class CaretNavigator:
         presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, start)
         focus_manager.get_manager().emit_region_changed(
-            obj, start, end, focus_manager.CARET_NAVIGATOR
+            obj,
+            start,
+            end,
+            focus_manager.CARET_NAVIGATOR,
         )
 
         if not notify_user:
@@ -951,7 +990,10 @@ class CaretNavigator:
         presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, end)
         focus_manager.get_manager().emit_region_changed(
-            obj, start, end, focus_manager.CARET_NAVIGATOR
+            obj,
+            start,
+            end,
+            focus_manager.CARET_NAVIGATOR,
         )
         if not notify_user:
             return True

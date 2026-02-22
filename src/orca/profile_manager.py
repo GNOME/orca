@@ -30,31 +30,34 @@
 # This must be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import subprocess
 import time
 import unicodedata
-from typing import Callable, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk  # pylint: disable=no-name-in-module
 
-from . import cmdnames
-from . import gsettings_registry
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import guilabels
-from . import input_event
-from . import messages
-from . import orca
-from . import orca_modifier_manager
-from . import preferences_grid_base
-from . import presentation_manager
+from . import (
+    cmdnames,
+    command_manager,
+    dbus_service,
+    debug,
+    gsettings_registry,
+    guilabels,
+    input_event,
+    messages,
+    orca,
+    orca_modifier_manager,
+    preferences_grid_base,
+    presentation_manager,
+)
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from .scripts import default
 
 
@@ -112,7 +115,9 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         ]
 
         self._auto_grid = preferences_grid_base.AutoPreferencesGrid(
-            tab_label="", controls=controls, info_message=guilabels.PROFILES_INFO
+            tab_label="",
+            controls=controls,
+            info_message=guilabels.PROFILES_INFO,
         )
         self.attach(self._auto_grid, 0, 0, 1, 1)
 
@@ -245,7 +250,9 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         return "".join(c for c in name if unicodedata.category(c)[0] != "C").strip()
 
     def _validate_profile_name(
-        self, name: str, exclude_internal_name: str | None = None
+        self,
+        name: str,
+        exclude_internal_name: str | None = None,
     ) -> tuple[bool, str]:
         """Validate a profile name and return (is_valid, error_message)."""
 
@@ -312,7 +319,8 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
             return
 
         if not self._show_confirmation_dialog(
-            guilabels.PROFILE_REMOVE_LABEL, guilabels.PROFILE_REMOVE_MESSAGE % profile[0]
+            guilabels.PROFILE_REMOVE_LABEL,
+            guilabels.PROFILE_REMOVE_MESSAGE % profile[0],
         ):
             return
 
@@ -336,7 +344,10 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
             return
 
         dialog, ok_button = self._create_header_bar_dialog(
-            guilabels.MENU_RENAME, guilabels.DIALOG_CANCEL, guilabels.DIALOG_APPLY, width=400
+            guilabels.MENU_RENAME,
+            guilabels.DIALOG_CANCEL,
+            guilabels.DIALOG_APPLY,
+            width=400,
         )
 
         content_area = dialog.get_content_area()
@@ -378,7 +389,8 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
             return
 
         is_valid, error_msg = self._validate_profile_name(
-            new_name, exclude_internal_name=internal_name
+            new_name,
+            exclude_internal_name=internal_name,
         )
         if not is_valid:
             self._show_error_dialog(error_msg)
@@ -528,7 +540,8 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
 
 @gsettings_registry.get_registry().gsettings_schema(
-    "org.gnome.Orca.ProfileMetadata", name="metadata"
+    "org.gnome.Orca.ProfileMetadata",
+    name="metadata",
 )
 class ProfileManager:
     """Manager for Orca profiles."""
@@ -602,7 +615,7 @@ class ProfileManager:
                     description,
                     desktop_keybinding=desktop_kb,
                     laptop_keybinding=laptop_kb,
-                )
+                ),
             )
 
         msg = "PROFILE MANAGER: Commands set up."
@@ -748,7 +761,9 @@ class ProfileManager:
         """Renames a profile."""
 
         gsettings_registry.get_registry().rename_profile(
-            old_internal_name, new_profile[0], new_profile[1]
+            old_internal_name,
+            new_profile[0],
+            new_profile[1],
         )
 
     @dbus_service.command
@@ -799,7 +814,8 @@ class ProfileManager:
             script.set_up_commands()
             if notify_user:
                 presentation_manager.get_manager().present_message(
-                    messages.PROFILE_CHANGED % name, name
+                    messages.PROFILE_CHANGED % name,
+                    name,
                 )
 
         return True
@@ -834,7 +850,8 @@ class ProfileManager:
 
         if script is not None and notify_user:
             presentation_manager.get_manager().present_message(
-                messages.PROFILE_CURRENT % name, name
+                messages.PROFILE_CURRENT % name,
+                name,
             )
 
         return True

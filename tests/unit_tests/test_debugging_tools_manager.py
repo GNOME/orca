@@ -30,8 +30,10 @@
 """Unit tests for debugging_tools_manager.py methods."""
 
 from __future__ import annotations
+
 from typing import TYPE_CHECKING
 from unittest.mock import call
+
 import gi
 import pytest
 
@@ -39,8 +41,9 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -79,7 +82,7 @@ class TestDebuggingToolsManager:
         input_event_mock = essential_modules["orca.input_event"]
         input_event_handler_mock = test_context.Mock()
         input_event_mock.InputEventHandler = test_context.Mock(
-            return_value=input_event_handler_mock
+            return_value=input_event_handler_mock,
         )
         input_event_mock.InputEvent = test_context.Mock
 
@@ -106,7 +109,7 @@ class TestDebuggingToolsManager:
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_manager_instance = test_context.Mock()
         focus_manager_instance.get_active_mode_and_object_of_interest = test_context.Mock(
-            return_value=("focus", test_context.Mock(spec=Atspi.Accessible))
+            return_value=("focus", test_context.Mock(spec=Atspi.Accessible)),
         )
         focus_manager_mock.get_manager = test_context.Mock(return_value=focus_manager_instance)
 
@@ -116,7 +119,7 @@ class TestDebuggingToolsManager:
 
         ax_utilities_mock = essential_modules["orca.ax_utilities"]
         ax_utilities_mock.get_application = test_context.Mock(
-            return_value=test_context.Mock(spec=Atspi.Accessible)
+            return_value=test_context.Mock(spec=Atspi.Accessible),
         )
         test_apps = [
             test_context.Mock(spec=Atspi.Accessible),
@@ -166,8 +169,8 @@ class TestDebuggingToolsManager:
         elif debug_file_config is None:
             essential_modules["orca.debug"].debugFile = None
 
-        from orca.debugging_tools_manager import DebuggingToolsManager
         from orca import command_manager
+        from orca.debugging_tools_manager import DebuggingToolsManager
 
         manager = DebuggingToolsManager()
 
@@ -179,8 +182,8 @@ class TestDebuggingToolsManager:
     def test_setup_registers_commands(self, test_context: OrcaTestContext) -> None:
         """Test DebuggingToolsManager.setup registers commands."""
         self._setup_dependencies(test_context)
-        from orca.debugging_tools_manager import DebuggingToolsManager
         from orca import command_manager
+        from orca.debugging_tools_manager import DebuggingToolsManager
 
         manager = DebuggingToolsManager()
         manager.set_up_commands()
@@ -197,7 +200,12 @@ class TestDebuggingToolsManager:
             pytest.param(0, 800, "Debug level info.", "info", False, id="all_to_info"),
             pytest.param(10000, 0, "Debug level all.", "all", False, id="off_to_all"),
             pytest.param(
-                800, 900, "Debug level warning.", "warning", True, id="info_to_warning_with_event"
+                800,
+                900,
+                "Debug level warning.",
+                "warning",
+                True,
+                id="info_to_warning_with_event",
             ),
             pytest.param(900, 1000, "Debug level severe.", "severe", False, id="warning_to_severe"),
             pytest.param(1000, 10000, "Debug level off.", "off", False, id="severe_to_off"),
@@ -297,7 +305,8 @@ class TestDebuggingToolsManager:
             )
 
         test_context.patch(
-            "orca.debugging_tools_manager.AXUtilities.get_application", return_value=test_app
+            "orca.debugging_tools_manager.AXUtilities.get_application",
+            return_value=test_app,
         )
 
         mock_clear_cache = test_context.patch("orca.debugging_tools_manager.AXObject.clear_cache")
@@ -310,7 +319,9 @@ class TestDebuggingToolsManager:
 
         if expects_clear_cache:
             mock_clear_cache.assert_called_once_with(
-                test_app, recursive=True, reason="User request."
+                test_app,
+                recursive=True,
+                reason="User request.",
             )
         else:
             mock_clear_cache.assert_not_called()
@@ -362,7 +373,10 @@ class TestDebuggingToolsManager:
         ],
     )
     def test_debug_utility_methods(
-        self, test_context: OrcaTestContext, test_method: str, scenario_data: dict
+        self,
+        test_context: OrcaTestContext,
+        test_method: str,
+        scenario_data: dict,
     ) -> None:
         """Test DebuggingToolsManager debug utility methods."""
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
@@ -375,7 +389,9 @@ class TestDebuggingToolsManager:
             essential_modules["orca.debug"].debugLevel = scenario_data["original_level"]
             mock_print_running = test_context.Mock()
             test_context.patch_object(
-                manager, "print_running_applications", side_effect=mock_print_running
+                manager,
+                "print_running_applications",
+                side_effect=mock_print_running,
             )
 
             result = manager._capture_snapshot(script_mock)
@@ -400,23 +416,26 @@ class TestDebuggingToolsManager:
                 return_value=test_apps,
             )
             test_context.patch(
-                "orca.debugging_tools_manager.AXUtilities.get_process_id", return_value=12345
+                "orca.debugging_tools_manager.AXUtilities.get_process_id",
+                return_value=12345,
             )
             test_context.patch(
                 "orca.debugging_tools_manager.AXUtilities.is_application_unresponsive",
                 return_value=False,
             )
             test_context.patch(
-                "orca.debugging_tools_manager.AXObject.get_name", return_value="TestApp"
+                "orca.debugging_tools_manager.AXObject.get_name",
+                return_value="TestApp",
             )
             test_context.patch(
-                "orca.debugging_tools_manager.subprocess.getoutput", return_value="test_command"
+                "orca.debugging_tools_manager.subprocess.getoutput",
+                return_value="test_command",
             )
 
             result_list = list(
                 manager._get_running_applications_as_string_iter(
-                    is_command_line=scenario_data["is_command_line"]
-                )
+                    is_command_line=scenario_data["is_command_line"],
+                ),
             )
             assert len(result_list) == scenario_data["expected_length"]
             assert scenario_data["header_contains"] in result_list[0]
@@ -448,7 +467,9 @@ class TestDebuggingToolsManager:
         manager = DebuggingToolsManager()
         expected_output = ["Header", "App 1", "App 2"]
         mock_get_apps = test_context.patch_object(
-            manager, "_get_running_applications_as_string_iter", return_value=expected_output
+            manager,
+            "_get_running_applications_as_string_iter",
+            return_value=expected_output,
         )
 
         manager.print_running_applications(force=force, is_command_line=is_command_line)
@@ -597,8 +618,7 @@ class TestDebuggingToolsManager:
     def test_get_manager_singleton(self, test_context: OrcaTestContext) -> None:
         """Test debugging_tools_manager.get_manager singleton behavior."""
         self._setup_dependencies(test_context)
-        from orca import debugging_tools_manager
-        from orca import command_manager
+        from orca import command_manager, debugging_tools_manager
 
         manager1 = debugging_tools_manager.get_manager()
         manager2 = debugging_tools_manager.get_manager()

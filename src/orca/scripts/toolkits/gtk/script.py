@@ -24,14 +24,12 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
-from orca import debug
-from orca import focus_manager
-from orca.scripts import default
+from orca import debug, focus_manager
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
+from orca.scripts import default
 
 if TYPE_CHECKING:
     import gi
@@ -122,7 +120,7 @@ class Script(default.Script):
                 return True
 
         if AXUtilities.is_icon_or_canvas(
-            event.source
+            event.source,
         ) and self.utilities.handle_container_selection_change(AXObject.get_parent(event.source)):
             return True
 

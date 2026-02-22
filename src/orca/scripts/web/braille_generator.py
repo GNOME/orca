@@ -27,20 +27,14 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import gi
 
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from orca import braille
-from orca import braille_generator
-from orca import debug
-from orca import focus_manager
-from orca import messages
-from orca import object_properties
+from orca import braille, braille_generator, debug, focus_manager, messages, object_properties
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
@@ -107,7 +101,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                     Atspi.Role.ROW_HEADER,
                     Atspi.Role.TABLE_CELL,
                     Atspi.Role.PANEL,
-                ]
+                ],
             )
 
         if args.get("startOffset") is not None and args.get("endOffset") is not None:
@@ -212,7 +206,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
     @log_generator_output
     def _generate_real_active_descendant_displayed_text(
-        self, obj: Atspi.Accessible, **args
+        self,
+        obj: Atspi.Accessible,
+        **args,
     ) -> list[Any]:
         if not self._script.utilities.in_document_content(obj):
             return super()._generate_real_active_descendant_displayed_text(obj, **args)
@@ -250,7 +246,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return result
 
     def generate_contents(  # type: ignore[override]
-        self, contents: list[tuple[Atspi.Accessible, int, int, str]], **args
+        self,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+        **args,
     ) -> tuple[list[list[Any]], Atspi.Accessible | None]:
         if not contents:
             return [], None

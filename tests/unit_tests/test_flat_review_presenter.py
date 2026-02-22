@@ -36,8 +36,9 @@ from typing import TYPE_CHECKING
 import pytest
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 class Fake:
@@ -97,19 +98,19 @@ class TestFlatReviewPresenter:
         flat_review_context_mock = test_context.Mock()
 
         flat_review_context_mock.get_current_object = test_context.Mock(
-            return_value=test_context.Mock()
+            return_value=test_context.Mock(),
         )
         flat_review_context_mock.get_current_word = test_context.Mock(return_value="test word")
         flat_review_context_mock.get_current_line = test_context.Mock(return_value="test line")
         flat_review_context_mock.get_current_line_string = test_context.Mock(
-            return_value="test line"
+            return_value="test line",
         )
         flat_review_context_mock.get_current_char = test_context.Mock(return_value="t")
         flat_review_context_mock.get_current_character = test_context.Mock(return_value="t")
         flat_review_context_mock.get_current_item = test_context.Mock(return_value="test item")
         flat_review_context_mock.get_contents = test_context.Mock(return_value="test content")
         flat_review_context_mock.get_current_braille_regions = test_context.Mock(
-            return_value=([], None)
+            return_value=([], None),
         )
 
         flat_review_context_mock.go_next_line = test_context.Mock(return_value=True)
@@ -134,10 +135,10 @@ class TestFlatReviewPresenter:
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_manager_instance = test_context.Mock()
         focus_manager_instance.get_active_mode_and_object_of_interest = test_context.Mock(
-            return_value=("focus_tracking", test_context.Mock())
+            return_value=("focus_tracking", test_context.Mock()),
         )
         focus_manager_instance.get_locus_of_focus = test_context.Mock(
-            return_value=test_context.Mock()
+            return_value=test_context.Mock(),
         )
         focus_manager_instance.emit_region_changed = test_context.Mock()
         focus_manager_instance.FLAT_REVIEW = "flat_review"
@@ -176,7 +177,7 @@ class TestFlatReviewPresenter:
         input_event_mock = essential_modules["orca.input_event"]
         input_event_handler_mock = test_context.Mock()
         input_event_mock.InputEventHandler = test_context.Mock(
-            return_value=input_event_handler_mock
+            return_value=input_event_handler_mock,
         )
         input_event_mock.InputEvent = test_context.Mock()
         braille_event_mock = type("BrailleEvent", (), {})
@@ -223,14 +224,14 @@ class TestFlatReviewPresenter:
         speech_verbosity_mock = essential_modules["orca.speech_presenter"]
         speech_verbosity_instance = test_context.Mock()
         speech_verbosity_mock.get_presenter = test_context.Mock(
-            return_value=speech_verbosity_instance
+            return_value=speech_verbosity_instance,
         )
 
         braille_presenter_mock = essential_modules["orca.braille_presenter"]
         braille_presenter_instance = test_context.Mock()
         braille_presenter_instance.use_braille = test_context.Mock(return_value=True)
         braille_presenter_mock.get_presenter = test_context.Mock(
-            return_value=braille_presenter_instance
+            return_value=braille_presenter_instance,
         )
 
         platform_mock = essential_modules["orca.orca_platform"]
@@ -266,7 +267,8 @@ class TestFlatReviewPresenter:
         # D-Bus registration and bindings setup happens during setup()
         presenter.set_up_commands()
         mock_controller.register_decorated_module.assert_called_with(
-            "FlatReviewPresenter", presenter
+            "FlatReviewPresenter",
+            presenter,
         )
 
     @pytest.mark.parametrize(
@@ -277,7 +279,10 @@ class TestFlatReviewPresenter:
         ],
     )
     def test_is_active(
-        self, test_context: OrcaTestContext, has_context: bool, expected: bool
+        self,
+        test_context: OrcaTestContext,
+        has_context: bool,
+        expected: bool,
     ) -> None:
         """Test FlatReviewPresenter.is_active with various context states."""
 
@@ -290,7 +295,8 @@ class TestFlatReviewPresenter:
         assert result is expected
 
     def test_get_or_create_context_creates_new_unrestricted(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test FlatReviewPresenter.get_or_create_context creates context in unrestricted mode."""
 
@@ -309,7 +315,8 @@ class TestFlatReviewPresenter:
         essential_modules["focus_manager_instance"].emit_region_changed.assert_called_once()
 
     def test_get_or_create_context_creates_new_restricted(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test FlatReviewPresenter.get_or_create_context creates new context in restricted mode."""
 
@@ -350,8 +357,8 @@ class TestFlatReviewPresenter:
         """Test FlatReviewPresenter sets up braille bindings during set_up_commands."""
 
         self._setup_dependencies(test_context)
-        from orca.flat_review_presenter import FlatReviewPresenter
         from orca import command_manager
+        from orca.flat_review_presenter import FlatReviewPresenter
 
         presenter = FlatReviewPresenter()
         presenter.set_up_commands()
@@ -375,8 +382,8 @@ class TestFlatReviewPresenter:
         """Test FlatReviewPresenter.get_handlers returns empty dict (commands in CommandManager)."""
 
         self._setup_dependencies(test_context)
-        from orca.flat_review_presenter import FlatReviewPresenter
         from orca import command_manager
+        from orca.flat_review_presenter import FlatReviewPresenter
 
         presenter = FlatReviewPresenter()
         presenter.set_up_commands()
@@ -436,7 +443,8 @@ class TestFlatReviewPresenter:
         if is_active:
             assert presenter._context is None
             essential_modules["focus_manager_instance"].emit_region_changed.assert_called_with(
-                focus_obj, mode=essential_modules["focus_manager_instance"].FOCUS_TRACKING
+                focus_obj,
+                mode=essential_modules["focus_manager_instance"].FOCUS_TRACKING,
             )
         else:
             essential_modules["focus_manager_instance"].emit_region_changed.assert_not_called()
@@ -496,7 +504,7 @@ class TestFlatReviewPresenter:
         method = getattr(presenter, method_name)
         result = method(script_mock, event_mock)
         getattr(context_mock, context_method).assert_called_once_with(
-            getattr(essential_modules["orca.flat_review"].Context, navigation_target)
+            getattr(essential_modules["orca.flat_review"].Context, navigation_target),
         )
         mock_present_line.assert_called_once_with(script_mock, event_mock)
         assert result is True
@@ -519,17 +527,19 @@ class TestFlatReviewPresenter:
 
         assert context_mock.go_to_end_of.call_count == 1
         context_mock.go_to_end_of.assert_called_with(
-            essential_modules["orca.flat_review"].Context.WINDOW
+            essential_modules["orca.flat_review"].Context.WINDOW,
         )
         context_mock.go_to_start_of.assert_called_once_with(
-            essential_modules["orca.flat_review"].Context.LINE
+            essential_modules["orca.flat_review"].Context.LINE,
         )
         mock_present_line.assert_called_once_with(script_mock, event_mock)
         assert result is True
 
     @pytest.mark.parametrize("navigation_succeeds", [True, False])
     def test_go_previous_line_scenarios(
-        self, test_context: OrcaTestContext, navigation_succeeds: bool
+        self,
+        test_context: OrcaTestContext,
+        navigation_succeeds: bool,
     ) -> None:
         """Test FlatReviewPresenter.go_previous_line with success and failure."""
         self._setup_dependencies(test_context)
@@ -578,7 +588,8 @@ class TestFlatReviewPresenter:
         assert not presenter.is_active()
 
     def test_restricted_vs_unrestricted_context_creation(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test context creation in both restricted and unrestricted modes."""
 
@@ -607,8 +618,8 @@ class TestFlatReviewPresenter:
         """Test flat review integration with braille system."""
 
         self._setup_dependencies(test_context)
-        from orca.flat_review_presenter import FlatReviewPresenter
         from orca import command_manager
+        from orca.flat_review_presenter import FlatReviewPresenter
 
         presenter = FlatReviewPresenter()
         presenter.set_up_commands()
@@ -635,7 +646,8 @@ class TestFlatReviewPresenter:
         presenter.set_up_commands()
 
         mock_controller.register_decorated_module.assert_called_with(
-            "FlatReviewPresenter", presenter
+            "FlatReviewPresenter",
+            presenter,
         )
 
     def test_focus_manager_integration(self, test_context: OrcaTestContext) -> None:
@@ -656,7 +668,8 @@ class TestFlatReviewPresenter:
         focus_manager_instance.get_locus_of_focus.return_value = focus_obj
         presenter.quit()
         focus_manager_instance.emit_region_changed.assert_called_with(
-            focus_obj, mode=focus_manager_instance.FOCUS_TRACKING
+            focus_obj,
+            mode=focus_manager_instance.FOCUS_TRACKING,
         )
 
     def test_error_handling_navigation_failure(self, test_context: OrcaTestContext) -> None:

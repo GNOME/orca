@@ -40,8 +40,9 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -185,7 +186,9 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXObject, "get_child_count", return_value=0)
         test_context.patch_object(AXObject, "get_parent", return_value=None)
         test_context.patch_object(
-            AXObject, "is_ancestor", side_effect=lambda focus, obj: focus == obj
+            AXObject,
+            "is_ancestor",
+            side_effect=lambda focus, obj: focus == obj,
         )
         test_context.patch_object(AXObject, "has_state", return_value=True)
 
@@ -227,7 +230,9 @@ class TestAXUtilitiesEvent:
         mock_event.source = mock_obj
         AXUtilitiesEvent.LAST_KNOWN_EXPANDED[hash(mock_obj)] = case["initial_state"]
         test_context.patch_object(
-            AXUtilitiesState, "is_expanded", side_effect=lambda obj: case["current_state"]
+            AXUtilitiesState,
+            "is_expanded",
+            side_effect=lambda obj: case["current_state"],
         )
 
         result = AXUtilitiesEvent.is_presentable_expanded_change(mock_event)
@@ -278,9 +283,7 @@ class TestAXUtilitiesEvent:
             if old_description == new_description:
                 return False
             AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION[hash(event.source)] = new_description
-            if not new_description:
-                return False
-            return True
+            return bool(new_description)
 
         test_context.patch_object(
             AXUtilitiesEvent,
@@ -457,7 +460,9 @@ class TestAXUtilitiesEvent:
         if case["method_name"] == "pressed_change":
             AXUtilitiesEvent.LAST_KNOWN_PRESSED[hash(mock_obj)] = case["last_state"]
             test_context.patch_object(
-                AXUtilitiesState, "is_pressed", side_effect=lambda obj: case["current_state"]
+                AXUtilitiesState,
+                "is_pressed",
+                side_effect=lambda obj: case["current_state"],
             )
 
             def mock_is_presentable_pressed_change(event):
@@ -480,17 +485,23 @@ class TestAXUtilitiesEvent:
 
             AXUtilitiesEvent.LAST_KNOWN_SELECTED[hash(mock_obj)] = case["last_state"]
             test_context.patch_object(
-                AXUtilitiesState, "is_selected", side_effect=lambda obj: case["current_state"]
+                AXUtilitiesState,
+                "is_selected",
+                side_effect=lambda obj: case["current_state"],
             )
             test_context.patch_object(
-                AXObject, "has_state", side_effect=lambda obj, state: case["has_focus"]
+                AXObject,
+                "has_state",
+                side_effect=lambda obj, state: case["has_focus"],
             )
             method = AXUtilitiesEvent.is_presentable_selected_change
 
         elif case["method_name"] == "invalid_entry_change":
             AXUtilitiesEvent.LAST_KNOWN_INVALID_ENTRY[hash(mock_obj)] = case["last_state"]
             test_context.patch_object(
-                AXUtilitiesState, "is_invalid_entry", side_effect=lambda obj: case["current_state"]
+                AXUtilitiesState,
+                "is_invalid_entry",
+                side_effect=lambda obj: case["current_state"],
             )
 
             if case["current_state"] != case["last_state"]:
@@ -520,10 +531,10 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent.save_object_info_for_events with valid object."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_event import AXUtilitiesEvent
-        from orca.ax_object import AXObject
-        from orca.ax_utilities_state import AXUtilitiesState
         from orca import focus_manager
+        from orca.ax_object import AXObject
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_state import AXUtilitiesState
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_window = test_context.Mock(spec=Atspi.Accessible)
@@ -598,7 +609,9 @@ class TestAXUtilitiesEvent:
 
         expected_reason = TextEventReason.TYPING
         test_context.patch_object(
-            AXUtilitiesEvent, case["expected_method"], side_effect=lambda event: expected_reason
+            AXUtilitiesEvent,
+            case["expected_method"],
+            side_effect=lambda event: expected_reason,
         )
 
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
@@ -643,10 +656,9 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent._get_caret_moved_event_reason."""
 
         self._setup_dependencies(test_context)
+        from orca import focus_manager, input_event_manager
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
-        from orca import focus_manager
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -674,14 +686,18 @@ class TestAXUtilitiesEvent:
             "last_event_was_printable_key": False,
         }
         for attr, value in input_defaults.items():
-            setattr(getattr(mock_input_manager, attr), "return_value", value)
+            getattr(mock_input_manager, attr).return_value = value
         mock_input_manager.last_event_was_backspace.return_value = case["last_event_was_backspace"]
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(
-            AXUtilitiesRole, "is_text_input_search", side_effect=lambda obj: case["is_search_input"]
+            AXUtilitiesRole,
+            "is_text_input_search",
+            side_effect=lambda obj: case["is_search_input"],
         )
 
         result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
@@ -773,10 +789,10 @@ class TestAXUtilitiesEvent:
         """Test _get_caret_moved_event_reason with various input event scenarios."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
-        from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_utilities_role import AXUtilitiesRole
         from orca import focus_manager, input_event_manager
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -813,9 +829,11 @@ class TestAXUtilitiesEvent:
         }
         input_defaults.update(case["input_events"])
         for attr, value in input_defaults.items():
-            setattr(getattr(mock_input_manager, attr), "return_value", value)
+            getattr(mock_input_manager, attr).return_value = value
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         if "printable_key" in str(case["input_events"]):
@@ -856,11 +874,11 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent._get_text_deletion_event_reason."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -882,24 +900,32 @@ class TestAXUtilitiesEvent:
             "last_event_was_printable_key": not case["last_event_was_backspace"],
         }
         for attr, value in input_settings.items():
-            setattr(getattr(mock_input_manager, attr), "return_value", value)
+            getattr(mock_input_manager, attr).return_value = value
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         if case["is_ui_role"]:
             test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.LABEL)
             test_context.patch_object(
-                AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+                AXUtilitiesRole,
+                "get_text_ui_roles",
+                return_value=[Atspi.Role.LABEL],
             )
         else:
             test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
             test_context.patch_object(
-                AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+                AXUtilitiesRole,
+                "get_text_ui_roles",
+                return_value=[Atspi.Role.LABEL],
             )
 
         test_context.patch_object(
-            AXUtilitiesState, "is_editable", side_effect=lambda obj: case["is_editable"]
+            AXUtilitiesState,
+            "is_editable",
+            side_effect=lambda obj: case["is_editable"],
         )
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
@@ -910,11 +936,11 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent._get_text_deletion_event_reason with spin button."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -934,12 +960,16 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_up_or_down.return_value = True
         mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
         test_context.patch_object(
-            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+            AXUtilitiesRole,
+            "get_text_ui_roles",
+            return_value=[Atspi.Role.LABEL],
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
@@ -953,12 +983,12 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent._get_text_deletion_event_reason with selected text deletion."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca.ax_text import AXText
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -978,18 +1008,24 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_up_or_down.return_value = False
         mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
         test_context.patch_object(
-            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+            AXUtilitiesRole,
+            "get_text_ui_roles",
+            return_value=[Atspi.Role.LABEL],
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
         test_context.patch_object(
-            AXText, "get_cached_selected_text", return_value=("selected text", 0, 13)
+            AXText,
+            "get_cached_selected_text",
+            return_value=("selected text", 0, 13),
         )
 
         result = AXUtilitiesEvent._get_text_deletion_event_reason(mock_event)
@@ -1033,12 +1069,12 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent._get_text_insertion_event_reason."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca.ax_text import AXText
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1063,28 +1099,38 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_up_or_down.return_value = False
         mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         if case["is_ui_role"]:
             test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.LABEL)
             test_context.patch_object(
-                AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+                AXUtilitiesRole,
+                "get_text_ui_roles",
+                return_value=[Atspi.Role.LABEL],
             )
         else:
             test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
             test_context.patch_object(
-                AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+                AXUtilitiesRole,
+                "get_text_ui_roles",
+                return_value=[Atspi.Role.LABEL],
             )
 
         test_context.patch_object(
-            AXUtilitiesState, "is_editable", side_effect=lambda obj: case["is_editable"]
+            AXUtilitiesState,
+            "is_editable",
+            side_effect=lambda obj: case["is_editable"],
         )
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
         if case["selected_text_matches"]:
             test_context.patch_object(
-                AXText, "get_selected_text", return_value=("inserted text", 0, 13)
+                AXText,
+                "get_selected_text",
+                return_value=("inserted text", 0, 13),
             )
         else:
             test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
@@ -1096,12 +1142,12 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent._get_text_insertion_event_reason with typing echoable."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca.ax_text import AXText
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1126,7 +1172,9 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_up_or_down.return_value = False
         mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         from orca import typing_echo_presenter
@@ -1136,12 +1184,16 @@ class TestAXUtilitiesEvent:
         mock_presenter.get_key_echo_enabled.return_value = True
         mock_presenter.get_locking_keys_presented.return_value = True
         test_context.patch_object(
-            typing_echo_presenter, "get_presenter", return_value=mock_presenter
+            typing_echo_presenter,
+            "get_presenter",
+            return_value=mock_presenter,
         )
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
         test_context.patch_object(
-            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+            AXUtilitiesRole,
+            "get_text_ui_roles",
+            return_value=[Atspi.Role.LABEL],
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
@@ -1156,12 +1208,12 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent._get_text_insertion_event_reason with auto-insertion newline."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca.ax_text import AXText
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1186,12 +1238,16 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_up_or_down.return_value = False
         mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
         test_context.patch_object(
-            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+            AXUtilitiesRole,
+            "get_text_ui_roles",
+            return_value=[Atspi.Role.LABEL],
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
@@ -1205,10 +1261,9 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent._get_text_selection_changed_event_reason with search scenarios."""
 
         self._setup_dependencies(test_context)
+        from orca import focus_manager, input_event_manager
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
-        from orca import focus_manager
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1227,11 +1282,15 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_select_all.return_value = False
         mock_input_manager.last_event_was_primary_click_or_release.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(
-            AXUtilitiesRole, "is_text_input_search", side_effect=lambda obj: obj == mock_focus
+            AXUtilitiesRole,
+            "is_text_input_search",
+            side_effect=lambda obj: obj == mock_focus,
         )
 
         result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
@@ -1241,10 +1300,9 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent._get_text_selection_changed_event_reason with word selection."""
 
         self._setup_dependencies(test_context)
+        from orca import focus_manager, input_event_manager
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
-        from orca import focus_manager
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1265,7 +1323,9 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_line_boundary_navigation.return_value = False
         mock_input_manager.last_event_was_file_boundary_navigation.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXUtilitiesRole, "is_text_input_search", return_value=False)
@@ -1277,10 +1337,10 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent.is_presentable_active_descendant_change with focused source."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_event import AXUtilitiesEvent
-        from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_utilities_role import AXUtilitiesRole
         from orca import focus_manager
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1293,7 +1353,9 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(focus_manager, "get_manager", return_value=mock_focus_manager)
 
         test_context.patch_object(
-            AXUtilitiesState, "is_focused", side_effect=lambda obj: obj == mock_child
+            AXUtilitiesState,
+            "is_focused",
+            side_effect=lambda obj: obj == mock_child,
         )
 
         test_context.patch_object(AXUtilitiesRole, "is_table_cell", return_value=False)
@@ -1305,11 +1367,11 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent.is_presentable_active_descendant_change with tree table."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_event import AXUtilitiesEvent
-        from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_utilities_role import AXUtilitiesRole
-        from orca.ax_object import AXObject
         from orca import focus_manager
+        from orca.ax_object import AXObject
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_child = test_context.Mock(spec=Atspi.Accessible)
@@ -1324,11 +1386,15 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(focus_manager, "get_manager", return_value=mock_focus_manager)
 
         test_context.patch_object(
-            AXUtilitiesState, "is_focused", side_effect=lambda obj: obj == mock_child
+            AXUtilitiesState,
+            "is_focused",
+            side_effect=lambda obj: obj == mock_child,
         )
 
         test_context.patch_object(
-            AXUtilitiesRole, "is_table_cell", side_effect=lambda obj: obj == mock_focus
+            AXUtilitiesRole,
+            "is_table_cell",
+            side_effect=lambda obj: obj == mock_focus,
         )
         test_context.patch_object(
             AXUtilitiesRole,
@@ -1349,12 +1415,11 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent.is_presentable_checked_change with focus scenarios."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_event import AXUtilitiesEvent
-        from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca import focus_manager, input_event_manager
         from orca.ax_object import AXObject
-        from orca import focus_manager
-        from orca import input_event_manager
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1370,7 +1435,9 @@ class TestAXUtilitiesEvent:
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_space.return_value = True
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXUtilitiesState, "is_checked", return_value=True)
@@ -1391,10 +1458,10 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent.is_presentable_description_change with focus scenarios."""
 
         self._setup_dependencies(test_context)
+        from orca import focus_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import focus_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1423,10 +1490,10 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent.is_presentable_expanded_change with detail and role scenarios."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_event import AXUtilitiesEvent
-        from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_utilities_role import AXUtilitiesRole
         from orca import focus_manager
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1454,9 +1521,9 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent.is_presentable_indeterminate_change with focus check."""
 
         self._setup_dependencies(test_context)
+        from orca import focus_manager
         from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca import focus_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1477,11 +1544,11 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent.is_presentable_name_change with frame scenarios."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_event import AXUtilitiesEvent
-        from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_utilities_role import AXUtilitiesRole
-        from orca.ax_text import AXText
         from orca import focus_manager
+        from orca.ax_text import AXText
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_frame = test_context.Mock(spec=Atspi.Accessible)
@@ -1498,11 +1565,15 @@ class TestAXUtilitiesEvent:
 
         test_context.patch_object(AXUtilitiesState, "is_showing", return_value=True)
         test_context.patch_object(
-            AXUtilitiesState, "is_editable", side_effect=lambda obj: obj == mock_focus
+            AXUtilitiesState,
+            "is_editable",
+            side_effect=lambda obj: obj == mock_focus,
         )
 
         test_context.patch_object(
-            AXUtilitiesRole, "is_frame", side_effect=lambda obj: obj == mock_frame
+            AXUtilitiesRole,
+            "is_frame",
+            side_effect=lambda obj: obj == mock_frame,
         )
 
         test_context.patch_object(AXText, "get_character_count", return_value=15)
@@ -1515,11 +1586,11 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent._is_presentable_text_event with editable scenarios."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_event import AXUtilitiesEvent
-        from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_utilities_role import AXUtilitiesRole
-        from orca.ax_object import AXObject
         from orca import focus_manager
+        from orca.ax_object import AXObject
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1706,10 +1777,10 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent._get_caret_moved_event_reason with various scenarios."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
-        from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_utilities_role import AXUtilitiesRole
         from orca import focus_manager, input_event_manager
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1751,11 +1822,15 @@ class TestAXUtilitiesEvent:
             setattr(mock_input_manager, attr, test_context.Mock(return_value=value))
 
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(
-            AXUtilitiesState, "is_editable", side_effect=lambda obj: case["editable_state"]
+            AXUtilitiesState,
+            "is_editable",
+            side_effect=lambda obj: case["editable_state"],
         )
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
         if case["test_scenario"] == "ui_update":
@@ -1770,10 +1845,10 @@ class TestAXUtilitiesEvent:
         """Test get_text_event_reason with UI update scenario."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
-        from orca.ax_object import AXObject
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1783,7 +1858,9 @@ class TestAXUtilitiesEvent:
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXUtilitiesRole, "get_text_ui_roles", return_value=["text"])
@@ -1796,10 +1873,10 @@ class TestAXUtilitiesEvent:
         """Test get_text_event_reason with page switch scenario."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
-        from orca.ax_object import AXObject
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1809,7 +1886,9 @@ class TestAXUtilitiesEvent:
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = True
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXUtilitiesRole, "get_text_ui_roles", return_value=[])
@@ -1822,11 +1901,11 @@ class TestAXUtilitiesEvent:
         """Test get_text_event_reason with command scenario."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1838,7 +1917,9 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_page_switch.return_value = False
         mock_input_manager.last_event_was_command.return_value = True
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXUtilitiesRole, "get_text_ui_roles", return_value=[])
@@ -1853,11 +1934,11 @@ class TestAXUtilitiesEvent:
         """Test get_text_event_reason with delete in editable object."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1870,7 +1951,9 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_backspace.return_value = False
         mock_input_manager.last_event_was_delete.return_value = True
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXUtilitiesRole, "get_text_ui_roles", return_value=[])
@@ -1889,11 +1972,11 @@ class TestAXUtilitiesEvent:
         """Test get_text_event_reason with cut in editable object."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1907,7 +1990,9 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_delete.return_value = False
         mock_input_manager.last_event_was_cut.return_value = True
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXUtilitiesRole, "get_text_ui_roles", return_value=[])
@@ -1926,11 +2011,11 @@ class TestAXUtilitiesEvent:
         """Test get_text_event_reason with paste in editable object."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1945,7 +2030,9 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_cut.return_value = False
         mock_input_manager.last_event_was_paste.return_value = True
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXUtilitiesRole, "get_text_ui_roles", return_value=[])
@@ -1964,11 +2051,11 @@ class TestAXUtilitiesEvent:
         """Test get_text_event_reason with undo in editable object."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1984,7 +2071,9 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_paste.return_value = False
         mock_input_manager.last_event_was_undo.return_value = True
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXUtilitiesRole, "get_text_ui_roles", return_value=[])
@@ -2003,11 +2092,11 @@ class TestAXUtilitiesEvent:
         """Test get_text_event_reason with redo in editable object."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2024,7 +2113,9 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_undo.return_value = False
         mock_input_manager.last_event_was_redo.return_value = True
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXUtilitiesRole, "get_text_ui_roles", return_value=[])
@@ -2043,11 +2134,11 @@ class TestAXUtilitiesEvent:
         """Test get_text_event_reason with command in editable object."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2065,7 +2156,9 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_redo.return_value = False
         mock_input_manager.last_event_was_command.return_value = True
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXUtilitiesRole, "get_text_ui_roles", return_value=[])
@@ -2084,8 +2177,8 @@ class TestAXUtilitiesEvent:
         """Test _clear_all_dictionaries method directly."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca import debug
+        from orca.ax_utilities_event import AXUtilitiesEvent
 
         mock_print_message = test_context.Mock()
         test_context.patch_object(debug, "print_message", new=mock_print_message)
@@ -2140,17 +2233,19 @@ class TestAXUtilitiesEvent:
         ids=lambda case: case["id"],
     )
     def test_get_text_insertion_event_reason_input_scenarios(
-        self, test_context, case: dict
+        self,
+        test_context,
+        case: dict,
     ) -> None:
         """Test _get_text_insertion_event_reason with various input scenarios."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca.ax_text import AXText
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2172,7 +2267,9 @@ class TestAXUtilitiesEvent:
         for method_name, return_value in default_config.items():
             setattr(mock_input_manager, method_name, test_context.Mock(return_value=return_value))
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXUtilitiesRole, "get_text_ui_roles", return_value=[])
@@ -2188,11 +2285,11 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent._get_text_deletion_event_reason with auto deletion."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2212,12 +2309,16 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_up_or_down.return_value = True
         mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
         test_context.patch_object(
-            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+            AXUtilitiesRole,
+            "get_text_ui_roles",
+            return_value=[Atspi.Role.LABEL],
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
@@ -2231,11 +2332,11 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent._get_text_deletion_event_reason with children change."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2246,12 +2347,16 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_page_switch.return_value = False
         mock_input_manager.last_event_was_command.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
         test_context.patch_object(
-            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+            AXUtilitiesRole,
+            "get_text_ui_roles",
+            return_value=[Atspi.Role.LABEL],
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
@@ -2263,12 +2368,12 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent._get_text_insertion_event_reason with selected text restoration."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca.ax_text import AXText
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2293,18 +2398,24 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_up_or_down.return_value = False
         mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
         test_context.patch_object(
-            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+            AXUtilitiesRole,
+            "get_text_ui_roles",
+            return_value=[Atspi.Role.LABEL],
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
         test_context.patch_object(
-            AXText, "get_selected_text", return_value=("restored text", 0, 13)
+            AXText,
+            "get_selected_text",
+            return_value=("restored text", 0, 13),
         )
 
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
@@ -2314,12 +2425,12 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent._get_text_insertion_event_reason with auto insertion from tab."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca.ax_text import AXText
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2344,12 +2455,16 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_up_or_down.return_value = False
         mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
         test_context.patch_object(
-            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+            AXUtilitiesRole,
+            "get_text_ui_roles",
+            return_value=[Atspi.Role.LABEL],
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
@@ -2360,17 +2475,18 @@ class TestAXUtilitiesEvent:
         assert result == TextEventReason.AUTO_INSERTION_PRESENTABLE
 
     def test_get_text_insertion_event_reason_auto_insertion_unpresentable_return(
-        self, test_context
+        self,
+        test_context,
     ):
         """Test _get_text_insertion_event_reason with auto insertion from return in single line."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca.ax_text import AXText
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2395,12 +2511,16 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_up_or_down.return_value = False
         mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
         test_context.patch_object(
-            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+            AXUtilitiesRole,
+            "get_text_ui_roles",
+            return_value=[Atspi.Role.LABEL],
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
@@ -2415,12 +2535,12 @@ class TestAXUtilitiesEvent:
         """Test AXUtilitiesEvent._get_text_insertion_event_reason with middle click."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca.ax_text import AXText
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2445,12 +2565,16 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_up_or_down.return_value = False
         mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
         test_context.patch_object(
-            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+            AXUtilitiesRole,
+            "get_text_ui_roles",
+            return_value=[Atspi.Role.LABEL],
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
@@ -2475,11 +2599,11 @@ class TestAXUtilitiesEvent:
         """Test _get_text_deletion_event_reason with page switch scenario."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2488,12 +2612,16 @@ class TestAXUtilitiesEvent:
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = True
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
         test_context.patch_object(
-            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+            AXUtilitiesRole,
+            "get_text_ui_roles",
+            return_value=[Atspi.Role.LABEL],
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
@@ -2505,12 +2633,12 @@ class TestAXUtilitiesEvent:
         """Test _get_text_deletion_event_reason with various editable scenarios."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca.ax_text import AXText
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2530,12 +2658,16 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_up_or_down.return_value = False
         mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
         test_context.patch_object(
-            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+            AXUtilitiesRole,
+            "get_text_ui_roles",
+            return_value=[Atspi.Role.LABEL],
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
@@ -2573,11 +2705,11 @@ class TestAXUtilitiesEvent:
         """Test _get_text_deletion_event_reason command scenario for non-editable."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2588,12 +2720,16 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_page_switch.return_value = False
         mock_input_manager.last_event_was_command.return_value = True
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
         test_context.patch_object(
-            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+            AXUtilitiesRole,
+            "get_text_ui_roles",
+            return_value=[Atspi.Role.LABEL],
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
@@ -2605,12 +2741,12 @@ class TestAXUtilitiesEvent:
         """Test _get_text_insertion_event_reason with editable backspace scenario."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca.ax_text import AXText
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2635,12 +2771,16 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_up_or_down.return_value = False
         mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
         test_context.patch_object(
-            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+            AXUtilitiesRole,
+            "get_text_ui_roles",
+            return_value=[Atspi.Role.LABEL],
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
@@ -2652,12 +2792,12 @@ class TestAXUtilitiesEvent:
         """Test _get_text_insertion_event_reason with redo and selected text restoration."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca.ax_text import AXText
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2682,17 +2822,23 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_up_or_down.return_value = False
         mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
         test_context.patch_object(
-            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+            AXUtilitiesRole,
+            "get_text_ui_roles",
+            return_value=[Atspi.Role.LABEL],
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
         test_context.patch_object(
-            AXText, "get_selected_text", return_value=("selected text", 0, 13)
+            AXText,
+            "get_selected_text",
+            return_value=("selected text", 0, 13),
         )
 
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
@@ -2702,10 +2848,10 @@ class TestAXUtilitiesEvent:
         """Test _get_text_selection_changed_event_reason with various scenarios."""
 
         self._setup_dependencies(test_context)
+        from orca import focus_manager, input_event_manager
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca import input_event_manager, focus_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2726,7 +2872,9 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_select_all.return_value = False
         mock_input_manager.last_event_was_primary_click_or_release.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXUtilitiesRole, "is_text_input_search", return_value=True)
@@ -2791,10 +2939,10 @@ class TestAXUtilitiesEvent:
         """Test _get_text_selection_changed_event_reason caret navigation scenarios."""
 
         self._setup_dependencies(test_context)
+        from orca import focus_manager, input_event_manager
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca import input_event_manager, focus_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2810,7 +2958,9 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_select_all.return_value = False
         mock_input_manager.last_event_was_primary_click_or_release.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXUtilitiesRole, "is_text_input_search", return_value=False)
@@ -2859,11 +3009,11 @@ class TestAXUtilitiesEvent:
         """Test _get_text_selection_changed_event_reason with editable scenarios."""
 
         self._setup_dependencies(test_context)
+        from orca import focus_manager, input_event_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import input_event_manager, focus_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2884,7 +3034,9 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_up_or_down.return_value = False
         mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXUtilitiesRole, "is_text_input_search", return_value=False)
@@ -2974,11 +3126,11 @@ class TestAXUtilitiesEvent:
         """Test is_presentable_active_descendant_change edge cases."""
 
         self._setup_dependencies(test_context)
+        from orca import focus_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import focus_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_source = test_context.Mock(spec=Atspi.Accessible)
@@ -2988,11 +3140,15 @@ class TestAXUtilitiesEvent:
 
         if case["test_scenario"] == "no_focused_state":
             test_context.patch_object(
-                AXUtilitiesState, "is_focused", new=case["setup_config"]["is_focused"]
+                AXUtilitiesState,
+                "is_focused",
+                new=case["setup_config"]["is_focused"],
             )
         elif case["test_scenario"] == "tree_table_different_tree":
             test_context.patch_object(
-                AXUtilitiesState, "is_focused", side_effect=lambda obj: obj == mock_child
+                AXUtilitiesState,
+                "is_focused",
+                side_effect=lambda obj: obj == mock_child,
             )
             mock_focus = test_context.Mock(spec=Atspi.Accessible)
             mock_table = test_context.Mock(spec=Atspi.Accessible)
@@ -3020,11 +3176,11 @@ class TestAXUtilitiesEvent:
         """Test is_presentable_checked_change edge cases."""
 
         self._setup_dependencies(test_context)
+        from orca import focus_manager, input_event_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import focus_manager, input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_source = test_context.Mock(spec=Atspi.Accessible)
@@ -3046,7 +3202,9 @@ class TestAXUtilitiesEvent:
             mock_input_manager = test_context.Mock()
             mock_input_manager.last_event_was_space.return_value = False
             test_context.patch_object(
-                input_event_manager, "get_manager", return_value=mock_input_manager
+                input_event_manager,
+                "get_manager",
+                return_value=mock_input_manager,
             )
 
         result = AXUtilitiesEvent.is_presentable_checked_change(mock_event)
@@ -3070,10 +3228,10 @@ class TestAXUtilitiesEvent:
         """Test is_presentable_description_change edge cases."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_event import AXUtilitiesEvent
-        from orca.ax_utilities_state import AXUtilitiesState
         from orca import focus_manager
         from orca.ax_object import AXObject
+        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_state import AXUtilitiesState
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_source = test_context.Mock(spec=Atspi.Accessible)
@@ -3082,7 +3240,9 @@ class TestAXUtilitiesEvent:
         AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION.clear()
 
         test_context.patch_object(
-            AXUtilitiesState, "is_showing", side_effect=lambda obj: case["is_showing"]
+            AXUtilitiesState,
+            "is_showing",
+            side_effect=lambda obj: case["is_showing"],
         )
 
         if case["test_scenario"] in ["not_focus_ancestor", "not_showing"]:
@@ -3091,7 +3251,9 @@ class TestAXUtilitiesEvent:
             mock_focus_manager.get_locus_of_focus.return_value = mock_focus
             test_context.patch_object(focus_manager, "get_manager", return_value=mock_focus_manager)
             test_context.patch_object(
-                AXObject, "is_ancestor", side_effect=lambda focus, source: case["is_ancestor"]
+                AXObject,
+                "is_ancestor",
+                side_effect=lambda focus, source: case["is_ancestor"],
             )
 
         result = AXUtilitiesEvent.is_presentable_description_change(mock_event)
@@ -3152,11 +3314,11 @@ class TestAXUtilitiesEvent:
         """Test is_presentable_expanded_change edge cases."""
 
         self._setup_dependencies(test_context)
+        from orca import focus_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import focus_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_source = test_context.Mock(spec=Atspi.Accessible)
@@ -3170,17 +3332,23 @@ class TestAXUtilitiesEvent:
         mock_focus_manager.get_locus_of_focus.return_value = mock_focus
         test_context.patch_object(focus_manager, "get_manager", return_value=mock_focus_manager)
         test_context.patch_object(
-            AXObject, "is_ancestor", side_effect=lambda focus, source: case["is_ancestor"]
+            AXObject,
+            "is_ancestor",
+            side_effect=lambda focus, source: case["is_ancestor"],
         )
 
         for role_method, value in case["role_configs"].items():
             test_context.patch_object(
-                AXUtilitiesRole, role_method, side_effect=lambda obj, v=value: v
+                AXUtilitiesRole,
+                role_method,
+                side_effect=lambda obj, v=value: v,
             )
 
         if "no_focus" in case["test_scenario"]:
             test_context.patch_object(
-                AXUtilitiesState, "is_focused", side_effect=lambda obj: case["is_focused"]
+                AXUtilitiesState,
+                "is_focused",
+                side_effect=lambda obj: case["is_focused"],
             )
 
         result = AXUtilitiesEvent.is_presentable_expanded_change(mock_event)
@@ -3208,9 +3376,9 @@ class TestAXUtilitiesEvent:
         """Test simple presentable change edge cases."""
 
         self._setup_dependencies(test_context)
+        from orca import focus_manager
         from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca import focus_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_source = test_context.Mock(spec=Atspi.Accessible)
@@ -3234,11 +3402,11 @@ class TestAXUtilitiesEvent:
         """Test is_presentable_name_change edge cases."""
 
         self._setup_dependencies(test_context)
+        from orca import focus_manager
+        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_text import AXText
-        from orca import focus_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_source = test_context.Mock(spec=Atspi.Accessible)
@@ -3301,9 +3469,9 @@ class TestAXUtilitiesEvent:
         """Test presentable state change edge cases not from focus."""
 
         self._setup_dependencies(test_context)
+        from orca import focus_manager
         from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca import focus_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_source = test_context.Mock(spec=Atspi.Accessible)
@@ -3327,11 +3495,11 @@ class TestAXUtilitiesEvent:
         """Test _is_presentable_text_event edge cases."""
 
         self._setup_dependencies(test_context)
+        from orca import focus_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import focus_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_source = test_context.Mock(spec=Atspi.Accessible)
@@ -3360,12 +3528,12 @@ class TestAXUtilitiesEvent:
         """Test additional _get_text_insertion_event_reason scenarios for missing coverage."""
 
         self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca.ax_text import AXText
-        from orca import input_event_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -3390,12 +3558,16 @@ class TestAXUtilitiesEvent:
         mock_input_manager.last_event_was_up_or_down.return_value = False
         mock_input_manager.last_event_was_page_up_or_page_down.return_value = False
         test_context.patch_object(
-            input_event_manager, "get_manager", return_value=mock_input_manager
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
         )
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TEXT)
         test_context.patch_object(
-            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+            AXUtilitiesRole,
+            "get_text_ui_roles",
+            return_value=[Atspi.Role.LABEL],
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
@@ -3409,7 +3581,9 @@ class TestAXUtilitiesEvent:
         mock_presenter.get_character_echo_enabled.return_value = False
         mock_presenter.get_locking_keys_presented.return_value = True
         test_context.patch_object(
-            typing_echo_presenter, "get_presenter", return_value=mock_presenter
+            typing_echo_presenter,
+            "get_presenter",
+            return_value=mock_presenter,
         )
 
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
@@ -3426,8 +3600,8 @@ class TestAXUtilitiesEvent:
         """Test that IGNORE_NAME_CHANGES_FOR is cleared by _clear_all_dictionaries."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_event import AXUtilitiesEvent
         from orca import debug
+        from orca.ax_utilities_event import AXUtilitiesEvent
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.append(hash(mock_obj))
@@ -3440,7 +3614,8 @@ class TestAXUtilitiesEvent:
         assert len(AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR) == 0
 
     def test_is_presentable_name_change_returns_false_when_source_in_ignore_list(
-        self, test_context
+        self,
+        test_context,
     ):
         """Test is_presentable_name_change returns False when source is in ignore list."""
 
@@ -3462,11 +3637,11 @@ class TestAXUtilitiesEvent:
         """Test is_presentable_name_change returns False for list item with progress bar."""
 
         self._setup_dependencies(test_context)
+        from orca import focus_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import focus_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_source = test_context.Mock(spec=Atspi.Accessible)
@@ -3494,11 +3669,11 @@ class TestAXUtilitiesEvent:
         """Test is_presentable_name_change returns True for list item without progress bar."""
 
         self._setup_dependencies(test_context)
+        from orca import focus_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import focus_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_source = test_context.Mock(spec=Atspi.Accessible)
@@ -3525,11 +3700,11 @@ class TestAXUtilitiesEvent:
         """Test that subsequent name changes are ignored after source added to ignore list."""
 
         self._setup_dependencies(test_context)
+        from orca import focus_manager
+        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
-        from orca import focus_manager
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_source = test_context.Mock(spec=Atspi.Accessible)

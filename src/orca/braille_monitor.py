@@ -25,7 +25,7 @@
 from __future__ import annotations
 
 import os
-from typing import Callable
+from typing import TYPE_CHECKING
 
 try:
     from brlapi import KEY_CMD_ROUTE
@@ -37,8 +37,10 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, Gtk
 
-from . import guilabels
-from . import script_manager
+from . import guilabels, script_manager
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 # Attribute/Selection mask strings:
 DOT_7 = "\x40"  # 01000000
@@ -202,7 +204,8 @@ class BrailleMonitor(Gtk.Window):
         title_label = Gtk.Label(label=guilabels.BRAILLE_MONITOR)
         titlebar.set_center_widget(title_label)
         close_btn = Gtk.Button.new_from_icon_name(
-            "window-close-symbolic", Gtk.IconSize.LARGE_TOOLBAR
+            "window-close-symbolic",
+            Gtk.IconSize.LARGE_TOOLBAR,
         )
         close_btn.set_relief(Gtk.ReliefStyle.NONE)
         close_btn.connect("clicked", self._on_close_clicked)

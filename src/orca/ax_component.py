@@ -29,8 +29,7 @@ import functools
 import gi
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
 from . import debug
 from .ax_object import AXObject
@@ -264,7 +263,8 @@ class AXComponent:
         """Returns True if the rects associated with obj1 and obj2 overlap."""
 
         intersection = AXComponent.get_rect_intersection(
-            AXComponent.get_rect(obj1), AXComponent.get_rect(obj2)
+            AXComponent.get_rect(obj1),
+            AXComponent.get_rect(obj2),
         )
         return not AXComponent.is_empty_rect(intersection)
 
@@ -284,10 +284,7 @@ class AXComponent:
         # If there's a significant difference in height, they are not on the same line.
         min_height = min(rect1.height, rect2.height)
         max_height = max(rect1.height, rect2.height)
-        if min_height > 0 and max_height / min_height > 2.0:
-            return False
-
-        return True
+        return not (min_height > 0 and max_height / min_height > 2.0)
 
     @staticmethod
     def _object_bounds_includes_children(obj: Atspi.Accessible) -> bool:

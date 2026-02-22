@@ -27,7 +27,6 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import time
 from typing import TYPE_CHECKING
 
@@ -36,23 +35,25 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
-from . import braille
-from . import braille_presenter
-from . import clipboard
-from . import cmdnames
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import gsettings_registry
-from . import flat_review
-from . import focus_manager
-from . import guilabels
-from . import input_event
-from . import keybindings
-from . import messages
-from . import presentation_manager
-from . import script_manager
-from . import speech_presenter
+from . import (
+    braille,
+    braille_presenter,
+    clipboard,
+    cmdnames,
+    command_manager,
+    dbus_service,
+    debug,
+    flat_review,
+    focus_manager,
+    gsettings_registry,
+    guilabels,
+    input_event,
+    keybindings,
+    messages,
+    presentation_manager,
+    script_manager,
+    speech_presenter,
+)
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -74,7 +75,10 @@ class FlatReviewPresenter:
         """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, "b", default=default
+            self._SCHEMA,
+            key,
+            "b",
+            default=default,
         )
 
     def __init__(self) -> None:
@@ -105,7 +109,8 @@ class FlatReviewPresenter:
             return keybindings.KeyBinding(keysym, mod, click_count=clicks)
 
         cmd_bindings: dict[
-            str, tuple[keybindings.KeyBinding | None, keybindings.KeyBinding | None]
+            str,
+            tuple[keybindings.KeyBinding | None, keybindings.KeyBinding | None],
         ] = {
             "toggleFlatReviewModeHandler": (
                 kb("KP_Subtract", keybindings.NO_MODIFIER_MASK),
@@ -299,7 +304,7 @@ class FlatReviewPresenter:
                     description,
                     desktop_keybinding=desktop_kb,
                     laptop_keybinding=laptop_kb,
-                )
+                ),
             )
             if name in braille_bindings:
                 bb = braille_bindings[name]
@@ -312,7 +317,7 @@ class FlatReviewPresenter:
                         description,
                         braille_bindings=bb,
                         executes_in_learn_mode=True,
-                    )
+                    ),
                 )
 
         msg = "FLAT REVIEW PRESENTER: Commands set up."
@@ -337,7 +342,8 @@ class FlatReviewPresenter:
                 self._context = flat_review.Context(script)
 
             focus_manager.get_manager().emit_region_changed(
-                self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW
+                self._context.get_current_object(),
+                mode=focus_manager.FLAT_REVIEW,
             )
 
             return self._context
@@ -379,7 +385,9 @@ class FlatReviewPresenter:
         return self._context
 
     def start(
-        self, script: default.Script | None = None, event: input_event.InputEvent | None = None
+        self,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
     ) -> None:
         """Starts flat review."""
 
@@ -404,7 +412,9 @@ class FlatReviewPresenter:
         self._item_presentation(script, event)
 
     def quit(
-        self, script: default.Script | None = None, event: input_event.InputEvent | None = None
+        self,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
     ) -> None:
         """Quits flat review."""
 
@@ -1009,7 +1019,8 @@ class FlatReviewPresenter:
             script.present_object(self._context.get_current_object(), speechonly=True)
 
         focus_manager.get_manager().emit_region_changed(
-            self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW
+            self._context.get_current_object(),
+            mode=focus_manager.FLAT_REVIEW,
         )
         return True
 
@@ -1187,7 +1198,9 @@ class FlatReviewPresenter:
         return True
 
     def _get_all_lines(
-        self, script: default.Script, _event: input_event.InputEvent | None = None
+        self,
+        script: default.Script,
+        _event: input_event.InputEvent | None = None,
     ) -> tuple[list[tuple[str, Atspi.Accessible | None]], tuple[int, int, int, int]]:
         """Returns a (list of (line_string, obj) tuples, current location) tuple."""
 
@@ -1361,11 +1374,8 @@ class FlatReviewPresenter:
         if self._restrict:
             if notify_user:
                 presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_RESTRICTED)
-        else:
-            if notify_user:
-                presentation_manager.get_manager().present_message(
-                    messages.FLAT_REVIEW_UNRESTRICTED
-                )
+        elif notify_user:
+            presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_UNRESTRICTED)
         if self.is_active():
             # Reset the context
             self._context = None
@@ -1400,7 +1410,8 @@ class FlatReviewPresenter:
                 presenter.speak_accessible_text(self._context.get_current_object(), line_string)
 
         focus_manager.get_manager().emit_region_changed(
-            self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW
+            self._context.get_current_object(),
+            mode=focus_manager.FLAT_REVIEW,
         )
         self._update_braille(script)
         self._current_contents = line_string
@@ -1436,7 +1447,8 @@ class FlatReviewPresenter:
                     presenter.speak_accessible_text(self._context.get_current_object(), word_string)
 
         focus_manager.get_manager().emit_region_changed(
-            self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW
+            self._context.get_current_object(),
+            mode=focus_manager.FLAT_REVIEW,
         )
         self._update_braille(script)
         self._current_contents = word_string
@@ -1458,23 +1470,21 @@ class FlatReviewPresenter:
             char_string = self._context.get_current_character_string()
         if not isinstance(event, input_event.BrailleEvent):
             presenter = presentation_manager.get_manager()
-            if not char_string:
+            if not char_string or (char_string == "\n" and speech_type != 3):
                 presenter.speak_message(messages.BLANK)
+            elif speech_type == 3:
+                presenter.speak_message(messages.UNICODE % f"{ord(char_string):04x}")
+            elif speech_type == 2:
+                presenter.spell_phonetically(char_string)
             else:
-                if char_string == "\n" and speech_type != 3:
-                    presenter.speak_message(messages.BLANK)
-                elif speech_type == 3:
-                    presenter.speak_message(messages.UNICODE % f"{ord(char_string):04x}")
-                elif speech_type == 2:
-                    presenter.spell_phonetically(char_string)
-                else:
-                    presenter.speak_character(char_string)
+                presenter.speak_character(char_string)
 
         if not self._context:
             return True
 
         focus_manager.get_manager().emit_region_changed(
-            self._context.get_current_object(), mode=focus_manager.FLAT_REVIEW
+            self._context.get_current_object(),
+            mode=focus_manager.FLAT_REVIEW,
         )
         self._update_braille(script)
         self._current_contents = char_string
@@ -1485,18 +1495,28 @@ class FlatReviewContextGUI:
     """Presents the entire flat review context in a text view"""
 
     def __init__(
-        self, script: default.Script, title: str, text: str, location: tuple[int, int, int, int]
+        self,
+        script: default.Script,
+        title: str,
+        text: str,
+        location: tuple[int, int, int, int],
     ) -> None:
         self._script: default.Script = script
         self._gui: Gtk.Dialog = self._create_dialog(title, text, location)
 
     def _create_dialog(
-        self, title: str, text: str, location: tuple[int, int, int, int]
+        self,
+        title: str,
+        text: str,
+        location: tuple[int, int, int, int],
     ) -> Gtk.Dialog:
         """Creates the dialog."""
 
         dialog = Gtk.Dialog(
-            title, None, Gtk.DialogFlags.MODAL, (Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
+            title,
+            None,
+            Gtk.DialogFlags.MODAL,
+            (Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE),
         )
         dialog.set_default_size(800, 600)
 

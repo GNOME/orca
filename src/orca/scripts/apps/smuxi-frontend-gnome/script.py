@@ -24,12 +24,10 @@
 
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
 from orca import chat_presenter
 from orca.scripts.toolkits import gtk
-
 
 if TYPE_CHECKING:
     import gi

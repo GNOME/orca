@@ -23,24 +23,29 @@
 
 """Utilities for obtaining value-related information about accessible objects."""
 
+from __future__ import annotations
+
 import threading
 import time
+from typing import TYPE_CHECKING
 
 import gi
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
 from . import debug
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
+if TYPE_CHECKING:
+    from typing import ClassVar
+
 
 class AXValue:
     """Utilities for obtaining value-related information about accessible objects."""
 
-    LAST_KNOWN_VALUE: dict[int, float] = {}
+    LAST_KNOWN_VALUE: ClassVar[dict[int, float]] = {}
     _lock = threading.Lock()
 
     @staticmethod

@@ -32,8 +32,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import debug
-from . import object_properties
+from . import debug, object_properties
 from .ax_object import AXObject
 from .ax_utilities_state import AXUtilitiesState
 
@@ -252,7 +251,7 @@ class AXUtilitiesRole:
                     Atspi.Role.TABLE_ROW_HEADER,
                     Atspi.Role.COLUMN_HEADER,
                     Atspi.Role.ROW_HEADER,
-                ]
+                ],
             )
         return roles
 
@@ -682,7 +681,7 @@ class AXUtilitiesRole:
         return (
             role == Atspi.Role.CONTENT_DELETION
             or "deletion" in AXUtilitiesRole._get_xml_roles(obj)
-            or "del" == AXUtilitiesRole._get_tag(obj)
+            or AXUtilitiesRole._get_tag(obj) == "del"
         )
 
     @staticmethod
@@ -694,7 +693,7 @@ class AXUtilitiesRole:
         return (
             role == Atspi.Role.CONTENT_INSERTION
             or "insertion" in AXUtilitiesRole._get_xml_roles(obj)
-            or "ins" == AXUtilitiesRole._get_tag(obj)
+            or AXUtilitiesRole._get_tag(obj) == "ins"
         )
 
     @staticmethod
@@ -710,7 +709,8 @@ class AXUtilitiesRole:
         """Returns True if obj has the push button role the is-default state"""
 
         return AXUtilitiesRole.is_push_button(obj, role) and AXObject.has_state(
-            obj, Atspi.StateType.IS_DEFAULT
+            obj,
+            Atspi.StateType.IS_DEFAULT,
         )
 
     @staticmethod
@@ -727,7 +727,7 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.DESCRIPTION_LIST or "dl" == AXUtilitiesRole._get_tag(obj)
+        return role == Atspi.Role.DESCRIPTION_LIST or AXUtilitiesRole._get_tag(obj) == "dl"
 
     @staticmethod
     def is_description_term(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -735,7 +735,7 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.DESCRIPTION_TERM or "dt" == AXUtilitiesRole._get_tag(obj)
+        return role == Atspi.Role.DESCRIPTION_TERM or AXUtilitiesRole._get_tag(obj) == "dt"
 
     @staticmethod
     def is_description_value(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -743,7 +743,7 @@ class AXUtilitiesRole:
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.DESCRIPTION_VALUE or "dd" == AXUtilitiesRole._get_tag(obj)
+        return role == Atspi.Role.DESCRIPTION_VALUE or AXUtilitiesRole._get_tag(obj) == "dd"
 
     @staticmethod
     def is_desktop_frame(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -1323,7 +1323,8 @@ class AXUtilitiesRole:
         """Returns True if obj is a horizontal scrollbar"""
 
         return AXUtilitiesRole.is_scroll_bar(obj, role) and AXObject.has_state(
-            obj, Atspi.StateType.HORIZONTAL
+            obj,
+            Atspi.StateType.HORIZONTAL,
         )
 
     @staticmethod
@@ -1331,7 +1332,8 @@ class AXUtilitiesRole:
         """Returns True if obj is a horizontal separator"""
 
         return AXUtilitiesRole.is_separator(obj, role) and AXObject.has_state(
-            obj, Atspi.StateType.HORIZONTAL
+            obj,
+            Atspi.StateType.HORIZONTAL,
         )
 
     @staticmethod
@@ -1339,7 +1341,8 @@ class AXUtilitiesRole:
         """Returns True if obj is a horizontal slider"""
 
         return AXUtilitiesRole.is_slider(obj, role) and AXObject.has_state(
-            obj, Atspi.StateType.HORIZONTAL
+            obj,
+            Atspi.StateType.HORIZONTAL,
         )
 
     @staticmethod
@@ -1612,7 +1615,7 @@ class AXUtilitiesRole:
         return (
             role == Atspi.Role.MARK
             or "mark" in AXUtilitiesRole._get_xml_roles(obj)
-            or "mark" == AXUtilitiesRole._get_tag(obj)
+            or AXUtilitiesRole._get_tag(obj) == "mark"
         )
 
     @staticmethod
@@ -1662,11 +1665,7 @@ class AXUtilitiesRole:
         if not line_thickness:
             return False
 
-        for char in line_thickness:
-            if char.isnumeric() and char != "0":
-                return False
-
-        return True
+        return all(not (char.isnumeric() and char != "0") for char in line_thickness)
 
     @staticmethod
     def is_math_layout_only(obj: Atspi.Accessible) -> bool:
@@ -1829,7 +1828,8 @@ class AXUtilitiesRole:
         """Returns True if obj has the alert or dialog role and modal state"""
 
         return AXUtilitiesRole.is_dialog_or_alert(obj, role) and AXObject.has_state(
-            obj, Atspi.StateType.MODAL
+            obj,
+            Atspi.StateType.MODAL,
         )
 
     @staticmethod
@@ -1837,7 +1837,8 @@ class AXUtilitiesRole:
         """Returns True if obj has the entry role and multiline state"""
 
         return AXUtilitiesRole.is_entry(obj, role) and AXObject.has_state(
-            obj, Atspi.StateType.MULTI_LINE
+            obj,
+            Atspi.StateType.MULTI_LINE,
         )
 
     @staticmethod
@@ -2035,7 +2036,8 @@ class AXUtilitiesRole:
 
     @staticmethod
     def is_single_line_autocomplete_entry(
-        obj: Atspi.Accessible, role: Atspi.Role | None = None
+        obj: Atspi.Accessible,
+        role: Atspi.Role | None = None,
     ) -> bool:
         """Returns True if obj has the entry role and single-line state"""
 
@@ -2114,7 +2116,8 @@ class AXUtilitiesRole:
 
     @staticmethod
     def is_subscript_or_superscript_text(
-        obj: Atspi.Accessible, role: Atspi.Role | None = None
+        obj: Atspi.Accessible,
+        role: Atspi.Role | None = None,
     ) -> bool:
         """Returns True if obj has the subscript or superscript role and is not math-related"""
 
@@ -2200,7 +2203,9 @@ class AXUtilitiesRole:
 
     @staticmethod
     def is_table_related(
-        obj: Atspi.Accessible, role: Atspi.Role | None = None, include_caption: bool = False
+        obj: Atspi.Accessible,
+        role: Atspi.Role | None = None,
+        include_caption: bool = False,
     ) -> bool:
         """Returns True if obj has a table-related role"""
 
@@ -2259,9 +2264,7 @@ class AXUtilitiesRole:
             return True
         if role == Atspi.Role.TEXT:
             return AXUtilitiesState.is_editable(obj) and AXUtilitiesState.is_single_line(obj)
-        if AXUtilitiesRole.is_editable_combo_box(obj):
-            return True
-        return False
+        return bool(AXUtilitiesRole.is_editable_combo_box(obj))
 
     @staticmethod
     def is_text_input_date(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -2365,8 +2368,8 @@ class AXUtilitiesRole:
     def is_time(obj: Atspi.Accessible, _role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has the time role"""
 
-        return "time" in AXUtilitiesRole._get_xml_roles(obj) or "time" == AXUtilitiesRole._get_tag(
-            obj
+        return (
+            "time" in AXUtilitiesRole._get_xml_roles(obj) or AXUtilitiesRole._get_tag(obj) == "time"
         )
 
     @staticmethod
@@ -2471,7 +2474,8 @@ class AXUtilitiesRole:
         """Returns True if obj is a vertical scrollbar"""
 
         return AXUtilitiesRole.is_scroll_bar(obj, role) and AXObject.has_state(
-            obj, Atspi.StateType.VERTICAL
+            obj,
+            Atspi.StateType.VERTICAL,
         )
 
     @staticmethod
@@ -2479,7 +2483,8 @@ class AXUtilitiesRole:
         """Returns True if obj is a vertical separator"""
 
         return AXUtilitiesRole.is_separator(obj, role) and AXObject.has_state(
-            obj, Atspi.StateType.VERTICAL
+            obj,
+            Atspi.StateType.VERTICAL,
         )
 
     @staticmethod
@@ -2487,7 +2492,8 @@ class AXUtilitiesRole:
         """Returns True if obj is a vertical slider"""
 
         return AXUtilitiesRole.is_slider(obj, role) and AXObject.has_state(
-            obj, Atspi.StateType.VERTICAL
+            obj,
+            Atspi.StateType.VERTICAL,
         )
 
     @staticmethod
@@ -2535,7 +2541,8 @@ class AXUtilitiesRole:
 
     @staticmethod
     def is_widget_controlled_by_line_navigation(
-        obj: Atspi.Accessible, role: Atspi.Role | None = None
+        obj: Atspi.Accessible,
+        role: Atspi.Role | None = None,
     ) -> bool:
         """Returns True if obj is a widget controlled by line navigation"""
 

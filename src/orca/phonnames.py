@@ -52,7 +52,7 @@ __phonlist = _(
     "p : papa, q : quebec, r : romeo, "
     "s : sierra, t : tango, u : uniform, "
     "v : victor, w : whiskey, x : xray, "
-    "y : yankee, z : zulu"
+    "y : yankee, z : zulu",
 )
 
 __phonnames = {}

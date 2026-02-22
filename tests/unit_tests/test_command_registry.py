@@ -71,7 +71,7 @@ FLAT_REVIEW_PRESENTER_HANDLERS = frozenset(
         "flatReviewAppendHandler",
         "flatReviewSayAllHandler",
         "flatReviewToggleRestrictHandler",
-    }
+    },
 )
 
 FLAT_REVIEW_FINDER_HANDLERS = frozenset(
@@ -79,7 +79,7 @@ FLAT_REVIEW_FINDER_HANDLERS = frozenset(
         "findHandler",
         "findNextHandler",
         "findPreviousHandler",
-    }
+    },
 )
 
 WHERE_AM_I_PRESENTER_HANDLERS = frozenset(
@@ -94,7 +94,7 @@ WHERE_AM_I_PRESENTER_HANDLERS = frozenset(
         "presentSizeAndPositionHandler",
         "present_default_button",
         "present_cell_formula",
-    }
+    },
 )
 
 LIVE_REGION_PRESENTER_HANDLERS = frozenset(
@@ -104,7 +104,7 @@ LIVE_REGION_PRESENTER_HANDLERS = frozenset(
         "advance_live_politeness",
         "toggle_live_region_presentation",
         "present_next_live_region_message",
-    }
+    },
 )
 
 NOTIFICATION_PRESENTER_HANDLERS = frozenset(
@@ -113,7 +113,7 @@ NOTIFICATION_PRESENTER_HANDLERS = frozenset(
         "present_next_notification",
         "present_previous_notification",
         "show_notification_list",
-    }
+    },
 )
 
 CHAT_PRESENTER_HANDLERS = frozenset(
@@ -123,7 +123,7 @@ CHAT_PRESENTER_HANDLERS = frozenset(
         "chat_toggle_message_histories",
         "chat_previous_message",
         "chat_next_message",
-    }
+    },
 )
 
 SYSTEM_INFORMATION_PRESENTER_HANDLERS = frozenset(
@@ -132,37 +132,37 @@ SYSTEM_INFORMATION_PRESENTER_HANDLERS = frozenset(
         "presentDateHandler",
         "present_battery_status",
         "present_cpu_and_memory_usage",
-    }
+    },
 )
 
 LEARN_MODE_PRESENTER_HANDLERS = frozenset(
     {
         "enterLearnModeHandler",
-    }
+    },
 )
 
 ACTION_PRESENTER_HANDLERS = frozenset(
     {
         "show_actions_list",
-    }
+    },
 )
 
 MOUSE_REVIEW_HANDLERS = frozenset(
     {
         "toggleMouseReviewHandler",
-    }
+    },
 )
 
 SLEEP_MODE_MANAGER_HANDLERS = frozenset(
     {
         "toggle_sleep_mode",
-    }
+    },
 )
 
 BYPASS_MODE_MANAGER_HANDLERS = frozenset(
     {
         "bypass_mode_toggle",
-    }
+    },
 )
 
 DEBUGGING_TOOLS_MANAGER_HANDLERS = frozenset(
@@ -170,19 +170,19 @@ DEBUGGING_TOOLS_MANAGER_HANDLERS = frozenset(
         "cycleDebugLevelHandler",
         "clear_atspi_app_cache",
         "capture_snapshot",
-    }
+    },
 )
 
 CLIPBOARD_HANDLERS = frozenset(
     {
         "present_clipboard_contents",
-    }
+    },
 )
 
 TYPING_ECHO_PRESENTER_HANDLERS = frozenset(
     {
         "cycleKeyEchoHandler",
-    }
+    },
 )
 
 CARET_NAVIGATOR_HANDLERS = frozenset(
@@ -199,7 +199,7 @@ CARET_NAVIGATOR_HANDLERS = frozenset(
         "start_of_line",
         "toggle_enabled",
         "toggle_layout_mode",
-    }
+    },
 )
 
 STRUCTURAL_NAVIGATOR_HANDLERS = frozenset(
@@ -290,7 +290,7 @@ STRUCTURAL_NAVIGATOR_HANDLERS = frozenset(
         "previous_unvisited_link",
         "previous_visited_link",
         "structural_navigator_mode_cycle",
-    }
+    },
 )
 
 TABLE_NAVIGATOR_HANDLERS = frozenset(
@@ -310,7 +310,7 @@ TABLE_NAVIGATOR_HANDLERS = frozenset(
         "table_cell_top_of_column",
         "table_cell_up",
         "table_navigator_toggle_enabled",
-    }
+    },
 )
 
 OBJECT_NAVIGATOR_HANDLERS = frozenset(
@@ -321,13 +321,13 @@ OBJECT_NAVIGATOR_HANDLERS = frozenset(
         "object_navigator_previous",
         "object_navigator_toggle_simplify",
         "object_navigator_up",
-    }
+    },
 )
 
 SAY_ALL_PRESENTER_HANDLERS = frozenset(
     {
         "sayAllHandler",
-    }
+    },
 )
 
 SPEECH_MANAGER_HANDLERS = frozenset(
@@ -342,7 +342,7 @@ SPEECH_MANAGER_HANDLERS = frozenset(
         "increaseSpeechRateHandler",
         "increaseSpeechVolumeHandler",
         "toggleSilenceSpeechHandler",
-    }
+    },
 )
 
 SPEECH_PRESENTER_HANDLERS = frozenset(
@@ -351,7 +351,7 @@ SPEECH_PRESENTER_HANDLERS = frozenset(
         "toggleSpeakingIndentationJustificationHandler",
         "toggleSpeechVerbosityHandler",
         "toggleTableCellReadModeHandler",
-    }
+    },
 )
 
 # Script handlers - these will eventually move to presenter/manager modules
@@ -371,7 +371,7 @@ DEFAULT_SCRIPT_HANDLERS = frozenset(
         "rightClickReviewItemHandler",
         "routePointerToItemHandler",
         "shutdownHandler",
-    }
+    },
 )
 
 DOCUMENT_PRESENTER_HANDLERS = frozenset(
@@ -379,7 +379,7 @@ DOCUMENT_PRESENTER_HANDLERS = frozenset(
         "enable_sticky_browse_mode",
         "enable_sticky_focus_mode",
         "toggle_presentation_mode",
-    }
+    },
 )
 
 # Total expected command count for verification
@@ -512,7 +512,8 @@ class TestCommandRegistry:
 
     # pylint: disable-next=too-many-statements
     def _setup_structural_navigator_dependencies(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> dict[str, MagicMock]:
         """Sets up dependencies for structural navigator testing."""
 
@@ -677,8 +678,8 @@ class TestCommandRegistry:
         """Test that all flat review presenter handlers are registered in CommandManager."""
 
         self._setup_dependencies(test_context)
-        from orca.flat_review_presenter import get_presenter
         from orca import command_manager
+        from orca.flat_review_presenter import get_presenter
 
         presenter = get_presenter()
         presenter.set_up_commands()
@@ -695,8 +696,8 @@ class TestCommandRegistry:
         """Test that all flat review finder handlers are registered in CommandManager."""
 
         self._setup_dependencies(test_context)
-        from orca.flat_review_finder import get_finder
         from orca import command_manager
+        from orca.flat_review_finder import get_finder
 
         finder = get_finder()
         finder.set_up_commands()
@@ -713,8 +714,8 @@ class TestCommandRegistry:
         """Test that all where am I presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
-        from orca.where_am_i_presenter import get_presenter
         from orca import command_manager
+        from orca.where_am_i_presenter import get_presenter
 
         presenter = get_presenter()
         presenter.set_up_commands()
@@ -731,8 +732,8 @@ class TestCommandRegistry:
         """Test that all notification presenter commands are registered with CommandManager."""
 
         self._setup_dependencies(test_context)
-        from orca.notification_presenter import get_presenter
         from orca import command_manager
+        from orca.notification_presenter import get_presenter
 
         presenter = get_presenter()
         presenter.set_up_commands()
@@ -747,13 +748,14 @@ class TestCommandRegistry:
         assert not missing, f"Missing commands in notification_presenter: {missing}"
 
     def test_system_information_presenter_handlers_exist(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test that all system info presenter commands are registered with CommandManager."""
 
         self._setup_dependencies(test_context)
-        from orca.system_information_presenter import get_presenter
         from orca import command_manager
+        from orca.system_information_presenter import get_presenter
 
         presenter = get_presenter()
         presenter.set_up_commands()
@@ -771,8 +773,8 @@ class TestCommandRegistry:
         """Test that all sleep mode manager commands are registered with CommandManager."""
 
         self._setup_dependencies(test_context)
-        from orca.sleep_mode_manager import get_manager
         from orca import command_manager
+        from orca.sleep_mode_manager import get_manager
 
         manager = get_manager()
         manager.set_up_commands()
@@ -790,8 +792,8 @@ class TestCommandRegistry:
         """Test that all live region presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
-        from orca.live_region_presenter import get_presenter
         from orca import command_manager
+        from orca.live_region_presenter import get_presenter
 
         presenter = get_presenter()
         presenter.set_up_commands()
@@ -808,8 +810,8 @@ class TestCommandRegistry:
         """Test that all chat presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
-        from orca.chat_presenter import get_presenter
         from orca import command_manager
+        from orca.chat_presenter import get_presenter
 
         presenter = get_presenter()
         presenter.set_up_commands()
@@ -826,8 +828,8 @@ class TestCommandRegistry:
         """Test that all learn mode presenter commands are registered with CommandManager."""
 
         self._setup_dependencies(test_context)
-        from orca.learn_mode_presenter import get_presenter
         from orca import command_manager
+        from orca.learn_mode_presenter import get_presenter
 
         presenter = get_presenter()
         presenter.set_up_commands()
@@ -845,8 +847,8 @@ class TestCommandRegistry:
         """Test that all action presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
-        from orca.action_presenter import get_presenter
         from orca import command_manager
+        from orca.action_presenter import get_presenter
 
         presenter = get_presenter()
         presenter.set_up_commands()
@@ -863,8 +865,8 @@ class TestCommandRegistry:
         """Test that all debugging tools manager handlers are registered."""
 
         self._setup_dependencies(test_context)
-        from orca.debugging_tools_manager import get_manager
         from orca import command_manager
+        from orca.debugging_tools_manager import get_manager
 
         manager = get_manager()
         manager.set_up_commands()
@@ -881,8 +883,8 @@ class TestCommandRegistry:
         """Test that all bypass mode manager commands are registered with CommandManager."""
 
         self._setup_dependencies(test_context)
-        from orca.bypass_mode_manager import get_manager
         from orca import command_manager
+        from orca.bypass_mode_manager import get_manager
 
         manager = get_manager()
         manager.set_up_commands()
@@ -900,8 +902,8 @@ class TestCommandRegistry:
         """Test that all mouse review handlers are registered."""
 
         self._setup_dependencies(test_context)
-        from orca.mouse_review import get_reviewer
         from orca import command_manager
+        from orca.mouse_review import get_reviewer
 
         reviewer = get_reviewer()
         reviewer.set_up_commands()
@@ -916,8 +918,8 @@ class TestCommandRegistry:
         """Test that all typing echo presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
-        from orca.typing_echo_presenter import get_presenter
         from orca import command_manager
+        from orca.typing_echo_presenter import get_presenter
 
         presenter = get_presenter()
         presenter.set_up_commands()
@@ -934,8 +936,8 @@ class TestCommandRegistry:
         """Test that all clipboard handlers are registered."""
 
         self._setup_dependencies(test_context)
-        from orca.clipboard import get_presenter
         from orca import command_manager
+        from orca.clipboard import get_presenter
 
         presenter = get_presenter()
         presenter.set_up_commands()
@@ -955,8 +957,8 @@ class TestCommandRegistry:
         """
 
         self._setup_structural_navigator_dependencies(test_context)
-        from orca.caret_navigator import get_navigator
         from orca import command_manager
+        from orca.caret_navigator import get_navigator
 
         navigator = get_navigator()
         navigator.set_up_commands()
@@ -972,8 +974,8 @@ class TestCommandRegistry:
         """Test that all structural navigator handlers are registered in CommandManager."""
 
         self._setup_structural_navigator_dependencies(test_context)
-        from orca.structural_navigator import get_navigator
         from orca import command_manager
+        from orca.structural_navigator import get_navigator
 
         navigator = get_navigator()
         navigator.set_up_commands()
@@ -990,8 +992,8 @@ class TestCommandRegistry:
         """Test that all table navigator handlers are registered in CommandManager."""
 
         self._setup_dependencies(test_context)
-        from orca.table_navigator import get_navigator
         from orca import command_manager
+        from orca.table_navigator import get_navigator
 
         navigator = get_navigator()
         navigator.set_up_commands()
@@ -1008,8 +1010,8 @@ class TestCommandRegistry:
         """Test that all object navigator handlers are registered in CommandManager."""
 
         self._setup_dependencies(test_context)
-        from orca.object_navigator import get_navigator
         from orca import command_manager
+        from orca.object_navigator import get_navigator
 
         navigator = get_navigator()
         navigator.set_up_commands()
@@ -1026,8 +1028,8 @@ class TestCommandRegistry:
         """Test that all say all presenter handlers are registered."""
 
         self._setup_structural_navigator_dependencies(test_context)
-        from orca.say_all_presenter import get_presenter
         from orca import command_manager
+        from orca.say_all_presenter import get_presenter
 
         presenter = get_presenter()
         presenter.set_up_commands()
@@ -1044,8 +1046,8 @@ class TestCommandRegistry:
         """Test that all speech manager handlers are registered in CommandManager."""
 
         self._setup_speech_dependencies(test_context)
-        from orca.speech_manager import get_manager
         from orca import command_manager
+        from orca.speech_manager import get_manager
 
         manager = get_manager()
         manager.set_up_commands()
@@ -1062,8 +1064,8 @@ class TestCommandRegistry:
         """Test that all speech presenter handlers are registered in CommandManager."""
 
         self._setup_speech_dependencies(test_context)
-        from orca.speech_presenter import get_presenter
         from orca import command_manager
+        from orca.speech_presenter import get_presenter
 
         presenter = get_presenter()
         presenter.set_up_commands()
@@ -1080,8 +1082,8 @@ class TestCommandRegistry:
         """Test that all document presenter handlers are registered."""
 
         self._setup_structural_navigator_dependencies(test_context)
-        from orca.document_presenter import get_presenter
         from orca import command_manager
+        from orca.document_presenter import get_presenter
 
         presenter = get_presenter()
         presenter.set_up_commands()

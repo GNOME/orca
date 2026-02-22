@@ -22,7 +22,7 @@
 so that we can present them in the correct language when users change the
 language on the fly without having to reload a bunch of modules."""
 
-from .orca_i18n import _, C_  # pylint: disable=import-error
+from .orca_i18n import C_, _  # pylint: disable=import-error
 
 # Translators: this is the action name for the 'toggle' action. It must be the
 # same string used in the *.po file for gail.

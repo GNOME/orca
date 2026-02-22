@@ -24,11 +24,9 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
-from orca import debug
-from orca import script_utilities
+from orca import debug, script_utilities
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
@@ -48,7 +46,9 @@ class Utilities(script_utilities.Utilities):
         return AXUtilities.is_application(AXObject.get_parent(obj))
 
     def top_level_object(
-        self, obj: Atspi.Accessible, use_fallback_search: bool = False
+        self,
+        obj: Atspi.Accessible,
+        use_fallback_search: bool = False,
     ) -> Atspi.Accessible | None:
         """Returns the top level object for obj."""
 
@@ -63,7 +63,8 @@ class Utilities(script_utilities.Utilities):
         return result
 
     def frame_and_dialog(
-        self, obj: Atspi.Accessible | None = None
+        self,
+        obj: Atspi.Accessible | None = None,
     ) -> list[Atspi.Accessible | None]:
         """Returns the frame and (possibly) the dialog containing obj."""
 

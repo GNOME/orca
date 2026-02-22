@@ -27,11 +27,9 @@ import gi
 
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gtk", "3.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
-from . import ax_device_manager
-from . import debug
+from . import ax_device_manager, debug
 from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -51,7 +49,9 @@ class AXEventSynthesizer:
 
     @staticmethod
     def _is_scrolled_off_screen(
-        obj: Atspi.Accessible, offset: int | None = None, ancestor: Atspi.Accessible | None = None
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+        ancestor: Atspi.Accessible | None = None,
     ) -> bool:
         """Returns true if obj, or the caret offset therein, is scrolled off-screen."""
 
@@ -93,7 +93,10 @@ class AXEventSynthesizer:
 
     @staticmethod
     def _generate_mouse_event(
-        obj: Atspi.Accessible, relative_x: int, relative_y: int, event: str
+        obj: Atspi.Accessible,
+        relative_x: int,
+        relative_y: int,
+        event: str,
     ) -> bool:
         tokens = [
             "AXEventSynthesizer: Attempting to generate mouse event on",
@@ -237,17 +240,24 @@ class AXEventSynthesizer:
 
     @staticmethod
     def scroll_into_view(
-        obj: Atspi.Accessible, start_offset: int | None = None, end_offset: int | None = None
+        obj: Atspi.Accessible,
+        start_offset: int | None = None,
+        end_offset: int | None = None,
     ) -> None:
         """Attempts to scroll obj into view."""
 
         AXEventSynthesizer._scroll_to_location(
-            obj, Atspi.ScrollType.ANYWHERE, start_offset, end_offset
+            obj,
+            Atspi.ScrollType.ANYWHERE,
+            start_offset,
+            end_offset,
         )
 
     @staticmethod
     def scroll_to_center(
-        obj: Atspi.Accessible, start_offset: int | None = None, end_offset: int | None = None
+        obj: Atspi.Accessible,
+        start_offset: int | None = None,
+        end_offset: int | None = None,
     ) -> None:
         """Attempts to scroll obj to the center of its window."""
 
@@ -264,62 +274,92 @@ class AXEventSynthesizer:
 
     @staticmethod
     def scroll_to_top_edge(
-        obj: Atspi.Accessible, start_offset: int | None = None, end_offset: int | None = None
+        obj: Atspi.Accessible,
+        start_offset: int | None = None,
+        end_offset: int | None = None,
     ) -> None:
         """Attempts to scroll obj to the top edge."""
 
         AXEventSynthesizer._scroll_to_location(
-            obj, Atspi.ScrollType.TOP_EDGE, start_offset, end_offset
+            obj,
+            Atspi.ScrollType.TOP_EDGE,
+            start_offset,
+            end_offset,
         )
 
     @staticmethod
     def scroll_to_top_left(
-        obj: Atspi.Accessible, start_offset: int | None = None, end_offset: int | None = None
+        obj: Atspi.Accessible,
+        start_offset: int | None = None,
+        end_offset: int | None = None,
     ) -> None:
         """Attempts to scroll obj to the top left."""
 
         AXEventSynthesizer._scroll_to_location(
-            obj, Atspi.ScrollType.TOP_LEFT, start_offset, end_offset
+            obj,
+            Atspi.ScrollType.TOP_LEFT,
+            start_offset,
+            end_offset,
         )
 
     @staticmethod
     def scroll_to_left_edge(
-        obj: Atspi.Accessible, start_offset: int | None = None, end_offset: int | None = None
+        obj: Atspi.Accessible,
+        start_offset: int | None = None,
+        end_offset: int | None = None,
     ) -> None:
         """Attempts to scroll obj to the left edge."""
 
         AXEventSynthesizer._scroll_to_location(
-            obj, Atspi.ScrollType.LEFT_EDGE, start_offset, end_offset
+            obj,
+            Atspi.ScrollType.LEFT_EDGE,
+            start_offset,
+            end_offset,
         )
 
     @staticmethod
     def scroll_to_bottom_edge(
-        obj: Atspi.Accessible, start_offset: int | None = None, end_offset: int | None = None
+        obj: Atspi.Accessible,
+        start_offset: int | None = None,
+        end_offset: int | None = None,
     ) -> None:
         """Attempts to scroll obj to the bottom edge."""
 
         AXEventSynthesizer._scroll_to_location(
-            obj, Atspi.ScrollType.BOTTOM_EDGE, start_offset, end_offset
+            obj,
+            Atspi.ScrollType.BOTTOM_EDGE,
+            start_offset,
+            end_offset,
         )
 
     @staticmethod
     def scroll_to_bottom_right(
-        obj: Atspi.Accessible, start_offset: int | None = None, end_offset: int | None = None
+        obj: Atspi.Accessible,
+        start_offset: int | None = None,
+        end_offset: int | None = None,
     ) -> None:
         """Attempts to scroll obj to the bottom right."""
 
         AXEventSynthesizer._scroll_to_location(
-            obj, Atspi.ScrollType.BOTTOM_RIGHT, start_offset, end_offset
+            obj,
+            Atspi.ScrollType.BOTTOM_RIGHT,
+            start_offset,
+            end_offset,
         )
 
     @staticmethod
     def scroll_to_right_edge(
-        obj: Atspi.Accessible, start_offset: int | None = None, end_offset: int | None = None
+        obj: Atspi.Accessible,
+        start_offset: int | None = None,
+        end_offset: int | None = None,
     ) -> None:
         """Attempts to scroll obj to the right edge."""
 
         AXEventSynthesizer._scroll_to_location(
-            obj, Atspi.ScrollType.RIGHT_EDGE, start_offset, end_offset
+            obj,
+            Atspi.ScrollType.RIGHT_EDGE,
+            start_offset,
+            end_offset,
         )
 
     @staticmethod
@@ -333,7 +373,7 @@ class AXEventSynthesizer:
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
 
-        if debug.LEVEL_INFO < debug.debugLevel:
+        if debug.debugLevel > debug.LEVEL_INFO:
             return False
 
         tokens = [

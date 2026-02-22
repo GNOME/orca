@@ -41,8 +41,9 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -173,10 +174,11 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
-        from orca.table_navigator import TableNavigator
         from orca import command_manager
+        from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
         assert navigator._previous_reported_row is None
@@ -202,7 +204,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
@@ -219,18 +222,19 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
-        from orca.table_navigator import TableNavigator
-
         from orca import gsettings_registry
+        from orca.table_navigator import TableNavigator
 
         gsettings_registry.get_registry().set_runtime_value("table-navigation", "enabled", False)
         navigator = TableNavigator()
         assert navigator.get_is_enabled() is False
 
     def test_last_input_event_was_navigation_command_none(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test last_input_event_was_navigation_command with None event returns False."""
 
@@ -241,7 +245,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_manager = test_context.Mock()
         essential_modules["orca.input_event_manager"].get_manager.return_value = mock_manager
@@ -254,7 +259,8 @@ class TestTableNavigator:
         mock_manager.last_event_equals_or_is_release_for_event.assert_not_called()
 
     def test_last_input_event_was_navigation_command_with_event(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test last_input_event_was_navigation_command with event returns True when matching."""
 
@@ -265,7 +271,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_manager = test_context.Mock()
         essential_modules["orca.input_event_manager"].get_manager.return_value = mock_manager
@@ -303,7 +310,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_cmd_mgr = test_context.Mock()
         essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
@@ -336,7 +344,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_cmd_mgr = test_context.Mock()
         essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
@@ -382,7 +391,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_cmd_mgr = test_context.Mock()
         essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
@@ -411,27 +421,38 @@ class TestTableNavigator:
         ],
     )
     def test_is_blank(
-        self, test_context, is_focusable, has_name, has_children, is_whitespace, expected_result
+        self,
+        test_context,
+        is_focusable,
+        has_name,
+        has_children,
+        is_whitespace,
+        expected_result,
     ) -> None:
         """Test _is_blank correctly identifies blank objects based on various criteria."""
 
         essential_modules = self._setup_dependencies(test_context)
         test_context.patch(
-            "orca.table_navigator.AXUtilities.is_focusable", return_value=is_focusable
+            "orca.table_navigator.AXUtilities.is_focusable",
+            return_value=is_focusable,
         )
         test_context.patch(
-            "orca.table_navigator.AXObject.get_name", return_value="name" if has_name else ""
+            "orca.table_navigator.AXObject.get_name",
+            return_value="name" if has_name else "",
         )
         test_context.patch(
-            "orca.table_navigator.AXObject.get_child_count", return_value=1 if has_children else 0
+            "orca.table_navigator.AXObject.get_child_count",
+            return_value=1 if has_children else 0,
         )
         test_context.patch(
-            "orca.table_navigator.AXText.is_whitespace_or_empty", return_value=is_whitespace
+            "orca.table_navigator.AXText.is_whitespace_or_empty",
+            return_value=is_whitespace,
         )
         if has_children:
             mock_child = test_context.Mock()
             test_context.patch(
-                "orca.table_navigator.AXObject.iter_children", return_value=[mock_child]
+                "orca.table_navigator.AXObject.iter_children",
+                return_value=[mock_child],
             )
             # For the recursive call on child, configure mock to handle both expected cases
             if expected_result and not is_focusable and not has_name:
@@ -468,7 +489,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
@@ -485,7 +507,8 @@ class TestTableNavigator:
         mock_focus_manager = test_context.Mock()
         mock_focus_manager.get_locus_of_focus.return_value = mock_cell
         test_context.patch(
-            "orca.table_navigator.focus_manager.get_manager", return_value=mock_focus_manager
+            "orca.table_navigator.focus_manager.get_manager",
+            return_value=mock_focus_manager,
         )
         test_context.patch("orca.table_navigator.AXObject.get_parent", return_value=None)
 
@@ -493,7 +516,8 @@ class TestTableNavigator:
             return obj == mock_cell
 
         test_context.patch(
-            "orca.table_navigator.AXUtilities.is_table_cell_or_header", new=mock_is_cell_or_header
+            "orca.table_navigator.AXUtilities.is_table_cell_or_header",
+            new=mock_is_cell_or_header,
         )
         test_context.patch("orca.table_navigator.AXObject.find_ancestor", return_value=None)
         test_context.patch("orca.table_navigator.debug.print_tokens", return_value=None)
@@ -503,7 +527,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
@@ -529,7 +554,8 @@ class TestTableNavigator:
             return obj in [mock_inner_cell, mock_parent_cell]
 
         test_context.patch(
-            "orca.table_navigator.AXUtilities.is_table_cell_or_header", new=mock_is_table_cell
+            "orca.table_navigator.AXUtilities.is_table_cell_or_header",
+            new=mock_is_table_cell,
         )
         mock_controller = test_context.Mock()
         essential_modules["orca.dbus_service"].get_remote_controller.return_value = mock_controller
@@ -537,7 +563,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
@@ -559,7 +586,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
@@ -586,7 +614,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
@@ -600,13 +629,25 @@ class TestTableNavigator:
         "direction, boundary_check, boundary_message, get_next_cell_method",
         [
             pytest.param(
-                "left", "is_start_of_row", "TABLE_ROW_BEGINNING", "get_cell_on_left", id="move_left"
+                "left",
+                "is_start_of_row",
+                "TABLE_ROW_BEGINNING",
+                "get_cell_on_left",
+                id="move_left",
             ),
             pytest.param(
-                "right", "is_end_of_row", "TABLE_ROW_END", "get_cell_on_right", id="move_right"
+                "right",
+                "is_end_of_row",
+                "TABLE_ROW_END",
+                "get_cell_on_right",
+                id="move_right",
             ),
             pytest.param(
-                "up", "is_top_of_column", "TABLE_COLUMN_TOP", "get_cell_above", id="move_up"
+                "up",
+                "is_top_of_column",
+                "TABLE_COLUMN_TOP",
+                "get_cell_above",
+                id="move_up",
             ),
             pytest.param(
                 "down",
@@ -634,7 +675,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
@@ -644,35 +686,36 @@ class TestTableNavigator:
         move_method = getattr(navigator, f"move_{direction}")
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
 
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
+        navigator._get_current_cell = test_context.Mock(return_value=None)
         pres_manager.present_message.reset_mock()
         result = move_method(mock_script, mock_event)
         assert result is True
         pres_manager.present_message.assert_called_with(
-            essential_modules["orca.messages"].TABLE_NOT_IN_A
+            essential_modules["orca.messages"].TABLE_NOT_IN_A,
         )
         assert navigator._last_input_event == mock_event
 
         mock_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch(f"orca.table_navigator.AXTable.{boundary_check}", return_value=True)
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_cell))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_cell)
         pres_manager.present_message.reset_mock()
         result = move_method(mock_script, mock_event)
         assert result is True
         pres_manager.present_message.assert_called_with(
-            getattr(essential_modules["orca.messages"], boundary_message)
+            getattr(essential_modules["orca.messages"], boundary_message),
         )
 
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_next_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch(f"orca.table_navigator.AXTable.{boundary_check}", return_value=False)
         test_context.patch(
-            f"orca.table_navigator.AXTable.{get_next_cell_method}", return_value=mock_next_cell
+            f"orca.table_navigator.AXTable.{get_next_cell_method}",
+            return_value=mock_next_cell,
         )
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
-        setattr(navigator, "_get_cell_coordinates", test_context.Mock(return_value=(1, 2)))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_current_cell)
+        navigator._get_cell_coordinates = test_context.Mock(return_value=(1, 2))
         mock_present_cell = test_context.Mock()
-        setattr(navigator, "_present_cell", mock_present_cell)
+        navigator._present_cell = mock_present_cell
         mock_script.reset_mock()
         result = move_method(mock_script, mock_event)
         assert result is True
@@ -693,27 +736,34 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_left_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch("orca.table_navigator.AXTable.is_start_of_row", return_value=False)
         test_context.patch(
-            "orca.table_navigator.AXTable.get_cell_on_left", return_value=mock_left_cell
+            "orca.table_navigator.AXTable.get_cell_on_left",
+            return_value=mock_left_cell,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
-        setattr(navigator, "_get_cell_coordinates", test_context.Mock(return_value=(1, 2)))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_current_cell)
+        navigator._get_cell_coordinates = test_context.Mock(return_value=(1, 2))
         mock_present_cell = test_context.Mock()
-        setattr(navigator, "_present_cell", mock_present_cell)
+        navigator._present_cell = mock_present_cell
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         result = navigator.move_left(mock_script, mock_event)
         assert result is True
         mock_present_cell.assert_called_once_with(
-            mock_script, mock_left_cell, 1, 1, mock_current_cell, True
+            mock_script,
+            mock_left_cell,
+            1,
+            1,
+            mock_current_cell,
+            True,
         )
 
     def test_move_right_successful(self, test_context: OrcaTestContext) -> None:
@@ -726,27 +776,34 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_right_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch("orca.table_navigator.AXTable.is_end_of_row", return_value=False)
         test_context.patch(
-            "orca.table_navigator.AXTable.get_cell_on_right", return_value=mock_right_cell
+            "orca.table_navigator.AXTable.get_cell_on_right",
+            return_value=mock_right_cell,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
-        setattr(navigator, "_get_cell_coordinates", test_context.Mock(return_value=(1, 2)))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_current_cell)
+        navigator._get_cell_coordinates = test_context.Mock(return_value=(1, 2))
         mock_present_cell = test_context.Mock()
-        setattr(navigator, "_present_cell", mock_present_cell)
+        navigator._present_cell = mock_present_cell
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         result = navigator.move_right(mock_script, mock_event)
         assert result is True
         mock_present_cell.assert_called_once_with(
-            mock_script, mock_right_cell, 1, 3, mock_current_cell, True
+            mock_script,
+            mock_right_cell,
+            1,
+            3,
+            mock_current_cell,
+            True,
         )
 
     def test_move_up_not_in_table(self, test_context: OrcaTestContext) -> None:
@@ -759,12 +816,13 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
+        navigator._get_current_cell = test_context.Mock(return_value=None)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -772,7 +830,7 @@ class TestTableNavigator:
         result = navigator.move_up(mock_script, mock_event)
         assert result is True
         pres_manager.present_message.assert_called_once_with(
-            essential_modules["orca.messages"].TABLE_NOT_IN_A
+            essential_modules["orca.messages"].TABLE_NOT_IN_A,
         )
         assert navigator._last_input_event == mock_event
 
@@ -786,14 +844,15 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch("orca.table_navigator.AXTable.is_top_of_column", return_value=True)
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_cell))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_cell)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -801,7 +860,7 @@ class TestTableNavigator:
         result = navigator.move_up(mock_script, mock_event)
         assert result is True
         pres_manager.present_message.assert_called_once_with(
-            essential_modules["orca.messages"].TABLE_COLUMN_TOP
+            essential_modules["orca.messages"].TABLE_COLUMN_TOP,
         )
 
     def test_move_up_successful(self, test_context: OrcaTestContext) -> None:
@@ -814,7 +873,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_up_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -823,16 +883,21 @@ class TestTableNavigator:
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
-        setattr(navigator, "_get_cell_coordinates", test_context.Mock(return_value=(2, 1)))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_current_cell)
+        navigator._get_cell_coordinates = test_context.Mock(return_value=(2, 1))
         mock_present_cell = test_context.Mock()
-        setattr(navigator, "_present_cell", mock_present_cell)
+        navigator._present_cell = mock_present_cell
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         result = navigator.move_up(mock_script, mock_event)
         assert result is True
         mock_present_cell.assert_called_once_with(
-            mock_script, mock_up_cell, 1, 1, mock_current_cell, True
+            mock_script,
+            mock_up_cell,
+            1,
+            1,
+            mock_current_cell,
+            True,
         )
 
     def test_move_down_successful(self, test_context: OrcaTestContext) -> None:
@@ -845,27 +910,34 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_down_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch("orca.table_navigator.AXTable.is_bottom_of_column", return_value=False)
         test_context.patch(
-            "orca.table_navigator.AXTable.get_cell_below", return_value=mock_down_cell
+            "orca.table_navigator.AXTable.get_cell_below",
+            return_value=mock_down_cell,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
-        setattr(navigator, "_get_cell_coordinates", test_context.Mock(return_value=(1, 1)))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_current_cell)
+        navigator._get_cell_coordinates = test_context.Mock(return_value=(1, 1))
         mock_present_cell = test_context.Mock()
-        setattr(navigator, "_present_cell", mock_present_cell)
+        navigator._present_cell = mock_present_cell
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         result = navigator.move_down(mock_script, mock_event)
         assert result is True
         mock_present_cell.assert_called_once_with(
-            mock_script, mock_down_cell, 2, 1, mock_current_cell, True
+            mock_script,
+            mock_down_cell,
+            2,
+            1,
+            mock_current_cell,
+            True,
         )
 
     def test_move_to_first_cell_not_in_table(self, test_context: OrcaTestContext) -> None:
@@ -878,12 +950,13 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
+        navigator._get_current_cell = test_context.Mock(return_value=None)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -891,7 +964,7 @@ class TestTableNavigator:
         result = navigator.move_to_first_cell(mock_script, mock_event)
         assert result is True
         pres_manager.present_message.assert_called_once_with(
-            essential_modules["orca.messages"].TABLE_NOT_IN_A
+            essential_modules["orca.messages"].TABLE_NOT_IN_A,
         )
 
     def test_move_to_first_cell_successful(self, test_context: OrcaTestContext) -> None:
@@ -904,27 +977,34 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_table = test_context.Mock(spec=Atspi.Accessible)
         mock_first_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch("orca.table_navigator.AXTable.get_table", return_value=mock_table)
         test_context.patch(
-            "orca.table_navigator.AXTable.get_first_cell", return_value=mock_first_cell
+            "orca.table_navigator.AXTable.get_first_cell",
+            return_value=mock_first_cell,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_current_cell)
         mock_present_cell = test_context.Mock()
-        setattr(navigator, "_present_cell", mock_present_cell)
+        navigator._present_cell = mock_present_cell
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         result = navigator.move_to_first_cell(mock_script, mock_event)
         assert result is True
         mock_present_cell.assert_called_once_with(
-            mock_script, mock_first_cell, 0, 0, mock_current_cell, True
+            mock_script,
+            mock_first_cell,
+            0,
+            0,
+            mock_current_cell,
+            True,
         )
 
     def test_present_cell_not_cell_or_header(self, test_context: OrcaTestContext) -> None:
@@ -932,7 +1012,8 @@ class TestTableNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         test_context.patch(
-            "orca.table_navigator.AXUtilities.is_table_cell_or_header", return_value=False
+            "orca.table_navigator.AXUtilities.is_table_cell_or_header",
+            return_value=False,
         )
         mock_controller = test_context.Mock()
         essential_modules["orca.dbus_service"].get_remote_controller.return_value = mock_controller
@@ -940,7 +1021,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
@@ -957,7 +1039,8 @@ class TestTableNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         test_context.patch(
-            "orca.table_navigator.AXUtilities.is_table_cell_or_header", return_value=True
+            "orca.table_navigator.AXUtilities.is_table_cell_or_header",
+            return_value=True,
         )
         test_context.patch("orca.table_navigator.AXObject.grab_focus", return_value=None)
         test_context.patch("orca.table_navigator.AXObject.find_descendant", return_value=None)
@@ -971,7 +1054,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
 
         from orca import gsettings_registry
@@ -993,7 +1077,10 @@ class TestTableNavigator:
         assert navigator._previous_reported_col == 2
         mock_focus_manager.set_locus_of_focus.assert_called()
         mock_script.present_object.assert_called_once_with(
-            mock_cell, offset=0, priorObj=mock_previous_cell, interrupt=True
+            mock_cell,
+            offset=0,
+            priorObj=mock_previous_cell,
+            interrupt=True,
         )
 
     def test_get_navigator(self, test_context: OrcaTestContext) -> None:
@@ -1006,7 +1093,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca import table_navigator
 
@@ -1024,7 +1112,8 @@ class TestTableNavigator:
         mock_focus_manager = test_context.Mock()
         mock_focus_manager.get_locus_of_focus.return_value = mock_initial_cell
         test_context.patch(
-            "orca.table_navigator.focus_manager.get_manager", return_value=mock_focus_manager
+            "orca.table_navigator.focus_manager.get_manager",
+            return_value=mock_focus_manager,
         )
         test_context.patch("orca.table_navigator.AXObject.get_parent", return_value=None)
 
@@ -1032,10 +1121,12 @@ class TestTableNavigator:
             return obj == mock_ancestor_cell
 
         test_context.patch(
-            "orca.table_navigator.AXUtilities.is_table_cell_or_header", new=mock_is_cell_or_header
+            "orca.table_navigator.AXUtilities.is_table_cell_or_header",
+            new=mock_is_cell_or_header,
         )
         test_context.patch(
-            "orca.table_navigator.AXObject.find_ancestor", return_value=mock_ancestor_cell
+            "orca.table_navigator.AXObject.find_ancestor",
+            return_value=mock_ancestor_cell,
         )
         test_context.patch("orca.table_navigator.debug.print_tokens", return_value=None)
         mock_controller = test_context.Mock()
@@ -1044,7 +1135,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
@@ -1060,7 +1152,9 @@ class TestTableNavigator:
         from orca import gsettings_registry
 
         gsettings_registry.get_registry().set_runtime_value(
-            "table-navigation", "skip-blank-cells", True
+            "table-navigation",
+            "skip-blank-cells",
+            True,
         )
         mock_script = test_context.Mock()
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -1082,7 +1176,8 @@ class TestTableNavigator:
             return None
 
         test_context.patch(
-            "orca.table_navigator.AXTable.get_cell_on_left", new=mock_get_cell_on_left
+            "orca.table_navigator.AXTable.get_cell_on_left",
+            new=mock_get_cell_on_left,
         )
 
         def mock_is_blank(cell):
@@ -1096,12 +1191,13 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_is_blank", mock_is_blank)
+        navigator._is_blank = mock_is_blank
         result = navigator.move_left(mock_script, mock_current_cell)
         assert result is True
 
@@ -1119,11 +1215,13 @@ class TestTableNavigator:
         mock_focus_manager = test_context.Mock()
         mock_focus_manager.get_locus_of_focus.return_value = mock_current_cell
         test_context.patch(
-            "orca.table_navigator.focus_manager.get_manager", return_value=mock_focus_manager
+            "orca.table_navigator.focus_manager.get_manager",
+            return_value=mock_focus_manager,
         )
         test_context.patch("orca.table_navigator.AXObject.get_parent", return_value=None)
         test_context.patch(
-            "orca.table_navigator.AXUtilities.is_table_cell_or_header", return_value=True
+            "orca.table_navigator.AXUtilities.is_table_cell_or_header",
+            return_value=True,
         )
         test_context.patch("orca.table_navigator.AXObject.find_ancestor", return_value=None)
         mock_controller = test_context.Mock()
@@ -1132,7 +1230,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
@@ -1154,12 +1253,13 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
+        navigator._get_current_cell = test_context.Mock(return_value=None)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -1167,7 +1267,7 @@ class TestTableNavigator:
         result = navigator.move_to_last_cell(mock_script, mock_event)
         assert result is True
         pres_manager.present_message.assert_called_once_with(
-            essential_modules["orca.messages"].TABLE_NOT_IN_A
+            essential_modules["orca.messages"].TABLE_NOT_IN_A,
         )
         assert navigator._last_input_event == mock_event
 
@@ -1181,29 +1281,36 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_table = test_context.Mock(spec=Atspi.Accessible)
         mock_last_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch("orca.table_navigator.AXTable.get_table", return_value=mock_table)
         test_context.patch(
-            "orca.table_navigator.AXTable.get_last_cell", return_value=mock_last_cell
+            "orca.table_navigator.AXTable.get_last_cell",
+            return_value=mock_last_cell,
         )
         test_context.patch("orca.table_navigator.AXTable.get_row_count", return_value=5)
         test_context.patch("orca.table_navigator.AXTable.get_column_count", return_value=3)
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_current_cell)
         mock_present_cell = test_context.Mock()
-        setattr(navigator, "_present_cell", mock_present_cell)
+        navigator._present_cell = mock_present_cell
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         result = navigator.move_to_last_cell(mock_script, mock_event)
         assert result is True
         mock_present_cell.assert_called_once_with(
-            mock_script, mock_last_cell, 5, 3, mock_current_cell, True
+            mock_script,
+            mock_last_cell,
+            5,
+            3,
+            mock_current_cell,
+            True,
         )
 
     def test_move_to_top_of_column_not_in_table(self, test_context: OrcaTestContext) -> None:
@@ -1216,12 +1323,13 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
+        navigator._get_current_cell = test_context.Mock(return_value=None)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -1229,7 +1337,7 @@ class TestTableNavigator:
         result = navigator.move_to_top_of_column(mock_script, mock_event)
         assert result is True
         pres_manager.present_message.assert_called_once_with(
-            essential_modules["orca.messages"].TABLE_NOT_IN_A
+            essential_modules["orca.messages"].TABLE_NOT_IN_A,
         )
 
     def test_move_to_top_of_column_already_at_top(self, test_context: OrcaTestContext) -> None:
@@ -1242,14 +1350,15 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch("orca.table_navigator.AXTable.is_top_of_column", return_value=True)
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_cell))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_cell)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -1257,7 +1366,7 @@ class TestTableNavigator:
         result = navigator.move_to_top_of_column(mock_script, mock_event)
         assert result is True
         pres_manager.present_message.assert_called_once_with(
-            essential_modules["orca.messages"].TABLE_COLUMN_TOP
+            essential_modules["orca.messages"].TABLE_COLUMN_TOP,
         )
 
     def test_move_to_top_of_column_successful(self, test_context: OrcaTestContext) -> None:
@@ -1270,13 +1379,15 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_top_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch("orca.table_navigator.AXTable.is_top_of_column", return_value=False)
         test_context.patch(
-            "orca.table_navigator.AXTable.get_top_of_column", return_value=mock_top_cell
+            "orca.table_navigator.AXTable.get_top_of_column",
+            return_value=mock_top_cell,
         )
 
         def mock_get_cell_coordinates(cell, prefer_attribute=False):  # pylint: disable=unused-argument
@@ -1287,20 +1398,26 @@ class TestTableNavigator:
             return (0, 0)
 
         test_context.patch(
-            "orca.table_navigator.AXTable.get_cell_coordinates", new=mock_get_cell_coordinates
+            "orca.table_navigator.AXTable.get_cell_coordinates",
+            new=mock_get_cell_coordinates,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_current_cell)
         mock_present_cell = test_context.Mock()
-        setattr(navigator, "_present_cell", mock_present_cell)
+        navigator._present_cell = mock_present_cell
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         result = navigator.move_to_top_of_column(mock_script, mock_event)
         assert result is True
         mock_present_cell.assert_called_once_with(
-            mock_script, mock_top_cell, 3, 1, mock_current_cell, True
+            mock_script,
+            mock_top_cell,
+            3,
+            1,
+            mock_current_cell,
+            True,
         )
 
     def test_move_to_bottom_of_column_not_in_table(self, test_context: OrcaTestContext) -> None:
@@ -1313,12 +1430,13 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
+        navigator._get_current_cell = test_context.Mock(return_value=None)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -1326,11 +1444,12 @@ class TestTableNavigator:
         result = navigator.move_to_bottom_of_column(mock_script, mock_event)
         assert result is True
         pres_manager.present_message.assert_called_once_with(
-            essential_modules["orca.messages"].TABLE_NOT_IN_A
+            essential_modules["orca.messages"].TABLE_NOT_IN_A,
         )
 
     def test_move_to_bottom_of_column_already_at_bottom(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test move_to_bottom_of_column presents column bottom message when already at bottom."""
 
@@ -1341,14 +1460,15 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch("orca.table_navigator.AXTable.is_bottom_of_column", return_value=True)
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_cell))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_cell)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -1356,7 +1476,7 @@ class TestTableNavigator:
         result = navigator.move_to_bottom_of_column(mock_script, mock_event)
         assert result is True
         pres_manager.present_message.assert_called_once_with(
-            essential_modules["orca.messages"].TABLE_COLUMN_BOTTOM
+            essential_modules["orca.messages"].TABLE_COLUMN_BOTTOM,
         )
 
     def test_move_to_bottom_of_column_successful(self, test_context: OrcaTestContext) -> None:
@@ -1369,13 +1489,15 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_bottom_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch("orca.table_navigator.AXTable.is_bottom_of_column", return_value=False)
         test_context.patch(
-            "orca.table_navigator.AXTable.get_bottom_of_column", return_value=mock_bottom_cell
+            "orca.table_navigator.AXTable.get_bottom_of_column",
+            return_value=mock_bottom_cell,
         )
 
         def mock_get_cell_coordinates(cell, prefer_attribute=False):  # pylint: disable=unused-argument
@@ -1386,20 +1508,26 @@ class TestTableNavigator:
             return (0, 0)
 
         test_context.patch(
-            "orca.table_navigator.AXTable.get_cell_coordinates", new=mock_get_cell_coordinates
+            "orca.table_navigator.AXTable.get_cell_coordinates",
+            new=mock_get_cell_coordinates,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_current_cell)
         mock_present_cell = test_context.Mock()
-        setattr(navigator, "_present_cell", mock_present_cell)
+        navigator._present_cell = mock_present_cell
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         result = navigator.move_to_bottom_of_column(mock_script, mock_event)
         assert result is True
         mock_present_cell.assert_called_once_with(
-            mock_script, mock_bottom_cell, 1, 2, mock_current_cell, True
+            mock_script,
+            mock_bottom_cell,
+            1,
+            2,
+            mock_current_cell,
+            True,
         )
 
     def test_move_to_beginning_of_row_not_in_table(self, test_context: OrcaTestContext) -> None:
@@ -1412,12 +1540,13 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
+        navigator._get_current_cell = test_context.Mock(return_value=None)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -1425,7 +1554,7 @@ class TestTableNavigator:
         result = navigator.move_to_beginning_of_row(mock_script, mock_event)
         assert result is True
         pres_manager.present_message.assert_called_once_with(
-            essential_modules["orca.messages"].TABLE_NOT_IN_A
+            essential_modules["orca.messages"].TABLE_NOT_IN_A,
         )
 
     def test_move_to_beginning_of_row_already_at_start(self, test_context: OrcaTestContext) -> None:
@@ -1438,14 +1567,15 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch("orca.table_navigator.AXTable.is_start_of_row", return_value=True)
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_cell))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_cell)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -1453,7 +1583,7 @@ class TestTableNavigator:
         result = navigator.move_to_beginning_of_row(mock_script, mock_event)
         assert result is True
         pres_manager.present_message.assert_called_once_with(
-            essential_modules["orca.messages"].TABLE_ROW_BEGINNING
+            essential_modules["orca.messages"].TABLE_ROW_BEGINNING,
         )
 
     def test_move_to_beginning_of_row_successful(self, test_context: OrcaTestContext) -> None:
@@ -1466,13 +1596,15 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_start_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch("orca.table_navigator.AXTable.is_start_of_row", return_value=False)
         test_context.patch(
-            "orca.table_navigator.AXTable.get_start_of_row", return_value=mock_start_cell
+            "orca.table_navigator.AXTable.get_start_of_row",
+            return_value=mock_start_cell,
         )
 
         def mock_get_cell_coordinates(cell, prefer_attribute=False):  # pylint: disable=unused-argument
@@ -1481,20 +1613,26 @@ class TestTableNavigator:
             return (2, 3)
 
         test_context.patch(
-            "orca.table_navigator.AXTable.get_cell_coordinates", new=mock_get_cell_coordinates
+            "orca.table_navigator.AXTable.get_cell_coordinates",
+            new=mock_get_cell_coordinates,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_current_cell)
         mock_present_cell = test_context.Mock()
-        setattr(navigator, "_present_cell", mock_present_cell)
+        navigator._present_cell = mock_present_cell
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         result = navigator.move_to_beginning_of_row(mock_script, mock_event)
         assert result is True
         mock_present_cell.assert_called_once_with(
-            mock_script, mock_start_cell, 2, 0, mock_current_cell, True
+            mock_script,
+            mock_start_cell,
+            2,
+            0,
+            mock_current_cell,
+            True,
         )
 
     def test_move_to_end_of_row_not_in_table(self, test_context: OrcaTestContext) -> None:
@@ -1507,12 +1645,13 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
+        navigator._get_current_cell = test_context.Mock(return_value=None)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -1520,7 +1659,7 @@ class TestTableNavigator:
         result = navigator.move_to_end_of_row(mock_script, mock_event)
         assert result is True
         pres_manager.present_message.assert_called_once_with(
-            essential_modules["orca.messages"].TABLE_NOT_IN_A
+            essential_modules["orca.messages"].TABLE_NOT_IN_A,
         )
 
     def test_move_to_end_of_row_already_at_end(self, test_context: OrcaTestContext) -> None:
@@ -1533,14 +1672,15 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch("orca.table_navigator.AXTable.is_end_of_row", return_value=True)
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_cell))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_cell)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -1548,7 +1688,7 @@ class TestTableNavigator:
         result = navigator.move_to_end_of_row(mock_script, mock_event)
         assert result is True
         pres_manager.present_message.assert_called_once_with(
-            essential_modules["orca.messages"].TABLE_ROW_END
+            essential_modules["orca.messages"].TABLE_ROW_END,
         )
 
     def test_move_to_end_of_row_successful(self, test_context: OrcaTestContext) -> None:
@@ -1561,13 +1701,15 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_end_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch("orca.table_navigator.AXTable.is_end_of_row", return_value=False)
         test_context.patch(
-            "orca.table_navigator.AXTable.get_end_of_row", return_value=mock_end_cell
+            "orca.table_navigator.AXTable.get_end_of_row",
+            return_value=mock_end_cell,
         )
 
         def mock_get_cell_coordinates(cell, prefer_attribute=False):  # pylint: disable=unused-argument
@@ -1576,24 +1718,31 @@ class TestTableNavigator:
             return (2, 1)
 
         test_context.patch(
-            "orca.table_navigator.AXTable.get_cell_coordinates", new=mock_get_cell_coordinates
+            "orca.table_navigator.AXTable.get_cell_coordinates",
+            new=mock_get_cell_coordinates,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_current_cell)
         mock_present_cell = test_context.Mock()
-        setattr(navigator, "_present_cell", mock_present_cell)
+        navigator._present_cell = mock_present_cell
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         result = navigator.move_to_end_of_row(mock_script, mock_event)
         assert result is True
         mock_present_cell.assert_called_once_with(
-            mock_script, mock_end_cell, 2, 4, mock_current_cell, True
+            mock_script,
+            mock_end_cell,
+            2,
+            4,
+            mock_current_cell,
+            True,
         )
 
     def test_set_dynamic_column_headers_row_not_in_table(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test set_dynamic_column_headers_row presents not in table message.
 
@@ -1607,12 +1756,13 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
+        navigator._get_current_cell = test_context.Mock(return_value=None)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -1620,7 +1770,7 @@ class TestTableNavigator:
         result = navigator.set_dynamic_column_headers_row(mock_script, mock_event)
         assert result is True
         pres_manager.present_message.assert_called_once_with(
-            essential_modules["orca.messages"].TABLE_NOT_IN_A
+            essential_modules["orca.messages"].TABLE_NOT_IN_A,
         )
 
     def test_set_dynamic_column_headers_row_successful(self, test_context: OrcaTestContext) -> None:
@@ -1633,7 +1783,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_table = test_context.Mock(spec=Atspi.Accessible)
@@ -1643,13 +1794,14 @@ class TestTableNavigator:
             return_value=(1, 2),
         )
         test_context.patch(
-            "orca.table_navigator.AXTable.set_dynamic_column_headers_row", return_value=None
+            "orca.table_navigator.AXTable.set_dynamic_column_headers_row",
+            return_value=None,
         )
         essential_modules["orca.messages"].DYNAMIC_COLUMN_HEADER_SET = "Column header row set to %d"
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_current_cell)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -1659,7 +1811,8 @@ class TestTableNavigator:
         pres_manager.present_message.assert_called_once_with("Column header row set to 2")
 
     def test_clear_dynamic_column_headers_row_not_in_table(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test clear_dynamic_column_headers_row presents not in table message.
 
@@ -1673,12 +1826,13 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
+        navigator._get_current_cell = test_context.Mock(return_value=None)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -1686,11 +1840,12 @@ class TestTableNavigator:
         result = navigator.clear_dynamic_column_headers_row(mock_script, mock_event)
         assert result is True
         pres_manager.present_message.assert_called_once_with(
-            essential_modules["orca.messages"].TABLE_NOT_IN_A
+            essential_modules["orca.messages"].TABLE_NOT_IN_A,
         )
 
     def test_clear_dynamic_column_headers_row_successful(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test clear_dynamic_column_headers_row successfully clears column headers row."""
 
@@ -1701,7 +1856,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_table = test_context.Mock(spec=Atspi.Accessible)
@@ -1710,12 +1866,13 @@ class TestTableNavigator:
         mock_focus_manager.get_locus_of_focus.return_value = mock_current_cell
         test_context.patch("orca.table_navigator.AXTable.get_table", return_value=mock_table)
         test_context.patch(
-            "orca.table_navigator.AXTable.clear_dynamic_column_headers_row", return_value=None
+            "orca.table_navigator.AXTable.clear_dynamic_column_headers_row",
+            return_value=None,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_current_cell)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -1725,11 +1882,12 @@ class TestTableNavigator:
         assert result is True
         pres_manager.interrupt_presentation.assert_called_once()
         pres_manager.present_message.assert_called_once_with(
-            essential_modules["orca.messages"].DYNAMIC_COLUMN_HEADER_CLEARED
+            essential_modules["orca.messages"].DYNAMIC_COLUMN_HEADER_CLEARED,
         )
 
     def test_set_dynamic_row_headers_column_not_in_table(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test set_dynamic_row_headers_column presents not in table message.
 
@@ -1743,12 +1901,13 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
+        navigator._get_current_cell = test_context.Mock(return_value=None)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -1756,7 +1915,7 @@ class TestTableNavigator:
         result = navigator.set_dynamic_row_headers_column(mock_script, mock_event)
         assert result is True
         pres_manager.present_message.assert_called_once_with(
-            essential_modules["orca.messages"].TABLE_NOT_IN_A
+            essential_modules["orca.messages"].TABLE_NOT_IN_A,
         )
 
     def test_set_dynamic_row_headers_column_successful(self, test_context: OrcaTestContext) -> None:
@@ -1769,7 +1928,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_table = test_context.Mock(spec=Atspi.Accessible)
@@ -1786,7 +1946,7 @@ class TestTableNavigator:
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_current_cell)
         mock_script = test_context.Mock()
         mock_script.utilities.convert_column_to_string.return_value = "B"
         mock_event = test_context.Mock()
@@ -1797,7 +1957,8 @@ class TestTableNavigator:
         pres_manager.present_message.assert_called_once_with("Row header column set to B")
 
     def test_clear_dynamic_row_headers_column_not_in_table(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test clear_dynamic_row_headers_column presents not in table message.
 
@@ -1811,12 +1972,13 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=None))
+        navigator._get_current_cell = test_context.Mock(return_value=None)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -1824,11 +1986,12 @@ class TestTableNavigator:
         result = navigator.clear_dynamic_row_headers_column(mock_script, mock_event)
         assert result is True
         pres_manager.present_message.assert_called_once_with(
-            essential_modules["orca.messages"].TABLE_NOT_IN_A
+            essential_modules["orca.messages"].TABLE_NOT_IN_A,
         )
 
     def test_clear_dynamic_row_headers_column_successful(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test clear_dynamic_row_headers_column successfully clears row headers column."""
 
@@ -1839,7 +2002,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_table = test_context.Mock(spec=Atspi.Accessible)
@@ -1848,12 +2012,13 @@ class TestTableNavigator:
         mock_focus_manager.get_locus_of_focus.return_value = mock_current_cell
         test_context.patch("orca.table_navigator.AXTable.get_table", return_value=mock_table)
         test_context.patch(
-            "orca.table_navigator.AXTable.clear_dynamic_row_headers_column", return_value=None
+            "orca.table_navigator.AXTable.clear_dynamic_row_headers_column",
+            return_value=None,
         )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
-        setattr(navigator, "_get_current_cell", test_context.Mock(return_value=mock_current_cell))
+        navigator._get_current_cell = test_context.Mock(return_value=mock_current_cell)
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
@@ -1863,11 +2028,12 @@ class TestTableNavigator:
         assert result is True
         pres_manager.interrupt_presentation.assert_called_once()
         pres_manager.present_message.assert_called_once_with(
-            essential_modules["orca.messages"].DYNAMIC_ROW_HEADER_CLEARED
+            essential_modules["orca.messages"].DYNAMIC_ROW_HEADER_CLEARED,
         )
 
     def test_get_cell_coordinates_with_different_previous_cell(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _get_cell_coordinates returns actual coordinates when previous cell differs."""
 
@@ -1881,7 +2047,8 @@ class TestTableNavigator:
         )
         test_context.patch("orca.table_navigator.AXTable.get_table", return_value=mock_table)
         test_context.patch(
-            "orca.table_navigator.AXTable.get_cell_at", return_value=mock_different_cell
+            "orca.table_navigator.AXTable.get_cell_at",
+            return_value=mock_different_cell,
         )
         mock_controller = test_context.Mock()
         essential_modules["orca.dbus_service"].get_remote_controller.return_value = mock_controller
@@ -1889,7 +2056,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
@@ -1904,7 +2072,8 @@ class TestTableNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         test_context.patch(
-            "orca.table_navigator.AXUtilities.is_table_cell_or_header", return_value=True
+            "orca.table_navigator.AXUtilities.is_table_cell_or_header",
+            return_value=True,
         )
         test_context.patch("orca.table_navigator.AXObject.grab_focus", return_value=None)
         test_context.patch("orca.table_navigator.AXObject.find_descendant", return_value=None)
@@ -1920,7 +2089,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 
@@ -1938,23 +2108,29 @@ class TestTableNavigator:
         assert navigator._previous_reported_col == 2
         mock_focus_manager.set_locus_of_focus.assert_called()
         mock_script.present_object.assert_called_once_with(
-            mock_cell, offset=0, priorObj=mock_previous_cell, interrupt=True
+            mock_cell,
+            offset=0,
+            priorObj=mock_previous_cell,
+            interrupt=True,
         )
         assert pres_manager.present_message.call_count == 2
 
     def test_present_cell_with_text_descendant_and_gui_cell(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _present_cell when cell has text descendant and is gui cell."""
 
         essential_modules = self._setup_dependencies(test_context)
         mock_text_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch(
-            "orca.table_navigator.AXUtilities.is_table_cell_or_header", return_value=True
+            "orca.table_navigator.AXUtilities.is_table_cell_or_header",
+            return_value=True,
         )
         test_context.patch("orca.table_navigator.AXObject.grab_focus", return_value=None)
         test_context.patch(
-            "orca.table_navigator.AXObject.find_descendant", return_value=mock_text_obj
+            "orca.table_navigator.AXObject.find_descendant",
+            return_value=mock_text_obj,
         )
         test_context.patch(
             "orca.table_navigator.AXObject.supports_text",
@@ -1969,7 +2145,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
 
         from orca import gsettings_registry
@@ -2001,7 +2178,9 @@ class TestTableNavigator:
         from orca.table_navigator import get_navigator
 
         gsettings_registry.get_registry().set_runtime_value(
-            "table-navigation", "skip-blank-cells", True
+            "table-navigation",
+            "skip-blank-cells",
+            True,
         )
         nav = get_navigator()
         result = nav.get_skip_blank_cells()
@@ -2027,7 +2206,9 @@ class TestTableNavigator:
         from orca.table_navigator import get_navigator
 
         gsettings_registry.get_registry().set_runtime_value(
-            "table-navigation", "skip-blank-cells", True
+            "table-navigation",
+            "skip-blank-cells",
+            True,
         )
         nav = get_navigator()
         result = nav.set_skip_blank_cells(True)
@@ -2038,7 +2219,8 @@ class TestTableNavigator:
 
         essential_modules = self._setup_dependencies(test_context)
         test_context.patch(
-            "orca.table_navigator.AXUtilities.is_table_cell_or_header", return_value=True
+            "orca.table_navigator.AXUtilities.is_table_cell_or_header",
+            return_value=True,
         )
         test_context.patch("orca.table_navigator.AXObject.grab_focus", return_value=None)
         test_context.patch("orca.table_navigator.AXObject.find_descendant", return_value=None)
@@ -2060,7 +2242,8 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings", new=mock_keybindings_class
+            "orca.table_navigator.keybindings.KeyBindings",
+            new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
 

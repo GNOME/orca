@@ -80,33 +80,33 @@ class TestPresentationManager:
         braille_presenter_instance = test_context.Mock()
         braille_presenter_instance.use_braille = test_context.Mock(return_value=True)
         braille_presenter_instance.get_flash_messages_are_enabled = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         braille_presenter_instance.get_flash_messages_are_detailed = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         braille_presenter_instance.get_flashtime_from_settings = test_context.Mock(
-            return_value=5000
+            return_value=5000,
         )
         braille_presenter_instance.kill_flash = test_context.Mock()
         braille_presenter_instance.present_message = test_context.Mock()
         braille_presenter_instance.present_regions = test_context.Mock()
         braille_presenter_mock.get_presenter = test_context.Mock(
-            return_value=braille_presenter_instance
+            return_value=braille_presenter_instance,
         )
 
         live_region_presenter_mock = essential_modules["orca.live_region_presenter"]
         live_region_instance = test_context.Mock()
         live_region_instance.flush_messages = test_context.Mock()
         live_region_presenter_mock.get_presenter = test_context.Mock(
-            return_value=live_region_instance
+            return_value=live_region_instance,
         )
 
         sound_presenter_mock = essential_modules["orca.sound_presenter"]
         sound_presenter_instance = test_context.Mock()
         sound_presenter_instance.play = test_context.Mock()
         sound_presenter_mock.get_presenter = test_context.Mock(
-            return_value=sound_presenter_instance
+            return_value=sound_presenter_instance,
         )
 
         speech_manager_mock = essential_modules["orca.speech_manager"]
@@ -116,7 +116,7 @@ class TestPresentationManager:
         speech_manager_instance.shutdown_speech = test_context.Mock()
         speech_manager_instance.refresh_speech = test_context.Mock()
         speech_manager_instance.get_speech_is_enabled_and_not_muted = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         speech_manager_instance.get_speech_is_muted = test_context.Mock(return_value=False)
         speech_manager_mock.get_manager = test_context.Mock(return_value=speech_manager_instance)
@@ -131,14 +131,14 @@ class TestPresentationManager:
         speech_presenter_instance.spell_phonetically = test_context.Mock()
         speech_presenter_instance.get_messages_are_detailed = test_context.Mock(return_value=True)
         speech_presenter_mock.get_presenter = test_context.Mock(
-            return_value=speech_presenter_instance
+            return_value=speech_presenter_instance,
         )
 
         typing_echo_presenter_mock = essential_modules["orca.typing_echo_presenter"]
         typing_echo_instance = test_context.Mock()
         typing_echo_instance.echo_keyboard_event = test_context.Mock()
         typing_echo_presenter_mock.get_presenter = test_context.Mock(
-            return_value=typing_echo_instance
+            return_value=typing_echo_instance,
         )
 
         script_manager_mock = essential_modules["orca.script_manager"]
@@ -150,7 +150,7 @@ class TestPresentationManager:
 
         braille_gen = test_context.Mock()
         braille_gen.generate_contents = test_context.Mock(
-            return_value=([test_context.Mock()], test_context.Mock())
+            return_value=([test_context.Mock()], test_context.Mock()),
         )
         mock_script.get_braille_generator = test_context.Mock(return_value=braille_gen)
         script_manager_instance = test_context.Mock()
@@ -258,7 +258,10 @@ class TestPresentationManager:
 
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
         speech_pres.speak_message.assert_called_once_with(
-            "Full message", voice=None, reset_styles=True, obj=None
+            "Full message",
+            voice=None,
+            reset_styles=True,
+            obj=None,
         )
 
     def test_present_message_empty_string(self, test_context: OrcaTestContext) -> None:
@@ -303,7 +306,10 @@ class TestPresentationManager:
         manager.present_message("Full message", brief="Brief")
 
         speech_pres.speak_message.assert_called_once_with(
-            "Brief", voice=None, reset_styles=True, obj=None
+            "Brief",
+            voice=None,
+            reset_styles=True,
+            obj=None,
         )
 
     def test_present_message_speech_disabled(self, test_context: OrcaTestContext) -> None:
@@ -386,7 +392,8 @@ class TestPresentationManager:
 
         braille_presenter = essential_modules["orca.braille_presenter"].get_presenter()
         braille_presenter.present_message.assert_called_once_with(
-            "Test braille", restore_previous=False
+            "Test braille",
+            restore_previous=False,
         )
 
     def test_present_braille_message_braille_disabled(self, test_context: OrcaTestContext) -> None:
@@ -449,7 +456,10 @@ class TestPresentationManager:
 
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
         speech_pres.speak_message.assert_called_once_with(
-            "Hello world", voice=None, reset_styles=True, obj=None
+            "Hello world",
+            voice=None,
+            reset_styles=True,
+            obj=None,
         )
 
     def test_speak_message_with_args_delegates(self, test_context: OrcaTestContext) -> None:
@@ -519,7 +529,8 @@ class TestPresentationManager:
 
         braille_presenter_instance = essential_modules["orca.braille_presenter"].get_presenter()
         braille_presenter_instance.display_generated_contents.assert_called_once_with(
-            script, mock_contents
+            script,
+            mock_contents,
         )
 
     def test_display_contents_braille_disabled(self, test_context: OrcaTestContext) -> None:

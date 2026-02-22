@@ -29,12 +29,14 @@ from __future__ import annotations
 import json
 import os
 from dataclasses import dataclass
-from typing import Any, Callable, overload
+from typing import TYPE_CHECKING, Any, overload
 
 from gi.repository import Gio
 
-from . import debug
-from . import gsettings_migrator
+from . import debug, gsettings_migrator
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 GSETTINGS_PATH_PREFIX = "/org/gnome/orca/"
 
@@ -168,7 +170,11 @@ class GSettingsRegistry:
         return gsettings_migrator.sanitize_gsettings_path(name)
 
     def get_settings(
-        self, schema_name: str, profile: str, sub_path: str = "", app_name: str = ""
+        self,
+        schema_name: str,
+        profile: str,
+        sub_path: str = "",
+        app_name: str = "",
     ) -> Gio.Settings | None:
         """Creates Gio.Settings for a sub-schema at the correct dconf path."""
 
@@ -190,14 +196,21 @@ class GSettingsRegistry:
         return Gio.Settings.new_with_path(schema_id, path)
 
     def set_runtime_value(
-        self, schema: str, key: str, value: Any, voice_type: str | None = None
+        self,
+        schema: str,
+        key: str,
+        value: Any,
+        voice_type: str | None = None,
     ) -> None:
         """Stores a runtime value override."""
 
         self._runtime_values[(schema, key, voice_type)] = value
 
     def get_runtime_value(
-        self, schema: str, key: str, voice_type: str | None = None
+        self,
+        schema: str,
+        key: str,
+        voice_type: str | None = None,
     ) -> tuple[bool, Any]:
         """Returns (found, value) for a runtime override."""
 
@@ -341,8 +354,12 @@ class GSettingsRegistry:
                 enum_map = {v: k for k, v in self._enums[desc.genum].items()}
             mappings.append(
                 SettingsMapping(
-                    desc.migration_key, desc.gsettings_key, desc.gtype, desc.default, enum_map
-                )
+                    desc.migration_key,
+                    desc.gsettings_key,
+                    desc.gtype,
+                    desc.default,
+                    enum_map,
+                ),
             )
         return mappings
 
@@ -545,10 +562,12 @@ class GSettingsRegistry:
                 if not isinstance(value, str):
                     enum_data = self._enums.get(setting.genum, {})
                     reverse = {v: k for k, v in enum_data.items()}
-                    value = reverse.get(int(value))
-                    if value is None:
+                    enum_name = reverse.get(int(value))
+                    if enum_name is None:
                         continue
-                gs.set_string(key, value)
+                    gs.set_string(key, enum_name)
+                else:
+                    gs.set_string(key, value)
                 continue
             writer = writers.get(setting.gtype)
             if writer is not None:
@@ -869,9 +888,7 @@ class GSettingsRegistry:
         gs = self.get_settings(schema_name, profile, schema_name, app_name)
         if gs is None:
             return False
-        if not importer(gs, data):
-            return False
-        return True
+        return importer(gs, data)
 
     def _migrate_all_apps(
         self,
@@ -933,7 +950,11 @@ class GSettingsRegistry:
                 migrated_any = True
 
             if self._migrate_app_extras(
-                app_name, profile_name, general, pronunciations, app_keybindings
+                app_name,
+                profile_name,
+                general,
+                pronunciations,
+                app_keybindings,
             ):
                 migrated_any = True
 
@@ -1080,7 +1101,10 @@ class GSettingsSchemaHandle:
         return self._get_for_path(path)
 
     def get_for_app(
-        self, app_name: str, profile: str = "default", sub_path: str = ""
+        self,
+        app_name: str,
+        profile: str = "default",
+        sub_path: str = "",
     ) -> Gio.Settings | None:
         """Returns Gio.Settings for an app override within a profile."""
 
@@ -1167,7 +1191,10 @@ class GSettingsSchemaHandle:
         return self._layered_get(key, lambda gs, k: gs.get_double(k), sub_path, app_name)
 
     def get_strv(
-        self, key: str, sub_path: str = "", app_name: str | None = None
+        self,
+        key: str,
+        sub_path: str = "",
+        app_name: str | None = None,
     ) -> list[str] | None:
         """Returns a string array via layered lookup, or None."""
         return self._layered_get(key, lambda gs, k: gs.get_strv(k), sub_path, app_name)

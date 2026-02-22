@@ -23,13 +23,12 @@
 
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
 from orca import document_presenter
-from orca.scripts.toolkits import Gecko
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
+from orca.scripts.toolkits import Gecko
 
 if TYPE_CHECKING:
     import gi
@@ -44,7 +43,7 @@ class Script(Gecko.Script):
     """The script for Thunderbird."""
 
     # Override the base class type annotations
-    utilities: "Utilities"
+    utilities: Utilities
 
     def on_busy_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:busy accessibility events."""
@@ -79,7 +78,7 @@ class Script(Gecko.Script):
         """Callback for object:text-changed:delete accessibility events."""
 
         if AXUtilities.is_label(event.source) and AXUtilities.is_status_bar(
-            AXObject.get_parent(event.source)
+            AXObject.get_parent(event.source),
         ):
             return True
 

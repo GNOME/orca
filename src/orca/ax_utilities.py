@@ -29,12 +29,12 @@
 
 from __future__ import annotations
 
-
 import functools
 import inspect
 import queue
 import threading
 import time
+from typing import TYPE_CHECKING
 
 import gi
 
@@ -54,6 +54,9 @@ from .ax_utilities_relation import AXUtilitiesRelation
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 
+if TYPE_CHECKING:
+    from typing import ClassVar
+
 
 class AXUtilities:
     """Utilities for performing tasks related to accessibility inspection."""
@@ -61,8 +64,8 @@ class AXUtilities:
     COMPARE_COLLECTION_PERFORMANCE = False
 
     # Things we cache.
-    SET_MEMBERS: dict[int, list[Atspi.Accessible]] = {}
-    IS_LAYOUT_ONLY: dict[int, tuple[bool, str]] = {}
+    SET_MEMBERS: ClassVar[dict[int, list[Atspi.Accessible]]] = {}
+    IS_LAYOUT_ONLY: ClassVar[dict[int, tuple[bool, str]]] = {}
 
     _lock = threading.Lock()
 
@@ -219,7 +222,8 @@ class AXUtilities:
         result = list(AXObject.iter_children(app, AXUtilities.is_unfocused_alert_or_dialog))
 
         frame = AXObject.find_ancestor(
-            obj, lambda x: AXUtilitiesRole.is_application(AXObject.get_parent(x))
+            obj,
+            lambda x: AXUtilitiesRole.is_application(AXObject.get_parent(x)),
         )
         result.extend(list(AXObject.iter_children(frame, AXUtilities.is_unfocused_alert_or_dialog)))
 
@@ -461,7 +465,7 @@ class AXUtilities:
             return False
 
         if AXObject.get_name(obj1) != AXObject.get_name(obj2) or AXObject.get_role(
-            obj1
+            obj1,
         ) != AXObject.get_role(obj2):
             return False
 
@@ -499,7 +503,8 @@ class AXUtilities:
 
     @staticmethod
     def _get_set_members(
-        obj: Atspi.Accessible, container: Atspi.Accessible
+        obj: Atspi.Accessible,
+        container: Atspi.Accessible,
     ) -> list[Atspi.Accessible]:
         """Returns the members of the container of obj"""
 
@@ -592,7 +597,7 @@ class AXUtilities:
             return AXTable.get_row_count(AXTable.get_table(obj))
 
         if AXUtilitiesRole.is_table_cell_or_header(obj) and not AXUtilitiesRole.is_table_row(
-            AXObject.get_parent(obj)
+            AXObject.get_parent(obj),
         ):
             return AXTable.get_row_count(AXTable.get_table(obj))
 
@@ -653,7 +658,7 @@ class AXUtilities:
                 return int(result) - 1
 
         if AXUtilitiesRole.is_table_cell_or_header(obj) and not AXUtilitiesRole.is_table_row(
-            AXObject.get_parent(obj)
+            AXObject.get_parent(obj),
         ):
             return AXTable.get_cell_coordinates(obj)[0]
 
@@ -884,9 +889,7 @@ class AXUtilities:
 
         if AXUtilitiesRole.children_are_presentational(obj):
             # In GTK, the contents of the page tab descends from the page tab.
-            if AXUtilitiesRole.is_page_tab(obj):
-                return False
-            return True
+            return not AXUtilitiesRole.is_page_tab(obj)
 
         role = AXObject.get_role(obj)
         if AXUtilitiesRole.is_combo_box(obj, role):
@@ -954,7 +957,9 @@ class AXUtilities:
 
     @staticmethod
     def get_on_screen_objects(
-        root: Atspi.Accessible, bounding_box: Atspi.Rect | None = None, timeout: float = 5.0
+        root: Atspi.Accessible,
+        bounding_box: Atspi.Rect | None = None,
+        timeout: float = 5.0,
     ) -> list:
         """Returns a list of onscreen objects in the given root."""
 

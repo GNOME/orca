@@ -23,13 +23,9 @@
 
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
-from orca import chat_presenter
-from orca import debug
-from orca import messages
-from orca import presentation_manager
+from orca import chat_presenter, debug, messages, presentation_manager
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.scripts.toolkits import gtk

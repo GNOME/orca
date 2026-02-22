@@ -24,16 +24,15 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
 from orca import debug
 from orca.ax_utilities import AXUtilities
-from orca.scripts.toolkits import gtk
-from orca.scripts.toolkits import WebKitGTK
+from orca.scripts.toolkits import WebKitGTK, gtk
+
 from .braille_generator import BrailleGenerator
-from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
+from .speech_generator import SpeechGenerator
 
 if TYPE_CHECKING:
     import gi

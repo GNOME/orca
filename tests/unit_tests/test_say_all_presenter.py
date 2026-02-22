@@ -190,8 +190,8 @@ class TestSayAllPresenter:
         """Test SayAllPresenter._parse_utterances with various input formats."""
 
         self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter
         from orca import speech
+        from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
 
@@ -231,8 +231,8 @@ class TestSayAllPresenter:
         """Test SayAllPresenter initialization sets up required attributes."""
 
         self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter
         from orca import command_manager
+        from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
         assert presenter is not None
@@ -274,12 +274,22 @@ class TestSayAllPresenter:
             pytest.param("rewind", False, True, True, False, id="rewind_disabled"),
             pytest.param("rewind", True, False, True, True, id="rewind_no_contents_valid_context"),
             pytest.param(
-                "rewind", True, False, False, False, id="rewind_no_contents_invalid_context_obj"
+                "rewind",
+                True,
+                False,
+                False,
+                False,
+                id="rewind_no_contents_invalid_context_obj",
             ),
             pytest.param("rewind", True, True, True, True, id="rewind_success"),
             pytest.param("fast_forward", False, True, True, False, id="fast_forward_disabled"),
             pytest.param(
-                "fast_forward", True, False, True, True, id="fast_forward_no_contents_valid_context"
+                "fast_forward",
+                True,
+                False,
+                True,
+                True,
+                id="fast_forward_no_contents_valid_context",
             ),
             pytest.param(
                 "fast_forward",
@@ -304,8 +314,8 @@ class TestSayAllPresenter:
         """Test _rewind and _fast_forward navigation controls with various conditions."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter
         from orca import speechserver
+        from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
@@ -477,7 +487,9 @@ class TestSayAllPresenter:
         ids=lambda case: case["id"],
     )
     def test_navigation_methods_with_parameters(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test _rewind and _fast_forward methods with override_setting parameter."""
 
@@ -488,8 +500,8 @@ class TestSayAllPresenter:
         expected_result = case["expected_result"]
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter
         from orca import speechserver
+        from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
@@ -546,8 +558,8 @@ class TestSayAllPresenter:
         """Test say_all method clears contexts, contents, and current_context at start."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter
         from orca import speechserver
+        from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
@@ -582,8 +594,8 @@ class TestSayAllPresenter:
         """Test that _progress_callback sets the current context."""
 
         self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter
         from orca import speechserver
+        from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
 
@@ -625,14 +637,15 @@ class TestSayAllPresenter:
         assert presenter._say_all_is_running is False
 
     def test_progress_callback_sets_say_all_is_running_true(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test that _progress_callback sets _say_all_is_running to True."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter
         from orca import speechserver
         from orca.ax_text import AXText
+        from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
@@ -657,14 +670,15 @@ class TestSayAllPresenter:
         assert presenter._say_all_is_running is True
 
     def test_progress_callback_uses_say_all_mode_when_running(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test that _progress_callback uses SAY_ALL mode when _say_all_is_running is True."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter
         from orca import speechserver
         from orca.ax_text import AXText
+        from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
@@ -692,16 +706,16 @@ class TestSayAllPresenter:
         )
 
     def test_progress_callback_uses_focus_tracking_mode_when_interrupted(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test that _progress_callback uses FOCUS_TRACKING mode when interrupted by keyboard."""
 
         self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter
-        from orca import speechserver
-        from orca.ax_text import AXText
-        from orca import input_event_manager
         from orca import focus_manager as fm
+        from orca import input_event_manager, speechserver
+        from orca.ax_text import AXText
+        from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
@@ -728,7 +742,10 @@ class TestSayAllPresenter:
 
         assert presenter._say_all_is_running is False
         focus_instance.emit_region_changed.assert_called_once_with(
-            mock_context.obj, mock_context.current_offset, None, fm.FOCUS_TRACKING
+            mock_context.obj,
+            mock_context.current_offset,
+            None,
+            fm.FOCUS_TRACKING,
         )
 
     @pytest.mark.parametrize(
@@ -756,8 +773,8 @@ class TestSayAllPresenter:
         """
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter
         from orca import gsettings_registry
+        from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
         mock_script = test_context.Mock()
@@ -797,7 +814,9 @@ class TestSayAllPresenter:
 
         # Mock _say_all_should_skip_content to avoid dependency issues
         test_context.patch_object(
-            presenter, "_say_all_should_skip_content", return_value=(False, "")
+            presenter,
+            "_say_all_should_skip_content",
+            return_value=(False, ""),
         )
 
         # Mock debug
@@ -838,8 +857,8 @@ class TestSayAllPresenter:
         """Test SayAllPresenter.stop clears contexts, contents, current_context and running flag."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.say_all_presenter import SayAllPresenter
         from orca import speechserver
+        from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
         presenter._contexts = [test_context.Mock(spec=speechserver.SayAllContext)]
@@ -858,7 +877,7 @@ class TestSayAllPresenter:
         assert presenter._current_context is None
         assert presenter._say_all_is_running is False
         manager_instance.reset_active_mode.assert_called_once_with(
-            "SAY ALL PRESENTER: Stopped Say All."
+            "SAY ALL PRESENTER: Stopped Say All.",
         )
 
     def test_stop_from_empty_state(self, test_context: OrcaTestContext) -> None:

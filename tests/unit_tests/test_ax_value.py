@@ -35,12 +35,12 @@ import gi
 import pytest
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -120,17 +120,21 @@ class TestAXValue:
         """Test AXValue.did_value_change."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_value import AXValue
         from orca.ax_object import AXObject
+        from orca.ax_value import AXValue
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            AXObject, "supports_value", side_effect=lambda obj: case["supports_value"]
+            AXObject,
+            "supports_value",
+            side_effect=lambda obj: case["supports_value"],
         )
 
         if case["current_value"] is not None:
             test_context.patch_object(
-                AXValue, "_get_current_value", side_effect=lambda obj: case["current_value"]
+                AXValue,
+                "_get_current_value",
+                side_effect=lambda obj: case["current_value"],
             )
 
         if case["setup_last_known"]:
@@ -176,12 +180,14 @@ class TestAXValue:
         """Test AXValue._get_current_value."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_value import AXValue
         from orca.ax_object import AXObject
+        from orca.ax_value import AXValue
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            AXObject, "supports_value", side_effect=lambda obj: case["supports_value"]
+            AXObject,
+            "supports_value",
+            side_effect=lambda obj: case["supports_value"],
         )
 
         if case["should_raise_error"]:
@@ -190,11 +196,15 @@ class TestAXValue:
                 raise GLib.GError("Test error")
 
             test_context.patch_object(
-                Atspi.Value, "get_current_value", side_effect=raise_glib_error
+                Atspi.Value,
+                "get_current_value",
+                side_effect=raise_glib_error,
             )
         elif case["atspi_return_value"] is not None:
             test_context.patch_object(
-                Atspi.Value, "get_current_value", side_effect=lambda obj: case["atspi_return_value"]
+                Atspi.Value,
+                "get_current_value",
+                side_effect=lambda obj: case["atspi_return_value"],
             )
         else:
             test_context.patch_object(Atspi.Value, "get_current_value", return_value=0.0)
@@ -230,20 +240,26 @@ class TestAXValue:
         """Test AXValue.get_current_value with various scenarios."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_value import AXValue
         from orca.ax_object import AXObject
+        from orca.ax_value import AXValue
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            AXObject, "supports_value", side_effect=lambda obj: case["supports_value"]
+            AXObject,
+            "supports_value",
+            side_effect=lambda obj: case["supports_value"],
         )
         if case["supports_value"]:
             test_context.patch_object(
-                AXValue, "_get_current_value", side_effect=lambda obj: case["get_current_return"]
+                AXValue,
+                "_get_current_value",
+                side_effect=lambda obj: case["get_current_return"],
             )
         else:
             test_context.patch_object(
-                Atspi.Value, "get_current_value", side_effect=lambda obj: case["get_current_return"]
+                Atspi.Value,
+                "get_current_value",
+                side_effect=lambda obj: case["get_current_return"],
             )
 
         AXValue.LAST_KNOWN_VALUE.clear()
@@ -320,18 +336,20 @@ class TestAXValue:
 
         essential_modules["orca.ax_object"].AXObject.get_attribute = mock_get_attribute
         essential_modules["orca.ax_object"].AXObject.supports_value = test_context.Mock(
-            return_value=case["supports_value"]
+            return_value=case["supports_value"],
         )
 
-        from orca.ax_value import AXValue
         from orca.ax_object import AXObject
+        from orca.ax_value import AXValue
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         AXValue.LAST_KNOWN_VALUE.clear()
 
         test_context.patch_object(AXObject, "get_attribute", side_effect=mock_get_attribute)
         test_context.patch_object(
-            AXObject, "supports_value", side_effect=lambda obj: case["supports_value"]
+            AXObject,
+            "supports_value",
+            side_effect=lambda obj: case["supports_value"],
         )
 
         if case["should_raise_error"]:
@@ -341,15 +359,21 @@ class TestAXValue:
 
             test_context.patch_object(Atspi.Value, "get_text", side_effect=raise_glib_error)
             test_context.patch_object(
-                AXValue, "get_current_value", side_effect=lambda obj: case["current_value"]
+                AXValue,
+                "get_current_value",
+                side_effect=lambda obj: case["current_value"],
             )
         else:
             test_context.patch_object(
-                Atspi.Value, "get_text", side_effect=lambda self: case["atspi_text"]
+                Atspi.Value,
+                "get_text",
+                side_effect=lambda self: case["atspi_text"],
             )
             if case["current_value"] != 0.0:
                 test_context.patch_object(
-                    AXValue, "get_current_value", side_effect=lambda obj: case["current_value"]
+                    AXValue,
+                    "get_current_value",
+                    side_effect=lambda obj: case["current_value"],
                 )
 
         test_context.patch_object(Atspi.Value, "get_current_value", return_value=0.0)
@@ -413,16 +437,18 @@ class TestAXValue:
         essential_modules["orca.ax_object"].AXObject.supports_value = supports_value_mock
         essential_modules["orca.ax_utilities"].AXUtilities.is_indeterminate = is_indeterminate_mock
 
-        from orca.ax_value import AXValue
         from orca.ax_object import AXObject
         from orca.ax_utilities import AXUtilities
+        from orca.ax_value import AXValue
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
         AXValue.LAST_KNOWN_VALUE.clear()
 
         test_context.patch_object(
-            AXObject, "supports_value", side_effect=lambda obj: case["supports_value"]
+            AXObject,
+            "supports_value",
+            side_effect=lambda obj: case["supports_value"],
         )
 
         current_val = case["current_value"] if case["current_value"] is not None else 0.0
@@ -430,30 +456,44 @@ class TestAXValue:
         max_val_default = case["max_val"] if case["max_val"] is not None else 100.0
 
         test_context.patch_object(
-            Atspi.Value, "get_current_value", side_effect=lambda obj: current_val
+            Atspi.Value,
+            "get_current_value",
+            side_effect=lambda obj: current_val,
         )
         test_context.patch_object(
-            Atspi.Value, "get_minimum_value", side_effect=lambda obj: min_val_default
+            Atspi.Value,
+            "get_minimum_value",
+            side_effect=lambda obj: min_val_default,
         )
         test_context.patch_object(
-            Atspi.Value, "get_maximum_value", side_effect=lambda obj: max_val_default
+            Atspi.Value,
+            "get_maximum_value",
+            side_effect=lambda obj: max_val_default,
         )
 
         test_context.patch_object(
-            AXUtilities, "is_indeterminate", side_effect=lambda obj: case["is_indeterminate"]
+            AXUtilities,
+            "is_indeterminate",
+            side_effect=lambda obj: case["is_indeterminate"],
         )
 
         if case["current_value"] is not None:
             test_context.patch_object(
-                AXValue, "get_current_value", side_effect=lambda obj: case["current_value"]
+                AXValue,
+                "get_current_value",
+                side_effect=lambda obj: case["current_value"],
             )
         if case["min_val"] is not None:
             test_context.patch_object(
-                AXValue, "get_minimum_value", side_effect=lambda obj: case["min_val"]
+                AXValue,
+                "get_minimum_value",
+                side_effect=lambda obj: case["min_val"],
             )
         if case["max_val"] is not None:
             test_context.patch_object(
-                AXValue, "get_maximum_value", side_effect=lambda obj: case["max_val"]
+                AXValue,
+                "get_maximum_value",
+                side_effect=lambda obj: case["max_val"],
             )
 
         result = AXValue.get_value_as_percent(mock_obj)
@@ -509,17 +549,21 @@ class TestAXValue:
         """Test AXValue.did_value_change with various scenarios."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.ax_value import AXValue
         from orca.ax_object import AXObject
+        from orca.ax_value import AXValue
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            AXObject, "supports_value", side_effect=lambda obj: case["supports_value"]
+            AXObject,
+            "supports_value",
+            side_effect=lambda obj: case["supports_value"],
         )
 
         if case["current_value"] is not None:
             test_context.patch_object(
-                AXValue, "_get_current_value", side_effect=lambda obj: case["current_value"]
+                AXValue,
+                "_get_current_value",
+                side_effect=lambda obj: case["current_value"],
             )
 
         AXValue.LAST_KNOWN_VALUE.clear()
@@ -615,12 +659,14 @@ class TestAXValue:
         """Test AXValue.get_minimum_value and get_maximum_value with various scenarios."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.ax_value import AXValue
         from orca.ax_object import AXObject
+        from orca.ax_value import AXValue
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            AXObject, "supports_value", side_effect=lambda obj: case["supports_value"]
+            AXObject,
+            "supports_value",
+            side_effect=lambda obj: case["supports_value"],
         )
 
         if case["should_raise_error"]:
@@ -630,11 +676,15 @@ class TestAXValue:
                 raise GLib.GError(f"Test {error_type} value error")
 
             test_context.patch_object(
-                Atspi.Value, case["method_name"], side_effect=raise_glib_error
+                Atspi.Value,
+                case["method_name"],
+                side_effect=raise_glib_error,
             )
         elif case["atspi_return_value"] is not None:
             test_context.patch_object(
-                Atspi.Value, case["method_name"], side_effect=lambda obj: case["atspi_return_value"]
+                Atspi.Value,
+                case["method_name"],
+                side_effect=lambda obj: case["atspi_return_value"],
             )
         else:
             test_context.patch_object(Atspi.Value, case["method_name"], return_value=0.0)

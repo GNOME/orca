@@ -27,31 +27,34 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import faulthandler
 import os
 import subprocess
 import time
-from typing import Generator, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
 import gi
 
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import cmdnames
-from . import command_manager
-from . import debug
-from . import focus_manager
-from . import guilabels
-from . import input_event
-from . import messages
-from . import orca_platform
-from . import presentation_manager
+from . import (
+    cmdnames,
+    command_manager,
+    debug,
+    focus_manager,
+    guilabels,
+    input_event,
+    messages,
+    orca_platform,
+    presentation_manager,
+)
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
+    from collections.abc import Generator
+
     from .scripts import default
 
 
@@ -95,14 +98,16 @@ class DebuggingToolsManager:
                     description,
                     desktop_keybinding=None,
                     laptop_keybinding=None,
-                )
+                ),
             )
 
         msg = "DEBUGGING TOOLS MANAGER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _cycle_debug_level(
-        self, _script: default.Script, _event: input_event.InputEvent | None = None
+        self,
+        _script: default.Script,
+        _event: input_event.InputEvent | None = None,
     ) -> bool:
         """Cycles through the existing debug levels."""
 
@@ -126,7 +131,9 @@ class DebuggingToolsManager:
         return True
 
     def _clear_atspi_app_cache(
-        self, _script: default.Script, _event: input_event.InputEvent | None = None
+        self,
+        _script: default.Script,
+        _event: input_event.InputEvent | None = None,
     ) -> bool:
         """Clears the AT-SPI cache for the current application."""
 
@@ -149,7 +156,9 @@ class DebuggingToolsManager:
         return True
 
     def _capture_snapshot(
-        self, _script: default.Script, _event: input_event.InputEvent | None = None
+        self,
+        _script: default.Script,
+        _event: input_event.InputEvent | None = None,
     ) -> bool:
         """Clears the AT-SPI cache for the current application."""
 
@@ -166,7 +175,8 @@ class DebuggingToolsManager:
         return True
 
     def _get_running_applications_as_string_iter(
-        self, is_command_line: bool
+        self,
+        is_command_line: bool,
     ) -> Generator[str, None, None]:
         """Generator providing strings with basic details about the running accessible apps."""
 
@@ -197,7 +207,9 @@ class DebuggingToolsManager:
             yield msg
 
     def print_running_applications(
-        self, force: bool = False, is_command_line: bool = False
+        self,
+        force: bool = False,
+        is_command_line: bool = False,
     ) -> None:
         """Prints basic details about the running accessible applications."""
 
@@ -211,7 +223,7 @@ class DebuggingToolsManager:
 
         for app_string in self._get_running_applications_as_string_iter(is_command_line):
             if is_command_line:
-                print(app_string)
+                print(app_string)  # noqa: T201
             else:
                 debug.print_message(level, app_string, True)
 
@@ -231,7 +243,7 @@ class DebuggingToolsManager:
             msg += f", Session: {session}"
 
         if is_command_line:
-            print(msg)
+            print(msg)  # noqa: T201
         else:
             msg = f"DEBUGGING TOOLS MANAGER: {msg}"
             debug.print_message(debug.LEVEL_INFO, msg, True)

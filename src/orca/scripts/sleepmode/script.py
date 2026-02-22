@@ -28,15 +28,16 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-
-from orca import command_manager
-from orca import debug
-from orca import focus_manager
-from orca import messages
-from orca import orca_modifier_manager
-from orca import presentation_manager
-from orca import script
-from orca import sleep_mode_manager
+from orca import (
+    command_manager,
+    debug,
+    focus_manager,
+    messages,
+    orca_modifier_manager,
+    presentation_manager,
+    script,
+    sleep_mode_manager,
+)
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 

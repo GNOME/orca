@@ -28,7 +28,6 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
 import gi
@@ -36,11 +35,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import ax_device_manager
-from . import debug
-from . import focus_manager
-from . import input_event
-from . import script_manager
+from . import ax_device_manager, debug, focus_manager, input_event, script_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
@@ -106,7 +101,9 @@ class InputEventManager:  # pylint: disable=too-many-instance-attributes
         self._paused = pause
 
     def add_grabs_for_keybinding(
-        self, binding: keybindings.KeyBinding, orca_modifiers: list[str]
+        self,
+        binding: keybindings.KeyBinding,
+        orca_modifiers: list[str],
     ) -> list[int]:
         """Adds grabs for binding, returns grab IDs."""
 
@@ -379,7 +376,9 @@ class InputEventManager:  # pylint: disable=too-many-instance-attributes
         from . import command_manager
 
         if not command_manager.get_manager().has_multi_click_bindings(
-            event.id, event.hw_code, event.modifiers
+            event.id,
+            event.hw_code,
+            event.modifiers,
         ):
             return 1
 
@@ -418,7 +417,8 @@ class InputEventManager:  # pylint: disable=too-many-instance-attributes
             return False
 
         if not isinstance(event1, input_event.KeyboardEvent) or not isinstance(
-            event2, input_event.KeyboardEvent
+            event2,
+            input_event.KeyboardEvent,
         ):
             return False
 
@@ -583,9 +583,11 @@ class InputEventManager:  # pylint: disable=too-many-instance-attributes
         """Returns True if the last event is believed to be character navigation."""
 
         string, mods = self._last_key_and_modifiers()
-        if string not in ["Left", "Right"]:
-            rv = False
-        elif mods & 1 << Atspi.ModifierType.CONTROL or mods & 1 << Atspi.ModifierType.ALT:
+        if (
+            string not in ["Left", "Right"]
+            or mods & 1 << Atspi.ModifierType.CONTROL
+            or mods & 1 << Atspi.ModifierType.ALT
+        ):
             rv = False
         else:
             rv = True
@@ -641,9 +643,7 @@ class InputEventManager:  # pylint: disable=too-many-instance-attributes
         """Returns True if the last event is believed to be line navigation."""
 
         string, mods = self._last_key_and_modifiers()
-        if string not in ["Up", "Down"]:
-            rv = False
-        elif mods & 1 << Atspi.ModifierType.CONTROL:
+        if string not in ["Up", "Down"] or mods & 1 << Atspi.ModifierType.CONTROL:
             rv = False
         else:
             focus = focus_manager.get_manager().get_locus_of_focus()
@@ -703,9 +703,7 @@ class InputEventManager:  # pylint: disable=too-many-instance-attributes
         """Returns True if the last event is believed to be page navigation."""
 
         string, mods = self._last_key_and_modifiers()
-        if string not in ["Page_Up", "Page_Down"]:
-            rv = False
-        elif mods & 1 << Atspi.ModifierType.CONTROL:
+        if string not in ["Page_Up", "Page_Down"] or mods & 1 << Atspi.ModifierType.CONTROL:
             rv = False
         else:
             focus = focus_manager.get_manager().get_locus_of_focus()
@@ -739,9 +737,11 @@ class InputEventManager:  # pylint: disable=too-many-instance-attributes
         """Returns True if the last event is believed to be Tab navigation."""
 
         string, mods = self._last_key_and_modifiers()
-        if string not in ["Tab", "ISO_Left_Tab"]:
-            rv = False
-        elif mods & 1 << Atspi.ModifierType.CONTROL or mods & 1 << Atspi.ModifierType.ALT:
+        if (
+            string not in ["Tab", "ISO_Left_Tab"]
+            or mods & 1 << Atspi.ModifierType.CONTROL
+            or mods & 1 << Atspi.ModifierType.ALT
+        ):
             rv = False
         else:
             rv = True
@@ -785,10 +785,7 @@ class InputEventManager:  # pylint: disable=too-many-instance-attributes
 
         # TODO: JD - 8 is the value of keybindings.MODIFIER_ORCA, but we need to
         # avoid a circular import.
-        if mods & 1 << 8:
-            return False
-
-        return True
+        return not mods & 1 << 8
 
     def last_event_was_alt_modified(self):
         """Returns True if the last event was alt-modified."""

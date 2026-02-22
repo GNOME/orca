@@ -26,7 +26,7 @@
 
 import inspect
 import time
-from typing import Callable
+from collections.abc import Callable
 
 import gi
 
@@ -47,7 +47,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def _apply_predicate(
-        matches: list[Atspi.Accessible], pred: Callable[[Atspi.Accessible], bool]
+        matches: list[Atspi.Accessible],
+        pred: Callable[[Atspi.Accessible], bool],
     ) -> list[Atspi.Accessible]:
         if not matches:
             return []
@@ -157,7 +158,10 @@ class AXUtilitiesCollection:
         """Returns all descendants of root with any of the specified roles"""
 
         return AXUtilitiesCollection._find_all_with_role(
-            root, role_list, Atspi.CollectionMatchType.ANY, pred
+            root,
+            role_list,
+            Atspi.CollectionMatchType.ANY,
+            pred,
         )
 
     @staticmethod
@@ -169,7 +173,10 @@ class AXUtilitiesCollection:
         """Returns all descendants of root which have none of the specified roles"""
 
         return AXUtilitiesCollection._find_all_with_role(
-            root, role_list, Atspi.CollectionMatchType.NONE, pred
+            root,
+            role_list,
+            Atspi.CollectionMatchType.NONE,
+            pred,
         )
 
     @staticmethod
@@ -295,7 +302,10 @@ class AXUtilitiesCollection:
         """Returns all descendants of root which have all of the specified states"""
 
         return AXUtilitiesCollection._find_all_with_states(
-            root, state_list, Atspi.CollectionMatchType.ALL, pred
+            root,
+            state_list,
+            Atspi.CollectionMatchType.ALL,
+            pred,
         )
 
     @staticmethod
@@ -307,7 +317,10 @@ class AXUtilitiesCollection:
         """Returns all descendants of root which have any of the specified states"""
 
         return AXUtilitiesCollection._find_all_with_states(
-            root, state_list, Atspi.CollectionMatchType.ANY, pred
+            root,
+            state_list,
+            Atspi.CollectionMatchType.ANY,
+            pred,
         )
 
     @staticmethod
@@ -319,12 +332,16 @@ class AXUtilitiesCollection:
         """Returns all descendants of root which have none of the specified states"""
 
         return AXUtilitiesCollection._find_all_with_states(
-            root, state_list, Atspi.CollectionMatchType.NONE, pred
+            root,
+            state_list,
+            Atspi.CollectionMatchType.NONE,
+            pred,
         )
 
     @staticmethod
     def find_all_accelerator_labels(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the accelerator label role"""
 
@@ -333,7 +350,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_alerts(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the alert role"""
 
@@ -342,7 +360,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_animations(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the animation role"""
 
@@ -351,7 +370,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_arrows(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the arrow role"""
 
@@ -360,7 +380,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_articles(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the article role"""
 
@@ -369,7 +390,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_audios(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the audio role"""
 
@@ -378,7 +400,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_autocompletes(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the autocomplete role"""
 
@@ -387,7 +410,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_block_quotes(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the block quote role"""
 
@@ -396,7 +420,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_buttons(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the push- or toggle-button role"""
 
@@ -405,7 +430,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_calendars(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the calendar role"""
 
@@ -414,7 +440,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_canvases(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the canvas role"""
 
@@ -423,7 +450,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_captions(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the caption role"""
 
@@ -432,7 +460,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_charts(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the chart role"""
 
@@ -441,7 +470,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_check_boxes(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the checkbox role"""
 
@@ -450,7 +480,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_check_menu_items(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the check menuitem role"""
 
@@ -459,7 +490,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_clickables(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all non-focusable descendants of root which support the click action"""
 
@@ -516,7 +548,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_color_choosers(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the color_chooser role"""
 
@@ -525,7 +558,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_column_headers(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the column header role"""
 
@@ -534,7 +568,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_combo_boxes(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the combobox role"""
 
@@ -543,7 +578,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_comments(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the comment role"""
 
@@ -552,7 +588,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_content_deletions(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the content deletion role"""
 
@@ -561,7 +598,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_content_insertions(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the content insertion role"""
 
@@ -570,7 +608,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_date_editors(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the date editor role"""
 
@@ -579,7 +618,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_definitions(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the definition role"""
 
@@ -588,7 +628,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_description_lists(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the description list role"""
 
@@ -597,7 +638,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_description_terms(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the description term role"""
 
@@ -606,7 +648,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_description_values(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the description value role"""
 
@@ -615,7 +658,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_desktop_frames(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the desktop frame role"""
 
@@ -624,7 +668,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_desktop_icons(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the desktop icon role"""
 
@@ -633,7 +678,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_dials(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the dial role"""
 
@@ -642,7 +688,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_dialogs(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the dialog role"""
 
@@ -651,7 +698,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_dialogs_and_alerts(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root that has any dialog or alert role"""
 
@@ -660,7 +708,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_directory_panes(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the directory pane role"""
 
@@ -669,7 +718,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_documents(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root that has any document-related role"""
 
@@ -678,7 +728,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_document_emails(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the document email role"""
 
@@ -687,7 +738,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_document_frames(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the document frame role"""
 
@@ -696,7 +748,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_document_presentations(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the document presentation role"""
 
@@ -705,7 +758,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_document_spreadsheets(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the document spreadsheet role"""
 
@@ -714,7 +768,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_document_texts(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the document text role"""
 
@@ -723,7 +778,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_document_webs(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the document web role"""
 
@@ -732,7 +788,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_drawing_areas(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the drawing area role"""
 
@@ -754,7 +811,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_editbars(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the editbar role"""
 
@@ -763,7 +821,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_embeddeds(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the embedded role"""
 
@@ -772,7 +831,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_entries(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the entry role"""
 
@@ -781,7 +841,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_extendeds(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the extended role"""
 
@@ -790,7 +851,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_file_choosers(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the file chooser role"""
 
@@ -799,7 +861,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_fillers(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the filler role"""
 
@@ -808,7 +871,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_focusable_objects(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root which are focusable"""
 
@@ -817,7 +881,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_focusable_objects_with_click_ancestor(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all focusable descendants of root which support the click-ancestor action"""
 
@@ -870,7 +935,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_focused_objects(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root which are focused"""
 
@@ -879,7 +945,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_focus_traversables(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the focus traversable role"""
 
@@ -888,7 +955,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_font_choosers(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the font chooser role"""
 
@@ -897,7 +965,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_footers(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the footer role"""
 
@@ -906,7 +975,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_footnotes(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the footnote role"""
 
@@ -915,7 +985,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_forms(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the form role"""
 
@@ -939,7 +1010,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_frames(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the frame role"""
 
@@ -948,7 +1020,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_glass_panes(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the glass pane role"""
 
@@ -957,7 +1030,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_grids(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root that are grids"""
 
@@ -978,7 +1052,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_grid_cells(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root that are grid cells"""
 
@@ -1003,7 +1078,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_groupings(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the grouping role"""
 
@@ -1012,7 +1088,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_headers(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the header role"""
 
@@ -1021,7 +1098,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_headings(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the heading role"""
 
@@ -1030,7 +1108,9 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_headings_at_level(
-        root: Atspi.Accessible, level: int, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        level: int,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the heading role"""
 
@@ -1059,7 +1139,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_html_containers(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the html container role"""
 
@@ -1068,7 +1149,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_horizontal_scrollbars(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root that is a horizontal scrollbar"""
 
@@ -1078,7 +1160,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_horizontal_separators(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root that is a horizontal separator"""
 
@@ -1088,7 +1171,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_horizontal_sliders(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root that is a horizontal slider"""
 
@@ -1098,7 +1182,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_icons(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the icon role"""
 
@@ -1107,7 +1192,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_icons_and_canvases(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the icon or canvas role"""
 
@@ -1116,7 +1202,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_images(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the image role"""
 
@@ -1125,7 +1212,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_images_and_canvases(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the image or canvas role"""
 
@@ -1134,7 +1222,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_images_and_image_maps(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the image or image map role"""
 
@@ -1143,7 +1232,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_image_maps(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the image map role"""
 
@@ -1152,7 +1242,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_info_bars(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the info bar role"""
 
@@ -1161,7 +1252,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_input_method_windows(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the input method window role"""
 
@@ -1170,7 +1262,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_internal_frames(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the internal frame role"""
 
@@ -1179,7 +1272,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_labels(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the label role"""
 
@@ -1188,7 +1282,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_labels_and_captions(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the label or caption role"""
 
@@ -1197,7 +1292,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_landmarks(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the landmark role"""
 
@@ -1206,7 +1302,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_large_containers(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root that we consider a large container"""
 
@@ -1215,7 +1312,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_layered_panes(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the layered pane role"""
 
@@ -1224,7 +1322,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_level_bars(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the level bar role"""
 
@@ -1248,7 +1347,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_live_regions(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root that are live regions"""
 
@@ -1258,13 +1358,12 @@ class AXUtilitiesCollection:
         tokens = ["AXUtilitiesCollection:", inspect.currentframe(), "Root:", root, "pred:", pred]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        attributes = []
         levels = ["off", "polite", "assertive"]
-        for level in levels:
-            attributes.append("container-live:" + level)
+        attributes = ["container-live:" + level for level in levels]
 
         rule = AXCollection.create_match_rule(
-            attributes=attributes, attribute_match_type=Atspi.CollectionMatchType.ANY
+            attributes=attributes,
+            attribute_match_type=Atspi.CollectionMatchType.ANY,
         )
         matches = AXCollection.get_all_matches(root, rule)
         if pred is not None:
@@ -1290,7 +1389,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_list_boxes(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the list box role"""
 
@@ -1315,7 +1415,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_logs(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the log role"""
 
@@ -1324,7 +1425,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_marks(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the mark role"""
 
@@ -1333,7 +1435,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_marquees(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the marquee role"""
 
@@ -1342,7 +1445,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_maths(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the math role"""
 
@@ -1351,7 +1455,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_math_fractions(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the math fraction role"""
 
@@ -1360,7 +1465,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_math_roots(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the math root role"""
 
@@ -1369,7 +1475,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_menus(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the menu role"""
 
@@ -1378,7 +1485,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_menu_bars(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the menubar role"""
 
@@ -1387,7 +1495,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_menu_items(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the menu item role"""
 
@@ -1396,7 +1505,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_menu_items_of_any_kind(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root that has any menu item role"""
 
@@ -1405,7 +1515,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_menu_related_objects(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root that has any menu-related role"""
 
@@ -1414,7 +1525,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_modal_dialogs(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the alert or dialog role and modal state"""
 
@@ -1424,7 +1536,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_multi_line_entries(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the entry role and multiline state"""
 
@@ -1434,7 +1547,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_notifications(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the notification role"""
 
@@ -1443,7 +1557,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_option_panes(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the option pane role"""
 
@@ -1452,7 +1567,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_pages(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the page role"""
 
@@ -1461,7 +1577,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_page_tabs(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the page tab role"""
 
@@ -1470,7 +1587,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_page_tab_lists(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the page tab list role"""
 
@@ -1479,7 +1597,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_page_tab_list_related_objects(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the page tab or page tab list role"""
 
@@ -1488,7 +1607,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_panels(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the panel role"""
 
@@ -1510,7 +1630,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_password_texts(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the password text role"""
 
@@ -1519,7 +1640,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_popup_menus(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the popup menu role"""
 
@@ -1528,7 +1650,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_progress_bars(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the progress bar role"""
 
@@ -1537,7 +1660,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_push_buttons(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the push button role"""
 
@@ -1546,7 +1670,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_push_button_menus(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the push button menu role"""
 
@@ -1555,7 +1680,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_radio_buttons(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the radio button role"""
 
@@ -1564,7 +1690,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_radio_menu_items(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the radio menu item role"""
 
@@ -1573,7 +1700,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_ratings(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the rating role"""
 
@@ -1582,7 +1710,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_root_panes(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the root pane role"""
 
@@ -1591,7 +1720,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_row_headers(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the row header role"""
 
@@ -1600,7 +1730,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_rulers(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the ruler role"""
 
@@ -1609,7 +1740,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_scroll_bars(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the scrollbar role"""
 
@@ -1618,7 +1750,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_scroll_panes(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the scroll pane role"""
 
@@ -1627,7 +1760,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_sections(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the section role"""
 
@@ -1636,7 +1770,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_selectable_objects(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root which are selectable"""
 
@@ -1645,7 +1780,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_selected_objects(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root which are selected"""
 
@@ -1654,7 +1790,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_separators(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the separator role"""
 
@@ -1663,7 +1800,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_set_containers(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with a set container role"""
 
@@ -1672,7 +1810,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_showing_objects(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root which are showing"""
 
@@ -1681,7 +1820,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_showing_and_visible_objects(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root which are showing and visible"""
 
@@ -1690,7 +1830,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_showing_or_visible_objects(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root which are showing or visible"""
 
@@ -1699,7 +1840,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_single_line_entries(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the entry role and multiline state"""
 
@@ -1709,7 +1851,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_sliders(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the slider role"""
 
@@ -1718,7 +1861,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_spin_buttons(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the spin button role"""
 
@@ -1727,7 +1871,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_split_panes(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the split pane role"""
 
@@ -1736,7 +1881,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_statics(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the static role"""
 
@@ -1745,7 +1891,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_status_bars(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the statusbar role"""
 
@@ -1754,7 +1901,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_subscripts(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the subscript role"""
 
@@ -1763,7 +1911,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_subscripts_and_superscripts(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the subscript or superscript role"""
 
@@ -1772,7 +1921,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_suggestions(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the suggestion role"""
 
@@ -1781,7 +1931,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_superscripts(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the superscript role"""
 
@@ -1790,7 +1941,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_supports_action(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root which support the action interface"""
 
@@ -1799,7 +1951,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_supports_document(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root which support the document interface"""
 
@@ -1808,7 +1961,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_supports_editable_text(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root which support the editable text interface"""
 
@@ -1817,7 +1971,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_supports_hypertext(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root which support the hypertext interface"""
 
@@ -1826,7 +1981,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_supports_hyperlink(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root which support the hyperlink interface"""
 
@@ -1835,7 +1991,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_supports_selection(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root which support the selection interface"""
 
@@ -1844,7 +2001,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_supports_table(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root which support the table interface"""
 
@@ -1853,7 +2011,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_supports_table_cell(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root which support the table cell interface"""
 
@@ -1862,7 +2021,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_supports_text(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root which support the text interface"""
 
@@ -1871,7 +2031,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_supports_value(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root which support the value interface"""
 
@@ -1880,7 +2041,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_tables(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the table role"""
 
@@ -1894,7 +2056,9 @@ class AXUtilitiesCollection:
         attributes = ["layout-guess:true"]
         attribute_match_type = Atspi.CollectionMatchType.NONE
         rule = AXCollection.create_match_rule(
-            roles=roles, attributes=attributes, attribute_match_type=attribute_match_type
+            roles=roles,
+            attributes=attributes,
+            attribute_match_type=attribute_match_type,
         )
 
         tables = AXCollection.get_all_matches(root, rule)
@@ -1905,7 +2069,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_table_cells(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the table cell role"""
 
@@ -1914,7 +2079,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_table_cells_and_headers(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the table cell or a header-related role"""
 
@@ -1923,7 +2089,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_table_column_headers(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the table column header role"""
 
@@ -1932,7 +2099,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_table_headers(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root that has a table header related role"""
 
@@ -1952,7 +2120,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_table_rows(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the table row role"""
 
@@ -1961,7 +2130,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_table_row_headers(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the table row header role"""
 
@@ -1970,7 +2140,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_tearoff_menu_items(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the tearoff menu item role"""
 
@@ -1979,7 +2150,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_terminals(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the terminal role"""
 
@@ -1988,7 +2160,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_texts(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the text role"""
 
@@ -1997,7 +2170,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_text_inputs(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root that has any role associated with textual input"""
 
@@ -2006,7 +2180,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_timers(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the timer role"""
 
@@ -2015,7 +2190,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_title_bars(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the titlebar role"""
 
@@ -2024,7 +2200,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_toggle_buttons(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the toggle button role"""
 
@@ -2033,7 +2210,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_tool_bars(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the toolbar role"""
 
@@ -2042,7 +2220,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_tool_tips(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the tooltip role"""
 
@@ -2051,7 +2230,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_trees(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the tree role"""
 
@@ -2060,7 +2240,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_trees_and_tree_tables(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the tree or tree table role"""
 
@@ -2069,7 +2250,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_tree_related_objects(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root that has a tree related role"""
 
@@ -2078,7 +2260,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_tree_items(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the tree item role"""
 
@@ -2087,7 +2270,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_tree_tables(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the tree table role"""
 
@@ -2115,7 +2299,10 @@ class AXUtilitiesCollection:
         else:
             states = [Atspi.StateType.SHOWING]
             matches = AXUtilitiesCollection.find_all_with_role_and_all_states(
-                root, roles, states, _pred
+                root,
+                roles,
+                states,
+                _pred,
             )
 
         return matches
@@ -2137,7 +2324,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_vertical_scrollbars(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root that is a vertical scrollbar"""
 
@@ -2147,7 +2335,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_vertical_separators(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root that is a vertical separator"""
 
@@ -2157,7 +2346,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_vertical_sliders(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root that is a vertical slider"""
 
@@ -2167,7 +2357,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_visible_objects(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root which are visible"""
 
@@ -2176,7 +2367,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_videos(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the video role"""
 
@@ -2185,7 +2377,8 @@ class AXUtilitiesCollection:
 
     @staticmethod
     def find_all_viewports(
-        root: Atspi.Accessible, pred: Callable[[Atspi.Accessible], bool] | None = None
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
     ) -> list[Atspi.Accessible]:
         """Returns all descendants of root with the viewport role"""
 
@@ -2248,7 +2441,9 @@ class AXUtilitiesCollection:
         roles = [Atspi.Role.COMBO_BOX, Atspi.Role.LIST_BOX]
         states = [Atspi.StateType.SHOWING, Atspi.StateType.VISIBLE]
         rule = AXCollection.create_match_rule(
-            roles=roles, role_match_type=Atspi.CollectionMatchType.ANY, states=states
+            roles=roles,
+            role_match_type=Atspi.CollectionMatchType.ANY,
+            states=states,
         )
         return bool(AXCollection.get_first_match(root, rule))
 
@@ -2267,7 +2462,9 @@ class AXUtilitiesCollection:
         roles = [Atspi.Role.SCROLL_PANE]
         states = [Atspi.StateType.SHOWING, Atspi.StateType.VISIBLE]
         rule = AXCollection.create_match_rule(
-            roles=roles, role_match_type=Atspi.CollectionMatchType.ANY, states=states
+            roles=roles,
+            role_match_type=Atspi.CollectionMatchType.ANY,
+            states=states,
         )
         return bool(AXCollection.get_first_match(root, rule))
 
@@ -2287,6 +2484,8 @@ class AXUtilitiesCollection:
         roles = [Atspi.Role.TREE, Atspi.Role.TREE_TABLE]
         states = [Atspi.StateType.SHOWING, Atspi.StateType.VISIBLE]
         rule = AXCollection.create_match_rule(
-            roles=roles, role_match_type=Atspi.CollectionMatchType.ANY, states=states
+            roles=roles,
+            role_match_type=Atspi.CollectionMatchType.ANY,
+            states=states,
         )
         return bool(AXCollection.get_first_match(root, rule))

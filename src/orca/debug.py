@@ -22,11 +22,11 @@
 """Handles writing debugging messages to the debug file or stderr."""
 
 import inspect
-import traceback
 import re
 import sys
 import threading
-from datetime import datetime
+import traceback
+from datetime import datetime, timezone
 from typing import Any, TextIO
 
 from .ax_utilities_debugging import AXUtilitiesDebugging
@@ -55,7 +55,10 @@ def print_exception(level: int) -> None:
 
 
 def print_tokens(
-    level: int, tokens: list[Any], timestamp: bool = False, stack: bool = False
+    level: int,
+    tokens: list[Any],
+    timestamp: bool = False,
+    stack: bool = False,
 ) -> None:
     """Prints out each token as a human-consumable string."""
 
@@ -109,7 +112,8 @@ def _print_text(level: int, text: str = "", timestamp: bool = False, stack: bool
 
     if timestamp:
         text = text.replace("\n", f"\n{' ' * 18}")
-        text = f"{datetime.now().strftime('%H:%M:%S.%f')} - {text}"
+        local_time = datetime.now(tz=timezone.utc).astimezone()
+        text = f"{local_time.strftime('%H:%M:%S.%f')} - {text}"
     if stack:
         text += f" {_stack_as_string()}"
 

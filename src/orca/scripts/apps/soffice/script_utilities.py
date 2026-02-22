@@ -24,17 +24,18 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
-from orca import caret_navigator
-from orca import debug
-from orca import focus_manager
-from orca import input_event_manager
-from orca import messages
-from orca import presentation_manager
-from orca import script_utilities
-from orca import table_navigator
+from orca import (
+    caret_navigator,
+    debug,
+    focus_manager,
+    input_event_manager,
+    messages,
+    presentation_manager,
+    script_utilities,
+    table_navigator,
+)
 from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
 from orca.ax_table import AXTable
@@ -72,14 +73,18 @@ class Utilities(script_utilities.Utilities):
         # TODO - JD: Is this still needed? See also _get_cell_name_for_coordinates.
         name_list = AXObject.get_name(cell).split()
         for name in name_list:
-            name = name.replace(".", "")
-            if not name.isalpha() and name.isalnum():
-                return name
+            cleaned_name = name.replace(".", "")
+            if not cleaned_name.isalpha() and cleaned_name.isalnum():
+                return cleaned_name
 
         return ""
 
     def _get_cell_name_for_coordinates(
-        self, obj: Atspi.Accessible, row: int, col: int, include_contents: bool = False
+        self,
+        obj: Atspi.Accessible,
+        row: int,
+        col: int,
+        include_contents: bool = False,
     ) -> str:
         # https://bugs.documentfoundation.org/show_bug.cgi?id=158030
         cell = AXTable.get_cell_at(obj, row, col)
@@ -91,7 +96,9 @@ class Utilities(script_utilities.Utilities):
         return name.strip()
 
     def get_word_at_offset_adjusted_for_navigation(
-        self, obj: Atspi.Accessible, offset: int | None = None
+        self,
+        obj: Atspi.Accessible,
+        offset: int | None = None,
     ) -> tuple[str, int, int]:
         """Returns the word in obj at the specified or current offset."""
 
@@ -101,7 +108,9 @@ class Utilities(script_utilities.Utilities):
         return AXText.get_word_at_offset(obj, offset)
 
     def should_read_full_row(
-        self, obj: Atspi.Accessible, previous_object: Atspi.Accessible | None = None
+        self,
+        obj: Atspi.Accessible,
+        previous_object: Atspi.Accessible | None = None,
     ) -> bool:
         """Returns True if the full row in obj should be read."""
 
@@ -139,7 +148,8 @@ class Utilities(script_utilities.Utilities):
         return res
 
     def _get_coordinates_for_selected_range(
-        self, obj: Atspi.Accessible
+        self,
+        obj: Atspi.Accessible,
     ) -> tuple[tuple[int, int], tuple[int, int]]:
         if not (AXObject.supports_table(obj) and AXObject.supports_selection(obj)):
             tokens = ["SOFFICE:", obj, "does not implement both selection and table"]
@@ -167,7 +177,7 @@ class Utilities(script_utilities.Utilities):
         cell1 = self._get_cell_name_for_coordinates(obj, *first_coords, True)
         cell2 = self._get_cell_name_for_coordinates(obj, *last_coords, True)
         presentation_manager.get_manager().speak_message(
-            messages.CELL_RANGE_SELECTED % (cell1, cell2)
+            messages.CELL_RANGE_SELECTED % (cell1, cell2),
         )
         return True
 
@@ -191,7 +201,7 @@ class Utilities(script_utilities.Utilities):
         unselected = sorted(previous.difference(current))
         selected = sorted(current.difference(previous))
         focus_coords = AXTable.get_cell_coordinates(
-            focus_manager.get_manager().get_locus_of_focus()
+            focus_manager.get_manager().get_locus_of_focus(),
         )
         if focus_coords in selected:
             selected.remove(focus_coords)
@@ -267,21 +277,21 @@ class Utilities(script_utilities.Utilities):
             msgs.append(messages.TABLE_COLUMN_UNSELECTED % unselected_cols[0])
         elif len(unselected_cols) > 1:
             msgs.append(
-                messages.TABLE_COLUMN_RANGE_UNSELECTED % (unselected_cols[0], unselected_cols[-1])
+                messages.TABLE_COLUMN_RANGE_UNSELECTED % (unselected_cols[0], unselected_cols[-1]),
             )
 
         if len(unselected_rows) == 1:
             msgs.append(messages.TABLE_ROW_UNSELECTED % unselected_rows[0])
         elif len(unselected_rows) > 1:
             msgs.append(
-                messages.TABLE_ROW_RANGE_UNSELECTED % (unselected_rows[0], unselected_rows[-1])
+                messages.TABLE_ROW_RANGE_UNSELECTED % (unselected_rows[0], unselected_rows[-1]),
             )
 
         if len(selected_cols) == 1:
             msgs.append(messages.TABLE_COLUMN_SELECTED % selected_cols[0])
         elif len(selected_cols) > 1:
             msgs.append(
-                messages.TABLE_COLUMN_RANGE_SELECTED % (selected_cols[0], selected_cols[-1])
+                messages.TABLE_COLUMN_RANGE_SELECTED % (selected_cols[0], selected_cols[-1]),
             )
 
         if len(selected_rows) == 1:

@@ -30,23 +30,17 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
-import time
 import threading
+import time
 from difflib import SequenceMatcher
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import gi
 
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import braille
-from . import debug
-from . import focus_manager
-from . import messages
-from . import object_properties
-from . import speech_presenter
+from . import braille, debug, focus_manager, messages, object_properties, speech_presenter
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
@@ -55,25 +49,27 @@ from .ax_utilities import AXUtilities
 from .ax_value import AXValue
 
 if TYPE_CHECKING:
+    from typing import ClassVar
+
     from . import script
 
 
 class Generator:
     """Superclass of classes used to generate presentations for objects."""
 
-    CACHED_DESCRIPTION: dict = {}
-    CACHED_IMAGE_DESCRIPTION: dict = {}
-    CACHED_IS_NAMELESS_TOGGLE: dict = {}
-    CACHED_NESTING_LEVEL: dict = {}
-    CACHED_STATIC_TEXT: dict = {}
-    CACHED_TEXT_SUBSTRING: dict = {}
-    CACHED_TEXT_LINE: dict = {}
-    CACHED_TEXT: dict = {}
-    CACHED_TEXT_EXPANDING_EOCS: dict = {}
-    CACHED_TREE_ITEM_LEVEL: dict = {}
-    CACHED_DESCENDANTS: dict = {}
-    USED_DESCRIPTION_FOR_NAME: dict = {}
-    USED_DESCRIPTION_FOR_STATIC_TEXT: dict = {}
+    CACHED_DESCRIPTION: ClassVar[dict] = {}
+    CACHED_IMAGE_DESCRIPTION: ClassVar[dict] = {}
+    CACHED_IS_NAMELESS_TOGGLE: ClassVar[dict] = {}
+    CACHED_NESTING_LEVEL: ClassVar[dict] = {}
+    CACHED_STATIC_TEXT: ClassVar[dict] = {}
+    CACHED_TEXT_SUBSTRING: ClassVar[dict] = {}
+    CACHED_TEXT_LINE: ClassVar[dict] = {}
+    CACHED_TEXT: ClassVar[dict] = {}
+    CACHED_TEXT_EXPANDING_EOCS: ClassVar[dict] = {}
+    CACHED_TREE_ITEM_LEVEL: ClassVar[dict] = {}
+    CACHED_DESCENDANTS: ClassVar[dict] = {}
+    USED_DESCRIPTION_FOR_NAME: ClassVar[dict] = {}
+    USED_DESCRIPTION_FOR_STATIC_TEXT: ClassVar[dict] = {}
 
     _lock = threading.Lock()
 
@@ -265,14 +261,14 @@ class Generator:
             args["role"] = self._get_functional_role(obj)
 
         _generator = self._generators.get(  # type: ignore
-            args.get("role") or AXObject.get_role(obj)
+            args.get("role") or AXObject.get_role(obj),
         )
         if _generator is None:
             tokens = [f"{self._mode.upper()} GENERATOR:", obj, "lacks dedicated generator"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             _generator = self._generate_default_presentation
 
-        if not args.get("formatType", None):
+        if not args.get("formatType"):
             if args.get("alreadyFocused", False):
                 args["formatType"] = "focused"
             else:
@@ -1023,7 +1019,9 @@ class Generator:
             return Generator.CACHED_TEXT_EXPANDING_EOCS.get((hash(obj), start, end), [])
 
         text = self._script.utilities.expand_eocs(
-            obj, args.get("startOffset", 0), args.get("endOffset", -1)
+            obj,
+            args.get("startOffset", 0),
+            args.get("endOffset", -1),
         )
         if (
             text.strip()
@@ -1180,7 +1178,8 @@ class Generator:
         args["readingRow"] = True
         result: list[Any] = []
         cells = AXTable.get_showing_cells_in_same_row(
-            obj, clip_to_window=self._script.utilities.is_spreadsheet_cell(obj)
+            obj,
+            clip_to_window=self._script.utilities.is_spreadsheet_cell(obj),
         )
 
         # Remove any pre-calculated values which only apply to obj and not row cells.
@@ -1204,7 +1203,9 @@ class Generator:
     # TODO - JD: If we had dedicated generators for cell types, we wouldn't need this.
     @log_generator_output
     def _generate_column_header_if_toggle_and_no_text(
-        self, obj: Atspi.Accessible, **args
+        self,
+        obj: Atspi.Accessible,
+        **args,
     ) -> list[Any]:
         if not self._get_is_nameless_toggle(obj):
             return []
@@ -1219,7 +1220,9 @@ class Generator:
     # TODO - JD: This needs to also be looked into.
     @log_generator_output
     def _generate_real_active_descendant_displayed_text(
-        self, obj: Atspi.Accessible, **args
+        self,
+        obj: Atspi.Accessible,
+        **args,
     ) -> list[Any]:
         rad = self._script.utilities.active_descendant(obj)
 
@@ -1261,7 +1264,7 @@ class Generator:
             role_string = self.get_localized_role_name(obj, role=Atspi.Role.COLUMN_HEADER)
             if self._mode == "speech":
                 if speech_presenter.get_presenter().use_verbose_speech() and args.get(
-                    "formatType"
+                    "formatType",
                 ) not in ["basicWhereAmI", "detailedWhereAmI"]:
                     text = f"{text} {role_string}"
             elif self._mode == "braille":
@@ -1298,7 +1301,7 @@ class Generator:
         role_string = self.get_localized_role_name(obj, role=Atspi.Role.ROW_HEADER)
         if self._mode == "speech":
             if speech_presenter.get_presenter().use_verbose_speech() and args.get(
-                "formatType"
+                "formatType",
             ) not in ["basicWhereAmI", "detailedWhereAmI"]:
                 text = f"{text} {role_string}"
         elif self._mode == "braille":

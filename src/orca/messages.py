@@ -25,7 +25,7 @@ have been put in their own module so that we can present them in
 the correct language when users change the synthesizer language
 on the fly without having to reload a bunch of modules."""
 
-from .orca_i18n import _, C_, ngettext  # pylint: disable=import-error
+from .orca_i18n import C_, _, ngettext  # pylint: disable=import-error
 from .orca_platform import version  # pylint: disable=import-error
 
 # Translators: Orca has a command to report the battery status. This message
@@ -212,7 +212,7 @@ CLI_NO_DESKTOP_ERROR = _("Cannot start the screen reader because it cannot conne
 CLI_OTHER_ORCAS_ERROR = _(
     "Another screen reader process is already running for this "
     "session.\nRun “orca --replace” to replace that "
-    "process with a new one."
+    "process with a new one.",
 )
 
 # Translators: This string indicates to the user what should be provided when
@@ -225,7 +225,7 @@ CLI_IMPORT_SETTINGS = _(
     "Import settings from DIR into dconf (overwrites current settings).\n"
     "To back up first: dconf dump /org/gnome/orca/ > backup.ini\n"
     "To restore: dconf reset -f /org/gnome/orca/ && "
-    "dconf load /org/gnome/orca/ < backup.ini"
+    "dconf load /org/gnome/orca/ < backup.ini",
 )
 
 # Translators: This string indicates to the user what should be provided when
@@ -1187,7 +1187,7 @@ LEARN_MODE_START_SPEECH = _(
     "Entering learn mode.  Press any key to hear its function.  "
     "To view the screen reader's documentation, press F1. "
     "To get a list of the screen reader's shortcuts, press F2. "
-    "To exit learn mode, press the escape key."
+    "To exit learn mode, press the escape key.",
 )
 
 # Translators: This message is presented when a user is navigating within a
@@ -2752,7 +2752,9 @@ def repeated_char_count(repeated_char, count):
     # of text. For example: "22 space characters". The %d is the number and the
     # %s is the spoken word for the character.
     return ngettext(
-        "%(count)d %(repeatChar)s character", "%(count)d %(repeatChar)s characters", count
+        "%(count)d %(repeatChar)s character",
+        "%(count)d %(repeatChar)s characters",
+        count,
     ) % {"count": count, "repeatChar": repeated_char}
 
 
@@ -2762,7 +2764,9 @@ def selected_items_count(selected, total):
     # Translators: This message is presented to indicate the number of selected
     # objects (e.g. icons) and the total number of those objects.
     return ngettext(
-        "%(index)d of %(total)d item selected", "%(index)d of %(total)d items selected", total
+        "%(index)d of %(total)d item selected",
+        "%(index)d of %(total)d items selected",
+        total,
     ) % {"index": selected, "total": total}
 
 

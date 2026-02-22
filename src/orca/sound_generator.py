@@ -28,7 +28,6 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import os
 from typing import TYPE_CHECKING, Any
 
@@ -37,10 +36,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
 
-from . import debug
-from . import generator
-from . import object_properties
-from . import sound_presenter
+from . import debug, generator, object_properties, sound_presenter
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
@@ -1176,13 +1172,15 @@ class SoundGenerator(generator.Generator):
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
             return self._generate_state_expanded(obj, **args) or self._generate_state_pressed(
-                obj, **args
+                obj,
+                **args,
             )
 
         result = self._generate_default_prefix(obj, **args)
         result += self._generate_accessible_role(obj, **args)
         result += self._generate_state_expanded(obj, **args) or self._generate_state_pressed(
-            obj, **args
+            obj,
+            **args,
         )
         result += self._generate_state_sensitive(obj, **args)
         result += self._generate_default_suffix(obj, **args)

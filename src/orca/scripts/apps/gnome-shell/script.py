@@ -25,15 +25,13 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
-from orca import debug
-from orca import focus_manager
-from orca import presentation_manager
+from orca import debug, focus_manager, presentation_manager
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.scripts import default
+
 from .script_utilities import Utilities
 
 if TYPE_CHECKING:
@@ -120,7 +118,8 @@ class Script(default.Script):
         # If we're already in a dialog, and a label inside that dialog changes its name,
         # present the new name. Example: the "Command not found" label in the Run dialog.
         dialog = AXObject.find_ancestor(
-            focus_manager.get_manager().get_locus_of_focus(), AXUtilities.is_dialog
+            focus_manager.get_manager().get_locus_of_focus(),
+            AXUtilities.is_dialog,
         )
         tokens = ["GNOME SHELL: focus is in dialog:", dialog]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)

@@ -28,7 +28,6 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import os
 import re
 import subprocess
@@ -38,14 +37,13 @@ import gi
 
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
-from gi.repository import Atspi
-from gi.repository import GLib
-from gi.repository import Gdk  # pylint: disable=no-name-in-module
+from gi.repository import (
+    Atspi,
+    Gdk,  # pylint: disable=no-name-in-module
+    GLib,
+)
 
-from . import debug
-from . import gsettings_registry
-from . import keybindings
-from . import input_event_manager
+from . import debug, gsettings_registry, input_event_manager, keybindings
 
 DESKTOP_MODIFIER_KEYS: list[str] = ["Insert", "KP_Insert"]
 LAPTOP_MODIFIER_KEYS: list[str] = ["Caps_Lock", "Shift_Lock"]
@@ -229,7 +227,10 @@ class OrcaModifierManager:
         """Returns the list of Orca modifier keys."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            "keybindings", "orca-modifier-keys", "as", default=["Insert", "KP_Insert"]
+            "keybindings",
+            "orca-modifier-keys",
+            "as",
+            default=["Insert", "KP_Insert"],
         )
 
     def set_modifiers_for_layout(self, is_desktop: bool) -> None:
@@ -241,7 +242,9 @@ class OrcaModifierManager:
             new_keys = LAPTOP_MODIFIER_KEYS
 
         gsettings_registry.get_registry().set_runtime_value(
-            "keybindings", "orca-modifier-keys", new_keys
+            "keybindings",
+            "orca-modifier-keys",
+            new_keys,
         )
 
         layout = "desktop" if is_desktop else "laptop"
@@ -269,7 +272,9 @@ class OrcaModifierManager:
 
         self._restore_original_xkbcomp()
         with subprocess.Popen(
-            ["xkbcomp", display, "-"], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL
+            ["xkbcomp", display, "-"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL,
         ) as p:
             self._original_xmodmap, _ = p.communicate()
         self._create_orca_xmodmap()
@@ -316,7 +321,10 @@ class OrcaModifierManager:
 
         self._caps_lock_cleared = False
         with subprocess.Popen(
-            ["xkbcomp", "-w0", "-", display], stdin=subprocess.PIPE, stdout=None, stderr=None
+            ["xkbcomp", "-w0", "-", display],
+            stdin=subprocess.PIPE,
+            stdout=None,
+            stderr=None,
         ) as p:
             p.communicate(self._original_xmodmap)
 
@@ -342,18 +350,25 @@ class OrcaModifierManager:
             return
 
         interpret_caps_line_prog = re.compile(
-            r"^\s*interpret\s+Caps[_+]Lock[_+]AnyOfOrNone\s*\(all\)\s*{\s*$", re.I
+            r"^\s*interpret\s+Caps[_+]Lock[_+]AnyOfOrNone\s*\(all\)\s*{\s*$",
+            re.IGNORECASE,
         )
         normal_caps_line_prog = re.compile(
-            r"^\s*action\s*=\s*LockMods\s*\(\s*modifiers\s*=\s*Lock\s*\)\s*;\s*$", re.I
+            r"^\s*action\s*=\s*LockMods\s*\(\s*modifiers\s*=\s*Lock\s*\)\s*;\s*$",
+            re.IGNORECASE,
         )
         interpret_shift_line_prog = re.compile(
-            r"^\s*interpret\s+Shift[_+]Lock[_+]AnyOf\s*\(\s*Shift\s*\+\s*Lock\s*\)\s*{\s*$", re.I
+            r"^\s*interpret\s+Shift[_+]Lock[_+]AnyOf\s*\(\s*Shift\s*\+\s*Lock\s*\)\s*{\s*$",
+            re.IGNORECASE,
         )
         normal_shift_line_prog = re.compile(
-            r"^\s*action\s*=\s*LockMods\s*\(\s*modifiers\s*=\s*Shift\s*\)\s*;\s*$", re.I
+            r"^\s*action\s*=\s*LockMods\s*\(\s*modifiers\s*=\s*Shift\s*\)\s*;\s*$",
+            re.IGNORECASE,
         )
-        disabled_mod_line_prog = re.compile(r"^\s*action\s*=\s*NoAction\s*\(\s*\)\s*;\s*$", re.I)
+        disabled_mod_line_prog = re.compile(
+            r"^\s*action\s*=\s*NoAction\s*\(\s*\)\s*;\s*$",
+            re.IGNORECASE,
+        )
         normal_caps_line = "        action= LockMods(modifiers=Lock);"
         normal_shift_line = "        action= LockMods(modifiers=Shift);"
         disabled_mod_line = "        action= NoAction();"
@@ -372,10 +387,9 @@ class OrcaModifierManager:
                     if normal_caps_line_prog.match(line):
                         lines[i] = disabled_mod_line
                         modified = True
-                else:
-                    if disabled_mod_line_prog.match(line):
-                        lines[i] = normal_caps_line
-                        modified = True
+                elif disabled_mod_line_prog.match(line):
+                    lines[i] = normal_caps_line
+                    modified = True
                 if line.find("}"):
                     found_caps_interpret_section = False
             elif found_shift_interpret_section:
@@ -383,10 +397,9 @@ class OrcaModifierManager:
                     if normal_shift_line_prog.match(line):
                         lines[i] = disabled_mod_line
                         modified = True
-                else:
-                    if disabled_mod_line_prog.match(line):
-                        lines[i] = normal_shift_line
-                        modified = True
+                elif disabled_mod_line_prog.match(line):
+                    lines[i] = normal_shift_line
+                    modified = True
                 if line.find("}"):
                     found_shift_interpret_section = False
         if modified:
@@ -394,7 +407,10 @@ class OrcaModifierManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
             with subprocess.Popen(
-                ["xkbcomp", "-w0", "-", display], stdin=subprocess.PIPE, stdout=None, stderr=None
+                ["xkbcomp", "-w0", "-", display],
+                stdin=subprocess.PIPE,
+                stdout=None,
+                stderr=None,
             ) as p:
                 p.communicate(bytes("\n".join(lines), "UTF-8"))
         else:

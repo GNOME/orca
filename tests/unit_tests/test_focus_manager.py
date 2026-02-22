@@ -32,6 +32,7 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
+
 import gi
 import pytest
 
@@ -39,8 +40,9 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -48,7 +50,12 @@ class TestFocusManager:
     """Test FocusManager class methods."""
 
     def _setup_locus_of_focus_ax_mocks(
-        self, test_context, mock_app=None, is_dead=False, cell_coords=(-1, -1), caret_offset=-1
+        self,
+        test_context,
+        mock_app=None,
+        is_dead=False,
+        cell_coords=(-1, -1),
+        caret_offset=-1,
     ):
         """Set up common AX object mocks for set_locus_of_focus testing scenarios.
 
@@ -57,9 +64,9 @@ class TestFocusManager:
         """
 
         from orca.ax_object import AXObject
-        from orca.ax_utilities import AXUtilities
         from orca.ax_table import AXTable
         from orca.ax_text import AXText
+        from orca.ax_utilities import AXUtilities
 
         test_context.patch_object(AXObject, "clear_cache", new=test_context.Mock())
         test_context.patch_object(AXObject, "is_dead", return_value=is_dead)
@@ -71,7 +78,9 @@ class TestFocusManager:
             test_context.patch_object(AXUtilities, "get_application", new=test_context.Mock())
 
         test_context.patch_object(
-            AXUtilities, "save_object_info_for_events", new=test_context.Mock()
+            AXUtilities,
+            "save_object_info_for_events",
+            new=test_context.Mock(),
         )
 
         mock_get_cell_coordinates = test_context.Mock(return_value=cell_coords)
@@ -82,7 +91,9 @@ class TestFocusManager:
 
         mock_update_cached_text = test_context.Mock()
         test_context.patch_object(
-            AXText, "update_cached_selected_text", new=mock_update_cached_text
+            AXText,
+            "update_cached_selected_text",
+            new=mock_update_cached_text,
         )
 
         return mock_get_cell_coordinates, mock_get_caret_offset, mock_update_cached_text
@@ -197,7 +208,9 @@ class TestFocusManager:
         test_context.patch_object(manager, "_focus", new=test_context.Mock(spec=Atspi.Accessible))
         test_context.patch_object(manager, "_window", new=test_context.Mock(spec=Atspi.Accessible))
         test_context.patch_object(
-            manager, "_object_of_interest", new=test_context.Mock(spec=Atspi.Accessible)
+            manager,
+            "_object_of_interest",
+            new=test_context.Mock(spec=Atspi.Accessible),
         )
         manager._active_mode = "focus-tracking"
 
@@ -214,8 +227,8 @@ class TestFocusManager:
         """Test FocusManager.find_focused_object."""
 
         self._setup_dependencies(test_context)
-        from orca.focus_manager import FocusManager
         from orca.ax_utilities import AXUtilities
+        from orca.focus_manager import FocusManager
 
         manager = FocusManager()
         mock_window = test_context.Mock(spec=Atspi.Accessible)
@@ -319,7 +332,12 @@ class TestFocusManager:
         ],
     )
     def test_focus_is_in_active_window(
-        self, test_context, focus, window, is_ancestor, expected
+        self,
+        test_context,
+        focus,
+        window,
+        is_ancestor,
+        expected,
     ) -> None:
         """Test FocusManager.focus_is_in_active_window."""
 
@@ -351,11 +369,16 @@ class TestFocusManager:
         ],
     )
     def test_emit_region_changed_scenarios(  # pylint: disable=too-many-arguments
-        self, test_context, start_offset, end_offset, mode, use_null_object
+        self,
+        test_context,
+        start_offset,
+        end_offset,
+        mode,
+        use_null_object,
     ) -> None:
         """Test FocusManager.emit_region_changed with various scenarios."""
         essential_modules = self._setup_dependencies(test_context)
-        from orca.focus_manager import FocusManager, FOCUS_TRACKING, FLAT_REVIEW
+        from orca.focus_manager import FLAT_REVIEW, FOCUS_TRACKING, FocusManager
 
         manager = FocusManager()
 
@@ -439,7 +462,11 @@ class TestFocusManager:
         ],
     )
     def test_set_locus_of_focus(
-        self, test_context, force, obj_equals_current_focus, notify_script
+        self,
+        test_context,
+        force,
+        obj_equals_current_focus,
+        notify_script,
     ) -> None:
         """Test FocusManager.set_locus_of_focus."""
 
@@ -454,7 +481,9 @@ class TestFocusManager:
             manager._focus = mock_obj
         else:
             test_context.patch_object(
-                manager, "_focus", new=test_context.Mock(spec=Atspi.Accessible)
+                manager,
+                "_focus",
+                new=test_context.Mock(spec=Atspi.Accessible),
             )
         script_manager_mock = essential_modules["orca.script_manager"]
         manager_instance = script_manager_mock.get_manager.return_value
@@ -477,8 +506,8 @@ class TestFocusManager:
         """Test FocusManager.set_locus_of_focus with null object."""
 
         self._setup_dependencies(test_context)
-        from orca.focus_manager import FocusManager
         from orca.ax_object import AXObject
+        from orca.focus_manager import FocusManager
 
         test_context.patch_object(AXObject, "is_valid", side_effect=lambda obj: obj is not None)
         manager = FocusManager()
@@ -522,7 +551,9 @@ class TestFocusManager:
         result = manager.active_window_is_active()
         assert result is True
         mock_clear.assert_called_once_with(
-            mock_window, False, "Ensuring the active window is really active."
+            mock_window,
+            False,
+            "Ensuring the active window is really active.",
         )
         mock_is_active.assert_called_once_with(mock_window)
 
@@ -568,7 +599,9 @@ class TestFocusManager:
             manager._window = mock_frame
         else:
             test_context.patch_object(
-                manager, "_window", new=test_context.Mock(spec=Atspi.Accessible)
+                manager,
+                "_window",
+                new=test_context.Mock(spec=Atspi.Accessible),
             )
         manager._focus = mock_focus
         from orca.ax_object import AXObject
@@ -577,10 +610,14 @@ class TestFocusManager:
         mock_set_focus = test_context.Mock()
         test_context.patch_object(manager, "set_locus_of_focus", new=mock_set_focus)
         test_context.patch_object(
-            manager, "focus_is_active_window", return_value=focus_is_in_window
+            manager,
+            "focus_is_active_window",
+            return_value=focus_is_in_window,
         )
         test_context.patch_object(
-            manager, "focus_is_in_active_window", return_value=focus_is_in_window
+            manager,
+            "focus_is_in_active_window",
+            return_value=focus_is_in_window,
         )
         test_context.patch_object(AXObject, "has_broken_ancestry", return_value=has_broken_ancestry)
         test_context.patch_object(AXObject, "is_ancestor", return_value=False)
@@ -625,7 +662,8 @@ class TestFocusManager:
         from orca.focus_manager import FocusManager
 
         mock_get_cell_coordinates = self._setup_locus_of_focus_ax_mocks(
-            test_context, cell_coords=(5, 3)
+            test_context,
+            cell_coords=(5, 3),
         )[0]
         manager = FocusManager()
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -654,15 +692,16 @@ class TestFocusManager:
         assert offset == 42
 
     def test_set_locus_of_focus_none_object_coordinates(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test FocusManager.set_locus_of_focus handles None object coordinates properly."""
 
         self._setup_dependencies(test_context)
-        from orca.focus_manager import FocusManager
+        from orca.ax_object import AXObject
         from orca.ax_table import AXTable
         from orca.ax_text import AXText
-        from orca.ax_object import AXObject
+        from orca.focus_manager import FocusManager
 
         test_context.patch_object(AXObject, "is_valid", side_effect=lambda obj: obj is not None)
         manager = FocusManager()
@@ -673,7 +712,9 @@ class TestFocusManager:
         test_context.patch_object(AXText, "get_caret_offset", new=mock_get_caret_offset)
         mock_update_cached_selected_text = test_context.Mock()
         test_context.patch_object(
-            AXText, "update_cached_selected_text", new=mock_update_cached_selected_text
+            AXText,
+            "update_cached_selected_text",
+            new=mock_update_cached_selected_text,
         )
         manager.set_locus_of_focus(None, None)
 
@@ -696,7 +737,11 @@ class TestFocusManager:
         ],
     )
     def test_cursor_position_debug_logging(
-        self, test_context: OrcaTestContext, method_name, attribute_name, test_offset
+        self,
+        test_context: OrcaTestContext,
+        method_name,
+        attribute_name,
+        test_offset,
     ) -> None:
         """Test cursor position methods log debug information."""
 
@@ -729,7 +774,8 @@ class TestFocusManager:
         essential_modules["orca.debug"].print_message.assert_called()
 
     def test_set_locus_of_focus_with_event_and_force_flag(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test FocusManager.set_locus_of_focus with event and force flag."""
 
@@ -746,7 +792,7 @@ class TestFocusManager:
         """Test reset_active_mode sets FOCUS_TRACKING and emits signal when focus exists."""
 
         self._setup_dependencies(test_context)
-        from orca.focus_manager import FocusManager, FOCUS_TRACKING
+        from orca.focus_manager import FOCUS_TRACKING, FocusManager
 
         manager = FocusManager()
         mock_focus = test_context.Mock(spec=Atspi.Accessible)
@@ -777,7 +823,7 @@ class TestFocusManager:
         """Test reset_active_mode works without a reason string."""
 
         self._setup_dependencies(test_context)
-        from orca.focus_manager import FocusManager, FOCUS_TRACKING
+        from orca.focus_manager import FOCUS_TRACKING, FocusManager
 
         manager = FocusManager()
         mock_focus = test_context.Mock(spec=Atspi.Accessible)

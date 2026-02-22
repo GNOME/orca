@@ -24,24 +24,29 @@
 
 """Utilities for obtaining relation-related information."""
 
+from __future__ import annotations
+
 import threading
 import time
+from typing import TYPE_CHECKING
 
 import gi
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
 from . import debug
 from .ax_object import AXObject
+
+if TYPE_CHECKING:
+    from typing import ClassVar
 
 
 class AXUtilitiesRelation:
     """Utilities for obtaining relation-related information."""
 
-    RELATIONS: dict[int, list[Atspi.Relation]] = {}
-    TARGETS: dict[int, dict[Atspi.RelationType, list[Atspi.Accessible]]] = {}
+    RELATIONS: ClassVar[dict[int, list[Atspi.Relation]]] = {}
+    TARGETS: ClassVar[dict[int, dict[Atspi.RelationType, list[Atspi.Accessible]]]] = {}
 
     _lock = threading.Lock()
 
@@ -106,7 +111,8 @@ class AXUtilitiesRelation:
 
     @staticmethod
     def _get_relation(
-        obj: Atspi.Accessible, relation_type: Atspi.RelationType
+        obj: Atspi.Accessible,
+        relation_type: Atspi.RelationType,
     ) -> Atspi.Relation | None:
         """Returns the specified Atspi.Relation for obj"""
 
@@ -118,7 +124,8 @@ class AXUtilitiesRelation:
 
     @staticmethod
     def get_relation_targets_for_debugging(
-        obj: Atspi.Accessible, relation_type: Atspi.RelationType
+        obj: Atspi.Accessible,
+        relation_type: Atspi.RelationType,
     ) -> list[Atspi.Accessible]:
         """Returns the list of targets with the specified relation type to obj."""
 
@@ -126,7 +133,8 @@ class AXUtilitiesRelation:
 
     @staticmethod
     def _get_relation_targets(
-        obj: Atspi.Accessible, relation_type: Atspi.RelationType
+        obj: Atspi.Accessible,
+        relation_type: Atspi.RelationType,
     ) -> list[Atspi.Accessible]:
         """Returns the list of targets with the specified relation type to obj."""
 
@@ -277,7 +285,8 @@ class AXUtilitiesRelation:
 
     @staticmethod
     def get_is_labelled_by(
-        obj: Atspi.Accessible, exclude_ancestors: bool = True
+        obj: Atspi.Accessible,
+        exclude_ancestors: bool = True,
     ) -> list[Atspi.Accessible]:
         """Returns a list of accessible objects that obj is labelled by."""
 

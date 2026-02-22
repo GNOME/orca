@@ -25,12 +25,9 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
+from typing import TYPE_CHECKING, Any
 
-from typing import Any, TYPE_CHECKING
-
-from orca import braille
-from orca import braille_generator
-from orca import debug
+from orca import braille, braille_generator, debug
 from orca.scripts import web
 
 if TYPE_CHECKING:
@@ -62,7 +59,9 @@ class BrailleGenerator(web.BrailleGenerator, braille_generator.BrailleGenerator)
 
     @log_generator_output
     def _generate_real_active_descendant_displayed_text(
-        self, obj: Atspi.Accessible, **args
+        self,
+        obj: Atspi.Accessible,
+        **args,
     ) -> list[Any]:
         if self._script.utilities.is_message_list_status_cell(obj):
             return []

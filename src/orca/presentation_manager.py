@@ -25,19 +25,19 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
-from . import braille_presenter
-from . import debug
-from . import focus_manager
-from . import live_region_presenter
-from . import script_manager
-from . import sound_presenter
-from . import speech_manager
-from . import speech_presenter
-from . import typing_echo_presenter
-
-from .acss import ACSS
+from . import (
+    braille_presenter,
+    debug,
+    focus_manager,
+    live_region_presenter,
+    script_manager,
+    sound_presenter,
+    speech_manager,
+    speech_presenter,
+    typing_echo_presenter,
+)
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
 
@@ -47,6 +47,7 @@ if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
+    from .acss import ACSS
     from .input_event import KeyboardEvent
     from .scripts import default
     from .sound import Icon, Tone
@@ -158,7 +159,8 @@ class PresentationManager:
         """Displays a single line in braille."""
 
         braille_presenter.get_presenter().present_message(
-            message, restore_previous=restore_previous
+            message,
+            restore_previous=restore_previous,
         )
 
     def spell_item(self, text: str) -> None:
@@ -195,7 +197,10 @@ class PresentationManager:
         if speech_manager.get_manager().get_speech_is_muted():
             return
         speech_presenter.get_presenter().speak_message(
-            text, voice=voice, reset_styles=reset_styles, obj=obj
+            text,
+            voice=voice,
+            reset_styles=reset_styles,
+            obj=obj,
         )
 
     # pylint: disable-next=too-many-arguments
@@ -227,18 +232,27 @@ class PresentationManager:
             if generate_speech:
                 generate_speech = (
                     speech_presenter.get_presenter().should_present_progress_bar_update(
-                        obj, percent, is_same_app, is_same_window
+                        obj,
+                        percent,
+                        is_same_app,
+                        is_same_window,
                     )
                 )
             if generate_braille:
                 generate_braille = (
                     braille_presenter.get_presenter().should_present_progress_bar_update(
-                        obj, percent, is_same_app, is_same_window
+                        obj,
+                        percent,
+                        is_same_app,
+                        is_same_window,
                     )
                 )
             if generate_sound:
                 generate_sound = sound_presenter.get_presenter().should_present_progress_bar_update(
-                    obj, percent, is_same_app, is_same_window
+                    obj,
+                    percent,
+                    is_same_app,
+                    is_same_window,
                 )
 
         if generate_speech:
@@ -252,14 +266,18 @@ class PresentationManager:
             sound_presenter.get_presenter().play(sounds)
 
     def speak_contents(
-        self, contents: list[tuple[Atspi.Accessible, int, int, str]], **args: Any
+        self,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+        **args: Any,
     ) -> None:
         """Speaks the specified contents."""
 
         speech_presenter.get_presenter().speak_contents(contents, **args)
 
     def display_contents(
-        self, contents: list[tuple[Atspi.Accessible, int, int, str]], **args: Any
+        self,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+        **args: Any,
     ) -> None:
         """Displays contents in braille."""
 
@@ -270,7 +288,9 @@ class PresentationManager:
             return
 
         braille_presenter.get_presenter().display_generated_contents(
-            active_script, contents, **args
+            active_script,
+            contents,
+            **args,
         )
 
     def present_window_title(self, script: default.Script, obj: Atspi.Accessible) -> None:

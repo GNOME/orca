@@ -204,11 +204,10 @@ class TestCaretNavigator:
                 mock_script.utilities.next_context.return_value = (mock_obj, 10)
             else:
                 mock_script.utilities.previous_context.return_value = (mock_obj, 5)
+        elif direction == "next":
+            mock_script.utilities.next_context.return_value = (None, 0)
         else:
-            if direction == "next":
-                mock_script.utilities.next_context.return_value = (None, 0)
-            else:
-                mock_script.utilities.previous_context.return_value = (None, 0)
+            mock_script.utilities.previous_context.return_value = (None, 0)
 
         navigation_method = getattr(navigator, f"{direction}_character")
         result = navigation_method(mock_script, mock_event)
@@ -228,12 +227,20 @@ class TestCaretNavigator:
             pytest.param("next", (None, 0), None, False, id="next_word_no_context"),
             pytest.param("next", ("obj", 20), [], False, id="next_word_no_contents"),
             pytest.param(
-                "next", ("obj", 20), [("obj", 20, 25, "word")], True, id="next_word_success"
+                "next",
+                ("obj", 20),
+                [("obj", 20, 25, "word")],
+                True,
+                id="next_word_success",
             ),
             pytest.param("previous", (None, 0), None, False, id="previous_word_no_context"),
             pytest.param("previous", ("obj", 15), [], False, id="previous_word_no_contents"),
             pytest.param(
-                "previous", ("obj", 15), [("obj", 10, 15, "word")], True, id="previous_word_success"
+                "previous",
+                ("obj", 15),
+                [("obj", 10, 15, "word")],
+                True,
+                id="previous_word_success",
             ),
         ],
     )
@@ -327,8 +334,8 @@ class TestCaretNavigator:
     def test_navigator_initialization(self, test_context: OrcaTestContext) -> None:
         """Test CaretNavigator initialization."""
         self._setup_dependencies(test_context)
-        from orca.caret_navigator import CaretNavigator
         from orca import command_manager
+        from orca.caret_navigator import CaretNavigator
 
         navigator = CaretNavigator()
 
@@ -344,7 +351,12 @@ class TestCaretNavigator:
         "navigation_type,in_say_all,current_line,next_prev_contents,expected_result",
         [
             pytest.param(
-                "next_line", True, [("obj", 0, 10, "text")], [], True, id="next_line_in_say_all"
+                "next_line",
+                True,
+                [("obj", 0, 10, "text")],
+                [],
+                True,
+                id="next_line_in_say_all",
             ),
             pytest.param("next_line", False, [], [], False, id="next_line_no_current_line"),
             pytest.param(
@@ -451,11 +463,17 @@ class TestCaretNavigator:
         [
             pytest.param("start_of_line", [], False, id="start_of_line_no_line"),
             pytest.param(
-                "start_of_line", [("obj", 5, 15, "text")], True, id="start_of_line_success"
+                "start_of_line",
+                [("obj", 5, 15, "text")],
+                True,
+                id="start_of_line_success",
             ),
             pytest.param("end_of_line", [], False, id="end_of_line_no_line"),
             pytest.param(
-                "end_of_line", [("obj", 5, 15, "text ")], True, id="end_of_line_with_space"
+                "end_of_line",
+                [("obj", 5, 15, "text ")],
+                True,
+                id="end_of_line_with_space",
             ),
             pytest.param("end_of_line", [("obj", 5, 15, "text")], True, id="end_of_line_no_space"),
         ],
@@ -518,7 +536,7 @@ class TestCaretNavigator:
 
         navigator = CaretNavigator()
         mock_script = test_context.Mock()
-        mock_active_script = test_context.Mock() if script_is_active else test_context.Mock()
+        mock_active_script = test_context.Mock()
 
         script_manager_mock = essential_modules["orca.script_manager"]
         manager_instance = test_context.Mock()
@@ -622,7 +640,9 @@ class TestCaretNavigator:
         from orca import gsettings_registry
 
         gsettings_registry.get_registry().set_runtime_value(
-            "caret-navigation", "triggers-focus-mode", True
+            "caret-navigation",
+            "triggers-focus-mode",
+            True,
         )
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
@@ -638,7 +658,9 @@ class TestCaretNavigator:
         from orca import gsettings_registry
 
         gsettings_registry.get_registry().set_runtime_value(
-            "caret-navigation", "triggers-focus-mode", True
+            "caret-navigation",
+            "triggers-focus-mode",
+            True,
         )
         from orca.caret_navigator import CaretNavigator  # pylint: disable=import-outside-toplevel
 
@@ -709,7 +731,8 @@ class TestCaretNavigator:
         mock_cmd_mgr.set_group_enabled.assert_not_called()
 
     def test_set_enabled_for_script_always_calls_set_group_enabled(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test set_enabled_for_script always calls set_group_enabled even if setting matches.
 
@@ -744,13 +767,16 @@ class TestCaretNavigator:
         mock_event = test_context.Mock()
         navigator._last_input_event = mock_event
         test_context.patch_object(
-            navigator, "last_input_event_was_navigation_command", return_value=True
+            navigator,
+            "last_input_event_was_navigation_command",
+            return_value=True,
         )
         result = navigator.last_command_prevents_focus_mode()
         assert result is True
 
     def test_last_command_prevents_focus_mode_false_no_event(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test last_command_prevents_focus_mode returns False if no event."""
 
@@ -763,7 +789,8 @@ class TestCaretNavigator:
         assert result is False
 
     def test_last_command_prevents_focus_mode_false_setting_true(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test last_command_prevents_focus_mode returns False if setting True."""
 
@@ -775,7 +802,9 @@ class TestCaretNavigator:
         mock_event = test_context.Mock()
         navigator._last_input_event = mock_event
         test_context.patch_object(
-            navigator, "last_input_event_was_navigation_command", return_value=True
+            navigator,
+            "last_input_event_was_navigation_command",
+            return_value=True,
         )
         result = navigator.last_command_prevents_focus_mode()
         assert result is False
@@ -787,8 +816,8 @@ class TestCaretNavigator:
         """Test successful caret navigation emits region_changed with CARET_NAVIGATOR mode."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.caret_navigator import CaretNavigator
         from orca import focus_manager
+        from orca.caret_navigator import CaretNavigator
 
         ax_object_mock = essential_modules["orca.ax_object"]
         ax_object_mock.AXObject.supports_text.side_effect = lambda obj: obj is not None

@@ -38,8 +38,9 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -166,7 +167,7 @@ class TestAXUtilities:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.get_attribute = test_context.Mock(
-            return_value="true"
+            return_value="true",
         )
         from orca.ax_utilities import AXUtilities
 
@@ -179,7 +180,7 @@ class TestAXUtilities:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.get_attribute = test_context.Mock(
-            return_value="false"
+            return_value="false",
         )
         from orca.ax_utilities import AXUtilities
 
@@ -209,7 +210,7 @@ class TestAXUtilities:
 
         essential_modules["orca.ax_object"].AXObject.get_name = mock_get_name
         essential_modules["orca.ax_object"].AXObject.get_role = test_context.Mock(
-            return_value=Atspi.Role.BUTTON
+            return_value=Atspi.Role.BUTTON,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -221,10 +222,10 @@ class TestAXUtilities:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.get_name = test_context.Mock(
-            return_value="Button"
+            return_value="Button",
         )
         essential_modules["orca.ax_object"].AXObject.get_role = test_context.Mock(
-            return_value=Atspi.Role.BUTTON
+            return_value=Atspi.Role.BUTTON,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -405,34 +406,36 @@ class TestAXUtilities:
         for mock_path, mock_value in mocks_config.items():
             if mock_path == "has_explicit_name":
                 test_context.patch(
-                    "orca.ax_utilities.AXUtilities.has_explicit_name", return_value=mock_value
+                    "orca.ax_utilities.AXUtilities.has_explicit_name",
+                    return_value=mock_value,
                 )
             elif mock_path == "_is_layout_only":
                 test_context.patch(
-                    "orca.ax_utilities.AXUtilities._is_layout_only", return_value=mock_value
+                    "orca.ax_utilities.AXUtilities._is_layout_only",
+                    return_value=mock_value,
                 )
             elif mock_path.startswith("ax_object.find_ancestor"):
                 if mock_value == "desktop":
                     mock_desktop = test_context.Mock(spec=Atspi.Accessible)
                     essential_modules["orca.ax_object"].AXObject.find_ancestor = test_context.Mock(
-                        return_value=mock_desktop
+                        return_value=mock_desktop,
                     )
                 elif mock_value == "combo_box":
                     mock_combo = test_context.Mock(spec=Atspi.Accessible)
                     essential_modules["orca.ax_object"].AXObject.find_ancestor = test_context.Mock(
-                        return_value=mock_combo
+                        return_value=mock_combo,
                     )
                 else:
                     essential_modules["orca.ax_object"].AXObject.find_ancestor = test_context.Mock(
-                        return_value=None
+                        return_value=None,
                     )
             elif mock_path.startswith("ax_object.has_action"):
                 essential_modules["orca.ax_object"].AXObject.has_action = test_context.Mock(
-                    return_value=mock_value
+                    return_value=mock_value,
                 )
             elif mock_path.startswith("ax_object.get_role"):
                 essential_modules["orca.ax_object"].AXObject.get_role = test_context.Mock(
-                    return_value=mock_value
+                    return_value=mock_value,
                 )
             elif mock_path.startswith("ax_utilities_role."):
                 method_name = mock_path.split(".", 1)[1]
@@ -467,7 +470,7 @@ class TestAXUtilities:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(
-            return_value=False
+            return_value=False,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -480,7 +483,7 @@ class TestAXUtilities:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(
-            return_value=False
+            return_value=False,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -535,7 +538,7 @@ class TestAXUtilities:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.get_attribute = test_context.Mock(
-            return_value="5"
+            return_value="5",
         )
         from orca.ax_utilities import AXUtilities
 
@@ -559,7 +562,7 @@ class TestAXUtilities:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.get_child_count = test_context.Mock(
-            return_value=3
+            return_value=3,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -575,7 +578,7 @@ class TestAXUtilities:
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.children_are_presentational = test_context.Mock(return_value=True)
         essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_page_tab = test_context.Mock(
-            return_value=False
+            return_value=False,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -588,7 +591,7 @@ class TestAXUtilities:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_label = test_context.Mock(
-            return_value=False
+            return_value=False,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -605,7 +608,7 @@ class TestAXUtilities:
         essential_modules[
             "orca.ax_utilities_relation"
         ].AXUtilitiesRelation.get_is_labelled_by = test_context.Mock(
-            return_value=[mock_label1, mock_label2]
+            return_value=[mock_label1, mock_label2],
         )
 
         def mock_get_name(obj):
@@ -623,7 +626,8 @@ class TestAXUtilities:
         assert result == "Button Label"
 
     def test_get_displayed_description_with_description(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.get_displayed_description with describing objects."""
 
@@ -633,7 +637,7 @@ class TestAXUtilities:
         essential_modules[
             "orca.ax_utilities_relation"
         ].AXUtilitiesRelation.get_is_described_by = test_context.Mock(
-            return_value=[mock_desc1, mock_desc2]
+            return_value=[mock_desc1, mock_desc2],
         )
 
         def mock_get_name(obj):
@@ -655,10 +659,10 @@ class TestAXUtilities:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_heading = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         essential_modules["orca.ax_object"].AXObject.get_attributes_dict = test_context.Mock(
-            return_value={"level": "2"}
+            return_value={"level": "2"},
         )
         from orca.ax_utilities import AXUtilities
 
@@ -671,10 +675,10 @@ class TestAXUtilities:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_heading = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         essential_modules["orca.ax_object"].AXObject.get_attributes_dict = test_context.Mock(
-            return_value={"level": "invalid"}
+            return_value={"level": "invalid"},
         )
         from orca.ax_utilities import AXUtilities
 
@@ -822,12 +826,13 @@ class TestAXUtilities:
 
         if supports_collection is not None:
             essential_modules["orca.ax_object"].AXObject.supports_collection = test_context.Mock(
-                return_value=supports_collection
+                return_value=supports_collection,
             )
 
         if not supports_collection and get_all_widgets is not None:
             test_context.patch(
-                "orca.ax_utilities.AXUtilities.get_all_widgets", return_value=get_all_widgets
+                "orca.ax_utilities.AXUtilities.get_all_widgets",
+                return_value=get_all_widgets,
             )
 
         for check_name, check_value in collection_checks.items():
@@ -855,7 +860,7 @@ class TestAXUtilities:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_utilities_state"].AXUtilitiesState.is_active = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         essential_modules[
             "orca.ax_utilities_state"
@@ -874,7 +879,7 @@ class TestAXUtilities:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.get_role = test_context.Mock(
-            return_value=Atspi.Role.FRAME
+            return_value=Atspi.Role.FRAME,
         )
         essential_modules[
             "orca.ax_utilities_state"
@@ -902,7 +907,7 @@ class TestAXUtilities:
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.is_dialog_or_alert = test_context.Mock(return_value=True)
         essential_modules["orca.ax_object"].AXObject.get_child_count = test_context.Mock(
-            return_value=1
+            return_value=1,
         )
         essential_modules[
             "orca.ax_utilities_state"
@@ -915,13 +920,14 @@ class TestAXUtilities:
         assert result is True
 
     def test_is_unfocused_alert_or_dialog_with_focused_dialog(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.is_unfocused_alert_or_dialog with focused dialog."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.get_role = test_context.Mock(
-            return_value=Atspi.Role.DIALOG
+            return_value=Atspi.Role.DIALOG,
         )
         essential_modules[
             "orca.ax_utilities_state"
@@ -933,7 +939,8 @@ class TestAXUtilities:
         assert result is False
 
     def test_is_unfocused_alert_or_dialog_with_no_children(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.is_unfocused_alert_or_dialog with alert having no children."""
 
@@ -942,7 +949,7 @@ class TestAXUtilities:
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.is_dialog_or_alert = test_context.Mock(return_value=True)
         essential_modules["orca.ax_object"].AXObject.get_child_count = test_context.Mock(
-            return_value=0
+            return_value=0,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -958,7 +965,7 @@ class TestAXUtilities:
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.is_dialog_or_alert = test_context.Mock(return_value=True)
         essential_modules["orca.ax_object"].AXObject.get_child_count = test_context.Mock(
-            return_value=3
+            return_value=3,
         )
         essential_modules[
             "orca.ax_utilities_state"
@@ -970,7 +977,8 @@ class TestAXUtilities:
         assert result is False
 
     def test_get_unfocused_alerts_and_dialogs_with_alerts(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.get_unfocused_alerts_and_dialogs with alert objects."""
 
@@ -983,7 +991,7 @@ class TestAXUtilities:
             "orca.ax_utilities_application"
         ].AXUtilitiesApplication.get_application = test_context.Mock(return_value=mock_app)
         essential_modules["orca.ax_object"].AXObject.find_ancestor = test_context.Mock(
-            return_value=None
+            return_value=None,
         )
 
         def mock_iter_children(parent, predicate=None):
@@ -1001,7 +1009,9 @@ class TestAXUtilities:
             return obj in [mock_alert1, mock_alert2]
 
         test_context.patch_object(
-            AXUtilities, "is_unfocused_alert_or_dialog", new=mock_is_unfocused
+            AXUtilities,
+            "is_unfocused_alert_or_dialog",
+            new=mock_is_unfocused,
         )
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         result = AXUtilities.get_unfocused_alerts_and_dialogs(mock_obj)
@@ -1015,7 +1025,7 @@ class TestAXUtilities:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.supports_collection = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         essential_modules[
             "orca.ax_utilities_role"
@@ -1023,12 +1033,12 @@ class TestAXUtilities:
             return_value=[
                 Atspi.Role.BUTTON,
                 Atspi.Role.CHECK_BOX,
-            ]
+            ],
         )
         sys.modules[
             "orca.ax_utilities_collection"
         ].AXUtilitiesCollection.find_all_with_role_and_all_states = test_context.Mock(
-            return_value=[mock_button1, mock_button2]
+            return_value=[mock_button1, mock_button2],
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1042,7 +1052,7 @@ class TestAXUtilities:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.supports_collection = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         essential_modules[
             "orca.ax_utilities_role"
@@ -1050,12 +1060,12 @@ class TestAXUtilities:
             return_value=[
                 Atspi.Role.BUTTON,
                 Atspi.Role.CHECK_BOX,
-            ]
+            ],
         )
         sys.modules[
             "orca.ax_utilities_collection"
         ].AXUtilitiesCollection.find_all_with_role_and_all_states = test_context.Mock(
-            return_value=[mock_checkbox]
+            return_value=[mock_checkbox],
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1064,7 +1074,9 @@ class TestAXUtilities:
         collection_module = sys.modules["orca.ax_utilities_collection"]
         find_all_method = collection_module.AXUtilitiesCollection.find_all_with_role_and_all_states
         find_all_method.assert_called_with(
-            mock_obj, [Atspi.Role.CHECK_BOX], [Atspi.StateType.SHOWING, Atspi.StateType.VISIBLE]
+            mock_obj,
+            [Atspi.Role.CHECK_BOX],
+            [Atspi.StateType.SHOWING, Atspi.StateType.VISIBLE],
         )
         assert result == [mock_checkbox]
 
@@ -1074,12 +1086,12 @@ class TestAXUtilities:
         mock_default_button = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.supports_collection = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         sys.modules[
             "orca.ax_utilities_collection"
         ].AXUtilitiesCollection.find_default_button = test_context.Mock(
-            return_value=mock_default_button
+            return_value=mock_default_button,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1088,14 +1100,15 @@ class TestAXUtilities:
         assert result == mock_default_button
 
     def test_get_focused_object_with_focused_descendant(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.get_focused_object with focused descendant."""
 
         mock_focused = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.supports_collection = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         sys.modules[
             "orca.ax_utilities_collection"
@@ -1112,7 +1125,7 @@ class TestAXUtilities:
         mock_info_bar = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.supports_collection = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         essential_modules[
             "orca.ax_utilities_collection"
@@ -1129,7 +1142,7 @@ class TestAXUtilities:
         mock_status_bar = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.supports_collection = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         essential_modules[
             "orca.ax_utilities_collection"
@@ -1166,7 +1179,9 @@ class TestAXUtilities:
         from orca.ax_utilities import AXUtilities
 
         test_context.patch_object(
-            AXUtilities, "_get_set_members", return_value=[mock_member1, mock_member2]
+            AXUtilities,
+            "_get_set_members",
+            return_value=[mock_member1, mock_member2],
         )
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         result = AXUtilities.get_set_members(mock_obj)
@@ -1193,12 +1208,14 @@ class TestAXUtilities:
             "orca.ax_utilities_application"
         ].AXUtilitiesApplication.get_all_applications = test_context.Mock(return_value=[mock_app])
         essential_modules["orca.ax_object"].AXObject.iter_children = test_context.Mock(
-            return_value=[mock_active_window]
+            return_value=[mock_active_window],
         )
         from orca.ax_utilities import AXUtilities
 
         test_context.patch_object(
-            AXUtilities, "can_be_active_window", side_effect=lambda x: x == mock_active_window
+            AXUtilities,
+            "can_be_active_window",
+            side_effect=lambda x: x == mock_active_window,
         )
         result = AXUtilities.find_active_window()
         assert result == mock_active_window
@@ -1231,10 +1248,10 @@ class TestAXUtilities:
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(
-            return_value=False
+            return_value=False,
         )
         essential_modules["orca.ax_table"].AXTable.iter_visible_cells = test_context.Mock(
-            return_value=[]
+            return_value=[],
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1283,7 +1300,7 @@ class TestAXUtilities:
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.is_list_item = test_context.Mock(return_value=True)
         essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_list = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         find_calls = []
 
@@ -1297,7 +1314,7 @@ class TestAXUtilities:
 
         essential_modules["orca.ax_object"].AXObject.find_ancestor = mock_find_ancestor
         essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
-            return_value=mock_obj
+            return_value=mock_obj,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1331,14 +1348,15 @@ class TestAXUtilities:
         assert result == 1
 
     def test_get_position_in_set_with_posinset_attribute(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.get_position_in_set with posinset attribute."""
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.get_attribute = test_context.Mock(
-            return_value="3"
+            return_value="3",
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1346,7 +1364,8 @@ class TestAXUtilities:
         assert result == 2
 
     def test_get_position_in_set_table_row_with_rowindex(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.get_position_in_set with table row and rowindex."""
 
@@ -1372,7 +1391,8 @@ class TestAXUtilities:
         assert result == 4
 
     def test_get_position_in_set_fallback_to_set_members(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.get_position_in_set fallback to set members."""
 
@@ -1391,13 +1411,13 @@ class TestAXUtilities:
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.is_combo_box = test_context.Mock(return_value=False)
         essential_modules["orca.ax_object"].AXObject.get_attribute = test_context.Mock(
-            return_value=None
+            return_value=None,
         )
         essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
-            return_value=mock_parent
+            return_value=mock_parent,
         )
         essential_modules["orca.ax_object"].AXObject.get_child_count = test_context.Mock(
-            return_value=100
+            return_value=100,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1410,7 +1430,8 @@ class TestAXUtilities:
         assert result == 1
 
     def test_get_set_members_internal_with_none_container(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.get_set_members with None container."""
 
@@ -1418,7 +1439,7 @@ class TestAXUtilities:
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
 
         essential_modules["orca.ax_object"].AXObject.get_parent_checked = test_context.Mock(
-            return_value=None
+            return_value=None,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1426,7 +1447,8 @@ class TestAXUtilities:
         assert result == []
 
     def test_get_set_members_internal_with_member_of_relation(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities._get_set_members with member-of relation."""
 
@@ -1437,7 +1459,7 @@ class TestAXUtilities:
         essential_modules[
             "orca.ax_utilities_relation"
         ].AXUtilitiesRelation.get_is_member_of = test_context.Mock(
-            return_value=[mock_member1, mock_member2]
+            return_value=[mock_member1, mock_member2],
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1446,7 +1468,8 @@ class TestAXUtilities:
         assert result == [mock_member1, mock_member2]
 
     def test_get_set_members_internal_with_node_parent_relation(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities._get_set_members with node-parent-of relation."""
 
@@ -1460,7 +1483,7 @@ class TestAXUtilities:
         essential_modules[
             "orca.ax_utilities_relation"
         ].AXUtilitiesRelation.get_is_node_parent_of = test_context.Mock(
-            return_value=[mock_child1, mock_child2]
+            return_value=[mock_child1, mock_child2],
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1469,7 +1492,8 @@ class TestAXUtilities:
         assert result == [mock_child1, mock_child2]
 
     def test_get_set_members_internal_with_description_values(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities._get_set_members with description values."""
 
@@ -1510,7 +1534,8 @@ class TestAXUtilities:
         assert mock_next in result
 
     def test_get_set_members_internal_with_menu_related(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities._get_set_members with menu-related objects."""
 
@@ -1531,7 +1556,7 @@ class TestAXUtilities:
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.is_menu_related = test_context.Mock(return_value=True)
         essential_modules["orca.ax_object"].AXObject.iter_children = test_context.Mock(
-            return_value=[mock_menu1, mock_menu2]
+            return_value=[mock_menu1, mock_menu2],
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1558,10 +1583,10 @@ class TestAXUtilities:
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.is_menu_related = test_context.Mock(return_value=False)
         essential_modules["orca.ax_object"].AXObject.get_role = test_context.Mock(
-            return_value=Atspi.Role.BUTTON
+            return_value=Atspi.Role.BUTTON,
         )
         essential_modules["orca.ax_object"].AXObject.iter_children = test_context.Mock(
-            return_value=[mock_same_role1, mock_same_role2]
+            return_value=[mock_same_role1, mock_same_role2],
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1585,7 +1610,8 @@ class TestAXUtilities:
         assert result == mock_target
 
     def test_get_next_object_with_dead_flows_to_targets(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.get_next_object filters out dead objects from flows-to targets."""
 
@@ -1595,12 +1621,12 @@ class TestAXUtilities:
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(return_value=True)
         essential_modules["orca.ax_object"].AXObject.is_dead = test_context.Mock(
-            side_effect=lambda obj: obj == mock_dead_target
+            side_effect=lambda obj: obj == mock_dead_target,
         )
         essential_modules[
             "orca.ax_utilities_relation"
         ].AXUtilitiesRelation.get_flows_to = test_context.Mock(
-            return_value=[mock_dead_target, mock_live_target]
+            return_value=[mock_dead_target, mock_live_target],
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1608,7 +1634,8 @@ class TestAXUtilities:
         assert result == mock_live_target
 
     def test_get_next_object_with_all_dead_flows_to_targets(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.get_next_object falls back to traversal when all flows-to are dead."""
 
@@ -1621,21 +1648,21 @@ class TestAXUtilities:
         essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(return_value=True)
         essential_modules["orca.ax_object"].AXObject.is_dead = test_context.Mock(return_value=True)
         essential_modules["orca.ax_object"].AXObject.get_index_in_parent = test_context.Mock(
-            return_value=0
+            return_value=0,
         )
         essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
-            return_value=mock_parent
+            return_value=mock_parent,
         )
         essential_modules["orca.ax_object"].AXObject.get_child_count = test_context.Mock(
-            return_value=2
+            return_value=2,
         )
         essential_modules["orca.ax_object"].AXObject.get_child = test_context.Mock(
-            return_value=mock_next
+            return_value=mock_next,
         )
         essential_modules[
             "orca.ax_utilities_relation"
         ].AXUtilitiesRelation.get_flows_to = test_context.Mock(
-            return_value=[mock_dead_target1, mock_dead_target2]
+            return_value=[mock_dead_target1, mock_dead_target2],
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1654,16 +1681,16 @@ class TestAXUtilities:
             "orca.ax_utilities_relation"
         ].AXUtilitiesRelation.get_flows_to = test_context.Mock(return_value=[])
         essential_modules["orca.ax_object"].AXObject.get_index_in_parent = test_context.Mock(
-            return_value=0
+            return_value=0,
         )
         essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
-            return_value=mock_parent
+            return_value=mock_parent,
         )
         essential_modules["orca.ax_object"].AXObject.get_child_count = test_context.Mock(
-            return_value=3
+            return_value=3,
         )
         essential_modules["orca.ax_object"].AXObject.get_child = test_context.Mock(
-            return_value=mock_next
+            return_value=mock_next,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1671,7 +1698,8 @@ class TestAXUtilities:
         assert result == mock_next
 
     def test_get_previous_object_with_flows_from_relation(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.get_previous_object with flows-from relation."""
 
@@ -1689,7 +1717,8 @@ class TestAXUtilities:
         assert result == mock_source
 
     def test_get_previous_object_with_dead_flows_from_targets(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.get_previous_object filters out dead objects from flows-from targets."""
 
@@ -1699,12 +1728,12 @@ class TestAXUtilities:
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(return_value=True)
         essential_modules["orca.ax_object"].AXObject.is_dead = test_context.Mock(
-            side_effect=lambda obj: obj == mock_dead_source
+            side_effect=lambda obj: obj == mock_dead_source,
         )
         essential_modules[
             "orca.ax_utilities_relation"
         ].AXUtilitiesRelation.get_flows_from = test_context.Mock(
-            return_value=[mock_dead_source, mock_live_source]
+            return_value=[mock_dead_source, mock_live_source],
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1712,7 +1741,8 @@ class TestAXUtilities:
         assert result == mock_live_source
 
     def test_get_previous_object_with_all_dead_flows_from_targets(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.get_previous_object falls back when all flows-from are dead."""
 
@@ -1725,21 +1755,21 @@ class TestAXUtilities:
         essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(return_value=True)
         essential_modules["orca.ax_object"].AXObject.is_dead = test_context.Mock(return_value=True)
         essential_modules["orca.ax_object"].AXObject.get_index_in_parent = test_context.Mock(
-            return_value=1
+            return_value=1,
         )
         essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
-            return_value=mock_parent
+            return_value=mock_parent,
         )
         essential_modules["orca.ax_object"].AXObject.get_child_count = test_context.Mock(
-            return_value=2
+            return_value=2,
         )
         essential_modules["orca.ax_object"].AXObject.get_child = test_context.Mock(
-            return_value=mock_previous
+            return_value=mock_previous,
         )
         essential_modules[
             "orca.ax_utilities_relation"
         ].AXUtilitiesRelation.get_flows_from = test_context.Mock(
-            return_value=[mock_dead_source1, mock_dead_source2]
+            return_value=[mock_dead_source1, mock_dead_source2],
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1865,21 +1895,21 @@ class TestAXUtilities:
             "orca.ax_utilities_state"
         ].AXUtilitiesState.is_visible = test_context.Mock(return_value=is_visible)
         essential_modules["orca.ax_utilities_state"].AXUtilitiesState.is_hidden = test_context.Mock(
-            return_value=is_hidden
+            return_value=is_hidden,
         )
 
         essential_modules[
             "orca.ax_component"
         ].AXComponent.has_no_size_or_invalid_rect = test_context.Mock(
-            return_value=has_no_size_invalid_rect
+            return_value=has_no_size_invalid_rect,
         )
         essential_modules["orca.ax_component"].AXComponent.object_is_off_screen = test_context.Mock(
-            return_value=object_is_off_screen
+            return_value=object_is_off_screen,
         )
         essential_modules[
             "orca.ax_component"
         ].AXComponent.object_intersects_rect = test_context.Mock(
-            return_value=object_intersects_rect
+            return_value=object_intersects_rect,
         )
 
         from orca.ax_utilities import AXUtilities
@@ -1898,16 +1928,16 @@ class TestAXUtilities:
         mock_caption = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_figure = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         essential_modules["orca.ax_object"].AXObject.supports_table = test_context.Mock(
-            return_value=False
+            return_value=False,
         )
         essential_modules[
             "orca.ax_utilities_relation"
         ].AXUtilitiesRelation.get_is_labelled_by = test_context.Mock(return_value=[mock_caption])
         essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_caption = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         essential_modules[
             "orca.ax_utilities_state"
@@ -1926,10 +1956,10 @@ class TestAXUtilities:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_figure = test_context.Mock(
-            return_value=False
+            return_value=False,
         )
         essential_modules["orca.ax_object"].AXObject.supports_table = test_context.Mock(
-            return_value=False
+            return_value=False,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1946,7 +1976,7 @@ class TestAXUtilities:
             "orca.ax_utilities_relation"
         ].AXUtilitiesRelation.get_is_described_by = test_context.Mock(return_value=[mock_desc])
         essential_modules["orca.ax_object"].AXObject.get_name = test_context.Mock(
-            return_value="Test description"
+            return_value="Test description",
         )
         essential_modules["orca.ax_text"].AXText.get_all_text = test_context.Mock(return_value="")
         from orca.ax_utilities import AXUtilities
@@ -1960,7 +1990,7 @@ class TestAXUtilities:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.get_description = test_context.Mock(
-            return_value=""
+            return_value="",
         )
         from orca.ax_utilities import AXUtilities
 
@@ -1968,7 +1998,8 @@ class TestAXUtilities:
         assert result == ""
 
     def test_get_position_in_set_with_large_child_count(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.get_position_in_set with large child count uses index_in_parent."""
 
@@ -1985,16 +2016,16 @@ class TestAXUtilities:
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.is_combo_box = test_context.Mock(return_value=False)
         essential_modules["orca.ax_object"].AXObject.get_attribute = test_context.Mock(
-            return_value=None
+            return_value=None,
         )
         essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
-            return_value=mock_parent
+            return_value=mock_parent,
         )
         essential_modules["orca.ax_object"].AXObject.get_child_count = test_context.Mock(
-            return_value=1000
+            return_value=1000,
         )
         essential_modules["orca.ax_object"].AXObject.get_index_in_parent = test_context.Mock(
-            return_value=42
+            return_value=42,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -2018,24 +2049,27 @@ class TestAXUtilities:
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.is_combo_box = test_context.Mock(return_value=False)
         essential_modules["orca.ax_object"].AXObject.get_attribute = test_context.Mock(
-            return_value=None
+            return_value=None,
         )
         essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
-            return_value=mock_parent
+            return_value=mock_parent,
         )
         essential_modules["orca.ax_object"].AXObject.get_child_count = test_context.Mock(
-            return_value=10
+            return_value=10,
         )
         from orca.ax_utilities import AXUtilities
 
         test_context.patch_object(
-            AXUtilities, "get_set_members", side_effect=lambda x: [mock_other]
+            AXUtilities,
+            "get_set_members",
+            side_effect=lambda x: [mock_other],
         )
         result = AXUtilities.get_position_in_set(mock_obj)
         assert result == -1
 
     def test_treat_as_leaf_node_presentational_page_tab(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.treat_as_leaf_node with presentational page tab."""
 
@@ -2045,7 +2079,7 @@ class TestAXUtilities:
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.children_are_presentational = test_context.Mock(return_value=True)
         essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_page_tab = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -2053,7 +2087,8 @@ class TestAXUtilities:
         assert result is False
 
     def test_treat_as_leaf_node_presentational_non_page_tab(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.treat_as_leaf_node with presentational non-page-tab."""
 
@@ -2063,7 +2098,7 @@ class TestAXUtilities:
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.children_are_presentational = test_context.Mock(return_value=True)
         essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_page_tab = test_context.Mock(
-            return_value=False
+            return_value=False,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -2079,7 +2114,7 @@ class TestAXUtilities:
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.children_are_presentational = test_context.Mock(return_value=False)
         essential_modules["orca.ax_object"].AXObject.get_role = test_context.Mock(
-            return_value=Atspi.Role.COMBO_BOX
+            return_value=Atspi.Role.COMBO_BOX,
         )
         essential_modules[
             "orca.ax_utilities_role"
@@ -2101,13 +2136,13 @@ class TestAXUtilities:
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.children_are_presentational = test_context.Mock(return_value=False)
         essential_modules["orca.ax_object"].AXObject.get_role = test_context.Mock(
-            return_value=Atspi.Role.MENU
+            return_value=Atspi.Role.MENU,
         )
         essential_modules[
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.is_combo_box = test_context.Mock(return_value=False)
         essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_menu = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         essential_modules[
             "orca.ax_utilities_role"
@@ -2127,7 +2162,7 @@ class TestAXUtilities:
         mock_selected = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.get_attribute = test_context.Mock(
-            return_value=None
+            return_value=None,
         )
         essential_modules[
             "orca.ax_utilities_role"
@@ -2159,7 +2194,7 @@ class TestAXUtilities:
         mock_table = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.get_attribute = test_context.Mock(
-            return_value=None
+            return_value=None,
         )
         essential_modules[
             "orca.ax_utilities_role"
@@ -2171,13 +2206,13 @@ class TestAXUtilities:
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.is_combo_box = test_context.Mock(return_value=False)
         essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
-            return_value=mock_parent
+            return_value=mock_parent,
         )
         essential_modules["orca.ax_table"].AXTable.get_table = test_context.Mock(
-            return_value=mock_table
+            return_value=mock_table,
         )
         essential_modules["orca.ax_table"].AXTable.get_row_count = test_context.Mock(
-            return_value=15
+            return_value=15,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -2191,16 +2226,16 @@ class TestAXUtilities:
         mock_table = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.get_attribute = test_context.Mock(
-            return_value=None
+            return_value=None,
         )
         essential_modules[
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.is_table_row = test_context.Mock(return_value=True)
         essential_modules["orca.ax_table"].AXTable.get_table = test_context.Mock(
-            return_value=mock_table
+            return_value=mock_table,
         )
         essential_modules["orca.ax_table"].AXTable.get_row_count = test_context.Mock(
-            return_value=20
+            return_value=20,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -2213,7 +2248,7 @@ class TestAXUtilities:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.get_attribute = test_context.Mock(
-            return_value=None
+            return_value=None,
         )
         essential_modules[
             "orca.ax_utilities_role"
@@ -2240,7 +2275,8 @@ class TestAXUtilities:
         assert result == 4
 
     def test_get_set_size_is_unknown_with_indeterminate_state(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.get_set_size_is_unknown with indeterminate state."""
 
@@ -2255,7 +2291,8 @@ class TestAXUtilities:
         assert result is True
 
     def test_get_set_size_is_unknown_table_with_negative_counts(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.get_set_size_is_unknown with table having negative counts."""
 
@@ -2265,10 +2302,10 @@ class TestAXUtilities:
             "orca.ax_utilities_state"
         ].AXUtilitiesState.is_indeterminate = test_context.Mock(return_value=False)
         essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_table = test_context.Mock(
-            return_value=True
+            return_value=True,
         )
         essential_modules["orca.ax_object"].AXObject.get_attributes_dict = test_context.Mock(
-            return_value={"rowcount": "-1", "colcount": "5"}
+            return_value={"rowcount": "-1", "colcount": "5"},
         )
         from orca.ax_utilities import AXUtilities
 
@@ -2281,7 +2318,7 @@ class TestAXUtilities:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         essential_modules["orca.ax_object"].AXObject.get_attribute = test_context.Mock(
-            return_value="true"
+            return_value="true",
         )
         from orca.ax_utilities import AXUtilities
 
@@ -2298,10 +2335,10 @@ class TestAXUtilities:
             "orca.ax_utilities_relation"
         ].AXUtilitiesRelation.get_flows_to = test_context.Mock(return_value=[])
         essential_modules["orca.ax_object"].AXObject.get_index_in_parent = test_context.Mock(
-            return_value=2
+            return_value=2,
         )
         essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
-            return_value=None
+            return_value=None,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -2318,10 +2355,10 @@ class TestAXUtilities:
             "orca.ax_utilities_relation"
         ].AXUtilitiesRelation.get_flows_from = test_context.Mock(return_value=[])
         essential_modules["orca.ax_object"].AXObject.get_index_in_parent = test_context.Mock(
-            return_value=0
+            return_value=0,
         )
         essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
-            return_value=None
+            return_value=None,
         )
         from orca.ax_utilities import AXUtilities
 
@@ -2329,7 +2366,8 @@ class TestAXUtilities:
         assert result is None
 
     def test_get_position_in_set_table_cell_with_coordinates(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilities.get_position_in_set with table cell using coordinates."""
 
@@ -2346,13 +2384,13 @@ class TestAXUtilities:
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.is_combo_box = test_context.Mock(return_value=False)
         essential_modules["orca.ax_object"].AXObject.get_attribute = test_context.Mock(
-            return_value=None
+            return_value=None,
         )
         essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
-            return_value=mock_parent
+            return_value=mock_parent,
         )
         essential_modules["orca.ax_table"].AXTable.get_cell_coordinates = test_context.Mock(
-            return_value=(3, 2)
+            return_value=(3, 2),
         )
         from orca.ax_utilities import AXUtilities
 

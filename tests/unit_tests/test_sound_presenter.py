@@ -31,8 +31,9 @@ from typing import TYPE_CHECKING
 import pytest
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -73,7 +74,8 @@ class TestSoundPresenter:
 
         presenter = sound_presenter.SoundPresenter()
         mocks["controller"].register_decorated_module.assert_called_with(
-            "SoundPresenter", presenter
+            "SoundPresenter",
+            presenter,
         )
 
     def test_get_sound_is_enabled_returns_setting(self, test_context: OrcaTestContext) -> None:
@@ -127,7 +129,8 @@ class TestSoundPresenter:
         assert presenter.get_sound_volume() == 0.8
 
     def test_get_beep_progress_bar_updates_returns_setting(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test get_beep_progress_bar_updates returns the beepProgressBarUpdates setting."""
 
@@ -143,7 +146,8 @@ class TestSoundPresenter:
         assert presenter.get_beep_progress_bar_updates() is False
 
     def test_set_beep_progress_bar_updates_updates_setting(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test set_beep_progress_bar_updates updates the beepProgressBarUpdates setting."""
 
@@ -158,7 +162,8 @@ class TestSoundPresenter:
         assert presenter.get_beep_progress_bar_updates() is True
 
     def test_get_progress_bar_beep_interval_returns_setting(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test get_progress_bar_beep_interval returns the progressBarBeepInterval setting."""
 
@@ -171,7 +176,8 @@ class TestSoundPresenter:
         assert presenter.get_progress_bar_beep_interval() == 10
 
     def test_set_progress_bar_beep_interval_updates_setting(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test set_progress_bar_beep_interval updates the progressBarBeepInterval setting."""
 
@@ -186,7 +192,8 @@ class TestSoundPresenter:
         assert presenter.get_progress_bar_beep_interval() == 15
 
     def test_get_progress_bar_beep_verbosity_returns_setting(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test get_progress_bar_beep_verbosity returns the progressBarBeepVerbosity setting."""
 
@@ -199,7 +206,8 @@ class TestSoundPresenter:
         assert presenter.get_progress_bar_beep_verbosity() == 2
 
     def test_set_progress_bar_beep_verbosity_updates_setting(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test set_progress_bar_beep_verbosity updates the progressBarBeepVerbosity setting."""
 

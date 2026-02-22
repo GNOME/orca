@@ -33,12 +33,12 @@ import gi
 import pytest
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -100,7 +100,8 @@ class TestAXHypertext:
 
         test_context.patch("orca.ax_hypertext.AXObject.supports_hypertext", return_value=True)
         test_context.patch(
-            "orca.ax_hypertext.Atspi.Hypertext.get_n_links", side_effect=raise_glib_error
+            "orca.ax_hypertext.Atspi.Hypertext.get_n_links",
+            side_effect=raise_glib_error,
         )
         test_context.patch(
             "orca.ax_hypertext.debug.print_message",
@@ -133,7 +134,8 @@ class TestAXHypertext:
         from orca.ax_hypertext import AXHypertext
 
         test_context.patch(
-            "orca.ax_hypertext.AXObject.supports_hypertext", return_value=has_hypertext_support
+            "orca.ax_hypertext.AXObject.supports_hypertext",
+            return_value=has_hypertext_support,
         )
         if raises_glib_error:
 
@@ -141,7 +143,8 @@ class TestAXHypertext:
                 raise GLib.GError("Test error")
 
             test_context.patch(
-                "orca.ax_hypertext.Atspi.Hypertext.get_link", side_effect=raise_glib_error
+                "orca.ax_hypertext.Atspi.Hypertext.get_link",
+                side_effect=raise_glib_error,
             )
             test_context.patch(
                 "orca.ax_hypertext.debug.print_message",
@@ -194,7 +197,8 @@ class TestAXHypertext:
             return -1
 
         test_context.patch(
-            "orca.ax_hypertext.AXHypertext._get_link_count", return_value=len(mock_links)
+            "orca.ax_hypertext.AXHypertext._get_link_count",
+            return_value=len(mock_links),
         )
 
         def mock_get_link_at_index(_obj, index):
@@ -300,7 +304,8 @@ class TestAXHypertext:
             raise GLib.GError("No hyperlink")
 
         test_context.patch(
-            "orca.ax_hypertext.Atspi.Accessible.get_hyperlink", side_effect=raise_glib_error
+            "orca.ax_hypertext.Atspi.Accessible.get_hyperlink",
+            side_effect=raise_glib_error,
         )
         test_context.patch(
             "orca.ax_hypertext.debug.print_message",
@@ -326,7 +331,8 @@ class TestAXHypertext:
             return_value=mock_hyperlink,
         )
         test_context.patch(
-            "orca.ax_hypertext.Atspi.Hyperlink.get_uri", side_effect=raise_glib_error
+            "orca.ax_hypertext.Atspi.Hyperlink.get_uri",
+            side_effect=raise_glib_error,
         )
         test_context.patch(
             "orca.ax_hypertext.debug.print_message",
@@ -401,7 +407,8 @@ class TestAXHypertext:
             return_value=mock_hyperlink,
         )
         test_context.patch(
-            "orca.ax_hypertext.Atspi.Hyperlink.get_start_index", side_effect=raise_glib_error
+            "orca.ax_hypertext.Atspi.Hyperlink.get_start_index",
+            side_effect=raise_glib_error,
         )
         test_context.patch(
             "orca.ax_hypertext.debug.print_message",
@@ -476,7 +483,8 @@ class TestAXHypertext:
             return_value=mock_hyperlink,
         )
         test_context.patch(
-            "orca.ax_hypertext.Atspi.Hyperlink.get_end_index", side_effect=raise_glib_error
+            "orca.ax_hypertext.Atspi.Hyperlink.get_end_index",
+            side_effect=raise_glib_error,
         )
         test_context.patch(
             "orca.ax_hypertext.debug.print_message",
@@ -490,20 +498,32 @@ class TestAXHypertext:
         "uri, remove_extension, expected_result",
         [
             pytest.param(
-                "https://example.com/path/file.html", False, "file.html", id="path_with_extension"
+                "https://example.com/path/file.html",
+                False,
+                "file.html",
+                id="path_with_extension",
             ),
             pytest.param(
-                "https://example.com/path/file.html", True, "file", id="path_with_extension_removed"
+                "https://example.com/path/file.html",
+                True,
+                "file",
+                id="path_with_extension_removed",
             ),
             pytest.param("https://example.com/", False, "", id="no_path_component"),
             pytest.param("", False, "", id="empty_uri"),
             pytest.param("https://example.com/simple", False, "simple", id="path_no_extension"),
             pytest.param(
-                "https://example.com/simple", True, "simple", id="path_no_extension_capitalized"
+                "https://example.com/simple",
+                True,
+                "simple",
+                id="path_no_extension_capitalized",
             ),
             pytest.param("file:///home/user/document.pdf", False, "document.pdf", id="file_uri"),
             pytest.param(
-                "file:///home/user/document.pdf", True, "document", id="file_uri_extension_removed"
+                "file:///home/user/document.pdf",
+                True,
+                "document",
+                id="file_uri_extension_removed",
             ),
         ],
     )
@@ -547,7 +567,8 @@ class TestAXHypertext:
         assert result == mock_child
 
     def test_get_child_at_offset_without_hypertext_support(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXHypertext.get_child_at_offset without hypertext support."""
 
@@ -572,7 +593,8 @@ class TestAXHypertext:
         assert result is None
 
     def test_get_child_at_offset_with_glib_error_get_link_index(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXHypertext.get_child_at_offset handles GLib.GError in get_link_index."""
 
@@ -585,7 +607,8 @@ class TestAXHypertext:
 
         test_context.patch("orca.ax_hypertext.AXObject.supports_hypertext", return_value=True)
         test_context.patch(
-            "orca.ax_hypertext.Atspi.Hypertext.get_link_index", side_effect=raise_glib_error
+            "orca.ax_hypertext.Atspi.Hypertext.get_link_index",
+            side_effect=raise_glib_error,
         )
         test_context.patch(
             "orca.ax_hypertext.debug.print_message",
@@ -596,7 +619,8 @@ class TestAXHypertext:
         essential_modules["orca.debug"].print_message.assert_called()
 
     def test_get_child_at_offset_with_glib_error_get_object(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXHypertext.get_child_at_offset handles GLib.GError in get_object."""
 
@@ -615,7 +639,8 @@ class TestAXHypertext:
             return_value=mock_hyperlink,
         )
         test_context.patch(
-            "orca.ax_hypertext.Atspi.Hyperlink.get_object", side_effect=raise_glib_error
+            "orca.ax_hypertext.Atspi.Hyperlink.get_object",
+            side_effect=raise_glib_error,
         )
         test_context.patch(
             "orca.ax_hypertext.debug.print_message",
@@ -626,7 +651,8 @@ class TestAXHypertext:
         essential_modules["orca.debug"].print_message.assert_called()
 
     def test_get_character_offset_in_parent_with_text_parent(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXHypertext.get_character_offset_in_parent with text-supporting parent."""
 
@@ -642,7 +668,8 @@ class TestAXHypertext:
         assert result == 10
 
     def test_get_character_offset_in_parent_without_text_parent(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXHypertext.get_character_offset_in_parent without text-supporting parent."""
 

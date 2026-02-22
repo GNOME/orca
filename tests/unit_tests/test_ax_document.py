@@ -33,12 +33,12 @@ import gi
 import pytest
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -95,7 +95,10 @@ class TestAXDocument:
         ],
     )
     def test_document_methods_when_not_document(
-        self, test_context: OrcaTestContext, method_name: str, expected_result
+        self,
+        test_context: OrcaTestContext,
+        method_name: str,
+        expected_result,
     ) -> None:
         """Test AXDocument methods return defaults when object doesn't support document."""
 
@@ -168,7 +171,8 @@ class TestAXDocument:
         ax_object_mock.supports_document.return_value = True
         mock_get_page = test_context.Mock(return_value=7)
         test_context.patch(
-            "gi.repository.Atspi.Document.get_current_page_number", new=mock_get_page
+            "gi.repository.Atspi.Document.get_current_page_number",
+            new=mock_get_page,
         )
         result = AXDocument._get_current_page(mock_accessible)
         assert result == 7
@@ -185,14 +189,16 @@ class TestAXDocument:
         ax_object_mock.supports_document.return_value = True
         mock_get_page = test_context.Mock(side_effect=GLib.GError("Test error"))
         test_context.patch(
-            "gi.repository.Atspi.Document.get_current_page_number", new=mock_get_page
+            "gi.repository.Atspi.Document.get_current_page_number",
+            new=mock_get_page,
         )
         result = AXDocument._get_current_page(mock_accessible)
         assert result == 0
         mock_get_page.assert_called_once_with(mock_accessible)
 
     def test_get_current_page_public_method_caches_result(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXDocument.get_current_page caches the result in LAST_KNOWN_PAGE."""
 
@@ -240,7 +246,8 @@ class TestAXDocument:
         mock_get_locale.assert_called_once_with(mock_accessible)
 
     def test_get_attributes_dict_empty_when_not_document(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXDocument._get_attributes_dict returns empty dict when object isn't a document."""
 
@@ -266,7 +273,8 @@ class TestAXDocument:
         test_attributes = {"DocURL": "http://example.com", "MimeType": "text/html"}
         mock_get_attrs = test_context.Mock(return_value=test_attributes)
         test_context.patch(
-            "gi.repository.Atspi.Document.get_document_attributes", new=mock_get_attrs
+            "gi.repository.Atspi.Document.get_document_attributes",
+            new=mock_get_attrs,
         )
         result = AXDocument._get_attributes_dict(mock_accessible)
         assert result == test_attributes
@@ -281,7 +289,10 @@ class TestAXDocument:
         ],
     )
     def test_get_uri_handling(
-        self, test_context: OrcaTestContext, attributes: dict, expected_uri: str
+        self,
+        test_context: OrcaTestContext,
+        attributes: dict,
+        expected_uri: str,
     ) -> None:
         """Test AXDocument.get_uri with different attribute scenarios."""
 
@@ -317,7 +328,10 @@ class TestAXDocument:
         ],
     )
     def test_is_plain_text(
-        self, test_context: OrcaTestContext, mime_type: str, expected: bool
+        self,
+        test_context: OrcaTestContext,
+        mime_type: str,
+        expected: bool,
     ) -> None:
         """Test AXDocument.is_plain_text with various mime types."""
 
@@ -341,7 +355,11 @@ class TestAXDocument:
         ],
     )
     def test_is_pdf(
-        self, test_context: OrcaTestContext, mime_type: str, uri: str, expected: bool
+        self,
+        test_context: OrcaTestContext,
+        mime_type: str,
+        uri: str,
+        expected: bool,
     ) -> None:
         """Test AXDocument.is_pdf with various mime types and URIs."""
 
@@ -357,7 +375,8 @@ class TestAXDocument:
         assert result is expected
 
     def test_get_document_uri_fragment_returns_fragment(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXDocument.get_document_uri_fragment returns fragment from parsed URI."""
 
@@ -371,7 +390,8 @@ class TestAXDocument:
         assert result == "section1"
 
     def test_get_object_counts_returns_zero_counts_for_empty_document(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXDocument._get_object_counts returns zero counts when no objects found."""
 
@@ -393,7 +413,8 @@ class TestAXDocument:
         assert result == expected
 
     def test_get_object_counts_with_various_objects(  # pylint: disable=too-many-locals
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXDocument._get_object_counts counts different object types correctly."""
 
@@ -492,7 +513,10 @@ class TestAXDocument:
         ],
     )
     def test_get_document_summary(
-        self, test_context: OrcaTestContext, object_counts: dict, expected_summary: str
+        self,
+        test_context: OrcaTestContext,
+        object_counts: dict,
+        expected_summary: str,
     ) -> None:
         """Test AXDocument.get_document_summary with different object count scenarios."""
 

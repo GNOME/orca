@@ -26,23 +26,27 @@
 
 """Utilities for obtaining event-related information."""
 
+from __future__ import annotations
+
 import enum
 import threading
 import time
 from difflib import SequenceMatcher
+from typing import TYPE_CHECKING
 
-import gi
-
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
-from . import debug
-from . import focus_manager
-
+from . import debug, focus_manager
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
+
+if TYPE_CHECKING:
+    from typing import ClassVar
+
+    import gi
+
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
 
 
 class TextEventReason(enum.Enum):
@@ -97,19 +101,19 @@ class TextEventReason(enum.Enum):
 class AXUtilitiesEvent:
     """Utilities for obtaining event-related information."""
 
-    LAST_KNOWN_DESCRIPTION: dict[int, str] = {}
-    LAST_KNOWN_NAME: dict[int, str] = {}
+    LAST_KNOWN_DESCRIPTION: ClassVar[dict[int, str]] = {}
+    LAST_KNOWN_NAME: ClassVar[dict[int, str]] = {}
 
-    LAST_KNOWN_CHECKED: dict[int, bool] = {}
-    LAST_KNOWN_EXPANDED: dict[int, bool] = {}
-    LAST_KNOWN_INDETERMINATE: dict[int, bool] = {}
-    LAST_KNOWN_INVALID_ENTRY: dict[int, bool] = {}
-    LAST_KNOWN_PRESSED: dict[int, bool] = {}
-    LAST_KNOWN_SELECTED: dict[int, bool] = {}
+    LAST_KNOWN_CHECKED: ClassVar[dict[int, bool]] = {}
+    LAST_KNOWN_EXPANDED: ClassVar[dict[int, bool]] = {}
+    LAST_KNOWN_INDETERMINATE: ClassVar[dict[int, bool]] = {}
+    LAST_KNOWN_INVALID_ENTRY: ClassVar[dict[int, bool]] = {}
+    LAST_KNOWN_PRESSED: ClassVar[dict[int, bool]] = {}
+    LAST_KNOWN_SELECTED: ClassVar[dict[int, bool]] = {}
 
-    IGNORE_NAME_CHANGES_FOR: list[int] = []
+    IGNORE_NAME_CHANGES_FOR: ClassVar[list[int]] = []
 
-    TEXT_EVENT_REASON: dict[Atspi.Event, TextEventReason] = {}
+    TEXT_EVENT_REASON: ClassVar[dict[Atspi.Event, TextEventReason]] = {}
 
     _lock = threading.Lock()
 
@@ -171,7 +175,7 @@ class AXUtilitiesEvent:
         AXUtilitiesEvent.LAST_KNOWN_CHECKED[hash(obj)] = AXUtilitiesState.is_checked(obj)
         AXUtilitiesEvent.LAST_KNOWN_EXPANDED[hash(obj)] = AXUtilitiesState.is_expanded(obj)
         AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE[hash(obj)] = AXUtilitiesState.is_indeterminate(
-            obj
+            obj,
         )
         AXUtilitiesEvent.LAST_KNOWN_PRESSED[hash(obj)] = AXUtilitiesState.is_pressed(obj)
         AXUtilitiesEvent.LAST_KNOWN_SELECTED[hash(obj)] = AXUtilitiesState.is_selected(obj)
@@ -327,7 +331,8 @@ class AXUtilitiesEvent:
                 reason = TextEventReason.TYPING
             elif mgr.last_event_was_up_or_down() or mgr.last_event_was_page_up_or_page_down():
                 if AXUtilitiesRole.is_spin_button(obj) or AXObject.find_ancestor(
-                    obj, AXUtilitiesRole.is_spin_button
+                    obj,
+                    AXUtilitiesRole.is_spin_button,
                 ):
                     reason = TextEventReason.SPIN_BUTTON_VALUE_CHANGE
                 else:
@@ -409,7 +414,8 @@ class AXUtilitiesEvent:
                 reason = TextEventReason.MOUSE_MIDDLE_BUTTON
             elif mgr.last_event_was_up_or_down() or mgr.last_event_was_page_up_or_page_down():
                 if AXUtilitiesRole.is_spin_button(obj) or AXObject.find_ancestor(
-                    obj, AXUtilitiesRole.is_spin_button
+                    obj,
+                    AXUtilitiesRole.is_spin_button,
                 ):
                     reason = TextEventReason.SPIN_BUTTON_VALUE_CHANGE
                 else:
@@ -503,7 +509,8 @@ class AXUtilitiesEvent:
                 reason = TextEventReason.TYPING
             elif mgr.last_event_was_up_or_down() or mgr.last_event_was_page_up_or_page_down():
                 if AXUtilitiesRole.is_spin_button(obj) or AXObject.find_ancestor(
-                    obj, AXUtilitiesRole.is_spin_button
+                    obj,
+                    AXUtilitiesRole.is_spin_button,
                 ):
                     reason = TextEventReason.SPIN_BUTTON_VALUE_CHANGE
         return reason

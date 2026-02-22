@@ -31,8 +31,9 @@ from typing import TYPE_CHECKING
 import pytest
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -71,7 +72,7 @@ class TestSpellCheckPresenter:
         """Test get_presenter returns a SpellCheckPresenter instance."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.spellcheck_presenter import get_presenter, SpellCheckPresenter
+        from orca.spellcheck_presenter import SpellCheckPresenter, get_presenter
 
         presenter = get_presenter()
         assert presenter is not None

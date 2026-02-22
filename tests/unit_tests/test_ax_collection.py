@@ -31,12 +31,12 @@ import gi
 import pytest
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -66,7 +66,8 @@ class TestAXCollection:
 
         mock_rule = test_context.Mock(spec=Atspi.MatchRule)
         mock_match_rule_new = test_context.patch(
-            "gi.repository.Atspi.MatchRule.new", return_value=mock_rule
+            "gi.repository.Atspi.MatchRule.new",
+            return_value=mock_rule,
         )
 
         attributes = ["url:http://example.com:8080"]
@@ -86,12 +87,14 @@ class TestAXCollection:
 
         mock_rule = test_context.Mock(spec=Atspi.MatchRule)
         mock_match_rule_new = test_context.patch(
-            "gi.repository.Atspi.MatchRule.new", return_value=mock_rule
+            "gi.repository.Atspi.MatchRule.new",
+            return_value=mock_rule,
         )
 
         attributes = ["class:button", "class:primary"]
         result = AXCollection.create_match_rule(
-            attributes=attributes, attribute_match_type=Atspi.CollectionMatchType.ANY
+            attributes=attributes,
+            attribute_match_type=Atspi.CollectionMatchType.ANY,
         )
 
         expected_attrs = {"class": "button:primary"}
@@ -107,7 +110,8 @@ class TestAXCollection:
         from orca.ax_collection import AXCollection
 
         test_context.patch(
-            "gi.repository.Atspi.MatchRule.new", side_effect=GLib.GError("Test error")
+            "gi.repository.Atspi.MatchRule.new",
+            side_effect=GLib.GError("Test error"),
         )
         result = AXCollection.create_match_rule()
 
@@ -164,7 +168,8 @@ class TestAXCollection:
 
         mock_rule = test_context.Mock(spec=Atspi.MatchRule)
         mock_match_rule_new = test_context.patch(
-            "gi.repository.Atspi.MatchRule.new", return_value=mock_rule
+            "gi.repository.Atspi.MatchRule.new",
+            return_value=mock_rule,
         )
 
         states = [Atspi.StateType.FOCUSED, Atspi.StateType.SELECTED]

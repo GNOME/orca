@@ -37,14 +37,11 @@ import re
 import threading
 import time
 from dataclasses import dataclass, field
-from typing import Any, Callable, Iterable, Iterator, Sequence, TYPE_CHECKING, cast
+from typing import TYPE_CHECKING, Any, cast
 
 from gi.repository import GLib
 
-from . import debug
-from . import script_manager
-from . import text_attribute_manager
-
+from . import debug, script_manager, text_attribute_manager
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
@@ -83,6 +80,8 @@ else:
         LOUIS = None  # pylint: disable=invalid-name
 
 if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable, Iterator, Sequence
+
     from .input_event import BrailleEvent, InputEvent
 
 
@@ -142,7 +141,7 @@ _BRLAPI_ATTR_NAMES = (
 )
 
 if BRLAPI is None:
-    _BRLAPI_ATTRS: dict[str, Any | None] = {name: None for name in _BRLAPI_ATTR_NAMES}
+    _BRLAPI_ATTRS: dict[str, Any | None] = dict.fromkeys(_BRLAPI_ATTR_NAMES)
 else:
     _BRLAPI_ATTRS = {name: getattr(BRLAPI, name, None) for name in _BRLAPI_ATTR_NAMES}
 
@@ -491,7 +490,8 @@ def _note_brlapi_task_started(token: int, action: str) -> bool:
     if _STATE.brlapi_inflight_timer_id:
         GLib.source_remove(_STATE.brlapi_inflight_timer_id)
     _STATE.brlapi_inflight_timer_id = GLib.timeout_add(
-        _BRLAPI_TASK_TIMEOUT_MS, _brlapi_task_timeout
+        _BRLAPI_TASK_TIMEOUT_MS,
+        _brlapi_task_timeout,
     )
     return False
 
@@ -606,7 +606,8 @@ def _schedule_brlapi_display_size_poll() -> None:
     if _STATE.brlapi_display_size_poll_id:
         return
     _STATE.brlapi_display_size_poll_id = GLib.timeout_add(
-        _BRLAPI_DISPLAY_SIZE_POLL_MS, _poll_brlapi_display_size
+        _BRLAPI_DISPLAY_SIZE_POLL_MS,
+        _poll_brlapi_display_size,
     )
 
 
@@ -647,7 +648,8 @@ def _schedule_brlapi_connect_timeout() -> None:
 
     _cancel_brlapi_connect_timeout()
     _STATE.brlapi_connect_timeout_source_id = GLib.timeout_add(
-        _BRLAPI_CONNECT_TIMEOUT_MS, _brlapi_connect_timeout
+        _BRLAPI_CONNECT_TIMEOUT_MS,
+        _brlapi_connect_timeout,
     )
 
 
@@ -795,7 +797,10 @@ def _finish_brlapi_connection(
         _schedule_brlapi_display_size_poll()
 
     _STATE.brlapi_source_id = GLib.io_add_watch(
-        connection.fileDescriptor, GLib.PRIORITY_DEFAULT, GLib.IO_IN, _brlapi_key_reader
+        connection.fileDescriptor,
+        GLib.PRIORITY_DEFAULT,
+        GLib.IO_IN,
+        _brlapi_key_reader,
     )
 
     if _STATE.pending_key_ranges:
@@ -955,7 +960,10 @@ class Region:
         return True
 
     def _contract_line(
-        self, line: str, cursor_offset: int = 0, expand_on_cursor: bool = False
+        self,
+        line: str,
+        cursor_offset: int = 0,
+        expand_on_cursor: bool = False,
     ) -> tuple[str, list[int], list[int], int]:
         """Contracts and returns the given line."""
 
@@ -966,15 +974,17 @@ class Region:
 
         if not expand_on_cursor or cursor_on_space:
             mode = 0
+        elif _STATE.enable_computer_braille_at_cursor:
+            mode = LOUIS.compbrlAtCursor
         else:
-            if _STATE.enable_computer_braille_at_cursor:
-                mode = LOUIS.compbrlAtCursor
-            else:
-                mode = 0
+            mode = 0
 
         try:
             contracted, in_position, out_position, cursor_position = LOUIS.translate(
-                [self._contraction_table], line, cursorPos=cursor_offset, mode=mode
+                [self._contraction_table],
+                line,
+                cursorPos=cursor_offset,
+                mode=mode,
             )
         except RuntimeError as error:
             msg = f"BRAILLE: Failed to contract with table '{self._contraction_table}': {error}"
@@ -1137,7 +1147,8 @@ class Text(Region):
             if start_offset is not None:
                 self.caret_offset = max(start_offset, self.caret_offset)
             string, self.line_offset = AXText.get_line_at_offset(
-                self.accessible, self.caret_offset
+                self.accessible,
+                self.caret_offset,
             )[0:2]
             string = string.replace("\ufffc", " ")
 
@@ -1198,7 +1209,9 @@ class Text(Region):
 
         if self._contracted:
             self.string, self._in_position, self._out_position, cursor_offset = self._contract_line(
-                self._raw_line, cursor_offset, True
+                self._raw_line,
+                cursor_offset,
+                True,
             )
 
         self.cursor_offset = cursor_offset
@@ -1266,7 +1279,8 @@ class Text(Region):
             offset = self.line_offset
             while offset < line_end_offset:
                 attributes, start_offset, end_offset = AXText.get_text_attributes_at_offset(
-                    self.accessible, offset
+                    self.accessible,
+                    offset,
                 )
                 if end_offset <= offset:
                     break
@@ -1298,11 +1312,11 @@ class Text(Region):
             out_position = self._out_position[len(self._label) :]
             if self._label:
                 out_position = [offset - len(self._label) - 1 for offset in out_position]
+            out_len = len(out_position)
+            mask_len = len(contracted_mask)
             for i, m in enumerate(region_mask):
-                try:
+                if i < out_len and out_position[i] < mask_len:
                     contracted_mask[out_position[i]] |= m
-                except IndexError:
-                    continue
             region_mask = contracted_mask[: len(self.string)]
 
         # Add empty mask characters for the EOL character as well as for the label.
@@ -1313,12 +1327,17 @@ class Text(Region):
         return "".join(map(chr, region_mask))
 
     def _contract_line(
-        self, line: str, cursor_offset: int = 0, expand_on_cursor: bool = True
+        self,
+        line: str,
+        cursor_offset: int = 0,
+        expand_on_cursor: bool = True,
     ) -> tuple[str, list[int], list[int], int]:
         """Contracts and returns the given line."""
 
         contracted, in_position, out_position, cursor_position = super()._contract_line(
-            line, cursor_offset, expand_on_cursor
+            line,
+            cursor_offset,
+            expand_on_cursor,
         )
         return contracted + self._eol, in_position, out_position, cursor_position
 
@@ -1356,6 +1375,9 @@ class ReviewComponent(Component):
             and self.cursor_offset == other.cursor_offset
         )
 
+    # Mutable: string and cursor_offset are modified after construction.
+    __hash__ = None  # type: ignore[assignment]
+
 
 class ReviewText(Region):
     """Text region used for flat review mode."""
@@ -1377,6 +1399,9 @@ class ReviewText(Region):
             and self.zone == other.zone
             and self.string == other.string
         )
+
+    # Mutable: accessible, zone, and string are modified after construction.
+    __hash__ = None  # type: ignore[assignment]
 
     def get_caret_offset(self, offset: int) -> int:
         """Map a display offset to a flat review caret offset."""
@@ -1510,8 +1535,10 @@ def _compute_ranges(string: str, focus_offset: int, display_width: int) -> list[
             if word_length > display_width:
                 display_widths = word_length // display_width
                 if display_widths:
-                    for i in range(display_widths):
-                        ranges.append([start + i * display_width, start + (i + 1) * display_width])
+                    ranges.extend(
+                        [start + i * display_width, start + (i + 1) * display_width]
+                        for i in range(display_widths)
+                    )
                     if word_length % display_width:
                         span = [start + display_widths * display_width, end]
                     else:
@@ -1618,7 +1645,9 @@ def is_end_showing() -> bool:
 
 
 def _set_focus(
-    region: Region | None, pan_to_focus: bool = True, indicate_links: bool = True
+    region: Region | None,
+    pan_to_focus: bool = True,
+    indicate_links: bool = True,
 ) -> None:
     """Specifies the region with focus.  This region will be positioned
     at the home position if pan_to_focus is True.
@@ -1648,9 +1677,8 @@ def _set_focus(
     # faced with a long text area, we'll show the position with
     # the caret vs. showing the beginning of the region.
 
-    line_number = 0
     done = False
-    for line in _STATE.lines:
+    for line_number, line in enumerate(_STATE.lines):
         for reg in line.get_regions():
             if reg == focused_region:
                 _STATE.viewport[1] = line_number
@@ -1658,7 +1686,6 @@ def _set_focus(
                 break
         if done:
             break
-        line_number += 1
 
     line = _STATE.lines[_STATE.viewport[1]]
     line_info = line.get_info(indicate_links)
@@ -1699,7 +1726,10 @@ def _idle_braille() -> bool:
         queued = _enqueue_brlapi_task(
             "idle braille",
             lambda brlapi: brlapi.setParameter(
-                BRLAPI_PARAM_CLIENT_PRIORITY, 0, False, BRLAPI_PRIORITY_IDLE
+                BRLAPI_PARAM_CLIENT_PRIORITY,
+                0,
+                False,
+                BRLAPI_PRIORITY_IDLE,
             ),
             on_success=_on_success,
             on_failure=_on_failure,
@@ -1764,7 +1794,10 @@ def _enable_braille() -> None:
             queued = _enqueue_brlapi_task(
                 "restore braille priority",
                 lambda brlapi: brlapi.setParameter(
-                    BRLAPI_PARAM_CLIENT_PRIORITY, 0, False, _STATE.brlapi_current_priority
+                    BRLAPI_PARAM_CLIENT_PRIORITY,
+                    0,
+                    False,
+                    _STATE.brlapi_current_priority,
                 ),
                 on_success=_on_success,
                 on_failure=_on_failure,
@@ -1950,7 +1983,10 @@ def _compute_target_cursor_cell(
 
 
 def _update_viewport_for_cursor(
-    pan_to_cursor: bool, target_cursor_cell: int, cursor_offset: int, line_string: str
+    pan_to_cursor: bool,
+    target_cursor_cell: int,
+    cursor_offset: int,
+    line_string: str,
 ) -> None:
     """Adjust the viewport offset to keep the cursor visible."""
 
@@ -2175,7 +2211,10 @@ def _init_flash(flash_time: int) -> None:
         _STATE.flash_event_source_id = 0
     else:
         _STATE.saved = _FlashState(
-            _STATE.lines, _STATE.region_with_focus, _STATE.viewport, flash_time
+            _STATE.lines,
+            _STATE.region_with_focus,
+            _STATE.viewport,
+            flash_time,
         )
 
     if flash_time > 0:
@@ -2306,7 +2345,7 @@ def _next_contracted_braille_setting(event: InputEvent | None) -> bool:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return not current
 
-    braille_event = cast(Any, event)
+    braille_event = cast("Any", event)
     enabled = (braille_event.event["flags"] & BRLAPI_KEY_FLG_TOGGLE_ON) != 0
     msg = (
         "BRAILLE: Contracted braille flag from display. "
@@ -2411,8 +2450,7 @@ def _apply_key_ranges(keys: Sequence[int]) -> None:
     msg = "BRAILLE: Enabling commands:"
     debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    for key in keys:
-        key_set.append(BRLAPI_KEY_TYPE_CMD | key)
+    key_set.extend(BRLAPI_KEY_TYPE_CMD | key for key in keys)
 
     msg = "BRAILLE: Sending keys to BrlAPI."
     debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -2548,10 +2586,10 @@ def shutdown() -> bool:
         brlapi = _STATE.brlapi
         if brlapi is not None and _STATE.brlapi_queue is not None:
             _STATE.brlapi_queue.put(
-                _BrlapiTask("leave TTY mode", lambda api: api.leaveTtyMode(), brlapi)
+                _BrlapiTask("leave TTY mode", lambda api: api.leaveTtyMode(), brlapi),
             )
             _STATE.brlapi_queue.put(
-                _BrlapiTask("close connection", lambda api: api.closeConnection(), brlapi)
+                _BrlapiTask("close connection", lambda api: api.closeConnection(), brlapi),
             )
             _STATE.brlapi_queue.put(None)
 

@@ -35,8 +35,9 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -102,11 +103,11 @@ class TestAXUtilitiesState:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         method = getattr(AXUtilitiesState, case["method_name"])
         mock_ax_object_class.has_state = test_context.Mock(
-            side_effect=lambda obj, state: state == case["state_type"]
+            side_effect=lambda obj, state: state == case["state_type"],
         )
         assert method(mock_obj)
         mock_ax_object_class.has_state = test_context.Mock(
-            side_effect=lambda obj, state: state != case["state_type"]
+            side_effect=lambda obj, state: state != case["state_type"],
         )
         assert not method(mock_obj)
 
@@ -165,7 +166,9 @@ class TestAXUtilitiesState:
         ids=lambda case: case["id"],
     )
     def test_get_current_item_status_string(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test AXUtilitiesState.get_current_item_status_string."""
 
@@ -197,8 +200,8 @@ class TestAXUtilitiesState:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_ax_object_class.get_state_set = test_context.Mock(
             return_value=test_context.Mock(
-                is_empty=test_context.Mock(return_value=case["is_empty"])
-            )
+                is_empty=test_context.Mock(return_value=case["is_empty"]),
+            ),
         )
         assert AXUtilitiesState.has_no_state(mock_obj) == case["expected_result"]
 
@@ -221,11 +224,11 @@ class TestAXUtilitiesState:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         if case["state_scenario"] == "checkable":
             mock_ax_object_class.has_state = test_context.Mock(
-                side_effect=lambda obj, state: state == Atspi.StateType.CHECKABLE
+                side_effect=lambda obj, state: state == Atspi.StateType.CHECKABLE,
             )
         elif case["state_scenario"] == "checked":
             mock_ax_object_class.has_state = test_context.Mock(
-                side_effect=lambda obj, state: state == Atspi.StateType.CHECKED
+                side_effect=lambda obj, state: state == Atspi.StateType.CHECKED,
             )
         else:
             mock_ax_object_class.has_state = test_context.Mock(return_value=False)
@@ -347,9 +350,9 @@ class TestAXUtilitiesState:
         """Test AXUtilitiesState methods that can trigger debug output."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.ax_utilities_state import AXUtilitiesState
-        from orca.ax_object import AXObject
         from orca import debug
+        from orca.ax_object import AXObject
+        from orca.ax_utilities_state import AXUtilitiesState
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
@@ -427,7 +430,9 @@ class TestAXUtilitiesState:
 
         if case["expects_debug"]:
             test_context.patch_object(
-                debug, "print_tokens", new=essential_modules["orca.debug"].print_tokens
+                debug,
+                "print_tokens",
+                new=essential_modules["orca.debug"].print_tokens,
             )
 
         method = getattr(AXUtilitiesState, case["method_name"])
@@ -453,7 +458,7 @@ class TestAXUtilitiesState:
         mock_ax_object_class.get_attribute = test_context.Mock(
             side_effect=lambda obj, attr, default=None: case["hidden_value"]
             if attr == "hidden"
-            else default
+            else default,
         )
         assert AXUtilitiesState.is_hidden(mock_obj) == case["expected_result"]
 
@@ -483,8 +488,8 @@ class TestAXUtilitiesState:
         """Test AXUtilitiesState.is_read_only."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_object import AXObject
+        from orca.ax_utilities_state import AXUtilitiesState
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
 

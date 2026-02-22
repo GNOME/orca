@@ -24,7 +24,6 @@
 
 from __future__ import annotations
 
-
 import enum
 from typing import Any
 
@@ -32,14 +31,9 @@ import gi
 
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gdk
-from gi.repository import GObject
-from gi.repository import Gtk
+from gi.repository import Gdk, GObject, Gtk
 
-from . import dbus_service
-from . import debug
-from . import gsettings_registry
-from . import guilabels
+from . import dbus_service, debug, gsettings_registry, guilabels
 from .ax_text import AXText, AXTextAttribute
 from .preferences_grid_base import PreferencesGridBase
 
@@ -181,7 +175,9 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
         target_entry = Gtk.TargetEntry.new("text/plain", Gtk.TargetFlags.SAME_APP, 0)
 
         drag_area.drag_source_set(
-            Gdk.ModifierType.BUTTON1_MASK, [target_entry], Gdk.DragAction.MOVE
+            Gdk.ModifierType.BUTTON1_MASK,
+            [target_entry],
+            Gdk.DragAction.MOVE,
         )
         drag_area.connect("drag-begin", self._on_drag_begin, row)
         drag_area.connect("drag-data-get", self._on_drag_data_get, row)
@@ -242,7 +238,10 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
         self.refresh()
 
     def _on_drag_begin(
-        self, _widget: Gtk.EventBox, _drag_context: Gdk.DragContext, row: Gtk.ListBoxRow
+        self,
+        _widget: Gtk.EventBox,
+        _drag_context: Gdk.DragContext,
+        row: Gtk.ListBoxRow,
     ) -> None:
         """Handle drag begin - store source index."""
 
@@ -293,7 +292,10 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
         self.refresh()
 
     def _on_drag_end(
-        self, _widget: Gtk.EventBox, _drag_context: Gdk.DragContext, _row: Gtk.ListBoxRow
+        self,
+        _widget: Gtk.EventBox,
+        _drag_context: Gdk.DragContext,
+        _row: Gtk.ListBoxRow,
     ) -> None:
         """Handle drag end - clean up."""
 
@@ -362,7 +364,10 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
 
         for index, (attribute, mode) in enumerate(self._attributes):
             row = self._create_attribute_row(
-                attribute, mode, index, include_top_separator=index > 0
+                attribute,
+                mode,
+                index,
+                include_top_separator=index > 0,
             )
             self._listbox.add(row)
 
@@ -398,7 +403,11 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
         if profile:
             skip = not app_name and profile == "default"
             gsettings_registry.get_registry().save_schema(
-                "text-attributes", result, profile, app_name, skip
+                "text-attributes",
+                result,
+                profile,
+                app_name,
+                skip,
             )
 
         return result
@@ -419,7 +428,10 @@ class TextAttributeManager:
         """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, gtype, default=default
+            self._SCHEMA,
+            key,
+            gtype,
+            default=default,
         )
 
     def __init__(self) -> None:
@@ -457,7 +469,9 @@ class TextAttributeManager:
         msg = f"TEXT ATTRIBUTE MANAGER: Setting attributes to speak to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "attributes-to-speak", value
+            self._SCHEMA,
+            "attributes-to-speak",
+            value,
         )
         return True
 
@@ -485,7 +499,9 @@ class TextAttributeManager:
         msg = f"TEXT ATTRIBUTE MANAGER: Setting attributes to braille to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "attributes-to-braille", value
+            self._SCHEMA,
+            "attributes-to-braille",
+            value,
         )
         return True
 

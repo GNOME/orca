@@ -218,7 +218,10 @@ class TestNotificationPresenter:
         ],
     )
     def test_get_handlers(
-        self, test_context: OrcaTestContext, _refresh: bool, check_handler_names: bool
+        self,
+        test_context: OrcaTestContext,
+        _refresh: bool,
+        check_handler_names: bool,
     ) -> None:
         """Test NotificationPresenter.get_handlers returns empty dict.
 
@@ -227,8 +230,8 @@ class TestNotificationPresenter:
         """
 
         self._setup_dependencies(test_context)
-        from orca.notification_presenter import NotificationPresenter
         from orca import command_manager
+        from orca.notification_presenter import NotificationPresenter
 
         presenter = NotificationPresenter()
         presenter.set_up_commands()
@@ -297,8 +300,8 @@ class TestNotificationPresenter:
         """Test that commands are registered with CommandManager during setup."""
 
         self._setup_dependencies(test_context)
-        from orca.notification_presenter import NotificationPresenter
         from orca import command_manager
+        from orca.notification_presenter import NotificationPresenter
 
         presenter = NotificationPresenter()
         presenter.set_up_commands()
@@ -429,7 +432,8 @@ class TestNotificationPresenter:
         pres_manager.present_message.assert_any_call("Message 1 1 minutes ago")
 
     def test_present_previous_notification_normal_navigation(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test NotificationPresenter.present_previous_notification normal navigation."""
 
@@ -461,7 +465,10 @@ class TestNotificationPresenter:
         ],
     )
     def test_navigation_index_error(
-        self, test_context: OrcaTestContext, method_name, start_index
+        self,
+        test_context: OrcaTestContext,
+        method_name,
+        start_index,
     ) -> None:
         """Test notification navigation methods handle IndexError scenarios."""
         deps = self._setup_dependencies(test_context)
@@ -528,7 +535,8 @@ class TestNotificationPresenter:
         pres_manager.present_message.assert_any_call("Message 2 1 minutes ago")
 
     def test_present_next_notification_normal_navigation(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test NotificationPresenter.present_next_notification normal navigation."""
 
@@ -705,19 +713,19 @@ class TestNotificationListGUI:
         focus_manager_instance = test_context.Mock()
         focus_manager_instance.get_locus_of_focus = test_context.Mock(return_value=None)
         essential_modules["orca.focus_manager"].get_manager = test_context.Mock(
-            return_value=focus_manager_instance
+            return_value=focus_manager_instance,
         )
 
         script_manager_instance = test_context.Mock()
         script_instance = test_context.Mock()
         script_manager_instance.get_active_script = test_context.Mock(return_value=script_instance)
         essential_modules["orca.script_manager"].get_manager = test_context.Mock(
-            return_value=script_manager_instance
+            return_value=script_manager_instance,
         )
 
         input_event_handler_mock = test_context.Mock()
         essential_modules["orca.input_event"].InputEventHandler = test_context.Mock(
-            return_value=input_event_handler_mock
+            return_value=input_event_handler_mock,
         )
 
         essential_modules[
@@ -735,7 +743,8 @@ class TestNotificationListGUI:
         return essential_modules
 
     def test_notification_list_gui_constructor_validation(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test NotificationListGUI class can be imported and instantiated."""
 
@@ -829,19 +838,19 @@ class TestNotificationPresenterModule:
         focus_manager_instance = test_context.Mock()
         focus_manager_instance.get_locus_of_focus = test_context.Mock(return_value=None)
         essential_modules["orca.focus_manager"].get_manager = test_context.Mock(
-            return_value=focus_manager_instance
+            return_value=focus_manager_instance,
         )
 
         script_manager_instance = test_context.Mock()
         script_instance = test_context.Mock()
         script_manager_instance.get_active_script = test_context.Mock(return_value=script_instance)
         essential_modules["orca.script_manager"].get_manager = test_context.Mock(
-            return_value=script_manager_instance
+            return_value=script_manager_instance,
         )
 
         input_event_handler_mock = test_context.Mock()
         essential_modules["orca.input_event"].InputEventHandler = test_context.Mock(
-            return_value=input_event_handler_mock
+            return_value=input_event_handler_mock,
         )
 
         essential_modules[

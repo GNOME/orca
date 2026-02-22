@@ -69,7 +69,11 @@ class Tone:  # pylint: disable=too-few-public-methods
     INVERTED_RED_NOISE = 12
 
     def __init__(
-        self, duration: float, frequency: int, volume: float = 1.0, wave: int = SINE_WAVE
+        self,
+        duration: float,
+        frequency: int,
+        volume: float = 1.0,
+        wave: int = SINE_WAVE,
     ) -> None:
         self.duration = duration
         self.frequency = min(max(0, frequency), 20000)

@@ -27,10 +27,9 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Callable, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import gi
 
@@ -38,24 +37,26 @@ gi.require_version("Atspi", "2.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Atspi, Gtk
 
-from . import caret_navigator
-from . import cmdnames
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import gsettings_registry
-from . import focus_manager
-from . import guilabels
-from . import input_event
-from . import input_event_manager
-from . import keybindings
-from . import live_region_presenter
-from . import messages
-from . import preferences_grid_base
-from . import presentation_manager
-from . import script_manager
-from . import structural_navigator
-from . import table_navigator
+from . import (
+    caret_navigator,
+    cmdnames,
+    command_manager,
+    dbus_service,
+    debug,
+    focus_manager,
+    gsettings_registry,
+    guilabels,
+    input_event,
+    input_event_manager,
+    keybindings,
+    live_region_presenter,
+    messages,
+    preferences_grid_base,
+    presentation_manager,
+    script_manager,
+    structural_navigator,
+    table_navigator,
+)
 from .ax_component import AXComponent
 from .ax_document import AXDocument
 from .ax_object import AXObject
@@ -64,6 +65,8 @@ from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from .scripts import default
 
 
@@ -406,7 +409,10 @@ class DocumentPresenter:
         """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, gtype, default=default
+            self._SCHEMA,
+            key,
+            gtype,
+            default=default,
         )
 
     def __init__(self) -> None:
@@ -465,7 +471,7 @@ class DocumentPresenter:
                     description,
                     desktop_keybinding=kb,
                     laptop_keybinding=kb,
-                )
+                ),
             )
 
         msg = "DOCUMENT PRESENTER: Commands set up."
@@ -655,7 +661,8 @@ class DocumentPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         structural_navigator.get_navigator().set_mode(
-            script, structural_navigator.NavigationMode.DOCUMENT
+            script,
+            structural_navigator.NavigationMode.DOCUMENT,
         )
         caret_navigator.get_navigator().set_enabled_for_script(script, True)
 
@@ -707,7 +714,7 @@ class DocumentPresenter:
             return True
 
         if role in [Atspi.Role.TABLE_CELL, Atspi.Role.TABLE] and AXTable.is_layout_table(
-            AXTable.get_table(obj)
+            AXTable.get_table(obj),
         ):
             tokens = ["DOCUMENT PRESENTER:", obj, "is not focus mode widget: it's layout only"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -844,7 +851,11 @@ class DocumentPresenter:
             AXObject.grab_focus(obj)
 
         self._set_presentation_mode(
-            script, use_focus, obj=obj, document=document, notify_user=notify_user
+            script,
+            use_focus,
+            obj=obj,
+            document=document,
+            notify_user=notify_user,
         )
         self._get_state_for_app(script.app).user_has_toggled = True
         return True
@@ -1010,7 +1021,8 @@ class DocumentPresenter:
             reason = "locus of focus no longer in document"
             self.suspend_navigators(script, False, reason)
             structural_navigator.get_navigator().set_mode(
-                script, structural_navigator.NavigationMode.OFF
+                script,
+                structural_navigator.NavigationMode.OFF,
             )
             caret_navigator.get_navigator().set_enabled_for_script(script, False)
             return True
@@ -1055,7 +1067,9 @@ class DocumentPresenter:
         msg = f"DOCUMENT PRESENTER: Setting native nav triggers focus mode to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "native-nav-triggers-focus-mode", value
+            self._SCHEMA,
+            "native-nav-triggers-focus-mode",
+            value,
         )
         return True
 
@@ -1083,7 +1097,9 @@ class DocumentPresenter:
         msg = f"DOCUMENT PRESENTER: Setting auto sticky focus mode for web apps to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "auto-sticky-focus-mode", value
+            self._SCHEMA,
+            "auto-sticky-focus-mode",
+            value,
         )
         return True
 
@@ -1137,7 +1153,9 @@ class DocumentPresenter:
         msg = f"DOCUMENT PRESENTER: Setting page summary on load to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "page-summary-on-load", value
+            self._SCHEMA,
+            "page-summary-on-load",
+            value,
         )
         return True
 
@@ -1177,7 +1195,9 @@ class DocumentPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         name = "all" if value else "none"
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "find-results-verbosity", name
+            self._SCHEMA,
+            "find-results-verbosity",
+            name,
         )
         return True
 
@@ -1198,7 +1218,9 @@ class DocumentPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         name = "if-line-changed" if value else "all"
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "find-results-verbosity", name
+            self._SCHEMA,
+            "find-results-verbosity",
+            name,
         )
         return True
 
@@ -1226,7 +1248,9 @@ class DocumentPresenter:
         msg = f"DOCUMENT PRESENTER: Setting find results minimum length to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "find-results-minimum-length", value
+            self._SCHEMA,
+            "find-results-minimum-length",
+            value,
         )
         return True
 
@@ -1281,7 +1305,9 @@ class DocumentPresenter:
         return True
 
     def _force_browse_mode_for_web_app_descendant(
-        self, script: default.Script, obj: Atspi.Accessible
+        self,
+        script: default.Script,
+        obj: Atspi.Accessible,
     ) -> bool:
         """Returns True if we should force browse mode for web-app descendant obj."""
 
@@ -1395,7 +1421,8 @@ class DocumentPresenter:
         return False
 
     def create_preferences_grid(
-        self, title_change_callback: Callable[[str], None] | None = None
+        self,
+        title_change_callback: Callable[[str], None] | None = None,
     ) -> DocumentPreferencesGrid:
         """Returns the preferences grid for document settings."""
 

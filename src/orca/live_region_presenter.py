@@ -24,32 +24,34 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import copy
 import enum
 import heapq
 import time
 from typing import TYPE_CHECKING
 
-import gi
 from gi.repository import GLib
 
-from . import cmdnames
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import gsettings_registry
-from . import focus_manager
-from . import guilabels
-from . import input_event
-from . import keybindings
-from . import messages
-from . import presentation_manager
-from . import script_manager
+from . import (
+    cmdnames,
+    command_manager,
+    dbus_service,
+    debug,
+    focus_manager,
+    gsettings_registry,
+    guilabels,
+    input_event,
+    keybindings,
+    messages,
+    presentation_manager,
+    script_manager,
+)
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
+    import gi
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
@@ -184,7 +186,10 @@ class LiveRegionPresenter:
         """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, "b", default=default
+            self._SCHEMA,
+            key,
+            "b",
+            default=default,
         )
 
     # Maximum size for message queue and cache
@@ -234,7 +239,7 @@ class LiveRegionPresenter:
                 desktop_keybinding=kb_backslash,
                 laptop_keybinding=kb_backslash,
                 is_group_toggle=True,
-            )
+            ),
         )
 
         manager.add_command(
@@ -245,7 +250,7 @@ class LiveRegionPresenter:
                 cmdnames.LIVE_REGIONS_PREVIOUS,
                 desktop_keybinding=None,
                 laptop_keybinding=None,
-            )
+            ),
         )
 
         manager.add_command(
@@ -256,7 +261,7 @@ class LiveRegionPresenter:
                 cmdnames.LIVE_REGIONS_ADVANCE_POLITENESS,
                 desktop_keybinding=None,
                 laptop_keybinding=None,
-            )
+            ),
         )
 
         manager.add_command(
@@ -268,7 +273,7 @@ class LiveRegionPresenter:
                 desktop_keybinding=None,
                 laptop_keybinding=None,
                 is_group_toggle=True,
-            )
+            ),
         )
 
         manager.add_command(
@@ -279,7 +284,7 @@ class LiveRegionPresenter:
                 cmdnames.LIVE_REGIONS_NEXT,
                 desktop_keybinding=None,
                 laptop_keybinding=None,
-            )
+            ),
         )
 
         msg = f"LIVE REGION PRESENTER: Commands set up. Suspended: {self._suspended}"
@@ -297,7 +302,8 @@ class LiveRegionPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._suspended = suspended
         command_manager.get_manager().set_group_suspended(
-            guilabels.KB_GROUP_LIVE_REGIONS, suspended
+            guilabels.KB_GROUP_LIVE_REGIONS,
+            suspended,
         )
 
     def reset(self) -> None:
@@ -411,13 +417,15 @@ class LiveRegionPresenter:
         return len(self.msg_queue) > 0
 
     def _advance_politeness_level(
-        self, _script: default.Script, _event: input_event.InputEvent
+        self,
+        _script: default.Script,
+        _event: input_event.InputEvent,
     ) -> bool:
         """Advance the politeness level of the given object"""
 
         if not self.get_is_enabled():
             presentation_manager.get_manager().present_message(
-                messages.LIVE_REGIONS_SUPPORT_DISABLED
+                messages.LIVE_REGIONS_SUPPORT_DISABLED,
             )
             return False
 
@@ -438,7 +446,7 @@ class LiveRegionPresenter:
         elif cur_priority == LivePoliteness.POLITE:
             self._politeness_overrides[object_id] = LivePoliteness.ASSERTIVE
             presentation_manager.get_manager().present_message(
-                messages.LIVE_REGIONS_LEVEL_ASSERTIVE
+                messages.LIVE_REGIONS_LEVEL_ASSERTIVE,
             )
         elif cur_priority == LivePoliteness.ASSERTIVE:
             self._politeness_overrides[object_id] = LivePoliteness.OFF
@@ -446,7 +454,9 @@ class LiveRegionPresenter:
         return True
 
     def go_last_live_region(
-        self, script: default.Script, _event: input_event.InputEvent | None
+        self,
+        script: default.Script,
+        _event: input_event.InputEvent | None,
     ) -> bool:
         """Move to the last announced live region and speak the contents of that object."""
 
@@ -457,25 +467,27 @@ class LiveRegionPresenter:
 
         if not self.get_is_enabled():
             presentation_manager.get_manager().present_message(
-                messages.LIVE_REGIONS_SUPPORT_DISABLED
+                messages.LIVE_REGIONS_SUPPORT_DISABLED,
             )
             return False
 
         obj = self._last_presented_message.obj
         script.utilities.set_caret_position(obj, 0)
         presentation_manager.get_manager().speak_contents(
-            script.utilities.get_object_contents_at_offset(obj, 0)
+            script.utilities.get_object_contents_at_offset(obj, 0),
         )
         return True
 
     def present_previous_live_region_message(
-        self, script: default.Script, _event: input_event.InputEvent | None
+        self,
+        script: default.Script,
+        _event: input_event.InputEvent | None,
     ) -> bool:
         """Presents the previous live region message."""
 
         if not self.get_is_enabled():
             presentation_manager.get_manager().present_message(
-                messages.LIVE_REGIONS_SUPPORT_DISABLED
+                messages.LIVE_REGIONS_SUPPORT_DISABLED,
             )
             return False
 
@@ -508,13 +520,15 @@ class LiveRegionPresenter:
         return True
 
     def present_next_live_region_message(
-        self, script: default.Script, _event: input_event.InputEvent | None
+        self,
+        script: default.Script,
+        _event: input_event.InputEvent | None,
     ) -> bool:
         """Presents the next live region message."""
 
         if not self.get_is_enabled():
             presentation_manager.get_manager().present_message(
-                messages.LIVE_REGIONS_SUPPORT_DISABLED
+                messages.LIVE_REGIONS_SUPPORT_DISABLED,
             )
             return False
 
@@ -594,7 +608,9 @@ class LiveRegionPresenter:
         msg = f"LIVE REGION PRESENTER: Setting presentLiveRegionFromInactiveTab to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "present-from-inactive-tab", value
+            self._SCHEMA,
+            "present-from-inactive-tab",
+            value,
         )
         return True
 
@@ -613,13 +629,15 @@ class LiveRegionPresenter:
         return True
 
     def toggle_live_region_presentation(
-        self, script: default.Script, _event: input_event.InputEvent
+        self,
+        script: default.Script,
+        _event: input_event.InputEvent,
     ) -> bool:
         """Toggles between presenting live regions and not presenting them."""
 
         if not self.get_is_enabled():
             presentation_manager.get_manager().present_message(
-                messages.LIVE_REGIONS_SUPPORT_DISABLED
+                messages.LIVE_REGIONS_SUPPORT_DISABLED,
             )
             return False
 
@@ -675,7 +693,9 @@ class LiveRegionPresenter:
                 content = event.any_data
             else:
                 content = script.utilities.expand_eocs(
-                    event.source, event.detail1, event.detail1 + event.detail2
+                    event.source,
+                    event.detail1,
+                    event.detail1 + event.detail2,
                 )
         else:
             container = self._find_container(event.source)

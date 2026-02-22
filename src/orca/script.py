@@ -24,18 +24,23 @@
 """The base Script class."""
 
 from __future__ import annotations
-from typing import Callable, TYPE_CHECKING
 
-from . import braille_generator
-from . import chat_presenter
-from . import debug
-from . import script_utilities
-from . import sound_generator
-from . import speech_generator
-from . import structural_navigator
+from typing import TYPE_CHECKING
+
+from . import (
+    braille_generator,
+    chat_presenter,
+    debug,
+    script_utilities,
+    sound_generator,
+    speech_generator,
+    structural_navigator,
+)
 from .ax_object import AXObject
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     import gi
 
     gi.require_version("Atspi", "2.0")

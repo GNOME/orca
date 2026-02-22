@@ -28,7 +28,6 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import re
 
 import gi
@@ -36,12 +35,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import braille
-from . import braille_presenter
-from . import debug
-from . import focus_manager
-from . import script_manager
-from . import speech_presenter
+from . import braille, braille_presenter, debug, focus_manager, script_manager, speech_presenter
 from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -51,7 +45,7 @@ from .ax_utilities import AXUtilities
 class Char:
     """A character's worth of presentable information."""
 
-    def __init__(self, word: "Word", start_offset: int, string: str):
+    def __init__(self, word: Word, start_offset: int, string: str):
         """Creates a new char.
 
         Arguments:
@@ -60,7 +54,7 @@ class Char:
         - string: the char string
         """
 
-        self._word: "Word" = word
+        self._word: Word = word
         self._start_offset: int = start_offset
         self._string: str = string
         self._rect: Atspi.Rect | None = None
@@ -94,7 +88,7 @@ class Char:
 class Word:
     """A single chunk (word or object) of presentable information."""
 
-    def __init__(self, zone: "Zone", start_offset: int, string: str):
+    def __init__(self, zone: Zone, start_offset: int, string: str):
         """Creates a new Word.
 
         Arguments:
@@ -103,7 +97,7 @@ class Word:
         - string: the word string
         """
 
-        self._zone: "Zone" = zone
+        self._zone: Zone = zone
         self._start_offset: int = start_offset
         self._string: str = string
         self._rect: Atspi.Rect | None = None
@@ -137,6 +131,9 @@ class Word:
             and this_rect.width == other_rect.width
             and this_rect.height == other_rect.height
         )
+
+    def __hash__(self) -> int:
+        return hash((self._zone, self._start_offset, self._string))
 
     def get_characters(self) -> list[Char]:
         """Returns a list of Char instances for this Word."""
@@ -211,7 +208,7 @@ class Zone:
         self._string: str = string
         self._rect: Atspi.Rect = rect
         self._words: list[Word] = []
-        self.line: "Line" | None = None
+        self.line: Line | None = None
         self._braille_region: braille.Region | None = None
         self._word_rect_cache: dict[tuple[int, int], Atspi.Rect] = {}
         self._word_index_map: dict[tuple[int, str], int] = {}  # (start_offset, string) -> index
@@ -226,10 +223,7 @@ class Zone:
         if AXUtilities.is_editable(self._obj):
             return False
 
-        if AXObject.supports_value(self._obj):
-            return False
-
-        return True
+        return not AXObject.supports_value(self._obj)
 
     def get_braille_region(self) -> braille.Region | None:
         """Returns the braille region for this Zone."""
@@ -303,7 +297,7 @@ class Zone:
         self._word_rect_cache[cache_key] = rect
         return rect
 
-    def on_same_line(self, zone: "Zone", pixel_delta: int = 5) -> bool:
+    def on_same_line(self, zone: Zone, pixel_delta: int = 5) -> bool:
         """Returns True if we treat this Zone and zone as being on one line."""
 
         if AXUtilities.is_scroll_bar(self._obj) or AXUtilities.is_scroll_bar(zone.get_object()):
@@ -372,7 +366,11 @@ class TextZone(Zone):
     """A Zone whose purpose is to display text of an object."""
 
     def __init__(
-        self, obj: Atspi.Accessible, start_offset: int, string: str, rect: Atspi.Rect
+        self,
+        obj: Atspi.Accessible,
+        start_offset: int,
+        string: str,
+        rect: Atspi.Rect,
     ) -> None:
         """Creates a new TextZone.
 
@@ -396,10 +394,7 @@ class TextZone(Zone):
         if AXUtilities.is_editable(self._obj) or AXUtilities.is_terminal(self._obj):
             return False
 
-        if AXUtilities.is_label(self._obj):
-            return False
-
-        return True
+        return not AXUtilities.is_label(self._obj)
 
     def get_braille_region(self) -> braille.Region | None:
         """Returns the braille region for this Zone."""
@@ -683,13 +678,17 @@ class Context:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _split_text_into_zones(
-        self, obj: Atspi.Accessible, string: str, start_offset: int, cliprect: Atspi.Rect
+        self,
+        obj: Atspi.Accessible,
+        string: str,
+        start_offset: int,
+        cliprect: Atspi.Rect,
     ) -> list[TextZone]:
         """Returns a list of TextZones with embedded object characters removed."""
 
         zones: list[TextZone] = []
         ranges = [(*m.span(), m.group(0)) for m in re.finditer(r"[^\ufffc]+", string)]
-        ranges = list(map(lambda x: (x[0] + start_offset, x[1] + start_offset, x[2]), ranges))
+        ranges = [(x[0] + start_offset, x[1] + start_offset, x[2]) for x in ranges]
         for start, end, substring in ranges:
             rect = AXText.get_range_rect(obj, start, end)
             intersection = AXComponent.get_rect_intersection(rect, cliprect)
@@ -830,7 +829,9 @@ class Context:
         return None
 
     def _get_showing_zones(
-        self, root: Atspi.Accessible, boundingbox: Atspi.Rect | None = None
+        self,
+        root: Atspi.Accessible,
+        boundingbox: Atspi.Rect | None = None,
     ) -> list[Zone]:
         """Returns an unsorted list of all the zones under root."""
 

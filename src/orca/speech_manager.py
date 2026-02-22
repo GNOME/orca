@@ -35,27 +35,28 @@ import locale
 import queue
 import threading
 from enum import Enum
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import GObject
-from gi.repository import Gtk
+from gi.repository import GObject, Gtk
 
-from . import cmdnames
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import guilabels
-from . import gsettings_registry
-from . import input_event
-from . import keybindings
-from . import messages
-from . import preferences_grid_base
-from . import presentation_manager
-from . import speech
-from . import speechserver
+from . import (
+    cmdnames,
+    command_manager,
+    dbus_service,
+    debug,
+    gsettings_registry,
+    guilabels,
+    input_event,
+    keybindings,
+    messages,
+    preferences_grid_base,
+    presentation_manager,
+    speech,
+    speechserver,
+)
 from .acss import ACSS
 from .speechserver import CapitalizationStyle, PunctuationStyle
 
@@ -145,7 +146,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         row = 0
 
         self._global_frame, global_content = self._create_frame(
-            guilabels.VOICE_GLOBAL_VOICE_SETTINGS, margin_top=12
+            guilabels.VOICE_GLOBAL_VOICE_SETTINGS,
+            margin_top=12,
         )
 
         punctuation_model = Gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_INT)
@@ -156,13 +158,13 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         capitalization_model = Gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_STRING)
         capitalization_model.append(
-            [guilabels.CAPITALIZATION_STYLE_NONE, CapitalizationStyle.NONE.value]
+            [guilabels.CAPITALIZATION_STYLE_NONE, CapitalizationStyle.NONE.value],
         )
         capitalization_model.append(
-            [guilabels.CAPITALIZATION_STYLE_ICON, CapitalizationStyle.ICON.value]
+            [guilabels.CAPITALIZATION_STYLE_ICON, CapitalizationStyle.ICON.value],
         )
         capitalization_model.append(
-            [guilabels.CAPITALIZATION_STYLE_SPELL, CapitalizationStyle.SPELL.value]
+            [guilabels.CAPITALIZATION_STYLE_SPELL, CapitalizationStyle.SPELL.value],
         )
 
         global_listbox = preferences_grid_base.FocusManagedListBox()
@@ -190,7 +192,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         global_combos = []
         for label_text, model, changed_handler in row_data:
             row_widget, combo, _label = self._create_combo_box_row(
-                label_text, model, changed_handler, include_top_separator=False
+                label_text,
+                model,
+                changed_handler,
+                include_top_separator=False,
             )
             combo_size_group.add_widget(combo)
             global_listbox.add_row_with_widget(row_widget, combo)
@@ -232,7 +237,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         switches = []
         for label_text, handler, state in switch_data:
             row_widget, switch, _label = self._create_switch_row(
-                label_text, handler, state, include_top_separator=False
+                label_text,
+                handler,
+                state,
+                include_top_separator=False,
             )
             global_listbox.add_row_with_widget(row_widget, switch)
             switches.append(switch)
@@ -248,7 +256,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         row += 1
 
         self._voice_types_frame, voice_types_content = self._create_frame(
-            guilabels.VOICE_VOICE_TYPE_SETTINGS, margin_top=12
+            guilabels.VOICE_VOICE_TYPE_SETTINGS,
+            margin_top=12,
         )
 
         voice_types_listbox, voice_buttons = self._create_button_listbox(
@@ -273,7 +282,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     "applications-system-symbolic",
                     lambda _btn: self._show_voice_settings_dialog(self.VoiceType.SYSTEM),
                 ),
-            ]
+            ],
         )
 
         voice_type_labels = [
@@ -282,7 +291,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             guilabels.SPEECH_VOICE_TYPE_UPPERCASE,
             guilabels.SPEECH_VOICE_TYPE_SYSTEM,
         ]
-        for button, voice_label in zip(voice_buttons, voice_type_labels):
+        for button, voice_label in zip(voice_buttons, voice_type_labels, strict=True):
             accessible_name = guilabels.VOICE_TYPE_SETTINGS % voice_label
             button.set_tooltip_text(accessible_name)
             accessible = button.get_accessible()
@@ -310,7 +319,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         saved_acss = ACSS(dict(voice_acss))
 
         dialog, ok_button = self._create_header_bar_dialog(
-            title, guilabels.BTN_CANCEL, guilabels.BTN_OK
+            title,
+            guilabels.BTN_CANCEL,
+            guilabels.BTN_OK,
         )
 
         content_area = dialog.get_content_area()
@@ -358,7 +369,11 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self._on_pitch_changed(widget, voice_type)
 
         pitch_adj = Gtk.Adjustment(
-            value=5.0, lower=0, upper=10, step_increment=0.1, page_increment=1
+            value=5.0,
+            lower=0,
+            upper=10,
+            step_increment=0.1,
+            page_increment=1,
         )
         pitch_row, pitch_scale, _pitch_label = self._create_slider_row(
             guilabels.VOICE_PITCH,
@@ -372,7 +387,11 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self._on_volume_changed(widget, voice_type)
 
         volume_adj = Gtk.Adjustment(
-            value=10.0, lower=0, upper=10, step_increment=0.1, page_increment=1
+            value=10.0,
+            lower=0,
+            upper=10,
+            step_increment=0.1,
+            page_increment=1,
         )
         volume_row, volume_scale, _volume_label = self._create_slider_row(
             guilabels.VOICE_VOLUME,
@@ -475,7 +494,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 speechserver.UPPERCASE_VOICE: dict(self._uppercase_voice),
                 speechserver.HYPERLINK_VOICE: dict(self._hyperlink_voice),
                 speechserver.SYSTEM_VOICE: dict(self._system_voice),
-            }
+            },
         }
 
         server_name = self._manager.get_current_server()
@@ -523,10 +542,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._speak_numbers_switch.set_active(self._manager.get_speak_numbers_as_digits())
         self._use_color_names_switch.set_active(self._manager.get_use_color_names())
         self._enable_pause_breaks_switch.set_active(
-            self._manager.get_insert_pauses_between_utterances()
+            self._manager.get_insert_pauses_between_utterances(),
         )
         self._use_pronunciation_dict_switch.set_active(
-            self._manager.get_use_pronunciation_dictionary()
+            self._manager.get_use_pronunciation_dictionary(),
         )
         self._auto_language_switching_switch.set_active(self._manager.get_auto_language_switching())
 
@@ -568,7 +587,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         return self._default_voice
 
     def _get_widgets_for_voice_type(
-        self, voice_type: VoicesPreferencesGrid.VoiceType
+        self,
+        voice_type: VoicesPreferencesGrid.VoiceType,
     ) -> tuple[Gtk.ComboBox, Gtk.ComboBox, list[speechserver.VoiceFamily]]:
         """Return the widgets and family choices for a given voice type."""
 
@@ -603,7 +623,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         )
 
     def _set_family_choices_for_voice_type(
-        self, voice_type: VoicesPreferencesGrid.VoiceType, choices: list[speechserver.VoiceFamily]
+        self,
+        voice_type: VoicesPreferencesGrid.VoiceType,
+        choices: list[speechserver.VoiceFamily],
     ) -> None:
         """Set the family choices for a given voice type."""
 
@@ -697,7 +719,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
     # pylint: disable-next=too-many-branches
     def _populate_languages_for_voice_type(
-        self, voice_type: VoicesPreferencesGrid.VoiceType
+        self,
+        voice_type: VoicesPreferencesGrid.VoiceType,
     ) -> None:
         """Populate the languages combo for a specific voice type."""
 
@@ -793,7 +816,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
     # pylint: disable-next=too-many-branches
     def _populate_families_for_voice_type(
-        self, voice_type: VoicesPreferencesGrid.VoiceType, apply_changes: bool = True
+        self,
+        voice_type: VoicesPreferencesGrid.VoiceType,
+        apply_changes: bool = True,
     ) -> None:
         """Populate the families/persons combo for a specific voice type."""
 
@@ -896,7 +921,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             registry.set_runtime_value(schema, "rate", voice[ACSS.RATE], voice_type=settings_key)
         if ACSS.AVERAGE_PITCH in voice:
             registry.set_runtime_value(
-                schema, "pitch", voice[ACSS.AVERAGE_PITCH], voice_type=settings_key
+                schema,
+                "pitch",
+                voice[ACSS.AVERAGE_PITCH],
+                voice_type=settings_key,
             )
         if ACSS.GAIN in voice:
             registry.set_runtime_value(schema, "volume", voice[ACSS.GAIN], voice_type=settings_key)
@@ -910,7 +938,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         ):
             if family_key in family:
                 registry.set_runtime_value(
-                    schema, dconf_key, family[family_key], voice_type=settings_key
+                    schema,
+                    dconf_key,
+                    family[family_key],
+                    voice_type=settings_key,
                 )
 
         server = self._manager.get_server()
@@ -920,7 +951,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             server.clear_cached_voice_properties()
 
     def _on_rate_changed(
-        self, widget: Gtk.Scale, voice_type: VoicesPreferencesGrid.VoiceType
+        self,
+        widget: Gtk.Scale,
+        voice_type: VoicesPreferencesGrid.VoiceType,
     ) -> None:
         """Handle rate slider change for a specific voice type."""
 
@@ -935,7 +968,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._has_unsaved_changes = True
 
     def _on_pitch_changed(
-        self, widget: Gtk.Scale, voice_type: VoicesPreferencesGrid.VoiceType
+        self,
+        widget: Gtk.Scale,
+        voice_type: VoicesPreferencesGrid.VoiceType,
     ) -> None:
         """Handle pitch slider change for a specific voice type."""
 
@@ -950,7 +985,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._has_unsaved_changes = True
 
     def _on_volume_changed(
-        self, widget: Gtk.Scale, voice_type: VoicesPreferencesGrid.VoiceType
+        self,
+        widget: Gtk.Scale,
+        voice_type: VoicesPreferencesGrid.VoiceType,
     ) -> None:
         """Handle volume slider change for a specific voice type."""
 
@@ -979,7 +1016,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         level = model.get_value(tree_iter, 1)
 
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "punctuation-level", PunctuationStyle(level).string_name
+            "speech",
+            "punctuation-level",
+            PunctuationStyle(level).string_name,
         )
         self._manager.update_punctuation_level()
         self._has_unsaved_changes = True
@@ -999,7 +1038,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         style = model.get_value(tree_iter, 1)
 
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "capitalization-style", CapitalizationStyle(style).string_name
+            "speech",
+            "capitalization-style",
+            CapitalizationStyle(style).string_name,
         )
         self._manager.update_capitalization_style()
         self._has_unsaved_changes = True
@@ -1091,7 +1132,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._has_unsaved_changes = True
 
     def _on_speech_language_changed(
-        self, widget: Gtk.ComboBox, voice_type: VoicesPreferencesGrid.VoiceType
+        self,
+        widget: Gtk.ComboBox,
+        voice_type: VoicesPreferencesGrid.VoiceType,
     ) -> None:
         """Handle speech language combo change for a specific voice type."""
 
@@ -1120,7 +1163,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self._sync_voice_to_settings(voice_type)
 
     def _on_speech_family_changed(
-        self, widget: Gtk.ComboBox, voice_type: VoicesPreferencesGrid.VoiceType
+        self,
+        widget: Gtk.ComboBox,
+        voice_type: VoicesPreferencesGrid.VoiceType,
     ) -> None:
         """Handle speech family combo change for a specific voice type."""
 
@@ -1160,7 +1205,10 @@ class SpeechManager:
         """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SPEECH_SCHEMA, key, gtype, default=default
+            self._SPEECH_SCHEMA,
+            key,
+            gtype,
+            default=default,
         )
 
     def get_voice_properties(self, voice_type: str = "") -> ACSS:
@@ -1300,7 +1348,7 @@ class SpeechManager:
                     description,
                     desktop_keybinding=desktop_kb,
                     laptop_keybinding=laptop_kb,
-                )
+                ),
             )
 
         msg = "SPEECH MANAGER: Commands set up."
@@ -1379,7 +1427,9 @@ class SpeechManager:
 
         self.shutdown_speech()
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "speech-server-factory", target_module
+            "speech",
+            "speech-server-factory",
+            target_module,
         )
         self.start_speech()
         return self.get_current_server() == target_server
@@ -1435,7 +1485,11 @@ class SpeechManager:
         return self._get_setting("speech-server-factory", "s", "speechdispatcherfactory")
 
     @gsettings_registry.get_registry().gsetting(
-        key="synthesizer", schema="speech", gtype="s", default="", summary="Speech synthesizer"
+        key="synthesizer",
+        schema="speech",
+        gtype="s",
+        default="",
+        summary="Speech synthesizer",
     )
     @dbus_service.getter
     def get_current_synthesizer(self) -> str:
@@ -1501,11 +1555,13 @@ class SpeechManager:
         if not voices:
             return []
 
-        result = []
-        for voice in voices:
-            if voice_name := voice.get(speechserver.VoiceFamily.NAME, ""):
-                result.append(voice_name)
-        result = sorted(set(result))
+        result = sorted(
+            {
+                voice_name
+                for voice in voices
+                if (voice_name := voice.get(speechserver.VoiceFamily.NAME, ""))
+            },
+        )
         return result
 
     def get_voice_families(self) -> list[speechserver.VoiceFamily]:
@@ -1557,7 +1613,11 @@ class SpeechManager:
         return result
 
     @gsettings_registry.get_registry().gsetting(
-        key="family-name", schema="voice", gtype="s", default="", summary="Voice family name"
+        key="family-name",
+        schema="voice",
+        gtype="s",
+        default="",
+        summary="Voice family name",
     )
     @dbus_service.getter
     def get_current_voice(self) -> str:
@@ -1574,7 +1634,11 @@ class SpeechManager:
         return result
 
     @gsettings_registry.get_registry().gsetting(
-        key="family-lang", schema="voice", gtype="s", default="", summary="Voice family language"
+        key="family-lang",
+        schema="voice",
+        gtype="s",
+        default="",
+        summary="Voice family language",
     )
     def get_current_voice_lang(self) -> str:
         """Returns the language of the current voice."""
@@ -1589,7 +1653,11 @@ class SpeechManager:
         return ""
 
     @gsettings_registry.get_registry().gsetting(
-        key="family-dialect", schema="voice", gtype="s", default="", summary="Voice family dialect"
+        key="family-dialect",
+        schema="voice",
+        gtype="s",
+        default="",
+        summary="Voice family dialect",
     )
     def get_current_voice_dialect(self) -> str:
         """Returns the dialect of the current voice."""
@@ -1604,7 +1672,11 @@ class SpeechManager:
         return ""
 
     @gsettings_registry.get_registry().gsetting(
-        key="family-gender", schema="voice", gtype="s", default="", summary="Voice family gender"
+        key="family-gender",
+        schema="voice",
+        gtype="s",
+        default="",
+        summary="Voice family gender",
     )
     def get_current_voice_gender(self) -> str:
         """Returns the gender of the current voice."""
@@ -1619,7 +1691,11 @@ class SpeechManager:
         return ""
 
     @gsettings_registry.get_registry().gsetting(
-        key="family-variant", schema="voice", gtype="s", default="", summary="Voice family variant"
+        key="family-variant",
+        schema="voice",
+        gtype="s",
+        default="",
+        summary="Voice family variant",
     )
     def get_current_voice_variant(self) -> str:
         """Returns the variant of the current voice."""
@@ -1736,7 +1812,9 @@ class SpeechManager:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             synth = gsettings_registry.get_registry().layered_lookup(
-                self._SPEECH_SCHEMA, "synthesizer", "s"
+                self._SPEECH_SCHEMA,
+                "synthesizer",
+                "s",
             )
             if synth:
                 self._server.set_output_module(synth)
@@ -1755,7 +1833,8 @@ class SpeechManager:
 
     @staticmethod
     def _init_server_from_module(
-        module_name: str, speech_server_info: list[str] | None
+        module_name: str,
+        speech_server_info: list[str] | None,
     ) -> SpeechServer | None:
         """Attempts to initialize a speech server from the given module."""
 
@@ -1879,14 +1958,21 @@ class SpeechManager:
         return False
 
     @gsettings_registry.get_registry().gsetting(
-        key="rate", schema="voice", gtype="i", default=50, summary="Speech rate (0-100)"
+        key="rate",
+        schema="voice",
+        gtype="i",
+        default=50,
+        summary="Speech rate (0-100)",
     )
     @dbus_service.getter
     def get_rate(self) -> int:
         """Returns the current speech rate."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._VOICE_SCHEMA, "rate", "i", default=50
+            self._VOICE_SCHEMA,
+            "rate",
+            "i",
+            default=50,
         )
 
     @dbus_service.setter
@@ -1965,14 +2051,21 @@ class SpeechManager:
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="pitch", schema="voice", gtype="d", default=5.0, summary="Speech pitch (0.0-10.0)"
+        key="pitch",
+        schema="voice",
+        gtype="d",
+        default=5.0,
+        summary="Speech pitch (0.0-10.0)",
     )
     @dbus_service.getter
     def get_pitch(self) -> float:
         """Returns the current speech pitch."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._VOICE_SCHEMA, "pitch", "d", default=5.0
+            self._VOICE_SCHEMA,
+            "pitch",
+            "d",
+            default=5.0,
         )
 
     @dbus_service.setter
@@ -2051,14 +2144,21 @@ class SpeechManager:
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="volume", schema="voice", gtype="d", default=10.0, summary="Speech volume (0.0-10.0)"
+        key="volume",
+        schema="voice",
+        gtype="d",
+        default=10.0,
+        summary="Speech volume (0.0-10.0)",
     )
     @dbus_service.getter
     def get_volume(self) -> float:
         """Returns the current speech volume."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._VOICE_SCHEMA, "volume", "d", default=10.0
+            self._VOICE_SCHEMA,
+            "volume",
+            "d",
+            default=10.0,
         )
 
     @dbus_service.setter
@@ -2171,7 +2271,9 @@ class SpeechManager:
         msg = f"SPEECH MANAGER: Setting capitalization style to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SPEECH_SCHEMA, "capitalization-style", style.string_name
+            self._SPEECH_SCHEMA,
+            "capitalization-style",
+            style.string_name,
         )
         self.update_capitalization_style()
         return True
@@ -2260,7 +2362,9 @@ class SpeechManager:
         msg = f"SPEECH MANAGER: Setting punctuation level to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SPEECH_SCHEMA, "punctuation-level", style.string_name
+            self._SPEECH_SCHEMA,
+            "punctuation-level",
+            style.string_name,
         )
         self.update_punctuation_level()
         return True
@@ -2331,7 +2435,9 @@ class SpeechManager:
         active_id = server.get_output_module()
         if not server_id:
             server_id = gsettings_registry.get_registry().layered_lookup(
-                self._SPEECH_SCHEMA, "synthesizer", "s"
+                self._SPEECH_SCHEMA,
+                "synthesizer",
+                "s",
             )
 
         if server_id and server_id != active_id:
@@ -2463,7 +2569,9 @@ class SpeechManager:
         msg = f"SPEECH MANAGER: Setting speak numbers as digits to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SPEECH_SCHEMA, "speak-numbers-as-digits", value
+            self._SPEECH_SCHEMA,
+            "speak-numbers-as-digits",
+            value,
         )
         return True
 
@@ -2488,7 +2596,9 @@ class SpeechManager:
         msg = f"SPEECH MANAGER: Setting use color names to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SPEECH_SCHEMA, "use-color-names", value
+            self._SPEECH_SCHEMA,
+            "use-color-names",
+            value,
         )
         return True
 
@@ -2513,7 +2623,9 @@ class SpeechManager:
         msg = f"SPEECH MANAGER: Setting insert pauses to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SPEECH_SCHEMA, "insert-pauses-between-utterances", value
+            self._SPEECH_SCHEMA,
+            "insert-pauses-between-utterances",
+            value,
         )
         return True
 
@@ -2538,7 +2650,9 @@ class SpeechManager:
         msg = f"SPEECH MANAGER: Setting use pronunciation dictionary to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SPEECH_SCHEMA, "use-pronunciation-dictionary", value
+            self._SPEECH_SCHEMA,
+            "use-pronunciation-dictionary",
+            value,
         )
         return True
 
@@ -2563,7 +2677,9 @@ class SpeechManager:
         msg = f"SPEECH MANAGER: Setting auto language switching to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SPEECH_SCHEMA, "auto-language-switching", value
+            self._SPEECH_SCHEMA,
+            "auto-language-switching",
+            value,
         )
         return True
 

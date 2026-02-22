@@ -26,10 +26,9 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import time
 from enum import Enum
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 _PSUTIL_AVAILABLE = False  # pylint: disable=invalid-name
 try:
@@ -39,17 +38,19 @@ try:
 except ModuleNotFoundError:
     pass
 
-from . import cmdnames
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import gsettings_registry
-from . import guilabels
-from . import input_event
-from . import keybindings
-from . import messages
-from . import preferences_grid_base
-from . import presentation_manager
+from . import (
+    cmdnames,
+    command_manager,
+    dbus_service,
+    debug,
+    gsettings_registry,
+    guilabels,
+    input_event,
+    keybindings,
+    messages,
+    preferences_grid_base,
+    presentation_manager,
+)
 
 
 class DateFormat(Enum):
@@ -102,7 +103,7 @@ class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 
     _gsettings_schema = "system-information"
 
-    def __init__(self, presenter: "SystemInformationPresenter") -> None:
+    def __init__(self, presenter: SystemInformationPresenter) -> None:
         """Initialize the preferences grid."""
 
         # Generate display options (strftime examples) and values (format strings)
@@ -161,7 +162,10 @@ class SystemInformationPresenter:
         """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, gtype, default=default
+            self._SCHEMA,
+            key,
+            gtype,
+            default=default,
         )
 
     def __init__(self) -> None:
@@ -213,7 +217,7 @@ class SystemInformationPresenter:
                     description,
                     desktop_keybinding=kb,
                     laptop_keybinding=kb,
-                )
+                ),
             )
 
         msg = "SYSTEM INFORMATION PRESENTER: Commands set up."
@@ -347,7 +351,7 @@ class SystemInformationPresenter:
 
         time_format = self._get_time_format_string()
         presentation_manager.get_manager().present_message(
-            time.strftime(time_format, time.localtime())
+            time.strftime(time_format, time.localtime()),
         )
         return True
 
@@ -372,7 +376,7 @@ class SystemInformationPresenter:
 
         date_format = self._get_date_format_string()
         presentation_manager.get_manager().present_message(
-            time.strftime(date_format, time.localtime())
+            time.strftime(date_format, time.localtime()),
         )
         return True
 
@@ -428,7 +432,7 @@ class SystemInformationPresenter:
 
         if not _PSUTIL_AVAILABLE:
             presentation_manager.get_manager().present_message(
-                messages.CPU_AND_MEMORY_USAGE_UNKNOWN
+                messages.CPU_AND_MEMORY_USAGE_UNKNOWN,
             )
             return True
 

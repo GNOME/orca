@@ -19,7 +19,7 @@
 
 """A dictionary that maps key events into localized descriptions."""
 
-from .orca_i18n import _, C_  # pylint: disable=import-error
+from .orca_i18n import C_, _  # pylint: disable=import-error
 
 # Contains keyboard-label:presentable-name pairs
 _keynames: dict[str, str] = {}

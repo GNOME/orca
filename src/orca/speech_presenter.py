@@ -37,44 +37,48 @@ import string
 import time
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Callable, Iterable, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import gi
 
 gi.require_version("Gtk", "3.0")
 
-from . import cmdnames
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import focus_manager
-from . import guilabels
-from . import input_event
-from . import keybindings
-from . import mathsymbols
-from . import messages
-from . import object_properties
-from . import phonnames
-from . import preferences_grid_base
-from . import presentation_manager
-from . import pronunciation_dictionary_manager
-from . import speech
-from . import speech_monitor
-from . import speechserver
-from .acss import ACSS
+from . import (
+    cmdnames,
+    command_manager,
+    dbus_service,
+    debug,
+    focus_manager,
+    gsettings_migrator,
+    gsettings_registry,
+    guilabels,
+    input_event,
+    keybindings,
+    mathsymbols,
+    messages,
+    object_properties,
+    phonnames,
+    preferences_grid_base,
+    presentation_manager,
+    pronunciation_dictionary_manager,
+    speech,
+    speech_monitor,
+    speechserver,
+)
 from .ax_document import AXDocument
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from . import gsettings_migrator
-from . import gsettings_registry
 
 if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
+    from .acss import ACSS
     from .input_event import KeyboardEvent
     from .scripts import default
 
@@ -504,7 +508,9 @@ class SpeechOSDPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
         ]
 
         super().__init__(
-            guilabels.ON_SCREEN_DISPLAY, controls, info_message=guilabels.SPEECH_MONITOR_INFO
+            guilabels.ON_SCREEN_DISPLAY,
+            controls,
+            info_message=guilabels.SPEECH_MONITOR_INFO,
         )
 
 
@@ -653,7 +659,10 @@ class SpeechPresenter:
         """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, gtype, default=default
+            self._SCHEMA,
+            key,
+            gtype,
+            default=default,
         )
 
     def __init__(self) -> None:
@@ -742,7 +751,7 @@ class SpeechPresenter:
                     description,
                     desktop_keybinding=desktop_kb,
                     laptop_keybinding=laptop_kb,
-                )
+                ),
             )
 
         msg = "SPEECH PRESENTER: Commands set up."
@@ -769,7 +778,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak misspelled indicator to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "speak-misspelled-indicator", value
+            self._SCHEMA,
+            "speak-misspelled-indicator",
+            value,
         )
         return True
 
@@ -794,7 +805,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak description to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "speak-description", value
+            self._SCHEMA,
+            "speak-description",
+            value,
         )
         return True
 
@@ -819,7 +832,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak position in set to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "speak-position-in-set", value
+            self._SCHEMA,
+            "speak-position-in-set",
+            value,
         )
         return True
 
@@ -844,7 +859,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak widget mnemonics to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "speak-widget-mnemonic", value
+            self._SCHEMA,
+            "speak-widget-mnemonic",
+            value,
         )
         return True
 
@@ -869,7 +886,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak tutorial messages to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "speak-tutorial-messages", value
+            self._SCHEMA,
+            "speak-tutorial-messages",
+            value,
         )
         return True
 
@@ -894,7 +913,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting repeated character limit to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "repeated-character-limit", value
+            self._SCHEMA,
+            "repeated-character-limit",
+            value,
         )
         return True
 
@@ -919,7 +940,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak blank lines to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "speak-blank-lines", value
+            self._SCHEMA,
+            "speak-blank-lines",
+            value,
         )
         return True
 
@@ -944,7 +967,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak row in GUI table to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "speak-row-in-gui-table", value
+            self._SCHEMA,
+            "speak-row-in-gui-table",
+            value,
         )
         return True
 
@@ -969,7 +994,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak row in document table to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "speak-row-in-document-table", value
+            self._SCHEMA,
+            "speak-row-in-document-table",
+            value,
         )
         return True
 
@@ -994,7 +1021,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak row in spreadsheet to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "speak-row-in-spreadsheet", value
+            self._SCHEMA,
+            "speak-row-in-spreadsheet",
+            value,
         )
         return True
 
@@ -1019,7 +1048,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting announce cell spans to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "announce-cell-span", value
+            self._SCHEMA,
+            "announce-cell-span",
+            value,
         )
         return True
 
@@ -1044,7 +1075,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting announce cell coordinates to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "announce-cell-coordinates", value
+            self._SCHEMA,
+            "announce-cell-coordinates",
+            value,
         )
         return True
 
@@ -1069,7 +1102,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting announce spreadsheet cell coordinates to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "announce-spreadsheet-cell-coordinates", value
+            self._SCHEMA,
+            "announce-spreadsheet-cell-coordinates",
+            value,
         )
         return True
 
@@ -1098,7 +1133,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting always announce selected spreadsheet range to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "always-announce-selected-range-in-spreadsheet", value
+            self._SCHEMA,
+            "always-announce-selected-range-in-spreadsheet",
+            value,
         )
         return True
 
@@ -1123,7 +1160,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting announce cell headers to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "announce-cell-headers", value
+            self._SCHEMA,
+            "announce-cell-headers",
+            value,
         )
         return True
 
@@ -1148,7 +1187,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting announce blockquotes to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "announce-blockquote", value
+            self._SCHEMA,
+            "announce-blockquote",
+            value,
         )
         return True
 
@@ -1196,7 +1237,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting announce groupings to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "announce-grouping", value
+            self._SCHEMA,
+            "announce-grouping",
+            value,
         )
         return True
 
@@ -1221,7 +1264,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting announce landmarks to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "announce-landmark", value
+            self._SCHEMA,
+            "announce-landmark",
+            value,
         )
         return True
 
@@ -1327,7 +1372,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting only speak displayed text to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "only-speak-displayed-text", value
+            self._SCHEMA,
+            "only-speak-displayed-text",
+            value,
         )
         return True
 
@@ -1352,7 +1399,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak progress bar updates to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "speak-progress-bar-updates", value
+            self._SCHEMA,
+            "speak-progress-bar-updates",
+            value,
         )
         return True
 
@@ -1377,7 +1426,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting progress bar speech interval to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "progress-bar-speech-interval", value
+            self._SCHEMA,
+            "progress-bar-speech-interval",
+            value,
         )
         return True
 
@@ -1410,7 +1461,9 @@ class SpeechPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         level = ProgressBarVerbosity(value)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "progress-bar-speech-verbosity", level.name.lower()
+            self._SCHEMA,
+            "progress-bar-speech-verbosity",
+            level.name.lower(),
         )
         return True
 
@@ -1471,7 +1524,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting messages are detailed to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "messages-are-detailed", value
+            self._SCHEMA,
+            "messages-are-detailed",
+            value,
         )
         return True
 
@@ -1514,7 +1569,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting verbosity level to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "verbosity-level", level.string_name
+            self._SCHEMA,
+            "verbosity-level",
+            level.string_name,
         )
         return True
 
@@ -1564,7 +1621,7 @@ class SpeechPresenter:
         if self.get_verbosity_level() == VerbosityLevel.BRIEF.string_name:
             if script is not None and notify_user:
                 presentation_manager.get_manager().present_message(
-                    messages.SPEECH_VERBOSITY_VERBOSE
+                    messages.SPEECH_VERBOSITY_VERBOSE,
                 )
             self.set_verbosity_level(VerbosityLevel.VERBOSE.string_name)
         else:
@@ -1594,7 +1651,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak indentation and justification to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "speak-indentation-and-justification", value
+            self._SCHEMA,
+            "speak-indentation-and-justification",
+            value,
         )
         return True
 
@@ -1619,7 +1678,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speak indentation only if changed to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "speak-indentation-only-if-changed", value
+            self._SCHEMA,
+            "speak-indentation-only-if-changed",
+            value,
         )
         return True
 
@@ -1746,7 +1807,10 @@ class SpeechPresenter:
             return word
 
         speak_digits = gsettings_registry.get_registry().layered_lookup(
-            "speech", "speak-numbers-as-digits", "b", default=False
+            "speech",
+            "speak-numbers-as-digits",
+            "b",
+            default=False,
         )
         if not (speak_digits or AXUtilities.is_text_input_telephone(obj)):
             return text
@@ -1811,10 +1875,7 @@ class SpeechPresenter:
         from . import speech_manager  # pylint: disable=import-outside-toplevel
 
         punct_level = speech_manager.get_manager().get_punctuation_level()
-        if punct_level in ("all", "none"):
-            return False
-
-        return True
+        return punct_level not in ("all", "none")
 
     @staticmethod
     def _adjust_for_verbalized_punctuation(obj: Atspi.Accessible, text: str) -> str:
@@ -1881,7 +1942,10 @@ class SpeechPresenter:
         return result
 
     def get_error_description(
-        self, obj: Atspi.Accessible, offset: int | None = None, only_if_changed: bool | None = True
+        self,
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+        only_if_changed: bool | None = True,
     ) -> str:
         """Returns a description of the error at the current offset."""
 
@@ -1908,7 +1972,10 @@ class SpeechPresenter:
         return msg
 
     def adjust_for_presentation(
-        self, obj: Atspi.Accessible | None, text: str, start_offset: int | None = None
+        self,
+        obj: Atspi.Accessible | None,
+        text: str,
+        start_offset: int | None = None,
     ) -> str:
         """Adjusts text for spoken presentation."""
 
@@ -1988,7 +2055,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speech monitor font size to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "monitor-font-size", value
+            self._SCHEMA,
+            "monitor-font-size",
+            value,
         )
         if self._monitor is not None:
             self._monitor.set_font_size(value)
@@ -2015,7 +2084,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speech monitor foreground to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "monitor-foreground", value
+            self._SCHEMA,
+            "monitor-foreground",
+            value,
         )
         if self._monitor is not None:
             self._monitor.reapply_css(foreground=value)
@@ -2042,7 +2113,9 @@ class SpeechPresenter:
         msg = f"SPEECH PRESENTER: Setting speech monitor background to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "monitor-background", value
+            self._SCHEMA,
+            "monitor-background",
+            value,
         )
         if self._monitor is not None:
             self._monitor.reapply_css(background=value)
@@ -2233,14 +2306,18 @@ class SpeechPresenter:
         return generator.utterances_to_string(utterances)
 
     def generate_window_title_strings(
-        self, script: default.Script, obj: Atspi.Accessible
+        self,
+        script: default.Script,
+        obj: Atspi.Accessible,
     ) -> list[str]:
         """Returns the window title as a list of strings."""
 
         return [s for s, _ in script.get_speech_generator().generate_window_title(obj)]
 
     def speak_contents(
-        self, contents: list[tuple[Atspi.Accessible, int, int, str]], **args: Any
+        self,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+        **args: Any,
     ) -> None:
         """Speaks the specified contents."""
 
@@ -2254,7 +2331,10 @@ class SpeechPresenter:
         speech.speak(utterances)
 
     def present_generated_speech(
-        self, script: default.Script, obj: Atspi.Accessible, **args: Any
+        self,
+        script: default.Script,
+        obj: Atspi.Accessible,
+        **args: Any,
     ) -> None:
         """Generates speech for obj using the script's speech generator and speaks it."""
 
@@ -2376,7 +2456,8 @@ class SpeechPresenter:
             self.speak_message(phonetic_string, voice)
 
     def create_speech_preferences_grid(
-        self, title_change_callback: Callable[[str], None] | None = None
+        self,
+        title_change_callback: Callable[[str], None] | None = None,
     ) -> SpeechPreferencesGrid:
         """Returns the GtkGrid containing the combined speech preferences UI."""
 
@@ -2475,7 +2556,8 @@ class SpeechPresenter:
         return general, object_details, announcements
 
     def apply_speech_preferences(
-        self, updates: Iterable[tuple[SpeechPreference, bool]]
+        self,
+        updates: Iterable[tuple[SpeechPreference, bool]],
     ) -> dict[str, bool]:
         """Apply the provided speech preference values."""
 

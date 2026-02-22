@@ -40,7 +40,8 @@ import signal
 import subprocess
 import sys
 import time
-from typing import Any, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 try:
     from setproctitle import setproctitle

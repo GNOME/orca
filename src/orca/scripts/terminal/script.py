@@ -23,20 +23,21 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
-from orca import debug
-from orca import flat_review_presenter
-from orca import focus_manager
-from orca import presentation_manager
-from orca import typing_echo_presenter
-from orca.scripts import default
+from orca import (
+    debug,
+    flat_review_presenter,
+    focus_manager,
+    presentation_manager,
+    typing_echo_presenter,
+)
 from orca.ax_text import AXText
+from orca.scripts import default
 
 from .braille_generator import BrailleGenerator
-from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
+from .speech_generator import SpeechGenerator
 
 if TYPE_CHECKING:
     import gi

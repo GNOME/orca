@@ -31,8 +31,9 @@ from typing import TYPE_CHECKING
 import pytest
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 LOCATION_NOT_FOUND_FULL_MSG = "Location not found (full)"
 LOCATION_NOT_FOUND_BRIEF_MSG = "Location not found (brief)"
@@ -58,7 +59,7 @@ class TestActionPresenter:
         essential_modules["orca.cmdnames"].SHOW_ACTIONS_LIST = SHOW_ACTIONS_LIST_CMD
         focus_manager_instance = test_context.Mock()
         focus_manager_instance.get_active_mode_and_object_of_interest = test_context.Mock(
-            return_value=(None, None)
+            return_value=(None, None),
         )
         focus_manager_instance.get_locus_of_focus = test_context.Mock(return_value=None)
         focus_manager_instance.get_active_window = test_context.Mock(return_value=None)
@@ -66,12 +67,12 @@ class TestActionPresenter:
         focus_manager_instance.set_active_window = test_context.Mock()
         focus_manager_instance.set_locus_of_focus = test_context.Mock()
         essential_modules["orca.focus_manager"].get_manager = test_context.Mock(
-            return_value=focus_manager_instance
+            return_value=focus_manager_instance,
         )
 
         input_event_handler_mock = test_context.Mock()
         essential_modules["orca.input_event"].InputEventHandler = test_context.Mock(
-            return_value=input_event_handler_mock
+            return_value=input_event_handler_mock,
         )
         essential_modules["orca.input_event"].InputEvent = test_context.mocker.MagicMock
 
@@ -153,17 +154,17 @@ class TestActionPresenter:
             ax_object_mock.get_action_name = test_context.Mock(
                 side_effect=lambda obj, i: ["click", "activate"][i]
                 if i < len(["click", "activate"])
-                else f"action{i}"
+                else f"action{i}",
             )
             ax_object_mock.get_action_localized_name = test_context.Mock(
                 side_effect=lambda obj, i: ["click", "activate"][i]
                 if i < len(["click", "activate"])
-                else f"action{i}"
+                else f"action{i}",
             )
             ax_object_mock.get_action_description = test_context.Mock(
                 side_effect=lambda obj, i: action_descriptions[i]
                 if i < len(action_descriptions)
-                else f"desc{i}"
+                else f"desc{i}",
             )
             ax_object_mock.get_name = test_context.Mock(return_value="Test Button")
 
@@ -208,7 +209,8 @@ class TestActionPresenter:
             focus_manager.get_active_window.return_value = mock_window
             mock_action_list = test_context.Mock()
             mock_action_list_class = test_context.patch(
-                "orca.action_presenter.ActionList", return_value=mock_action_list
+                "orca.action_presenter.ActionList",
+                return_value=mock_action_list,
             )
 
         result = presenter.show_actions_list(mock_script, mock_event, True)
@@ -218,7 +220,8 @@ class TestActionPresenter:
             pres_manager = essential_modules["orca.presentation_manager"].get_manager()
             if LOCATION_NOT_FOUND_MSG in expected_message:
                 pres_manager.present_message.assert_called_once_with(
-                    LOCATION_NOT_FOUND_FULL_MSG, LOCATION_NOT_FOUND_BRIEF_MSG
+                    LOCATION_NOT_FOUND_FULL_MSG,
+                    LOCATION_NOT_FOUND_BRIEF_MSG,
                 )
             else:
                 pres_manager.present_message.assert_called_once_with(expected_message)
@@ -327,10 +330,11 @@ class TestActionPresenter:
         ax_utilities_mock.get_application.assert_called_once_with(mock_obj)
         script_manager_instance.get_script.assert_called_once_with(mock_app, mock_obj)
         script_manager_instance.set_active_script.assert_called_once_with(
-            mock_script, "Action Presenter list is being destroyed"
+            mock_script,
+            "Action Presenter list is being destroyed",
         )
         focus_manager_instance.clear_state.assert_called_once_with(
-            "Action Presenter list is being destroyed"
+            "Action Presenter list is being destroyed",
         )
         focus_manager_instance.set_active_window.assert_called_once_with(mock_window)
         focus_manager_instance.set_locus_of_focus.assert_called_once_with(None, mock_obj)
@@ -345,7 +349,9 @@ class TestActionPresenter:
         presenter._gui = test_context.Mock()
 
         mock_restore_focus = test_context.patch_object(
-            presenter, "_restore_focus", return_value=None
+            presenter,
+            "_restore_focus",
+            return_value=None,
         )
 
         presenter._clear_gui_and_restore_focus()

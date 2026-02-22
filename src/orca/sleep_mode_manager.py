@@ -25,19 +25,20 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
-from . import cmdnames
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import guilabels
-from . import input_event
-from . import keybindings
-from . import messages
-from . import presentation_manager
-from . import script_manager
+from . import (
+    cmdnames,
+    command_manager,
+    dbus_service,
+    debug,
+    guilabels,
+    input_event,
+    keybindings,
+    messages,
+    presentation_manager,
+    script_manager,
+)
 from .ax_object import AXObject
 
 if TYPE_CHECKING:
@@ -82,7 +83,7 @@ class SleepModeManager:
                 cmdnames.TOGGLE_SLEEP_MODE,
                 desktop_keybinding=kb,
                 laptop_keybinding=kb,
-            )
+            ),
         )
 
         msg = "SLEEP MODE MANAGER: Commands set up."
@@ -125,7 +126,7 @@ class SleepModeManager:
             new_script = _script_manager.get_script(script.app)
             if notify_user:
                 presentation_manager.get_manager().present_message(
-                    messages.SLEEP_MODE_DISABLED_FOR % AXObject.get_name(script.app)
+                    messages.SLEEP_MODE_DISABLED_FOR % AXObject.get_name(script.app),
                 )
             _script_manager.set_active_script(new_script, "Sleep mode toggled off")
             return True

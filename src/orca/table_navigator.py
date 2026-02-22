@@ -30,22 +30,23 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
-from . import cmdnames
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import gsettings_registry
-from . import focus_manager
-from . import guilabels
-from . import input_event
-from . import input_event_manager
-from . import keybindings
-from . import messages
-from . import presentation_manager
-from . import speech_presenter
+from . import (
+    cmdnames,
+    command_manager,
+    dbus_service,
+    debug,
+    focus_manager,
+    gsettings_registry,
+    guilabels,
+    input_event,
+    input_event_manager,
+    keybindings,
+    messages,
+    presentation_manager,
+    speech_presenter,
+)
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
@@ -74,7 +75,10 @@ class TableNavigator:
         """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, "b", default=default
+            self._SCHEMA,
+            key,
+            "b",
+            default=default,
         )
 
     def __init__(self) -> None:
@@ -152,7 +156,7 @@ class TableNavigator:
                 desktop_keybinding=kb_t,
                 laptop_keybinding=kb_t,
                 is_group_toggle=True,
-            )
+            ),
         )
 
         # (name, function, description, keybinding)
@@ -222,7 +226,7 @@ class TableNavigator:
                     description,
                     desktop_keybinding=kb,
                     laptop_keybinding=kb,
-                )
+                ),
             )
 
         msg = f"TABLE NAVIGATOR: Commands set up. Suspended: {self._suspended}"
@@ -252,16 +256,17 @@ class TableNavigator:
         if notify_user:
             if self._enabled:
                 presentation_manager.get_manager().present_message(
-                    messages.TABLE_NAVIGATION_ENABLED
+                    messages.TABLE_NAVIGATION_ENABLED,
                 )
             else:
                 presentation_manager.get_manager().present_message(
-                    messages.TABLE_NAVIGATION_DISABLED
+                    messages.TABLE_NAVIGATION_DISABLED,
                 )
 
         self._last_input_event = None
         command_manager.get_manager().set_group_enabled(
-            guilabels.KB_GROUP_TABLE_NAVIGATION, self._enabled
+            guilabels.KB_GROUP_TABLE_NAVIGATION,
+            self._enabled,
         )
         return True
 
@@ -277,7 +282,8 @@ class TableNavigator:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._suspended = suspended
         command_manager.get_manager().set_group_suspended(
-            guilabels.KB_GROUP_TABLE_NAVIGATION, suspended
+            guilabels.KB_GROUP_TABLE_NAVIGATION,
+            suspended,
         )
 
     def _is_blank(self, obj: Atspi.Accessible) -> bool:
@@ -344,7 +350,9 @@ class TableNavigator:
         # we presented in order to facilitate more linear movement. Therefore, if the cell at the
         # stored coordinates is the same as cell, we prefer the stored coordinates.
         last_cell = AXTable.get_cell_at(
-            AXTable.get_table(cell), self._previous_reported_row, self._previous_reported_col
+            AXTable.get_table(cell),
+            self._previous_reported_row,
+            self._previous_reported_col,
         )
         if last_cell == cell:
             return self._previous_reported_row, self._previous_reported_col
@@ -762,7 +770,7 @@ class TableNavigator:
             AXTable.set_dynamic_column_headers_row(table, row)
             if notify_user:
                 presentation_manager.get_manager().present_message(
-                    messages.DYNAMIC_COLUMN_HEADER_SET % (row + 1)
+                    messages.DYNAMIC_COLUMN_HEADER_SET % (row + 1),
                 )
 
         return True
@@ -799,7 +807,7 @@ class TableNavigator:
             if notify_user:
                 presentation_manager.get_manager().interrupt_presentation()
                 presentation_manager.get_manager().present_message(
-                    messages.DYNAMIC_COLUMN_HEADER_CLEARED
+                    messages.DYNAMIC_COLUMN_HEADER_CLEARED,
                 )
 
         return True
@@ -837,7 +845,7 @@ class TableNavigator:
             if notify_user:
                 presentation_manager.get_manager().present_message(
                     messages.DYNAMIC_ROW_HEADER_SET
-                    % script.utilities.convert_column_to_string(column + 1)
+                    % script.utilities.convert_column_to_string(column + 1),
                 )
 
         return True
@@ -874,7 +882,7 @@ class TableNavigator:
             if notify_user:
                 presentation_manager.get_manager().interrupt_presentation()
                 presentation_manager.get_manager().present_message(
-                    messages.DYNAMIC_ROW_HEADER_CLEARED
+                    messages.DYNAMIC_ROW_HEADER_CLEARED,
                 )
 
         return True
@@ -920,7 +928,7 @@ class TableNavigator:
         # TODO - JD: This should be part of the normal table cell presentation.
         if manager.get_announce_cell_coordinates():
             presentation_manager.get_manager().present_message(
-                messages.TABLE_CELL_COORDINATES % {"row": row + 1, "column": col + 1}
+                messages.TABLE_CELL_COORDINATES % {"row": row + 1, "column": col + 1},
             )
 
         # TODO - JD: Ditto.
@@ -928,7 +936,7 @@ class TableNavigator:
             rowspan, colspan = AXTable.get_cell_spans(cell)
             if rowspan > 1 or colspan > 1:
                 presentation_manager.get_manager().present_message(
-                    messages.cell_span(rowspan, colspan)
+                    messages.cell_span(rowspan, colspan),
                 )
 
     @gsettings_registry.get_registry().gsetting(
@@ -953,7 +961,8 @@ class TableNavigator:
             msg = f"TABLE NAVIGATOR: Enabled already {value}. Refreshing command group."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             command_manager.get_manager().set_group_enabled(
-                guilabels.KB_GROUP_TABLE_NAVIGATION, value
+                guilabels.KB_GROUP_TABLE_NAVIGATION,
+                value,
             )
             return True
 

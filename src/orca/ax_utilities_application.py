@@ -28,8 +28,7 @@ import subprocess
 import gi
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
 from . import debug
 from .ax_object import AXObject
@@ -55,7 +54,9 @@ class AXUtilitiesApplication:
 
     @staticmethod
     def get_all_applications(
-        must_have_window: bool = False, exclude_unresponsive: bool = False, is_debug: bool = False
+        must_have_window: bool = False,
+        exclude_unresponsive: bool = False,
+        is_debug: bool = False,
     ) -> list[Atspi.Accessible]:
         """Returns a list of running applications known to Atspi."""
 

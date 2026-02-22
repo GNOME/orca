@@ -608,7 +608,7 @@ def _rgb_to_name(red, green, blue):
 
     # Find the closest match.
     colors = {}
-    for key, _value in css_names.items():
+    for key in css_names:
         r, g, b = [int(s, 16) for s in (key[1:3], key[3:5], key[5:7])]
         rd = abs(r - red) ** 2
         gd = abs(g - green) ** 2

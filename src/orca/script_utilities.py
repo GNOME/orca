@@ -26,25 +26,27 @@
 
 """Utilities for providing app/toolkit-specific information about objects and events."""
 
-from typing import Callable
+from collections.abc import Callable
 
 import gi
 
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import ax_event_synthesizer
-from . import braille_presenter
-from . import debug
-from . import focus_manager
-from . import input_event_manager
-from . import messages
-from . import object_properties
-from . import presentation_manager
-from . import sound_presenter
-from . import speech_presenter
-from . import spellcheck_presenter
-from . import table_navigator
+from . import (
+    ax_event_synthesizer,
+    braille_presenter,
+    debug,
+    focus_manager,
+    input_event_manager,
+    messages,
+    object_properties,
+    presentation_manager,
+    sound_presenter,
+    speech_presenter,
+    spellcheck_presenter,
+    table_navigator,
+)
 from .ax_component import AXComponent
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
@@ -141,13 +143,14 @@ class Utilities:
         text_objects = []
         for detail in details:
             text_objects.extend(
-                self._find_all_descendants(detail, lambda x: not AXText.is_whitespace_or_empty(x))
+                self._find_all_descendants(detail, lambda x: not AXText.is_whitespace_or_empty(x)),
             )
 
         return text_objects
 
     def frame_and_dialog(
-        self, obj: Atspi.Accessible | None = None
+        self,
+        obj: Atspi.Accessible | None = None,
     ) -> list[Atspi.Accessible | None]:
         """Returns the frame and (possibly) the dialog containing obj."""
 
@@ -299,7 +302,7 @@ class Utilities:
             return documents[0]
 
         document = self.get_top_level_document_for_object(
-            focus_manager.get_manager().get_locus_of_focus()
+            focus_manager.get_manager().get_locus_of_focus(),
         )
         tokens = ["SCRIPT UTILITIES: Active document (via locus of focus):", document]
         return document
@@ -387,7 +390,9 @@ class Utilities:
         return AXObject.find_ancestor(obj, self.is_spreadsheet_table) is not None
 
     def cell_column_changed(
-        self, cell: Atspi.Accessible, prior_cell: Atspi.Accessible | None = None
+        self,
+        cell: Atspi.Accessible,
+        prior_cell: Atspi.Accessible | None = None,
     ) -> bool:
         """Returns True if the column of cell has changed since prior_cell."""
 
@@ -403,7 +408,9 @@ class Utilities:
         return column != last_column
 
     def cell_row_changed(
-        self, cell: Atspi.Accessible, prior_cell: Atspi.Accessible | None = None
+        self,
+        cell: Atspi.Accessible,
+        prior_cell: Atspi.Accessible | None = None,
     ) -> bool:
         """Returns True if the row of cell has changed since prior_cell."""
 
@@ -418,7 +425,9 @@ class Utilities:
         return row != last_row
 
     def should_read_full_row(
-        self, obj: Atspi.Accessible, previous_object: Atspi.Accessible | None = None
+        self,
+        obj: Atspi.Accessible,
+        previous_object: Atspi.Accessible | None = None,
     ) -> bool:
         """Returns True if we should present the full row in speech."""
 
@@ -457,10 +466,8 @@ class Utilities:
             tokens.append(text)
         else:
             labels = " ".join(
-                map(
-                    lambda x: AXText.get_all_text(x) or AXObject.get_name(x),
-                    self.unrelated_labels(obj, False, 1),
-                )
+                AXText.get_all_text(x) or AXObject.get_name(x)
+                for x in self.unrelated_labels(obj, False, 1)
             )
             if labels and labels not in tokens:
                 tokens.append(labels)
@@ -557,7 +564,9 @@ class Utilities:
         )
 
     def top_level_object(
-        self, obj: Atspi.Accessible, use_fallback_search: bool = False
+        self,
+        obj: Atspi.Accessible,
+        use_fallback_search: bool = False,
     ) -> Atspi.Accessible | None:
         """Returns the top-level object (frame, dialog ...) containing obj."""
 
@@ -675,16 +684,12 @@ class Utilities:
                 return False
             if not root_is_notification and AXUtilities.is_focusable(x):
                 return False
-            if only_showing and not AXUtilities.is_showing(x):
-                return False
-            return True
+            return not (only_showing and not AXUtilities.is_showing(x))
 
         def _exclude(x):
             if not x or AXObject.get_role(x) in skip_roles:
                 return True
-            if only_showing and not AXUtilities.is_showing(x):
-                return True
-            return False
+            return only_showing and not AXUtilities.is_showing(x)
 
         labels = self._find_all_descendants(root, _include, _exclude)
 
@@ -705,7 +710,9 @@ class Utilities:
         return AXComponent.sort_objects_by_position(labels_filtered)
 
     def find_previous_object(
-        self, obj: Atspi.Accessible, restrict_to: Atspi.Accessible | None = None
+        self,
+        obj: Atspi.Accessible,
+        restrict_to: Atspi.Accessible | None = None,
     ) -> Atspi.Accessible | None:
         """Finds the object before this one."""
 
@@ -723,7 +730,9 @@ class Utilities:
         return result
 
     def find_next_object(
-        self, obj: Atspi.Accessible, restrict_to: Atspi.Accessible | None = None
+        self,
+        obj: Atspi.Accessible,
+        restrict_to: Atspi.Accessible | None = None,
     ) -> Atspi.Accessible | None:
         """Finds the object after this one."""
 
@@ -740,7 +749,10 @@ class Utilities:
         return result
 
     def expand_eocs(
-        self, obj: Atspi.Accessible, start_offset: int = 0, end_offset: int = -1
+        self,
+        obj: Atspi.Accessible,
+        start_offset: int = 0,
+        end_offset: int = -1,
     ) -> str:
         """Expands the current object replacing embedded object characters with their text."""
 
@@ -905,7 +917,10 @@ class Utilities:
         AXText.set_caret_offset(obj, offset)
 
     def split_substring_by_language(
-        self, obj: Atspi.Accessible, start: int, end: int
+        self,
+        obj: Atspi.Accessible,
+        start: int,
+        end: int,
     ) -> list[tuple[int, int, str, str, str]]:
         """Returns a list of (start, end, string, language, dialect) tuples."""
 
@@ -916,15 +931,18 @@ class Utilities:
                 continue
             if end <= start_offset:
                 break
-            start_offset = max(start, start_offset)
-            end_offset = min(end, end_offset)
-            string = AXText.get_substring(obj, start_offset, end_offset)
-            rv.append((start_offset, end_offset, string, language, dialect))
+            clamped_start = max(start, start_offset)
+            clamped_end = min(end, end_offset)
+            string = AXText.get_substring(obj, clamped_start, clamped_end)
+            rv.append((clamped_start, clamped_end, string, language, dialect))
 
         return rv
 
     def get_language_and_dialect_for_substring(
-        self, obj: Atspi.Accessible, start: int, end: int
+        self,
+        obj: Atspi.Accessible,
+        start: int,
+        end: int,
     ) -> tuple[str, str]:
         """Returns a (language, dialect) tuple. If multiple languages apply to
         the substring, language and dialect will be empty strings. Callers must
@@ -938,7 +956,10 @@ class Utilities:
         return "", ""
 
     def get_language_and_dialect_from_text_attributes(
-        self, obj: Atspi.Accessible, start_offset: int = 0, end_offset: int = -1
+        self,
+        obj: Atspi.Accessible,
+        start_offset: int = 0,
+        end_offset: int = -1,
     ) -> list[tuple[int, int, str, str]]:
         """Returns a list of (start, end, language, dialect) tuples for obj."""
 
@@ -1245,11 +1266,14 @@ class Utilities:
         """Returns true if obj has a toggle action that is meaningful. Because app bugs."""
 
         return AXObject.has_action(obj, "toggle") or AXObject.has_action(
-            obj, object_properties.ACTION_TOGGLE
+            obj,
+            object_properties.ACTION_TOGGLE,
         )
 
     def get_word_at_offset_adjusted_for_navigation(
-        self, obj: Atspi.Accessible, offset: int | None = None
+        self,
+        obj: Atspi.Accessible,
+        offset: int | None = None,
     ) -> tuple[str, int, int]:
         """Returns the word at offset, adjusted for native navigation commands."""
 
@@ -1383,7 +1407,8 @@ class Utilities:
         if input_event_manager.get_manager().last_event_was_paste():
             if not self._script.point_of_reference.get("paste"):
                 presentation_manager.get_manager().present_message(
-                    messages.CLIPBOARD_PASTED_FULL, messages.CLIPBOARD_PASTED_BRIEF
+                    messages.CLIPBOARD_PASTED_FULL,
+                    messages.CLIPBOARD_PASTED_BRIEF,
                 )
                 self._script.point_of_reference["paste"] = True
             return True
@@ -1434,7 +1459,9 @@ class Utilities:
         return False
 
     def handle_text_selection_change(
-        self, obj: Atspi.Accessible, speak_message: bool = True
+        self,
+        obj: Atspi.Accessible,
+        speak_message: bool = True,
     ) -> bool:
         """Handles a change in the selected text."""
 
@@ -1504,25 +1531,24 @@ class Utilities:
         for start, end, message in changes:
             string = AXText.get_substring(obj, start, end)
             ends_with_child = string.endswith("\ufffc")
-            if ends_with_child:
-                end -= 1
+            effective_end = end - 1 if ends_with_child else end
 
             if len(string) > 5000 and speak_message:
                 if message == messages.TEXT_SELECTED:
                     presentation_manager.get_manager().speak_message(
-                        messages.selected_character_count(len(string))
+                        messages.selected_character_count(len(string)),
                     )
                 else:
                     presentation_manager.get_manager().speak_message(
-                        messages.unselected_character_count(len(string))
+                        messages.unselected_character_count(len(string)),
                     )
             else:
-                self._script.say_phrase(obj, start, end)
+                self._script.say_phrase(obj, start, effective_end)
                 if speak_message and not ends_with_child:
                     presentation_manager.get_manager().speak_message(message)
 
             if ends_with_child:
-                child = AXHypertext.find_child_at_offset(obj, end)
+                child = AXHypertext.find_child_at_offset(obj, effective_end)
                 self.handle_text_selection_change(child, speak_message)
 
         return True
@@ -1583,7 +1609,8 @@ class Utilities:
             return True
 
         if AXUtilities.object_is_controlled_by(
-            old_focus, new_focus
+            old_focus,
+            new_focus,
         ) or AXUtilities.object_is_controlled_by(new_focus, old_focus):
             msg += "new locusOfFocus and old locusOfFocus have controls relation"
             debug.print_message(debug.LEVEL_INFO, msg, True)

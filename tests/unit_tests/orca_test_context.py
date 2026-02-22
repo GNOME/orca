@@ -24,7 +24,6 @@ from __future__ import annotations
 import os
 import sys
 from typing import TYPE_CHECKING, Any
-from unittest.mock import MagicMock
 
 import gi
 
@@ -33,8 +32,10 @@ gi.require_version("Gio", "2.0")
 from gi.repository import Atspi, Gio, GLib  # pylint: disable=wrong-import-position
 
 if TYPE_CHECKING:
-    from pytest_mock import MockerFixture
+    from unittest.mock import MagicMock
+
     from _pytest.monkeypatch import MonkeyPatch
+    from pytest_mock import MockerFixture
 
 
 class OrcaTestContext:
@@ -64,7 +65,9 @@ class OrcaTestContext:
         return self.mocker.Mock(**kwargs)
 
     def patch_env(
-        self, env_vars: dict[str, str], remove_vars: list[str] | None = None
+        self,
+        env_vars: dict[str, str],
+        remove_vars: list[str] | None = None,
     ) -> MagicMock | None:
         """Convenience method for patching environment variables."""
 
@@ -117,7 +120,8 @@ class OrcaTestContext:
         return essential_modules
 
     def setup_shared_dependencies(
-        self, additional_modules: list[str] | None = None
+        self,
+        additional_modules: list[str] | None = None,
     ) -> dict[str, MagicMock]:
         """Returns common/shared dependencies used across most Orca test modules."""
 
@@ -251,7 +255,7 @@ class OrcaTestContext:
             presenter_instance.get_braille_is_enabled = self.mocker.Mock(return_value=False)
             presenter_instance.get_flash_messages_are_enabled = self.mocker.Mock(return_value=False)
             presenter_instance.get_flash_messages_are_detailed = self.mocker.Mock(
-                return_value=False
+                return_value=False,
             )
             presenter_instance.get_flashtime_from_settings = self.mocker.Mock(return_value=5000)
             braille_presenter_mock.get_presenter = self.mocker.Mock(return_value=presenter_instance)
@@ -281,7 +285,7 @@ class OrcaTestContext:
 
         return self.mocks.get(name)
 
-    def __enter__(self) -> OrcaTestContext:
+    def __enter__(self) -> OrcaTestContext:  # noqa: PYI034
         """Enter the test context."""
 
         return self

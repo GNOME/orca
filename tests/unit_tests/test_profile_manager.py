@@ -35,8 +35,9 @@ gi.require_version("Gtk", "3.0")
 import pytest
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -124,7 +125,7 @@ class TestProfileManager:
 
         assert gsettings_registry.get_registry().get_active_profile() == "spanish"
         essential_modules["orca.orca"].load_user_settings.assert_called_once_with(
-            skip_reload_message=True
+            skip_reload_message=True,
         )
 
     def test_remove_profile(self, test_context: OrcaTestContext) -> None:
@@ -138,7 +139,8 @@ class TestProfileManager:
         manager.remove_profile("spanish")
 
         mock_run.assert_called_once_with(
-            ["dconf", "reset", "-f", "/org/gnome/orca/spanish/"], check=True
+            ["dconf", "reset", "-f", "/org/gnome/orca/spanish/"],
+            check=True,
         )
 
     def test_remove_profile_dconf_failure(self, test_context: OrcaTestContext) -> None:
@@ -180,7 +182,8 @@ class TestProfileManager:
         manager.remove_profile("My Profile")
 
         mock_run.assert_called_once_with(
-            ["dconf", "reset", "-f", "/org/gnome/orca/my-profile/"], check=True
+            ["dconf", "reset", "-f", "/org/gnome/orca/my-profile/"],
+            check=True,
         )
 
     def test_rename_profile(self, test_context: OrcaTestContext) -> None:
@@ -202,8 +205,8 @@ class TestProfileManager:
         """Test that profile manager commands are registered with CommandManager."""
 
         self._setup_dependencies(test_context)
-        from orca.profile_manager import ProfileManager
         from orca import command_manager
+        from orca.profile_manager import ProfileManager
 
         manager = ProfileManager()
         manager.set_up_commands()
@@ -216,9 +219,10 @@ class TestProfileManager:
         """Test cycle_settings_profile cycles to next profile."""
 
         essential_modules = self._setup_dependencies(test_context)
+        from unittest.mock import MagicMock
+
         from orca import gsettings_registry
         from orca.profile_manager import ProfileManager
-        from unittest.mock import MagicMock
 
         manager = ProfileManager()
         mock_script = MagicMock()
@@ -235,9 +239,10 @@ class TestProfileManager:
         """Test cycle_settings_profile wraps to first profile at end."""
 
         self._setup_dependencies(test_context)
+        from unittest.mock import MagicMock
+
         from orca import gsettings_registry
         from orca.profile_manager import ProfileManager
-        from unittest.mock import MagicMock
 
         gsettings_registry.get_registry().set_active_profile("work")
 
@@ -253,8 +258,9 @@ class TestProfileManager:
         """Test cycle_settings_profile handles no profiles."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.profile_manager import ProfileManager
         from unittest.mock import MagicMock
+
+        from orca.profile_manager import ProfileManager
 
         manager = ProfileManager()
         mock_script = MagicMock()
@@ -270,8 +276,9 @@ class TestProfileManager:
         """Test present_current_profile presents the current profile name."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.profile_manager import ProfileManager
         from unittest.mock import MagicMock
+
+        from orca.profile_manager import ProfileManager
 
         manager = ProfileManager()
         mock_script = MagicMock()
@@ -471,7 +478,8 @@ class TestProfilePreferencesGridUI:
         assert error_msg == ""
 
     def test_get_available_profiles_includes_pending_renames(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _get_available_profiles includes pending renames."""
 

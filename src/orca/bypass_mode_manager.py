@@ -24,17 +24,18 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
-from . import cmdnames
-from . import command_manager
-from . import guilabels
-from . import input_event
-from . import keybindings
-from . import messages
-from . import orca_modifier_manager
-from . import presentation_manager
+from . import (
+    cmdnames,
+    command_manager,
+    guilabels,
+    input_event,
+    keybindings,
+    messages,
+    orca_modifier_manager,
+    presentation_manager,
+)
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -68,7 +69,7 @@ class BypassModeManager:
                 cmdnames.BYPASS_MODE_TOGGLE,
                 desktop_keybinding=kb,
                 laptop_keybinding=kb,
-            )
+            ),
         )
 
     def is_active(self) -> bool:
@@ -77,7 +78,9 @@ class BypassModeManager:
         return self._is_active
 
     def toggle_enabled(
-        self, _script: default.Script, event: input_event.InputEvent | None = None
+        self,
+        _script: default.Script,
+        event: input_event.InputEvent | None = None,
     ) -> bool:
         """Toggles bypass mode."""
 

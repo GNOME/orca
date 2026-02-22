@@ -28,7 +28,7 @@
 import copy
 import re
 import time
-from typing import Callable
+from collections.abc import Callable
 
 import gi
 
@@ -36,17 +36,18 @@ gi.require_version("Atspi", "2.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Atspi, Gtk
 
-from . import cmdnames
-from . import command_manager
-from . import debug
-from . import flat_review_presenter
-from . import focus_manager
-from . import guilabels
-from . import keybindings
-from . import messages
-from . import presentation_manager
-from . import script_manager
-
+from . import (
+    cmdnames,
+    command_manager,
+    debug,
+    flat_review_presenter,
+    focus_manager,
+    guilabels,
+    keybindings,
+    messages,
+    presentation_manager,
+    script_manager,
+)
 from .flat_review import Context
 
 
@@ -76,6 +77,9 @@ class _SearchQueryMatch:
             and self._word == other._word
             and self._char == other._char
         )
+
+    def __hash__(self) -> int:
+        return hash((self._line_string, self._line, self._zone, self._word, self._char))
 
 
 class SearchQuery:
@@ -163,7 +167,7 @@ class FlatReviewFinder:
                     description,
                     desktop_keybinding=desktop_kb,
                     laptop_keybinding=laptop_kb,
-                )
+                ),
             )
 
         msg = "FLAT REVIEW FINDER: Commands set up."
@@ -261,7 +265,11 @@ class FlatReviewFinder:
         return False
 
     def _find_match_in(
-        self, query: SearchQuery, context: Context, pattern: re.Pattern, context_type: int
+        self,
+        query: SearchQuery,
+        context: Context,
+        pattern: re.Pattern,
+        context_type: int,
     ) -> bool:
         """Searches for a match of pattern in context for the given type."""
 
@@ -309,12 +317,18 @@ class FlatReviewFinder:
             return True
 
         if self._move(query, context, Context.WORD) and self._find_match_in(
-            query, context, pattern, Context.WORD
+            query,
+            context,
+            pattern,
+            Context.WORD,
         ):
             return True
 
         if self._move(query, context, Context.ZONE) and self._find_match_in(
-            query, context, pattern, Context.ZONE
+            query,
+            context,
+            pattern,
+            Context.ZONE,
         ):
             return True
 
@@ -326,12 +340,12 @@ class FlatReviewFinder:
     def _do_find(self, query: SearchQuery, context: Context) -> Context | None:
         """Performs the actual search."""
 
-        msg = f"FLAT REVIEW FINDER: Searching for {str(query)}"
+        msg = f"FLAT REVIEW FINDER: Searching for {query!s}"
         if self._match:
             msg += f". Last match: {self._match}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        flags = re.U
+        flags = re.UNICODE
         if not query.case_sensitive:
             flags = flags | re.IGNORECASE
         if query.match_entire_word:
@@ -422,11 +436,13 @@ class FlatReviewFinderGUI:
         grid.attach(entry_grid, 0, 0, 3, 1)
 
         rb1 = Gtk.RadioButton.new_with_mnemonic_from_widget(
-            None, guilabels.FIND_START_AT_CURRENT_LOCATION
+            None,
+            guilabels.FIND_START_AT_CURRENT_LOCATION,
         )
         rb1.connect("toggled", self.on_current_location_toggled)
         rb2 = Gtk.RadioButton.new_with_mnemonic_from_widget(
-            rb1, guilabels.FIND_START_AT_TOP_OF_WINDOW
+            rb1,
+            guilabels.FIND_START_AT_TOP_OF_WINDOW,
         )
         grid.attach(_frame_with_grid(guilabels.FIND_START_FROM, (rb1, rb2)), 0, 1, 1, 1)
 

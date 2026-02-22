@@ -38,12 +38,12 @@ import gi
 import pytest
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -51,7 +51,10 @@ class TestAXObject:
     """Test AXObject class methods."""
 
     def _setup_soffice_collection_mocks(
-        self, test_context, has_document_text=False, has_spreadsheet=False
+        self,
+        test_context,
+        has_document_text=False,
+        has_spreadsheet=False,
     ):
         """Set up common mocks for soffice collection testing scenarios."""
 
@@ -64,7 +67,9 @@ class TestAXObject:
         test_context.patch_object(AXObject, "get_name", return_value="soffice")
         test_context.patch_object(Atspi.Accessible, "get_application", return_value=mock_app)
         test_context.patch_object(
-            Atspi.Accessible, "get_collection_iface", side_effect=lambda obj: test_context.Mock()
+            Atspi.Accessible,
+            "get_collection_iface",
+            side_effect=lambda obj: test_context.Mock(),
         )
 
         if has_document_text:
@@ -164,7 +169,7 @@ class TestAXObject:
             mock_get_role = test_context.Mock(
                 side_effect=lambda obj: case["obj_role"]
                 if obj == mock_accessible
-                else case["parent_role"]
+                else case["parent_role"],
             )
         else:
             mock_get_role = test_context.Mock(return_value=case["obj_role"])
@@ -237,7 +242,9 @@ class TestAXObject:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            AXObject, "get_toolkit_name", side_effect=lambda obj: case["toolkit"]
+            AXObject,
+            "get_toolkit_name",
+            side_effect=lambda obj: case["toolkit"],
         )
 
         if case["toolkit"] == "qt":
@@ -254,7 +261,7 @@ class TestAXObject:
             def mock_get_role(obj) -> object:
                 if obj == mock_parent and case["parent_role"] == "window":
                     return Atspi.Role.WINDOW
-                if case["has_grandparent"] and obj != mock_accessible and obj != mock_parent:
+                if case["has_grandparent"] and obj not in (mock_accessible, mock_parent):
                     return Atspi.Role.APPLICATION
                 return Atspi.Role.BUTTON
 
@@ -314,16 +321,22 @@ class TestAXObject:
                 raise case["toolkit_result"]
 
             test_context.patch_object(
-                Atspi.Accessible, "get_toolkit_name", side_effect=raise_glib_error
+                Atspi.Accessible,
+                "get_toolkit_name",
+                side_effect=raise_glib_error,
             )
             from orca import debug
 
             test_context.patch_object(
-                debug, "print_tokens", new=essential_modules["orca.debug"].print_tokens
+                debug,
+                "print_tokens",
+                new=essential_modules["orca.debug"].print_tokens,
             )
         else:
             test_context.patch_object(
-                Atspi.Accessible, "get_toolkit_name", side_effect=lambda app: case["toolkit_result"]
+                Atspi.Accessible,
+                "get_toolkit_name",
+                side_effect=lambda app: case["toolkit_result"],
             )
 
         result = AXObject.get_toolkit_name(mock_accessible)
@@ -635,7 +648,9 @@ class TestAXObject:
                 else case["interface_result"]
             )
             test_context.patch_object(
-                Atspi.Accessible, getter_name, return_value=actual_interface_result
+                Atspi.Accessible,
+                getter_name,
+                return_value=actual_interface_result,
             )
 
         result = support_method(mock_accessible)
@@ -677,11 +692,14 @@ class TestAXObject:
         assert len(AXObject.KNOWN_DEAD) == 0
         assert len(AXObject.OBJECT_ATTRIBUTES) == 0
         essential_modules["orca.debug"].print_message.assert_called_with(
-            essential_modules["orca.debug"].LEVEL_INFO, case["expected_message"], True
+            essential_modules["orca.debug"].LEVEL_INFO,
+            case["expected_message"],
+            True,
         )
 
     def test_clear_cache_now_calls_clear_all_dictionaries(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXObject.clear_cache_now calls _clear_all_dictionaries."""
 
@@ -833,7 +851,9 @@ class TestAXObject:
             mock_app = test_context.Mock(spec=Atspi.Accessible)
             test_context.patch_object(AXObject, "is_valid", return_value=True)
             test_context.patch_object(
-                AXObject, "get_name", side_effect=lambda obj: case["app_name"]
+                AXObject,
+                "get_name",
+                side_effect=lambda obj: case["app_name"],
             )
 
             if case["raises_app_error"]:
@@ -842,7 +862,9 @@ class TestAXObject:
                     raise GLib.GError("Test application error")
 
                 test_context.patch_object(
-                    Atspi.Accessible, "get_application", side_effect=raise_app_error
+                    Atspi.Accessible,
+                    "get_application",
+                    side_effect=raise_app_error,
                 )
             elif case["raises_iface_error"]:
 
@@ -852,18 +874,26 @@ class TestAXObject:
                 handle_error_mock = test_context.Mock()
                 test_context.patch_object(AXObject, "handle_error", new=handle_error_mock)
                 test_context.patch_object(
-                    Atspi.Accessible, "get_application", return_value=mock_app
+                    Atspi.Accessible,
+                    "get_application",
+                    return_value=mock_app,
                 )
                 test_context.patch_object(
-                    Atspi.Accessible, "get_collection_iface", side_effect=raise_iface_error
+                    Atspi.Accessible,
+                    "get_collection_iface",
+                    side_effect=raise_iface_error,
                 )
             else:
                 test_context.patch_object(
-                    Atspi.Accessible, "get_application", return_value=mock_app
+                    Atspi.Accessible,
+                    "get_application",
+                    return_value=mock_app,
                 )
                 mock_iface = test_context.Mock() if case["has_interface"] else None
                 test_context.patch_object(
-                    Atspi.Accessible, "get_collection_iface", return_value=mock_iface
+                    Atspi.Accessible,
+                    "get_collection_iface",
+                    return_value=mock_iface,
                 )
 
         result = AXObject.supports_collection(mock_accessible)
@@ -913,7 +943,9 @@ class TestAXObject:
         else:
             test_obj = test_context.Mock(spec=Atspi.Accessible)
             test_context.patch_object(
-                AXObject, "object_is_known_dead", side_effect=lambda obj: case["is_dead"]
+                AXObject,
+                "object_is_known_dead",
+                side_effect=lambda obj: case["is_dead"],
             )
 
         result = AXObject.is_valid(test_obj)
@@ -1123,7 +1155,9 @@ class TestAXObject:
                 raise GLib.GError("Test path error")
 
             test_context.patch_object(
-                Atspi.Accessible, "get_index_in_parent", side_effect=raise_glib_error
+                Atspi.Accessible,
+                "get_index_in_parent",
+                side_effect=raise_glib_error,
             )
 
         result = AXObject.get_path(mock_accessible)
@@ -1170,7 +1204,9 @@ class TestAXObject:
                 raise GLib.GError("Test index error")
 
             test_context.patch_object(
-                Atspi.Accessible, "get_index_in_parent", side_effect=raise_glib_error
+                Atspi.Accessible,
+                "get_index_in_parent",
+                side_effect=raise_glib_error,
             )
 
         result = AXObject.get_index_in_parent(mock_accessible)
@@ -1260,7 +1296,9 @@ class TestAXObject:
         test_context.patch_object(AXObject, "handle_error", new=handle_error_mock)
         set_known_dead_status_mock = test_context.Mock()
         test_context.patch_object(
-            AXObject, "_set_known_dead_status", new=set_known_dead_status_mock
+            AXObject,
+            "_set_known_dead_status",
+            new=set_known_dead_status_mock,
         )
 
         if case["scenario"] == "valid_object":
@@ -1345,7 +1383,9 @@ class TestAXObject:
         elif case["scenario"] == "valid_localized":
             test_context.patch_object(AXObject, "is_valid", return_value=True)
             test_context.patch_object(
-                Atspi.Accessible, "get_localized_role_name", return_value="botón"
+                Atspi.Accessible,
+                "get_localized_role_name",
+                return_value="botón",
             )
             result = AXObject.get_role_name(mock_accessible, localized=True)
         elif case["scenario"] == "invalid_object":
@@ -1358,7 +1398,9 @@ class TestAXObject:
 
             test_context.patch_object(AXObject, "is_valid", return_value=True)
             test_context.patch_object(
-                Atspi.Accessible, "get_role_name", side_effect=raise_glib_error
+                Atspi.Accessible,
+                "get_role_name",
+                side_effect=raise_glib_error,
             )
             result = AXObject.get_role_name(mock_accessible, localized=case["localized"])
 
@@ -1381,7 +1423,8 @@ class TestAXObject:
         assert result == ""
 
     def test_get_role_description_with_role_description(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXObject.get_role_description with role description attribute."""
 
@@ -1391,13 +1434,16 @@ class TestAXObject:
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
         test_context.patch_object(
-            AXObject, "get_attributes_dict", return_value={"roledescription": "custom button"}
+            AXObject,
+            "get_attributes_dict",
+            return_value={"roledescription": "custom button"},
         )
         result = AXObject.get_role_description(mock_accessible)
         assert result == "custom button"
 
     def test_get_role_description_with_braille_description(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXObject.get_role_description with braille role description."""
 
@@ -1423,7 +1469,9 @@ class TestAXObject:
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
         test_context.patch_object(
-            AXObject, "get_attributes_dict", return_value={"roledescription": "custom button"}
+            AXObject,
+            "get_attributes_dict",
+            return_value={"roledescription": "custom button"},
         )
         result = AXObject.get_role_description(mock_accessible, is_braille=True)
         assert result == "custom button"
@@ -1467,7 +1515,9 @@ class TestAXObject:
         elif case["scenario"] == "valid_object":
             test_context.patch_object(AXObject, "is_valid", return_value=True)
             test_context.patch_object(
-                Atspi.Accessible, "get_accessible_id", return_value="button-123"
+                Atspi.Accessible,
+                "get_accessible_id",
+                return_value="button-123",
             )
         elif case["scenario"] == "glib_error":
 
@@ -1476,7 +1526,9 @@ class TestAXObject:
 
             test_context.patch_object(AXObject, "is_valid", return_value=True)
             test_context.patch_object(
-                Atspi.Accessible, "get_accessible_id", side_effect=raise_glib_error
+                Atspi.Accessible,
+                "get_accessible_id",
+                side_effect=raise_glib_error,
             )
 
         result = AXObject.get_accessible_id(mock_accessible)
@@ -1609,11 +1661,15 @@ class TestAXObject:
         if case["is_valid"] and not case["raises_glib_error"]:
             mock_state_set = test_context.Mock()
             test_context.patch_object(
-                Atspi.Accessible, "get_state_set", return_value=mock_state_set
+                Atspi.Accessible,
+                "get_state_set",
+                return_value=mock_state_set,
             )
             set_known_dead_status_mock = test_context.Mock()
             test_context.patch_object(
-                AXObject, "_set_known_dead_status", new=set_known_dead_status_mock
+                AXObject,
+                "_set_known_dead_status",
+                new=set_known_dead_status_mock,
             )
 
             result = AXObject.get_state_set(mock_accessible)
@@ -1625,7 +1681,9 @@ class TestAXObject:
                 raise GLib.GError("Test state set error")
 
             test_context.patch_object(
-                Atspi.Accessible, "get_state_set", side_effect=raise_glib_error
+                Atspi.Accessible,
+                "get_state_set",
+                side_effect=raise_glib_error,
             )
             handle_error_mock = test_context.Mock()
             test_context.patch_object(AXObject, "handle_error", new=handle_error_mock)
@@ -1681,7 +1739,7 @@ class TestAXObject:
         test_context.patch_object(Atspi.Accessible, "clear_cache_single", new=test_context.Mock())
         AXObject.clear_cache(mock_accessible, recursive=False, reason="test")
         sys.modules["gi.repository"].Atspi.Accessible.clear_cache_single.assert_called_once_with(
-            mock_accessible
+            mock_accessible,
         )
         essential_modules["orca.debug"].print_tokens.assert_called()
 
@@ -1697,7 +1755,9 @@ class TestAXObject:
             raise GLib.GError("Test clear cache error")
 
         test_context.patch_object(
-            Atspi.Accessible, "clear_cache_single", side_effect=raise_glib_error
+            Atspi.Accessible,
+            "clear_cache_single",
+            side_effect=raise_glib_error,
         )
         AXObject.clear_cache(mock_accessible, recursive=False)
         essential_modules["orca.debug"].print_message.assert_called()
@@ -1813,13 +1873,17 @@ class TestAXObject:
                 raise GLib.GError("Test attributes error")
 
             test_context.patch_object(
-                Atspi.Accessible, "get_attributes", side_effect=raise_glib_error
+                Atspi.Accessible,
+                "get_attributes",
+                side_effect=raise_glib_error,
             )
             handle_error_mock = test_context.Mock()
             test_context.patch_object(AXObject, "handle_error", new=handle_error_mock)
         elif case["get_attributes_result"] is not None:
             test_context.patch_object(
-                Atspi.Accessible, "get_attributes", return_value=case["get_attributes_result"]
+                Atspi.Accessible,
+                "get_attributes",
+                return_value=case["get_attributes_result"],
             )
         else:
             test_context.patch_object(Atspi.Accessible, "get_attributes", return_value=None)
@@ -2012,17 +2076,23 @@ class TestAXObject:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            AXObject, "get_n_actions", side_effect=lambda obj: case["n_actions"]
+            AXObject,
+            "get_n_actions",
+            side_effect=lambda obj: case["n_actions"],
         )
         handle_error_mock = test_context.Mock()
         test_context.patch_object(AXObject, "handle_error", new=handle_error_mock)
 
         if case["scenario"] == "valid":
             test_context.patch_object(
-                Atspi.Action, "get_action_name", return_value=case["atspi_result"]
+                Atspi.Action,
+                "get_action_name",
+                return_value=case["atspi_result"],
             )
             test_context.patch_object(
-                AXObject, "_normalize_action_name", return_value=case["normalize_result"]
+                AXObject,
+                "_normalize_action_name",
+                return_value=case["normalize_result"],
             )
         elif case["scenario"] == "glib_error":
             test_context.patch_object(
@@ -2118,14 +2188,18 @@ class TestAXObject:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            AXObject, "get_n_actions", side_effect=lambda obj: case["n_actions"]
+            AXObject,
+            "get_n_actions",
+            side_effect=lambda obj: case["n_actions"],
         )
         handle_error_mock = test_context.Mock()
         test_context.patch_object(AXObject, "handle_error", new=handle_error_mock)
 
         if case["scenario"] == "valid":
             test_context.patch_object(
-                Atspi.Action, "get_action_description", return_value=case["atspi_result"]
+                Atspi.Action,
+                "get_action_description",
+                return_value=case["atspi_result"],
             )
         elif case["scenario"] == "glib_error":
             test_context.patch_object(
@@ -2202,14 +2276,18 @@ class TestAXObject:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            AXObject, "get_n_actions", side_effect=lambda obj: case["n_actions"]
+            AXObject,
+            "get_n_actions",
+            side_effect=lambda obj: case["n_actions"],
         )
         handle_error_mock = test_context.Mock()
         test_context.patch_object(AXObject, "handle_error", new=handle_error_mock)
 
         if case["scenario"] in ["valid", "void_symbol"]:
             test_context.patch_object(
-                Atspi.Action, "get_key_binding", return_value=case["atspi_result"]
+                Atspi.Action,
+                "get_key_binding",
+                return_value=case["atspi_result"],
             )
         elif case["scenario"] == "glib_error":
             test_context.patch_object(
@@ -2276,7 +2354,9 @@ class TestAXObject:
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
         test_context.patch_object(
-            AXObject, "get_attributes_dict", return_value={"keyshortcuts": "F"}
+            AXObject,
+            "get_attributes_dict",
+            return_value={"keyshortcuts": "F"},
         )
         test_context.patch_object(AXObject, "_get_label_for_key_sequence", return_value="F")
         result = AXObject.get_mnemonic(mock_accessible)
@@ -2291,7 +2371,9 @@ class TestAXObject:
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
         test_context.patch_object(
-            AXObject, "get_attributes_dict", return_value={"keyshortcuts": "Ctrl+F"}
+            AXObject,
+            "get_attributes_dict",
+            return_value={"keyshortcuts": "Ctrl+F"},
         )
         test_context.patch_object(AXObject, "_get_label_for_key_sequence", return_value="Ctrl+F")
         test_context.patch_object(AXObject, "_find_first_action_with_keybinding", return_value=-1)
@@ -2359,13 +2441,16 @@ class TestAXObject:
             return "Alt+F"
 
         test_context.patch_object(
-            AXObject, "get_action_key_binding", new=mock_get_action_key_binding
+            AXObject,
+            "get_action_key_binding",
+            new=mock_get_action_key_binding,
         )
         result = AXObject._find_first_action_with_keybinding(mock_accessible)
         assert result == 1
 
     def test_find_first_action_with_keybinding_not_found(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXObject._find_first_action_with_keybinding not found."""
 
@@ -2396,7 +2481,9 @@ class TestAXObject:
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
         test_context.patch_object(
-            AXObject, "get_action_index", side_effect=lambda obj, name: case["action_index"]
+            AXObject,
+            "get_action_index",
+            side_effect=lambda obj, name: case["action_index"],
         )
         result = AXObject.has_action(mock_accessible, "click")
         assert result is case["expected"]
@@ -2410,7 +2497,9 @@ class TestAXObject:
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
         test_context.patch_object(
-            AXObject, "_normalize_action_name", side_effect=lambda name: name.lower()
+            AXObject,
+            "_normalize_action_name",
+            side_effect=lambda name: name.lower(),
         )
         test_context.patch_object(AXObject, "get_n_actions", return_value=2)
 
@@ -2432,7 +2521,9 @@ class TestAXObject:
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
         test_context.patch_object(
-            AXObject, "_normalize_action_name", side_effect=lambda name: name.lower()
+            AXObject,
+            "_normalize_action_name",
+            side_effect=lambda name: name.lower(),
         )
         test_context.patch_object(AXObject, "get_n_actions", return_value=2)
         test_context.patch_object(AXObject, "get_action_name", return_value="press")
@@ -2476,7 +2567,7 @@ class TestAXObject:
         handle_error_mock = test_context.Mock()
         test_context.patch_object(AXObject, "handle_error", new=handle_error_mock)
         sys.modules["gi.repository"].Atspi.Action.do_action = test_context.Mock(
-            side_effect=sys.modules["gi.repository"].GLib.GError("Test error")
+            side_effect=sys.modules["gi.repository"].GLib.GError("Test error"),
         )
         result = AXObject.do_action(mock_accessible, 0)
         assert result is False
@@ -2551,7 +2642,9 @@ class TestAXObject:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            AXObject, "is_valid", side_effect=lambda obj: obj == mock_accessible
+            AXObject,
+            "is_valid",
+            side_effect=lambda obj: obj == mock_accessible,
         )
         result = AXObject.is_ancestor(None, mock_accessible)
         assert result is False
@@ -2564,7 +2657,9 @@ class TestAXObject:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            AXObject, "is_valid", side_effect=lambda obj: obj == mock_accessible
+            AXObject,
+            "is_valid",
+            side_effect=lambda obj: obj == mock_accessible,
         )
         result = AXObject.is_ancestor(mock_accessible, None)
         assert result is False
@@ -2973,12 +3068,12 @@ class TestAXObject:
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
         sys.modules["gi.repository"].Atspi.Accessible.get_role_name = test_context.Mock(
-            return_value="button"
+            return_value="button",
         )
         result = AXObject.get_role_name(mock_accessible, localized=False)
         assert result == "button"
         sys.modules["gi.repository"].Atspi.Accessible.get_localized_role_name = test_context.Mock(
-            return_value="botón"
+            return_value="botón",
         )
         result = AXObject.get_role_name(mock_accessible, localized=True)
         assert result == "botón"
@@ -2994,7 +3089,7 @@ class TestAXObject:
         handle_error_mock = test_context.Mock()
         test_context.patch_object(AXObject, "handle_error", new=handle_error_mock)
         sys.modules["gi.repository"].Atspi.Accessible.get_role_name = test_context.Mock(
-            side_effect=GLib.GError("Test error")
+            side_effect=GLib.GError("Test error"),
         )
         result = AXObject.get_role_name(mock_accessible)
         assert result == ""
@@ -3141,7 +3236,7 @@ class TestAXObject:
             glib_error = GLib.GError("Test error")
             if case["method_name"] == "get_image_description":
                 sys.modules["gi.repository"].Atspi.Image.get_image_description = test_context.Mock(
-                    side_effect=glib_error
+                    side_effect=glib_error,
                 )
             else:
                 setattr(
@@ -3152,7 +3247,7 @@ class TestAXObject:
         elif case["scenario"] == "success":
             if case["method_name"] == "get_image_description":
                 sys.modules["gi.repository"].Atspi.Image.get_image_description = test_context.Mock(
-                    return_value=case["expected_result"]
+                    return_value=case["expected_result"],
                 )
             else:
                 setattr(
@@ -3253,7 +3348,7 @@ class TestAXObject:
         mock_ax_collection = test_context.Mock()
         mock_ax_collection.AXCollection = test_context.Mock()
         mock_ax_collection.AXCollection.create_match_rule = test_context.Mock(
-            return_value="mock_rule"
+            return_value="mock_rule",
         )
         sys.modules["orca.ax_collection"] = mock_ax_collection
         test_context.patch_object(AXObject, "find_ancestor_inclusive", return_value=None)
@@ -3261,7 +3356,8 @@ class TestAXObject:
         assert result is False
 
     def test_has_document_spreadsheet_with_matches_path(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXObject._has_document_spreadsheet with matches path."""
 
@@ -3273,12 +3369,12 @@ class TestAXObject:
         mock_ax_collection = test_context.Mock()
         mock_ax_collection.AXCollection = test_context.Mock()
         mock_ax_collection.AXCollection.create_match_rule = test_context.Mock(
-            return_value="mock_rule"
+            return_value="mock_rule",
         )
         sys.modules["orca.ax_collection"] = mock_ax_collection
         test_context.patch_object(AXObject, "find_ancestor_inclusive", return_value=mock_frame)
         sys.modules["gi.repository"].Atspi.Collection.get_matches = test_context.Mock(
-            return_value=["match1"]
+            return_value=["match1"],
         )
         result = AXObject._has_document_spreadsheet(mock_accessible)
         assert result is True
@@ -3435,7 +3531,9 @@ class TestAXObject:
         test_context.patch_object(AXObject, "is_valid", return_value=True)
         mock_spreadsheet = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
-            AXObject, "find_ancestor_inclusive", return_value=mock_spreadsheet
+            AXObject,
+            "find_ancestor_inclusive",
+            return_value=mock_spreadsheet,
         )
         result = AXObject._has_document_spreadsheet(mock_accessible)
         assert result is True
@@ -3554,7 +3652,9 @@ class TestAXObject:
         ids=lambda case: case["id"],
     )
     def test_get_label_for_key_sequence_various_formats(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test AXObject._get_label_for_key_sequence with various key sequence formats."""
 
@@ -3647,7 +3747,9 @@ class TestAXObject:
         ids=lambda case: case["id"],
     )
     def test_get_accelerator_shortcut_parsing(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test AXObject.get_accelerator shortcut parsing logic."""
 
@@ -3660,7 +3762,9 @@ class TestAXObject:
         test_context.patch_object(AXObject, "get_attributes_dict", return_value=attributes)
 
         test_context.patch_object(
-            AXObject, "_get_label_for_key_sequence", side_effect=lambda seq: seq
+            AXObject,
+            "_get_label_for_key_sequence",
+            side_effect=lambda seq: seq,
         )
 
         test_context.patch_object(AXObject, "_find_first_action_with_keybinding", return_value=-1)
@@ -3685,7 +3789,9 @@ class TestAXObject:
         ids=lambda case: case["id"],
     )
     def test_get_image_size_various_conditions(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test AXObject.get_image_size with various conditions."""
 
@@ -3891,7 +3997,9 @@ class TestAXObject:
         test_context.patch_object(AXObject, "is_valid", side_effect=lambda obj: case["is_valid"])
         test_context.patch_object(AXObject, "get_parent", return_value=mock_parent)
         test_context.patch_object(
-            AXObject, "get_index_in_parent", side_effect=lambda obj: case["index"]
+            AXObject,
+            "get_index_in_parent",
+            side_effect=lambda obj: case["index"],
         )
         test_context.patch_object(
             AXObject,
@@ -3985,7 +4093,9 @@ class TestAXObject:
         test_context.patch_object(AXObject, "is_valid", side_effect=lambda obj: case["is_valid"])
         test_context.patch_object(AXObject, "get_parent", return_value=mock_parent)
         test_context.patch_object(
-            AXObject, "get_index_in_parent", side_effect=lambda obj: case["index"]
+            AXObject,
+            "get_index_in_parent",
+            side_effect=lambda obj: case["index"],
         )
         test_context.patch_object(
             AXObject,
@@ -4124,7 +4234,7 @@ class TestAXObject:
         debug_mock = test_context.Mock()
         debug_mock.LEVEL_INFO = 1
         debug_mock.print_tokens = test_context.Mock(
-            side_effect=lambda *args: debug_calls.append(args)
+            side_effect=lambda *args: debug_calls.append(args),
         )
         test_context.patch("orca.ax_object.debug", new=debug_mock)
 

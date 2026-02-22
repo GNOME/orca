@@ -75,7 +75,7 @@ class TestBrailleLineRanges:
                 "orca.ax_object": ax_object_mock,
                 "orca.ax_text": ax_text_mock,
                 "orca.orca_platform": platform_mock,
-            }
+            },
         )
 
     def test_compute_ranges_basic(self, test_context: OrcaTestContext) -> None:
@@ -200,7 +200,8 @@ class TestBrailleLineRanges:
         assert braille._STATE.flash_event_source_id == 0
 
     def test_setup_key_ranges_skips_when_constants_missing(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """setup_key_ranges should no-op if required constants are missing."""
 
@@ -246,7 +247,8 @@ class TestBrailleLineRanges:
         assert braille._STATE.last_text_info == braille._empty_text_info()
 
     def test_prepare_refresh_empty_lines_clears_braille(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """_prepare_refresh should clear braille and reset state with no lines."""
 
@@ -262,7 +264,8 @@ class TestBrailleLineRanges:
         assert braille._STATE.last_text_info == braille._empty_text_info()
 
     def test_set_contracted_braille_toggles_for_keyboard_event(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Non-braille events should toggle contracted braille."""
 

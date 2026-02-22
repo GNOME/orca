@@ -25,9 +25,8 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import time
-from typing import Any, Callable, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import gi
 
@@ -35,21 +34,25 @@ gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GLib, Gtk
 
-from . import cmdnames
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import focus_manager
-from . import guilabels
-from . import input_event
-from . import keybindings
-from . import messages
-from . import presentation_manager
-from . import script_manager
+from . import (
+    cmdnames,
+    command_manager,
+    dbus_service,
+    debug,
+    focus_manager,
+    guilabels,
+    input_event,
+    keybindings,
+    messages,
+    presentation_manager,
+    script_manager,
+)
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
@@ -89,7 +92,7 @@ class ActionPresenter:
                 cmdnames.SHOW_ACTIONS_LIST,
                 desktop_keybinding=kb,
                 laptop_keybinding=kb,
-            )
+            ),
         )
 
         msg = "ACTION PRESENTER: Commands set up."
@@ -213,7 +216,7 @@ class ActionList(Gtk.Window):
             label.set_margin_start(10)
             label.set_margin_end(10)
             row.add(label)  # pylint: disable=no-member
-            setattr(row, "_action_name", name)
+            row._action_name = name
             self._list_box.add(row)  # pylint: disable=no-member
 
         self.add(self._list_box)  # pylint: disable=no-member

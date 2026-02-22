@@ -24,6 +24,7 @@ import errno
 import os
 import socket
 import time
+
 from gi.repository import GLib
 
 from . import debug
@@ -60,7 +61,9 @@ class Systemd:
         # https://freedesktop.org/software/systemd/man/sd_notify.html#Standalone%20Implementations
         if self._notify_socket:
             debug.print_message(
-                debug.LEVEL_INFO, f"SYSTEMD: Sending: {message.decode('utf-8')}", True
+                debug.LEVEL_INFO,
+                f"SYSTEMD: Sending: {message.decode('utf-8')}",
+                True,
             )
             self._notify_socket.sendall(message)
 
@@ -114,7 +117,9 @@ class Systemd:
         # scheduled ahead of other work done on the main loop (e.g. event
         # processing during a flood).
         GLib.timeout_add(
-            self._watchdog_interval // 2, _on_watchdog_tick, priority=GLib.PRIORITY_HIGH
+            self._watchdog_interval // 2,
+            _on_watchdog_tick,
+            priority=GLib.PRIORITY_HIGH,
         )
 
     def is_systemd_managed(self) -> bool:

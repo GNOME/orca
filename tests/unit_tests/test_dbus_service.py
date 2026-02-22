@@ -30,13 +30,16 @@
 """Unit tests for D-Bus functionality."""
 
 from __future__ import annotations
-from typing import TYPE_CHECKING
+
 import re
+from typing import TYPE_CHECKING
+
 import pytest
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 class _MockDBusError(Exception):
@@ -244,7 +247,8 @@ class TestDBusService:
         mock_module = MockModule()
         assert hasattr(mock_module.toggle_speech, "dbus_command_description")
         assert hasattr(
-            mock_module.get_voices_for_language, "dbus_parameterized_command_description"
+            mock_module.get_voices_for_language,
+            "dbus_parameterized_command_description",
         )
         assert hasattr(mock_module.get_rate, "dbus_getter_description")
         assert hasattr(mock_module.set_rate, "dbus_setter_description")
@@ -296,7 +300,9 @@ class TestDBusService:
             return True
 
         info = dbus_service._HandlerInfo(
-            python_function_name="test_function", description="Test function", action=test_action
+            python_function_name="test_function",
+            description="Test function",
+            action=test_action,
         )
         assert info.handler_type == dbus_service.HandlerType.COMMAND
 
@@ -314,7 +320,8 @@ class TestDBusService:
         assert params == expected
 
     def test_extract_function_parameters_skips_standard_params(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _extract_function_parameters skips standard params."""
 
@@ -329,7 +336,8 @@ class TestDBusService:
         assert params == expected
 
     def test_extract_function_parameters_no_annotations(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _extract_function_parameters no annotations."""
 
@@ -344,7 +352,8 @@ class TestDBusService:
         assert params == expected
 
     def test_extract_function_parameters_mixed_annotations(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _extract_function_parameters mixed annotations."""
 
@@ -418,7 +427,8 @@ class TestDBusService:
 
         handler_type_obj = getattr(dbus_service.HandlerType, case["handler_type"])
         result = dbus_service.OrcaModuleDBusInterface._normalize_handler_name(
-            case["input_name"], handler_type_obj
+            case["input_name"],
+            handler_type_obj,
         )
         assert result == case["expected_result"]
 
@@ -980,7 +990,7 @@ class TestDBusService:
                         "GetVoicesForLanguage",
                         "Get voices for language",
                         [("language", "str"), ("variant", "str")],
-                    )
+                    ),
                 ],
             },
         ],
@@ -1209,9 +1219,9 @@ class TestDBusService:
         self._setup_dependencies(test_context)
         from orca import dbus_service
 
-        MockDBusError = self._get_mock_dbus_error()
+        mock_dbus_error = self._get_mock_dbus_error()
         mock_bus = test_context.Mock()
-        mock_bus.unpublish_object.side_effect = MockDBusError("Unpublish failed")
+        mock_bus.unpublish_object.side_effect = mock_dbus_error("Unpublish failed")
         service = dbus_service.OrcaDBusServiceInterface()
         service._registered_modules.add("TestModule")
         handlers: list[dbus_service._HandlerInfo] = []
@@ -1235,9 +1245,9 @@ class TestDBusService:
         self._setup_dependencies(test_context)
         from orca import dbus_service
 
-        MockDBusError = self._get_mock_dbus_error()
+        mock_dbus_error = self._get_mock_dbus_error()
         mock_bus = test_context.Mock()
-        mock_bus.publish_object.side_effect = MockDBusError("Publish failed")
+        mock_bus.publish_object.side_effect = mock_dbus_error("Publish failed")
         service = dbus_service.OrcaDBusServiceInterface()
         handlers: list[dbus_service._HandlerInfo] = []
         mock_module_iface = test_context.Mock()
@@ -1282,9 +1292,9 @@ class TestDBusService:
         self._setup_dependencies(test_context)
         from orca import dbus_service
 
-        MockDBusError = self._get_mock_dbus_error()
+        mock_dbus_error = self._get_mock_dbus_error()
         mock_bus = test_context.Mock()
-        mock_bus.unpublish_object.side_effect = MockDBusError("Unpublish failed")
+        mock_bus.unpublish_object.side_effect = mock_dbus_error("Unpublish failed")
         service = dbus_service.OrcaDBusServiceInterface()
         service._registered_modules.add("TestModule")
 
@@ -1447,9 +1457,9 @@ class TestDBusService:
         self._setup_dependencies(test_context)
         from orca import dbus_service
 
-        MockDBusError = self._get_mock_dbus_error()
+        mock_dbus_error = self._get_mock_dbus_error()
         mock_bus = test_context.Mock()
-        mock_bus.unpublish_object.side_effect = MockDBusError("Unpublish failed")
+        mock_bus.unpublish_object.side_effect = mock_dbus_error("Unpublish failed")
         service = dbus_service.OrcaDBusServiceInterface()
         service._registered_modules.update(["Module1"])
 
@@ -1509,10 +1519,10 @@ class TestDBusService:
         self._setup_dependencies(test_context)
         from orca import dbus_service
 
-        MockDBusError = self._get_mock_dbus_error()
+        mock_dbus_error = self._get_mock_dbus_error()
 
         def mock_session_bus() -> None:
-            raise MockDBusError("Bus connection failed")
+            raise mock_dbus_error("Bus connection failed")
 
         test_context.patch_object(dbus_service, "SessionMessageBus", new=mock_session_bus)
 
@@ -1528,10 +1538,10 @@ class TestDBusService:
         self._setup_dependencies(test_context)
         from orca import dbus_service
 
-        MockDBusError = self._get_mock_dbus_error()
+        mock_dbus_error = self._get_mock_dbus_error()
         mock_bus = test_context.Mock()
         mock_bus.connection.get_unique_name.return_value = "test_name"
-        mock_bus.publish_object.side_effect = MockDBusError("Publish failed")
+        mock_bus.publish_object.side_effect = mock_dbus_error("Publish failed")
         test_context.patch_object(dbus_service, "SessionMessageBus", return_value=mock_bus)
 
         controller = dbus_service.OrcaRemoteController()
@@ -1547,10 +1557,10 @@ class TestDBusService:
         self._setup_dependencies(test_context)
         from orca import dbus_service
 
-        MockDBusError = self._get_mock_dbus_error()
+        mock_dbus_error = self._get_mock_dbus_error()
         mock_bus = test_context.Mock()
         mock_bus.connection.get_unique_name.return_value = "test_name"
-        mock_bus.register_service.side_effect = MockDBusError("Register failed")
+        mock_bus.register_service.side_effect = mock_dbus_error("Register failed")
         test_context.patch_object(dbus_service, "SessionMessageBus", return_value=mock_bus)
 
         controller = dbus_service.OrcaRemoteController()
@@ -1628,9 +1638,9 @@ class TestDBusService:
         self._setup_dependencies(test_context)
         from orca import dbus_service
 
-        MockDBusError = self._get_mock_dbus_error()
+        mock_dbus_error = self._get_mock_dbus_error()
         mock_bus = test_context.Mock()
-        mock_bus.unpublish_object.side_effect = MockDBusError("Unpublish failed")
+        mock_bus.unpublish_object.side_effect = mock_dbus_error("Unpublish failed")
         mock_service = test_context.Mock()
         controller = dbus_service.OrcaRemoteController()
         controller._is_running = True
@@ -1648,9 +1658,9 @@ class TestDBusService:
         self._setup_dependencies(test_context)
         from orca import dbus_service
 
-        MockDBusError = self._get_mock_dbus_error()
+        mock_dbus_error = self._get_mock_dbus_error()
         mock_bus = test_context.Mock()
-        mock_bus.unregister_service.side_effect = MockDBusError("Unregister failed")
+        mock_bus.unregister_service.side_effect = mock_dbus_error("Unregister failed")
         mock_service = test_context.Mock()
         controller = dbus_service.OrcaRemoteController()
         controller._is_running = True
@@ -1685,7 +1695,9 @@ class TestDBusService:
         controller._bus = test_context.Mock()
         mock_register = test_context.Mock()
         test_context.patch_object(
-            controller, "_register_decorated_commands_internal", new=mock_register
+            controller,
+            "_register_decorated_commands_internal",
+            new=mock_register,
         )
         mock_module = test_context.Mock()
         controller.register_decorated_module("TestModule", mock_module)
@@ -1767,7 +1779,8 @@ class TestDBusService:
         controller._process_pending_registrations()
 
     def test_process_pending_registrations_with_modules(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test OrcaRemoteController._process_pending_registrations with modules."""
 
@@ -1777,7 +1790,9 @@ class TestDBusService:
         controller = dbus_service.OrcaRemoteController()
         mock_register = test_context.Mock()
         test_context.patch_object(
-            controller, "_register_decorated_commands_internal", new=mock_register
+            controller,
+            "_register_decorated_commands_internal",
+            new=mock_register,
         )
         mock_module1 = test_context.Mock()
         mock_module2 = test_context.Mock()
@@ -1805,7 +1820,9 @@ class TestDBusService:
         ids=lambda case: case["id"],
     )
     def test_count_system_commands_scenarios(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test OrcaRemoteController._count_system_commands with and without interface."""
         self._setup_dependencies(test_context)
@@ -1847,7 +1864,8 @@ class TestDBusService:
         assert isinstance(controller, dbus_service.OrcaRemoteController)
 
     def test_extract_function_parameters_complex_annotation(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _extract_function_parameters complex annotation without __name__."""
 
@@ -1887,7 +1905,8 @@ class TestDBusService:
         assert len(unpacked) == 3
 
     def test_register_decorated_commands_internal_not_ready(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test OrcaRemoteController._register_decorated_commands_internal not ready."""
 
@@ -1907,7 +1926,8 @@ class TestDBusService:
         assert controller._total_modules == 0
 
     def test_register_decorated_commands_internal_with_decorators(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test OrcaRemoteController._register_decorated_commands_internal with decorators."""
 
@@ -1943,14 +1963,12 @@ class TestDBusService:
                 return "setter"
 
         # Add decorations to methods
-        setattr(MockModule.command_method, "dbus_command_description", "Test command method.")
-        setattr(
-            MockModule.param_command_method,
-            "dbus_parameterized_command_description",
-            "Test parameterized command.",
+        MockModule.command_method.dbus_command_description = "Test command method."
+        MockModule.param_command_method.dbus_parameterized_command_description = (
+            "Test parameterized command."
         )
-        setattr(MockModule.getter_method, "dbus_getter_description", "Test getter method.")
-        setattr(MockModule.setter_method, "dbus_setter_description", "Test setter method.")
+        MockModule.getter_method.dbus_getter_description = "Test getter method."
+        MockModule.setter_method.dbus_setter_description = "Test setter method."
         mock_module = MockModule()
         controller = dbus_service.OrcaRemoteController()
         controller._is_running = True
@@ -1966,7 +1984,8 @@ class TestDBusService:
         # Patch modules directly since they're imported locally in the method
         test_context.patch("orca.script_manager.get_manager", new=mock_get_manager)
         test_context.patch(
-            "orca.input_event.RemoteControllerEvent", new=mock_remote_controller_event
+            "orca.input_event.RemoteControllerEvent",
+            new=mock_remote_controller_event,
         )
         controller._register_decorated_commands_internal("TestModule", mock_module)
         assert controller._total_commands == 2  # command + parameterized command
@@ -1975,7 +1994,8 @@ class TestDBusService:
         assert controller._total_modules == 1
 
     def test_register_decorated_commands_internal_no_handlers(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test OrcaRemoteController._register_decorated_commands_internal no handlers."""
 
@@ -1999,7 +2019,9 @@ class TestDBusService:
         # Properly patch the method we want to assert on
         mock_add_interface = test_context.Mock()
         test_context.patch_object(
-            controller._dbus_service_interface, "add_module_interface", new=mock_add_interface
+            controller._dbus_service_interface,
+            "add_module_interface",
+            new=mock_add_interface,
         )
         controller._register_decorated_commands_internal("TestModule", mock_module)
         assert controller._total_commands == 0
@@ -2009,18 +2031,19 @@ class TestDBusService:
         mock_add_interface.assert_not_called()
 
     def test_start_unpublish_object_error_during_cleanup(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test OrcaRemoteController.start unpublish object error during cleanup."""
 
         self._setup_dependencies(test_context)
         from orca import dbus_service
 
-        MockDBusError = self._get_mock_dbus_error()
+        mock_dbus_error = self._get_mock_dbus_error()
         mock_bus = test_context.Mock()
         mock_bus.connection.get_unique_name.return_value = "test_name"
-        mock_bus.register_service.side_effect = MockDBusError("Register failed")
-        mock_bus.unpublish_object.side_effect = MockDBusError("Unpublish failed")
+        mock_bus.register_service.side_effect = mock_dbus_error("Register failed")
+        mock_bus.unpublish_object.side_effect = mock_dbus_error("Unpublish failed")
         test_context.patch_object(dbus_service, "SessionMessageBus", return_value=mock_bus)
 
         controller = dbus_service.OrcaRemoteController()

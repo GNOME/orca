@@ -32,22 +32,22 @@ import os
 from typing import TYPE_CHECKING, Any
 
 import pytest
-
 from dasbus.error import DBusError
 from gi.repository import GLib
 
 if TYPE_CHECKING:
     from collections.abc import Callable
+
     from dasbus.client.proxy import ObjectProxy as DBusProxy
 
 # Get configurable timeout values from environment variables
 DEFAULT_MODULE_TIMEOUT = 15
-FLAT_REVIEW_TIMEOUT = int(os.environ.get("ORCA_FLAT_REVIEW_TIMEOUT", DEFAULT_MODULE_TIMEOUT))
+FLAT_REVIEW_TIMEOUT = int(os.environ.get("ORCA_FLAT_REVIEW_TIMEOUT", str(DEFAULT_MODULE_TIMEOUT)))
 STRUCTURAL_NAVIGATOR_TIMEOUT = int(
-    os.environ.get("ORCA_STRUCTURAL_NAVIGATOR_TIMEOUT", DEFAULT_MODULE_TIMEOUT)
+    os.environ.get("ORCA_STRUCTURAL_NAVIGATOR_TIMEOUT", str(DEFAULT_MODULE_TIMEOUT)),
 )
-SPEECH_MANAGER_TIMEOUT = int(os.environ.get("ORCA_SPEECH_MANAGER_TIMEOUT", 30))
-SPEECH_PRESENTER_TIMEOUT = int(os.environ.get("ORCA_SPEECH_PRESENTER_TIMEOUT", 30))
+SPEECH_MANAGER_TIMEOUT = int(os.environ.get("ORCA_SPEECH_MANAGER_TIMEOUT", "30"))
+SPEECH_PRESENTER_TIMEOUT = int(os.environ.get("ORCA_SPEECH_PRESENTER_TIMEOUT", "30"))
 
 MODULE_TIMEOUTS = {
     "FlatReviewPresenter": FLAT_REVIEW_TIMEOUT,
@@ -801,7 +801,7 @@ MODULE_CONFIG = {
 }
 
 PARAMETERIZED_TEST_PARAMS = {
-    "GetVoicesForLanguage": {"language": "en", "variant": "", "notify_user": False}
+    "GetVoicesForLanguage": {"language": "en", "variant": "", "notify_user": False},
 }
 
 
@@ -862,8 +862,10 @@ def unpack_variant(value: Any) -> Any:
 
 
 def get_alternative_value(
-    proxy: DBusProxy, prop_name: str, current_value: str | int | float | bool
-) -> str | int | float | bool:
+    proxy: DBusProxy,
+    prop_name: str,
+    current_value: str | float | bool,
+) -> str | float | bool:
     """Get an alternative value for testing setters, avoiding defaults when possible."""
 
     try:
@@ -904,8 +906,10 @@ def get_alternative_value(
 
 
 def get_test_value(
-    proxy: DBusProxy, prop_name: str, current_value: str | int | float | bool
-) -> str | int | float | bool:
+    proxy: DBusProxy,
+    prop_name: str,
+    current_value: str | float | bool,
+) -> str | float | bool:
     """Generate an appropriate test value for a property."""
 
     if isinstance(current_value, (int, float)):
@@ -917,7 +921,7 @@ def get_test_value(
     return current_value
 
 
-def to_variant(value: str | bool | int | float) -> Any:
+def to_variant(value: str | bool | float) -> Any:
     """Convert a Python value to GLib.Variant."""
 
     if isinstance(value, str):
@@ -976,7 +980,9 @@ class TestOrcaDBusIntegration:
             dbus_service_proxy.NonExistentMethod()
 
     @pytest.mark.parametrize(
-        "module_name,config", MODULE_CONFIG.items(), ids=list(MODULE_CONFIG.keys())
+        "module_name,config",
+        MODULE_CONFIG.items(),
+        ids=list(MODULE_CONFIG.keys()),
     )
     @pytest.mark.dbus
     def test_module_capabilities(self, module_proxy_factory, run_with_timeout, module_name, config):
@@ -1106,7 +1112,11 @@ class TestOrcaDBusIntegration:
     )
     @pytest.mark.dbus
     def test_module_parameterized_commands(
-        self, module_proxy_factory, run_with_timeout, module_name, config
+        self,
+        module_proxy_factory,
+        run_with_timeout,
+        module_name,
+        config,
     ):
         """Test that module parameterized commands execute with proper parameters."""
         param_commands = config["parameterized_commands"]
@@ -1167,7 +1177,11 @@ class TestOrcaDBusIntegration:
     )
     @pytest.mark.dbus
     def test_module_getters_setters(
-        self, module_proxy_factory, run_with_timeout, module_name, config
+        self,
+        module_proxy_factory,
+        run_with_timeout,
+        module_name,
+        config,
     ):
         """Test that module getter/setter pairs work correctly."""
         # Skip optional modules that aren't available
@@ -1296,4 +1310,4 @@ class TestOrcaDBusIntegration:
                 f"{module_list}\n"
                 f"Please add configuration for these modules to MODULE_CONFIG in the test file."
             )
-            assert False, error_msg
+            raise AssertionError(error_msg)

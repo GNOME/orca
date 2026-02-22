@@ -23,29 +23,33 @@
 
 """Utilities for obtaining document-related information about accessible objects."""
 
+from __future__ import annotations
+
 import threading
 import time
 import urllib.parse
+from typing import TYPE_CHECKING
 
 import gi
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
-from . import debug
-from . import messages
+from . import debug, messages
 from .ax_collection import AXCollection
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 
+if TYPE_CHECKING:
+    from typing import ClassVar
+
 
 class AXDocument:
     """Utilities for obtaining document-related information about accessible objects."""
 
-    LAST_KNOWN_PAGE: dict[int, int] = {}
+    LAST_KNOWN_PAGE: ClassVar[dict[int, int]] = {}
     _lock = threading.Lock()
 
     @staticmethod
@@ -235,7 +239,8 @@ class AXDocument:
         ]
 
         rule = AXCollection.create_match_rule(
-            roles=roles, role_match_type=Atspi.CollectionMatchType.ANY
+            roles=roles,
+            role_match_type=Atspi.CollectionMatchType.ANY,
         )
         matches = AXCollection.get_all_matches(document, rule)
 
@@ -268,7 +273,7 @@ class AXDocument:
         result.append(messages.table_count(counts.get("tables", 0), only_if_found))
         result.append(messages.visited_link_count(counts.get("visited_links", 0), only_if_found))
         result.append(
-            messages.unvisited_link_count(counts.get("unvisited_links", 0), only_if_found)
+            messages.unvisited_link_count(counts.get("unvisited_links", 0), only_if_found),
         )
         result = list(filter(lambda x: x, result))
         if not result:

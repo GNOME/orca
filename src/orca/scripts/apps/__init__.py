@@ -1,6 +1,7 @@
 """Orca"s application scripts."""
 
 __all__ = [
+    "Thunderbird",
     "evolution",
     "gajim",
     "gedit",
@@ -8,8 +9,7 @@ __all__ = [
     "kwin",
     "notification-daemon",
     "pidgin",
-    "soffice",
     "smuxi-frontend-gnome",
-    "Thunderbird",
+    "soffice",
     "xfwm4",
 ]

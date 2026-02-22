@@ -27,25 +27,23 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import gc
 import locale
 import time
-from typing import TYPE_CHECKING, Any, Callable, Iterator
+from typing import TYPE_CHECKING, Any
 
 from gi.repository import GLib
 
-from . import debug
-from . import focus_manager
-from . import guilabels
-from . import mathsymbols
-from . import speechserver
+from . import debug, focus_manager, guilabels, mathsymbols, speechserver
 from .acss import ACSS
-from .speechserver import CapitalizationStyle, PunctuationStyle
 from .ax_utilities import AXUtilities
+from .speechserver import CapitalizationStyle, PunctuationStyle
 from .ssml import SSML, SSMLCapabilities
 
 if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
+    from typing import ClassVar
+
     from . import input_event
     from .speechserver import VoiceFamily
 
@@ -56,7 +54,7 @@ except Exception:
 else:
     _SPEECHD_AVAILABLE = True
     try:
-        getattr(speechd, "CallbackType")
+        _callback_type = speechd.CallbackType
     except AttributeError:
         _SPEECHD_VERSION_OK = False
     else:
@@ -66,10 +64,10 @@ else:
 class SpeechServer(speechserver.SpeechServer):
     """Speech Dispatcher speech server for Orca."""
 
-    _active_servers: dict[str, SpeechServer] = {}
+    _active_servers: ClassVar[dict[str, SpeechServer]] = {}
 
     DEFAULT_SERVER_ID = "default"
-    _SERVER_NAMES = {DEFAULT_SERVER_ID: guilabels.DEFAULT_SYNTHESIZER}
+    _SERVER_NAMES: ClassVar[dict[str, str]] = {DEFAULT_SERVER_ID: guilabels.DEFAULT_SYNTHESIZER}
 
     @staticmethod
     def get_factory_name() -> str:
@@ -127,7 +125,8 @@ class SpeechServer(speechserver.SpeechServer):
         self._current_punctuation_level: PunctuationStyle = PunctuationStyle.MOST
         self._current_capitalization_style: str = CapitalizationStyle.NONE.value
         self._voice_families_cache: dict[
-            tuple[str, str, str | None, int | None], list[tuple[str, str, str | None]]
+            tuple[str, str, str | None, int | None],
+            list[tuple[str, str, str | None]],
         ] = {}
         self._acss_manipulators = (
             (ACSS.FAMILY, self._set_family),
@@ -493,18 +492,18 @@ class SpeechServer(speechserver.SpeechServer):
         default_lang = ""
         if locale_language:
             # Check whether how it appears in the server list
-            for name, lang, variant in voices:
+            for _name, lang, _variant in voices:
                 if lang == locale_language:
                     default_lang = locale_language
                     break
             if not default_lang:
-                for name, lang, variant in voices:
+                for _name, lang, _variant in voices:
                     if lang == locale_lang:
                         default_lang = locale_lang
             if not default_lang:
                 default_lang = locale_language
 
-        voices = ((self._default_voice_name, default_lang, None),) + voices
+        voices = ((self._default_voice_name, default_lang, None), *voices)
 
         families = []
         for name, lang, variant in voices:
@@ -516,8 +515,8 @@ class SpeechServer(speechserver.SpeechServer):
                         speechserver.VoiceFamily.LANG: lang.partition("-")[0],
                         speechserver.VoiceFamily.DIALECT: lang.partition("-")[2],
                         speechserver.VoiceFamily.VARIANT: variant,
-                    }
-                )
+                    },
+                ),
             )
 
         return families
@@ -567,7 +566,9 @@ class SpeechServer(speechserver.SpeechServer):
         self.speak(name, acss)
 
     def speak_key_event(
-        self, event: input_event.KeyboardEvent, acss: dict[str, Any] | None = None
+        self,
+        event: input_event.KeyboardEvent,
+        acss: dict[str, Any] | None = None,
     ) -> None:
         """Speaks event."""
 
@@ -698,13 +699,13 @@ class SpeechServer(speechserver.SpeechServer):
         fallbacks = []
         for voice in voices:
             normalized_language, normalized_dialect = self._normalized_language_and_dialect(
-                voice[1]
+                voice[1],
             )
             if normalized_language != target_language:
                 continue
-            if normalized_dialect == target_dialect:
-                candidates.append(voice)
-            elif not normalized_dialect and target_dialect == normalized_language:
+            if normalized_dialect == target_dialect or (
+                not normalized_dialect and target_dialect == normalized_language
+            ):
                 candidates.append(voice)
             elif not target_dialect:
                 if normalized_dialect == target_language:
@@ -815,7 +816,7 @@ class SpeechServer(speechserver.SpeechServer):
                 speechserver.VoiceFamily.LANG: lang,
                 speechserver.VoiceFamily.DIALECT: dialect,
                 speechserver.VoiceFamily.VARIANT: None,
-            }
+            },
         )
 
     def set_voice_family(self, family: VoiceFamily) -> None:

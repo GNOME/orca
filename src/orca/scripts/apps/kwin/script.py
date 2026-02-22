@@ -23,6 +23,7 @@
 
 from orca.scripts import switcher
 from orca.scripts.toolkits import Qt
+
 from .script_utilities import Utilities
 
 

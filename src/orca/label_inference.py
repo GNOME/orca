@@ -30,7 +30,6 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
 from . import debug
@@ -46,6 +45,7 @@ if TYPE_CHECKING:
 
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
     from .scripts import default
 
 
@@ -59,7 +59,9 @@ class LabelInference:
         self._is_widget_cache: dict[int, bool] = {}
 
     def infer(
-        self, obj: Atspi.Accessible, focused_only: bool = True
+        self,
+        obj: Atspi.Accessible,
+        focused_only: bool = True,
     ) -> tuple[str | None, list[Atspi.Accessible]]:
         """Attempt to infer the functional/displayed label of obj."""
 
@@ -158,10 +160,7 @@ class LabelInference:
             return False
 
         string = AXText.get_all_text(obj).strip()
-        if string.count("\ufffc") > 1:
-            return False
-
-        return True
+        return string.count("\ufffc") <= 1
 
     def _cannot_label(self, obj: Atspi.Accessible | None) -> bool:
         """Returns True if the given object should not be treated as a label."""
@@ -192,7 +191,10 @@ class LabelInference:
         return is_widget
 
     def _get_extents(
-        self, obj: Atspi.Accessible | None, start_offset: int = 0, end_offset: int = -1
+        self,
+        obj: Atspi.Accessible | None,
+        start_offset: int = 0,
+        end_offset: int = -1,
     ) -> tuple[int, int, int, int]:
         """Returns (x, y, width, height) of the text at the given offsets."""
 
@@ -219,7 +221,8 @@ class LabelInference:
         return extents
 
     def _create_label_from_contents(
-        self, obj: Atspi.Accessible
+        self,
+        obj: Atspi.Accessible,
     ) -> tuple[str | None, list[Atspi.Accessible]]:
         """Gets the functional label text associated with the object obj."""
 
@@ -238,7 +241,9 @@ class LabelInference:
         return "".join(strings), objects
 
     def _get_line_contents(
-        self, obj: Atspi.Accessible, start: int = 0
+        self,
+        obj: Atspi.Accessible,
+        start: int = 0,
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
         """Get the (obj, start_offset, end_offset, string) tuples for the line containing obj."""
 
@@ -259,7 +264,9 @@ class LabelInference:
         return rv
 
     def _infer_from_text_left(
-        self, obj: Atspi.Accessible, proximity: int = 75
+        self,
+        obj: Atspi.Accessible,
+        proximity: int = 75,
     ) -> tuple[str | None, list[Atspi.Accessible]]:
         """Attempt to infer the functional/displayed label of obj from contents on its left."""
 
@@ -296,7 +303,9 @@ class LabelInference:
         return None, []
 
     def _infer_from_text_right(
-        self, obj: Atspi.Accessible, proximity: int = 25
+        self,
+        obj: Atspi.Accessible,
+        proximity: int = 25,
     ) -> tuple[str | None, list[Atspi.Accessible]]:
         """Attempt to infer the functional/displayed label of obj from contents on its right."""
 
@@ -336,7 +345,9 @@ class LabelInference:
         return None, []
 
     def _infer_from_text_above(
-        self, obj: Atspi.Accessible, proximity: int = 20
+        self,
+        obj: Atspi.Accessible,
+        proximity: int = 20,
     ) -> tuple[str | None, list[Atspi.Accessible]]:
         """Attempt to infer the functional/displayed label of obj from contents above it."""
 
@@ -350,7 +361,9 @@ class LabelInference:
             return None, []
 
         prev_obj, prev_offset = self._script.utilities.previous_context(
-            this_line[0][0], this_line[0][1], True
+            this_line[0][0],
+            this_line[0][1],
+            True,
         )
         prev_line = self._get_line_contents(prev_obj, prev_offset)
         if len(prev_line) != 1:
@@ -374,7 +387,9 @@ class LabelInference:
         return None, []
 
     def _infer_from_text_below(
-        self, obj: Atspi.Accessible, proximity: int = 20
+        self,
+        obj: Atspi.Accessible,
+        proximity: int = 20,
     ) -> tuple[str | None, list[Atspi.Accessible]]:
         """Attempt to infer the functional/displayed label of obj from contents below it."""
 
@@ -391,7 +406,9 @@ class LabelInference:
             return None, []
 
         next_obj, next_offset = self._script.utilities.next_context(
-            this_line[-1][0], this_line[-1][2] - 1, True
+            this_line[-1][0],
+            this_line[-1][2] - 1,
+            True,
         )
         next_line = self._get_line_contents(next_obj, next_offset)
         if len(next_line) != 1:
@@ -411,7 +428,9 @@ class LabelInference:
         return None, []
 
     def _infer_from_table(
-        self, obj: Atspi.Accessible, proximity_for_right: int = 50
+        self,
+        obj: Atspi.Accessible,
+        proximity_for_right: int = 50,
     ) -> tuple[str | None, list[Atspi.Accessible]]:
         """Attempt to infer the functional/displayed label of obj from neighboring cells."""
 

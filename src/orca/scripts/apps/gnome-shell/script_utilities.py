@@ -23,11 +23,9 @@
 
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
-from orca import debug
-from orca import script_utilities
+from orca import debug, script_utilities
 from orca.ax_text import AXText
 
 if TYPE_CHECKING:

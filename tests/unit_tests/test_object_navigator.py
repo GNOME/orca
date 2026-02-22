@@ -34,8 +34,9 @@ from typing import TYPE_CHECKING
 import pytest
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -68,7 +69,7 @@ class TestObjectNavigator:
                 "orca.orca_platform",
                 "orca.braille_presenter",
                 "orca.presentation_manager",
-            ]
+            ],
         )
 
         command_manager_mock = essential_modules["orca.command_manager"]
@@ -79,7 +80,7 @@ class TestObjectNavigator:
         mock_command.is_active.return_value = True
         manager_instance_mock.get_command = test_context.Mock(return_value=mock_command)
         manager_instance_mock.get_commands_by_group_label = test_context.Mock(
-            return_value=[mock_command]
+            return_value=[mock_command],
         )
         command_manager_mock.get_manager = test_context.Mock(return_value=manager_instance_mock)
         command_manager_mock.Command = test_context.Mock()
@@ -105,12 +106,12 @@ class TestObjectNavigator:
         if "orca.object_navigator" in sys.modules:
             object_navigator_module = sys.modules["orca.object_navigator"]
             if not hasattr(object_navigator_module, "_original_navigator"):
-                setattr(
+                object_navigator_module._original_navigator = getattr(
                     object_navigator_module,
-                    "_original_navigator",
-                    getattr(object_navigator_module, "_navigator", None),
+                    "_navigator",
+                    None,
                 )
-            setattr(object_navigator_module, "_navigator", test_context.Mock())
+            object_navigator_module._navigator = test_context.Mock()
 
         debug_mock = essential_modules["orca.debug"]
         debug_mock.LEVEL_INFO = 800
@@ -120,7 +121,7 @@ class TestObjectNavigator:
         input_event_mock = essential_modules["orca.input_event"]
         input_event_handler_mock = test_context.Mock()
         input_event_mock.InputEventHandler = test_context.Mock(
-            return_value=input_event_handler_mock
+            return_value=input_event_handler_mock,
         )
 
         keybindings_mock = essential_modules["orca.keybindings"]
@@ -146,14 +147,14 @@ class TestObjectNavigator:
         focus_manager_instance = test_context.Mock()
         focus_manager_instance.get_locus_of_focus = test_context.Mock(return_value=None)
         focus_manager_instance.get_active_mode_and_object_of_interest = test_context.Mock(
-            return_value=("default", None)
+            return_value=("default", None),
         )
         focus_manager_mock.get_manager.return_value = focus_manager_instance
 
         ax_event_synthesizer_mock = essential_modules["orca.ax_event_synthesizer"]
         ax_event_synthesizer_mock.AXEventSynthesizer = test_context.Mock()
         ax_event_synthesizer_mock.AXEventSynthesizer.try_all_clickable_actions = test_context.Mock(
-            return_value=False
+            return_value=False,
         )
         ax_event_synthesizer_mock.AXEventSynthesizer.click_object = test_context.Mock()
 
@@ -216,7 +217,8 @@ class TestObjectNavigator:
         assert result is True
 
     def test_exclude_from_simple_navigation_with_script(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _exclude_from_simple_navigation with script parameter."""
 
@@ -230,7 +232,8 @@ class TestObjectNavigator:
         assert result is False
 
     def test_children_returns_list_for_object_with_children(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _children returns list of child objects."""
 
@@ -250,7 +253,8 @@ class TestObjectNavigator:
         assert children[0] == mock_child
 
     def test_children_returns_empty_list_for_object_without_children(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _children returns empty list for object with no children."""
 
@@ -297,7 +301,8 @@ class TestObjectNavigator:
         assert parent is None
 
     def test_set_navigator_focus_updates_focus_tracking(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _set_navigator_focus properly tracks focus changes."""
 
@@ -357,7 +362,9 @@ class TestObjectNavigator:
         ],
     )
     def test_present_respects_notify_user_parameter(
-        self, test_context: OrcaTestContext, notify_user
+        self,
+        test_context: OrcaTestContext,
+        notify_user,
     ) -> None:
         """Test _present respects the notify_user parameter."""
 
@@ -382,7 +389,9 @@ class TestObjectNavigator:
         ],
     )
     def test_move_to_parent_scenarios(
-        self, test_context: OrcaTestContext, has_parent: bool
+        self,
+        test_context: OrcaTestContext,
+        has_parent: bool,
     ) -> None:
         """Test move_to_parent with various parent availability scenarios."""
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
@@ -416,7 +425,10 @@ class TestObjectNavigator:
         ],
     )
     def test_move_to_first_child_scenarios(
-        self, test_context: OrcaTestContext, has_children: bool, child_count: int
+        self,
+        test_context: OrcaTestContext,
+        has_children: bool,
+        child_count: int,
     ) -> None:
         """Test move_to_first_child with various child availability scenarios."""
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
@@ -579,7 +591,8 @@ class TestObjectNavigator:
         assert result is True
 
     def test_perform_action_with_null_focus_logs_debug_info(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test perform_action logs debug information with None navigator focus."""
 

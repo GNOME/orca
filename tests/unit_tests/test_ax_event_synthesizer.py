@@ -34,12 +34,12 @@ import gi
 import pytest
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -90,7 +90,7 @@ class TestAXEventSynthesizer:
         ax_utilities_debugging_mock = essential_modules["orca.ax_utilities_debugging"]
         ax_utilities_debugging_mock.AXUtilitiesDebugging = test_context.Mock()
         ax_utilities_debugging_mock.AXUtilitiesDebugging.actions_as_string = test_context.Mock(
-            return_value="mock actions"
+            return_value="mock actions",
         )
 
         if "orca.debug" in essential_modules:
@@ -132,7 +132,8 @@ class TestAXEventSynthesizer:
         ax_object_mock.get_parent.assert_called_once_with(mock_accessible)
 
     def test_highest_ancestor_true_when_parent_is_application(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _highest_ancestor returns True when parent is application."""
 
@@ -151,7 +152,8 @@ class TestAXEventSynthesizer:
         ax_utilities_role_mock.is_application.assert_called_once_with(mock_parent)
 
     def test_is_scrolled_off_screen_false_when_no_ancestor(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _is_scrolled_off_screen returns False when no ancestor found."""
 
@@ -165,7 +167,8 @@ class TestAXEventSynthesizer:
         assert result is False
 
     def test_is_scrolled_off_screen_true_when_outside_ancestor(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _is_scrolled_off_screen returns True when object is outside ancestor."""
 
@@ -211,7 +214,8 @@ class TestAXEventSynthesizer:
         mock_generate.assert_called_once_with(mock_device, mock_accessible, 50, 25, "b1c")
 
     def test_generate_mouse_event_exception_returns_false(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _generate_mouse_event returns False on GLib.GError exception."""
 
@@ -229,7 +233,8 @@ class TestAXEventSynthesizer:
         assert result is False
 
     def test_mouse_event_on_character_uses_caret_offset_when_none(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _mouse_event_on_character uses caret offset when offset is None."""
 
@@ -248,7 +253,8 @@ class TestAXEventSynthesizer:
         assert result is True
 
     def test_route_to_character_calls_mouse_event_with_abs(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test route_to_character calls _mouse_event_on_character with 'abs' event."""
 
@@ -264,7 +270,8 @@ class TestAXEventSynthesizer:
         assert result is True
 
     def test_route_to_object_calls_mouse_event_with_abs(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test route_to_object calls _mouse_event_on_object with 'abs' event."""
 
@@ -280,7 +287,8 @@ class TestAXEventSynthesizer:
         assert result is True
 
     def test_click_character_calls_mouse_event_with_button_click(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test click_character calls _mouse_event_on_character with button click event."""
 
@@ -296,7 +304,8 @@ class TestAXEventSynthesizer:
         assert result is True
 
     def test_click_object_calls_mouse_event_with_button_click(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test click_object calls _mouse_event_on_object with button click event."""
 
@@ -312,7 +321,8 @@ class TestAXEventSynthesizer:
         assert result is True
 
     def test_scroll_into_view_calls_scroll_to_location_anywhere(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test scroll_into_view calls _scroll_to_location with ANYWHERE."""
 
@@ -326,7 +336,8 @@ class TestAXEventSynthesizer:
         mock_scroll.assert_called_once_with(mock_accessible, Atspi.ScrollType.ANYWHERE, 5, 15)
 
     def test_scroll_to_center_calculates_center_coordinates(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test scroll_to_center calculates center coordinates of ancestor."""
 
@@ -358,7 +369,9 @@ class TestAXEventSynthesizer:
             pytest.param("scroll_to_left_edge", "Atspi.ScrollType.LEFT_EDGE", id="left_edge"),
             pytest.param("scroll_to_bottom_edge", "Atspi.ScrollType.BOTTOM_EDGE", id="bottom_edge"),
             pytest.param(
-                "scroll_to_bottom_right", "Atspi.ScrollType.BOTTOM_RIGHT", id="bottom_right"
+                "scroll_to_bottom_right",
+                "Atspi.ScrollType.BOTTOM_RIGHT",
+                id="bottom_right",
             ),
             pytest.param("scroll_to_right_edge", "Atspi.ScrollType.RIGHT_EDGE", id="right_edge"),
         ],
@@ -378,7 +391,8 @@ class TestAXEventSynthesizer:
         mock_scroll.assert_called_once_with(mock_accessible, scroll_type_value, 10, 20)
 
     def test_try_all_clickable_actions_success_on_first_action(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test try_all_clickable_actions returns True on first successful action."""
 
@@ -393,7 +407,8 @@ class TestAXEventSynthesizer:
         ax_object_mock.do_named_action.assert_called_once_with(mock_accessible, "click")
 
     def test_try_all_clickable_actions_false_when_all_fail(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test try_all_clickable_actions returns False when all actions fail."""
 
@@ -418,7 +433,8 @@ class TestAXEventSynthesizer:
         assert synthesizer1 is synthesizer2
 
     def test_mouse_event_on_character_returns_false_when_empty_rect(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _mouse_event_on_character returns False when character rect is empty."""
 
@@ -437,14 +453,17 @@ class TestAXEventSynthesizer:
         ax_component_mock.is_empty_rect.return_value = True
 
         test_context.patch_object(
-            AXEventSynthesizer, "_is_scrolled_off_screen", side_effect=lambda obj, offset: False
+            AXEventSynthesizer,
+            "_is_scrolled_off_screen",
+            side_effect=lambda obj, offset: False,
         )
 
         result = AXEventSynthesizer._mouse_event_on_character(mock_obj, 5, "abs")
         assert result is False
 
     def test_mouse_event_on_character_returns_false_when_caret_outside_object(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _mouse_event_on_character returns False when caret is outside object bounds."""
 
@@ -469,7 +488,9 @@ class TestAXEventSynthesizer:
         ax_component_mock.is_empty_rect.side_effect = lambda rect: rect.width == 0
 
         test_context.patch_object(
-            AXEventSynthesizer, "_is_scrolled_off_screen", side_effect=lambda obj, offset: False
+            AXEventSynthesizer,
+            "_is_scrolled_off_screen",
+            side_effect=lambda obj, offset: False,
         )
 
         result = AXEventSynthesizer._mouse_event_on_character(mock_obj, 10, "abs")
@@ -573,7 +594,8 @@ class TestAXEventSynthesizer:
             assert essential_modules["orca.debug"].print_tokens.call_count == 2
 
     def test_is_scrolled_off_screen_returns_false_when_no_ancestor_found(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _is_scrolled_off_screen returns False when no ancestor is found."""
 
@@ -595,7 +617,8 @@ class TestAXEventSynthesizer:
         essential_modules["orca.debug"].print_tokens.assert_called()
 
     def test_is_scrolled_off_screen_returns_true_when_object_outside_ancestor(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _is_scrolled_off_screen returns True when object is outside ancestor bounds."""
 
@@ -630,7 +653,8 @@ class TestAXEventSynthesizer:
         essential_modules["orca.debug"].print_tokens.assert_called()
 
     def test_is_scrolled_off_screen_returns_false_when_no_offset(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _is_scrolled_off_screen returns False when offset is None and object in bounds."""
 
@@ -658,7 +682,8 @@ class TestAXEventSynthesizer:
         essential_modules["orca.debug"].print_tokens.assert_called()
 
     def test_is_scrolled_off_screen_returns_false_when_empty_character_rect(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _is_scrolled_off_screen returns False when character rect is empty."""
 
@@ -691,7 +716,8 @@ class TestAXEventSynthesizer:
         essential_modules["orca.debug"].print_tokens.assert_called()
 
     def test_mouse_event_on_object_grabs_focus_when_still_offscreen(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test _mouse_event_on_object grabs focus when object remains offscreen after scroll."""
 
@@ -708,10 +734,14 @@ class TestAXEventSynthesizer:
 
         test_context.patch_object(AXEventSynthesizer, "scroll_into_view", new=mock_scroll_into_view)
         test_context.patch_object(
-            AXEventSynthesizer, "_is_scrolled_off_screen", side_effect=lambda obj, offset=None: True
+            AXEventSynthesizer,
+            "_is_scrolled_off_screen",
+            side_effect=lambda obj, offset=None: True,
         )
         test_context.patch_object(
-            AXEventSynthesizer, "_generate_mouse_event", side_effect=lambda obj, x, y, event: True
+            AXEventSynthesizer,
+            "_generate_mouse_event",
+            side_effect=lambda obj, x, y, event: True,
         )
 
         rect = test_context.Mock()

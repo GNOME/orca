@@ -23,34 +23,38 @@
 
 # This must be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
-from typing import Callable, TYPE_CHECKING
 
+from typing import TYPE_CHECKING
 
 import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk  # pylint: disable=no-name-in-module
 
-from . import gsettings_migrator
-from . import gsettings_registry
-from . import guilabels
-from . import messages
-from . import preferences_grid_base
-from . import presentation_manager
-from . import script_manager
+from . import (
+    gsettings_migrator,
+    gsettings_registry,
+    guilabels,
+    messages,
+    preferences_grid_base,
+    presentation_manager,
+    script_manager,
+)
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from .scripts import default
 
 
 class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instance-attributes
-    preferences_grid_base.PreferencesGridBase
+    preferences_grid_base.PreferencesGridBase,
 ):
     """GtkGrid containing the Pronunciation Dictionary preferences page."""
 
     # pylint: disable=no-member
 
-    def __init__(self, manager: "PronunciationDictionaryManager", script: default.Script) -> None:
+    def __init__(self, manager: PronunciationDictionaryManager, script: default.Script) -> None:
         super().__init__(guilabels.PRONUNCIATION)
         self._manager: PronunciationDictionaryManager = manager
         self._script: default.Script = script
@@ -63,7 +67,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
 
         # Size group to ensure all left labels (phrases) have the same width
         self._left_label_size_group: Gtk.SizeGroup = Gtk.SizeGroup(
-            mode=Gtk.SizeGroupMode.HORIZONTAL
+            mode=Gtk.SizeGroupMode.HORIZONTAL,
         )
 
         self._build()
@@ -175,7 +179,11 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         return row
 
     def _create_row(
-        self, phrase: str, substitution: str, row_index: int, include_top_separator: bool = True
+        self,
+        phrase: str,
+        substitution: str,
+        row_index: int,
+        include_top_separator: bool = True,
     ) -> Gtk.ListBoxRow:
         """Create a ListBoxRow for a pronunciation entry."""
 
@@ -217,7 +225,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         script = script_manager.get_manager().get_active_script()
         if script:
             presentation_manager.get_manager().present_message(
-                messages.PRONUNCIATION_DELETED % phrase
+                messages.PRONUNCIATION_DELETED % phrase,
             )
 
     def _on_listbox_realize(self, _widget: Gtk.Widget) -> None:
@@ -239,7 +247,9 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         """Show dialog to add a new pronunciation."""
 
         dialog, add_button = self._create_header_bar_dialog(
-            guilabels.ADD_NEW_PRONUNCIATION, guilabels.DIALOG_CANCEL, guilabels.DIALOG_ADD
+            guilabels.ADD_NEW_PRONUNCIATION,
+            guilabels.DIALOG_CANCEL,
+            guilabels.DIALOG_ADD,
         )
 
         content_area = dialog.get_content_area()
@@ -296,12 +306,17 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         phrase_entry.grab_focus()
 
     def _show_edit_dialog(  # pylint: disable=too-many-locals
-        self, phrase: str, substitution: str, row_index: int
+        self,
+        phrase: str,
+        substitution: str,
+        row_index: int,
     ) -> None:
         """Show dialog to edit an existing pronunciation."""
 
         dialog, edit_button = self._create_header_bar_dialog(
-            guilabels.EDIT_PRONUNCIATION, guilabels.DIALOG_CANCEL, guilabels.DIALOG_EDIT
+            guilabels.EDIT_PRONUNCIATION,
+            guilabels.DIALOG_CANCEL,
+            guilabels.DIALOG_EDIT,
         )
 
         content_area = dialog.get_content_area()
@@ -441,7 +456,8 @@ class PronunciationDictionaryManager:
         self._suppressed: bool = False
 
     def create_preferences_grid(
-        self, script: default.Script
+        self,
+        script: default.Script,
     ) -> PronunciationDictionaryPreferencesGrid:
         """Returns the GtkGrid containing the pronunciation dictionary UI."""
 
@@ -473,7 +489,10 @@ class PronunciationDictionaryManager:
 
         if self._dictionary is None:
             self._dictionary = registry.layered_lookup(
-                "pronunciations", "entries", "a{ss}", default={}
+                "pronunciations",
+                "entries",
+                "a{ss}",
+                default={},
             )
 
         return self._dictionary.get(word.lower(), word)

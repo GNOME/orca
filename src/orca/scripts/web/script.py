@@ -34,27 +34,27 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
-from orca import braille_presenter
-from orca import caret_navigator
-from orca import debug
-from orca import document_presenter
-from orca import flat_review_presenter
-from orca import focus_manager
-from orca import input_event
-from orca import input_event_manager
-from orca import label_inference
-from orca import live_region_presenter
-from orca import messages
-from orca import presentation_manager
-from orca import say_all_presenter
-from orca import speech_manager
-from orca import speech_presenter
-from orca import structural_navigator
-from orca import table_navigator
-from orca.scripts import default
+from orca import (
+    braille_presenter,
+    caret_navigator,
+    debug,
+    document_presenter,
+    flat_review_presenter,
+    focus_manager,
+    input_event,
+    input_event_manager,
+    label_inference,
+    live_region_presenter,
+    messages,
+    presentation_manager,
+    say_all_presenter,
+    speech_manager,
+    speech_presenter,
+    structural_navigator,
+    table_navigator,
+)
 from orca.ax_component import AXComponent
 from orca.ax_document import AXDocument
 from orca.ax_event_synthesizer import AXEventSynthesizer
@@ -63,11 +63,12 @@ from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_event import TextEventReason
+from orca.scripts import default
 from orca.structural_navigator import NavigationMode
 
 from .braille_generator import BrailleGenerator
-from .speech_generator import SpeechGenerator
 from .script_utilities import Utilities
+from .speech_generator import SpeechGenerator
 
 if TYPE_CHECKING:
     from gi.repository import Atspi
@@ -232,7 +233,11 @@ class Script(default.Script):
 
         line, start_offset = AXText.get_line_at_offset(obj, offset)[0:2]
         speech_presenter.get_presenter().speak_line(
-            self, obj, start_offset, start_offset + len(line), line
+            self,
+            obj,
+            start_offset,
+            start_offset + len(line),
+            line,
         )
 
         self.point_of_reference["lastTextUnitSpoken"] = "line"
@@ -282,7 +287,8 @@ class Script(default.Script):
             tokens = ["WEB:", obj, "believed to be destroyed after scroll."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             replicant = AXObject.find_descendant(
-                document, lambda x: AXObject.get_name(x) == name and AXObject.get_role(obj) == role
+                document,
+                lambda x: AXObject.get_name(x) == name and AXObject.get_role(obj) == role,
             )
             if replicant:
                 obj = replicant
@@ -336,7 +342,7 @@ class Script(default.Script):
             return
 
         if document_presenter.get_presenter().in_focus_mode(
-            self.app
+            self.app,
         ) and "\ufffc" not in AXText.get_all_text(obj):
             tokens = ["WEB: updating braille in focus mode", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -661,7 +667,9 @@ class Script(default.Script):
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if not AXUtilities.is_document_web(event.source) and not AXObject.is_ancestor(
-            focus, event.source, True
+            focus,
+            event.source,
+            True,
         ):
             msg = "WEB: Ignoring: Not document and not something we're in"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -779,7 +787,7 @@ class Script(default.Script):
             msg = "WEB: Not doing SayAll due to sayAllOnLoad being False"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             presentation_manager.get_manager().speak_contents(
-                self.utilities.get_line_contents_at_offset(obj, offset)
+                self.utilities.get_line_contents_at_offset(obj, offset),
             )
         elif speech_manager.get_manager().get_speech_is_enabled_and_not_muted():
             msg = "WEB: Doing SayAll"
@@ -908,7 +916,7 @@ class Script(default.Script):
             return True
 
         if document_presenter.get_presenter().in_focus_mode(
-            self.app
+            self.app,
         ) and self.utilities.caret_moved_outside_active_grid(event):
             msg = "WEB: Event ignored: Caret moved outside active grid during focus mode"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -922,7 +930,7 @@ class Script(default.Script):
             return True
 
         if not self.utilities.treat_as_text_object(event.source) and not AXUtilities.is_editable(
-            event.source
+            event.source,
         ):
             msg = "WEB: Event ignored: Was for non-editable object we're treating as textless"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1273,7 +1281,9 @@ class Script(default.Script):
             msg = "WEB: Event handled: Setting locusOfFocus to embedded descendant"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             if self.utilities.should_interrupt_for_locus_of_focus_change(
-                focus, event.source, event
+                focus,
+                event.source,
+                event,
             ):
                 presentation_manager.get_manager().interrupt_presentation()
 
@@ -1466,7 +1476,9 @@ class Script(default.Script):
                 # Because we cannot count on the app firing the right state-changed events
                 # for descendants.
                 AXObject.clear_cache(
-                    event.source, True, "Workaround for missing events on descendants."
+                    event.source,
+                    True,
+                    "Workaround for missing events on descendants.",
                 )
                 msg = "WEB: Event source is embedded descendant and we're in focus mode"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1587,7 +1599,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if not AXUtilities.is_editable(
-            event.source
+            event.source,
         ) and not self.utilities.is_content_editable_with_embedded_objects(event.source):
             msg = "WEB: Done processing non-editable source"
             debug.print_message(debug.LEVEL_INFO, msg, True)

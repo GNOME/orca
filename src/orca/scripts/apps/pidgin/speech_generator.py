@@ -24,18 +24,16 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
+from typing import TYPE_CHECKING, Any
 
-from typing import Any, TYPE_CHECKING
-
-import gi
-
-gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-
-from orca import debug
-from orca import speech_generator
+from orca import debug, speech_generator
 
 if TYPE_CHECKING:
+    import gi
+
+    gi.require_version("Atspi", "2.0")
+    from gi.repository import Atspi
+
     from . import script
 
 

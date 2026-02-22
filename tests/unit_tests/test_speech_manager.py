@@ -69,8 +69,9 @@ class CapitalizationStyle(Enum):
 
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -160,8 +161,8 @@ class TestSpeechManager:
         """Test that set_up_commands registers commands in CommandManager."""
 
         self._setup_dependencies(test_context)
-        from orca.speech_manager import SpeechManager
         from orca import command_manager
+        from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
         manager.set_up_commands()
@@ -417,7 +418,9 @@ class TestSpeechManager:
 
         manager = SpeechManager()
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "capitalization-style", case["setting_value"]
+            "speech",
+            "capitalization-style",
+            case["setting_value"],
         )
 
         result = manager.get_capitalization_style()
@@ -476,7 +479,9 @@ class TestSpeechManager:
         ids=lambda case: case["id"],
     )
     def test_get_punctuation_level_from_dconf(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test get_punctuation_level reads from layered_lookup."""
 
@@ -563,7 +568,9 @@ class TestSpeechManager:
 
         manager = SpeechManager()
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "enable", case["setting_value"]
+            "speech",
+            "enable",
+            case["setting_value"],
         )
 
         result = manager.get_speech_is_enabled()
@@ -621,7 +628,9 @@ class TestSpeechManager:
         ids=lambda case: case["id"],
     )
     def test_get_speech_is_enabled_and_not_muted(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test get_speech_is_enabled_and_not_muted method."""
 
@@ -633,7 +642,9 @@ class TestSpeechManager:
 
         manager = SpeechManager()
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "enable", case["enable_speech"]
+            "speech",
+            "enable",
+            case["enable_speech"],
         )
 
         result = manager.get_speech_is_enabled_and_not_muted()
@@ -661,7 +672,9 @@ class TestSpeechManager:
 
         manager = SpeechManager()
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "enable", case["speech_enabled"]
+            "speech",
+            "enable",
+            case["speech_enabled"],
         )
         mock_method = test_context.Mock()
         test_context.patch_object(manager, case["expected_method"], new=mock_method)
@@ -899,7 +912,9 @@ class TestSpeechManager:
 
         manager = SpeechManager()
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "speak-numbers-as-digits", case["setting_value"]
+            "speech",
+            "speak-numbers-as-digits",
+            case["setting_value"],
         )
 
         result = manager.get_speak_numbers_as_digits()
@@ -935,7 +950,9 @@ class TestSpeechManager:
         ids=lambda case: case["id"],
     )
     def test_get_use_pronunciation_dictionary(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test get_use_pronunciation_dictionary method."""
 
@@ -946,7 +963,9 @@ class TestSpeechManager:
 
         manager = SpeechManager()
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "use-pronunciation-dictionary", case["setting_value"]
+            "speech",
+            "use-pronunciation-dictionary",
+            case["setting_value"],
         )
 
         result = manager.get_use_pronunciation_dictionary()
@@ -961,7 +980,9 @@ class TestSpeechManager:
         ids=lambda case: case["id"],
     )
     def test_set_use_pronunciation_dictionary(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test set_use_pronunciation_dictionary method."""
 
@@ -993,7 +1014,9 @@ class TestSpeechManager:
 
         manager = SpeechManager()
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "use-color-names", case["setting_value"]
+            "speech",
+            "use-color-names",
+            case["setting_value"],
         )
 
         result = manager.get_use_color_names()
@@ -1029,7 +1052,9 @@ class TestSpeechManager:
         ids=lambda case: case["id"],
     )
     def test_get_insert_pauses_between_utterances(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test get_insert_pauses_between_utterances method."""
 
@@ -1040,7 +1065,9 @@ class TestSpeechManager:
 
         manager = SpeechManager()
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "insert-pauses-between-utterances", case["setting_value"]
+            "speech",
+            "insert-pauses-between-utterances",
+            case["setting_value"],
         )
 
         result = manager.get_insert_pauses_between_utterances()
@@ -1055,7 +1082,9 @@ class TestSpeechManager:
         ids=lambda case: case["id"],
     )
     def test_set_insert_pauses_between_utterances(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test set_insert_pauses_between_utterances method."""
 
@@ -1087,7 +1116,9 @@ class TestSpeechManager:
 
         manager = SpeechManager()
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "auto-language-switching", case["setting_value"]
+            "speech",
+            "auto-language-switching",
+            case["setting_value"],
         )
 
         result = manager.get_auto_language_switching()
@@ -1147,7 +1178,8 @@ class TestSpeechManager:
         mock_init.assert_called()
 
     def test_toggle_speech_mutes_when_app_profile_has_speech_enabled(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test toggle_speech mutes when the app profile has enableSpeech=True."""
 
@@ -1164,14 +1196,15 @@ class TestSpeechManager:
         assert manager.get_speech_is_enabled() is True
 
     def test_toggle_speech_disables_when_app_profile_has_speech_disabled(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test toggle_speech shuts down when underlying setting disables speech."""
 
         self._setup_dependencies(test_context)
 
-        from orca.speech_manager import SpeechManager
         from orca import gsettings_registry
+        from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
         test_context.patch_object(manager, "get_speech_is_enabled", side_effect=[True, False])
@@ -1214,7 +1247,8 @@ class TestVoicesPreferencesGridUI:  # pylint: disable=too-few-public-methods
         return essential_modules
 
     def test_save_settings_includes_speech_server_factory(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test save_settings includes speechServerFactory."""
 
@@ -1224,7 +1258,9 @@ class TestVoicesPreferencesGridUI:  # pylint: disable=too-few-public-methods
         from orca.speech_manager import SpeechManager, VoicesPreferencesGrid
 
         gsettings_registry.get_registry().set_runtime_value(
-            "speech", "speech-server-factory", "spiel"
+            "speech",
+            "speech-server-factory",
+            "spiel",
         )
 
         manager = SpeechManager()

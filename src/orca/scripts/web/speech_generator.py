@@ -31,23 +31,24 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
-from typing import Any, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import gi
 
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from orca import caret_navigator
-from orca import debug
-from orca import document_presenter
-from orca import focus_manager
-from orca import input_event_manager
-from orca import messages
-from orca import object_properties
-from orca import speech_presenter
-from orca import speech_generator
+from orca import (
+    caret_navigator,
+    debug,
+    document_presenter,
+    focus_manager,
+    input_event_manager,
+    messages,
+    object_properties,
+    speech_generator,
+    speech_presenter,
+)
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
@@ -317,7 +318,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             )
             words = string.split()
             if len(words) > 5:
-                words = words[0:5] + ["..."]
+                words = [*words[0:5], "..."]
 
             result.append(object_properties.RELATION_DETAILS_FOR % " ".join(words))
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
@@ -412,9 +413,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         if self._script.utilities.in_document_content(
-            obj
+            obj,
         ) and not self._script.utilities.in_document_content(
-            focus_manager.get_manager().get_locus_of_focus()
+            focus_manager.get_manager().get_locus_of_focus(),
         ):
             result: list[Any] = [""]
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
@@ -478,7 +479,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_real_active_descendant_displayed_text(
-        self, obj: Atspi.Accessible, **args
+        self,
+        obj: Atspi.Accessible,
+        **args,
     ) -> list[Any]:
         if not self._script.utilities.in_document_content(obj):
             return super()._generate_real_active_descendant_displayed_text(obj, **args)
@@ -517,7 +520,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         mgr = input_event_manager.get_manager()
         is_editable = AXUtilities.is_editable(obj)
         if is_editable and not self._script.utilities.is_content_editable_with_embedded_objects(
-            obj
+            obj,
         ):
             if focus_manager.get_manager().in_say_all() and start:
                 return []
@@ -548,7 +551,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 if level:
                     result.append(
                         object_properties.ROLE_HEADING_LEVEL_SPEECH
-                        % {"role": self.get_localized_role_name(obj, **args), "level": level}
+                        % {"role": self.get_localized_role_name(obj, **args), "level": level},
                     )
                     result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
                 else:
@@ -564,7 +567,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                     result.append(self.get_localized_role_name(obj, role=Atspi.Role.IMAGE))
                     result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
                 if index == total - 1 or not self._script.utilities.is_focusable_with_math_child(
-                    obj
+                    obj,
                 ):
                     result.append(self.get_localized_role_name(obj, **args))
                     result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
@@ -658,7 +661,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def generate_contents(
-        self, contents: list[tuple[Atspi.Accessible, int, int, str]], **args
+        self,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+        **args,
     ) -> list[Any]:
         if not contents:
             return []
@@ -707,7 +712,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def generate_line(
-        self, obj: Atspi.Accessible, start_offset: int, end_offset: int, line: str
+        self,
+        obj: Atspi.Accessible,
+        start_offset: int,
+        end_offset: int,
+        line: str,
     ) -> list[Any]:
         """Generates speech for a web document line via DOM-walking contents."""
 
@@ -722,7 +731,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         prior_obj = prior_context[0] if prior_context else None
 
         contents = self._script.utilities.get_line_contents_at_offset(
-            obj, start_offset, use_cache=True
+            obj,
+            start_offset,
+            use_cache=True,
         )
         return self.generate_contents(contents, priorObj=prior_obj)
 
@@ -730,11 +741,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         """Generates speech for a web document word via DOM-walking contents."""
 
         word_contents = self._script.utilities.get_word_contents_at_offset(
-            obj, offset, use_cache=True
+            obj,
+            offset,
+            use_cache=True,
         )
         if not word_contents:
             return []
         text_obj = word_contents[0][0]
         return self.generate_contents(
-            word_contents, alreadyFocused=AXUtilities.is_text_input(text_obj)
+            word_contents,
+            alreadyFocused=AXUtilities.is_text_input(text_obj),
         )

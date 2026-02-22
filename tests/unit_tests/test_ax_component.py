@@ -34,12 +34,12 @@ import gi
 import pytest
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -113,7 +113,9 @@ class TestAXComponent:
             test_context.patch_object(Atspi.Component, "get_position", return_value=mock_position)
         elif case["supports_component"] and case["position_result"]:
             test_context.patch_object(
-                Atspi.Component, "get_position", return_value=case["position_result"]
+                Atspi.Component,
+                "get_position",
+                return_value=case["position_result"],
             )
         else:
             mock_negative_position = test_context.Mock(x=-1, y=-1)
@@ -133,10 +135,16 @@ class TestAXComponent:
             pytest.param("get_rect", "get_extents", "empty_rect", id="get_rect"),
             pytest.param("object_contains_point", "contains", False, id="object_contains_point"),
             pytest.param(
-                "scroll_object_to_point", "scroll_to_point", False, id="scroll_object_to_point"
+                "scroll_object_to_point",
+                "scroll_to_point",
+                False,
+                id="scroll_object_to_point",
             ),
             pytest.param(
-                "scroll_object_to_location", "scroll_to", False, id="scroll_object_to_location"
+                "scroll_object_to_location",
+                "scroll_to",
+                False,
+                id="scroll_object_to_location",
             ),
         ],
     )
@@ -152,7 +160,9 @@ class TestAXComponent:
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         test_context.patch_object(
-            essential_modules["orca.ax_object"].AXObject, "supports_component", return_value=True
+            essential_modules["orca.ax_object"].AXObject,
+            "supports_component",
+            return_value=True,
         )
         from orca.ax_component import AXComponent
 
@@ -242,7 +252,7 @@ class TestAXComponent:
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
 
         essential_modules["orca.ax_object"].AXObject.supports_component = test_context.Mock(
-            return_value=case["supports_component"]
+            return_value=case["supports_component"],
         )
         from orca.ax_component import AXComponent
 
@@ -287,7 +297,11 @@ class TestAXComponent:
         ],
     )
     def test_has_no_size(
-        self, test_context: OrcaTestContext, width: int, height: int, expected_result: bool
+        self,
+        test_context: OrcaTestContext,
+        width: int,
+        height: int,
+        expected_result: bool,
     ) -> None:
         """Test AXComponent.has_no_size."""
 
@@ -334,7 +348,9 @@ class TestAXComponent:
         mock_rect.width = width
         mock_rect.height = height
         test_context.patch_object(
-            essential_modules["orca.ax_object"].AXObject, "clear_cache", return_value=None
+            essential_modules["orca.ax_object"].AXObject,
+            "clear_cache",
+            return_value=None,
         )
         test_context.patch_object(AXComponent, "get_rect", return_value=mock_rect)
         result = AXComponent.has_no_size_or_invalid_rect(mock_accessible)
@@ -402,7 +418,11 @@ class TestAXComponent:
         [
             pytest.param((10, 20, 100, 30), (10, 20, 100, 30), 5, True, id="same_rects"),
             pytest.param(
-                (50, 35, 0, 0), (10, 20, 100, 30), 5, True, id="point_in_rect_vertical_range"
+                (50, 35, 0, 0),
+                (10, 20, 100, 30),
+                5,
+                True,
+                id="point_in_rect_vertical_range",
             ),
             pytest.param((50, 10, 0, 0), (10, 20, 100, 30), 5, False, id="point_above_rect"),
             pytest.param((10, 20, 100, 30), (50, 35, 0, 0), 5, True, id="rect_contains_point"),
@@ -410,7 +430,11 @@ class TestAXComponent:
             pytest.param((10, 20, 100, 30), (10, 22, 100, 30), 5, True, id="overlapping_same_line"),
             pytest.param((10, 20, 100, 30), (10, 40, 100, 30), 5, False, id="midpoints_too_far"),
             pytest.param(
-                (10, 20, 100, 30), (10, 40, 100, 30), 20, True, id="midpoints_within_larger_delta"
+                (10, 20, 100, 30),
+                (10, 40, 100, 30),
+                20,
+                True,
+                id="midpoints_within_larger_delta",
             ),
         ],
     )
@@ -476,7 +500,9 @@ class TestAXComponent:
         ids=lambda case: case["id"],
     )
     def test_get_rect_intersection_scenarios(
-        self, test_context: OrcaTestContext, case: dict
+        self,
+        test_context: OrcaTestContext,
+        case: dict,
     ) -> None:
         """Test AXComponent.get_rect_intersection with different rectangle scenarios."""
 
@@ -541,10 +567,10 @@ class TestAXComponent:
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
 
         essential_modules["orca.ax_object"].AXObject.supports_component = test_context.Mock(
-            return_value=case["supports_component"]
+            return_value=case["supports_component"],
         )
         essential_modules["orca.ax_object"].AXObject.is_bogus = test_context.Mock(
-            return_value=case["is_bogus"]
+            return_value=case["is_bogus"],
         )
         from orca.ax_component import AXComponent
 
@@ -569,7 +595,11 @@ class TestAXComponent:
         ],
     )
     def test_object_intersects_rect(
-        self, test_context: OrcaTestContext, obj_coords, test_coords, expected_result
+        self,
+        test_context: OrcaTestContext,
+        obj_coords,
+        test_coords,
+        expected_result,
     ) -> None:
         """Test AXComponent.object_intersects_rect intersection scenarios."""
 
@@ -615,10 +645,10 @@ class TestAXComponent:
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
 
         essential_modules["orca.ax_object"].AXObject.get_child_count = test_context.Mock(
-            return_value=child_count
+            return_value=child_count,
         )
         essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_menu = test_context.Mock(
-            return_value=is_menu
+            return_value=is_menu,
         )
         from orca.ax_component import AXComponent
 
@@ -842,7 +872,9 @@ class TestAXComponent:
         )
         if case["supports_component"] and case["scroll_result"] is not None:
             test_context.patch_object(
-                Atspi.Component, "scroll_to", return_value=case["scroll_result"]
+                Atspi.Component,
+                "scroll_to",
+                return_value=case["scroll_result"],
             )
         else:
             test_context.patch_object(Atspi.Component, "scroll_to", return_value=False)
@@ -922,10 +954,10 @@ class TestAXComponent:
         parent = test_context.Mock(spec=Atspi.Accessible)
 
         essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
-            return_value=parent
+            return_value=parent,
         )
         essential_modules["orca.ax_object"].AXObject.get_index_in_parent = test_context.Mock(
-            side_effect=lambda obj: 0 if obj == obj1 else 1
+            side_effect=lambda obj: 0 if obj == obj1 else 1,
         )
         from orca.ax_component import AXComponent
 

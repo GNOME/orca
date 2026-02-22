@@ -29,27 +29,30 @@
 # This must be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import string
 from dataclasses import dataclass
 from enum import Enum
-from typing import Callable, Iterable, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
-from . import cmdnames
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import guilabels
-from . import input_event
-from . import messages
-from . import preferences_grid_base
-from . import presentation_manager
-from . import speech_presenter
+from . import (
+    cmdnames,
+    command_manager,
+    dbus_service,
+    debug,
+    gsettings_registry,
+    guilabels,
+    input_event,
+    messages,
+    preferences_grid_base,
+    presentation_manager,
+    speech_presenter,
+)
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from . import gsettings_registry
 
 if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable
+
     from gi.repository import Atspi
 
     from .scripts import default
@@ -79,7 +82,7 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 
     _gsettings_schema = "typing-echo"
 
-    def __init__(self, presenter: "TypingEchoPresenter") -> None:
+    def __init__(self, presenter: TypingEchoPresenter) -> None:
         self._enable_key_echo_control = preferences_grid_base.BooleanPreferenceControl(
             label=guilabels.ECHO_ENABLE_KEY_ECHO,
             getter=presenter.get_key_echo_enabled,
@@ -198,7 +201,10 @@ class TypingEchoPresenter:
         """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, "b", default=default
+            self._SCHEMA,
+            key,
+            "b",
+            default=default,
         )
 
     def __init__(self) -> None:
@@ -228,7 +234,7 @@ class TypingEchoPresenter:
                 cmdnames.CYCLE_KEY_ECHO,
                 desktop_keybinding=None,
                 laptop_keybinding=None,
-            )
+            ),
         )
 
         msg = "TYPING ECHO PRESENTER: Commands set up."
@@ -337,7 +343,8 @@ class TypingEchoPresenter:
         )
 
     def apply_typing_echo_preferences(
-        self, updates: Iterable[tuple[TypingEchoPreference, bool]]
+        self,
+        updates: Iterable[tuple[TypingEchoPreference, bool]],
     ) -> dict[str, bool]:
         """Apply the provided preference values and return the saved mapping."""
 

@@ -23,15 +23,13 @@
 
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
-from orca import input_event_manager
-from orca import focus_manager
-from orca.scripts import web
+from orca import focus_manager, input_event_manager
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
+from orca.scripts import web
 
 if TYPE_CHECKING:
     import gi
@@ -80,10 +78,7 @@ class Utilities(web.Utilities):
             return False
         if not AXUtilities.is_table_cell(focus):
             return False
-        if not AXObject.find_ancestor(focus, AXUtilities.is_tree_or_tree_table):
-            return False
-
-        return True
+        return bool(AXObject.find_ancestor(focus, AXUtilities.is_tree_or_tree_table))
 
     def is_document_preview(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is or descends from the preview document."""

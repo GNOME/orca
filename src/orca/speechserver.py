@@ -25,13 +25,11 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from enum import Enum
-from typing import Any, Callable, Iterator, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from . import gsettings_registry
 from .ax_utilities_debugging import AXUtilitiesDebugging
-
 
 DEFAULT_VOICE: str = "default"
 UPPERCASE_VOICE: str = "uppercase"
@@ -77,10 +75,14 @@ class CapitalizationStyle(Enum):
 
 
 if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
+    from typing import ClassVar
+
     import gi
 
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
     from . import input_event
     from .acss import ACSS
 
@@ -97,7 +99,7 @@ class VoiceFamily(dict):
     MALE = "male"
     FEMALE = "female"
 
-    settings = {
+    settings: ClassVar[dict[str, str | None]] = {
         NAME: None,
         GENDER: None,
         LANG: None,
@@ -122,7 +124,11 @@ class SayAllContext:
     COMPLETED = 2
 
     def __init__(
-        self, obj: Atspi.Accessible, utterance: str, start_offset: int = -1, end_offset: int = -1
+        self,
+        obj: Atspi.Accessible,
+        utterance: str,
+        start_offset: int = -1,
+        end_offset: int = -1,
     ) -> None:
         self.obj = obj
         self.utterance = utterance
@@ -155,6 +161,9 @@ class SayAllContext:
             and self.obj == other.obj
             and self.utterance == other.utterance
         )
+
+    def __hash__(self) -> int:
+        return hash((self.start_offset, self.end_offset, self.obj, self.utterance))
 
 
 class SpeechServer:

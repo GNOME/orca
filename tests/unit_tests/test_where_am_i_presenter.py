@@ -108,7 +108,7 @@ class TestWhereAmIPresenter:
 
         handler_mock = test_context.Mock()
         essential_modules["orca.input_event"].InputEventHandler = test_context.Mock(
-            return_value=handler_mock
+            return_value=handler_mock,
         )
         essential_modules["orca.input_event"].InputEvent = test_context.Mock()
 
@@ -122,13 +122,13 @@ class TestWhereAmIPresenter:
         speech_verbosity_instance = test_context.Mock()
         speech_verbosity_instance.get_indentation_description = test_context.Mock(return_value="")
         speech_verbosity_instance.adjust_for_presentation = test_context.Mock(
-            return_value="adjusted text"
+            return_value="adjusted text",
         )
         speech_verbosity_instance.adjust_for_digits = test_context.Mock(
-            return_value="adjusted text"
+            return_value="adjusted text",
         )
         essential_modules["orca.speech_presenter"].get_presenter = test_context.Mock(
-            return_value=speech_verbosity_instance
+            return_value=speech_verbosity_instance,
         )
 
         ax_component_mock = essential_modules["orca.ax_component"]
@@ -144,10 +144,10 @@ class TestWhereAmIPresenter:
         ax_text_mock = essential_modules["orca.ax_text"]
         ax_text_mock.AXText = test_context.Mock()
         ax_text_mock.AXText.get_text_attributes_at_offset = test_context.Mock(
-            return_value=({"weight": "bold"}, 0, 5)
+            return_value=({"weight": "bold"}, 0, 5),
         )
         ax_text_mock.AXText.get_selected_text = test_context.Mock(
-            return_value=("selected text", 0, 5)
+            return_value=("selected text", 0, 5),
         )
         ax_text_mock.AXText.get_all_supported_text_attributes = test_context.Mock()
 
@@ -158,7 +158,7 @@ class TestWhereAmIPresenter:
         ax_text_attribute_instance.get_attribute_name = test_context.Mock(return_value="weight")
         ax_text_mock.AXTextAttribute = test_context.Mock()
         ax_text_mock.AXTextAttribute.from_string = test_context.Mock(
-            return_value=ax_text_attribute_instance
+            return_value=ax_text_attribute_instance,
         )
 
         ax_utilities_mock = essential_modules["orca.ax_utilities"]
@@ -172,7 +172,7 @@ class TestWhereAmIPresenter:
         ax_utilities_mock.AXUtilities.is_focused = test_context.Mock(return_value=True)
         ax_utilities_mock.AXUtilities.is_table_cell = test_context.Mock(return_value=False)
         ax_utilities_mock.AXUtilities.is_table_cell_or_header = test_context.Mock(
-            return_value=False
+            return_value=False,
         )
         ax_utilities_mock.AXUtilities.save_object_info_for_events = test_context.Mock()
         ax_utilities_mock.AXUtilities.is_list_item = test_context.Mock(return_value=False)
@@ -184,8 +184,8 @@ class TestWhereAmIPresenter:
         """Test WhereAmIPresenter.__init__ using OrcaTestContext for simpler mocking."""
 
         deps = self._setup_dependencies(test_context)
-        from orca.where_am_i_presenter import WhereAmIPresenter
         from orca import command_manager
+        from orca.where_am_i_presenter import WhereAmIPresenter
 
         presenter = WhereAmIPresenter()
         presenter.set_up_commands()
@@ -216,8 +216,8 @@ class TestWhereAmIPresenter:
         """Test WhereAmIPresenter commands are registered in CommandManager."""
 
         self._setup_dependencies(test_context)
-        from orca.where_am_i_presenter import WhereAmIPresenter
         from orca import command_manager
+        from orca.where_am_i_presenter import WhereAmIPresenter
 
         presenter = WhereAmIPresenter()
         presenter.set_up_commands()
@@ -249,7 +249,11 @@ class TestWhereAmIPresenter:
         ],
     )
     def test_localize_text_attribute_scenarios(
-        self, test_context: OrcaTestContext, attribute: str, value: str | None, expected: str
+        self,
+        test_context: OrcaTestContext,
+        attribute: str,
+        value: str | None,
+        expected: str,
     ) -> None:
         """Test WhereAmIPresenter._localize_text_attribute with various attribute scenarios."""
 
@@ -297,7 +301,8 @@ class TestWhereAmIPresenter:
         assert len(call_args) > 0, "Expected at least one call to speak_message for attributes"
 
     def test_present_character_attributes_no_custom_attributes(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test WhereAmIPresenter.present_character_attributes with no custom attributes."""
 
@@ -371,7 +376,8 @@ class TestWhereAmIPresenter:
         result = presenter.present_size_and_position(mock_script)
         assert result is True
         pres_manager.present_message.assert_called_with(
-            LOCATION_NOT_FOUND_MSG, LOCATION_NOT_FOUND_MSG
+            LOCATION_NOT_FOUND_MSG,
+            LOCATION_NOT_FOUND_MSG,
         )
 
     def test_present_title_valid_focus(self, test_context: OrcaTestContext) -> None:
@@ -449,7 +455,12 @@ class TestWhereAmIPresenter:
         [
             pytest.param(True, True, True, "OK", "Default button is OK", id="button_success"),
             pytest.param(
-                True, True, False, "OK", "Default button OK is grayed", id="button_grayed"
+                True,
+                True,
+                False,
+                "OK",
+                "Default button OK is grayed",
+                id="button_grayed",
             ),
             pytest.param(False, False, False, None, "Not in a dialog", id="no_dialog"),
             pytest.param(True, False, False, None, DEFAULT_BUTTON_NOT_FOUND_MSG, id="no_button"),
@@ -541,7 +552,8 @@ class TestWhereAmIPresenter:
         result = presenter.present_status_bar(mock_script)
         assert result is True
         pres_manager.present_message.assert_called_with(
-            STATUS_BAR_NOT_FOUND_FULL_MSG, STATUS_BAR_NOT_FOUND_BRIEF_MSG
+            STATUS_BAR_NOT_FOUND_FULL_MSG,
+            STATUS_BAR_NOT_FOUND_BRIEF_MSG,
         )
 
     def test_present_link_valid_link(self, test_context: OrcaTestContext) -> None:
@@ -558,7 +570,9 @@ class TestWhereAmIPresenter:
         mock_script.utilities.is_link.return_value = True
         presenter = WhereAmIPresenter()
         mock_do_where_am_i = test_context.patch_object(
-            presenter, "_do_where_am_i", return_value=True
+            presenter,
+            "_do_where_am_i",
+            return_value=True,
         )
         result = presenter.present_link(mock_script)
         assert result is True
@@ -859,7 +873,9 @@ class TestWhereAmIPresenter:
         mock_script = test_context.Mock()
         presenter = WhereAmIPresenter()
         mock_do_where_am_i = test_context.patch_object(
-            presenter, "_do_where_am_i", return_value=True
+            presenter,
+            "_do_where_am_i",
+            return_value=True,
         )
         result = presenter.where_am_i_basic(mock_script)
         assert result is True
@@ -876,7 +892,9 @@ class TestWhereAmIPresenter:
         mock_script = test_context.Mock()
         presenter = WhereAmIPresenter()
         mock_do_where_am_i = test_context.patch_object(
-            presenter, "_do_where_am_i", return_value=True
+            presenter,
+            "_do_where_am_i",
+            return_value=True,
         )
         result = presenter.where_am_i_detailed(mock_script)
         assert result is True

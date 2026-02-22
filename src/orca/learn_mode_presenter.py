@@ -28,7 +28,6 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import time
 from typing import TYPE_CHECKING
 
@@ -38,16 +37,18 @@ gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GObject, Gtk
 
-from . import cmdnames
-from . import command_manager
-from . import debug
-from . import guilabels
-from . import input_event
-from . import input_event_manager
-from . import keybindings
-from . import messages
-from . import presentation_manager
-from . import script_manager
+from . import (
+    cmdnames,
+    command_manager,
+    debug,
+    guilabels,
+    input_event,
+    input_event_manager,
+    keybindings,
+    messages,
+    presentation_manager,
+    script_manager,
+)
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -80,7 +81,7 @@ class LearnModePresenter:
                 cmdnames.ENTER_LEARN_MODE,
                 desktop_keybinding=kb,
                 laptop_keybinding=kb,
-            )
+            ),
         )
 
         msg = "LEARN MODE PRESENTER: Commands set up."
@@ -92,7 +93,9 @@ class LearnModePresenter:
         return self._is_active
 
     def start(
-        self, _script: default.Script | None = None, _event: input_event.InputEvent | None = None
+        self,
+        _script: default.Script | None = None,
+        _event: input_event.InputEvent | None = None,
     ) -> bool:
         """Starts learn mode."""
 
@@ -114,7 +117,9 @@ class LearnModePresenter:
         return True
 
     def quit(
-        self, _script: default.Script | None = None, _event: input_event.InputEvent | None = None
+        self,
+        _script: default.Script | None = None,
+        _event: input_event.InputEvent | None = None,
     ) -> bool:
         """Quits learn mode."""
 
@@ -250,7 +255,10 @@ class CommandListGUI:
         """Creates the commands-list dialog."""
 
         dialog = Gtk.Dialog(
-            title, None, Gtk.DialogFlags.MODAL, (Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
+            title,
+            None,
+            Gtk.DialogFlags.MODAL,
+            (Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE),
         )
         dialog.set_default_size(1000, 800)
 

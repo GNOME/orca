@@ -26,16 +26,13 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import gi
 
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
-from gi.repository import Atspi
-from gi.repository import Gdk
+from gi.repository import Atspi, Gdk
 
-from . import input_event_manager
-from . import keynames
+from . import input_event_manager, keynames
 
 _keycode_cache = {}
 
@@ -103,7 +100,7 @@ def get_keycodes(keysym: str) -> tuple[int, int]:
         return (0, 0)
 
     if keysym not in _keycode_cache:
-        keymap = Gdk.Keymap.get_default()
+        keymap = Gdk.Keymap.get_default()  # pylint: disable=no-value-for-parameter
 
         # Find the numerical value of the keysym
         #
@@ -176,7 +173,9 @@ class KeyBinding:
 
     @staticmethod
     def _create_key_definitions(
-        keyval: int, modifiers: int, orca_modifiers: list[str]
+        keyval: int,
+        modifiers: int,
+        orca_modifiers: list[str],
     ) -> list[Atspi.KeyDefinition]:
         """Returns a list of Atspi key definitions for the given keyval and modifiers."""
 
@@ -237,7 +236,7 @@ class KeyBinding:
         if self.modifiers & SHIFT_MODIFIER_MASK:
             if (upper_keyval := Gdk.keyval_to_upper(self.keyval)) != self.keyval:
                 ret.extend(
-                    self._create_key_definitions(upper_keyval, self.modifiers, orca_modifiers)
+                    self._create_key_definitions(upper_keyval, self.modifiers, orca_modifiers),
                 )
         return ret
 
@@ -260,7 +259,8 @@ class KeyBinding:
         """Adds key grabs for this KeyBinding."""
 
         self._grab_ids = input_event_manager.get_manager().add_grabs_for_keybinding(
-            self, orca_modifiers
+            self,
+            orca_modifiers,
         )
 
     def remove_grabs(self) -> None:

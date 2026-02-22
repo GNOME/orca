@@ -35,8 +35,7 @@ import gi
 import pytest
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
 if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
@@ -74,7 +73,10 @@ class TestAXUtilitiesApplication:
         "method_name, atspi_method_name, success_value",
         [
             pytest.param(
-                "get_application_toolkit_name", "get_toolkit_name", "Gtk", id="toolkit_name"
+                "get_application_toolkit_name",
+                "get_toolkit_name",
+                "Gtk",
+                id="toolkit_name",
             ),
             pytest.param(
                 "get_application_toolkit_version",
@@ -85,7 +87,11 @@ class TestAXUtilitiesApplication:
         ],
     )
     def test_toolkit_info_methods(
-        self, test_context, method_name, atspi_method_name, success_value
+        self,
+        test_context,
+        method_name,
+        atspi_method_name,
+        success_value,
     ) -> None:
         """Test AXUtilitiesApplication toolkit methods."""
 
@@ -117,7 +123,12 @@ class TestAXUtilitiesApplication:
         [
             pytest.param("get_desktop", Atspi, "get_desktop", "mock_desktop", None, id="desktop"),
             pytest.param(
-                "get_process_id", Atspi.Accessible, "get_process_id", 1234, -1, id="process_id"
+                "get_process_id",
+                Atspi.Accessible,
+                "get_process_id",
+                1234,
+                -1,
+                id="process_id",
             ),
         ],
     )
@@ -182,18 +193,22 @@ class TestAXUtilitiesApplication:
         """Test AXUtilitiesApplication.application_as_string with different scenarios."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_application import AXUtilitiesApplication
         from orca.ax_object import AXObject
+        from orca.ax_utilities_application import AXUtilitiesApplication
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         if app_exists:
             mock_app = test_context.Mock(spec=Atspi.Accessible)
             test_context.patch_object(
-                AXUtilitiesApplication, "get_application", return_value=mock_app
+                AXUtilitiesApplication,
+                "get_application",
+                return_value=mock_app,
             )
             test_context.patch_object(AXObject, "get_name", return_value=app_name)
             test_context.patch_object(
-                AXUtilitiesApplication, "get_application_toolkit_name", return_value=toolkit_name
+                AXUtilitiesApplication,
+                "get_application_toolkit_name",
+                return_value=toolkit_name,
             )
             test_context.patch_object(
                 AXUtilitiesApplication,
@@ -219,8 +234,8 @@ class TestAXUtilitiesApplication:
         """Test AXUtilitiesApplication.get_all_applications."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_application import AXUtilitiesApplication
         from orca.ax_object import AXObject
+        from orca.ax_utilities_application import AXUtilitiesApplication
 
         mock_desktop = test_context.Mock(spec=Atspi.Accessible)
         mock_app1 = test_context.Mock(spec=Atspi.Accessible)
@@ -232,19 +247,22 @@ class TestAXUtilitiesApplication:
             side_effect=lambda parent, pred: filter(pred, [mock_app1, mock_app2]),
         )
         test_context.patch_object(
-            AXObject, "get_name", side_effect=lambda obj: "App1" if obj == mock_app1 else "App2"
+            AXObject,
+            "get_name",
+            side_effect=lambda obj: "App1" if obj == mock_app1 else "App2",
         )
         result = AXUtilitiesApplication.get_all_applications()
         assert result == [mock_app1, mock_app2]
 
     def test_get_all_applications_excludes_unresponsive(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilitiesApplication.get_all_applications excludes unresponsive."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_application import AXUtilitiesApplication
         from orca.ax_object import AXObject
+        from orca.ax_utilities_application import AXUtilitiesApplication
 
         mock_desktop = test_context.Mock(spec=Atspi.Accessible)
         mock_app1 = test_context.Mock(spec=Atspi.Accessible)
@@ -269,13 +287,14 @@ class TestAXUtilitiesApplication:
         assert result == [mock_app1]
 
     def test_get_all_applications_excludes_mutter_x11_frames(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilitiesApplication.get_all_applications excludes mutter-x11-frames."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_application import AXUtilitiesApplication
         from orca.ax_object import AXObject
+        from orca.ax_utilities_application import AXUtilitiesApplication
 
         mock_desktop = test_context.Mock(spec=Atspi.Accessible)
         mock_app1 = test_context.Mock(spec=Atspi.Accessible)
@@ -295,13 +314,14 @@ class TestAXUtilitiesApplication:
         assert result == [mock_app2]
 
     def test_get_all_applications_includes_mutter_x11_frames_in_debug(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test AXUtilitiesApplication.get_all_applications includes mutter-x11-frames in debug."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_application import AXUtilitiesApplication
         from orca.ax_object import AXObject
+        from orca.ax_utilities_application import AXUtilitiesApplication
 
         mock_desktop = test_context.Mock(spec=Atspi.Accessible)
         mock_app1 = test_context.Mock(spec=Atspi.Accessible)
@@ -324,8 +344,8 @@ class TestAXUtilitiesApplication:
         """Test AXUtilitiesApplication.get_all_applications filters without windows."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_application import AXUtilitiesApplication
         from orca.ax_object import AXObject
+        from orca.ax_utilities_application import AXUtilitiesApplication
 
         mock_desktop = test_context.Mock(spec=Atspi.Accessible)
         mock_app1 = test_context.Mock(spec=Atspi.Accessible)
@@ -342,7 +362,9 @@ class TestAXUtilitiesApplication:
             side_effect=lambda obj: "App1" if obj == mock_app1 else "App2",
         )
         test_context.patch_object(
-            AXObject, "get_child_count", side_effect=lambda obj: 1 if obj == mock_app1 else 0
+            AXObject,
+            "get_child_count",
+            side_effect=lambda obj: 1 if obj == mock_app1 else 0,
         )
         result = AXUtilitiesApplication.get_all_applications(must_have_window=True)
         assert result == [mock_app1]
@@ -391,7 +413,10 @@ class TestAXUtilitiesApplication:
         ],
     )
     def test_get_application_with_pid(
-        self, test_context: OrcaTestContext, search_pid: int, expected_found: bool
+        self,
+        test_context: OrcaTestContext,
+        search_pid: int,
+        expected_found: bool,
     ) -> None:
         """Test AXUtilitiesApplication.get_application_with_pid with different scenarios."""
 
@@ -424,7 +449,10 @@ class TestAXUtilitiesApplication:
         ],
     )
     def test_is_application_in_desktop(
-        self, test_context: OrcaTestContext, search_app_index: int, expected_found: bool
+        self,
+        test_context: OrcaTestContext,
+        search_app_index: int,
+        expected_found: bool,
     ) -> None:
         """Test AXUtilitiesApplication.is_application_in_desktop with different scenarios."""
 
@@ -454,7 +482,10 @@ class TestAXUtilitiesApplication:
         ],
     )
     def test_is_application_unresponsive(
-        self, test_context: OrcaTestContext, process_state: str, expected_unresponsive: bool
+        self,
+        test_context: OrcaTestContext,
+        process_state: str,
+        expected_unresponsive: bool,
     ) -> None:
         """Test AXUtilitiesApplication.is_application_unresponsive with different process states."""
 

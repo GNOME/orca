@@ -24,31 +24,34 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from collections import deque
 from dataclasses import dataclass
 from enum import Enum
-from typing import Iterator, TYPE_CHECKING
+from typing import TYPE_CHECKING
 
-from . import cmdnames
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import gsettings_registry
-from . import focus_manager
-from . import guilabels
-from . import input_event
-from . import input_event_manager
-from . import messages
-from . import preferences_grid_base
-from . import presentation_manager
-from . import script_manager
+from . import (
+    cmdnames,
+    command_manager,
+    dbus_service,
+    debug,
+    focus_manager,
+    gsettings_registry,
+    guilabels,
+    input_event,
+    input_event_manager,
+    messages,
+    preferences_grid_base,
+    presentation_manager,
+    script_manager,
+)
 from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
+    from collections.abc import Iterator
+
     from gi.repository import Atspi
 
     from .scripts import default
@@ -201,7 +204,7 @@ class Chat:
 
         if get_presenter().get_room_histories():
             conversation = self.get_conversation_for_object(
-                focus_manager.get_manager().get_locus_of_focus()
+                focus_manager.get_manager().get_locus_of_focus(),
             )
             if conversation:
                 return conversation.get_message_count()
@@ -337,14 +340,11 @@ class Chat:
         if not AXUtilities.is_text(event.source):
             return False
 
-        if (
+        return (
             input_event_manager.get_manager().last_event_was_tab()
             and event.any_data
             and event.any_data != "\t"
-        ):
-            return True
-
-        return False
+        )
 
     def is_typing_status_changed_event(self, event: Atspi.Event) -> bool:
         """Returns True if event is associated with a change in typing status."""
@@ -432,7 +432,10 @@ class ChatPresenter:
         """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, "b", default=default
+            self._SCHEMA,
+            key,
+            "b",
+            default=default,
         )
 
     def __init__(self) -> None:
@@ -485,7 +488,7 @@ class ChatPresenter:
                     description,
                     desktop_keybinding=None,
                     laptop_keybinding=None,
-                )
+                ),
             )
 
         msg = "CHAT PRESENTER: Commands set up."
@@ -539,7 +542,7 @@ class ChatPresenter:
         chat = script.chat
         if self.get_room_histories():
             conversation = chat.get_conversation_for_object(
-                focus_manager.get_manager().get_locus_of_focus()
+                focus_manager.get_manager().get_locus_of_focus(),
             )
             if not conversation:
                 return
@@ -593,7 +596,10 @@ class ChatPresenter:
         return False
 
     def _present_typing_status_change(
-        self, script: default.Script, event: Atspi.Event, status: str
+        self,
+        script: default.Script,
+        event: Atspi.Event,
+        status: str,
     ) -> bool:
         """Presents a change in typing status for the current conversation."""
 
@@ -717,7 +723,11 @@ class ChatPresenter:
 
         app_name = AXObject.get_name(app) if app else None
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, "speak-room-name", "b", app_name=app_name, default=False
+            self._SCHEMA,
+            "speak-room-name",
+            "b",
+            app_name=app_name,
+            default=False,
         )
 
     @dbus_service.setter
@@ -746,7 +756,9 @@ class ChatPresenter:
         """Sets whether to announce when buddies are typing."""
 
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "announce-buddy-typing", value
+            self._SCHEMA,
+            "announce-buddy-typing",
+            value,
         )
         return value
 
@@ -793,7 +805,7 @@ class ChatPresenter:
             default="all",
         )
         enum_values = gsettings_registry.get_registry().get_enum_values(
-            "org.gnome.Orca.ChatMessageVerbosity"
+            "org.gnome.Orca.ChatMessageVerbosity",
         )
         if enum_values and nick in enum_values:
             return enum_values[nick]
@@ -804,7 +816,9 @@ class ChatPresenter:
         """Sets the chat message verbosity setting."""
 
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "message-verbosity", value
+            self._SCHEMA,
+            "message-verbosity",
+            value,
         )
         return value
 
@@ -827,7 +841,9 @@ class ChatPresenter:
         """Sets whether to speak the chat room name after the message."""
 
         gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA, "speak-room-name-last", value
+            self._SCHEMA,
+            "speak-room-name-last",
+            value,
         )
         return value
 

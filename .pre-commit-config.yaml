@@ -19,9 +19,3 @@ repos:
           - mypy
           - pytest
           - pytest-mock
-      - id: pylint
-        name: pylint
-        entry: pylint
-        language: system
-        types: [python]
-        args: [--jobs=0]

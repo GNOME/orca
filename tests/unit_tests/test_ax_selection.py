@@ -35,12 +35,12 @@ import gi
 import pytest
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -74,8 +74,8 @@ class TestAXSelection:
     def _setup_combo_box_selection_mocks(self, test_context, accessible, container, child):
         """Set up common mocks for combo box selection testing."""
 
-        from orca.ax_selection import AXSelection
         from orca.ax_object import AXObject
+        from orca.ax_selection import AXSelection
         from orca.ax_utilities_role import AXUtilitiesRole
 
         def mock_get_selected_child_count(obj):
@@ -91,18 +91,26 @@ class TestAXSelection:
             return None
 
         test_context.patch_object(
-            AXSelection, "get_selected_child_count", side_effect=mock_get_selected_child_count
+            AXSelection,
+            "get_selected_child_count",
+            side_effect=mock_get_selected_child_count,
         )
         test_context.patch_object(
-            AXUtilitiesRole, "is_combo_box", side_effect=lambda obj: obj == accessible
+            AXUtilitiesRole,
+            "is_combo_box",
+            side_effect=lambda obj: obj == accessible,
         )
         test_context.patch_object(AXUtilitiesRole, "is_menu", return_value=False)
         test_context.patch_object(
-            AXUtilitiesRole, "is_list_box", side_effect=lambda obj: obj == container
+            AXUtilitiesRole,
+            "is_list_box",
+            side_effect=lambda obj: obj == container,
         )
         test_context.patch_object(AXObject, "find_descendant", return_value=container)
         test_context.patch_object(
-            Atspi.Selection, "get_selected_child", side_effect=mock_get_selected_child
+            Atspi.Selection,
+            "get_selected_child",
+            side_effect=mock_get_selected_child,
         )
 
     @pytest.mark.parametrize(
@@ -131,19 +139,25 @@ class TestAXSelection:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.ax_selection import AXSelection
-        from orca.ax_object import AXObject
         from orca import debug
+        from orca.ax_object import AXObject
+        from orca.ax_selection import AXSelection
 
         test_context.patch_object(
-            AXObject, "supports_selection", return_value=has_selection_support
+            AXObject,
+            "supports_selection",
+            return_value=has_selection_support,
         )
         if side_effect:
             test_context.patch_object(
-                Atspi.Selection, "get_n_selected_children", side_effect=side_effect
+                Atspi.Selection,
+                "get_n_selected_children",
+                side_effect=side_effect,
             )
         test_context.patch_object(
-            debug, "print_tokens", new=essential_modules["orca.debug"].print_tokens
+            debug,
+            "print_tokens",
+            new=essential_modules["orca.debug"].print_tokens,
         )
         result = AXSelection.get_selected_child_count(mock_accessible)
         assert result == expected_result
@@ -174,10 +188,14 @@ class TestAXSelection:
             return mock_children.get(idx)
 
         test_context.patch_object(
-            AXSelection, "get_selected_child_count", return_value=selected_count
+            AXSelection,
+            "get_selected_child_count",
+            return_value=selected_count,
         )
         test_context.patch_object(
-            Atspi.Selection, "get_selected_child", side_effect=mock_get_selected_child
+            Atspi.Selection,
+            "get_selected_child",
+            side_effect=mock_get_selected_child,
         )
         result = AXSelection.get_selected_child(mock_accessible, index)
         assert result == expected_child
@@ -202,14 +220,16 @@ class TestAXSelection:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.ax_selection import AXSelection
         from orca import debug
+        from orca.ax_selection import AXSelection
 
         test_context.patch_object(AXSelection, "get_selected_child_count", return_value=1)
 
         if error_scenario == "returns_self":
             test_context.patch_object(
-                Atspi.Selection, "get_selected_child", return_value=mock_accessible
+                Atspi.Selection,
+                "get_selected_child",
+                return_value=mock_accessible,
             )
         elif error_scenario == "glib_error":
 
@@ -217,11 +237,15 @@ class TestAXSelection:
                 raise GLib.GError("Test error")
 
             test_context.patch_object(
-                Atspi.Selection, "get_selected_child", side_effect=raise_glib_error
+                Atspi.Selection,
+                "get_selected_child",
+                side_effect=raise_glib_error,
             )
 
         test_context.patch_object(
-            debug, "print_tokens", new=essential_modules["orca.debug"].print_tokens
+            debug,
+            "print_tokens",
+            new=essential_modules["orca.debug"].print_tokens,
         )
         result = AXSelection.get_selected_child(mock_accessible, 0)
         assert result == expected_result
@@ -261,10 +285,14 @@ class TestAXSelection:
                 return mock_children[idx] if idx < len(mock_children) else None
 
             test_context.patch_object(
-                AXSelection, "get_selected_child_count", return_value=child_count
+                AXSelection,
+                "get_selected_child_count",
+                return_value=child_count,
             )
             test_context.patch_object(
-                Atspi.Selection, "get_selected_child", side_effect=mock_get_selected_child
+                Atspi.Selection,
+                "get_selected_child",
+                side_effect=mock_get_selected_child,
             )
 
         result = AXSelection.get_selected_children(mock_accessible)
@@ -284,7 +312,10 @@ class TestAXSelection:
         mock_child = test_context.Mock(spec=Atspi.Accessible)
 
         self._setup_combo_box_selection_mocks(
-            test_context, mock_accessible, mock_container, mock_child
+            test_context,
+            mock_accessible,
+            mock_container,
+            mock_child,
         )
         result = AXSelection.get_selected_children(mock_accessible)
         assert result == [mock_child]
@@ -310,12 +341,14 @@ class TestAXSelection:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.ax_selection import AXSelection
         from orca import debug
+        from orca.ax_selection import AXSelection
 
         test_context.patch_object(AXSelection, "get_selected_child_count", return_value=child_count)
         test_context.patch_object(
-            debug, "print_tokens", new=essential_modules["orca.debug"].print_tokens
+            debug,
+            "print_tokens",
+            new=essential_modules["orca.debug"].print_tokens,
         )
 
         if special_scenario == "removes_self":
@@ -325,7 +358,9 @@ class TestAXSelection:
                 return mock_accessible if idx == 0 else mock_child if idx == 1 else None
 
             test_context.patch_object(
-                Atspi.Selection, "get_selected_child", side_effect=mock_get_selected_child
+                Atspi.Selection,
+                "get_selected_child",
+                side_effect=mock_get_selected_child,
             )
             result = AXSelection.get_selected_children(mock_accessible)
             assert mock_child in result
@@ -336,12 +371,16 @@ class TestAXSelection:
                 raise GLib.GError("Test error")
 
             test_context.patch_object(
-                Atspi.Selection, "get_selected_child", side_effect=raise_glib_error
+                Atspi.Selection,
+                "get_selected_child",
+                side_effect=raise_glib_error,
             )
         elif special_scenario == "duplicates":
             mock_child = test_context.Mock(spec=Atspi.Accessible)
             test_context.patch_object(
-                Atspi.Selection, "get_selected_child", return_value=mock_child
+                Atspi.Selection,
+                "get_selected_child",
+                return_value=mock_child,
             )
             result = AXSelection.get_selected_children(mock_accessible)
             assert mock_child in result

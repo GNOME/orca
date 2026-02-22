@@ -28,10 +28,10 @@
 # This must be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
+import contextlib
 import time
 from enum import Enum
-from typing import TYPE_CHECKING, Any, Callable
+from typing import TYPE_CHECKING, Any
 
 import gi
 
@@ -40,24 +40,28 @@ gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GLib, Gtk  # pylint: disable=no-name-in-module
 
-from . import cmdnames
-from . import dbus_service
-from . import debug
-from . import gsettings_migrator
-from . import gsettings_registry
-from . import guilabels
-from . import input_event
-from . import input_event_manager
-from . import keybindings
-from . import keynames
-from . import messages
-from . import orca_modifier_manager
-from . import preferences_grid_base
-from . import presentation_manager
-from . import script_manager
+from . import (
+    cmdnames,
+    dbus_service,
+    debug,
+    gsettings_migrator,
+    gsettings_registry,
+    guilabels,
+    input_event,
+    input_event_manager,
+    keybindings,
+    keynames,
+    messages,
+    orca_modifier_manager,
+    preferences_grid_base,
+    presentation_manager,
+    script_manager,
+)
 from .ax_object import AXObject
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from .scripts import default
 
 
@@ -203,7 +207,8 @@ class KeyboardCommand(Command):  # pylint: disable=too-many-instance-attributes
         return self._keybinding
 
     def get_default_keybinding(
-        self, is_desktop: bool | None = None
+        self,
+        is_desktop: bool | None = None,
     ) -> keybindings.KeyBinding | None:
         """Returns the default key binding for the specified or current layout."""
 
@@ -281,7 +286,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     # pylint: disable=no-member
 
     def __init__(
-        self, script: default.Script, title_change_callback: Callable[[str], None] | None = None
+        self,
+        script: default.Script,
+        title_change_callback: Callable[[str], None] | None = None,
     ) -> None:
         """Initialize the keybindings preferences grid."""
 
@@ -304,7 +311,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             get_manager().get_keyboard_layout_is_desktop()
         )
         self._original_orca_modifier_keys: list[str] = list(
-            orca_modifier_manager.get_manager().get_orca_modifier_keys()
+            orca_modifier_manager.get_manager().get_orca_modifier_keys(),
         )
 
         self.keyboard_layout_combo: Gtk.ComboBox | None = None
@@ -322,10 +329,10 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         keyboard_layout_model = Gtk.ListStore(str, int)
         keyboard_layout_model.append(
-            [guilabels.KEYBOARD_LAYOUT_DESKTOP, KeyboardLayout.DESKTOP.value]
+            [guilabels.KEYBOARD_LAYOUT_DESKTOP, KeyboardLayout.DESKTOP.value],
         )
         keyboard_layout_model.append(
-            [guilabels.KEYBOARD_LAYOUT_LAPTOP, KeyboardLayout.LAPTOP.value]
+            [guilabels.KEYBOARD_LAYOUT_LAPTOP, KeyboardLayout.LAPTOP.value],
         )
 
         orca_model = Gtk.ListStore(str)
@@ -349,7 +356,10 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         combos: list[Gtk.ComboBox] = []
         for label_text, model, changed_handler in row_data:
             row_widget, combo, _label = self._create_combo_box_row(
-                label_text, model, changed_handler, include_top_separator=False
+                label_text,
+                model,
+                changed_handler,
+                include_top_separator=False,
             )
             combo_size_group.add_widget(combo)
             self._combos_listbox.add_row_with_widget(row_widget, combo)
@@ -390,7 +400,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         current_keys = orca_modifier_manager.get_manager().get_orca_modifier_keys()
         if current_keys != self._original_orca_modifier_keys:
             gsettings_registry.get_registry().set_runtime_value(
-                "keybindings", "orca-modifier-keys", self._original_orca_modifier_keys
+                "keybindings",
+                "orca-modifier-keys",
+                self._original_orca_modifier_keys,
             )
 
     def _populate_keybindings(self) -> None:
@@ -434,7 +446,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         sorted_categories = sorted(self._categories.keys(), key=sort_key)
         for category_name in sorted_categories:
             self._add_stack_category_row(
-                self._categories_listbox, category_name, category=category_name
+                self._categories_listbox,
+                category_name,
+                category=category_name,
             )
 
         self._categories_listbox.show_all()
@@ -558,7 +572,11 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._start_inline_editing(row, command, vbox, binding_label)
 
     def _start_inline_editing(
-        self, row: Gtk.ListBoxRow, command: KeyboardCommand, vbox: Gtk.Box, binding_label: Gtk.Label
+        self,
+        row: Gtk.ListBoxRow,
+        command: KeyboardCommand,
+        vbox: Gtk.Box,
+        binding_label: Gtk.Label,
     ) -> None:
         """Start inline editing of a keybinding."""
 
@@ -590,7 +608,12 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         def on_key_press(_widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
             if event.keyval == Gdk.KEY_Escape:
                 self._finish_inline_editing(
-                    row, command, vbox, capture_entry, binding_label, canceled=True
+                    row,
+                    command,
+                    vbox,
+                    capture_entry,
+                    binding_label,
+                    canceled=True,
                 )
                 return True
 
@@ -599,13 +622,16 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     key_name, modifiers, click_count = self._captured_key
                     handler_name = command.get_name()
                     description_dup = self._find_duplicate_binding(
-                        key_name, modifiers, click_count, handler_name
+                        key_name,
+                        modifiers,
+                        click_count,
+                        handler_name,
                     )
                     if description_dup:
 
                         def present_duplicate_error():
                             presentation_manager.get_manager().present_message(
-                                messages.KB_ALREADY_BOUND % description_dup
+                                messages.KB_ALREADY_BOUND % description_dup,
                             )
                             return False
 
@@ -615,7 +641,12 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         return True
 
                 self._finish_inline_editing(
-                    row, command, vbox, capture_entry, binding_label, canceled=False
+                    row,
+                    command,
+                    vbox,
+                    capture_entry,
+                    binding_label,
+                    canceled=False,
                 )
                 return True
 
@@ -645,7 +676,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
             def present_message_after_keypress():
                 presentation_manager.get_manager().present_message(
-                    messages.KB_CAPTURED % new_string
+                    messages.KB_CAPTURED % new_string,
                 )
                 return False
 
@@ -690,7 +721,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
                 def present_delete_confirmation():
                     presentation_manager.get_manager().present_message(
-                        messages.KB_DELETED_CONFIRMATION
+                        messages.KB_DELETED_CONFIRMATION,
                     )
                     return False
 
@@ -726,7 +757,11 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._keybinding_being_edited = None
 
     def _find_duplicate_binding(
-        self, key_name: str, modifiers: int, click_count: int, exclude_handler: str | None = None
+        self,
+        key_name: str,
+        modifiers: int,
+        click_count: int,
+        exclude_handler: str | None = None,
     ) -> str | None:
         """Find if a keybinding is already used and return its description."""
 
@@ -897,7 +932,10 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             entry.set_text(new_string)
 
             description_dup = self._find_duplicate_binding(
-                key_name, modifiers, click_count, handler_name
+                key_name,
+                modifiers,
+                click_count,
+                handler_name,
             )
             if description_dup:
                 msg = messages.KB_ALREADY_BOUND % description_dup
@@ -1090,7 +1128,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         model = combo.get_model()
         orca_modifier = model.get_value(tree_iter, 0)
         gsettings_registry.get_registry().set_runtime_value(
-            "keybindings", "orca-modifier-keys", orca_modifier.split(", ")
+            "keybindings",
+            "orca-modifier-keys",
+            orca_modifier.split(", "),
         )
         self._has_unsaved_changes = True
 
@@ -1189,7 +1229,9 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         if layout_changed:
             self._is_desktop = is_desktop
             gsettings_registry.get_registry().set_runtime_value(
-                self._SCHEMA, "keyboard-layout", "desktop" if is_desktop else "laptop"
+                self._SCHEMA,
+                "keyboard-layout",
+                "desktop" if is_desktop else "laptop",
             )
 
         has_device = input_event_manager.get_manager().has_device()
@@ -1204,7 +1246,10 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
 
         if has_device:
             self._diff_and_update_grabs(
-                self._keyboard_commands, "keyboard layout change", old_bindings, old_key_to_cmd
+                self._keyboard_commands,
+                "keyboard layout change",
+                old_bindings,
+                old_key_to_cmd,
             )
         else:
             msg = "COMMAND MANAGER: Device not ready, skipping grab updates."
@@ -1329,7 +1374,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
                 cmdnames.TOGGLE_KEYBOARD_LAYOUT,
                 desktop_keybinding=None,
                 laptop_keybinding=None,
-            )
+            ),
         )
 
     def _apply_layout_to_commands(self) -> None:
@@ -1377,16 +1422,12 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             return
 
         if kb.keyval in self._commands_by_keyval:
-            try:
+            with contextlib.suppress(ValueError):
                 self._commands_by_keyval[kb.keyval].remove(cmd)
-            except ValueError:
-                pass  # Command wasn't in the list
 
         if kb.keycode in self._commands_by_keycode:
-            try:
+            with contextlib.suppress(ValueError):
                 self._commands_by_keycode[kb.keycode].remove(cmd)
-            except ValueError:
-                pass  # Command wasn't in the list
 
     def add_command(self, command: Command) -> None:
         """Adds a command to the registry and sets its active keybinding."""
@@ -1429,7 +1470,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         return tuple(self._braille_commands.values())
 
     def _get_keyboard_commands_by_group_label(
-        self, group_label: str
+        self,
+        group_label: str,
     ) -> tuple[KeyboardCommand, ...]:
         """Returns all keyboard commands with the specified group label."""
 
@@ -1447,7 +1489,10 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         self._apply_layout_to_commands()
 
         keybindings_dict = gsettings_registry.get_registry().layered_lookup(
-            "keybindings", "entries", "a{saas}", default={}
+            "keybindings",
+            "entries",
+            "a{saas}",
+            default={},
         )
         if keybindings_dict:
             msg = f"COMMAND MANAGER: Applying {len(keybindings_dict)} user overrides"
@@ -1503,7 +1548,9 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
                     self._add_to_key_index(cmd)
 
     def get_command_for_event(
-        self, event: input_event.KeyboardEvent, active_only: bool = True
+        self,
+        event: input_event.KeyboardEvent,
+        active_only: bool = True,
     ) -> KeyboardCommand | None:
         """Returns the keyboard command matching the keyboard event, or None."""
 
@@ -1535,7 +1582,10 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         return None
 
     def get_command_for_keybinding(
-        self, keysymstring: str, modifiers: int, click_count: int
+        self,
+        keysymstring: str,
+        modifiers: int,
+        click_count: int,
     ) -> KeyboardCommand | None:
         """Returns the keyboard command matching the keybinding properties, or None."""
 
@@ -1714,10 +1764,9 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
                     new_kb.set_grab_ids(old_kb.get_grab_ids())
                     old_kb.set_grab_ids([])
                     transferred.append(key)
-            else:
-                if old_kb.has_grabs():
-                    old_kb.remove_grabs()
-                    removed.append(key)
+            elif old_kb.has_grabs():
+                old_kb.remove_grabs()
+                removed.append(key)
 
         transferred_keys = set(transferred)
         for key, new_kb in new_bindings.items():
@@ -1762,7 +1811,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         debug.print_message(debug.LEVEL_INFO, msg, False)
 
     def _get_active_bindings(
-        self, commands: dict[str, KeyboardCommand]
+        self,
+        commands: dict[str, KeyboardCommand],
     ) -> dict[tuple[str, int, int], keybindings.KeyBinding]:
         """Returns a map of binding keys to KeyBinding objects for active commands."""
 
@@ -1776,7 +1826,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         return bindings
 
     def _get_key_to_cmd_mapping(
-        self, commands: dict[str, KeyboardCommand]
+        self,
+        commands: dict[str, KeyboardCommand],
     ) -> dict[tuple[str, int, int], str]:
         """Returns a map of binding keys to command names."""
 
@@ -1853,7 +1904,10 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         """Returns the user's keybinding overrides."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            "keybindings", "entries", "a{saas}", default={}
+            "keybindings",
+            "entries",
+            "a{saas}",
+            default={},
         )
 
     # pylint: disable-next=too-many-arguments, too-many-positional-arguments
@@ -1874,13 +1928,20 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             kb = keybindings.KeyBinding(key, modifiers, click_count=click_count)
 
         cmd = KeyboardCommand(
-            name, function, group_label, description, desktop_keybinding=kb, laptop_keybinding=kb
+            name,
+            function,
+            group_label,
+            description,
+            desktop_keybinding=kb,
+            laptop_keybinding=kb,
         )
         self.add_command(cmd)
         return cmd
 
     def create_preferences_grid(
-        self, script: default.Script, title_change_callback: Callable[[str], None] | None = None
+        self,
+        script: default.Script,
+        title_change_callback: Callable[[str], None] | None = None,
     ) -> KeybindingsPreferencesGrid:
         """Returns the GtkGrid containing the keybindings preferences UI."""
 

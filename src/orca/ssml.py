@@ -31,7 +31,6 @@ can pass flags to control the elements and attributes used.
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from enum import Enum, auto
 from typing import Any
 
@@ -74,9 +73,10 @@ class SSML(dict[str, Any]):
             return False
         if self.get("text") != other.get("text"):
             return False
-        if self.get("features") != other.get("features"):
-            return False
-        return True
+        return self.get("features") == other.get("features")
+
+    def __hash__(self) -> int:  # type: ignore[override]
+        return hash((self.get("text"), self.get("features")))
 
     @staticmethod
     def _mark_words(text: str) -> tuple[str, list[tuple[int, int]]]:

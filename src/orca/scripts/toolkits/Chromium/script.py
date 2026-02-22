@@ -24,11 +24,9 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 from typing import TYPE_CHECKING
 
-from orca import debug
-from orca import focus_manager
+from orca import debug, focus_manager
 from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
@@ -55,7 +53,7 @@ class Script(web.ToolkitBridge):
         """Callback for object:text-caret-moved accessibility events."""
 
         if not AXUtilities.is_web_element(event.source) and AXUtilities.is_web_element(
-            AXObject.get_parent(event.source)
+            AXObject.get_parent(event.source),
         ):
             msg = "CHROMIUM: Ignoring because source is not an element"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -67,7 +65,7 @@ class Script(web.ToolkitBridge):
         """Callback for object:children-changed:add accessibility events."""
 
         if AXUtilities.is_web_element(event.source) and not AXUtilities.is_web_element(
-            event.any_data
+            event.any_data,
         ):
             msg = "CHROMIUM: Ignoring because child is not an element"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -79,7 +77,7 @@ class Script(web.ToolkitBridge):
         """Callback for object:children-changed:removed accessibility events."""
 
         if AXUtilities.is_web_element(event.source) and not AXUtilities.is_web_element(
-            event.any_data
+            event.any_data,
         ):
             msg = "CHROMIUM: Ignoring because child is not an element"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -115,7 +113,7 @@ class Script(web.ToolkitBridge):
         """Callback for object:text-selection-changed accessibility events."""
 
         if not AXUtilities.is_web_element(event.source) and AXUtilities.is_web_element(
-            AXObject.get_parent(event.source)
+            AXObject.get_parent(event.source),
         ):
             msg = "CHROMIUM: Ignoring because source is not an element"
             debug.print_message(debug.LEVEL_INFO, msg, True)

@@ -33,8 +33,9 @@ from typing import TYPE_CHECKING
 import pytest
 
 if TYPE_CHECKING:
-    from .orca_test_context import OrcaTestContext
     from unittest.mock import MagicMock
+
+    from .orca_test_context import OrcaTestContext
 
 
 @pytest.mark.unit
@@ -62,7 +63,7 @@ class TestBypassModeManager:
         input_event_mock = essential_modules["orca.input_event"]
         input_event_handler_mock = test_context.Mock()
         input_event_mock.InputEventHandler = test_context.Mock(
-            return_value=input_event_handler_mock
+            return_value=input_event_handler_mock,
         )
 
         keybindings_mock = essential_modules["orca.keybindings"]
@@ -86,7 +87,7 @@ class TestBypassModeManager:
         modifier_manager_instance.add_grabs_for_orca_modifiers = test_context.Mock()
         modifier_manager_instance.remove_grabs_for_orca_modifiers = test_context.Mock()
         orca_modifier_manager_mock.get_manager = test_context.Mock(
-            return_value=modifier_manager_instance
+            return_value=modifier_manager_instance,
         )
 
         command_manager_mock = essential_modules["orca.command_manager"]
@@ -106,8 +107,8 @@ class TestBypassModeManager:
         """Test BypassModeManager initialization."""
 
         self._setup_dependencies(test_context)
-        from orca.bypass_mode_manager import BypassModeManager
         from orca import command_manager
+        from orca.bypass_mode_manager import BypassModeManager
 
         manager = BypassModeManager()
         assert manager._is_active is False
@@ -120,8 +121,8 @@ class TestBypassModeManager:
         """Test that commands are registered with CommandManager during setup."""
 
         self._setup_dependencies(test_context)
-        from orca.bypass_mode_manager import BypassModeManager
         from orca import command_manager
+        from orca.bypass_mode_manager import BypassModeManager
 
         manager = BypassModeManager()
         manager.set_up_commands()
@@ -134,8 +135,8 @@ class TestBypassModeManager:
         """Test that keybindings are created via Command.set_keybinding."""
 
         self._setup_dependencies(test_context)
-        from orca.bypass_mode_manager import BypassModeManager
         from orca import command_manager
+        from orca.bypass_mode_manager import BypassModeManager
 
         manager = BypassModeManager()
         manager.set_up_commands()
@@ -264,8 +265,8 @@ class TestBypassModeManager:
         """Test that bindings are properly configured from commands."""
 
         self._setup_dependencies(test_context)
-        from orca.bypass_mode_manager import BypassModeManager
         from orca import command_manager
+        from orca.bypass_mode_manager import BypassModeManager
 
         manager = BypassModeManager()
         manager.set_up_commands()
@@ -275,7 +276,8 @@ class TestBypassModeManager:
         assert cmd.get_keybinding() is not None
 
     def test_toggle_enabled_with_minimal_script_interface(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test toggle_enabled method with script that has minimal interface."""
 

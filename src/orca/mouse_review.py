@@ -31,7 +31,6 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import math
 import os
 import time
@@ -41,8 +40,7 @@ from typing import TYPE_CHECKING
 import gi
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
 _MOUSE_REVIEW_CAPABLE = False
 try:
@@ -54,18 +52,20 @@ try:
 except Exception:
     pass
 
-from . import cmdnames
-from . import command_manager
-from . import dbus_service
-from . import debug
-from . import gsettings_registry
-from . import focus_manager
-from . import guilabels
-from . import input_event
-from . import messages
-from . import preferences_grid_base
-from . import presentation_manager
-from . import script_manager
+from . import (
+    cmdnames,
+    command_manager,
+    dbus_service,
+    debug,
+    focus_manager,
+    gsettings_registry,
+    guilabels,
+    input_event,
+    messages,
+    preferences_grid_base,
+    presentation_manager,
+    script_manager,
+)
 from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -103,6 +103,9 @@ class _StringContext:
             and self._start == other._start
             and self._end == other._end
         )
+
+    def __hash__(self) -> int:
+        return hash((self._obj, self._string, self._start, self._end))
 
     def is_substring_of(self, other: _StringContext | None) -> bool:
         """Returns True if this is a substring of other."""
@@ -172,7 +175,10 @@ class _StringContext:
             return False
 
         focus_manager.get_manager().emit_region_changed(
-            self._obj, self._start, self._end, focus_manager.MOUSE_REVIEW
+            self._obj,
+            self._start,
+            self._end,
+            focus_manager.MOUSE_REVIEW,
         )
         presenter = presentation_manager.get_manager()
         presenter.speak_accessible_text(self._obj, self._string)
@@ -209,6 +215,9 @@ class _ItemContext:
             and self._obj == other._obj
             and self._string == other._string
         )
+
+    def __hash__(self) -> int:
+        return hash((self._frame, self._obj, self._string))
 
     def _treat_as_duplicate(self, prior: _ItemContext) -> bool:
         if self._obj != prior.get_object() or self._frame != prior.get_frame():
@@ -333,11 +342,9 @@ class _ItemContext:
 
         prior_obj = prior.get_object()
         prior_x, prior_y = prior.get_bounding_box()[0:2]
-        interrupt = (
-            self._obj
-            and self._obj != prior_obj
-            or math.sqrt((self._x - prior_x) ** 2 + (self._y - prior_y) ** 2) > 25
-        )
+        interrupt = (self._obj and self._obj != prior_obj) or math.sqrt(
+            (self._x - prior_x) ** 2 + (self._y - prior_y) ** 2,
+        ) > 25
 
         assert self._script, "Script must not be None"
         if interrupt:
@@ -345,13 +352,17 @@ class _ItemContext:
 
         if self._frame and self._frame != prior.get_frame():
             self._script.present_object(
-                self._frame, alreadyFocused=True, inMouseReview=True, interrupt=True
+                self._frame,
+                alreadyFocused=True,
+                inMouseReview=True,
+                interrupt=True,
             )
 
         if self._obj and self._obj != prior_obj and not self._is_inline_child(prior):
             prior_obj = prior_obj or self._get_container()
             focus_manager.get_manager().emit_region_changed(
-                self._obj, mode=focus_manager.MOUSE_REVIEW
+                self._obj,
+                mode=focus_manager.MOUSE_REVIEW,
             )
             self._script.present_object(self._obj, priorObj=prior_obj, inMouseReview=True)
             if self._string.get_string() == AXObject.get_name(self._obj):
@@ -374,7 +385,7 @@ class MousePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 
     _gsettings_schema = "mouse-review"
 
-    def __init__(self, reviewer: "MouseReviewer") -> None:
+    def __init__(self, reviewer: MouseReviewer) -> None:
         """Initialize the preferences grid."""
 
         controls = [
@@ -408,7 +419,10 @@ class MouseReviewer:
         """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA, key, "b", default=default
+            self._SCHEMA,
+            key,
+            "b",
+            default=default,
         )
 
     def __init__(self) -> None:
@@ -451,7 +465,7 @@ class MouseReviewer:
                 cmdnames.MOUSE_REVIEW_TOGGLE,
                 desktop_keybinding=None,
                 laptop_keybinding=None,
-            )
+            ),
         )
 
         msg = "MOUSE REVIEW: Commands set up."
@@ -682,8 +696,9 @@ class MouseReviewer:
 
         candidates = list(
             AXObject.iter_children(
-                app, lambda x: AXComponent.object_contains_point(x, relative_x, relative_y)
-            )
+                app,
+                lambda x: AXComponent.object_contains_point(x, relative_x, relative_y),
+            ),
         )
         if len(candidates) == 1:
             return candidates[0], relative_x, relative_y

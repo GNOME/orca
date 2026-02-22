@@ -167,13 +167,15 @@ class TestLiveRegionMessage:
         """Test LiveRegionMessage creation."""
 
         self._setup_dependencies(test_context)
-        from orca.live_region_presenter import LiveRegionMessage, LivePoliteness
+        from orca.live_region_presenter import LivePoliteness, LiveRegionMessage
 
         mock_obj = test_context.Mock()
         test_context.patch("time.time", return_value=1234567890.0)
 
         message = LiveRegionMessage(
-            text="Test message", politeness=LivePoliteness.POLITE, obj=mock_obj
+            text="Test message",
+            politeness=LivePoliteness.POLITE,
+            obj=mock_obj,
         )
 
         assert message.text == "Test message"
@@ -185,11 +187,14 @@ class TestLiveRegionMessage:
         """Test LiveRegionMessage with explicit timestamp."""
 
         self._setup_dependencies(test_context)
-        from orca.live_region_presenter import LiveRegionMessage, LivePoliteness
+        from orca.live_region_presenter import LivePoliteness, LiveRegionMessage
 
         mock_obj = test_context.Mock()
         message = LiveRegionMessage(
-            text="Test", politeness=LivePoliteness.ASSERTIVE, obj=mock_obj, timestamp=999.0
+            text="Test",
+            politeness=LivePoliteness.ASSERTIVE,
+            obj=mock_obj,
+            timestamp=999.0,
         )
 
         assert message.timestamp == 999.0
@@ -215,7 +220,7 @@ class TestLiveRegionMessage:
         """Test LiveRegionMessage comparison for priority queue ordering."""
 
         self._setup_dependencies(test_context)
-        from orca.live_region_presenter import LiveRegionMessage, LivePoliteness
+        from orca.live_region_presenter import LivePoliteness, LiveRegionMessage
 
         mock_obj = test_context.Mock()
         msg1 = LiveRegionMessage(
@@ -243,18 +248,26 @@ class TestLiveRegionMessage:
         ],
     )
     def test_is_duplicate_of(
-        self, test_context: OrcaTestContext, text1, text2, time_diff, expected_duplicate
+        self,
+        test_context: OrcaTestContext,
+        text1,
+        text2,
+        time_diff,
+        expected_duplicate,
     ) -> None:
         """Test LiveRegionMessage.is_duplicate_of."""
 
         self._setup_dependencies(test_context)
-        from orca.live_region_presenter import LiveRegionMessage, LivePoliteness
+        from orca.live_region_presenter import LivePoliteness, LiveRegionMessage
 
         mock_obj = test_context.Mock()
         base_time = 1000.0
 
         msg1 = LiveRegionMessage(
-            text=text1, politeness=LivePoliteness.POLITE, obj=mock_obj, timestamp=base_time
+            text=text1,
+            politeness=LivePoliteness.POLITE,
+            obj=mock_obj,
+            timestamp=base_time,
         )
         msg2 = LiveRegionMessage(
             text=text2,
@@ -269,7 +282,7 @@ class TestLiveRegionMessage:
         """Test LiveRegionMessage.is_duplicate_of with None."""
 
         self._setup_dependencies(test_context)
-        from orca.live_region_presenter import LiveRegionMessage, LivePoliteness
+        from orca.live_region_presenter import LivePoliteness, LiveRegionMessage
 
         mock_obj = test_context.Mock()
         message = LiveRegionMessage(text="Test", politeness=LivePoliteness.POLITE, obj=mock_obj)
@@ -324,9 +337,9 @@ class TestLiveRegionMessageQueue:
 
         self._setup_dependencies(test_context)
         from orca.live_region_presenter import (
-            LiveRegionMessageQueue,
-            LiveRegionMessage,
             LivePoliteness,
+            LiveRegionMessage,
+            LiveRegionMessageQueue,
         )
 
         queue = LiveRegionMessageQueue(max_size=5)
@@ -345,9 +358,9 @@ class TestLiveRegionMessageQueue:
 
         self._setup_dependencies(test_context)
         from orca.live_region_presenter import (
-            LiveRegionMessageQueue,
-            LiveRegionMessage,
             LivePoliteness,
+            LiveRegionMessage,
+            LiveRegionMessageQueue,
         )
 
         queue = LiveRegionMessageQueue(max_size=5)
@@ -355,7 +368,10 @@ class TestLiveRegionMessageQueue:
 
         polite_msg = LiveRegionMessage("Polite", LivePoliteness.POLITE, mock_obj, timestamp=100.0)
         assertive_msg = LiveRegionMessage(
-            "Assertive", LivePoliteness.ASSERTIVE, mock_obj, timestamp=200.0
+            "Assertive",
+            LivePoliteness.ASSERTIVE,
+            mock_obj,
+            timestamp=200.0,
         )
 
         queue.enqueue(polite_msg)
@@ -374,9 +390,9 @@ class TestLiveRegionMessageQueue:
 
         self._setup_dependencies(test_context)
         from orca.live_region_presenter import (
-            LiveRegionMessageQueue,
-            LiveRegionMessage,
             LivePoliteness,
+            LiveRegionMessage,
+            LiveRegionMessageQueue,
         )
 
         queue = LiveRegionMessageQueue(max_size=3)
@@ -384,7 +400,10 @@ class TestLiveRegionMessageQueue:
 
         for i in range(5):
             msg = LiveRegionMessage(
-                f"Message {i}", LivePoliteness.POLITE, mock_obj, timestamp=float(i)
+                f"Message {i}",
+                LivePoliteness.POLITE,
+                mock_obj,
+                timestamp=float(i),
             )
             queue.enqueue(msg)
 
@@ -395,9 +414,9 @@ class TestLiveRegionMessageQueue:
 
         self._setup_dependencies(test_context)
         from orca.live_region_presenter import (
-            LiveRegionMessageQueue,
-            LiveRegionMessage,
             LivePoliteness,
+            LiveRegionMessage,
+            LiveRegionMessageQueue,
         )
 
         queue = LiveRegionMessageQueue(max_size=5)
@@ -425,9 +444,9 @@ class TestLiveRegionMessageQueue:
 
         self._setup_dependencies(test_context)
         from orca.live_region_presenter import (
-            LiveRegionMessageQueue,
-            LiveRegionMessage,
             LivePoliteness,
+            LiveRegionMessage,
+            LiveRegionMessageQueue,
         )
 
         queue = LiveRegionMessageQueue(max_size=10)
@@ -438,13 +457,19 @@ class TestLiveRegionMessageQueue:
 
         # Add old message (older than MSG_KEEPALIVE_TIME)
         old_msg = LiveRegionMessage(
-            "Old", LivePoliteness.POLITE, mock_obj, timestamp=current_time - 50
+            "Old",
+            LivePoliteness.POLITE,
+            mock_obj,
+            timestamp=current_time - 50,
         )
         queue.enqueue(old_msg)
 
         # Add recent message
         new_msg = LiveRegionMessage(
-            "New", LivePoliteness.POLITE, mock_obj, timestamp=current_time - 10
+            "New",
+            LivePoliteness.POLITE,
+            mock_obj,
+            timestamp=current_time - 10,
         )
         queue.enqueue(new_msg)
 
@@ -461,16 +486,19 @@ class TestLiveRegionMessageQueue:
 
         self._setup_dependencies(test_context)
         from orca.live_region_presenter import (
-            LiveRegionMessageQueue,
-            LiveRegionMessage,
             LivePoliteness,
+            LiveRegionMessage,
+            LiveRegionMessageQueue,
         )
 
         queue = LiveRegionMessageQueue(max_size=10)
         mock_obj = test_context.Mock()
 
         assertive_msg = LiveRegionMessage(
-            "Assertive", LivePoliteness.ASSERTIVE, mock_obj, timestamp=100.0
+            "Assertive",
+            LivePoliteness.ASSERTIVE,
+            mock_obj,
+            timestamp=100.0,
         )
         polite_msg = LiveRegionMessage("Polite", LivePoliteness.POLITE, mock_obj, timestamp=200.0)
         off_msg = LiveRegionMessage("Off", LivePoliteness.OFF, mock_obj, timestamp=300.0)
@@ -596,7 +624,7 @@ class TestLiveRegionPresenter:
         script_instance.utilities = test_context.Mock()
         script_manager_mock.get_manager = test_context.Mock()
         script_manager_mock.get_manager.return_value.get_active_script = test_context.Mock(
-            return_value=script_instance
+            return_value=script_instance,
         )
 
         axobject_mock = essential_modules["orca.AXObject"]
@@ -637,8 +665,8 @@ class TestLiveRegionPresenter:
         """Test LiveRegionPresenter commands are registered in CommandManager."""
 
         self._setup_dependencies(test_context)
-        from orca.live_region_presenter import LiveRegionPresenter
         from orca import command_manager
+        from orca.live_region_presenter import LiveRegionPresenter
 
         presenter = LiveRegionPresenter()
         presenter.set_up_commands()
@@ -674,7 +702,7 @@ class TestLiveRegionPresenter:
         """Test LiveRegionPresenter.reset."""
 
         self._setup_dependencies(test_context)
-        from orca.live_region_presenter import LiveRegionPresenter, LivePoliteness
+        from orca.live_region_presenter import LivePoliteness, LiveRegionPresenter
 
         presenter = LiveRegionPresenter()
         presenter._politeness_overrides = {123: LivePoliteness.POLITE}
@@ -743,9 +771,9 @@ class TestLiveRegionPresenter:
 
         self._setup_dependencies(test_context)
         from orca.live_region_presenter import (
-            LiveRegionPresenter,
-            LiveRegionMessage,
             LivePoliteness,
+            LiveRegionMessage,
+            LiveRegionPresenter,
         )
 
         presenter = LiveRegionPresenter()
@@ -758,7 +786,8 @@ class TestLiveRegionPresenter:
         assert len(presenter.msg_queue) == 0
 
     def test_present_previous_live_region_message_no_messages(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test present_previous_live_region_message with no messages."""
 
@@ -776,7 +805,8 @@ class TestLiveRegionPresenter:
         pres_manager.present_message.assert_called_with("No live region messages")
 
     def test_present_previous_live_region_message_disabled(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test present_previous_live_region_message when disabled."""
 
@@ -795,7 +825,8 @@ class TestLiveRegionPresenter:
         pres_manager.present_message.assert_called_with("Live regions support disabled")
 
     def test_present_next_live_region_message_no_messages(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test present_next_live_region_message with no messages."""
 
@@ -825,7 +856,8 @@ class TestLiveRegionPresenter:
         assert result is False
 
     def test_is_presentable_live_region_event_wrong_type(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test is_presentable_live_region_event with wrong event type."""
 
@@ -858,13 +890,14 @@ class TestLiveRegionPresenter:
         assert result is False
 
     def test_is_presentable_live_region_event_not_live_region(
-        self, test_context: OrcaTestContext
+        self,
+        test_context: OrcaTestContext,
     ) -> None:
         """Test is_presentable_live_region_event when source is not a live region."""
 
         self._setup_dependencies(test_context)
-        from orca.live_region_presenter import LiveRegionPresenter
         from orca import ax_utilities
+        from orca.live_region_presenter import LiveRegionPresenter
 
         presenter = LiveRegionPresenter()
         test_context.patch_object(ax_utilities.AXUtilities, "is_live_region", return_value=False)
@@ -969,7 +1002,7 @@ class TestLiveRegionPresenterModule:
         script_instance = test_context.Mock()
         script_manager_mock.get_manager = test_context.Mock()
         script_manager_mock.get_manager.return_value.get_active_script = test_context.Mock(
-            return_value=script_instance
+            return_value=script_instance,
         )
 
         axobject_mock = essential_modules["orca.AXObject"]

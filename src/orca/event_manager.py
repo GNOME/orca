@@ -30,7 +30,6 @@
 # This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
-
 import itertools
 import queue
 import threading
@@ -40,17 +39,18 @@ from typing import TYPE_CHECKING
 import gi
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
-from gi.repository import GLib
+from gi.repository import Atspi, GLib
 
-from . import braille_presenter
-from . import debug
-from . import focus_manager
-from . import input_event
-from . import input_event_manager
-from . import orca_modifier_manager
-from . import script_manager
-from . import systemd
+from . import (
+    braille_presenter,
+    debug,
+    focus_manager,
+    input_event,
+    input_event_manager,
+    orca_modifier_manager,
+    script_manager,
+    systemd,
+)
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .ax_utilities_debugging import AXUtilitiesDebugging
@@ -76,7 +76,7 @@ class EventManager:
         self._paused: bool = False
         self._counter = itertools.count()
         self._event_queue: queue.PriorityQueue[tuple[int, int, Atspi.Event]] = queue.PriorityQueue(
-            0
+            0,
         )
         self._gidle_id: int = 0
         self._gidle_lock = threading.Lock()
@@ -112,7 +112,10 @@ class EventManager:
         debug.print_message(debug.LEVEL_INFO, "EVENT MANAGER: Deactivated", True)
 
     def pause_queuing(
-        self, pause: bool = True, clear_queue: bool = False, reason: str = ""
+        self,
+        pause: bool = True,
+        clear_queue: bool = False,
+        reason: str = "",
     ) -> None:
         """Pauses/unpauses event queuing."""
 
@@ -127,15 +130,14 @@ class EventManager:
         """Returns the priority associated with event."""
 
         event_type = event.type
-        if event_type.startswith("window"):
-            priority = EventManager.PRIORITY_IMPORTANT
-        elif event_type == "object:state-changed:active" and (
-            AXUtilities.is_frame(event.source) or AXUtilities.is_dialog_or_alert(event.source)
+        if event_type.startswith("window") or (
+            event_type == "object:state-changed:active"
+            and (AXUtilities.is_frame(event.source) or AXUtilities.is_dialog_or_alert(event.source))
         ):
             priority = EventManager.PRIORITY_IMPORTANT
-        elif event_type.startswith("object:state-changed:focused"):
-            priority = EventManager.PRIORITY_HIGH
-        elif event_type.startswith("object:active-descendant-changed"):
+        elif event_type.startswith(
+            ("object:state-changed:focused", "object:active-descendant-changed"),
+        ):
             priority = EventManager.PRIORITY_HIGH
         elif event_type.startswith("object:announcement"):
             if event.detail1 == Atspi.Live.ASSERTIVE:
@@ -210,9 +212,7 @@ class EventManager:
                 return False
             if not any(event.type.startswith(etype) for etype in skippable):
                 return False
-            if x.source == event.source:
-                return True
-            return False
+            return x.source == event.source
 
         with self._event_queue.mutex:
             try:
@@ -351,7 +351,7 @@ class EventManager:
                 return False
 
         if event_type.startswith("object:text-changed:insert") and AXUtilities.is_section(
-            event.source
+            event.source,
         ):
             live = AXObject.get_attribute(event.source, "live")
             if live and live != "off":
@@ -517,11 +517,13 @@ class EventManager:
         return False
 
     def _queue_println(
-        self, event: input_event.InputEvent | Atspi.Event, is_enqueue: bool = True
+        self,
+        event: input_event.InputEvent | Atspi.Event,
+        is_enqueue: bool = True,
     ) -> None:
         """Convenience method to output queue-related debugging info."""
 
-        if debug.LEVEL_INFO < debug.debugLevel:
+        if debug.debugLevel > debug.LEVEL_INFO:
             return
 
         tokens = []
@@ -663,7 +665,7 @@ class EventManager:
         tokens = ["EVENT MANAGER: Registering listeners for:", script]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        for event_type in script.listeners.keys():
+        for event_type in script.listeners:
             self.register_listener(event_type)
 
     def deregister_script_listeners(self, script: default.Script) -> None:
@@ -677,12 +679,13 @@ class EventManager:
         tokens = ["EVENT MANAGER: De-registering listeners for:", script]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        for event_type in script.listeners.keys():
+        for event_type in script.listeners:
             self.deregister_listener(event_type)
 
     @staticmethod
     def _get_script_for_event(
-        event: Atspi.Event, active_script: default.Script | None = None
+        event: Atspi.Event,
+        active_script: default.Script | None = None,
     ) -> default.Script | None:
         """Returns the script associated with event."""
 
@@ -715,7 +718,9 @@ class EventManager:
         return script
 
     def _is_activatable_event(
-        self, event: Atspi.Event, script: default.Script | None = None
+        self,
+        event: Atspi.Event,
+        script: default.Script | None = None,
     ) -> tuple[bool, str]:
         """Determines if event should cause us to change the active script."""
 
@@ -784,7 +789,10 @@ class EventManager:
         return False
 
     def _should_process_event(
-        self, event: Atspi.Event, event_script: default.Script, active_script: default.Script
+        self,
+        event: Atspi.Event,
+        event_script: default.Script,
+        active_script: default.Script,
     ) -> bool:
         """Returns True if this event should be processed."""
 
@@ -842,7 +850,7 @@ class EventManager:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
-        if debug.LEVEL_INFO >= debug.debugLevel:
+        if debug.debugLevel <= debug.LEVEL_INFO:
             msg = AXUtilitiesDebugging.object_event_details_as_string(event)
             debug.print_message(debug.LEVEL_INFO, msg, True)
 

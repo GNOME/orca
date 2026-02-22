@@ -349,7 +349,7 @@ FLAT_REVIEW_SHOW_CONTENTS = _("Show flat review contents")
 # entire row of a table read; other times they just want the current cell
 # to be presented to them.
 TOGGLE_TABLE_CELL_READ_MODE = _(
-    "Toggle whether to read just the current table cell or the whole row"
+    "Toggle whether to read just the current table cell or the whole row",
 )
 
 # Translators: the attributes being presented are the text attributes, such as
@@ -486,7 +486,7 @@ SHOW_APP_PREFERENCES_GUI = _("Display the application preferences configuration 
 # Translators: Orca allows the user to enable/disable speaking of indentation
 # and justification.
 TOGGLE_SPOKEN_INDENTATION_AND_JUSTIFICATION = _(
-    "Toggle the speaking of indentation and justification"
+    "Toggle the speaking of indentation and justification",
 )
 
 # Translators: Orca has a setting through which users can control how a number is

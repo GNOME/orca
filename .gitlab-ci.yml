@@ -77,10 +77,11 @@ linters:
       optional: true
   script:
     - source ci/env.sh
-    - ruff format --check src/orca
-    - ruff check src/orca
-    - mypy src/orca
-    - pylint src/orca src/orca/orca_bin.py.in
+    - status=0
+    - ruff format --check src/orca || status=1
+    - ruff check src/orca || status=1
+    - mypy src/orca || status=1
+    - exit $status
   allow_failure: true
 
 # Auto-format code with ruff and commit back to the branch.
