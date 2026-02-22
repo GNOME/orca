@@ -210,6 +210,10 @@ class TestInputEventManager:
         )
         test_context.patch("orca.input_event_manager.Atspi", new=essential_modules["atspi"])
 
+        ax_device_mgr_mock = test_context.Mock()
+        essential_modules["ax_device_manager"] = ax_device_mgr_mock
+        test_context.patch("orca.input_event_manager.ax_device_manager", new=ax_device_mgr_mock)
+
         from orca.input_event_manager import InputEventManager
 
         return InputEventManager(), essential_modules
@@ -230,15 +234,16 @@ class TestInputEventManager:
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
         mock_device = test_context.Mock()
-        essential_modules["atspi"].Device.new_full.return_value = mock_device
+        ax_device_mgr = essential_modules["ax_device_manager"]
+        ax_device_mgr.get_manager.return_value.get_device.return_value = mock_device
 
         input_event_manager.start_key_watcher()
 
-        essential_modules["atspi"].Device.new_full.assert_called_once_with("org.gnome.Orca")
+        ax_device_mgr.get_manager.return_value.get_device.assert_called_once()
         mock_device.add_key_watcher.assert_called_once_with(
             input_event_manager.process_keyboard_event
         )
-        assert input_event_manager._device == mock_device
+        assert input_event_manager._device is mock_device
 
     def test_stop_key_watcher(self, test_context: OrcaTestContext) -> None:
         """Test InputEventManager.stop_key_watcher."""

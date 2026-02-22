@@ -51,6 +51,7 @@ class TestAXEventSynthesizer:
 
         additional_modules = [
             "orca.ax_component",
+            "orca.ax_device_manager",
             "orca.ax_object",
             "orca.ax_text",
             "orca.ax_utilities_debugging",
@@ -195,19 +196,18 @@ class TestAXEventSynthesizer:
     def test_generate_mouse_event_success(self, test_context: OrcaTestContext) -> None:
         """Test _generate_mouse_event returns True on successful event generation."""
 
-        self._setup_dependencies(test_context)
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         from orca.ax_event_synthesizer import AXEventSynthesizer
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        mock_device_new = test_context.Mock()
-        test_context.patch("gi.repository.Atspi.Device.new", new=mock_device_new)
+        mock_device = test_context.Mock()
+        ax_device_mgr = essential_modules["orca.ax_device_manager"]
+        ax_device_mgr.get_manager.return_value.get_device.return_value = mock_device
         mock_generate = test_context.Mock()
         test_context.patch("gi.repository.Atspi.Device.generate_mouse_event", new=mock_generate)
-        mock_device = test_context.Mock()
-        mock_device_new.return_value = mock_device
         result = AXEventSynthesizer._generate_mouse_event(mock_accessible, 50, 25, "b1c")
         assert result is True
-        mock_device_new.assert_called_once()
+        ax_device_mgr.get_manager.return_value.get_device.assert_called_once()
         mock_generate.assert_called_once_with(mock_device, mock_accessible, 50, 25, "b1c")
 
     def test_generate_mouse_event_exception_returns_false(
@@ -215,16 +215,15 @@ class TestAXEventSynthesizer:
     ) -> None:
         """Test _generate_mouse_event returns False on GLib.GError exception."""
 
-        self._setup_dependencies(test_context)
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         from orca.ax_event_synthesizer import AXEventSynthesizer
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        mock_device_new = test_context.Mock()
-        test_context.patch("gi.repository.Atspi.Device.new", new=mock_device_new)
+        mock_device = test_context.Mock()
+        ax_device_mgr = essential_modules["orca.ax_device_manager"]
+        ax_device_mgr.get_manager.return_value.get_device.return_value = mock_device
         mock_generate = test_context.Mock()
         test_context.patch("gi.repository.Atspi.Device.generate_mouse_event", new=mock_generate)
-        mock_device = test_context.Mock()
-        mock_device_new.return_value = mock_device
         mock_generate.side_effect = GLib.GError("Test error")
         result = AXEventSynthesizer._generate_mouse_event(mock_accessible, 50, 25, "b1c")
         assert result is False

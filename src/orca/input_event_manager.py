@@ -50,7 +50,7 @@ if TYPE_CHECKING:
 _DOUBLE_CLICK_TIMEOUT: float = 0.5
 
 
-class InputEventManager:
+class InputEventManager:  # pylint: disable=too-many-instance-attributes
     """Provides utilities for managing input events."""
 
     def __init__(self) -> None:
@@ -61,6 +61,8 @@ class InputEventManager:
         self._mapped_keysyms: list[int] = []
         self._grabbed_bindings: dict[int, keybindings.KeyBinding] = {}
         self._paused: bool = False
+        self._key_pressed_id: int = 0
+        self._key_released_id: int = 0
 
     def start_key_watcher(self) -> None:
         """Starts the watcher for keyboard input events."""
@@ -81,6 +83,9 @@ class InputEventManager:
 
         msg = "INPUT EVENT MANAGER: Stopping key watcher."
         debug.print_message(debug.LEVEL_INFO, msg, True)
+        if self._device is None:
+            return
+
         atspi_version = Atspi.get_version()  # pylint: disable=no-value-for-parameter
         if atspi_version[0] > 2 or atspi_version[1] >= 60:
             self._device.disconnect(self._key_pressed_id)

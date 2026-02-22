@@ -18,20 +18,14 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=wrong-import-position
+
 """Handle activating and providing access to the AT-SPI device."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
-from __future__ import annotations
-
-
-from typing import TYPE_CHECKING
-
 import gi
+
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
-
-if TYPE_CHECKING:
-    from .scripts import default
 
 
 class AXDeviceManager:
@@ -60,6 +54,7 @@ class AXDeviceManager:
         """Returns the AT-SPI device."""
 
         return self._device
+
 
 _manager: AXDeviceManager = AXDeviceManager()
 
