@@ -2,6 +2,7 @@
 #
 # Copyright 2008 Eitan Isaacson
 # Copyright 2016 Igalia, S.L.
+# Copyright 2026 SUSE LLC.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -39,17 +40,15 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
 
-_MOUSE_REVIEW_CAPABLE = False
 try:
     if os.environ.get("XDG_SESSION_TYPE", "").lower() != "wayland":
         gi.require_version("Wnck", "3.0")
         from gi.repository import Wnck  # pylint: disable=no-name-in-module
-
-        _MOUSE_REVIEW_CAPABLE = Wnck.Screen.get_default() is not None  # pylint: disable=no-value-for-parameter
 except Exception:
     pass
 
 from . import (
+    ax_device_manager,
     cmdnames,
     command_manager,
     dbus_service,
@@ -429,12 +428,40 @@ class MouseReviewer:
         self._all_windows: list[Wnck.Window] = []
         self._handler_ids: dict[int, Wnck.Screen] = {}
         self._event_listener: Atspi.EventListener = Atspi.EventListener.new(self._listener)
+        self._pointer_moved_id = None
+        self._device: Atspi.Device = None
         self.in_mouse_event: bool = False
         self._event_queue: deque = deque()
         self._initialized: bool = False
+        self._mouse_review_capable: bool = False
+        self._use_atspi: bool = False
 
-        if not _MOUSE_REVIEW_CAPABLE:
-            msg = "MOUSE REVIEW ERROR: Wnck is not available"
+        atspi_version = Atspi.get_version()  # pylint: disable=no-value-for-parameter
+        if (
+            atspi_version[0] > 2
+            or atspi_version[1] >= 60
+            or (atspi_version[0] == 2 and atspi_version[1] == 59 and atspi_version[2] >= 90)
+        ):
+            self._use_atspi = True
+
+        try:
+            if self._use_atspi:
+                ax_device_manager.get_manager().activate()
+                self._device = ax_device_manager.get_manager().get_device()
+                caps = self._device.get_capabilities()
+                caps = self._device.set_capabilities(caps | Atspi.DeviceCapability.POINTER_MONITOR)
+                if caps & Atspi.DeviceCapability.POINTER_MONITOR:
+                    self._mouse_review_capable = True
+            else:
+                self._mouse_review_capable = Wnck.Screen.get_default() is not None  # pylint: disable=no-value-for-parameter
+        except Exception:
+            debug.print_exception(debug.LEVEL_WARNING)
+
+        if not self._mouse_review_capable:
+            if self._use_atspi:
+                msg = "MOUSE REVIEW ERROR: Not supported by AT-SPI device"
+            else:
+                msg = "MOUSE REVIEW ERROR: Wnck or at-spi2-core >= 2.60 required"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
@@ -475,8 +502,11 @@ class MouseReviewer:
     def activate(self) -> None:
         """Activates mouse review."""
 
-        if not _MOUSE_REVIEW_CAPABLE:
-            msg = "MOUSE REVIEW ERROR: Wnck is not available"
+        if not self._mouse_review_capable:
+            if self._use_atspi:
+                msg = "MOUSE REVIEW ERROR: Not supported by AT-SPI device"
+            else:
+                msg = "MOUSE REVIEW ERROR: Wnck or at-spi2-core >= 2.60 required"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._active = False
             return
@@ -492,52 +522,60 @@ class MouseReviewer:
             frame = script.utilities.top_level_object(obj)
         self._current_mouse_over = _ItemContext(obj=obj, frame=frame, script=script)
 
-        self._event_listener.register("mouse:abs")
-        screen = Wnck.Screen.get_default()  # pylint: disable=no-value-for-parameter
-        if screen is None:
-            self._active = False
-            return
+        if self._use_atspi:
+            self._pointer_moved_id = self._device.connect("pointer-moved", self._on_pointer_moved)
+        else:
+            self._event_listener.register("mouse:abs")
+            screen = Wnck.Screen.get_default()  # pylint: disable=no-value-for-parameter
+            if screen is None:
+                self._active = False
+                return
 
-        # On first startup windows and workspace are likely to be None,
-        # but the signals we connect to will get emitted when proper values
-        # become available;  but in case we got disabled and re-enabled we
-        # have to get the initial values manually.
-        stacked = screen.get_windows_stacked()
-        if stacked:
-            stacked.reverse()
-            self._all_windows = stacked
-        self._workspace = screen.get_active_workspace()
-        if self._workspace:
-            self._update_workspace_windows()
+            # On first startup windows and workspace are likely to be None,
+            # but the signals we connect to will get emitted when proper values
+            # become available;  but in case we got disabled and re-enabled we
+            # have to get the initial values manually.
+            stacked = screen.get_windows_stacked()
+            if stacked:
+                stacked.reverse()
+                self._all_windows = stacked
+            self._workspace = screen.get_active_workspace()
+            if self._workspace:
+                self._update_workspace_windows()
 
-        i = screen.connect("window-stacking-changed", self._on_stacking_changed)
-        self._handler_ids[i] = screen
-        i = screen.connect("active-workspace-changed", self._on_workspace_changed)
-        self._handler_ids[i] = screen
-        self._active = True
+            i = screen.connect("window-stacking-changed", self._on_stacking_changed)
+            self._handler_ids[i] = screen
+            i = screen.connect("active-workspace-changed", self._on_workspace_changed)
+            self._handler_ids[i] = screen
+            self._active = True
 
     def deactivate(self) -> None:
         """Deactivates mouse review."""
 
-        try:
-            self._event_listener.deregister("mouse:abs")
-        except GLib.GError as error:
-            msg = f"MOUSE REVIEW: Exception deregistering 'mouse:abs' listener: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+        if self._use_atspi:
+            if self._pointer_moved_id is not None:
+                self._device.disconnect(self._pointer_moved_id)
+                self._pointer_moved_id = None
+        else:
+            try:
+                self._event_listener.deregister("mouse:abs")
+            except GLib.GError as error:
+                msg = f"MOUSE REVIEW: Exception deregistering 'mouse:abs' listener: {error}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        for key, value in self._handler_ids.items():
-            value.disconnect(key)
-        self._handler_ids = {}
-        self._workspace = None
-        self._windows = []
-        self._all_windows = []
+            for key, value in self._handler_ids.items():
+                value.disconnect(key)
+            self._handler_ids = {}
+            self._workspace = None
+            self._windows = []
+            self._all_windows = []
         self._event_queue.clear()
         self._active = False
 
     def get_current_item(self):
         """Returns the accessible object being reviewed."""
 
-        if not _MOUSE_REVIEW_CAPABLE:
+        if not self._mouse_review_capable:
             return None
 
         if not self._active:
@@ -595,7 +633,7 @@ class MouseReviewer:
     def set_is_enabled(self, value: bool) -> bool:
         """Sets whether mouse review is enabled (requires Wnck)."""
 
-        if not _MOUSE_REVIEW_CAPABLE:
+        if not self._mouse_review_capable:
             msg = "MOUSE REVIEW ERROR: Wnck is not available"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
@@ -663,7 +701,9 @@ class MouseReviewer:
         self._workspace = screen.get_active_workspace()
         self._update_workspace_windows()
 
-    def _accessible_window_at_point(self, point_x: int, point_y: int) -> tuple[object, int, int]:
+    def _accessible_window_at_point_deprecated(
+        self, point_x: int, point_y: int
+    ) -> tuple[object, int, int]:
         """Returns the accessible window and window based coordinates for the screen coordinates."""
 
         window = None
@@ -709,6 +749,29 @@ class MouseReviewer:
 
         return None, -1, -1
 
+    def _accessible_window_at_point(
+        self, app: Atspi.Accessible, point_x: int, point_y: int
+    ) -> tuple[object, int, int]:
+        """Returns the accessible window and window based coordinates"""
+
+        def get_tuple(obj, x, y):
+            rect = AXComponent.get_rect(obj)
+            return [obj, x - rect.x, y - rect.y]
+
+        candidates = list(
+            AXObject.iter_children(
+                app, lambda obj: AXComponent.object_contains_point(obj, point_x, point_y)
+            )
+        )
+        if len(candidates) == 1:
+            return get_tuple(candidates[0], point_x, point_y)
+
+        matches = [o for o in candidates if AXUtilities.is_active(o)]
+        if len(matches) == 1:
+            return get_tuple(matches[0], point_x, point_y)
+
+        return None, -1, -1
+
     def _is_multi_paragraph_object(self, obj) -> bool:
         """Returns True if obj has multiple paragraphs of text."""
 
@@ -716,12 +779,24 @@ class MouseReviewer:
         chunks = list(filter(lambda x: x.strip(), string.split("\n\n")))
         return len(chunks) > 1
 
-    def _on_mouse_moved(self, event) -> None:
+    def _on_mouse_moved_deprecated(self, event) -> None:
         """Callback for mouse:abs events."""
 
         point_x, point_y = event.detail1, event.detail2
-        window, window_x, window_y = self._accessible_window_at_point(point_x, point_y)
-        tokens = [f"MOUSE REVIEW: Window at ({point_x}, {point_y}) is", window]
+        window, window_x, window_y = self._accessible_window_at_point_deprecated(point_x, point_y)
+        self._mouse_moved_common(window, window_x, window_y)
+
+    def _on_mouse_moved(self, obj, point_x, point_y) -> None:
+        """Callback for pointer-moved events."""
+
+        if AXObject.get_role(obj) == Atspi.Role.APPLICATION:
+            window, window_x, window_y = self._accessible_window_at_point(obj, point_x, point_y)
+            self._mouse_moved_common(window, window_x, window_y)
+        else:
+            self._mouse_moved_common(obj, point_x, point_y)
+
+    def _mouse_moved_common(self, window, window_x, window_y) -> None:
+        tokens = [f"MOUSE REVIEW: Window at ({window_x}, {window_y}) is", window]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if not window:
             return
@@ -770,7 +845,7 @@ class MouseReviewer:
         if new.present(self._current_mouse_over):
             self._current_mouse_over = new
 
-    def _process_event(self) -> None:
+    def _process_event_deprecated(self) -> None:
         if not self._event_queue:
             return
 
@@ -783,7 +858,7 @@ class MouseReviewer:
         debug.print_tokens(debug.LEVEL_INFO, tokens, False)
 
         self.in_mouse_event = True
-        self._on_mouse_moved(event)
+        self._on_mouse_moved_deprecated(event)
         self.in_mouse_event = False
 
         msg = f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}\n"
@@ -795,7 +870,33 @@ class MouseReviewer:
 
         if event.type.startswith("mouse:abs"):
             self._event_queue.append(event)
-            GLib.timeout_add(50, self._process_event)
+            GLib.timeout_add(50, self._process_event_deprecated)
+
+    def _process_event(self) -> None:
+        if not self._event_queue:
+            return
+
+        [obj, x, y] = self._event_queue.popleft()
+        if len(self._event_queue):
+            return
+
+        start_time = time.time()
+        tokens = ["\nvvvvv PROCESS POINTER-MOVED EVENT", "vvvvv"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, False)
+
+        self.in_mouse_event = True
+        self._on_mouse_moved(obj, x, y)
+        self.in_mouse_event = False
+
+        msg = f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}\n"
+        msg += "^^^^^ PROCESS POINTER-MOVED EVENT ^^^^^\n"
+        debug.print_message(debug.LEVEL_INFO, msg, False)
+
+    def _on_pointer_moved(self, device, obj, x, y) -> None:
+        """Listener for pointer-moved events from devices."""
+
+        self._event_queue.append([obj, x, y])
+        GLib.timeout_add(50, self._process_event)
 
 
 _reviewer = MouseReviewer()
