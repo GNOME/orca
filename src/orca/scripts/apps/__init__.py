@@ -4,7 +4,6 @@ __all__ = [
     "Thunderbird",
     "evolution",
     "gajim",
-    "gedit",
     "gnome-shell",
     "kwin",
     "notification-daemon",

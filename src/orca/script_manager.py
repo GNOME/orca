@@ -103,7 +103,6 @@ class ScriptManager:
             "mate-notification-daemon": "notification-daemon",
             "metacity": "switcher",
             "budgie-daemon": "switcher",
-            "pluma": "gedit",
             "xfce4-notifyd": "notification-daemon",
         }
         alt_names = list(app_names.keys())

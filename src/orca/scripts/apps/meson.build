@@ -1,6 +1,5 @@
 subdir('evolution')
 subdir('gajim')
-subdir('gedit')
 subdir('gnome-shell')
 subdir('kwin')
 subdir('notification-daemon')

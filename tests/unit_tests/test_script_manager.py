@@ -124,7 +124,7 @@ class TestScriptManager:
         default_mock = essential_modules["orca.scripts.default"]
         sleepmode_mock = essential_modules["orca.scripts.sleepmode"]
 
-        apps_mock.__all__ = ["evolution", "gedit", "gnome-shell"]
+        apps_mock.__all__ = ["evolution", "gnome-shell"]
         toolkits_mock.__all__ = ["gtk", "Gecko", "Qt"]
 
         class MockScript:
@@ -312,12 +312,6 @@ class TestScriptManager:
                 "id": "mapped_app_name",
                 "app_name": "mate-notification-daemon",
                 "expected_result": "notification-daemon",
-                "use_null_app": False,
-            },
-            {
-                "id": "alias_app_name",
-                "app_name": "pluma",
-                "expected_result": "gedit",
                 "use_null_app": False,
             },
             {
