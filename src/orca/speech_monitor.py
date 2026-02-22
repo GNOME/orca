@@ -18,8 +18,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
-
 """Provides a graphical speech monitor, mainly for development tasks."""
 
 from __future__ import annotations

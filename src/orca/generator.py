@@ -19,15 +19,10 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-lines
-# pylint: disable=wrong-import-position
-# pylint: disable=too-many-return-statements
-# pylint: disable=too-many-branches
-# pylint: disable=too-many-statements
 # pylint: disable=unused-argument
 
 """Superclass of classes used to generate presentations for objects."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import threading
@@ -49,6 +44,7 @@ from .ax_utilities import AXUtilities
 from .ax_value import AXValue
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
     from typing import ClassVar
 
     from . import script
@@ -296,22 +292,41 @@ class Generator:
         """Returns an array with the generated state of obj."""
 
         role = args.get("role", AXObject.get_role(obj))
-        if AXUtilities.is_menu_item(obj, role):
-            return self._generate_state_checked_if_checkable(obj, **args)
-        if AXUtilities.is_radio_button(obj, role):
-            return self._generate_state_selected_for_radio_button(obj, **args)
-        if AXUtilities.is_radio_menu_item(obj, role):
-            return self._generate_state_selected_for_radio_button(obj, **args)
-        if AXUtilities.is_check_box(obj, role):
-            return self._generate_state_checked(obj, **args)
-        if AXUtilities.is_check_menu_item(obj, **args):
-            return self._generate_state_checked(obj, **args)
-        if AXUtilities.is_switch(obj, role):
-            return self._generate_state_checked_for_switch(obj, **args)
-        if AXUtilities.is_toggle_button(obj, role):
-            return self._generate_state_pressed(obj, **args)
-        if AXUtilities.is_table_cell(obj, role):
-            return self._generate_state_checked_for_cell(obj, **args)
+        checks: list[tuple[Callable[..., bool], Callable[..., list[Any]]]] = [
+            (
+                lambda: AXUtilities.is_menu_item(obj, role),
+                lambda: self._generate_state_checked_if_checkable(obj, **args),
+            ),
+            (
+                lambda: (
+                    AXUtilities.is_radio_button(obj, role)
+                    or AXUtilities.is_radio_menu_item(obj, role)
+                ),
+                lambda: self._generate_state_selected_for_radio_button(obj, **args),
+            ),
+            (
+                lambda: (
+                    AXUtilities.is_check_box(obj, role)
+                    or AXUtilities.is_check_menu_item(obj, **args)
+                ),
+                lambda: self._generate_state_checked(obj, **args),
+            ),
+            (
+                lambda: AXUtilities.is_switch(obj, role),
+                lambda: self._generate_state_checked_for_switch(obj, **args),
+            ),
+            (
+                lambda: AXUtilities.is_toggle_button(obj, role),
+                lambda: self._generate_state_pressed(obj, **args),
+            ),
+            (
+                lambda: AXUtilities.is_table_cell(obj, role),
+                lambda: self._generate_state_checked_for_cell(obj, **args),
+            ),
+        ]
+        for predicate, generator in checks:
+            if predicate():
+                return generator()
         return []
 
     def get_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
@@ -350,30 +365,22 @@ class Generator:
 
     @log_generator_output
     def _generate_accessible_description(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if args.get("omitDescription"):
+        if args.get("omitDescription") or AXUtilities.is_terminal(obj):
             return []
 
-        if AXUtilities.is_terminal(obj):
-            return []
+        obj_hash = hash(obj)
+        if obj_hash in Generator.CACHED_DESCRIPTION:
+            return Generator.CACHED_DESCRIPTION.get(obj_hash, [])
 
-        if hash(obj) in Generator.CACHED_DESCRIPTION:
-            return Generator.CACHED_DESCRIPTION.get(hash(obj), [])
-
-        if Generator.USED_DESCRIPTION_FOR_STATIC_TEXT.get(hash(obj)):
-            Generator.CACHED_DESCRIPTION[hash(obj)] = []
-            return []
-
-        if Generator.USED_DESCRIPTION_FOR_NAME.get(hash(obj)):
-            Generator.CACHED_DESCRIPTION[hash(obj)] = []
+        if Generator.USED_DESCRIPTION_FOR_STATIC_TEXT.get(
+            obj_hash
+        ) or Generator.USED_DESCRIPTION_FOR_NAME.get(obj_hash):
+            Generator.CACHED_DESCRIPTION[obj_hash] = []
             return []
 
         description = AXObject.get_description(obj) or AXUtilities.get_displayed_description(obj)
-        if not description:
-            Generator.CACHED_DESCRIPTION[hash(obj)] = []
-            return []
-
-        if self._strings_are_redundant(AXObject.get_name(obj), description):
-            Generator.CACHED_DESCRIPTION[hash(obj)] = []
+        if not description or self._strings_are_redundant(AXObject.get_name(obj), description):
+            Generator.CACHED_DESCRIPTION[obj_hash] = []
             return []
 
         focus = focus_manager.get_manager().get_locus_of_focus()
@@ -382,10 +389,10 @@ class Generator:
             and obj != focus
             and description in [AXObject.get_name(focus), AXObject.get_description(focus)]
         ):
-            Generator.CACHED_DESCRIPTION[hash(obj)] = []
+            Generator.CACHED_DESCRIPTION[obj_hash] = []
             return []
 
-        Generator.CACHED_DESCRIPTION[hash(obj)] = [description]
+        Generator.CACHED_DESCRIPTION[obj_hash] = [description]
         return [description]
 
     @log_generator_output
@@ -446,9 +453,7 @@ class Generator:
             return result
 
         if name and label and self._strings_are_redundant(name[0], label[0]):
-            if len(name[0]) < len(label[0]):
-                return label
-            return name
+            return label if len(name[0]) < len(label[0]) else name
 
         result.extend(name)
         if result:
@@ -531,51 +536,57 @@ class Generator:
         return result
 
     @log_generator_output
+    def _get_functional_math_role(self, obj: Atspi.Accessible) -> str | None:
+        """Returns the functional math role string, or None if not a recognized math role."""
+
+        math_checks: list[tuple[Callable[[Atspi.Accessible], bool], str]] = [
+            (AXUtilities.is_math_sub_or_super_script, "ROLE_MATH_SCRIPT_SUBSUPER"),
+            (AXUtilities.is_math_under_or_over_script, "ROLE_MATH_SCRIPT_UNDEROVER"),
+            (AXUtilities.is_math_multi_script, "ROLE_MATH_MULTISCRIPT"),
+            (AXUtilities.is_math_enclose, "ROLE_MATH_ENCLOSED"),
+            (AXUtilities.is_math_fenced, "ROLE_MATH_FENCED"),
+            (AXUtilities.is_math_table, "ROLE_MATH_TABLE"),
+            (AXUtilities.is_math_table_row, "ROLE_MATH_TABLE_ROW"),
+        ]
+        for predicate, result in math_checks:
+            if predicate(obj):
+                return result
+        return None
+
+    @log_generator_output
     def _get_functional_role(self, obj, **args):
         role = args.get("role", AXObject.get_role(obj))
         if AXUtilities.is_math_related(obj):
-            if AXUtilities.is_math_sub_or_super_script(obj):
-                return "ROLE_MATH_SCRIPT_SUBSUPER"
-            if AXUtilities.is_math_under_or_over_script(obj):
-                return "ROLE_MATH_SCRIPT_UNDEROVER"
-            if AXUtilities.is_math_multi_script(obj):
-                return "ROLE_MATH_MULTISCRIPT"
-            if AXUtilities.is_math_enclose(obj):
-                return "ROLE_MATH_ENCLOSED"
-            if AXUtilities.is_math_fenced(obj):
-                return "ROLE_MATH_FENCED"
-            if AXUtilities.is_math_table(obj):
-                return "ROLE_MATH_TABLE"
-            if AXUtilities.is_math_table_row(obj):
-                return "ROLE_MATH_TABLE_ROW"
-        if AXUtilities.is_dpub(obj, role):
-            if AXUtilities.is_landmark(obj):
-                return "ROLE_DPUB_LANDMARK"
-            if AXUtilities.is_section(obj, role):
-                return "ROLE_DPUB_SECTION"
-        if self._script.utilities.is_anchor(obj):
-            return Atspi.Role.STATIC
-        if AXUtilities.is_block_quote(obj, role):
-            return Atspi.Role.BLOCK_QUOTE
-        if AXUtilities.is_comment(obj, role):
-            return Atspi.Role.COMMENT
-        if AXUtilities.is_description_list(obj, role):
-            return Atspi.Role.DESCRIPTION_LIST
-        if AXUtilities.is_description_term(obj, role):
-            return Atspi.Role.DESCRIPTION_TERM
-        if AXUtilities.is_description_value(obj, role):
-            return Atspi.Role.DESCRIPTION_VALUE
-        if AXUtilities.is_feed_article(obj, role):
-            return "ROLE_ARTICLE_IN_FEED"
-        if AXUtilities.is_feed(obj, role):
-            return "ROLE_FEED"
+            math_role = self._get_functional_math_role(obj)
+            if math_role is not None:
+                return math_role
+        role_checks: list[tuple[Callable[[], bool], Atspi.Role | str]] = [
+            (
+                lambda: AXUtilities.is_dpub(obj, role) and AXUtilities.is_landmark(obj),
+                "ROLE_DPUB_LANDMARK",
+            ),
+            (
+                lambda: AXUtilities.is_dpub(obj, role) and AXUtilities.is_section(obj, role),
+                "ROLE_DPUB_SECTION",
+            ),
+            (lambda: self._script.utilities.is_anchor(obj), Atspi.Role.STATIC),
+            (lambda: AXUtilities.is_block_quote(obj, role), Atspi.Role.BLOCK_QUOTE),
+            (lambda: AXUtilities.is_comment(obj, role), Atspi.Role.COMMENT),
+            (lambda: AXUtilities.is_description_list(obj, role), Atspi.Role.DESCRIPTION_LIST),
+            (lambda: AXUtilities.is_description_term(obj, role), Atspi.Role.DESCRIPTION_TERM),
+            (lambda: AXUtilities.is_description_value(obj, role), Atspi.Role.DESCRIPTION_VALUE),
+            (lambda: AXUtilities.is_feed_article(obj, role), "ROLE_ARTICLE_IN_FEED"),
+            (lambda: AXUtilities.is_feed(obj, role), "ROLE_FEED"),
+        ]
+        for predicate, result in role_checks:
+            if predicate():
+                return result
+
         if AXUtilities.is_landmark(obj, role):
-            if AXUtilities.is_landmark_region(obj):
-                return "ROLE_REGION"
-            return Atspi.Role.LANDMARK
+            return "ROLE_REGION" if AXUtilities.is_landmark_region(obj) else Atspi.Role.LANDMARK
+
         if self._script.utilities.is_document(obj) and AXObject.supports_image(obj):
             return Atspi.Role.IMAGE
-
         return role
 
     @log_generator_output
@@ -599,25 +610,20 @@ class Generator:
         labelled_by = AXUtilities.get_is_labelled_by(obj)
         obj_name = AXObject.get_name(obj) or AXUtilities.get_displayed_label(obj)
 
+        skip_roles: tuple[Callable[[Atspi.Accessible], bool], ...] = (
+            AXUtilities.is_section,
+            AXUtilities.is_paragraph,
+            AXUtilities.is_table_related,
+            AXUtilities.is_static,
+            AXUtilities.is_link,
+            AXUtilities.is_image,
+            AXUtilities.is_separator,
+        )
         presentable_descendants = []
         for child in descendants:
-            if child == obj:
+            if child == obj or child in labelled_by:
                 continue
-            if child in labelled_by:
-                continue
-            if AXUtilities.is_section(child):
-                continue
-            if AXUtilities.is_paragraph(child):
-                continue
-            if AXUtilities.is_table_related(child):
-                continue
-            if AXUtilities.is_static(child):
-                continue
-            if AXUtilities.is_link(child):
-                continue
-            if AXUtilities.is_image(child):
-                continue
-            if AXUtilities.is_separator(child):
+            if any(check(child) for check in skip_roles):
                 continue
 
             child_name = AXObject.get_name(child)
@@ -625,9 +631,7 @@ class Generator:
                 continue
 
             if AXUtilities.is_label(child):
-                if not AXText.has_presentable_text(child):
-                    continue
-                if AXUtilities.get_is_label_for(child):
+                if not AXText.has_presentable_text(child) or AXUtilities.get_is_label_for(child):
                     continue
 
             presentable_descendants.append(child)

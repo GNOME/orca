@@ -26,11 +26,9 @@
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-statements
 # pylint: disable=too-many-return-statements
-# pylint: disable=wrong-import-position
 
 """Utilities for providing information about objects and events in web content."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import functools

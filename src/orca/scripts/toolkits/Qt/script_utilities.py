@@ -21,7 +21,6 @@
 
 """Custom script utilities for Qt"""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 from typing import TYPE_CHECKING

@@ -19,18 +19,13 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
 # pylint: disable=too-many-lines
-# pylint: disable=too-many-statements
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=too-many-public-methods
-# pylint: disable=too-many-return-statements
-# pylint: disable=too-many-branches
 
 """Implements structural navigation."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 from enum import Enum
@@ -742,6 +737,33 @@ class StructuralNavigator:
 
         return candidate
 
+    @staticmethod
+    def _get_adjacent_or_wrap(
+        objects: list[Atspi.Accessible],
+        index: int,
+        is_next: bool,
+        should_wrap: bool,
+        notify_user: bool,
+    ) -> Atspi.Accessible | None:
+        """Returns the adjacent object in the list, wrapping if enabled."""
+
+        if is_next:
+            if index + 1 < len(objects):
+                return objects[index + 1]
+            wrap_msg = messages.WRAPPING_TO_TOP
+            wrap_target = objects[0]
+        else:
+            if index > 0:
+                return objects[index - 1]
+            wrap_msg = messages.WRAPPING_TO_BOTTOM
+            wrap_target = objects[-1]
+
+        if not should_wrap:
+            return None
+        if notify_user:
+            presentation_manager.get_manager().present_message(wrap_msg)
+        return wrap_target
+
     def _get_object_in_direction(
         self,
         script: default.Script,
@@ -772,21 +794,13 @@ class StructuralNavigator:
                     candidate = alternative
 
             index = objects.index(candidate)
-            if is_next:
-                if index + 1 < len(objects):
-                    return objects[index + 1]
-                if not should_wrap:
-                    return None
-                if notify_user:
-                    presentation_manager.get_manager().present_message(messages.WRAPPING_TO_TOP)
-                return objects[0]
-            if index > 0:
-                return objects[index - 1]
-            if not should_wrap:
-                return None
-            if notify_user:
-                presentation_manager.get_manager().present_message(messages.WRAPPING_TO_BOTTOM)
-            return objects[-1]
+            return self._get_adjacent_or_wrap(
+                objects,
+                index,
+                is_next,
+                should_wrap,
+                notify_user,
+            )
 
         # If we're not in a matching object, find the next/previous one based on the path.
         if not is_next:
@@ -802,46 +816,76 @@ class StructuralNavigator:
         if not should_wrap:
             return None
 
-        if is_next:
-            if notify_user:
-                presentation_manager.get_manager().present_message(messages.WRAPPING_TO_TOP)
-        elif notify_user:
-            presentation_manager.get_manager().present_message(messages.WRAPPING_TO_BOTTOM)
-        if obj != objects[0]:
-            return objects[0]
-
-        return None
+        wrap_msg = messages.WRAPPING_TO_TOP if is_next else messages.WRAPPING_TO_BOTTOM
+        if notify_user:
+            presentation_manager.get_manager().present_message(wrap_msg)
+        return objects[0] if obj != objects[0] else None
 
     def _get_state_string(self, obj: Atspi.Accessible) -> str:
-        if obj is None:
-            return ""
-
         if AXUtilities.is_switch(obj):
             off, on = object_properties.SWITCH_INDICATORS_SPEECH
-            if AXUtilities.is_checked(obj):
-                return on
-            return off
+            return on if AXUtilities.is_checked(obj) else off
 
         if AXUtilities.is_check_box(obj):
             unchecked, checked, partially = object_properties.CHECK_BOX_INDICATORS_SPEECH
             if AXUtilities.is_indeterminate(obj):
                 return partially
-            if AXUtilities.is_checked(obj):
-                return checked
-            return unchecked
+            return checked if AXUtilities.is_checked(obj) else unchecked
 
         if AXUtilities.is_radio_button(obj):
             unselected, selected = object_properties.RADIO_BUTTON_INDICATORS_SPEECH
-            if AXUtilities.is_checked(obj):
-                return selected
-            return unselected
+            return selected if AXUtilities.is_checked(obj) else unselected
 
         if AXUtilities.is_link(obj):
-            if AXUtilities.is_visited(obj):
-                return object_properties.STATE_VISITED
-            return object_properties.STATE_UNVISITED
+            return (
+                object_properties.STATE_VISITED
+                if AXUtilities.is_visited(obj)
+                else object_properties.STATE_UNVISITED
+            )
 
         return ""
+
+    def _get_item_string_by_role(
+        self,
+        script: default.Script,
+        obj: Atspi.Accessible,
+    ) -> str | None:
+        """Returns a string for the object based on its role, or None if not role-specific."""
+
+        if AXUtilities.is_table(obj):
+            caption = AXTable.get_caption(obj)
+            return AXText.get_all_text(caption) if caption else ""
+
+        if AXUtilities.is_internal_frame(obj):
+            result = self._get_item_string(script, AXObject.get_child(obj, 0))
+            return result or AXUtilities.get_localized_role_name(obj)
+
+        if AXUtilities.is_list(obj):
+            children = list(AXObject.iter_children(obj, AXUtilities.is_list_item))
+            count = len(children)
+            counter = (
+                messages.nested_list_item_count
+                if AXUtilities.get_nesting_level(obj)
+                else messages.list_item_count
+            )
+            return counter(count)
+
+        if AXUtilities.is_description_list(obj):
+            return messages.description_list_term_count(
+                len(AXUtilities.find_all_description_terms(obj)),
+            )
+
+        if AXUtilities.is_image(obj):
+            result = AXObject.get_image_description(obj)
+            if not result:
+                parent = AXObject.get_parent(obj)
+                if AXUtilities.is_link(parent):
+                    result = self._get_item_string(script, parent)
+                else:
+                    result = AXUtilities.get_localized_role_name(obj)
+            return result
+
+        return None
 
     def _get_item_string(self, script: default.Script, obj: Atspi.Accessible) -> str:
         if obj is None:
@@ -856,36 +900,14 @@ class StructuralNavigator:
         if result:
             return result
 
-        if AXUtilities.is_table(obj):
-            if caption := AXTable.get_caption(obj):
-                return AXText.get_all_text(caption)
-            return ""
-
-        if AXUtilities.is_internal_frame(obj):
-            result = self._get_item_string(script, AXObject.get_child(obj, 0))
-            return result or AXUtilities.get_localized_role_name(obj)
-
-        if AXUtilities.is_list(obj):
-            children = list(AXObject.iter_children(obj, AXUtilities.is_list_item))
-            if AXUtilities.get_nesting_level(obj):
-                return messages.nested_list_item_count(len(children))
-            return messages.list_item_count(len(children))
-
-        if AXUtilities.is_description_list(obj):
-            children = AXUtilities.find_all_description_terms(obj)
-            return messages.description_list_term_count(len(children))
+        role_result = self._get_item_string_by_role(script, obj)
+        if role_result is not None:
+            return role_result
 
         if AXUtilities.is_page_tab_list(obj):
-            children = list(AXObject.iter_children(obj, AXUtilities.is_page_tab))
-            return messages.tab_list_item_count(len(children))
-
-        if AXUtilities.is_image(obj):
-            if result := AXObject.get_image_description(obj):
-                return result
-            parent = AXObject.get_parent(obj)
-            if AXUtilities.is_link(parent):
-                return self._get_item_string(script, parent)
-            return AXUtilities.get_localized_role_name(obj)
+            return messages.tab_list_item_count(
+                len(list(AXObject.iter_children(obj, AXUtilities.is_page_tab))),
+            )
 
         if result := script.utilities.expand_eocs(obj):
             return result

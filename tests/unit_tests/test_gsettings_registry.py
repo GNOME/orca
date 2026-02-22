@@ -22,7 +22,6 @@
 # pylint: disable=import-outside-toplevel
 # pylint: disable=protected-access
 # pylint: disable=too-many-lines
-# pylint: disable=too-few-public-methods
 
 """Unit tests for gsettings_registry.py."""
 

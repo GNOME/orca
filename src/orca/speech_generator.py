@@ -18,18 +18,14 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-lines
-# pylint: disable=too-many-branches
-# pylint: disable=too-many-statements
-# pylint: disable=wrong-import-position
-# pylint: disable=too-many-return-statements
-# pylint: disable=too-few-public-methods
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-boolean-expressions
 # pylint: disable=unused-argument
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-positional-arguments
 
 """Produces speech presentation for accessible objects."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import contextlib
@@ -67,6 +63,8 @@ from .ax_value import AXValue
 from .speechserver import VoiceFamily
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from . import script
 
 
@@ -210,6 +208,94 @@ class SpeechGenerator(generator.Generator):
 
         return PAUSE
 
+    def _resolve_language_and_dialect(
+        self,
+        obj: Atspi.Accessible | None,
+        language: str,
+        dialect: str,
+        server: speechserver.SpeechServer,
+        family: dict,
+    ) -> tuple[str, str]:
+        """Returns the resolved language and dialect for voice selection."""
+
+        if not language:
+            obj_locale = AXObject.get_locale(obj).split(".")[0]
+            if parts := obj_locale.split("_"):
+                language = parts[0]
+                if len(parts) > 1:
+                    dialect = parts[1]
+            tokens = ["SPEECH GENERATOR: Reported locale of", obj, "is", obj_locale]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        if len(language) <= 1 or not language.isalpha():
+            language = ""
+            dialect = ""
+        elif len(dialect) <= 1 or not dialect.isalpha():
+            dialect = ""
+
+        if not language:
+            language, dialect = server.get_language_and_dialect(family)
+            msg = f"SPEECH GENERATOR: Updated to: '{language}', '{dialect}'"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        return language, dialect
+
+    def _apply_default_voice_overrides(
+        self,
+        voice_props: ACSS,
+        family: dict,
+        obj: Atspi.Accessible | None,
+        server: speechserver.SpeechServer,
+        language: str,
+        dialect: str,
+        string: str,
+    ) -> dict:
+        """Applies voice overrides and auto-language-switching for default voice key."""
+
+        mgr = speech_manager.get_manager()
+        voice_override: ACSS | None = None
+        if AXUtilities.is_link(obj):
+            voice_override = mgr.get_voice_properties(voice_type[HYPERLINK])
+        elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
+            voice_override = mgr.get_voice_properties(voice_type[UPPERCASE])
+
+        if voice_override:
+            voice_props.update(voice_override)
+            if ACSS.FAMILY in voice_override:
+                family.update(voice_override[ACSS.FAMILY])
+
+        auto_lang_switching = (
+            not focus_manager.get_manager().is_in_preferences_window()
+            and mgr.get_auto_language_switching()
+        )
+        # Only update the language if it has changed from the user's preferred voice.
+        # If that occurred, changing the dialect should not be problematic/bothersome.
+        # For now, ignore dialect changes for the same language to avoid two potential
+        # problems: 1) Unexpected voice changes when we have both a user-specified and
+        # object-specified dialect (e.g. American English versus British English). In
+        # the future, we can make this change opt-in. 2) Unexpected voice changes and/or
+        # pauses when either the user or the object lacks a dialect because the families
+        # won't match.
+        if auto_lang_switching and language and language != family.get(VoiceFamily.LANG):
+            family[VoiceFamily.LANG] = language
+            family[VoiceFamily.DIALECT] = dialect
+            if families := server.get_voice_families_for_language(
+                language,
+                dialect,
+                family.get(VoiceFamily.VARIANT),
+            ):
+                family[VoiceFamily.NAME] = families[0][0]
+            else:
+                # On occasions (e.g. SD + espeak + "zh"), we might not get any matching
+                # family. When that occurs, setting/updating the language but leaving the
+                # original name can cause the voice to not be updated, whereas clearing the
+                # name seems to be enough to trigger the correct language to be used.
+                family[VoiceFamily.NAME] = ""
+            tokens = ["SPEECH GENERATOR: Family updated to", family]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        return family
+
     def voice(self, key: str | None = None, **args) -> list[ACSS]:
         """Returns an array containing a voice."""
 
@@ -229,21 +315,6 @@ class SpeechGenerator(generator.Generator):
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if not language:
-            obj_locale = AXObject.get_locale(obj).split(".")[0]
-            if parts := obj_locale.split("_"):
-                language = parts[0]
-                if len(parts) > 1:
-                    dialect = parts[1]
-            tokens = ["SPEECH GENERATOR: Reported locale of", obj, "is", obj_locale]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if len(language) <= 1 or not language.isalpha():
-            language = ""
-            dialect = ""
-        elif len(dialect) <= 1 or not dialect.isalpha():
-            dialect = ""
-
         server = mgr.get_server()
         # TODO - JD: We probably never should have gotten to this point if there is no speech
         # server. Thus we should probably return early in generate_speech() instead. For now,
@@ -253,56 +324,24 @@ class SpeechGenerator(generator.Generator):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return [voice]
 
-        if not language:
-            alt_language, alt_dialect = server.get_language_and_dialect(family)
-            language = alt_language
-            dialect = alt_dialect
-            msg = f"SPEECH GENERATOR: Updated to: '{language}', '{dialect}'"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+        language, dialect = self._resolve_language_and_dialect(
+            obj,
+            language,
+            dialect,
+            server,
+            family,
+        )
 
         if key in [None, DEFAULT]:
-            string = args.get("string", "")
-            voice_override: ACSS | None = None
-            if AXUtilities.is_link(obj):
-                voice_override = mgr.get_voice_properties(voice_type[HYPERLINK])
-            elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
-                voice_override = mgr.get_voice_properties(voice_type[UPPERCASE])
-
-            if voice_override:
-                voice.update(voice_override)
-                if ACSS.FAMILY in voice_override:
-                    family.update(voice_override[ACSS.FAMILY])
-
-            if focus_manager.get_manager().is_in_preferences_window():
-                auto_lang_switching = False
-            else:
-                auto_lang_switching = mgr.get_auto_language_switching()
-            if auto_lang_switching:
-                # Only update the language if it has changed from the user's preferred voice.
-                # If that occurred, changing the dialect should not be problematic/bothersome.
-                # For now, ignore dialect changes for the same language to avoid two potential
-                # problems: 1) Unexpected voice changes when we have both a user-specified and
-                # object-specified dialect (e.g. American English versus British English). In
-                # the future, we can make this change opt-in. 2) Unexpected voice changes and/or
-                # pauses when either the user or the object lacks a dialect because the families
-                # won't match.
-                if language and language != family.get(VoiceFamily.LANG):
-                    family[VoiceFamily.LANG] = language
-                    family[VoiceFamily.DIALECT] = dialect
-                    if families := server.get_voice_families_for_language(
-                        language,
-                        dialect,
-                        family.get(VoiceFamily.VARIANT),
-                    ):
-                        family[VoiceFamily.NAME] = families[0][0]
-                    else:
-                        # On occasions (e.g. SD + espeak + "zh"), we might not get any matching
-                        # family. When that occurs, setting/updating the language but leaving the
-                        # original name can cause the voice to not be updated, whereas clearing the
-                        # name seems to be enough to trigger the correct language to be used.
-                        family[VoiceFamily.NAME] = ""
-                    tokens = ["SPEECH GENERATOR: Family updated to", family]
-                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            family = self._apply_default_voice_overrides(
+                voice,
+                family,
+                obj,
+                server,
+                language,
+                dialect,
+                args.get("string", ""),
+            )
         else:
             override = mgr.get_voice_properties(voicename)
             if override:
@@ -426,45 +465,31 @@ class SpeechGenerator(generator.Generator):
 
         role = args.get("role", AXObject.get_role(obj))
         _enabled, disabled = self._get_enabled_and_disabled_context_roles()
-        if role in disabled:
-            return False
 
-        do_not_speak = [
-            Atspi.Role.ARTICLE,
-            Atspi.Role.EXTENDED,
-            Atspi.Role.FILLER,
-            Atspi.Role.FOOTER,
-            Atspi.Role.FORM,
-            Atspi.Role.LABEL,
-            Atspi.Role.MENU_ITEM,
-            Atspi.Role.PARAGRAPH,
-            Atspi.Role.REDUNDANT_OBJECT,
-            Atspi.Role.SECTION,
-            Atspi.Role.STATIC,
-            Atspi.Role.TABLE_CELL,
-            Atspi.Role.UNKNOWN,
-        ]
+        do_not_speak = list(disabled)
+        do_not_speak.extend(
+            [
+                Atspi.Role.ARTICLE,
+                Atspi.Role.EXTENDED,
+                Atspi.Role.FILLER,
+                Atspi.Role.FOOTER,
+                Atspi.Role.FORM,
+                Atspi.Role.LABEL,
+                Atspi.Role.MENU_ITEM,
+                Atspi.Role.PARAGRAPH,
+                Atspi.Role.REDUNDANT_OBJECT,
+                Atspi.Role.SECTION,
+                Atspi.Role.STATIC,
+                Atspi.Role.TABLE_CELL,
+                Atspi.Role.UNKNOWN,
+            ]
+        )
         if not speech_presenter.get_presenter().use_verbose_speech():
-            do_not_speak.extend(
-                [
-                    Atspi.Role.CANVAS,
-                    Atspi.Role.ICON,
-                ],
-            )
-
+            do_not_speak.extend([Atspi.Role.CANVAS, Atspi.Role.ICON])
         if args.get("string"):
-            do_not_speak.extend(
-                [
-                    "ROLE_CONTENT_SUGGESTION",
-                ],
-            )
+            do_not_speak.append("ROLE_CONTENT_SUGGESTION")
         if args.get("formatType") != "basicWhereAmI":
-            do_not_speak.extend(
-                [
-                    Atspi.Role.LIST,
-                    Atspi.Role.LIST_ITEM,
-                ],
-            )
+            do_not_speak.extend([Atspi.Role.LIST, Atspi.Role.LIST_ITEM])
         if args.get("startOffset") is not None or args.get("endOffset") is not None:
             do_not_speak.extend(
                 [
@@ -474,36 +499,27 @@ class SpeechGenerator(generator.Generator):
                     Atspi.Role.DOCUMENT_SPREADSHEET,
                     Atspi.Role.DOCUMENT_TEXT,
                     Atspi.Role.DOCUMENT_WEB,
-                ],
+                ]
             )
         if args.get("total", 1) > 1:
-            do_not_speak.extend(
-                [
-                    Atspi.Role.ROW_HEADER,
-                ],
-            )
+            do_not_speak.append(Atspi.Role.ROW_HEADER)
 
         if role in do_not_speak:
             return False
 
-        if AXUtilities.is_combo_box(AXObject.get_parent(obj)):
+        if (
+            AXUtilities.is_combo_box(AXObject.get_parent(obj))
+            or self._script.utilities.is_anchor(obj)
+            or AXUtilities.is_desktop_frame(obj)
+            or AXUtilities.is_docked_frame(obj)
+        ):
             return False
 
-        if self._script.utilities.is_anchor(obj):
+        if AXUtilities.is_panel(obj, role) and (
+            AXUtilities.is_selected(obj)
+            or not (args.get("ancestorOf") and AXUtilities.is_widget(args.get("ancestorOf")))
+        ):
             return False
-
-        if AXUtilities.is_desktop_frame(obj):
-            return False
-
-        if AXUtilities.is_docked_frame(obj):
-            return False
-
-        if AXUtilities.is_panel(obj, role):
-            if AXUtilities.is_selected(obj):
-                return False
-            child = args.get("ancestorOf")
-            if not (child and AXUtilities.is_widget(child)):
-                return False
 
         return obj != args.get("priorObj")
 
@@ -609,11 +625,10 @@ class SpeechGenerator(generator.Generator):
 
         if AXObject.find_ancestor(obj, AXUtilities.is_tree_or_tree_table):
             child_nodes = self._script.utilities.child_nodes(obj)
-            if child_nodes:
-                result = [messages.item_count(len(child_nodes))]
+            result: list[Any] = [messages.item_count(len(child_nodes))] if child_nodes else []
+            if result:
                 result.extend(self.voice(SYSTEM, obj=obj, **args))
-                return result
-            return []
+            return result
 
         role = args.get("role")
         if AXUtilities.is_list(obj, role) or AXUtilities.is_list_box(obj, role):
@@ -745,6 +760,74 @@ class SpeechGenerator(generator.Generator):
         return enabled, disabled
 
     @log_generator_output
+    @staticmethod
+    def _get_dpub_landmark_leaving_message(obj: Atspi.Accessible) -> str:
+        """Returns the leaving message for a DPUB landmark."""
+
+        dpub_landmark_checks: list[tuple[Callable, str]] = [
+            (AXUtilities.is_dpub_acknowledgments, messages.LEAVING_ACKNOWLEDGMENTS),
+            (AXUtilities.is_dpub_afterword, messages.LEAVING_AFTERWORD),
+            (AXUtilities.is_dpub_appendix, messages.LEAVING_APPENDIX),
+            (AXUtilities.is_dpub_bibliography, messages.LEAVING_BIBLIOGRAPHY),
+            (AXUtilities.is_dpub_chapter, messages.LEAVING_CHAPTER),
+            (AXUtilities.is_dpub_conclusion, messages.LEAVING_CONCLUSION),
+            (AXUtilities.is_dpub_credits, messages.LEAVING_CREDITS),
+            (AXUtilities.is_dpub_endnotes, messages.LEAVING_ENDNOTES),
+            (AXUtilities.is_dpub_epilogue, messages.LEAVING_EPILOGUE),
+            (AXUtilities.is_dpub_errata, messages.LEAVING_ERRATA),
+            (AXUtilities.is_dpub_foreword, messages.LEAVING_FOREWORD),
+            (AXUtilities.is_dpub_glossary, messages.LEAVING_GLOSSARY),
+            (AXUtilities.is_dpub_index, messages.LEAVING_INDEX),
+            (AXUtilities.is_dpub_introduction, messages.LEAVING_INTRODUCTION),
+            (AXUtilities.is_dpub_pagelist, messages.LEAVING_PAGELIST),
+            (AXUtilities.is_dpub_part, messages.LEAVING_PART),
+            (AXUtilities.is_dpub_preface, messages.LEAVING_PREFACE),
+            (AXUtilities.is_dpub_prologue, messages.LEAVING_PROLOGUE),
+            (AXUtilities.is_dpub_toc, messages.LEAVING_TOC),
+        ]
+        for predicate, msg in dpub_landmark_checks:
+            if predicate(obj):
+                return msg
+        return ""
+
+    @staticmethod
+    def _get_dpub_section_leaving_message(obj: Atspi.Accessible) -> str:
+        """Returns the leaving message for a DPUB section."""
+
+        dpub_section_checks: list[tuple[Callable, str]] = [
+            (AXUtilities.is_dpub_abstract, messages.LEAVING_ABSTRACT),
+            (AXUtilities.is_dpub_colophon, messages.LEAVING_COLOPHON),
+            (AXUtilities.is_dpub_credit, messages.LEAVING_CREDIT),
+            (AXUtilities.is_dpub_dedication, messages.LEAVING_DEDICATION),
+            (AXUtilities.is_dpub_epigraph, messages.LEAVING_EPIGRAPH),
+            (AXUtilities.is_dpub_example, messages.LEAVING_EXAMPLE),
+            (AXUtilities.is_dpub_pullquote, messages.LEAVING_PULLQUOTE),
+            (AXUtilities.is_dpub_qna, messages.LEAVING_QNA),
+        ]
+        for predicate, msg in dpub_section_checks:
+            if predicate(obj):
+                return msg
+        return ""
+
+    @staticmethod
+    def _get_landmark_leaving_message(obj: Atspi.Accessible) -> str:
+        """Returns the leaving message for a landmark."""
+
+        landmark_checks: list[tuple[Callable, str]] = [
+            (AXUtilities.is_landmark_banner, messages.LEAVING_LANDMARK_BANNER),
+            (AXUtilities.is_landmark_complementary, messages.LEAVING_LANDMARK_COMPLEMENTARY),
+            (AXUtilities.is_landmark_contentinfo, messages.LEAVING_LANDMARK_CONTENTINFO),
+            (AXUtilities.is_landmark_main, messages.LEAVING_LANDMARK_MAIN),
+            (AXUtilities.is_landmark_navigation, messages.LEAVING_LANDMARK_NAVIGATION),
+            (AXUtilities.is_landmark_region, messages.LEAVING_LANDMARK_REGION),
+            (AXUtilities.is_landmark_search, messages.LEAVING_LANDMARK_SEARCH),
+            (AXUtilities.is_landmark_form, messages.LEAVING_FORM),
+        ]
+        for predicate, msg in landmark_checks:
+            if predicate(obj):
+                return msg
+        return ""
+
     def _generate_leaving(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not args.get("leaving"):
             return []
@@ -757,129 +840,116 @@ class SpeechGenerator(generator.Generator):
 
         count = args.get("count", 1)
 
-        result = []
-        if is_details:
-            result.append(messages.LEAVING_DETAILS)
-        elif role == Atspi.Role.BLOCK_QUOTE:
-            if count > 1:
-                result.append(messages.leaving_n_blockquotes(count))
-            else:
-                result.append(messages.LEAVING_BLOCKQUOTE)
-        elif self._script.utilities.is_document_list(obj):
-            if count > 1:
-                result.append(messages.leaving_n_lists(count))
-            else:
-                result.append(messages.LEAVING_LIST)
-        elif role == "ROLE_FEED":
-            result.append(messages.LEAVING_FEED)
-        elif role == Atspi.Role.PANEL:
-            if AXUtilities.is_figure(obj):
-                result.append(messages.LEAVING_FIGURE)
-            elif self._script.utilities.is_document_panel(obj):
-                result.append(messages.LEAVING_PANEL)
-            else:
-                result = [""]
-        elif role == Atspi.Role.GROUPING:
-            result.append(messages.LEAVING_GROUPING)
-        elif role == Atspi.Role.TABLE and self._script.utilities.is_text_document_table(obj):
-            result.append(messages.LEAVING_TABLE)
-        elif role == "ROLE_DPUB_LANDMARK":
-            if AXUtilities.is_dpub_acknowledgments(obj):
-                result.append(messages.LEAVING_ACKNOWLEDGMENTS)
-            elif AXUtilities.is_dpub_afterword(obj):
-                result.append(messages.LEAVING_AFTERWORD)
-            elif AXUtilities.is_dpub_appendix(obj):
-                result.append(messages.LEAVING_APPENDIX)
-            elif AXUtilities.is_dpub_bibliography(obj):
-                result.append(messages.LEAVING_BIBLIOGRAPHY)
-            elif AXUtilities.is_dpub_chapter(obj):
-                result.append(messages.LEAVING_CHAPTER)
-            elif AXUtilities.is_dpub_conclusion(obj):
-                result.append(messages.LEAVING_CONCLUSION)
-            elif AXUtilities.is_dpub_credits(obj):
-                result.append(messages.LEAVING_CREDITS)
-            elif AXUtilities.is_dpub_endnotes(obj):
-                result.append(messages.LEAVING_ENDNOTES)
-            elif AXUtilities.is_dpub_epilogue(obj):
-                result.append(messages.LEAVING_EPILOGUE)
-            elif AXUtilities.is_dpub_errata(obj):
-                result.append(messages.LEAVING_ERRATA)
-            elif AXUtilities.is_dpub_foreword(obj):
-                result.append(messages.LEAVING_FOREWORD)
-            elif AXUtilities.is_dpub_glossary(obj):
-                result.append(messages.LEAVING_GLOSSARY)
-            elif AXUtilities.is_dpub_index(obj):
-                result.append(messages.LEAVING_INDEX)
-            elif AXUtilities.is_dpub_introduction(obj):
-                result.append(messages.LEAVING_INTRODUCTION)
-            elif AXUtilities.is_dpub_pagelist(obj):
-                result.append(messages.LEAVING_PAGELIST)
-            elif AXUtilities.is_dpub_part(obj):
-                result.append(messages.LEAVING_PART)
-            elif AXUtilities.is_dpub_preface(obj):
-                result.append(messages.LEAVING_PREFACE)
-            elif AXUtilities.is_dpub_prologue(obj):
-                result.append(messages.LEAVING_PROLOGUE)
-            elif AXUtilities.is_dpub_toc(obj):
-                result.append(messages.LEAVING_TOC)
-        elif role == "ROLE_DPUB_SECTION":
-            if AXUtilities.is_dpub_abstract(obj):
-                result.append(messages.LEAVING_ABSTRACT)
-            elif AXUtilities.is_dpub_colophon(obj):
-                result.append(messages.LEAVING_COLOPHON)
-            elif AXUtilities.is_dpub_credit(obj):
-                result.append(messages.LEAVING_CREDIT)
-            elif AXUtilities.is_dpub_dedication(obj):
-                result.append(messages.LEAVING_DEDICATION)
-            elif AXUtilities.is_dpub_epigraph(obj):
-                result.append(messages.LEAVING_EPIGRAPH)
-            elif AXUtilities.is_dpub_example(obj):
-                result.append(messages.LEAVING_EXAMPLE)
-            elif AXUtilities.is_dpub_pullquote(obj):
-                result.append(messages.LEAVING_PULLQUOTE)
-            elif AXUtilities.is_dpub_qna(obj):
-                result.append(messages.LEAVING_QNA)
-        elif AXUtilities.is_landmark(obj):
-            if AXUtilities.is_landmark_banner(obj):
-                result.append(messages.LEAVING_LANDMARK_BANNER)
-            elif AXUtilities.is_landmark_complementary(obj):
-                result.append(messages.LEAVING_LANDMARK_COMPLEMENTARY)
-            elif AXUtilities.is_landmark_contentinfo(obj):
-                result.append(messages.LEAVING_LANDMARK_CONTENTINFO)
-            elif AXUtilities.is_landmark_main(obj):
-                result.append(messages.LEAVING_LANDMARK_MAIN)
-            elif AXUtilities.is_landmark_navigation(obj):
-                result.append(messages.LEAVING_LANDMARK_NAVIGATION)
-            elif AXUtilities.is_landmark_region(obj):
-                result.append(messages.LEAVING_LANDMARK_REGION)
-            elif AXUtilities.is_landmark_search(obj):
-                result.append(messages.LEAVING_LANDMARK_SEARCH)
-            elif AXUtilities.is_landmark_form(obj):
-                result.append(messages.LEAVING_FORM)
-            else:
-                result = [""]
-        elif role == Atspi.Role.FORM:
-            result.append(messages.LEAVING_FORM)
-        elif role == Atspi.Role.TOOL_TIP:
-            result.append(messages.LEAVING_TOOL_TIP)
-        elif role == Atspi.Role.CONTENT_DELETION:
-            result.append(messages.CONTENT_DELETION_END)
-        elif role == Atspi.Role.CONTENT_INSERTION:
-            result.append(messages.CONTENT_INSERTION_END)
-        elif role == Atspi.Role.MARK:
-            result.append(messages.CONTENT_MARK_END)
-        elif role == Atspi.Role.SUGGESTION and not AXUtilities.is_inline_suggestion(obj, role):
-            result.append(messages.LEAVING_SUGGESTION)
-        else:
-            result = [""]
+        result = self._get_leaving_message(obj, role, count, is_details)
         if result:
             result.extend(self.voice(SYSTEM, obj=obj, **args))
 
         return result
 
-    def _generate_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        result = []
+    def _get_leaving_message(
+        self,
+        obj: Atspi.Accessible,
+        role: Atspi.Role | str,
+        count: int,
+        is_details: bool,
+    ) -> list[Any]:
+        """Returns the leaving message for the given object and role."""
 
+        simple_role_messages: dict[Atspi.Role | str, str] = {
+            "ROLE_FEED": messages.LEAVING_FEED,
+            Atspi.Role.GROUPING: messages.LEAVING_GROUPING,
+            Atspi.Role.FORM: messages.LEAVING_FORM,
+            Atspi.Role.TOOL_TIP: messages.LEAVING_TOOL_TIP,
+            Atspi.Role.CONTENT_DELETION: messages.CONTENT_DELETION_END,
+            Atspi.Role.CONTENT_INSERTION: messages.CONTENT_INSERTION_END,
+            Atspi.Role.MARK: messages.CONTENT_MARK_END,
+        }
+
+        result = ""
+        if is_details:
+            result = messages.LEAVING_DETAILS
+        elif role == Atspi.Role.BLOCK_QUOTE:
+            result = (
+                messages.leaving_n_blockquotes(count) if count > 1 else messages.LEAVING_BLOCKQUOTE
+            )
+        elif self._script.utilities.is_document_list(obj):
+            result = messages.leaving_n_lists(count) if count > 1 else messages.LEAVING_LIST
+        elif role == Atspi.Role.PANEL:
+            if AXUtilities.is_figure(obj):
+                result = messages.LEAVING_FIGURE
+            elif self._script.utilities.is_document_panel(obj):
+                result = messages.LEAVING_PANEL
+        elif role == Atspi.Role.TABLE and self._script.utilities.is_text_document_table(obj):
+            result = messages.LEAVING_TABLE
+        elif role == "ROLE_DPUB_LANDMARK":
+            result = self._get_dpub_landmark_leaving_message(obj)
+        elif role == "ROLE_DPUB_SECTION":
+            result = self._get_dpub_section_leaving_message(obj)
+        elif AXUtilities.is_landmark(obj):
+            result = self._get_landmark_leaving_message(obj)
+        elif role in simple_role_messages:
+            result = simple_role_messages[role]
+        elif role == Atspi.Role.SUGGESTION and not AXUtilities.is_inline_suggestion(obj, role):
+            result = messages.LEAVING_SUGGESTION
+
+        return [result]
+
+    def _should_present_common_ancestor(
+        self,
+        obj: Atspi.Accessible,
+        prior_obj: Atspi.Accessible | None,
+        common_ancestor: Atspi.Accessible,
+        present_once: list[Atspi.Role],
+    ) -> bool:
+        """Returns True if the common ancestor's nesting level has changed."""
+
+        common_role = self._get_functional_role(common_ancestor)
+        if common_role not in present_once:
+            return False
+
+        def pred(x: Atspi.Accessible) -> bool:
+            return self._get_functional_role(x) == common_role
+
+        obj_level = self._get_nesting_level(AXObject.find_ancestor(obj, pred))
+        prior_level = self._get_nesting_level(AXObject.find_ancestor(prior_obj, pred))
+        return obj_level != prior_level
+
+    def _present_ancestor_results(
+        self,
+        ancestors: list[Atspi.Accessible],
+        ancestor_roles: list[Atspi.Role],
+        obj: Atspi.Accessible,
+        prior_obj: Atspi.Accessible | None,
+        leaving: Any,
+    ) -> list[Any]:
+        """Generates presentations for the collected ancestor chain."""
+
+        present_once = [Atspi.Role.BLOCK_QUOTE, Atspi.Role.LIST]
+        result: list[Any] = []
+        presented_roles: list[Atspi.Role] = []
+        for i, ancestor in enumerate(ancestors):
+            alt_role = ancestor_roles[i]
+            if alt_role in present_once and alt_role in presented_roles:
+                continue
+
+            presented_roles.append(alt_role)
+            result.append(
+                self.generate(
+                    ancestor,
+                    formatType="ancestor",
+                    role=alt_role,
+                    leaving=leaving,
+                    count=ancestor_roles.count(alt_role),
+                    ancestorOf=obj,
+                    priorObj=prior_obj,
+                ),
+            )
+
+        if not leaving:
+            result.reverse()
+        return result
+
+    def _generate_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
         leaving = args.get("leaving")
         if leaving and args.get("priorObj"):
             prior_obj = obj
@@ -887,19 +957,13 @@ class SpeechGenerator(generator.Generator):
         else:
             prior_obj = args.get("priorObj")
 
-        if prior_obj and AXObject.is_dead(prior_obj):
-            return []
-
-        if AXUtilities.is_tool_tip(prior_obj):
+        if (prior_obj and AXObject.is_dead(prior_obj)) or AXUtilities.is_tool_tip(prior_obj):
             return []
 
         if prior_obj and AXObject.get_parent(prior_obj) == AXObject.get_parent(obj):
             return []
 
-        if AXUtilities.is_page_tab(obj):
-            return []
-
-        if AXUtilities.is_tool_tip(obj):
+        if AXUtilities.is_page_tab(obj) or AXUtilities.is_tool_tip(obj):
             return []
 
         common_ancestor = AXObject.get_common_ancestor(prior_obj, obj)
@@ -920,20 +984,11 @@ class SpeechGenerator(generator.Generator):
         stop_after_roles.extend([Atspi.Role.TOOL_TIP])
 
         present_once = [Atspi.Role.BLOCK_QUOTE, Atspi.Role.LIST]
-
-        present_common_ancestor = False
-        if common_ancestor and not leaving:
-            common_role = self._get_functional_role(common_ancestor)
-            if common_role in present_once:
-
-                def pred(x):
-                    return self._get_functional_role(x) == common_role
-
-                obj_ancestor = AXObject.find_ancestor(obj, pred)
-                prior_ancestor = AXObject.find_ancestor(prior_obj, pred)
-                obj_level = self._get_nesting_level(obj_ancestor)
-                prior_level = self._get_nesting_level(prior_ancestor)
-                present_common_ancestor = obj_level != prior_level
+        present_common = (
+            common_ancestor is not None
+            and not leaving
+            and self._should_present_common_ancestor(obj, prior_obj, common_ancestor, present_once)
+        )
 
         ancestors: list[Atspi.Accessible] = []
         ancestor_roles: list[Atspi.Role] = []
@@ -944,7 +999,7 @@ class SpeechGenerator(generator.Generator):
                 break
 
             # TODO - JD: Create an alternative role for this.
-            if (
+            should_skip = (
                 (
                     parent_role in skip_roles
                     and not self._script.utilities.is_spreadsheet_table(parent)
@@ -952,53 +1007,25 @@ class SpeechGenerator(generator.Generator):
                 or (include_only and parent_role not in include_only)
                 or AXUtilities.is_layout_only(parent)
                 or AXUtilities.is_button_with_popup(parent)
+            )
+            if (
+                not should_skip
+                and (parent != common_ancestor or present_common)
+                and not any(AXUtilities.is_redundant_object(a, parent) for a in ancestors)
             ):
-                pass
-            elif parent != common_ancestor or present_common_ancestor:
-                is_redundant = False
-                for ancestor in ancestors:
-                    if AXUtilities.is_redundant_object(ancestor, parent):
-                        is_redundant = True
-                        break
-                if not is_redundant:
-                    ancestors.append(parent)
-                    ancestor_roles.append(parent_role)
+                ancestors.append(parent)
+                ancestor_roles.append(parent_role)
 
             if parent == common_ancestor or parent_role in stop_after_roles:
                 break
 
             parent = AXObject.get_parent_checked(parent)
 
-        presented_roles = []
-        for i, x in enumerate(ancestors):
-            alt_role = ancestor_roles[i]
-            if alt_role in present_once and alt_role in presented_roles:
-                continue
-
-            presented_roles.append(alt_role)
-            count = ancestor_roles.count(alt_role)
-            result.append(
-                self.generate(
-                    x,
-                    formatType="ancestor",
-                    role=alt_role,
-                    leaving=leaving,
-                    count=count,
-                    ancestorOf=obj,
-                    priorObj=prior_obj,
-                ),
-            )
-
-        if not leaving:
-            result.reverse()
-        return result
+        return self._present_ancestor_results(ancestors, ancestor_roles, obj, prior_obj, leaving)
 
     @log_generator_output
     def _generate_old_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if self._only_speak_displayed_text():
-            return []
-
-        if self._script.utilities.in_find_container():
+        if self._only_speak_displayed_text() or self._script.utilities.in_find_container():
             return []
 
         prior_obj = args.get("priorObj")
@@ -1056,10 +1083,7 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_new_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if self._only_speak_displayed_text():
-            return []
-
-        if self._script.utilities.in_find_container():
+        if self._only_speak_displayed_text() or self._script.utilities.in_find_container():
             return []
 
         prior_obj = args.get("priorObj")
@@ -1067,11 +1091,13 @@ class SpeechGenerator(generator.Generator):
             return []
 
         role = args.get("role", AXObject.get_role(obj))
-        if AXUtilities.is_frame(obj, role) or AXUtilities.is_window(obj, role):
-            return []
-
-        if AXUtilities.is_menu_item_of_any_kind(obj, role) and (
-            not prior_obj or AXUtilities.is_window(prior_obj)
+        if (
+            AXUtilities.is_frame(obj, role)
+            or AXUtilities.is_window(obj, role)
+            or (
+                AXUtilities.is_menu_item_of_any_kind(obj, role)
+                and (not prior_obj or AXUtilities.is_window(prior_obj))
+            )
         ):
             return []
 
@@ -1116,10 +1142,10 @@ class SpeechGenerator(generator.Generator):
         ):
             return []
 
-        if args.get("index", 0) + 1 < args.get("total", 1):
-            return []
-
-        if obj != focus_manager.get_manager().get_locus_of_focus():
+        if (
+            args.get("index", 0) + 1 < args.get("total", 1)
+            or obj != focus_manager.get_manager().get_locus_of_focus()
+        ):
             return []
 
         result = []
@@ -1290,43 +1316,28 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_math_enclosed_enclosures(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        strings = []
+        enclosure_messages = {
+            "actuarial": messages.MATH_ENCLOSURE_ACTUARIAL,
+            "box": messages.MATH_ENCLOSURE_BOX,
+            "circle": messages.MATH_ENCLOSURE_CIRCLE,
+            "longdiv": messages.MATH_ENCLOSURE_LONGDIV,
+            "radical": messages.MATH_ENCLOSURE_RADICAL,
+            "roundedbox": messages.MATH_ENCLOSURE_ROUNDEDBOX,
+            "horizontalstrike": messages.MATH_ENCLOSURE_HORIZONTALSTRIKE,
+            "verticalstrike": messages.MATH_ENCLOSURE_VERTICALSTRIKE,
+            "downdiagonalstrike": messages.MATH_ENCLOSURE_DOWNDIAGONALSTRIKE,
+            "updiagonalstrike": messages.MATH_ENCLOSURE_UPDIAGONALSTRIKE,
+            "northeastarrow": messages.MATH_ENCLOSURE_NORTHEASTARROW,
+            "bottom": messages.MATH_ENCLOSURE_BOTTOM,
+            "left": messages.MATH_ENCLOSURE_LEFT,
+            "right": messages.MATH_ENCLOSURE_RIGHT,
+            "top": messages.MATH_ENCLOSURE_TOP,
+            "phasorangle": messages.MATH_ENCLOSURE_PHASOR_ANGLE,
+            "madruwb": messages.MATH_ENCLOSURE_MADRUWB,
+        }
         attrs = AXObject.get_attributes_dict(obj)
         enclosures = attrs.get("notation", "longdiv").split()
-        if "actuarial" in enclosures:
-            strings.append(messages.MATH_ENCLOSURE_ACTUARIAL)
-        if "box" in enclosures:
-            strings.append(messages.MATH_ENCLOSURE_BOX)
-        if "circle" in enclosures:
-            strings.append(messages.MATH_ENCLOSURE_CIRCLE)
-        if "longdiv" in enclosures:
-            strings.append(messages.MATH_ENCLOSURE_LONGDIV)
-        if "radical" in enclosures:
-            strings.append(messages.MATH_ENCLOSURE_RADICAL)
-        if "roundedbox" in enclosures:
-            strings.append(messages.MATH_ENCLOSURE_ROUNDEDBOX)
-        if "horizontalstrike" in enclosures:
-            strings.append(messages.MATH_ENCLOSURE_HORIZONTALSTRIKE)
-        if "verticalstrike" in enclosures:
-            strings.append(messages.MATH_ENCLOSURE_VERTICALSTRIKE)
-        if "downdiagonalstrike" in enclosures:
-            strings.append(messages.MATH_ENCLOSURE_DOWNDIAGONALSTRIKE)
-        if "updiagonalstrike" in enclosures:
-            strings.append(messages.MATH_ENCLOSURE_UPDIAGONALSTRIKE)
-        if "northeastarrow" in enclosures:
-            strings.append(messages.MATH_ENCLOSURE_NORTHEASTARROW)
-        if "bottom" in enclosures:
-            strings.append(messages.MATH_ENCLOSURE_BOTTOM)
-        if "left" in enclosures:
-            strings.append(messages.MATH_ENCLOSURE_LEFT)
-        if "right" in enclosures:
-            strings.append(messages.MATH_ENCLOSURE_RIGHT)
-        if "top" in enclosures:
-            strings.append(messages.MATH_ENCLOSURE_TOP)
-        if "phasorangle" in enclosures:
-            strings.append(messages.MATH_ENCLOSURE_PHASOR_ANGLE)
-        if "madruwb" in enclosures:
-            strings.append(messages.MATH_ENCLOSURE_MADRUWB)
+        strings = [enclosure_messages[e] for e in enclosures if e in enclosure_messages]
         if not strings:
             tokens = ["SPEECH GENERATOR: Could not get enclosure message for", enclosures]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1924,25 +1935,18 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_state_unselected(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if self._only_speak_displayed_text():
+        role = args.get("role")
+        if (
+            self._only_speak_displayed_text()
+            or args.get("inMouseReview")
+            or not obj
+            or not AXUtilities.is_selectable(obj)
+            or AXUtilities.is_selected(obj)
+            or AXUtilities.is_text(obj, role)
+        ):
             return []
 
-        if args.get("inMouseReview"):
-            return []
-
-        if not obj:
-            return []
-
-        if not AXUtilities.is_selectable(obj):
-            return []
-
-        if AXUtilities.is_selected(obj):
-            return []
-
-        if AXUtilities.is_text(obj, args.get("role")):
-            return []
-
-        if AXUtilities.is_list_item(obj, args.get("role")):
+        if AXUtilities.is_list_item(obj, role):
             result = [object_properties.STATE_UNSELECTED_LIST_ITEM]
             result.extend(self.voice(STATE, obj=obj, **args))
             return result
@@ -1950,11 +1954,11 @@ class SpeechGenerator(generator.Generator):
         parent = AXObject.get_parent(obj)
         table = AXTable.get_table(obj)
         if table:
-            if input_event_manager.get_manager().last_event_was_left_or_right():
-                return []
-            if AXTable.is_layout_table(table):
-                return []
-            if not self._script.utilities.is_gui_cell(obj):
+            if (
+                input_event_manager.get_manager().last_event_was_left_or_right()
+                or AXTable.is_layout_table(table)
+                or not self._script.utilities.is_gui_cell(obj)
+            ):
                 return []
         elif AXUtilities.is_layered_pane(parent):
             if obj in self._script.utilities.selected_children(parent):
@@ -2079,16 +2083,12 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_table_size(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if self._only_speak_displayed_text():
-            return []
-
-        if args.get("leaving"):
-            return []
-
-        if AXTable.is_layout_table(obj):
-            return []
-
-        if self._script.utilities.is_spreadsheet_table(obj):
+        if (
+            self._only_speak_displayed_text()
+            or args.get("leaving")
+            or AXTable.is_layout_table(obj)
+            or self._script.utilities.is_spreadsheet_table(obj)
+        ):
             return []
 
         if not speech_presenter.get_presenter().use_verbose_speech():

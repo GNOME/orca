@@ -19,12 +19,10 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-lines
-# pylint: disable=wrong-import-position
 # pylint: disable=too-many-public-methods
 
 """Module for flat-review commands"""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import time

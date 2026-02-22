@@ -22,7 +22,6 @@
 # pylint: disable=import-outside-toplevel
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-statements
-# pylint: disable=too-few-public-methods
 # pylint: disable=protected-access
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-arguments

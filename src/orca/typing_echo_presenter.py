@@ -20,13 +20,9 @@
 
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-lines
-# pylint:disable=too-many-branches
-# pylint:disable=too-many-return-statements
-# pylint:disable=wrong-import-position
 
 """Provides typing echo support."""
 
-# This must be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import string
@@ -780,7 +776,53 @@ class TypingEchoPresenter:
         presentation_manager.get_manager().speak_accessible_text(obj, word)
         return True
 
-    # pylint: disable-next=too-many-statements
+    def _should_echo_orca_modifier(self, event: input_event.KeyboardEvent) -> bool:
+        """Returns whether an Orca modifier event should be echoed."""
+
+        click_count = event.get_click_count()
+        if click_count == 2:
+            msg = "TYPING ECHO PRESENTER: Echoing Orca modifier double-click."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        result = (
+            click_count == 1 and self.get_key_echo_enabled() and self.get_modifier_keys_enabled()
+        )
+        msg = f"TYPING ECHO PRESENTER: Echoing modifier Orca modifier event: {result}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return result
+
+    def _get_echo_for_key_type(self, event: input_event.KeyboardEvent) -> tuple[bool, str] | None:
+        """Returns (result, key_type) for the event's key type, or None if unrecognized."""
+
+        checks = [
+            (event.is_navigation_key, self.get_navigation_keys_enabled, "navigation"),
+            (event.is_action_key, self.get_action_keys_enabled, "action"),
+            (event.is_modifier_key, self.get_modifier_keys_enabled, "modifier"),
+            (event.is_function_key, self.get_function_keys_enabled, "function"),
+        ]
+        for type_check, enabled_check, label in checks:
+            if type_check():
+                return enabled_check(), label
+
+        if AXUtilities.is_password_text(event.get_object()) and event.should_obscure():
+            return False, "password text"
+
+        character_checks = [
+            (event.is_diacritical_key, self.get_diacritical_keys_enabled, "diacritical"),
+            (event.is_alphabetic_key, self.get_alphabetic_keys_enabled, "alphabetic"),
+            (event.is_numeric_key, self.get_numeric_keys_enabled, "numeric"),
+            (event.is_punctuation_key, self.get_punctuation_keys_enabled, "punctuation"),
+        ]
+        for type_check, enabled_check, label in character_checks:
+            if type_check():
+                return enabled_check(), label
+
+        if event.is_space():
+            return self.get_space_enabled() or self.get_character_echo_enabled(), "space"
+
+        return None
+
     def should_echo_keyboard_event(self, event: input_event.KeyboardEvent) -> bool:
         """Returns whether the given keyboard event should be echoed."""
 
@@ -794,34 +836,13 @@ class TypingEchoPresenter:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        key_echo_enabled = self.get_key_echo_enabled()
-
         if event.is_orca_modifier():
-            click_count = event.get_click_count()
-            if click_count == 2:
-                msg = "TYPING ECHO PRESENTER: Echoing Orca modifier double-click."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return True
+            return self._should_echo_orca_modifier(event)
 
-            result = click_count == 1 and key_echo_enabled and self.get_modifier_keys_enabled()
-            msg = f"TYPING ECHO PRESENTER: Echoing modifier Orca modifier event: {result}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return result
-
-        # Historically we had only filtered out Orca-modified events. But it seems strange to
-        # treat the Orca modifier as special. A change to make Orca-modified events echoed in
-        # the same fashion as other modified events received some negative feedback, specifically
-        # in relation to flat review commands in laptop layout. Feedback regarding whether any
-        # command-like modifier should result in no echo has thus far ranged from yes to
-        # it's "not disturbing" to hear echo with other modifiers. Given the lack of demand
-        # for echo with modifiers, treat all command modifiers the same and suppress echo.
-        if event.is_alt_control_or_orca_modified():
-            msg = "TYPING ECHO PRESENTER: Not echoing keyboard event due to modifier."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if self.is_character_echoable(event):
-            msg = "TYPING ECHO PRESENTER: Not echoing keyboard event: is character echoable."
+        # Treat all command modifiers the same and suppress echo.
+        if event.is_alt_control_or_orca_modified() or self.is_character_echoable(event):
+            reason = "modifier" if event.is_alt_control_or_orca_modified() else "character echoable"
+            msg = f"TYPING ECHO PRESENTER: Not echoing keyboard event: {reason}."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -831,73 +852,16 @@ class TypingEchoPresenter:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return result
 
-        if not key_echo_enabled:
+        if not self.get_key_echo_enabled():
             msg = "TYPING ECHO PRESENTER: Not echoing keyboard event: key echo is not enabled."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if event.is_navigation_key():
-            result = self.get_navigation_keys_enabled()
-            msg = f"TYPING ECHO PRESENTER: Echoing navigation keyboard event: {result}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return result
-
-        if event.is_action_key():
-            result = self.get_action_keys_enabled()
-            msg = f"TYPING ECHO PRESENTER: Echoing action keyboard event: {result}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return result
-
-        if event.is_modifier_key():
-            result = self.get_modifier_keys_enabled()
-            msg = f"TYPING ECHO PRESENTER: Echoing modifier keyboard event: {result}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return result
-
-        if event.is_function_key():
-            result = self.get_function_keys_enabled()
-            msg = f"TYPING ECHO PRESENTER: Echoing function keyboard event: {result}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return result
-
-        if AXUtilities.is_password_text(event.get_object()) and event.should_obscure():
-            msg = "TYPING ECHO PRESENTER: Not echoing keyboard event: is password text."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if event.is_diacritical_key():
-            result = self.get_diacritical_keys_enabled()
-            msg = f"TYPING ECHO PRESENTER: Echoing diacritical keyboard event: {result}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return result
-
-        if event.is_alphabetic_key():
-            result = self.get_alphabetic_keys_enabled()
-            msg = f"TYPING ECHO PRESENTER: Echoing alphabetic keyboard event: {result}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return result
-
-        if event.is_numeric_key():
-            result = self.get_numeric_keys_enabled()
-            msg = f"TYPING ECHO PRESENTER: Echoing numeric keyboard event: {result}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return result
-
-        if event.is_punctuation_key():
-            result = self.get_punctuation_keys_enabled()
-            msg = f"TYPING ECHO PRESENTER: Echoing punctuation keyboard event: {result}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return result
-
-        if event.is_space():
-            result = self.get_space_enabled() or self.get_character_echo_enabled()
-            msg = f"TYPING ECHO PRESENTER: Echoing space keyboard event: {result}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return result
-
-        msg = "TYPING ECHO PRESENTER: Not echoing keyboard event: key type unknown."
+        key_type_result = self._get_echo_for_key_type(event)
+        result, label = key_type_result if key_type_result is not None else (False, "unknown")
+        msg = f"TYPING ECHO PRESENTER: Echoing {label} keyboard event: {result}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        return False
+        return result
 
     def is_character_echoable(self, event: input_event.KeyboardEvent) -> bool:
         """Returns True if the script will echo this event as part of character echo."""

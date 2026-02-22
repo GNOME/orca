@@ -21,14 +21,12 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=too-many-locals
 
 """Module for notification messages"""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import time

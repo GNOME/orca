@@ -18,6 +18,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-arguments
+
 """Module for drawing highlights over an area of interest."""
 
 from __future__ import annotations

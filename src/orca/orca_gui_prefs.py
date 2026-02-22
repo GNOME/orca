@@ -18,7 +18,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
 # pylint: disable=no-member
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-statements
@@ -84,7 +83,6 @@ class _AppearanceProviders:
     shapes: Gtk.CssProvider | None = None
 
 
-# pylint: disable-next=too-few-public-methods
 class NavigationRow(Gtk.ListBoxRow):
     """ListBoxRow with a panel_id attribute for navigation."""
 

@@ -18,11 +18,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=too-many-return-statements
-
 """Script utilities for terminal presentation."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import re
@@ -106,29 +103,24 @@ class Utilities(script_utilities.Utilities):
     def treat_event_as_command(self, event: Atspi.Event) -> bool:
         """Returns true if we should treat this event as resulting from a command."""
 
-        if event.source != focus_manager.get_manager().get_locus_of_focus():
+        if event.source != focus_manager.get_manager().get_locus_of_focus() or not (
+            event.type.startswith("object:text-changed:insert") and event.any_data.strip()
+        ):
             return False
 
-        if event.type.startswith("object:text-changed:insert") and event.any_data.strip():
-            # To let default script handle presentation.
-            if input_event_manager.get_manager().last_event_was_paste():
-                return False
+        # To let default script handle presentation.
+        if input_event_manager.get_manager().last_event_was_paste() or event.any_data.count("\n~"):
+            return False
 
-            if event.any_data.count("\n~"):
-                return False
-
-            manager = input_event_manager.get_manager()
-            if manager.last_event_was_return_tab_or_space():
-                return bool(re.search(r"[^\d\s]", event.any_data))
-            # TODO - JD: What condition specifically is this here for?
-            if manager.last_event_was_alt_modified():
-                return True
-            if manager.last_event_was_printable_key():
-                return len(event.any_data) > 1
-            if AXText.get_caret_offset(event.source) == event.detail1 + event.detail2:
-                return True
-
-        return False
+        manager = input_event_manager.get_manager()
+        if manager.last_event_was_return_tab_or_space():
+            return bool(re.search(r"[^\d\s]", event.any_data))
+        # TODO - JD: What condition specifically is this here for?
+        if manager.last_event_was_alt_modified():
+            return True
+        if manager.last_event_was_printable_key():
+            return len(event.any_data) > 1
+        return AXText.get_caret_offset(event.source) == event.detail1 + event.detail2
 
     def treat_event_as_noise(self, event: Atspi.Event) -> bool:
         """Returns true if we should treat this event as noise."""

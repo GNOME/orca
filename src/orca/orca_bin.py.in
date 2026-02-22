@@ -24,7 +24,6 @@
 
 from __future__ import annotations
 
-# pylint: disable=wrong-import-position
 # pylint: disable=too-many-branches
 
 __id__        = "$Id$"
@@ -241,7 +240,7 @@ def cleanup(sigval: int) -> None:
         time.sleep(0.5)
 
 # TODO - JD: Remove _DeprecatedSettingsStub in Orca v51.
-class _DeprecatedSettingsStub(ModuleType):  # pylint: disable=too-few-public-methods
+class _DeprecatedSettingsStub(ModuleType):
     """Stub for the removed orca.settings module."""
 
     _has_warned: bool = False

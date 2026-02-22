@@ -20,11 +20,11 @@
 
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-public-methods
-# pylint: disable=wrong-import-position
+# pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-arguments, too-many-positional-arguments
 
 """Module for document-related presentation and navigation settings."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -309,7 +309,6 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
         super().__init__(guilabels.NATIVE_NAVIGATION, controls, info_message=info)
 
 
-# pylint: disable-next=too-many-instance-attributes
 class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     """Main document preferences grid with categorized navigation settings."""
 
@@ -575,7 +574,6 @@ class DocumentPresenter:
             app = self._get_current_app()
         self._get_state_for_app(app).in_focus_mode = value
 
-    # pylint: disable-next=too-many-arguments, too-many-positional-arguments, too-many-branches
     def _set_presentation_mode(
         self,
         script: default.Script,
@@ -628,10 +626,8 @@ class DocumentPresenter:
                 AXObject.grab_focus(obj)
 
         if notify_user:
-            if use_focus_mode:
-                presentation_manager.get_manager().present_message(messages.MODE_FOCUS)
-            else:
-                presentation_manager.get_manager().present_message(messages.MODE_BROWSE)
+            msg = messages.MODE_FOCUS if use_focus_mode else messages.MODE_BROWSE
+            presentation_manager.get_manager().present_message(msg)
 
         state = self._get_state_for_app(script.app)
         state.in_focus_mode = use_focus_mode
@@ -666,27 +662,27 @@ class DocumentPresenter:
         )
         caret_navigator.get_navigator().set_enabled_for_script(script, True)
 
-    # pylint: disable-next=too-many-return-statements
-    def is_focus_mode_widget(self, script: default.Script, obj: Atspi.Accessible) -> bool:
-        """Returns True if obj should be interacted with in focus mode."""
+    def _is_focus_mode_widget_by_state(self, obj: Atspi.Accessible) -> tuple[bool, str]:
+        """Returns (True, reason) if obj's state makes it a focus mode widget."""
 
         if AXUtilities.is_editable(obj):
-            tokens = ["DOCUMENT PRESENTER:", obj, "is focus mode widget: it's editable"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
+            return True, "it's editable"
 
         if (
             AXUtilities.is_expandable(obj)
             and AXUtilities.is_focusable(obj)
             and not AXUtilities.is_link(obj)
         ):
-            tokens = [
-                "DOCUMENT PRESENTER:",
-                obj,
-                "is focus mode widget: it's expandable and focusable",
-            ]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
+            return True, "it's expandable and focusable"
+
+        return False, ""
+
+    def _is_focus_mode_widget_by_role(
+        self,
+        script: default.Script,
+        obj: Atspi.Accessible,
+    ) -> tuple[bool | None, str]:
+        """Returns (True/False, reason) if role determines focus mode, or (None, '') if unclear."""
 
         always_focus_mode_roles = [
             Atspi.Role.COMBO_BOX,
@@ -709,64 +705,68 @@ class DocumentPresenter:
 
         role = AXObject.get_role(obj)
         if role in always_focus_mode_roles:
-            tokens = ["DOCUMENT PRESENTER:", obj, "is focus mode widget due to its role"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
+            return True, "due to its role"
 
         if role in [Atspi.Role.TABLE_CELL, Atspi.Role.TABLE] and AXTable.is_layout_table(
             AXTable.get_table(obj),
         ):
-            tokens = ["DOCUMENT PRESENTER:", obj, "is not focus mode widget: it's layout only"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
+            return False, "it's layout only"
 
         if AXUtilities.is_list_box_item(obj, role):
-            tokens = ["DOCUMENT PRESENTER:", obj, "is focus mode widget:it's a listbox item"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
+            return True, "it's a listbox item"
 
         if AXUtilities.is_button_with_popup(obj, role):
-            tokens = ["DOCUMENT PRESENTER:", obj, "is focus mode widget: it's a button with popup"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
+            return True, "it's a button with popup"
 
         focus_mode_roles = [Atspi.Role.EMBEDDED, Atspi.Role.TABLE_CELL, Atspi.Role.TABLE]
-
         if (
             role in focus_mode_roles
             and not script.utilities.is_text_block_element(obj)
             and not script.utilities.has_name_and_action_and_no_useful_children(obj)
             and not AXDocument.is_pdf(script.utilities.get_document_for_object(obj))
         ):
-            tokens = [
-                "DOCUMENT PRESENTER:",
-                obj,
-                "is focus mode widget based on presumed functionality",
-            ]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
+            return True, "based on presumed functionality"
 
-        if AXObject.find_ancestor(obj, AXUtilities.is_grid) is not None:
-            tokens = ["DOCUMENT PRESENTER:", obj, "is focus mode widget: it's a grid descendant"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
+        return None, ""
 
-        if AXObject.find_ancestor(obj, AXUtilities.is_menu) is not None:
-            tokens = ["DOCUMENT PRESENTER:", obj, "is focus mode widget: it's a menu descendant"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
+    def _is_focus_mode_widget_by_ancestry(
+        self,
+        script: default.Script,
+        obj: Atspi.Accessible,
+    ) -> tuple[bool, str]:
+        """Returns (True, reason) if obj's ancestry makes it a focus mode widget."""
 
-        if AXObject.find_ancestor(obj, AXUtilities.is_tool_bar) is not None:
-            tokens = ["DOCUMENT PRESENTER:", obj, "is focus mode widget: it's a toolbar descendant"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
+        ancestor_checks: list[tuple[Callable[[Atspi.Accessible], bool], str]] = [
+            (AXUtilities.is_grid, "it's a grid descendant"),
+            (AXUtilities.is_menu, "it's a menu descendant"),
+            (AXUtilities.is_tool_bar, "it's a toolbar descendant"),
+        ]
+        for predicate, reason in ancestor_checks:
+            if AXObject.find_ancestor(obj, predicate) is not None:
+                return True, reason
 
         if script.utilities.is_content_editable_with_embedded_objects(obj):
-            tokens = ["DOCUMENT PRESENTER:", obj, "is focus mode widget: it's content editable"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
+            return True, "it's content editable"
 
-        return False
+        return False, ""
+
+    def is_focus_mode_widget(self, script: default.Script, obj: Atspi.Accessible) -> bool:
+        """Returns True if obj should be interacted with in focus mode."""
+
+        result, reason = self._is_focus_mode_widget_by_state(obj)
+        if not result:
+            role_result, reason = self._is_focus_mode_widget_by_role(script, obj)
+            if role_result is None:
+                result, reason = self._is_focus_mode_widget_by_ancestry(script, obj)
+            else:
+                result = role_result
+
+        prefix = "is" if result else "is not"
+        if reason:
+            tokens = ["DOCUMENT PRESENTER:", obj, f"{prefix} focus mode widget:", reason]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        return result
 
     @dbus_service.command
     def enable_sticky_browse_mode(
@@ -991,7 +991,6 @@ class DocumentPresenter:
 
         return True
 
-    # pylint: disable-next=too-many-return-statements
     def update_mode_if_needed(
         self,
         script: default.Script,
@@ -1254,7 +1253,6 @@ class DocumentPresenter:
         )
         return True
 
-    # pylint: disable-next=too-many-return-statements
     def present_find_results(self, obj: Atspi.Accessible, offset: int) -> bool:
         """Presents find results if appropriate based on settings.
 
@@ -1268,11 +1266,8 @@ class DocumentPresenter:
             return False
 
         document = script.utilities.get_document_for_object(obj)
-        if not document:
-            return False
-
         start = AXText.get_selection_start_offset(obj)
-        if start < 0:
+        if not document or start < 0:
             return False
 
         offset = max(offset, start)
@@ -1280,10 +1275,10 @@ class DocumentPresenter:
         script.utilities.set_caret_context(obj, offset, document=document)
 
         end = AXText.get_selection_end_offset(obj)
-        if end - start < self.get_find_results_minimum_length():
-            return False
-
-        if not self.get_speak_find_results():
+        if (
+            end - start < self.get_find_results_minimum_length()
+            or not self.get_speak_find_results()
+        ):
             return False
 
         if self._made_find_announcement and self.get_only_speak_changed_lines():
@@ -1322,7 +1317,50 @@ class DocumentPresenter:
 
         return False
 
-    # pylint: disable-next=too-many-return-statements, too-many-branches, too-many-statements
+    def _navigation_prevents_focus_mode(
+        self,
+        script: default.Script,
+        obj: Atspi.Accessible,
+        prev_obj: Atspi.Accessible | None,
+    ) -> tuple[bool | None, str]:
+        """Returns (True/False, reason) if navigation state determines focus mode.
+
+        Returns (None, '') if navigation doesn't determine the result.
+        """
+
+        if self.focus_mode_is_sticky(script.app):
+            return True, "focus mode is sticky"
+        if self.browse_mode_is_sticky(script.app):
+            return False, "browse mode is sticky"
+        if (
+            focus_manager.get_manager().in_say_all()
+            or table_navigator.get_navigator().last_input_event_was_navigation_command()
+        ):
+            reason = "SayAll is active" if focus_manager.get_manager().in_say_all() else "table nav"
+            return False, reason
+
+        _structural_navigator = structural_navigator.get_navigator()
+        _caret_navigator = caret_navigator.get_navigator()
+        caret_prevents = (
+            _caret_navigator.last_command_prevents_focus_mode()
+            and AXObject.find_ancestor_inclusive(prev_obj, AXUtilities.is_tool_tip) is None
+        )
+        if _structural_navigator.last_command_prevents_focus_mode() or caret_prevents:
+            struct_prevents = _structural_navigator.last_command_prevents_focus_mode()
+            nav_type = "structural" if struct_prevents else "caret"
+            return False, f"prevented by {nav_type} nav settings"
+
+        old_doc = script.utilities.get_top_level_document_for_object(prev_obj)
+        new_doc = script.utilities.get_top_level_document_for_object(obj)
+        if old_doc == new_doc and not self.get_native_nav_triggers_focus_mode():
+            was_struct_nav = _structural_navigator.last_input_event_was_navigation_command()
+            was_caret_nav = _caret_navigator.last_input_event_was_navigation_command()
+            if not (was_struct_nav or was_caret_nav):
+                result = self.in_focus_mode(script.app)
+                return result, "prevented by native nav settings"
+
+        return None, ""
+
     def use_focus_mode(
         self,
         obj: Atspi.Accessible,
@@ -1336,85 +1374,44 @@ class DocumentPresenter:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if self.focus_mode_is_sticky(script.app):
-            msg = "DOCUMENT PRESENTER: Using focus mode: focus mode is sticky"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if self.browse_mode_is_sticky(script.app):
-            msg = "DOCUMENT PRESENTER: Not using focus mode: browse mode is sticky"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if focus_manager.get_manager().in_say_all():
-            msg = "DOCUMENT PRESENTER: Not using focus mode: SayAll is active."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if table_navigator.get_navigator().last_input_event_was_navigation_command():
-            msg = "DOCUMENT PRESENTER: Not using focus mode: last command was table navigation"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        _structural_navigator = structural_navigator.get_navigator()
-        if _structural_navigator.last_command_prevents_focus_mode():
-            msg = "DOCUMENT PRESENTER: Not using focus mode: prevented by structural nav settings"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
         if prev_obj and AXObject.is_dead(prev_obj):
             prev_obj = None
 
-        _caret_navigator = caret_navigator.get_navigator()
-        if (
-            _caret_navigator.last_command_prevents_focus_mode()
-            and AXObject.find_ancestor_inclusive(prev_obj, AXUtilities.is_tool_tip) is None
-        ):
-            msg = "DOCUMENT PRESENTER: Not using focus mode: prevented by caret nav settings"
+        nav_result, reason = self._navigation_prevents_focus_mode(script, obj, prev_obj)
+        if nav_result is not None:
+            prefix = "Using" if nav_result else "Not using"
+            msg = f"DOCUMENT PRESENTER: {prefix} focus mode: {reason}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        old_doc = script.utilities.get_top_level_document_for_object(prev_obj)
-        new_doc = script.utilities.get_top_level_document_for_object(obj)
-        if old_doc == new_doc and not self.get_native_nav_triggers_focus_mode():
-            was_struct_nav = _structural_navigator.last_input_event_was_navigation_command()
-            was_caret_nav = _caret_navigator.last_input_event_was_navigation_command()
-            if not (was_struct_nav or was_caret_nav):
-                msg = "DOCUMENT PRESENTER: Not changing mode: prevented by native nav settings"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return self.in_focus_mode(script.app)
-
-        if self.is_focus_mode_widget(script, obj):
-            tokens = ["DOCUMENT PRESENTER: Using focus mode:", obj, "is a focus mode widget"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
+            return nav_result
 
         do_not_toggle = AXUtilities.is_link(obj) or AXUtilities.is_radio_button(obj)
-        if (
+        stay_in_focus = (
             self.in_focus_mode(script.app)
             and do_not_toggle
             and input_event_manager.get_manager().last_event_was_unmodified_arrow()
-        ):
-            tokens = ["DOCUMENT PRESENTER: Staying in focus mode: arrowing in", obj]
+        )
+        if self.is_focus_mode_widget(script, obj) or stay_in_focus:
+            reason = "is a focus mode widget" if not stay_in_focus else "arrowing in link/radio"
+            tokens = ["DOCUMENT PRESENTER: Using focus mode:", obj, reason]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
         was_in_app = AXObject.find_ancestor(prev_obj, AXUtilities.is_embedded)
         is_in_app = AXObject.find_ancestor(obj, AXUtilities.is_embedded)
-        if not was_in_app and is_in_app:
-            msg = "DOCUMENT PRESENTER: Using focus mode: just entered a web application"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if self.in_focus_mode(script.app) and is_in_app:
-            if self._force_browse_mode_for_web_app_descendant(script, obj):
-                tokens = ["DOCUMENT PRESENTER: Forcing browse mode for web app descendant", obj]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return False
-
-            msg = "DOCUMENT PRESENTER: Staying in focus mode: we're inside a web application"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
+        if is_in_app:
+            if not was_in_app:
+                msg = "DOCUMENT PRESENTER: Using focus mode: just entered a web application"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
+            if self.in_focus_mode(script.app):
+                force_browse = self._force_browse_mode_for_web_app_descendant(script, obj)
+                if force_browse:
+                    tokens = ["DOCUMENT PRESENTER: Forcing browse mode for web app descendant", obj]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                else:
+                    msg = "DOCUMENT PRESENTER: Staying in focus mode: inside a web application"
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                return not force_browse
 
         tokens = ["DOCUMENT PRESENTER: Not using focus mode for", obj, "due to lack of cause"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)

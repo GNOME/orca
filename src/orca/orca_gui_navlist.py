@@ -19,13 +19,10 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
-# pylint: disable=too-few-public-methods
 # pylint: disable=too-many-locals
 
 """Displays a GUI for Orca navigation list dialogs"""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import time

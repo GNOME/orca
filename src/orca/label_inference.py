@@ -20,14 +20,10 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-locals
-# pylint: disable=too-many-return-statements
-# pylint: disable=too-many-branches
-# pylint: disable=too-few-public-methods
 # pylint: disable=too-many-statements
 
 """Heuristic means to infer the functional/displayed label of a widget."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
@@ -411,12 +407,10 @@ class LabelInference:
             True,
         )
         next_line = self._get_line_contents(next_obj, next_offset)
-        if len(next_line) != 1:
+        if len(next_line) != 1 or self._cannot_label(next_line[0][0]):
             return None, []
 
         next_obj, start, end, string = next_line[0]
-        if self._cannot_label(next_obj):
-            return None, []
 
         if string.strip():
             _x, y, _width, _height = self._get_extents(next_obj, start, end)
@@ -427,6 +421,70 @@ class LabelInference:
 
         return None, []
 
+    def _choose_vertical_label(
+        self,
+        obj: Atspi.Accessible,
+        cell_above: Atspi.Accessible | None,
+        cell_below: Atspi.Accessible | None,
+    ) -> tuple[str | None, list[Atspi.Accessible]]:
+        """Returns the best label from cells above or below obj."""
+
+        label_above: str | None = None
+        sources_above: list[Atspi.Accessible] = []
+        if cell_above:
+            label_above, sources_above = self._create_label_from_contents(cell_above)
+            if label_above and self._prefer_top(obj):
+                return label_above.strip(), sources_above
+
+        label_below: str | None = None
+        sources_below: list[Atspi.Accessible] = []
+        if cell_below and not self._prevent_below(obj):
+            label_below, sources_below = self._create_label_from_contents(cell_below)
+
+        if label_above and label_below:
+            _obj_x, obj_y, _obj_width, obj_height = self._get_extents(obj)
+            _above_x, above_y, _above_width, above_height = self._get_extents(cell_above)
+            _below_x, below_y, _below_width, _below_height = self._get_extents(cell_below)
+            delta_above = obj_y - (above_y + above_height)
+            delta_below = below_y - (obj_y + obj_height)
+            if delta_above <= delta_below:
+                return label_above.strip(), sources_above
+            return label_below.strip(), sources_below
+
+        if label_above:
+            return label_above.strip(), sources_above
+        if label_below:
+            return label_below.strip(), sources_below
+        return None, []
+
+    def _infer_from_table_header_row(
+        self,
+        obj: Atspi.Accessible,
+        grid: Atspi.Accessible,
+        colindex: int,
+    ) -> tuple[str | None, list[Atspi.Accessible]]:
+        """Attempts to infer the label from the first row of a table-like grid."""
+
+        columns = AXTable.get_column_count(grid)
+        first_row = [AXTable.get_cell_at(grid, 0, i) for i in range(columns)]
+        if not first_row or list(filter(self._is_widget, first_row)) or colindex < 0:
+            return None, []
+
+        def is_match(x: Atspi.Accessible) -> bool:
+            if not AXObject.get_child_count(x):
+                return False
+            return not AXUtilities.have_same_role(AXObject.get_child(x, 0), obj)
+
+        rows = AXTable.get_row_count(grid)
+        cells = [AXTable.get_cell_at(grid, i, colindex) for i in range(1, rows)]
+        if list(filter(is_match, cells)):
+            return None, []
+
+        label, sources = self._create_label_from_contents(first_row[colindex])
+        if label:
+            return label.strip(), sources
+        return None, []
+
     def _infer_from_table(
         self,
         obj: Atspi.Accessible,
@@ -435,11 +493,8 @@ class LabelInference:
         """Attempt to infer the functional/displayed label of obj from neighboring cells."""
 
         cell = AXObject.find_ancestor(obj, AXUtilities.is_table_cell)
-        if not self._is_simple_object(cell):
-            return None, []
-
         parent = AXObject.get_parent(obj)
-        if cell not in [parent, AXObject.get_parent(parent)]:
+        if not self._is_simple_object(cell) or cell not in [parent, AXObject.get_parent(parent)]:
             return None, []
 
         grid = AXObject.find_ancestor(cell, AXUtilities.is_table)
@@ -472,8 +527,8 @@ class LabelInference:
             if label:
                 return label.strip(), sources
 
-        obj_x, obj_y, obj_width, obj_height = self._get_extents(obj)
         if cell_right and not self._prevent_right(obj):
+            obj_x, _obj_y, obj_width, _obj_height = self._get_extents(obj)
             x, _y, _width, _height = self._get_extents(cell_right)
             distance = x - (obj_x + obj_width)
             if distance <= proximity_for_right or self._prefer_right(obj):
@@ -481,55 +536,8 @@ class LabelInference:
                 if label:
                     return label.strip(), sources
 
-        label_above: str | None = None
-        sources_above: list[Atspi.Accessible] = []
-        if cell_above:
-            label_above, sources_above = self._create_label_from_contents(cell_above)
-            if label_above and self._prefer_top(obj):
-                return label_above.strip(), sources_above
-
-        label_below: str | None = None
-        sources_below: list[Atspi.Accessible] = []
-        if cell_below and not self._prevent_below(obj):
-            label_below, sources_below = self._create_label_from_contents(cell_below)
-
-        if label_above and label_below:
-            _above_x, above_y, _above_width, above_height = self._get_extents(cell_above)
-            _below_x, below_y, _below_width, _below_height = self._get_extents(cell_below)
-            delta_above = obj_y - (above_y + above_height)
-            delta_below = below_y - (obj_y + obj_height)
-            if delta_above <= delta_below:
-                return label_above.strip(), sources_above
-            return label_below.strip(), sources_below
-
-        if label_above:
-            return label_above.strip(), sources_above
-        if label_below:
-            return label_below.strip(), sources_below
-
-        # None of the cells immediately surrounding this cell seem to be serving
-        # as a functional label. Therefore, see if this table looks like a grid
-        # of widgets with the functional labels in the first row.
-        columns = AXTable.get_column_count(grid)
-        first_row = [AXTable.get_cell_at(grid, 0, i) for i in range(columns)]
-        if not first_row or list(filter(self._is_widget, first_row)):
-            return None, []
-
-        if colindex < 0:
-            return None, []
-
-        def is_match(x: Atspi.Accessible) -> bool:
-            if not AXObject.get_child_count(x):
-                return False
-            return not AXUtilities.have_same_role(AXObject.get_child(x, 0), obj)
-
-        rows = AXTable.get_row_count(grid)
-        cells = [AXTable.get_cell_at(grid, i, colindex) for i in range(1, rows)]
-        if list(filter(is_match, cells)):
-            return None, []
-
-        label, sources = self._create_label_from_contents(first_row[colindex])
+        label, sources = self._choose_vertical_label(obj, cell_above, cell_below)
         if label:
-            return label.strip(), sources
+            return label, sources
 
-        return None, []
+        return self._infer_from_table_header_row(obj, grid, colindex)

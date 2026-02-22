@@ -18,15 +18,11 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=too-few-public-methods
-# pylint: disable=too-many-return-statements
 # pylint: disable=too-many-instance-attributes
-# pylint: disable=too-many-branches
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-nested-blocks
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-positional-arguments
-# pylint: disable=too-many-statements
 
 """Provides a D-Bus interface for remotely controlling Orca."""
 
@@ -159,6 +155,29 @@ class _HandlerInfo:
         self.action: Callable[..., bool] = action
         self.handler_type: HandlerType = handler_type
         self.parameters: list[tuple[str, str]] = parameters or []
+
+
+def _sequence_to_variant(result: list | tuple) -> GLib.Variant:
+    """Converts a Python list or tuple to a GLib.Variant."""
+
+    homogeneous_signatures: list[tuple[type, str]] = [
+        (str, "as"),
+        (bool, "ab"),
+        (int, "ax"),
+    ]
+    for element_type, signature in homogeneous_signatures:
+        if all(isinstance(x, element_type) for x in result):
+            return GLib.Variant(signature, list(result))
+
+    if all(isinstance(x, (list, tuple)) for x in result):
+        if not result:
+            return GLib.Variant("av", [])
+        first_len = len(result[0])
+        converted = [tuple(str(item or "") for item in x) for x in result]
+        signature = "(" + "s" * first_len + ")"
+        return GLib.Variant(f"a{signature}", converted)
+
+    return GLib.Variant("av", [GLib.Variant("v", x) for x in result])
 
 
 @dbus_interface("org.gnome.Orca.Module")
@@ -323,31 +342,20 @@ class OrcaModuleDBusInterface(Publishable):
     def _to_variant(result):
         """Converts a Python value to a correctly-typed GLib.Variant for D-Bus marshalling."""
 
-        if isinstance(result, bool):
-            return GLib.Variant("b", result)
-        if isinstance(result, int):
-            return GLib.Variant("i", result)
-        if isinstance(result, float):
-            return GLib.Variant("d", result)
-        if isinstance(result, str):
-            return GLib.Variant("s", result)
+        scalar_signatures: dict[type, str] = {
+            bool: "b",
+            int: "i",
+            float: "d",
+            str: "s",
+        }
+        for scalar_type, signature in scalar_signatures.items():
+            if isinstance(result, scalar_type):
+                return GLib.Variant(signature, result)
+
         if isinstance(result, dict):
             return GLib.Variant("a{sv}", {str(k): GLib.Variant("v", v) for k, v in result.items()})
         if isinstance(result, (list, tuple)):
-            if all(isinstance(x, str) for x in result):
-                return GLib.Variant("as", list(result))
-            if all(isinstance(x, bool) for x in result):
-                return GLib.Variant("ab", list(result))
-            if all(isinstance(x, int) for x in result):
-                return GLib.Variant("ax", list(result))
-            if all(isinstance(x, (list, tuple)) for x in result):
-                if not result:
-                    return GLib.Variant("av", [])
-                first_len = len(result[0])
-                converted = [tuple(str(item or "") for item in x) for x in result]
-                signature = "(" + "s" * first_len + ")"
-                return GLib.Variant(f"a{signature}", converted)
-            return GLib.Variant("av", [GLib.Variant("v", x) for x in result])
+            return _sequence_to_variant(result)
         if result is None:
             return GLib.Variant("v", GLib.Variant("s", ""))
         return GLib.Variant("s", str(result))

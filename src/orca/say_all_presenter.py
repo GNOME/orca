@@ -20,16 +20,12 @@
 
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-arguments
-# pylint: disable=too-many-branches
 # pylint: disable=too-many-positional-arguments
-# pylint: disable=too-many-statements
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-instance-attributes
-# pylint: disable=wrong-import-position
 
 """Module for commands related to the current accessible object."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 from enum import Enum
@@ -366,6 +362,40 @@ class SayAllPresenter:
             return True, "is non-focusable label for other object"
         return False, ""
 
+    def _advance_to_next(
+        self,
+        obj: Atspi.Accessible,
+        _offset: int,
+        contents: list,
+        restrict_to: Atspi.Accessible | None,
+    ) -> tuple[Atspi.Accessible | None, int]:
+        """Advances to the next content position during say-all iteration."""
+
+        assert self._script is not None
+        if contents:
+            last_obj, last_offset = contents[-1][0], contents[-1][2]
+            # last_offset is the start of the next text unit (per AT-SPI2 semantics).
+            # next_context() looks for the position after the provided offset. In the case of
+            # text, we will wind up with the same text unit for last_offset and last_offset - 1.
+            # However, if the character at last_offset is an embedded object, we'll skip over
+            # its contents if we pass last_offset directly. Therefore decrement last_offset and
+            # let next_context() find the correct next position.
+            next_obj, next_offset = self._script.utilities.next_context(
+                last_obj,
+                max(0, last_offset - 1),
+                restrict_to=restrict_to,
+            )
+        else:
+            next_obj = self._script.utilities.find_next_object(obj, restrict_to)
+            next_offset = 0
+
+        if next_obj is not None:
+            tokens = ["SAY ALL PRESENTER: Updating focus to", next_obj]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            focus_manager.get_manager().set_locus_of_focus(None, next_obj, notify_script=False)
+
+        return next_obj, next_offset
+
     def _say_all_iter(
         self,
         obj: Atspi.Accessible,
@@ -463,26 +493,7 @@ class SayAllPresenter:
                     )
                     yield [context, voice]
 
-            if contents:
-                last_obj, last_offset = contents[-1][0], contents[-1][2]
-                # last_offset is the start of the next text unit (per AT-SPI2 semantics).
-                # next_context() looks for the position after the provided offset. In the case of
-                # text, we will wind up with the same text unit for last_offset and last_offset - 1.
-                # However, if the character at last_offset is an embedded object, we'll skip over
-                # its contents if we pass last_offset directly. Therefore decrement last_offset and
-                # let next_context() find the correct next position.
-                obj, offset = self._script.utilities.next_context(
-                    last_obj,
-                    max(0, last_offset - 1),
-                    restrict_to=restrict_to,
-                )
-            else:
-                obj = self._script.utilities.find_next_object(obj, restrict_to)
-                offset = 0
-
-            if obj is not None:
-                tokens = ["SAY ALL PRESENTER: Updating focus to", obj]
-                focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
+            obj, offset = self._advance_to_next(obj, offset, contents, restrict_to)
 
         self.stop()
 

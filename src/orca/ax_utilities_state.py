@@ -19,7 +19,6 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-public-methods
-# pylint: disable=too-many-return-statements
 
 """Utilities for obtaining state-related information."""
 
@@ -44,18 +43,20 @@ class AXUtilitiesState:
 
         result = AXObject.get_attribute(obj, "current")
         if not result:
-            return ""
-        if result == "date":
-            return messages.CURRENT_DATE
-        if result == "time":
-            return messages.CURRENT_TIME
-        if result == "location":
-            return messages.CURRENT_LOCATION
-        if result == "page":
-            return messages.CURRENT_PAGE
-        if result == "step":
-            return messages.CURRENT_STEP
-        return messages.CURRENT_ITEM
+            status = ""
+        elif result == "date":
+            status = messages.CURRENT_DATE
+        elif result == "time":
+            status = messages.CURRENT_TIME
+        elif result == "location":
+            status = messages.CURRENT_LOCATION
+        elif result == "page":
+            status = messages.CURRENT_PAGE
+        elif result == "step":
+            status = messages.CURRENT_STEP
+        else:
+            status = messages.CURRENT_ITEM
+        return status
 
     @staticmethod
     def has_no_state(obj: Atspi.Accessible) -> bool:

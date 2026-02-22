@@ -21,7 +21,6 @@
 
 """Provides means to pass keyboard events to the app being used."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 from typing import TYPE_CHECKING

@@ -17,37 +17,24 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Holds platform-specific settings.
-"""
-
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2005-2008 Sun Microsystems Inc."
-__license__   = "LGPL"
+"""Holds platform-specific settings."""
 
 import os
 
 # $ORCA_VERSION
-#
 version     = "@VERSION@"
 
 # The revision if built from git; otherwise an empty string
-#
 revision = "@REVISION@"
 
 # "--prefix" parameter used when configuring the build.
-#
 prefix      = "@prefix@"
 
 # The package name (should be "orca").
-#
 package     = "@PACKAGE@"
 
 # The location of the data directory (usually "share").
-#
 datadir = os.path.join('@prefix@','@datadir@')
 
 # The directory where we could find liblouis translation tables.
-#
 tablesdir = "@LOUIS_TABLE_DIR@"

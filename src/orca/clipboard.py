@@ -19,13 +19,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-order
-# pylint: disable=wrong-import-position
-# pylint: disable=too-many-return-statements
-
 """Utilities related to the clipboard."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import re
@@ -502,10 +497,11 @@ class ClipboardPresenter:
             return False
 
         manager = input_event_manager.get_manager()
-        if not manager.last_event_was_command() or manager.last_event_was_undo():
-            return False
-
-        if manager.last_event_was_backspace():
+        if (
+            not manager.last_event_was_command()
+            or manager.last_event_was_undo()
+            or manager.last_event_was_backspace()
+        ):
             return False
 
         if "delete" in event.type and manager.last_event_was_paste():
@@ -515,14 +511,9 @@ class ClipboardPresenter:
         if not contents:
             return False
 
-        if event.any_data == contents:
-            return True
-
-        if bool(re.search(r"\w", event.any_data)) != bool(re.search(r"\w", contents)):
-            return False
-
         # Some applications send multiple text insertion events for part of a given paste.
-        return bool(contents.startswith(event.any_data.rstrip()))
+        words_match = bool(re.search(r"\w", event.any_data)) == bool(re.search(r"\w", contents))
+        return words_match and contents.startswith(event.any_data.rstrip())
 
     def _present_clipboard_contents_change(self, string: str) -> None:
         """Presents the clipboard contents change."""

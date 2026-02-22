@@ -27,11 +27,9 @@
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-return-statements
 # pylint: disable=too-many-statements
-# pylint: disable=wrong-import-position
 
 """Provides support for accessing user-agent-agnostic web-content."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 from typing import TYPE_CHECKING

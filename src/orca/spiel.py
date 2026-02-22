@@ -19,7 +19,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
 # pylint: disable=broad-exception-caught
 # pylint: disable=too-many-instance-attributes
 # pylint: disable=too-many-statements
@@ -28,7 +27,6 @@
 
 """Provides an Orca speech server for Spiel backend."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import locale

@@ -18,18 +18,15 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
 # pylint: disable=too-many-lines
-# pylint: disable=too-many-branches
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-nested-blocks
-# pylint: disable=too-many-statements
 
 """Base class for preference grid UI components."""
 
-# This must be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
+import contextlib
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
@@ -97,7 +94,6 @@ class CommandListBoxRow(Gtk.ListBoxRow):
         self._binding_label = value
 
 
-# pylint: disable-next=too-few-public-methods
 class RadioButtonWithActions(Gtk.RadioButton):
     """RadioButton with associated action buttons for navigation."""
 
@@ -276,58 +272,64 @@ class FocusManagedListBox(Gtk.ListBox):
             return self._rows[-1]
         return None
 
-    # pylint: disable-next=too-many-return-statements
+    def _focus_next_sensitive_widget(self, widget: Gtk.Widget) -> bool:
+        """Focus the next sensitive widget after the given one."""
+
+        try:
+            current_index = self._widgets.index(widget)
+            for next_index in range(current_index + 1, len(self._widgets)):
+                if self._widgets[next_index].get_sensitive():
+                    self._widgets[next_index].grab_focus()
+                    return True
+        except ValueError:
+            pass
+        return False
+
+    def _focus_prev_sensitive_widget(self, widget: Gtk.Widget) -> bool:
+        """Focus the previous sensitive widget before the given one."""
+
+        try:
+            current_index = self._widgets.index(widget)
+            for prev_index in range(current_index - 1, -1, -1):
+                if self._widgets[prev_index].get_sensitive():
+                    self._widgets[prev_index].grab_focus()
+                    return True
+            if self._rows:
+                self._exiting_backward[0] = True
+                self._rows[0].grab_focus()
+        except ValueError:
+            pass
+        return False
+
+    def _navigate_left_from_widget(self, widget: Gtk.Widget) -> bool:
+        """Exit nested group or move to sidebar on Left arrow."""
+
+        if isinstance(widget, (Gtk.Scale, Gtk.SpinButton)):
+            return False
+        parent = self.get_parent()
+        first_grid = None
+        while parent is not None:
+            if isinstance(parent, PreferencesGridBase):
+                if first_grid is None:
+                    first_grid = parent
+                if parent.is_in_multipage_detail():
+                    parent.multipage_show_categories()
+                    return True
+            parent = parent.get_parent()
+        if first_grid is not None:
+            first_grid.focus_sidebar()
+            return True
+        return False
+
     def _on_widget_key_press(self, widget: Gtk.Widget, event) -> bool:
         """Handle Tab, Shift+Tab, and Left arrow to navigate."""
 
         if event.keyval == Gdk.KEY_Tab:
-            try:
-                current_index = self._widgets.index(widget)
-                for next_index in range(current_index + 1, len(self._widgets)):
-                    next_widget = self._widgets[next_index]
-                    if next_widget.get_sensitive():
-                        next_widget.grab_focus()
-                        return True
-                return False
-            except ValueError:
-                pass
-            return False
-
-        # Left arrow: exit nested group first, then move to sidebar
-        # But not for widgets where arrows have meaning (sliders, spin buttons)
+            return self._focus_next_sensitive_widget(widget)
         if event.keyval == Gdk.KEY_Left:
-            if isinstance(widget, (Gtk.Scale, Gtk.SpinButton)):
-                return False
-            parent = self.get_parent()
-            first_grid = None
-            while parent is not None:
-                if isinstance(parent, PreferencesGridBase):
-                    if first_grid is None:
-                        first_grid = parent
-                    if parent.is_in_multipage_detail():
-                        parent.multipage_show_categories()
-                        return True
-                parent = parent.get_parent()
-            if first_grid is not None:
-                first_grid.focus_sidebar()
-                return True
-            return False
-
+            return self._navigate_left_from_widget(widget)
         if event.keyval == Gdk.KEY_ISO_Left_Tab:
-            try:
-                current_index = self._widgets.index(widget)
-                for prev_index in range(current_index - 1, -1, -1):
-                    prev_widget = self._widgets[prev_index]
-                    if prev_widget.get_sensitive():
-                        prev_widget.grab_focus()
-                        return True
-                if self._rows:
-                    self._exiting_backward[0] = True
-                    self._rows[0].grab_focus()
-                    return False
-            except ValueError:
-                pass
-
+            return self._focus_prev_sensitive_widget(widget)
         return False
 
     def _on_row_focus_in(self, _row, _event, widget: Gtk.Widget) -> bool:
@@ -347,7 +349,7 @@ class FocusManagedListBox(Gtk.ListBox):
 # pylint: enable=no-member
 
 
-# pylint: disable-next=too-few-public-methods, too-many-instance-attributes
+# pylint: disable-next=too-many-instance-attributes
 class PreferencesGridBase(Gtk.Grid):
     """Base class for all preferences grid widgets with common UI helpers."""
 
@@ -925,6 +927,30 @@ class PreferencesGridBase(Gtk.Grid):
 
         return False
 
+    def _add_category_grids_to_stack(
+        self,
+        stack: Gtk.Stack,
+        categories: list[tuple[str, str, PreferencesGridBase]],
+    ) -> None:
+        """Adds category grids to the stack with normalized margins."""
+
+        for _label, page_id, grid in categories:
+            grid.set_border_width(0)
+            grid.set_margin_start(0)
+            grid.set_margin_end(0)
+            grid.set_margin_top(0)
+            grid.set_margin_bottom(0)
+            grid.set_row_spacing(6)
+            for child in grid.get_children():
+                if isinstance(child, Gtk.Frame):
+                    child.set_margin_start(0)
+                    child.set_margin_end(0)
+                    child.set_margin_top(6)
+                    child.set_margin_bottom(0)
+
+            stack.add_named(grid, page_id)
+            grid.connect("key-press-event", self._on_multipage_child_key_press)
+
     # pylint: disable-next=too-many-arguments, too-many-positional-arguments
     def _create_multi_page_stack(
         self,
@@ -1011,22 +1037,7 @@ class PreferencesGridBase(Gtk.Grid):
         categories_listbox.set_valign(Gtk.Align.START)
         stack.add_named(categories_listbox, "categories")
 
-        for _label, page_id, grid in categories:
-            grid.set_border_width(0)
-            grid.set_margin_start(0)
-            grid.set_margin_end(0)
-            grid.set_margin_top(0)
-            grid.set_margin_bottom(0)
-            grid.set_row_spacing(6)
-            for child in grid.get_children():
-                if isinstance(child, Gtk.Frame):
-                    child.set_margin_start(0)
-                    child.set_margin_end(0)
-                    child.set_margin_top(6)
-                    child.set_margin_bottom(0)
-
-            stack.add_named(grid, page_id)
-            grid.connect("key-press-event", self._on_multipage_child_key_press)
+        self._add_category_grids_to_stack(stack, categories)
 
         stack.set_visible_child_name("categories")
 
@@ -1118,69 +1129,66 @@ class PreferencesGridBase(Gtk.Grid):
             if grid:
                 GLib.idle_add(self._multipage_focus_first_widget, grid)
 
+    @staticmethod
+    def _get_children_via_foreach(container: Gtk.Container) -> list[Gtk.Widget]:
+        """Gets non-internal children via foreach."""
+
+        children: list[Gtk.Widget] = []
+        container.foreach(children.append)
+        return children
+
+    @staticmethod
+    def _focus_first_listbox_row(listbox: Gtk.ListBox) -> bool:
+        """Focuses the first sensitive, visible row in a listbox."""
+
+        for row in listbox.get_children():
+            if row.get_sensitive() and row.get_visible():
+                row.grab_focus()
+                return True
+        return False
+
+    def _focus_first_in_frame(self, frame: Gtk.Frame) -> bool:
+        """Tries to focus the first listbox row inside a frame."""
+
+        frame_child = frame.get_child()
+        if not (frame_child and isinstance(frame_child, Gtk.Container)):
+            return False
+        grandchildren = self._get_children_via_foreach(frame_child)
+        if isinstance(frame_child, Gtk.Grid):
+            grandchildren = list(reversed(grandchildren))
+        for grandchild in grandchildren:
+            if isinstance(grandchild, Gtk.ListBox) and self._focus_first_listbox_row(grandchild):
+                return True
+        return False
+
+    def _focus_first_in_scrolled_window(self, scrolled_window: Gtk.ScrolledWindow) -> None:
+        """Tries to focus the first listbox row inside a scrolled window."""
+
+        for sw_child in self._get_children_via_foreach(scrolled_window):
+            viewport_children = (
+                self._get_children_via_foreach(sw_child)
+                if isinstance(sw_child, Gtk.Container)
+                else []
+            )
+            for vp_child in viewport_children:
+                if isinstance(vp_child, Gtk.Grid):
+                    for gc in reversed(self._get_children_via_foreach(vp_child)):
+                        if isinstance(gc, Gtk.ListBox):
+                            self._focus_first_listbox_row(gc)
+
     def _multipage_focus_first_widget(self, grid: PreferencesGridBase) -> bool:
         """Focus the first focusable widget in a multi-page child grid."""
 
-        def focus_first_row(listbox):
-            """Focus the first focusable row in a listbox."""
-
-            rows = listbox.get_children()
-            for row in rows:
-                if row.get_sensitive() and row.get_visible():
-                    row.grab_focus()
-                    return True
-            return False
-
-        def get_children_via_foreach(container):
-            """Get non-internal children via foreach."""
-
-            children = []
-            container.foreach(children.append)
-            return children
-
-        children = get_children_via_foreach(grid)
-
-        # Reverse children since foreach() returns Grid children in reverse attachment order
-        children = list(reversed(children))
+        children = list(reversed(self._get_children_via_foreach(grid)))
 
         for child in children:
             if isinstance(child, Gtk.Frame):
-                frame_child = child.get_child()
-                if frame_child and isinstance(frame_child, Gtk.Container):
-                    grandchildren = get_children_via_foreach(frame_child)
-                    # Reverse if it's a Grid (foreach returns Grid children in reverse order)
-                    if isinstance(frame_child, Gtk.Grid):
-                        grandchildren = list(reversed(grandchildren))
-                    for grandchild in grandchildren:
-                        if isinstance(grandchild, Gtk.ListBox):
-                            if focus_first_row(grandchild):
-                                return False
-
+                self._focus_first_in_frame(child)
             elif isinstance(child, Gtk.ScrolledWindow):
-                sw_children = get_children_via_foreach(child)
-
-                for sw_child in sw_children:
-                    if isinstance(sw_child, Gtk.Container):
-                        viewport_children = get_children_via_foreach(sw_child)
-                    else:
-                        viewport_children = []
-
-                    for vp_child in viewport_children:
-                        if isinstance(vp_child, Gtk.Grid):
-                            grid_children = get_children_via_foreach(vp_child)
-
-                            # Reverse since foreach returns Grid children in reverse order
-                            reversed_children = list(reversed(grid_children))
-
-                            for gc in reversed_children:
-                                if isinstance(gc, Gtk.ListBox):
-                                    if focus_first_row(gc):
-                                        return False
+                self._focus_first_in_scrolled_window(child)
                 return False
-
             elif isinstance(child, Gtk.ListBox):
-                if focus_first_row(child):
-                    return False
+                self._focus_first_listbox_row(child)
 
         return False
 
@@ -1284,6 +1292,24 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         self._initializing = False
         self.refresh()
 
+    def _populate_listbox(
+        self,
+        listbox: FocusManagedListBox,
+        controls: list[tuple[int, ControlType]],
+    ) -> None:
+        """Adds control rows to a listbox and registers widgets."""
+
+        for index, control in controls:
+            widget = self._create_control_row(control, listbox)
+            self._widget_to_control_index[widget] = index
+            if isinstance(widget, Gtk.RadioButton):
+                for radio in widget.get_group():
+                    self._widget_to_control_index[radio] = index
+            self._widgets.insert(index, widget)
+            last_row = listbox.get_last_row()
+            if last_row:
+                self._rows.insert(index, last_row)
+
     # pylint: disable-next=too-many-statements
     def _build(self) -> None:
         """Automatically build UI from controls, grouping by member_of."""
@@ -1314,16 +1340,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
             listbox.set_hexpand(True)
             listbox.set_halign(Gtk.Align.FILL)
             listbox.get_accessible().set_name(self._tab_label)
-            for index, control in groups[None]:
-                widget = self._create_control_row(control, listbox)
-                self._widget_to_control_index[widget] = index
-                if isinstance(widget, Gtk.RadioButton):
-                    for radio in widget.get_group():
-                        self._widget_to_control_index[radio] = index
-                self._widgets.insert(index, widget)
-                last_row = listbox.get_last_row()
-                if last_row:
-                    self._rows.insert(index, last_row)
+            self._populate_listbox(listbox, groups[None])
             content_grid.attach(listbox, 0, row, 1, 1)
             row += 1
 
@@ -1348,16 +1365,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                 listbox.get_accessible().set_name(member)
                 self._group_listboxes[member] = listbox
 
-                for index, group_control in groups[member]:
-                    widget = self._create_control_row(group_control, listbox)
-                    self._widget_to_control_index[widget] = index
-                    if isinstance(widget, Gtk.RadioButton):
-                        for radio in widget.get_group():
-                            self._widget_to_control_index[radio] = index
-                    self._widgets.insert(index, widget)
-                    last_row = listbox.get_last_row()
-                    if last_row:
-                        self._rows.insert(index, last_row)
+                self._populate_listbox(listbox, groups[member])
 
                 content_grid.attach(listbox, 0, row, 1, 1)
                 row += 1
@@ -1719,7 +1727,46 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
 
         return first_radio
 
-    # pylint: disable-next=too-many-return-statements
+    def _handle_left_arrow_navigation(self) -> bool:
+        """Exits multipage detail or navigates to sidebar on Left arrow."""
+
+        parent: Gtk.Widget | None = self
+        while parent is not None:
+            if isinstance(parent, PreferencesGridBase) and parent.is_in_multipage_detail():
+                parent.multipage_show_categories()
+                return True
+            parent = parent.get_parent()
+        self.focus_sidebar()
+        return True
+
+    @staticmethod
+    def _navigate_radio_group(radio: Gtk.RadioButton, keyval) -> bool:
+        """Handles Up/Down navigation within a radio button group."""
+
+        group = radio.get_group()
+        if not group:
+            return False
+
+        current_index = -1
+        for i, r in enumerate(group):
+            if r == radio:
+                current_index = i
+                break
+
+        if current_index == -1:
+            return False
+
+        offset = -1 if keyval == Gdk.KEY_Down else 1
+        next_radio = group[(current_index + offset) % len(group)]
+
+        def activate_next():
+            next_radio.grab_focus()
+            next_radio.set_active(True)
+            return False
+
+        GLib.idle_add(activate_next)
+        return True
+
     def _on_radio_key_press(self, radio: Gtk.RadioButton, event) -> bool:
         """Handle navigation keys for radio button group."""
 
@@ -1729,104 +1776,67 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                 return True
             return False
 
-        # Left arrow: exit nested group first, then move to sidebar
         if event.keyval == Gdk.KEY_Left:
-            parent: Gtk.Widget | None = self
-            while parent is not None:
-                if isinstance(parent, PreferencesGridBase):
-                    if parent.is_in_multipage_detail():
-                        parent.multipage_show_categories()
-                        return True
-                parent = parent.get_parent()
-            self.focus_sidebar()
-            return True
+            return self._handle_left_arrow_navigation()
 
         if event.keyval in (Gdk.KEY_Up, Gdk.KEY_Down):
-            group = radio.get_group()
-            if not group:
-                return False
-
-            current_index = -1
-            for i, r in enumerate(group):
-                if r == radio:
-                    current_index = i
-                    break
-
-            if current_index == -1:
-                return False
-
-            if event.keyval == Gdk.KEY_Down:
-                next_index = (current_index - 1) % len(group)
-            else:
-                next_index = (current_index + 1) % len(group)
-
-            next_radio = group[next_index]
-
-            def activate_next():
-                next_radio.grab_focus()
-                next_radio.set_active(True)
-                return False
-
-            GLib.idle_add(activate_next)
-            return True
+            return self._navigate_radio_group(radio, event.keyval)
 
         return False
 
-    # pylint: disable-next=too-many-return-statements
-    def _on_action_button_key_press(self, button: Gtk.Button, event) -> bool:
-        """Handle Tab/Shift+Tab navigation for action buttons."""
+    @staticmethod
+    def _get_action_button_context(
+        button: Gtk.Button,
+    ) -> tuple[RadioButtonWithActions, list[Gtk.Button], int] | None:
+        """Returns (radio, action_buttons, current_index) or None if not in a valid context."""
 
-        parent = button.get_parent()  # button_box
-        if not parent:
-            return False
-
-        parent = parent.get_parent()  # hbox
-        if not parent:
-            return False
+        button_box = button.get_parent()
+        hbox = button_box.get_parent() if button_box else None
+        if not hbox:
+            return None
 
         radio = None
-        for child in parent.get_children():
-            if isinstance(child, Gtk.RadioButton):
+        for child in hbox.get_children():
+            if isinstance(child, RadioButtonWithActions):
                 radio = child
                 break
 
-        if not radio or not isinstance(radio, RadioButtonWithActions):
-            return False
-
-        if not radio.action_buttons:
-            return False
-
-        action_buttons = radio.action_buttons
+        if not radio or not radio.action_buttons:
+            return None
 
         try:
-            current_index = action_buttons.index(button)
+            current_index = radio.action_buttons.index(button)
         except ValueError:
+            return None
+
+        return radio, radio.action_buttons, current_index
+
+    def _on_action_button_key_press(self, button: Gtk.Button, event) -> bool:
+        """Handle Tab/Shift+Tab navigation for action buttons."""
+
+        if event.keyval == Gdk.KEY_Left:
+            return self._handle_left_arrow_navigation()
+
+        context = self._get_action_button_context(button)
+        if context is None:
             return False
+
+        radio, action_buttons, current_index = context
 
         if event.keyval == Gdk.KEY_Tab and not event.state & Gdk.ModifierType.SHIFT_MASK:
             if current_index < len(action_buttons) - 1:
                 action_buttons[current_index + 1].grab_focus()
                 return True
             return False
-        if event.keyval == Gdk.KEY_ISO_Left_Tab or (
+
+        is_shift_tab = event.keyval == Gdk.KEY_ISO_Left_Tab or (
             event.keyval == Gdk.KEY_Tab and (event.state & Gdk.ModifierType.SHIFT_MASK)
-        ):
+        )
+        if is_shift_tab:
             if current_index > 0:
                 action_buttons[current_index - 1].grab_focus()
-                return True
-            radio.grab_focus()
-            return True
-
-        # Left arrow: exit nested group first, then move to sidebar
-        if event.keyval == Gdk.KEY_Left:
-            widget: Gtk.Widget | None = self
-            while widget is not None:
-                if isinstance(widget, PreferencesGridBase):
-                    if widget.is_in_multipage_detail():
-                        widget.multipage_show_categories()
-                        return True
-                widget = widget.get_parent()
-            self.focus_sidebar()
+            else:
+                radio.grab_focus()
             return True
 
         return False
@@ -1834,11 +1844,8 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
     def _on_value_changed(self, widget: Gtk.Widget, *_args: Any) -> None:
         """Handle value changes in any widget."""
 
-        if self._initializing:
-            return
-
         # For radio buttons, only process the activation (not deactivation)
-        if isinstance(widget, Gtk.RadioButton) and not widget.get_active():
+        if self._initializing or (isinstance(widget, Gtk.RadioButton) and not widget.get_active()):
             return
 
         # Check if this is an apply_immediately control
@@ -1912,124 +1919,114 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         self._has_unsaved_changes = False
         self.refresh()
 
+    def _refresh_selection_widget(
+        self,
+        control: SelectionPreferenceControl,
+        widget: Gtk.Widget,
+    ) -> None:
+        """Refreshes a selection preference widget to reflect its current value."""
+
+        current_value = control.getter()
+        if isinstance(widget, Gtk.ComboBoxText):
+            value_list = control.values or control.options
+            with contextlib.suppress(ValueError):
+                widget.set_active(value_list.index(current_value))
+        elif isinstance(widget, Gtk.RadioButton):
+            for radio in widget.get_group():
+                if (
+                    radio in self._radio_to_selection_value
+                    and self._radio_to_selection_value[radio] == current_value
+                ):
+                    radio.set_active(True)
+                    break
+
+    def _refresh_widget(self, control: ControlType, widget: Gtk.Widget) -> None:
+        """Refreshes a single widget to reflect its control's current value."""
+
+        if isinstance(control, BooleanPreferenceControl):
+            assert isinstance(widget, Gtk.Switch)
+            widget.set_active(control.getter())
+        elif isinstance(control, IntRangePreferenceControl):
+            assert isinstance(widget, Gtk.SpinButton)
+            widget.set_value(control.getter())
+        elif isinstance(control, FloatRangePreferenceControl):
+            assert isinstance(widget, Gtk.Scale)
+            widget.set_value(control.getter())
+        elif isinstance(control, EnumPreferenceControl):
+            assert isinstance(widget, Gtk.ComboBoxText)
+            with contextlib.suppress(ValueError):
+                widget.set_active((control.values or control.options).index(control.getter()))
+        elif isinstance(control, ColorPreferenceControl):
+            assert isinstance(widget, Gtk.ColorButton)
+            self._set_color_button_hex(widget, control.getter())
+        elif isinstance(control, SelectionPreferenceControl):
+            self._refresh_selection_widget(control, widget)
+
     def refresh(self) -> None:
         """Update all widgets to reflect current values."""
 
         self._initializing = True
-
         for i, control in enumerate(self._controls):
-            widget = self._widgets[i]
-
-            if isinstance(control, BooleanPreferenceControl):
-                assert isinstance(widget, Gtk.Switch)
-                widget.set_active(control.getter())
-
-            elif isinstance(control, IntRangePreferenceControl):
-                assert isinstance(widget, Gtk.SpinButton)
-                widget.set_value(control.getter())
-
-            elif isinstance(control, FloatRangePreferenceControl):
-                assert isinstance(widget, Gtk.Scale)
-                widget.set_value(control.getter())
-
-            elif isinstance(control, EnumPreferenceControl):
-                assert isinstance(widget, Gtk.ComboBoxText)
-                current_value = control.getter()
-                value_list = control.values or control.options
-                try:
-                    index = value_list.index(current_value)
-                    widget.set_active(index)
-                except ValueError:
-                    pass
-
-            elif isinstance(control, ColorPreferenceControl):
-                assert isinstance(widget, Gtk.ColorButton)
-                self._set_color_button_hex(widget, control.getter())
-
-            elif isinstance(control, SelectionPreferenceControl):
-                current_value = control.getter()
-                if isinstance(widget, Gtk.ComboBoxText):
-                    # Combo box variant
-                    value_list = control.values or control.options
-                    try:
-                        index = value_list.index(current_value)
-                        widget.set_active(index)
-                    except ValueError:
-                        pass
-                elif isinstance(widget, Gtk.RadioButton):
-                    for radio in widget.get_group():
-                        if radio in self._radio_to_selection_value:
-                            if self._radio_to_selection_value[radio] == current_value:
-                                radio.set_active(True)
-                                break
-
+            self._refresh_widget(control, self._widgets[i])
         self._initializing = False
         self._update_sensitivity()
 
-    # pylint: disable-next=too-many-statements
+    def _get_selection_value(
+        self,
+        control: SelectionPreferenceControl,
+        widget: Gtk.Widget,
+    ) -> Any:
+        """Extracts the current selection value from a combo box or radio group."""
+
+        if isinstance(widget, Gtk.ComboBoxText):
+            active = widget.get_active()
+            if active >= 0:
+                return (control.values or control.options)[active]
+        elif isinstance(widget, Gtk.RadioButton):
+            for radio in widget.get_group():
+                if radio.get_active() and radio in self._radio_to_selection_value:
+                    return self._radio_to_selection_value[radio]
+        return None
+
+    def _get_widget_value(self, control: ControlType, widget: Gtk.Widget) -> Any:
+        """Extracts the current value from a control's widget."""
+
+        if isinstance(control, BooleanPreferenceControl):
+            assert isinstance(widget, Gtk.Switch)
+            return widget.get_active()
+        if isinstance(control, IntRangePreferenceControl):
+            assert isinstance(widget, Gtk.SpinButton)
+            return int(widget.get_value())
+        if isinstance(control, FloatRangePreferenceControl):
+            assert isinstance(widget, Gtk.Scale)
+            return widget.get_value()
+        if isinstance(control, EnumPreferenceControl):
+            assert isinstance(widget, Gtk.ComboBoxText)
+            active = widget.get_active()
+            return (control.values or control.options)[active] if active >= 0 else None
+        if isinstance(control, ColorPreferenceControl):
+            assert isinstance(widget, Gtk.ColorButton)
+            return self._rgba_to_hex(widget.get_rgba())
+        return (
+            self._get_selection_value(control, widget)
+            if isinstance(
+                control,
+                SelectionPreferenceControl,
+            )
+            else None
+        )
+
     def save_settings(self, profile: str = "", app_name: str = "") -> dict[str, Any]:
         """Save all values using their setters and return a dict of changes."""
 
-        result = {}
+        result: dict[str, Any] = {}
 
         for i, control in enumerate(self._controls):
-            widget = self._widgets[i]
-
-            if isinstance(control, BooleanPreferenceControl):
-                assert isinstance(widget, Gtk.Switch)
-                value = widget.get_active()
+            value = self._get_widget_value(control, self._widgets[i])
+            if value is not None and control.setter is not None:
                 control.setter(value)
                 if control.prefs_key:
                     result[control.prefs_key] = value
-
-            elif isinstance(control, IntRangePreferenceControl):
-                assert isinstance(widget, Gtk.SpinButton)
-                value = int(widget.get_value())
-                control.setter(value)
-                if control.prefs_key:
-                    result[control.prefs_key] = value
-
-            elif isinstance(control, FloatRangePreferenceControl):
-                assert isinstance(widget, Gtk.Scale)
-                value = widget.get_value()
-                control.setter(value)
-                if control.prefs_key:
-                    result[control.prefs_key] = value
-
-            elif isinstance(control, EnumPreferenceControl):
-                assert isinstance(widget, Gtk.ComboBoxText)
-                active = widget.get_active()
-                if active >= 0:
-                    value_list = control.values or control.options
-                    value = value_list[active]
-                    control.setter(value)
-                    if control.prefs_key:
-                        result[control.prefs_key] = value
-
-            elif isinstance(control, ColorPreferenceControl):
-                assert isinstance(widget, Gtk.ColorButton)
-                value = self._rgba_to_hex(widget.get_rgba())
-                control.setter(value)
-                if control.prefs_key:
-                    result[control.prefs_key] = value
-
-            elif isinstance(control, SelectionPreferenceControl):
-                value = None
-                if isinstance(widget, Gtk.ComboBoxText):
-                    active = widget.get_active()
-                    if active >= 0:
-                        value_list = control.values or control.options
-                        value = value_list[active]
-                elif isinstance(widget, Gtk.RadioButton):
-                    for radio in widget.get_group():
-                        if radio.get_active() and radio in self._radio_to_selection_value:
-                            value = self._radio_to_selection_value[radio]
-                            break
-
-                if value is not None and control.setter is not None:
-                    control.setter(value)
-                    if control.prefs_key:
-                        result[control.prefs_key] = value
 
         self._has_unsaved_changes = False
         self._write_gsettings(result, profile, app_name)

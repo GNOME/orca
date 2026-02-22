@@ -19,13 +19,14 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-lines
+# pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-positional-arguments
 
 """Provides utilities for managing input events."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
@@ -45,7 +46,7 @@ if TYPE_CHECKING:
 _DOUBLE_CLICK_TIMEOUT: float = 0.5
 
 
-class InputEventManager:  # pylint: disable=too-many-instance-attributes
+class InputEventManager:
     """Provides utilities for managing input events."""
 
     def __init__(self) -> None:
@@ -270,8 +271,6 @@ class InputEventManager:  # pylint: disable=too-many-instance-attributes
     ) -> None:
         self.process_keyboard_event(_device, False, keycode, keysym, modifiers, text)
 
-    # pylint: disable=too-many-arguments
-    # pylint: disable=too-many-positional-arguments
     def process_keyboard_event(
         self,
         _device: Atspi.Device,
@@ -334,10 +333,6 @@ class InputEventManager:  # pylint: disable=too-many-instance-attributes
         self._last_input_event = event
         return True
 
-    # pylint: enable=too-many-arguments
-    # pylint: enable=too-many-positional-arguments
-
-    # pylint: disable-next=too-many-return-statements
     def _determine_keyboard_event_click_count(self, event: input_event.KeyboardEvent) -> int:
         """Determines the click count of event."""
 
@@ -358,9 +353,7 @@ class InputEventManager:  # pylint: disable=too-many-instance-attributes
             return 1
 
         last_count = last_event.get_click_count()
-        if not event.is_pressed_key():
-            return last_count
-        if last_event.is_pressed_key():
+        if not event.is_pressed_key() or last_event.is_pressed_key():
             return last_count
         if (event.is_modifier_key() and last_count == 2) or last_count == 3:
             return 1
@@ -375,14 +368,12 @@ class InputEventManager:  # pylint: disable=too-many-instance-attributes
         # pylint: disable-next=import-outside-toplevel
         from . import command_manager
 
-        if not command_manager.get_manager().has_multi_click_bindings(
+        has_multi_click = command_manager.get_manager().has_multi_click_bindings(
             event.id,
             event.hw_code,
             event.modifiers,
-        ):
-            return 1
-
-        return last_count + 1
+        )
+        return last_count + 1 if has_multi_click else 1
 
     def _determine_mouse_event_click_count(self, event: input_event.MouseButtonEvent) -> int:
         """Determines the click count of event."""

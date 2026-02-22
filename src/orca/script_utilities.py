@@ -17,12 +17,11 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-locals
-# pylint: disable=too-many-branches
-# pylint: disable=too-many-return-statements
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-positional-arguments
 
 """Utilities for providing app/toolkit-specific information about objects and events."""
 
@@ -431,13 +430,11 @@ class Utilities:
     ) -> bool:
         """Returns True if we should present the full row in speech."""
 
-        if focus_manager.get_manager().in_say_all():
-            return False
-
-        if table_navigator.get_navigator().last_input_event_was_navigation_command():
-            return False
-
-        if not self.cell_row_changed(obj, previous_object):
+        if (
+            focus_manager.get_manager().in_say_all()
+            or table_navigator.get_navigator().last_input_event_was_navigation_command()
+            or not self.cell_row_changed(obj, previous_object)
+        ):
             return False
 
         table = AXTable.get_table(obj)
@@ -1270,6 +1267,23 @@ class Utilities:
             object_properties.ACTION_TOGGLE,
         )
 
+    @staticmethod
+    def _strip_newline_from_repeated_word(
+        word: str,
+        prev_word: str,
+        start: int,
+        end: int,
+    ) -> tuple[int, int]:
+        """Strips leading/trailing newline from a word that matches the previous word."""
+
+        if "\n" not in word or word != prev_word:
+            return start, end
+        if word.startswith("\n"):
+            return start + 1, end
+        if word.endswith("\n"):
+            return start, end - 1
+        return start, end
+
     def get_word_at_offset_adjusted_for_navigation(
         self,
         obj: Atspi.Accessible,
@@ -1340,15 +1354,7 @@ class Utilities:
                     start = offset - 1
 
         word = AXText.get_substring(obj, start, end)
-
-        # We only want to present the newline character when we cross a boundary moving from one
-        # word to another. If we're in the same word, strip it out.
-        if "\n" in word and word == prev_word:
-            if word.startswith("\n"):
-                start += 1
-            elif word.endswith("\n"):
-                end -= 1
-
+        start, end = self._strip_newline_from_repeated_word(word, prev_word, start, end)
         word = AXText.get_substring(obj, start, end)
         debug_string = word.replace("\n", "\\n")
         msg = (
@@ -1458,72 +1464,54 @@ class Utilities:
 
         return False
 
-    def handle_text_selection_change(
+    def _compute_selection_changes(
         self,
         obj: Atspi.Accessible,
-        speak_message: bool = True,
-    ) -> bool:
-        """Handles a change in the selected text."""
+        old_string: str,
+        old_start: int,
+        old_end: int,
+        new_string: str,
+        new_start: int,
+        new_end: int,
+    ) -> list[list]:
+        """Returns a list of [start, end, message] describing what changed in the selection."""
 
-        # Note: This guesswork to figure out what actually changed with respect
-        # to text selection will get eliminated once the new text-selection API
-        # is added to ATK and implemented by the toolkits. (BGO 638378)
-
-        if not AXObject.supports_text(obj):
-            return False
-
-        if input_event_manager.get_manager().last_event_was_cut():
-            return False
-
-        old_string, old_start, old_end = AXText.get_cached_selected_text(obj)
-        AXText.update_cached_selected_text(obj)
-        new_string, new_start, new_end = AXText.get_cached_selected_text(obj)
-
-        if input_event_manager.get_manager().last_event_was_select_all() and new_string:
-            if new_string != old_string:
-                presentation_manager.get_manager().speak_message(messages.DOCUMENT_SELECTED_ALL)
-            return True
-
-        # Even though we present a message, treat it as unhandled so the new location is
-        # still presented.
-        if (
-            not input_event_manager.get_manager().last_event_was_caret_selection()
-            and old_string
-            and not new_string
-        ):
-            presentation_manager.get_manager().speak_message(messages.SELECTION_REMOVED)
-            return False
-
-        changes = []
         old_chars = set(range(old_start, old_end))
         new_chars = set(range(new_start, new_end))
         if not old_chars.union(new_chars):
-            return False
+            return []
 
         if old_chars and new_chars and not old_chars.intersection(new_chars):
-            # A simultaneous unselection and selection centered at one offset.
-            changes.append([old_start, old_end, messages.TEXT_UNSELECTED])
-            changes.append([new_start, new_end, messages.TEXT_SELECTED])
-        else:
-            change = sorted(old_chars.symmetric_difference(new_chars))
-            if not change:
-                return False
+            return [
+                [old_start, old_end, messages.TEXT_UNSELECTED],
+                [new_start, new_end, messages.TEXT_SELECTED],
+            ]
 
-            change_start, change_end = change[0], change[-1] + 1
-            if old_chars < new_chars:
-                changes.append([change_start, change_end, messages.TEXT_SELECTED])
-                if old_string.endswith("\ufffc") and old_end == change_start:
-                    # There's a possibility that we have a link spanning multiple lines. If so,
-                    # we want to present the continuation that just became selected.
-                    child = AXHypertext.find_child_at_offset(obj, old_end - 1)
-                    self.handle_text_selection_change(child, False)
-            else:
-                changes.append([change_start, change_end, messages.TEXT_UNSELECTED])
-                if new_string.endswith("\ufffc"):
-                    # There's a possibility that we have a link spanning multiple lines. If so,
-                    # we want to present the continuation that just became unselected.
-                    child = AXHypertext.find_child_at_offset(obj, new_end - 1)
-                    self.handle_text_selection_change(child, False)
+        change = sorted(old_chars.symmetric_difference(new_chars))
+        if not change:
+            return []
+
+        changes = []
+        change_start, change_end = change[0], change[-1] + 1
+        if old_chars < new_chars:
+            changes.append([change_start, change_end, messages.TEXT_SELECTED])
+            if old_string.endswith("\ufffc") and old_end == change_start:
+                child = AXHypertext.find_child_at_offset(obj, old_end - 1)
+                self.handle_text_selection_change(child, False)
+        else:
+            changes.append([change_start, change_end, messages.TEXT_UNSELECTED])
+            if new_string.endswith("\ufffc"):
+                child = AXHypertext.find_child_at_offset(obj, new_end - 1)
+                self.handle_text_selection_change(child, False)
+        return changes
+
+    def _present_selection_changes(
+        self,
+        obj: Atspi.Accessible,
+        changes: list[list],
+        speak_message: bool,
+    ) -> None:
+        """Presents the selection changes to the user."""
 
         speak_message = (
             speak_message and not speech_presenter.get_presenter().get_only_speak_displayed_text()
@@ -1551,6 +1539,77 @@ class Utilities:
                 child = AXHypertext.find_child_at_offset(obj, effective_end)
                 self.handle_text_selection_change(child, speak_message)
 
+    def handle_text_selection_change(
+        self,
+        obj: Atspi.Accessible,
+        speak_message: bool = True,
+    ) -> bool:
+        """Handles a change in the selected text."""
+
+        # Note: This guesswork to figure out what actually changed with respect
+        # to text selection will get eliminated once the new text-selection API
+        # is added to ATK and implemented by the toolkits. (BGO 638378)
+
+        if (
+            not AXObject.supports_text(obj)
+            or input_event_manager.get_manager().last_event_was_cut()
+        ):
+            return False
+
+        old_string, old_start, old_end = AXText.get_cached_selected_text(obj)
+        AXText.update_cached_selected_text(obj)
+        new_string, new_start, new_end = AXText.get_cached_selected_text(obj)
+
+        if input_event_manager.get_manager().last_event_was_select_all() and new_string:
+            if new_string != old_string:
+                presentation_manager.get_manager().speak_message(messages.DOCUMENT_SELECTED_ALL)
+            return True
+
+        # Even though we present a message, treat it as unhandled so the new location is
+        # still presented.
+        if (
+            not input_event_manager.get_manager().last_event_was_caret_selection()
+            and old_string
+            and not new_string
+        ):
+            presentation_manager.get_manager().speak_message(messages.SELECTION_REMOVED)
+            return False
+
+        changes = self._compute_selection_changes(
+            obj,
+            old_string,
+            old_start,
+            old_end,
+            new_string,
+            new_start,
+            new_end,
+        )
+        if not changes:
+            return False
+
+        self._present_selection_changes(obj, changes, speak_message)
+        return True
+
+    def _should_interrupt_for_ancestor_focus_change(
+        self,
+        old_focus: Atspi.Accessible,
+        new_focus: Atspi.Accessible,
+    ) -> bool:
+        """Returns True if speech should be interrupted when old_focus is an ancestor."""
+
+        msg = "SCRIPT UTILITIES: Not interrupting for locusOfFocus change: "
+        if old_name := AXObject.get_name(old_focus):
+            if old_name == AXObject.get_name(new_focus):
+                return True
+            msg += "old locusOfFocus is ancestor of new locusOfFocus, and has a name"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+        if AXUtilities.is_dialog_or_window(old_focus):
+            if AXUtilities.is_menu(new_focus):
+                return True
+            msg += "old locusOfFocus is ancestor dialog or window of the new locusOfFocus"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
         return True
 
     def should_interrupt_for_locus_of_focus_change(
@@ -1562,18 +1621,17 @@ class Utilities:
         """Returns True if speech should be interrupted to present the new focus."""
 
         msg = "SCRIPT UTILITIES: Not interrupting for locusOfFocus change: "
-        if event is None:
-            msg += "event is None"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if old_focus == new_focus:
-            msg += "old locusOfFocus is same as new locusOfFocus"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if event.type.startswith("object:active-descendant-changed"):
-            msg += "event is active-descendant-changed"
+        if (
+            event is None
+            or old_focus == new_focus
+            or event.type.startswith("object:active-descendant-changed")
+        ):
+            if event is None:
+                msg += "event is None"
+            elif old_focus == new_focus:
+                msg += "old locusOfFocus is same as new locusOfFocus"
+            else:
+                msg += "event is active-descendant-changed"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -1594,19 +1652,7 @@ class Utilities:
             return False
 
         if AXObject.is_ancestor(new_focus, old_focus):
-            if old_name := AXObject.get_name(old_focus):
-                if old_name == AXObject.get_name(new_focus):
-                    return True
-                msg += "old locusOfFocus is ancestor of new locusOfFocus, and has a name"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return False
-            if AXUtilities.is_dialog_or_window(old_focus):
-                if AXUtilities.is_menu(new_focus):
-                    return True
-                msg += "old locusOfFocus is ancestor dialog or window of the new locusOfFocus"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return False
-            return True
+            return self._should_interrupt_for_ancestor_focus_change(old_focus, new_focus)
 
         if AXUtilities.object_is_controlled_by(
             old_focus,

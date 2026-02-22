@@ -18,11 +18,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=too-many-return-statements
-
 """Custom script utilities for Gecko"""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import re
@@ -107,13 +104,11 @@ class Utilities(web.Utilities):
 
         # TODO: This would be far easier if Gecko gave us an object attribute to look for....
 
-        if len(AXUtilities.find_all_entries(obj)) != 1:
-            tokens = ["GECKO:", obj, "not believed to be find-in-page container (entry count)"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        if len(AXUtilities.find_all_push_buttons(obj)) < 5:
-            tokens = ["GECKO:", obj, "not believed to be find-in-page container (button count)"]
+        if (
+            len(AXUtilities.find_all_entries(obj)) != 1
+            or len(AXUtilities.find_all_push_buttons(obj)) < 5
+        ):
+            tokens = ["GECKO:", obj, "not believed to be find-in-page container (widget counts)"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 

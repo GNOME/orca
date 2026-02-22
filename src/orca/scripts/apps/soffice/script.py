@@ -18,9 +18,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
-# pylint: disable=too-many-return-statements
-# pylint: disable=too-many-branches
 # pylint: disable=too-many-public-methods
 
 """Custom script for LibreOffice."""
@@ -280,14 +277,43 @@ class Script(default.Script):
 
         return super().on_children_added(event)
 
+    def _handle_spreadsheet_focus(self, event: Atspi.Event, focus: Atspi.Accessible) -> bool:
+        """Returns True if the spreadsheet focus event was handled."""
+
+        if not self.utilities.is_spreadsheet_table(event.source):
+            return False
+
+        if focus_manager.get_manager().focus_is_dead():
+            msg = "SOFFICE: Event believed to be post-editing focus claim."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
+            return True
+
+        if AXUtilities.is_paragraph(focus) or AXUtilities.is_table_cell(focus):
+            if AXObject.find_ancestor(focus, lambda x: x == event.source):
+                msg = "SOFFICE: Event believed to be post-editing focus claim based on role."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
+                return True
+
+            # If we were in a cell, and a different table is claiming focus, it's likely that
+            # the current sheet has just changed. There will not be a common ancestor between
+            # the old cell and the table and we'll wind up re-announcing the frame. To prevent
+            # that, set the focus to the parent of the sheet before the default script causes
+            # the table to be presented.
+            focus_manager.get_manager().set_locus_of_focus(
+                None,
+                AXObject.get_parent(event.source),
+                False,
+            )
+
+        return False
+
     def on_focused_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:focused accessibility events."""
 
-        if not event.detail1:
-            return True
-
         manager = focus_manager.get_manager()
-        if manager.in_say_all():
+        if not event.detail1 or manager.in_say_all():
             return True
 
         # LibreOffice seems to fire focus events for root panes (in documents) and panels
@@ -319,26 +345,8 @@ class Script(default.Script):
                 focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
                 return True
 
-        if self.utilities.is_spreadsheet_table(event.source):
-            if focus_manager.get_manager().focus_is_dead():
-                msg = "SOFFICE: Event believed to be post-editing focus claim."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-                return True
-
-            if AXUtilities.is_paragraph(focus) or AXUtilities.is_table_cell(focus):
-                if AXObject.find_ancestor(focus, lambda x: x == event.source):
-                    msg = "SOFFICE: Event believed to be post-editing focus claim based on role."
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
-                    focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-                    return True
-
-                # If we were in a cell, and a different table is claiming focus, it's likely that
-                # the current sheet has just changed. There will not be a common ancestor between
-                # the old cell and the table and we'll wind up re-announcing the frame. To prevent
-                # that, set the focus to the parent of the sheet before the default script causes
-                # the table to be presented.
-                manager.set_locus_of_focus(None, AXObject.get_parent(event.source), False)
+        if self._handle_spreadsheet_focus(event, focus):
+            return True
 
         return super().on_focused_changed(event)
 

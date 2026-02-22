@@ -1218,7 +1218,7 @@ class TestSpeechManager:
         mock_shutdown.assert_called_once()
 
 
-class TestVoicesPreferencesGridUI:  # pylint: disable=too-few-public-methods
+class TestVoicesPreferencesGridUI:
     """Test VoicesPreferencesGrid save behavior."""
 
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:

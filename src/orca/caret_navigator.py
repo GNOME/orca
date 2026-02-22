@@ -18,13 +18,12 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=too-many-return-statements
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-locals
+# pylint: disable=too-many-lines
 
 """Provides an Orca-controlled caret for text content."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
@@ -747,13 +746,12 @@ class CaretNavigator:
             focus_manager.CARET_NAVIGATOR,
         )
 
-        if not notify_user:
-            return True
-
-        # Setting the last object on the current line as priorObj prevents re-announcing context.
-        presenter = presentation_manager.get_manager()
-        presenter.speak_contents(contents, priorObj=line[-1][0])
-        presenter.display_contents(contents)
+        if notify_user:
+            # Setting the last object on the current line as priorObj
+            # prevents re-announcing context.
+            presenter = presentation_manager.get_manager()
+            presenter.speak_contents(contents, priorObj=line[-1][0])
+            presenter.display_contents(contents)
         return True
 
     @dbus_service.command
@@ -816,13 +814,12 @@ class CaretNavigator:
             focus_manager.CARET_NAVIGATOR,
         )
 
-        if not notify_user:
-            return True
-
-        # Setting the first object on the current line as priorObj prevents re-announcing context.
-        presenter = presentation_manager.get_manager()
-        presenter.speak_contents(contents, priorObj=line[0][0])
-        presenter.display_contents(contents)
+        if notify_user:
+            # Setting the first object on the current line as priorObj
+            # prevents re-announcing context.
+            presenter = presentation_manager.get_manager()
+            presenter.speak_contents(contents, priorObj=line[0][0])
+            presenter.display_contents(contents)
         return True
 
     @dbus_service.command

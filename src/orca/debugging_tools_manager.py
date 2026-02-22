@@ -19,12 +19,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
-# pylint: disable=no-name-in-module
-
 """Provides debugging tools."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import faulthandler
@@ -38,7 +34,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import (
+from . import (  # pylint: disable=no-name-in-module
     cmdnames,
     command_manager,
     debug,

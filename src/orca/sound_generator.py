@@ -20,12 +20,9 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-lines
-# pylint: disable=too-few-public-methods
-# pylint: disable=wrong-import-position
 
 """Utilities for obtaining sounds to be presented for objects."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import os

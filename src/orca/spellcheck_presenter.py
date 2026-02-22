@@ -19,12 +19,10 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
 # pylint: disable=too-many-instance-attributes
 
 """Script-customizable support for application spellcheckers."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import re
@@ -195,7 +193,6 @@ class SpellCheckPresenter:
 
         return SpellCheckPreferencesGrid(self)
 
-    # pylint: disable-next=too-many-branches, too-many-return-statements
     def _on_event(self, event: Atspi.Event) -> None:
         """Listener for spellcheck-related events."""
 
@@ -500,17 +497,12 @@ class SpellCheckPresenter:
         self._check_and_present_if_error_changed()
         return True
 
-    # pylint: disable-next=too-many-return-statements
     def _check_and_present_if_error_changed(self) -> bool:
         """Checks if the misspelled word changed and presents if so."""
 
-        if self._widgets is None:
-            msg = "SPELL CHECK PRESENTER: Not active; not checking for error change"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if self._state.completion_announced:
-            msg = "SPELL CHECK PRESENTER: Completion already announced; ignoring"
+        if self._widgets is None or self._state.completion_announced:
+            reason = "Not active" if self._widgets is None else "Completion already announced"
+            msg = f"SPELL CHECK PRESENTER: {reason}; not checking for error change"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 

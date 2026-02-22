@@ -411,7 +411,6 @@ EXPECTED_TOTAL_COMMANDS = (
 )
 
 
-# pylint: disable=too-few-public-methods
 class Fake:
     """A simple class to use as a mock for Atspi constants and classes."""
 

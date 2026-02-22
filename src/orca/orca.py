@@ -19,9 +19,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=too-many-statements
 # pylint: disable=too-many-locals
-# pylint: disable=wrong-import-position
 
 """The main module for the Orca screen reader."""
 
@@ -146,8 +144,8 @@ def shutdown(_event=None, _signum=None):
     return True
 
 
-def main(import_dir: str | None = None, prefs_dir: str = ""):
-    """The main entry point for Orca."""
+def _setup_signal_handlers():
+    """Sets up signal handlers for reload, shutdown, and preferences."""
 
     def _reload_on_signal(signum, frame):
         signal_string = f"({signal.strsignal(signum)})"
@@ -196,7 +194,9 @@ def main(import_dir: str | None = None, prefs_dir: str = ""):
     GLib.unix_signal_add(GLib.PRIORITY_HIGH, signal.SIGINT, _glib_shutdown_handler)
     GLib.unix_signal_add(GLib.PRIORITY_HIGH, signal.SIGHUP, _glib_reload_handler)
 
-    systemd.get_manager().start_watchdog()
+
+def _ensure_accessibility_enabled() -> int | None:
+    """Ensures the accessibility bus is enabled. Returns error code or None on success."""
 
     try:
         bus = SessionMessageBus()
@@ -213,51 +213,36 @@ def main(import_dir: str | None = None, prefs_dir: str = ""):
         debug.print_message(debug.LEVEL_SEVERE, msg, True)
         print(msg, file=sys.stderr)  # noqa: T201
         return 1
+    return None
 
-    registry = gsettings_registry.get_registry()
 
-    if import_dir:
-        registry.import_from_dir(import_dir)
-    else:
-        registry.migrate_all(prefs_dir)
+def _setup_legacy_gsettings_monitoring() -> Gio.Settings | None:
+    """Sets up legacy GSettings monitoring for non-systemd environments."""
 
-    load_user_settings(is_reload=False)
+    def _on_enabled_changed(gsetting, key):
+        enabled = gsetting.get_boolean(key)
+        msg = f"ORCA: {key} changed to {enabled}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        if key == "screen-reader-enabled" and not enabled:
+            shutdown()
 
-    is_systemd_managed = systemd.get_manager().is_systemd_managed()
-    msg = f"ORCA: Running under systemd: {is_systemd_managed}"
-    debug.print_message(debug.LEVEL_INFO, msg, True)
+    try:
+        gsetting = Gio.Settings(schema_id="org.gnome.desktop.a11y.applications")
+        connection = gsetting.connect("changed", _on_enabled_changed)
+        msg = f"ORCA: Connected to a11y applications gsetting: {bool(connection)}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return gsetting
+    except GLib.Error as error:
+        msg = f"ORCA: EXCEPTION connecting to a11y applications (schema may be missing): {error}"
+        debug.print_message(debug.LEVEL_SEVERE, msg, True)
+    except (AttributeError, TypeError) as error:
+        msg = f"ORCA: EXCEPTION connecting to a11y applications (version incompatibility):{error}"
+        debug.print_message(debug.LEVEL_SEVERE, msg, True)
+    return None
 
-    if not is_systemd_managed:
-        # Legacy behavior, here for backwards-compatibility. You really should
-        # never rely on this. Run git blame and read the commit message!
 
-        def _on_enabled_changed(gsetting, key):
-            enabled = gsetting.get_boolean(key)
-            msg = f"ORCA: {key} changed to {enabled}."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            if key == "screen-reader-enabled" and not enabled:
-                shutdown()
-
-        try:
-            _a11y_applications_gsetting = Gio.Settings(
-                schema_id="org.gnome.desktop.a11y.applications",
-            )
-            connection = _a11y_applications_gsetting.connect("changed", _on_enabled_changed)
-            msg = f"ORCA: Connected to a11y applications gsetting: {bool(connection)}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-        except GLib.Error as error:
-            msg = (
-                f"ORCA: EXCEPTION connecting to a11y applications (schema may be missing): {error}"
-            )
-            debug.print_message(debug.LEVEL_SEVERE, msg, True)
-        except (AttributeError, TypeError) as error:
-            msg = (
-                f"ORCA: EXCEPTION connecting to a11y applications (version incompatibility):{error}"
-            )
-            debug.print_message(debug.LEVEL_SEVERE, msg, True)
-
-    dbus_service.get_remote_controller().start()
-    presentation_manager.get_manager().present_message(messages.START_ORCA)
+def _activate_services():
+    """Activates Orca services and attempts to find the focused object."""
 
     ax_device_manager.get_manager().activate()
     event_manager.get_manager().activate()
@@ -282,6 +267,38 @@ def main(import_dir: str | None = None, prefs_dir: str = ""):
     clipboard.get_presenter().activate()
     Gdk.notify_startup_complete()  # pylint: disable=no-value-for-parameter
     systemd.get_manager().notify_ready()
+
+
+def main(import_dir: str | None = None, prefs_dir: str = ""):
+    """The main entry point for Orca."""
+
+    _setup_signal_handlers()
+    systemd.get_manager().start_watchdog()
+
+    error = _ensure_accessibility_enabled()
+    if error is not None:
+        return error
+
+    registry = gsettings_registry.get_registry()
+    if import_dir:
+        registry.import_from_dir(import_dir)
+    else:
+        registry.migrate_all(prefs_dir)
+
+    load_user_settings(is_reload=False)
+
+    is_systemd_managed = systemd.get_manager().is_systemd_managed()
+    msg = f"ORCA: Running under systemd: {is_systemd_managed}"
+    debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    # Keep a reference to prevent garbage collection of the GSettings connection.
+    _gsettings_ref = None
+    if not is_systemd_managed:
+        _gsettings_ref = _setup_legacy_gsettings_monitoring()
+
+    dbus_service.get_remote_controller().start()
+    presentation_manager.get_manager().present_message(messages.START_ORCA)
+    _activate_services()
 
     try:
         debug.print_message(debug.LEVEL_INFO, "ORCA: Starting Atspi main event loop", True)

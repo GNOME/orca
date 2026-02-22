@@ -19,13 +19,13 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
 # pylint: disable=too-many-locals
-# pylint: disable=too-many-branches
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-positional-arguments
+
 
 """Manages the Orca modifier key."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import os
@@ -331,7 +331,23 @@ class OrcaModifierManager:
         msg = "ORCA MODIFIER MANAGER: Original xmodmap restored"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    # pylint: disable-next=too-many-statements
+    @staticmethod
+    def _update_xkb_line(
+        line: str,
+        enable: bool,
+        normal_pattern: re.Pattern[str],
+        normal_line: str,
+        disabled_pattern: re.Pattern[str],
+        disabled_line: str,
+    ) -> tuple[str, bool]:
+        """Returns the possibly-updated line and whether it was modified."""
+
+        if enable and normal_pattern.match(line):
+            return disabled_line, True
+        if not enable and disabled_pattern.match(line):
+            return normal_line, True
+        return line, False
+
     def set_caps_lock_as_orca_modifier(self, enable: bool) -> None:
         """Enable or disable use of the caps lock key as an Orca modifier key."""
 
@@ -383,39 +399,45 @@ class OrcaModifierManager:
                 elif interpret_shift_line_prog.match(line):
                     found_shift_interpret_section = True
             elif found_caps_interpret_section:
-                if enable:
-                    if normal_caps_line_prog.match(line):
-                        lines[i] = disabled_mod_line
-                        modified = True
-                elif disabled_mod_line_prog.match(line):
-                    lines[i] = normal_caps_line
-                    modified = True
+                lines[i], changed = self._update_xkb_line(
+                    line,
+                    enable,
+                    normal_caps_line_prog,
+                    normal_caps_line,
+                    disabled_mod_line_prog,
+                    disabled_mod_line,
+                )
+                modified = modified or changed
                 if line.find("}"):
                     found_caps_interpret_section = False
             elif found_shift_interpret_section:
-                if enable:
-                    if normal_shift_line_prog.match(line):
-                        lines[i] = disabled_mod_line
-                        modified = True
-                elif disabled_mod_line_prog.match(line):
-                    lines[i] = normal_shift_line
-                    modified = True
+                lines[i], changed = self._update_xkb_line(
+                    line,
+                    enable,
+                    normal_shift_line_prog,
+                    normal_shift_line,
+                    disabled_mod_line_prog,
+                    disabled_mod_line,
+                )
+                modified = modified or changed
                 if line.find("}"):
                     found_shift_interpret_section = False
-        if modified:
-            msg = "ORCA MODIFIER MANAGER: Updating xmodmap"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
 
-            with subprocess.Popen(
-                ["xkbcomp", "-w0", "-", display],
-                stdin=subprocess.PIPE,
-                stdout=None,
-                stderr=None,
-            ) as p:
-                p.communicate(bytes("\n".join(lines), "UTF-8"))
-        else:
+        if not modified:
             msg = "ORCA MODIFIER MANAGER: Not updating xmodmap"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        msg = "ORCA MODIFIER MANAGER: Updating xmodmap"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        with subprocess.Popen(
+            ["xkbcomp", "-w0", "-", display],
+            stdin=subprocess.PIPE,
+            stdout=None,
+            stderr=None,
+        ) as p:
+            p.communicate(bytes("\n".join(lines), "UTF-8"))
 
 
 _manager: OrcaModifierManager = OrcaModifierManager()

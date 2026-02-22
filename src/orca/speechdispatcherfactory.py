@@ -19,12 +19,11 @@
 
 # pylint: disable=broad-exception-caught
 # pylint: disable=too-many-public-methods
-# pylint: disable=too-many-branches
 # pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-locals
 
 """Provides an Orca speech server for Speech Dispatcher backend."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import gc
@@ -54,7 +53,7 @@ except Exception:
 else:
     _SPEECHD_AVAILABLE = True
     try:
-        _callback_type = speechd.CallbackType
+        _CallbackType = speechd.CallbackType
     except AttributeError:
         _SPEECHD_VERSION_OK = False
     else:
@@ -465,15 +464,29 @@ class SpeechServer(speechserver.SpeechServer):
     def get_info(self) -> list[str]:
         return [self._SERVER_NAMES.get(self._id, self._id), self._id]
 
-    def get_voice_families(self) -> list[speechserver.VoiceFamily]:
-        # Always offer the configured default voice with a language
-        # set according to the current locale.
+    def _get_default_voice_language(
+        self,
+        voices: tuple[tuple[str, str, str | None], ...],
+    ) -> str:
+        """Returns the default language string based on the current locale and available voices."""
+
         current_locale = locale.getlocale(locale.LC_MESSAGES)[0]
         if current_locale is None or "_" not in current_locale:
-            locale_language = None
-        else:
-            locale_lang, locale_dialect = current_locale.split("_")
-            locale_language = locale_lang + "-" + locale_dialect
+            return ""
+
+        locale_lang, locale_dialect = current_locale.split("_")
+        locale_language = locale_lang + "-" + locale_dialect
+        for _name, lang, _variant in voices:
+            if lang == locale_language:
+                return locale_language
+        for _name, lang, _variant in voices:
+            if lang == locale_lang:
+                return locale_lang
+        return locale_language
+
+    def get_voice_families(self) -> list[speechserver.VoiceFamily]:
+        """Returns the list of voice families available in the current synthesizer."""
+
         voices: tuple[tuple[str, str, str | None], ...] = ()
         if self._client is not None:
             try:
@@ -489,20 +502,7 @@ class SpeechServer(speechserver.SpeechServer):
                 except Exception:
                     pass
 
-        default_lang = ""
-        if locale_language:
-            # Check whether how it appears in the server list
-            for _name, lang, _variant in voices:
-                if lang == locale_language:
-                    default_lang = locale_language
-                    break
-            if not default_lang:
-                for _name, lang, _variant in voices:
-                    if lang == locale_lang:
-                        default_lang = locale_lang
-            if not default_lang:
-                default_lang = locale_language
-
+        default_lang = self._get_default_voice_language(voices)
         voices = ((self._default_voice_name, default_lang, None), *voices)
 
         families = []
@@ -630,7 +630,36 @@ class SpeechServer(speechserver.SpeechServer):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._current_voice_properties.clear()
 
-    # pylint: disable-next=too-many-locals, too-many-statements
+    def _filter_voices_for_language(
+        self,
+        voices: list[tuple[str, str, str | None]],
+        target_language: str,
+        target_dialect: str,
+        maximum: int | None,
+    ) -> tuple[list[tuple[str, str, str | None]], list[tuple[str, str, str | None]]]:
+        """Filters voices by language and dialect, returning candidates and fallbacks."""
+
+        candidates: list[tuple[str, str, str | None]] = []
+        fallbacks: list[tuple[str, str, str | None]] = []
+        for voice in voices:
+            normalized_language, normalized_dialect = self._normalized_language_and_dialect(
+                voice[1],
+            )
+            if normalized_language != target_language:
+                continue
+            if normalized_dialect == target_dialect or (
+                not normalized_dialect and target_dialect == normalized_language
+            ):
+                candidates.append(voice)
+            elif not target_dialect:
+                if normalized_dialect == target_language:
+                    candidates.append(voice)
+                if len(normalized_dialect) == 2:
+                    fallbacks.append(voice)
+            if maximum is not None and len(candidates) >= maximum:
+                break
+        return candidates, fallbacks
+
     def get_voice_families_for_language(
         self,
         language: str,
@@ -691,29 +720,12 @@ class SpeechServer(speechserver.SpeechServer):
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return []
 
-        # While the speech-dispatcher API used above lets us specify language and variant, it works
-        # in some cases (e.g. espeak variants), but fails in others (e.g. Voxin). So we need to do
-        # a second pass. In addition, the language and dialect formats are not consistent across
-        # synthesizers.
-        candidates = []
-        fallbacks = []
-        for voice in voices:
-            normalized_language, normalized_dialect = self._normalized_language_and_dialect(
-                voice[1],
-            )
-            if normalized_language != target_language:
-                continue
-            if normalized_dialect == target_dialect or (
-                not normalized_dialect and target_dialect == normalized_language
-            ):
-                candidates.append(voice)
-            elif not target_dialect:
-                if normalized_dialect == target_language:
-                    candidates.append(voice)
-                if len(normalized_dialect) == 2:
-                    fallbacks.append(voice)
-            if maximum is not None and len(candidates) >= maximum:
-                break
+        candidates, fallbacks = self._filter_voices_for_language(
+            voices,
+            target_language,
+            target_dialect,
+            maximum,
+        )
 
         msg = (
             f"SPEECH DISPATCHER: Found {len(candidates)} match(es) for "

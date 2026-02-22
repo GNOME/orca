@@ -17,8 +17,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
-
 """Handles writing debugging messages to the debug file or stderr."""
 
 import inspect

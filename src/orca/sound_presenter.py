@@ -19,11 +19,9 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-public-methods
-# pylint: disable=wrong-import-position
 
 """Provides sound presentation support."""
 
-# This must be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import time

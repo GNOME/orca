@@ -1,4 +1,4 @@
-# Stub file that should contain all public methods of AXUtilities
+# pylint: disable=missing-module-docstring
 #
 # Copyright 2023 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
@@ -27,12 +27,6 @@
 # Stub file that contains all public methods of AXUtilities, including
 # those which are added dynamically at runtime. This is needed for type
 # checkers, linters, and IDEs.
-
-__id__: str = "$Id$"
-__version__: str = "$Revision$"
-__date__: str = "$Date$"
-__copyright__: str = "Copyright (c) 2023 Igalia, S.L."
-__license__: str = "LGPL"
 
 from collections.abc import Callable
 

@@ -18,14 +18,11 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=broad-exception-caught
-# pylint: disable=wrong-import-position
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-instance-attributes
 
 """Provides support for handling input events."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import inspect
@@ -774,7 +771,7 @@ class MouseButtonEvent(InputEvent):
         display = Gdk.Display.get_default()  # pylint: disable=no-value-for-parameter
         seat = Gdk.Display.get_default_seat(display)
         _pointer = seat.get_pointer()
-    except Exception:
+    except Exception:  # pylint: disable=broad-exception-caught
         _pointer = None
 
     def __init__(self, event):

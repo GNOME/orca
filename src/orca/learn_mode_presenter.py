@@ -18,14 +18,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
-# pylint: disable=too-many-locals
-# pylint: disable=too-many-statements
-# pylint: disable=too-many-return-statements
-
 """Module for learn mode"""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import time
@@ -246,7 +240,7 @@ class CommandListGUI:
         self._model: Gtk.TreeStore | None = None
         self._gui: Gtk.Dialog = self._create_dialog(title, column_headers, commands_dict)
 
-    def _create_dialog(
+    def _create_dialog(  # pylint: disable=too-many-locals
         self,
         title: str,
         column_headers: list[str],

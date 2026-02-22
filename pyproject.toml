@@ -77,6 +77,7 @@ disable = [
     "cyclic-import",
     "c-extension-no-member",
     "wrong-import-position",
+    "too-few-public-methods",
 ]
 
 [tool.mypy]

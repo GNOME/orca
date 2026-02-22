@@ -19,16 +19,13 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=broad-exception-caught
-# pylint: disable=wrong-import-position
 # pylint: disable=too-many-arguments
-# pylint: disable=too-many-return-statements
 # pylint: disable=too-many-instance-attributes
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=too-many-locals
 
 """Mouse review mode."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import math
@@ -110,10 +107,7 @@ class _StringContext:
     def is_substring_of(self, other: _StringContext | None) -> bool:
         """Returns True if this is a substring of other."""
 
-        if other is None:
-            return False
-
-        if not (self._obj and other.get_object()):
+        if other is None or not (self._obj and other.get_object()):
             return False
 
         this_box = self.get_bounding_box()
@@ -682,10 +676,7 @@ class MouseReviewer:
             return None, -1, -1
 
         window_app = window.get_application()
-        if not window_app:
-            return None, -1, -1
-
-        app = AXUtilities.get_application_with_pid(window_app.get_pid())
+        app = AXUtilities.get_application_with_pid(window_app.get_pid()) if window_app else None
         if not app:
             return None, -1, -1
 

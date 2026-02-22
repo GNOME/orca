@@ -18,10 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=too-many-branches
 # pylint: disable=too-many-public-methods
-# pylint: disable=too-many-return-statements
-# pylint: disable=too-many-statements
 # pylint: disable=too-many-lines
 
 """Utilities for performing tasks related to accessibility inspection."""
@@ -117,38 +114,31 @@ class AXUtilities:
         app = AXUtilitiesApplication.get_application(window)
         tokens = ["AXUtilities:", window, "from", app]
 
+        can_be_active = True
         if not AXUtilitiesState.is_active(window):
             tokens.append("lacks active state")
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        if not AXUtilitiesState.is_showing(window):
+            can_be_active = False
+        elif not AXUtilitiesState.is_showing(window):
             tokens.append("lacks showing state")
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        if AXUtilitiesState.is_iconified(window):
+            can_be_active = False
+        elif AXUtilitiesState.is_iconified(window):
             tokens.append("is iconified")
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        if AXObject.get_name(app) == "mutter-x11-frames":
+            can_be_active = False
+        elif AXObject.get_name(app) == "mutter-x11-frames":
             tokens.append("is from app that cannot have the real active window")
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        if app and not AXUtilitiesApplication.is_application_in_desktop(app):
+            can_be_active = False
+        elif app and not AXUtilitiesApplication.is_application_in_desktop(app):
             tokens.append("is from app unknown to AT-SPI2")
             # Firefox alerts and dialogs suffer from this bug too, but if we ignore these windows
             # we'll fail to fully present things like the file chooser dialog and the replace-file
             # alert. https://bugzilla.mozilla.org/show_bug.cgi?id=1882794
             if not AXUtilitiesRole.is_dialog_or_alert(window):
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return False
+                can_be_active = False
 
-        tokens.append("can be active window")
+        if can_be_active:
+            tokens.append("can be active window")
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return True
+        return can_be_active
 
     @staticmethod
     def find_active_window() -> Atspi.Accessible | None:
@@ -311,94 +301,132 @@ class AXUtilities:
         return AXObject.find_descendant(obj, AXUtilitiesRole.is_status_bar)
 
     @staticmethod
+    def _is_layout_only_layered_pane(obj: Atspi.Accessible) -> tuple[bool, str]:
+        """Returns True with reason if this layered pane is layout-only."""
+
+        if AXObject.find_ancestor(obj, AXUtilitiesRole.is_desktop_frame) is not None:
+            return True, "is inside desktop frame"
+        return False, ""
+
+    @staticmethod
+    def _is_layout_only_menu_or_list(obj: Atspi.Accessible) -> tuple[bool, str]:
+        """Returns True with reason if this menu or list in a combo box is layout-only."""
+
+        if AXObject.find_ancestor(obj, AXUtilitiesRole.is_combo_box) is not None:
+            return True, "is inside combo box"
+        return False, ""
+
+    @staticmethod
+    def _is_layout_only_group(obj: Atspi.Accessible) -> tuple[bool, str]:
+        """Returns True with reason if this group is layout-only."""
+
+        if not AXUtilities.has_explicit_name(obj):
+            return True, "lacks explicit name"
+        return False, ""
+
+    @staticmethod
+    def _is_layout_only_panel(obj: Atspi.Accessible) -> tuple[bool, str]:
+        """Returns True with reason if this panel or grouping is layout-only."""
+
+        name = AXObject.get_name(obj)
+        description = AXObject.get_description(obj)
+        labelled_by = AXUtilitiesRelation.get_is_labelled_by(obj)
+        described_by = AXUtilitiesRelation.get_is_described_by(obj)
+        if not (name or description or labelled_by or described_by):
+            return True, "lacks name, description, and relations"
+        if name == AXObject.get_name(AXUtilitiesApplication.get_application(obj)):
+            return True, "has same name as app"
+        if AXObject.get_child_count(obj) == 1:
+            child = AXObject.get_child(obj, 0)
+            if name == AXObject.get_name(child):
+                return True, "has same name as its only child"
+            if not AXUtilitiesRole.is_label(child) and child in labelled_by:
+                return True, "is labelled by non-label only child"
+        set_roles = AXUtilitiesRole.get_set_container_roles()
+        ancestor = AXObject.find_ancestor(obj, lambda x: AXObject.get_role(x) in set_roles)
+        if ancestor and AXObject.get_name(ancestor) == name:
+            return True, "is in set container with same name"
+        return False, ""
+
+    @staticmethod
+    def _is_layout_only_section(obj: Atspi.Accessible) -> tuple[bool, str]:
+        """Returns True with reason if this section or document is layout-only."""
+
+        if AXUtilitiesState.is_focusable(obj):
+            return False, "is focusable"
+        if AXObject.has_action(obj, "click"):
+            return False, "has click action"
+        return True, "is not interactive"
+
+    @staticmethod
+    def _is_layout_only_toolbar(obj: Atspi.Accessible) -> tuple[bool, str]:
+        """Returns True with reason if this toolbar is layout-only."""
+
+        if AXUtilitiesRole.is_page_tab_list(AXObject.get_child(obj, 0)):
+            return True, "is parent of page tab list"
+        return False, ""
+
+    @staticmethod
+    def _is_layout_only_table(obj: Atspi.Accessible) -> tuple[bool, str]:
+        """Returns True with reason if this table is layout-only."""
+
+        if AXTable.is_layout_table(obj):
+            return True, "is layout table"
+        return False, ""
+
+    @staticmethod
+    def _is_layout_only_table_row(obj: Atspi.Accessible) -> tuple[bool, str]:
+        """Returns True with reason if this table row is layout-only."""
+
+        if AXUtilitiesState.is_focusable(obj):
+            return False, "is focusable"
+        if AXUtilitiesState.is_selectable(obj):
+            return False, "is selectable"
+        if AXUtilitiesState.is_expandable(obj):
+            return False, "is expandable"
+        if AXUtilities.has_explicit_name(obj):
+            return False, "has explicit name"
+        return True, "is not focusable, selectable, or expandable and lacks explicit name"
+
+    @staticmethod
+    def _is_layout_only_table_cell(obj: Atspi.Accessible) -> tuple[bool, str]:
+        """Returns True with reason if this table cell is layout-only."""
+
+        if AXUtilitiesRole.is_table_cell(AXObject.get_child(obj, 0)):
+            return True, "child of this cell is table cell"
+        table = AXTable.get_table(obj)
+        if AXUtilitiesRole.is_table(table) and AXTable.is_layout_table(table):
+            return True, "is in layout table"
+        return False, ""
+
+    @staticmethod
     def _is_layout_only(obj: Atspi.Accessible) -> tuple[bool, str]:
         """Returns True and a string reason if obj is believed to serve only for layout."""
 
-        reason = ""
         role = AXObject.get_role(obj)
         if role in AXUtilitiesRole.get_layout_only_roles():
             return True, "has layout-only role"
 
+        result, reason = False, ""
         if AXUtilitiesRole.is_layered_pane(obj, role):
-            result = AXObject.find_ancestor(obj, AXUtilitiesRole.is_desktop_frame) is not None
-            if result:
-                reason = "is inside desktop frame"
-            return result, reason
-
-        if AXUtilitiesRole.is_menu(obj, role) or AXUtilitiesRole.is_list(obj, role):
-            result = AXObject.find_ancestor(obj, AXUtilitiesRole.is_combo_box) is not None
-            if result:
-                reason = "is inside combo box"
-            return result, reason
-
-        if AXUtilitiesRole.is_group(obj, role):
-            result = not AXUtilities.has_explicit_name(obj)
-            if result:
-                reason = "lacks explicit name"
-            return result, reason
-
-        if AXUtilitiesRole.is_panel(obj, role) or AXUtilitiesRole.is_grouping(obj, role):
-            name = AXObject.get_name(obj)
-            description = AXObject.get_description(obj)
-            labelled_by = AXUtilitiesRelation.get_is_labelled_by(obj)
-            described_by = AXUtilitiesRelation.get_is_described_by(obj)
-            if not (name or description or labelled_by or described_by):
-                return True, "lacks name, description, and relations"
-            if name == AXObject.get_name(AXUtilitiesApplication.get_application(obj)):
-                return True, "has same name as app"
-            if AXObject.get_child_count(obj) == 1:
-                child = AXObject.get_child(obj, 0)
-                if name == AXObject.get_name(child):
-                    return True, "has same name as its only child"
-                if not AXUtilitiesRole.is_label(child) and child in labelled_by:
-                    return True, "is labelled by non-label only child"
-            set_roles = AXUtilitiesRole.get_set_container_roles()
-            ancestor = AXObject.find_ancestor(obj, lambda x: AXObject.get_role(x) in set_roles)
-            if ancestor and AXObject.get_name(ancestor) == name:
-                return True, "is in set container with same name"
-            return False, reason
-
-        if AXUtilitiesRole.is_section(obj, role) or AXUtilitiesRole.is_document(obj, role):
-            if AXUtilitiesState.is_focusable(obj):
-                return False, "is focusable"
-            if AXObject.has_action(obj, "click"):
-                return False, "has click action"
-            return True, "is not interactive"
-
-        if AXUtilitiesRole.is_tool_bar(obj):
-            result = AXUtilitiesRole.is_page_tab_list(AXObject.get_child(obj, 0))
-            if result:
-                reason = "is parent of page tab list"
-            return result, reason
-
-        if AXUtilitiesRole.is_table(obj, role):
-            result = AXTable.is_layout_table(obj)
-            if result:
-                reason = "is layout table"
-            return result, reason
-
-        if AXUtilitiesRole.is_table_row(obj):
-            if AXUtilitiesState.is_focusable(obj):
-                return False, "is focusable"
-            if AXUtilitiesState.is_selectable(obj):
-                return False, "is selectable"
-            if AXUtilitiesState.is_expandable(obj):
-                return False, "is expandable"
-            if AXUtilities.has_explicit_name(obj):
-                return False, "has explicit name"
-            return True, "is not focusable, selectable, or expandable and lacks explicit name"
-
-        if AXUtilitiesRole.is_table_cell(obj, role):
-            if AXUtilitiesRole.is_table_cell(AXObject.get_child(obj, 0)):
-                return True, "child of this cell is table cell"
-            table = AXTable.get_table(obj)
-            if AXUtilitiesRole.is_table(table):
-                result = AXTable.is_layout_table(table)
-                if result:
-                    reason = "is in layout table"
-                return result, reason
-
-        return False, reason
+            result, reason = AXUtilities._is_layout_only_layered_pane(obj)
+        elif AXUtilitiesRole.is_menu(obj, role) or AXUtilitiesRole.is_list(obj, role):
+            result, reason = AXUtilities._is_layout_only_menu_or_list(obj)
+        elif AXUtilitiesRole.is_group(obj, role):
+            result, reason = AXUtilities._is_layout_only_group(obj)
+        elif AXUtilitiesRole.is_panel(obj, role) or AXUtilitiesRole.is_grouping(obj, role):
+            result, reason = AXUtilities._is_layout_only_panel(obj)
+        elif AXUtilitiesRole.is_section(obj, role) or AXUtilitiesRole.is_document(obj, role):
+            result, reason = AXUtilities._is_layout_only_section(obj)
+        elif AXUtilitiesRole.is_tool_bar(obj):
+            result, reason = AXUtilities._is_layout_only_toolbar(obj)
+        elif AXUtilitiesRole.is_table(obj, role):
+            result, reason = AXUtilities._is_layout_only_table(obj)
+        elif AXUtilitiesRole.is_table_row(obj):
+            result, reason = AXUtilities._is_layout_only_table_row(obj)
+        elif AXUtilitiesRole.is_table_cell(obj, role):
+            result, reason = AXUtilities._is_layout_only_table_cell(obj)
+        return result, reason
 
     @staticmethod
     def is_layout_only(obj: Atspi.Accessible) -> bool:
@@ -427,34 +455,28 @@ class AXUtilities:
             widgets = AXUtilities.get_all_widgets(obj, exclude_push_button=True)
             return not widgets
 
+        tokens = ["AXUtilities:", obj]
+        result = True
         if AXUtilitiesCollection.has_scroll_pane(obj):
-            tokens = ["AXUtilities:", obj, "is not a message dialog: has scroll pane"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
+            tokens.append("is not a message dialog: has scroll pane")
+            result = False
+        elif AXUtilitiesCollection.has_split_pane(obj):
+            tokens.append("is not a message dialog: has split pane")
+            result = False
+        elif AXUtilitiesCollection.has_tree_or_tree_table(obj):
+            tokens.append("is not a message dialog: has tree or tree table")
+            result = False
+        elif AXUtilitiesCollection.has_combo_box_or_list_box(obj):
+            tokens.append("is not a message dialog: has combo box or list box")
+            result = False
+        elif AXUtilitiesCollection.has_editable_object(obj):
+            tokens.append("is not a message dialog: has editable object")
+            result = False
+        else:
+            tokens.append("is believed to be a message dialog")
 
-        if AXUtilitiesCollection.has_split_pane(obj):
-            tokens = ["AXUtilities:", obj, "is not a message dialog: has split pane"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        if AXUtilitiesCollection.has_tree_or_tree_table(obj):
-            tokens = ["AXUtilities:", obj, "is not a message dialog: has tree or tree table"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        if AXUtilitiesCollection.has_combo_box_or_list_box(obj):
-            tokens = ["AXUtilities:", obj, "is not a message dialog: has combo box or list box"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        if AXUtilitiesCollection.has_editable_object(obj):
-            tokens = ["AXUtilities:", obj, "is not a message dialog: has editable object"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        tokens = ["AXUtilities:", obj, "is believed to be a message dialog"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return True
+        return result
 
     @staticmethod
     def is_redundant_object(obj1: Atspi.Accessible, obj2: Atspi.Accessible) -> bool:
@@ -634,27 +656,30 @@ class AXUtilities:
         return False
 
     @staticmethod
+    def _get_table_row_position(obj: Atspi.Accessible) -> int:
+        """Returns the position of a table row from ARIA attributes, or -1."""
+
+        result = AXObject.get_attribute(obj, "rowindex", False)
+        if not (isinstance(result, str) and result.isnumeric()) and AXObject.get_child_count(obj):
+            cell = AXObject.find_descendant(obj, AXUtilitiesRole.is_table_cell_or_header)
+            result = AXObject.get_attribute(cell, "rowindex", False)
+
+        if isinstance(result, str) and result.isnumeric():
+            return int(result) - 1
+        return -1
+
+    @staticmethod
     def get_position_in_set(obj: Atspi.Accessible) -> int:
         """Returns the position of obj with respect to the number of items in its container."""
 
         result = AXObject.get_attribute(obj, "posinset", False)
         if isinstance(result, str) and result.isnumeric():
-            # ARIA posinset is 1-based.
             return int(result) - 1
 
         if AXUtilitiesRole.is_table_row(obj):
-            result = AXObject.get_attribute(obj, "rowindex", False)
-            if isinstance(result, str) and result.isnumeric():
-                # ARIA posinset is 1-based.
-                return int(result) - 1
-
-            if AXObject.get_child_count(obj):
-                cell = AXObject.find_descendant(obj, AXUtilitiesRole.is_table_cell_or_header)
-                result = AXObject.get_attribute(cell, "rowindex", False)
-
-            if isinstance(result, str) and result.isnumeric():
-                # ARIA posinset is 1-based.
-                return int(result) - 1
+            position = AXUtilities._get_table_row_position(obj)
+            if position >= 0:
+                return position
 
         if AXUtilitiesRole.is_table_cell_or_header(obj) and not AXUtilitiesRole.is_table_row(
             AXObject.get_parent(obj),
@@ -668,15 +693,11 @@ class AXUtilities:
             if len(selected_children) == 1:
                 obj = selected_children[0]
 
-        child_count = AXObject.get_child_count(AXObject.get_parent(obj))
-        if child_count > 500:
+        if AXObject.get_child_count(AXObject.get_parent(obj)) > 500:
             return AXObject.get_index_in_parent(obj)
 
         members = AXUtilities.get_set_members(obj)
-        if obj not in members:
-            return -1
-
-        return members.index(obj)
+        return members.index(obj) if obj in members else -1
 
     @staticmethod
     def has_explicit_name(obj: Atspi.Accessible) -> bool:
@@ -946,13 +967,11 @@ class AXUtilities:
             if root_name and children and root in objects and root_name == AXObject.get_name(child):
                 objects.remove(root)
 
-        if objects:
-            return objects
+        is_interactive = AXUtilitiesState.is_focusable(root) or AXObject.has_action(root, "click")
+        if not objects and is_interactive:
+            objects = [root]
 
-        if AXUtilitiesState.is_focusable(root) or AXObject.has_action(root, "click"):
-            return [root]
-
-        return []
+        return objects
 
     @staticmethod
     def get_on_screen_objects(

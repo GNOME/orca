@@ -18,16 +18,11 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
-# pylint: disable=too-many-return-statements
-# pylint: disable=too-many-branches
-# pylint: disable=too-many-statements
 # pylint: disable=too-many-instance-attributes
 # pylint: disable=too-many-locals
 
 """Manager for accessible object events."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import itertools
@@ -262,46 +257,29 @@ class EventManager:
 
         return None
 
-    def _ignore(self, event: Atspi.Event) -> bool:
-        """Returns True if this event should be ignored."""
-
-        debug.print_message(debug.LEVEL_INFO, "")
-        tokens = ["EVENT MANAGER:", event]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if not self._active or self._paused:
-            msg = "EVENT MANAGER: Ignoring because manager is not active or queueing is paused"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
+    def _ignore_by_role(self, event: Atspi.Event) -> bool | None:
+        """Returns True/False if the source role determines ignore, or None if inconclusive."""
 
         event_type = event.type
-        if event_type.startswith(("window", "mouse:button")):
-            return False
 
         # gnome-shell fires "focused" events spuriously after the Alt+Tab switcher
-        # is used and something else has claimed focus. We don't want to update our
-        # location or the keygrabs in response.
+        # is used and something else has claimed focus.
         if AXUtilities.is_window(event.source) and "focused" in event_type:
             msg = f"EVENT MANAGER: Ignoring {event_type} based on type and role"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        # Events on the window itself are typically something we want to handle.
         if AXUtilities.is_frame(event.source):
             app = AXUtilities.get_application(event.source)
-            if AXObject.get_name(app) == "mutter-x11-frames":
-                msg = f"EVENT MANAGER: Ignoring {event_type} based on application"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return True
-            msg = f"EVENT_MANAGER: Not ignoring {event_type} due to role"
+            ignore = AXObject.get_name(app) == "mutter-x11-frames"
+            prefix = "Ignoring" if ignore else "Not ignoring"
+            reason = "application" if ignore else "role"
+            msg = f"EVENT MANAGER: {prefix} {event_type} based on {reason}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
+            return ignore
 
         # Events from the text role are typically something we want to handle.
-        # One exception is a huge text insertion. For instance when a huge plain text document
-        # is loaded in a text editor, the text view in some versions of GTK fires a ton of text
-        # insertions of several thousand characters each, along with caret moved events. Ignore
-        # the former and let our flood protection handle the latter.
+        # One exception is a huge text insertion.
         if AXUtilities.is_text(event.source):
             if event_type.startswith("object:text-changed:insert") and event.detail2 > 5000:
                 msg = f"EVENT_MANAGER: Ignoring {event_type} due to size of inserted text"
@@ -312,22 +290,24 @@ class EventManager:
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
-        # Notifications and alerts are things we want to handle.
         if AXUtilities.is_notification(event.source) or AXUtilities.is_alert(event.source):
             msg = f"EVENT_MANAGER: Not ignoring {event_type} due to role"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        # Keep these checks early in the process so we can assume them throughout
-        # the rest of our checks.
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if focus == event.source:
-            msg = f"EVENT_MANAGER: Not ignoring {event_type} due to source being locus of focus"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
+        return None
 
-        if focus == event.any_data:
-            msg = f"EVENT_MANAGER: Not ignoring {event_type} due to any_data being locus of focus"
+    def _ignore_by_focus_state(
+        self,
+        event: Atspi.Event,
+        focus: Atspi.Accessible | None,
+    ) -> bool | None:
+        """Returns False if focus/state means we should not ignore, or None if inconclusive."""
+
+        event_type = event.type
+        if focus in (event.source, event.any_data):
+            reason = "source" if focus == event.source else "any_data"
+            msg = f"EVENT_MANAGER: Not ignoring {event_type} due to {reason} being locus of focus"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -336,16 +316,15 @@ class EventManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        # We see an unbelievable number of active-descendant-changed and selection changed from Caja
-        # when the user navigates from one giant folder to another. We need the spam filtering
-        # below to catch this bad behavior coming from a focused object, so only return early here
-        # if the focused object doesn't manage descendants, or the event is not a focus claim.
+        # We see an unbelievable number of active-descendant-changed and selection changed
+        # from Caja when the user navigates from one giant folder to another. We need the
+        # spam filtering below to catch this bad behavior coming from a focused object, so
+        # only return early here if the focused object doesn't manage descendants, or the
+        # event is not a focus claim.
         if AXUtilities.is_focused(event.source):
-            if not AXUtilities.manages_descendants(event.source):
-                msg = f"EVENT_MANAGER: Not ignoring {event_type} due to source being focused"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return False
-            if event_type.startswith("object:state-changed:focused") and event.detail1:
+            if not AXUtilities.manages_descendants(event.source) or (
+                event_type.startswith("object:state-changed:focused") and event.detail1
+            ):
                 msg = f"EVENT_MANAGER: Not ignoring {event_type} due to source being focused"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
@@ -359,6 +338,12 @@ class EventManager:
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
+        return None
+
+    def _ignore_by_spam_filter(self, event: Atspi.Event) -> bool | None:
+        """Returns True if the event is spam, or None if inconclusive."""
+
+        event_type = event.type
         last_app, last_time = self._event_history.get(event_type, (None, 0))
         app = AXUtilities.get_application(event.source)
         ignore = last_app == hash(app) and time.time() - last_time < 0.1
@@ -368,12 +353,161 @@ class EventManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        # mutter-x11-frames is firing accessibility events. We will never present them.
         if AXObject.get_name(app) == "mutter-x11-frames":
             msg = f"EVENT MANAGER: Ignoring {event_type} based on application"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
+        return None
+
+    @staticmethod
+    def _ignore_children_changed(
+        event: Atspi.Event,
+        focus: Atspi.Accessible | None,
+    ) -> bool | None:
+        """Returns True/False for children-changed events, or None if not applicable."""
+
+        event_type = event.type
+        if not event_type.startswith("object:children-changed"):
+            return None
+
+        if "remove" in event_type:
+            if (focus and AXObject.is_dead(focus)) or event.source == AXUtilities.get_desktop():
+                return False
+
+        child = event.any_data
+        if child is None or AXObject.is_dead(child):
+            msg = f"EVENT_MANAGER: Ignoring {event_type} due to null/dead event.any_data"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+        if AXUtilities.is_menu_related(child) or AXUtilities.is_image(child):
+            msg = f"EVENT_MANAGER: Ignoring {event_type} due to role of event.any_data"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        script = script_manager.get_manager().get_active_script()
+        if script is None or script.app != AXUtilities.get_application(event.source):
+            reason = (
+                "there is no active script" if script is None else "event is not from active app"
+            )
+            msg = f"EVENT MANAGER: Ignoring {event_type} because {reason}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        return None
+
+    @staticmethod
+    def _ignore_property_change(event: Atspi.Event) -> bool | None:
+        """Returns True/False for property-change events, or None if not applicable."""
+
+        event_type = event.type
+        if not event_type.startswith("object:property-change"):
+            return None
+
+        role = AXObject.get_role(event.source)
+        if "name" in event_type:
+            ignore_name_roles = [
+                Atspi.Role.CANVAS,
+                Atspi.Role.CHECK_BOX,
+                Atspi.Role.ICON,
+                Atspi.Role.IMAGE,
+                Atspi.Role.LIST,
+                Atspi.Role.LIST_ITEM,
+                Atspi.Role.MENU,
+                Atspi.Role.MENU_ITEM,
+                Atspi.Role.PANEL,
+                Atspi.Role.RADIO_BUTTON,
+                Atspi.Role.SECTION,
+                Atspi.Role.TABLE_ROW,
+                Atspi.Role.TABLE_CELL,
+                Atspi.Role.TREE_ITEM,
+            ]
+            if role in ignore_name_roles:
+                msg = f"EVENT MANAGER: Ignoring {event_type} due to role of unfocused source"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
+            return False
+        if "value" in event_type:
+            if role in [Atspi.Role.SPLIT_PANE, Atspi.Role.SCROLL_BAR]:
+                msg = f"EVENT MANAGER: Ignoring {event_type} due to role of unfocused source"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
+            return False
+
+        return None
+
+    @staticmethod
+    def _ignore_state_changed(event: Atspi.Event) -> bool | None:
+        """Returns True/False for state-changed events, or None if not applicable."""
+
+        event_type = event.type
+        if not event_type.startswith("object:state-changed"):
+            return None
+
+        role = AXObject.get_role(event.source)
+        if event_type.endswith("system"):
+            system_ignore_roles = [
+                Atspi.Role.TABLE,
+                Atspi.Role.TABLE_CELL,
+                Atspi.Role.TABLE_ROW,
+                Atspi.Role.TREE,
+                Atspi.Role.TREE_ITEM,
+                Atspi.Role.TREE_TABLE,
+            ]
+            if role in system_ignore_roles:
+                msg = f"EVENT MANAGER: Ignoring {event_type} based on role"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
+
+        return EventManager._ignore_state_changed_subtype(event, event_type, role)
+
+    @staticmethod
+    def _ignore_state_changed_subtype(
+        event: Atspi.Event,
+        event_type: str,
+        role: int,
+    ) -> bool | None:
+        """Returns True/False for state-changed subtypes, or None if not applicable."""
+
+        showing_roles = [
+            Atspi.Role.ALERT,
+            Atspi.Role.ANIMATION,
+            Atspi.Role.DIALOG,
+            Atspi.Role.INFO_BAR,
+            Atspi.Role.MENU,
+            Atspi.Role.NOTIFICATION,
+            Atspi.Role.STATUS_BAR,
+            Atspi.Role.TOOL_TIP,
+        ]
+
+        ignore: bool | None = None
+        reason = ""
+        if "checked" in event_type:
+            ignore = not AXUtilities.is_showing(event.source)
+            reason = "unfocused, non-showing source"
+        elif "selected" in event_type:
+            ignore = not event.detail1 and role == Atspi.Role.BUTTON
+            reason = "role of source and detail1"
+        elif "sensitive" in event_type:
+            ignore = role not in [Atspi.Role.TEXT, Atspi.Role.ENTRY]
+            reason = "role of unfocused source"
+        elif "showing" in event_type:
+            ignore = role not in showing_roles
+            reason = "role"
+
+        if ignore is None:
+            return None
+
+        if ignore:
+            msg = f"EVENT MANAGER: Ignoring {event_type} due to {reason}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+        return ignore
+
+    @staticmethod
+    def _ignore_active_descendant_or_selection(event: Atspi.Event) -> bool | None:
+        """Returns True/False for active-descendant and selection events."""
+
+        event_type = event.type
         if event_type.startswith("object:active-descendant-changed"):
             child = event.any_data
             if child is None or AXUtilities.is_invalid_role(child):
@@ -382,60 +516,6 @@ class EventManager:
                 return True
             return False
 
-        if event_type.startswith("object:children-changed"):
-            if "remove" in event_type and focus and AXObject.is_dead(focus):
-                return False
-            if "remove" in event_type and event.source == AXUtilities.get_desktop():
-                return False
-            child = event.any_data
-            if child is None or AXObject.is_dead(child):
-                msg = f"EVENT_MANAGER: Ignoring {event_type} due to null/dead event.any_data"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return True
-            if AXUtilities.is_menu_related(child) or AXUtilities.is_image(child):
-                msg = f"EVENT_MANAGER: Ignoring {event_type} due to role of event.any_data"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return True
-            script = script_manager.get_manager().get_active_script()
-            if script is None:
-                msg = f"EVENT MANAGER: Ignoring {event_type} because there is no active script"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return True
-            if script.app != AXUtilities.get_application(event.source):
-                msg = f"EVENT MANAGER: Ignoring {event_type} because event is not from active app"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return True
-
-        if event_type.startswith("object:property-change"):
-            role = AXObject.get_role(event.source)
-            if "name" in event_type:
-                if role in [
-                    Atspi.Role.CANVAS,
-                    Atspi.Role.CHECK_BOX,  # TeamTalk5 spam
-                    Atspi.Role.ICON,
-                    Atspi.Role.IMAGE,  # Thunderbird spam
-                    Atspi.Role.LIST,  # Web app spam
-                    Atspi.Role.LIST_ITEM,  # Web app spam
-                    Atspi.Role.MENU,
-                    Atspi.Role.MENU_ITEM,
-                    Atspi.Role.PANEL,  # TeamTalk5 spam
-                    Atspi.Role.RADIO_BUTTON,  # TeamTalk5 spam
-                    Atspi.Role.SECTION,  # Web app spam
-                    Atspi.Role.TABLE_ROW,  # Thunderbird spam
-                    Atspi.Role.TABLE_CELL,  # Thunderbird spam
-                    Atspi.Role.TREE_ITEM,
-                ]:  # Thunderbird spam
-                    msg = f"EVENT MANAGER: Ignoring {event_type} due to role of unfocused source"
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
-                    return True
-                return False
-            if "value" in event_type:
-                if role in [Atspi.Role.SPLIT_PANE, Atspi.Role.SCROLL_BAR]:
-                    msg = f"EVENT MANAGER: Ignoring {event_type} due to role of unfocused source"
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
-                    return True
-                return False
-
         if event_type.startswith("object:selection-changed"):
             if AXObject.is_dead(event.source):
                 msg = f"EVENT MANAGER: Ignoring {event_type} from dead source"
@@ -443,60 +523,18 @@ class EventManager:
                 return True
             return False
 
-        if event_type.startswith("object:state-changed"):
-            role = AXObject.get_role(event.source)
-            if event_type.endswith("system"):
-                # Thunderbird spams us with these when a message list thread is expanded/collapsed.
-                if role in [
-                    Atspi.Role.TABLE,
-                    Atspi.Role.TABLE_CELL,
-                    Atspi.Role.TABLE_ROW,
-                    Atspi.Role.TREE,
-                    Atspi.Role.TREE_ITEM,
-                    Atspi.Role.TREE_TABLE,
-                ]:
-                    msg = f"EVENT MANAGER: Ignoring {event_type} based on role"
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
-                    return True
-            if "checked" in event_type:
-                # Gtk 3 apps. See https://gitlab.gnome.org/GNOME/gtk/-/issues/6449
-                if not AXUtilities.is_showing(event.source):
-                    msg = f"EVENT MANAGER: Ignoring {event_type} of unfocused, non-showing source"
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
-                    return True
-                return False
-            if "selected" in event_type:
-                if not event.detail1 and role == Atspi.Role.BUTTON:
-                    msg = f"EVENT MANAGER: Ignoring {event_type} due to role of source and detail1"
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
-                    return True
-                return False
-            if "sensitive" in event_type:
-                # The Gedit and Thunderbird scripts pay attention to this event for spellcheck.
-                if role not in [Atspi.Role.TEXT, Atspi.Role.ENTRY]:
-                    msg = f"EVENT MANAGER: Ignoring {event_type} due to role of unfocused source"
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
-                    return True
-                return False
-            if "showing" in event_type:
-                if role not in [
-                    Atspi.Role.ALERT,
-                    Atspi.Role.ANIMATION,
-                    Atspi.Role.DIALOG,
-                    Atspi.Role.INFO_BAR,
-                    Atspi.Role.MENU,
-                    Atspi.Role.NOTIFICATION,
-                    Atspi.Role.STATUS_BAR,
-                    Atspi.Role.TOOL_TIP,
-                ]:
-                    msg = f"EVENT MANAGER: Ignoring {event_type} due to role"
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
-                    return True
-                return False
+        return None
 
+    @staticmethod
+    def _ignore_text_events(
+        event: Atspi.Event,
+        focus: Atspi.Accessible | None,
+    ) -> bool | None:
+        """Returns True/False for text caret-moved and text-changed events."""
+
+        event_type = event.type
         if event_type.startswith("object:text-caret-moved"):
-            role = AXObject.get_role(event.source)
-            if role == Atspi.Role.LABEL:
+            if AXObject.get_role(event.source) == Atspi.Role.LABEL:
                 msg = f"EVENT MANAGER: Ignoring {event_type} due to role of unfocused source"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
@@ -508,11 +546,42 @@ class EventManager:
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
             if event_type.endswith("system") and AXUtilities.is_selectable(focus):
-                # Thunderbird spams us with text changes every time the selected item changes.
                 msg = f"EVENT MANAGER: Ignoring because {event_type} is suspected spam"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
             return False
+
+        return None
+
+    def _ignore(self, event: Atspi.Event) -> bool:
+        """Returns True if this event should be ignored."""
+
+        debug.print_message(debug.LEVEL_INFO, "")
+        tokens = ["EVENT MANAGER:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        if event.type.startswith(("window", "mouse:button")):
+            return False
+
+        if not self._active or self._paused:
+            msg = "EVENT MANAGER: Ignoring because manager is not active or queueing is paused"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        for check in (
+            lambda: self._ignore_by_role(event),
+            lambda: self._ignore_by_focus_state(event, focus),
+            lambda: self._ignore_by_spam_filter(event),
+            lambda: self._ignore_active_descendant_or_selection(event),
+            lambda: self._ignore_children_changed(event, focus),
+            lambda: self._ignore_property_change(event),
+            lambda: self._ignore_state_changed(event),
+            lambda: self._ignore_text_events(event, focus),
+        ):
+            result = check()
+            if result is not None:
+                return result
 
         return False
 
@@ -742,21 +811,25 @@ class EventManager:
         if script.force_script_activation(event):
             return True, "The script insists it should be activated for this event."
 
+        return self._is_activatable_by_event_type(event)
+
+    @staticmethod
+    def _is_activatable_by_event_type(event: Atspi.Event) -> tuple[bool, str]:
+        """Determines if event type makes this an activatable event."""
+
         event_type = event.type
 
-        if event_type.startswith("window:activate"):
-            window_activation = True
-        else:
-            window_activation = (
-                event_type.startswith("object:state-changed:active")
-                and event.detail1
-                and AXUtilities.is_frame(event.source)
-            )
-
+        window_activation = event_type.startswith("window:activate") or (
+            event_type.startswith("object:state-changed:active")
+            and event.detail1
+            and AXUtilities.is_frame(event.source)
+        )
         if window_activation:
-            if event.source != focus_manager.get_manager().get_active_window():
-                return True, "Window activation"
-            return False, "Window activation for already-active window"
+            is_new = event.source != focus_manager.get_manager().get_active_window()
+            reason = (
+                "Window activation" if is_new else "Window activation for already-active window"
+            )
+            return is_new, reason
 
         if event_type.startswith("object:state-changed:focused") and event.detail1:
             return True, "Event source claimed focus."
@@ -769,8 +842,7 @@ class EventManager:
         ):
             return True, "Selection change in focused menu"
 
-        # This condition appears with gnome-screensaver-dialog.
-        # See bug 530368.
+        # This condition appears with gnome-screensaver-dialog. See bug 530368.
         if (
             event_type.startswith("object:state-changed:showing")
             and AXUtilities.is_panel(event.source)
@@ -816,11 +888,9 @@ class EventManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
 
-    def _process_object_event(self, event: Atspi.Event) -> None:
-        """Handles all object events destined for scripts."""
-
-        if self._is_obsoleted_by(event):
-            return
+    @staticmethod
+    def _handle_early_event_processing(event: Atspi.Event) -> bool:
+        """Handles early event processing. Returns True if the event was fully handled."""
 
         script_mgr = script_manager.get_manager()
         focus_mgr = focus_manager.get_manager()
@@ -831,7 +901,7 @@ class EventManager:
             and event.source == AXUtilities.get_desktop()
         ):
             script_mgr.reclaim_scripts()
-            return
+            return True
 
         if AXObject.is_dead(event.source) or AXUtilities.is_defunct(event.source):
             tokens = ["EVENT MANAGER: Ignoring defunct object:", event.source]
@@ -840,7 +910,7 @@ class EventManager:
             if event_type.startswith("window:de") and focus_mgr.get_active_window() == event.source:
                 focus_mgr.clear_state("Active window is dead or defunct")
                 script_mgr.set_active_script(None, "Active window is dead or defunct")
-            return
+            return True
 
         if event_type.startswith("window:") and event_type.endswith("destroy"):
             script_mgr.reclaim_scripts()
@@ -848,12 +918,36 @@ class EventManager:
         if AXUtilities.is_iconified(event.source):
             tokens = ["EVENT MANAGER: Ignoring iconified object:", event.source]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return True
+
+        return False
+
+    @staticmethod
+    def _find_listener(script: default.Script, event_type: str):
+        """Returns the listener for event_type, or None."""
+
+        listener = script.listeners.get(event_type)
+        if listener is not None:
+            return listener
+
+        # The listener can be None if the event type has a suffix such as "system".
+        for key, value in script.listeners.items():
+            if event_type.startswith(key):
+                return value
+
+        return None
+
+    def _process_object_event(self, event: Atspi.Event) -> None:
+        """Handles all object events destined for scripts."""
+
+        if self._is_obsoleted_by(event) or self._handle_early_event_processing(event):
             return
 
         if debug.debugLevel <= debug.LEVEL_INFO:
             msg = AXUtilitiesDebugging.object_event_details_as_string(event)
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
+        script_mgr = script_manager.get_manager()
         active_script = script_mgr.get_active_script()
         script = self._get_script_for_event(event, active_script)
         if not script:
@@ -880,13 +974,7 @@ class EventManager:
             if not self._should_process_event(event, script, active_script):
                 return
 
-        listener = script.listeners.get(event.type)
-        # The listener can be None if the event type has a suffix such as "system".
-        if listener is None:
-            for key, value in script.listeners.items():
-                if event.type.startswith(key):
-                    listener = value
-                    break
+        listener = self._find_listener(script, event.type)
         if listener is None:
             msg = f"EVENT MANAGER: No listener for event type {event.type}"
             debug.print_message(debug.LEVEL_INFO, msg, True)

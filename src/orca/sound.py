@@ -51,7 +51,7 @@ class Icon:
         return os.path.isfile(self.path)
 
 
-class Tone:  # pylint: disable=too-few-public-methods
+class Tone:
     """Tone representing a particular aspect of an object."""
 
     SINE_WAVE = 0

@@ -19,17 +19,13 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-lines
-# pylint: disable=too-many-branches
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-locals
-# pylint: disable=too-many-return-statements
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=too-many-public-methods
-# pylint: disable=too-many-statements
 
 """The default Script for presenting information to the user."""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 import re
@@ -270,16 +266,17 @@ class Script(script.Script):
             braille_bindings["panBrailleLeftHandler"] = left_keys
         if right_keys:
             braille_bindings["panBrailleRightHandler"] = right_keys
-        if braille.BRLAPI_KEY_CMD_HOME is not None:
-            braille_bindings["goBrailleHomeHandler"] = (braille.BRLAPI_KEY_CMD_HOME,)
-        if braille.BRLAPI_KEY_CMD_SIXDOTS is not None:
-            braille_bindings["contractedBrailleHandler"] = (braille.BRLAPI_KEY_CMD_SIXDOTS,)
-        if braille.BRLAPI_KEY_CMD_ROUTE is not None:
-            braille_bindings["processRoutingKeyHandler"] = (braille.BRLAPI_KEY_CMD_ROUTE,)
-        if braille.BRLAPI_KEY_CMD_CUTBEGIN is not None:
-            braille_bindings["processBrailleCutBeginHandler"] = (braille.BRLAPI_KEY_CMD_CUTBEGIN,)
-        if braille.BRLAPI_KEY_CMD_CUTLINE is not None:
-            braille_bindings["processBrailleCutLineHandler"] = (braille.BRLAPI_KEY_CMD_CUTLINE,)
+
+        single_key_bindings: list[tuple[str, int | None]] = [
+            ("goBrailleHomeHandler", braille.BRLAPI_KEY_CMD_HOME),
+            ("contractedBrailleHandler", braille.BRLAPI_KEY_CMD_SIXDOTS),
+            ("processRoutingKeyHandler", braille.BRLAPI_KEY_CMD_ROUTE),
+            ("processBrailleCutBeginHandler", braille.BRLAPI_KEY_CMD_CUTBEGIN),
+            ("processBrailleCutLineHandler", braille.BRLAPI_KEY_CMD_CUTLINE),
+        ]
+        for handler_name, key in single_key_bindings:
+            if key is not None:
+                braille_bindings[handler_name] = (key,)
         if not braille_bindings:
             msg = "DEFAULT: Braille bindings unavailable."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1072,30 +1069,33 @@ class Script(script.Script):
 
         return True
 
-    def on_selection_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:selection-changed accessibility events."""
+    def _ignore_selection_based_on_source(
+        self,
+        event: Atspi.Event,
+        focus: Atspi.Accessible | None,
+    ) -> bool:
+        """Returns True if this selection-changed event should be ignored based on its source."""
 
-        focus = focus_manager.get_manager().get_locus_of_focus()
         if self.utilities.handle_paste_locus_of_focus_change():
             if self.utilities.top_level_object_is_active_and_current(event.source):
                 focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-        elif self.utilities.handle_container_selection_change(
+            return False
+
+        if self.utilities.handle_container_selection_change(
             event.source,
         ) or AXUtilities.manages_descendants(event.source):
             return True
-        elif event.source == focus:
-            # There is a bug in (at least) Pidgin in which a newly-expanded submenu lacks the
-            # showing and visible states, causing the logic below to be triggered. Work around
-            # that here by trusting selection changes from the locus of focus are probably valid
-            # even if the state set is not.
-            pass
-        elif not (AXUtilities.is_showing(event.source) and AXUtilities.is_visible(event.source)):
-            # If the current combobox is collapsed, its menu child that fired the event might lack
-            # the showing and visible states. This happens in (at least) Thunderbird's calendar
-            # new-appointment comboboxes. Therefore check to see if the event came from the current
-            # combobox. This is necessary because (at least) VSCode's debugger has some hidden menu
-            # that the user is not in which is firing this event. This is why we cannot have nice
-            # things.
+
+        # There is a bug in (at least) Pidgin in which a newly-expanded submenu lacks the
+        # showing and visible states. Trust selection changes from the locus of focus.
+        if event.source != focus and not (
+            AXUtilities.is_showing(event.source) and AXUtilities.is_visible(event.source)
+        ):
+            # If the current combobox is collapsed, its menu child that fired the event might
+            # lack the showing and visible states. This happens in (at least) Thunderbird's
+            # calendar new-appointment comboboxes. Therefore check to see if the event came
+            # from the current combobox. This is necessary because (at least) VSCode's debugger
+            # has some hidden menu that the user is not in which is firing this event.
             combobox = AXObject.find_ancestor(event.source, AXUtilities.is_combo_box)
             if combobox != focus and event.source != AXObject.get_parent(focus):
                 tokens = ["DEFAULT: Ignoring event: source lacks showing + visible", event.source]
@@ -1108,6 +1108,15 @@ class Script(script.Script):
                 tokens = ["DEFAULT: Ignoring event:", event.source, "is not inside", active_window]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
+
+        return False
+
+    def on_selection_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:selection-changed accessibility events."""
+
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if self._ignore_selection_based_on_source(event, focus):
+            return True
 
         # If the current item's selection is toggled, we'll present that
         # via the state-changed event.
@@ -1306,30 +1315,21 @@ class Script(script.Script):
             live_region_presenter.get_presenter().handle_event(self, event)
             return True
 
-        speak_string = True
-        if reason == TextEventReason.PAGE_SWITCH:
-            msg = "DEFAULT: Insertion is believed to be due to page switch"
+        reason_messages: dict[TextEventReason, str] = {
+            TextEventReason.PAGE_SWITCH: "due to page switch",
+            TextEventReason.PASTE: "due to paste",
+            TextEventReason.UNSPECIFIED_COMMAND: "due to command",
+            TextEventReason.MOUSE_MIDDLE_BUTTON: "due to middle mouse button",
+            TextEventReason.TYPING_ECHOABLE: "echoable",
+            TextEventReason.AUTO_INSERTION_PRESENTABLE: "presentable auto text event",
+            TextEventReason.SELECTED_TEXT_INSERTION: "also selected",
+        }
+        silent_reasons = {TextEventReason.PAGE_SWITCH, TextEventReason.PASTE}
+        description = reason_messages.get(reason)
+        if description is not None:
+            msg = f"DEFAULT: Insertion is believed to be {description}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            speak_string = False
-        elif reason == TextEventReason.PASTE:
-            msg = "DEFAULT: Insertion is believed to be due to paste"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            speak_string = False
-        elif reason == TextEventReason.UNSPECIFIED_COMMAND:
-            msg = "DEFAULT: Insertion is believed to be due to command"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-        elif reason == TextEventReason.MOUSE_MIDDLE_BUTTON:
-            msg = "DEFAULT: Insertion is believed to be due to middle mouse button"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-        elif reason == TextEventReason.TYPING_ECHOABLE:
-            msg = "DEFAULT: Insertion is believed to be echoable"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-        elif reason == TextEventReason.AUTO_INSERTION_PRESENTABLE:
-            msg = "DEFAULT: Insertion is believed to be presentable auto text event"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-        elif reason == TextEventReason.SELECTED_TEXT_INSERTION:
-            msg = "DEFAULT: Insertion is also selected"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            speak_string = reason not in silent_reasons
         else:
             msg = "DEFAULT: Not speaking inserted string due to lack of cause"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1575,24 +1575,20 @@ class Script(script.Script):
             msg = "DEFAULT: Not presenting text because SayAll is active"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
-        if reason == TextEventReason.NAVIGATION_BY_LINE:
-            self.say_line(obj)
+
+        navigation_handlers: dict[TextEventReason, Callable[[Atspi.Accessible], None]] = {
+            TextEventReason.NAVIGATION_BY_LINE: self.say_line,
+            TextEventReason.NAVIGATION_BY_WORD: self.say_word,
+            TextEventReason.NAVIGATION_BY_CHARACTER: self.say_character,
+            TextEventReason.NAVIGATION_BY_PAGE: self.say_line,
+            TextEventReason.NAVIGATION_TO_LINE_BOUNDARY: self.say_character,
+            TextEventReason.NAVIGATION_TO_FILE_BOUNDARY: self.say_line,
+        }
+        handler = navigation_handlers.get(reason)
+        if handler is not None:
+            handler(obj)
             return True
-        if reason == TextEventReason.NAVIGATION_BY_WORD:
-            self.say_word(obj)
-            return True
-        if reason == TextEventReason.NAVIGATION_BY_CHARACTER:
-            self.say_character(obj)
-            return True
-        if reason == TextEventReason.NAVIGATION_BY_PAGE:
-            self.say_line(obj)
-            return True
-        if reason == TextEventReason.NAVIGATION_TO_LINE_BOUNDARY:
-            self.say_character(obj)
-            return True
-        if reason == TextEventReason.NAVIGATION_TO_FILE_BOUNDARY:
-            self.say_line(obj)
-            return True
+
         if reason == TextEventReason.MOUSE_PRIMARY_BUTTON:
             text, _start, _end = AXText.get_cached_selected_text(event.source)
             if not text:

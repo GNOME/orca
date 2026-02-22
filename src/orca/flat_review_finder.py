@@ -18,10 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
-# pylint: disable=too-few-public-methods
 # pylint: disable=too-many-instance-attributes
-# pylint: disable=too-many-return-statements
 
 """Provides support for a flat review find."""
 
@@ -46,7 +43,6 @@ from . import (
     keybindings,
     messages,
     presentation_manager,
-    script_manager,
 )
 from .flat_review import Context
 
@@ -230,39 +226,32 @@ class FlatReviewFinder:
         """Moves within the flat review context while looking for a match."""
 
         if context_type == Context.WORD:
-            if query.search_backwards:
-                return context.go_previous_word()
-            return context.go_next_word()
+            return context.go_previous_word() if query.search_backwards else context.go_next_word()
 
         if context_type == Context.ZONE:
             if query.search_backwards:
                 moved = context.go_previous_zone()
                 context.go_to_end_of(Context.ZONE)
-                return moved
-            return context.go_next_zone()
-
-        if context_type == Context.LINE:
-            if query.search_backwards:
-                moved = context.go_previous_line()
-                context.go_to_end_of(Context.LINE)
             else:
-                moved = context.go_next_line()
-            if moved:
-                return True
-            if not query.window_wrap or self._wrapped:
-                return False
-            self._wrapped = True
-            script = script_manager.get_manager().get_active_script()
-            assert script is not None
-            if query.search_backwards:
-                presentation_manager.get_manager().present_message(messages.WRAPPING_TO_BOTTOM)
-                moved = context.go_previous_line(True)
-            else:
-                presentation_manager.get_manager().present_message(messages.WRAPPING_TO_TOP)
-                moved = context.go_next_line(True)
+                moved = context.go_next_zone()
             return moved
 
-        return False
+        if context_type != Context.LINE:
+            return False
+
+        if query.search_backwards:
+            moved = context.go_previous_line()
+            context.go_to_end_of(Context.LINE)
+        else:
+            moved = context.go_next_line()
+        if moved or not query.window_wrap or self._wrapped:
+            return moved
+        self._wrapped = True
+        if query.search_backwards:
+            presentation_manager.get_manager().present_message(messages.WRAPPING_TO_BOTTOM)
+            return context.go_previous_line(True)
+        presentation_manager.get_manager().present_message(messages.WRAPPING_TO_TOP)
+        return context.go_next_line(True)
 
     def _find_match_in(
         self,
@@ -304,33 +293,21 @@ class FlatReviewFinder:
     def _find_match(self, query: SearchQuery, context: Context, pattern: re.Pattern) -> bool:
         """Searches for a match of pattern in context."""
 
-        if not self._find_match_in(query, context, pattern, Context.LINE):
-            return False
-
-        if not self._find_match_in(query, context, pattern, Context.ZONE):
-            return False
-
-        if not self._find_match_in(query, context, pattern, Context.WORD):
-            return False
+        for context_type in (Context.LINE, Context.ZONE, Context.WORD):
+            if not self._find_match_in(query, context, pattern, context_type):
+                return False
 
         if self._match != _SearchQueryMatch(context, pattern):
             return True
 
-        if self._move(query, context, Context.WORD) and self._find_match_in(
-            query,
-            context,
-            pattern,
-            Context.WORD,
-        ):
-            return True
-
-        if self._move(query, context, Context.ZONE) and self._find_match_in(
-            query,
-            context,
-            pattern,
-            Context.ZONE,
-        ):
-            return True
+        for context_type in (Context.WORD, Context.ZONE):
+            if self._move(query, context, context_type) and self._find_match_in(
+                query,
+                context,
+                pattern,
+                context_type,
+            ):
+                return True
 
         if self._move(query, context, Context.LINE):
             return self._find_match(query, context, pattern)

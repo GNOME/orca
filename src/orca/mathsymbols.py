@@ -20,8 +20,6 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-lines
-# pylint: disable=too-many-return-statements
-# pylint: disable=too-many-branches
 
 """Turns math symbols into their spoken representation."""
 
@@ -2237,37 +2235,29 @@ _all.update(_operators)
 _all.update(_shapes)
 
 
+_STYLE_MAP: list[tuple[str, list[range | list[int]]]] = [
+    (BOLD, [_bold, _bold_greek, _bold_digits]),
+    (ITALIC, [_italic, _italic_greek, _other_italic]),
+    (BOLD_ITALIC, [_bold_italic, _bold_italic_greek]),
+    (SCRIPT, [_script, _other_script]),
+    (BOLD_SCRIPT, [_bold_script]),
+    (FRAKTUR, [_fraktur, _other_fraktur]),
+    (DOUBLE_STRUCK, [_double_struck, _double_struck_digits, _other_double_struck]),
+    (BOLD_FRAKTUR, [_bold_fraktur]),
+    (SANS_SERIF, [_sans_serif, _sans_serif_digits]),
+    (SANS_SERIF_BOLD, [_sans_serif_bold, _sans_serif_bold_greek, _sans_serif_bold_digits]),
+    (SANS_SERIF_ITALIC, [_sans_serif_italic]),
+    (SANS_SERIF_BOLD_ITALIC, [_sans_serif_bold_italic, _sans_serif_bold_italic_greek]),
+    (MONOSPACE, [_monospace, _monospace_digits]),
+    (DOTLESS, [_dotless]),
+]
+
+
 def _get_style_string(symbol):
     o = ord(symbol)
-    if o in _bold or o in _bold_greek or o in _bold_digits:
-        return BOLD
-    if o in _italic or o in _italic_greek or o in _other_italic:
-        return ITALIC
-    if o in _bold_italic or o in _bold_italic_greek:
-        return BOLD_ITALIC
-    if o in _script or o in _other_script:
-        return SCRIPT
-    if o in _bold_script:
-        return BOLD_SCRIPT
-    if o in _fraktur or o in _other_fraktur:
-        return FRAKTUR
-    if o in _double_struck or o in _double_struck_digits or o in _other_double_struck:
-        return DOUBLE_STRUCK
-    if o in _bold_fraktur:
-        return BOLD_FRAKTUR
-    if o in _sans_serif or o in _sans_serif_digits:
-        return SANS_SERIF
-    if o in _sans_serif_bold or o in _sans_serif_bold_greek or o in _sans_serif_bold_digits:
-        return SANS_SERIF_BOLD
-    if o in _sans_serif_italic:
-        return SANS_SERIF_ITALIC
-    if o in _sans_serif_bold_italic or o in _sans_serif_bold_italic_greek:
-        return SANS_SERIF_BOLD_ITALIC
-    if o in _monospace or o in _monospace_digits:
-        return MONOSPACE
-    if o in _dotless:
-        return DOTLESS
-
+    for style, dicts in _STYLE_MAP:
+        if any(o in d for d in dicts):
+            return style
     return "%s"
 
 

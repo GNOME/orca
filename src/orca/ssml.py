@@ -28,7 +28,6 @@ text to SSML, suitable to be sent to a speech server. Services
 can pass flags to control the elements and attributes used.
 """
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 from enum import Enum, auto

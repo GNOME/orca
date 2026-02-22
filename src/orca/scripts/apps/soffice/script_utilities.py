@@ -17,11 +17,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=too-many-branches
-
 """Custom script utilities for LibreOffice"""
 
-# This has to be the first non-docstring line in the module to make linters happy.
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
@@ -233,6 +230,26 @@ class Utilities(script_utilities.Utilities):
 
         return bool(msgs)
 
+    @staticmethod
+    def _build_selection_change_messages(
+        selected: list,
+        unselected: list,
+        selected_msgs: tuple[str, str],
+        unselected_msgs: tuple[str, str],
+    ) -> list[str]:
+        """Builds messages for a set of selected/unselected items."""
+
+        result: list[str] = []
+        if len(unselected) == 1:
+            result.append(unselected_msgs[0] % unselected[0])
+        elif len(unselected) > 1:
+            result.append(unselected_msgs[1] % (unselected[0], unselected[-1]))
+        if len(selected) == 1:
+            result.append(selected_msgs[0] % selected[0])
+        elif len(selected) > 1:
+            result.append(selected_msgs[1] % (selected[0], selected[-1]))
+        return result
+
     def handle_row_and_column_selection_change(self, obj: Atspi.Accessible) -> bool:
         """Presents the selection change for obj."""
 
@@ -272,32 +289,20 @@ class Utilities(script_utilities.Utilities):
             presentation_manager.get_manager().speak_message(messages.DOCUMENT_UNSELECTED_ALL)
             return True
 
-        msgs = []
-        if len(unselected_cols) == 1:
-            msgs.append(messages.TABLE_COLUMN_UNSELECTED % unselected_cols[0])
-        elif len(unselected_cols) > 1:
-            msgs.append(
-                messages.TABLE_COLUMN_RANGE_UNSELECTED % (unselected_cols[0], unselected_cols[-1]),
+        msgs = self._build_selection_change_messages(
+            selected_cols,
+            unselected_cols,
+            (messages.TABLE_COLUMN_SELECTED, messages.TABLE_COLUMN_RANGE_SELECTED),
+            (messages.TABLE_COLUMN_UNSELECTED, messages.TABLE_COLUMN_RANGE_UNSELECTED),
+        )
+        msgs.extend(
+            self._build_selection_change_messages(
+                selected_rows,
+                unselected_rows,
+                (messages.TABLE_ROW_SELECTED, messages.TABLE_ROW_RANGE_SELECTED),
+                (messages.TABLE_ROW_UNSELECTED, messages.TABLE_ROW_RANGE_UNSELECTED),
             )
-
-        if len(unselected_rows) == 1:
-            msgs.append(messages.TABLE_ROW_UNSELECTED % unselected_rows[0])
-        elif len(unselected_rows) > 1:
-            msgs.append(
-                messages.TABLE_ROW_RANGE_UNSELECTED % (unselected_rows[0], unselected_rows[-1]),
-            )
-
-        if len(selected_cols) == 1:
-            msgs.append(messages.TABLE_COLUMN_SELECTED % selected_cols[0])
-        elif len(selected_cols) > 1:
-            msgs.append(
-                messages.TABLE_COLUMN_RANGE_SELECTED % (selected_cols[0], selected_cols[-1]),
-            )
-
-        if len(selected_rows) == 1:
-            msgs.append(messages.TABLE_ROW_SELECTED % selected_rows[0])
-        elif len(selected_rows) > 1:
-            msgs.append(messages.TABLE_ROW_RANGE_SELECTED % (selected_rows[0], selected_rows[-1]))
+        )
 
         if msgs:
             presentation_manager.get_manager().interrupt_presentation()
