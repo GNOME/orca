@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca main\n"
-"POT-Creation-Date: 2025-10-30 23:10+0000\n"
-"PO-Revision-Date: 2026-01-25 19:08+0100\n"
+"POT-Creation-Date: 2026-02-06 07:46+0000\n"
+"PO-Revision-Date: 2026-02-06 15:49+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgctxt "_"
 msgid "translator-credits"
 msgstr ""
-"Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2016, 2017, 2018"
+"Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2016, 2017, 2018, 2026"
 
 #. (itstool) path: info/title
 #: C/commands_braille.page:6
@@ -97,7 +97,8 @@ msgid "Creative Commons Share Alike 3.0"
 msgstr "Creative Commons DelaLika 3.0"
 
 #. (itstool) path: page/title
-#: C/commands_braille.page:19
+#. (itstool) path: section/title
+#: C/commands_braille.page:19 C/commands_controlling_orca.page:73
 msgid "Braille Commands"
 msgstr "Punktskriftskommandon"
 
@@ -210,29 +211,36 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:30
-msgid ""
-"Present previous chat room messages: <keyseq><key>Orca Modifier</"
-"key><key>F1</key></keyseq> through <key>F9</key>"
-msgstr ""
-"Presentera tidigare chattrumsmeddelanden: <keyseq><key>Orca-modifierare</"
-"key><key>F1</key></keyseq> till <key>F9</key>"
+msgid "Present previous chat room message: (Unbound)"
+msgstr "Presentera föregående chattrumsmeddelande: (Inte bunden)"
 
 #. (itstool) path: item/p
-#: C/commands_chat.page:36
+#: C/commands_chat.page:35
+msgid "Present next chat room message: (Unbound)"
+msgstr "Presentera nästa chattrumsmeddelande: (Inte bunden)"
+
+#. (itstool) path: item/p
+#: C/commands_chat.page:40
 msgid "Enable/disable announcement of room name with messages: (Unbound)"
 msgstr ""
 "Aktivera/inaktivera annonsering av rumsnamn med meddelanden: (Inte bunden)"
 
+# Ändra ev. till Tillhandahåll chattrumsspeciifk meddelandehistorik + i GUI
 #. (itstool) path: item/p
-#: C/commands_chat.page:41
+#: C/commands_chat.page:45
+msgid "Toggle chat room specific message histories: (unbound)"
+msgstr "Växla chattrumsspecifik meddelandehistorik: (Inte bunden)"
+
+#. (itstool) path: item/p
+#: C/commands_chat.page:50
 msgid "Enable/disable announcement of buddy typing status: (Unbound)"
 msgstr ""
 "Aktivera/inaktivera annonsering av kompisars skrivstatus: (Inte bunden)"
 
 #. (itstool) path: item/p
-#: C/commands_chat.page:44
-msgid "Enable/disable room-specific histories: (Unbound)"
-msgstr "Aktivera/inaktivera rumsspecifik historik: (Inte bunden)"
+#: C/commands_chat.page:53
+msgid "Toggle room name presentation: (Unbound)"
+msgstr "Växla presentation av rumsnamn: (Inte bunden)"
 
 #. (itstool) path: info/title
 #: C/commands_controlling_orca.page:5
@@ -276,11 +284,11 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:29
 msgid ""
-"Toggle <app>Orca</app> on and off in GNOME: <keyseq><key>Super</"
-"key><key>Alt</key><key>S</key></keyseq>."
+"Toggle <app>Orca</app> on and off in supported desktop environments: "
+"<keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
 msgstr ""
-"Slå på eller av <app>Orca</app> i GNOME: <keyseq><key>Super</key><key>Alt</"
-"key><key>S</key></keyseq>."
+"Slå på och av <app>Orca</app> i skrivbordsmiljöer som stöds: "
+"<keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
 
 #. (itstool) path: note/p
 #: C/commands_controlling_orca.page:34
@@ -318,20 +326,59 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:56
 msgid ""
-"Pass the next command on to the current application: <keyseq><key>Orca "
-"Modifier</key><key>BackSpace</key></keyseq>"
+"Toggle all Orca command keys: <keyseq><key>Alt&gt;</key><key>BackSpace</"
+"key></keyseq>"
 msgstr ""
-"Skicka nästa kommando vidare till aktuellt program: <keyseq><key>Orca-"
-"modifierare</key><key>Backsteg</key></keyseq>"
+"Aktivera/inaktivera alla Orca-kommandotangenter: <keyseq><key>Alt&gt;</"
+"key><key>Backsteg</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:62
+msgid "Toggle keyboard layout: (Unbound)"
+msgstr "Växla tangentbordslayout: (Inte bunden)"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:65 C/commands_speech_settings.page:57
+msgid "Cycle to the next key echo level: (Unbound)"
+msgstr "Växla till nästa nivå för tangenteko: (Inte bunden)"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:68
+msgid "Quit the screen reader: (Unbound)"
+msgstr "Avsluta skärmläsaren: (Inte bunden)"
+
+#. (itstool) path: section/p
+#: C/commands_controlling_orca.page:74
+msgid ""
+"The following commands can be used to control and customize Orca's braille "
+"output."
+msgstr ""
+"Följande kommandon kan användas för att styra och anpassa Orcas "
+"punktskriftsutmatning."
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:77
+msgid "Pan the braille display to the left: (Unbound)"
+msgstr "Flytta punktskriftsskärmen åt vänster: (Inte bunden)"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:80
+msgid "Pan the braille display to the right: (Unbound)"
+msgstr "Flytta punktskriftsskärmen åt höger: (Inte bunden)"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:83
+msgid "Turn contracted braille on and off: (Unbound)"
+msgstr "Aktivera eller inaktivera förkortad punktskrift: (Inte bunden)"
 
 #. (itstool) path: section/title
-#: C/commands_controlling_orca.page:64
+#: C/commands_controlling_orca.page:88
 msgid "Commands for Learning to Use <app>Orca</app>"
 msgstr "Kommandon för att lära dig använda <app>Orca</app>"
 
 #. (itstool) path: section/p
 #. (itstool) path: page/p
-#: C/commands_controlling_orca.page:65 C/howto_learn_modes.page:18
+#: C/commands_controlling_orca.page:89 C/howto_learn_modes.page:18
 msgid ""
 "In Learn Mode, <app>Orca</app> will announce each keystroke you pressed "
 "along with any associated <app>Orca</app> command that keystroke is bound "
@@ -344,14 +391,14 @@ msgstr ""
 "genvägar som innehåller alla <app>Orca</app>-kommandon du kan använda."
 
 #. (itstool) path: item/p
-#: C/commands_controlling_orca.page:73
+#: C/commands_controlling_orca.page:97
 msgid "Enter Learn Mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgstr ""
 "Gå in i inlärningsläge: <keyseq><key>Orca-modifierare</key><key>H</key></"
 "keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_controlling_orca.page:79
+#: C/commands_controlling_orca.page:103
 msgid "Exit Learn Mode: <keyseq><key>Esc</key></keyseq>"
 msgstr "Gå ur inlärningsläge: <keyseq><key>Esc</key></keyseq>"
 
@@ -394,8 +441,18 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_debugging.page:26
+msgid "Capture snapshot for debugging: (Unbound)"
+msgstr "Ta ögonblicksbild för felsökning: (Inte bunden)"
+
+#. (itstool) path: item/p
+#: C/commands_debugging.page:29
 msgid "Cycle to the next debug level: (Unbound)"
 msgstr "Växla till nästa felsökningsnivå: (Inte bunden)"
+
+#. (itstool) path: item/p
+#: C/commands_debugging.page:32
+msgid "Clear the AT-SPI cache for the current application: (Unbound)"
+msgstr "Töm AT-SPI-cachen för det aktuella programmet: (Inte bunden)"
 
 #. (itstool) path: info/title
 #: C/commands_find.page:6
@@ -965,6 +1022,22 @@ msgid "Append the contents under flat review to the clipboard: (Unbound)"
 msgstr ""
 "Lägg till innehållet under platt granskning till urklipp: (Inte bunden)"
 
+#. (itstool) path: item/p
+#: C/commands_flat_review.page:197
+msgid "Move flat review to the bottom left: (Unbound)"
+msgstr "Flytta platt granskning till nedre vänsterkant: (Inte bunden)"
+
+#. (itstool) path: item/p
+#: C/commands_flat_review.page:198
+msgid "Show flat review contents: (Unbound)"
+msgstr "Visa innehåll för platt granskning: (Inte bunden)"
+
+#. (itstool) path: item/p
+#: C/commands_flat_review.page:199
+msgid "Toggle restricting flat review to the current object: (Unbound)"
+msgstr ""
+"Växla begränsning av platt granskning till aktuellt objekt: (Inte bunden)"
+
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:6
 msgctxt "sort"
@@ -1257,6 +1330,11 @@ msgstr ""
 #: C/commands_profiles.page:30
 msgid "Cycle to the next profile: (Unbound)"
 msgstr "Växla till nästa profil: (Inte bunden)"
+
+#. (itstool) path: item/p
+#: C/commands_profiles.page:35
+msgid "Present the current profile: (Unbound)"
+msgstr "Presentera den aktuella profilen: (Inte bunden)"
 
 #. (itstool) path: info/title
 #: C/commands_reading.page:8
@@ -1569,8 +1647,8 @@ msgstr "Kommandon för att anpassa <app>Orca</app>s utmatning"
 
 #. (itstool) path: page/title
 #: C/commands_speech_settings.page:19
-msgid "Speech Settings Commands"
-msgstr "Kommandon för uppläsningsinställningar"
+msgid "Speech And Verbosity Settings Commands"
+msgstr "Kommandon för tal- och informationsnivåinställningar"
 
 #. (itstool) path: page/p
 #: C/commands_speech_settings.page:20
@@ -1629,11 +1707,6 @@ msgid "Cycle to the next spoken punctuation level: (Unbound)"
 msgstr "Växla till nästa nivå för uppläsning av skiljetecken: (Inte bunden)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:57
-msgid "Cycle to the next key echo level: (Unbound)"
-msgstr "Växla till nästa nivå för tangenteko: (Inte bunden)"
-
-#. (itstool) path: item/p
 #: C/commands_speech_settings.page:60
 msgid "Cycle to the next capitalization style: (Unbound)"
 msgstr "Växla till nästa versaliseringsstil: (Inte bunden)"
@@ -1667,6 +1740,11 @@ msgstr "Sänk volymen: (Inte bunden)"
 #: C/commands_speech_settings.page:78
 msgid "Increase the volume: (Unbound)"
 msgstr "Höj volymen: (Inte bunden)"
+
+#. (itstool) path: item/p
+#: C/commands_speech_settings.page:81
+msgid "Cycle to the next speech synthesizer: (Unbound)"
+msgstr "Växla till nästa talsyntes: (Inte bunden)"
 
 #. (itstool) path: info/title
 #: C/commands_structural_navigation.page:6
@@ -7963,6 +8041,30 @@ msgstr ""
 msgid "Default value: 4"
 msgstr "Standardvärde: 4"
 
+#~ msgid ""
+#~ "Present previous chat room messages: <keyseq><key>Orca Modifier</"
+#~ "key><key>F1</key></keyseq> through <key>F9</key>"
+#~ msgstr ""
+#~ "Presentera tidigare chattrumsmeddelanden: <keyseq><key>Orca-modifierare</"
+#~ "key><key>F1</key></keyseq> till <key>F9</key>"
+
+#~ msgid "Enable/disable room-specific histories: (Unbound)"
+#~ msgstr "Aktivera/inaktivera rumsspecifik historik: (Inte bunden)"
+
+#~ msgid ""
+#~ "Toggle <app>Orca</app> on and off in GNOME: <keyseq><key>Super</"
+#~ "key><key>Alt</key><key>S</key></keyseq>."
+#~ msgstr ""
+#~ "Slå på eller av <app>Orca</app> i GNOME: <keyseq><key>Super</"
+#~ "key><key>Alt</key><key>S</key></keyseq>."
+
+#~ msgid ""
+#~ "Pass the next command on to the current application: <keyseq><key>Orca "
+#~ "Modifier</key><key>BackSpace</key></keyseq>"
+#~ msgstr ""
+#~ "Skicka nästa kommando vidare till aktuellt program: <keyseq><key>Orca-"
+#~ "modifierare</key><key>Backsteg</key></keyseq>"
+
 #~ msgctxt "sort"
 #~ msgid "4. Bookmarks"
 #~ msgstr "4. Bokmärken"
@@ -8174,9 +8276,6 @@ msgstr "Standardvärde: 4"
 
 #~ msgid "Restrict to"
 #~ msgstr "Begränsa till"
-
-#~ msgid "Speak the selected text: (Unbound)"
-#~ msgstr "Läs upp den markerade texten: (Inte bunden)"
 
 #~ msgid ""
 #~ "Get into the <link xref=\"preferences\">Orca Preferences</link> dialog by "
