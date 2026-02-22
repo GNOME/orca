@@ -89,6 +89,7 @@ from orca.gsettings_migrator import (
     export_pronunciations,
     export_synthesizer,
     export_voice,
+    force_navigation_enabled,
     gsettings_to_json,
     hoist_keybindings_metadata,
     import_keybindings,
@@ -379,6 +380,7 @@ def _import_profile(
 ) -> None:
     """Import all settings for a single profile."""
     apply_legacy_aliases(profile_prefs)
+    force_navigation_enabled(profile_prefs)
     hoist_keybindings_metadata(profile_prefs)
     profile = sanitize_gsettings_path(profile_name)
     skip_defaults = profile_name == "default"
@@ -453,6 +455,7 @@ def _import_app(
     for profile_name, profile_data in prefs.get("profiles", {}).items():
         general = profile_data.get("general", {})
         apply_legacy_aliases(general)
+        force_navigation_enabled(general)
         pronunciations = profile_data.get("pronunciations", {})
         app_keybindings = profile_data.get("keybindings", {})
         if not general and not pronunciations and not app_keybindings:
