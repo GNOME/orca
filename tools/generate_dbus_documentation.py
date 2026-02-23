@@ -24,11 +24,12 @@
 
 """Generate markdown documentation for Orca's D-Bus remote controller."""
 
+import contextlib
 import os
 import sys
+
 from dasbus.connection import SessionMessageBus
 from dasbus.error import DBusError
-
 
 SERVICE_NAME = "org.gnome.Orca.Service"
 SERVICE_PATH = "/org/gnome/Orca/Service"
@@ -114,7 +115,7 @@ def _group_structural_navigator_commands(commands):
             return obj_type[:-3] + "y"
         if obj_type.endswith("xes"):  # Checkboxes -> Checkbox
             return obj_type[:-2]
-        if obj_type.endswith("shes") or obj_type.endswith("ches"):  # Matches -> Match
+        if obj_type.endswith(("shes", "ches")):  # Matches -> Match
             return obj_type[:-2]
         if obj_type.endswith("s") and not obj_type.endswith("ss"):
             return obj_type[:-1]
@@ -122,7 +123,7 @@ def _group_structural_navigator_commands(commands):
 
     for name, description in commands:
         # Extract the object type from command names like NextHeading, ListButtons, etc.
-        if name.startswith("Next") or name.startswith("Previous"):
+        if name.startswith(("Next", "Previous")):
             prefix = "Next" if name.startswith("Next") else "Previous"
             obj_type = name[len(prefix) :]
             normalized = normalize_obj_type(obj_type)
@@ -283,10 +284,8 @@ def format_module_commands(module_name, info):
 
                     if "Level" in suffix:
                         # For headings: extract level number
-                        try:
+                        with contextlib.suppress(IndexError, ValueError):
                             level_or_variant = int(suffix.split("Level")[1])
-                        except (IndexError, ValueError):
-                            pass
                     elif "Unvisited" in suffix:
                         # For links: Unvisited comes after base
                         level_or_variant = 1
@@ -361,12 +360,11 @@ def format_module_commands(module_name, info):
                 annotation = " (getter only)"
             elif prop["setter"] and not prop["getter"]:
                 annotation = " (setter only)"
-            else:
-                # Both getter and setter - change "Returns" or "Sets" to "Gets/Sets"
-                if description.startswith("Returns "):
-                    description = description.replace("Returns ", "Gets/Sets ", 1)
-                elif description.startswith("Sets "):
-                    description = description.replace("Sets ", "Gets/Sets ", 1)
+            # Both getter and setter - change "Returns" or "Sets" to "Gets/Sets"
+            elif description.startswith("Returns "):
+                description = description.replace("Returns ", "Gets/Sets ", 1)
+            elif description.startswith("Sets "):
+                description = description.replace("Sets ", "Gets/Sets ", 1)
 
             lines.append(f"- **`{name}`:** {description}{annotation}")
         lines.append("")
@@ -454,7 +452,7 @@ def main():
             f.write(documentation)
         print(f"Documentation written to {output_file}", file=sys.stderr)
         return 0
-    except IOError as e:
+    except OSError as e:
         print(f"Error writing to {output_file}: {e}", file=sys.stderr)
         return 1
 

@@ -27,8 +27,8 @@
 
 """Command-line tool to dump the tree of accessible objects for a given application."""
 
-from datetime import datetime
 import sys
+from datetime import datetime, timezone
 
 import gi
 
@@ -39,7 +39,7 @@ from gi.repository import Atspi, GLib
 def as_string(obj: Atspi.Accessible, prefix: str) -> str:
     "Convert an accessible object to a string representation."
 
-    timestamp = f"{datetime.now():%H:%M:%S}"
+    timestamp = f"{datetime.now(tz=timezone.utc).astimezone():%H:%M:%S}"
     indent = " " * (len(prefix) + len(timestamp) + 2)
     return (
         f"{timestamp} {prefix} "
@@ -200,9 +200,7 @@ def get_attributes_as_string(obj: Atspi.Accessible) -> str:
 
     result = []
     for key, value in attributes.items():
-        if value is None:
-            value = "(null)"
-        result.append(f"{key}={value}")
+        result.append(f"{key}={value if value is not None else '(null)'}")
 
     return ", ".join(result)
 

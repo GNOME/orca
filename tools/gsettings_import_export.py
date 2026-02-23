@@ -2,7 +2,6 @@
 # pylint: disable=too-many-arguments,too-many-positional-arguments,too-many-locals
 # pylint: disable=too-many-branches,too-many-statements,too-many-return-statements
 # pylint: disable=too-many-lines
-# ruff: noqa: T201, PERF203
 # gsettings_import_export.py
 #
 # Standalone tool for importing/exporting Orca settings between JSON and GSettings.

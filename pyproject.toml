@@ -64,7 +64,8 @@ known-first-party = ["orca", "generate_gsettings_schemas"]
 
 [tool.ruff.lint.per-file-ignores]
 "src/orca/dbus_service.py" = ["FA100", "TC002"]  # dasbus needs runtime type hints; future annotations breaks it
-"tests/integration_tests/*" = ["T201"]  # print used for test output
+"tests/*" = ["T201"]  # print used for test output
+"tools/*" = ["T201", "PERF203"]  # print used for CLI output; try-except in loops is fine
 
 [tool.pylint.master]
 #extension-pkg-allow-list = ["brlapi"] # this makes cli pylint crash.

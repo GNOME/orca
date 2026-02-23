@@ -23,24 +23,6 @@ When Orca reads a setting, it checks several layers from most specific to least 
 
 Dict settings do not inherit from the `default` profile because new profiles copy dict entries from the source profile when created; after that, each profile's dictionaries are independent. Removing an entry from one profile should not cause it to reappear via fallback to `default`.
 
-## Migrating to GSettings
-
-On first launch after upgrading to GSettings, Orca automatically migrates JSON settings from `~/.local/share/orca/` into dconf. The migration is stamped so it only runs once.
-
-You can also import JSON settings manually with `orca -i DIR` / `orca --import-dir DIR`. Note: This replaces the current `/org/gnome/orca/` settings in dconf.
-
-- Backup (if needed): `dconf dump /org/gnome/orca/ > backup.ini`
-- Restore (if needed): `dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < backup.ini`
-
-There is also a stand-alone tool with four subcommands: `python tools/gsettings_import_export.py <subcommand> ...`
-
-- `import DIR`: load JSON settings from `DIR` into dconf. Use `import --dry-run` to preview writes without changing anything.
-- `export DIR`: save current dconf settings to JSON files in `DIR`, for backup or transfer to another machine.
-- `diff SRC_DIR OUT_DIR`: export current dconf to JSON in `OUT_DIR` and compare against `SRC_DIR`. Nothing is imported; this is a read-only check, useful for verifying migration results.
-- `roundtrip SRC_DIR OUT_DIR`: reset `/org/gnome/orca/`, import from `SRC_DIR`, export to `OUT_DIR`, then diff. Tests the full import/export cycle from a clean state.
-
-`diff` and `roundtrip` accept `-v` / `--verbose` for fuller output. Use `--prefix <orca-prefix>` if schemas are installed in a non-default prefix.
-
 ## Inspecting and Modifying Settings
 
 You can read and write individual Orca settings with `dconf`.
@@ -62,28 +44,30 @@ You can read and write individual Orca settings with `dconf`.
 - `dconf watch /org/gnome/orca/default/speech/`: one schema path
 - `gsettings monitor org.gnome.Orca.Speech:/org/gnome/orca/default/speech/`
 
+## Migrating to GSettings
+
+On first launch after upgrading to GSettings, Orca automatically migrates JSON settings from `~/.local/share/orca/` into dconf. The migration is stamped so it only runs once.
+
+`orca -i DIR` / `orca --import-dir DIR` can also import JSON settings manually. This replaces the current `/org/gnome/orca/` settings in dconf, so back up first if needed (see Transferring, Backing Up, and Restoring Settings).
+
+There is also a stand-alone tool mainly for testing and debugging the migration: `python tools/gsettings_import_export.py <subcommand> ...`
+
+- `import DIR`: load JSON settings from `DIR` into dconf. Use `import --dry-run` to preview writes without changing anything.
+- `export DIR`: save current dconf settings to JSON files in `DIR`.
+- `diff SRC_DIR OUT_DIR`: export current dconf to JSON in `OUT_DIR` and compare against `SRC_DIR`. Nothing is imported; useful for verifying migration results.
+- `roundtrip SRC_DIR OUT_DIR`: reset `/org/gnome/orca/`, import from `SRC_DIR`, export to `OUT_DIR`, then diff. Tests the full import/export cycle from a clean state.
+
+`diff` and `roundtrip` accept `-v` / `--verbose` for fuller output. Use `--prefix <orca-prefix>` if schemas are installed in a non-default prefix.
+
 ## Transferring, Backing Up, and Restoring Settings
 
 All Orca settings live in dconf under `/org/gnome/orca/`. You can dump them to a file, load them from a file, or reset them to defaults. These operations work for transferring settings between machines, creating backups, or starting fresh.
 
-- Dump all settings to a file:
-  ```
-  dconf dump /org/gnome/orca/ > orca-settings.ini
-  ```
-- Load settings from a file:
-  ```
-  dconf load /org/gnome/orca/ < orca-settings.ini
-  ```
-- Reset all settings to defaults:
-  ```
-  dconf reset -f /org/gnome/orca/
-  ```
+- Dump all settings to a file: `dconf dump /org/gnome/orca/ > orca-settings.ini`
+- Load settings from a file: `dconf load /org/gnome/orca/ < orca-settings.ini`
+- Reset all settings to defaults: `dconf reset -f /org/gnome/orca/`
 
-Note: `dconf load` merges at the key level: it overwrites keys present in the ini file but leaves other existing keys untouched. To get an exact copy of the ini file (for example, when transferring settings from another machine), reset before loading:
-```
-dconf reset -f /org/gnome/orca/
-dconf load /org/gnome/orca/ < orca-settings.ini
-```
+Note: `dconf load` merges at the key level: it overwrites keys present in the ini file but leaves other existing keys untouched. To get an exact copy of the ini file (for example, when transferring settings from another machine), reset before loading: `dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < orca-settings.ini`
 
 These operations also work at the profile level:
 

@@ -1,5 +1,4 @@
 #!/usr/bin/python
-# ruff: noqa: T201
 # generate_gsettings_documentation.py
 #
 # Generate markdown documentation for Orca's GSettings schemas.
@@ -149,53 +148,6 @@ def generate_documentation(
         "should not cause it to reappear via fallback to `default`."
     )
     lines.append("")
-    lines.append("## Migrating to GSettings")
-    lines.append("")
-    lines.append(
-        "On first launch after upgrading to GSettings, Orca automatically migrates "
-        "JSON settings from `~/.local/share/orca/` into dconf. The migration is "
-        "stamped so it only runs once."
-    )
-    lines.append("")
-    lines.append(
-        "You can also import JSON settings manually with `orca -i DIR` / `orca --import-dir DIR`. "
-        "Note: This replaces the current `/org/gnome/orca/` settings in dconf."
-    )
-    lines.append("")
-    lines.append("- Backup (if needed): `dconf dump /org/gnome/orca/ > backup.ini`")
-    lines.append(
-        "- Restore (if needed): "
-        "`dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < backup.ini`"
-    )
-    lines.append("")
-    lines.append(
-        "There is also a stand-alone tool with four subcommands: "
-        "`python tools/gsettings_import_export.py <subcommand> ...`"
-    )
-    lines.append("")
-    lines.append(
-        "- `import DIR`: load JSON settings from `DIR` into dconf. "
-        "Use `import --dry-run` to preview writes without changing anything."
-    )
-    lines.append(
-        "- `export DIR`: save current dconf settings to JSON files in `DIR`, "
-        "for backup or transfer to another machine."
-    )
-    lines.append(
-        "- `diff SRC_DIR OUT_DIR`: export current dconf to JSON in `OUT_DIR` and compare "
-        "against `SRC_DIR`. Nothing is imported; this is a read-only check, "
-        "useful for verifying migration results."
-    )
-    lines.append(
-        "- `roundtrip SRC_DIR OUT_DIR`: reset `/org/gnome/orca/`, import from `SRC_DIR`, "
-        "export to `OUT_DIR`, then diff. Tests the full import/export cycle from a clean state."
-    )
-    lines.append("")
-    lines.append(
-        "`diff` and `roundtrip` accept `-v` / `--verbose` for fuller output. "
-        "Use `--prefix <orca-prefix>` if schemas are installed in a non-default prefix."
-    )
-    lines.append("")
     lines.append("## Inspecting and Modifying Settings")
     lines.append("")
     lines.append("You can read and write individual Orca settings with `dconf`.")
@@ -225,6 +177,44 @@ def generate_documentation(
     lines.append("- `dconf watch /org/gnome/orca/default/speech/`: one schema path")
     lines.append("- `gsettings monitor org.gnome.Orca.Speech:/org/gnome/orca/default/speech/`")
     lines.append("")
+    lines.append("## Migrating to GSettings")
+    lines.append("")
+    lines.append(
+        "On first launch after upgrading to GSettings, Orca automatically migrates "
+        "JSON settings from `~/.local/share/orca/` into dconf. The migration is "
+        "stamped so it only runs once."
+    )
+    lines.append("")
+    lines.append(
+        "`orca -i DIR` / `orca --import-dir DIR` can also import JSON settings manually. "
+        "This replaces the current `/org/gnome/orca/` settings in dconf, so back up first "
+        "if needed (see Transferring, Backing Up, and Restoring Settings)."
+    )
+    lines.append("")
+    lines.append(
+        "There is also a stand-alone tool mainly for testing and debugging the migration: "
+        "`python tools/gsettings_import_export.py <subcommand> ...`"
+    )
+    lines.append("")
+    lines.append(
+        "- `import DIR`: load JSON settings from `DIR` into dconf. "
+        "Use `import --dry-run` to preview writes without changing anything."
+    )
+    lines.append("- `export DIR`: save current dconf settings to JSON files in `DIR`.")
+    lines.append(
+        "- `diff SRC_DIR OUT_DIR`: export current dconf to JSON in `OUT_DIR` and compare "
+        "against `SRC_DIR`. Nothing is imported; useful for verifying migration results."
+    )
+    lines.append(
+        "- `roundtrip SRC_DIR OUT_DIR`: reset `/org/gnome/orca/`, import from `SRC_DIR`, "
+        "export to `OUT_DIR`, then diff. Tests the full import/export cycle from a clean state."
+    )
+    lines.append("")
+    lines.append(
+        "`diff` and `roundtrip` accept `-v` / `--verbose` for fuller output. "
+        "Use `--prefix <orca-prefix>` if schemas are installed in a non-default prefix."
+    )
+    lines.append("")
     lines.append("## Transferring, Backing Up, and Restoring Settings")
     lines.append("")
     lines.append(
@@ -233,29 +223,17 @@ def generate_documentation(
         "work for transferring settings between machines, creating backups, or starting fresh."
     )
     lines.append("")
-    lines.append("- Dump all settings to a file:")
-    lines.append("  ```")
-    lines.append("  dconf dump /org/gnome/orca/ > orca-settings.ini")
-    lines.append("  ```")
-    lines.append("- Load settings from a file:")
-    lines.append("  ```")
-    lines.append("  dconf load /org/gnome/orca/ < orca-settings.ini")
-    lines.append("  ```")
-    lines.append("- Reset all settings to defaults:")
-    lines.append("  ```")
-    lines.append("  dconf reset -f /org/gnome/orca/")
-    lines.append("  ```")
+    lines.append("- Dump all settings to a file: `dconf dump /org/gnome/orca/ > orca-settings.ini`")
+    lines.append("- Load settings from a file: `dconf load /org/gnome/orca/ < orca-settings.ini`")
+    lines.append("- Reset all settings to defaults: `dconf reset -f /org/gnome/orca/`")
     lines.append("")
     lines.append(
         "Note: `dconf load` merges at the key level: it overwrites keys present in the "
         "ini file but leaves other existing keys untouched. To get an exact copy "
         "of the ini file (for example, when transferring settings from another machine), "
-        "reset before loading:"
+        "reset before loading: "
+        "`dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < orca-settings.ini`"
     )
-    lines.append("```")
-    lines.append("dconf reset -f /org/gnome/orca/")
-    lines.append("dconf load /org/gnome/orca/ < orca-settings.ini")
-    lines.append("```")
     lines.append("")
     lines.append("These operations also work at the profile level:")
     lines.append("")
