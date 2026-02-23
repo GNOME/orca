@@ -1,19 +1,20 @@
 # Orca GSettings Schemas Reference
 
+[TOC]
+
+## Overview
+
 Orca stores settings under `/org/gnome/orca/`.
 - Profile-level settings: `/org/gnome/orca/<profile>/<schema-name>/`
 - App-specific overrides: `/org/gnome/orca/<profile>/apps/<app>/<schema-name>/`
 - Voice settings: `/org/gnome/orca/<profile>/voices/<voice-type>/`
 - App-specific voice overrides: `/org/gnome/orca/<profile>/apps/<app>/voices/<voice-type>/`
 
-## Path Variables
-
+Path variables:
 - `<profile>`: profile ID. `default` is the standard profile; users can add others, e.g. `italian`.
 - `<schema-name>`: Orca schema name, e.g. `typing-echo`, `speech`, `braille`.
 - `<app>`: app ID used for app-specific overrides.
 - `<voice-type>`: voice type (`default`, `uppercase`, `hyperlink`, `system`).
-
-## Lookup Precedence
 
 When Orca reads a setting, it checks several layers from most specific to least specific:
 
@@ -22,7 +23,7 @@ When Orca reads a setting, it checks several layers from most specific to least 
 
 Dict settings do not inherit from the `default` profile because new profiles copy dict entries from the source profile when created; after that, each profile's dictionaries are independent. Removing an entry from one profile should not cause it to reappear via fallback to `default`.
 
-## Migration Paths
+## Migrating to GSettings
 
 On first launch after upgrading to GSettings, Orca automatically migrates JSON settings from `~/.local/share/orca/` into dconf. The migration is stamped so it only runs once.
 
@@ -40,17 +41,13 @@ There is also a stand-alone tool with four subcommands: `python tools/gsettings_
 
 `diff` and `roundtrip` accept `-v` / `--verbose` for fuller output. Use `--prefix <orca-prefix>` if schemas are installed in a non-default prefix.
 
-## Inspecting and Modifying Settings with dconf
+## Inspecting and Modifying Settings
 
-You can read and write Orca settings directly with `dconf`.
+You can read and write individual Orca settings with `dconf`.
 
-- `dconf dump /org/gnome/orca/`: view all Orca settings
-- `dconf dump /org/gnome/orca/default/speech/`: view one schema for one profile
 - `dconf list /org/gnome/orca/`: list profiles
 - `dconf read /org/gnome/orca/default/speech/enable`: read a single key
 - `dconf write /org/gnome/orca/default/speech/enable false`: write a single key
-- `dconf reset -f /org/gnome/orca/default/speech/`: reset a schema to defaults
-- `dconf reset -f /org/gnome/orca/`: reset all Orca settings (backup first with `dconf dump`)
 
 `gsettings` also works but requires both the schema ID and path, since Orca uses relocatable schemas:
 
@@ -59,14 +56,40 @@ You can read and write Orca settings directly with `dconf`.
 
 ## Monitoring Changes
 
-`dconf watch` is path-based, so it can monitor any subtree (broad or narrow):
+`dconf watch` is path-based and can monitor any subtree. `gsettings monitor` is schema-based and shows key names instead of raw paths.
 
 - `dconf watch /org/gnome/orca/`: all Orca changes
-- `dconf watch /org/gnome/orca/default/speech/`: just one schema path
-
-`gsettings monitor` is schema-based, so it watches one schema at a time but shows key names instead of raw paths:
-
+- `dconf watch /org/gnome/orca/default/speech/`: one schema path
 - `gsettings monitor org.gnome.Orca.Speech:/org/gnome/orca/default/speech/`
+
+## Transferring, Backing Up, and Restoring Settings
+
+All Orca settings live in dconf under `/org/gnome/orca/`. You can dump them to a file, load them from a file, or reset them to defaults. These operations work for transferring settings between machines, creating backups, or starting fresh.
+
+- Dump all settings to a file:
+  ```
+  dconf dump /org/gnome/orca/ > orca-settings.ini
+  ```
+- Load settings from a file:
+  ```
+  dconf load /org/gnome/orca/ < orca-settings.ini
+  ```
+- Reset all settings to defaults:
+  ```
+  dconf reset -f /org/gnome/orca/
+  ```
+
+Note: `dconf load` merges at the key level: it overwrites keys present in the ini file but leaves other existing keys untouched. To get an exact copy of the ini file (for example, when transferring settings from another machine), reset before loading:
+```
+dconf reset -f /org/gnome/orca/
+dconf load /org/gnome/orca/ < orca-settings.ini
+```
+
+These operations also work at the profile level:
+
+- Dump one profile: `dconf dump /org/gnome/orca/default/ > default-profile.ini`
+- Load one profile: `dconf load /org/gnome/orca/default/ < default-profile.ini`
+- Reset one profile to start fresh: `dconf reset -f /org/gnome/orca/default/`
 
 ---
 

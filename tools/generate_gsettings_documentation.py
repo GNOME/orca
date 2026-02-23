@@ -106,6 +106,10 @@ def generate_documentation(
     lines: list[str] = []
     lines.append("# Orca GSettings Schemas Reference")
     lines.append("")
+    lines.append("[TOC]")
+    lines.append("")
+    lines.append("## Overview")
+    lines.append("")
     lines.append("Orca stores settings under `/org/gnome/orca/`.")
     lines.append("- Profile-level settings: `/org/gnome/orca/<profile>/<schema-name>/`")
     lines.append("- App-specific overrides: `/org/gnome/orca/<profile>/apps/<app>/<schema-name>/`")
@@ -115,8 +119,7 @@ def generate_documentation(
         "`/org/gnome/orca/<profile>/apps/<app>/voices/<voice-type>/`"
     )
     lines.append("")
-    lines.append("## Path Variables")
-    lines.append("")
+    lines.append("Path variables:")
     lines.append(
         "- `<profile>`: profile ID. `default` is the standard profile; "
         "users can add others, e.g. `italian`."
@@ -124,8 +127,6 @@ def generate_documentation(
     lines.append("- `<schema-name>`: Orca schema name, e.g. `typing-echo`, `speech`, `braille`.")
     lines.append("- `<app>`: app ID used for app-specific overrides.")
     lines.append("- `<voice-type>`: voice type (`default`, `uppercase`, `hyperlink`, `system`).")
-    lines.append("")
-    lines.append("## Lookup Precedence")
     lines.append("")
     lines.append(
         "When Orca reads a setting, it checks several layers from most specific to least specific:"
@@ -148,7 +149,7 @@ def generate_documentation(
         "should not cause it to reappear via fallback to `default`."
     )
     lines.append("")
-    lines.append("## Migration Paths")
+    lines.append("## Migrating to GSettings")
     lines.append("")
     lines.append(
         "On first launch after upgrading to GSettings, Orca automatically migrates "
@@ -195,20 +196,13 @@ def generate_documentation(
         "Use `--prefix <orca-prefix>` if schemas are installed in a non-default prefix."
     )
     lines.append("")
-    lines.append("## Inspecting and Modifying Settings with dconf")
+    lines.append("## Inspecting and Modifying Settings")
     lines.append("")
-    lines.append("You can read and write Orca settings directly with `dconf`.")
+    lines.append("You can read and write individual Orca settings with `dconf`.")
     lines.append("")
-    lines.append("- `dconf dump /org/gnome/orca/`: view all Orca settings")
-    lines.append("- `dconf dump /org/gnome/orca/default/speech/`: view one schema for one profile")
     lines.append("- `dconf list /org/gnome/orca/`: list profiles")
     lines.append("- `dconf read /org/gnome/orca/default/speech/enable`: read a single key")
     lines.append("- `dconf write /org/gnome/orca/default/speech/enable false`: write a single key")
-    lines.append("- `dconf reset -f /org/gnome/orca/default/speech/`: reset a schema to defaults")
-    lines.append(
-        "- `dconf reset -f /org/gnome/orca/`: reset all Orca settings "
-        "(backup first with `dconf dump`)"
-    )
     lines.append("")
     lines.append(
         "`gsettings` also works but requires both the schema ID and path, since Orca "
@@ -222,17 +216,52 @@ def generate_documentation(
     lines.append("")
     lines.append("## Monitoring Changes")
     lines.append("")
-    lines.append("`dconf watch` is path-based, so it can monitor any subtree (broad or narrow):")
-    lines.append("")
-    lines.append("- `dconf watch /org/gnome/orca/`: all Orca changes")
-    lines.append("- `dconf watch /org/gnome/orca/default/speech/`: just one schema path")
-    lines.append("")
     lines.append(
-        "`gsettings monitor` is schema-based, so it watches one schema at a time "
-        "but shows key names instead of raw paths:"
+        "`dconf watch` is path-based and can monitor any subtree. "
+        "`gsettings monitor` is schema-based and shows key names instead of raw paths."
     )
     lines.append("")
+    lines.append("- `dconf watch /org/gnome/orca/`: all Orca changes")
+    lines.append("- `dconf watch /org/gnome/orca/default/speech/`: one schema path")
     lines.append("- `gsettings monitor org.gnome.Orca.Speech:/org/gnome/orca/default/speech/`")
+    lines.append("")
+    lines.append("## Transferring, Backing Up, and Restoring Settings")
+    lines.append("")
+    lines.append(
+        "All Orca settings live in dconf under `/org/gnome/orca/`. You can dump them "
+        "to a file, load them from a file, or reset them to defaults. These operations "
+        "work for transferring settings between machines, creating backups, or starting fresh."
+    )
+    lines.append("")
+    lines.append("- Dump all settings to a file:")
+    lines.append("  ```")
+    lines.append("  dconf dump /org/gnome/orca/ > orca-settings.ini")
+    lines.append("  ```")
+    lines.append("- Load settings from a file:")
+    lines.append("  ```")
+    lines.append("  dconf load /org/gnome/orca/ < orca-settings.ini")
+    lines.append("  ```")
+    lines.append("- Reset all settings to defaults:")
+    lines.append("  ```")
+    lines.append("  dconf reset -f /org/gnome/orca/")
+    lines.append("  ```")
+    lines.append("")
+    lines.append(
+        "Note: `dconf load` merges at the key level: it overwrites keys present in the "
+        "ini file but leaves other existing keys untouched. To get an exact copy "
+        "of the ini file (for example, when transferring settings from another machine), "
+        "reset before loading:"
+    )
+    lines.append("```")
+    lines.append("dconf reset -f /org/gnome/orca/")
+    lines.append("dconf load /org/gnome/orca/ < orca-settings.ini")
+    lines.append("```")
+    lines.append("")
+    lines.append("These operations also work at the profile level:")
+    lines.append("")
+    lines.append("- Dump one profile: `dconf dump /org/gnome/orca/default/ > default-profile.ini`")
+    lines.append("- Load one profile: `dconf load /org/gnome/orca/default/ < default-profile.ini`")
+    lines.append("- Reset one profile to start fresh: `dconf reset -f /org/gnome/orca/default/`")
     lines.append("")
     lines.append("---")
     lines.append("")

@@ -621,6 +621,8 @@ class GSettingsRegistry:
 
         general = dict(general)
         gsettings_migrator.apply_legacy_aliases(general)
+        gsettings_migrator.hoist_keybindings_metadata(general)
+        gsettings_migrator.force_navigation_enabled(general)
 
         profile = gsettings_migrator.sanitize_gsettings_path(profile_name)
         skip_defaults = not app_name and profile_name == "default"

@@ -279,11 +279,12 @@ def main(import_dir: str | None = None, prefs_dir: str = ""):
     if error is not None:
         return error
 
+    # TODO - JD: Delete -i/--import-dir support in v52.
     registry = gsettings_registry.get_registry()
     if import_dir:
         registry.import_from_dir(import_dir)
     else:
-        registry.migrate_all(prefs_dir)
+        registry.migrate_all(prefs_dir)  # TODO - JD: Delete this in v51.
 
     load_user_settings(is_reload=False)
 

@@ -35,6 +35,7 @@ from gi.repository import Gio, GLib
 
 VOICE_TYPES: list[str] = ["default", "uppercase", "hyperlink", "system"]
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 VOICE_MIGRATION_MAP: dict[str, tuple[str, str, Any]] = {
     "established": ("established", "b", False),
     "rate": ("rate", "i", 50),
@@ -42,6 +43,7 @@ VOICE_MIGRATION_MAP: dict[str, tuple[str, str, Any]] = {
     "gain": ("volume", "d", 10.0),
 }
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 VOICE_FAMILY_FIELDS: dict[str, str] = {
     "name": "family-name",
     "lang": "family-lang",
@@ -50,16 +52,20 @@ VOICE_FAMILY_FIELDS: dict[str, str] = {
     "variant": "family-variant",
 }
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 LEGACY_KEY_ALIASES: dict[str, str] = {
     "progressBarVerbosity": "progressBarSpeechVerbosity",
     "progressBarUpdateInterval": "progressBarSpeechInterval",
 }
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 REVERSE_LEGACY_KEY_ALIASES: dict[str, str] = {v: k for k, v in LEGACY_KEY_ALIASES.items()}
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 KEYBINDINGS_METADATA_KEYS: frozenset[str] = frozenset({"keyboardLayout", "orcaModifierKeys"})
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 @dataclass
 class SettingsMapping:
     """Describes a mapping between a preferences key and a GSettings key."""
@@ -81,6 +87,7 @@ def sanitize_gsettings_path(name: str) -> str:
     return sanitized.strip("-")
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def resolve_enum_nick(value: Any, enum_map: dict[int, str]) -> str | None:
     """Resolve a JSON enum value (string nick, int, or bool) to a GSettings enum nick."""
 
@@ -89,6 +96,7 @@ def resolve_enum_nick(value: Any, enum_map: dict[int, str]) -> str | None:
     return enum_map.get(value)
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 _NAVIGATION_ENABLED_KEYS = (
     "caretNavigationEnabled",
     "structuralNavigationEnabled",
@@ -96,6 +104,7 @@ _NAVIGATION_ENABLED_KEYS = (
 )
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def force_navigation_enabled(json_dict: dict) -> None:
     """Force navigation-enabled keys to True during migration."""
 
@@ -107,6 +116,7 @@ def force_navigation_enabled(json_dict: dict) -> None:
             json_dict[key] = True
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def apply_legacy_aliases(json_dict: dict) -> None:
     """Copy legacy key names to their modern equivalents if modern key is absent."""
 
@@ -115,6 +125,7 @@ def apply_legacy_aliases(json_dict: dict) -> None:
             json_dict[modern_key] = json_dict[legacy_key]
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def add_legacy_aliases(result: dict) -> None:
     """Add legacy key names to exported dict for backwards compatibility with stable."""
 
@@ -123,6 +134,7 @@ def add_legacy_aliases(result: dict) -> None:
             result[legacy_key] = result[modern_key]
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def hoist_keybindings_metadata(profile_prefs: dict) -> None:
     """Move keyboardLayout and orcaModifierKeys from keybindings to profile level."""
 
@@ -132,6 +144,7 @@ def hoist_keybindings_metadata(profile_prefs: dict) -> None:
             profile_prefs[key] = keybindings[key]
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def sink_keybindings_metadata(profile_data: dict, keybindings: dict) -> None:
     """Move keyboardLayout and orcaModifierKeys from profile level into keybindings."""
 
@@ -140,6 +153,7 @@ def sink_keybindings_metadata(profile_data: dict, keybindings: dict) -> None:
             keybindings[key] = profile_data.pop(key)
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def _write_one_mapping(
     gs: Gio.Settings,
     m: SettingsMapping,
@@ -174,6 +188,7 @@ def _write_one_mapping(
     return True
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def json_to_gsettings(
     json_dict: dict,
     gs: Gio.Settings,
@@ -191,6 +206,7 @@ def json_to_gsettings(
     return wrote_any
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def gsettings_to_json(gs: Gio.Settings, mappings: list[SettingsMapping]) -> dict:
     """Reads explicitly-set GSettings values into a JSON-compatible dict."""
 
@@ -221,6 +237,7 @@ def gsettings_to_json(gs: Gio.Settings, mappings: list[SettingsMapping]) -> dict
     return result
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def import_voice(gs: Gio.Settings, voice_data: dict, skip_defaults: bool = True) -> bool:
     """Import ACSS voice data to a Gio.Settings object. Returns True if any value was written."""
 
@@ -255,6 +272,7 @@ def import_voice(gs: Gio.Settings, voice_data: dict, skip_defaults: bool = True)
     return migrated
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def export_voice(gs: Gio.Settings) -> dict:
     """Export voice settings from a Gio.Settings to ACSS format."""
 
@@ -283,6 +301,7 @@ def export_voice(gs: Gio.Settings) -> dict:
     return voice_data
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def import_synthesizer(gs: Gio.Settings, profile_prefs: dict) -> bool:
     """Import speechServerInfo to GSettings. Returns True if written."""
 
@@ -298,6 +317,7 @@ def import_synthesizer(gs: Gio.Settings, profile_prefs: dict) -> bool:
     return True
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def export_synthesizer(gs: Gio.Settings) -> tuple[str, str] | None:
     """Export synthesizer from GSettings. Returns (display_name, module_id) or None."""
 
@@ -312,6 +332,7 @@ def export_synthesizer(gs: Gio.Settings) -> tuple[str, str] | None:
     return ("", "")
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def import_pronunciations(gs: Gio.Settings, pronunciations_dict: dict) -> bool:
     """Import pronunciation dictionary to GSettings. Returns True if written.
 
@@ -334,6 +355,7 @@ def import_pronunciations(gs: Gio.Settings, pronunciations_dict: dict) -> bool:
     return True
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def export_pronunciations(gs: Gio.Settings) -> dict:
     """Export pronunciation dictionary from GSettings to JSON format.
 
@@ -351,6 +373,7 @@ def export_pronunciations(gs: Gio.Settings) -> dict:
     return result
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def import_keybindings(gs: Gio.Settings, keybindings_dict: dict) -> bool:
     """Import keybinding overrides to GSettings. Returns True if written.
 
@@ -374,6 +397,7 @@ def import_keybindings(gs: Gio.Settings, keybindings_dict: dict) -> bool:
     return True
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def export_keybindings(gs: Gio.Settings) -> dict:
     """Export keybinding overrides from GSettings to JSON format."""
 
@@ -383,6 +407,7 @@ def export_keybindings(gs: Gio.Settings) -> dict:
     return user_value.unpack()
 
 
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def stamp_version(gs: Gio.Settings, version: int = 1) -> None:
     """Stamps a version number on a Gio.Settings instance."""
 
