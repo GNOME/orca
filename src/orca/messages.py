@@ -503,22 +503,6 @@ DEBUG_CLEAR_CACHE_FAILED = _("Clearing cache failed.")
 # bug. This message is presented when the user performs the command.
 DEBUG_CLEAR_CACHE = _("Clearing cache.")
 
-# Translators: this is a debug message for advanced users and developers. It
-# describes a command to print detailed debugging information about the current
-# state with respect to the accessible applications being used, such as the
-# accessibility tree of the current window, a list of all the running accessible
-# objects, etc. This message is presented to confirm to the user that the snapshot
-# capture has begun.
-DEBUG_CAPTURE_SNAPSHOT_START = _("Capturing debugging snapshot")
-
-# Translators: this is a debug message for advanced users and developers. It
-# describes a command to print detailed debugging information about the current
-# state with respect to the accessible applications being used, such as the
-# accessibility tree of the current window, a list of all the running accessible
-# objects, etc. This message is presented to confirm to the user that the snapshot
-# capture has begun.
-DEBUG_CAPTURE_SNAPSHOT_END = _("Debugging snapshot captured")
-
 # Translators: The "default" button in a dialog box is the button that gets
 # activated when Enter is pressed anywhere within that dialog box. The string
 # substitution is the name of the button (e.g. "OK" or "Close").

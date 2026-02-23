@@ -169,7 +169,6 @@ DEBUGGING_TOOLS_MANAGER_HANDLERS = frozenset(
     {
         "cycleDebugLevelHandler",
         "clear_atspi_app_cache",
-        "capture_snapshot",
     },
 )
 

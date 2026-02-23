@@ -555,12 +555,6 @@ DEBUG_CYCLE_LEVEL = _("Cycle the debug level at run time")
 # information which impacts Orca's logic and/or presentation to users.
 DEBUG_CLEAR_ATSPI_CACHE_FOR_APPLICATION = _("Clear the AT-SPI cache for the current application")
 
-# Translators: this is a debug message for advanced users and developers. It
-# describes a command to print detailed debugging information about the current
-# state such as the current Orca settings and a list of all the running accessible
-# applications, etc.
-DEBUG_CAPTURE_SNAPSHOT = _("Capture snapshot for debugging")
-
 # Translators: Orca allows the item under the pointer to be spoken. This toggles
 # the feature without the need to get into a GUI.
 MOUSE_REVIEW_TOGGLE = _("Toggle mouse review mode")

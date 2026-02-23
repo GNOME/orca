@@ -77,7 +77,6 @@ class TestDebuggingToolsManager:
         cmdnames_mock = essential_modules["orca.cmdnames"]
         cmdnames_mock.DEBUG_CYCLE_LEVEL = "cycleDebugLevel"
         cmdnames_mock.DEBUG_CLEAR_ATSPI_CACHE_FOR_APPLICATION = "clearAtSpiCache"
-        cmdnames_mock.DEBUG_CAPTURE_SNAPSHOT = "captureSnapshot"
 
         input_event_mock = essential_modules["orca.input_event"]
         input_event_handler_mock = test_context.Mock()
@@ -99,8 +98,6 @@ class TestDebuggingToolsManager:
         messages_mock = essential_modules["orca.messages"]
         messages_mock.DEBUG_CLEAR_CACHE_FAILED = "Failed to clear cache"
         messages_mock.DEBUG_CLEAR_CACHE = "Cache cleared"
-        messages_mock.DEBUG_CAPTURE_SNAPSHOT_START = "Snapshot started"
-        messages_mock.DEBUG_CAPTURE_SNAPSHOT_END = "Snapshot ended"
 
         orca_platform_mock = essential_modules["orca.orca_platform"]
         orca_platform_mock.version = "3.50.0"
@@ -192,7 +189,6 @@ class TestDebuggingToolsManager:
         cmd_manager = command_manager.get_manager()
         assert cmd_manager.get_keyboard_command("cycleDebugLevelHandler") is not None
         assert cmd_manager.get_keyboard_command("clear_atspi_app_cache") is not None
-        assert cmd_manager.get_keyboard_command("capture_snapshot") is not None
 
     @pytest.mark.parametrize(
         "initial_level,expected_level,expected_message,expected_brief,has_event",
@@ -341,16 +337,6 @@ class TestDebuggingToolsManager:
         "test_method,scenario_data",
         [
             pytest.param(
-                "_capture_snapshot",
-                {
-                    "original_level": 1,
-                    "expected_calls": ["Snapshot started", "Snapshot ended"],
-                    "expects_debug": True,
-                    "expects_print_running": True,
-                },
-                id="capture_snapshot",
-            ),
-            pytest.param(
                 "_get_running_applications_as_string_iter",
                 {
                     "is_command_line": True,
@@ -379,35 +365,12 @@ class TestDebuggingToolsManager:
         scenario_data: dict,
     ) -> None:
         """Test DebuggingToolsManager debug utility methods."""
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.debugging_tools_manager import DebuggingToolsManager
 
         manager = DebuggingToolsManager()
-        script_mock = test_context.Mock()
 
-        if test_method == "_capture_snapshot":
-            essential_modules["orca.debug"].debugLevel = scenario_data["original_level"]
-            mock_print_running = test_context.Mock()
-            test_context.patch_object(
-                manager,
-                "print_running_applications",
-                side_effect=mock_print_running,
-            )
-
-            result = manager._capture_snapshot(script_mock)
-            assert result
-            assert essential_modules["orca.debug"].debugLevel == scenario_data["original_level"]
-
-            pres_manager = essential_modules["orca.presentation_manager"].get_manager()
-            expected_calls = [call(msg) for msg in scenario_data["expected_calls"]]
-            pres_manager.present_message.assert_has_calls(expected_calls)
-
-            if scenario_data["expects_debug"]:
-                essential_modules["orca.debug"].print_message.assert_called()
-            if scenario_data["expects_print_running"]:
-                mock_print_running.assert_called_once()
-
-        elif test_method == "_get_running_applications_as_string_iter":
+        if test_method == "_get_running_applications_as_string_iter":
             app_count = scenario_data["app_count"]
             test_apps = [test_context.Mock(spec=Atspi.Accessible) for _ in range(app_count)]
 

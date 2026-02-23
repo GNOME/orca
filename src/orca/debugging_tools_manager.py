@@ -82,7 +82,6 @@ class DebuggingToolsManager:
                 self._clear_atspi_app_cache,
                 cmdnames.DEBUG_CLEAR_ATSPI_CACHE_FOR_APPLICATION,
             ),
-            ("capture_snapshot", self._capture_snapshot, cmdnames.DEBUG_CAPTURE_SNAPSHOT),
         ]
 
         for name, function, description in commands_data:
@@ -149,25 +148,6 @@ class DebuggingToolsManager:
 
         presentation_manager.get_manager().present_message(messages.DEBUG_CLEAR_CACHE)
         AXObject.clear_cache(app, recursive=True, reason="User request.")
-        return True
-
-    def _capture_snapshot(
-        self,
-        _script: default.Script,
-        _event: input_event.InputEvent | None = None,
-    ) -> bool:
-        """Clears the AT-SPI cache for the current application."""
-
-        presentation_manager.get_manager().present_message(messages.DEBUG_CAPTURE_SNAPSHOT_START)
-
-        old_level = debug.debugLevel
-        debug.debugLevel = debug.LEVEL_SEVERE
-        debug.print_message(debug.debugLevel, "DEBUGGING SNAPSHOT STARTING", True)
-        self.print_running_applications()
-
-        debug.print_message(debug.debugLevel, "DEBUGGING SNAPSHOT FINISHED", True)
-        presentation_manager.get_manager().present_message(messages.DEBUG_CAPTURE_SNAPSHOT_END)
-        debug.debugLevel = old_level
         return True
 
     def _get_running_applications_as_string_iter(
