@@ -378,11 +378,13 @@ class SayAllPresenter:
             # next_context() looks for the position after the provided offset. In the case of
             # text, we will wind up with the same text unit for last_offset and last_offset - 1.
             # However, if the character at last_offset is an embedded object, we'll skip over
-            # its contents if we pass last_offset directly. Therefore decrement last_offset and
-            # let next_context() find the correct next position.
+            # its contents if we pass last_offset directly. Only decrement in that case so that
+            # next_context() can still cross object boundaries at end of text.
+            if AXText.character_at_offset_is_eoc(last_obj, last_offset):
+                last_offset = max(0, last_offset - 1)
             next_obj, next_offset = self._script.utilities.next_context(
                 last_obj,
-                max(0, last_offset - 1),
+                last_offset,
                 restrict_to=restrict_to,
             )
         else:
