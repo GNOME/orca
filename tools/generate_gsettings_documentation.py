@@ -158,14 +158,14 @@ def generate_documentation(
     )
     lines.append("")
     lines.append(
-        "If automatic migration is not sufficient, you can import settings manually "
-        "with `orca -i DIR` / `orca --import-dir DIR`. This replaces the current "
-        "`/org/gnome/orca/` settings in dconf, so back up first:"
+        "You can also import JSON settings manually with `orca -i DIR` / `orca --import-dir DIR`. "
+        "Note: This replaces the current `/org/gnome/orca/` settings in dconf."
     )
     lines.append("")
-    lines.append("- Backup: `dconf dump /org/gnome/orca/ > backup.ini`")
+    lines.append("- Backup (if needed): `dconf dump /org/gnome/orca/ > backup.ini`")
     lines.append(
-        "- Restore: `dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < backup.ini`"
+        "- Restore (if needed): "
+        "`dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < backup.ini`"
     )
     lines.append("")
     lines.append(

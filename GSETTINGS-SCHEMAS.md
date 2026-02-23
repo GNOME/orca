@@ -27,10 +27,10 @@ Dict settings do not inherit from the `default` profile because new profiles cop
 
 On first launch after upgrading to GSettings, Orca automatically migrates JSON settings from `~/.local/share/orca/` into dconf. The migration is stamped so it only runs once.
 
-If automatic migration is not sufficient, you can import settings manually with `orca -i DIR` / `orca --import-dir DIR`. This replaces the current `/org/gnome/orca/` settings in dconf, so back up first:
+You can also import JSON settings manually with `orca -i DIR` / `orca --import-dir DIR`. Note: This replaces the current `/org/gnome/orca/` settings in dconf.
 
-- Backup: `dconf dump /org/gnome/orca/ > backup.ini`
-- Restore: `dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < backup.ini`
+- Backup (if needed): `dconf dump /org/gnome/orca/ > backup.ini`
+- Restore (if needed): `dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < backup.ini`
 
 There is also a stand-alone tool with four subcommands: `python tools/gsettings_import_export.py <subcommand> ...`
 
