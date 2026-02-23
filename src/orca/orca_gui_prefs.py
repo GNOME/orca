@@ -123,7 +123,6 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
         self._profile_name: str = profile_manager.get_manager().get_active_profile()
         self.script = script
-        self._settings_applied = False
         self._app_name: str | None = None
         if script.app is not None:
             self._app_name = AXObject.get_name(script.app) or None
@@ -569,8 +568,6 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         # Re-apply user keybinding overrides and refresh grabs so changes work immediately.
         command_manager.get_manager().activate_commands("Applied preferences")
 
-        self._settings_applied = True
-
         msg = "PREFERENCES: Handling Apply button click complete"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
@@ -616,7 +613,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         msg = "PREFERENCES: Window is being closed"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
-        has_unsaved_changes = not self._settings_applied and self._has_unsaved_changes(
+        has_unsaved_changes = self._has_unsaved_changes(
             include_profiles=not self._app_name,
         )
 

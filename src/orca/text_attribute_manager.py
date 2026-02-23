@@ -391,14 +391,12 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
             if mode in (PresentationMode.BRAILLE, PresentationMode.SPEAK_AND_BRAILLE):
                 brailled_attributes.append(key)
 
-        self._has_unsaved_changes = False
-
         result = {
             "attributes-to-speak": spoken_attributes,
             "attributes-to-braille": brailled_attributes,
         }
 
-        if profile:
+        if profile and self._has_unsaved_changes:
             skip = not app_name and profile == "default"
             gsettings_registry.get_registry().save_schema(
                 "text-attributes",
@@ -408,6 +406,7 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
                 skip,
             )
 
+        self._has_unsaved_changes = False
         return result
 
     # pylint: enable=no-member
