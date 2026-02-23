@@ -79,7 +79,7 @@ class Script(default.Script):
 
         return super().locus_of_focus_changed(event, old_focus, new_focus)
 
-    def on_focused_changed(self, event: Atspi.Event) -> bool:
+    def _on_focused_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:focused accessibility events."""
 
         if not event.detail1:
@@ -106,13 +106,13 @@ class Script(default.Script):
                 focus_manager.get_manager().set_locus_of_focus(event, descendant)
                 return True
 
-        return super().on_focused_changed(event)
+        return super()._on_focused_changed(event)
 
-    def on_name_changed(self, event: Atspi.Event) -> bool:
+    def _on_name_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:property-change:accessible-name events."""
 
         if not AXUtilities.is_label(event.source):
-            return super().on_name_changed(event)
+            return super()._on_name_changed(event)
 
         # If we're already in a dialog, and a label inside that dialog changes its name,
         # present the new name. Example: the "Command not found" label in the Run dialog.
@@ -129,7 +129,7 @@ class Script(default.Script):
 
         return True
 
-    def on_selected_changed(self, event: Atspi.Event) -> bool:
+    def _on_selected_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:selected accessibility events."""
 
         # gnome-shell fails to implement the selection interface but fires state-changed
@@ -138,4 +138,4 @@ class Script(default.Script):
             focus_manager.get_manager().set_locus_of_focus(event, event.source)
             return True
 
-        return super().on_selected_changed(event)
+        return super()._on_selected_changed(event)

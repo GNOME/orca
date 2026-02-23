@@ -57,7 +57,7 @@ class Script(default.Script):
 
         return Utilities(self)
 
-    def on_text_deleted(self, event: Atspi.Event) -> bool:
+    def _on_text_deleted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:delete accessibility events."""
 
         if self.utilities.treat_event_as_noise(event):
@@ -65,9 +65,9 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        return super().on_text_deleted(event)
+        return super()._on_text_deleted(event)
 
-    def on_text_inserted(self, event: Atspi.Event) -> bool:
+    def _on_text_inserted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:insert accessibility events."""
 
         typing_echo_presenter.get_presenter().echo_delayed_terminal_press(self, event)
@@ -75,7 +75,7 @@ class Script(default.Script):
         if not self.utilities.treat_event_as_command(event):
             msg = "TERMINAL: Passing along event to default script."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return super().on_text_inserted(event)
+            return super()._on_text_inserted(event)
 
         msg = "TERMINAL: Insertion is believed to be due to terminal command"
         debug.print_message(debug.LEVEL_INFO, msg, True)

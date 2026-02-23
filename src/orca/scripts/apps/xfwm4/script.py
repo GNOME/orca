@@ -38,20 +38,20 @@ if TYPE_CHECKING:
 class Script(default.Script):
     """Custom script for xfwm4."""
 
-    def on_text_inserted(self, event: Atspi.Event) -> bool:
+    def _on_text_inserted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:insert accessibility events."""
 
         if not AXUtilities.is_label(event.source):
-            return default.Script.on_text_inserted(self, event)
+            return super()._on_text_inserted(event)
 
         presentation_manager.get_manager().present_message(AXObject.get_name(event.source))
         return True
 
-    def on_text_deleted(self, event: Atspi.Event) -> bool:
+    def _on_text_deleted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:delete accessibility events."""
 
         if not AXUtilities.is_label(event.source):
-            return default.Script.on_text_deleted(self, event)
+            return super()._on_text_deleted(event)
 
         presentation_manager.get_manager().present_message(AXObject.get_name(event.source))
         return True

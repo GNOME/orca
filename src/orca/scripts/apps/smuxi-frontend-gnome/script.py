@@ -39,10 +39,10 @@ if TYPE_CHECKING:
 class Script(gtk.Script):
     """Custom script for Smuxi."""
 
-    def on_text_inserted(self, event: Atspi.Event) -> bool:
+    def _on_text_inserted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:insert accessibility events."""
 
         if chat_presenter.get_presenter().present_inserted_text(self, event):
             return True
 
-        return super().on_text_inserted(event)
+        return super()._on_text_inserted(event)

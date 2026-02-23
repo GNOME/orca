@@ -59,7 +59,7 @@ class Script(default.Script):
 
         return super().locus_of_focus_changed(event, old_focus, new_focus)
 
-    def on_active_descendant_changed(self, event: Atspi.Event) -> bool:
+    def _on_active_descendant_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:active-descendant-changed accessibility events."""
 
         if AXUtilities.is_table_related(event.source):
@@ -83,16 +83,16 @@ class Script(default.Script):
 
         msg = "GTK: Passing event to super class for processing."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        return super().on_active_descendant_changed(event)
+        return super()._on_active_descendant_changed(event)
 
-    def on_caret_moved(self, event: Atspi.Event) -> bool:
+    def _on_caret_moved(self, event: Atspi.Event) -> bool:
         """Callback for object:text-caret-moved accessibility events."""
 
         if not AXUtilities.is_focused(event.source):
             AXObject.clear_cache(event.source, False, "Work around possibly-missing focused state.")
-        return super().on_caret_moved(event)
+        return super()._on_caret_moved(event)
 
-    def on_focused_changed(self, event: Atspi.Event) -> bool:
+    def _on_focused_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:focused accessibility events."""
 
         focus = focus_manager.get_manager().get_locus_of_focus()
@@ -101,9 +101,9 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        return super().on_focused_changed(event)
+        return super()._on_focused_changed(event)
 
-    def on_selected_changed(self, event: Atspi.Event) -> bool:
+    def _on_selected_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:selected accessibility events."""
 
         # Handle changes within an entry completion popup.
@@ -123,9 +123,9 @@ class Script(default.Script):
         ) and self.utilities.handle_container_selection_change(AXObject.get_parent(event.source)):
             return True
 
-        return super().on_selected_changed(event)
+        return super()._on_selected_changed(event)
 
-    def on_selection_changed(self, event: Atspi.Event) -> bool:
+    def _on_selection_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:selection-changed accessibility events."""
 
         focus = focus_manager.get_manager().get_locus_of_focus()
@@ -134,7 +134,7 @@ class Script(default.Script):
             and AXUtilities.is_combo_box(event.source)
             and AXObject.is_ancestor(focus, event.source)
         ):
-            return super().on_selection_changed(event)
+            return super()._on_selection_changed(event)
 
         is_focused = AXUtilities.is_focused(event.source)
         if AXUtilities.is_combo_box(event.source) and not is_focused:
@@ -146,13 +146,13 @@ class Script(default.Script):
         ):
             return True
 
-        return super().on_selection_changed(event)
+        return super()._on_selection_changed(event)
 
-    def on_showing_changed(self, event: Atspi.Event) -> bool:
+    def _on_showing_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:showing accessibility events."""
 
         if not event.detail1:
-            return super().on_showing_changed(event)
+            return super()._on_showing_changed(event)
 
         if (
             AXUtilities.get_is_popup_for(event.source)
@@ -164,4 +164,4 @@ class Script(default.Script):
             self.present_object(event.source, interrupt=True)
             return True
 
-        return super().on_showing_changed(event)
+        return super()._on_showing_changed(event)

@@ -18,8 +18,6 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=too-many-public-methods
-
 """Bridges web.Script event handlers to the appropriate script."""
 
 from __future__ import annotations
@@ -65,7 +63,7 @@ class ToolkitBridge(web.Script):
         return None
 
     @bridge
-    def on_active_changed(self, event):
+    def _on_active_changed(self, event):
         """Callback for object:state-changed:active accessibility events."""
 
         if (
@@ -77,112 +75,112 @@ class ToolkitBridge(web.Script):
         return None
 
     @bridge
-    def on_busy_changed(self, event):
+    def _on_busy_changed(self, event):
         """Callback for object:state-changed:busy accessibility events."""
         return None
 
     @bridge
-    def on_caret_moved(self, event):
+    def _on_caret_moved(self, event):
         """Callback for object:text-caret-moved accessibility events."""
         return None
 
     @bridge
-    def on_checked_changed(self, event):
+    def _on_checked_changed(self, event):
         """Callback for object:state-changed:checked accessibility events."""
         return None
 
     @bridge
-    def on_children_added(self, event):
+    def _on_children_added(self, event):
         """Callback for object:children-changed:add accessibility events."""
         return None
 
     @bridge
-    def on_children_removed(self, event):
+    def _on_children_removed(self, event):
         """Callback for object:children-changed:removed accessibility events."""
         return None
 
     @bridge
-    def on_column_reordered(self, event):
+    def _on_column_reordered(self, event):
         """Callback for object:column-reordered accessibility events."""
         return None
 
     @bridge
-    def on_document_load_complete(self, event):
+    def _on_document_load_complete(self, event):
         """Callback for document:load-complete accessibility events."""
         return None
 
     @bridge
-    def on_document_load_stopped(self, event):
+    def _on_document_load_stopped(self, event):
         """Callback for document:load-stopped accessibility events."""
         return None
 
     @bridge
-    def on_document_reload(self, event):
+    def _on_document_reload(self, event):
         """Callback for document:reload accessibility events."""
         return None
 
     @bridge
-    def on_expanded_changed(self, event):
+    def _on_expanded_changed(self, event):
         """Callback for object:state-changed:expanded accessibility events."""
         return None
 
     @bridge
-    def on_focused_changed(self, event):
+    def _on_focused_changed(self, event):
         """Callback for object:state-changed:focused accessibility events."""
         return None
 
     @bridge
-    def on_mouse_button(self, event):
+    def _on_mouse_button(self, event):
         """Callback for mouse:button accessibility events."""
         return None
 
     @bridge
-    def on_name_changed(self, event):
+    def _on_name_changed(self, event):
         """Callback for object:property-change:accessible-name events."""
         return None
 
     @bridge
-    def on_row_reordered(self, event):
+    def _on_row_reordered(self, event):
         """Callback for object:row-reordered accessibility events."""
         return None
 
     @bridge
-    def on_selected_changed(self, event):
+    def _on_selected_changed(self, event):
         """Callback for object:state-changed:selected accessibility events."""
         return None
 
     @bridge
-    def on_selection_changed(self, event):
+    def _on_selection_changed(self, event):
         """Callback for object:selection-changed accessibility events."""
         return None
 
     @bridge
-    def on_showing_changed(self, event):
+    def _on_showing_changed(self, event):
         """Callback for object:state-changed:showing accessibility events."""
         return None
 
     @bridge
-    def on_text_attributes_changed(self, event):
+    def _on_text_attributes_changed(self, event):
         """Callback for object:text-attributes-changed accessibility events."""
         return None
 
     @bridge
-    def on_text_deleted(self, event):
+    def _on_text_deleted(self, event):
         """Callback for object:text-changed:delete accessibility events."""
         return None
 
     @bridge
-    def on_text_inserted(self, event):
+    def _on_text_inserted(self, event):
         """Callback for object:text-changed:insert accessibility events."""
         return None
 
     @bridge
-    def on_text_selection_changed(self, event):
+    def _on_text_selection_changed(self, event):
         """Callback for object:text-selection-changed accessibility events."""
         return None
 
     @bridge
-    def on_window_activated(self, event):
+    def _on_window_activated(self, event):
         """Callback for window:activate accessibility events."""
 
         if not AXUtilities.can_be_active_window(event.source):
@@ -190,6 +188,6 @@ class ToolkitBridge(web.Script):
         return None
 
     @bridge
-    def on_window_deactivated(self, event):
+    def _on_window_deactivated(self, event):
         """Callback for window:deactivate accessibility events."""
         return None

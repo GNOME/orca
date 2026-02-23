@@ -92,7 +92,7 @@ class Script(script.Script):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return True
 
-    def on_window_activated(self, event: Atspi.Event) -> bool:
+    def _on_window_activated(self, event: Atspi.Event) -> bool:
         """Callback for window:activate accessibility events."""
 
         focus_manager.get_manager().clear_state("Sleep mode enabled for this app.")

@@ -98,66 +98,66 @@ class Script(default.Script):
 
         return super().locus_of_focus_changed(event, old_focus, new_focus)
 
-    def on_focused_changed(self, event: Atspi.Event) -> bool:
+    def _on_focused_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:focused accessibility events."""
 
         if self._handle_switcher_event(event):
             return True
 
-        return super().on_focused_changed(event)
+        return super()._on_focused_changed(event)
 
-    def on_name_changed(self, event: Atspi.Event) -> bool:
+    def _on_name_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:property-change:accessible-name events."""
 
         if self._handle_switcher_event(event):
             return True
 
-        return super().on_name_changed(event)
+        return super()._on_name_changed(event)
 
-    def on_selected_changed(self, event: Atspi.Event) -> bool:
+    def _on_selected_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:selected accessibility events."""
 
         if self._handle_switcher_event(event):
             return True
 
-        return super().on_selected_changed(event)
+        return super()._on_selected_changed(event)
 
-    def on_selection_changed(self, event: Atspi.Event) -> bool:
+    def _on_selection_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:selection-changed accessibility events."""
 
         if self._handle_switcher_event(event):
             return True
 
-        return super().on_selection_changed(event)
+        return super()._on_selection_changed(event)
 
-    def on_showing_changed(self, event: Atspi.Event) -> bool:
+    def _on_showing_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:showing accessibility events."""
 
         if self._handle_switcher_event(event):
             return True
 
-        return super().on_showing_changed(event)
+        return super()._on_showing_changed(event)
 
-    def on_caret_moved(self, event: Atspi.Event) -> bool:
+    def _on_caret_moved(self, event: Atspi.Event) -> bool:
         """Callback for object:text-caret-moved accessibility events."""
 
         if self._handle_switcher_event(event):
             return True
 
-        return super().on_caret_moved(event)
+        return super()._on_caret_moved(event)
 
-    def on_text_deleted(self, event: Atspi.Event) -> bool:
+    def _on_text_deleted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:delete accessibility events."""
 
         if self._handle_switcher_event(event):
             return True
 
-        return super().on_text_deleted(event)
+        return super()._on_text_deleted(event)
 
-    def on_text_inserted(self, event: Atspi.Event) -> bool:
+    def _on_text_inserted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:insert accessibility events."""
 
         if self._handle_switcher_event(event):
             return True
 
-        return super().on_text_inserted(event)
+        return super()._on_text_inserted(event)

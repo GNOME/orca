@@ -56,10 +56,10 @@ class Script(gtk.Script):
 
         return Utilities(self)
 
-    def on_children_added(self, event: Atspi.Event) -> bool:
+    def _on_children_added(self, event: Atspi.Event) -> bool:
         """Callback for object:children-changed:add accessibility events."""
 
-        super().on_children_added(event)
+        super()._on_children_added(event)
         if not AXUtilities.is_page_tab_list(event.source):
             return True
 
@@ -86,7 +86,7 @@ class Script(gtk.Script):
         presentation_manager.get_manager().speak_accessible_text(event.any_data, line)
         return True
 
-    def on_expanded_changed(self, event: Atspi.Event) -> bool:
+    def _on_expanded_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:expanded accessibility events."""
 
         # Overridden here because the event.source is in a hidden column.
@@ -96,36 +96,36 @@ class Script(gtk.Script):
             self.present_object(obj, alreadyFocused=True)
             return True
 
-        return super().on_expanded_changed(event)
+        return super()._on_expanded_changed(event)
 
-    def on_name_changed(self, event: Atspi.Event) -> bool:
+    def _on_name_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:property-change:accessible-name events."""
 
         if self.chat.is_in_buddy_list(event.source):
             return True
 
-        return super().on_name_changed(event)
+        return super()._on_name_changed(event)
 
-    def on_text_deleted(self, event: Atspi.Event) -> bool:
+    def _on_text_deleted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:delete accessibility events."""
 
         if self.chat.is_in_buddy_list(event.source):
             return True
 
-        return super().on_text_deleted(event)
+        return super()._on_text_deleted(event)
 
-    def on_text_inserted(self, event: Atspi.Event) -> bool:
+    def _on_text_inserted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:insert accessibility events."""
 
         if chat_presenter.get_presenter().present_inserted_text(self, event):
             return True
 
-        return super().on_text_inserted(event)
+        return super()._on_text_inserted(event)
 
-    def on_value_changed(self, event: Atspi.Event) -> bool:
+    def _on_value_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:property-change:accessible-value accessibility events."""
 
         if self.chat.is_in_buddy_list(event.source):
             return True
 
-        return super().on_value_changed(event)
+        return super()._on_value_changed(event)

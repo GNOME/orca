@@ -24,7 +24,6 @@
 # pylint: disable=too-many-instance-attributes
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-locals
-# pylint: disable=too-many-public-methods
 # pylint: disable=too-many-return-statements
 # pylint: disable=too-many-statements
 
@@ -611,7 +610,7 @@ class Script(default.Script):
         document_presenter.get_presenter().update_mode_if_needed(self, old_focus, new_focus)
         return True
 
-    def on_active_changed(self, event: Atspi.Event) -> bool:
+    def _on_active_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:active accessibility events."""
 
         if not self.utilities.in_document_content(event.source):
@@ -632,7 +631,7 @@ class Script(default.Script):
 
         return False
 
-    def on_busy_changed(self, event: Atspi.Event) -> bool:
+    def _on_busy_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:busy accessibility events."""
 
         if AXComponent.has_no_size(event.source):
@@ -797,7 +796,7 @@ class Script(default.Script):
 
         return True
 
-    def on_caret_moved(self, event: Atspi.Event) -> bool:
+    def _on_caret_moved(self, event: Atspi.Event) -> bool:
         """Callback for object:text-caret-moved accessibility events."""
 
         reason = AXUtilities.get_text_event_reason(event)
@@ -973,14 +972,14 @@ class Script(default.Script):
         focus_manager.get_manager().set_locus_of_focus(event, obj, notify, force)
         return handled
 
-    def on_checked_changed(self, event: Atspi.Event) -> bool:
+    def _on_checked_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:checked accessibility events."""
 
         msg = "WEB: This event is is handled by the toolkit or default script."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
 
-    def on_children_added(self, event: Atspi.Event) -> bool:
+    def _on_children_added(self, event: Atspi.Event) -> bool:
         """Callback for object:children-changed:add accessibility events."""
 
         AXUtilities.clear_all_cache_now(event.source, "children-changed event.")
@@ -1055,7 +1054,7 @@ class Script(default.Script):
 
         return False
 
-    def on_children_removed(self, event: Atspi.Event) -> bool:
+    def _on_children_removed(self, event: Atspi.Event) -> bool:
         """Callback for object:children-changed:removed accessibility events."""
 
         AXUtilities.clear_all_cache_now(event.source, "children-changed event.")
@@ -1106,7 +1105,7 @@ class Script(default.Script):
 
         return False
 
-    def on_column_reordered(self, event: Atspi.Event) -> bool:
+    def _on_column_reordered(self, event: Atspi.Event) -> bool:
         """Callback for object:column-reordered accessibility events."""
 
         if not self.utilities.in_document_content(event.source):
@@ -1127,7 +1126,7 @@ class Script(default.Script):
             presentation_manager.get_manager().present_message(msg)
         return True
 
-    def on_document_load_complete(self, event: Atspi.Event) -> bool:
+    def _on_document_load_complete(self, event: Atspi.Event) -> bool:
         """Callback for document:load-complete accessibility events."""
 
         if AXComponent.has_no_size(event.source):
@@ -1158,7 +1157,7 @@ class Script(default.Script):
         live_region_presenter.get_presenter().reset()
         return True
 
-    def on_document_load_stopped(self, event: Atspi.Event) -> bool:
+    def _on_document_load_stopped(self, event: Atspi.Event) -> bool:
         """Callback for document:load-stopped accessibility events."""
 
         if not AXDocument.get_uri(event.source):
@@ -1176,7 +1175,7 @@ class Script(default.Script):
         self._loading_content = False
         return True
 
-    def on_document_reload(self, event: Atspi.Event) -> bool:
+    def _on_document_reload(self, event: Atspi.Event) -> bool:
         """Callback for document:reload accessibility events."""
 
         if not AXDocument.get_uri(event.source):
@@ -1194,7 +1193,7 @@ class Script(default.Script):
         self._loading_content = True
         return True
 
-    def on_expanded_changed(self, event: Atspi.Event) -> bool:
+    def _on_expanded_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:expanded accessibility events."""
 
         if not self.utilities.in_document_content(event.source):
@@ -1213,7 +1212,7 @@ class Script(default.Script):
 
         return False
 
-    def on_focused_changed(self, event: Atspi.Event) -> bool:
+    def _on_focused_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:focused accessibility events."""
 
         if not event.detail1:
@@ -1374,12 +1373,12 @@ class Script(default.Script):
         focus_manager.get_manager().set_locus_of_focus(event, obj)
         return True
 
-    def on_mouse_button(self, event: Atspi.Event) -> bool:
+    def _on_mouse_button(self, event: Atspi.Event) -> bool:
         """Callback for mouse:button accessibility events."""
 
         return False
 
-    def on_name_changed(self, event: Atspi.Event) -> bool:
+    def _on_name_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:property-change:accessible-name events."""
 
         if self.utilities.event_is_browser_ui_noise_deprecated(event):
@@ -1389,7 +1388,7 @@ class Script(default.Script):
 
         return False
 
-    def on_row_reordered(self, event: Atspi.Event) -> bool:
+    def _on_row_reordered(self, event: Atspi.Event) -> bool:
         """Callback for object:row-reordered accessibility events."""
 
         if not self.utilities.in_document_content(event.source):
@@ -1410,7 +1409,7 @@ class Script(default.Script):
             presentation_manager.get_manager().present_message(msg)
         return True
 
-    def on_selected_changed(self, event: Atspi.Event) -> bool:
+    def _on_selected_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:selected accessibility events."""
 
         if self.utilities.event_is_browser_ui_autocomplete_noise_deprecated(event):
@@ -1441,7 +1440,7 @@ class Script(default.Script):
 
         return False
 
-    def on_selection_changed(self, event: Atspi.Event) -> bool:
+    def _on_selection_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:selection-changed accessibility events."""
 
         if self.utilities.event_is_browser_ui_autocomplete_noise_deprecated(event):
@@ -1500,7 +1499,7 @@ class Script(default.Script):
 
         return False
 
-    def on_showing_changed(self, event: Atspi.Event) -> bool:
+    def _on_showing_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:showing accessibility events."""
 
         if event.detail1 and self.utilities.is_browser_ui_alert(event.source):
@@ -1516,14 +1515,14 @@ class Script(default.Script):
 
         return True
 
-    def on_text_attributes_changed(self, event: Atspi.Event) -> bool:
+    def _on_text_attributes_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:text-attributes-changed accessibility events."""
 
         msg = "WEB: This event is is handled by the toolkit or default script."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
 
-    def on_text_deleted(self, event: Atspi.Event) -> bool:
+    def _on_text_deleted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:delete accessibility events."""
 
         reason = AXUtilities.get_text_event_reason(event)
@@ -1605,7 +1604,7 @@ class Script(default.Script):
 
         return False
 
-    def on_text_inserted(self, event: Atspi.Event) -> bool:
+    def _on_text_inserted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:insert accessibility events."""
 
         reason = AXUtilities.get_text_event_reason(event)
@@ -1691,7 +1690,7 @@ class Script(default.Script):
 
         return False
 
-    def on_text_selection_changed(self, event: Atspi.Event) -> bool:
+    def _on_text_selection_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:text-selection-changed accessibility events."""
 
         _reason = AXUtilities.get_text_event_reason(event)
@@ -1768,14 +1767,14 @@ class Script(default.Script):
 
         return False
 
-    def on_window_activated(self, event: Atspi.Event) -> bool:
+    def _on_window_activated(self, event: Atspi.Event) -> bool:
         """Callback for window:activate accessibility events."""
 
         msg = "WEB: Deferring to app/toolkit script"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return False
 
-    def on_window_deactivated(self, event: Atspi.Event) -> bool:
+    def _on_window_deactivated(self, event: Atspi.Event) -> bool:
         """Callback for window:deactivate accessibility events."""
 
         msg = "WEB: Clearing command state"

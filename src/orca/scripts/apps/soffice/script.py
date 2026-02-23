@@ -1,7 +1,7 @@
 # Orca
 #
 # Copyright 2005-2009 Sun Microsystems Inc.
-# Copyright 2010-2013 The Orca Team.
+# Copyright 2011-2016 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -17,8 +17,6 @@
 # License along with this library; if not, write to the
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
-
-# pylint: disable=too-many-public-methods
 
 """Custom script for LibreOffice."""
 
@@ -170,7 +168,7 @@ class Script(default.Script):
 
         return super().locus_of_focus_changed(event, old_focus, new_focus)
 
-    def on_active_changed(self, event: Atspi.Event) -> bool:
+    def _on_active_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:active accessibility events."""
 
         if not AXObject.get_parent(event.source):
@@ -178,9 +176,9 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        return super().on_active_changed(event)
+        return super()._on_active_changed(event)
 
-    def on_active_descendant_changed(self, event: Atspi.Event) -> bool:
+    def _on_active_descendant_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:active accessibility events."""
 
         manager = focus_manager.get_manager()
@@ -189,7 +187,7 @@ class Script(default.Script):
             return True
 
         if AXUtilities.is_paragraph(focus):
-            return super().on_active_descendant_changed(event)
+            return super()._on_active_descendant_changed(event)
 
         if (
             self.utilities.is_spreadsheet_cell(event.any_data)
@@ -209,9 +207,9 @@ class Script(default.Script):
             # presentation of the actual event we're processing without too much chattiness.
             manager.set_locus_of_focus(event, event.source)
 
-        return super().on_active_descendant_changed(event)
+        return super()._on_active_descendant_changed(event)
 
-    def on_caret_moved(self, event: Atspi.Event) -> bool:
+    def _on_caret_moved(self, event: Atspi.Event) -> bool:
         """Callback for object:text-caret-moved accessibility events."""
 
         if event.detail1 == -1:
@@ -244,9 +242,9 @@ class Script(default.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
-        return super().on_caret_moved(event)
+        return super()._on_caret_moved(event)
 
-    def on_children_added(self, event: Atspi.Event) -> bool:
+    def _on_children_added(self, event: Atspi.Event) -> bool:
         """Callback for object:children-changed:add accessibility events."""
 
         if self.utilities.is_spreadsheet_cell(event.any_data):
@@ -275,7 +273,7 @@ class Script(default.Script):
             presentation_manager.get_manager().present_message(full, brief)
             return True
 
-        return super().on_children_added(event)
+        return super()._on_children_added(event)
 
     def _handle_spreadsheet_focus(self, event: Atspi.Event, focus: Atspi.Accessible) -> bool:
         """Returns True if the spreadsheet focus event was handled."""
@@ -309,7 +307,7 @@ class Script(default.Script):
 
         return False
 
-    def on_focused_changed(self, event: Atspi.Event) -> bool:
+    def _on_focused_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:focused accessibility events."""
 
         manager = focus_manager.get_manager()
@@ -348,9 +346,9 @@ class Script(default.Script):
         if self._handle_spreadsheet_focus(event, focus):
             return True
 
-        return super().on_focused_changed(event)
+        return super()._on_focused_changed(event)
 
-    def on_selected_changed(self, event: Atspi.Event) -> bool:
+    def _on_selected_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:selected accessibility events."""
 
         # https://bugs.documentfoundation.org/show_bug.cgi?id=163801
@@ -359,9 +357,9 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        return super().on_selected_changed(event)
+        return super()._on_selected_changed(event)
 
-    def on_selection_changed(self, event: Atspi.Event) -> bool:
+    def _on_selection_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:selection-changed accessibility events."""
 
         # https://bugs.documentfoundation.org/show_bug.cgi?id=163801
@@ -382,4 +380,4 @@ class Script(default.Script):
             self.utilities.handle_cell_selection_change(event.source)
             return True
 
-        return super().on_selection_changed(event)
+        return super()._on_selection_changed(event)

@@ -60,7 +60,7 @@ class Script(WebKitGTK.Script, gtk.Script):
 
         return Utilities(self)
 
-    def on_busy_changed(self, event: Atspi.Event) -> bool:
+    def _on_busy_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:busy accessibility events."""
 
         if self.utilities.is_ignorable_event_from_document_preview(event):
@@ -70,9 +70,9 @@ class Script(WebKitGTK.Script, gtk.Script):
 
         msg = "EVOLUTION: Passing event to super class for processing."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        return super().on_busy_changed(event)
+        return super()._on_busy_changed(event)
 
-    def on_caret_moved(self, event: Atspi.Event) -> bool:
+    def _on_caret_moved(self, event: Atspi.Event) -> bool:
         """Callback for object:text-caret-moved accessibility events."""
 
         if self.utilities.is_ignorable_event_from_document_preview(event):
@@ -82,9 +82,9 @@ class Script(WebKitGTK.Script, gtk.Script):
 
         msg = "EVOLUTION: Passing event to super class for processing."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        return super().on_caret_moved(event)
+        return super()._on_caret_moved(event)
 
-    def on_focused_changed(self, event: Atspi.Event) -> bool:
+    def _on_focused_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:focused accessibility events."""
 
         if self.utilities.is_ignorable_event_from_document_preview(event):
@@ -102,4 +102,4 @@ class Script(WebKitGTK.Script, gtk.Script):
 
         msg = "EVOLUTION: Passing event to super class for processing."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        return super().on_focused_changed(event)
+        return super()._on_focused_changed(event)

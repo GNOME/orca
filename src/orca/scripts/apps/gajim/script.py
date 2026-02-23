@@ -37,19 +37,19 @@ if TYPE_CHECKING:
 class Script(default.Script):
     """Custom script for Gajim."""
 
-    def on_text_inserted(self, event: Atspi.Event) -> bool:
+    def _on_text_inserted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:insert accessibility events."""
 
         if chat_presenter.get_presenter().present_inserted_text(self, event):
             return True
 
-        return default.Script.on_text_inserted(self, event)
+        return super()._on_text_inserted(event)
 
-    def on_window_activated(self, event: Atspi.Event) -> bool:
+    def _on_window_activated(self, event: Atspi.Event) -> bool:
         """Callback for window:activate accessibility events."""
 
         # Hack to "tickle" the accessible hierarchy. Otherwise, the
         # events we need to present text added to the chatroom are
         # missing.
         AXUtilities.find_all_page_tabs(event.source)
-        return default.Script.on_window_activated(self, event)
+        return super()._on_window_activated(event)

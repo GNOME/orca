@@ -48,7 +48,7 @@ class Script(web.ToolkitBridge):
 
         return Utilities(self)
 
-    def on_caret_moved(self, event: Atspi.Event) -> bool:
+    def _on_caret_moved(self, event: Atspi.Event) -> bool:
         """Callback for object:text-caret-moved accessibility events."""
 
         if not AXUtilities.is_web_element(event.source) and AXUtilities.is_web_element(
@@ -58,9 +58,9 @@ class Script(web.ToolkitBridge):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        return super().on_caret_moved(event)
+        return super()._on_caret_moved(event)
 
-    def on_children_added(self, event: Atspi.Event) -> bool:
+    def _on_children_added(self, event: Atspi.Event) -> bool:
         """Callback for object:children-changed:add accessibility events."""
 
         if AXUtilities.is_web_element(event.source) and not AXUtilities.is_web_element(
@@ -70,9 +70,9 @@ class Script(web.ToolkitBridge):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        return super().on_children_added(event)
+        return super()._on_children_added(event)
 
-    def on_children_removed(self, event: Atspi.Event) -> bool:
+    def _on_children_removed(self, event: Atspi.Event) -> bool:
         """Callback for object:children-changed:removed accessibility events."""
 
         if AXUtilities.is_web_element(event.source) and not AXUtilities.is_web_element(
@@ -82,9 +82,9 @@ class Script(web.ToolkitBridge):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        return super().on_children_removed(event)
+        return super()._on_children_removed(event)
 
-    def on_focused_changed(self, event: Atspi.Event) -> bool:
+    def _on_focused_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:focused accessibility events."""
 
         if self.utilities.is_document(event.source) and not AXDocument.get_uri(event.source):
@@ -92,9 +92,9 @@ class Script(web.ToolkitBridge):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        return super().on_focused_changed(event)
+        return super()._on_focused_changed(event)
 
-    def on_selected_changed(self, event: Atspi.Event) -> bool:
+    def _on_selected_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:selected accessibility events."""
 
         if event.detail1 and not self.utilities.in_document_content(event.source):  # type: ignore
@@ -106,9 +106,9 @@ class Script(web.ToolkitBridge):
                     focus_manager.get_manager().set_locus_of_focus(event, event.source)
                     return True
 
-        return super().on_selected_changed(event)
+        return super()._on_selected_changed(event)
 
-    def on_text_selection_changed(self, event: Atspi.Event) -> bool:
+    def _on_text_selection_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:text-selection-changed accessibility events."""
 
         if not AXUtilities.is_web_element(event.source) and AXUtilities.is_web_element(
@@ -118,12 +118,12 @@ class Script(web.ToolkitBridge):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        return super().on_text_selection_changed(event)
+        return super()._on_text_selection_changed(event)
 
-    def on_window_activated(self, event: Atspi.Event) -> bool:
+    def _on_window_activated(self, event: Atspi.Event) -> bool:
         """Callback for window:activate accessibility events."""
 
-        super().on_window_activated(event)
+        super()._on_window_activated(event)
 
         for child in AXObject.iter_children(event.source):
             if AXUtilities.is_alert(child):

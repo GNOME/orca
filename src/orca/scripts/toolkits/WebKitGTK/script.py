@@ -41,7 +41,7 @@ if TYPE_CHECKING:
 class Script(web.ToolkitBridge, gtk.Script):
     """Custom script for WebKitGTK."""
 
-    def on_caret_moved(self, event: Atspi.Event) -> bool:
+    def _on_caret_moved(self, event: Atspi.Event) -> bool:
         """Callback for object:text-caret-moved accessibility events."""
 
         # TODO - JD: This is likely needed for https://bugs.webkit.org/show_bug.cgi?id=268154,
@@ -54,4 +54,4 @@ class Script(web.ToolkitBridge, gtk.Script):
                 if self.utilities.in_document_content(ancestor):
                     focus_manager.get_manager().set_locus_of_focus(None, document)
 
-        return super().on_caret_moved(event)
+        return super()._on_caret_moved(event)

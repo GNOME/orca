@@ -46,7 +46,7 @@ class Script(web.ToolkitBridge):
 
         return Utilities(self)
 
-    def on_focused_changed(self, event: Atspi.Event) -> bool:
+    def _on_focused_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:focused accessibility events."""
 
         if AXUtilities.is_panel(event.source):
@@ -60,9 +60,9 @@ class Script(web.ToolkitBridge):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        return super().on_focused_changed(event)
+        return super()._on_focused_changed(event)
 
-    def on_showing_changed(self, event: Atspi.Event) -> bool:
+    def _on_showing_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:showing accessibility events."""
 
         # TODO - JD: Is this workaround still needed? It is here because we normally get a
@@ -77,4 +77,4 @@ class Script(web.ToolkitBridge):
             focus_manager.get_manager().set_locus_of_focus(event, event.source)
             return True
 
-        return super().on_showing_changed(event)
+        return super()._on_showing_changed(event)

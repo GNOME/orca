@@ -39,7 +39,7 @@ if TYPE_CHECKING:
 class Script(default.Script):
     """Custom script for The notification daemon."""
 
-    def on_window_created(self, event: Atspi.Event) -> bool:
+    def _on_window_created(self, event: Atspi.Event) -> bool:
         """Callback for window:create accessibility events."""
 
         texts = [AXText.get_all_text(acc) for acc in AXUtilities.find_all_labels(event.source)]
