@@ -4089,7 +4089,7 @@ class SpeechGenerator(generator.Generator):
 
         # TODO - JD: There should be separate generators for each type of cell.
         result = self._generate_default_prefix(obj, **args)
-        result = self._generate_table_cell_row_header(obj, **args)
+        result += self._generate_table_cell_row_header(obj, **args)
         result += self._generate_table_cell_column_header(obj, **args)
         result += self._generate_state_checked_for_cell(obj, **args)
         result += (
