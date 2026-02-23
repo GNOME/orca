@@ -1,47 +1,72 @@
 # Orca GSettings Schemas Reference
 
-Orca stores settings under `/org/gnome/orca/`:
+Orca stores settings under `/org/gnome/orca/`.
 - Profile-level settings: `/org/gnome/orca/<profile>/<schema-name>/`
 - App-specific overrides: `/org/gnome/orca/<profile>/apps/<app>/<schema-name>/`
 - Voice settings: `/org/gnome/orca/<profile>/voices/<voice-type>/`
 - App-specific voice overrides: `/org/gnome/orca/<profile>/apps/<app>/voices/<voice-type>/`
 
-Path variables:
-- `<profile>`: profile ID. `default` is the standard profile; users can add others (for example `italian`).
-- `<schema-name>`: Orca schema name (for example `typing-echo`, `speech`, `braille`).
+## Path Variables
+
+- `<profile>`: profile ID. `default` is the standard profile; users can add others, e.g. `italian`.
+- `<schema-name>`: Orca schema name, e.g. `typing-echo`, `speech`, `braille`.
 - `<app>`: app ID used for app-specific overrides.
 - `<voice-type>`: voice type (`default`, `uppercase`, `hyperlink`, `system`).
 
-Lookup precedence (highest to lowest):
+## Lookup Precedence
+
+When Orca reads a setting, it checks several layers from most specific to least specific:
+
 - Scalars and enums: runtime override -> app override -> active profile -> `default` profile (if active profile is not `default`) -> schema default
-- Dictionary settings (for example pronunciation entries and keybinding overrides): runtime override -> profile dictionary with app dictionary overlaid on top -> schema default
+- Dictionary settings (pronunciation entries, keybinding overrides): runtime override -> profile dictionary with app dictionary overlaid on top -> schema default
 
-Why dict settings do not inherit from `default` profile:
-- New profiles copy dict entries from the source profile when created.
-- Primary use case: pronunciation dictionaries should be independently editable per profile. Entries in `default` that do not apply to another profile should be removable there without runtime fallback to `default`.
-- This also applies to keybinding overrides: each profile/app layer should use only its own override dictionary instead of inheriting override entries from `default`.
+Dict settings do not inherit from the `default` profile because new profiles copy dict entries from the source profile when created; after that, each profile's dictionaries are independent. Removing an entry from one profile should not cause it to reappear via fallback to `default`.
 
-Migration paths:
-- Automatic startup migration: Orca runs JSON -> GSettings migration at startup if migration has not been stamped yet.
-- Manual import at startup: `orca -i DIR` / `orca --import-dir DIR` imports settings from `DIR` into dconf. WARNING: this replaces current `/org/gnome/orca/` settings.
-  - Most users should not need this; automatic migration handles normal upgrades.
-  - Backup first: `dconf dump /org/gnome/orca/ > backup.ini`
-  - Restore backup: `dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < backup.ini`
-- Stand-alone import/export/diff tool: `python tools/gsettings_import_export.py <import|export|roundtrip|diff> ...`
-  - `import DIR`:
-    - What it does: import JSON settings from `DIR` into dconf (use `import --dry-run` to preview writes without changing dconf).
-    - Why use it: manually load settings from a JSON directory into the current dconf.
-  - `export DIR`:
-    - What it does: export current dconf settings to JSON files in `DIR`.
-    - Why use it: create a portable JSON backup or source directory for comparison.
-  - `diff SRC_DIR OUT_DIR`:
-    - What it does: export current dconf to JSON in `OUT_DIR`, then compare those exported JSON files to `SRC_DIR` (`user-settings.conf` and `app-settings/*.conf`). This does not import `SRC_DIR`.
-    - Why use it: non-destructive validation of current dconf against original JSON (for example, to check migration results).
-  - `roundtrip SRC_DIR OUT_DIR`:
-    - What it does: reset `/org/gnome/orca/`, import from `SRC_DIR`, export to `OUT_DIR`, then diff.
-    - Why use it: reset-based end-to-end validation of import/export behavior from a known JSON source.
-  - `diff` and `roundtrip` support `-v` / `--verbose` for fuller diff output.
-  - Use `--prefix <orca-prefix>` if schemas are installed in a non-default prefix.
+## Migration Paths
+
+On first launch after upgrading to GSettings, Orca automatically migrates JSON settings from `~/.local/share/orca/` into dconf. The migration is stamped so it only runs once.
+
+If automatic migration is not sufficient, you can import settings manually with `orca -i DIR` / `orca --import-dir DIR`. This replaces the current `/org/gnome/orca/` settings in dconf, so back up first:
+
+- Backup: `dconf dump /org/gnome/orca/ > backup.ini`
+- Restore: `dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < backup.ini`
+
+There is also a stand-alone tool with four subcommands: `python tools/gsettings_import_export.py <subcommand> ...`
+
+- `import DIR`: load JSON settings from `DIR` into dconf. Use `import --dry-run` to preview writes without changing anything.
+- `export DIR`: save current dconf settings to JSON files in `DIR`, for backup or transfer to another machine.
+- `diff SRC_DIR OUT_DIR`: export current dconf to JSON in `OUT_DIR` and compare against `SRC_DIR`. Nothing is imported; this is a read-only check, useful for verifying migration results.
+- `roundtrip SRC_DIR OUT_DIR`: reset `/org/gnome/orca/`, import from `SRC_DIR`, export to `OUT_DIR`, then diff. Tests the full import/export cycle from a clean state.
+
+`diff` and `roundtrip` accept `-v` / `--verbose` for fuller output. Use `--prefix <orca-prefix>` if schemas are installed in a non-default prefix.
+
+## Inspecting and Modifying Settings with dconf
+
+You can read and write Orca settings directly with `dconf`.
+
+- `dconf dump /org/gnome/orca/`: view all Orca settings
+- `dconf dump /org/gnome/orca/default/speech/`: view one schema for one profile
+- `dconf list /org/gnome/orca/`: list profiles
+- `dconf read /org/gnome/orca/default/speech/enable`: read a single key
+- `dconf write /org/gnome/orca/default/speech/enable false`: write a single key
+- `dconf reset -f /org/gnome/orca/default/speech/`: reset a schema to defaults
+- `dconf reset -f /org/gnome/orca/`: reset all Orca settings (backup first with `dconf dump`)
+
+`gsettings` also works but requires both the schema ID and path, since Orca uses relocatable schemas:
+
+- `gsettings get org.gnome.Orca.Speech:/org/gnome/orca/default/speech/ enable`
+- `gsettings set org.gnome.Orca.Speech:/org/gnome/orca/default/speech/ enable false`
+
+## Monitoring Changes
+
+`dconf watch` is path-based, so it can monitor any subtree (broad or narrow):
+
+- `dconf watch /org/gnome/orca/`: all Orca changes
+- `dconf watch /org/gnome/orca/default/speech/`: just one schema path
+
+`gsettings monitor` is schema-based, so it watches one schema at a time but shows key names instead of raw paths:
+
+- `gsettings monitor org.gnome.Orca.Speech:/org/gnome/orca/default/speech/`
 
 ---
 

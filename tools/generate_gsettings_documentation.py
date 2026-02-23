@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# ruff: noqa: T201
 # generate_gsettings_documentation.py
 #
 # Generate markdown documentation for Orca's GSettings schemas.
@@ -105,7 +106,7 @@ def generate_documentation(
     lines: list[str] = []
     lines.append("# Orca GSettings Schemas Reference")
     lines.append("")
-    lines.append("Orca stores settings under `/org/gnome/orca/`:")
+    lines.append("Orca stores settings under `/org/gnome/orca/`.")
     lines.append("- Profile-level settings: `/org/gnome/orca/<profile>/<schema-name>/`")
     lines.append("- App-specific overrides: `/org/gnome/orca/<profile>/apps/<app>/<schema-name>/`")
     lines.append("- Voice settings: `/org/gnome/orca/<profile>/voices/<voice-type>/`")
@@ -114,98 +115,124 @@ def generate_documentation(
         "`/org/gnome/orca/<profile>/apps/<app>/voices/<voice-type>/`"
     )
     lines.append("")
-    lines.append("Path variables:")
+    lines.append("## Path Variables")
+    lines.append("")
     lines.append(
         "- `<profile>`: profile ID. `default` is the standard profile; "
-        "users can add others (for example `italian`)."
+        "users can add others, e.g. `italian`."
     )
-    lines.append(
-        "- `<schema-name>`: Orca schema name (for example `typing-echo`, `speech`, `braille`)."
-    )
+    lines.append("- `<schema-name>`: Orca schema name, e.g. `typing-echo`, `speech`, `braille`.")
     lines.append("- `<app>`: app ID used for app-specific overrides.")
     lines.append("- `<voice-type>`: voice type (`default`, `uppercase`, `hyperlink`, `system`).")
     lines.append("")
-    lines.append("Lookup precedence (highest to lowest):")
+    lines.append("## Lookup Precedence")
+    lines.append("")
+    lines.append(
+        "When Orca reads a setting, it checks several layers from most specific to least specific:"
+    )
+    lines.append("")
     lines.append(
         "- Scalars and enums: runtime override -> app override -> active profile -> "
         "`default` profile (if active profile is not `default`) -> schema default"
     )
     lines.append(
-        "- Dictionary settings (for example pronunciation entries and keybinding overrides): "
+        "- Dictionary settings (pronunciation entries, keybinding overrides): "
         "runtime override -> profile dictionary with app dictionary overlaid on top -> "
         "schema default"
     )
     lines.append("")
-    lines.append("Why dict settings do not inherit from `default` profile:")
-    lines.append("- New profiles copy dict entries from the source profile when created.")
     lines.append(
-        "- Primary use case: pronunciation dictionaries should be independently editable per "
-        "profile. Entries in `default` that do not apply to another profile should be removable "
-        "there without runtime fallback to `default`."
-    )
-    lines.append(
-        "- This also applies to keybinding overrides: each profile/app layer should use only its "
-        "own override dictionary instead of inheriting override entries from `default`."
+        "Dict settings do not inherit from the `default` profile because new profiles "
+        "copy dict entries from the source profile when created; after that, each "
+        "profile's dictionaries are independent. Removing an entry from one profile "
+        "should not cause it to reappear via fallback to `default`."
     )
     lines.append("")
-    lines.append("Migration paths:")
+    lines.append("## Migration Paths")
+    lines.append("")
     lines.append(
-        "- Automatic startup migration: Orca runs JSON -> GSettings migration at startup if "
-        "migration has not been stamped yet."
+        "On first launch after upgrading to GSettings, Orca automatically migrates "
+        "JSON settings from `~/.local/share/orca/` into dconf. The migration is "
+        "stamped so it only runs once."
+    )
+    lines.append("")
+    lines.append(
+        "If automatic migration is not sufficient, you can import settings manually "
+        "with `orca -i DIR` / `orca --import-dir DIR`. This replaces the current "
+        "`/org/gnome/orca/` settings in dconf, so back up first:"
+    )
+    lines.append("")
+    lines.append("- Backup: `dconf dump /org/gnome/orca/ > backup.ini`")
+    lines.append(
+        "- Restore: `dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < backup.ini`"
+    )
+    lines.append("")
+    lines.append(
+        "There is also a stand-alone tool with four subcommands: "
+        "`python tools/gsettings_import_export.py <subcommand> ...`"
+    )
+    lines.append("")
+    lines.append(
+        "- `import DIR`: load JSON settings from `DIR` into dconf. "
+        "Use `import --dry-run` to preview writes without changing anything."
     )
     lines.append(
-        "- Manual import at startup: `orca -i DIR` / `orca --import-dir DIR` imports "
-        "settings from `DIR` into dconf. WARNING: this replaces current "
-        "`/org/gnome/orca/` settings."
+        "- `export DIR`: save current dconf settings to JSON files in `DIR`, "
+        "for backup or transfer to another machine."
     )
     lines.append(
-        "  - Most users should not need this; automatic migration handles normal upgrades."
-    )
-    lines.append("  - Backup first: `dconf dump /org/gnome/orca/ > backup.ini`")
-    lines.append(
-        "  - Restore backup: "
-        "`dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < backup.ini`"
+        "- `diff SRC_DIR OUT_DIR`: export current dconf to JSON in `OUT_DIR` and compare "
+        "against `SRC_DIR`. Nothing is imported; this is a read-only check, "
+        "useful for verifying migration results."
     )
     lines.append(
-        "- Stand-alone import/export/diff tool: "
-        "`python tools/gsettings_import_export.py <import|export|roundtrip|diff> ...`"
+        "- `roundtrip SRC_DIR OUT_DIR`: reset `/org/gnome/orca/`, import from `SRC_DIR`, "
+        "export to `OUT_DIR`, then diff. Tests the full import/export cycle from a clean state."
     )
-    lines.append("  - `import DIR`:")
+    lines.append("")
     lines.append(
-        "    - What it does: import JSON settings from `DIR` into dconf "
-        "(use `import --dry-run` to preview writes without changing dconf)."
+        "`diff` and `roundtrip` accept `-v` / `--verbose` for fuller output. "
+        "Use `--prefix <orca-prefix>` if schemas are installed in a non-default prefix."
     )
+    lines.append("")
+    lines.append("## Inspecting and Modifying Settings with dconf")
+    lines.append("")
+    lines.append("You can read and write Orca settings directly with `dconf`.")
+    lines.append("")
+    lines.append("- `dconf dump /org/gnome/orca/`: view all Orca settings")
+    lines.append("- `dconf dump /org/gnome/orca/default/speech/`: view one schema for one profile")
+    lines.append("- `dconf list /org/gnome/orca/`: list profiles")
+    lines.append("- `dconf read /org/gnome/orca/default/speech/enable`: read a single key")
+    lines.append("- `dconf write /org/gnome/orca/default/speech/enable false`: write a single key")
+    lines.append("- `dconf reset -f /org/gnome/orca/default/speech/`: reset a schema to defaults")
     lines.append(
-        "    - Why use it: manually load settings from a JSON directory into the current dconf."
+        "- `dconf reset -f /org/gnome/orca/`: reset all Orca settings "
+        "(backup first with `dconf dump`)"
     )
-    lines.append("  - `export DIR`:")
-    lines.append("    - What it does: export current dconf settings to JSON files in `DIR`.")
+    lines.append("")
     lines.append(
-        "    - Why use it: create a portable JSON backup or source directory for comparison."
+        "`gsettings` also works but requires both the schema ID and path, since Orca "
+        "uses relocatable schemas:"
     )
-    lines.append("  - `diff SRC_DIR OUT_DIR`:")
+    lines.append("")
+    lines.append("- `gsettings get org.gnome.Orca.Speech:/org/gnome/orca/default/speech/ enable`")
     lines.append(
-        "    - What it does: export current dconf to JSON in `OUT_DIR`, then compare those "
-        "exported JSON files to `SRC_DIR` (`user-settings.conf` and `app-settings/*.conf`). "
-        "This does not import `SRC_DIR`."
+        "- `gsettings set org.gnome.Orca.Speech:/org/gnome/orca/default/speech/ enable false`"
     )
+    lines.append("")
+    lines.append("## Monitoring Changes")
+    lines.append("")
+    lines.append("`dconf watch` is path-based, so it can monitor any subtree (broad or narrow):")
+    lines.append("")
+    lines.append("- `dconf watch /org/gnome/orca/`: all Orca changes")
+    lines.append("- `dconf watch /org/gnome/orca/default/speech/`: just one schema path")
+    lines.append("")
     lines.append(
-        "    - Why use it: non-destructive validation of current dconf against original JSON "
-        "(for example, to check migration results)."
+        "`gsettings monitor` is schema-based, so it watches one schema at a time "
+        "but shows key names instead of raw paths:"
     )
-    lines.append("  - `roundtrip SRC_DIR OUT_DIR`:")
-    lines.append(
-        "    - What it does: reset `/org/gnome/orca/`, import from `SRC_DIR`, export to "
-        "`OUT_DIR`, then diff."
-    )
-    lines.append(
-        "    - Why use it: reset-based end-to-end validation of import/export behavior from a "
-        "known JSON source."
-    )
-    lines.append("  - `diff` and `roundtrip` support `-v` / `--verbose` for fuller diff output.")
-    lines.append(
-        "  - Use `--prefix <orca-prefix>` if schemas are installed in a non-default prefix."
-    )
+    lines.append("")
+    lines.append("- `gsettings monitor org.gnome.Orca.Speech:/org/gnome/orca/default/speech/`")
     lines.append("")
     lines.append("---")
     lines.append("")
@@ -226,8 +253,7 @@ def generate_documentation(
 
         lines.append("| Key | Type | Default | Summary |")
         lines.append("| --- | --- | --- | --- |")
-        for key_el in keys:
-            lines.append(_format_key_row(key_el, enum_values, include_enum_allowed))
+        lines.extend(_format_key_row(key_el, enum_values, include_enum_allowed) for key_el in keys)
 
         lines.append("")
         lines.append("---")
