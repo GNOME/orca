@@ -575,12 +575,15 @@ class SpeechServer(speechserver.SpeechServer):
         event_string = event.get_key_name()
         locking_state_string = event.get_locking_state_string()
         event_string = f"{event_string} {locking_state_string}".strip()
+        # Speaking this key event as a character makes the user experience more consistent.
+        # Example: The user presses '.' and then presses BackSpace and expects the output to
+        # be the same.
         if len(event_string) == 1:
-            msg = f"SPEECH DISPATCHER: Speaking '{event_string}' as key"
+            msg = f"SPEECH DISPATCHER: Speaking '{event_string}' as char"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._apply_acss(acss)
             if self._client is not None:
-                self._send_command(self._client.key, event_string)
+                self._send_command(self._client.char, event_string)
         else:
             msg = f"SPEECH DISPATCHER: Speaking '{event_string}' as string"
             debug.print_message(debug.LEVEL_INFO, msg, True)
