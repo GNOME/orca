@@ -823,11 +823,6 @@ class Script(script.Script):
 
         return True
 
-    def _on_busy_changed(self, event: Atspi.Event) -> bool:  # pylint: disable=unused-argument
-        """Callback for object:state-changed:busy accessibility events."""
-
-        return True
-
     def _on_checked_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:checked accessibility events."""
 
@@ -912,26 +907,6 @@ class Script(script.Script):
 
         if AXUtilities.is_presentable_description_change(event):
             presentation_manager.get_manager().present_message(event.any_data)
-        return True
-
-    def _on_document_attributes_changed(self, event: Atspi.Event) -> bool:  # pylint: disable=unused-argument
-        """Callback for document:attributes-changed accessibility events."""
-
-        return True
-
-    def _on_document_reload(self, event: Atspi.Event) -> bool:  # pylint: disable=unused-argument
-        """Callback for document:reload accessibility events."""
-
-        return True
-
-    def _on_document_load_complete(self, event: Atspi.Event) -> bool:  # pylint: disable=unused-argument
-        """Callback for document:load-complete accessibility events."""
-
-        return True
-
-    def _on_document_load_stopped(self, event: Atspi.Event) -> bool:  # pylint: disable=unused-argument
-        """Callback for document:load-stopped accessibility events."""
-
         return True
 
     def _on_document_page_changed(self, event: Atspi.Event) -> bool:
@@ -1159,11 +1134,6 @@ class Script(script.Script):
             if not AXUtilities.is_layout_only(child):
                 focus_manager.get_manager().set_locus_of_focus(event, child)
                 break
-
-        return True
-
-    def _on_sensitive_changed(self, event: Atspi.Event) -> bool:  # pylint: disable=unused-argument
-        """Callback for object:state-changed:sensitive accessibility events."""
 
         return True
 
@@ -1474,16 +1444,6 @@ class Script(script.Script):
 
         if not spellcheck_presenter.get_presenter().handle_window_event(event, self):
             manager.set_locus_of_focus(event, event.source)
-        return True
-
-    def _on_window_created(self, event: Atspi.Event) -> bool:  # pylint: disable=unused-argument
-        """Callback for window:create accessibility events."""
-
-        return True
-
-    def _on_window_destroyed(self, event: Atspi.Event) -> bool:  # pylint: disable=unused-argument
-        """Callback for window:destroy accessibility events."""
-
         return True
 
     def _on_window_deactivated(self, event: Atspi.Event) -> bool:
