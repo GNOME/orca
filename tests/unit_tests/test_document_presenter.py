@@ -956,8 +956,8 @@ class TestDocumentPresenter:
 
         assert result is True
 
-    def test_set_mode_value(self, test_context: OrcaTestContext) -> None:
-        """Test _set_mode_value sets the state."""
+    def test_get_state_for_app_sets_mode(self, test_context: OrcaTestContext) -> None:
+        """Test _get_state_for_app can be used to set mode state."""
 
         from unittest.mock import MagicMock
 
@@ -965,11 +965,13 @@ class TestDocumentPresenter:
         presenter = module.get_presenter()
         mock_app = MagicMock()
 
-        presenter._set_mode_value(mock_app, True)
+        state = presenter._get_state_for_app(mock_app)
+        state.in_focus_mode = True
 
         assert presenter.in_focus_mode(mock_app) is True
 
-        presenter._set_mode_value(mock_app, False)
+        state = presenter._get_state_for_app(mock_app)
+        state.in_focus_mode = False
 
         assert presenter.in_focus_mode(mock_app) is False
 

@@ -567,13 +567,6 @@ class DocumentPresenter:
             return False
         return self._app_states[app_hash].browse_mode_is_sticky
 
-    def _set_mode_value(self, app: Atspi.Accessible | None, value: bool) -> None:
-        """Sets focus mode state for the given app without affecting sticky state."""
-
-        if app is None:
-            app = self._get_current_app()
-        self._get_state_for_app(app).in_focus_mode = value
-
     def _set_presentation_mode(
         self,
         script: default.Script,
@@ -981,13 +974,14 @@ class DocumentPresenter:
         if not use_focus:
             self._enable_document_navigators(script, reason)
 
+        state = self._get_state_for_app(script.app)
+        state.in_focus_mode = use_focus
         self.suspend_navigators(script, use_focus, reason)
 
-        if AXUtilities.get_application(old_focus) != AXUtilities.get_application(new_focus):
-            if use_focus:
-                presentation_manager.get_manager().present_message(messages.MODE_FOCUS)
-            else:
-                presentation_manager.get_manager().present_message(messages.MODE_BROWSE)
+        if use_focus:
+            presentation_manager.get_manager().present_message(messages.MODE_FOCUS)
+        else:
+            presentation_manager.get_manager().present_message(messages.MODE_BROWSE)
 
         return True
 
