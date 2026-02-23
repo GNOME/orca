@@ -91,8 +91,7 @@ if TYPE_CHECKING:
     import gi
 
     gi.require_version("Atspi", "2.0")
-    gi.require_version("Gtk", "3.0")
-    from gi.repository import Atspi, Gtk
+    from gi.repository import Atspi
 
 
 class Script(script.Script):
@@ -335,16 +334,6 @@ class Script(script.Script):
         cmd_count = len(command_manager.get_manager().get_all_keyboard_commands())
         msg = f"DEFAULT: Commands set up: {cmd_count} keyboard commands"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def get_app_preferences_gui(self) -> Gtk.Grid | None:
-        """Return a GtkGrid, or None if there's no app-specific UI."""
-
-        return None
-
-    def get_preferences_from_gui(self) -> dict:
-        """Returns a dictionary with the app-specific preferences."""
-
-        return {}
 
     def register_event_listeners(self) -> None:
         """Registers for listeners needed by this script."""
