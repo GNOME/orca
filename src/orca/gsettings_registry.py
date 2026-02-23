@@ -546,11 +546,6 @@ class GSettingsRegistry:
         if gs is None:
             return
 
-        for (schema, _key), desc in self._descriptors.items():
-            if schema == schema_name and _key in settings:
-                if gs.get_user_value(desc.gsettings_key) is not None:
-                    gs.reset(desc.gsettings_key)
-
         writers: dict[str, Callable[..., None]] = {
             "b": gs.set_boolean,
             "s": gs.set_string,
@@ -558,23 +553,38 @@ class GSettingsRegistry:
             "d": gs.set_double,
             "as": gs.set_strv,
         }
+        readers: dict[str, Callable[..., Any]] = {
+            "b": gs.get_boolean,
+            "s": gs.get_string,
+            "i": gs.get_int,
+            "d": gs.get_double,
+            "as": gs.get_strv,
+        }
 
         for key, value in settings.items():
             setting = self._descriptors.get((schema_name, key))
             if setting is None:
                 continue
             if skip_defaults and value == setting.default:
+                if gs.get_user_value(key) is not None:
+                    gs.reset(key)
                 continue
             if setting.genum:
-                if not isinstance(value, str):
+                nick: str
+                if isinstance(value, str):
+                    nick = value
+                else:
                     enum_data = self._enums.get(setting.genum, {})
                     reverse = {v: k for k, v in enum_data.items()}
-                    enum_name = reverse.get(int(value))
-                    if enum_name is None:
+                    resolved = reverse.get(int(value))
+                    if resolved is None:
                         continue
-                    gs.set_string(key, enum_name)
-                else:
-                    gs.set_string(key, value)
+                    nick = resolved
+                if gs.get_string(key) != nick:
+                    gs.set_string(key, nick)
+                continue
+            reader = readers.get(setting.gtype)
+            if reader is not None and reader(key) == value:
                 continue
             writer = writers.get(setting.gtype)
             if writer is not None:
