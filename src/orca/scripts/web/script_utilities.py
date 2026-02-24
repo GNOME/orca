@@ -1100,6 +1100,7 @@ class Utilities(script_utilities.Utilities):
                 return self._cached_object_contents or []
 
         obj_is_landmark = AXUtilities.is_landmark(obj)
+        obj_list = AXObject.find_ancestor(obj, AXUtilities.is_list)
 
         def _is_in_object(x):
             if not x:
@@ -1118,6 +1119,11 @@ class Utilities(script_utilities.Utilities):
 
             if obj_is_landmark and AXUtilities.is_landmark(x_obj) and obj != x_obj:
                 return False
+
+            if obj_list is not None:
+                x_list = AXObject.find_ancestor(x_obj, AXUtilities.is_list)
+                if x_list is not None and x_list != obj_list:
+                    return False
 
             return _is_in_object(x_obj)
 
