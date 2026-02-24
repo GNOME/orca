@@ -561,10 +561,9 @@ class SayAllPresenter:
         self._current_context = context
         self._say_all_is_running = True
 
-        if AXText.character_at_offset_is_eoc(context.obj, context.current_offset):
-            return
-
         if progress_type == speechserver.SayAllContext.PROGRESS:
+            if AXText.character_at_offset_is_eoc(context.obj, context.current_offset):
+                return
             focus_manager.get_manager().emit_region_changed(
                 context.obj,
                 context.current_offset,
