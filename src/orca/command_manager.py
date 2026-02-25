@@ -555,6 +555,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _on_keybinding_activated(self, _listbox: Gtk.ListBox, row: Gtk.ListBoxRow) -> None:
         """Handle keybinding row activation - start inline editing."""
 
+        if self._keybinding_being_edited is not None:
+            return
+
         if not isinstance(row, preferences_grid_base.CommandListBoxRow):
             return
 
