@@ -28,7 +28,6 @@
 """Command-line tool to dump the tree of accessible objects for a given application."""
 
 import sys
-from datetime import datetime, timezone
 
 import gi
 
@@ -36,26 +35,171 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
 
 
-def as_string(obj: Atspi.Accessible, prefix: str) -> str:
+def as_string(
+    obj: Atspi.Accessible, prefix: str, expected_parent: Atspi.Accessible | None = None
+) -> str:
     "Convert an accessible object to a string representation."
 
-    timestamp = f"{datetime.now(tz=timezone.utc).astimezone():%H:%M:%S}"
-    indent = " " * (len(prefix) + len(timestamp) + 2)
-    return (
-        f"{timestamp} {prefix} "
-        f"{get_role_as_string(obj)} ({hex(id(obj))}) "
+    indent = " " * (len(prefix) + 1)
+    result = (
+        f"{prefix} "
+        f"{get_role_as_string(obj)} "
         f"NAME: '{get_name(obj)}' "
         f"DESCRIPTION: '{get_description(obj)}' "
         f"ACCESSIBLE ID: '{get_accessible_id(obj)}'"
-        f"\n{indent}LOCALE: '{get_locale(obj)}'"
-        f"\n{indent}PARENT: {get_parent_as_string(obj)} "
-        f"INDEX IN PARENT: {get_index_in_parent(obj)}"
-        f"\n{indent}ATTRIBUTES: {get_attributes_as_string(obj)}"
-        f"\n{indent}RECT: {get_rect_as_string(obj)}"
-        f"\n{indent}STATES: {get_states_as_string(obj)}"
-        f"\n{indent}RELATIONS: {get_relations_as_string(obj)}"
-        f"\n{indent}TEXT: {get_text(obj)}"
     )
+
+    parent_info = get_parent_info(obj, expected_parent)
+    if parent_info:
+        result += f"\n{indent}{parent_info}"
+
+    result += (
+        f"\n{indent}INTERFACES: {get_interfaces_as_string(obj)}"
+        f"\n{indent}STATES: {get_states_as_string(obj)}"
+        f"\n{indent}ATTRIBUTES: {get_attributes_as_string(obj)}"
+        f"\n{indent}LOCALE: '{get_locale(obj)}'"
+        f"\n{indent}RECT: {get_rect_as_string(obj)}"
+    )
+
+    relations = get_relations_as_string(obj)
+    if relations:
+        result += f"\n{indent}RELATIONS: {relations}"
+
+    selection_info = get_selection_info(obj, indent)
+    if selection_info:
+        result += f"\n{indent}{selection_info}"
+
+    if supports_interface(obj, Atspi.Accessible.get_text_iface):
+        result += f"\n{indent}TEXT: {get_text(obj)}"
+        text_attrs = get_text_attributes(obj, indent)
+        if text_attrs:
+            result += f"\n{indent}{text_attrs}"
+
+    table_info = get_table_info(obj, indent)
+    if table_info:
+        result += f"\n{indent}{table_info}"
+
+    table_cell_info = get_table_cell_info(obj, indent)
+    if table_cell_info:
+        result += f"\n{indent}{table_cell_info}"
+
+    return result
+
+
+def supports_interface(obj: Atspi.Accessible, getter) -> bool:
+    "Check if an accessible object supports a specific interface."
+
+    try:
+        iface = getter(obj)
+    except GLib.GError:
+        return False
+    return iface is not None
+
+
+INTERFACE_CHECKS = [
+    (Atspi.Accessible.get_action_iface, "Action"),
+    (Atspi.Accessible.get_collection_iface, "Collection"),
+    (Atspi.Accessible.get_component_iface, "Component"),
+    (Atspi.Accessible.get_document_iface, "Document"),
+    (Atspi.Accessible.get_editable_text_iface, "EditableText"),
+    (Atspi.Accessible.get_hyperlink, "Hyperlink"),
+    (Atspi.Accessible.get_hypertext_iface, "Hypertext"),
+    (Atspi.Accessible.get_image_iface, "Image"),
+    (Atspi.Accessible.get_selection_iface, "Selection"),
+    (Atspi.Accessible.get_table_iface, "Table"),
+    (Atspi.Accessible.get_table_cell, "TableCell"),
+    (Atspi.Accessible.get_text_iface, "Text"),
+    (Atspi.Accessible.get_value_iface, "Value"),
+]
+
+
+def get_interfaces_as_string(obj: Atspi.Accessible) -> str:
+    "Get the supported interfaces of an accessible object as a string."
+
+    ifaces = [name for getter, name in INTERFACE_CHECKS if supports_interface(obj, getter)]
+    return ", ".join(ifaces) or "(none)"
+
+
+def get_selection_info(obj: Atspi.Accessible, indent: str) -> str:
+    "Get selection interface details if the selection interface is supported."
+
+    if not supports_interface(obj, Atspi.Accessible.get_selection_iface):
+        return ""
+
+    try:
+        count = Atspi.Selection.get_n_selected_children(obj)
+    except GLib.GError as error:
+        return f"SELECTION: Exception in get_n_selected_children: {error}"
+
+    result = f"SELECTION: SELECTED CHILD COUNT: {count}"
+
+    def format_selected_child(index: int) -> str:
+        try:
+            child = Atspi.Selection.get_selected_child(obj, index)
+        except GLib.GError as error:
+            return f"SELECTED CHILD [{index}]: Exception: {error}"
+        if child is None:
+            return f"SELECTED CHILD [{index}]: (null)"
+        return f"SELECTED CHILD [{index}]: {get_role_as_string(child)} NAME: '{get_name(child)}'"
+
+    if count <= 10:
+        indices = range(count)
+    else:
+        indices = list(range(5)) + list(range(count - 5, count))
+
+    for i in indices:
+        if i == count - 5 and count > 10:
+            result += f"\n{indent}  ... ({count - 10} selected children omitted) ..."
+        result += f"\n{indent}  {format_selected_child(i)}"
+
+    return result
+
+
+def get_table_info(obj: Atspi.Accessible, _indent: str) -> str:
+    "Get table interface details if the table interface is supported."
+
+    if not supports_interface(obj, Atspi.Accessible.get_table_iface):
+        return ""
+
+    try:
+        n_rows = Atspi.Table.get_n_rows(obj)
+    except GLib.GError as error:
+        return f"TABLE: Exception in get_n_rows: {error}"
+
+    try:
+        n_cols = Atspi.Table.get_n_columns(obj)
+    except GLib.GError as error:
+        return f"TABLE: ROWS: {n_rows}, Exception in get_n_columns: {error}"
+
+    return f"TABLE: ROWS: {n_rows}, COLUMNS: {n_cols}"
+
+
+def get_table_cell_info(obj: Atspi.Accessible, _indent: str) -> str:
+    "Get table cell interface details if the table cell interface is supported."
+
+    if not supports_interface(obj, Atspi.Accessible.get_table_cell):
+        return ""
+
+    try:
+        success, row, column = Atspi.TableCell.get_position(obj)
+    except GLib.GError as error:
+        return f"TABLE CELL: Exception in get_position: {error}"
+
+    if not success:
+        return "TABLE CELL: ROW: (unknown), COLUMN: (unknown)"
+
+    result = f"TABLE CELL: ROW: {row}, COLUMN: {column}"
+
+    try:
+        row_span = Atspi.TableCell.get_row_span(obj)
+        col_span = Atspi.TableCell.get_column_span(obj)
+    except GLib.GError as error:
+        return f"{result}, Exception in get_span: {error}"
+
+    if row_span != 1 or col_span != 1:
+        result += f", ROW SPAN: {row_span}, COLUMN SPAN: {col_span}"
+
+    return result
 
 
 def get_rect_as_string(obj: Atspi.Accessible) -> str:
@@ -91,11 +235,11 @@ def get_relations_as_string(obj: Atspi.Accessible) -> str:
             continue
         targets = [relation.get_target(i) for i in range(relation.get_n_targets())]
         target_addresses = ", ".join(
-            [f"{get_role_as_string(target)} ({hex(id(target))})" for target in targets]
+            [f"{get_role_as_string(target)} NAME: '{get_name(target)}'" for target in targets]
         )
         result.append(f"{relation.get_relation_type().value_nick}: {target_addresses}")
 
-    return " ".join(result) or "(none)"
+    return " ".join(result)
 
 
 def get_states_as_string(obj: Atspi.Accessible) -> str:
@@ -230,16 +374,51 @@ def get_locale(obj: Atspi.Accessible) -> str:
 def get_text(obj: Atspi.Accessible) -> str:
     "Get the text of an accessible object."
 
-    try:
-        length = Atspi.Text.get_character_count(obj)
-        result = Atspi.Text.get_text(obj, 0, length)
-    except GLib.GError:
-        return "(not implemented)"
-
+    length = Atspi.Text.get_character_count(obj)
+    result = Atspi.Text.get_text(obj, 0, length)
+    result = result.replace("\ufffc", "[OBJ]")
     result = result.replace("\n", "\\n")
     if len(result) > 80:
         result = result[:80] + "[...]"
     return f"'{result}'"
+
+
+def get_text_attributes(obj: Atspi.Accessible, indent: str) -> str:
+    "Get the text attribute runs for an accessible object."
+
+    try:
+        length = Atspi.Text.get_character_count(obj)
+    except GLib.GError:
+        return ""
+
+    if length <= 0:
+        return ""
+
+    runs = []
+    offset = 0
+    while offset < length:
+        try:
+            attrs, start, end = Atspi.Text.get_attribute_run(obj, offset, True)
+        except GLib.GError as error:
+            runs.append(f"Exception at offset {offset}: {error}")
+            break
+
+        if end <= offset:
+            break
+
+        if attrs:
+            formatted = ", ".join(f"{k}={v}" for k, v in attrs.items())
+            runs.append(f"[{start}-{end}] {formatted}")
+
+        offset = end
+
+    if not runs:
+        return ""
+
+    result = f"TEXT ATTRIBUTES: {len(runs)} run(s)"
+    for run in runs:
+        result += f"\n{indent}  {run}"
+    return result
 
 
 def get_parent(obj: Atspi.Accessible) -> Atspi.Accessible:
@@ -259,40 +438,23 @@ def get_parent(obj: Atspi.Accessible) -> Atspi.Accessible:
         return None
 
 
-def get_parent_as_string(obj: Atspi.Accessible) -> str:
-    "Get the parent of an accessible object."
+def get_parent_info(obj: Atspi.Accessible, expected_parent: Atspi.Accessible | None) -> str:
+    "Get parent info, only if the parent is unexpected or missing."
 
     parent = get_parent(obj)
-    if parent:
-        return f"{get_role_as_string(parent)} ({hex(id(parent))})"
-    return ""
+    if parent is None and expected_parent is None:
+        return ""
 
+    if parent is None:
+        return "**NO PARENT** (expected one)"
 
-def get_index_in_parent(obj: Atspi.Accessible) -> int:
-    "Get the index of an accessible object in its parent's children."
+    if expected_parent is None:
+        return f"PARENT: {get_role_as_string(parent)} (unexpected; object has no expected parent)"
 
-    parent = get_parent(obj)
-    if not parent:
-        return -1
+    if parent == expected_parent:
+        return ""
 
-    try:
-        index = Atspi.Accessible.get_index_in_parent(obj)
-    except GLib.GError as error:
-        print(f"Exception in get_index_in_parent: {error}")
-        return -1
-
-    if index < 0:
-        print(f"WARNING: Object {hex(id(obj))} has invalid index in parent {hex(id(parent))}")
-        return -1
-
-    child = Atspi.Accessible.get_child_at_index(parent, index)
-    if child != obj:
-        print(
-            f"WARNING: Object {hex(id(obj))} at index {index} in parent {hex(id(parent))} "
-            f"is not the expected child {hex(id(child))}"
-        )
-
-    return index
+    return f"**UNEXPECTED PARENT**: {get_role_as_string(parent)} NAME: '{get_name(parent)}'"
 
 
 def get_children(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
@@ -324,36 +486,50 @@ def clear_cache_single(obj: Atspi.Accessible) -> None:
         print(f"Exception in clear_cache_single: {error}")
 
 
-def print_tree(root: Atspi.Accessible, indent: int = 0) -> None:
+def print_tree(
+    root: Atspi.Accessible,
+    indent: int = 0,
+    expected_parent: Atspi.Accessible | None = None,
+) -> None:
     "Print the tree structure of accessible objects."
 
     clear_cache_single(root)
     prefix = f"{'  ' * indent}-->"
-    print(f"{as_string(root, prefix)}")
+    print(f"{as_string(root, prefix, expected_parent)}")
     for child in get_children(root):
-        print_tree(child, indent + 1)
+        print_tree(child, indent + 1, root)
 
 
-def find_application_with_name(app_name: str) -> Atspi.Accessible:
-    "Find the accessible application with the specified name."
+def get_desktop_apps() -> list[Atspi.Accessible]:
+    "Get all accessible applications from the desktop."
 
     try:
         desktop = Atspi.get_desktop(0)
     except GLib.GError as error:
         print(f"Exception getting desktop from Atspi: {error}")
-        return None
+        return []
 
-    apps = []
-    for child in get_children(desktop):
-        if get_name(child, False) == app_name:
-            return child
-        apps.append(child)
+    return get_children(desktop)
 
-    apps_as_string = "\n".join([f"{i + 1}. {get_name(app, False)}" for i, app in enumerate(apps)])
-    print(
-        f"Application '{app_name}' not found.\nDesktop has {len(apps)} accessible applications:\n"
-        f"{apps_as_string}"
-    )
+
+def print_available_apps(apps: list[Atspi.Accessible]) -> None:
+    "Print the list of available accessible applications."
+
+    print(f"Desktop has {len(apps)} accessible application(s):")
+    for i, app in enumerate(apps):
+        print(f"  {i + 1}. {get_name(app, False)}")
+
+
+def find_application_with_name(app_name: str) -> Atspi.Accessible:
+    "Find the accessible application with the specified name."
+
+    apps = get_desktop_apps()
+    for app in apps:
+        if get_name(app, False) == app_name:
+            return app
+
+    print(f"Application '{app_name}' not found.")
+    print_available_apps(apps)
     return None
 
 
@@ -362,6 +538,8 @@ def main():
 
     if len(sys.argv) != 2:
         print("Usage: dump-tree.py <APP_NAME>")
+        print()
+        print_available_apps(get_desktop_apps())
         sys.exit(1)
 
     app = find_application_with_name(sys.argv[1])
