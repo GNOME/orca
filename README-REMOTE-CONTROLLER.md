@@ -323,7 +323,7 @@ if reading some difficult-to-understand text, one might want to reduce the speed
 If one were doing a final proofread of some content, one might want to briefly set the punctuation
 level to all. If one needs slow speed and/or verbose punctuation all the time, those should be set
 in Orca's Preferences dialogs -- either globally or on a per-app basis. Orca also has a profile
-feature through which the user can save settings and quickly load/unload them by switching profiles*.
+feature through which the user can save settings and quickly load/unload them by switching profiles.
 
 Whether or not that historical decision was the right decision goes beyond the scope of the
 Remote Controller. The primary purpose of the Remote Controller is to provide D-Bus access to
