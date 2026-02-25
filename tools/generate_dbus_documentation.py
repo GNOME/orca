@@ -24,7 +24,6 @@
 
 """Generate markdown documentation for Orca's D-Bus remote controller."""
 
-import contextlib
 import os
 import sys
 
@@ -96,66 +95,6 @@ def format_system_commands(commands):
     return "\n".join(lines)
 
 
-def _group_structural_navigator_commands(commands):
-    """Group structural navigator commands by object type."""
-    groups = {}
-    other = []
-
-    def normalize_obj_type(obj_type):  # pylint: disable=too-many-return-statements
-        """Convert to a canonical form for grouping."""
-
-        # Group all heading commands together. Ditto for link commands.
-        if obj_type.startswith("Heading"):
-            return "Heading"
-        if "Link" in obj_type:
-            return "Link"
-
-        # Common plural patterns
-        if obj_type.endswith("ies"):  # Entries -> Entry
-            return obj_type[:-3] + "y"
-        if obj_type.endswith("xes"):  # Checkboxes -> Checkbox
-            return obj_type[:-2]
-        if obj_type.endswith(("shes", "ches")):  # Matches -> Match
-            return obj_type[:-2]
-        if obj_type.endswith("s") and not obj_type.endswith("ss"):
-            return obj_type[:-1]
-        return obj_type
-
-    for name, description in commands:
-        # Extract the object type from command names like NextHeading, ListButtons, etc.
-        if name.startswith(("Next", "Previous")):
-            prefix = "Next" if name.startswith("Next") else "Previous"
-            obj_type = name[len(prefix) :]
-            normalized = normalize_obj_type(obj_type)
-            if normalized not in groups:
-                if normalized == "Heading":
-                    display = "Headings"
-                elif not obj_type.endswith("s"):
-                    display = obj_type + "s"
-                else:
-                    display = obj_type
-                groups[normalized] = {"commands": [], "display_name": display}
-            groups[normalized]["commands"].append((name, description))
-        elif name.startswith("List"):
-            obj_type = name[4:]
-            normalized = normalize_obj_type(obj_type)
-            if normalized not in groups:
-                display = "Headings" if normalized == "Heading" else obj_type
-                groups[normalized] = {"commands": [], "display_name": display}
-            else:
-                current_display = groups[normalized]["display_name"]
-                if not current_display.endswith("s") or normalized == "Heading":
-                    new_display = "Headings" if normalized == "Heading" else obj_type
-                    groups[normalized]["display_name"] = new_display
-            groups[normalized]["commands"].append((name, description))
-        else:
-            # Other commands like ContainerStart, CycleMode
-            other.append((name, description))
-
-    return groups, other
-
-
-# pylint: disable-next=too-many-branches,too-many-statements,too-many-locals
 def format_module_commands(module_name, info):
     """Format module-level commands as markdown."""
 
@@ -165,7 +104,6 @@ def format_module_commands(module_name, info):
     lines.append(f"**Object Path:** `/org/gnome/Orca/Service/{module_name}`")
     lines.append("")
 
-    # Commands - special handling for certain modules
     if info["commands"]:
         lines.append("#### Commands")
         lines.append("")
@@ -176,143 +114,10 @@ def format_module_commands(module_name, info):
             "[`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)"
         )
         lines.append("")
+        for name, description in info["commands"]:
+            lines.append(f"- **`{name}`:** {description}")
+        lines.append("")
 
-        if module_name == "SpeechAndVerbosityManager":
-            # Group related increase/decrease commands
-            def sort_speech_commands(cmd_tuple):
-                name, _ = cmd_tuple
-                # Define groups and their order
-                groups = {
-                    "Rate": 0,
-                    "Pitch": 1,
-                    "Volume": 2,
-                }
-                # Check if it's an Increase/Decrease command
-                for group_name, group_order in groups.items():
-                    if group_name in name:
-                        if name.startswith("Increase"):
-                            return (group_order, 0, name)
-                        if name.startswith("Decrease"):
-                            return (group_order, 1, name)
-                # Other commands go at the end, sorted alphabetically
-                return (100, 0, name)
-
-            sorted_commands = sorted(info["commands"], key=sort_speech_commands)
-            for name, description in sorted_commands:
-                lines.append(f"- **`{name}`:** {description}")
-            lines.append("")
-
-        elif module_name == "FlatReviewPresenter":
-            # Group Go commands at the top
-            def sort_flat_review_commands(cmd_tuple):
-                name, _ = cmd_tuple
-                if name.startswith("Go"):
-                    return (0, name)
-                return (1, name)
-
-            sorted_commands = sorted(info["commands"], key=sort_flat_review_commands)
-            for name, description in sorted_commands:
-                lines.append(f"- **`{name}`:** {description}")
-            lines.append("")
-
-        elif module_name == "CaretNavigator":
-            # Group related navigation commands
-            def sort_caret_commands(cmd_tuple):
-                name, _ = cmd_tuple
-                # Define groups for Character, Word, Line, File
-                if "Character" in name:
-                    group = 0
-                elif "Word" in name:
-                    group = 1
-                elif "Line" in name:
-                    group = 2
-                elif "File" in name:
-                    group = 3
-                else:
-                    group = 100
-
-                # Within each group: Next, Previous, Start, End, Toggle
-                if name.startswith("Next"):
-                    order = 0
-                elif name.startswith("Previous"):
-                    order = 1
-                elif name.startswith("Start"):
-                    order = 0
-                elif name.startswith("End"):
-                    order = 1
-                elif name.startswith("Toggle"):
-                    order = 2
-                else:
-                    order = 99
-
-                return (group, order, name)
-
-            sorted_commands = sorted(info["commands"], key=sort_caret_commands)
-            for name, description in sorted_commands:
-                lines.append(f"- **`{name}`:** {description}")
-            lines.append("")
-
-        elif module_name == "StructuralNavigator":
-            groups, other = _group_structural_navigator_commands(info["commands"])
-
-            # Show grouped commands by object type first
-            for obj_type in sorted(groups.keys()):
-                cmds = groups[obj_type]
-                display_name = cmds["display_name"]
-                lines.append(f"##### {display_name}")
-                lines.append("")
-
-                # Sort commands in a specific order: Next, Previous, List, grouped by variant
-                def sort_key(cmd_tuple):
-                    name, _ = cmd_tuple
-                    # Extract base command and any suffix (like Level1, UnvisitedLink, etc.)
-                    if name.startswith("Next"):
-                        prefix_order = 0
-                        suffix = name[4:]  # Remove "Next"
-                    elif name.startswith("Previous"):
-                        prefix_order = 1
-                        suffix = name[8:]  # Remove "Previous"
-                    elif name.startswith("List"):
-                        prefix_order = 2
-                        suffix = name[4:]  # Remove "List"
-                    else:
-                        prefix_order = 3
-                        suffix = name
-
-                    # Extract level number or variant for proper ordering
-                    level_or_variant = 0
-
-                    if "Level" in suffix:
-                        # For headings: extract level number
-                        with contextlib.suppress(IndexError, ValueError):
-                            level_or_variant = int(suffix.split("Level")[1])
-                    elif "Unvisited" in suffix:
-                        # For links: Unvisited comes after base
-                        level_or_variant = 1
-                    elif "Visited" in suffix:
-                        # For links: Visited comes after Unvisited
-                        level_or_variant = 2
-
-                    return (level_or_variant, prefix_order, name)
-
-                sorted_commands = sorted(cmds["commands"], key=sort_key)
-                for name, desc in sorted_commands:
-                    lines.append(f"- **`{name}`:** {desc}")
-                lines.append("")
-
-            # Show uncategorized commands at the end
-            if other:
-                lines.append("##### Other")
-                lines.append("")
-                for name, description in other:
-                    lines.append(f"- **`{name}`:** {description}")
-                lines.append("")
-        else:
-            for name, description in info["commands"]:
-                lines.append(f"- **`{name}`:** {description}")
-            lines.append("")
-
-    # Parameterized Commands
     if info["parameterized_commands"]:
         lines.append("#### Parameterized Commands")
         lines.append("")
@@ -326,7 +131,6 @@ def format_module_commands(module_name, info):
                 lines.append(f"- **`{name}`:** {description}")
         lines.append("")
 
-    # Runtime Settings (combine getters and setters)
     if info["getters"] or info["setters"]:
         lines.append("#### Settings")
         lines.append("")
@@ -389,6 +193,13 @@ def generate_documentation():
 
     system_commands = get_system_commands(proxy)
     modules = get_modules(proxy)
+    if not system_commands and not modules:
+        print(
+            "No commands or modules found. Is Orca running with the D-Bus service enabled?",
+            file=sys.stderr,
+        )
+        return None
+
     module_infos = {}
     for module_name in modules:
         module_infos[module_name] = get_module_info(bus, module_name)
@@ -410,12 +221,10 @@ def generate_documentation():
     lines.append("---")
     lines.append("")
 
-    # System commands
     lines.append(format_system_commands(system_commands))
     lines.append("---")
     lines.append("")
 
-    # Module commands
     lines.append("## Modules")
     lines.append("")
     lines.append(

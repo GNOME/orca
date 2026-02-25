@@ -98,16 +98,16 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
-- **`NextCharacter`:** Moves to the next character.
-- **`PreviousCharacter`:** Moves to the previous character.
-- **`NextWord`:** Moves to the next word.
-- **`PreviousWord`:** Moves to the previous word.
-- **`NextLine`:** Moves to the next line.
-- **`StartOfLine`:** Moves to the start of the line.
-- **`EndOfLine`:** Moves to the end of the line.
-- **`PreviousLine`:** Moves to the previous line.
-- **`StartOfFile`:** Moves to the start of the file.
 - **`EndOfFile`:** Moves to the end of the file.
+- **`EndOfLine`:** Moves to the end of the line.
+- **`NextCharacter`:** Moves to the next character.
+- **`NextLine`:** Moves to the next line.
+- **`NextWord`:** Moves to the next word.
+- **`PreviousCharacter`:** Moves to the previous character.
+- **`PreviousLine`:** Moves to the previous line.
+- **`PreviousWord`:** Moves to the previous word.
+- **`StartOfFile`:** Moves to the start of the file.
+- **`StartOfLine`:** Moves to the start of the line.
 - **`ToggleEnabled`:** Toggles caret navigation.
 - **`ToggleLayoutMode`:** Switches between object mode and layout mode for line presentation.
 
@@ -232,6 +232,9 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
+- **`AppendToClipboard`:** Appends the string just presented to the clipboard.
+- **`CopyToClipboard`:** Copies the string just presented to the clipboard.
+- **`GetCurrentObject`:** Returns the current accessible object.
 - **`GoAbove`:** Moves to the character above.
 - **`GoBelow`:** Moves to the character below.
 - **`GoBottomLeft`:** Moves to the bottom left of the current window.
@@ -245,9 +248,6 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`GoPreviousItem`:** Moves to the previous item or word.
 - **`GoPreviousLine`:** Moves to the previous line.
 - **`GoStartOfLine`:** Moves to the beginning of the current line.
-- **`AppendToClipboard`:** Appends the string just presented to the clipboard.
-- **`CopyToClipboard`:** Copies the string just presented to the clipboard.
-- **`GetCurrentObject`:** Returns the current accessible object.
 - **`LeftClickOnObject`:** Attempts to synthesize a left click on the current accessible.
 - **`PhoneticItem`:** Presents the current word letter by letter phonetically.
 - **`PhoneticLine`:** Presents the current line letter by letter phonetically.
@@ -543,153 +543,91 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
-##### Blockquotes
-
-- **`NextBlockquote`:** Goes to the next blockquote.
-- **`PreviousBlockquote`:** Goes to the previous blockquote.
-- **`ListBlockquotes`:** Displays a list of blockquotes.
-
-##### Buttons
-
-- **`NextButton`:** Goes to the next button.
-- **`PreviousButton`:** Goes to the previous button.
-- **`ListButtons`:** Displays a list of buttons.
-
-##### Checkboxes
-
-- **`NextCheckbox`:** Goes to the next checkbox.
-- **`PreviousCheckbox`:** Goes to the previous checkbox.
-- **`ListCheckboxes`:** Displays a list of checkboxes.
-
-##### Clickables
-
-- **`NextClickable`:** Goes to the next clickable.
-- **`PreviousClickable`:** Goes to the previous clickable.
-- **`ListClickables`:** Displays a list of clickables.
-
-##### Comboboxes
-
-- **`NextCombobox`:** Goes to the next combo box.
-- **`PreviousCombobox`:** Goes to the previous combo box.
-- **`ListComboboxes`:** Displays a list of combo boxes.
-
-##### Entries
-
-- **`NextEntry`:** Goes to the next entry.
-- **`PreviousEntry`:** Goes to the previous entry.
-- **`ListEntries`:** Displays a list of entries.
-
-##### FormFields
-
-- **`NextFormField`:** Goes to the next form field.
-- **`PreviousFormField`:** Goes to the previous form field.
-- **`ListFormFields`:** Displays a list of form fields.
-
-##### Headings
-
-- **`NextHeading`:** Goes to the next heading.
-- **`PreviousHeading`:** Goes to the previous heading.
-- **`ListHeadings`:** Displays a list of headings.
-- **`NextHeadingLevel1`:** Goes to the next level 1 heading.
-- **`PreviousHeadingLevel1`:** Goes to the previous level 1 heading.
-- **`ListHeadingsLevel1`:** Displays a list of level 1 headings.
-- **`NextHeadingLevel2`:** Goes to the next level 2 heading.
-- **`PreviousHeadingLevel2`:** Goes to the previous level 2 heading.
-- **`ListHeadingsLevel2`:** Displays a list of level 2 headings.
-- **`NextHeadingLevel3`:** Goes to the next level 3 heading.
-- **`PreviousHeadingLevel3`:** Goes to the previous level 3 heading.
-- **`ListHeadingsLevel3`:** Displays a list of level 3 headings.
-- **`NextHeadingLevel4`:** Goes to the next level 4 heading.
-- **`PreviousHeadingLevel4`:** Goes to the previous level 4 heading.
-- **`ListHeadingsLevel4`:** Displays a list of level 4 headings.
-- **`NextHeadingLevel5`:** Goes to the next level 5 heading.
-- **`PreviousHeadingLevel5`:** Goes to the previous level 5 heading.
-- **`ListHeadingsLevel5`:** Displays a list of level 5 headings.
-- **`NextHeadingLevel6`:** Goes to the next level 6 heading.
-- **`PreviousHeadingLevel6`:** Goes to the previous level 6 heading.
-- **`ListHeadingsLevel6`:** Displays a list of level 6 headings.
-
-##### Iframes
-
-- **`NextIframe`:** Goes to the next iframe.
-- **`PreviousIframe`:** Goes to the previous iframe.
-- **`ListIframes`:** Displays a list of iframes.
-
-##### Images
-
-- **`NextImage`:** Goes to the next image.
-- **`PreviousImage`:** Goes to the previous image.
-- **`ListImages`:** Displays a list of images.
-
-##### Landmarks
-
-- **`NextLandmark`:** Goes to the next landmark.
-- **`PreviousLandmark`:** Goes to the previous landmark.
-- **`ListLandmarks`:** Displays a list of landmarks.
-
-##### LargeObjects
-
-- **`NextLargeObject`:** Goes to the next large object.
-- **`PreviousLargeObject`:** Goes to the previous large object.
-- **`ListLargeObjects`:** Displays a list of large objects.
-
-##### Links
-
-- **`NextLink`:** Goes to the next link.
-- **`PreviousLink`:** Goes to the previous link.
-- **`ListLinks`:** Displays a list of links.
-- **`NextUnvisitedLink`:** Goes to the next unvisited link.
-- **`PreviousUnvisitedLink`:** Goes to the previous unvisited link.
-- **`ListUnvisitedLinks`:** Displays a list of unvisited links.
-- **`NextVisitedLink`:** Goes to the next visited link.
-- **`PreviousVisitedLink`:** Goes to the previous visited link.
-- **`ListVisitedLinks`:** Displays a list of visited links.
-
-##### Lists
-
-- **`NextList`:** Goes to the next list.
-- **`PreviousList`:** Goes to the previous list.
-- **`ListLists`:** Displays a list of lists.
-
-##### ListItems
-
-- **`NextListItem`:** Goes to the next list item.
-- **`PreviousListItem`:** Goes to the previous list item.
-- **`ListListItems`:** Displays a list of list items.
-
-##### LiveRegions
-
-- **`NextLiveRegion`:** Goes to the next live region.
-- **`PreviousLiveRegion`:** Goes to the previous live region.
-
-##### Paragraphs
-
-- **`NextParagraph`:** Goes to the next paragraph.
-- **`PreviousParagraph`:** Goes to the previous paragraph.
-- **`ListParagraphs`:** Displays a list of paragraphs.
-
-##### RadioButtons
-
-- **`NextRadioButton`:** Goes to the next radio button.
-- **`PreviousRadioButton`:** Goes to the previous radio button.
-- **`ListRadioButtons`:** Displays a list of radio buttons.
-
-##### Separators
-
-- **`NextSeparator`:** Goes to the next separator.
-- **`PreviousSeparator`:** Goes to the previous separator.
-
-##### Tables
-
-- **`NextTable`:** Goes to the next table.
-- **`PreviousTable`:** Goes to the previous table.
-- **`ListTables`:** Displays a list of tables.
-
-##### Other
-
 - **`ContainerEnd`:** Moves to the end of the current container.
 - **`ContainerStart`:** Moves to the start of the current container.
 - **`CycleMode`:** Cycles among the structural navigation modes.
+- **`ListBlockquotes`:** Displays a list of blockquotes.
+- **`ListButtons`:** Displays a list of buttons.
+- **`ListCheckboxes`:** Displays a list of checkboxes.
+- **`ListClickables`:** Displays a list of clickables.
+- **`ListComboboxes`:** Displays a list of combo boxes.
+- **`ListEntries`:** Displays a list of entries.
+- **`ListFormFields`:** Displays a list of form fields.
+- **`ListHeadings`:** Displays a list of headings.
+- **`ListHeadingsLevel1`:** Displays a list of level 1 headings.
+- **`ListHeadingsLevel2`:** Displays a list of level 2 headings.
+- **`ListHeadingsLevel3`:** Displays a list of level 3 headings.
+- **`ListHeadingsLevel4`:** Displays a list of level 4 headings.
+- **`ListHeadingsLevel5`:** Displays a list of level 5 headings.
+- **`ListHeadingsLevel6`:** Displays a list of level 6 headings.
+- **`ListIframes`:** Displays a list of iframes.
+- **`ListImages`:** Displays a list of images.
+- **`ListLandmarks`:** Displays a list of landmarks.
+- **`ListLargeObjects`:** Displays a list of large objects.
+- **`ListLinks`:** Displays a list of links.
+- **`ListListItems`:** Displays a list of list items.
+- **`ListLists`:** Displays a list of lists.
+- **`ListParagraphs`:** Displays a list of paragraphs.
+- **`ListRadioButtons`:** Displays a list of radio buttons.
+- **`ListTables`:** Displays a list of tables.
+- **`ListUnvisitedLinks`:** Displays a list of unvisited links.
+- **`ListVisitedLinks`:** Displays a list of visited links.
+- **`NextBlockquote`:** Goes to the next blockquote.
+- **`NextButton`:** Goes to the next button.
+- **`NextCheckbox`:** Goes to the next checkbox.
+- **`NextClickable`:** Goes to the next clickable.
+- **`NextCombobox`:** Goes to the next combo box.
+- **`NextEntry`:** Goes to the next entry.
+- **`NextFormField`:** Goes to the next form field.
+- **`NextHeading`:** Goes to the next heading.
+- **`NextHeadingLevel1`:** Goes to the next level 1 heading.
+- **`NextHeadingLevel2`:** Goes to the next level 2 heading.
+- **`NextHeadingLevel3`:** Goes to the next level 3 heading.
+- **`NextHeadingLevel4`:** Goes to the next level 4 heading.
+- **`NextHeadingLevel5`:** Goes to the next level 5 heading.
+- **`NextHeadingLevel6`:** Goes to the next level 6 heading.
+- **`NextIframe`:** Goes to the next iframe.
+- **`NextImage`:** Goes to the next image.
+- **`NextLandmark`:** Goes to the next landmark.
+- **`NextLargeObject`:** Goes to the next large object.
+- **`NextLink`:** Goes to the next link.
+- **`NextList`:** Goes to the next list.
+- **`NextListItem`:** Goes to the next list item.
+- **`NextLiveRegion`:** Goes to the next live region.
+- **`NextParagraph`:** Goes to the next paragraph.
+- **`NextRadioButton`:** Goes to the next radio button.
+- **`NextSeparator`:** Goes to the next separator.
+- **`NextTable`:** Goes to the next table.
+- **`NextUnvisitedLink`:** Goes to the next unvisited link.
+- **`NextVisitedLink`:** Goes to the next visited link.
+- **`PreviousBlockquote`:** Goes to the previous blockquote.
+- **`PreviousButton`:** Goes to the previous button.
+- **`PreviousCheckbox`:** Goes to the previous checkbox.
+- **`PreviousClickable`:** Goes to the previous clickable.
+- **`PreviousCombobox`:** Goes to the previous combo box.
+- **`PreviousEntry`:** Goes to the previous entry.
+- **`PreviousFormField`:** Goes to the previous form field.
+- **`PreviousHeading`:** Goes to the previous heading.
+- **`PreviousHeadingLevel1`:** Goes to the previous level 1 heading.
+- **`PreviousHeadingLevel2`:** Goes to the previous level 2 heading.
+- **`PreviousHeadingLevel3`:** Goes to the previous level 3 heading.
+- **`PreviousHeadingLevel4`:** Goes to the previous level 4 heading.
+- **`PreviousHeadingLevel5`:** Goes to the previous level 5 heading.
+- **`PreviousHeadingLevel6`:** Goes to the previous level 6 heading.
+- **`PreviousIframe`:** Goes to the previous iframe.
+- **`PreviousImage`:** Goes to the previous image.
+- **`PreviousLandmark`:** Goes to the previous landmark.
+- **`PreviousLargeObject`:** Goes to the previous large object.
+- **`PreviousLink`:** Goes to the previous link.
+- **`PreviousList`:** Goes to the previous list.
+- **`PreviousListItem`:** Goes to the previous list item.
+- **`PreviousLiveRegion`:** Goes to the previous live region.
+- **`PreviousParagraph`:** Goes to the previous paragraph.
+- **`PreviousRadioButton`:** Goes to the previous radio button.
+- **`PreviousSeparator`:** Goes to the previous separator.
+- **`PreviousTable`:** Goes to the previous table.
+- **`PreviousUnvisitedLink`:** Goes to the previous unvisited link.
+- **`PreviousVisitedLink`:** Goes to the previous visited link.
 
 #### Settings
 
