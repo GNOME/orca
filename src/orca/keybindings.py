@@ -54,11 +54,13 @@ CTRL_ALT_MODIFIER_MASK = 1 << Atspi.ModifierType.CONTROL | 1 << Atspi.ModifierTy
 SHIFT_ALT_CTRL_MODIFIER_MASK = (
     1 << Atspi.ModifierType.SHIFT | 1 << Atspi.ModifierType.CONTROL | 1 << Atspi.ModifierType.ALT
 )
+ALTGR_MODIFIER_MASK = 1 << 7
 NON_LOCKING_MODIFIER_MASK = (
     1 << Atspi.ModifierType.SHIFT
     | 1 << Atspi.ModifierType.ALT
     | 1 << Atspi.ModifierType.CONTROL
     | 1 << Atspi.ModifierType.META3
+    | ALTGR_MODIFIER_MASK
     | 1 << MODIFIER_ORCA
 )
 DEFAULT_MODIFIER_MASK = NON_LOCKING_MODIFIER_MASK
@@ -144,6 +146,10 @@ def get_modifier_names(mods: int) -> str:
         name = keynames.get_key_name("Control")
         assert name
         text += name + "+"
+    if mods & ALTGR_MODIFIER_MASK:
+        name = keynames.get_key_name("ISO_Level3_Shift")
+        assert name
+        text += name + "+"
     if mods & SHIFT_MODIFIER_MASK:
         name = keynames.get_key_name("Shift")
         assert name
@@ -208,10 +214,14 @@ class KeyBinding:
             self.keyval, self.keycode = get_keycodes(self.keysymstring)
 
         # Prefer keyval matching (layout-correct for QWERTZ, AZERTY, Dvorak, etc.).
-        # Fall back to keycode when Shift changes the keyval (e.g., 'h' vs 'H')
-        # or for non-Latin layouts where the keyval is outside the Latin range.
+        # Fall back to keycode when a modifier changes the keyval (Shift: 'h' vs
+        # 'H', AltGr: 'period' vs 'periodcentered') or for non-Latin layouts
+        # where the keyval is outside the Latin range.
         if self.keyval == keyval or (
-            self.keycode == keycode and (keyval > 0xFF or modifiers & SHIFT_MODIFIER_MASK)
+            self.keycode == keycode
+            and (
+                keyval > 0xFF or modifiers & SHIFT_MODIFIER_MASK or modifiers & ALTGR_MODIFIER_MASK
+            )
         ):
             result = modifiers & self.modifier_mask
             return result == self.modifiers

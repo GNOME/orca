@@ -353,6 +353,8 @@ class KeyboardEvent(InputEvent):
             Gdk.KEY_Control_R,
             Gdk.KEY_Meta_L,
             Gdk.KEY_Meta_R,
+            Gdk.KEY_Super_L,
+            Gdk.KEY_Super_R,
             Gdk.KEY_Shift_L,
             Gdk.KEY_Shift_R,
             Gdk.KEY_ISO_Level3_Shift,

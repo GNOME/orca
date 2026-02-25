@@ -809,14 +809,17 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             "Shift_R",
             "Meta_L",
             "Meta_R",
+            "Super_L",
+            "Super_R",
             "Num_Lock",
             "Caps_Lock",
             "Shift_Lock",
+            "ISO_Level3_Shift",
         ]
         if event_string in modifier_keys:
             return False
 
-        event_state = event_state & Gtk.accelerator_get_default_mod_mask()  # pylint: disable=no-value-for-parameter
+        event_state = event_state & keybindings.NON_LOCKING_MODIFIER_MASK
 
         # Return and Escape are used to confirm/cancel editing, not as captured keys
         # Return False to let GTK process them normally
