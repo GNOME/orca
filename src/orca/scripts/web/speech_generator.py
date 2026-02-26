@@ -94,6 +94,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         result: list[Any] = []
         prior_obj = args.get("priorObj")
+        if prior_obj and AXObject.get_parent(prior_obj) == AXObject.get_parent(obj):
+            return result
+
         if prior_obj and self._script.utilities.in_document_content(prior_obj):
             prior_doc = self._script.utilities.get_document_for_object(prior_obj)
             doc = self._script.utilities.get_document_for_object(obj)
