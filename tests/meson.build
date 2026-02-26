@@ -79,7 +79,7 @@ foreach test_file : unit_tests
   )
 endforeach
 
-integration_tests = [
+dbus_integration_tests = [
   'integration_tests/test_dbus_with_orca.py',
 ]
 
@@ -91,7 +91,7 @@ integration_wrapper = configure_file(
   },
 )
 
-foreach test_file : integration_tests
+foreach test_file : dbus_integration_tests
   test_name = test_file.split('/')[-1].split('.')[0]
   test(
     test_name,
@@ -100,5 +100,21 @@ foreach test_file : integration_tests
     env: test_env,
     suite: 'integration',
     timeout: 120,
+  )
+endforeach
+
+gsettings_integration_tests = [
+  'integration_tests/test_gsettings.py',
+]
+
+foreach test_file : gsettings_integration_tests
+  test_name = test_file.split('/')[-1].split('.')[0]
+  test(
+    test_name,
+    python,
+    args: ['-m', 'pytest', files(test_file), '-v'],
+    env: test_env,
+    suite: 'integration',
+    timeout: 30,
   )
 endforeach
