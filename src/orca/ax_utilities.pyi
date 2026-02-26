@@ -834,32 +834,13 @@ class AXUtilities:
 
     # From ax_utilities_collection.py
     @staticmethod
-    def find_all_with_interfaces(
-        root: Atspi.Accessible,
-        interface_list: list[str],
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
     def find_all_with_role(
         root: Atspi.Accessible,
         roles_list: list[Atspi.Role],
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
-    def find_all_without_roles(
-        root: Atspi.Accessible,
-        roles_list: list[Atspi.Role],
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
     def find_all_with_role_and_all_states(
-        root: Atspi.Accessible,
-        roles_list: list[Atspi.Role],
-        state_list: list[Atspi.StateType],
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_with_role_and_any_state(
         root: Atspi.Accessible,
         roles_list: list[Atspi.Role],
         state_list: list[Atspi.StateType],
@@ -879,53 +860,6 @@ class AXUtilities:
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
-    def find_all_with_any_state(
-        root: Atspi.Accessible,
-        state_list: list[Atspi.StateType],
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_without_states(
-        root: Atspi.Accessible,
-        state_list: list[Atspi.StateType],
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_accelerator_labels(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_alerts(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_animations(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_arrows(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_articles(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_audios(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_autocompletes(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
     def find_all_block_quotes(
         root: Atspi.Accessible,
         pred: Callable | None = None,
@@ -936,22 +870,7 @@ class AXUtilities:
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
-    def find_all_calendars(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
     def find_all_canvases(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_captions(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_charts(
         root: Atspi.Accessible,
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
@@ -961,22 +880,7 @@ class AXUtilities:
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
-    def find_all_check_menu_items(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
     def find_all_clickables(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_color_choosers(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_column_headers(
         root: Atspi.Accessible,
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
@@ -986,112 +890,7 @@ class AXUtilities:
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
-    def find_all_comments(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_content_deletions(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_content_insertions(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_date_editors(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_definitions(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_description_lists(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
     def find_all_description_terms(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_description_values(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_desktop_frames(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_desktop_icons(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_dials(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_dialogs(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_dialogs_and_alerts(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_directory_panes(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_documents(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_document_emails(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_document_frames(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_document_presentations(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_document_spreadsheets(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_document_texts(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_document_webs(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_drawing_areas(
         root: Atspi.Accessible,
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
@@ -1101,72 +900,12 @@ class AXUtilities:
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
-    def find_all_editbars(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_embeddeds(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
     def find_all_entries(
         root: Atspi.Accessible,
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
-    def find_all_extendeds(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_file_choosers(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_fillers(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_focus_traversables(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_focusable_objects(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
     def find_all_focusable_objects_with_click_ancestor(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_focused_objects(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_font_choosers(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_footers(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_footnotes(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_forms(
         root: Atspi.Accessible,
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
@@ -1177,32 +916,7 @@ class AXUtilities:
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
-    def find_all_frames(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_glass_panes(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
     def find_all_grids(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_grid_cells(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_groupings(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_headers(
         root: Atspi.Accessible,
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
@@ -1218,62 +932,7 @@ class AXUtilities:
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
-    def find_all_html_containers(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_horizontal_scrollbars(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_horizontal_separators(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_horizontal_sliders(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_icons(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_icons_and_canvases(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_images(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_images_and_canvases(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
     def find_all_images_and_image_maps(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_image_maps(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_info_bars(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_input_method_windows(
         root: Atspi.Accessible,
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
@@ -1288,27 +947,7 @@ class AXUtilities:
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
-    def find_all_labels_and_captions(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
     def find_all_landmarks(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_large_containers(
-        root: Atspi.Accessible,
-        pred: Callable[[Atspi.Accessible], bool] | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_layered_panes(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_level_bars(
         root: Atspi.Accessible,
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
@@ -1326,11 +965,6 @@ class AXUtilities:
         include_tab_lists: bool = False,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
-    def find_all_list_boxes(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
     def find_all_list_items(
         root: Atspi.Accessible,
         pred: Callable[[Atspi.Accessible], bool] | None = None,
@@ -1343,102 +977,7 @@ class AXUtilities:
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
-    def find_all_logs(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_marks(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_marquees(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_maths(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_math_fractions(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_math_roots(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_menus(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_menu_bars(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_menu_items(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_menu_items_of_any_kind(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_menu_related_objects(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_modal_dialogs(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_multi_line_entries(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_notifications(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_option_panes(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_pages(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
     def find_all_page_tabs(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_page_tab_lists(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_page_tab_list_related_objects(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_panels(
         root: Atspi.Accessible,
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
@@ -1449,27 +988,7 @@ class AXUtilities:
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
-    def find_all_password_texts(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_popup_menus(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_progress_bars(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
     def find_all_push_buttons(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_push_button_menus(
         root: Atspi.Accessible,
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
@@ -1479,102 +998,7 @@ class AXUtilities:
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
-    def find_all_radio_menu_items(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_ratings(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_root_panes(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_row_headers(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_rulers(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_scroll_bars(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_scroll_panes(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_sections(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_selectable_objects(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_selected_objects(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
     def find_all_separators(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_set_containers(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_showing_objects(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_showing_and_visible_objects(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_showing_or_visible_objects(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_single_line_entries(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_sliders(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_spin_buttons(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_split_panes(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_statics(
         root: Atspi.Accessible,
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
@@ -1584,226 +1008,14 @@ class AXUtilities:
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
-    def find_all_subscripts(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_subscripts_and_superscripts(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_suggestions(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_superscripts(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_supports_action(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_supports_document(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_supports_editable_text(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_supports_hypertext(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_supports_hyperlink(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_supports_selection(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_supports_table(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_supports_table_cell(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_supports_text(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_supports_value(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
     def find_all_tables(
         root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_table_cells(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_table_cells_and_headers(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_table_column_headers(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_table_headers(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_table_related_objects(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-        include_caption: bool = False,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_table_rows(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_table_row_headers(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_tearoff_menu_items(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_terminals(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_texts(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_text_inputs(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_timers(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_title_bars(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_toggle_buttons(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_tool_bars(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_tool_tips(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_trees(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_trees_and_tree_tables(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_tree_related_objects(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_tree_items(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_tree_tables(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_unrelated_labels(
-        root: Atspi.Accessible,
-        must_be_showing: bool = True,
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
     def find_all_unvisited_links(
         root: Atspi.Accessible,
         must_be_focusable: bool = True,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_vertical_scrollbars(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_vertical_separators(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_vertical_sliders(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_videos(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_viewports(
-        root: Atspi.Accessible,
-        pred: Callable | None = None,
-    ) -> list[Atspi.Accessible]: ...
-    @staticmethod
-    def find_all_visible_objects(
-        root: Atspi.Accessible,
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
