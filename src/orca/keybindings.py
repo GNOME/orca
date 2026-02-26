@@ -215,15 +215,17 @@ class KeyBinding:
 
         # Prefer keyval matching (layout-correct for QWERTZ, AZERTY, Dvorak, etc.).
         # Fall back to keycode when a modifier changes the keyval (Shift: 'h' vs
-        # 'H', AltGr: 'period' vs 'periodcentered'), when the layout maps a
-        # different base character to the key (AZERTY: '&' on the '1' key), or
-        # for non-Latin layouts where the keyval is outside the Latin range.
+        # 'H', AltGr: 'period' vs 'periodcentered'), when an Orca-modifier
+        # command uses a key whose layout maps a different base character
+        # (AZERTY: Orca+7/8/9 produce Orca+'è'/'_'/'ç'), when no non-locking
+        # modifiers are present and the layout itself changed the keyval
+        # (AZERTY: '&' on the '1' key), or for non-Latin layouts where the
+        # keyval is outside the Latin range.
         if self.keyval == keyval or (
             self.keycode == keycode
             and (
                 keyval > 0xFF
-                or modifiers & SHIFT_MODIFIER_MASK
-                or modifiers & ALTGR_MODIFIER_MASK
+                or modifiers & (SHIFT_MODIFIER_MASK | ALTGR_MODIFIER_MASK | ORCA_MODIFIER_MASK)
                 or not (modifiers & NON_LOCKING_MODIFIER_MASK)
             )
         ):

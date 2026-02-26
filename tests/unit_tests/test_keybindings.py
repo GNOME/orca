@@ -87,14 +87,14 @@ class TestAltGrModifierSupport:
         kb = self._create_binding("period", orca_altgr, keyval=46, keycode=60)
         assert kb.matches(183, 60, orca_altgr) is True
 
-    def test_altgr_keycode_fallback_requires_altgr(
+    def test_orca_modifier_enables_keycode_fallback(
         self,
         test_context: OrcaTestContext,
     ) -> None:
-        """Test keycode fallback does not trigger without AltGr in modifiers."""
+        """Test that Orca modifier enables keycode fallback for AZERTY-like layouts."""
 
         _setup_keybindings_dependencies(test_context)
         from orca.keybindings import ORCA_MODIFIER_MASK
 
-        kb = self._create_binding("period", ORCA_MODIFIER_MASK, keyval=46, keycode=60)
-        assert kb.matches(183, 60, ORCA_MODIFIER_MASK) is False
+        kb = self._create_binding("9", ORCA_MODIFIER_MASK, keyval=57, keycode=18)
+        assert kb.matches(231, 18, ORCA_MODIFIER_MASK) is True
