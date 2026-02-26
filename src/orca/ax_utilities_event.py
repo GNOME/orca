@@ -29,19 +29,20 @@ import time
 from difflib import SequenceMatcher
 from typing import TYPE_CHECKING
 
+import gi
+
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
+
 from . import debug, focus_manager
 from .ax_object import AXObject
 from .ax_text import AXText
+from .ax_utilities_collection import AXUtilitiesCollection
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 
 if TYPE_CHECKING:
     from typing import ClassVar
-
-    import gi
-
-    gi.require_version("Atspi", "2.0")
-    from gi.repository import Atspi
 
     from .input_event_manager import InputEventManager
 
@@ -891,7 +892,19 @@ class AXUtilitiesEvent:
         if AXUtilitiesRole.is_list_item(event.source):
             # Inspired by Firefox's downloads list in which the list item's name changes to show
             # download progress. It's super chatty and stomps on the progress bar announcements.
-            if AXObject.find_descendant(event.source, AXUtilitiesRole.is_progress_bar):
+            if AXObject.supports_collection(event.source):
+                has_progress_bar = (
+                    AXUtilitiesCollection.find_first_with_role(
+                        event.source, [Atspi.Role.PROGRESS_BAR]
+                    )
+                    is not None
+                )
+            else:
+                has_progress_bar = (
+                    AXObject.find_descendant(event.source, AXUtilitiesRole.is_progress_bar)
+                    is not None
+                )
+            if has_progress_bar:
                 msg = "AXUtilitiesEvent: The list item contains a progress bar."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.append(hash(event.source))

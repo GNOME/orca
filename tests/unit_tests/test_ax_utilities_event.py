@@ -3659,6 +3659,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_showing", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_frame", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=True)
+        test_context.patch_object(AXObject, "supports_collection", return_value=False)
         test_context.patch_object(AXObject, "find_descendant", return_value=mock_progress_bar)
 
         result = AXUtilitiesEvent.is_presentable_name_change(mock_event)
@@ -3690,6 +3691,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_showing", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_frame", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=True)
+        test_context.patch_object(AXObject, "supports_collection", return_value=False)
         test_context.patch_object(AXObject, "find_descendant", return_value=None)
 
         result = AXUtilitiesEvent.is_presentable_name_change(mock_event)
@@ -3722,6 +3724,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_showing", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_frame", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=True)
+        test_context.patch_object(AXObject, "supports_collection", return_value=False)
         test_context.patch_object(AXObject, "find_descendant", return_value=mock_progress_bar)
 
         result1 = AXUtilitiesEvent.is_presentable_name_change(mock_event)

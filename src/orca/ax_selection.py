@@ -27,6 +27,7 @@ from gi.repository import Atspi, GLib
 
 from . import debug
 from .ax_object import AXObject
+from .ax_utilities_collection import AXUtilitiesCollection
 from .ax_utilities_role import AXUtilitiesRole
 
 
@@ -90,10 +91,15 @@ class AXSelection:
 
         count = AXSelection.get_selected_child_count(obj)
         if not count and AXUtilitiesRole.is_combo_box(obj):
-            container = AXObject.find_descendant(
-                obj,
-                lambda x: AXUtilitiesRole.is_menu(x) or AXUtilitiesRole.is_list_box(x),
-            )
+            if AXObject.supports_collection(obj):
+                container = AXUtilitiesCollection.find_first_with_role(
+                    obj, [Atspi.Role.MENU, Atspi.Role.LIST_BOX]
+                )
+            else:
+                container = AXObject.find_descendant(
+                    obj,
+                    lambda x: AXUtilitiesRole.is_menu(x) or AXUtilitiesRole.is_list_box(x),
+                )
             return AXSelection.get_selected_children(container)
 
         children = set()

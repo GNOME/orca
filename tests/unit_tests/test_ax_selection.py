@@ -61,6 +61,7 @@ class TestAXSelection:
         ax_object_mock = essential_modules["orca.ax_object"]
         ax_object_mock.AXObject = test_context.Mock()
         ax_object_mock.AXObject.supports_selection = test_context.Mock(return_value=True)
+        ax_object_mock.AXObject.supports_collection = test_context.Mock(return_value=False)
         ax_object_mock.AXObject.find_descendant = test_context.Mock()
 
         ax_utilities_role_mock = essential_modules["orca.ax_utilities_role"]
