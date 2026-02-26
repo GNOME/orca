@@ -1089,7 +1089,7 @@ class Script(script.Script):
 
         if AXUtilities.is_combo_box(event.source) and not AXUtilities.is_expanded(event.source):
             if AXUtilities.is_focused(
-                AXObject.find_descendant(event.source, AXUtilities.is_text_input),
+                AXUtilities.get_text_input(event.source),
             ):
                 return True
         elif (
@@ -1434,7 +1434,7 @@ class Script(script.Script):
             child = AXObject.get_child(event.source, 0)
             # Popup menus in Chromium live in a menu bar whose first child is a panel.
             if AXUtilities.is_menu_bar(child):
-                child = AXObject.find_descendant(child, AXUtilities.is_menu)
+                child = AXUtilities.get_menu(child)
             if AXUtilities.is_menu(child):
                 selected_item = AXSelection.get_selected_child(child, 0)
                 if AXUtilities.is_selected(selected_item):

@@ -301,6 +301,138 @@ class AXUtilities:
         return AXObject.find_descendant(obj, AXUtilitiesRole.is_status_bar)
 
     @staticmethod
+    def get_label(obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns the label descendant of obj"""
+
+        result = None
+        if AXObject.supports_collection(obj):
+            result = AXUtilitiesCollection.find_first_with_role(obj, [Atspi.Role.LABEL])
+            if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
+                return result
+
+        return AXObject.find_descendant(obj, AXUtilitiesRole.is_label)
+
+    @staticmethod
+    def get_list_item(obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns the list item descendant of obj"""
+
+        result = None
+        if AXObject.supports_collection(obj):
+            result = AXUtilitiesCollection.find_first_with_role(obj, [Atspi.Role.LIST_ITEM])
+            if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
+                return result
+
+        return AXObject.find_descendant(obj, AXUtilitiesRole.is_list_item)
+
+    @staticmethod
+    def get_menu(obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns the menu descendant of obj"""
+
+        result = None
+        if AXObject.supports_collection(obj):
+            result = AXUtilitiesCollection.find_first_with_role(obj, [Atspi.Role.MENU])
+            if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
+                return result
+
+        return AXObject.find_descendant(obj, AXUtilitiesRole.is_menu)
+
+    @staticmethod
+    def get_menu_or_list_box(obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns the menu or list box descendant of obj"""
+
+        result = None
+        if AXObject.supports_collection(obj):
+            result = AXUtilitiesCollection.find_first_with_role(
+                obj, [Atspi.Role.MENU, Atspi.Role.LIST_BOX]
+            )
+            if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
+                return result
+
+        return AXObject.find_descendant(
+            obj, lambda x: AXUtilitiesRole.is_menu(x) or AXUtilitiesRole.is_list_box(x)
+        )
+
+    @staticmethod
+    def get_progress_bar(obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns the progress bar descendant of obj"""
+
+        result = None
+        if AXObject.supports_collection(obj):
+            result = AXUtilitiesCollection.find_first_with_role(obj, [Atspi.Role.PROGRESS_BAR])
+            if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
+                return result
+
+        return AXObject.find_descendant(obj, AXUtilitiesRole.is_progress_bar)
+
+    @staticmethod
+    def get_slider(obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns the slider descendant of obj"""
+
+        result = None
+        if AXObject.supports_collection(obj):
+            result = AXUtilitiesCollection.find_first_with_role(obj, [Atspi.Role.SLIDER])
+            if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
+                return result
+
+        return AXObject.find_descendant(obj, AXUtilitiesRole.is_slider)
+
+    @staticmethod
+    def get_table_cell(obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns the table cell descendant of obj"""
+
+        result = None
+        if AXObject.supports_collection(obj):
+            result = AXUtilitiesCollection.find_first_with_role(obj, [Atspi.Role.TABLE_CELL])
+            if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
+                return result
+
+        return AXObject.find_descendant(obj, AXUtilitiesRole.is_table_cell)
+
+    @staticmethod
+    def get_table_cell_or_header(obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns the table cell or header descendant of obj"""
+
+        result = None
+        if AXObject.supports_collection(obj):
+            result = AXUtilitiesCollection.find_first_with_role(
+                obj, AXUtilitiesRole.get_table_cell_roles()
+            )
+            if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
+                return result
+
+        return AXObject.find_descendant(obj, AXUtilitiesRole.is_table_cell_or_header)
+
+    @staticmethod
+    def get_descendant_supporting_text(obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns the first descendant of obj implementing the text interface"""
+
+        result = None
+        if AXObject.supports_collection(obj):
+            result = AXUtilitiesCollection.find_first_with_interfaces(obj, ["Text"])
+            if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
+                return result
+
+        return AXObject.find_descendant(obj, AXObject.supports_text)
+
+    @staticmethod
+    def get_text_input(obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns the text input descendant of obj"""
+
+        result = None
+        if AXObject.supports_collection(obj):
+            result = AXUtilitiesCollection.find_first_with_role(
+                obj, [Atspi.Role.ENTRY, Atspi.Role.PASSWORD_TEXT, Atspi.Role.SPIN_BUTTON]
+            )
+            if result is None:
+                result = AXUtilitiesCollection.find_first_with_role_and_all_states(
+                    obj, [Atspi.Role.TEXT], [Atspi.StateType.EDITABLE, Atspi.StateType.SINGLE_LINE]
+                )
+            if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
+                return result
+
+        return AXObject.find_descendant(obj, AXUtilitiesRole.is_text_input)
+
+    @staticmethod
     def _is_layout_only_layered_pane(obj: Atspi.Accessible) -> tuple[bool, str]:
         """Returns True with reason if this layered pane is layout-only."""
 
@@ -630,7 +762,7 @@ class AXUtilities:
                 obj = selected_children[0]
 
         if AXUtilitiesRole.is_list(obj) or AXUtilitiesRole.is_list_box(obj):
-            obj = AXObject.find_descendant(obj, AXUtilitiesRole.is_list_item)
+            obj = AXUtilities.get_list_item(obj)
 
         child_count = AXObject.get_child_count(AXObject.get_parent(obj))
         if child_count > 500:
@@ -661,7 +793,7 @@ class AXUtilities:
 
         result = AXObject.get_attribute(obj, "rowindex", False)
         if not (isinstance(result, str) and result.isnumeric()) and AXObject.get_child_count(obj):
-            cell = AXObject.find_descendant(obj, AXUtilitiesRole.is_table_cell_or_header)
+            cell = AXUtilities.get_table_cell_or_header(obj)
             result = AXObject.get_attribute(cell, "rowindex", False)
 
         if isinstance(result, str) and result.isnumeric():

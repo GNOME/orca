@@ -730,6 +730,54 @@ class AXUtilitiesCollection:
         return AXUtilitiesCollection.find_all_with_role_and_all_states(root, roles, states, pred)
 
     @staticmethod
+    def find_first_with_role(
+        root: Atspi.Accessible,
+        role_list: list[Atspi.Role],
+    ) -> Atspi.Accessible | None:
+        """Returns the first descendant of root with any of the specified roles"""
+
+        if not (root and role_list):
+            return None
+
+        rule = AXCollection.create_match_rule(
+            roles=role_list,
+            role_match_type=Atspi.CollectionMatchType.ANY,
+        )
+        return AXCollection.get_first_match(root, rule)
+
+    @staticmethod
+    def find_first_with_role_and_all_states(
+        root: Atspi.Accessible,
+        role_list: list[Atspi.Role],
+        state_list: list[Atspi.StateType],
+    ) -> Atspi.Accessible | None:
+        """Returns the first descendant of root with any of the roles and all the states"""
+
+        if not (root and role_list and state_list):
+            return None
+
+        rule = AXCollection.create_match_rule(
+            roles=role_list,
+            role_match_type=Atspi.CollectionMatchType.ANY,
+            states=state_list,
+            state_match_type=Atspi.CollectionMatchType.ALL,
+        )
+        return AXCollection.get_first_match(root, rule)
+
+    @staticmethod
+    def find_first_with_interfaces(
+        root: Atspi.Accessible,
+        interface_list: list[str],
+    ) -> Atspi.Accessible | None:
+        """Returns the first descendant of root implementing all the specified interfaces"""
+
+        if not (root and interface_list):
+            return None
+
+        rule = AXCollection.create_match_rule(interfaces=interface_list)
+        return AXCollection.get_first_match(root, rule)
+
+    @staticmethod
     def find_default_button(root: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the default button inside root"""
 

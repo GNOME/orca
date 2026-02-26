@@ -1138,7 +1138,7 @@ class Utilities:
         if AXObject.supports_text(obj):
             return obj, offset
 
-        descendant = AXObject.find_descendant(obj, AXObject.supports_text)
+        descendant = AXUtilities.get_descendant_supporting_text(obj)
         if descendant is not None:
             return descendant, 0
 

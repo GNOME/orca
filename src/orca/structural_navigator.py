@@ -3266,7 +3266,7 @@ class StructuralNavigator:
 
         tokens = ["STRUCTURAL NAVIGATOR: Broken table interface for", table]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        cell = AXObject.find_descendant(table, AXUtilities.is_table_cell)
+        cell = AXUtilities.get_table_cell(table)
         if cell:
             tokens = ["STRUCTURAL NAVIGATOR: Located", cell, "for first cell"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)

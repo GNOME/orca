@@ -101,7 +101,7 @@ class Script(default.Script):
             and AXUtilities.is_menu_item(event.source)
             and not AXUtilities.get_is_labelled_by(event.source)
         ):
-            descendant = AXObject.find_descendant(event.source, AXUtilities.is_slider)
+            descendant = AXUtilities.get_slider(event.source)
             if descendant is not None:
                 focus_manager.get_manager().set_locus_of_focus(event, descendant)
                 return True

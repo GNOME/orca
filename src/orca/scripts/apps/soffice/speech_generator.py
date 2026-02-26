@@ -67,7 +67,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     @log_generator_output
     def _generate_text_line(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if AXUtilities.is_combo_box(obj):
-            if entry := AXObject.find_descendant(obj, AXUtilities.is_text_input):
+            if entry := AXUtilities.get_text_input(obj):
                 return super()._generate_text_line(entry)
             return []
 

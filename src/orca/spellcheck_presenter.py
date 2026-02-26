@@ -807,7 +807,7 @@ class SpellCheckPresenter:
         if app_name == "thunderbird":
             if AXObject.get_attribute(window, "tag") != "body":
                 return False
-            return AXObject.find_descendant(window, AXUtilities.is_menu) is None
+            return AXUtilities.get_menu(window) is None
 
         # Fallback: gedit/pluma uses a modal dialog (gedit) or frame (pluma); no ID.
         if app_name in ("gedit", "pluma"):
@@ -901,7 +901,7 @@ class SpellCheckPresenter:
 
         # soffice: errorsentence ID is on panel; get text child if needed
         if error_widget is not None and not AXObject.supports_text(error_widget):
-            if text_child := AXObject.find_descendant(error_widget, AXObject.supports_text):
+            if text_child := AXUtilities.get_descendant_supporting_text(error_widget):
                 error_widget = text_child
 
         tokens = [

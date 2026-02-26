@@ -1043,7 +1043,9 @@ class TestTableNavigator:
             return_value=True,
         )
         test_context.patch("orca.table_navigator.AXObject.grab_focus", return_value=None)
-        test_context.patch("orca.table_navigator.AXObject.find_descendant", return_value=None)
+        test_context.patch(
+            "orca.table_navigator.AXUtilities.get_descendant_supporting_text", return_value=None
+        )
         test_context.patch("orca.table_navigator.AXObject.supports_text", return_value=False)
         test_context.patch("orca.table_navigator.AXTable.get_cell_spans", return_value=(1, 1))
         mock_focus_manager = test_context.Mock()
@@ -2076,7 +2078,9 @@ class TestTableNavigator:
             return_value=True,
         )
         test_context.patch("orca.table_navigator.AXObject.grab_focus", return_value=None)
-        test_context.patch("orca.table_navigator.AXObject.find_descendant", return_value=None)
+        test_context.patch(
+            "orca.table_navigator.AXUtilities.get_descendant_supporting_text", return_value=None
+        )
         test_context.patch("orca.table_navigator.AXObject.supports_text", return_value=False)
         test_context.patch("orca.table_navigator.AXTable.get_cell_spans", return_value=(2, 3))
         mock_focus_manager = test_context.Mock()
@@ -2129,7 +2133,7 @@ class TestTableNavigator:
         )
         test_context.patch("orca.table_navigator.AXObject.grab_focus", return_value=None)
         test_context.patch(
-            "orca.table_navigator.AXObject.find_descendant",
+            "orca.table_navigator.AXUtilities.get_descendant_supporting_text",
             return_value=mock_text_obj,
         )
         test_context.patch(
@@ -2223,7 +2227,9 @@ class TestTableNavigator:
             return_value=True,
         )
         test_context.patch("orca.table_navigator.AXObject.grab_focus", return_value=None)
-        test_context.patch("orca.table_navigator.AXObject.find_descendant", return_value=None)
+        test_context.patch(
+            "orca.table_navigator.AXUtilities.get_descendant_supporting_text", return_value=None
+        )
         test_context.patch("orca.table_navigator.AXObject.supports_text", return_value=False)
         test_context.patch("orca.table_navigator.AXTable.get_cell_spans", return_value=(1, 1))
         mock_focus_manager = test_context.Mock()

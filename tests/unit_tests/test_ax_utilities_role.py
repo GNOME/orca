@@ -1665,6 +1665,7 @@ class TestAXUtilitiesRole:
         mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
         mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.LABEL)
         mock_ax_object_class.find_descendant = test_context.Mock(return_value=None)
+        mock_ax_object_class.supports_collection = test_context.Mock(return_value=False)
         mock_utilities_state_class = essential_modules["orca.ax_utilities_state"].AXUtilitiesState
         mock_utilities_state_class.is_editable = test_context.Mock(return_value=False)
         from orca.ax_utilities_role import AXUtilitiesRole

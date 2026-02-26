@@ -71,7 +71,7 @@ class Utilities(script_utilities.Utilities):
 
         # Budgie's container doesn't actually hold the label.
         if AXUtilities.is_table(container):
-            if label := AXObject.find_descendant(self._script.app, AXUtilities.is_label):
+            if label := AXUtilities.get_label(self._script.app):
                 return AXObject.get_name(label)
 
         return ""

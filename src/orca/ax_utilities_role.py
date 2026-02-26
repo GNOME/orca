@@ -29,6 +29,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import debug, object_properties
+from .ax_collection import AXCollection
 from .ax_object import AXObject
 from .ax_utilities_state import AXUtilitiesState
 
@@ -1151,6 +1152,19 @@ class AXUtilitiesRole:
             return False
         if AXUtilitiesState.is_editable(obj):
             return True
+        if AXObject.supports_collection(obj):
+            rule = AXCollection.create_match_rule(
+                roles=[Atspi.Role.ENTRY, Atspi.Role.PASSWORD_TEXT, Atspi.Role.SPIN_BUTTON],
+                role_match_type=Atspi.CollectionMatchType.ANY,
+            )
+            if AXCollection.get_first_match(obj, rule) is not None:
+                return True
+            rule = AXCollection.create_match_rule(
+                roles=[Atspi.Role.TEXT],
+                states=[Atspi.StateType.EDITABLE, Atspi.StateType.SINGLE_LINE],
+                state_match_type=Atspi.CollectionMatchType.ALL,
+            )
+            return AXCollection.get_first_match(obj, rule) is not None
         return bool(AXObject.find_descendant(obj, AXUtilitiesRole.is_text_input))
 
     @staticmethod
