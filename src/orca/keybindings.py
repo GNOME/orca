@@ -215,12 +215,16 @@ class KeyBinding:
 
         # Prefer keyval matching (layout-correct for QWERTZ, AZERTY, Dvorak, etc.).
         # Fall back to keycode when a modifier changes the keyval (Shift: 'h' vs
-        # 'H', AltGr: 'period' vs 'periodcentered') or for non-Latin layouts
-        # where the keyval is outside the Latin range.
+        # 'H', AltGr: 'period' vs 'periodcentered'), when the layout maps a
+        # different base character to the key (AZERTY: '&' on the '1' key), or
+        # for non-Latin layouts where the keyval is outside the Latin range.
         if self.keyval == keyval or (
             self.keycode == keycode
             and (
-                keyval > 0xFF or modifiers & SHIFT_MODIFIER_MASK or modifiers & ALTGR_MODIFIER_MASK
+                keyval > 0xFF
+                or modifiers & SHIFT_MODIFIER_MASK
+                or modifiers & ALTGR_MODIFIER_MASK
+                or not (modifiers & NON_LOCKING_MODIFIER_MASK)
             )
         ):
             result = modifiers & self.modifier_mask
