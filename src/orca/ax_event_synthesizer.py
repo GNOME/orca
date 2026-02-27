@@ -32,6 +32,7 @@ from . import ax_device_manager, debug
 from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
+from .ax_utilities_component import AXUtilitiesComponent
 from .ax_utilities_debugging import AXUtilitiesDebugging
 from .ax_utilities_role import AXUtilitiesRole
 
@@ -65,8 +66,8 @@ class AXEventSynthesizer:
             return False
 
         ancestor_rect = AXComponent.get_rect(ancestor)
-        intersection = AXComponent.get_rect_intersection(ancestor_rect, rect)
-        if AXComponent.is_empty_rect(intersection):
+        intersection = AXUtilitiesComponent.get_rect_intersection(ancestor_rect, rect)
+        if AXUtilitiesComponent.is_empty_rect(intersection):
             tokens = ["AXEventSynthesizer:", obj, "is outside of", ancestor, ancestor_rect]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
@@ -77,13 +78,13 @@ class AXEventSynthesizer:
             return False
 
         extents = AXText.get_character_rect(obj, offset)
-        if AXComponent.is_empty_rect(extents):
+        if AXUtilitiesComponent.is_empty_rect(extents):
             tokens = ["AXEventSynthesizer: Could not get character rect of", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        intersection = AXComponent.get_rect_intersection(extents, rect)
-        if AXComponent.is_empty_rect(intersection):
+        intersection = AXUtilitiesComponent.get_rect_intersection(extents, rect)
+        if AXUtilitiesComponent.is_empty_rect(intersection):
             tokens = ["AXEventSynthesizer:", obj, "'s caret", extents, "not in obj", rect]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
@@ -128,12 +129,12 @@ class AXEventSynthesizer:
                 AXText.set_caret_offset(obj, offset)
 
         extents = AXText.get_character_rect(obj, offset)
-        if AXComponent.is_empty_rect(extents):
+        if AXUtilitiesComponent.is_empty_rect(extents):
             return False
 
         rect = AXComponent.get_rect(obj)
-        intersection = AXComponent.get_rect_intersection(extents, rect)
-        if AXComponent.is_empty_rect(intersection):
+        intersection = AXUtilitiesComponent.get_rect_intersection(extents, rect)
+        if AXUtilitiesComponent.is_empty_rect(intersection):
             tokens = ["AXEventSynthesizer:", obj, "'s caret", extents, "not in obj", rect]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
@@ -266,10 +267,10 @@ class AXEventSynthesizer:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return
 
-        ancestor_rect = AXComponent.get_rect(ancestor)
-        x_coord = ancestor_rect.x + ancestor_rect.width / 2
-        y_coord = ancestor_rect.y + ancestor_rect.height / 2
-        AXEventSynthesizer._scroll_to_point(obj, x_coord, y_coord, start_offset, end_offset)
+        x_coord, y_coord = AXUtilitiesComponent.get_center_point(ancestor)
+        AXEventSynthesizer._scroll_to_point(
+            obj, int(x_coord), int(y_coord), start_offset, end_offset
+        )
 
     @staticmethod
     def scroll_to_top_edge(

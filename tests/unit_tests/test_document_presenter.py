@@ -45,7 +45,6 @@ class TestDocumentPresenter:
         """Set up mocks for document_presenter dependencies."""
 
         additional_modules = [
-            "orca.ax_component",
             "orca.ax_document",
             "orca.ax_object",
             "orca.ax_table",
@@ -525,8 +524,7 @@ class TestDocumentPresenter:
         ax_text = mocks["orca.ax_text"]
         ax_text.AXText.get_range_rect.return_value = MagicMock()
 
-        ax_component = mocks["orca.ax_component"]
-        ax_component.AXComponent.rects_are_on_same_line.return_value = True
+        ax_utilities.AXUtilities.rects_are_on_same_line = MagicMock(return_value=True)
 
         presenter = module.get_presenter()
         presenter._made_find_announcement = True  # Already announced

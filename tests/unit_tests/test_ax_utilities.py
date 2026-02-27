@@ -53,6 +53,7 @@ class TestAXUtilities:
         additional_modules = [
             "orca.ax_component",
             "orca.ax_selection",
+            "orca.ax_utilities_component",
             "orca.ax_table",
             "orca.ax_text",
             "orca.ax_utilities_application",
@@ -1910,16 +1911,18 @@ class TestAXUtilities:
         )
 
         essential_modules[
-            "orca.ax_component"
-        ].AXComponent.has_no_size_or_invalid_rect = test_context.Mock(
+            "orca.ax_utilities_component"
+        ].AXUtilitiesComponent.has_no_size_or_invalid_rect = test_context.Mock(
             return_value=has_no_size_invalid_rect,
         )
-        essential_modules["orca.ax_component"].AXComponent.object_is_off_screen = test_context.Mock(
+        essential_modules[
+            "orca.ax_utilities_component"
+        ].AXUtilitiesComponent.object_is_off_screen = test_context.Mock(
             return_value=object_is_off_screen,
         )
         essential_modules[
-            "orca.ax_component"
-        ].AXComponent.object_intersects_rect = test_context.Mock(
+            "orca.ax_utilities_component"
+        ].AXUtilitiesComponent.object_intersects_rect = test_context.Mock(
             return_value=object_intersects_rect,
         )
 

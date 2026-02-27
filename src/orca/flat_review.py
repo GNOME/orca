@@ -689,8 +689,8 @@ class Context:
         ranges = [(x[0] + start_offset, x[1] + start_offset, x[2]) for x in ranges]
         for start, end, substring in ranges:
             rect = AXText.get_range_rect(obj, start, end)
-            intersection = AXComponent.get_rect_intersection(rect, cliprect)
-            if not AXComponent.is_empty_rect(intersection):
+            intersection = AXUtilities.get_rect_intersection(rect, cliprect)
+            if not AXUtilities.is_empty_rect(intersection):
                 zones.append(TextZone(obj, start, substring, intersection))
 
         return zones
@@ -709,8 +709,8 @@ class Context:
         container = AXObject.find_ancestor(obj, _is_container)
         if container:
             rect = AXComponent.get_rect(container)
-            intersection = AXComponent.get_rect_intersection(rect, cliprect)
-            if AXComponent.is_same_rect(rect, intersection):
+            intersection = AXUtilities.get_rect_intersection(rect, cliprect)
+            if AXUtilities.is_same_rect(rect, intersection):
                 tokens = ["FLAT REVIEW: Cliprect", cliprect, "->", rect, "from", container]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 cliprect = rect

@@ -342,7 +342,7 @@ class Utilities(script_utilities.Utilities):
         """Returns the extents for the text range, or the component rect as fallback."""
 
         if not obj:
-            return AXComponent.EMPTY_RECT
+            return Atspi.Rect()
 
         if self.treat_as_text_object(obj) and 0 <= start_offset < end_offset:
             rect = AXText.get_range_rect(obj, start_offset, end_offset)
@@ -1000,7 +1000,7 @@ class Utilities(script_utilities.Utilities):
                 return False
 
             x_rect = self._get_extents(x_obj, x_start, x_start + 1)
-            return AXComponent.rects_are_on_same_line(rect, x_rect)
+            return AXUtilities.rects_are_on_same_line(rect, x_rect)
 
         # Check for things in the same word to the left of this object.
         first_obj, first_start, _first_end, first_string = objects[0]
@@ -1213,7 +1213,7 @@ class Utilities(script_utilities.Utilities):
         if char == "\ufffc":
             prev_rect = self._get_extents(obj, offset - 1, offset)
             this_rect = self._get_extents(obj, offset, offset + 1)
-            same_line = AXComponent.rects_are_on_same_line(prev_rect, this_rect)
+            same_line = AXUtilities.rects_are_on_same_line(prev_rect, this_rect)
             tokens = [
                 "WEB: ",
                 obj,
@@ -1322,20 +1322,20 @@ class Utilities(script_utilities.Utilities):
                 elif (
                     self._is_block_list_descendant(obj) != self._is_block_list_descendant(x_obj)
                     or (AXUtilities.is_tree_related(obj) and AXUtilities.is_tree_related(x_obj))
-                    or (AXUtilities.is_heading(obj) and AXComponent.has_no_size(obj))
-                    or (AXUtilities.is_heading(x_obj) and AXComponent.has_no_size(x_obj))
+                    or (AXUtilities.is_heading(obj) and AXUtilities.has_no_size(obj))
+                    or (AXUtilities.is_heading(x_obj) and AXUtilities.has_no_size(x_obj))
                 ):
                     return False
 
             if AXUtilities.is_math(x_obj) or AXUtilities.is_math_related(obj):
-                on_same_line = AXComponent.rects_are_on_same_line(rect, x_rect, rect.height)
+                on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect, rect.height)
             elif AXObject.find_ancestor_inclusive(
                 x_obj,
                 AXUtilities.is_subscript_or_superscript_text,
             ):
-                on_same_line = AXComponent.rects_are_on_same_line(rect, x_rect, x_rect.height)
+                on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect, x_rect.height)
             else:
-                on_same_line = AXComponent.rects_are_on_same_line(rect, x_rect)
+                on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect)
             return on_same_line
 
         granularity = Atspi.TextGranularity.LINE
@@ -1869,7 +1869,7 @@ class Utilities(script_utilities.Utilities):
                 ((self.is_text_block_element(obj) or self.is_link(obj)) and not text)
                 or (self.is_content_editable_with_embedded_objects(obj) and not string.strip())
                 or self._is_empty_anchor(obj)
-                or (AXComponent.has_no_size(obj) and not text)
+                or (AXUtilities.has_no_size(obj) and not text)
                 or AXUtilities.is_hidden(obj)
                 or self._is_off_screen_label(obj)
                 or self._is_useless_image(obj)
@@ -2327,11 +2327,11 @@ class Utilities(script_utilities.Utilities):
         parent = AXObject.get_parent(obj)
         children = list(AXObject.iter_children(parent, AXUtilities.is_svg))
         if len(children) == AXObject.get_child_count(parent):
-            sorted_children = AXComponent.sort_objects_by_size(children)
+            sorted_children = AXUtilities.sort_objects_by_size(children)
             if obj != sorted_children[-1]:
                 obj_extents = AXComponent.get_rect(obj)
                 largest_extents = AXComponent.get_rect(sorted_children[-1])
-                intersection = AXComponent.get_rect_intersection(obj_extents, largest_extents)
+                intersection = AXUtilities.get_rect_intersection(obj_extents, largest_extents)
                 rv = intersection == obj_extents
 
         rv = bool(rv)
@@ -2910,7 +2910,7 @@ class Utilities(script_utilities.Utilities):
             tokens = ["WEB: Hidden object cannot have caret context", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = False
-        elif AXComponent.has_no_size(obj):
+        elif AXUtilities.has_no_size(obj):
             tokens = ["WEB: Allowing sizeless object to have caret context", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = True

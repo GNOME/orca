@@ -29,6 +29,7 @@ from . import debug, messages, object_properties
 from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_table import AXTable
+from .ax_utilities_component import AXUtilitiesComponent
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 
@@ -552,7 +553,7 @@ class AXUtilitiesTable:
         tokens = ["AXUtilitiesTable: Rect for", table, "is", rect]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        first_cell = AXComponent.get_descendant_at_point(table, rect.x + 1, rect.y + 1)
+        first_cell = AXUtilitiesComponent.get_descendant_at_point(table, rect.x + 1, rect.y + 1)
         tokens = ["AXUtilitiesTable: First visible cell for", table, "is", first_cell]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -560,7 +561,7 @@ class AXUtilitiesTable:
         tokens = ["AXUtilitiesTable: First visible cell is at row", start[0], "column", start[1]]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        last_cell = AXComponent.get_descendant_at_point(
+        last_cell = AXUtilitiesComponent.get_descendant_at_point(
             table,
             rect.x + rect.width - 1,
             rect.y + rect.height - 1,
@@ -585,12 +586,12 @@ class AXUtilitiesTable:
             first_cell,
         ):
             candidate = AXTable.get_cell_above(last_cell)
-            while candidate and AXComponent.object_intersects_rect(candidate, rect):
+            while candidate and AXUtilitiesComponent.object_intersects_rect(candidate, rect):
                 first_cell = candidate
                 candidate = AXTable.get_cell_above(first_cell)
 
             candidate = AXTable.get_cell_on_left(first_cell)
-            while candidate and AXComponent.object_intersects_rect(candidate, rect):
+            while candidate and AXUtilitiesComponent.object_intersects_rect(candidate, rect):
                 first_cell = candidate
                 candidate = AXTable.get_cell_on_left(first_cell)
 
@@ -644,9 +645,11 @@ class AXUtilitiesTable:
         start_index, end_index = 0, AXTable.get_column_count(table, False)
         if clip_to_window:
             rect = AXComponent.get_rect(table)
-            if cell := AXComponent.get_descendant_at_point(table, rect.x + 1, rect.y):
+            if cell := AXUtilitiesComponent.get_descendant_at_point(table, rect.x + 1, rect.y):
                 start_index = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1]
-            if cell := AXComponent.get_descendant_at_point(table, rect.x + rect.width - 1, rect.y):
+            if cell := AXUtilitiesComponent.get_descendant_at_point(
+                table, rect.x + rect.width - 1, rect.y
+            ):
                 end_index = AXTable.get_cell_coordinates(cell, prefer_attribute=False)[1] + 1
 
         if start_index == end_index:

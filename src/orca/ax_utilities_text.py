@@ -30,6 +30,7 @@ import re
 from typing import TYPE_CHECKING
 
 from . import debug
+from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities_role import AXUtilitiesRole
@@ -58,6 +59,22 @@ class AXUtilitiesText:
             return "", 0, 0
 
         return AXText.get_character_at_offset(obj, offset)
+
+    @staticmethod
+    def get_character_overflow_count(obj: Atspi.Accessible) -> int:
+        """Returns the number of characters in obj that extend beyond its rect."""
+
+        extents = AXComponent.get_rect(obj)
+        count = 0
+        length = AXText.get_character_count(obj)
+        for i in range(length):
+            rect = AXText.get_character_rect(obj, i)
+            if rect.x < extents.x:
+                count += 1
+            elif rect.x + rect.width > extents.x + extents.width:
+                count += length - i
+                break
+        return count
 
     @staticmethod
     def get_next_character(

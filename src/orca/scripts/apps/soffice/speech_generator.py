@@ -24,7 +24,6 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 from orca import debug, focus_manager, messages, speech_generator, speech_presenter, table_navigator
-from orca.ax_component import AXComponent
 from orca.ax_object import AXObject
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
@@ -101,32 +100,17 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     def _generate_too_long(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """If there is text in this spread sheet cell, compare the size of
-        the text within the table cell with the size of the actual table
-        cell and report back to the user if it is larger.
+        """Returns speech for characters that extend beyond the cell's rect."""
 
-        Returns an indication of how many characters are greater than the size
-        of the spread sheet cell, or None if the message fits.
-        """
         if self._only_speak_displayed_text():
             return []
 
-        # TODO - JD: Can this be moved to AXText?
-        result: list[Any] = []
-        length = AXText.get_character_count(obj)
-        too_long_count = 0
-        extents = AXComponent.get_rect(obj)
-        for i in range(length):
-            rect = AXText.get_character_rect(obj, i)
-            if rect.x < extents.x:
-                too_long_count += 1
-            elif rect.x + rect.width > extents.x + extents.width:
-                too_long_count += length - i
-                break
-        if too_long_count > 0:
-            result = [messages.characters_too_long(too_long_count)]
-        if result:
-            result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
+        too_long_count = AXUtilities.get_character_overflow_count(obj)
+        if not too_long_count:
+            return []
+
+        result: list[Any] = [messages.characters_too_long(too_long_count)]
+        result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
         return result
 
     @log_generator_output

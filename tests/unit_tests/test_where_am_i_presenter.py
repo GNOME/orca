@@ -139,7 +139,9 @@ class TestWhereAmIPresenter:
         rect_mock.y = 150
         ax_component_mock.AXComponent = test_context.Mock()
         ax_component_mock.AXComponent.get_rect = test_context.Mock(return_value=rect_mock)
-        ax_component_mock.AXComponent.is_empty_rect = test_context.Mock(return_value=False)
+
+        ax_utilities_mock = essential_modules["orca.ax_utilities"]
+        ax_utilities_mock.AXUtilities.is_empty_rect = test_context.Mock(return_value=False)
 
         ax_text_mock = essential_modules["orca.ax_text"]
         ax_text_mock.AXText = test_context.Mock()
@@ -347,7 +349,7 @@ class TestWhereAmIPresenter:
         rect.x = 50
         rect.y = 75
         deps["orca.ax_component"].AXComponent.get_rect.return_value = rect
-        deps["orca.ax_component"].AXComponent.is_empty_rect.return_value = False
+        deps["orca.ax_utilities"].AXUtilities.is_empty_rect.return_value = False
         pres_manager = deps["orca.presentation_manager"].get_manager()
         pres_manager.present_message.reset_mock()
         presenter = WhereAmIPresenter()
@@ -371,7 +373,7 @@ class TestWhereAmIPresenter:
             "orca.focus_manager"
         ].get_manager.return_value.get_locus_of_focus.return_value = focus_obj
 
-        deps["orca.ax_component"].AXComponent.is_empty_rect.return_value = True
+        deps["orca.ax_utilities"].AXUtilities.is_empty_rect.return_value = True
         pres_manager = deps["orca.presentation_manager"].get_manager()
         pres_manager.present_message.reset_mock()
         presenter = WhereAmIPresenter()

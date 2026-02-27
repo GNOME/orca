@@ -130,7 +130,7 @@ class _StringContext:
         this_rect.x, this_rect.y, this_rect.width, this_rect.height = this_box
         other_rect = Atspi.Rect()
         other_rect.x, other_rect.y, other_rect.width, other_rect.height = other_box
-        if AXComponent.get_rect_intersection(this_rect, other_rect) != this_rect:
+        if AXUtilities.get_rect_intersection(this_rect, other_rect) != this_rect:
             return False
 
         if not (self._string and self._string.strip() in other.get_string()):
@@ -736,18 +736,18 @@ class MouseReviewer:
 
         obj = None
         if menu:
-            obj = AXComponent.get_descendant_at_point(menu, window_x, window_y)
+            obj = AXUtilities.get_descendant_at_point(menu, window_x, window_y)
             tokens = ["MOUSE REVIEW: Object in", menu, f"at ({window_x}, {window_y}) is", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if obj is None:
-            obj = AXComponent.get_descendant_at_point(window, window_x, window_y)
+            obj = AXUtilities.get_descendant_at_point(window, window_x, window_y)
             tokens = ["MOUSE REVIEW: Object in", window, f"at ({window_x}, {window_y}) is", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         script = script_manager.get_manager().get_script(AXUtilities.get_application(window), obj)
         if menu and obj and not AXObject.find_ancestor(obj, AXUtilities.is_menu):
-            if AXComponent.objects_overlap(obj, menu):
+            if AXUtilities.objects_overlap(obj, menu):
                 tokens = ["MOUSE REVIEW:", obj, "believed to be under", menu]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return

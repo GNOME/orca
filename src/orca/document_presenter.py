@@ -57,7 +57,6 @@ from . import (
     structural_navigator,
     table_navigator,
 )
-from .ax_component import AXComponent
 from .ax_document import AXDocument
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -1278,7 +1277,7 @@ class DocumentPresenter:
             context_obj, context_offset = context
             context_rect = AXText.get_range_rect(context_obj, context_offset, context_offset + 1)
             current_rect = AXText.get_range_rect(obj, offset, offset + 1)
-            if AXComponent.rects_are_on_same_line(context_rect, current_rect):
+            if AXUtilities.rects_are_on_same_line(context_rect, current_rect):
                 return False
 
         contents = script.utilities.get_line_contents_at_offset(obj, offset)

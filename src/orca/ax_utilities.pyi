@@ -1124,6 +1124,57 @@ class AXUtilities:
     @staticmethod
     def object_is_unrelated(obj: Atspi.Accessible) -> bool: ...
 
+    # From ax_utilities_component.py
+    @staticmethod
+    def get_center_point(obj: Atspi.Accessible) -> tuple[float, float]: ...
+    @staticmethod
+    def get_rect_intersection(rect1: Atspi.Rect, rect2: Atspi.Rect) -> Atspi.Rect: ...
+    @staticmethod
+    def has_no_size(obj: Atspi.Accessible) -> bool: ...
+    @staticmethod
+    def has_no_size_or_invalid_rect(obj: Atspi.Accessible) -> bool: ...
+    @staticmethod
+    def is_empty_rect(rect: Atspi.Rect) -> bool: ...
+    @staticmethod
+    def is_same_rect(rect1: Atspi.Rect, rect2: Atspi.Rect) -> bool: ...
+    @staticmethod
+    def rects_are_on_same_line(
+        rect1: Atspi.Rect,
+        rect2: Atspi.Rect,
+        pixel_delta: int = 5,
+    ) -> bool: ...
+    @staticmethod
+    def object_intersects_rect(obj: Atspi.Accessible, rect: Atspi.Rect) -> bool: ...
+    @staticmethod
+    def object_is_off_screen(obj: Atspi.Accessible) -> bool: ...
+    @staticmethod
+    def objects_have_same_rect(
+        obj1: Atspi.Accessible,
+        obj2: Atspi.Accessible,
+    ) -> bool: ...
+    @staticmethod
+    def objects_overlap(obj1: Atspi.Accessible, obj2: Atspi.Accessible) -> bool: ...
+    @staticmethod
+    def on_same_line(
+        obj1: Atspi.Accessible,
+        obj2: Atspi.Accessible,
+        delta: int = 0,
+    ) -> bool: ...
+    @staticmethod
+    def get_descendant_at_point(
+        obj: Atspi.Accessible,
+        x: int,
+        y: int,
+    ) -> Atspi.Accessible | None: ...
+    @staticmethod
+    def sort_objects_by_size(
+        objects: list[Atspi.Accessible],
+    ) -> list[Atspi.Accessible]: ...
+    @staticmethod
+    def sort_objects_by_position(
+        objects: list[Atspi.Accessible],
+    ) -> list[Atspi.Accessible]: ...
+
     # From ax_utilities_table.py
     @staticmethod
     def get_table(obj: Atspi.Accessible) -> Atspi.Accessible | None: ...
@@ -1215,6 +1266,8 @@ class AXUtilities:
         x: int,
         y: int,
     ) -> tuple[str, int, int]: ...
+    @staticmethod
+    def get_character_overflow_count(obj: Atspi.Accessible) -> int: ...
     @staticmethod
     def get_next_character(
         obj: Atspi.Accessible,

@@ -275,7 +275,7 @@ class WhereAmIPresenter:
             obj = focus_manager.get_manager().get_locus_of_focus()
 
         rect = AXComponent.get_rect(obj)
-        if AXComponent.is_empty_rect(rect):
+        if AXUtilities.is_empty_rect(rect):
             full = messages.LOCATION_NOT_FOUND_FULL
             brief = messages.LOCATION_NOT_FOUND_BRIEF
             presentation_manager.get_manager().present_message(full, brief)

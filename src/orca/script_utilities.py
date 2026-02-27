@@ -46,7 +46,6 @@ from . import (
     spellcheck_presenter,
     table_navigator,
 )
-from .ax_component import AXComponent
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_selection import AXSelection
@@ -243,7 +242,7 @@ class Utilities:
         if not AXValue.get_value_as_percent(obj):
             return False, "Could not obtain value"
 
-        if AXComponent.has_no_size(obj):
+        if AXUtilities.has_no_size(obj):
             return False, "Has no size"
 
         if AXObject.find_ancestor(obj, AXUtilities.is_status_bar):
@@ -610,7 +609,7 @@ class Utilities:
                 continue
             labels_filtered.append(label)
 
-        return AXComponent.sort_objects_by_position(labels_filtered)
+        return AXUtilities.sort_objects_by_position(labels_filtered)
 
     def find_previous_object(
         self,

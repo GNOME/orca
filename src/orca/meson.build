@@ -63,6 +63,7 @@ lib_sources = [
   'ax_utilities.py',
   'ax_utilities_application.py',
   'ax_utilities_collection.py',
+  'ax_utilities_component.py',
   'ax_utilities_debugging.py',
   'ax_utilities_event.py',
   'ax_utilities_relation.py',

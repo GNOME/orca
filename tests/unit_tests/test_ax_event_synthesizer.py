@@ -54,6 +54,7 @@ class TestAXEventSynthesizer:
             "orca.ax_device_manager",
             "orca.ax_object",
             "orca.ax_text",
+            "orca.ax_utilities_component",
             "orca.ax_utilities_debugging",
             "orca.ax_utilities_role",
         ]
@@ -62,10 +63,14 @@ class TestAXEventSynthesizer:
         ax_component_mock = essential_modules["orca.ax_component"].AXComponent
         ax_component_mock.get_rect = test_context.Mock()
         ax_component_mock.get_position = test_context.Mock(return_value=(0, 0))
-        ax_component_mock.get_rect_intersection = test_context.Mock()
-        ax_component_mock.is_empty_rect = test_context.Mock(return_value=False)
         ax_component_mock.scroll_object_to_location = test_context.Mock()
         ax_component_mock.scroll_object_to_point = test_context.Mock()
+
+        ax_utilities_component_mock = essential_modules[
+            "orca.ax_utilities_component"
+        ].AXUtilitiesComponent
+        ax_utilities_component_mock.get_rect_intersection = test_context.Mock()
+        ax_utilities_component_mock.is_empty_rect = test_context.Mock(return_value=False)
 
         def mock_rect(x=0, y=0, width=100, height=50):
             rect = test_context.Mock()
@@ -115,8 +120,9 @@ class TestAXEventSynthesizer:
         obj_rect.x = 40
         obj_rect.y = 50
         ax_component_mock.get_rect.return_value = obj_rect
-        ax_component_mock.get_rect_intersection.return_value = test_context.Mock()
-        ax_component_mock.is_empty_rect.return_value = False
+        ax_uc_mock = essential_modules["orca.ax_utilities_component"].AXUtilitiesComponent
+        ax_uc_mock.get_rect_intersection.return_value = test_context.Mock()
+        ax_uc_mock.is_empty_rect.return_value = False
 
     def test_highest_ancestor_true_when_parent_is_none(self, test_context: OrcaTestContext) -> None:
         """Test _highest_ancestor returns True when parent is None."""
@@ -191,8 +197,9 @@ class TestAXEventSynthesizer:
         ancestor_rect.width = 100
         ancestor_rect.height = 100
         ax_component_mock.get_rect.side_effect = [obj_rect, ancestor_rect]
-        ax_component_mock.get_rect_intersection.return_value = test_context.Mock()
-        ax_component_mock.is_empty_rect.return_value = True
+        ax_uc_mock = essential_modules["orca.ax_utilities_component"].AXUtilitiesComponent
+        ax_uc_mock.get_rect_intersection.return_value = test_context.Mock()
+        ax_uc_mock.is_empty_rect.return_value = True
         result = AXEventSynthesizer._is_scrolled_off_screen(mock_accessible)
         assert result is True
 
@@ -348,13 +355,8 @@ class TestAXEventSynthesizer:
         mock_ancestor = test_context.Mock(spec=Atspi.Accessible)
         ax_object_mock = essential_modules["orca.ax_object"].AXObject
         ax_object_mock.find_ancestor.return_value = mock_ancestor
-        ancestor_rect = test_context.Mock()
-        ancestor_rect.x = 100
-        ancestor_rect.y = 200
-        ancestor_rect.width = 400
-        ancestor_rect.height = 300
-        ax_component_mock = essential_modules["orca.ax_component"].AXComponent
-        ax_component_mock.get_rect.return_value = ancestor_rect
+        ax_uc_mock = essential_modules["orca.ax_utilities_component"].AXUtilitiesComponent
+        ax_uc_mock.get_center_point.return_value = (300.0, 350.0)
         mock_scroll = test_context.Mock()
         test_context.patch_object(AXEventSynthesizer, "_scroll_to_point", new=mock_scroll)
         AXEventSynthesizer.scroll_to_center(mock_accessible, 5, 15)
@@ -449,8 +451,8 @@ class TestAXEventSynthesizer:
         empty_rect.x = empty_rect.y = empty_rect.width = empty_rect.height = 0
         ax_text_mock.get_character_rect.return_value = empty_rect
 
-        ax_component_mock = essential_modules["orca.ax_component"].AXComponent
-        ax_component_mock.is_empty_rect.return_value = True
+        ax_uc_mock = essential_modules["orca.ax_utilities_component"].AXUtilitiesComponent
+        ax_uc_mock.is_empty_rect.return_value = True
 
         test_context.patch_object(
             AXEventSynthesizer,
@@ -484,8 +486,9 @@ class TestAXEventSynthesizer:
         ax_component_mock.get_rect.return_value = obj_rect
         empty_intersection = test_context.Mock()
         empty_intersection.width = empty_intersection.height = 0
-        ax_component_mock.get_rect_intersection.return_value = empty_intersection
-        ax_component_mock.is_empty_rect.side_effect = lambda rect: rect.width == 0
+        ax_uc_mock = essential_modules["orca.ax_utilities_component"].AXUtilitiesComponent
+        ax_uc_mock.get_rect_intersection.return_value = empty_intersection
+        ax_uc_mock.is_empty_rect.side_effect = lambda rect: rect.width == 0
 
         test_context.patch_object(
             AXEventSynthesizer,
@@ -642,8 +645,9 @@ class TestAXEventSynthesizer:
         empty_intersection.width = empty_intersection.height = 0
 
         ax_component_mock.get_rect.side_effect = [obj_rect, ancestor_rect]
-        ax_component_mock.get_rect_intersection.return_value = empty_intersection
-        ax_component_mock.is_empty_rect.return_value = True
+        ax_uc_mock = essential_modules["orca.ax_utilities_component"].AXUtilitiesComponent
+        ax_uc_mock.get_rect_intersection.return_value = empty_intersection
+        ax_uc_mock.is_empty_rect.return_value = True
 
         ax_object_mock = essential_modules["orca.ax_object"].AXObject
         ax_object_mock.find_ancestor.return_value = mock_ancestor
@@ -671,8 +675,9 @@ class TestAXEventSynthesizer:
         intersection.width = intersection.height = 50
 
         ax_component_mock.get_rect.side_effect = [obj_rect, ancestor_rect]
-        ax_component_mock.get_rect_intersection.return_value = intersection
-        ax_component_mock.is_empty_rect.return_value = False
+        ax_uc_mock = essential_modules["orca.ax_utilities_component"].AXUtilitiesComponent
+        ax_uc_mock.get_rect_intersection.return_value = intersection
+        ax_uc_mock.is_empty_rect.return_value = False
 
         ax_object_mock = essential_modules["orca.ax_object"].AXObject
         ax_object_mock.find_ancestor.return_value = mock_ancestor
@@ -702,8 +707,9 @@ class TestAXEventSynthesizer:
         empty_char_rect.width = empty_char_rect.height = 0
 
         ax_component_mock.get_rect.side_effect = [obj_rect, ancestor_rect]
-        ax_component_mock.get_rect_intersection.return_value = intersection
-        ax_component_mock.is_empty_rect.side_effect = [False, True]
+        ax_uc_mock = essential_modules["orca.ax_utilities_component"].AXUtilitiesComponent
+        ax_uc_mock.get_rect_intersection.return_value = intersection
+        ax_uc_mock.is_empty_rect.side_effect = [False, True]
 
         ax_text_mock = essential_modules["orca.ax_text"].AXText
         ax_text_mock.get_character_rect.return_value = empty_char_rect

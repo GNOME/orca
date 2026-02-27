@@ -52,7 +52,6 @@ from orca import (
     structural_navigator,
     table_navigator,
 )
-from orca.ax_component import AXComponent
 from orca.ax_document import AXDocument
 from orca.ax_event_synthesizer import AXEventSynthesizer
 from orca.ax_object import AXObject
@@ -631,7 +630,7 @@ class Script(default.Script):
     def _on_busy_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:busy accessibility events."""
 
-        if AXComponent.has_no_size(event.source):
+        if AXUtilities.has_no_size(event.source):
             msg = "WEB: Ignoring event from page with no size."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -1126,7 +1125,7 @@ class Script(default.Script):
     def _on_document_load_complete(self, event: Atspi.Event) -> bool:
         """Callback for document:load-complete accessibility events."""
 
-        if AXComponent.has_no_size(event.source):
+        if AXUtilities.has_no_size(event.source):
             msg = "WEB: Ignoring event from page with no size."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True

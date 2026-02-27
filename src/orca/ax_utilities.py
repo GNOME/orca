@@ -45,6 +45,7 @@ from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities_application import AXUtilitiesApplication
 from .ax_utilities_collection import AXUtilitiesCollection
+from .ax_utilities_component import AXUtilitiesComponent
 from .ax_utilities_event import AXUtilitiesEvent
 from .ax_utilities_relation import AXUtilitiesRelation
 from .ax_utilities_role import AXUtilitiesRole
@@ -644,7 +645,9 @@ class AXUtilities:
         if AXUtilitiesRole.is_radio_button(first) and AXObject.get_toolkit_name(first) == "gtk":
             # Gtk radio buttons are often in reverse order, except for when they're not.
             # See https://gitlab.gnome.org/GNOME/gtk/-/issues/7839.
-            sorted_first, _sorted_second = AXComponent.sort_objects_by_position([first, second])
+            sorted_first, _sorted_second = AXUtilitiesComponent.sort_objects_by_position(
+                [first, second]
+            )
             if sorted_first != first:
                 result.reverse()
 
@@ -1006,7 +1009,7 @@ class AXUtilities:
         tokens = ["AXUtilities:", obj, "is not hidden. Checking size and rect..."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if AXComponent.has_no_size_or_invalid_rect(obj):
+        if AXUtilitiesComponent.has_no_size_or_invalid_rect(obj):
             tokens = ["AXUtilities: Rect of", obj, "is unhelpful. Treating as on screen."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
@@ -1014,7 +1017,7 @@ class AXUtilities:
         tokens = ["AXUtilities:", obj, "has size and a valid rect. Checking if off screen..."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if AXComponent.object_is_off_screen(obj):
+        if AXUtilitiesComponent.object_is_off_screen(obj):
             tokens = ["AXUtilities:", obj, "is believed to be off screen."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
@@ -1028,7 +1031,9 @@ class AXUtilities:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if bounding_box is not None and not AXComponent.object_intersects_rect(obj, bounding_box):
+        if bounding_box is not None and not AXUtilitiesComponent.object_intersects_rect(
+            obj, bounding_box
+        ):
             tokens = ["AXUtilities", obj, "not in", bounding_box, ". Treating as off screen."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
@@ -1168,6 +1173,9 @@ for method_name, method in inspect.getmembers(AXUtilitiesState, predicate=inspec
 for method_name, method in inspect.getmembers(AXUtilitiesCollection, predicate=inspect.isfunction):
     if method_name.startswith("find"):
         setattr(AXUtilities, method_name, method)
+
+for method_name, method in inspect.getmembers(AXUtilitiesComponent, predicate=inspect.isfunction):
+    setattr(AXUtilities, method_name, method)
 
 for method_name, method in inspect.getmembers(AXUtilitiesTable, predicate=inspect.isfunction):
     setattr(AXUtilities, method_name, method)
