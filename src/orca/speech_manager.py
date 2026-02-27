@@ -440,11 +440,21 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 # User cancelled - revert local copy and sync runtime values
                 voice_acss.clear()
                 voice_acss.update(saved_acss)
-                self._sync_voice_to_settings(voice_type)
             else:
-                # User clicked OK - changes already applied and synced
+                # User clicked OK. The combo may show a selection the user
+                # didn't interact with (e.g. auto-selected first entry after
+                # a synthesizer change). Sync it so the ACSS dict matches
+                # what the UI shows.
+                if ACSS.FAMILY not in voice_acss:
+                    _lang, families_combo, family_choices = self._get_widgets_for_voice_type(
+                        voice_type
+                    )
+                    active = families_combo.get_active()
+                    if 0 <= active < len(family_choices):
+                        voice_acss[ACSS.FAMILY] = family_choices[active]
                 self._has_unsaved_changes = True
 
+            self._sync_voice_to_settings(voice_type)
             dlg.destroy()
 
         dialog.connect("response", on_response)
@@ -1117,7 +1127,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._voice_families = self._manager.get_voice_families()
         self._families_sorted = False
 
-        # Clear family for all voice types when synthesizer changes
+        # When synthesizer changes, replace the old family with a default
+        # from the new synthesizer. Without this, import_voice only writes
+        # keys present in the ACSS dict, so old family values persist in dconf.
+        default_family = self._voice_families[0] if self._voice_families else None
         for voice_type in [
             self.VoiceType.DEFAULT,
             self.VoiceType.HYPERLINK,
@@ -1127,6 +1140,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             voice_acss = self._get_acss_for_voice_type(voice_type)
             if ACSS.FAMILY in voice_acss:
                 del voice_acss[ACSS.FAMILY]
+            if default_family is not None:
+                voice_acss[ACSS.FAMILY] = default_family
 
         self._has_unsaved_changes = True
 
