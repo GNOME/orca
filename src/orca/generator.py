@@ -590,7 +590,7 @@ class Generator:
 
     @log_generator_output
     def _generate_keyboard_mnemonic(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if mnemonic := AXObject.get_mnemonic(obj):
+        if mnemonic := AXUtilities.get_mnemonic(obj):
             return [mnemonic]
         return []
 

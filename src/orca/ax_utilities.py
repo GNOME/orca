@@ -43,6 +43,7 @@ from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_table import AXTable
 from .ax_text import AXText
+from .ax_utilities_action import AXUtilitiesAction
 from .ax_utilities_application import AXUtilitiesApplication
 from .ax_utilities_collection import AXUtilitiesCollection
 from .ax_utilities_component import AXUtilitiesComponent
@@ -489,7 +490,7 @@ class AXUtilities:
 
         if AXUtilitiesState.is_focusable(obj):
             return False, "is focusable"
-        if AXObject.has_action(obj, "click"):
+        if AXUtilitiesAction.has_action(obj, "click"):
             return False, "has click action"
         return True, "is not interactive"
 
@@ -1110,7 +1111,9 @@ class AXUtilities:
             if root_name and children and root in objects and root_name == AXObject.get_name(child):
                 objects.remove(root)
 
-        is_interactive = AXUtilitiesState.is_focusable(root) or AXObject.has_action(root, "click")
+        is_interactive = AXUtilitiesState.is_focusable(root) or AXUtilitiesAction.has_action(
+            root, "click"
+        )
         if not objects and is_interactive:
             objects = [root]
 
@@ -1154,6 +1157,9 @@ class AXUtilities:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
+
+for method_name, method in inspect.getmembers(AXUtilitiesAction, predicate=inspect.isfunction):
+    setattr(AXUtilities, method_name, method)
 
 for method_name, method in inspect.getmembers(AXUtilitiesApplication, predicate=inspect.isfunction):
     setattr(AXUtilities, method_name, method)

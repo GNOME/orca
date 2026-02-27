@@ -174,7 +174,7 @@ class TestAXUtilitiesDebugging:
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
 
-        test_context.patch("orca.ax_utilities_debugging.AXObject.get_n_actions", return_value=2)
+        test_context.patch("orca.ax_utilities_debugging.AXAction.get_n_actions", return_value=2)
 
         def mock_get_action_name(unused_obj, index):
             return ["click", "focus"][index]
@@ -183,11 +183,11 @@ class TestAXUtilitiesDebugging:
             return ["Return", ""][index]
 
         test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_action_name",
+            "orca.ax_utilities_debugging.AXAction.get_action_name",
             new=mock_get_action_name,
         )
         test_context.patch(
-            "orca.ax_utilities_debugging.AXObject.get_action_key_binding",
+            "orca.ax_utilities_debugging.AXAction.get_action_key_binding",
             new=mock_get_action_key_binding,
         )
         result = AXUtilitiesDebugging.actions_as_string(mock_obj)

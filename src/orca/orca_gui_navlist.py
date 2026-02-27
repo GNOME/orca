@@ -36,7 +36,7 @@ from gi.repository import Gdk, GObject, Gtk
 
 from . import debug, guilabels, script_manager
 from .ax_event_synthesizer import AXEventSynthesizer
-from .ax_object import AXObject
+from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
@@ -143,10 +143,10 @@ class OrcaNavListGUI:
     def _on_cursor_changed(self, _widget: Gtk.Widget) -> None:
         """Handle cursor change events in the tree view."""
         obj, _offset = self._get_selected_accessible_and_offset()
-        n_actions = AXObject.get_n_actions(obj)
+        actions = AXUtilities.get_action_names(obj)
         if self._activate_button is not None:
-            self._activate_button.set_sensitive(n_actions > 0)
-            if n_actions > 0:
+            self._activate_button.set_sensitive(bool(actions))
+            if actions:
                 self._activate_button.grab_default()
             elif self._jump_to_button is not None:
                 self._jump_to_button.grab_default()

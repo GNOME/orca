@@ -171,6 +171,16 @@ class TestActionPresenter:
             ax_utilities_mock = test_context.Mock()
             ax_utilities_mock.get_application = test_context.Mock(return_value=test_context.Mock())
 
+            ax_action_mock = test_context.Mock()
+            ax_action_mock.get_n_actions = ax_object_mock.get_n_actions
+            ax_action_mock.get_action_name = ax_object_mock.get_action_name
+            ax_action_mock.get_action_localized_name = ax_object_mock.get_action_localized_name
+            ax_action_mock.get_action_description = ax_object_mock.get_action_description
+
+            ax_action_module_mock = test_context.Mock()
+            ax_action_module_mock.AXAction = ax_action_mock
+            test_context.patch_module("orca.ax_action", ax_action_module_mock)
+
             ax_object_module_mock = test_context.Mock()
             ax_object_module_mock.AXObject = ax_object_mock
             test_context.patch_module("orca.ax_object", ax_object_module_mock)
@@ -269,7 +279,7 @@ class TestActionPresenter:
 
         mock_idle_add = test_context.patch("orca.action_presenter.GLib.idle_add")
         mock_debug_tokens = test_context.patch("orca.action_presenter.debug.print_tokens")
-        mock_do_action = test_context.patch("orca.action_presenter.AXObject.do_named_action")
+        mock_do_action = test_context.patch("orca.action_presenter.AXUtilities.do_named_action")
         mock_do_action.return_value = action_success
 
         presenter._perform_action("click")

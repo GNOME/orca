@@ -54,6 +54,7 @@ class TestAXEventSynthesizer:
             "orca.ax_device_manager",
             "orca.ax_object",
             "orca.ax_text",
+            "orca.ax_utilities_action",
             "orca.ax_utilities_component",
             "orca.ax_utilities_debugging",
             "orca.ax_utilities_role",
@@ -402,11 +403,11 @@ class TestAXEventSynthesizer:
         from orca.ax_event_synthesizer import AXEventSynthesizer
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        ax_object_mock = essential_modules["orca.ax_object"].AXObject
-        ax_object_mock.do_named_action.return_value = True
+        ax_utilities_action_mock = essential_modules["orca.ax_utilities_action"].AXUtilitiesAction
+        ax_utilities_action_mock.do_named_action.return_value = True
         result = AXEventSynthesizer.try_all_clickable_actions(mock_accessible)
         assert result is True
-        ax_object_mock.do_named_action.assert_called_once_with(mock_accessible, "click")
+        ax_utilities_action_mock.do_named_action.assert_called_once_with(mock_accessible, "click")
 
     def test_try_all_clickable_actions_false_when_all_fail(
         self,
@@ -418,11 +419,11 @@ class TestAXEventSynthesizer:
         from orca.ax_event_synthesizer import AXEventSynthesizer
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        ax_object_mock = essential_modules["orca.ax_object"].AXObject
-        ax_object_mock.do_named_action.return_value = False
+        ax_utilities_action_mock = essential_modules["orca.ax_utilities_action"].AXUtilitiesAction
+        ax_utilities_action_mock.do_named_action.return_value = False
         result = AXEventSynthesizer.try_all_clickable_actions(mock_accessible)
         assert result is False
-        assert ax_object_mock.do_named_action.call_count == 5
+        assert ax_utilities_action_mock.do_named_action.call_count == 5
 
     def test_get_synthesizer_returns_singleton(self, test_context: OrcaTestContext) -> None:
         """Test get_synthesizer returns the singleton instance."""

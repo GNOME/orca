@@ -37,7 +37,6 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import ax_device_manager, debug, focus_manager, input_event, script_manager
-from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
@@ -477,13 +476,7 @@ class InputEventManager:
         if not string:
             return False
 
-        rv = False
-        keys = AXObject.get_action_key_binding(obj, 0).split(";")
-        for key in keys:
-            if key.endswith(string.upper()):
-                rv = True
-                break
-
+        rv = AXUtilities.has_matching_shortcut(obj, string)
         if rv:
             tokens = ["INPUT EVENT MANAGER: Last event was shortcut for", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)

@@ -33,6 +33,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
 
+from .ax_action import AXAction
 from .ax_object import AXObject
 from .ax_utilities_application import AXUtilitiesApplication
 from .ax_utilities_relation import AXUtilitiesRelation
@@ -139,9 +140,9 @@ class AXUtilitiesDebugging:
         """Returns information about the actions as a string."""
 
         results = []
-        for i in range(AXObject.get_n_actions(obj)):
-            result = AXObject.get_action_name(obj, i)
-            keybinding = AXObject.get_action_key_binding(obj, i)
+        for i in range(AXAction.get_n_actions(obj)):
+            result = AXAction.get_action_name(obj, i)
+            keybinding = AXAction.get_action_key_binding(obj, i)
             if keybinding:
                 result += f" ({keybinding})"
             results.append(result)

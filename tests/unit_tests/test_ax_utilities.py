@@ -51,8 +51,10 @@ class TestAXUtilities:
         """Set up mocks for ax_utilities dependencies."""
 
         additional_modules = [
+            "orca.ax_action",
             "orca.ax_component",
             "orca.ax_selection",
+            "orca.ax_utilities_action",
             "orca.ax_utilities_component",
             "orca.ax_table",
             "orca.ax_text",
@@ -77,7 +79,6 @@ class TestAXUtilities:
         ax_object_class_mock.get_description = test_context.Mock(return_value="")
         ax_object_class_mock.get_child = test_context.Mock(return_value=None)
         ax_object_class_mock.find_ancestor = test_context.Mock(return_value=None)
-        ax_object_class_mock.has_action = test_context.Mock(return_value=False)
         ax_object_class_mock.clear_cache = test_context.Mock()
         ax_object_class_mock.get_attributes_dict = test_context.Mock(return_value={})
         ax_object_class_mock.supports_collection = test_context.Mock(return_value=False)
@@ -90,6 +91,12 @@ class TestAXUtilities:
 
         ax_object_class_mock.iter_children = mock_iter_children
         essential_modules["orca.ax_object"].AXObject = ax_object_class_mock
+
+        action_utilities_class_mock = test_context.Mock()
+        action_utilities_class_mock.has_action = test_context.Mock(return_value=False)
+        essential_modules[
+            "orca.ax_utilities_action"
+        ].AXUtilitiesAction = action_utilities_class_mock
 
         role_class_mock = test_context.Mock()
         role_class_mock.get_layout_only_roles = test_context.Mock(return_value=[Atspi.Role.FILLER])
@@ -316,7 +323,7 @@ class TestAXUtilities:
                 "id": "document_with_click_action",
                 "mocks_config": {
                     "ax_utilities_role.is_document": True,
-                    "ax_object.has_action": True,
+                    "ax_utilities_action.has_action": True,
                 },
                 "expected": False,
             },
@@ -434,8 +441,10 @@ class TestAXUtilities:
                     essential_modules["orca.ax_object"].AXObject.find_ancestor = test_context.Mock(
                         return_value=None,
                     )
-            elif mock_path.startswith("ax_object.has_action"):
-                essential_modules["orca.ax_object"].AXObject.has_action = test_context.Mock(
+            elif mock_path.startswith("ax_utilities_action.has_action"):
+                essential_modules[
+                    "orca.ax_utilities_action"
+                ].AXUtilitiesAction.has_action = test_context.Mock(
                     return_value=mock_value,
                 )
             elif mock_path.startswith("ax_object.get_role"):

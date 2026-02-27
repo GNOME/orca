@@ -150,11 +150,6 @@ class TestInputEventManager:
         input_event_mock.BrailleEvent = MockBrailleEvent
         input_event_mock.MouseButtonEvent = MockMouseButtonEvent
 
-        ax_object_mock = essential_modules["orca.ax_object"]
-        ax_object_class = test_context.Mock()
-        ax_object_class.get_action_key_binding = test_context.Mock(return_value="Alt+F")
-        ax_object_mock.AXObject = ax_object_class
-
         ax_utilities_mock = essential_modules["orca.ax_utilities"]
         ax_utilities_class = test_context.Mock()
         ax_utilities_class.can_be_active_window = test_context.Mock(return_value=True)
@@ -163,6 +158,7 @@ class TestInputEventManager:
         ax_utilities_class.is_widget_controlled_by_line_navigation = test_context.Mock(
             return_value=False,
         )
+        ax_utilities_class.has_matching_shortcut = test_context.Mock(return_value=False)
         ax_utilities_class.is_table_header = test_context.Mock(return_value=False)
         ax_utilities_class.is_terminal = test_context.Mock(return_value=False)
         ax_utilities_mock.AXUtilities = ax_utilities_class
@@ -186,7 +182,7 @@ class TestInputEventManager:
         essential_modules["focus_manager_instance"] = focus_mgr_instance
         essential_modules["script_manager_instance"] = script_mgr_instance
         essential_modules["script_instance"] = script_instance
-        essential_modules["ax_object_class"] = ax_object_class
+
         essential_modules["ax_utilities_class"] = ax_utilities_class
         essential_modules["atspi"] = atspi_mock
         return essential_modules
@@ -208,10 +204,6 @@ class TestInputEventManager:
         test_context.patch(
             "orca.input_event_manager.input_event",
             new=essential_modules["orca.input_event"],
-        )
-        test_context.patch(
-            "orca.input_event_manager.AXObject",
-            new=essential_modules["ax_object_class"],
         )
         test_context.patch(
             "orca.input_event_manager.AXUtilities",
@@ -1100,26 +1092,20 @@ class TestInputEventManager:
             {
                 "id": "empty_key_string",
                 "key_string": "",
-                "action_key_bindings": [],
+                "has_shortcut": False,
                 "expected_result": False,
             },
             {
-                "id": "matching_key_uppercase",
+                "id": "matching_shortcut",
                 "key_string": "f",
-                "action_key_bindings": ["Alt+F"],
+                "has_shortcut": True,
                 "expected_result": True,
             },
             {
-                "id": "non_matching_key",
+                "id": "no_matching_shortcut",
                 "key_string": "f",
-                "action_key_bindings": ["Alt+G"],
+                "has_shortcut": False,
                 "expected_result": False,
-            },
-            {
-                "id": "multiple_bindings_match",
-                "key_string": "f",
-                "action_key_bindings": ["Alt+F", "Ctrl+F"],
-                "expected_result": True,
             },
         ],
         ids=lambda case: case["id"],
@@ -1136,9 +1122,8 @@ class TestInputEventManager:
         input_event_manager._last_key_and_modifiers = test_context.Mock(
             return_value=(case["key_string"], 0),
         )
-        essential_modules["ax_object_class"].get_action_key_binding.return_value = ";".join(
-            case["action_key_bindings"],
-        )
+        ax_utilities_class = essential_modules["orca.ax_utilities"].AXUtilities
+        ax_utilities_class.has_matching_shortcut.return_value = case["has_shortcut"]
         result = input_event_manager.last_event_was_shortcut_for(mock_obj)
         assert result == case["expected_result"]
         if case["expected_result"]:

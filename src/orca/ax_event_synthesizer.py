@@ -32,6 +32,7 @@ from . import ax_device_manager, debug
 from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
+from .ax_utilities_action import AXUtilitiesAction
 from .ax_utilities_component import AXUtilitiesComponent
 from .ax_utilities_debugging import AXUtilitiesDebugging
 from .ax_utilities_role import AXUtilitiesRole
@@ -368,7 +369,7 @@ class AXEventSynthesizer:
 
         actions = ["click", "press", "jump", "open", "activate"]
         for action in actions:
-            if AXObject.do_named_action(obj, action):
+            if AXUtilitiesAction.do_named_action(obj, action):
                 tokens = ["AXEventSynthesizer: '", action, "' on", obj, "performed successfully"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True

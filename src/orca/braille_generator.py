@@ -315,7 +315,7 @@ class BrailleGenerator(generator.Generator):
             return []
 
         result = []
-        accelerator = AXObject.get_accelerator(obj)
+        accelerator = AXUtilities.get_accelerator(obj)
         if accelerator:
             result.append("(" + accelerator + ")")
         return result

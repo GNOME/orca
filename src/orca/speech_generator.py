@@ -1173,7 +1173,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result: list[Any] = []
-        accelerator = AXObject.get_accelerator(obj)
+        accelerator = AXUtilities.get_accelerator(obj)
         if accelerator:
             result.append(accelerator)
             result.extend(self.voice(SYSTEM, obj=obj, **args))

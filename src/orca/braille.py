@@ -1085,7 +1085,7 @@ class Component(Region):
         if script and script.utilities.grab_focus_before_routing(self.accessible):
             AXObject.grab_focus(self.accessible)
 
-        if AXObject.do_action(self.accessible, 0):
+        if AXEventSynthesizer.try_all_clickable_actions(self.accessible):
             return
 
         # Do a mouse button 1 click if we have to. For example, page tabs don't have any actions

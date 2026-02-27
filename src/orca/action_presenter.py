@@ -44,6 +44,7 @@ from . import (
     presentation_manager,
     script_manager,
 )
+from .ax_action import AXAction
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 
@@ -126,7 +127,7 @@ class ActionPresenter:
             return
 
         self._gui.hide()
-        result = AXObject.do_named_action(self._obj, action)
+        result = AXUtilities.do_named_action(self._obj, action)
         tokens = ["ACTION PRESENTER: Performing", action, "on", self._obj, "succeeded:", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         GLib.idle_add(self._gui.destroy)
@@ -159,10 +160,10 @@ class ActionPresenter:
             return True
 
         actions = {}
-        for i in range(AXObject.get_n_actions(obj)):
-            name = AXObject.get_action_name(obj, i)
-            localized_name = AXObject.get_action_localized_name(obj, i)
-            description = AXObject.get_action_description(obj, i)
+        for i in range(AXAction.get_n_actions(obj)):
+            name = AXAction.get_action_name(obj, i)
+            localized_name = AXAction.get_action_localized_name(obj, i)
+            description = AXAction.get_action_description(obj, i)
             tokens = [
                 f"ACTION PRESENTER: Action {i} on",
                 obj,

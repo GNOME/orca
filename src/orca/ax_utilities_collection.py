@@ -33,7 +33,7 @@ from gi.repository import Atspi
 
 from . import debug
 from .ax_collection import AXCollection
-from .ax_object import AXObject
+from .ax_utilities_action import AXUtilitiesAction
 from .ax_utilities_debugging import AXUtilitiesDebugging
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
@@ -295,7 +295,7 @@ class AXUtilitiesCollection:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         def is_match(obj):
-            result = AXObject.has_action(obj, "click")
+            result = AXUtilitiesAction.has_action(obj, "click")
             tokens = [
                 "AXUtilitiesCollection:",
                 obj,
@@ -394,7 +394,7 @@ class AXUtilitiesCollection:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         def is_match(obj):
-            result = AXObject.has_action(obj, "click-ancestor")
+            result = AXUtilitiesAction.has_action(obj, "click-ancestor")
             tokens = [
                 "AXUtilitiesCollection:",
                 obj,

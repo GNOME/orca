@@ -2218,9 +2218,9 @@ class Utilities(script_utilities.Utilities):
         rv = False
         if not document_presenter.get_presenter().is_focus_mode_widget(self._script, obj):
             if not AXUtilities.is_focusable(obj):
-                rv = AXObject.has_action(obj, "click")
+                rv = AXUtilities.has_action(obj, "click")
             else:
-                rv = AXObject.has_action(obj, "click-ancestor")
+                rv = AXUtilities.has_action(obj, "click-ancestor")
 
         if rv and not AXObject.get_name(obj) and AXObject.supports_text(obj):
             text = AXText.get_all_text(obj)
@@ -2458,7 +2458,7 @@ class Utilities(script_utilities.Utilities):
         ):
             rv = False
         elif AXObject.supports_action(obj):
-            names = AXObject.get_action_names(obj)
+            names = AXUtilities.get_action_names(obj)
             ignore = ["click-ancestor", "show-context-menu", "do-default"]
             names = list(filter(lambda x: x not in ignore, names))
             rv = not names
@@ -2473,7 +2473,7 @@ class Utilities(script_utilities.Utilities):
 
         if not (obj and self.in_document_content(obj)):
             return False
-        return AXObject.has_action(obj, "showlongdesc")
+        return AXUtilities.has_action(obj, "showlongdesc")
 
     def infer_label_for(self, obj: Atspi.Accessible) -> tuple[str | None, list[Atspi.Accessible]]:
         """Attempts to infer the text serving as the functional label for obj."""

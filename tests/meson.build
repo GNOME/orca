@@ -10,6 +10,7 @@ test_env.prepend('PYTHONPATH', meson.project_source_root() / 'src')
 
 unit_tests = [
   'unit_tests/test_action_presenter.py',
+  'unit_tests/test_ax_action.py',
   'unit_tests/test_ax_collection.py',
   'unit_tests/test_ax_component.py',
   'unit_tests/test_ax_document.py',
@@ -20,6 +21,7 @@ unit_tests = [
   'unit_tests/test_ax_table.py',
   'unit_tests/test_ax_text.py',
   'unit_tests/test_ax_utilities.py',
+  'unit_tests/test_ax_utilities_action.py',
   'unit_tests/test_ax_utilities_component.py',
   'unit_tests/test_ax_utilities_application.py',
   'unit_tests/test_ax_utilities_debugging.py',

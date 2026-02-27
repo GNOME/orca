@@ -221,7 +221,7 @@ class Utilities:
         return (
             AXUtilities.is_link(obj)
             and not AXUtilities.is_focusable(obj)
-            and not AXObject.has_action(obj, "jump")
+            and not AXUtilities.has_action(obj, "jump")
             and not AXUtilities.has_role_from_aria(obj)
         )
 
@@ -1167,7 +1167,7 @@ class Utilities:
     def has_meaningful_toggle_action(self, obj: Atspi.Accessible) -> bool:
         """Returns true if obj has a toggle action that is meaningful. Because app bugs."""
 
-        return AXObject.has_action(obj, "toggle") or AXObject.has_action(
+        return AXUtilities.has_action(obj, "toggle") or AXUtilities.has_action(
             obj,
             object_properties.ACTION_TOGGLE,
         )
