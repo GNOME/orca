@@ -208,7 +208,12 @@ class SpeechServer:
     def set_voice_family(self, family: VoiceFamily) -> None:
         """Sets the voice family to family VoiceFamily dictionary."""
 
-    def speak_character(self, character: str, acss: ACSS | None = None) -> None:
+    def speak_character(
+        self,
+        character: str,
+        acss: ACSS | None = None,
+        cap_style: CapitalizationStyle | None = None,
+    ) -> None:
         """Speaks character."""
 
     def speak_key_event(self, event: input_event.KeyboardEvent, acss: ACSS | None = None) -> None:

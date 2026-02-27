@@ -223,6 +223,7 @@ class TestPresentationManager:
 
         manager = get_manager()
         mock_event = test_context.Mock()
+        mock_event.get_key_name.return_value = "BackSpace"
         manager.present_key_event(mock_event)
 
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
@@ -443,7 +444,11 @@ class TestPresentationManager:
         manager.speak_character("a")
 
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
-        speech_pres.speak_character.assert_called_once_with("a")
+        speech_pres.speak_character.assert_called_once_with(
+            "a",
+            voice_from="a",
+            cap_style=None,
+        )
 
     def test_speak_message_delegates(self, test_context: OrcaTestContext) -> None:
         """Test speak_message delegates to speech_presenter."""

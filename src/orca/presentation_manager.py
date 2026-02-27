@@ -33,6 +33,7 @@ from . import (
     sound_presenter,
     speech_manager,
     speech_presenter,
+    speechserver,
     typing_echo_presenter,
 )
 from .ax_utilities import AXUtilities
@@ -104,6 +105,10 @@ class PresentationManager:
     def present_key_event(self, event: KeyboardEvent) -> None:
         """Presents a key event via speech (and potentially braille/sound in the future)."""
 
+        key_name = event.get_key_name()
+        if len(key_name) == 1:
+            self.speak_character(key_name)
+            return
         speech_presenter.get_presenter().present_key_event(event)
 
     # pylint: disable-next=too-many-arguments, too-many-positional-arguments
@@ -170,10 +175,39 @@ class PresentationManager:
 
         speech_presenter.get_presenter().spell_phonetically(item_string)
 
+    @staticmethod
+    def _get_cap_style(character: str) -> speechserver.CapitalizationStyle | None:
+        """Returns the capitalization style if character is uppercase alpha."""
+
+        if character.isupper() and character.strip().isalpha():
+            style_str = speech_manager.get_manager().get_capitalization_style()
+            return speechserver.CapitalizationStyle(style_str)
+        return None
+
     def speak_character(self, character: str) -> None:
         """Speaks a single character."""
 
-        speech_presenter.get_presenter().speak_character(character)
+        speech_presenter.get_presenter().speak_character(
+            character,
+            voice_from=character,
+            cap_style=self._get_cap_style(character),
+        )
+
+    def speak_character_at_offset(
+        self,
+        obj: Atspi.Accessible,
+        offset: int,
+        character: str,
+    ) -> None:
+        """Speaks a character at the given offset, handling capitalization style."""
+
+        cap_style = self._get_cap_style(character)
+        speech_presenter.get_presenter().speak_character_at_offset(
+            obj,
+            offset,
+            character,
+            cap_style=cap_style,
+        )
 
     def speak_accessible_text(self, obj: Atspi.Accessible | None, text: str) -> None:
         """Speaks text from an accessible object."""

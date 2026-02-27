@@ -526,6 +526,15 @@ class SpeechServer(speechserver.SpeechServer):
             return
 
         if len(text) == 1:
+            if (
+                text.isupper()
+                and text.isalpha()
+                and self._current_capitalization_style == CapitalizationStyle.ICON.value
+            ):
+                # See https://gitlab.gnome.org/GNOME/orca/-/issues/657
+                self._apply_acss(acss)
+                self._speak(text, acss)
+                return
             msg = f"SPEECH DISPATCHER: Speaking '{text}' as char"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._apply_acss(acss)
@@ -545,10 +554,18 @@ class SpeechServer(speechserver.SpeechServer):
 
         GLib.idle_add(self._say_all, utterance_iterator, progress_callback)
 
-    def speak_character(self, character: str, acss: dict[str, Any] | None = None) -> None:
+    def speak_character(
+        self,
+        character: str,
+        acss: dict[str, Any] | None = None,
+        cap_style: CapitalizationStyle | None = None,
+    ) -> None:
         """Speaks character."""
 
         self._apply_acss(acss)
+        if cap_style == CapitalizationStyle.NONE:
+            character = character.lower()
+
         name = character
         focus = focus_manager.get_manager().get_locus_of_focus()
         if AXUtilities.is_math_related(focus):
@@ -557,6 +574,11 @@ class SpeechServer(speechserver.SpeechServer):
             name = mathsymbols.get_character_name(character)
 
         if not name or name == character:
+            if cap_style == CapitalizationStyle.ICON:
+                # char() does not reliably trigger the icon sound whereas
+                # speak() does. See https://gitlab.gnome.org/GNOME/orca/-/issues/657
+                self._speak(character, acss)
+                return
             msg = f"SPEECH DISPATCHER: Speaking '{character}' as char"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             if self._client is not None:

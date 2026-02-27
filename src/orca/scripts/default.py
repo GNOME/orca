@@ -1566,7 +1566,7 @@ class Script(script.Script):
             focus_manager.CARET_TRACKING,
         )
 
-        speech_presenter.get_presenter().speak_character_at_offset(obj, offset, character)
+        presentation_manager.get_manager().speak_character_at_offset(obj, offset, character)
         self.point_of_reference["lastTextUnitSpoken"] = "char"
 
     def say_line(self, obj: Atspi.Accessible, offset: int | None = None) -> None:

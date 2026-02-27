@@ -45,7 +45,7 @@ except Exception:
 
 from . import debug, guilabels, speechserver
 from .acss import ACSS
-from .speechserver import PunctuationStyle, VoiceFamily
+from .speechserver import CapitalizationStyle, PunctuationStyle, VoiceFamily
 from .ssml import SSML, SSMLCapabilities
 
 if TYPE_CHECKING:
@@ -465,7 +465,12 @@ class SpeechServer(speechserver.SpeechServer):
 
         return families
 
-    def speak_character(self, character: str, acss: ACSS | None = None) -> None:
+    def speak_character(
+        self,
+        character: str,
+        acss: ACSS | None = None,
+        cap_style: CapitalizationStyle | None = None,
+    ) -> None:
         debug.print_message(debug.LEVEL_INFO, f"SPIEL Character: '{character}'")
 
         if not acss:

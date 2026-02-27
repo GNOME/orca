@@ -2393,6 +2393,7 @@ class SpeechPresenter:
         obj: Atspi.Accessible,
         offset: int,
         character: str,
+        cap_style: speechserver.CapitalizationStyle | None = None,
     ) -> None:
         """Handles presentation of a character at the given offset."""
 
@@ -2414,7 +2415,7 @@ class SpeechPresenter:
         if error := self.get_error_description(obj, offset):
             self.speak_message(error)
 
-        self.speak_character(character)
+        self.speak_character(character, voice_from=character, cap_style=cap_style)
 
     def speak_string(self, text: str, voice: ACSS | list[ACSS] | None = None) -> None:
         """Speaks a string using the specified voice."""
@@ -2431,11 +2432,16 @@ class SpeechPresenter:
 
         speech.say_all(utterance_iterator, progress_callback)
 
-    def speak_character(self, character: str) -> None:
-        """Speaks a single character."""
+    def speak_character(
+        self,
+        character: str,
+        voice_from: str = "",
+        cap_style: speechserver.CapitalizationStyle | None = None,
+    ) -> None:
+        """Speaks a single character using the voice for voice_from."""
 
-        voice = self._get_voice(text=character)
-        speech.speak_character(character, voice[0] if voice else None)
+        voice = self._get_voice(text=voice_from or character)
+        speech.speak_character(character, voice[0] if voice else None, cap_style=cap_style)
 
     def spell_item(self, text: str) -> None:
         """Speak the characters in the string one by one."""

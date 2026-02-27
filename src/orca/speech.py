@@ -242,7 +242,11 @@ def speak_key_event(
         _state.write_key(key_name)
 
 
-def speak_character(character: str, acss: ACSS | dict[str, Any] | None = None) -> None:
+def speak_character(
+    character: str,
+    acss: ACSS | dict[str, Any] | None = None,
+    cap_style: speechserver.CapitalizationStyle | None = None,
+) -> None:
     """Speaks character immediately using the voice specified by acss."""
 
     if _state.mute_speech:
@@ -255,6 +259,6 @@ def speak_character(character: str, acss: ACSS | dict[str, Any] | None = None) -
 
     server = _state.server
     if server:
-        server.speak_character(character, acss=acss)
+        server.speak_character(character, acss=acss, cap_style=cap_style)
     if _state.write_character is not None:
         _state.write_character(character)
