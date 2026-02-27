@@ -59,6 +59,7 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
 
         self._build()
         self._initializing = False
+        self.reload()
 
     def _build(self) -> None:
         """Build the UI components."""
