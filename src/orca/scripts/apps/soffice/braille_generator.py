@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING, Any
 
 from orca import braille, braille_generator, debug
 from orca.ax_object import AXObject
-from orca.ax_table import AXTable
 from orca.ax_text import AXText
+from orca.ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     import gi
@@ -76,11 +76,11 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             for child in AXObject.iter_children(obj):
                 result.extend(self.generate(child, **args))
 
-        if not self._script.utilities.is_spreadsheet_cell(obj):
+        if not AXUtilities.is_spreadsheet_cell(obj):
             return result
 
         object_text = AXText.get_substring(obj, 0, -1)
-        cell_name = AXTable.get_label_for_cell_coordinates(
+        cell_name = AXUtilities.get_label_for_cell_coordinates(
             obj,
         ) or self._script.utilities.spreadsheet_cell_name(obj)
         return [braille.Component(obj, f"{object_text} {cell_name}")]

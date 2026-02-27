@@ -70,7 +70,7 @@ class Utilities(script_utilities.Utilities):
         if not AXUtilities.is_expanded(obj):
             return []
 
-        parent = AXTable.get_table(obj)
+        parent = AXUtilities.get_table(obj)
         if parent is None:
             return []
 

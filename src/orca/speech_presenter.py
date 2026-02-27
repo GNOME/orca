@@ -65,7 +65,6 @@ from . import (
 from .ax_document import AXDocument
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
-from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
@@ -1738,7 +1737,7 @@ class SpeechPresenter:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        table = AXTable.get_table(focus_manager.get_manager().get_locus_of_focus())
+        table = AXUtilities.get_table(focus_manager.get_manager().get_locus_of_focus())
         if table is None and notify_user:
             presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
@@ -1746,7 +1745,7 @@ class SpeechPresenter:
         if not script.utilities.get_document_for_object(table):
             getter = self.get_speak_row_in_gui_table
             setter = self.set_speak_row_in_gui_table
-        elif script.utilities.is_spreadsheet_table(table):
+        elif AXUtilities.is_spreadsheet_table(table):
             getter = self.get_speak_row_in_spreadsheet
             setter = self.set_speak_row_in_spreadsheet
         else:

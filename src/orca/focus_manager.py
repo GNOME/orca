@@ -61,7 +61,6 @@ class FocusManager:
         self._object_of_interest: Atspi.Accessible | None = None
         self._object_to_restore: Atspi.Accessible | None = None
         self._active_mode: str | None = None
-        self._last_cell_coordinates: tuple[int, int] = (-1, -1)
         self._last_cursor_position: tuple[Atspi.Accessible | None, int] = (None, -1)
         self._penultimate_cursor_position: tuple[Atspi.Accessible | None, int] = (None, -1)
         self._in_preferences_window: bool = False
@@ -226,21 +225,6 @@ class FocusManager:
         self._penultimate_cursor_position = self._last_cursor_position
         self._last_cursor_position = obj, offset
 
-    def get_last_cell_coordinates(self) -> tuple[int, int]:
-        """Returns the last known cell coordinates as a tuple of (row, column)."""
-
-        row, column = self._last_cell_coordinates
-        msg = f"FOCUS MANAGER: Last known cell coordinates: row={row}, column={column}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return row, column
-
-    def set_last_cell_coordinates(self, row: int, column: int) -> None:
-        """Sets the last known cell coordinates as a tuple of (row, column)."""
-
-        msg = f"FOCUS MANAGER: Setting last cell coordinates to row={row}, column={column}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        self._last_cell_coordinates = row, column
-
     def get_locus_of_focus(self) -> Atspi.Accessible | None:
         """Returns the current locus of focus (i.e. the object with visual focus)."""
 
@@ -253,8 +237,7 @@ class FocusManager:
 
         # We save the current row and column of a newly focused or selected table cell so that on
         # subsequent cell focus/selection we only present the changed location.
-        row, column = AXTable.get_cell_coordinates(obj, find_cell=True)
-        self.set_last_cell_coordinates(row, column)
+        AXTable.save_last_cell_coordinates(obj)
 
         # We save the offset for text objects because some apps and toolkits emit caret-moved events
         # immediately after a text object gains focus, even though the caret has not actually moved.

@@ -56,7 +56,6 @@ from orca.ax_component import AXComponent
 from orca.ax_document import AXDocument
 from orca.ax_event_synthesizer import AXEventSynthesizer
 from orca.ax_object import AXObject
-from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_event import TextEventReason
@@ -264,7 +263,7 @@ class Script(default.Script):
             or structural_navigator.get_navigator().last_input_event_was_navigation_command()
             or table_navigator.get_navigator().last_input_event_was_navigation_command()
             or args.get("includeContext")
-            or AXTable.get_table(obj)
+            or AXUtilities.get_table(obj)
         ):
             prior_context = self.utilities.get_prior_context()
             if prior_context is not None:
@@ -540,7 +539,7 @@ class Script(default.Script):
             contents = self.utilities.get_line_contents_at_offset(new_focus, 0)
         elif (
             input_event_manager.get_manager().last_event_was_page_navigation()
-            and not AXTable.get_table(new_focus)
+            and not AXUtilities.get_table(new_focus)
             and not AXUtilities.is_feed_article(new_focus)
         ):
             tokens = ["WEB: New focus", new_focus, "was scrolled to. Generating line."]
@@ -1112,14 +1111,14 @@ class Script(default.Script):
             return False
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if event.source != AXTable.get_table(focus):
+        if event.source != AXUtilities.get_table(focus):
             msg = "WEB: focus is not in this table"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         presentation_manager.get_manager().present_message(messages.TABLE_REORDERED_COLUMNS)
         header = AXObject.find_ancestor_inclusive(focus, AXUtilities.is_table_header)
-        msg = AXTable.get_presentable_sort_order_from_header(header, True)
+        msg = AXUtilities.get_presentable_sort_order_from_header(header, True)
         if msg:
             presentation_manager.get_manager().present_message(msg)
         return True
@@ -1395,14 +1394,14 @@ class Script(default.Script):
             return False
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if event.source != AXTable.get_table(focus):
+        if event.source != AXUtilities.get_table(focus):
             msg = "WEB: focus is not in this table"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         presentation_manager.get_manager().present_message(messages.TABLE_REORDERED_ROWS)
         header = AXObject.find_ancestor_inclusive(focus, AXUtilities.is_table_header)
-        msg = AXTable.get_presentable_sort_order_from_header(header, True)
+        msg = AXUtilities.get_presentable_sort_order_from_header(header, True)
         if msg:
             presentation_manager.get_manager().present_message(msg)
         return True

@@ -79,7 +79,6 @@ from orca import (
 from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
-from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_event import TextEventReason
@@ -1363,7 +1362,7 @@ class Script(script.Script):
         if not input_event_manager.get_manager().last_event_was_table_sort():
             return True
 
-        if event.source != AXTable.get_table(focus_manager.get_manager().get_locus_of_focus()):
+        if event.source != AXUtilities.get_table(focus_manager.get_manager().get_locus_of_focus()):
             return True
 
         presentation_manager.get_manager().present_message(messages.TABLE_REORDERED_COLUMNS)
@@ -1376,7 +1375,7 @@ class Script(script.Script):
         if not input_event_manager.get_manager().last_event_was_table_sort():
             return True
 
-        if event.source != AXTable.get_table(focus_manager.get_manager().get_locus_of_focus()):
+        if event.source != AXUtilities.get_table(focus_manager.get_manager().get_locus_of_focus()):
             return True
 
         presentation_manager.get_manager().present_message(messages.TABLE_REORDERED_ROWS)

@@ -3352,7 +3352,7 @@ class StructuralNavigator:
             [guilabels.SN_HEADER_CAPTION, guilabels.SN_HEADER_DESCRIPTION],
             lambda obj: [
                 self._get_item_string(script, obj),
-                AXTable.get_table_description_for_presentation(obj),
+                AXUtilities.get_table_description_for_presentation(obj),
             ],
             notify_user=notify_user,
         )

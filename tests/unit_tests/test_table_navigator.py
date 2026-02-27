@@ -606,7 +606,7 @@ class TestTableNavigator:
             "orca.table_navigator.AXTable.get_cell_coordinates",
             return_value=(2, 3),
         )
-        test_context.patch("orca.table_navigator.AXTable.get_table", return_value=mock_table)
+        test_context.patch("orca.table_navigator.AXUtilities.get_table", return_value=mock_table)
         test_context.patch("orca.table_navigator.AXTable.get_cell_at", return_value=mock_cell)
         mock_controller = test_context.Mock()
         essential_modules["orca.dbus_service"].get_remote_controller.return_value = mock_controller
@@ -879,7 +879,10 @@ class TestTableNavigator:
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_up_cell = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch("orca.table_navigator.AXTable.is_top_of_column", return_value=False)
-        test_context.patch("orca.table_navigator.AXTable.get_cell_above", return_value=mock_up_cell)
+        test_context.patch(
+            "orca.table_navigator.AXTable.get_cell_above",
+            return_value=mock_up_cell,
+        )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
@@ -915,7 +918,10 @@ class TestTableNavigator:
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_down_cell = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch("orca.table_navigator.AXTable.is_bottom_of_column", return_value=False)
+        test_context.patch(
+            "orca.table_navigator.AXTable.is_bottom_of_column",
+            return_value=False,
+        )
         test_context.patch(
             "orca.table_navigator.AXTable.get_cell_below",
             return_value=mock_down_cell,
@@ -983,7 +989,7 @@ class TestTableNavigator:
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_table = test_context.Mock(spec=Atspi.Accessible)
         mock_first_cell = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch("orca.table_navigator.AXTable.get_table", return_value=mock_table)
+        test_context.patch("orca.table_navigator.AXUtilities.get_table", return_value=mock_table)
         test_context.patch(
             "orca.table_navigator.AXTable.get_first_cell",
             return_value=mock_first_cell,
@@ -1070,7 +1076,7 @@ class TestTableNavigator:
         navigator = TableNavigator()
         mock_script = test_context.Mock()
         mock_script.utilities.grab_focus_when_setting_caret.return_value = False
-        mock_script.utilities.is_gui_cell.return_value = False
+        test_context.patch("orca.table_navigator.AXUtilities.is_gui_cell", return_value=False)
         mock_script.present_object = test_context.Mock()
         mock_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_previous_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -1162,7 +1168,10 @@ class TestTableNavigator:
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_blank_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_final_cell = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch("orca.table_navigator.AXTable.get_cell_coordinates", return_value=(1, 1))
+        test_context.patch(
+            "orca.table_navigator.AXTable.get_cell_coordinates",
+            return_value=(1, 1),
+        )
         test_context.patch(
             "orca.table_navigator.AXTable.is_start_of_row",
             side_effect=lambda cell: cell == mock_final_cell,
@@ -1209,7 +1218,10 @@ class TestTableNavigator:
         essential_modules = self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch("orca.table_navigator.AXTable.get_cell_coordinates", return_value=(1, 5))
+        test_context.patch(
+            "orca.table_navigator.AXTable.get_cell_coordinates",
+            return_value=(1, 5),
+        )
         test_context.patch("orca.table_navigator.AXTable.get_cell_on_right", return_value=None)
         test_context.patch("orca.table_navigator.AXTable.is_end_of_row", return_value=True)
         test_context.patch("orca.table_navigator.debug.print_tokens", return_value=None)
@@ -1289,7 +1301,7 @@ class TestTableNavigator:
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_table = test_context.Mock(spec=Atspi.Accessible)
         mock_last_cell = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch("orca.table_navigator.AXTable.get_table", return_value=mock_table)
+        test_context.patch("orca.table_navigator.AXUtilities.get_table", return_value=mock_table)
         test_context.patch(
             "orca.table_navigator.AXTable.get_last_cell",
             return_value=mock_last_cell,
@@ -1466,7 +1478,10 @@ class TestTableNavigator:
             new=mock_keybindings_class,
         )
         mock_cell = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch("orca.table_navigator.AXTable.is_bottom_of_column", return_value=True)
+        test_context.patch(
+            "orca.table_navigator.AXTable.is_bottom_of_column",
+            return_value=True,
+        )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
@@ -1496,7 +1511,10 @@ class TestTableNavigator:
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_bottom_cell = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch("orca.table_navigator.AXTable.is_bottom_of_column", return_value=False)
+        test_context.patch(
+            "orca.table_navigator.AXTable.is_bottom_of_column",
+            return_value=False,
+        )
         test_context.patch(
             "orca.table_navigator.AXTable.get_bottom_of_column",
             return_value=mock_bottom_cell,
@@ -1790,13 +1808,13 @@ class TestTableNavigator:
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_table = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch("orca.table_navigator.AXTable.get_table", return_value=mock_table)
+        test_context.patch("orca.table_navigator.AXUtilities.get_table", return_value=mock_table)
         test_context.patch(
             "orca.table_navigator.AXTable.get_cell_coordinates",
             return_value=(1, 2),
         )
         test_context.patch(
-            "orca.table_navigator.AXTable.set_dynamic_column_headers_row",
+            "orca.table_navigator.AXUtilities.set_dynamic_column_headers_row",
             return_value=None,
         )
         essential_modules["orca.messages"].DYNAMIC_COLUMN_HEADER_SET = "Column header row set to %d"
@@ -1866,9 +1884,9 @@ class TestTableNavigator:
         mock_focus_manager = test_context.Mock()
         essential_modules["orca.focus_manager"].get_manager.return_value = mock_focus_manager
         mock_focus_manager.get_locus_of_focus.return_value = mock_current_cell
-        test_context.patch("orca.table_navigator.AXTable.get_table", return_value=mock_table)
+        test_context.patch("orca.table_navigator.AXUtilities.get_table", return_value=mock_table)
         test_context.patch(
-            "orca.table_navigator.AXTable.clear_dynamic_column_headers_row",
+            "orca.table_navigator.AXUtilities.clear_dynamic_column_headers_row",
             return_value=None,
         )
         from orca.table_navigator import TableNavigator
@@ -1935,13 +1953,13 @@ class TestTableNavigator:
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_table = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch("orca.table_navigator.AXTable.get_table", return_value=mock_table)
+        test_context.patch("orca.table_navigator.AXUtilities.get_table", return_value=mock_table)
         test_context.patch(
             "orca.table_navigator.AXTable.get_cell_coordinates",
             return_value=(2, 1),
         )
         test_context.patch(
-            "orca.table_navigator.AXTable.set_dynamic_row_headers_column",
+            "orca.table_navigator.AXUtilities.set_dynamic_row_headers_column",
             return_value=None,
         )
         essential_modules["orca.messages"].DYNAMIC_ROW_HEADER_SET = "Row header column set to %s"
@@ -2012,9 +2030,9 @@ class TestTableNavigator:
         mock_focus_manager = test_context.Mock()
         essential_modules["orca.focus_manager"].get_manager.return_value = mock_focus_manager
         mock_focus_manager.get_locus_of_focus.return_value = mock_current_cell
-        test_context.patch("orca.table_navigator.AXTable.get_table", return_value=mock_table)
+        test_context.patch("orca.table_navigator.AXUtilities.get_table", return_value=mock_table)
         test_context.patch(
-            "orca.table_navigator.AXTable.clear_dynamic_row_headers_column",
+            "orca.table_navigator.AXUtilities.clear_dynamic_row_headers_column",
             return_value=None,
         )
         from orca.table_navigator import TableNavigator
@@ -2047,7 +2065,7 @@ class TestTableNavigator:
             "orca.table_navigator.AXTable.get_cell_coordinates",
             return_value=(2, 3),
         )
-        test_context.patch("orca.table_navigator.AXTable.get_table", return_value=mock_table)
+        test_context.patch("orca.table_navigator.AXUtilities.get_table", return_value=mock_table)
         test_context.patch(
             "orca.table_navigator.AXTable.get_cell_at",
             return_value=mock_different_cell,
@@ -2101,7 +2119,7 @@ class TestTableNavigator:
         navigator = TableNavigator()
         mock_script = test_context.Mock()
         mock_script.utilities.grab_focus_when_setting_caret.return_value = False
-        mock_script.utilities.is_gui_cell.return_value = False
+        test_context.patch("orca.table_navigator.AXUtilities.is_gui_cell", return_value=False)
         mock_script.present_object = test_context.Mock()
         mock_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_previous_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -2163,7 +2181,7 @@ class TestTableNavigator:
         navigator = TableNavigator()
         mock_script = test_context.Mock()
         mock_script.utilities.grab_focus_when_setting_caret.return_value = True
-        mock_script.utilities.is_gui_cell.return_value = True
+        test_context.patch("orca.table_navigator.AXUtilities.is_gui_cell", return_value=True)
         mock_script.utilities.set_caret_position = test_context.Mock()
         mock_script.present_object = test_context.Mock()
         mock_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -2256,7 +2274,7 @@ class TestTableNavigator:
         navigator = TableNavigator()
         mock_script = test_context.Mock()
         mock_script.utilities.grab_focus_when_setting_caret.return_value = False
-        mock_script.utilities.is_gui_cell.return_value = False
+        test_context.patch("orca.table_navigator.AXUtilities.is_gui_cell", return_value=False)
         mock_script.present_object = test_context.Mock()
         mock_cell = test_context.Mock(spec=Atspi.Accessible)
         mock_previous_cell = test_context.Mock(spec=Atspi.Accessible)

@@ -49,6 +49,7 @@ from .ax_utilities_event import AXUtilitiesEvent
 from .ax_utilities_relation import AXUtilitiesRelation
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
+from .ax_utilities_table import AXUtilitiesTable
 
 if TYPE_CHECKING:
     from typing import ClassVar
@@ -502,7 +503,7 @@ class AXUtilities:
     def _is_layout_only_table(obj: Atspi.Accessible) -> tuple[bool, str]:
         """Returns True with reason if this table is layout-only."""
 
-        if AXTable.is_layout_table(obj):
+        if AXUtilitiesTable.is_layout_table(obj):
             return True, "is layout table"
         return False, ""
 
@@ -526,8 +527,8 @@ class AXUtilities:
 
         if AXUtilitiesRole.is_table_cell(AXObject.get_child(obj, 0)):
             return True, "child of this cell is table cell"
-        table = AXTable.get_table(obj)
-        if AXUtilitiesRole.is_table(table) and AXTable.is_layout_table(table):
+        table = AXUtilitiesTable.get_table(obj)
+        if AXUtilitiesRole.is_table(table) and AXUtilitiesTable.is_layout_table(table):
             return True, "is in layout table"
         return False, ""
 
@@ -747,12 +748,12 @@ class AXUtilities:
             return int(result)
 
         if AXUtilitiesRole.is_table_row(obj):
-            return AXTable.get_row_count(AXTable.get_table(obj))
+            return AXTable.get_row_count(AXUtilitiesTable.get_table(obj))
 
         if AXUtilitiesRole.is_table_cell_or_header(obj) and not AXUtilitiesRole.is_table_row(
             AXObject.get_parent(obj),
         ):
-            return AXTable.get_row_count(AXTable.get_table(obj))
+            return AXTable.get_row_count(AXUtilitiesTable.get_table(obj))
 
         if AXUtilitiesRole.is_combo_box(obj):
             selected_children = AXSelection.get_selected_children(obj)
@@ -1076,7 +1077,7 @@ class AXUtilities:
             return [root]
 
         if AXObject.supports_table(root) and AXObject.supports_selection(root):
-            return list(AXTable.iter_visible_cells(root))
+            return list(AXUtilitiesTable.iter_visible_cells(root))
 
         objects = []
         root_name = AXObject.get_name(root)
@@ -1162,5 +1163,8 @@ for method_name, method in inspect.getmembers(AXUtilitiesState, predicate=inspec
 for method_name, method in inspect.getmembers(AXUtilitiesCollection, predicate=inspect.isfunction):
     if method_name.startswith("find"):
         setattr(AXUtilities, method_name, method)
+
+for method_name, method in inspect.getmembers(AXUtilitiesTable, predicate=inspect.isfunction):
+    setattr(AXUtilities, method_name, method)
 
 AXUtilities.start_cache_clearing_thread()

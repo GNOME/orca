@@ -162,14 +162,14 @@ class TestFocusManager:
         ax_object_mock.AXObject.is_ancestor = test_context.Mock(return_value=False)
         ax_object_mock.AXObject.has_broken_ancestry = test_context.Mock(return_value=False)
 
-        ax_table_mock = essential_modules["orca.ax_table"]
-        ax_table_mock.AXTable = test_context.Mock()
-        ax_table_mock.AXTable.get_cell_coordinates = test_context.Mock(return_value=(-1, -1))
-
         ax_text_mock = essential_modules["orca.ax_text"]
         ax_text_mock.AXText = test_context.Mock()
         ax_text_mock.AXText.get_caret_offset = test_context.Mock(return_value=-1)
         ax_text_mock.AXText.update_cached_selected_text = test_context.Mock()
+
+        ax_table_mock = essential_modules["orca.ax_table"]
+        ax_table_mock.AXTable = test_context.Mock()
+        ax_table_mock.AXTable.get_cell_coordinates = test_context.Mock(return_value=(-1, -1))
 
         ax_utilities_mock = essential_modules["orca.ax_utilities"]
         ax_utilities_mock.AXUtilities = test_context.Mock()
@@ -659,18 +659,15 @@ class TestFocusManager:
         """Test FocusManager.set_locus_of_focus saves table cell coordinates."""
 
         self._setup_dependencies(test_context)
+        from orca.ax_table import AXTable
         from orca.focus_manager import FocusManager
 
-        mock_get_cell_coordinates = self._setup_locus_of_focus_ax_mocks(
-            test_context,
-            cell_coords=(5, 3),
-        )[0]
+        self._setup_locus_of_focus_ax_mocks(test_context, cell_coords=(5, 3))
         manager = FocusManager()
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         manager.set_locus_of_focus(None, mock_obj)
 
-        mock_get_cell_coordinates.assert_called_once_with(mock_obj, find_cell=True)
-        assert manager.get_last_cell_coordinates() == (5, 3)
+        AXTable.save_last_cell_coordinates.assert_called_once_with(mock_obj)
 
     def test_set_locus_of_focus_text_cursor_position(self, test_context: OrcaTestContext) -> None:
         """Test FocusManager.set_locus_of_focus saves text cursor position."""
@@ -701,13 +698,16 @@ class TestFocusManager:
         from orca.ax_object import AXObject
         from orca.ax_table import AXTable
         from orca.ax_text import AXText
+        from orca.ax_utilities import AXUtilities
         from orca.focus_manager import FocusManager
 
         test_context.patch_object(AXObject, "is_valid", side_effect=lambda obj: obj is not None)
         manager = FocusManager()
 
         mock_get_cell_coordinates = test_context.Mock()
-        test_context.patch_object(AXTable, "get_cell_coordinates", new=mock_get_cell_coordinates)
+        test_context.patch_object(
+            AXUtilities, "get_cell_coordinates", new=mock_get_cell_coordinates
+        )
         mock_get_caret_offset = test_context.Mock()
         test_context.patch_object(AXText, "get_caret_offset", new=mock_get_caret_offset)
         mock_update_cached_selected_text = test_context.Mock()
@@ -718,11 +718,9 @@ class TestFocusManager:
         )
         manager.set_locus_of_focus(None, None)
 
-        mock_get_cell_coordinates.assert_not_called()
+        AXTable.save_last_cell_coordinates.assert_not_called()
         mock_get_caret_offset.assert_not_called()
         mock_update_cached_selected_text.assert_not_called()
-
-        assert manager.get_last_cell_coordinates() == (-1, -1)
 
     @pytest.mark.parametrize(
         "method_name,attribute_name,test_offset",

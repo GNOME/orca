@@ -605,7 +605,7 @@ class TestWhereAmIPresenter:
 
         cell_obj = test_context.Mock()
         mock_script = test_context.Mock()
-        mock_script.utilities.is_spreadsheet_cell.return_value = True
+        deps["orca.ax_utilities"].AXUtilities.is_spreadsheet_cell.return_value = True
 
         deps["orca.ax_text"].AXText.get_selected_text.return_value = ("cell text", 0, 9)
         presenter = WhereAmIPresenter()
@@ -622,7 +622,7 @@ class TestWhereAmIPresenter:
         prev_obj = test_context.Mock()
         next_obj = test_context.Mock()
         mock_script = test_context.Mock()
-        mock_script.utilities.is_spreadsheet_cell.return_value = False
+        deps["orca.ax_utilities"].AXUtilities.is_spreadsheet_cell.return_value = False
         mock_script.utilities.find_previous_object.side_effect = [prev_obj, None]
         mock_script.utilities.find_next_object.side_effect = [next_obj, None]
 
@@ -696,7 +696,6 @@ class TestWhereAmIPresenter:
         spreadsheet = test_context.Mock()
         deps["orca.ax_object"].AXObject.find_ancestor.return_value = spreadsheet
         mock_script = test_context.Mock()
-        mock_script.utilities.is_spreadsheet_table = test_context.Mock(return_value=True)
         mock_script.utilities.speak_selected_cell_range.return_value = True
         presenter = WhereAmIPresenter()
         result = presenter.present_selection(mock_script)
@@ -718,7 +717,6 @@ class TestWhereAmIPresenter:
         container = test_context.Mock()
         selected_items = [test_context.Mock(), test_context.Mock()]
         mock_script = test_context.Mock()
-        mock_script.utilities.is_spreadsheet_table = test_context.Mock(return_value=False)
         mock_script.utilities.get_selection_container.return_value = container
         mock_script.utilities.selected_child_count.return_value = 2
         mock_script.utilities.selectable_child_count.return_value = 5
@@ -743,7 +741,6 @@ class TestWhereAmIPresenter:
 
         deps["orca.ax_object"].AXObject.find_ancestor.return_value = None
         mock_script = test_context.Mock()
-        mock_script.utilities.is_spreadsheet_table = test_context.Mock(return_value=False)
         mock_script.utilities.get_selection_container.return_value = None
         presenter = WhereAmIPresenter()
         presenter.present_selected_text = test_context.Mock(return_value=True)

@@ -61,6 +61,7 @@ class TestAXUtilities:
             "orca.ax_utilities_relation",
             "orca.ax_utilities_role",
             "orca.ax_utilities_state",
+            "orca.ax_utilities_table",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -142,11 +143,14 @@ class TestAXUtilities:
         essential_modules["orca.ax_utilities_application"].AXUtilitiesApplication = app_class_mock
 
         table_class_mock = test_context.Mock()
-        table_class_mock.is_layout_table = test_context.Mock(return_value=False)
         table_class_mock.get_table = test_context.Mock(return_value=None)
         table_class_mock.get_cell_coordinates = test_context.Mock(return_value=(0, 0))
         table_class_mock.get_row_count = test_context.Mock(return_value=0)
         essential_modules["orca.ax_table"].AXTable = table_class_mock
+
+        utilities_table_class_mock = test_context.Mock()
+        utilities_table_class_mock.is_layout_table = test_context.Mock(return_value=False)
+        essential_modules["orca.ax_utilities_table"].AXUtilitiesTable = utilities_table_class_mock
 
         collection_class_mock = test_context.Mock()
         collection_class_mock.find_all_descendants = test_context.Mock(return_value=[])
@@ -319,7 +323,7 @@ class TestAXUtilities:
                 "id": "table_layout_table",
                 "mocks_config": {
                     "ax_utilities_role.is_table": True,
-                    "ax_table.is_layout_table": True,
+                    "ax_utilities_table.is_layout_table": True,
                 },
                 "expected": True,
             },
@@ -327,7 +331,7 @@ class TestAXUtilities:
                 "id": "table_data_table",
                 "mocks_config": {
                     "ax_utilities_role.is_table": True,
-                    "ax_table.is_layout_table": False,
+                    "ax_utilities_table.is_layout_table": False,
                 },
                 "expected": False,
             },
@@ -455,6 +459,13 @@ class TestAXUtilities:
                 method_name = mock_path.split(".", 1)[1]
                 setattr(
                     essential_modules["orca.ax_table"].AXTable,
+                    method_name,
+                    test_context.Mock(return_value=mock_value),
+                )
+            elif mock_path.startswith("ax_utilities_table."):
+                method_name = mock_path.split(".", 1)[1]
+                setattr(
+                    essential_modules["orca.ax_utilities_table"].AXUtilitiesTable,
                     method_name,
                     test_context.Mock(return_value=mock_value),
                 )
@@ -2208,7 +2219,7 @@ class TestAXUtilities:
         essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
             return_value=mock_parent,
         )
-        essential_modules["orca.ax_table"].AXTable.get_table = test_context.Mock(
+        essential_modules["orca.ax_utilities_table"].AXUtilitiesTable.get_table = test_context.Mock(
             return_value=mock_table,
         )
         essential_modules["orca.ax_table"].AXTable.get_row_count = test_context.Mock(
@@ -2231,7 +2242,7 @@ class TestAXUtilities:
         essential_modules[
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.is_table_row = test_context.Mock(return_value=True)
-        essential_modules["orca.ax_table"].AXTable.get_table = test_context.Mock(
+        essential_modules["orca.ax_utilities_table"].AXUtilitiesTable.get_table = test_context.Mock(
             return_value=mock_table,
         )
         essential_modules["orca.ax_table"].AXTable.get_row_count = test_context.Mock(

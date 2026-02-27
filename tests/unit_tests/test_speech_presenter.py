@@ -104,6 +104,7 @@ class TestSpeechPresenter:
 
         ax_utilities_mock = essential_modules["orca.ax_utilities"]
         ax_utilities_mock.AXUtilities = test_context.Mock()
+        ax_utilities_mock.AXUtilities.get_table = test_context.Mock(return_value=None)
         ax_utilities_mock.AXUtilities.is_math_related = test_context.Mock(return_value=False)
         ax_utilities_mock.AXUtilities.is_text_input_telephone = test_context.Mock(
             return_value=False,
@@ -113,10 +114,6 @@ class TestSpeechPresenter:
         ax_document_mock = essential_modules["orca.ax_document"]
         ax_document_mock.AXDocument = test_context.Mock()
         ax_document_mock.AXDocument.is_plain_text = test_context.Mock(return_value=False)
-
-        ax_table_mock = essential_modules["orca.ax_table"]
-        ax_table_mock.AXTable = test_context.Mock()
-        ax_table_mock.AXTable.get_table = test_context.Mock(return_value=None)
 
         mathsymbols_mock = essential_modules["orca.mathsymbols"]
         mathsymbols_mock.adjust_for_speech = test_context.Mock(side_effect=lambda x: x)

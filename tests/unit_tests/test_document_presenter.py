@@ -1868,9 +1868,8 @@ class TestDocumentPresenter:
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.TABLE_CELL
 
-        ax_table = mocks["orca.ax_table"]
-        ax_table.AXTable.get_table.return_value = MagicMock()
-        ax_table.AXTable.is_layout_table.return_value = True
+        ax_utilities.AXUtilities.get_table.return_value = MagicMock()
+        ax_utilities.AXUtilities.is_layout_table.return_value = True
 
         mock_script = MagicMock()
         mock_obj = MagicMock()
@@ -1900,8 +1899,7 @@ class TestDocumentPresenter:
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.LIST_ITEM
 
-        ax_table = mocks["orca.ax_table"]
-        ax_table.AXTable.is_layout_table.return_value = False
+        ax_utilities.AXUtilities.is_layout_table.return_value = False
 
         mock_script = MagicMock()
         mock_obj = MagicMock()
@@ -1932,8 +1930,7 @@ class TestDocumentPresenter:
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.BUTTON
 
-        ax_table = mocks["orca.ax_table"]
-        ax_table.AXTable.is_layout_table.return_value = False
+        ax_utilities.AXUtilities.is_layout_table.return_value = False
 
         mock_script = MagicMock()
         mock_obj = MagicMock()
@@ -1967,9 +1964,8 @@ class TestDocumentPresenter:
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.TABLE_CELL
 
-        ax_table = mocks["orca.ax_table"]
-        ax_table.AXTable.get_table.return_value = MagicMock()
-        ax_table.AXTable.is_layout_table.return_value = False
+        ax_utilities.AXUtilities.get_table.return_value = MagicMock()
+        ax_utilities.AXUtilities.is_layout_table.return_value = False
 
         ax_document = mocks["orca.ax_document"]
         ax_document.AXDocument.is_pdf.return_value = False
@@ -2007,8 +2003,7 @@ class TestDocumentPresenter:
         ax_object.AXObject.get_role.return_value = Atspi.Role.PARAGRAPH
         ax_object.AXObject.find_ancestor.return_value = MagicMock()
 
-        ax_table = mocks["orca.ax_table"]
-        ax_table.AXTable.is_layout_table.return_value = False
+        ax_utilities.AXUtilities.is_layout_table.return_value = False
 
         mock_script = MagicMock()
         mock_script.utilities.is_text_block_element.return_value = True
@@ -2043,8 +2038,7 @@ class TestDocumentPresenter:
         ax_object.AXObject.get_role.return_value = Atspi.Role.PARAGRAPH
         ax_object.AXObject.find_ancestor.side_effect = [None, MagicMock()]
 
-        ax_table = mocks["orca.ax_table"]
-        ax_table.AXTable.is_layout_table.return_value = False
+        ax_utilities.AXUtilities.is_layout_table.return_value = False
 
         mock_script = MagicMock()
         mock_script.utilities.is_text_block_element.return_value = True
@@ -2080,8 +2074,7 @@ class TestDocumentPresenter:
         ax_object.AXObject.get_role.return_value = Atspi.Role.PARAGRAPH
         ax_object.AXObject.find_ancestor.side_effect = [None, None, MagicMock()]
 
-        ax_table = mocks["orca.ax_table"]
-        ax_table.AXTable.is_layout_table.return_value = False
+        ax_utilities.AXUtilities.is_layout_table.return_value = False
 
         mock_script = MagicMock()
         mock_script.utilities.is_text_block_element.return_value = True
@@ -2117,8 +2110,7 @@ class TestDocumentPresenter:
         ax_object.AXObject.get_role.return_value = Atspi.Role.PARAGRAPH
         ax_object.AXObject.find_ancestor.return_value = None
 
-        ax_table = mocks["orca.ax_table"]
-        ax_table.AXTable.is_layout_table.return_value = False
+        ax_utilities.AXUtilities.is_layout_table.return_value = False
 
         mock_script = MagicMock()
         mock_script.utilities.is_text_block_element.return_value = True
@@ -2155,8 +2147,7 @@ class TestDocumentPresenter:
         ax_object.AXObject.get_role.return_value = Atspi.Role.PARAGRAPH
         ax_object.AXObject.find_ancestor.return_value = None
 
-        ax_table = mocks["orca.ax_table"]
-        ax_table.AXTable.is_layout_table.return_value = False
+        ax_utilities.AXUtilities.is_layout_table.return_value = False
 
         mock_script = MagicMock()
         mock_script.utilities.is_text_block_element.return_value = True
@@ -2193,9 +2184,8 @@ class TestDocumentPresenter:
         ax_object.AXObject.get_role.return_value = Atspi.Role.TABLE_CELL
         ax_object.AXObject.find_ancestor.return_value = None
 
-        ax_table = mocks["orca.ax_table"]
-        ax_table.AXTable.get_table.return_value = MagicMock()
-        ax_table.AXTable.is_layout_table.return_value = False
+        ax_utilities.AXUtilities.get_table.return_value = MagicMock()
+        ax_utilities.AXUtilities.is_layout_table.return_value = False
 
         ax_document = mocks["orca.ax_document"]
         ax_document.AXDocument.is_pdf.return_value = True

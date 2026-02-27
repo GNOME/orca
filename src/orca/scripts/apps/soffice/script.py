@@ -79,7 +79,7 @@ class Script(default.Script):
         focus = focus_manager.get_manager().get_locus_of_focus()
         if (
             flat_review_presenter.get_presenter().is_active()
-            or self.utilities.is_spreadsheet_cell(focus)
+            or AXUtilities.is_spreadsheet_cell(focus)
             or not AXUtilities.is_paragraph(focus)
         ):
             return super()._pan_braille_left(event)
@@ -107,7 +107,7 @@ class Script(default.Script):
         focus = focus_manager.get_manager().get_locus_of_focus()
         if (
             flat_review_presenter.get_presenter().is_active()
-            or self.utilities.is_spreadsheet_cell(focus)
+            or AXUtilities.is_spreadsheet_cell(focus)
             or not AXUtilities.is_paragraph(focus)
         ):
             return super()._pan_braille_right(event)
@@ -190,7 +190,7 @@ class Script(default.Script):
             return super()._on_active_descendant_changed(event)
 
         if (
-            self.utilities.is_spreadsheet_cell(event.any_data)
+            AXUtilities.is_spreadsheet_cell(event.any_data)
             and not AXUtilities.is_focused(event.any_data)
             and not AXUtilities.is_focused(event.source)
         ):
@@ -236,7 +236,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.is_spreadsheet_cell(focus_manager.get_manager().get_locus_of_focus()):
+        if AXUtilities.is_spreadsheet_cell(focus_manager.get_manager().get_locus_of_focus()):
             if not self.utilities.is_cell_being_edited(event.source):
                 msg = "SOFFICE: Event ignored: Source is not cell being edited."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -247,15 +247,15 @@ class Script(default.Script):
     def _on_children_added(self, event: Atspi.Event) -> bool:
         """Callback for object:children-changed:add accessibility events."""
 
-        if self.utilities.is_spreadsheet_cell(event.any_data):
+        if AXUtilities.is_spreadsheet_cell(event.any_data):
             focus_manager.get_manager().set_locus_of_focus(event, event.any_data)
             return True
 
         AXUtilities.clear_all_cache_now(event.source, "children-changed event.")
 
         manager = focus_manager.get_manager()
-        if AXTable.is_last_cell(event.any_data):
-            active_row, active_col = manager.get_last_cell_coordinates()
+        if AXUtilities.is_last_cell(event.any_data):
+            active_row, active_col = AXTable.get_last_cell_coordinates()
             if active_row < 0 or active_col < 0:
                 return True
 
@@ -278,7 +278,7 @@ class Script(default.Script):
     def _handle_spreadsheet_focus(self, event: Atspi.Event, focus: Atspi.Accessible) -> bool:
         """Returns True if the spreadsheet focus event was handled."""
 
-        if not self.utilities.is_spreadsheet_table(event.source):
+        if not AXUtilities.is_spreadsheet_table(event.source):
             return False
 
         if focus_manager.get_manager().focus_is_dead():
@@ -368,7 +368,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if self.utilities.is_spreadsheet_table(event.source):
+        if AXUtilities.is_spreadsheet_table(event.source):
             presenter = speech_presenter.get_presenter()
             if presenter.get_only_speak_displayed_text():
                 return True

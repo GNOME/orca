@@ -42,7 +42,6 @@ from . import (
 )
 from .ax_component import AXComponent
 from .ax_object import AXObject
-from .ax_table import AXTable
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
 
@@ -389,7 +388,7 @@ class WhereAmIPresenter:
                 presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
-        text = AXTable.get_cell_formula(cell)
+        text = AXUtilities.get_cell_formula(cell)
         if not text:
             text = AXText.get_all_text(cell) or AXText.get_all_text(focus) or messages.EMPTY
         if notify_user:
@@ -464,7 +463,7 @@ class WhereAmIPresenter:
         """Returns the selected text of obj plus any adjacent text objects."""
 
         string = AXText.get_selected_text(obj)[0]
-        if script.utilities.is_spreadsheet_cell(obj):
+        if AXUtilities.is_spreadsheet_cell(obj):
             return string
 
         prev_obj = script.utilities.find_previous_object(obj)
@@ -549,7 +548,7 @@ class WhereAmIPresenter:
         tokens = ["WHERE AM I PRESENTER: presenting selection for", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        spreadsheet = AXObject.find_ancestor(obj, script.utilities.is_spreadsheet_table)
+        spreadsheet = AXObject.find_ancestor(obj, AXUtilities.is_spreadsheet_table)
         if spreadsheet is not None and script.utilities.speak_selected_cell_range(spreadsheet):
             return True
 

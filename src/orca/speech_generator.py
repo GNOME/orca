@@ -178,7 +178,7 @@ class SpeechGenerator(generator.Generator):
                 result.append(dialog_result)
         elif spreadsheet := AXObject.find_ancestor(
             obj,
-            self._script.utilities.is_spreadsheet_table,
+            AXUtilities.is_spreadsheet_table,
         ):
             if spreadsheet_result := self._generate_accessible_label_and_name(spreadsheet):
                 result.append(spreadsheet_result)
@@ -879,7 +879,7 @@ class SpeechGenerator(generator.Generator):
                 result = messages.LEAVING_FIGURE
             elif self._script.utilities.is_document_panel(obj):
                 result = messages.LEAVING_PANEL
-        elif role == Atspi.Role.TABLE and self._script.utilities.is_text_document_table(obj):
+        elif role == Atspi.Role.TABLE and AXUtilities.is_text_document_table(obj):
             result = messages.LEAVING_TABLE
         elif role == "ROLE_DPUB_LANDMARK":
             result = self._get_dpub_landmark_leaving_message(obj)
@@ -1000,10 +1000,7 @@ class SpeechGenerator(generator.Generator):
 
             # TODO - JD: Create an alternative role for this.
             should_skip = (
-                (
-                    parent_role in skip_roles
-                    and not self._script.utilities.is_spreadsheet_table(parent)
-                )
+                (parent_role in skip_roles and not AXUtilities.is_spreadsheet_table(parent))
                 or (include_only and parent_role not in include_only)
                 or AXUtilities.is_layout_only(parent)
                 or AXUtilities.is_button_with_popup(parent)
@@ -1952,12 +1949,12 @@ class SpeechGenerator(generator.Generator):
             return result
 
         parent = AXObject.get_parent(obj)
-        table = AXTable.get_table(obj)
+        table = AXUtilities.get_table(obj)
         if table:
             if (
                 input_event_manager.get_manager().last_event_was_left_or_right()
-                or AXTable.is_layout_table(table)
-                or not self._script.utilities.is_gui_cell(obj)
+                or AXUtilities.is_layout_table(table)
+                or not AXUtilities.is_gui_cell(obj)
             ):
                 return []
         elif AXUtilities.is_layered_pane(parent):
@@ -2046,7 +2043,7 @@ class SpeechGenerator(generator.Generator):
         if focus_manager.get_manager().in_say_all():
             return []
 
-        if not self._script.utilities.cell_column_changed(
+        if not AXUtilities.cell_column_changed(
             obj,
             args.get("priorObj"),
         ) and not args.get("formatType", "").endswith("WhereAmI"):
@@ -2069,7 +2066,7 @@ class SpeechGenerator(generator.Generator):
         if focus_manager.get_manager().in_say_all():
             return []
 
-        if not self._script.utilities.cell_row_changed(obj, args.get("priorObj")) and not args.get(
+        if not AXUtilities.cell_row_changed(obj, args.get("priorObj")) and not args.get(
             "formatType",
             "",
         ).endswith("WhereAmI"):
@@ -2086,15 +2083,15 @@ class SpeechGenerator(generator.Generator):
         if (
             self._only_speak_displayed_text()
             or args.get("leaving")
-            or AXTable.is_layout_table(obj)
-            or self._script.utilities.is_spreadsheet_table(obj)
+            or AXUtilities.is_layout_table(obj)
+            or AXUtilities.is_spreadsheet_table(obj)
         ):
             return []
 
         if not speech_presenter.get_presenter().use_verbose_speech():
             return self._generate_accessible_role(obj, **args)
 
-        if self._script.utilities.is_text_document_table(obj):
+        if AXUtilities.is_text_document_table(obj):
             role = args.get("role", AXObject.get_role(obj))
             _enabled, disabled = self._get_enabled_and_disabled_context_roles()
             if role in disabled:
@@ -2124,7 +2121,7 @@ class SpeechGenerator(generator.Generator):
         if not speech_presenter.get_presenter().get_announce_cell_coordinates():
             return []
 
-        if not self._script.utilities.cell_column_changed(obj):
+        if not AXUtilities.cell_column_changed(obj):
             return []
 
         col = AXTable.get_cell_coordinates(obj, find_cell=True)[1]
@@ -2137,7 +2134,7 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_table_cell_row_index(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if not self._script.utilities.cell_row_changed(obj):
+        if not AXUtilities.cell_row_changed(obj):
             return []
 
         if args.get("readingRow"):
@@ -2163,7 +2160,7 @@ class SpeechGenerator(generator.Generator):
         if row == -1 or col == -1:
             return []
 
-        table = AXTable.get_table(obj)
+        table = AXUtilities.get_table(obj)
         if table is None:
             return []
 
@@ -2177,7 +2174,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generate_has_formula(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        formula = AXTable.get_cell_formula(obj)
+        formula = AXUtilities.get_cell_formula(obj)
         if not formula:
             return []
 

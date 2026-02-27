@@ -103,7 +103,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if prior_doc != doc and not self._script.utilities.get_document_for_object(doc):
                 result = [super()._generate_accessible_name(doc)]
 
-        if not AXTable.get_table(obj) and (
+        if not AXUtilities.get_table(obj) and (
             AXUtilities.is_landmark(obj)
             or AXUtilities.is_math_related(obj)
             or AXUtilities.is_tool_tip(obj)
@@ -610,17 +610,17 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return result
 
         if speech_presenter.get_presenter().get_announce_cell_coordinates():
-            label = AXTable.get_label_for_cell_coordinates(obj)
+            label = AXUtilities.get_label_for_cell_coordinates(obj)
             if label:
                 result.append(label)
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
                 return result
 
             row, col = AXTable.get_cell_coordinates(obj)
-            if self._script.utilities.cell_row_changed(obj):
+            if AXUtilities.cell_row_changed(obj):
                 result.append(messages.TABLE_ROW % (row + 1))
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
-            if self._script.utilities.cell_column_changed(obj):
+            if AXUtilities.cell_column_changed(obj):
                 result.append(messages.TABLE_COLUMN % (col + 1))
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 

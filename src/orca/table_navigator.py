@@ -349,7 +349,7 @@ class TableNavigator:
         # we presented in order to facilitate more linear movement. Therefore, if the cell at the
         # stored coordinates is the same as cell, we prefer the stored coordinates.
         last_cell = AXTable.get_cell_at(
-            AXTable.get_table(cell),
+            AXUtilities.get_table(cell),
             self._previous_reported_row,
             self._previous_reported_col,
         )
@@ -548,7 +548,7 @@ class TableNavigator:
                 presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
-        table = AXTable.get_table(current)
+        table = AXUtilities.get_table(current)
         cell = AXTable.get_first_cell(table)
         self._present_cell(script, cell, 0, 0, current, notify_user)
         return True
@@ -579,7 +579,7 @@ class TableNavigator:
                 presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
-        table = AXTable.get_table(current)
+        table = AXUtilities.get_table(current)
         cell = AXTable.get_last_cell(table)
         self._present_cell(
             script,
@@ -763,10 +763,10 @@ class TableNavigator:
                 presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
-        table = AXTable.get_table(current)
+        table = AXUtilities.get_table(current)
         if table:
             row = AXTable.get_cell_coordinates(current)[0]
-            AXTable.set_dynamic_column_headers_row(table, row)
+            AXUtilities.set_dynamic_column_headers_row(table, row)
             if notify_user:
                 presentation_manager.get_manager().present_message(
                     messages.DYNAMIC_COLUMN_HEADER_SET % (row + 1),
@@ -800,9 +800,9 @@ class TableNavigator:
                 presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
-        table = AXTable.get_table(focus_manager.get_manager().get_locus_of_focus())
+        table = AXUtilities.get_table(focus_manager.get_manager().get_locus_of_focus())
         if table:
-            AXTable.clear_dynamic_column_headers_row(table)
+            AXUtilities.clear_dynamic_column_headers_row(table)
             if notify_user:
                 presentation_manager.get_manager().interrupt_presentation()
                 presentation_manager.get_manager().present_message(
@@ -837,10 +837,10 @@ class TableNavigator:
                 presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
-        table = AXTable.get_table(current)
+        table = AXUtilities.get_table(current)
         if table:
             column = AXTable.get_cell_coordinates(current)[1]
-            AXTable.set_dynamic_row_headers_column(table, column)
+            AXUtilities.set_dynamic_row_headers_column(table, column)
             if notify_user:
                 presentation_manager.get_manager().present_message(
                     messages.DYNAMIC_ROW_HEADER_SET
@@ -875,9 +875,9 @@ class TableNavigator:
                 presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
             return True
 
-        table = AXTable.get_table(focus_manager.get_manager().get_locus_of_focus())
+        table = AXUtilities.get_table(focus_manager.get_manager().get_locus_of_focus())
         if table:
-            AXTable.clear_dynamic_row_headers_column(table)
+            AXUtilities.clear_dynamic_row_headers_column(table)
             if notify_user:
                 presentation_manager.get_manager().interrupt_presentation()
                 presentation_manager.get_manager().present_message(
@@ -913,7 +913,7 @@ class TableNavigator:
         focus_mgr.set_locus_of_focus(None, obj, False)
         focus_mgr.emit_region_changed(obj, mode=focus_manager.TABLE_NAVIGATOR)
 
-        if AXObject.supports_text(obj) and not script.utilities.is_gui_cell(cell):
+        if AXObject.supports_text(obj) and not AXUtilities.is_gui_cell(cell):
             script.utilities.set_caret_position(obj, 0)
 
         if not notify_user:

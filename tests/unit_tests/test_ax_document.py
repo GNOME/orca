@@ -51,9 +51,9 @@ class TestAXDocument:
         additional_modules = [
             "orca.ax_collection",
             "orca.ax_object",
-            "orca.ax_table",
             "orca.ax_utilities_role",
             "orca.ax_utilities_state",
+            "orca.ax_utilities_table",
             "orca.messages",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
@@ -71,8 +71,8 @@ class TestAXDocument:
         ax_collection_mock.create_match_rule = test_context.Mock(return_value={})
         ax_collection_mock.get_all_matches = test_context.Mock(return_value=[])
 
-        ax_table_mock = essential_modules["orca.ax_table"].AXTable
-        ax_table_mock.is_layout_table = test_context.Mock(return_value=False)
+        ax_utilities_table_mock = essential_modules["orca.ax_utilities_table"].AXUtilitiesTable
+        ax_utilities_table_mock.is_layout_table = test_context.Mock(return_value=False)
 
         ax_utilities_role_mock = essential_modules["orca.ax_utilities_role"].AXUtilitiesRole
         ax_utilities_role_mock.is_heading = test_context.Mock(return_value=False)
@@ -458,8 +458,8 @@ class TestAXDocument:
         ax_utilities_state_mock = essential_modules["orca.ax_utilities_state"].AXUtilitiesState
         ax_utilities_state_mock.is_visited.side_effect = lambda obj: obj == visited_link
 
-        ax_table_mock = essential_modules["orca.ax_table"].AXTable
-        ax_table_mock.is_layout_table.side_effect = lambda obj: obj == layout_table
+        ax_utilities_table_mock = essential_modules["orca.ax_utilities_table"].AXUtilitiesTable
+        ax_utilities_table_mock.is_layout_table.side_effect = lambda obj: obj == layout_table
 
         result = AXDocument._get_object_counts(mock_accessible)
 

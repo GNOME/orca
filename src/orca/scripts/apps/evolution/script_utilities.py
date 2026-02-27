@@ -27,7 +27,6 @@ from typing import TYPE_CHECKING
 
 from orca import focus_manager, input_event_manager
 from orca.ax_object import AXObject
-from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 from orca.scripts import web
 
@@ -47,7 +46,7 @@ class Utilities(web.Utilities):
         if not self.is_message_list_toggle_cell(obj):
             return False
 
-        headers = AXTable.get_column_headers(obj)
+        headers = AXUtilities.get_column_headers(obj)
         if not headers:
             return False
 

@@ -94,7 +94,7 @@ class Utilities:
         if not AXUtilities.is_expanded(obj):
             return []
 
-        table = AXTable.get_table(obj)
+        table = AXUtilities.get_table(obj)
         if table is None:
             return []
 
@@ -327,102 +327,6 @@ class Utilities:
 
         return str(column)
 
-    def is_text_document_table(self, obj: Atspi.Accessible) -> bool:
-        """Returns True if obj is a text document table (i.e. not a spreadsheet or GUI table)"""
-
-        # TODO - JD: Move this into AXUtilities.
-
-        if not AXUtilities.is_table(obj):
-            return False
-
-        doc = self.get_document_for_object(obj)
-        return doc is not None and not AXUtilities.is_document_spreadsheet(doc)
-
-    def is_gui_table(self, obj: Atspi.Accessible) -> bool:
-        """Returns True if obj is a GUI table."""
-
-        # TODO - JD: Move this into AXUtilities.
-
-        return AXUtilities.is_table(obj) and self.get_document_for_object(obj) is None
-
-    def is_spreadsheet_table(self, obj: Atspi.Accessible) -> bool:
-        """Returns True if obj is a spreadsheet table."""
-
-        # TODO - JD: Move this into AXUtilities.
-
-        if not (AXUtilities.is_table(obj) and AXObject.supports_table(obj)):
-            return False
-
-        doc = self.get_document_for_object(obj)
-        if doc is None:
-            return False
-        if AXUtilities.is_document_spreadsheet(doc):
-            return True
-
-        return AXTable.get_row_count(obj) > 65536
-
-    def is_text_document_cell(self, obj: Atspi.Accessible) -> bool:
-        """Returns true if obj is a cell in a text document table."""
-
-        # TODO - JD: Move this into AXUtilities.
-
-        if not AXUtilities.is_table_cell_or_header(obj):
-            return False
-        return AXObject.find_ancestor(obj, self.is_text_document_table) is not None
-
-    def is_gui_cell(self, obj: Atspi.Accessible) -> bool:
-        """Returns true if obj is a cell in a GUI table."""
-
-        # TODO - JD: Move this into AXUtilities.
-
-        if not AXUtilities.is_table_cell_or_header(obj):
-            return False
-        return AXObject.find_ancestor(obj, self.is_gui_table) is not None
-
-    def is_spreadsheet_cell(self, obj: Atspi.Accessible) -> bool:
-        """Returns true if obj is a cell in a spreadsheet table."""
-
-        # TODO - JD: Move this into AXUtilities.
-
-        if not AXUtilities.is_table_cell_or_header(obj):
-            return False
-        return AXObject.find_ancestor(obj, self.is_spreadsheet_table) is not None
-
-    def cell_column_changed(
-        self,
-        cell: Atspi.Accessible,
-        prior_cell: Atspi.Accessible | None = None,
-    ) -> bool:
-        """Returns True if the column of cell has changed since prior_cell."""
-
-        column = AXTable.get_cell_coordinates(cell)[1]
-        if column == -1:
-            return False
-
-        if prior_cell is None:
-            _last_row, last_column = focus_manager.get_manager().get_last_cell_coordinates()
-        else:
-            last_column = AXTable.get_cell_coordinates(prior_cell)[1]
-
-        return column != last_column
-
-    def cell_row_changed(
-        self,
-        cell: Atspi.Accessible,
-        prior_cell: Atspi.Accessible | None = None,
-    ) -> bool:
-        """Returns True if the row of cell has changed since prior_cell."""
-
-        row = AXTable.get_cell_coordinates(cell)[0]
-        if row == -1:
-            return False
-
-        if prior_cell is None:
-            last_row, _last_column = focus_manager.get_manager().get_last_cell_coordinates()
-        else:
-            last_row = AXTable.get_cell_coordinates(prior_cell)[0]
-        return row != last_row
-
     def should_read_full_row(
         self,
         obj: Atspi.Accessible,
@@ -433,18 +337,18 @@ class Utilities:
         if (
             focus_manager.get_manager().in_say_all()
             or table_navigator.get_navigator().last_input_event_was_navigation_command()
-            or not self.cell_row_changed(obj, previous_object)
+            or not AXUtilities.cell_row_changed(obj, previous_object)
         ):
             return False
 
-        table = AXTable.get_table(obj)
+        table = AXUtilities.get_table(obj)
         if table is None:
             return False
 
         manager = speech_presenter.get_presenter()
         if not self.get_document_for_object(table):
             return manager.get_speak_row_in_gui_table()
-        if self.is_spreadsheet_table(table):
+        if AXUtilities.is_spreadsheet_table(table):
             return manager.get_speak_row_in_spreadsheet()
         return manager.get_speak_row_in_document_table()
 
@@ -1164,7 +1068,7 @@ class Utilities:
 
         # TODO - JD: This was originally in the LO script. See if it is still an issue when
         # lots of cells are selected.
-        if self.is_spreadsheet_table(obj):
+        if AXUtilities.is_spreadsheet_table(obj):
             return []
 
         return AXSelection.get_selected_children(obj)
@@ -1446,7 +1350,7 @@ class Utilities:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        return AXTable.all_cells_are_selected(obj)
+        return AXUtilities.all_cells_are_selected(obj)
 
     def handle_container_selection_change(self, obj: Atspi.Accessible) -> bool:
         """Handles a change in a container that supports selection."""

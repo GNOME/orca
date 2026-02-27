@@ -56,7 +56,6 @@ from orca.ax_component import AXComponent
 from orca.ax_document import AXDocument
 from orca.ax_hypertext import AXHypertext
 from orca.ax_object import AXObject
-from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_debugging import AXUtilitiesDebugging
@@ -1930,11 +1929,11 @@ class Utilities(script_utilities.Utilities):
         if not name:
             return False
 
-        headers = AXTable.get_column_headers(obj)
+        headers = AXUtilities.get_column_headers(obj)
         if any(AXObject.get_name(header) == name for header in headers):
             return True
 
-        headers = AXTable.get_row_headers(obj)
+        headers = AXUtilities.get_row_headers(obj)
         return any(AXObject.get_name(header) == name for header in headers)
 
     def should_read_full_row(

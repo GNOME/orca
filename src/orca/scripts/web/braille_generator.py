@@ -34,7 +34,6 @@ from gi.repository import Atspi
 
 from orca import braille, braille_generator, debug, focus_manager, messages, object_properties
 from orca.ax_object import AXObject
-from orca.ax_table import AXTable
 from orca.ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
@@ -121,7 +120,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                 result.append(messages.IMAGE_MAP_LINK)
 
         elif role not in do_not_display:
-            label = AXTable.get_label_for_cell_coordinates(obj)
+            label = AXUtilities.get_label_for_cell_coordinates(obj)
             if label:
                 result.append(label)
             else:

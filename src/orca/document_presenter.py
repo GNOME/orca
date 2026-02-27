@@ -60,7 +60,6 @@ from . import (
 from .ax_component import AXComponent
 from .ax_document import AXDocument
 from .ax_object import AXObject
-from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
@@ -700,8 +699,8 @@ class DocumentPresenter:
         if role in always_focus_mode_roles:
             return True, "due to its role"
 
-        if role in [Atspi.Role.TABLE_CELL, Atspi.Role.TABLE] and AXTable.is_layout_table(
-            AXTable.get_table(obj),
+        if role in [Atspi.Role.TABLE_CELL, Atspi.Role.TABLE] and AXUtilities.is_layout_table(
+            AXUtilities.get_table(obj),
         ):
             return False, "it's layout only"
 

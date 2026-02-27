@@ -38,7 +38,6 @@ from gi.repository import Atspi
 from . import braille, debug, focus_manager, messages, object_properties, speech_presenter
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
-from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
@@ -1184,9 +1183,9 @@ class Generator:
 
         args["readingRow"] = True
         result: list[Any] = []
-        cells = AXTable.get_showing_cells_in_same_row(
+        cells = AXUtilities.get_showing_cells_in_same_row(
             obj,
-            clip_to_window=self._script.utilities.is_spreadsheet_cell(obj),
+            clip_to_window=AXUtilities.is_spreadsheet_cell(obj),
         )
 
         # Remove any pre-calculated values which only apply to obj and not row cells.
@@ -1218,7 +1217,7 @@ class Generator:
             return []
 
         result = []
-        headers = AXTable.get_column_headers(obj)
+        headers = AXUtilities.get_column_headers(obj)
         if headers:
             result.append(AXObject.get_name(headers[0]) or AXText.get_all_text(headers[0]))
 
@@ -1249,9 +1248,9 @@ class Generator:
 
         result: list[Any] = []
         if args.get("newOnly"):
-            headers = AXTable.get_new_column_headers(obj, args.get("priorObj"))
+            headers = AXUtilities.get_new_column_headers(obj, args.get("priorObj"))
         else:
-            headers = AXTable.get_column_headers(obj)
+            headers = AXUtilities.get_column_headers(obj)
 
         tokens = []
         for header in headers:
@@ -1287,9 +1286,9 @@ class Generator:
 
         result: list[Any] = []
         if args.get("newOnly"):
-            headers = AXTable.get_new_row_headers(obj, args.get("priorObj"))
+            headers = AXUtilities.get_new_row_headers(obj, args.get("priorObj"))
         else:
-            headers = AXTable.get_row_headers(obj)
+            headers = AXUtilities.get_row_headers(obj)
 
         tokens = []
         for header in headers:
@@ -1319,7 +1318,7 @@ class Generator:
 
     @log_generator_output
     def _generate_table_sort_order(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        description = AXTable.get_presentable_sort_order_from_header(obj)
+        description = AXUtilities.get_presentable_sort_order_from_header(obj)
         if not description:
             return []
 

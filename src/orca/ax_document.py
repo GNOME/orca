@@ -36,9 +36,9 @@ from gi.repository import Atspi, GLib
 from . import debug, messages
 from .ax_collection import AXCollection
 from .ax_object import AXObject
-from .ax_table import AXTable
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
+from .ax_utilities_table import AXUtilitiesTable
 
 if TYPE_CHECKING:
     from typing import ClassVar
@@ -247,7 +247,7 @@ class AXDocument:
                 result["headings"] += 1
             elif AXUtilitiesRole.is_form(obj):
                 result["forms"] += 1
-            elif AXUtilitiesRole.is_table(obj) and not AXTable.is_layout_table(obj):
+            elif AXUtilitiesRole.is_table(obj) and not AXUtilitiesTable.is_layout_table(obj):
                 result["tables"] += 1
             elif AXUtilitiesRole.is_link(obj):
                 if AXUtilitiesState.is_visited(obj):
