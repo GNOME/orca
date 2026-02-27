@@ -67,7 +67,6 @@ class TestFocusManager:
         from orca.ax_table import AXTable
         from orca.ax_text import AXText
         from orca.ax_utilities import AXUtilities
-        from orca.ax_utilities_text import AXUtilitiesText
 
         test_context.patch_object(AXObject, "clear_cache", new=test_context.Mock())
         test_context.patch_object(AXObject, "is_dead", return_value=is_dead)
@@ -92,7 +91,7 @@ class TestFocusManager:
 
         mock_update_cached_text = test_context.Mock()
         test_context.patch_object(
-            AXUtilitiesText,
+            AXUtilities,
             "update_cached_selected_text",
             new=mock_update_cached_text,
         )
@@ -117,7 +116,6 @@ class TestFocusManager:
             "orca.braille_presenter",
             "orca.ax_table",
             "orca.ax_text",
-            "orca.ax_utilities_text",
             "orca.ax_utilities",
             "orca.document_presenter",
         ]
@@ -168,10 +166,6 @@ class TestFocusManager:
         ax_text_mock.AXText = test_context.Mock()
         ax_text_mock.AXText.get_caret_offset = test_context.Mock(return_value=-1)
 
-        ax_utilities_text_mock = essential_modules["orca.ax_utilities_text"]
-        ax_utilities_text_mock.AXUtilitiesText = test_context.Mock()
-        ax_utilities_text_mock.AXUtilitiesText.update_cached_selected_text = test_context.Mock()
-
         ax_table_mock = essential_modules["orca.ax_table"]
         ax_table_mock.AXTable = test_context.Mock()
         ax_table_mock.AXTable.get_cell_coordinates = test_context.Mock(return_value=(-1, -1))
@@ -183,6 +177,7 @@ class TestFocusManager:
         ax_utilities_mock.AXUtilities.save_object_info_for_events = test_context.Mock()
         ax_utilities_mock.AXUtilities.is_active = test_context.Mock(return_value=True)
         ax_utilities_mock.AXUtilities.get_focused_object = test_context.Mock()
+        ax_utilities_mock.AXUtilities.update_cached_selected_text = test_context.Mock()
 
         document_presenter_mock = essential_modules["orca.document_presenter"]
         presenter_instance = test_context.Mock()
@@ -717,7 +712,7 @@ class TestFocusManager:
         test_context.patch_object(AXText, "get_caret_offset", new=mock_get_caret_offset)
         mock_update_cached_selected_text = test_context.Mock()
         test_context.patch_object(
-            AXText,
+            AXUtilities,
             "update_cached_selected_text",
             new=mock_update_cached_selected_text,
         )

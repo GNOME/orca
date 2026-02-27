@@ -33,7 +33,7 @@ from gi.repository import Gdk, GObject, Gtk
 
 from . import dbus_service, debug, gsettings_registry, guilabels
 from .ax_text import AXTextAttribute
-from .ax_utilities_text import AXUtilitiesText
+from .ax_utilities import AXUtilities
 from .preferences_grid_base import PreferencesGridBase
 
 
@@ -311,7 +311,7 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
         if not spoken_attrs:
             spoken_attrs = [
                 attr.get_attribute_name()
-                for attr in AXUtilitiesText.get_all_supported_text_attributes()
+                for attr in AXUtilities.get_all_supported_text_attributes()
                 if attr.should_present_by_default()
             ]
 
@@ -339,7 +339,7 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
 
             self._attributes.append((attr, mode))
 
-        for attr in AXUtilitiesText.get_all_supported_text_attributes():
+        for attr in AXUtilities.get_all_supported_text_attributes():
             attr_name = attr.get_attribute_name()
             if attr_name not in spoken_set:
                 if attr_name in brailled_set:

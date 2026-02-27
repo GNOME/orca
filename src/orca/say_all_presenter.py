@@ -54,7 +54,6 @@ from .acss import ACSS
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from .ax_utilities_text import AXUtilitiesText
 
 if TYPE_CHECKING:
     from collections.abc import Generator
@@ -381,7 +380,7 @@ class SayAllPresenter:
             # However, if the character at last_offset is an embedded object, we'll skip over
             # its contents if we pass last_offset directly. Only decrement in that case so that
             # next_context() can still cross object boundaries at end of text.
-            if AXUtilitiesText.character_at_offset_is_eoc(last_obj, last_offset):
+            if AXUtilities.character_at_offset_is_eoc(last_obj, last_offset):
                 last_offset = max(0, last_offset - 1)
             next_obj, next_offset = self._script.utilities.next_context(
                 last_obj,
@@ -563,7 +562,7 @@ class SayAllPresenter:
         self._say_all_is_running = True
 
         if progress_type == speechserver.SayAllContext.PROGRESS:
-            if AXUtilitiesText.character_at_offset_is_eoc(context.obj, context.current_offset):
+            if AXUtilities.character_at_offset_is_eoc(context.obj, context.current_offset):
                 return
             focus_manager.get_manager().emit_region_changed(
                 context.obj,

@@ -38,7 +38,6 @@ from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from .ax_utilities_text import AXUtilitiesText
 
 
 class Char:
@@ -699,7 +698,7 @@ class Context:
     def _get_zones_from_text(self, obj: Atspi.Accessible, cliprect: Atspi.Rect) -> list[TextZone]:
         """Returns a list of TextZones for the given object."""
 
-        if not AXUtilitiesText.has_presentable_text(obj):
+        if not AXUtilities.has_presentable_text(obj):
             return []
 
         zones: list[TextZone] = []
@@ -723,7 +722,7 @@ class Context:
         tokens = ["FLAT REVIEW: Getting lines for", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        lines = AXUtilitiesText.get_visible_lines(obj, cliprect)
+        lines = AXUtilities.get_visible_lines(obj, cliprect)
         # Optionally skip whitespace-only lines based on user preference.
         if not speech_presenter.get_presenter().get_speak_blank_lines():
             lines = [t for t in lines if t[0] and t[0].strip()]

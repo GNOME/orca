@@ -643,7 +643,6 @@ class TestCommandRegistry:
             "orca.ax_text",
             "orca.ax_utilities",
             "orca.colornames",
-            "orca.ax_utilities_text",
             "orca.ax_document",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)

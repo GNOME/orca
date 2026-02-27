@@ -42,7 +42,6 @@ from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
-from orca.ax_utilities_text import AXUtilitiesText
 from orca.scripts import default
 
 from .braille_generator import BrailleGenerator
@@ -97,7 +96,7 @@ class Script(default.Script):
         obj = self.utilities.find_previous_object(focus)
         if obj is not None:
             focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
-            AXUtilitiesText.set_caret_offset_to_end(obj)
+            AXUtilities.set_caret_offset_to_end(obj)
             return True
 
         return super()._pan_braille_left(event)
@@ -125,7 +124,7 @@ class Script(default.Script):
         obj = self.utilities.find_next_object(focus)
         if obj is not None:
             focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
-            AXUtilitiesText.set_caret_offset_to_start(obj)
+            AXUtilities.set_caret_offset_to_start(obj)
             return True
 
         return super()._pan_braille_right(event)

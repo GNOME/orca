@@ -67,7 +67,6 @@ class TestWhereAmIPresenter:
             "orca.text_attribute_manager",
             "orca.ax_component",
             "orca.ax_text",
-            "orca.ax_utilities_text",
             "orca.ax_utilities",
             "orca.braille_presenter",
             "orca.presentation_manager",
@@ -148,15 +147,6 @@ class TestWhereAmIPresenter:
             return_value=({"weight": "bold"}, 0, 5),
         )
 
-        ax_utilities_text_mock = essential_modules["orca.ax_utilities_text"]
-        ax_utilities_text_mock.AXUtilitiesText = test_context.Mock()
-        ax_utilities_text_mock.AXUtilitiesText.get_selected_text = test_context.Mock(
-            return_value=("selected text", 0, 5),
-        )
-        ax_utilities_text_mock.AXUtilitiesText.get_all_supported_text_attributes = (
-            test_context.Mock()
-        )
-
         ax_text_attribute_instance = test_context.Mock()
         ax_text_attribute_instance.get_localized_name = test_context.Mock(return_value="Weight")
         ax_text_attribute_instance.get_localized_value = test_context.Mock(return_value="Bold")
@@ -182,6 +172,10 @@ class TestWhereAmIPresenter:
         )
         ax_utilities_mock.AXUtilities.save_object_info_for_events = test_context.Mock()
         ax_utilities_mock.AXUtilities.is_list_item = test_context.Mock(return_value=False)
+        ax_utilities_mock.AXUtilities.get_selected_text = test_context.Mock(
+            return_value=("selected text", 0, 5),
+        )
+        ax_utilities_mock.AXUtilities.get_all_supported_text_attributes = test_context.Mock()
         ax_utilities_mock.AXUtilities.is_layout_only = test_context.Mock(return_value=False)
 
         return essential_modules
@@ -322,9 +316,9 @@ class TestWhereAmIPresenter:
         default_attr = test_context.Mock()
         default_attr.get_attribute_name.return_value = "weight"
         default_attr.value_is_default.return_value = False
-        deps[
-            "orca.ax_utilities_text"
-        ].AXUtilitiesText.get_all_supported_text_attributes.return_value = [default_attr]
+        deps["orca.ax_utilities"].AXUtilities.get_all_supported_text_attributes.return_value = [
+            default_attr
+        ]
         pres_manager = deps["orca.presentation_manager"].get_manager()
         pres_manager.speak_message.reset_mock()
         mock_script = test_context.Mock()
@@ -332,9 +326,7 @@ class TestWhereAmIPresenter:
         result = presenter.present_character_attributes(mock_script)
         assert result is True
         pres_manager.speak_message.assert_called()
-        deps[
-            "orca.ax_utilities_text"
-        ].AXUtilitiesText.get_all_supported_text_attributes.assert_called_once()
+        deps["orca.ax_utilities"].AXUtilities.get_all_supported_text_attributes.assert_called_once()
 
     def test_present_size_and_position_flat_review(self, test_context: OrcaTestContext) -> None:
         """Test WhereAmIPresenter.present_size_and_position in flat review mode."""
@@ -617,7 +609,7 @@ class TestWhereAmIPresenter:
         mock_script = test_context.Mock()
         deps["orca.ax_utilities"].AXUtilities.is_spreadsheet_cell.return_value = True
 
-        deps["orca.ax_utilities_text"].AXUtilitiesText.get_selected_text.return_value = (
+        deps["orca.ax_utilities"].AXUtilities.get_selected_text.return_value = (
             "cell text",
             0,
             9,
@@ -640,7 +632,7 @@ class TestWhereAmIPresenter:
         mock_script.utilities.find_previous_object.side_effect = [prev_obj, None]
         mock_script.utilities.find_next_object.side_effect = [next_obj, None]
 
-        deps["orca.ax_utilities_text"].AXUtilitiesText.get_selected_text.side_effect = [
+        deps["orca.ax_utilities"].AXUtilities.get_selected_text.side_effect = [
             ("current text", 0, 12),  # current object
             ("prev text", 0, 9),  # previous object
             ("next text", 0, 9),  # next object

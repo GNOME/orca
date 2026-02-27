@@ -62,7 +62,6 @@ from .ax_document import AXDocument
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from .ax_utilities_text import AXUtilitiesText
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -1260,7 +1259,7 @@ class DocumentPresenter:
             return False
 
         document = script.utilities.get_document_for_object(obj)
-        start = AXUtilitiesText.get_selection_start_offset(obj)
+        start = AXUtilities.get_selection_start_offset(obj)
         if not document or start < 0:
             return False
 
@@ -1268,7 +1267,7 @@ class DocumentPresenter:
         context = script.utilities.get_caret_context(document)
         script.utilities.set_caret_context(obj, offset, document=document)
 
-        end = AXUtilitiesText.get_selection_end_offset(obj)
+        end = AXUtilities.get_selection_end_offset(obj)
         if (
             end - start < self.get_find_results_minimum_length()
             or not self.get_speak_find_results()

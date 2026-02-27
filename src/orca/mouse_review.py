@@ -67,7 +67,6 @@ from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from .ax_utilities_text import AXUtilitiesText
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -242,7 +241,7 @@ class _ItemContext:
         return True
 
     def _treat_as_single_object(self) -> bool:
-        return AXUtilitiesText.is_whitespace_or_empty(self._obj)
+        return AXUtilities.is_whitespace_or_empty(self._obj)
 
     def _get_string_context(self) -> _StringContext:
         """Returns the _StringContext associated with the specified point."""
@@ -254,9 +253,9 @@ class _ItemContext:
             return _StringContext(self._obj, self._script)
 
         if self._granularity == Atspi.TextGranularity.WORD:
-            string, start, end = AXUtilitiesText.get_word_at_point(self._obj, self._x, self._y)
+            string, start, end = AXUtilities.get_word_at_point(self._obj, self._x, self._y)
         else:
-            string, start, end = AXUtilitiesText.get_line_at_point(self._obj, self._x, self._y)
+            string, start, end = AXUtilities.get_line_at_point(self._obj, self._x, self._y)
 
         if string:
             string = self._script.utilities.expand_eocs(self._obj, start, end)

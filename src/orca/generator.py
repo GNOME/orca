@@ -40,7 +40,6 @@ from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from .ax_utilities_text import AXUtilitiesText
 from .ax_value import AXValue
 
 if TYPE_CHECKING:
@@ -631,7 +630,7 @@ class Generator:
                 continue
 
             if AXUtilities.is_label(child):
-                if not AXUtilitiesText.has_presentable_text(child) or AXUtilities.get_is_label_for(
+                if not AXUtilities.has_presentable_text(child) or AXUtilities.get_is_label_for(
                     child
                 ):
                     continue

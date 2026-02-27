@@ -50,7 +50,6 @@ class TestDocumentPresenter:
             "orca.ax_object",
             "orca.ax_table",
             "orca.ax_text",
-            "orca.ax_utilities_text",
             "orca.ax_utilities",
             "orca.caret_navigator",
             "orca.focus_manager",
@@ -415,9 +414,9 @@ class TestDocumentPresenter:
         script_manager.get_manager.return_value.get_active_script.return_value = mock_script
 
         # Set up AXText mock to return short selection (length 3)
-        ax_utilities_text = mocks["orca.ax_utilities_text"]
-        ax_utilities_text.AXUtilitiesText.get_selection_start_offset.return_value = 0
-        ax_utilities_text.AXUtilitiesText.get_selection_end_offset.return_value = 3
+        ax_utilities = mocks["orca.ax_utilities"]
+        ax_utilities.AXUtilities.get_selection_start_offset.return_value = 0
+        ax_utilities.AXUtilities.get_selection_end_offset.return_value = 3
 
         presenter = module.get_presenter()
         mock_obj = MagicMock()
@@ -445,9 +444,9 @@ class TestDocumentPresenter:
         script_manager.get_manager.return_value.get_active_script.return_value = mock_script
 
         # Set up AXText mock with valid selection length
-        ax_utilities_text = mocks["orca.ax_utilities_text"]
-        ax_utilities_text.AXUtilitiesText.get_selection_start_offset.return_value = 0
-        ax_utilities_text.AXUtilitiesText.get_selection_end_offset.return_value = 10
+        ax_utilities = mocks["orca.ax_utilities"]
+        ax_utilities.AXUtilities.get_selection_start_offset.return_value = 0
+        ax_utilities.AXUtilities.get_selection_end_offset.return_value = 10
 
         presenter = module.get_presenter()
         mock_obj = MagicMock()
@@ -479,9 +478,9 @@ class TestDocumentPresenter:
         script_manager.get_manager.return_value.get_active_script.return_value = mock_script
 
         # Set up AXText mock with valid selection length
-        ax_utilities_text = mocks["orca.ax_utilities_text"]
-        ax_utilities_text.AXUtilitiesText.get_selection_start_offset.return_value = 0
-        ax_utilities_text.AXUtilitiesText.get_selection_end_offset.return_value = 10
+        ax_utilities = mocks["orca.ax_utilities"]
+        ax_utilities.AXUtilities.get_selection_start_offset.return_value = 0
+        ax_utilities.AXUtilities.get_selection_end_offset.return_value = 10
 
         presenter = module.get_presenter()
         presenter._made_find_announcement = False
@@ -520,9 +519,9 @@ class TestDocumentPresenter:
         script_manager.get_manager.return_value.get_active_script.return_value = mock_script
 
         # Set up AXText mock with valid selection length
-        ax_utilities_text = mocks["orca.ax_utilities_text"]
-        ax_utilities_text.AXUtilitiesText.get_selection_start_offset.return_value = 0
-        ax_utilities_text.AXUtilitiesText.get_selection_end_offset.return_value = 10
+        ax_utilities = mocks["orca.ax_utilities"]
+        ax_utilities.AXUtilities.get_selection_start_offset.return_value = 0
+        ax_utilities.AXUtilities.get_selection_end_offset.return_value = 10
         ax_text = mocks["orca.ax_text"]
         ax_text.AXText.get_range_rect.return_value = MagicMock()
 
