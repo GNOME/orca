@@ -498,7 +498,9 @@ class Script(script.Script):
     ) -> bool:
         """Displays the Preferences dialog."""
 
-        ui = orca_gui_prefs.OrcaSetupGUI(script_manager.get_manager().get_default_script())
+        default_script = script_manager.get_manager().get_default_script()
+        script_manager.get_manager().set_active_script(default_script, "Global preferences")
+        ui = orca_gui_prefs.OrcaSetupGUI(default_script)
         ui.show_gui()
         return True
 
