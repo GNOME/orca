@@ -44,6 +44,7 @@ from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
+from .ax_utilities_text import AXUtilitiesText
 
 if TYPE_CHECKING:
     import gi
@@ -238,7 +239,7 @@ class WhereAmIPresenter:
             ),
         )
         if not attr_list:
-            attr_list = AXText.get_all_supported_text_attributes()
+            attr_list = AXUtilitiesText.get_all_supported_text_attributes()
 
         for ax_text_attr in attr_list:
             key = ax_text_attr.get_attribute_name()
@@ -462,13 +463,13 @@ class WhereAmIPresenter:
     def _get_all_selected_text(self, script: default.Script, obj: Atspi.Accessible) -> str:
         """Returns the selected text of obj plus any adjacent text objects."""
 
-        string = AXText.get_selected_text(obj)[0]
+        string = AXUtilitiesText.get_selected_text(obj)[0]
         if AXUtilities.is_spreadsheet_cell(obj):
             return string
 
         prev_obj = script.utilities.find_previous_object(obj)
         while prev_obj:
-            selection = AXText.get_selected_text(prev_obj)[0]
+            selection = AXUtilitiesText.get_selected_text(prev_obj)[0]
             if not selection:
                 break
             string = f"{selection} {string}"
@@ -476,7 +477,7 @@ class WhereAmIPresenter:
 
         next_obj = script.utilities.find_next_object(obj)
         while next_obj:
-            selection = AXText.get_selected_text(next_obj)[0]
+            selection = AXUtilitiesText.get_selected_text(next_obj)[0]
             if not selection:
                 break
             string = f"{string} {selection}"

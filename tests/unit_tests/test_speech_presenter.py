@@ -57,6 +57,7 @@ class TestSpeechPresenter:
             "orca.ax_hypertext",
             "orca.ax_table",
             "orca.ax_text",
+            "orca.ax_utilities_text",
             "orca.ax_utilities",
             "orca.ax_document",
             "orca.presentation_manager",
@@ -99,8 +100,15 @@ class TestSpeechPresenter:
         ax_text_mock = essential_modules["orca.ax_text"]
         ax_text_mock.AXText = test_context.Mock()
         ax_text_mock.AXText.get_character_at_offset = test_context.Mock(return_value=("a", 0))
-        ax_text_mock.AXText.string_has_spelling_error = test_context.Mock(return_value=False)
-        ax_text_mock.AXText.string_has_grammar_error = test_context.Mock(return_value=False)
+
+        ax_utilities_text_mock = essential_modules["orca.ax_utilities_text"]
+        ax_utilities_text_mock.AXUtilitiesText = test_context.Mock()
+        ax_utilities_text_mock.AXUtilitiesText.string_has_spelling_error = test_context.Mock(
+            return_value=False,
+        )
+        ax_utilities_text_mock.AXUtilitiesText.string_has_grammar_error = test_context.Mock(
+            return_value=False,
+        )
 
         ax_utilities_mock = essential_modules["orca.ax_utilities"]
         ax_utilities_mock.AXUtilities = test_context.Mock()
@@ -480,8 +488,13 @@ class TestSpeechPresenter:
 
         ax_text_mock = essential_modules["orca.ax_text"]
         ax_text_mock.AXText.get_character_at_offset = test_context.Mock(return_value=("a", 0))
-        ax_text_mock.AXText.string_has_spelling_error = test_context.Mock(return_value=True)
-        ax_text_mock.AXText.string_has_grammar_error = test_context.Mock(return_value=False)
+        ax_utilities_text_mock = essential_modules["orca.ax_utilities_text"]
+        ax_utilities_text_mock.AXUtilitiesText.string_has_spelling_error = test_context.Mock(
+            return_value=True,
+        )
+        ax_utilities_text_mock.AXUtilitiesText.string_has_grammar_error = test_context.Mock(
+            return_value=False,
+        )
 
         from orca.speech_presenter import SpeechPresenter
 

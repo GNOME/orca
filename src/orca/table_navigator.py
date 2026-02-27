@@ -48,8 +48,8 @@ from . import (
 )
 from .ax_object import AXObject
 from .ax_table import AXTable
-from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .ax_utilities_text import AXUtilitiesText
 
 if TYPE_CHECKING:
     import gi
@@ -306,7 +306,7 @@ class TableNavigator:
                     return False
             return True
 
-        if not AXText.is_whitespace_or_empty(obj):
+        if not AXUtilitiesText.is_whitespace_or_empty(obj):
             tokens = ["TABLE NAVIGATOR:", obj, "is not blank: it has text"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False

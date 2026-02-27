@@ -82,6 +82,7 @@ from orca.ax_selection import AXSelection
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_event import TextEventReason
+from orca.ax_utilities_text import AXUtilitiesText
 from orca.ax_value import AXValue
 
 if TYPE_CHECKING:
@@ -667,7 +668,7 @@ class Script(script.Script):
             return True
 
         presentation_manager.get_manager().interrupt_presentation()
-        AXText.clear_all_selected_text(caret_context.accessible)
+        AXUtilitiesText.clear_all_selected_text(caret_context.accessible)
         self.utilities.set_caret_offset(caret_context.accessible, caret_context.offset)
         return True
 
@@ -686,15 +687,15 @@ class Script(script.Script):
             return True
 
         presentation_manager.get_manager().interrupt_presentation()
-        start_offset = AXText.get_selection_start_offset(caret_context.accessible)
-        end_offset = AXText.get_selection_end_offset(caret_context.accessible)
+        start_offset = AXUtilitiesText.get_selection_start_offset(caret_context.accessible)
+        end_offset = AXUtilitiesText.get_selection_end_offset(caret_context.accessible)
         if start_offset < 0 or end_offset < 0:
             caret_offset = AXText.get_caret_offset(caret_context.accessible)
             start_offset = min(caret_context.offset, caret_offset)
             end_offset = max(caret_context.offset, caret_offset)
 
-        AXText.set_selected_text(caret_context.accessible, start_offset, end_offset)
-        text = AXText.get_selected_text(caret_context.accessible)[0]
+        AXUtilitiesText.set_selected_text(caret_context.accessible, start_offset, end_offset)
+        text = AXUtilitiesText.get_selected_text(caret_context.accessible)[0]
         clipboard.get_presenter().set_text(text)
         return True
 
@@ -883,16 +884,16 @@ class Script(script.Script):
         if reason in ignore:
             msg = f"DEFAULT: Ignoring event due to reason ({reason})"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            AXText.update_cached_selected_text(event.source)
+            AXUtilitiesText.update_cached_selected_text(event.source)
             return True
 
-        if AXText.has_selected_text(event.source):
+        if AXUtilitiesText.has_selected_text(event.source):
             msg = "DEFAULT: Event source has text selections"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self.utilities.handle_text_selection_change(event.source)
             return True
 
-        text, _start, _end = AXText.get_cached_selected_text(obj)
+        text, _start, _end = AXUtilitiesText.get_cached_selected_text(obj)
         if text and self.utilities.handle_text_selection_change(obj):
             msg = "DEFAULT: Event handled as text selection change"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1228,11 +1229,11 @@ class Script(script.Script):
             msg = "DEFAULT: Deletion is believed to be due to deleting selected text"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             presentation_manager.get_manager().present_message(messages.SELECTION_DELETED)
-            AXText.update_cached_selected_text(event.source)
+            AXUtilitiesText.update_cached_selected_text(event.source)
             return True
 
         text = self.utilities.deleted_text(event)
-        selected_text, _start, _end = AXText.get_cached_selected_text(event.source)
+        selected_text, _start, _end = AXUtilitiesText.get_cached_selected_text(event.source)
         if reason == TextEventReason.DELETE:
             msg = "DEFAULT: Deletion is believed to be due to Delete command"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1266,7 +1267,7 @@ class Script(script.Script):
             msg = "DEFAULT: Insertion is believed to be due to restoring selected text"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             presentation_manager.get_manager().present_message(messages.SELECTION_RESTORED)
-            AXText.update_cached_selected_text(event.source)
+            AXUtilitiesText.update_cached_selected_text(event.source)
             return True
 
         if reason == TextEventReason.LIVE_REGION_UPDATE:
@@ -1332,23 +1333,23 @@ class Script(script.Script):
         if reason == TextEventReason.UNKNOWN:
             msg = "DEFAULT: Ignoring event because reason for change is unknown"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            AXText.update_cached_selected_text(event.source)
+            AXUtilitiesText.update_cached_selected_text(event.source)
             return True
         if reason == TextEventReason.SEARCH_PRESENTABLE:
             msg = "DEFAULT: Presenting line believed to be search match"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self.say_line(event.source)
-            AXText.update_cached_selected_text(event.source)
+            AXUtilitiesText.update_cached_selected_text(event.source)
             return True
         if reason == TextEventReason.SEARCH_UNPRESENTABLE:
             msg = "DEFAULT: Ignoring event believed to be unpresentable search results change"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            AXText.update_cached_selected_text(event.source)
+            AXUtilitiesText.update_cached_selected_text(event.source)
             return True
         if reason in [TextEventReason.CUT, TextEventReason.BACKSPACE, TextEventReason.DELETE]:
             msg = "DEFAULT: Ignoring event believed to be text removal"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            AXText.update_cached_selected_text(event.source)
+            AXUtilitiesText.update_cached_selected_text(event.source)
             return True
 
         self.utilities.handle_text_selection_change(event.source)
@@ -1540,7 +1541,7 @@ class Script(script.Script):
             return True
 
         if reason == TextEventReason.MOUSE_PRIMARY_BUTTON:
-            text, _start, _end = AXText.get_cached_selected_text(event.source)
+            text, _start, _end = AXUtilitiesText.get_cached_selected_text(event.source)
             if not text:
                 self.say_line(obj)
                 return True

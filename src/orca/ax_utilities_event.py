@@ -40,6 +40,7 @@ from .ax_text import AXText
 from .ax_utilities_collection import AXUtilitiesCollection
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
+from .ax_utilities_text import AXUtilitiesText
 
 if TYPE_CHECKING:
     from typing import ClassVar
@@ -352,7 +353,7 @@ class AXUtilitiesEvent:
             else:
                 reason = TextEventReason.AUTO_DELETION
         else:
-            selected_text, _start, _end = AXText.get_cached_selected_text(obj)
+            selected_text, _start, _end = AXUtilitiesText.get_cached_selected_text(obj)
             if selected_text and event.any_data.strip() == selected_text.strip():
                 reason = TextEventReason.SELECTED_TEXT_DELETION
         return reason
@@ -390,7 +391,7 @@ class AXUtilitiesEvent:
         """Returns the reason for a text-insertion event in an editable or terminal."""
 
         obj = event.source
-        selected_text, _start, _end = AXText.get_selected_text(obj)
+        selected_text, _start, _end = AXUtilitiesText.get_selected_text(obj)
         has_selected = bool(selected_text and event.any_data == selected_text)
 
         reason = AXUtilitiesEvent._get_insertion_editing_reason(mgr, has_selected)

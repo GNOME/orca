@@ -59,6 +59,7 @@ from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .ax_utilities_text import AXUtilitiesText
 from .ax_value import AXValue
 from .speechserver import VoiceFamily
 
@@ -2291,7 +2292,7 @@ class SpeechGenerator(generator.Generator):
         if self._only_speak_displayed_text():
             return []
 
-        if not AXText.is_all_text_selected(obj):
+        if not AXUtilitiesText.is_all_text_selected(obj):
             return []
 
         result = [messages.TEXT_SELECTED]

@@ -51,6 +51,7 @@ from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
+from orca.ax_utilities_text import AXUtilitiesText
 
 if TYPE_CHECKING:
     from . import script
@@ -334,7 +335,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if (
             self._script.utilities.is_text_block_element(obj)
-            and AXText.has_presentable_text(obj)
+            and AXUtilitiesText.has_presentable_text(obj)
             and not AXUtilities.is_landmark(obj, args.get("role"))
             and not self._script.utilities.is_document(obj)
             and not AXUtilities.is_dpub(obj, args.get("role"))
@@ -357,7 +358,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if (
             self._script.utilities.is_text_block_element(obj)
-            and AXText.has_presentable_text(obj)
+            and AXUtilitiesText.has_presentable_text(obj)
             and not AXUtilities.is_landmark(obj, args.get("role"))
             and not AXUtilities.is_dpub(obj, args.get("role"))
             and not args.get("inFlatReview")

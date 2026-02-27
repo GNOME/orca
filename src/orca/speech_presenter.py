@@ -67,6 +67,7 @@ from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .ax_utilities_text import AXUtilitiesText
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterable
@@ -1955,10 +1956,10 @@ class SpeechPresenter:
             return ""
 
         msg = ""
-        if AXText.string_has_spelling_error(obj, offset):
+        if AXUtilitiesText.string_has_spelling_error(obj, offset):
             # TODO - JD: We're using the message here to preserve existing behavior.
             msg = messages.MISSPELLED
-        elif AXText.string_has_grammar_error(obj, offset):
+        elif AXUtilitiesText.string_has_grammar_error(obj, offset):
             msg = object_properties.STATE_INVALID_GRAMMAR_SPEECH
 
         if only_if_changed and msg == self._last_error_description:

@@ -59,6 +59,7 @@ from orca.ax_object import AXObject
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_debugging import AXUtilitiesDebugging
+from orca.ax_utilities_text import AXUtilitiesText
 
 if TYPE_CHECKING:
     from .script import Script
@@ -240,7 +241,7 @@ class Utilities(script_utilities.Utilities):
         self.set_caret_context(obj, offset, document)
 
         old_focus = focus_manager.get_manager().get_locus_of_focus()
-        AXText.clear_all_selected_text(old_focus)
+        AXUtilitiesText.clear_all_selected_text(old_focus)
         focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
         if grab_focus:
             AXObject.grab_focus(obj)
@@ -855,7 +856,7 @@ class Utilities(script_utilities.Utilities):
             if 0 <= x_start <= 5:
                 x_string = " ".join(x_string.split()[1:])
 
-            return AXText.has_sentence_ending(x_string)
+            return AXUtilitiesText.has_sentence_ending(x_string)
 
         # Check for things in the same sentence before this object.
         first_obj, first_start, _first_end, first_string = objects[0]
@@ -1566,7 +1567,7 @@ class Utilities(script_utilities.Utilities):
         root: Atspi.Accessible,
         find_start: bool = True,
     ) -> Atspi.Accessible | None:
-        string = AXText.get_selected_text(root)[0]
+        string = AXUtilitiesText.get_selected_text(root)[0]
         if not string:
             return None
 
@@ -1690,7 +1691,7 @@ class Utilities(script_utilities.Utilities):
                 descendant,
                 lambda x: x in descendants,
             ):
-                AXText.update_cached_selected_text(descendant)
+                AXUtilitiesText.update_cached_selected_text(descendant)
             else:
                 super().handle_text_selection_change(descendant, speak_message)
 

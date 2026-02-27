@@ -50,6 +50,7 @@ from .ax_utilities_relation import AXUtilitiesRelation
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 from .ax_utilities_table import AXUtilitiesTable
+from .ax_utilities_text import AXUtilitiesText
 
 if TYPE_CHECKING:
     from typing import ClassVar
@@ -1081,7 +1082,11 @@ class AXUtilities:
 
         objects = []
         root_name = AXObject.get_name(root)
-        if root_name or AXObject.get_description(root) or AXText.has_presentable_text(root):
+        if (
+            root_name
+            or AXObject.get_description(root)
+            or AXUtilitiesText.has_presentable_text(root)
+        ):
             objects.append(root)
 
         if bounding_box is None:
@@ -1165,6 +1170,9 @@ for method_name, method in inspect.getmembers(AXUtilitiesCollection, predicate=i
         setattr(AXUtilities, method_name, method)
 
 for method_name, method in inspect.getmembers(AXUtilitiesTable, predicate=inspect.isfunction):
+    setattr(AXUtilities, method_name, method)
+
+for method_name, method in inspect.getmembers(AXUtilitiesText, predicate=inspect.isfunction):
     setattr(AXUtilities, method_name, method)
 
 AXUtilities.start_cache_clearing_thread()

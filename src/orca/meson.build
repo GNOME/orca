@@ -69,6 +69,7 @@ lib_sources = [
   'ax_utilities_role.py',
   'ax_utilities_state.py',
   'ax_utilities_table.py',
+  'ax_utilities_text.py',
   'ax_value.py',
   'braille.py',
   'braille_generator.py',

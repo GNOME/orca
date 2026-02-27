@@ -32,6 +32,7 @@ from orca import (
     typing_echo_presenter,
 )
 from orca.ax_text import AXText
+from orca.ax_utilities_text import AXUtilitiesText
 from orca.scripts import default
 
 from .script_utilities import Utilities
@@ -95,5 +96,5 @@ class Script(default.Script):
 
         offset = AXText.get_caret_offset(event.source)
         focus_manager.get_manager().set_last_cursor_position(event.source, offset)
-        AXText.update_cached_selected_text(event.source)
+        AXUtilitiesText.update_cached_selected_text(event.source)
         return True

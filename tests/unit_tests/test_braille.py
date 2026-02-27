@@ -55,6 +55,9 @@ class TestBrailleLineRanges:
         ax_text_mock.AXText = test_context.Mock()
         ax_text_mock.AXTextAttribute = test_context.Mock()
 
+        ax_utilities_text_mock = test_context.Mock()
+        ax_utilities_text_mock.AXUtilitiesText = test_context.Mock()
+
         platform_mock = test_context.Mock()
         platform_mock.tablesdir = "/tmp"
 
@@ -74,6 +77,7 @@ class TestBrailleLineRanges:
                 "orca.ax_hypertext": ax_hypertext_mock,
                 "orca.ax_object": ax_object_mock,
                 "orca.ax_text": ax_text_mock,
+                "orca.ax_utilities_text": ax_utilities_text_mock,
                 "orca.orca_platform": platform_mock,
             },
         )

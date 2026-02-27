@@ -445,7 +445,7 @@ class TestTableNavigator:
             return_value=1 if has_children else 0,
         )
         test_context.patch(
-            "orca.table_navigator.AXText.is_whitespace_or_empty",
+            "orca.table_navigator.AXUtilitiesText.is_whitespace_or_empty",
             return_value=is_whitespace,
         )
         if has_children:
@@ -472,7 +472,7 @@ class TestTableNavigator:
                     side_effect=lambda obj: 0 if obj == mock_child else (1 if has_children else 0),
                 )
                 test_context.patch(
-                    "orca.table_navigator.AXText.is_whitespace_or_empty",
+                    "orca.table_navigator.AXUtilitiesText.is_whitespace_or_empty",
                     side_effect=lambda obj: True if obj == mock_child else is_whitespace,
                 )
             else:

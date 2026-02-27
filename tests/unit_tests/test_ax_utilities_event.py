@@ -985,10 +985,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_utilities_text import AXUtilitiesText
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1023,7 +1023,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
         test_context.patch_object(
-            AXText,
+            AXUtilitiesText,
             "get_cached_selected_text",
             return_value=("selected text", 0, 13),
         )
@@ -1071,10 +1071,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_utilities_text import AXUtilitiesText
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1128,12 +1128,12 @@ class TestAXUtilitiesEvent:
 
         if case["selected_text_matches"]:
             test_context.patch_object(
-                AXText,
+                AXUtilitiesText,
                 "get_selected_text",
                 return_value=("inserted text", 0, 13),
             )
         else:
-            test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
+            test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
 
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == getattr(TextEventReason, case["expected_reason"])
@@ -1144,10 +1144,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_utilities_text import AXUtilitiesText
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1199,7 +1199,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_password_text", return_value=False)
 
-        test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
+        test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
 
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == TextEventReason.TYPING_ECHOABLE
@@ -1210,10 +1210,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_utilities_text import AXUtilitiesText
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1252,7 +1252,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
-        test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
+        test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
 
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == TextEventReason.AUTO_INSERTION_UNPRESENTABLE
@@ -1961,9 +1961,9 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
-        from orca.ax_text import AXText
+        from orca.ax_utilities_text import AXUtilitiesText
 
-        test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
+        test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
 
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
         assert result == TextEventReason.DELETE
@@ -2000,9 +2000,9 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
-        from orca.ax_text import AXText
+        from orca.ax_utilities_text import AXUtilitiesText
 
-        test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
+        test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
 
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
         assert result == TextEventReason.CUT
@@ -2040,9 +2040,9 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
-        from orca.ax_text import AXText
+        from orca.ax_utilities_text import AXUtilitiesText
 
-        test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
+        test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
 
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
         assert result == TextEventReason.PASTE
@@ -2081,9 +2081,9 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
-        from orca.ax_text import AXText
+        from orca.ax_utilities_text import AXUtilitiesText
 
-        test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
+        test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
 
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
         assert result == TextEventReason.UNDO
@@ -2123,9 +2123,9 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
-        from orca.ax_text import AXText
+        from orca.ax_utilities_text import AXUtilitiesText
 
-        test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
+        test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
 
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
         assert result == TextEventReason.REDO
@@ -2166,9 +2166,9 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
-        from orca.ax_text import AXText
+        from orca.ax_utilities_text import AXUtilitiesText
 
-        test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
+        test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
 
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
         assert result == TextEventReason.UNSPECIFIED_COMMAND
@@ -2242,10 +2242,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_utilities_text import AXUtilitiesText
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2276,7 +2276,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXObject, "get_role", return_value="entry")
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
-        test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
+        test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
 
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == getattr(TextEventReason, case["expected_reason"])
@@ -2370,10 +2370,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_utilities_text import AXUtilitiesText
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2413,7 +2413,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
         test_context.patch_object(
-            AXText,
+            AXUtilitiesText,
             "get_selected_text",
             return_value=("restored text", 0, 13),
         )
@@ -2427,10 +2427,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_utilities_text import AXUtilitiesText
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2469,7 +2469,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
-        test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
+        test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
 
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == TextEventReason.AUTO_INSERTION_PRESENTABLE
@@ -2483,10 +2483,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_utilities_text import AXUtilitiesText
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2526,7 +2526,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
         test_context.patch_object(AXUtilitiesState, "is_single_line", return_value=True)
 
-        test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
+        test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
 
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == TextEventReason.AUTO_INSERTION_UNPRESENTABLE
@@ -2537,10 +2537,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_utilities_text import AXUtilitiesText
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2579,7 +2579,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
-        test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
+        test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
 
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == TextEventReason.MOUSE_MIDDLE_BUTTON
@@ -2635,10 +2635,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_utilities_text import AXUtilitiesText
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2671,7 +2671,9 @@ class TestAXUtilitiesEvent:
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
-        test_context.patch_object(AXText, "get_cached_selected_text", return_value=("", 0, 0))
+        test_context.patch_object(
+            AXUtilitiesText, "get_cached_selected_text", return_value=("", 0, 0)
+        )
 
         result = AXUtilitiesEvent._get_text_deletion_event_reason(mock_event)
         assert result == TextEventReason.DELETE
@@ -2743,10 +2745,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_utilities_text import AXUtilitiesText
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2784,7 +2786,7 @@ class TestAXUtilitiesEvent:
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
-        test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
+        test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == TextEventReason.BACKSPACE
 
@@ -2794,10 +2796,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_utilities_text import AXUtilitiesText
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -2836,7 +2838,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
         test_context.patch_object(
-            AXText,
+            AXUtilitiesText,
             "get_selected_text",
             return_value=("selected text", 0, 13),
         )
@@ -3530,10 +3532,10 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca import input_event_manager
         from orca.ax_object import AXObject
-        from orca.ax_text import AXText
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_utilities_text import AXUtilitiesText
 
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -3572,7 +3574,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_password_text", return_value=True)
-        test_context.patch_object(AXText, "get_selected_text", return_value=("", 0, 0))
+        test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
 
         from orca import typing_echo_presenter
 

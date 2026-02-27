@@ -59,6 +59,7 @@ class TestSayAllPresenter:
             "orca.guilabels",
             "orca.ax_object",
             "orca.ax_text",
+            "orca.ax_utilities_text",
             "orca.ax_utilities",
             "orca.messages",
             "orca.input_event_manager",
@@ -644,7 +645,6 @@ class TestSayAllPresenter:
 
         essential_modules = self._setup_dependencies(test_context)
         from orca import speechserver
-        from orca.ax_text import AXText
         from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
@@ -656,7 +656,9 @@ class TestSayAllPresenter:
         mock_context.current_offset = 5
         mock_context.current_end_offset = 10
 
-        test_context.patch_object(AXText, "character_at_offset_is_eoc", return_value=False)
+        from orca.ax_utilities_text import AXUtilitiesText
+
+        test_context.patch_object(AXUtilitiesText, "character_at_offset_is_eoc", return_value=False)
 
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_instance = test_context.Mock()
@@ -677,7 +679,6 @@ class TestSayAllPresenter:
 
         essential_modules = self._setup_dependencies(test_context)
         from orca import speechserver
-        from orca.ax_text import AXText
         from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
@@ -689,7 +690,9 @@ class TestSayAllPresenter:
         mock_context.current_offset = 5
         mock_context.current_end_offset = 10
 
-        test_context.patch_object(AXText, "character_at_offset_is_eoc", return_value=False)
+        from orca.ax_utilities_text import AXUtilitiesText
+
+        test_context.patch_object(AXUtilitiesText, "character_at_offset_is_eoc", return_value=False)
 
         focus_manager_mock = essential_modules["orca.focus_manager"]
         focus_instance = test_context.Mock()
@@ -726,7 +729,9 @@ class TestSayAllPresenter:
         mock_context.current_offset = 5
         mock_context.current_end_offset = 10
 
-        test_context.patch_object(AXText, "character_at_offset_is_eoc", return_value=False)
+        from orca.ax_utilities_text import AXUtilitiesText
+
+        test_context.patch_object(AXUtilitiesText, "character_at_offset_is_eoc", return_value=False)
         test_context.patch_object(AXText, "set_caret_offset", return_value=True)
 
         focus_instance = test_context.Mock()

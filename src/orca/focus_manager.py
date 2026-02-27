@@ -34,6 +34,7 @@ from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .ax_utilities_text import AXUtilitiesText
 
 if TYPE_CHECKING:
     import gi
@@ -245,7 +246,7 @@ class FocusManager:
         # motivation described above. However, we need to audit callers that set/get the position
         # before doing so.
         self.set_last_cursor_position(obj, AXText.get_caret_offset(obj))
-        AXText.update_cached_selected_text(obj)
+        AXUtilitiesText.update_cached_selected_text(obj)
 
         # We save additional information about the object for events that were received at the same
         # time as the prioritized focus-change event so we don't double-present aspects about obj.

@@ -53,6 +53,7 @@ from .ax_selection import AXSelection
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .ax_utilities_text import AXUtilitiesText
 from .ax_value import AXValue
 
 
@@ -142,7 +143,9 @@ class Utilities:
         text_objects = []
         for detail in details:
             text_objects.extend(
-                self._find_all_descendants(detail, lambda x: not AXText.is_whitespace_or_empty(x)),
+                self._find_all_descendants(
+                    detail, lambda x: not AXUtilitiesText.is_whitespace_or_empty(x)
+                ),
             )
 
         return text_objects
@@ -797,7 +800,7 @@ class Utilities:
         # We cannot count on implementations clearing the selection for us when we set the caret
         # offset. Also, we should clear the selected text first.
         # https://bugs.documentfoundation.org/show_bug.cgi?id=167930
-        AXText.clear_all_selected_text(obj)
+        AXUtilitiesText.clear_all_selected_text(obj)
         self.set_caret_offset(obj, offset)
 
         # TODO - JD: The web script's set_caret_position() also sets the caret context.
@@ -865,7 +868,7 @@ class Utilities:
         """Returns a list of (start, end, language, dialect) tuples for obj."""
 
         rv: list[tuple[int, int, str, str]] = []
-        attribute_set = AXText.get_all_text_attributes(obj, start_offset, end_offset)
+        attribute_set = AXUtilitiesText.get_all_text_attributes(obj, start_offset, end_offset)
         last_language = last_dialect = ""
         for start, end, attrs in attribute_set:
             language = attrs.get("language", "")
@@ -906,7 +909,7 @@ class Utilities:
         if offset == -1:
             offset = AXText.get_caret_offset(obj)
 
-        text, start, end = AXText.get_previous_line(obj, offset)
+        text, start, end = AXUtilitiesText.get_previous_line(obj, offset)
         if text:
             return [(obj, start, end, text)]
 
@@ -944,7 +947,7 @@ class Utilities:
         if offset == -1:
             offset = AXText.get_caret_offset(obj)
 
-        text, start, end = AXText.get_next_line(obj, offset)
+        text, start, end = AXUtilitiesText.get_next_line(obj, offset)
         if text:
             return [(obj, start, end, text)]
 
@@ -1282,14 +1285,14 @@ class Utilities:
             if not self._script.point_of_reference.get("undo"):
                 presentation_manager.get_manager().present_message(messages.UNDO)
                 self._script.point_of_reference["undo"] = True
-            AXText.update_cached_selected_text(event.source)
+            AXUtilitiesText.update_cached_selected_text(event.source)
             return True
 
         if input_event_manager.get_manager().last_event_was_redo():
             if not self._script.point_of_reference.get("redo"):
                 presentation_manager.get_manager().present_message(messages.REDO)
                 self._script.point_of_reference["redo"] = True
-            AXText.update_cached_selected_text(event.source)
+            AXUtilitiesText.update_cached_selected_text(event.source)
             return True
 
         return False
@@ -1460,9 +1463,9 @@ class Utilities:
         ):
             return False
 
-        old_string, old_start, old_end = AXText.get_cached_selected_text(obj)
-        AXText.update_cached_selected_text(obj)
-        new_string, new_start, new_end = AXText.get_cached_selected_text(obj)
+        old_string, old_start, old_end = AXUtilitiesText.get_cached_selected_text(obj)
+        AXUtilitiesText.update_cached_selected_text(obj)
+        new_string, new_start, new_end = AXUtilitiesText.get_cached_selected_text(obj)
 
         if input_event_manager.get_manager().last_event_was_select_all() and new_string:
             if new_string != old_string:

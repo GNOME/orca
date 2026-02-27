@@ -46,6 +46,7 @@ from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
+from .ax_utilities_text import AXUtilitiesText
 from .orca_platform import tablesdir  # pylint: disable=import-error
 
 try:
@@ -1247,7 +1248,7 @@ class Text(Region):
     def get_attribute_mask(self, indicate_links: bool = True) -> str:
         """Return the attrOr mask for links, attributes, and selections."""
 
-        if AXText.is_whitespace_or_empty(self.accessible):
+        if AXUtilitiesText.is_whitespace_or_empty(self.accessible):
             return ""
 
         script = script_manager.get_manager().get_active_script()

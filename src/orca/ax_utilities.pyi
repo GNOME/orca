@@ -1207,3 +1207,181 @@ class AXUtilities:
         cell: Atspi.Accessible,
         clip_to_window: bool = False,
     ) -> list[Atspi.Accessible]: ...
+
+    # From ax_utilities_text.py
+    @staticmethod
+    def get_character_at_point(
+        obj: Atspi.Accessible,
+        x: int,
+        y: int,
+    ) -> tuple[str, int, int]: ...
+    @staticmethod
+    def get_next_character(
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> tuple[str, int, int]: ...
+    @staticmethod
+    def get_previous_character(
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> tuple[str, int, int]: ...
+    @staticmethod
+    def iter_character(
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> Generator[tuple[str, int, int]]: ...
+    @staticmethod
+    def get_word_at_point(
+        obj: Atspi.Accessible,
+        x: int,
+        y: int,
+    ) -> tuple[str, int, int]: ...
+    @staticmethod
+    def get_next_word(
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> tuple[str, int, int]: ...
+    @staticmethod
+    def get_previous_word(
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> tuple[str, int, int]: ...
+    @staticmethod
+    def iter_word(
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> Generator[tuple[str, int, int]]: ...
+    @staticmethod
+    def get_line_at_point(
+        obj: Atspi.Accessible,
+        x: int,
+        y: int,
+    ) -> tuple[str, int, int]: ...
+    @staticmethod
+    def get_next_line(
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> tuple[str, int, int]: ...
+    @staticmethod
+    def get_previous_line(
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> tuple[str, int, int]: ...
+    @staticmethod
+    def iter_line(
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> Generator[tuple[str, int, int]]: ...
+    @staticmethod
+    def has_sentence_ending(text: str) -> bool: ...
+    @staticmethod
+    def get_sentence_at_point(
+        obj: Atspi.Accessible,
+        x: int,
+        y: int,
+    ) -> tuple[str, int, int]: ...
+    @staticmethod
+    def get_next_sentence(
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> tuple[str, int, int]: ...
+    @staticmethod
+    def get_previous_sentence(
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> tuple[str, int, int]: ...
+    @staticmethod
+    def iter_sentence(
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> Generator[tuple[str, int, int]]: ...
+    @staticmethod
+    def get_paragraph_at_point(
+        obj: Atspi.Accessible,
+        x: int,
+        y: int,
+    ) -> tuple[str, int, int]: ...
+    @staticmethod
+    def get_next_paragraph(
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> tuple[str, int, int]: ...
+    @staticmethod
+    def get_previous_paragraph(
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> tuple[str, int, int]: ...
+    @staticmethod
+    def iter_paragraph(
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> Generator[tuple[str, int, int]]: ...
+    @staticmethod
+    def supports_paragraph_iteration(obj: Atspi.Accessible) -> bool: ...
+    @staticmethod
+    def set_caret_offset_to_start(obj: Atspi.Accessible) -> bool: ...
+    @staticmethod
+    def set_caret_offset_to_end(obj: Atspi.Accessible) -> bool: ...
+    @staticmethod
+    def has_selected_text(obj: Atspi.Accessible) -> bool: ...
+    @staticmethod
+    def is_all_text_selected(obj: Atspi.Accessible) -> bool: ...
+    @staticmethod
+    def clear_all_selected_text(obj: Atspi.Accessible) -> None: ...
+    @staticmethod
+    def get_selection_start_offset(obj: Atspi.Accessible) -> int: ...
+    @staticmethod
+    def get_selection_end_offset(obj: Atspi.Accessible) -> int: ...
+    @staticmethod
+    def get_cached_selected_text(obj: Atspi.Accessible) -> tuple[str, int, int]: ...
+    @staticmethod
+    def update_cached_selected_text(obj: Atspi.Accessible) -> None: ...
+    @staticmethod
+    def get_selected_text(obj: Atspi.Accessible) -> tuple[str, int, int]: ...
+    @staticmethod
+    def set_selected_text(
+        obj: Atspi.Accessible,
+        start_offset: int,
+        end_offset: int,
+    ) -> bool: ...
+    @staticmethod
+    def get_all_text_attributes(
+        obj: Atspi.Accessible,
+        start_offset: int = 0,
+        end_offset: int = -1,
+    ) -> list[tuple[int, int, dict[str, str]]]: ...
+    @staticmethod
+    def get_all_supported_text_attributes() -> list: ...
+    @staticmethod
+    def get_visible_lines(
+        obj: Atspi.Accessible,
+        clip_rect: Atspi.Rect,
+    ) -> list[tuple[str, int, int]]: ...
+    @staticmethod
+    def find_first_visible_line(
+        obj: Atspi.Accessible,
+        clip_rect: Atspi.Rect,
+    ) -> tuple[str, int, int]: ...
+    @staticmethod
+    def find_last_visible_line(
+        obj: Atspi.Accessible,
+        clip_rect: Atspi.Rect,
+    ) -> tuple[str, int, int]: ...
+    @staticmethod
+    def string_has_spelling_error(
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> bool: ...
+    @staticmethod
+    def string_has_grammar_error(
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> bool: ...
+    @staticmethod
+    def is_eoc(character: str) -> bool: ...
+    @staticmethod
+    def character_at_offset_is_eoc(obj: Atspi.Accessible, offset: int) -> bool: ...
+    @staticmethod
+    def is_whitespace_or_empty(obj: Atspi.Accessible) -> bool: ...
+    @staticmethod
+    def has_presentable_text(obj: Atspi.Accessible) -> bool: ...
