@@ -6,20 +6,21 @@
 # Enrico Nicoletto <liverig@gmail.com>, 2013.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2013.
 # Leônidas Araújo <leorusvellt@hotmail.com>, 2022.
+# Álvaro Burns <>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2024-04-28 18:06+0000\n"
-"PO-Revision-Date: 2024-05-28 17:36-0300\n"
-"Last-Translator: Leônidas Araújo <leorusvellt@hotmail.com>\n"
-"Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
+"POT-Creation-Date: 2026-02-05 15:56+0000\n"
+"PO-Revision-Date: 2026-02-04 19:07-0300\n"
+"Last-Translator: Álvaro Burns <>\n"
+"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Gtranslator 49.0\n"
 "X-DL-Team: pt_BR\n"
 "X-DL-Module: orca\n"
 "X-DL-Branch: master\n"
@@ -34,142 +35,6 @@ msgstr ""
 "José Vilmar Estácio De Souza <vilmar@informal.com.br>, 2013\n"
 "Enrico Nicoletto <liverig@gmail.com>, 2013\n"
 "Leônidas Araújo <leorusvellt@hotmail.com>, 2022"
-
-#. (itstool) path: info/title
-#: C/commands_bookmarks.page:6
-msgctxt "sort"
-msgid "4. Bookmarks"
-msgstr "4. Marcadores"
-
-#. (itstool) path: info/title
-#: C/commands_bookmarks.page:7
-msgctxt "link"
-msgid "Bookmarks"
-msgstr "Marcadores"
-
-#. (itstool) path: info/desc
-#: C/commands_bookmarks.page:8
-msgid "Commands to bookmark and retrieve objects"
-msgstr "Comandos para marcar e recuperar objetos"
-
-#. (itstool) path: credit/name
-#: C/commands_bookmarks.page:12 C/commands_braille.page:12
-#: C/commands_chat.page:12 C/commands_controlling_orca.page:11
-#: C/commands_debugging.page:10 C/commands_find.page:12
-#: C/commands_flat_review.page:12 C/commands_live_regions.page:12
-#: C/commands_mouse.page:13 C/commands.page:8 C/commands_profiles.page:12
-#: C/commands_reading.page:14 C/commands_speech_settings.page:12
-#: C/commands_structural_navigation.page:12 C/commands_table.page:12
-#: C/commands_time_date_notifications.page:12 C/commands_where_am_i.page:12
-#: C/howto_bookmarks.page:7 C/howto_documents.page:10
-#: C/howto_flat_review.page:8 C/howto_forms.page:10 C/howto_key_bindings.page:8
-#: C/howto_keyboard_layout.page:8 C/howto_learn_modes.page:10
-#: C/howto_live_regions.page:10 C/howto_mouse_review.page:8
-#: C/howto_notifications.page:8 C/howto_orca_find.page:8
-#: C/howto_profiles.page:8 C/howto_setting_up_orca.page:12
-#: C/howto_structural_navigation.page:12 C/howto_tables.page:10
-#: C/howto_text_attributes.page:10 C/howto_the_orca_modifier.page:11
-#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:10
-#: C/introduction.page:10 C/preferences_braille.page:11
-#: C/preferences_chat.page:11 C/preferences_general.page:11
-#: C/preferences_introduction.page:8 C/preferences_key_bindings.page:12
-#: C/preferences_key_echo.page:11 C/preferences.page:7
-#: C/preferences_pronunciation.page:12 C/preferences_speech.page:11
-#: C/preferences_spellcheck.page:10 C/preferences_table_navigation.page:14
-#: C/preferences_text_attributes.page:13 C/preferences_voice.page:11
-#: C/preferences_web.page:12
-msgid "Joanmarie Diggs"
-msgstr "Joanmarie Diggs"
-
-#. (itstool) path: license/p
-#: C/commands_bookmarks.page:16 C/commands_braille.page:16
-#: C/commands_chat.page:16 C/commands_controlling_orca.page:15
-#: C/commands_debugging.page:14 C/commands_find.page:16
-#: C/commands_flat_review.page:16 C/commands_live_regions.page:16
-#: C/commands_mouse.page:17 C/commands.page:12 C/commands_profiles.page:16
-#: C/commands_reading.page:18 C/commands_speech_settings.page:16
-#: C/commands_structural_navigation.page:16 C/commands_table.page:16
-#: C/commands_time_date_notifications.page:16 C/commands_where_am_i.page:16
-#: C/howto_bookmarks.page:11 C/howto_documents.page:14
-#: C/howto_flat_review.page:12 C/howto_forms.page:14
-#: C/howto_key_bindings.page:12 C/howto_keyboard_layout.page:12
-#: C/howto_learn_modes.page:14 C/howto_live_regions.page:14
-#: C/howto_mouse_review.page:12 C/howto_notifications.page:12
-#: C/howto_orca_find.page:12 C/howto_profiles.page:12
-#: C/howto_setting_up_orca.page:16 C/howto_structural_navigation.page:16
-#: C/howto_tables.page:14 C/howto_text_attributes.page:14
-#: C/howto_the_orca_modifier.page:15 C/howto_toggling_caps_lock.page:12
-#: C/howto_whereami.page:14 C/index.page:14 C/introduction.page:14
-#: C/preferences_braille.page:15 C/preferences_chat.page:15
-#: C/preferences_general.page:15 C/preferences_introduction.page:12
-#: C/preferences_key_bindings.page:16 C/preferences_key_echo.page:15
-#: C/preferences.page:11 C/preferences_pronunciation.page:16
-#: C/preferences_speech.page:15 C/preferences_spellcheck.page:14
-#: C/preferences_table_navigation.page:18 C/preferences_text_attributes.page:17
-#: C/preferences_voice.page:15 C/preferences_web.page:16
-msgid "Creative Commons Share Alike 3.0"
-msgstr "Atribuição Compartilhada Igual 3.0 — Creative Commons"
-
-#. (itstool) path: page/title
-#: C/commands_bookmarks.page:19
-msgid "Bookmark Commands"
-msgstr "Comandos de marcador"
-
-#. (itstool) path: page/p
-#: C/commands_bookmarks.page:20
-msgid ""
-"<app>Orca</app> provides several commands which can be used to \"bookmark\" "
-"a given object for the purpose of navigating back to it later."
-msgstr ""
-"O <app>Orca</app> fornece vários comandos que podem ser usados para “marcar” "
-"um determinado objeto com a finalidade de navegar de volta para ele mais "
-"tarde."
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:26
-msgid ""
-"Save a bookmark to the numbered slot: <keyseq><key>Orca Modifier</key> "
-"<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
-msgstr ""
-"Salva um marcador numa posição numerada: <keyseq><key>Tecla Modificadora do "
-"Orca</key> <key>Alt</key><key>1</key></keyseq>-<key>6</key>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:32
-msgid ""
-"Save the defined bookmarks for the application or page: <keyseq><key>Orca "
-"Modifier</key><key>Alt</key><key>B</key></keyseq>"
-msgstr ""
-"Salva os marcadores definidos para o aplicativo ou a página: "
-"<keyseq><key>Tecla Modificadora do Orca</key><key>Alt</key><key>B</key></"
-"keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:38
-msgid ""
-"Go to a specific, numbered bookmark: <keyseq><key>Orca Modifier</key> "
-"<key>1</key></keyseq>-<key>6</key>"
-msgstr ""
-"Vai para um marcador numerado específico: <keyseq><key>Tecla Modificadora do "
-"Orca</key> <key>1</key></keyseq>-<key>6</key>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:44
-msgid ""
-"Go to the previous bookmark for the application or page: <keyseq><key>Orca "
-"Modifier</key><key>Shift</key><key>B</key> </keyseq>"
-msgstr ""
-"Vai para o marcador anterior para o aplicativo ou página: <keyseq><key>Tecla "
-"Modificadora do Orca</key><key>Shift</key><key>B</key> </keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:51
-msgid ""
-"Go to the next bookmark for the application or page: <keyseq><key>Orca "
-"Modifier</key><key>B</key></keyseq>"
-msgstr ""
-"Vai para o próximo marcador para o aplicativo ou página: <keyseq><key>Tecla "
-"Modificadora do Orca</key><key>B</key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_braille.page:6
@@ -188,8 +53,65 @@ msgstr "Braille"
 msgid "Commands executable on braille displays"
 msgstr "Comandos executáveis na linha braile"
 
+#. (itstool) path: credit/name
+#: C/commands_braille.page:12 C/commands_chat.page:12
+#: C/commands_controlling_orca.page:11 C/commands_debugging.page:10
+#: C/commands_find.page:12 C/commands_flat_review.page:12
+#: C/commands_live_regions.page:12 C/commands_mouse.page:13 C/commands.page:8
+#: C/commands_profiles.page:12 C/commands_reading.page:14
+#: C/commands_speech_settings.page:12 C/commands_structural_navigation.page:12
+#: C/commands_table.page:12 C/commands_time_date_notifications.page:12
+#: C/commands_where_am_i.page:12 C/howto_documents.page:10
+#: C/howto_flat_review.page:8 C/howto_forms.page:10 C/howto_key_bindings.page:8
+#: C/howto_keyboard_layout.page:8 C/howto_learn_modes.page:10
+#: C/howto_live_regions.page:10 C/howto_mouse_review.page:8
+#: C/howto_notifications.page:7 C/howto_orca_find.page:8
+#: C/howto_profiles.page:8 C/howto_setting_up_orca.page:12
+#: C/howto_structural_navigation.page:12 C/howto_tables.page:10
+#: C/howto_text_attributes.page:10 C/howto_the_orca_modifier.page:11
+#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:10
+#: C/introduction.page:10 C/preferences_braille.page:11
+#: C/preferences_chat.page:11 C/preferences_general.page:11
+#: C/preferences_introduction.page:8 C/preferences_key_bindings.page:12
+#: C/preferences_key_echo.page:11 C/preferences.page:7
+#: C/preferences_pronunciation.page:12 C/preferences_speech.page:11
+#: C/preferences_spellcheck.page:10 C/preferences_table_navigation.page:14
+#: C/preferences_text_attributes.page:13 C/preferences_voice.page:11
+#: C/preferences_web.page:12
+msgid "Joanmarie Diggs"
+msgstr "Joanmarie Diggs"
+
+#. (itstool) path: license/p
+#: C/commands_braille.page:16 C/commands_chat.page:16
+#: C/commands_controlling_orca.page:15 C/commands_debugging.page:14
+#: C/commands_find.page:16 C/commands_flat_review.page:16
+#: C/commands_live_regions.page:16 C/commands_mouse.page:17 C/commands.page:12
+#: C/commands_profiles.page:16 C/commands_reading.page:18
+#: C/commands_speech_settings.page:16 C/commands_structural_navigation.page:16
+#: C/commands_table.page:16 C/commands_time_date_notifications.page:16
+#: C/commands_where_am_i.page:16 C/howto_documents.page:14
+#: C/howto_flat_review.page:12 C/howto_forms.page:14
+#: C/howto_key_bindings.page:12 C/howto_keyboard_layout.page:12
+#: C/howto_learn_modes.page:14 C/howto_live_regions.page:14
+#: C/howto_mouse_review.page:12 C/howto_notifications.page:11
+#: C/howto_orca_find.page:12 C/howto_profiles.page:12
+#: C/howto_setting_up_orca.page:16 C/howto_structural_navigation.page:16
+#: C/howto_tables.page:14 C/howto_text_attributes.page:14
+#: C/howto_the_orca_modifier.page:15 C/howto_toggling_caps_lock.page:12
+#: C/howto_whereami.page:14 C/index.page:14 C/introduction.page:14
+#: C/preferences_braille.page:15 C/preferences_chat.page:15
+#: C/preferences_general.page:15 C/preferences_introduction.page:12
+#: C/preferences_key_bindings.page:16 C/preferences_key_echo.page:15
+#: C/preferences.page:11 C/preferences_pronunciation.page:16
+#: C/preferences_speech.page:15 C/preferences_spellcheck.page:14
+#: C/preferences_table_navigation.page:18 C/preferences_text_attributes.page:17
+#: C/preferences_voice.page:15 C/preferences_web.page:16
+msgid "Creative Commons Share Alike 3.0"
+msgstr "Atribuição Compartilhada Igual 3.0 — Creative Commons"
+
 #. (itstool) path: page/title
-#: C/commands_braille.page:19
+#. (itstool) path: section/title
+#: C/commands_braille.page:19 C/commands_controlling_orca.page:73
 msgid "Braille Commands"
 msgstr "Comandos Braille"
 
@@ -302,32 +224,47 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:30
-msgid ""
-"Present previous chat room messages: <keyseq><key>Orca Modifier</"
-"key><key>F1</key></keyseq> through <key>F9</key>"
-msgstr ""
-"Apresenta a mensagem anterior na sala de bate-papo: <keyseq><key>Tecla "
-"Modificadora do Orca</key><key>F1</key></keyseq> até <key>F9</key>"
+#, fuzzy
+#| msgid "Present the previous notification message: (Unbound)"
+msgid "Present previous chat room message: (Unbound)"
+msgstr "Apresenta a mensagem de notificação anterior: (Sem atalho definido)"
 
 #. (itstool) path: item/p
-#: C/commands_chat.page:36
+#: C/commands_chat.page:35
+#, fuzzy
+#| msgid "Present the next notification message: (Unbound)"
+msgid "Present next chat room message: (Unbound)"
+msgstr "Apresentar a próxima mensagem de notificação: (Sem atalho definido)"
+
+#. (itstool) path: item/p
+#: C/commands_chat.page:40
 msgid "Enable/disable announcement of room name with messages: (Unbound)"
 msgstr ""
 "Habilita/desabilita o anúncio do nome da sala com mensagens: (Sem atalho "
 "definido)"
 
 #. (itstool) path: item/p
-#: C/commands_chat.page:41
+#: C/commands_chat.page:45
+#, fuzzy
+#| msgid "Provide chat room specific message histories"
+msgid "Toggle chat room specific message histories: (unbound)"
+msgstr "Fornece históricos de mensagens específicos para as salas de bate-papo"
+
+#. (itstool) path: item/p
+#: C/commands_chat.page:50
 msgid "Enable/disable announcement of buddy typing status: (Unbound)"
 msgstr ""
 "Habilita/desabilita o anúncio do status de digitação de amigos: (Sem atalho "
 "definido)"
 
+# Usando mesma tradução da UI para "Cycle to the next speaking of punctuation level"
 #. (itstool) path: item/p
-#: C/commands_chat.page:44
-msgid "Enable/disable room-specific histories: (Unbound)"
+#: C/commands_chat.page:53
+#, fuzzy
+#| msgid "Cycle to the next spoken punctuation level: (Unbound)"
+msgid "Toggle room name presentation: (Unbound)"
 msgstr ""
-"Habilita/desabilita o histórico de uma sala específica: (Sem atalho definido)"
+"Circula para o próximo nível de fala de pontuação: (Sem atalho definido)"
 
 #. (itstool) path: info/title
 #: C/commands_controlling_orca.page:5
@@ -370,12 +307,16 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:29
+#, fuzzy
+#| msgid ""
+#| "To toggle <app>Orca</app> on and off in GNOME, press <keyseq><key>Super</"
+#| "key><key>Alt</key><key>S</key></keyseq>."
 msgid ""
-"Toggle <app>Orca</app> on and off in GNOME: <keyseq><key>Super</"
-"key><key>Alt</key><key>S</key></keyseq>."
+"Toggle <app>Orca</app> on and off in supported desktop environments: "
+"<keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
 msgstr ""
-"Ative ou desative o <app>Orca</app> no GNOME: <keyseq><key>Super</"
-"key><key>Alt</key><key>S</key></keyseq>."
+"Para alternar o <app>Orca</app> em ligado e desligado no GNOME, pressione as "
+"teclas <keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
 
 #. (itstool) path: note/p
 #: C/commands_controlling_orca.page:34
@@ -414,21 +355,66 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:56
+#, fuzzy
+#| msgid ""
+#| "Cell above: <keyseq><key>Alt</key><key>Shift</key><key>Up</key></keyseq>"
 msgid ""
-"Pass the next command on to the current application: <keyseq><key>Orca "
-"Modifier</key><key>BackSpace</key></keyseq>"
+"Toggle all Orca command keys: <keyseq><key>Alt&gt;</key><key>BackSpace</"
+"key></keyseq>"
 msgstr ""
-"Envia o próximo comando para o aplicativo atual: <keyseq><key>Tecla "
-"Modificadora do Orca</key><key>BackSpace</key></keyseq>"
+"Célula acima: <keyseq><key>Alt</key><key>Shift</key><key>Cima</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:62
+msgid "Toggle keyboard layout: (Unbound)"
+msgstr ""
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:65 C/commands_speech_settings.page:57
+msgid "Cycle to the next key echo level: (Unbound)"
+msgstr "Circular para o próximo nível de eco de tecla: (Sem atalho definido)"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:68
+#, fuzzy
+#| msgid "Decrease the rate: (Unbound)"
+msgid "Quit the screen reader: (Unbound)"
+msgstr "Diminui a velocidade: (Sem atalho definido)"
+
+#. (itstool) path: section/p
+#: C/commands_controlling_orca.page:74
+msgid ""
+"The following commands can be used to control and customize Orca's braille "
+"output."
+msgstr ""
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:77
+#, fuzzy
+#| msgid "Pan braille display to the left: Line Left"
+msgid "Pan the braille display to the left: (Unbound)"
+msgstr "Varre a linha Braille para a esquerda: Linha à esquerda"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:80
+#, fuzzy
+#| msgid "Pan braille display to the right: Line Right"
+msgid "Pan the braille display to the right: (Unbound)"
+msgstr "Varre a linha Braille para a direita: Linha à direita"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:83
+msgid "Turn contracted braille on and off: (Unbound)"
+msgstr ""
 
 #. (itstool) path: section/title
-#: C/commands_controlling_orca.page:64
+#: C/commands_controlling_orca.page:88
 msgid "Commands for Learning to Use <app>Orca</app>"
 msgstr "Comandos para aprender a usar o <app>Orca</app>"
 
 #. (itstool) path: section/p
 #. (itstool) path: page/p
-#: C/commands_controlling_orca.page:65 C/howto_learn_modes.page:18
+#: C/commands_controlling_orca.page:89 C/howto_learn_modes.page:18
 msgid ""
 "In Learn Mode, <app>Orca</app> will announce each keystroke you pressed "
 "along with any associated <app>Orca</app> command that keystroke is bound "
@@ -441,14 +427,14 @@ msgstr ""
 "comandos do <app>Orca</app> que você pode usar."
 
 #. (itstool) path: item/p
-#: C/commands_controlling_orca.page:73
+#: C/commands_controlling_orca.page:97
 msgid "Enter Learn Mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgstr ""
 "Entra no Modo de Aprendizado: <keyseq><key>Tecla Modificadora do Orca</"
 "key><key>H</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_controlling_orca.page:79
+#: C/commands_controlling_orca.page:103
 msgid "Exit Learn Mode: <keyseq><key>Esc</key></keyseq>"
 msgstr "Sai do Modo de Aprendizado: <keyseq><key>Esc</key></keyseq>"
 
@@ -491,8 +477,21 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_debugging.page:26
+msgid "Capture snapshot for debugging: (Unbound)"
+msgstr ""
+
+#. (itstool) path: item/p
+#: C/commands_debugging.page:29
 msgid "Cycle to the next debug level: (Unbound)"
 msgstr "Alterna para o próximo nível de depuração: (Sem atalho definido)"
+
+#. (itstool) path: item/p
+#: C/commands_debugging.page:32
+#, fuzzy
+#| msgid "Cycle to the next capitalization style: (Unbound)"
+msgid "Clear the AT-SPI cache for the current application: (Unbound)"
+msgstr ""
+"Circula para o próximo estilo de letras maiúsculas: (Sem atalho definido)"
 
 #. (itstool) path: info/title
 #: C/commands_find.page:6
@@ -1081,6 +1080,29 @@ msgstr ""
 "Anexar o conteúdo em revisão plana à área de transferência: (Sem atalho "
 "definido)"
 
+#. (itstool) path: item/p
+#: C/commands_flat_review.page:197
+#, fuzzy
+#| msgid "Copy the contents under flat review to the clipboard: (Unbound)"
+msgid "Move flat review to the bottom left: (Unbound)"
+msgstr ""
+"Copie o conteúdo sob revisão plana para a área de transferência: (Sem atalho "
+"definido)"
+
+#. (itstool) path: item/p
+#: C/commands_flat_review.page:198
+msgid "Show flat review contents: (Unbound)"
+msgstr ""
+
+#. (itstool) path: item/p
+#: C/commands_flat_review.page:199
+#, fuzzy
+#| msgid "Copy the contents under flat review to the clipboard: (Unbound)"
+msgid "Toggle restricting flat review to the current object: (Unbound)"
+msgstr ""
+"Copie o conteúdo sob revisão plana para a área de transferência: (Sem atalho "
+"definido)"
+
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:6
 msgctxt "sort"
@@ -1115,53 +1137,47 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:27
 msgid ""
-"Monitor live regions: <keyseq><key>Orca Modifier</key><key>Shift</"
-"key><key>Backslash</key></keyseq>"
+"Monitor live regions: <keyseq><key>Orca Modifier</key><key>Backslash</key></"
+"keyseq>"
 msgstr ""
 "Monitora regiões dinâmicas: <keyseq><key>Tecla Modificadora do Orca</"
-"key><key>Shift</key><key>Barra invertida</key></keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_live_regions.page:33
-msgid "Advance live region politeness setting: <key>Backslash</key>"
-msgstr ""
-"Avança configuração da polidez da região ativa: <key>Barra invertida</key>"
-
-#. (itstool) path: item/p
-#: C/commands_live_regions.page:38
-msgid ""
-"Set default politeness level to off: <keyseq><key>Shift</key><key>Backslash</"
-"key></keyseq>"
-msgstr ""
-"Ajusta o nível de refinamento para desligado: <keyseq><key>Shift</"
 "key><key>Barra invertida</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_live_regions.page:44
-msgid ""
-"Go to next/previous live region: <keyseq><key>D</key></keyseq>/"
-"<keyseq><key>Shift</key><key>D</key></keyseq>"
-msgstr ""
-"Vai para a região dinâmica seguinte/anterior: <keyseq><key>D</key></keyseq>/"
-"<keyseq><key>Shift</key><key>D</key></keyseq>"
+#: C/commands_live_regions.page:33
+msgid "Advance live region politeness setting: (Unbound)"
+msgstr "Avança configuração da polidez da região ativa: (Sem atalho definido)"
 
 #. (itstool) path: item/p
-#: C/commands_live_regions.page:50
+#: C/commands_live_regions.page:36
+msgid "Set default politeness level to off: (Unbound)"
+msgstr "Desativa o nível de polidez padrão: (Sem atalho definido)"
+
+#. (itstool) path: item/p
+#: C/commands_live_regions.page:39
+msgid ""
+"Go to next/previous live region in the document's reading order: "
+"<keyseq><key>D</key></keyseq>/<keyseq><key>Shift</key><key>D</key></keyseq>"
+msgstr ""
+"Vai para a região dinâmica seguinte/anterior na ordem de leitura do "
+"documento: <keyseq><key>D</key></keyseq>/<keyseq><key>Shift</key><key>D</"
+"key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_live_regions.page:45
+msgid "Review the next/previous saved live region message: (Unbound)"
+msgstr ""
+"Revisa a mensagem salva da região dinâmica seguinte/anterior: (Sem atalho "
+"definido)"
+
+#. (itstool) path: item/p
+#: C/commands_live_regions.page:48
 msgid ""
 "Go to last live region which made an announcement: <keyseq><key>Y</key></"
 "keyseq>"
 msgstr ""
 "Vai para última região dinâmica que emitiu uma mensagem: <keyseq><key>Y</"
 "key></keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_live_regions.page:56
-msgid ""
-"Review live region announcements: <keyseq><key>Orca Modifier</key><key>F1</"
-"key></keyseq> through <key>F9</key>"
-msgstr ""
-"Revisa mensagens da região dinâmica: <keyseq><key>Tecla Modificadora do "
-"Orca</key><key>F1</key></keyseq> até <key>F9</key>"
 
 #. (itstool) path: info/title
 #: C/commands_mouse.page:5
@@ -1387,6 +1403,13 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_profiles.page:30
 msgid "Cycle to the next profile: (Unbound)"
+msgstr "Alterna para o próximo perfil: (Sem atalho definido)"
+
+#. (itstool) path: item/p
+#: C/commands_profiles.page:35
+#, fuzzy
+#| msgid "Cycle to the next profile: (Unbound)"
+msgid "Present the current profile: (Unbound)"
 msgstr "Alterna para o próximo perfil: (Sem atalho definido)"
 
 #. (itstool) path: info/title
@@ -1701,7 +1724,9 @@ msgstr "Comandos para personalizar a saída do <app>Orca</app>"
 
 #. (itstool) path: page/title
 #: C/commands_speech_settings.page:19
-msgid "Speech Settings Commands"
+#, fuzzy
+#| msgid "Speech Settings Commands"
+msgid "Speech And Verbosity Settings Commands"
 msgstr "Comandos de configuração de fala"
 
 #. (itstool) path: page/p
@@ -1763,11 +1788,6 @@ msgstr ""
 "Circula para o próximo nível de fala de pontuação: (Sem atalho definido)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:57
-msgid "Cycle to the next key echo level: (Unbound)"
-msgstr "Circular para o próximo nível de eco de tecla: (Sem atalho definido)"
-
-#. (itstool) path: item/p
 #: C/commands_speech_settings.page:60
 msgid "Cycle to the next capitalization style: (Unbound)"
 msgstr ""
@@ -1802,6 +1822,13 @@ msgstr "Diminui o volume: (Sem atalho definido)"
 #: C/commands_speech_settings.page:78
 msgid "Increase the volume: (Unbound)"
 msgstr "Aumenta o volume: (Sem atalho definido)"
+
+#. (itstool) path: item/p
+#: C/commands_speech_settings.page:81
+#, fuzzy
+#| msgid "Cycle to the next key echo level: (Unbound)"
+msgid "Cycle to the next speech synthesizer: (Unbound)"
+msgstr "Circular para o próximo nível de eco de tecla: (Sem atalho definido)"
 
 #. (itstool) path: info/title
 #: C/commands_structural_navigation.page:6
@@ -2670,88 +2697,6 @@ msgstr ""
 "definido)"
 
 #. (itstool) path: info/title
-#: C/howto_bookmarks.page:4
-msgctxt "sort"
-msgid "6. Bookmarks"
-msgstr "6. Marcadores"
-
-#. (itstool) path: info/desc
-#: C/howto_bookmarks.page:5
-msgid "Storing and retrieving objects"
-msgstr "Armazenando e recuperando objetos"
-
-#. (itstool) path: page/title
-#: C/howto_bookmarks.page:14
-msgid "Bookmarks"
-msgstr "Marcadores"
-
-#. (itstool) path: page/p
-#: C/howto_bookmarks.page:15
-msgid ""
-"<app>Orca</app>'s Bookmarks support allows you to indicate that an object is "
-"of interest. It includes the following features:"
-msgstr ""
-"O suporte aos marcadores do <app>Orca</app> permite-lhe indicar se um objeto "
-"é de seu interesse. Isto inclui os seguintes recursos:"
-
-#. (itstool) path: item/p
-#: C/howto_bookmarks.page:21
-msgid ""
-"You are not limited to a single object: You can set up to six bookmarks per "
-"environment. You can also save bookmarks so that they will persist from Orca "
-"session to Orca session."
-msgstr ""
-"Você não está limitado a um único objeto: Você pode definir seis marcadores "
-"por ambiente. Também podem ser salvos marcadores que continuarão a existir "
-"entre o encerramento de uma seção do Orca e o início de outra."
-
-#. (itstool) path: item/p
-#: C/howto_bookmarks.page:28
-msgid ""
-"Having set a bookmark you can navigate to it later, and do so regardless of "
-"whether or not you have chosen to permanently save the bookmarks associated "
-"with your current environment. Navigation can be based on the number of the "
-"bookmark should you wish to jump directly to a specific item. Alternatively, "
-"you can navigate to the next or previous bookmark just like you can a <link "
-"xref=\"howto_structural_navigation\">Structural Navigation</link> object."
-msgstr ""
-"Depois de definir um marcador, você pode navegar até ele mais tarde e fazê-"
-"lo independentemente de ter ou não escolhido salvar permanentemente os "
-"marcadores associados ao seu ambiente atual. A navegação pode ser baseada no "
-"número do marcador, caso você queira pular diretamente para um item "
-"específico. Alternativamente, você pode navegar para o próximo marcador ou "
-"para o anterior, assim como faz com um objeto de <link "
-"xref=\"howto_structural_navigation\">Navegação Estrutural</link>."
-
-#. (itstool) path: item/p
-#: C/howto_bookmarks.page:39
-msgid ""
-"Bookmarkable objects can be widgets within an application or objects on the "
-"web page you are reading. Which environment you are in determines what "
-"happens as you navigate amongst bookmarks: If you are in web content, the "
-"caret will be moved to the bookmark so that you can continue reading; "
-"otherwise, <link xref=\"howto_flat_review\">Flat Review</link> will be "
-"activated with the bookmark becoming the current review item."
-msgstr ""
-"Os objetos que podem ser marcados podem ser widgets em um aplicativo ou "
-"objetos na página da web que você está lendo. O ambiente em que você está "
-"determina o que acontece enquanto você navega entre os marcadores: se você "
-"estiver em conteúdo da web, o cursor será movido para o marcador para que "
-"você possa continuar lendo; caso contrário, a <link "
-"xref=\"howto_flat_review\">Revisão Plana</link> será ativada, com o marcador "
-"se tornando o item de revisão atual."
-
-#. (itstool) path: page/p
-#: C/howto_bookmarks.page:50
-msgid ""
-"The specific keybindings associated with each of the above tasks can be "
-"found in <link xref=\"commands_bookmarks\">Bookmark Commands</link>."
-msgstr ""
-"As associações de teclas específicas relativas a cada uma das tarefas acima "
-"podem ser encontradas entre os <link xref=\"commands_bookmarks\">Comandos de "
-"marcadores</link>."
-
-#. (itstool) path: info/title
 #: C/howto_documents.page:5
 msgctxt "sort"
 msgid "1. Documents"
@@ -3416,14 +3361,14 @@ msgid ""
 "Live regions have an associated \"politeness\" level which is set by the "
 "author as a means to convey the importance of the information and to suggest "
 "when users should be informed by their assistive technology of updates made "
-"within that region. Live regions can be \"off\", \"polite\", or "
-"\"assertive\" to the point of being \"rude.\""
+"within that region. Live regions can be \"off\", \"polite\", or \"assertive."
+"\""
 msgstr ""
-"As regiões dinâmicas têm um nível de \"cortesia\" associado que é definido "
+"As regiões dinâmicas têm um nível de \"polidez\" associado que é definido "
 "pelo autor como um meio de transmitir a importância da informação e sugerir "
 "quando os usuários devem ser informados por sua tecnologia assistiva das "
 "atualizações feitas naquela região. As regiões dinâmicas podem ser "
-"\"desativadas\", \"educadas\" ou \"assertivas\" a ponto de serem \"rude\"."
+"\"desativadas\", \"polidas\" ou \"assertivas\"."
 
 #. (itstool) path: section/title
 #: C/howto_live_regions.page:37
@@ -3552,23 +3497,23 @@ msgstr ""
 "associações de teclas são independentes entre sí."
 
 #. (itstool) path: info/title
-#: C/howto_notifications.page:5
+#: C/howto_notifications.page:4
 msgctxt "sort"
 msgid "5. Notifications"
 msgstr "5. Notificações"
 
 #. (itstool) path: info/desc
-#: C/howto_notifications.page:6
+#: C/howto_notifications.page:5
 msgid "Reading previously-received messages"
 msgstr "Leitura de mensagens recebidas"
 
 #. (itstool) path: page/title
-#: C/howto_notifications.page:15
+#: C/howto_notifications.page:14
 msgid "Notifications"
 msgstr "Notificações"
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:16
+#: C/howto_notifications.page:15
 msgid ""
 "The GNOME Desktop includes a \"notification area\" which can be used by "
 "applications to present information to the user. Examples of notifications "
@@ -3583,7 +3528,7 @@ msgstr ""
 "nível de bateria está ficando baixo."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:23
+#: C/howto_notifications.page:22
 msgid ""
 "Because notifications are intended to present information to users without "
 "interrupting what the user is doing, these messages tend to appear and "
@@ -3602,22 +3547,22 @@ msgstr ""
 "pode usar para acessar as mensagens de notificação exibidas anteriormente:"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:35
+#: C/howto_notifications.page:34
 msgid "Present the last (most recent) notification message"
 msgstr "Apresenta a última (mais recente) mensagem de notificação"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:38
+#: C/howto_notifications.page:37
 msgid "Present the previous notification message"
 msgstr "Apresenta a mensagem de notificação anterior"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:41
+#: C/howto_notifications.page:40
 msgid "Present list of all notification messages"
 msgstr "Apresenta uma lista com todas as mensagens de notificação"
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:44
+#: C/howto_notifications.page:43
 msgid ""
 "The first two commands are designed mainly for quick access to a message you "
 "just received. The last command is the most powerful as it stores your "
@@ -3628,7 +3573,7 @@ msgstr ""
 "poderoso uma vez que ele armazena seu histórico de mensagem de notificação."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:49
+#: C/howto_notifications.page:48
 msgid ""
 "When you enter the list of notification messages, you will be told the size "
 "of the list and prompted with the following choices:"
@@ -3637,38 +3582,38 @@ msgstr ""
 "do tamanho da lista e solicitado a escolher uma das seguintes opções:"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:54
+#: C/howto_notifications.page:53
 msgid "Press H for help."
 msgstr "Pressione H para ajuda."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:55
+#: C/howto_notifications.page:54
 msgid "Use Up, Down, Home or End to navigate in the list."
 msgstr "Use seta para cima ou para baixo, home ou end para navegar pela lista."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:56
+#: C/howto_notifications.page:55
 msgid "Press Escape to exit."
 msgstr "Pressione escapeepara sair."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:57
+#: C/howto_notifications.page:56
 msgid "Press Space to repeat the last message read."
 msgstr "Pressione barra de espaço para repetir a última mensagem lida."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:58
+#: C/howto_notifications.page:57
 msgid "Press one digit to read a specific message."
 msgstr "Pressione um dígito para ler uma mensagem específica."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:60
+#: C/howto_notifications.page:59
 msgid "Note that the most recently-received message is at the top of the list."
 msgstr ""
 "Observe que a mensagem recebida mais recentemente estará no topo da lista."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:63
+#: C/howto_notifications.page:62
 msgid ""
 "Each of <app>Orca</app>'s notification review commands is unbound by "
 "default. You can bind any or all of them to the shortcut or shortcuts you "
@@ -5210,8 +5155,8 @@ msgstr ""
 #: C/introduction.page:125
 msgid "<cmd>--debug</cmd>: Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
 msgstr ""
-"<cmd>--debug</cmd>: Envia a saída de depuração para debug-AAAA-MM-DD-HH:MM:"
-"SS.out"
+"<cmd>--debug</cmd>: Envia a saída de depuração para debug-AAAA-MM-DD-"
+"HH:MM:SS.out"
 
 #. (itstool) path: item/p
 #: C/introduction.page:130
@@ -5268,9 +5213,9 @@ msgstr ""
 #: C/preferences_speech.page:105 C/preferences_speech.page:135
 #: C/preferences_speech.page:160 C/preferences_speech.page:171
 #: C/preferences_speech.page:183 C/preferences_speech.page:343
-#: C/preferences_table_navigation.page:65 C/preferences_voice.page:122
-#: C/preferences_voice.page:133 C/preferences_web.page:58
-#: C/preferences_web.page:100 C/preferences_web.page:205
+#: C/preferences_table_navigation.page:65 C/preferences_voice.page:118
+#: C/preferences_web.page:58 C/preferences_web.page:100
+#: C/preferences_web.page:205
 msgid "Default value: not checked"
 msgstr "Valor padrão: não selecionado"
 
@@ -7914,36 +7859,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:112
-msgid "Speak multicase strings as words"
-msgstr "Falar palavras com maiúsculas misturadas como palavras separadas"
-
-#. (itstool) path: section/p
-#: C/preferences_voice.page:113
-msgid ""
-"In some text, and especially when working with code, one often comes across "
-"a \"word\" consisting of several words with alternating case, such as "
-"\"MultiCaseString.\" Speech synthesizers do not always pronounce such "
-"multicase strings correctly. Checking the <gui>Speak multicase strings as "
-"words</gui> checkbox will cause <app>Orca</app> to break a word like "
-"\"MultiCaseString\" into separate words (\"Multi,\" \"Case,\" and "
-"\"String\") prior to passing it along to the speech synthesizer."
-msgstr ""
-"Em alguns textos, e especialmente ao trabalhar com código, muitas vezes "
-"encontramos uma \"palavra\" composta por várias palavras alternadas entre "
-"maiúsculas e minúsculas, como \"MultiCaseString\". Sintetizadores de voz nem "
-"sempre pronunciam essas strings maiúsculas misturadas corretamente. Marcar a "
-"caixa de seleção <gui>Fala palavras com maiúsculas misturadas como palavras "
-"separadas</gui> fará com que o <app>Orca</app> divida uma palavra como "
-"\"MultiCaseString\" em palavras separadas (\"Multi\", \"Case\" e \"String\") "
-"antes de passá-lo para o sintetizador de voz."
-
-#. (itstool) path: section/title
-#: C/preferences_voice.page:127
 msgid "Speak numbers as digits"
 msgstr "Falar números como dígitos"
 
 #. (itstool) path: section/p
-#: C/preferences_voice.page:128
+#: C/preferences_voice.page:113
 msgid ""
 "Checking the <gui>Speak numbers as digits</gui> checkbox will cause "
 "<app>Orca</app> to break a number like \"123\" into separate digits (\"1,\" "
@@ -8293,6 +8213,195 @@ msgstr ""
 #: C/preferences_web.page:218
 msgid "Default value: 4"
 msgstr "Valor padrão: 4"
+
+#~ msgid ""
+#~ "Present previous chat room messages: <keyseq><key>Orca Modifier</"
+#~ "key><key>F1</key></keyseq> through <key>F9</key>"
+#~ msgstr ""
+#~ "Apresenta a mensagem anterior na sala de bate-papo: <keyseq><key>Tecla "
+#~ "Modificadora do Orca</key><key>F1</key></keyseq> até <key>F9</key>"
+
+#~ msgid "Enable/disable room-specific histories: (Unbound)"
+#~ msgstr ""
+#~ "Habilita/desabilita o histórico de uma sala específica: (Sem atalho "
+#~ "definido)"
+
+#~ msgid ""
+#~ "Toggle <app>Orca</app> on and off in GNOME: <keyseq><key>Super</"
+#~ "key><key>Alt</key><key>S</key></keyseq>."
+#~ msgstr ""
+#~ "Ative ou desative o <app>Orca</app> no GNOME: <keyseq><key>Super</"
+#~ "key><key>Alt</key><key>S</key></keyseq>."
+
+#~ msgid ""
+#~ "Pass the next command on to the current application: <keyseq><key>Orca "
+#~ "Modifier</key><key>BackSpace</key></keyseq>"
+#~ msgstr ""
+#~ "Envia o próximo comando para o aplicativo atual: <keyseq><key>Tecla "
+#~ "Modificadora do Orca</key><key>BackSpace</key></keyseq>"
+
+#~ msgctxt "sort"
+#~ msgid "4. Bookmarks"
+#~ msgstr "4. Marcadores"
+
+#~ msgctxt "link"
+#~ msgid "Bookmarks"
+#~ msgstr "Marcadores"
+
+#~ msgid "Commands to bookmark and retrieve objects"
+#~ msgstr "Comandos para marcar e recuperar objetos"
+
+#~ msgid "Bookmark Commands"
+#~ msgstr "Comandos de marcador"
+
+#~ msgid ""
+#~ "<app>Orca</app> provides several commands which can be used to "
+#~ "\"bookmark\" a given object for the purpose of navigating back to it "
+#~ "later."
+#~ msgstr ""
+#~ "O <app>Orca</app> fornece vários comandos que podem ser usados para "
+#~ "“marcar” um determinado objeto com a finalidade de navegar de volta para "
+#~ "ele mais tarde."
+
+#~ msgid ""
+#~ "Save a bookmark to the numbered slot: <keyseq><key>Orca Modifier</key> "
+#~ "<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
+#~ msgstr ""
+#~ "Salva um marcador numa posição numerada: <keyseq><key>Tecla Modificadora "
+#~ "do Orca</key> <key>Alt</key><key>1</key></keyseq>-<key>6</key>"
+
+#~ msgid ""
+#~ "Save the defined bookmarks for the application or page: <keyseq><key>Orca "
+#~ "Modifier</key><key>Alt</key><key>B</key></keyseq>"
+#~ msgstr ""
+#~ "Salva os marcadores definidos para o aplicativo ou a página: "
+#~ "<keyseq><key>Tecla Modificadora do Orca</key><key>Alt</key><key>B</key></"
+#~ "keyseq>"
+
+#~ msgid ""
+#~ "Go to a specific, numbered bookmark: <keyseq><key>Orca Modifier</key> "
+#~ "<key>1</key></keyseq>-<key>6</key>"
+#~ msgstr ""
+#~ "Vai para um marcador numerado específico: <keyseq><key>Tecla Modificadora "
+#~ "do Orca</key> <key>1</key></keyseq>-<key>6</key>"
+
+#~ msgid ""
+#~ "Go to the previous bookmark for the application or page: "
+#~ "<keyseq><key>Orca Modifier</key><key>Shift</key><key>B</key> </keyseq>"
+#~ msgstr ""
+#~ "Vai para o marcador anterior para o aplicativo ou página: "
+#~ "<keyseq><key>Tecla Modificadora do Orca</key><key>Shift</key><key>B</key> "
+#~ "</keyseq>"
+
+#~ msgid ""
+#~ "Go to the next bookmark for the application or page: <keyseq><key>Orca "
+#~ "Modifier</key><key>B</key></keyseq>"
+#~ msgstr ""
+#~ "Vai para o próximo marcador para o aplicativo ou página: "
+#~ "<keyseq><key>Tecla Modificadora do Orca</key><key>B</key></keyseq>"
+
+#~ msgid ""
+#~ "Set default politeness level to off: <keyseq><key>Shift</"
+#~ "key><key>Backslash</key></keyseq>"
+#~ msgstr ""
+#~ "Ajusta o nível de refinamento para desligado: <keyseq><key>Shift</"
+#~ "key><key>Barra invertida</key></keyseq>"
+
+#~ msgid ""
+#~ "Review live region announcements: <keyseq><key>Orca Modifier</"
+#~ "key><key>F1</key></keyseq> through <key>F9</key>"
+#~ msgstr ""
+#~ "Revisa mensagens da região dinâmica: <keyseq><key>Tecla Modificadora do "
+#~ "Orca</key><key>F1</key></keyseq> até <key>F9</key>"
+
+#~ msgctxt "sort"
+#~ msgid "6. Bookmarks"
+#~ msgstr "6. Marcadores"
+
+#~ msgid "Storing and retrieving objects"
+#~ msgstr "Armazenando e recuperando objetos"
+
+#~ msgid "Bookmarks"
+#~ msgstr "Marcadores"
+
+#~ msgid ""
+#~ "<app>Orca</app>'s Bookmarks support allows you to indicate that an object "
+#~ "is of interest. It includes the following features:"
+#~ msgstr ""
+#~ "O suporte aos marcadores do <app>Orca</app> permite-lhe indicar se um "
+#~ "objeto é de seu interesse. Isto inclui os seguintes recursos:"
+
+#~ msgid ""
+#~ "You are not limited to a single object: You can set up to six bookmarks "
+#~ "per environment. You can also save bookmarks so that they will persist "
+#~ "from Orca session to Orca session."
+#~ msgstr ""
+#~ "Você não está limitado a um único objeto: Você pode definir seis "
+#~ "marcadores por ambiente. Também podem ser salvos marcadores que "
+#~ "continuarão a existir entre o encerramento de uma seção do Orca e o "
+#~ "início de outra."
+
+#~ msgid ""
+#~ "Having set a bookmark you can navigate to it later, and do so regardless "
+#~ "of whether or not you have chosen to permanently save the bookmarks "
+#~ "associated with your current environment. Navigation can be based on the "
+#~ "number of the bookmark should you wish to jump directly to a specific "
+#~ "item. Alternatively, you can navigate to the next or previous bookmark "
+#~ "just like you can a <link xref=\"howto_structural_navigation\">Structural "
+#~ "Navigation</link> object."
+#~ msgstr ""
+#~ "Depois de definir um marcador, você pode navegar até ele mais tarde e "
+#~ "fazê-lo independentemente de ter ou não escolhido salvar permanentemente "
+#~ "os marcadores associados ao seu ambiente atual. A navegação pode ser "
+#~ "baseada no número do marcador, caso você queira pular diretamente para um "
+#~ "item específico. Alternativamente, você pode navegar para o próximo "
+#~ "marcador ou para o anterior, assim como faz com um objeto de <link "
+#~ "xref=\"howto_structural_navigation\">Navegação Estrutural</link>."
+
+#~ msgid ""
+#~ "Bookmarkable objects can be widgets within an application or objects on "
+#~ "the web page you are reading. Which environment you are in determines "
+#~ "what happens as you navigate amongst bookmarks: If you are in web "
+#~ "content, the caret will be moved to the bookmark so that you can continue "
+#~ "reading; otherwise, <link xref=\"howto_flat_review\">Flat Review</link> "
+#~ "will be activated with the bookmark becoming the current review item."
+#~ msgstr ""
+#~ "Os objetos que podem ser marcados podem ser widgets em um aplicativo ou "
+#~ "objetos na página da web que você está lendo. O ambiente em que você está "
+#~ "determina o que acontece enquanto você navega entre os marcadores: se "
+#~ "você estiver em conteúdo da web, o cursor será movido para o marcador "
+#~ "para que você possa continuar lendo; caso contrário, a <link "
+#~ "xref=\"howto_flat_review\">Revisão Plana</link> será ativada, com o "
+#~ "marcador se tornando o item de revisão atual."
+
+#~ msgid ""
+#~ "The specific keybindings associated with each of the above tasks can be "
+#~ "found in <link xref=\"commands_bookmarks\">Bookmark Commands</link>."
+#~ msgstr ""
+#~ "As associações de teclas específicas relativas a cada uma das tarefas "
+#~ "acima podem ser encontradas entre os <link "
+#~ "xref=\"commands_bookmarks\">Comandos de marcadores</link>."
+
+#~ msgid "Speak multicase strings as words"
+#~ msgstr "Falar palavras com maiúsculas misturadas como palavras separadas"
+
+#~ msgid ""
+#~ "In some text, and especially when working with code, one often comes "
+#~ "across a \"word\" consisting of several words with alternating case, such "
+#~ "as \"MultiCaseString.\" Speech synthesizers do not always pronounce such "
+#~ "multicase strings correctly. Checking the <gui>Speak multicase strings as "
+#~ "words</gui> checkbox will cause <app>Orca</app> to break a word like "
+#~ "\"MultiCaseString\" into separate words (\"Multi,\" \"Case,\" and "
+#~ "\"String\") prior to passing it along to the speech synthesizer."
+#~ msgstr ""
+#~ "Em alguns textos, e especialmente ao trabalhar com código, muitas vezes "
+#~ "encontramos uma \"palavra\" composta por várias palavras alternadas entre "
+#~ "maiúsculas e minúsculas, como \"MultiCaseString\". Sintetizadores de voz "
+#~ "nem sempre pronunciam essas strings maiúsculas misturadas corretamente. "
+#~ "Marcar a caixa de seleção <gui>Fala palavras com maiúsculas misturadas "
+#~ "como palavras separadas</gui> fará com que o <app>Orca</app> divida uma "
+#~ "palavra como \"MultiCaseString\" em palavras separadas (\"Multi\", "
+#~ "\"Case\" e \"String\") antes de passá-lo para o sintetizador de voz."
 
 #~ msgid ""
 #~ "Next and previous form field: <keyseq><key>Orca Modifier</key><key>Tab</"
