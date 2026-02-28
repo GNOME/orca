@@ -452,7 +452,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         set_size = AXUtilities.get_set_size(AXObject.get_child(obj, 0))
         if set_size is None:
             if AXUtilities.is_description_list(obj, role):
-                set_size = len(self._script.utilities.description_list_terms(obj))
+                set_size = len(AXUtilities.get_description_list_terms(obj))
             elif AXUtilities.is_list_box(obj, role) or AXUtilities.is_list(obj, role):
                 set_size = len(list(AXObject.iter_children(obj, AXUtilities.is_list_item)))
 

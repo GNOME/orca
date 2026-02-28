@@ -222,17 +222,6 @@ class Utilities:
             and not AXUtilities.has_role_from_aria(obj)
         )
 
-    def description_list_terms(self, obj: Atspi.Accessible) -> list[Atspi.Accessible]:
-        """Returns a list of all the accessible description list terms in obj."""
-
-        # TODO - JD: The only caller is the web speech generator. Consider moving this there.
-        if not AXUtilities.is_description_list(obj):
-            return []
-
-        _include = AXUtilities.is_description_term
-        _exclude = AXUtilities.is_description_list
-        return self._find_all_descendants(obj, _include, _exclude)
-
     def is_document_list(self, obj: Atspi.Accessible) -> bool:
         """Returns true if obj is a list inside a document."""
 

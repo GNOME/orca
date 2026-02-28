@@ -97,6 +97,29 @@ class AXUtilitiesRole:
         return roles
 
     @staticmethod
+    def get_description_list_terms(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
+        """Returns all description list terms in obj, excluding nested description lists."""
+
+        if not AXUtilitiesRole.is_description_list(obj):
+            return []
+
+        if AXObject.supports_collection(obj):
+            rule = AXCollection.create_match_rule(
+                roles=[Atspi.Role.DESCRIPTION_TERM],
+                role_match_type=Atspi.CollectionMatchType.ANY,
+            )
+            matches = AXCollection.get_all_matches(obj, rule)
+            return [
+                m
+                for m in matches
+                if AXUtilitiesObject.find_ancestor(m, AXUtilitiesRole.is_description_list) == obj
+            ]
+
+        return AXUtilitiesObject.find_all_descendants(
+            obj, AXUtilitiesRole.is_description_term, AXUtilitiesRole.is_description_list
+        )
+
+    @staticmethod
     def get_document_roles() -> list[Atspi.Role]:
         """Returns the list of roles we consider documents"""
 
