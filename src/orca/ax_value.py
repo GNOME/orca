@@ -23,10 +23,6 @@
 
 from __future__ import annotations
 
-import threading
-import time
-from typing import TYPE_CHECKING
-
 import gi
 
 gi.require_version("Atspi", "2.0")
@@ -34,68 +30,11 @@ from gi.repository import Atspi, GLib
 
 from . import debug
 from .ax_object import AXObject
-from .ax_utilities import AXUtilities
-
-if TYPE_CHECKING:
-    from typing import ClassVar
+from .ax_utilities_state import AXUtilitiesState
 
 
 class AXValue:
     """Wrapper for the Atspi.Value interface."""
-
-    LAST_KNOWN_VALUE: ClassVar[dict[int, float]] = {}
-    _lock = threading.Lock()
-
-    @staticmethod
-    def _clear_stored_data() -> None:
-        """Clears any data we have cached for objects"""
-
-        while True:
-            time.sleep(60)
-            msg = "AXValue: Clearing local cache."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            AXValue.LAST_KNOWN_VALUE.clear()
-
-    @staticmethod
-    def start_cache_clearing_thread() -> None:
-        """Starts thread to periodically clear cached details."""
-
-        thread = threading.Thread(target=AXValue._clear_stored_data)
-        thread.daemon = True
-        thread.start()
-
-    @staticmethod
-    def did_value_change(obj: Atspi.Accessible) -> bool:
-        """Returns True if the current value changed."""
-
-        if not AXObject.supports_value(obj):
-            return False
-
-        old_value = AXValue.LAST_KNOWN_VALUE.get(hash(obj))
-        result = old_value != AXValue._get_current_value(obj)
-        if result:
-            tokens = ["AXValue: Previous value of", obj, f"was {old_value}"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        return result
-
-    @staticmethod
-    def _get_current_value(obj: Atspi.Accessible) -> float:
-        """Returns the current value of obj."""
-
-        if not AXObject.supports_value(obj):
-            return 0.0
-
-        try:
-            value = Atspi.Value.get_current_value(obj)
-        except GLib.GError as error:
-            msg = f"AXValue: Exception in _get_current_value: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return 0.0
-
-        tokens = ["AXValue: Current value of", obj, f"is {value}"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return value
 
     @staticmethod
     def get_current_value(obj: Atspi.Accessible) -> float:
@@ -104,8 +43,15 @@ class AXValue:
         if not AXObject.supports_value(obj):
             return 0.0
 
-        value = AXValue._get_current_value(obj)
-        AXValue.LAST_KNOWN_VALUE[hash(obj)] = value
+        try:
+            value = Atspi.Value.get_current_value(obj)
+        except GLib.GError as error:
+            msg = f"AXValue: Exception in get_current_value: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return 0.0
+
+        tokens = ["AXValue: Current value of", obj, f"is {value}"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return value
 
     @staticmethod
@@ -150,7 +96,7 @@ class AXValue:
             return None
 
         value = AXValue.get_current_value(obj)
-        if AXUtilities.is_indeterminate(obj) and value <= 0:
+        if AXUtilitiesState.is_indeterminate(obj) and value <= 0:
             tokens = ["AXValue:", obj, "has state indeterminate"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
@@ -200,6 +146,3 @@ class AXValue:
         tokens = ["AXValue: Maximum value of", obj, f"is {value}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return value
-
-
-AXValue.start_cache_clearing_thread()

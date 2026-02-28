@@ -80,78 +80,7 @@ class TestAXValue:
             {
                 "id": "no_value_support",
                 "supports_value": False,
-                "current_value": None,
-                "last_known_value": None,
-                "expected_result": False,
-                "setup_last_known": False,
-            },
-            {
-                "id": "first_time_value",
-                "supports_value": True,
-                "current_value": 50.0,
-                "last_known_value": None,
-                "expected_result": True,
-                "setup_last_known": False,
-            },
-            {
-                "id": "same_value",
-                "supports_value": True,
-                "current_value": 50.0,
-                "last_known_value": 50.0,
-                "expected_result": False,
-                "setup_last_known": True,
-            },
-            {
-                "id": "value_changed",
-                "supports_value": True,
-                "current_value": 75.0,
-                "last_known_value": 50.0,
-                "expected_result": True,
-                "setup_last_known": True,
-            },
-        ],
-        ids=lambda case: case["id"],
-    )
-    def test_did_value_change(
-        self,
-        test_context,
-        case: dict,
-    ) -> None:
-        """Test AXValue.did_value_change."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-        from orca.ax_value import AXValue
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXObject,
-            "supports_value",
-            side_effect=lambda obj: case["supports_value"],
-        )
-
-        if case["current_value"] is not None:
-            test_context.patch_object(
-                AXValue,
-                "_get_current_value",
-                side_effect=lambda obj: case["current_value"],
-            )
-
-        if case["setup_last_known"]:
-            AXValue.LAST_KNOWN_VALUE[hash(mock_accessible)] = case["last_known_value"]
-        else:
-            AXValue.LAST_KNOWN_VALUE.clear()
-
-        result = AXValue.did_value_change(mock_accessible)
-        assert result is case["expected_result"]
-
-    @pytest.mark.parametrize(
-        "case",
-        [
-            {
-                "id": "no_value_support",
-                "supports_value": False,
-                "atspi_return_value": None,
+                "atspi_return_value": 0.0,
                 "should_raise_error": False,
                 "expected_result": 0.0,
             },
@@ -165,19 +94,19 @@ class TestAXValue:
             {
                 "id": "glib_error",
                 "supports_value": True,
-                "atspi_return_value": None,
+                "atspi_return_value": 0.0,
                 "should_raise_error": True,
                 "expected_result": 0.0,
             },
         ],
         ids=lambda case: case["id"],
     )
-    def test_get_current_value_private(
+    def test_get_current_value(
         self,
-        test_context,
+        test_context: OrcaTestContext,
         case: dict,
-    ):
-        """Test AXValue._get_current_value."""
+    ) -> None:
+        """Test AXValue.get_current_value."""
 
         self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
@@ -200,74 +129,15 @@ class TestAXValue:
                 "get_current_value",
                 side_effect=raise_glib_error,
             )
-        elif case["atspi_return_value"] is not None:
+        else:
             test_context.patch_object(
                 Atspi.Value,
                 "get_current_value",
                 side_effect=lambda obj: case["atspi_return_value"],
             )
-        else:
-            test_context.patch_object(Atspi.Value, "get_current_value", return_value=0.0)
 
-        result = AXValue._get_current_value(mock_obj)
-        assert result == case["expected_result"]
-
-    @pytest.mark.parametrize(
-        "case",
-        [
-            {
-                "id": "no_value_support",
-                "supports_value": False,
-                "get_current_return": 0.0,
-                "expected_result": 0.0,
-                "stores_value": False,
-            },
-            {
-                "id": "stores_value",
-                "supports_value": True,
-                "get_current_return": 75.0,
-                "expected_result": 75.0,
-                "stores_value": True,
-            },
-        ],
-        ids=lambda case: case["id"],
-    )
-    def test_get_current_value(
-        self,
-        test_context: OrcaTestContext,
-        case: dict,
-    ) -> None:
-        """Test AXValue.get_current_value with various scenarios."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-        from orca.ax_value import AXValue
-
-        mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXObject,
-            "supports_value",
-            side_effect=lambda obj: case["supports_value"],
-        )
-        if case["supports_value"]:
-            test_context.patch_object(
-                AXValue,
-                "_get_current_value",
-                side_effect=lambda obj: case["get_current_return"],
-            )
-        else:
-            test_context.patch_object(
-                Atspi.Value,
-                "get_current_value",
-                side_effect=lambda obj: case["get_current_return"],
-            )
-
-        AXValue.LAST_KNOWN_VALUE.clear()
         result = AXValue.get_current_value(mock_obj)
         assert result == case["expected_result"]
-
-        if case["stores_value"]:
-            assert AXValue.LAST_KNOWN_VALUE[hash(mock_obj)] == case["expected_result"]
 
     @pytest.mark.parametrize(
         "case",
@@ -343,7 +213,6 @@ class TestAXValue:
         from orca.ax_value import AXValue
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        AXValue.LAST_KNOWN_VALUE.clear()
 
         test_context.patch_object(AXObject, "get_attribute", side_effect=mock_get_attribute)
         test_context.patch_object(
@@ -435,15 +304,15 @@ class TestAXValue:
         supports_value_mock = test_context.Mock(return_value=case["supports_value"])
         is_indeterminate_mock = test_context.Mock(return_value=case["is_indeterminate"])
         essential_modules["orca.ax_object"].AXObject.supports_value = supports_value_mock
-        essential_modules["orca.ax_utilities"].AXUtilities.is_indeterminate = is_indeterminate_mock
+        essential_modules[
+            "orca.ax_utilities_state"
+        ].AXUtilitiesState.is_indeterminate = is_indeterminate_mock
 
         from orca.ax_object import AXObject
-        from orca.ax_utilities import AXUtilities
+        from orca.ax_utilities_state import AXUtilitiesState
         from orca.ax_value import AXValue
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-
-        AXValue.LAST_KNOWN_VALUE.clear()
 
         test_context.patch_object(
             AXObject,
@@ -472,7 +341,7 @@ class TestAXValue:
         )
 
         test_context.patch_object(
-            AXUtilities,
+            AXUtilitiesState,
             "is_indeterminate",
             side_effect=lambda obj: case["is_indeterminate"],
         )
@@ -498,88 +367,6 @@ class TestAXValue:
 
         result = AXValue.get_value_as_percent(mock_obj)
         assert result == case["expected_result"]
-
-    @pytest.mark.parametrize(
-        "case",
-        [
-            {
-                "id": "no_value_support",
-                "supports_value": False,
-                "current_value": None,
-                "cached_value": None,
-                "expected_result": False,
-                "expects_debug_call": False,
-                "cache_should_exist": False,
-            },
-            {
-                "id": "cached_value_changed",
-                "supports_value": True,
-                "current_value": 75.0,
-                "cached_value": 50.0,
-                "expected_result": True,
-                "expects_debug_call": True,
-                "cache_should_exist": True,
-            },
-            {
-                "id": "cached_value_unchanged",
-                "supports_value": True,
-                "current_value": 50.0,
-                "cached_value": 50.0,
-                "expected_result": False,
-                "expects_debug_call": False,
-                "cache_should_exist": True,
-            },
-            {
-                "id": "no_cached_value",
-                "supports_value": True,
-                "current_value": 25.0,
-                "cached_value": None,
-                "expected_result": True,
-                "expects_debug_call": True,
-                "cache_should_exist": False,
-            },
-        ],
-        ids=lambda case: case["id"],
-    )
-    def test_did_value_change_scenarios(
-        self,
-        test_context: OrcaTestContext,
-        case: dict,
-    ) -> None:
-        """Test AXValue.did_value_change with various scenarios."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-        from orca.ax_value import AXValue
-
-        mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXObject,
-            "supports_value",
-            side_effect=lambda obj: case["supports_value"],
-        )
-
-        if case["current_value"] is not None:
-            test_context.patch_object(
-                AXValue,
-                "_get_current_value",
-                side_effect=lambda obj: case["current_value"],
-            )
-
-        AXValue.LAST_KNOWN_VALUE.clear()
-        if case["cached_value"] is not None:
-            AXValue.LAST_KNOWN_VALUE[hash(mock_obj)] = case["cached_value"]
-
-        result = AXValue.did_value_change(mock_obj)
-        assert result is case["expected_result"]
-
-        if case["expects_debug_call"]:
-            essential_modules["orca.debug"].print_tokens.assert_called()
-
-        if case["cache_should_exist"] and case["cached_value"] is not None:
-            assert AXValue.LAST_KNOWN_VALUE[hash(mock_obj)] == case["cached_value"]
-        elif not case["cache_should_exist"]:
-            assert hash(mock_obj) not in AXValue.LAST_KNOWN_VALUE
 
     @pytest.mark.parametrize(
         "case",

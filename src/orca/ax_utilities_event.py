@@ -42,6 +42,7 @@ from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 from .ax_utilities_text import AXUtilitiesText
+from .ax_value import AXValue
 
 if TYPE_CHECKING:
     from typing import ClassVar
@@ -110,6 +111,7 @@ class AXUtilitiesEvent:
     LAST_KNOWN_INVALID_ENTRY: ClassVar[dict[int, bool]] = {}
     LAST_KNOWN_PRESSED: ClassVar[dict[int, bool]] = {}
     LAST_KNOWN_SELECTED: ClassVar[dict[int, bool]] = {}
+    LAST_KNOWN_VALUE: ClassVar[dict[int, float]] = {}
 
     IGNORE_NAME_CHANGES_FOR: ClassVar[list[int]] = []
 
@@ -154,6 +156,7 @@ class AXUtilitiesEvent:
         AXUtilitiesEvent.LAST_KNOWN_INVALID_ENTRY.clear()
         AXUtilitiesEvent.LAST_KNOWN_PRESSED.clear()
         AXUtilitiesEvent.LAST_KNOWN_SELECTED.clear()
+        AXUtilitiesEvent.LAST_KNOWN_VALUE.clear()
         AXUtilitiesEvent.TEXT_EVENT_REASON.clear()
         AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.clear()
 
@@ -1003,6 +1006,22 @@ class AXUtilitiesEvent:
                 tokens = ["AXUtilitiesEvent:", event.source, "is not inside", active_window]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return False
+
+        msg = "AXUtilitiesEvent: Event is presentable."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return True
+
+    @staticmethod
+    def is_presentable_value_change(event: Atspi.Event) -> bool:
+        """Returns True if this event should be presented as a value change."""
+
+        old_value = AXUtilitiesEvent.LAST_KNOWN_VALUE.get(hash(event.source))
+        new_value = AXValue.get_current_value(event.source)
+        AXUtilitiesEvent.LAST_KNOWN_VALUE[hash(event.source)] = new_value
+        if old_value == new_value:
+            msg = "AXUtilitiesEvent: The new value matches the old value."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
 
         msg = "AXUtilitiesEvent: Event is presentable."
         debug.print_message(debug.LEVEL_INFO, msg, True)

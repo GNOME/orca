@@ -82,7 +82,6 @@ from orca.ax_selection import AXSelection
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_event import TextEventReason
-from orca.ax_value import AXValue
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -1315,7 +1314,7 @@ class Script(script.Script):
     def _on_value_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:property-change:accessible-value accessibility events."""
 
-        if not AXValue.did_value_change(event.source):
+        if not AXUtilities.is_presentable_value_change(event):
             return True
 
         is_progress_bar_update, msg = self.utilities.is_progress_bar_update(event.source)
