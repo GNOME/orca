@@ -1802,28 +1802,40 @@ class TestEventManager:
                 "id": "active_script",
                 "event_script_is_active": True,
                 "present_if_inactive": False,
-                "is_progress_bar_update": False,
+                "event_type": "test:event",
+                "is_progress_bar": False,
                 "expected": True,
             },
             {
                 "id": "inactive_but_presents",
                 "event_script_is_active": False,
                 "present_if_inactive": True,
-                "is_progress_bar_update": False,
+                "event_type": "test:event",
+                "is_progress_bar": False,
                 "expected": True,
             },
             {
-                "id": "progress_bar_update",
+                "id": "progress_bar_value_change",
                 "event_script_is_active": False,
                 "present_if_inactive": False,
-                "is_progress_bar_update": True,
+                "event_type": "object:property-change:accessible-value",
+                "is_progress_bar": True,
                 "expected": True,
+            },
+            {
+                "id": "progress_bar_non_value_event",
+                "event_script_is_active": False,
+                "present_if_inactive": False,
+                "event_type": "object:state-changed:focused",
+                "is_progress_bar": True,
+                "expected": False,
             },
             {
                 "id": "no_reason_to_process",
                 "event_script_is_active": False,
                 "present_if_inactive": False,
-                "is_progress_bar_update": False,
+                "event_type": "test:event",
+                "is_progress_bar": False,
                 "expected": False,
             },
         ],
@@ -1837,18 +1849,20 @@ class TestEventManager:
         """Test EventManager._should_process_event."""
 
         self._setup_dependencies(test_context)
+        from orca.ax_utilities import AXUtilities
         from orca.event_manager import EventManager
 
         manager = EventManager()
         mock_event = test_context.Mock(spec=Atspi.Event)
-        mock_event.type = "test:event"
+        mock_event.type = case["event_type"]
         mock_event.source = test_context.Mock()
         event_script = test_context.Mock()
         event_script.present_if_inactive = case["present_if_inactive"]
-        if case["is_progress_bar_update"]:
-            event_script.utilities.is_progress_bar_update.return_value = (True, "test reason")
-        else:
-            event_script.utilities.is_progress_bar_update.return_value = (False, "")
+        test_context.patch_object(
+            AXUtilities,
+            "is_progress_bar",
+            side_effect=lambda obj: case["is_progress_bar"],
+        )
         if case["event_script_is_active"]:
             active_script = event_script
         else:

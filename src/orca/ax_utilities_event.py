@@ -38,6 +38,7 @@ from . import debug, focus_manager
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities_collection import AXUtilitiesCollection
+from .ax_utilities_component import AXUtilitiesComponent
 from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
@@ -1022,6 +1023,16 @@ class AXUtilitiesEvent:
             msg = "AXUtilitiesEvent: The new value matches the old value."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
+
+        if AXUtilitiesRole.is_progress_bar(event.source):
+            if AXUtilitiesComponent.has_no_size(event.source):
+                tokens = ["AXUtilitiesEvent:", event.source, "has no size."]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return False
+            if AXUtilitiesObject.find_ancestor(event.source, AXUtilitiesRole.is_status_bar):
+                tokens = ["AXUtilitiesEvent:", event.source, "is in a status bar."]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return False
 
         msg = "AXUtilitiesEvent: Event is presentable."
         debug.print_message(debug.LEVEL_INFO, msg, True)

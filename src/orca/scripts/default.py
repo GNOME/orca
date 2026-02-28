@@ -1317,12 +1317,11 @@ class Script(script.Script):
         if not AXUtilities.is_presentable_value_change(event):
             return True
 
-        is_progress_bar_update, msg = self.utilities.is_progress_bar_update(event.source)
-        tokens = ["DEFAULT: Is progress bar update:", is_progress_bar_update, ",", msg]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
         manager = focus_manager.get_manager()
-        if not is_progress_bar_update and event.source != manager.get_locus_of_focus():
+        if (
+            not AXUtilities.is_progress_bar(event.source)
+            and event.source != manager.get_locus_of_focus()
+        ):
             msg = "DEFAULT: Source != locusOfFocus"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -1330,7 +1329,7 @@ class Script(script.Script):
         if AXUtilities.is_spin_button(event.source):
             manager.set_last_cursor_position(event.source, AXText.get_caret_offset(event.source))
 
-        if not is_progress_bar_update:
+        if not AXUtilities.is_progress_bar(event.source):
             presentation_manager.get_manager().interrupt_presentation()
 
         presentation_manager.get_manager().present_object(
@@ -1338,7 +1337,7 @@ class Script(script.Script):
             event.source,
             generate_sound=True,
             alreadyFocused=True,
-            isProgressBarUpdate=is_progress_bar_update,
+            isProgressBarUpdate=AXUtilities.is_progress_bar(event.source),
         )
         return True
 

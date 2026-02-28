@@ -34,14 +34,12 @@ from gi.repository import Atspi
 
 from . import (
     ax_event_synthesizer,
-    braille_presenter,
     debug,
     focus_manager,
     input_event_manager,
     messages,
     object_properties,
     presentation_manager,
-    sound_presenter,
     speech_presenter,
     spellcheck_presenter,
     table_navigator,
@@ -51,7 +49,6 @@ from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from .ax_value import AXValue
 
 
 class Utilities:
@@ -223,31 +220,6 @@ class Utilities:
             and not AXUtilities.has_action(obj, "jump")
             and not AXUtilities.has_role_from_aria(obj)
         )
-
-    def is_progress_bar_update(self, obj: Atspi.Accessible) -> tuple[bool, str]:
-        """Returns a (is-update, reason) tuple if updates to obj should be presented."""
-
-        # TODO - JD: Move this into the AXUtilities.
-        if (
-            not speech_presenter.get_presenter().get_speak_progress_bar_updates()
-            and not braille_presenter.get_presenter().get_braille_progress_bar_updates()
-            and not sound_presenter.get_presenter().get_beep_progress_bar_updates()
-        ):
-            return False, "Updates not enabled"
-
-        if not AXUtilities.is_progress_bar(obj):
-            return False, "Is not progress bar"
-
-        if not AXValue.get_value_as_percent(obj):
-            return False, "Could not obtain value"
-
-        if AXUtilities.has_no_size(obj):
-            return False, "Has no size"
-
-        if AXUtilities.find_ancestor(obj, AXUtilities.is_status_bar):
-            return False, "Is status bar descendant"
-
-        return True, "Is valid progress bar update"
 
     def description_list_terms(self, obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of all the accessible description list terms in obj."""

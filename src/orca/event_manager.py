@@ -878,9 +878,8 @@ class EventManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        is_progress_bar_update, reason = event_script.utilities.is_progress_bar_update(event.source)
-        if is_progress_bar_update:
-            msg = f"EVENT MANAGER: Processing {event.type}: is progress bar update ({reason})"
+        if "accessible-value" in event.type and AXUtilities.is_progress_bar(event.source):
+            msg = f"EVENT MANAGER: Processing {event.type}: source is progress bar"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
