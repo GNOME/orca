@@ -36,6 +36,7 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from .ax_utilities_event import TextEventReason
+from .ax_utilities_text import TextUnit
 
 class AXUtilities:
     # From ax_utilities.py
@@ -1348,6 +1349,10 @@ class AXUtilities:
     ) -> Atspi.Accessible | None: ...
 
     # From ax_utilities_text.py
+    @staticmethod
+    def get_last_text_unit_spoken() -> TextUnit | None: ...
+    @staticmethod
+    def set_last_text_unit_spoken(unit: TextUnit) -> None: ...
     @staticmethod
     def get_character_at_point(
         obj: Atspi.Accessible,

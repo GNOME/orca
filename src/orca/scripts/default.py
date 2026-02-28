@@ -82,6 +82,7 @@ from orca.ax_selection import AXSelection
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_event import TextEventReason
+from orca.ax_utilities_text import TextUnit
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -1493,7 +1494,7 @@ class Script(script.Script):
         )
 
         presentation_manager.get_manager().speak_character_at_offset(obj, offset, character)
-        self.point_of_reference["lastTextUnitSpoken"] = "char"
+        AXUtilities.set_last_text_unit_spoken(TextUnit.CHAR)
 
     def say_line(self, obj: Atspi.Accessible, offset: int | None = None) -> None:
         """Speaks the line at the current or specified offset."""
@@ -1521,7 +1522,7 @@ class Script(script.Script):
             line,
         )
 
-        self.point_of_reference["lastTextUnitSpoken"] = "line"
+        AXUtilities.set_last_text_unit_spoken(TextUnit.LINE)
 
     def say_phrase(self, obj: Atspi.Accessible, start_offset: int, end_offset: int) -> None:
         """Speaks the substring between start and end offset."""
@@ -1539,7 +1540,7 @@ class Script(script.Script):
             )
 
         speech_presenter.get_presenter().speak_phrase(self, obj, start_offset, end_offset, phrase)
-        self.point_of_reference["lastTextUnitSpoken"] = "phrase"
+        AXUtilities.set_last_text_unit_spoken(TextUnit.PHRASE)
 
     def say_word(self, obj: Atspi.Accessible) -> None:
         """Speaks the word at the caret, taking into account the previous caret position."""
@@ -1586,7 +1587,7 @@ class Script(script.Script):
             presentation_manager.get_manager().speak_message(error)
 
         self.say_phrase(obj, start_offset, end_offset)
-        self.point_of_reference["lastTextUnitSpoken"] = "word"
+        AXUtilities.set_last_text_unit_spoken(TextUnit.WORD)
 
     def present_object(self, obj: Atspi.Accessible, **args) -> None:
         """Presents the current object."""

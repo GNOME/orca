@@ -82,6 +82,12 @@ class Utilities(script_utilities.Utilities):
         self._cached_element_lines_are_single_chars: dict[int, bool] = {}
         self._cached_element_lines_are_single_words: dict[int, bool] = {}
         self._cached_is_clickable_element: dict[int, bool] = {}
+        self._selection_anchor_and_focus: tuple[
+            Atspi.Accessible | None, Atspi.Accessible | None
+        ] = (
+            None,
+            None,
+        )
         self._cached_is_link: dict[int, bool] = {}
         self._cached_is_custom_image: dict[int, bool] = {}
         self._cached_is_useless_image: dict[int, bool] = {}
@@ -1662,12 +1668,9 @@ class Utilities(script_utilities.Utilities):
         ):
             return super().handle_text_selection_change(obj)
 
-        old_start, old_end = self._script.point_of_reference.get(
-            "selectionAnchorAndFocus",
-            (None, None),
-        )
+        old_start, old_end = self._selection_anchor_and_focus
         start, end = self._get_selection_anchor_and_focus(obj)
-        self._script.point_of_reference["selectionAnchorAndFocus"] = (start, end)
+        self._selection_anchor_and_focus = (start, end)
 
         def _cmp(obj1, obj2):
             return self.path_comparison(AXObject.get_path(obj1), AXObject.get_path(obj2))

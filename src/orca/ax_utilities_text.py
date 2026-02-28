@@ -26,6 +26,7 @@
 
 from __future__ import annotations
 
+import enum
 import re
 from typing import TYPE_CHECKING
 
@@ -45,10 +46,32 @@ if TYPE_CHECKING:
     from gi.repository import Atspi
 
 
+class TextUnit(enum.Enum):
+    """Text units that can be spoken."""
+
+    CHAR = enum.auto()
+    WORD = enum.auto()
+    LINE = enum.auto()
+    PHRASE = enum.auto()
+
+
 class AXUtilitiesText:
     """Utilities for accessible text."""
 
     CACHED_TEXT_SELECTION: ClassVar[dict[int, tuple[str, int, int]]] = {}
+    LAST_TEXT_UNIT_SPOKEN: ClassVar[TextUnit | None] = None
+
+    @staticmethod
+    def get_last_text_unit_spoken() -> TextUnit | None:
+        """Returns the last text unit spoken."""
+
+        return AXUtilitiesText.LAST_TEXT_UNIT_SPOKEN
+
+    @staticmethod
+    def set_last_text_unit_spoken(unit: TextUnit) -> None:
+        """Sets the last text unit spoken."""
+
+        AXUtilitiesText.LAST_TEXT_UNIT_SPOKEN = unit
 
     @staticmethod
     def get_character_at_point(obj: Atspi.Accessible, x: int, y: int) -> tuple[str, int, int]:

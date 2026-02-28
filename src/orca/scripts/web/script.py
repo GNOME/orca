@@ -58,6 +58,7 @@ from orca.ax_object import AXObject
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_event import TextEventReason
+from orca.ax_utilities_text import TextUnit
 from orca.scripts import default
 from orca.structural_navigator import NavigationMode
 
@@ -171,7 +172,7 @@ class Script(default.Script):
         else:
             presenter.speak_contents(contents)
 
-        self.point_of_reference["lastTextUnitSpoken"] = "char"
+        AXUtilities.set_last_text_unit_spoken(TextUnit.CHAR)
 
     def say_word(self, obj: Atspi.Accessible) -> None:
         """Speaks the word at the current caret position."""
@@ -199,7 +200,7 @@ class Script(default.Script):
             presentation_manager.get_manager().speak_message(error)
 
         speech_presenter.get_presenter().speak_word(self, obj, offset)
-        self.point_of_reference["lastTextUnitSpoken"] = "word"
+        AXUtilities.set_last_text_unit_spoken(TextUnit.WORD)
 
     def say_line(self, obj: Atspi.Accessible, offset: int | None = None) -> None:
         """Speaks the line at the current caret position."""
@@ -235,7 +236,7 @@ class Script(default.Script):
             line,
         )
 
-        self.point_of_reference["lastTextUnitSpoken"] = "line"
+        AXUtilities.set_last_text_unit_spoken(TextUnit.LINE)
 
     def present_object(self, obj: Atspi.Accessible, **args) -> None:
         if obj is None:

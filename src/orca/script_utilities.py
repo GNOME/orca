@@ -49,6 +49,7 @@ from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .ax_utilities_text import TextUnit
 
 
 class Utilities:
@@ -1064,7 +1065,7 @@ class Utilities:
         # If we're in an ongoing series of native navigation-by-word commands, just present the
         # newly-traversed string.
         prev_word, prev_start, prev_end = AXText.get_word_at_offset(prev_obj, prev_offset)
-        if self._script.point_of_reference.get("lastTextUnitSpoken") == "word":
+        if AXUtilities.get_last_text_unit_spoken() == TextUnit.WORD:
             if was_previous_word_nav:
                 start = offset
                 end = prev_offset
