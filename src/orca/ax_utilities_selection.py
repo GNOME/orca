@@ -22,6 +22,8 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import gi
 
 gi.require_version("Atspi", "2.0")
@@ -37,9 +39,32 @@ from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 from .ax_utilities_table import AXUtilitiesTable
 
+if TYPE_CHECKING:
+    from typing import ClassVar
+
 
 class AXUtilitiesSelection:
     """Utilities for obtaining selection-related information about accessible objects."""
+
+    _all_items_selected: ClassVar[dict[int, bool]] = {}
+
+    @staticmethod
+    def clear_cache_now(reason: str = "") -> None:
+        """Clears all cached selection state."""
+
+        AXUtilitiesSelection._all_items_selected.clear()
+
+    @staticmethod
+    def get_all_items_selected_state(obj: Atspi.Accessible) -> bool:
+        """Returns the cached all-items-selected state for obj."""
+
+        return AXUtilitiesSelection._all_items_selected.get(hash(obj), False)
+
+    @staticmethod
+    def set_all_items_selected_state(obj: Atspi.Accessible, selected: bool) -> None:
+        """Sets the cached all-items-selected state for obj."""
+
+        AXUtilitiesSelection._all_items_selected[hash(obj)] = selected
 
     @staticmethod
     def get_selected_children(obj: Atspi.Accessible) -> list[Atspi.Accessible]:

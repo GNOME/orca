@@ -1210,12 +1210,11 @@ class Utilities:
     def handle_container_selection_change(self, obj: Atspi.Accessible) -> bool:
         """Handles a change in a container that supports selection."""
 
-        all_already_selected = self._script.point_of_reference.get("allItemsSelected")
+        all_already_selected = AXUtilities.get_all_items_selected_state(obj)
         all_currently_selected = AXUtilities.all_items_selected(obj)
+        AXUtilities.set_all_items_selected_state(obj, all_currently_selected)
         if all_already_selected and all_currently_selected:
             return True
-
-        self._script.point_of_reference["allItemsSelected"] = all_currently_selected
         if input_event_manager.get_manager().last_event_was_select_all() and all_currently_selected:
             presentation_manager.get_manager().present_message(messages.CONTAINER_SELECTED_ALL)
             focus_manager.get_manager().set_locus_of_focus(None, obj, False)
