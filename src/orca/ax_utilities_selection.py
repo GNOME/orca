@@ -40,6 +40,7 @@ from .ax_utilities_state import AXUtilitiesState
 from .ax_utilities_table import AXUtilitiesTable
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
     from typing import ClassVar
 
 
@@ -52,6 +53,10 @@ class AXUtilitiesSelection:
     def clear_cache_now(reason: str = "") -> None:
         """Clears all cached selection state."""
 
+        msg = "AXUtilitiesSelection: Clearing cache."
+        if reason:
+            msg += f" Reason: {reason}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
         AXUtilitiesSelection._all_items_selected.clear()
 
     @staticmethod
@@ -201,3 +206,40 @@ class AXUtilitiesSelection:
             return True
 
         return AXUtilitiesTable.all_cells_are_selected(obj)
+
+    @staticmethod
+    def get_selected_child_for_focus(
+        obj: Atspi.Accessible,
+        focus: Atspi.Accessible | None,
+        should_skip: Callable[[Atspi.Accessible], bool] | None = None,
+    ) -> Atspi.Accessible | None:
+        """Returns the selected child of obj that should become the locus of focus, or None."""
+
+        selected = AXUtilitiesSelection.selected_children(obj)
+        if focus in selected:
+            tokens = ["AXUtilitiesSelection: Focus", focus, "is already in selected children"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return None
+
+        for child in selected:
+            if should_skip is not None and should_skip(child):
+                continue
+
+            if AXUtilitiesObject.is_ancestor(focus, child):
+                tokens = ["AXUtilitiesSelection: Child", child, "is ancestor of focus"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return None
+
+            if (
+                AXUtilitiesRole.is_page_tab(child)
+                and focus is not None
+                and AXObject.get_name(child) == AXObject.get_name(focus)
+                and not AXUtilitiesState.is_focused(obj)
+            ):
+                tokens = ["AXUtilitiesSelection: Selected", child, "matches focus", focus]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return None
+
+            return child
+
+        return None

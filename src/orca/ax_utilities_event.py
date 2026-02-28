@@ -959,6 +959,56 @@ class AXUtilitiesEvent:
         return True
 
     @staticmethod
+    def is_presentable_selection_change(event: Atspi.Event) -> bool:
+        """Returns True if this object:selection-changed event should be presented."""
+
+        from . import input_event_manager  # pylint: disable=import-outside-toplevel
+
+        if input_event_manager.get_manager().last_event_was_space():
+            msg = "AXUtilitiesEvent: Selection toggled via space; handled elsewhere."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if AXUtilitiesState.manages_descendants(event.source):
+            msg = "AXUtilitiesEvent: Source manages descendants; handled elsewhere."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if AXUtilitiesRole.is_combo_box(event.source) and not AXUtilitiesState.is_expanded(
+            event.source
+        ):
+            text_input = AXUtilitiesObject.find_descendant(
+                event.source, AXUtilitiesRole.is_text_input
+            )
+            if text_input is not None and AXUtilitiesState.is_focused(text_input):
+                msg = "AXUtilitiesEvent: Combo box text input is focused; not a user selection."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
+
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if event.source != focus and not (
+            AXUtilitiesState.is_showing(event.source) and AXUtilitiesState.is_visible(event.source)
+        ):
+            combobox = AXUtilitiesObject.find_ancestor(event.source, AXUtilitiesRole.is_combo_box)
+            if combobox != focus and event.source != AXObject.get_parent(focus):
+                tokens = ["AXUtilitiesEvent: Source lacks showing + visible:", event.source]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return False
+
+        if AXUtilitiesRole.is_tree_or_tree_table(event.source):
+            active_window = focus_manager.get_manager().get_active_window()
+            if not AXUtilitiesObject.find_ancestor(
+                event.source, lambda x: x and x == active_window
+            ):
+                tokens = ["AXUtilitiesEvent:", event.source, "is not inside", active_window]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return False
+
+        msg = "AXUtilitiesEvent: Event is presentable."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return True
+
+    @staticmethod
     def _is_presentable_text_event(event: Atspi.Event) -> bool:
         """Returns True if this text event should be presented."""
 

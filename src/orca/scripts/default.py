@@ -1034,66 +1034,20 @@ class Script(script.Script):
 
         return True
 
-    def _ignore_selection_based_on_source(
-        self,
-        event: Atspi.Event,
-        focus: Atspi.Accessible | None,
-    ) -> bool:
-        """Returns True if this selection-changed event should be ignored based on its source."""
+    def _on_selection_changed(self, event: Atspi.Event) -> bool:
+        """Callback for object:selection-changed accessibility events."""
+
+        if not AXUtilities.is_presentable_selection_change(event):
+            return True
 
         if self.utilities.handle_paste_locus_of_focus_change():
             if self.utilities.top_level_object_is_active_and_current(event.source):
                 focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-            return False
 
-        if self.utilities.handle_container_selection_change(
-            event.source,
-        ) or AXUtilities.manages_descendants(event.source):
+        if self.utilities.handle_container_selection_change(event.source):
             return True
 
-        # There is a bug in (at least) Pidgin in which a newly-expanded submenu lacks the
-        # showing and visible states. Trust selection changes from the locus of focus.
-        if event.source != focus and not (
-            AXUtilities.is_showing(event.source) and AXUtilities.is_visible(event.source)
-        ):
-            # If the current combobox is collapsed, its menu child that fired the event might
-            # lack the showing and visible states. This happens in (at least) Thunderbird's
-            # calendar new-appointment comboboxes. Therefore check to see if the event came
-            # from the current combobox. This is necessary because (at least) VSCode's debugger
-            # has some hidden menu that the user is not in which is firing this event.
-            combobox = AXUtilities.find_ancestor(event.source, AXUtilities.is_combo_box)
-            if combobox != focus and event.source != AXObject.get_parent(focus):
-                tokens = ["DEFAULT: Ignoring event: source lacks showing + visible", event.source]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return True
-
-        if AXUtilities.is_tree_or_tree_table(event.source):
-            active_window = focus_manager.get_manager().get_active_window()
-            if not AXUtilities.find_ancestor(event.source, lambda x: x and x == active_window):
-                tokens = ["DEFAULT: Ignoring event:", event.source, "is not inside", active_window]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return True
-
-        return False
-
-    def _on_selection_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:selection-changed accessibility events."""
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if self._ignore_selection_based_on_source(event, focus):
-            return True
-
-        # If the current item's selection is toggled, we'll present that
-        # via the state-changed event.
-        if input_event_manager.get_manager().last_event_was_space():
-            return True
-
-        if AXUtilities.is_combo_box(event.source) and not AXUtilities.is_expanded(event.source):
-            if AXUtilities.is_focused(
-                AXUtilities.get_text_input(event.source),
-            ):
-                return True
-        elif (
+        if (
             AXUtilities.is_page_tab_list(event.source)
             and flat_review_presenter.get_presenter().is_active()
         ):
@@ -1103,38 +1057,15 @@ class Script(script.Script):
             # TODO - JD: We can potentially do some automatic reading here.
             flat_review_presenter.get_presenter().quit()
 
-        selected_children = AXUtilities.selected_children(event.source)
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if focus in selected_children:
-            msg = "DEFAULT: Ignoring event believed to be redundant to focus change"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
         mouse_review_item = mouse_review.get_reviewer().get_current_item()
-        for child in selected_children:
-            if AXUtilities.is_ancestor(focus, child):
-                tokens = ["DEFAULT: Child", child, "is ancestor of locusOfFocus"]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return True
-
-            if child == mouse_review_item:
-                tokens = ["DEFAULT: Child", child, "is current mouse review item"]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                continue
-
-            if (
-                AXUtilities.is_page_tab(child)
-                and focus
-                and AXObject.get_name(child) == AXObject.get_name(focus)
-                and not AXUtilities.is_focused(event.source)
-            ):
-                tokens = ["DEFAULT:", child, "'s selection redundant to", focus]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                break
-
-            if not AXUtilities.is_layout_only(child):
-                focus_manager.get_manager().set_locus_of_focus(event, child)
-                break
+        child = AXUtilities.get_selected_child_for_focus(
+            event.source,
+            focus,
+            lambda c: c == mouse_review_item or AXUtilities.is_layout_only(c),
+        )
+        if child is not None:
+            focus_manager.get_manager().set_locus_of_focus(event, child)
 
         return True
 
