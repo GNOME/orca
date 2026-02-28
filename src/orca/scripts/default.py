@@ -460,7 +460,6 @@ class Script(script.Script):
     def deactivate(self) -> None:
         """Called when this script is deactivated."""
 
-        self.point_of_reference = {}
         if bypass_mode_manager.get_manager().is_active():
             bypass_mode_manager.get_manager().toggle_enabled(self)
 
@@ -1363,7 +1362,6 @@ class Script(script.Script):
         if AXUtilities.is_combo_box_popup(active_window):
             return True
 
-        self.point_of_reference = {}
         if AXObject.get_child_count(event.source) == 1:
             child = AXObject.get_child(event.source, 0)
             # Popup menus in Chromium live in a menu bar whose first child is a panel.
@@ -1410,8 +1408,6 @@ class Script(script.Script):
 
         if learn_mode_presenter.get_presenter().is_active():
             learn_mode_presenter.get_presenter().quit()
-
-        self.point_of_reference = {}
 
         focus_manager.get_manager().clear_state("Window deactivated")
         script_manager.get_manager().set_active_script(None, "Window deactivated")

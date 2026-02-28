@@ -58,7 +58,6 @@ class Script:
         self.name = f"{self.app_name or 'default'} (module={self.__module__})"
         self.present_if_inactive: bool = True
         self.run_find_command_on: Atspi.Accessible | None = None
-        self.point_of_reference: dict = {}
         self.event_cache: dict = {}
 
         self.listeners = self.get_listeners()

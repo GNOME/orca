@@ -3122,13 +3122,9 @@ class Utilities(script_utilities.Utilities):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        names = self._script.point_of_reference.get("names", {})
-        old_name = names.get(hash(focus_manager.get_manager().get_locus_of_focus()))
-        notify = AXObject.get_name(item) != old_name
-
         tokens = ["WEB: Recovered from removed child. New focus is: ", item, "0"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        focus_manager.get_manager().set_locus_of_focus(event, item, notify)
+        focus_manager.get_manager().set_locus_of_focus(event, item)
         self.set_caret_context(item, 0)
         return True
 
@@ -3213,12 +3209,8 @@ class Utilities(script_utilities.Utilities):
             if obj is None:
                 obj = AXUtilities.get_focused_object(event.source)
 
-            # Risk "chattiness" if the locusOfFocus is dead and the object we've found is
-            # focused and has a different name than the last known focused object.
             if obj and focus_manager.get_manager().focus_is_dead() and AXUtilities.is_focused(obj):
-                names = self._script.point_of_reference.get("names", {})
-                old_name = names.get(hash(focus_manager.get_manager().get_locus_of_focus()))
-                notify = AXObject.get_name(obj) != old_name
+                notify = True
 
         if obj:
             msg = f"WEB: Setting locusOfFocus and context to: {obj}, {offset}"
