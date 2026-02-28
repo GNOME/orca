@@ -169,8 +169,12 @@ class AXUtilitiesSelection:
         if role not in rolemap:
             return AXObject.get_child_count(obj)
 
+        child_roles = rolemap[role]
+        if AXObject.supports_collection(obj):
+            return len(AXUtilitiesCollection.find_all_with_role(obj, child_roles))
+
         def is_match(x: Atspi.Accessible) -> bool:
-            return AXObject.get_role(x) in rolemap[role]
+            return AXObject.get_role(x) in child_roles
 
         return len(AXUtilitiesObject.find_all_descendants(obj, is_match))
 
