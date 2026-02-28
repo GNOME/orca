@@ -1280,4 +1280,5 @@ class TestVoicesPreferencesGridUI:
         result = VoicesPreferencesGrid.save_settings(grid_mock)
 
         assert result["speechServerFactory"] == "spiel"
-        assert result["speechServerInfo"] == ["Spiel", "Piper"]
+        assert result["speech-server"] == "Spiel"
+        assert result["synthesizer"] == "Piper"

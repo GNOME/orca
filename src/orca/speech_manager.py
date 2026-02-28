@@ -506,9 +506,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             },
         }
 
-        server_name = self._manager.get_current_server()
-        synthesizer_id = self._manager.get_current_synthesizer()
-        result["speechServerInfo"] = [server_name, synthesizer_id]
+        result["speech-server"] = self._manager.get_current_server()
+        result["synthesizer"] = self._manager.get_current_synthesizer()
         result["speechServerFactory"] = self._manager.get_speech_server_factory()
 
         result["punctuation-level"] = self._manager.get_punctuation_level()

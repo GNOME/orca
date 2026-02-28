@@ -601,7 +601,16 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             registry = gsettings_registry.get_registry()
             p = registry.sanitize_gsettings_path(profile)
             skip = not app_name and profile == "default"
+
+            # For app saves, remove synthesizer from result before save_schema
+            # so it doesn't get written to the app dconf path unconditionally.
+            # save_schema writes all matched keys, which would shadow the
+            # profile-level synthesizer even when the user didn't change it.
+            app_synth = result.pop("synthesizer", None) if app_name else None
+            app_server = result.pop("speech-server", None) if app_name else None
+
             registry.save_schema("speech", result, p, app_name, skip)
+
             voices = result.get("voices", {})
             for voice_type in gsettings_migrator.VOICE_TYPES:
                 voice_data = voices.get(voice_type, {})
@@ -612,9 +621,15 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 if voice_gs is not None:
                     gsettings_migrator.import_voice(voice_gs, voice_data, skip)
 
-            speech_gs = registry.get_settings("speech", p, "speech", app_name)
-            if speech_gs is not None:
-                gsettings_migrator.import_synthesizer(speech_gs, result)
+            if app_name and app_synth is not None:
+                profile_synth = registry.layered_lookup("speech", "synthesizer", "s")
+                if speech_gs := registry.get_settings("speech", p, "speech", app_name):
+                    if app_synth != profile_synth:
+                        speech_gs.set_string("synthesizer", app_synth)
+                        speech_gs.set_string("speech-server", app_server or "")
+                    elif speech_gs.get_user_value("synthesizer") is not None:
+                        speech_gs.reset("synthesizer")
+                        speech_gs.reset("speech-server")
 
         return result
 
