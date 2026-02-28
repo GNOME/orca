@@ -519,7 +519,7 @@ class TestTableNavigator:
             "orca.table_navigator.AXUtilities.is_table_cell_or_header",
             new=mock_is_cell_or_header,
         )
-        test_context.patch("orca.table_navigator.AXObject.find_ancestor", return_value=None)
+        test_context.patch("orca.table_navigator.AXUtilities.find_ancestor", return_value=None)
         test_context.patch("orca.table_navigator.debug.print_tokens", return_value=None)
         mock_controller = test_context.Mock()
         essential_modules["orca.dbus_service"].get_remote_controller.return_value = mock_controller
@@ -1133,7 +1133,7 @@ class TestTableNavigator:
             new=mock_is_cell_or_header,
         )
         test_context.patch(
-            "orca.table_navigator.AXObject.find_ancestor",
+            "orca.table_navigator.AXUtilities.find_ancestor",
             return_value=mock_ancestor_cell,
         )
         test_context.patch("orca.table_navigator.debug.print_tokens", return_value=None)
@@ -1237,7 +1237,7 @@ class TestTableNavigator:
             "orca.table_navigator.AXUtilities.is_table_cell_or_header",
             return_value=True,
         )
-        test_context.patch("orca.table_navigator.AXObject.find_ancestor", return_value=None)
+        test_context.patch("orca.table_navigator.AXUtilities.find_ancestor", return_value=None)
         mock_controller = test_context.Mock()
         essential_modules["orca.dbus_service"].get_remote_controller.return_value = mock_controller
         mock_keybindings_class = test_context.Mock()

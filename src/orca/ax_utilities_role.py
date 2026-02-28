@@ -1,4 +1,4 @@
-# Utilities for obtaining role-related information.
+# Orca
 #
 # Copyright 2023 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
@@ -21,7 +21,7 @@
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-lines
 
-"""Utilities for obtaining role-related information."""
+"""Utilities for accessible roles."""
 
 import gi
 
@@ -31,11 +31,12 @@ from gi.repository import Atspi
 from . import debug, object_properties
 from .ax_collection import AXCollection
 from .ax_object import AXObject
+from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_state import AXUtilitiesState
 
 
 class AXUtilitiesRole:
-    """Utilities for obtaining role-related information."""
+    """Utilities for accessible roles."""
 
     @staticmethod
     def _get_display_style(obj: Atspi.Accessible) -> str:
@@ -1165,7 +1166,7 @@ class AXUtilitiesRole:
                 state_match_type=Atspi.CollectionMatchType.ALL,
             )
             return AXCollection.get_first_match(obj, rule) is not None
-        return bool(AXObject.find_descendant(obj, AXUtilitiesRole.is_text_input))
+        return bool(AXUtilitiesObject.find_descendant(obj, AXUtilitiesRole.is_text_input))
 
     @staticmethod
     def is_editbar(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -1212,7 +1213,7 @@ class AXUtilitiesRole:
         if not AXUtilitiesRole.is_article(obj, role):
             return False
 
-        return AXObject.find_ancestor(obj, AXUtilitiesRole.is_feed) is not None
+        return AXUtilitiesObject.find_ancestor(obj, AXUtilitiesRole.is_feed) is not None
 
     @staticmethod
     def is_figure(obj: Atspi.Accessible, _role: Atspi.Role | None = None) -> bool:
@@ -1324,7 +1325,7 @@ class AXUtilitiesRole:
         if "gridcell" in roles:
             return True
         if "cell" in roles:
-            return AXObject.find_ancestor(obj, AXUtilitiesRole.is_grid) is not None
+            return AXUtilitiesObject.find_ancestor(obj, AXUtilitiesRole.is_grid) is not None
         return False
 
     @staticmethod
@@ -1628,7 +1629,7 @@ class AXUtilitiesRole:
 
         if not AXUtilitiesRole.is_list_item(obj, role):
             return False
-        return AXObject.find_ancestor(obj, AXUtilitiesRole.is_list_box) is not None
+        return AXUtilitiesObject.find_ancestor(obj, AXUtilitiesRole.is_list_box) is not None
 
     @staticmethod
     def is_list_item(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -2607,7 +2608,10 @@ class AXUtilitiesRole:
             return True
 
         if AXUtilitiesState.is_editable(obj) or AXUtilitiesState.is_selectable(obj):
-            return AXObject.find_ancestor(obj, lambda x: AXObject.get_role(x) in roles) is not None
+            return (
+                AXUtilitiesObject.find_ancestor(obj, lambda x: AXObject.get_role(x) in roles)
+                is not None
+            )
 
         if not AXUtilitiesState.is_vertical(obj):
             return False

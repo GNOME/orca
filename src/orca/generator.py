@@ -439,7 +439,7 @@ class Generator:
         name = self._generate_accessible_name(obj, **args)
         role = args.get("role", AXObject.get_role(obj))
         if not (label or name) and role == Atspi.Role.TABLE_CELL:
-            descendant = self._script.utilities.active_descendant(obj)
+            descendant = AXUtilities.active_descendant(obj)
             if descendant is not None:
                 name = self._generate_accessible_name(descendant)
 
@@ -1159,7 +1159,7 @@ class Generator:
             Generator.CACHED_IS_NAMELESS_TOGGLE[hash(obj)] = False
             return False
 
-        descendant = self._script.utilities.active_descendant(obj)
+        descendant = AXUtilities.active_descendant(obj)
         if AXObject.get_name(descendant) or AXText.get_all_text(descendant):
             Generator.CACHED_IS_NAMELESS_TOGGLE[hash(obj)] = False
             return False
@@ -1179,7 +1179,7 @@ class Generator:
         if not present_all:
             return self._generate_real_table_cell(obj, **args)
 
-        row = AXObject.find_ancestor(obj, AXUtilities.is_table_row)
+        row = AXUtilities.find_ancestor(obj, AXUtilities.is_table_row)
         if row and AXObject.get_name(row) and not AXUtilities.is_layout_only(row):
             return self.generate(row)
 
@@ -1232,7 +1232,7 @@ class Generator:
         obj: Atspi.Accessible,
         **args,
     ) -> list[Any]:
-        rad = self._script.utilities.active_descendant(obj)
+        rad = AXUtilities.active_descendant(obj)
 
         if not (AXUtilities.is_table_cell(rad) and AXObject.get_child_count(rad)):
             return self._generate_text_content(rad, **args)

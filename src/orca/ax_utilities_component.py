@@ -1,4 +1,4 @@
-# Higher-level utilities for working with accessible component positions.
+# Orca
 #
 # Copyright 2024-2026 Igalia, S.L.
 # Copyright 2024 GNOME Foundation Inc.
@@ -19,7 +19,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Higher-level utilities for working with accessible component positions."""
+"""Utilities for accessible component positions."""
 
 import functools
 
@@ -35,7 +35,7 @@ from .ax_utilities_role import AXUtilitiesRole
 
 
 class AXUtilitiesComponent:
-    """Higher-level utilities for working with accessible component positions."""
+    """Utilities for accessible component positions."""
 
     EMPTY_RECT: Atspi.Rect = Atspi.Rect()
 

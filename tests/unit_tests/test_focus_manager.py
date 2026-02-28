@@ -159,7 +159,6 @@ class TestFocusManager:
         ax_object_mock.AXObject.is_dead = test_context.Mock(return_value=False)
         ax_object_mock.AXObject.is_valid = test_context.Mock(return_value=True)
         ax_object_mock.AXObject.clear_cache = test_context.Mock()
-        ax_object_mock.AXObject.is_ancestor = test_context.Mock(return_value=False)
         ax_object_mock.AXObject.has_broken_ancestry = test_context.Mock(return_value=False)
 
         ax_text_mock = essential_modules["orca.ax_text"]
@@ -176,6 +175,7 @@ class TestFocusManager:
         ax_utilities_mock.AXUtilities.get_application = test_context.Mock()
         ax_utilities_mock.AXUtilities.save_object_info_for_events = test_context.Mock()
         ax_utilities_mock.AXUtilities.is_active = test_context.Mock(return_value=True)
+        ax_utilities_mock.AXUtilities.is_ancestor = test_context.Mock(return_value=False)
         ax_utilities_mock.AXUtilities.get_focused_object = test_context.Mock()
         ax_utilities_mock.AXUtilities.update_cached_selected_text = test_context.Mock()
 
@@ -349,10 +349,10 @@ class TestFocusManager:
         window_obj = test_context.Mock(spec=Atspi.Accessible) if window else None
         test_context.patch_object(manager, "_focus", new=focus_obj)
         test_context.patch_object(manager, "_window", new=window_obj)
-        from orca.ax_object import AXObject
+        from orca.ax_utilities import AXUtilities
 
         mock_is_ancestor = test_context.Mock(return_value=is_ancestor)
-        test_context.patch_object(AXObject, "is_ancestor", new=mock_is_ancestor)
+        test_context.patch_object(AXUtilities, "is_ancestor", new=mock_is_ancestor)
         result = manager.focus_is_in_active_window()
         assert result == expected
         if focus and window:
@@ -620,7 +620,7 @@ class TestFocusManager:
             return_value=focus_is_in_window,
         )
         test_context.patch_object(AXObject, "has_broken_ancestry", return_value=has_broken_ancestry)
-        test_context.patch_object(AXObject, "is_ancestor", return_value=False)
+        test_context.patch_object(AXUtilities, "is_ancestor", return_value=False)
         test_context.patch_object(AXUtilities, "get_application", return_value=mock_app)
         test_context.patch_object(AXUtilities, "is_combo_box_popup", return_value=False)
         test_context.patch_object(AXUtilities, "is_combo_box", return_value=False)

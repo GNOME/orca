@@ -1,4 +1,4 @@
-# Utilities for obtaining state-related information.
+# Orca
 #
 # Copyright 2023 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
@@ -20,7 +20,7 @@
 
 # pylint: disable=too-many-public-methods
 
-"""Utilities for obtaining state-related information."""
+"""Utilities for accessible states."""
 
 import gi
 
@@ -32,7 +32,7 @@ from .ax_object import AXObject
 
 
 class AXUtilitiesState:
-    """Utilities for obtaining state-related information."""
+    """Utilities for accessible states."""
 
     @staticmethod
     def get_current_item_status_string(obj: Atspi.Accessible) -> str:

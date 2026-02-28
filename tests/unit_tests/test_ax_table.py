@@ -52,6 +52,7 @@ class TestAXTable:
         """Set up mocks for ax_table dependencies."""
 
         additional_modules = [
+            "orca.ax_utilities_object",
             "orca.ax_utilities_role",
             "orca.ax_utilities_state",
             "orca.object_properties",
@@ -67,7 +68,6 @@ class TestAXTable:
         ax_object_mock.AXObject = test_context.Mock()
         ax_object_mock.AXObject.supports_table = test_context.Mock(return_value=True)
         ax_object_mock.AXObject.supports_table_cell = test_context.Mock(return_value=True)
-        ax_object_mock.AXObject.find_descendant = test_context.Mock()
         ax_object_mock.AXObject.get_name = test_context.Mock(return_value="")
         ax_object_mock.AXObject.get_role = test_context.Mock()
         ax_object_mock.AXObject.get_parent = test_context.Mock()
@@ -101,6 +101,10 @@ class TestAXTable:
         ax_utilities_state_mock = essential_modules["orca.ax_utilities_state"]
         ax_utilities_state_mock.AXUtilitiesState = test_context.Mock()
         ax_utilities_state_mock.AXUtilitiesState.is_showing = test_context.Mock(return_value=True)
+
+        ax_utilities_object_mock = essential_modules["orca.ax_utilities_object"]
+        ax_utilities_object_mock.AXUtilitiesObject = test_context.Mock()
+        ax_utilities_object_mock.AXUtilitiesObject.find_descendant = test_context.Mock()
 
         return essential_modules
 
@@ -1392,6 +1396,7 @@ class TestAXTable:
             essential_modules = self._setup_dependencies(test_context)
 
         from orca.ax_object import AXObject
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_table import AXUtilitiesTable
 
         if case["obj_type"] == "none":
@@ -1425,7 +1430,7 @@ class TestAXTable:
             test_context.patch_object(Atspi.TableCell, "get_table", side_effect=raise_glib_error)
             test_context.patch_object(AXObject, "supports_table", side_effect=is_table)
             test_context.patch_object(
-                AXObject,
+                AXUtilitiesObject,
                 "find_ancestor_inclusive",
                 side_effect=lambda obj, func: mock_table,
             )
@@ -1437,7 +1442,7 @@ class TestAXTable:
             )
             self._setup_table_role_mocks(test_context, is_table_func=lambda _obj: True)
             test_context.patch_object(
-                AXObject,
+                AXUtilitiesObject,
                 "find_ancestor_inclusive",
                 side_effect=lambda obj, func: mock_table,
             )
@@ -2636,7 +2641,7 @@ class TestAXTable:
         from orca.ax_utilities_table import AXUtilitiesTable
 
         if case["old_cell_type"] == "not_table_cell":
-            from orca.ax_object import AXObject
+            from orca.ax_utilities_object import AXUtilitiesObject
             from orca.ax_utilities_role import AXUtilitiesRole
 
             mock_old_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -2648,7 +2653,7 @@ class TestAXTable:
                 side_effect=lambda obj: obj == mock_ancestor,
             )
             test_context.patch_object(
-                AXObject,
+                AXUtilitiesObject,
                 "find_ancestor",
                 side_effect=lambda obj, func: mock_ancestor,
             )
@@ -2703,7 +2708,7 @@ class TestAXTable:
         from orca.ax_utilities_table import AXUtilitiesTable
 
         if old_cell_type == "not_table_cell":
-            from orca.ax_object import AXObject
+            from orca.ax_utilities_object import AXUtilitiesObject
             from orca.ax_utilities_role import AXUtilitiesRole
 
             mock_old_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -2715,7 +2720,7 @@ class TestAXTable:
                 side_effect=lambda obj: obj == mock_ancestor,
             )
             test_context.patch_object(
-                AXObject,
+                AXUtilitiesObject,
                 "find_ancestor",
                 side_effect=lambda obj, func: mock_ancestor,
             )
@@ -3150,6 +3155,7 @@ class TestAXTable:
         self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
         from orca.ax_table import AXTable
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_ancestor = test_context.Mock(spec=Atspi.Accessible)
@@ -3158,7 +3164,7 @@ class TestAXTable:
             "is_table_cell_or_header",
             side_effect=lambda obj: obj == mock_ancestor,
         )
-        test_context.patch_object(AXObject, "find_ancestor", return_value=mock_ancestor)
+        test_context.patch_object(AXUtilitiesObject, "find_ancestor", return_value=mock_ancestor)
         test_context.patch_object(AXObject, "supports_table_cell", return_value=True)
         test_context.patch_object(
             AXTable,
@@ -3325,6 +3331,7 @@ class TestAXTable:
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
         from orca.ax_table import AXTable
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_row = test_context.Mock(spec=Atspi.Accessible)
@@ -3340,7 +3347,7 @@ class TestAXTable:
             "is_table_row",
             side_effect=lambda obj: obj == mock_row,
         )
-        test_context.patch_object(AXObject, "find_ancestor", return_value=mock_row)
+        test_context.patch_object(AXUtilitiesObject, "find_ancestor", return_value=mock_row)
         result = AXTable._get_cell_coordinates_from_attribute(mock_cell)
         assert result == ("2", "5")
         essential_modules["orca.debug"].print_tokens.assert_called()

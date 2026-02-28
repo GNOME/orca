@@ -19,7 +19,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Utilities for obtaining position-related information about accessible objects."""
+"""Wrapper for the Atspi.Component interface."""
 
 import gi
 
@@ -31,7 +31,7 @@ from .ax_object import AXObject
 
 
 class AXComponent:
-    """Utilities for obtaining position-related information about accessible objects."""
+    """Wrapper for the Atspi.Component interface."""
 
     @staticmethod
     def get_position(obj: Atspi.Accessible) -> tuple[int, int]:

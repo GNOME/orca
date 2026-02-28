@@ -76,18 +76,13 @@ class TestAXObject:
             mock_ancestor = test_context.Mock(spec=Atspi.Accessible)
             test_context.patch_object(
                 AXObject,
-                "find_ancestor_inclusive",
-                side_effect=lambda obj, func: mock_ancestor if func(mock_ancestor) else None,
-            )
-            test_context.patch_object(
-                AXObject,
-                "get_role",
-                side_effect=lambda obj: (
-                    Atspi.Role.DOCUMENT_TEXT if obj == mock_ancestor else Atspi.Role.BUTTON
-                ),
+                "_find_ancestor_with_role",
+                side_effect=lambda obj, role: mock_ancestor
+                if role == Atspi.Role.DOCUMENT_TEXT
+                else None,
             )
         else:
-            test_context.patch_object(AXObject, "find_ancestor_inclusive", return_value=None)
+            test_context.patch_object(AXObject, "_find_ancestor_with_role", return_value=None)
             if has_spreadsheet:
                 test_context.patch_object(AXObject, "_has_document_spreadsheet", return_value=True)
             else:
@@ -1980,85 +1975,6 @@ class TestAXObject:
         result = AXObject.grab_focus(mock_accessible)
         assert result is True
 
-    def test_is_ancestor_invalid_obj(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject.is_ancestor with invalid obj."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXObject,
-            "is_valid",
-            side_effect=lambda obj: obj == mock_accessible,
-        )
-        result = AXObject.is_ancestor(None, mock_accessible)
-        assert result is False
-
-    def test_is_ancestor_invalid_ancestor(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject.is_ancestor with invalid ancestor."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(
-            AXObject,
-            "is_valid",
-            side_effect=lambda obj: obj == mock_accessible,
-        )
-        result = AXObject.is_ancestor(mock_accessible, None)
-        assert result is False
-
-    def test_is_ancestor_same_object_inclusive(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject.is_ancestor with same object and inclusive=True."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-        result = AXObject.is_ancestor(mock_accessible, mock_accessible, inclusive=True)
-        assert result is True
-
-    def test_is_ancestor_same_object_not_inclusive(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject.is_ancestor with same object and inclusive=False."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-        test_context.patch_object(AXObject, "find_ancestor", return_value=None)
-        result = AXObject.is_ancestor(mock_accessible, mock_accessible, inclusive=False)
-        assert result is False
-
-    def test_is_ancestor_found(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject.is_ancestor when ancestor is found."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        mock_ancestor = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-        test_context.patch_object(AXObject, "find_ancestor", return_value=mock_ancestor)
-        result = AXObject.is_ancestor(mock_accessible, mock_ancestor)
-        assert result is True
-
-    def test_is_ancestor_not_found(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject.is_ancestor when ancestor is not found."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        mock_ancestor = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-        test_context.patch_object(AXObject, "find_ancestor", return_value=None)
-        result = AXObject.is_ancestor(mock_accessible, mock_ancestor)
-        assert result is False
-
     def test_get_child_invalid_obj(self, test_context: OrcaTestContext) -> None:
         """Test AXObject.get_child with invalid obj."""
 
@@ -2117,282 +2033,6 @@ class TestAXObject:
         )
         result = AXObject.get_child(mock_accessible, 1)
         assert result == mock_child
-
-    def test_find_descendant_invalid_obj(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject._find_descendant with invalid obj."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=False)
-
-        def always_true(_obj) -> bool:
-            return True
-
-        result = AXObject._find_descendant(mock_accessible, always_true)
-        assert result is None
-
-    def test_find_descendant_no_children(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject._find_descendant with no children."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-        test_context.patch_object(AXObject, "get_child_count", return_value=0)
-
-        def always_true(_obj) -> bool:
-            return True
-
-        result = AXObject._find_descendant(mock_accessible, always_true)
-        assert result is None
-
-    def test_find_descendant_found_direct_child(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject._find_descendant with direct child match."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        mock_child = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-        test_context.patch_object(AXObject, "get_child_count", return_value=1)
-        test_context.patch_object(AXObject, "get_child_checked", return_value=mock_child)
-
-        def match_child(obj) -> bool:
-            return obj == mock_child
-
-        result = AXObject._find_descendant(mock_accessible, match_child)
-        assert result == mock_child
-
-    def test_find_descendant_found_in_grandchild(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject._find_descendant with grandchild match."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        mock_child = test_context.Mock(spec=Atspi.Accessible)
-        mock_grandchild = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-
-        def mock_get_child_count(obj) -> int:
-            if obj == mock_accessible:
-                return 1
-            if obj == mock_child:
-                return 1
-            return 0
-
-        def mock_get_child_checked(obj, idx) -> object:
-            if obj == mock_accessible and idx == 0:
-                return mock_child
-            if obj == mock_child and idx == 0:
-                return mock_grandchild
-            return None
-
-        test_context.patch_object(AXObject, "get_child_count", new=mock_get_child_count)
-        test_context.patch_object(AXObject, "get_child_checked", new=mock_get_child_checked)
-
-        def match_grandchild(obj) -> bool:
-            return obj == mock_grandchild
-
-        result = AXObject._find_descendant(mock_accessible, match_grandchild)
-        assert result == mock_grandchild
-
-    def test_find_descendant_not_found(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject._find_descendant when predicate never matches."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-        test_context.patch_object(AXObject, "get_child_count", return_value=0)
-
-        def never_match(_obj) -> bool:
-            return False
-
-        result = AXObject._find_descendant(mock_accessible, never_match)
-        assert result is None
-
-    def test_find_descendant_with_timing(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject.find_descendant includes timing."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        mock_child = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-        test_context.patch_object(AXObject, "_find_descendant", return_value=mock_child)
-        debug_mock = test_context.Mock()
-        debug_mock.print_tokens = test_context.Mock()
-        sys.modules["orca.debug"] = debug_mock
-
-        def always_true(_obj) -> bool:
-            return True
-
-        result = AXObject.find_descendant(mock_accessible, always_true)
-        assert result == mock_child
-
-    def test_find_deepest_descendant_invalid_obj(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject.find_deepest_descendant with invalid obj."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=False)
-        result = AXObject.find_deepest_descendant(mock_accessible)
-        assert result is None
-
-    def test_find_deepest_descendant_no_children(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject.find_deepest_descendant with no children."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-        test_context.patch_object(AXObject, "get_child_count", return_value=0)
-        test_context.patch_object(AXObject, "get_child", return_value=None)
-        result = AXObject.find_deepest_descendant(mock_accessible)
-        assert result == mock_accessible
-
-    def test_find_deepest_descendant_with_children(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject.find_deepest_descendant with nested children."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        mock_child = test_context.Mock(spec=Atspi.Accessible)
-        mock_grandchild = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-
-        def mock_get_child_count(obj) -> int:
-            if obj == mock_accessible:
-                return 2
-            if obj == mock_child:
-                return 1
-            return 0
-
-        def mock_get_child(obj, index) -> object:
-            if obj == mock_accessible and index == 1:
-                return mock_child
-            if obj == mock_child and index == 0:
-                return mock_grandchild
-            return None
-
-        test_context.patch_object(AXObject, "get_child_count", new=mock_get_child_count)
-        test_context.patch_object(AXObject, "get_child", new=mock_get_child)
-        result = AXObject.find_deepest_descendant(mock_accessible)
-        assert result == mock_grandchild
-
-    def test_find_all_descendants_invalid_obj(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject._find_all_descendants with invalid obj."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=False)
-        matches: list[Atspi.Accessible] = []
-        AXObject._find_all_descendants(mock_accessible, None, None, matches)
-        assert not matches
-
-    def test_find_all_descendants_with_include_filter(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject._find_all_descendants with include filter."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        mock_child1 = test_context.Mock(spec=Atspi.Accessible)
-        mock_child2 = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-
-        def mock_get_child_count(obj) -> int:
-            if obj == mock_accessible:
-                return 2
-            return 0
-
-        def mock_get_child(obj, idx) -> object:
-            if obj == mock_accessible:
-                if idx == 0:
-                    return mock_child1
-                if idx == 1:
-                    return mock_child2
-            return None
-
-        test_context.patch_object(AXObject, "get_child_count", new=mock_get_child_count)
-        test_context.patch_object(AXObject, "get_child", new=mock_get_child)
-
-        def include_child1(obj) -> bool:
-            return obj == mock_child1
-
-        matches: list[Atspi.Accessible] = []
-        AXObject._find_all_descendants(mock_accessible, include_child1, None, matches)
-        assert matches == [mock_child1]
-
-    def test_find_all_descendants_with_exclude_filter(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject._find_all_descendants with exclude filter."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        mock_child1 = test_context.Mock(spec=Atspi.Accessible)
-        mock_child2 = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-
-        def mock_get_child_count(obj) -> int:
-            if obj == mock_accessible:
-                return 2
-            return 0
-
-        def mock_get_child(obj, idx) -> object:
-            if obj == mock_accessible:
-                if idx == 0:
-                    return mock_child1
-                if idx == 1:
-                    return mock_child2
-            return None
-
-        test_context.patch_object(AXObject, "get_child_count", new=mock_get_child_count)
-        test_context.patch_object(AXObject, "get_child", new=mock_get_child)
-
-        def include_all(_obj) -> bool:
-            return True
-
-        def exclude_child1(obj) -> bool:
-            return obj == mock_child1
-
-        matches: list[Atspi.Accessible] = []
-        AXObject._find_all_descendants(mock_accessible, include_all, exclude_child1, matches)
-        assert matches == [mock_child2]
-
-    def test_find_all_descendants_public_method(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject.find_all_descendants public method."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        mock_child = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-        test_context.patch_object(
-            AXObject,
-            "_find_all_descendants",
-            side_effect=lambda root, incl, excl, matches: matches.append(mock_child),
-        )
-        debug_mock = test_context.Mock()
-        debug_mock.print_message = test_context.Mock()
-        sys.modules["orca.debug"] = debug_mock
-        result = AXObject.find_all_descendants(mock_accessible)
-        assert result == [mock_child]
 
     def test_get_role_name_invalid_obj(self, test_context: OrcaTestContext) -> None:
         """Test AXObject.get_role_name with invalid obj."""
@@ -2697,7 +2337,7 @@ class TestAXObject:
             return_value="mock_rule",
         )
         sys.modules["orca.ax_collection"] = mock_ax_collection
-        test_context.patch_object(AXObject, "find_ancestor_inclusive", return_value=None)
+        test_context.patch_object(AXObject, "_find_ancestor_with_role", return_value=None)
         result = AXObject._has_document_spreadsheet(mock_accessible)
         assert result is False
 
@@ -2718,32 +2358,12 @@ class TestAXObject:
             return_value="mock_rule",
         )
         sys.modules["orca.ax_collection"] = mock_ax_collection
-        test_context.patch_object(AXObject, "find_ancestor_inclusive", return_value=mock_frame)
+        test_context.patch_object(AXObject, "_find_ancestor_with_role", return_value=mock_frame)
         sys.modules["gi.repository"].Atspi.Collection.get_matches = test_context.Mock(
             return_value=["match1"],
         )
         result = AXObject._has_document_spreadsheet(mock_accessible)
         assert result is True
-
-    def test_get_common_ancestor_with_none_objects(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject.get_common_ancestor with None objects."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        result = AXObject.get_common_ancestor(None, None)
-        assert result is None
-
-    def test_get_common_ancestor_same_objects(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject.get_common_ancestor with same objects."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-        result = AXObject.get_common_ancestor(mock_accessible, mock_accessible)
-        assert result == mock_accessible
 
     def test_get_parent_checked_invalid_obj(self, test_context: OrcaTestContext) -> None:
         """Test AXObject.get_parent_checked with invalid obj."""
@@ -2768,94 +2388,6 @@ class TestAXObject:
         result = AXObject.get_parent_checked(mock_accessible)
         assert result is None
 
-    def test_find_ancestor_found_grandparent(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject.find_ancestor found in parent."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        mock_parent = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-
-        def mock_get_parent_checked(obj) -> object:
-            if obj == mock_accessible:
-                return mock_parent
-            return None
-
-        test_context.patch_object(AXObject, "get_parent_checked", new=mock_get_parent_checked)
-
-        def match_parent(obj) -> bool:
-            return obj == mock_parent
-
-        result = AXObject.find_ancestor(mock_accessible, match_parent)
-        assert result == mock_parent
-
-    def test_find_ancestor_found_in_grandparent(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject.find_ancestor found in grandparent."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        mock_parent = test_context.Mock(spec=Atspi.Accessible)
-        mock_grandparent = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-
-        def mock_get_parent_checked(obj) -> object:
-            if obj == mock_accessible:
-                return mock_parent
-            if obj == mock_parent:
-                return mock_grandparent
-            return None
-
-        test_context.patch_object(AXObject, "get_parent_checked", new=mock_get_parent_checked)
-
-        def match_grandparent(obj) -> bool:
-            return obj == mock_grandparent
-
-        result = AXObject.find_ancestor(mock_accessible, match_grandparent)
-        assert result == mock_grandparent
-
-    def test_find_ancestor_not_found(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject.find_ancestor not found."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        mock_parent = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-
-        def mock_get_parent_checked(obj) -> object:
-            if obj == mock_accessible:
-                return mock_parent
-            return None
-
-        test_context.patch_object(AXObject, "get_parent_checked", new=mock_get_parent_checked)
-
-        def never_match(_obj) -> bool:
-            return False
-
-        result = AXObject.find_ancestor(mock_accessible, never_match)
-        assert result is None
-
-    def test_find_ancestor_no_parent(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject.find_ancestor with no parent."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(AXObject, "is_valid", return_value=True)
-        test_context.patch_object(AXObject, "get_parent_checked", return_value=None)
-
-        def always_true(_obj) -> bool:
-            return True
-
-        result = AXObject.find_ancestor(mock_accessible, always_true)
-        assert result is None
-
     def test_has_document_spreadsheet_with_invalid_obj(self, test_context: OrcaTestContext) -> None:
         """Test AXObject._has_document_spreadsheet with invalid object."""
 
@@ -2878,7 +2410,7 @@ class TestAXObject:
         mock_spreadsheet = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(
             AXObject,
-            "find_ancestor_inclusive",
+            "_find_ancestor_with_role",
             return_value=mock_spreadsheet,
         )
         result = AXObject._has_document_spreadsheet(mock_accessible)
@@ -2892,7 +2424,7 @@ class TestAXObject:
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
-        test_context.patch_object(AXObject, "find_ancestor_inclusive", return_value=None)
+        test_context.patch_object(AXObject, "_find_ancestor_with_role", return_value=None)
         result = AXObject._has_document_spreadsheet(mock_accessible)
         assert result is False
 

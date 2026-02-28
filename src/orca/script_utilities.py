@@ -71,7 +71,7 @@ class Utilities:
     def node_level(self, obj: Atspi.Accessible) -> int:
         """Returns the node level of the specified tree item."""
 
-        if not AXObject.find_ancestor(obj, AXUtilities.is_tree_or_tree_table):
+        if not AXUtilities.find_ancestor(obj, AXUtilities.is_tree_or_tree_table):
             return -1
 
         attrs = AXObject.get_attributes_dict(obj)
@@ -179,7 +179,7 @@ class Utilities:
             def is_dialog(x):
                 return AXObject.get_role(x) in dialog_roles
 
-            results[1] = AXObject.find_ancestor_inclusive(obj, is_dialog)
+            results[1] = AXUtilities.find_ancestor_inclusive(obj, is_dialog)
 
         tokens = ["SCRIPT UTILITIES:", obj, "is in frame", results[0], "and dialog", results[1]]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -207,7 +207,7 @@ class Utilities:
         if not AXUtilities.is_entry(obj):
             return False
 
-        return AXObject.find_ancestor(obj, AXUtilities.is_tool_bar) is not None
+        return AXUtilities.find_ancestor(obj, AXUtilities.is_tool_bar) is not None
 
     def get_find_results_count(self, _root: Atspi.Accessible | None = None) -> str:
         """Returns a string description of the number of find-in-page results in root."""
@@ -245,7 +245,7 @@ class Utilities:
         if AXUtilities.has_no_size(obj):
             return False, "Has no size"
 
-        if AXObject.find_ancestor(obj, AXUtilities.is_status_bar):
+        if AXUtilities.find_ancestor(obj, AXUtilities.is_status_bar):
             return False, "Is status bar descendant"
 
         return True, "Is valid progress bar update"
@@ -267,7 +267,7 @@ class Utilities:
         # TODO - JD: Move this into AXUtilities.
         if not (AXUtilities.is_list(obj) or AXUtilities.is_description_list(obj)):
             return False
-        return AXObject.find_ancestor(obj, AXUtilities.is_document) is not None
+        return AXUtilities.find_ancestor(obj, AXUtilities.is_document) is not None
 
     def is_document_panel(self, obj: Atspi.Accessible) -> bool:
         """Returns true if obj is a panel inside a document."""
@@ -275,7 +275,7 @@ class Utilities:
         # TODO - JD: Move this into AXUtilities.
         if not AXUtilities.is_panel(obj):
             return False
-        return AXObject.find_ancestor(obj, AXUtilities.is_document) is not None
+        return AXUtilities.find_ancestor(obj, AXUtilities.is_document) is not None
 
     def is_document(self, obj: Atspi.Accessible, _exclude_document_frame=False) -> bool:
         """Returns True if obj is a document."""
@@ -310,18 +310,18 @@ class Utilities:
     def is_top_level_document(self, obj: Atspi.Accessible) -> bool:
         """Returns true if obj is a top-level document."""
 
-        return self.is_document(obj) and not AXObject.find_ancestor(obj, self.is_document)
+        return self.is_document(obj) and not AXUtilities.find_ancestor(obj, self.is_document)
 
     def get_top_level_document_for_object(self, obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the top-level document containing obj."""
 
-        return AXObject.find_ancestor_inclusive(obj, self.is_top_level_document)
+        return AXUtilities.find_ancestor_inclusive(obj, self.is_top_level_document)
 
     def get_document_for_object(self, obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the nearest document ancestor of obj, or obj if it is a document."""
 
         # TODO - JD: Replace callers of this function with the logic below.
-        return AXObject.find_ancestor_inclusive(obj, self.is_document)
+        return AXUtilities.find_ancestor_inclusive(obj, self.is_document)
 
     def convert_column_to_string(self, column: int) -> str:
         """Converts a column number to a string representation."""
@@ -403,29 +403,6 @@ class Utilities:
 
         return rv
 
-    def active_descendant(self, obj: Atspi.Accessible) -> Atspi.Accessible | None:
-        """Legacy table-cell code originally for managed descendants."""
-
-        # TODO - JD: Determine what actually needs this support and why.
-
-        if AXObject.is_dead(obj):
-            return None
-
-        if not AXUtilities.is_table_cell(obj):
-            return obj
-
-        if AXObject.get_name(obj):
-            return obj
-
-        def pred(x):
-            return AXObject.get_name(x) or AXText.get_all_text(x)
-
-        child = AXObject.find_descendant(obj, pred)
-        if child is not None:
-            return child
-
-        return obj
-
     def _top_level_roles(self) -> list[Atspi.Role]:
         # TODO - JD: Move this into AXUtilities.
         roles = [
@@ -449,7 +426,7 @@ class Utilities:
 
         for i in range(AXObject.get_child_count(app)):
             window = AXObject.get_child(app, i)
-            if AXObject.find_descendant(window, lambda x: x == child) is not None:
+            if AXUtilities.find_descendant(window, lambda x: x == child) is not None:
                 tokens = ["SCRIPT UTILITIES:", window, "contains", child]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return window
@@ -472,7 +449,7 @@ class Utilities:
     ) -> Atspi.Accessible | None:
         """Returns the top-level object (frame, dialog ...) containing obj."""
 
-        rv = AXObject.find_ancestor_inclusive(obj, self._is_top_level_object)
+        rv = AXUtilities.find_ancestor_inclusive(obj, self._is_top_level_object)
         tokens = ["SCRIPT UTILITIES:", rv, "is top-level object for:", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -536,7 +513,7 @@ class Utilities:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
-        return AXObject.find_all_descendants(root, include_if, exclude_if)
+        return AXUtilities.find_all_descendants(root, include_if, exclude_if)
 
     def unrelated_labels(
         self,
@@ -620,16 +597,7 @@ class Utilities:
 
         if restrict_to is None:
             restrict_to = self.get_top_level_document_for_object(obj)
-
-        result = AXUtilities.get_previous_object(obj)
-        tokens = ["SCRIPT UTILITIES: Previous object for", obj, "is", result, "."]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        if restrict_to is not None and not AXObject.is_ancestor(result, restrict_to, True):
-            tokens = ["SCRIPT UTILITIES:", result, "is not a descendant of", restrict_to]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return None
-
-        return result
+        return AXUtilities.find_previous_object(obj, restrict_to)
 
     def find_next_object(
         self,
@@ -640,15 +608,7 @@ class Utilities:
 
         if restrict_to is None:
             restrict_to = self.get_top_level_document_for_object(obj)
-
-        result = AXUtilities.get_next_object(obj)
-        tokens = ["SCRIPT UTILITIES: Next object for", obj, "is", result, "."]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        if restrict_to is not None and not AXObject.is_ancestor(result, restrict_to, True):
-            tokens = ["SCRIPT UTILITIES:", result, "is not a descendant of", restrict_to]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return None
-        return result
+        return AXUtilities.find_next_object(obj, restrict_to)
 
     def expand_eocs(
         self,
@@ -1111,7 +1071,7 @@ class Utilities:
                 return False
             return AXObject.supports_selection(x)
 
-        return AXObject.find_ancestor(obj, is_match)
+        return AXUtilities.find_ancestor(obj, is_match)
 
     def selectable_child_count(self, obj: Atspi.Accessible) -> int:
         """Returns the number of selectable children in obj."""
@@ -1556,7 +1516,7 @@ class Utilities:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if AXObject.is_ancestor(new_focus, old_focus):
+        if AXUtilities.is_ancestor(new_focus, old_focus):
             return self._should_interrupt_for_ancestor_focus_change(old_focus, new_focus)
 
         if AXUtilities.object_is_controlled_by(

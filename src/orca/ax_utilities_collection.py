@@ -1,4 +1,4 @@
-# Utilities for finding all objects that meet a certain criteria.
+# Orca
 #
 # Copyright 2023 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
@@ -20,7 +20,7 @@
 
 # pylint: disable=too-many-public-methods
 
-"""Utilities for finding all objects that meet a certain criteria."""
+"""Utilities for finding accessible objects via the collection interface."""
 
 import inspect
 import time
@@ -40,7 +40,7 @@ from .ax_utilities_state import AXUtilitiesState
 
 
 class AXUtilitiesCollection:
-    """Utilities for finding all objects that meet a certain criteria."""
+    """Utilities for finding accessible objects via the collection interface."""
 
     @staticmethod
     def _apply_predicate(

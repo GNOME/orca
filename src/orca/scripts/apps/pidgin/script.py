@@ -72,7 +72,7 @@ class Script(gtk.Script):
 
         # In the chat window, the frame name changes to reflect the active chat.
         # So if we don't have a matching tab, this isn't the chat window.
-        frame = AXObject.find_ancestor(event.source, AXUtilities.is_frame)
+        frame = AXUtilities.find_ancestor(event.source, AXUtilities.is_frame)
         frame_name = AXObject.get_name(frame)
         for child in AXObject.iter_children(event.source):
             if frame_name == AXObject.get_name(child):

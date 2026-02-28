@@ -1,4 +1,4 @@
-# Higher-level utilities for working with accessible tables.
+# Orca
 #
 # Copyright 2023-2026 Igalia, S.L.
 # Copyright 2023 GNOME Foundation Inc.
@@ -19,7 +19,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Higher-level utilities for working with accessible tables."""
+"""Utilities for accessible tables."""
 
 from __future__ import annotations
 
@@ -30,6 +30,7 @@ from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_utilities_component import AXUtilitiesComponent
+from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 
@@ -44,7 +45,7 @@ if TYPE_CHECKING:
 
 
 class AXUtilitiesTable:
-    """Higher-level utilities for working with accessible tables."""
+    """Utilities for accessible tables."""
 
     DYNAMIC_COLUMN_HEADERS_ROW: ClassVar[dict[int, int]] = {}
     DYNAMIC_ROW_HEADERS_COLUMN: ClassVar[dict[int, int]] = {}
@@ -72,7 +73,9 @@ class AXUtilitiesTable:
         if table is not None:
             return table
 
-        return AXObject.find_ancestor_inclusive(obj, AXUtilitiesTable._is_table_with_interface)
+        return AXUtilitiesObject.find_ancestor_inclusive(
+            obj, AXUtilitiesTable._is_table_with_interface
+        )
 
     @staticmethod
     def get_new_row_headers(
@@ -82,7 +85,9 @@ class AXUtilitiesTable:
         """Returns row headers of cell that are not also headers of old_cell."""
 
         if old_cell and not AXUtilitiesRole.is_table_cell_or_header(old_cell):
-            old_cell = AXObject.find_ancestor(old_cell, AXUtilitiesRole.is_table_cell_or_header)
+            old_cell = AXUtilitiesObject.find_ancestor(
+                old_cell, AXUtilitiesRole.is_table_cell_or_header
+            )
 
         headers = AXUtilitiesTable.get_row_headers(cell)
         if old_cell is None:
@@ -99,7 +104,9 @@ class AXUtilitiesTable:
         """Returns column headers of cell that are not also headers of old_cell."""
 
         if old_cell and not AXUtilitiesRole.is_table_cell_or_header(old_cell):
-            old_cell = AXObject.find_ancestor(old_cell, AXUtilitiesRole.is_table_cell_or_header)
+            old_cell = AXUtilitiesObject.find_ancestor(
+                old_cell, AXUtilitiesRole.is_table_cell_or_header
+            )
 
         headers = AXUtilitiesTable.get_column_headers(cell)
         if old_cell is None:
@@ -313,7 +320,7 @@ class AXUtilitiesTable:
         if not AXUtilitiesRole.is_table(obj):
             return False
 
-        doc = AXObject.find_ancestor_inclusive(obj, AXUtilitiesRole.is_document)
+        doc = AXUtilitiesObject.find_ancestor_inclusive(obj, AXUtilitiesRole.is_document)
         return doc is not None and not AXUtilitiesRole.is_document_spreadsheet(doc)
 
     @staticmethod
@@ -322,7 +329,7 @@ class AXUtilitiesTable:
 
         return (
             AXUtilitiesRole.is_table(obj)
-            and AXObject.find_ancestor_inclusive(obj, AXUtilitiesRole.is_document) is None
+            and AXUtilitiesObject.find_ancestor_inclusive(obj, AXUtilitiesRole.is_document) is None
         )
 
     @staticmethod
@@ -332,7 +339,7 @@ class AXUtilitiesTable:
         if not (AXUtilitiesRole.is_table(obj) and AXObject.supports_table(obj)):
             return False
 
-        doc = AXObject.find_ancestor_inclusive(obj, AXUtilitiesRole.is_document)
+        doc = AXUtilitiesObject.find_ancestor_inclusive(obj, AXUtilitiesRole.is_document)
         if doc is None:
             return False
         if AXUtilitiesRole.is_document_spreadsheet(doc):
@@ -346,7 +353,10 @@ class AXUtilitiesTable:
 
         if not AXUtilitiesRole.is_table_cell_or_header(obj):
             return False
-        return AXObject.find_ancestor(obj, AXUtilitiesTable.is_text_document_table) is not None
+        return (
+            AXUtilitiesObject.find_ancestor(obj, AXUtilitiesTable.is_text_document_table)
+            is not None
+        )
 
     @staticmethod
     def is_gui_cell(obj: Atspi.Accessible) -> bool:
@@ -354,7 +364,7 @@ class AXUtilitiesTable:
 
         if not AXUtilitiesRole.is_table_cell_or_header(obj):
             return False
-        return AXObject.find_ancestor(obj, AXUtilitiesTable.is_gui_table) is not None
+        return AXUtilitiesObject.find_ancestor(obj, AXUtilitiesTable.is_gui_table) is not None
 
     @staticmethod
     def is_spreadsheet_cell(obj: Atspi.Accessible) -> bool:
@@ -362,7 +372,9 @@ class AXUtilitiesTable:
 
         if not AXUtilitiesRole.is_table_cell_or_header(obj):
             return False
-        return AXObject.find_ancestor(obj, AXUtilitiesTable.is_spreadsheet_table) is not None
+        return (
+            AXUtilitiesObject.find_ancestor(obj, AXUtilitiesTable.is_spreadsheet_table) is not None
+        )
 
     @staticmethod
     def cell_column_changed(
@@ -466,7 +478,7 @@ class AXUtilitiesTable:
         if result:
             return result
 
-        row = AXObject.find_ancestor(cell, AXUtilitiesRole.is_table_row)
+        row = AXUtilitiesObject.find_ancestor(cell, AXUtilitiesRole.is_table_row)
         if row is None:
             return result
 

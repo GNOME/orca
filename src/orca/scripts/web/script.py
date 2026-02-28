@@ -281,7 +281,7 @@ class Script(default.Script):
         if (name and AXObject.get_name(obj) != name) or AXObject.get_index_in_parent(obj) < 0:
             tokens = ["WEB:", obj, "believed to be destroyed after scroll."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            replicant = AXObject.find_descendant(
+            replicant = AXUtilities.find_descendant(
                 document,
                 lambda x: AXObject.get_name(x) == name and AXObject.get_role(obj) == role,
             )
@@ -659,7 +659,7 @@ class Script(default.Script):
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if not AXUtilities.is_document_web(event.source) and not AXObject.is_ancestor(
+        if not AXUtilities.is_document_web(event.source) and not AXUtilities.is_ancestor(
             focus,
             event.source,
             True,
@@ -855,7 +855,7 @@ class Script(default.Script):
             msg = "WEB: Event handled: Last command was mouse button"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self.utilities.set_caret_context(event.source, event.detail1)
-            notify = AXObject.find_ancestor_inclusive(obj, AXUtilities.is_entry) is None
+            notify = AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_entry) is None
             focus_manager.get_manager().set_locus_of_focus(event, event.source, notify, True)
             return True
 
@@ -997,7 +997,7 @@ class Script(default.Script):
                 msg = "WEB: Dumping cache: dead focus"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.utilities.dump_cache(document, preserve_context=True)
-            elif AXObject.find_ancestor(focus, lambda x: x == event.source):
+            elif AXUtilities.find_ancestor(focus, lambda x: x == event.source):
                 msg = "WEB: Dumping cache: source is ancestor of focus"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.utilities.dump_cache(document, preserve_context=True)
@@ -1085,7 +1085,7 @@ class Script(default.Script):
                 msg = "WEB: Dumping cache: dead focus"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.utilities.dump_cache(document, preserve_context=True)
-            elif AXObject.find_ancestor(focus, lambda x: x == event.source):
+            elif AXUtilities.find_ancestor(focus, lambda x: x == event.source):
                 msg = "WEB: Dumping cache: source is ancestor of focus"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 self.utilities.dump_cache(document, preserve_context=True)
@@ -1116,7 +1116,7 @@ class Script(default.Script):
             return False
 
         presentation_manager.get_manager().present_message(messages.TABLE_REORDERED_COLUMNS)
-        header = AXObject.find_ancestor_inclusive(focus, AXUtilities.is_table_header)
+        header = AXUtilities.find_ancestor_inclusive(focus, AXUtilities.is_table_header)
         msg = AXUtilities.get_presentable_sort_order_from_header(header, True)
         if msg:
             presentation_manager.get_manager().present_message(msg)
@@ -1237,7 +1237,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if AXUtilities.is_link(event.source) and AXObject.is_ancestor(focus, event.source):
+        if AXUtilities.is_link(event.source) and AXUtilities.is_ancestor(focus, event.source):
             msg = "WEB: Ignoring focus change on link ancestor of focus"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -1265,8 +1265,10 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if AXObject.find_ancestor(event.source, AXUtilities.is_embedded):
-            if AXUtilities.is_tool_tip(event.source) and AXObject.is_ancestor(focus, event.source):
+        if AXUtilities.find_ancestor(event.source, AXUtilities.is_embedded):
+            if AXUtilities.is_tool_tip(event.source) and AXUtilities.is_ancestor(
+                focus, event.source
+            ):
                 msg = "WEB: Event believed to be side effect of tooltip navigation."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
@@ -1289,7 +1291,7 @@ class Script(default.Script):
             return False
 
         if AXUtilities.is_dialog_or_alert(event.source):
-            if AXObject.is_ancestor(focus, event.source, True):
+            if AXUtilities.is_ancestor(focus, event.source, True):
                 msg = "WEB: Ignoring event from ancestor of focus"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
             else:
@@ -1399,7 +1401,7 @@ class Script(default.Script):
             return False
 
         presentation_manager.get_manager().present_message(messages.TABLE_REORDERED_ROWS)
-        header = AXObject.find_ancestor_inclusive(focus, AXUtilities.is_table_header)
+        header = AXUtilities.find_ancestor_inclusive(focus, AXUtilities.is_table_header)
         msg = AXUtilities.get_presentable_sort_order_from_header(header, True)
         if msg:
             presentation_manager.get_manager().present_message(msg)
@@ -1464,7 +1466,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if AXObject.find_ancestor(event.source, AXUtilities.is_embedded):
+        if AXUtilities.find_ancestor(event.source, AXUtilities.is_embedded):
             if document_presenter.get_presenter().in_focus_mode(self.app):
                 # Because we cannot count on the app firing the right state-changed events
                 # for descendants.
@@ -1487,7 +1489,7 @@ class Script(default.Script):
             return True
 
         obj, _offset = self.utilities.get_caret_context()
-        ancestor = AXObject.get_common_ancestor(obj, event.source)
+        ancestor = AXUtilities.get_common_ancestor(obj, event.source)
         if ancestor and self.utilities.is_text_block_element(ancestor):
             msg = "WEB: Ignoring: Common ancestor of context and event source is text block"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1571,7 +1573,7 @@ class Script(default.Script):
         if (
             obj
             and obj != event.source
-            and not AXObject.find_ancestor(obj, lambda x: x == event.source)
+            and not AXUtilities.find_ancestor(obj, lambda x: x == event.source)
         ):
             tokens = ["WEB: Ignoring event because it isn't", obj, "or its ancestor"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)

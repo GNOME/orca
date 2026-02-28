@@ -212,7 +212,7 @@ class SpellCheckPresenter:
         tokens = ["SPELL CHECK PRESENTER: Event:", event]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if not AXObject.is_ancestor(event.source, self._widgets.window, inclusive=True):
+        if not AXUtilities.is_ancestor(event.source, self._widgets.window, inclusive=True):
             debug.print_message(debug.LEVEL_INFO, "^^^^^ PROCESS SPELL CHECK EVENT ^^^^^\n")
             return
 
@@ -304,12 +304,12 @@ class SpellCheckPresenter:
         def is_valid_document(obj: Atspi.Accessible | None) -> bool:
             if obj is None or AXObject.is_dead(obj):
                 return False
-            if obj == window or AXObject.is_ancestor(obj, window):
+            if obj == window or AXUtilities.is_ancestor(obj, window):
                 return False
             if not AXObject.supports_text(obj):
                 return False
             return AXUtilities.is_editable(obj) or bool(
-                AXObject.find_ancestor(obj, AXUtilities.is_editable),
+                AXUtilities.find_ancestor(obj, AXUtilities.is_editable),
             )
 
         last_obj, _ = manager.get_last_cursor_position()
@@ -432,7 +432,7 @@ class SpellCheckPresenter:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if not AXObject.is_ancestor(event.source, self._widgets.window, inclusive=True):
+        if not AXUtilities.is_ancestor(event.source, self._widgets.window, inclusive=True):
             tokens = ["SPELL CHECK PRESENTER:", event.source, "is not in the spellcheck window"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
@@ -468,7 +468,7 @@ class SpellCheckPresenter:
                 # If focus is newly entering the list, clear last_presented_suggestion
                 # so we announce the item even if it was presented during error details.
                 current_focus = focus_manager.get_manager().get_locus_of_focus()
-                if not AXObject.is_ancestor(current_focus, self._widgets.suggestions_list):
+                if not AXUtilities.is_ancestor(current_focus, self._widgets.suggestions_list):
                     self._state.last_presented_suggestion = None
                 focus_manager.get_manager().set_locus_of_focus(
                     None,
@@ -882,18 +882,18 @@ class SpellCheckPresenter:
         if not self._could_be_spellcheck_window(window, app_name):
             return None, None, None
 
-        error_widget = AXObject.find_descendant(
+        error_widget = AXUtilities.find_descendant(
             window,
             lambda obj: self._could_be_error_widget(obj, app_name),
         )
-        suggestions_list = AXObject.find_descendant(
+        suggestions_list = AXUtilities.find_descendant(
             window,
             lambda obj: self._could_be_suggestions_list(obj, app_name),
         )
         change_to_entry = (
             None
             if app_name == "soffice"
-            else AXObject.find_descendant(
+            else AXUtilities.find_descendant(
                 window,
                 lambda obj: self._could_be_change_to_entry(obj, app_name),
             )

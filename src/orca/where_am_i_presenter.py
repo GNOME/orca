@@ -382,7 +382,7 @@ class WhereAmIPresenter:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        cell = AXObject.find_ancestor_inclusive(focus, AXUtilities.is_table_cell)
+        cell = AXUtilities.find_ancestor_inclusive(focus, AXUtilities.is_table_cell)
         if cell is None:
             if notify_user:
                 presentation_manager.get_manager().present_message(messages.TABLE_NOT_IN_A)
@@ -548,7 +548,7 @@ class WhereAmIPresenter:
         tokens = ["WHERE AM I PRESENTER: presenting selection for", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        spreadsheet = AXObject.find_ancestor(obj, AXUtilities.is_spreadsheet_table)
+        spreadsheet = AXUtilities.find_ancestor(obj, AXUtilities.is_spreadsheet_table)
         if spreadsheet is not None and script.utilities.speak_selected_cell_range(spreadsheet):
             return True
 
@@ -606,7 +606,7 @@ class WhereAmIPresenter:
             def pred(x):
                 return AXUtilities.is_table_cell_or_header(x) or AXUtilities.is_list_item(x)
 
-            ancestor = AXObject.find_ancestor(acc, pred)
+            ancestor = AXUtilities.find_ancestor(acc, pred)
             if ancestor is not None and not AXUtilities.is_layout_only(
                 AXObject.get_parent(ancestor),
             ):

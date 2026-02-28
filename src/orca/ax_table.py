@@ -1,4 +1,4 @@
-# Utilities for obtaining information about accessible tables.
+# Orca
 #
 # Copyright 2023-2026 Igalia, S.L.
 # Copyright 2023 GNOME Foundation Inc.
@@ -21,7 +21,7 @@
 
 # pylint: disable=too-many-public-methods
 
-"""Utilities for obtaining information about accessible tables."""
+"""Wrapper for the Atspi.Table and TableCell interfaces."""
 
 from __future__ import annotations
 
@@ -36,6 +36,7 @@ from gi.repository import Atspi, GLib
 
 from . import debug
 from .ax_object import AXObject
+from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_role import AXUtilitiesRole
 
 if TYPE_CHECKING:
@@ -43,7 +44,7 @@ if TYPE_CHECKING:
 
 
 class AXTable:
-    """Utilities for obtaining information about accessible tables."""
+    """Wrapper for the Atspi.Table and TableCell interfaces."""
 
     CAPTIONS: ClassVar[dict[int, Atspi.Accessible]] = {}
     PHYSICAL_COORDINATES_FROM_CELL: ClassVar[dict[int, tuple[int, int]]] = {}
@@ -626,7 +627,7 @@ class AXTable:
         """Returns the 0-based row and column indices."""
 
         if not AXUtilitiesRole.is_table_cell_or_header(cell) and find_cell:
-            cell = AXObject.find_ancestor(cell, AXUtilitiesRole.is_table_cell_or_header)
+            cell = AXUtilitiesObject.find_ancestor(cell, AXUtilitiesRole.is_table_cell_or_header)
 
         if not AXUtilitiesRole.is_table_cell_or_header(cell):
             return -1, -1
@@ -725,7 +726,7 @@ class AXTable:
         if row_index is not None and col_index is not None:
             return row_index, col_index
 
-        row = AXObject.find_ancestor(cell, AXUtilitiesRole.is_table_row)
+        row = AXUtilitiesObject.find_ancestor(cell, AXUtilitiesRole.is_table_row)
         if row is None:
             return row_index, col_index
 
@@ -776,7 +777,7 @@ class AXTable:
         if is_table(obj):
             return obj
 
-        return AXObject.find_ancestor(obj, is_table)
+        return AXUtilitiesObject.find_ancestor(obj, is_table)
 
     @staticmethod
     def _get_table(obj: Atspi.Accessible) -> Atspi.Accessible | None:

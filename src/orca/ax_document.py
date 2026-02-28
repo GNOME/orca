@@ -19,7 +19,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Utilities for obtaining document-related information about accessible objects."""
+"""Wrapper for the Atspi.Document interface."""
 
 from __future__ import annotations
 
@@ -45,7 +45,7 @@ if TYPE_CHECKING:
 
 
 class AXDocument:
-    """Utilities for obtaining document-related information about accessible objects."""
+    """Wrapper for the Atspi.Document interface."""
 
     LAST_KNOWN_PAGE: ClassVar[dict[int, int]] = {}
     _lock = threading.Lock()

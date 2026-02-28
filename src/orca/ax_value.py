@@ -19,7 +19,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Utilities for obtaining value-related information about accessible objects."""
+"""Wrapper for the Atspi.Value interface."""
 
 from __future__ import annotations
 
@@ -41,7 +41,7 @@ if TYPE_CHECKING:
 
 
 class AXValue:
-    """Utilities for obtaining value-related information about accessible objects."""
+    """Wrapper for the Atspi.Value interface."""
 
     LAST_KNOWN_VALUE: ClassVar[dict[int, float]] = {}
     _lock = threading.Lock()

@@ -26,7 +26,6 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from orca import focus_manager
-from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.scripts import web
 from orca.scripts.toolkits import gtk
@@ -50,7 +49,7 @@ class Script(web.ToolkitBridge, gtk.Script):
         if not self.utilities.in_document_content(focus):
             document = self.utilities.get_document_for_object(event.source)
             if document:
-                ancestor = AXObject.find_ancestor(document, AXUtilities.is_focused)
+                ancestor = AXUtilities.find_ancestor(document, AXUtilities.is_focused)
                 if self.utilities.in_document_content(ancestor):
                     focus_manager.get_manager().set_locus_of_focus(None, document)
 

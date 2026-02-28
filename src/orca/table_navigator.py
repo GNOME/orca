@@ -330,7 +330,7 @@ class TableNavigator:
         # And we might instead be in some deeply-nested elements which display text in
         # a web table, so we do one more check.
         if not AXUtilities.is_table_cell_or_header(cell):
-            cell = AXObject.find_ancestor(cell, AXUtilities.is_table_cell_or_header)
+            cell = AXUtilities.find_ancestor(cell, AXUtilities.is_table_cell_or_header)
 
         tokens = ["TABLE NAVIGATOR: Current cell is", cell]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)

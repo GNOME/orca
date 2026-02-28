@@ -21,7 +21,7 @@
 
 # pylint: disable=too-many-public-methods
 
-"""Utilities for obtaining accessibility information for debugging."""
+"""Utilities for accessibility debugging."""
 
 import inspect
 import pprint
@@ -40,7 +40,7 @@ from .ax_utilities_relation import AXUtilitiesRelation
 
 
 class AXUtilitiesDebugging:
-    """Utilities for obtaining accessibility information for debugging."""
+    """Utilities for accessibility debugging."""
 
     @staticmethod
     def _format_string(string: str = "") -> str:

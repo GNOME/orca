@@ -272,7 +272,7 @@ class _ItemContext:
                 or AXUtilities.is_tool_bar(x)
             )
 
-        return AXObject.find_ancestor(self._obj, is_container)
+        return AXUtilities.find_ancestor(self._obj, is_container)
 
     def _is_substring_of(self, other: _ItemContext) -> bool:
         """Returns True if this is a substring of other."""
@@ -732,7 +732,7 @@ class MouseReviewer:
         elif AXUtilities.is_menu(focus):
             menu = focus
         else:
-            menu = AXObject.find_ancestor(focus, AXUtilities.is_menu)
+            menu = AXUtilities.find_ancestor(focus, AXUtilities.is_menu)
 
         obj = None
         if menu:
@@ -746,7 +746,7 @@ class MouseReviewer:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         script = script_manager.get_manager().get_script(AXUtilities.get_application(window), obj)
-        if menu and obj and not AXObject.find_ancestor(obj, AXUtilities.is_menu):
+        if menu and obj and not AXUtilities.find_ancestor(obj, AXUtilities.is_menu):
             if AXUtilities.objects_overlap(obj, menu):
                 tokens = ["MOUSE REVIEW:", obj, "believed to be under", menu]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)

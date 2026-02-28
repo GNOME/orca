@@ -1,4 +1,4 @@
-# Utilities for performing tasks related to accessible actions.
+# Orca
 #
 # Copyright 2023-2026 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Utilities for performing tasks related to accessible actions."""
+"""Utilities for accessible actions."""
 
 import gi
 
@@ -32,7 +32,7 @@ from .ax_object import AXObject
 
 
 class AXUtilitiesAction:
-    """Utilities for performing tasks related to accessible actions."""
+    """Utilities for accessible actions."""
 
     @staticmethod
     def get_action_names(obj: Atspi.Accessible) -> list[str]:

@@ -129,7 +129,7 @@ class Utilities(web.Utilities):
         if not (AXUtilities.is_entry(obj) or AXUtilities.is_push_button(obj)):
             return False
 
-        toolbar = AXObject.find_ancestor(obj, AXUtilities.is_tool_bar)
+        toolbar = AXUtilities.find_ancestor(obj, AXUtilities.is_tool_bar)
         result = self._is_find_container(toolbar)
         if result:
             tokens = ["GECKO:", obj, "believed to be find-in-page widget (toolbar)"]

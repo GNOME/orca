@@ -795,7 +795,7 @@ class Script(script.Script):
             source_is_active_window = window == focus_manager.get_manager().get_active_window()
             if source_is_active_window and not event.detail1:
                 focus = focus_manager.get_manager().get_locus_of_focus()
-                if AXObject.find_ancestor_inclusive(focus, AXUtilities.is_menu):
+                if AXUtilities.find_ancestor_inclusive(focus, AXUtilities.is_menu):
                     msg = "DEFAULT: Ignoring event. In menu."
                     debug.print_message(debug.LEVEL_INFO, msg, True)
                     return True
@@ -1061,7 +1061,7 @@ class Script(script.Script):
             # calendar new-appointment comboboxes. Therefore check to see if the event came
             # from the current combobox. This is necessary because (at least) VSCode's debugger
             # has some hidden menu that the user is not in which is firing this event.
-            combobox = AXObject.find_ancestor(event.source, AXUtilities.is_combo_box)
+            combobox = AXUtilities.find_ancestor(event.source, AXUtilities.is_combo_box)
             if combobox != focus and event.source != AXObject.get_parent(focus):
                 tokens = ["DEFAULT: Ignoring event: source lacks showing + visible", event.source]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -1069,7 +1069,7 @@ class Script(script.Script):
 
         if AXUtilities.is_tree_or_tree_table(event.source):
             active_window = focus_manager.get_manager().get_active_window()
-            if not AXObject.find_ancestor(event.source, lambda x: x and x == active_window):
+            if not AXUtilities.find_ancestor(event.source, lambda x: x and x == active_window):
                 tokens = ["DEFAULT: Ignoring event:", event.source, "is not inside", active_window]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
@@ -1112,7 +1112,7 @@ class Script(script.Script):
 
         mouse_review_item = mouse_review.get_reviewer().get_current_item()
         for child in selected_children:
-            if AXObject.is_ancestor(focus, child):
+            if AXUtilities.is_ancestor(focus, child):
                 tokens = ["DEFAULT: Child", child, "is ancestor of locusOfFocus"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return True
@@ -1452,7 +1452,7 @@ class Script(script.Script):
 
         manager = focus_manager.get_manager()
         focus = manager.get_locus_of_focus()
-        if AXObject.find_ancestor_inclusive(focus, AXUtilities.is_menu):
+        if AXUtilities.find_ancestor_inclusive(focus, AXUtilities.is_menu):
             msg = "DEFAULT: Ignoring event. In menu."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True

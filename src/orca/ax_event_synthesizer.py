@@ -32,6 +32,7 @@ from . import ax_device_manager, debug
 from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
+from .ax_utilities import AXUtilities
 from .ax_utilities_action import AXUtilitiesAction
 from .ax_utilities_component import AXUtilitiesComponent
 from .ax_utilities_debugging import AXUtilitiesDebugging
@@ -60,7 +61,7 @@ class AXEventSynthesizer:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         rect = AXComponent.get_rect(obj)
-        ancestor = ancestor or AXObject.find_ancestor(obj, AXEventSynthesizer._highest_ancestor)
+        ancestor = ancestor or AXUtilities.find_ancestor(obj, AXEventSynthesizer._highest_ancestor)
         if ancestor is None:
             tokens = ["AXEventSynthesizer: Could not get ancestor of", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -262,7 +263,7 @@ class AXEventSynthesizer:
     ) -> None:
         """Attempts to scroll obj to the center of its window."""
 
-        ancestor = AXObject.find_ancestor(obj, AXEventSynthesizer._highest_ancestor)
+        ancestor = AXUtilities.find_ancestor(obj, AXEventSynthesizer._highest_ancestor)
         if ancestor is None:
             tokens = ["AXEventSynthesizer: Could not get ancestor of", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)

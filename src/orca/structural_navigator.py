@@ -708,7 +708,7 @@ class StructuralNavigator:
         # and then set the caret context to the first position inside the outer heading, i.e.
         # the inner heading, we'll get stuck. Thanks authors.
         if AXUtilities.is_heading(obj):
-            if ancestor := AXObject.find_ancestor(obj, AXUtilities.is_heading):
+            if ancestor := AXUtilities.find_ancestor(obj, AXUtilities.is_heading):
                 tokens = [
                     "STRUCTURAL NAVIGATOR: Current heading",
                     obj,
@@ -722,7 +722,7 @@ class StructuralNavigator:
 
         candidate = obj
         if AXUtilities.is_live_region(obj):
-            while ancestor := AXObject.find_ancestor(candidate, AXUtilities.is_live_region):
+            while ancestor := AXUtilities.find_ancestor(candidate, AXUtilities.is_live_region):
                 candidate = ancestor
             if candidate != obj:
                 tokens = [
@@ -1016,12 +1016,12 @@ class StructuralNavigator:
     def _determine_root_container(self, script: default.Script) -> Atspi.Accessible:
         mode = self.get_mode(script)
         focus = focus_manager.get_manager().get_locus_of_focus()
-        root = AXObject.find_ancestor_inclusive(focus, AXUtilities.is_modal_dialog)
+        root = AXUtilities.find_ancestor_inclusive(focus, AXUtilities.is_modal_dialog)
         if root is None:
             if mode == NavigationMode.DOCUMENT:
                 root = script.utilities.get_top_level_document_for_object(focus)
             elif mode == NavigationMode.GUI:
-                root = AXObject.find_ancestor_inclusive(focus, AXUtilities.is_dialog_or_window)
+                root = AXUtilities.find_ancestor_inclusive(focus, AXUtilities.is_dialog_or_window)
                 if root is None:
                     root = focus_manager.get_manager().get_active_window()
 
@@ -1030,7 +1030,7 @@ class StructuralNavigator:
         return root
 
     def _is_non_document_object(self, obj: Atspi.Accessible, must_be_showing: bool = True) -> bool:
-        if AXObject.find_ancestor_inclusive(obj, AXUtilities.is_document) is not None:
+        if AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_document) is not None:
             return False
         return not (must_be_showing and not AXUtilities.is_showing(obj))
 
@@ -3770,9 +3770,9 @@ class StructuralNavigator:
 
     def _get_current_container(self, script: default.Script) -> Atspi.Accessible | None:
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if container := AXObject.find_ancestor_inclusive(focus, AXUtilities.is_large_container):
+        if container := AXUtilities.find_ancestor_inclusive(focus, AXUtilities.is_large_container):
             root = self._determine_root_container(script)
-            if not AXObject.is_ancestor(container, root):
+            if not AXUtilities.is_ancestor(container, root):
                 return None
         return container
 

@@ -50,7 +50,7 @@ class TestAXSelection:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Set up mocks for ax_selection dependencies."""
 
-        additional_modules = ["orca.ax_utilities_role"]
+        additional_modules = ["orca.ax_utilities_object", "orca.ax_utilities_role"]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         debug_mock = essential_modules["orca.debug"]
@@ -62,7 +62,9 @@ class TestAXSelection:
         ax_object_mock.AXObject = test_context.Mock()
         ax_object_mock.AXObject.supports_selection = test_context.Mock(return_value=True)
         ax_object_mock.AXObject.supports_collection = test_context.Mock(return_value=False)
-        ax_object_mock.AXObject.find_descendant = test_context.Mock()
+        ax_utilities_object_mock = essential_modules["orca.ax_utilities_object"]
+        ax_utilities_object_mock.AXUtilitiesObject = test_context.Mock()
+        ax_utilities_object_mock.AXUtilitiesObject.find_descendant = test_context.Mock()
 
         ax_utilities_role_mock = essential_modules["orca.ax_utilities_role"]
         ax_utilities_role_mock.AXUtilitiesRole = test_context.Mock()
@@ -75,8 +77,8 @@ class TestAXSelection:
     def _setup_combo_box_selection_mocks(self, test_context, accessible, container, child):
         """Set up common mocks for combo box selection testing."""
 
-        from orca.ax_object import AXObject
         from orca.ax_selection import AXSelection
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
 
         def mock_get_selected_child_count(obj):
@@ -107,7 +109,7 @@ class TestAXSelection:
             "is_list_box",
             side_effect=lambda obj: obj == container,
         )
-        test_context.patch_object(AXObject, "find_descendant", return_value=container)
+        test_context.patch_object(AXUtilitiesObject, "find_descendant", return_value=container)
         test_context.patch_object(
             Atspi.Selection,
             "get_selected_child",

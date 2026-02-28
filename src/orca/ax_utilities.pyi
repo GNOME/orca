@@ -112,10 +112,6 @@ class AXUtilities:
     @staticmethod
     def get_nesting_level(obj: Atspi.Accessible) -> int: ...
     @staticmethod
-    def get_next_object(obj: Atspi.Accessible) -> Atspi.Accessible | None: ...
-    @staticmethod
-    def get_previous_object(obj: Atspi.Accessible) -> Atspi.Accessible | None: ...
-    @staticmethod
     def is_on_screen(obj: Atspi.Accessible, bounding_box: Atspi.Rect | None = None) -> bool: ...
     @staticmethod
     def treat_as_leaf_node(obj: Atspi.Accessible) -> bool: ...
@@ -124,6 +120,18 @@ class AXUtilities:
         root: Atspi.Accessible,
         bounding_box: Atspi.Rect | None = None,
     ) -> list: ...
+    @staticmethod
+    def active_descendant(obj: Atspi.Accessible) -> Atspi.Accessible | None: ...
+    @staticmethod
+    def find_previous_object(
+        obj: Atspi.Accessible,
+        restrict_to: Atspi.Accessible | None = None,
+    ) -> Atspi.Accessible | None: ...
+    @staticmethod
+    def find_next_object(
+        obj: Atspi.Accessible,
+        restrict_to: Atspi.Accessible | None = None,
+    ) -> Atspi.Accessible | None: ...
 
     # From ax_utilities_action.py
     @staticmethod
@@ -1139,6 +1147,42 @@ class AXUtilities:
     def object_is_controlled_by(obj1: Atspi.Accessible, obj2: Atspi.Accessible) -> bool: ...
     @staticmethod
     def object_is_unrelated(obj: Atspi.Accessible) -> bool: ...
+
+    # From ax_utilities_object.py
+    @staticmethod
+    def get_common_ancestor(
+        obj1: Atspi.Accessible,
+        obj2: Atspi.Accessible,
+    ) -> Atspi.Accessible | None: ...
+    @staticmethod
+    def find_ancestor_inclusive(
+        obj: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool],
+    ) -> Atspi.Accessible | None: ...
+    @staticmethod
+    def find_ancestor(
+        obj: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool],
+    ) -> Atspi.Accessible | None: ...
+    @staticmethod
+    def is_ancestor(
+        obj: Atspi.Accessible,
+        ancestor: Atspi.Accessible,
+        inclusive: bool = False,
+    ) -> bool: ...
+    @staticmethod
+    def find_descendant(
+        obj: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool],
+    ) -> Atspi.Accessible | None: ...
+    @staticmethod
+    def find_deepest_descendant(obj: Atspi.Accessible) -> Atspi.Accessible | None: ...
+    @staticmethod
+    def find_all_descendants(
+        root: Atspi.Accessible,
+        include_if: Callable[[Atspi.Accessible], bool] | None = None,
+        exclude_if: Callable[[Atspi.Accessible], bool] | None = None,
+    ) -> list[Atspi.Accessible]: ...
 
     # From ax_utilities_component.py
     @staticmethod

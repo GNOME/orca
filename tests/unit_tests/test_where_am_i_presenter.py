@@ -702,7 +702,7 @@ class TestWhereAmIPresenter:
         ].get_manager.return_value.get_locus_of_focus.return_value = focus_obj
 
         spreadsheet = test_context.Mock()
-        deps["orca.ax_object"].AXObject.find_ancestor.return_value = spreadsheet
+        deps["orca.ax_utilities"].AXUtilities.find_ancestor.return_value = spreadsheet
         mock_script = test_context.Mock()
         mock_script.utilities.speak_selected_cell_range.return_value = True
         presenter = WhereAmIPresenter()
@@ -719,7 +719,7 @@ class TestWhereAmIPresenter:
         focus_obj = test_context.Mock()
         deps["focus_manager_instance"].get_locus_of_focus.return_value = focus_obj
 
-        deps["orca.ax_object"].AXObject.find_ancestor.return_value = None
+        deps["orca.ax_utilities"].AXUtilities.find_ancestor.return_value = None
         deps["orca.ax_object"].AXObject.get_name.side_effect = ["Item 1", "Item 2"]
 
         container = test_context.Mock()
@@ -747,7 +747,7 @@ class TestWhereAmIPresenter:
         focus_obj = test_context.Mock()
         deps["focus_manager_instance"].get_locus_of_focus.return_value = focus_obj
 
-        deps["orca.ax_object"].AXObject.find_ancestor.return_value = None
+        deps["orca.ax_utilities"].AXUtilities.find_ancestor.return_value = None
         mock_script = test_context.Mock()
         mock_script.utilities.get_selection_container.return_value = None
         presenter = WhereAmIPresenter()

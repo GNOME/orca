@@ -50,9 +50,9 @@ class Script(default.Script):
 
         manager = focus_manager.get_manager()
         if AXUtilities.is_toggle_button(new_focus):
-            new_focus = AXObject.find_ancestor(new_focus, AXUtilities.is_combo_box) or new_focus
+            new_focus = AXUtilities.find_ancestor(new_focus, AXUtilities.is_combo_box) or new_focus
             manager.set_locus_of_focus(event, new_focus, False)
-        elif AXObject.find_ancestor(new_focus, AXUtilities.is_menu_bar):
+        elif AXUtilities.find_ancestor(new_focus, AXUtilities.is_menu_bar):
             window = self.utilities.top_level_object(new_focus)
             if window and manager.get_active_window() != window:
                 manager.set_active_window(window)
@@ -68,7 +68,7 @@ class Script(default.Script):
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if AXUtilities.is_table_cell(focus):
-            table = AXObject.find_ancestor(focus, AXUtilities.is_tree_or_tree_table)
+            table = AXUtilities.find_ancestor(focus, AXUtilities.is_tree_or_tree_table)
             if table is not None and table != event.source:
                 msg = "GTK: Event is from a different tree or tree table."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -96,7 +96,7 @@ class Script(default.Script):
         """Callback for object:state-changed:focused accessibility events."""
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if AXObject.is_ancestor(focus, event.source) and AXUtilities.is_focused(focus):
+        if AXUtilities.is_ancestor(focus, event.source) and AXUtilities.is_focused(focus):
             msg = "GTK: Ignoring focus change on ancestor of still-focused locusOfFocus"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -109,7 +109,7 @@ class Script(default.Script):
         # Handle changes within an entry completion popup.
         if (
             AXUtilities.is_table_cell(event.source)
-            and AXObject.find_ancestor(event.source, AXUtilities.is_window) is not None
+            and AXUtilities.find_ancestor(event.source, AXUtilities.is_window) is not None
         ):
             if event.detail1:
                 focus_manager.get_manager().set_locus_of_focus(event, event.source)
@@ -132,7 +132,7 @@ class Script(default.Script):
         if (
             AXUtilities.is_toggle_button(focus)
             and AXUtilities.is_combo_box(event.source)
-            and AXObject.is_ancestor(focus, event.source)
+            and AXUtilities.is_ancestor(focus, event.source)
         ):
             return super()._on_selection_changed(event)
 

@@ -380,7 +380,7 @@ class LiveRegionPresenter:
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return False
 
-        alert = AXObject.find_ancestor(event.source, AXUtilities.is_aria_alert)
+        alert = AXUtilities.find_ancestor(event.source, AXUtilities.is_aria_alert)
         if alert and AXUtilities.get_focused_object(alert) == event.source:
             msg = "LIVE REGION PRESENTER: Focused source will be presented as part of alert"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -672,7 +672,7 @@ class LiveRegionPresenter:
             attrs = AXObject.get_attributes_dict(x, False)
             return bool(attrs.get("atomic"))
 
-        container = AXObject.find_ancestor_inclusive(obj, is_container)
+        container = AXUtilities.find_ancestor_inclusive(obj, is_container)
         tokens = ["LIVE REGION PRESENTER: Container for", obj, "is", container]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return container

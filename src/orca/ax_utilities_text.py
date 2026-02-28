@@ -1,4 +1,4 @@
-# Higher-level utilities for working with accessible text.
+# Orca
 #
 # Copyright 2024-2026 Igalia, S.L.
 # Copyright 2024 GNOME Foundation Inc.
@@ -22,7 +22,7 @@
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-lines
 
-"""Higher-level utilities for working with accessible text."""
+"""Utilities for accessible text."""
 
 from __future__ import annotations
 
@@ -46,7 +46,7 @@ if TYPE_CHECKING:
 
 
 class AXUtilitiesText:
-    """Higher-level utilities for working with accessible text."""
+    """Utilities for accessible text."""
 
     CACHED_TEXT_SELECTION: ClassVar[dict[int, tuple[str, int, int]]] = {}
 

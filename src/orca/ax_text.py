@@ -22,7 +22,7 @@
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-lines
 
-"""Utilities for obtaining information about accessible text."""
+"""Wrapper for the Atspi.Text interface."""
 
 from __future__ import annotations
 
@@ -168,7 +168,7 @@ class AXTextAttribute(enum.Enum):
 
 
 class AXText:
-    """Utilities for obtaining information about accessible text."""
+    """Wrapper for the Atspi.Text interface."""
 
     @staticmethod
     def get_character_at_offset(

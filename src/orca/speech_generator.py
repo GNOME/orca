@@ -144,7 +144,7 @@ class SpeechGenerator(generator.Generator):
         return ""
 
     def get_localized_role_name(self, obj: Atspi.Accessible, **args) -> str:
-        if AXObject.find_ancestor_inclusive(obj, AXUtilities.is_editable_combo_box):
+        if AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_editable_combo_box):
             return object_properties.ROLE_EDITABLE_COMBO_BOX
 
         if AXUtilities.is_link(obj, args.get("role")) and AXUtilities.is_visited(obj):
@@ -176,7 +176,7 @@ class SpeechGenerator(generator.Generator):
         if dialog:
             if dialog_result := self._generate_accessible_label_and_name(dialog):
                 result.append(dialog_result)
-        elif spreadsheet := AXObject.find_ancestor(
+        elif spreadsheet := AXUtilities.find_ancestor(
             obj,
             AXUtilities.is_spreadsheet_table,
         ):
@@ -453,7 +453,7 @@ class SpeechGenerator(generator.Generator):
                 return False
             return index == total - 1 or AXObject.get_name(x) == AXObject.get_name(obj)
 
-        return AXObject.find_ancestor(obj, use_ancestor_role)
+        return AXUtilities.find_ancestor(obj, use_ancestor_role)
 
     def _should_speak_role(self, obj, **args):
         if self._only_speak_displayed_text():
@@ -623,7 +623,7 @@ class SpeechGenerator(generator.Generator):
         ):
             return []
 
-        if AXObject.find_ancestor(obj, AXUtilities.is_tree_or_tree_table):
+        if AXUtilities.find_ancestor(obj, AXUtilities.is_tree_or_tree_table):
             child_nodes = self._script.utilities.child_nodes(obj)
             result: list[Any] = [messages.item_count(len(child_nodes))] if child_nodes else []
             if result:
@@ -910,8 +910,8 @@ class SpeechGenerator(generator.Generator):
         def pred(x: Atspi.Accessible) -> bool:
             return self._get_functional_role(x) == common_role
 
-        obj_level = self._get_nesting_level(AXObject.find_ancestor(obj, pred))
-        prior_level = self._get_nesting_level(AXObject.find_ancestor(prior_obj, pred))
+        obj_level = self._get_nesting_level(AXUtilities.find_ancestor(obj, pred))
+        prior_level = self._get_nesting_level(AXUtilities.find_ancestor(prior_obj, pred))
         return obj_level != prior_level
 
     def _present_ancestor_results(
@@ -966,7 +966,7 @@ class SpeechGenerator(generator.Generator):
         if AXUtilities.is_page_tab(obj) or AXUtilities.is_tool_tip(obj):
             return []
 
-        common_ancestor = AXObject.get_common_ancestor(prior_obj, obj)
+        common_ancestor = AXUtilities.get_common_ancestor(prior_obj, obj)
         if obj == common_ancestor:
             return []
 
@@ -1034,7 +1034,7 @@ class SpeechGenerator(generator.Generator):
 
         if AXUtilities.get_application(obj) != AXUtilities.get_application(
             prior_obj,
-        ) or AXObject.find_ancestor(obj, lambda x: x == prior_obj):
+        ) or AXUtilities.find_ancestor(obj, lambda x: x == prior_obj):
             return []
 
         _frame, dialog = self._script.utilities.frame_and_dialog(obj)
@@ -1557,7 +1557,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = []
-        suggestion = AXObject.find_ancestor(obj, AXUtilities.is_inline_suggestion)
+        suggestion = AXUtilities.find_ancestor(obj, AXUtilities.is_inline_suggestion)
         if suggestion and obj == AXObject.get_child(suggestion, 0):
             result.extend([object_properties.ROLE_CONTENT_SUGGESTION])
             result.extend(self.voice(SYSTEM, obj=obj, **args))
@@ -1581,7 +1581,7 @@ class SpeechGenerator(generator.Generator):
         result = [messages.CONTENT_DELETION_END]
         result.extend(self.voice(SYSTEM, obj=obj, **args))
 
-        suggestion = AXObject.find_ancestor(obj, AXUtilities.is_inline_suggestion)
+        suggestion = AXUtilities.find_ancestor(obj, AXUtilities.is_inline_suggestion)
         if suggestion and obj == AXObject.get_child(
             suggestion,
             AXObject.get_child_count(suggestion) - 1,
@@ -1590,7 +1590,7 @@ class SpeechGenerator(generator.Generator):
             result.extend([messages.CONTENT_SUGGESTION_END])
             result.extend(self.voice(SYSTEM, obj=obj, **args))
 
-            container = AXObject.find_ancestor(obj, lambda x: bool(AXUtilities.get_details(x)))
+            container = AXUtilities.find_ancestor(obj, lambda x: bool(AXUtilities.get_details(x)))
             if AXUtilities.is_suggestion(container):
                 result.extend(self._generate_pause(obj, **args))
                 result.extend(self._generate_has_details(container))
@@ -1607,7 +1607,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = []
-        suggestion = AXObject.find_ancestor(obj, AXUtilities.is_inline_suggestion)
+        suggestion = AXUtilities.find_ancestor(obj, AXUtilities.is_inline_suggestion)
         if suggestion and obj == AXObject.get_child(suggestion, 0):
             result.extend([object_properties.ROLE_CONTENT_SUGGESTION])
             result.extend(self.voice(SYSTEM, obj=obj, **args))
@@ -1631,7 +1631,7 @@ class SpeechGenerator(generator.Generator):
         result = [messages.CONTENT_INSERTION_END]
         result.extend(self.voice(SYSTEM, obj=obj, **args))
 
-        suggestion = AXObject.find_ancestor(obj, AXUtilities.is_inline_suggestion)
+        suggestion = AXUtilities.find_ancestor(obj, AXUtilities.is_inline_suggestion)
         if suggestion and obj == AXObject.get_child(
             suggestion,
             AXObject.get_child_count(suggestion) - 1,
@@ -1640,7 +1640,7 @@ class SpeechGenerator(generator.Generator):
             result.extend([messages.CONTENT_SUGGESTION_END])
             result.extend(self.voice(SYSTEM, obj=obj, **args))
 
-            container = AXObject.find_ancestor(obj, lambda x: bool(AXUtilities.get_details(x)))
+            container = AXUtilities.find_ancestor(obj, lambda x: bool(AXUtilities.get_details(x)))
             if AXUtilities.is_suggestion(container):
                 result.extend(self._generate_pause(obj, **args))
                 result.extend(self._generate_has_details(container))
@@ -2417,7 +2417,7 @@ class SpeechGenerator(generator.Generator):
         if result and not isinstance(result[-1], Pause):
             result += self._generate_pause(obj, **args)
         result += self._generate_state_has_popup(obj, **args)
-        if cell := AXObject.find_ancestor(obj, AXUtilities.is_table_cell):
+        if cell := AXUtilities.find_ancestor(obj, AXUtilities.is_table_cell):
             result += self._generate_has_formula(cell, **args)
             if result and not isinstance(result[-1], Pause):
                 result += self._generate_pause(obj, **args)
@@ -2865,7 +2865,7 @@ class SpeechGenerator(generator.Generator):
         result = []
         prior_doc = None
         if prior_obj := args.get("priorObj"):
-            prior_doc = AXObject.find_ancestor_inclusive(prior_obj, AXUtilities.is_document)
+            prior_doc = AXUtilities.find_ancestor_inclusive(prior_obj, AXUtilities.is_document)
 
         if prior_doc != obj:
             result += self._generate_default_prefix(obj, **args)
@@ -3233,7 +3233,7 @@ class SpeechGenerator(generator.Generator):
 
         result = self._generate_default_prefix(obj, **args)
         prior_obj = args.get("priorObj")
-        if prior_obj and obj != prior_obj and not AXObject.is_ancestor(prior_obj, obj):
+        if prior_obj and obj != prior_obj and not AXUtilities.is_ancestor(prior_obj, obj):
             result += self._generate_accessible_role(obj, **args)
             result += self._generate_accessible_label_and_name(obj, **args)
         result += self._generate_text_line(obj, **args)
@@ -3803,7 +3803,7 @@ class SpeechGenerator(generator.Generator):
 
         result = self._generate_default_prefix(obj, **args)
         prior_obj = args.get("priorObj")
-        if prior_obj and obj != prior_obj and not AXObject.is_ancestor(prior_obj, obj):
+        if prior_obj and obj != prior_obj and not AXUtilities.is_ancestor(prior_obj, obj):
             result += self._generate_accessible_label_and_name(obj, **args)
             result += self._generate_accessible_role(obj, **args)
 

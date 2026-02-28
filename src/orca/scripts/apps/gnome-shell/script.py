@@ -91,7 +91,7 @@ class Script(default.Script):
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if AXUtilities.is_panel(event.source) and AXObject.is_ancestor(focus, event.source):
+        if AXUtilities.is_panel(event.source) and AXUtilities.is_ancestor(focus, event.source):
             msg = "GNOME SHELL: Event ignored: Source is panel ancestor of current focus."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -116,13 +116,13 @@ class Script(default.Script):
 
         # If we're already in a dialog, and a label inside that dialog changes its name,
         # present the new name. Example: the "Command not found" label in the Run dialog.
-        dialog = AXObject.find_ancestor(
+        dialog = AXUtilities.find_ancestor(
             focus_manager.get_manager().get_locus_of_focus(),
             AXUtilities.is_dialog,
         )
         tokens = ["GNOME SHELL: focus is in dialog:", dialog]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        if dialog and AXObject.is_ancestor(event.source, dialog):
+        if dialog and AXUtilities.is_ancestor(event.source, dialog):
             msg = "GNOME SHELL: Label changed name in current dialog. Presenting."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             presentation_manager.get_manager().present_message(AXObject.get_name(event.source))

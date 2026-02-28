@@ -130,7 +130,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             AXUtilities.is_image(obj, args.get("role"))
             or self._script.utilities.treat_as_text_object(obj)
         ):
-            heading = AXObject.find_ancestor(obj, AXUtilities.is_heading)
+            heading = AXUtilities.find_ancestor(obj, AXUtilities.is_heading)
             if heading is not None:
                 result.extend(self._generate_accessible_role(heading))
 
@@ -155,7 +155,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if self._script.utilities.is_text_block_element(obj):
             return []
 
-        if AXUtilities.is_editable(obj) and AXObject.find_ancestor(obj, AXUtilities.is_code):
+        if AXUtilities.is_editable(obj) and AXUtilities.find_ancestor(obj, AXUtilities.is_code):
             return []
 
         role = args.get("role", AXObject.get_role(obj))
@@ -195,7 +195,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if result and result[0] and not AXUtilities.has_explicit_name(obj):
             result[0] = result[0].strip()
         elif not result and AXUtilities.is_check_box(obj):
-            grid_cell = AXObject.find_ancestor(obj, AXUtilities.is_grid_cell)
+            grid_cell = AXUtilities.find_ancestor(obj, AXUtilities.is_grid_cell)
             if grid_cell:
                 return super()._generate_accessible_name(grid_cell, **args)
 
@@ -210,7 +210,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if not self._script.utilities.in_document_content(obj):
             return super()._generate_real_active_descendant_displayed_text(obj, **args)
 
-        rad = self._script.utilities.active_descendant(obj)
+        rad = AXUtilities.active_descendant(obj)
         return self._generate_text_content(rad, **args)
 
     def generate_braille(self, obj: Atspi.Accessible, **args) -> list[Any]:
@@ -235,7 +235,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             args["role"] = Atspi.Role.SECTION
 
         if AXUtilities.is_menu_item(obj):
-            combo_box = AXObject.find_ancestor(obj, AXUtilities.is_combo_box)
+            combo_box = AXUtilities.find_ancestor(obj, AXUtilities.is_combo_box)
             if combo_box and not AXUtilities.is_expanded(combo_box):
                 obj = combo_box
         result.extend(super().generate_braille(obj, **args))

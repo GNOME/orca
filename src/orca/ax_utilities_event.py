@@ -1,4 +1,4 @@
-# Utilities for obtaining event-related information.
+# Orca
 #
 # Copyright 2024 Igalia, S.L.
 # Copyright 2024 GNOME Foundation Inc.
@@ -19,7 +19,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Utilities for obtaining event-related information."""
+"""Utilities for accessible events."""
 
 from __future__ import annotations
 
@@ -38,6 +38,7 @@ from . import debug, focus_manager
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities_collection import AXUtilitiesCollection
+from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 from .ax_utilities_text import AXUtilitiesText
@@ -98,7 +99,7 @@ class TextEventReason(enum.Enum):
 
 
 class AXUtilitiesEvent:
-    """Utilities for obtaining event-related information."""
+    """Utilities for accessible events."""
 
     LAST_KNOWN_DESCRIPTION: ClassVar[dict[int, str]] = {}
     LAST_KNOWN_NAME: ClassVar[dict[int, str]] = {}
@@ -322,7 +323,7 @@ class AXUtilitiesEvent:
             reason = AXUtilitiesEvent._get_caret_moved_editable_reason(mgr)
         elif mgr.last_event_was_tab_navigation():
             reason = TextEventReason.FOCUS_CHANGE
-        elif AXObject.find_ancestor(obj, AXUtilitiesRole.children_are_presentational):
+        elif AXUtilitiesObject.find_ancestor(obj, AXUtilitiesRole.children_are_presentational):
             reason = TextEventReason.UI_UPDATE
         else:
             reason = TextEventReason.UNKNOWN
@@ -345,7 +346,7 @@ class AXUtilitiesEvent:
         elif mgr.last_event_was_printable_key():
             reason = TextEventReason.TYPING
         elif mgr.last_event_was_up_or_down() or mgr.last_event_was_page_up_or_page_down():
-            if AXUtilitiesRole.is_spin_button(obj) or AXObject.find_ancestor(
+            if AXUtilitiesRole.is_spin_button(obj) or AXUtilitiesObject.find_ancestor(
                 obj,
                 AXUtilitiesRole.is_spin_button,
             ):
@@ -479,7 +480,7 @@ class AXUtilitiesEvent:
         if mgr.last_event_was_middle_click() or mgr.last_event_was_middle_release():
             reason = TextEventReason.MOUSE_MIDDLE_BUTTON
         elif mgr.last_event_was_up_or_down() or mgr.last_event_was_page_up_or_page_down():
-            if AXUtilitiesRole.is_spin_button(obj) or AXObject.find_ancestor(
+            if AXUtilitiesRole.is_spin_button(obj) or AXUtilitiesObject.find_ancestor(
                 obj,
                 AXUtilitiesRole.is_spin_button,
             ):
@@ -564,7 +565,7 @@ class AXUtilitiesEvent:
         if mgr.last_event_was_printable_key():
             return TextEventReason.TYPING
         if mgr.last_event_was_up_or_down() or mgr.last_event_was_page_up_or_page_down():
-            if AXUtilitiesRole.is_spin_button(obj) or AXObject.find_ancestor(
+            if AXUtilitiesRole.is_spin_button(obj) or AXUtilitiesObject.find_ancestor(
                 obj,
                 AXUtilitiesRole.is_spin_button,
             ):
@@ -618,7 +619,7 @@ class AXUtilitiesEvent:
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if AXUtilitiesRole.is_table_cell(focus):
-            table = AXObject.find_ancestor(focus, AXUtilitiesRole.is_tree_or_tree_table)
+            table = AXUtilitiesObject.find_ancestor(focus, AXUtilitiesRole.is_tree_or_tree_table)
             if table is not None and table != event.source:
                 msg = "AXUtilitiesEvent: Event is from a different tree or tree table."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -642,7 +643,7 @@ class AXUtilitiesEvent:
         AXUtilitiesEvent.LAST_KNOWN_CHECKED[hash(event.source)] = new_state
         focus = focus_manager.get_manager().get_locus_of_focus()
         if event.source != focus:
-            if not AXObject.is_ancestor(event.source, focus):
+            if not AXUtilitiesObject.is_ancestor(event.source, focus):
                 msg = "AXUtilitiesEvent: The source is not the locus of focus or its descendant."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
@@ -711,7 +712,7 @@ class AXUtilitiesEvent:
             return False
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if event.source != focus and not AXObject.is_ancestor(focus, event.source):
+        if event.source != focus and not AXUtilitiesObject.is_ancestor(focus, event.source):
             msg = "AXUtilitiesEvent: The event is not from the locus of focus or ancestor."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
@@ -738,7 +739,7 @@ class AXUtilitiesEvent:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if not event.detail1 and not AXObject.is_ancestor(focus, event.source):
+        if not event.detail1 and not AXUtilitiesObject.is_ancestor(focus, event.source):
             msg = "AXUtilitiesEvent: Event is not from the locus of focus or ancestor."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
@@ -902,7 +903,7 @@ class AXUtilitiesEvent:
                 )
             else:
                 has_progress_bar = (
-                    AXObject.find_descendant(event.source, AXUtilitiesRole.is_progress_bar)
+                    AXUtilitiesObject.find_descendant(event.source, AXUtilitiesRole.is_progress_bar)
                     is not None
                 )
             if has_progress_bar:
@@ -975,7 +976,7 @@ class AXUtilitiesEvent:
 
             # This can happen in web content where the focus is a contenteditable element and a
             # new child element is created for new or changed text.
-            if AXObject.is_ancestor(event.source, focus):
+            if AXUtilitiesObject.is_ancestor(event.source, focus):
                 msg = "AXUtilitiesEvent: The locus of focus is an ancestor of the source."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True

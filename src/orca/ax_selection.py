@@ -1,4 +1,4 @@
-# Utilities for obtaining information about containers supporting selection
+# Orca
 #
 # Copyright 2023 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Utilities for obtaining information about containers supporting selection."""
+"""Wrapper for the Atspi.Selection interface."""
 
 import gi
 
@@ -28,11 +28,12 @@ from gi.repository import Atspi, GLib
 from . import debug
 from .ax_object import AXObject
 from .ax_utilities_collection import AXUtilitiesCollection
+from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_role import AXUtilitiesRole
 
 
 class AXSelection:
-    """Utilities for obtaining information about containers supporting selection."""
+    """Wrapper for the Atspi.Selection interface."""
 
     @staticmethod
     def get_selected_child_count(obj: Atspi.Accessible) -> int:
@@ -96,7 +97,7 @@ class AXSelection:
                     obj, [Atspi.Role.MENU, Atspi.Role.LIST_BOX]
                 )
             else:
-                container = AXObject.find_descendant(
+                container = AXUtilitiesObject.find_descendant(
                     obj,
                     lambda x: AXUtilitiesRole.is_menu(x) or AXUtilitiesRole.is_list_box(x),
                 )

@@ -21,7 +21,7 @@
 
 # pylint: disable=too-many-public-methods
 
-"""Utilities for obtaining relation-related information."""
+"""Utilities for accessible relations."""
 
 from __future__ import annotations
 
@@ -36,13 +36,14 @@ from gi.repository import Atspi, GLib
 
 from . import debug
 from .ax_object import AXObject
+from .ax_utilities_object import AXUtilitiesObject
 
 if TYPE_CHECKING:
     from typing import ClassVar
 
 
 class AXUtilitiesRelation:
-    """Utilities for obtaining relation-related information."""
+    """Utilities for accessible relations."""
 
     RELATIONS: ClassVar[dict[int, list[Atspi.Relation]]] = {}
     TARGETS: ClassVar[dict[int, dict[Atspi.RelationType, list[Atspi.Accessible]]]] = {}
@@ -290,7 +291,7 @@ class AXUtilitiesRelation:
         """Returns a list of accessible objects that obj is labelled by."""
 
         def is_not_ancestor(acc):
-            return not AXObject.is_ancestor(obj, acc)
+            return not AXUtilitiesObject.is_ancestor(obj, acc)
 
         result = AXUtilitiesRelation._get_relation_targets(obj, Atspi.RelationType.LABELLED_BY)
         if exclude_ancestors:

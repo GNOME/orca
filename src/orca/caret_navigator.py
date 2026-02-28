@@ -46,6 +46,7 @@ from . import (
 )
 from .ax_object import AXObject
 from .ax_text import AXText
+from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     import gi
@@ -449,7 +450,7 @@ class CaretNavigator:
         if root is None:
             return False
 
-        return AXObject.is_ancestor(obj, root, True)
+        return AXUtilities.is_ancestor(obj, root, True)
 
     def _line_contains_context(
         self,
@@ -485,7 +486,7 @@ class CaretNavigator:
         """Returns the end of the file as (obj, offset)."""
 
         root = self._get_root_object(script)
-        obj = AXObject.find_deepest_descendant(root)
+        obj = AXUtilities.find_deepest_descendant(root)
         if obj is None:
             return None, -1
 

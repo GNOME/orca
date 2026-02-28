@@ -219,7 +219,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         if AXUtilities.is_image(obj):
-            return AXObject.find_ancestor(obj, AXUtilities.is_link) is not None
+            return AXUtilities.find_ancestor(obj, AXUtilities.is_link) is not None
 
         if AXUtilities.is_heading(obj) and AXObject.get_child_count(obj) == 1:
             return self.is_link(AXObject.get_child(obj, 0))
@@ -322,7 +322,7 @@ class Utilities(script_utilities.Utilities):
             offset = AXText.get_character_count(root) - 1
 
         def _is_in_root(o: Atspi.Accessible) -> bool:
-            return o == root or AXObject.find_ancestor(o, lambda x: x == root) is not None
+            return o == root or AXUtilities.find_ancestor(o, lambda x: x == root) is not None
 
         obj = root
         while obj:
@@ -745,7 +745,7 @@ class Utilities(script_utilities.Utilities):
 
         if granularity == Atspi.TextGranularity.LINE:
             if AXUtilities.is_math_related(obj):
-                math = AXObject.find_ancestor_inclusive(obj, AXUtilities.is_math)
+                math = AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_math)
                 return [(math, 0, 1, "")]
 
             treat_as_text = self.treat_as_text_object(obj)
@@ -1099,7 +1099,7 @@ class Utilities(script_utilities.Utilities):
                 return self._cached_object_contents or []
 
         obj_is_landmark = AXUtilities.is_landmark(obj)
-        obj_list = AXObject.find_ancestor(obj, AXUtilities.is_list)
+        obj_list = AXUtilities.find_ancestor(obj, AXUtilities.is_list)
 
         def _is_in_object(x):
             if not x:
@@ -1120,7 +1120,7 @@ class Utilities(script_utilities.Utilities):
                 return False
 
             if obj_list is not None:
-                x_list = AXObject.find_ancestor(x_obj, AXUtilities.is_list)
+                x_list = AXUtilities.find_ancestor(x_obj, AXUtilities.is_list)
                 if x_list is not None and x_list != obj_list:
                     return False
 
@@ -1291,13 +1291,13 @@ class Utilities(script_utilities.Utilities):
         else:
             rect = self._get_extents(obj, offset, offset + 1)
 
-        if AXObject.find_ancestor_inclusive(obj, AXUtilities.is_inline_list_item) is not None:
-            container = AXObject.find_ancestor(obj, AXUtilities.is_list)
+        if AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_inline_list_item) is not None:
+            container = AXUtilities.find_ancestor(obj, AXUtilities.is_list)
             if container:
                 rect = self._get_extents(container, 0, 1)
 
-        obj_banner = AXObject.find_ancestor(obj, AXUtilities.is_landmark_banner)
-        obj_row = AXObject.find_ancestor_inclusive(obj, AXUtilities.is_table_row)
+        obj_banner = AXUtilities.find_ancestor(obj, AXUtilities.is_landmark_banner)
+        obj_row = AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_table_row)
 
         def _include(x):
             if x in objects:
@@ -1313,7 +1313,7 @@ class Utilities(script_utilities.Utilities):
                 if AXUtilities.is_landmark(obj) and AXUtilities.is_landmark(x_obj):
                     return False
                 if self.is_link(obj) and self.is_link(x_obj):
-                    x_obj_banner = AXObject.find_ancestor(x_obj, AXUtilities.is_landmark_banner)
+                    x_obj_banner = AXUtilities.find_ancestor(x_obj, AXUtilities.is_landmark_banner)
                     if (obj_banner or x_obj_banner) and obj_banner != x_obj_banner:
                         return False
                     if abs(rect.x - x_rect.x) <= 1 and abs(rect.y - x_rect.y) <= 1:
@@ -1329,7 +1329,7 @@ class Utilities(script_utilities.Utilities):
 
             if AXUtilities.is_math(x_obj) or AXUtilities.is_math_related(obj):
                 on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect, rect.height)
-            elif AXObject.find_ancestor_inclusive(
+            elif AXUtilities.find_ancestor_inclusive(
                 x_obj,
                 AXUtilities.is_subscript_or_superscript_text,
             ):
@@ -1368,7 +1368,7 @@ class Utilities(script_utilities.Utilities):
         # Check for things on the same line to the left of this object.
         prev_start_time = time.time()
         while prev_obj and self.get_document_for_object(prev_obj) == document:
-            if obj_row != AXObject.find_ancestor_inclusive(prev_obj, AXUtilities.is_table_row):
+            if obj_row != AXUtilities.find_ancestor_inclusive(prev_obj, AXUtilities.is_table_row):
                 break
 
             on_left = self._get_contents_for_obj(prev_obj, prev_offset, granularity)
@@ -1390,7 +1390,7 @@ class Utilities(script_utilities.Utilities):
         # Check for things on the same line to the right of this object.
         next_start_time = time.time()
         while next_obj and self.get_document_for_object(next_obj) == document:
-            if obj_row != AXObject.find_ancestor_inclusive(next_obj, AXUtilities.is_table_row):
+            if obj_row != AXUtilities.find_ancestor_inclusive(next_obj, AXUtilities.is_table_row):
                 break
 
             on_right = self._get_contents_for_obj(next_obj, next_offset, granularity)
@@ -1522,7 +1522,7 @@ class Utilities(script_utilities.Utilities):
             return []
 
         last_obj, last_offset = line[-1][0], line[-1][2] - 1
-        math = AXObject.find_ancestor_inclusive(last_obj, AXUtilities.is_math)
+        math = AXUtilities.find_ancestor_inclusive(last_obj, AXUtilities.is_math)
         if math:
             last_obj, last_offset = self.last_context(math)
 
@@ -1686,7 +1686,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         for descendant in descendants:
-            if descendant not in (old_start, old_end, start, end) and AXObject.find_ancestor(
+            if descendant not in (old_start, old_end, start, end) and AXUtilities.find_ancestor(
                 descendant,
                 lambda x: x in descendants,
             ):
@@ -1947,7 +1947,7 @@ class Utilities(script_utilities.Utilities):
         if not super().should_read_full_row(obj, previous_object):
             return False
 
-        if AXObject.find_ancestor(obj, AXUtilities.is_grid) is not None:
+        if AXUtilities.find_ancestor(obj, AXUtilities.is_grid) is not None:
             return not document_presenter.get_presenter().in_focus_mode(self._script.app)
 
         if input_event_manager.get_manager().last_event_was_line_navigation():
@@ -2066,7 +2066,7 @@ class Utilities(script_utilities.Utilities):
     def _label_is_ancestor_of_labelled(self, label: Atspi.Accessible) -> bool:
         # TODO - JD: Move into AXUtilities.
         for labelled in AXUtilities.get_is_label_for(label):
-            if AXObject.is_ancestor(labelled, label):
+            if AXUtilities.is_ancestor(labelled, label):
                 return True
         return False
 
@@ -2126,7 +2126,7 @@ class Utilities(script_utilities.Utilities):
         for obj, _start, _end, _string in contents:
             if not AXUtilities.is_image(obj):
                 continue
-            if AXObject.find_ancestor(obj, lambda x: x == link):
+            if AXUtilities.find_ancestor(obj, lambda x: x == link):
                 return True
 
         return False
@@ -2162,7 +2162,7 @@ class Utilities(script_utilities.Utilities):
         if not contents:
             if targets:
                 return True
-            return AXObject.find_ancestor(obj, AXUtilities.is_label_or_caption) is not None
+            return AXUtilities.find_ancestor(obj, AXUtilities.is_label_or_caption) is not None
 
         for acc, _start, _end, _string in contents:
             if acc in targets:
@@ -2171,16 +2171,16 @@ class Utilities(script_utilities.Utilities):
         if not self.is_text_block_element(obj):
             return False
 
-        if AXObject.find_ancestor(obj, AXUtilities.is_label_or_caption) is None:
+        if AXUtilities.find_ancestor(obj, AXUtilities.is_label_or_caption) is None:
             return False
 
         for acc, _start, _end, _string in contents:
-            if AXObject.find_ancestor(acc, AXUtilities.is_label_or_caption) is None:
+            if AXUtilities.find_ancestor(acc, AXUtilities.is_label_or_caption) is None:
                 continue
             if self.is_text_block_element(acc):
                 continue
 
-            if AXUtilities.is_label_or_caption(AXObject.get_common_ancestor(acc, obj)):
+            if AXUtilities.is_label_or_caption(AXUtilities.get_common_ancestor(acc, obj)):
                 return True
 
         return False
@@ -2246,10 +2246,10 @@ class Utilities(script_utilities.Utilities):
             return False
         if not AXUtilities.is_editable_combo_box(combobox):
             return False
-        if AXObject.is_ancestor(item, combobox):
+        if AXUtilities.is_ancestor(item, combobox):
             return True
 
-        container = AXObject.find_ancestor(
+        container = AXUtilities.find_ancestor(
             item,
             lambda x: AXUtilities.is_list_box(x) or AXUtilities.is_combo_box(x),
         )
@@ -2263,7 +2263,7 @@ class Utilities(script_utilities.Utilities):
         if AXUtilities.is_editable(obj):
             return False
 
-        entry_name = AXObject.get_name(AXObject.find_ancestor(obj, AXUtilities.is_entry))
+        entry_name = AXObject.get_name(AXUtilities.find_ancestor(obj, AXUtilities.is_entry))
         if not entry_name:
             return False
 
@@ -2276,14 +2276,14 @@ class Utilities(script_utilities.Utilities):
         if _is_match(obj):
             return True
 
-        return AXObject.find_descendant(obj, _is_match) is not None
+        return AXUtilities.find_descendant(obj, _is_match) is not None
 
     def _is_block_list_descendant(self, obj: Atspi.Accessible) -> bool:
         # TODO - JD: Move into AXUtilities.
-        if AXObject.find_ancestor(obj, AXUtilities.is_list) is None:
+        if AXUtilities.find_ancestor(obj, AXUtilities.is_list) is None:
             return False
 
-        return AXObject.find_ancestor_inclusive(obj, AXUtilities.is_inline_list_item) is None
+        return AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_inline_list_item) is None
 
     def is_link(self, obj: Atspi.Accessible) -> bool:
         if not obj:
@@ -2490,7 +2490,9 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def _should_infer_label_for(self, obj: Atspi.Accessible) -> bool:
-        if not self.in_document_content() or AXObject.find_ancestor(obj, AXUtilities.is_embedded):
+        if not self.in_document_content() or AXUtilities.find_ancestor(
+            obj, AXUtilities.is_embedded
+        ):
             return False
 
         rv = self._cached_should_infer_label_for.get(hash(obj))
@@ -2711,7 +2713,7 @@ class Utilities(script_utilities.Utilities):
             msg = "WEB: Selection changed event is relevant (is locusOfFocus)"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
-        if AXObject.find_ancestor(focus, lambda x: x == event.source):
+        if AXUtilities.find_ancestor(focus, lambda x: x == event.source):
             msg = "WEB: Selection changed event is relevant (ancestor of locusOfFocus)"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
@@ -2745,10 +2747,10 @@ class Utilities(script_utilities.Utilities):
             return False
 
         old_focus = old_focus or focus_manager.get_manager().get_locus_of_focus()
-        if AXObject.find_ancestor(old_focus, AXUtilities.is_grid) is None:
+        if AXUtilities.find_ancestor(old_focus, AXUtilities.is_grid) is None:
             return False
 
-        return AXObject.find_ancestor(event.source, AXUtilities.is_grid) is None
+        return AXUtilities.find_ancestor(event.source, AXUtilities.is_grid) is None
 
     def caret_moved_to_same_page_fragment(self, event, old_focus=None):
         """Returns true if the caret moved to a same-page fragment."""
@@ -2772,7 +2774,7 @@ class Utilities(script_utilities.Utilities):
         if self.is_link(old_focus):
             link = old_focus
         else:
-            link = AXObject.find_ancestor(old_focus, self.is_link)
+            link = AXUtilities.find_ancestor(old_focus, self.is_link)
 
         return link and AXHypertext.get_link_uri(link) == AXDocument.get_uri(document)
 
@@ -2786,7 +2788,7 @@ class Utilities(script_utilities.Utilities):
         def is_same_fragment(x):
             return AXObject.get_attribute(x, "id") == fragment
 
-        return AXObject.find_ancestor(obj, is_same_fragment) is not None
+        return AXUtilities.find_ancestor(obj, is_same_fragment) is not None
 
     def is_content_editable_with_embedded_objects(self, obj: Atspi.Accessible) -> bool:
         """Returns true if obj is content editable with embedded objects."""
@@ -2812,7 +2814,7 @@ class Utilities(script_utilities.Utilities):
         if AXUtilities.is_text_input(obj):
             rv = False
         elif AXUtilities.is_multi_line_entry(obj):
-            rv = AXObject.find_descendant(obj, has_text_block_role) is not None
+            rv = AXUtilities.find_descendant(obj, has_text_block_role) is not None
         elif AXUtilities.is_editable(obj):
             rv = has_text_block_role(obj) or self.is_link(obj)
         elif not self.is_document(obj):
@@ -2899,7 +2901,7 @@ class Utilities(script_utilities.Utilities):
             tokens = ["WEB: Fake placeholder for entry cannot have caret context", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = False
-        elif AXObject.find_ancestor(obj, AXUtilities.children_are_presentational):
+        elif AXUtilities.find_ancestor(obj, AXUtilities.children_are_presentational):
             tokens = ["WEB: Presentational child cannot have caret context", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = False
@@ -3097,10 +3099,10 @@ class Utilities(script_utilities.Utilities):
         if AXUtilities.is_list_box(event.source) or AXUtilities.is_tree(event.source):
             container = event.source
         else:
-            container = AXObject.find_ancestor(
+            container = AXUtilities.find_ancestor(
                 event.source,
                 AXUtilities.is_list_box,
-            ) or AXObject.find_ancestor(event.source, AXUtilities.is_tree)
+            ) or AXUtilities.find_ancestor(event.source, AXUtilities.is_tree)
         if container is None:
             msg = "WEB: Could not find listbox or tree to recover from removed child."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -3134,7 +3136,7 @@ class Utilities(script_utilities.Utilities):
         if event.any_data == focus:
             msg = "WEB: Removed child is locus of focus."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-        elif AXObject.find_ancestor(focus, lambda x: x == event.any_data):
+        elif AXUtilities.find_ancestor(focus, lambda x: x == event.any_data):
             msg = "WEB: Removed child is ancestor of locus of focus."
             debug.print_message(debug.LEVEL_INFO, msg, True)
         else:

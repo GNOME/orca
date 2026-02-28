@@ -197,7 +197,9 @@ class Script(default.Script):
             msg = "SOFFICE: Neither source nor child have focused state. Clearing cache on table."
             AXObject.clear_cache(event.source, False, msg)
 
-        if event.source != focus and not AXObject.find_ancestor(focus, lambda x: x == event.source):
+        if event.source != focus and not AXUtilities.find_ancestor(
+            focus, lambda x: x == event.source
+        ):
             msg = "SOFFICE: Working around LO bug 161444."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             # If we immediately set focus to the table, the lack of common ancestor will result in
@@ -288,7 +290,7 @@ class Script(default.Script):
             return True
 
         if AXUtilities.is_paragraph(focus) or AXUtilities.is_table_cell(focus):
-            if AXObject.find_ancestor(focus, lambda x: x == event.source):
+            if AXUtilities.find_ancestor(focus, lambda x: x == event.source):
                 msg = "SOFFICE: Event believed to be post-editing focus claim based on role."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
@@ -318,7 +320,7 @@ class Script(default.Script):
         # in the spell-check dialog for ancestors of the actual focus -- for which we also
         # get events.
         focus = manager.get_locus_of_focus()
-        if AXObject.is_ancestor(focus, event.source):
+        if AXUtilities.is_ancestor(focus, event.source):
             msg = "SOFFICE: Event ignored: Source is ancestor of current focus."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -332,7 +334,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if AXUtilities.is_text(event.source) or AXUtilities.is_list(event.source):
-            combobox = AXObject.find_ancestor(event.source, AXUtilities.is_combo_box)
+            combobox = AXUtilities.find_ancestor(event.source, AXUtilities.is_combo_box)
             if combobox:
                 focus_manager.get_manager().set_locus_of_focus(event, combobox, True)
                 return True

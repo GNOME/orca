@@ -105,7 +105,7 @@ class Utilities(web.Utilities):
         if self.in_document_content(obj):
             return False
 
-        result = AXObject.find_ancestor(obj, self._is_find_container)
+        result = AXUtilities.find_ancestor(obj, self._is_find_container)
         if result:
             tokens = ["CHROMIUM:", obj, "believed to be find-in-page widget"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)

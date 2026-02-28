@@ -77,7 +77,7 @@ class Utilities(web.Utilities):
             return False
         if not AXUtilities.is_table_cell(focus):
             return False
-        return bool(AXObject.find_ancestor(focus, AXUtilities.is_tree_or_tree_table))
+        return bool(AXUtilities.find_ancestor(focus, AXUtilities.is_tree_or_tree_table))
 
     def is_document_preview(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is or descends from the preview document."""
@@ -88,8 +88,8 @@ class Utilities(web.Utilities):
         if AXUtilities.is_document(obj):
             document = obj
         else:
-            document = AXObject.find_ancestor(obj, AXUtilities.is_document)
+            document = AXUtilities.find_ancestor(obj, AXUtilities.is_document)
         if not document:
             return False
 
-        return bool(AXObject.find_ancestor(document, AXUtilities.is_page_tab))
+        return bool(AXUtilities.find_ancestor(document, AXUtilities.is_page_tab))

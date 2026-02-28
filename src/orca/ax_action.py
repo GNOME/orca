@@ -1,4 +1,4 @@
-# Utilities for performing accessible actions.
+# Orca
 #
 # Copyright 2023-2026 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Utilities for performing accessible actions."""
+"""Wrapper for the Atspi.Action interface."""
 
 import re
 
@@ -31,7 +31,7 @@ from .ax_object import AXObject
 
 
 class AXAction:
-    """Utilities for performing accessible actions."""
+    """Wrapper for the Atspi.Action interface."""
 
     @staticmethod
     def get_n_actions(obj: Atspi.Accessible) -> int:

@@ -1,4 +1,4 @@
-# Utilities for obtaining information about accessible applications.
+# Orca
 #
 # Copyright 2023-2024 Igalia, S.L.
 # Copyright 2024 GNOME Foundation Inc.
@@ -19,7 +19,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Utilities for obtaining information about accessible applications."""
+"""Utilities for accessible applications."""
 
 import subprocess
 
@@ -33,7 +33,7 @@ from .ax_object import AXObject
 
 
 class AXUtilitiesApplication:
-    """Utilities for obtaining information about accessible applications."""
+    """Utilities for accessible applications."""
 
     @staticmethod
     def application_as_string(obj: Atspi.Accessible) -> str:

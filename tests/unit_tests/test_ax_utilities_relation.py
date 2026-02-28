@@ -438,7 +438,7 @@ class TestAXUtilitiesRelation:
 
         if case["exclude_ancestors"]:
             test_context.patch(
-                "orca.ax_utilities_relation.AXObject.is_ancestor",
+                "orca.ax_utilities_relation.AXUtilitiesObject.is_ancestor",
                 side_effect=lambda child, acc: acc == mock_ancestor,
             )
 

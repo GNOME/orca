@@ -66,6 +66,7 @@ class TestAXUtilitiesEvent:
             "orca.AXText",
             "orca.AXUtilities",
             "orca.input_event",
+            "orca.ax_utilities_object",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -176,6 +177,7 @@ class TestAXUtilitiesEvent:
 
         from orca.ax_object import AXObject
         from orca.ax_text import AXText
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_state import AXUtilitiesState
 
         test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.LABEL)
@@ -186,7 +188,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXObject, "get_child_count", return_value=0)
         test_context.patch_object(AXObject, "get_parent", return_value=None)
         test_context.patch_object(
-            AXObject,
+            AXUtilitiesObject,
             "is_ancestor",
             side_effect=lambda focus, obj: focus == obj,
         )
@@ -939,6 +941,7 @@ class TestAXUtilitiesEvent:
         from orca import input_event_manager
         from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
 
@@ -974,7 +977,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_spin_button", return_value=True)
-        test_context.patch_object(AXObject, "find_ancestor", return_value=None)
+        test_context.patch_object(AXUtilitiesObject, "find_ancestor", return_value=None)
 
         result = AXUtilitiesEvent._get_text_deletion_event_reason(mock_event)
         assert result == TextEventReason.SPIN_BUTTON_VALUE_CHANGE
@@ -1368,8 +1371,8 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager
-        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
 
@@ -1403,7 +1406,7 @@ class TestAXUtilitiesEvent:
         )
 
         test_context.patch_object(
-            AXObject,
+            AXUtilitiesObject,
             "find_ancestor",
             side_effect=lambda obj, predicate: mock_table if obj == mock_focus else None,
         )
@@ -1416,8 +1419,8 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager, input_event_manager
-        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
 
@@ -1446,7 +1449,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=True)
 
         test_context.patch_object(
-            AXObject,
+            AXUtilitiesObject,
             "is_ancestor",
             side_effect=lambda obj1, obj2: obj1 == mock_obj and obj2 == mock_focus,
         )
@@ -1459,8 +1462,8 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager
-        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_state import AXUtilitiesState
 
         mock_event = test_context.Mock(spec=Atspi.Event)
@@ -1478,7 +1481,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_showing", return_value=True)
 
         test_context.patch_object(
-            AXObject,
+            AXUtilitiesObject,
             "is_ancestor",
             side_effect=lambda obj1, obj2: obj1 == mock_focus and obj2 == mock_obj,
         )
@@ -1587,8 +1590,8 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager
-        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
 
@@ -1607,7 +1610,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
         test_context.patch_object(
-            AXObject,
+            AXUtilitiesObject,
             "is_ancestor",
             side_effect=lambda obj1, obj2: obj1 == mock_obj and obj2 == mock_focus,
         )
@@ -1834,9 +1837,11 @@ class TestAXUtilitiesEvent:
         )
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
         if case["test_scenario"] == "ui_update":
-            from orca.ax_object import AXObject
+            from orca.ax_utilities_object import AXUtilitiesObject
 
-            test_context.patch_object(AXObject, "find_ancestor", return_value=test_context.Mock())
+            test_context.patch_object(
+                AXUtilitiesObject, "find_ancestor", return_value=test_context.Mock()
+            )
 
         result = AXUtilitiesEvent._get_caret_moved_event_reason(mock_event)
         assert result == getattr(TextEventReason, case["expected_result"])
@@ -2288,6 +2293,7 @@ class TestAXUtilitiesEvent:
         from orca import input_event_manager
         from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
 
@@ -2323,7 +2329,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_spin_button", return_value=False)
-        test_context.patch_object(AXObject, "find_ancestor", return_value=None)
+        test_context.patch_object(AXUtilitiesObject, "find_ancestor", return_value=None)
 
         result = AXUtilitiesEvent._get_text_deletion_event_reason(mock_event)
         assert result == TextEventReason.AUTO_DELETION
@@ -3012,8 +3018,8 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager, input_event_manager
-        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
 
@@ -3045,7 +3051,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_spin_button", return_value=False)
-        test_context.patch_object(AXObject, "find_ancestor", return_value=None)
+        test_context.patch_object(AXUtilitiesObject, "find_ancestor", return_value=None)
 
         mock_input_manager.last_event_was_backspace.return_value = True
         mock_input_manager.last_event_was_delete.return_value = False
@@ -3129,8 +3135,8 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager
-        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
 
@@ -3158,7 +3164,7 @@ class TestAXUtilitiesEvent:
             mock_focus_manager.get_locus_of_focus.return_value = mock_focus
             test_context.patch_object(focus_manager, "get_manager", return_value=mock_focus_manager)
             test_context.patch_object(AXUtilitiesRole, "is_table_cell", return_value=True)
-            test_context.patch_object(AXObject, "find_ancestor", return_value=mock_table)
+            test_context.patch_object(AXUtilitiesObject, "find_ancestor", return_value=mock_table)
 
         result = AXUtilitiesEvent.is_presentable_active_descendant_change(mock_event)
         assert result is case["expected_result"]
@@ -3179,8 +3185,8 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager, input_event_manager
-        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
 
@@ -3195,7 +3201,7 @@ class TestAXUtilitiesEvent:
         AXUtilitiesEvent.LAST_KNOWN_CHECKED.clear()
 
         if case["test_scenario"] == "ancestor_not_list_tree_item":
-            test_context.patch_object(AXObject, "is_ancestor", return_value=True)
+            test_context.patch_object(AXUtilitiesObject, "is_ancestor", return_value=True)
             test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=False)
             test_context.patch_object(AXUtilitiesRole, "is_tree_item", return_value=False)
         elif case["test_scenario"] == "radio_button_no_space":
@@ -3231,8 +3237,8 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager
-        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_state import AXUtilitiesState
 
         mock_event = test_context.Mock(spec=Atspi.Event)
@@ -3253,7 +3259,7 @@ class TestAXUtilitiesEvent:
             mock_focus_manager.get_locus_of_focus.return_value = mock_focus
             test_context.patch_object(focus_manager, "get_manager", return_value=mock_focus_manager)
             test_context.patch_object(
-                AXObject,
+                AXUtilitiesObject,
                 "is_ancestor",
                 side_effect=lambda focus, source: case["is_ancestor"],
             )
@@ -3317,8 +3323,8 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager
-        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
 
@@ -3334,7 +3340,7 @@ class TestAXUtilitiesEvent:
         mock_focus_manager.get_locus_of_focus.return_value = mock_focus
         test_context.patch_object(focus_manager, "get_manager", return_value=mock_focus_manager)
         test_context.patch_object(
-            AXObject,
+            AXUtilitiesObject,
             "is_ancestor",
             side_effect=lambda focus, source: case["is_ancestor"],
         )
@@ -3498,8 +3504,8 @@ class TestAXUtilitiesEvent:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager
-        from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
 
@@ -3521,7 +3527,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(focus_manager, "get_manager", return_value=mock_focus_manager)
 
         test_context.patch_object(AXUtilitiesState, "is_focused", return_value=False)
-        test_context.patch_object(AXObject, "is_ancestor", return_value=True)
+        test_context.patch_object(AXUtilitiesObject, "is_ancestor", return_value=True)
 
         result = AXUtilitiesEvent._is_presentable_text_event(mock_event)
         assert result is True
@@ -3642,6 +3648,7 @@ class TestAXUtilitiesEvent:
         from orca import focus_manager
         from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
 
@@ -3662,7 +3669,9 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesRole, "is_frame", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=True)
         test_context.patch_object(AXObject, "supports_collection", return_value=False)
-        test_context.patch_object(AXObject, "find_descendant", return_value=mock_progress_bar)
+        test_context.patch_object(
+            AXUtilitiesObject, "find_descendant", return_value=mock_progress_bar
+        )
 
         result = AXUtilitiesEvent.is_presentable_name_change(mock_event)
         assert result is False
@@ -3675,6 +3684,7 @@ class TestAXUtilitiesEvent:
         from orca import focus_manager
         from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
 
@@ -3694,7 +3704,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesRole, "is_frame", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=True)
         test_context.patch_object(AXObject, "supports_collection", return_value=False)
-        test_context.patch_object(AXObject, "find_descendant", return_value=None)
+        test_context.patch_object(AXUtilitiesObject, "find_descendant", return_value=None)
 
         result = AXUtilitiesEvent.is_presentable_name_change(mock_event)
         assert result is True
@@ -3707,6 +3717,7 @@ class TestAXUtilitiesEvent:
         from orca import focus_manager
         from orca.ax_object import AXObject
         from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_state import AXUtilitiesState
 
@@ -3727,7 +3738,9 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesRole, "is_frame", return_value=False)
         test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=True)
         test_context.patch_object(AXObject, "supports_collection", return_value=False)
-        test_context.patch_object(AXObject, "find_descendant", return_value=mock_progress_bar)
+        test_context.patch_object(
+            AXUtilitiesObject, "find_descendant", return_value=mock_progress_bar
+        )
 
         result1 = AXUtilitiesEvent.is_presentable_name_change(mock_event)
         assert result1 is False

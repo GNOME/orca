@@ -50,7 +50,11 @@ class TestAXUtilitiesRole:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Set up mocks for ax_utilities_role dependencies."""
 
-        additional_modules = ["orca.object_properties", "orca.ax_utilities_state"]
+        additional_modules = [
+            "orca.ax_utilities_object",
+            "orca.ax_utilities_state",
+            "orca.object_properties",
+        ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         debug_mock = essential_modules["orca.debug"]
@@ -1639,8 +1643,10 @@ class TestAXUtilitiesRole:
         """Test AXUtilitiesRole.is_grid_cell."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
-        mock_ax_object_class.find_ancestor = test_context.Mock(return_value=None)
+        mock_ax_utilities_object_class = essential_modules[
+            "orca.ax_utilities_object"
+        ].AXUtilitiesObject
+        mock_ax_utilities_object_class.find_ancestor = test_context.Mock(return_value=None)
         from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1652,10 +1658,12 @@ class TestAXUtilitiesRole:
         assert AXUtilitiesRole.is_grid_cell(mock_obj)
 
         test_context.patch_object(AXUtilitiesRole, "_get_xml_roles", return_value=["cell"])
-        mock_ax_object_class.find_ancestor = test_context.Mock(return_value=test_context.Mock())
+        mock_ax_utilities_object_class.find_ancestor = test_context.Mock(
+            return_value=test_context.Mock()
+        )
         assert AXUtilitiesRole.is_grid_cell(mock_obj)
 
-        mock_ax_object_class.find_ancestor = test_context.Mock(return_value=None)
+        mock_ax_utilities_object_class.find_ancestor = test_context.Mock(return_value=None)
         assert not AXUtilitiesRole.is_grid_cell(mock_obj)
 
     def test_is_editable_combo_box(self, test_context: OrcaTestContext) -> None:
@@ -1664,8 +1672,11 @@ class TestAXUtilitiesRole:
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
         mock_ax_object_class.get_role = test_context.Mock(return_value=Atspi.Role.LABEL)
-        mock_ax_object_class.find_descendant = test_context.Mock(return_value=None)
         mock_ax_object_class.supports_collection = test_context.Mock(return_value=False)
+        mock_ax_utilities_object_class = essential_modules[
+            "orca.ax_utilities_object"
+        ].AXUtilitiesObject
+        mock_ax_utilities_object_class.find_descendant = test_context.Mock(return_value=None)
         mock_utilities_state_class = essential_modules["orca.ax_utilities_state"].AXUtilitiesState
         mock_utilities_state_class.is_editable = test_context.Mock(return_value=False)
         from orca.ax_utilities_role import AXUtilitiesRole
@@ -1679,18 +1690,22 @@ class TestAXUtilitiesRole:
         assert AXUtilitiesRole.is_editable_combo_box(mock_obj)
 
         mock_utilities_state_class.is_editable = test_context.Mock(return_value=False)
-        mock_ax_object_class.find_descendant = test_context.Mock(return_value=test_context.Mock())
+        mock_ax_utilities_object_class.find_descendant = test_context.Mock(
+            return_value=test_context.Mock(),
+        )
         assert AXUtilitiesRole.is_editable_combo_box(mock_obj)
 
-        mock_ax_object_class.find_descendant = test_context.Mock(return_value=None)
+        mock_ax_utilities_object_class.find_descendant = test_context.Mock(return_value=None)
         assert not AXUtilitiesRole.is_editable_combo_box(mock_obj)
 
     def test_is_feed_article(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesRole.is_feed_article."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
-        mock_ax_object_class.find_ancestor = test_context.Mock(return_value=None)
+        mock_ax_utilities_object_class = essential_modules[
+            "orca.ax_utilities_object"
+        ].AXUtilitiesObject
+        mock_ax_utilities_object_class.find_ancestor = test_context.Mock(return_value=None)
         from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1698,10 +1713,12 @@ class TestAXUtilitiesRole:
         assert not AXUtilitiesRole.is_feed_article(mock_obj)
 
         test_context.patch_object(AXUtilitiesRole, "is_article", return_value=True)
-        mock_ax_object_class.find_ancestor = test_context.Mock(return_value=None)
+        mock_ax_utilities_object_class.find_ancestor = test_context.Mock(return_value=None)
         assert not AXUtilitiesRole.is_feed_article(mock_obj)
 
-        mock_ax_object_class.find_ancestor = test_context.Mock(return_value=test_context.Mock())
+        mock_ax_utilities_object_class.find_ancestor = test_context.Mock(
+            return_value=test_context.Mock()
+        )
         assert AXUtilitiesRole.is_feed_article(mock_obj)
 
     @pytest.mark.parametrize(
@@ -1747,8 +1764,10 @@ class TestAXUtilitiesRole:
         """Test is_list_box_item for list item and list box ancestor."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
-        mock_ax_object_class.find_ancestor = test_context.Mock(return_value=None)
+        mock_ax_utilities_object_class = essential_modules[
+            "orca.ax_utilities_object"
+        ].AXUtilitiesObject
+        mock_ax_utilities_object_class.find_ancestor = test_context.Mock(return_value=None)
         from orca.ax_utilities_role import AXUtilitiesRole
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
@@ -1756,10 +1775,12 @@ class TestAXUtilitiesRole:
         assert not AXUtilitiesRole.is_list_box_item(mock_obj)
 
         test_context.patch_object(AXUtilitiesRole, "is_list_item", return_value=True)
-        mock_ax_object_class.find_ancestor = test_context.Mock(return_value=None)
+        mock_ax_utilities_object_class.find_ancestor = test_context.Mock(return_value=None)
         assert not AXUtilitiesRole.is_list_box_item(mock_obj)
 
-        mock_ax_object_class.find_ancestor = test_context.Mock(return_value=test_context.Mock())
+        mock_ax_utilities_object_class.find_ancestor = test_context.Mock(
+            return_value=test_context.Mock()
+        )
         assert AXUtilitiesRole.is_list_box_item(mock_obj)
 
     def test_is_math_fraction_without_bar(self, test_context: OrcaTestContext) -> None:

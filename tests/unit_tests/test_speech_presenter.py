@@ -94,7 +94,6 @@ class TestSpeechPresenter:
 
         ax_object_mock = essential_modules["orca.ax_object"]
         ax_object_mock.AXObject = test_context.Mock()
-        ax_object_mock.AXObject.find_ancestor_inclusive = test_context.Mock(return_value=None)
 
         ax_text_mock = essential_modules["orca.ax_text"]
         ax_text_mock.AXText = test_context.Mock()
@@ -102,6 +101,7 @@ class TestSpeechPresenter:
 
         ax_utilities_mock = essential_modules["orca.ax_utilities"]
         ax_utilities_mock.AXUtilities = test_context.Mock()
+        ax_utilities_mock.AXUtilities.find_ancestor_inclusive = test_context.Mock(return_value=None)
         ax_utilities_mock.AXUtilities.string_has_spelling_error = test_context.Mock(
             return_value=False,
         )
@@ -693,7 +693,9 @@ class TestSpeechPresenter:
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         from orca.speech_presenter import SpeechPresenter
 
-        essential_modules["orca.ax_object"].AXObject.find_ancestor_inclusive.return_value = None
+        essential_modules[
+            "orca.ax_utilities"
+        ].AXUtilities.find_ancestor_inclusive.return_value = None
         mock_obj = test_context.Mock()
         result = SpeechPresenter._should_verbalize_punctuation(mock_obj)
         assert result is False
@@ -706,7 +708,7 @@ class TestSpeechPresenter:
 
         mock_code_obj = test_context.Mock()
         (
-            essential_modules["orca.ax_object"].AXObject.find_ancestor_inclusive.return_value
+            essential_modules["orca.ax_utilities"].AXUtilities.find_ancestor_inclusive.return_value
         ) = mock_code_obj
         essential_modules["orca.ax_document"].AXDocument.is_plain_text.return_value = False
         mock_obj = test_context.Mock()
@@ -721,7 +723,7 @@ class TestSpeechPresenter:
 
         mock_code_obj = test_context.Mock()
         (
-            essential_modules["orca.ax_object"].AXObject.find_ancestor_inclusive.return_value
+            essential_modules["orca.ax_utilities"].AXUtilities.find_ancestor_inclusive.return_value
         ) = mock_code_obj
         essential_modules["orca.ax_document"].AXDocument.is_plain_text.return_value = False
         mock_obj = test_context.Mock()

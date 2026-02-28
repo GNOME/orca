@@ -733,7 +733,7 @@ class DocumentPresenter:
             (AXUtilities.is_tool_bar, "it's a toolbar descendant"),
         ]
         for predicate, reason in ancestor_checks:
-            if AXObject.find_ancestor(obj, predicate) is not None:
+            if AXUtilities.find_ancestor(obj, predicate) is not None:
                 return True, reason
 
         if script.utilities.is_content_editable_with_embedded_objects(obj):
@@ -1298,7 +1298,7 @@ class DocumentPresenter:
     ) -> bool:
         """Returns True if we should force browse mode for web-app descendant obj."""
 
-        if not AXObject.find_ancestor(obj, AXUtilities.is_embedded):
+        if not AXUtilities.find_ancestor(obj, AXUtilities.is_embedded):
             return False
 
         if AXUtilities.is_tool_tip(obj):
@@ -1335,7 +1335,7 @@ class DocumentPresenter:
         _caret_navigator = caret_navigator.get_navigator()
         caret_prevents = (
             _caret_navigator.last_command_prevents_focus_mode()
-            and AXObject.find_ancestor_inclusive(prev_obj, AXUtilities.is_tool_tip) is None
+            and AXUtilities.find_ancestor_inclusive(prev_obj, AXUtilities.is_tool_tip) is None
         )
         if _structural_navigator.last_command_prevents_focus_mode() or caret_prevents:
             struct_prevents = _structural_navigator.last_command_prevents_focus_mode()
@@ -1388,8 +1388,8 @@ class DocumentPresenter:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
-        was_in_app = AXObject.find_ancestor(prev_obj, AXUtilities.is_embedded)
-        is_in_app = AXObject.find_ancestor(obj, AXUtilities.is_embedded)
+        was_in_app = AXUtilities.find_ancestor(prev_obj, AXUtilities.is_embedded)
+        is_in_app = AXUtilities.find_ancestor(obj, AXUtilities.is_embedded)
         if is_in_app:
             if not was_in_app:
                 msg = "DOCUMENT PRESENTER: Using focus mode: just entered a web application"

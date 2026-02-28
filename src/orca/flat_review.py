@@ -641,7 +641,7 @@ class Context:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._rect = AXComponent.get_rect(self._top_level)
 
-        container = AXObject.find_ancestor_inclusive(self._focus_obj, AXUtilities.is_menu)
+        container = AXUtilities.find_ancestor_inclusive(self._focus_obj, AXUtilities.is_menu)
         self._container = container or self._top_level
 
         self._zones = self._get_showing_zones(self._container)
@@ -706,7 +706,7 @@ class Context:
         def _is_container(x: Atspi.Accessible) -> bool:
             return AXUtilities.is_scroll_pane(x) or AXUtilities.is_document(x)
 
-        container = AXObject.find_ancestor(obj, _is_container)
+        container = AXUtilities.find_ancestor(obj, _is_container)
         if container:
             rect = AXComponent.get_rect(container)
             intersection = AXUtilities.get_rect_intersection(rect, cliprect)
@@ -848,7 +848,7 @@ class Context:
 
             zones = self._get_zones_from_object(o, boundingbox)
             if not zones:
-                descendant = self._script.utilities.active_descendant(o)
+                descendant = AXUtilities.active_descendant(o)
                 if descendant:
                     zones = self._get_zones_from_object(descendant, boundingbox)
             all_zones.extend(zones)

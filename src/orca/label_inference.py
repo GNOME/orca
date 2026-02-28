@@ -492,17 +492,17 @@ class LabelInference:
     ) -> tuple[str | None, list[Atspi.Accessible]]:
         """Attempt to infer the functional/displayed label of obj from neighboring cells."""
 
-        cell = AXObject.find_ancestor(obj, AXUtilities.is_table_cell)
+        cell = AXUtilities.find_ancestor(obj, AXUtilities.is_table_cell)
         parent = AXObject.get_parent(obj)
         if not self._is_simple_object(cell) or cell not in [parent, AXObject.get_parent(parent)]:
             return None, []
 
-        grid = AXObject.find_ancestor(cell, AXUtilities.is_table)
+        grid = AXUtilities.find_ancestor(cell, AXUtilities.is_table)
         if not grid:
             return None, []
 
         cell_left = cell_right = cell_above = cell_below = None
-        gridrow = AXObject.find_ancestor(cell, AXUtilities.is_table_row)
+        gridrow = AXUtilities.find_ancestor(cell, AXUtilities.is_table_row)
         rowindex, colindex = AXTable.get_cell_coordinates(cell, prefer_attribute=False)
         if colindex > -1:
             cell_left = AXTable.get_cell_at(grid, rowindex, colindex - 1)

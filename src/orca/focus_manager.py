@@ -126,7 +126,7 @@ class FocusManager:
     def focus_is_in_active_window(self) -> bool:
         """Returns True if the locus of focus is inside the current window."""
 
-        return self._focus is not None and AXObject.is_ancestor(self._focus, self._window)
+        return self._focus is not None and AXUtilities.is_ancestor(self._focus, self._window)
 
     def emit_region_changed(
         self,
@@ -366,7 +366,7 @@ class FocusManager:
                 tokens = ["FOCUS MANAGER: Saving focus to restore later", self._focus]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 self._object_to_restore = self._focus
-            elif AXObject.is_ancestor(self._object_to_restore, self._window):
+            elif AXUtilities.is_ancestor(self._object_to_restore, self._window):
                 self._focus = AXObject.get_parent(self._object_to_restore)
                 tokens = [
                     "FOCUS MANAGER: Restoring focus to",

@@ -83,7 +83,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_new_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if args.get("index", 0) > 0 and AXObject.find_ancestor(obj, AXUtilities.is_list) is None:
+        if args.get("index", 0) > 0 and AXUtilities.find_ancestor(obj, AXUtilities.is_list) is None:
             return []
 
         return super()._generate_new_ancestors(obj, **args)
@@ -131,7 +131,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         ]
         args["stop_after_roles"] = [Atspi.Role.TOOL_BAR]
 
-        if AXObject.find_ancestor(obj, AXUtilities.is_editable_combo_box):
+        if AXUtilities.find_ancestor(obj, AXUtilities.is_editable_combo_box):
             args["skipRoles"].append(Atspi.Role.COMBO_BOX)
 
         result.extend(super()._generate_ancestors(obj, **args))
@@ -373,7 +373,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if AXUtilities.is_figure(obj, args.get("role")) and args.get("ancestorOf"):
             caption = args.get("ancestorOf")
             if not AXUtilities.is_caption(caption):
-                caption = AXObject.find_ancestor(caption, AXUtilities.is_caption)
+                caption = AXUtilities.find_ancestor(caption, AXUtilities.is_caption)
             if caption and obj in AXUtilities.get_is_label_for(caption):
                 return []
 
@@ -487,7 +487,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not self._script.utilities.in_document_content(obj):
             return super()._generate_real_active_descendant_displayed_text(obj, **args)
 
-        rad = self._script.utilities.active_descendant(obj)
+        rad = AXUtilities.active_descendant(obj)
         return self._generate_text_content(rad, **args)
 
     @log_generator_output

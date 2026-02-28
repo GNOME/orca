@@ -1,4 +1,4 @@
-# Utilities for performing tasks related to accessibility inspection.
+# Orca
 #
 # Copyright 2023-2025 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
@@ -21,7 +21,7 @@
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-lines
 
-"""Utilities for performing tasks related to accessibility inspection."""
+"""Utilities for accessibility inspection."""
 
 from __future__ import annotations
 
@@ -48,6 +48,7 @@ from .ax_utilities_application import AXUtilitiesApplication
 from .ax_utilities_collection import AXUtilitiesCollection
 from .ax_utilities_component import AXUtilitiesComponent
 from .ax_utilities_event import AXUtilitiesEvent
+from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_relation import AXUtilitiesRelation
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
@@ -59,7 +60,7 @@ if TYPE_CHECKING:
 
 
 class AXUtilities:
-    """Utilities for performing tasks related to accessibility inspection."""
+    """Utilities for accessibility inspection."""
 
     COMPARE_COLLECTION_PERFORMANCE = False
 
@@ -214,7 +215,7 @@ class AXUtilities:
         app = AXUtilitiesApplication.get_application(obj)
         result = list(AXObject.iter_children(app, AXUtilities.is_unfocused_alert_or_dialog))
 
-        frame = AXObject.find_ancestor(
+        frame = AXUtilitiesObject.find_ancestor(
             obj,
             lambda x: AXUtilitiesRole.is_application(AXObject.get_parent(x)),
         )
@@ -254,7 +255,7 @@ class AXUtilities:
                 return AXUtilitiesState.is_showing(acc) and AXUtilitiesState.is_visible(acc)
             return True
 
-        return AXObject.find_all_descendants(obj, is_match)
+        return AXUtilitiesObject.find_all_descendants(obj, is_match)
 
     @staticmethod
     def get_default_button(obj: Atspi.Accessible) -> Atspi.Accessible | None:
@@ -266,7 +267,7 @@ class AXUtilities:
             if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
                 return result
 
-        return AXObject.find_descendant(obj, AXUtilitiesRole.is_default_button)
+        return AXUtilitiesObject.find_descendant(obj, AXUtilitiesRole.is_default_button)
 
     @staticmethod
     def get_focused_object(obj: Atspi.Accessible) -> Atspi.Accessible | None:
@@ -278,7 +279,7 @@ class AXUtilities:
             if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
                 return result
 
-        return AXObject.find_descendant(obj, AXUtilitiesState.is_focused)
+        return AXUtilitiesObject.find_descendant(obj, AXUtilitiesState.is_focused)
 
     @staticmethod
     def get_info_bar(obj: Atspi.Accessible) -> Atspi.Accessible | None:
@@ -290,7 +291,7 @@ class AXUtilities:
             if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
                 return result
 
-        return AXObject.find_descendant(obj, AXUtilitiesRole.is_info_bar)
+        return AXUtilitiesObject.find_descendant(obj, AXUtilitiesRole.is_info_bar)
 
     @staticmethod
     def get_status_bar(obj: Atspi.Accessible) -> Atspi.Accessible | None:
@@ -302,7 +303,7 @@ class AXUtilities:
             if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
                 return result
 
-        return AXObject.find_descendant(obj, AXUtilitiesRole.is_status_bar)
+        return AXUtilitiesObject.find_descendant(obj, AXUtilitiesRole.is_status_bar)
 
     @staticmethod
     def get_label(obj: Atspi.Accessible) -> Atspi.Accessible | None:
@@ -314,7 +315,7 @@ class AXUtilities:
             if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
                 return result
 
-        return AXObject.find_descendant(obj, AXUtilitiesRole.is_label)
+        return AXUtilitiesObject.find_descendant(obj, AXUtilitiesRole.is_label)
 
     @staticmethod
     def get_list_item(obj: Atspi.Accessible) -> Atspi.Accessible | None:
@@ -326,7 +327,7 @@ class AXUtilities:
             if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
                 return result
 
-        return AXObject.find_descendant(obj, AXUtilitiesRole.is_list_item)
+        return AXUtilitiesObject.find_descendant(obj, AXUtilitiesRole.is_list_item)
 
     @staticmethod
     def get_menu(obj: Atspi.Accessible) -> Atspi.Accessible | None:
@@ -338,7 +339,7 @@ class AXUtilities:
             if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
                 return result
 
-        return AXObject.find_descendant(obj, AXUtilitiesRole.is_menu)
+        return AXUtilitiesObject.find_descendant(obj, AXUtilitiesRole.is_menu)
 
     @staticmethod
     def get_menu_or_list_box(obj: Atspi.Accessible) -> Atspi.Accessible | None:
@@ -352,7 +353,7 @@ class AXUtilities:
             if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
                 return result
 
-        return AXObject.find_descendant(
+        return AXUtilitiesObject.find_descendant(
             obj, lambda x: AXUtilitiesRole.is_menu(x) or AXUtilitiesRole.is_list_box(x)
         )
 
@@ -366,7 +367,7 @@ class AXUtilities:
             if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
                 return result
 
-        return AXObject.find_descendant(obj, AXUtilitiesRole.is_progress_bar)
+        return AXUtilitiesObject.find_descendant(obj, AXUtilitiesRole.is_progress_bar)
 
     @staticmethod
     def get_slider(obj: Atspi.Accessible) -> Atspi.Accessible | None:
@@ -378,7 +379,7 @@ class AXUtilities:
             if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
                 return result
 
-        return AXObject.find_descendant(obj, AXUtilitiesRole.is_slider)
+        return AXUtilitiesObject.find_descendant(obj, AXUtilitiesRole.is_slider)
 
     @staticmethod
     def get_table_cell(obj: Atspi.Accessible) -> Atspi.Accessible | None:
@@ -390,7 +391,7 @@ class AXUtilities:
             if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
                 return result
 
-        return AXObject.find_descendant(obj, AXUtilitiesRole.is_table_cell)
+        return AXUtilitiesObject.find_descendant(obj, AXUtilitiesRole.is_table_cell)
 
     @staticmethod
     def get_table_cell_or_header(obj: Atspi.Accessible) -> Atspi.Accessible | None:
@@ -404,7 +405,7 @@ class AXUtilities:
             if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
                 return result
 
-        return AXObject.find_descendant(obj, AXUtilitiesRole.is_table_cell_or_header)
+        return AXUtilitiesObject.find_descendant(obj, AXUtilitiesRole.is_table_cell_or_header)
 
     @staticmethod
     def get_descendant_supporting_text(obj: Atspi.Accessible) -> Atspi.Accessible | None:
@@ -416,7 +417,7 @@ class AXUtilities:
             if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
                 return result
 
-        return AXObject.find_descendant(obj, AXObject.supports_text)
+        return AXUtilitiesObject.find_descendant(obj, AXObject.supports_text)
 
     @staticmethod
     def get_text_input(obj: Atspi.Accessible) -> Atspi.Accessible | None:
@@ -434,13 +435,13 @@ class AXUtilities:
             if not AXUtilities.COMPARE_COLLECTION_PERFORMANCE:
                 return result
 
-        return AXObject.find_descendant(obj, AXUtilitiesRole.is_text_input)
+        return AXUtilitiesObject.find_descendant(obj, AXUtilitiesRole.is_text_input)
 
     @staticmethod
     def _is_layout_only_layered_pane(obj: Atspi.Accessible) -> tuple[bool, str]:
         """Returns True with reason if this layered pane is layout-only."""
 
-        if AXObject.find_ancestor(obj, AXUtilitiesRole.is_desktop_frame) is not None:
+        if AXUtilitiesObject.find_ancestor(obj, AXUtilitiesRole.is_desktop_frame) is not None:
             return True, "is inside desktop frame"
         return False, ""
 
@@ -448,7 +449,7 @@ class AXUtilities:
     def _is_layout_only_menu_or_list(obj: Atspi.Accessible) -> tuple[bool, str]:
         """Returns True with reason if this menu or list in a combo box is layout-only."""
 
-        if AXObject.find_ancestor(obj, AXUtilitiesRole.is_combo_box) is not None:
+        if AXUtilitiesObject.find_ancestor(obj, AXUtilitiesRole.is_combo_box) is not None:
             return True, "is inside combo box"
         return False, ""
 
@@ -479,7 +480,7 @@ class AXUtilities:
             if not AXUtilitiesRole.is_label(child) and child in labelled_by:
                 return True, "is labelled by non-label only child"
         set_roles = AXUtilitiesRole.get_set_container_roles()
-        ancestor = AXObject.find_ancestor(obj, lambda x: AXObject.get_role(x) in set_roles)
+        ancestor = AXUtilitiesObject.find_ancestor(obj, lambda x: AXObject.get_role(x) in set_roles)
         if ancestor and AXObject.get_name(ancestor) == name:
             return True, "is in set container with same name"
         return False, ""
@@ -733,7 +734,7 @@ class AXUtilities:
         def is_combo_box_or_list_box(x):
             return AXUtilitiesRole.is_combo_box(x) or AXUtilitiesRole.is_list_box(x)
 
-        must_be_showing = not AXObject.find_ancestor(obj, is_combo_box_or_list_box)
+        must_be_showing = not AXUtilitiesObject.find_ancestor(obj, is_combo_box_or_list_box)
         if not must_be_showing:
             return result
 
@@ -918,15 +919,15 @@ class AXUtilities:
             return AXUtilitiesRole.have_same_role(obj, x)
 
         ancestors = []
-        ancestor = AXObject.find_ancestor(obj, pred)
+        ancestor = AXUtilitiesObject.find_ancestor(obj, pred)
         while ancestor:
             ancestors.append(ancestor)
-            ancestor = AXObject.find_ancestor(ancestor, pred)
+            ancestor = AXUtilitiesObject.find_ancestor(ancestor, pred)
 
         return len(ancestors)
 
     @staticmethod
-    def get_next_object(obj: Atspi.Accessible) -> Atspi.Accessible | None:
+    def _get_next_object(obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the next object (depth first, unless there's a flows-to relation)"""
 
         if not AXObject.is_valid(obj):
@@ -956,7 +957,7 @@ class AXUtilities:
         return next_object
 
     @staticmethod
-    def get_previous_object(obj: Atspi.Accessible) -> Atspi.Accessible | None:
+    def _get_previous_object(obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the previous object (depth first, unless there's a flows-from relation)"""
 
         if not AXObject.is_valid(obj):
@@ -1157,6 +1158,64 @@ class AXUtilities:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
+    @staticmethod
+    def active_descendant(obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Legacy table-cell code originally for managed descendants."""
+
+        # TODO - JD: Determine what actually needs this support and why.
+
+        if AXObject.is_dead(obj):
+            return None
+
+        if not AXUtilitiesRole.is_table_cell(obj):
+            return obj
+
+        if AXObject.get_name(obj):
+            return obj
+
+        def pred(x: Atspi.Accessible) -> bool:
+            return bool(AXObject.get_name(x) or AXText.get_all_text(x))
+
+        child = AXUtilitiesObject.find_descendant(obj, pred)
+        if child is not None:
+            return child
+
+        return obj
+
+    @staticmethod
+    def find_previous_object(
+        obj: Atspi.Accessible,
+        restrict_to: Atspi.Accessible | None = None,
+    ) -> Atspi.Accessible | None:
+        """Finds the object before this one, optionally restricted to a subtree."""
+
+        result = AXUtilities._get_previous_object(obj)
+        tokens = ["AXUtilities: Previous object for", obj, "is", result]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        if restrict_to is not None and not AXUtilitiesObject.is_ancestor(result, restrict_to, True):
+            tokens = ["AXUtilities:", result, "is not a descendant of", restrict_to]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return None
+
+        return result
+
+    @staticmethod
+    def find_next_object(
+        obj: Atspi.Accessible,
+        restrict_to: Atspi.Accessible | None = None,
+    ) -> Atspi.Accessible | None:
+        """Finds the object after this one, optionally restricted to a subtree."""
+
+        result = AXUtilities._get_next_object(obj)
+        tokens = ["AXUtilities: Next object for", obj, "is", result]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        if restrict_to is not None and not AXUtilitiesObject.is_ancestor(result, restrict_to, True):
+            tokens = ["AXUtilities:", result, "is not a descendant of", restrict_to]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return None
+
+        return result
+
 
 for method_name, method in inspect.getmembers(AXUtilitiesAction, predicate=inspect.isfunction):
     setattr(AXUtilities, method_name, method)
@@ -1179,6 +1238,9 @@ for method_name, method in inspect.getmembers(AXUtilitiesState, predicate=inspec
 for method_name, method in inspect.getmembers(AXUtilitiesCollection, predicate=inspect.isfunction):
     if method_name.startswith("find"):
         setattr(AXUtilities, method_name, method)
+
+for method_name, method in inspect.getmembers(AXUtilitiesObject, predicate=inspect.isfunction):
+    setattr(AXUtilities, method_name, method)
 
 for method_name, method in inspect.getmembers(AXUtilitiesComponent, predicate=inspect.isfunction):
     setattr(AXUtilities, method_name, method)

@@ -98,7 +98,7 @@ class Script(web.ToolkitBridge):
         """Callback for object:state-changed:selected accessibility events."""
 
         if event.detail1 and not self.utilities.in_document_content(event.source):  # type: ignore
-            if listbox := AXObject.find_ancestor(event.source, AXUtilities.is_list_box):
+            if listbox := AXUtilities.find_ancestor(event.source, AXUtilities.is_list_box):
                 parent = AXObject.get_parent(listbox)
                 if AXUtilities.is_frame(parent) and not AXObject.get_name(parent):
                     msg = "CHROMIUM: Event source believed to be in autocomplete popup"

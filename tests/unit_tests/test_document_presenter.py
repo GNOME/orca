@@ -700,7 +700,9 @@ class TestDocumentPresenter:
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.is_dead.return_value = False
-        ax_object.AXObject.find_ancestor_inclusive.return_value = None
+
+        ax_utilities = mocks["orca.ax_utilities"]
+        ax_utilities.AXUtilities.find_ancestor_inclusive.return_value = None
 
         presenter = module.get_presenter()
         result = presenter.use_focus_mode(MagicMock(), MagicMock())
@@ -768,9 +770,8 @@ class TestDocumentPresenter:
         ax_utilities.AXUtilities.is_radio_button.return_value = False
         ax_utilities.AXUtilities.is_embedded = MagicMock()
 
-        ax_object = mocks["orca.ax_object"]
         # prev_obj not in app, obj in app
-        ax_object.AXObject.find_ancestor.side_effect = [None, MagicMock()]
+        ax_utilities.AXUtilities.find_ancestor.side_effect = [None, MagicMock()]
 
         presenter = module.get_presenter()
         with patch.object(presenter, "is_focus_mode_widget", return_value=False):
@@ -808,8 +809,7 @@ class TestDocumentPresenter:
         ax_utilities.AXUtilities.is_radio_button.return_value = False
         ax_utilities.AXUtilities.is_embedded = MagicMock()
 
-        ax_object = mocks["orca.ax_object"]
-        ax_object.AXObject.find_ancestor.return_value = None
+        ax_utilities.AXUtilities.find_ancestor.return_value = None
 
         presenter = module.get_presenter()
         with patch.object(presenter, "is_focus_mode_widget", return_value=False):
@@ -1810,7 +1810,7 @@ class TestDocumentPresenter:
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.LINK
-        ax_object.AXObject.find_ancestor.return_value = None
+        ax_utilities.AXUtilities.find_ancestor.return_value = None
 
         mock_script = MagicMock()
         mock_script.utilities.is_content_editable_with_embedded_objects.return_value = False
@@ -2000,7 +2000,7 @@ class TestDocumentPresenter:
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.PARAGRAPH
-        ax_object.AXObject.find_ancestor.return_value = MagicMock()
+        ax_utilities.AXUtilities.find_ancestor.return_value = MagicMock()
 
         ax_utilities.AXUtilities.is_layout_table.return_value = False
 
@@ -2035,7 +2035,7 @@ class TestDocumentPresenter:
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.PARAGRAPH
-        ax_object.AXObject.find_ancestor.side_effect = [None, MagicMock()]
+        ax_utilities.AXUtilities.find_ancestor.side_effect = [None, MagicMock()]
 
         ax_utilities.AXUtilities.is_layout_table.return_value = False
 
@@ -2071,7 +2071,7 @@ class TestDocumentPresenter:
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.PARAGRAPH
-        ax_object.AXObject.find_ancestor.side_effect = [None, None, MagicMock()]
+        ax_utilities.AXUtilities.find_ancestor.side_effect = [None, None, MagicMock()]
 
         ax_utilities.AXUtilities.is_layout_table.return_value = False
 
@@ -2107,7 +2107,7 @@ class TestDocumentPresenter:
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.PARAGRAPH
-        ax_object.AXObject.find_ancestor.return_value = None
+        ax_utilities.AXUtilities.find_ancestor.return_value = None
 
         ax_utilities.AXUtilities.is_layout_table.return_value = False
 
@@ -2144,7 +2144,7 @@ class TestDocumentPresenter:
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.PARAGRAPH
-        ax_object.AXObject.find_ancestor.return_value = None
+        ax_utilities.AXUtilities.find_ancestor.return_value = None
 
         ax_utilities.AXUtilities.is_layout_table.return_value = False
 
@@ -2181,7 +2181,7 @@ class TestDocumentPresenter:
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.TABLE_CELL
-        ax_object.AXObject.find_ancestor.return_value = None
+        ax_utilities.AXUtilities.find_ancestor.return_value = None
 
         ax_utilities.AXUtilities.get_table.return_value = MagicMock()
         ax_utilities.AXUtilities.is_layout_table.return_value = False

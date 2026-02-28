@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Utilities for obtaining information about accessible hypertext and hyperlinks."""
+"""Wrapper for the Atspi.Hypertext and Hyperlink interfaces."""
 
 import os
 import re
@@ -34,7 +34,7 @@ from .ax_object import AXObject
 
 
 class AXHypertext:
-    """Utilities for obtaining information about accessible hypertext and hyperlinks."""
+    """Wrapper for the Atspi.Hypertext and Hyperlink interfaces."""
 
     @staticmethod
     def _get_link_count(obj: Atspi.Accessible) -> int:

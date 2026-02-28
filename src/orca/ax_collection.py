@@ -1,4 +1,4 @@
-# Utilities for obtaining objects via the collection interface.
+# Orca
 #
 # Copyright 2023 Igalia, S.L.
 # Author: Joanmarie Diggs <jdiggs@igalia.com>
@@ -20,7 +20,7 @@
 
 # pylint: disable=too-many-positional-arguments
 
-"""Utilities for obtaining objects via the collection interface."""
+"""Wrapper for the Atspi.Collection interface."""
 
 import time
 
@@ -34,7 +34,7 @@ from .ax_object import AXObject
 
 
 class AXCollection:
-    """Utilities for obtaining objects via the collection interface."""
+    """Wrapper for the Atspi.Collection interface."""
 
     # Too many arguments and too many local variables.
     # This function wraps Atspi.MatchRule.new which has all the arguments.

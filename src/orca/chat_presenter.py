@@ -221,7 +221,7 @@ class Chat:
     def _is_scrollable_list(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is a list-like scrollable widget."""
 
-        scroll_pane = AXObject.find_ancestor(obj, AXUtilities.is_scroll_pane)
+        scroll_pane = AXUtilities.find_ancestor(obj, AXUtilities.is_scroll_pane)
         if not scroll_pane:
             return False
 
@@ -240,7 +240,7 @@ class Chat:
         if not self._is_scrollable_list(obj):
             return False
 
-        if AXObject.find_ancestor(obj, AXUtilities.is_frame) is None:
+        if AXUtilities.find_ancestor(obj, AXUtilities.is_frame) is None:
             return False
 
         tokens = ["CHAT:", obj, "believed to be buddy list."]
@@ -253,7 +253,7 @@ class Chat:
         if self.is_buddy_list(obj):
             return True
 
-        buddy_list = AXObject.find_ancestor(obj, self._is_scrollable_list)
+        buddy_list = AXUtilities.find_ancestor(obj, self._is_scrollable_list)
         if buddy_list is None:
             return False
 
@@ -292,7 +292,7 @@ class Chat:
     def is_active_channel(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is in the active/selected channel."""
 
-        if page_tab := AXObject.find_ancestor(obj, AXUtilities.is_page_tab):
+        if page_tab := AXUtilities.find_ancestor(obj, AXUtilities.is_page_tab):
             tab_list = AXObject.get_parent(page_tab)
             selected = AXSelection.get_selected_child(tab_list, 0)
             result = selected == page_tab
@@ -326,7 +326,7 @@ class Chat:
                 return False
             return bool(AXObject.get_name(x))
 
-        ancestor = AXObject.find_ancestor(obj, pred)
+        ancestor = AXUtilities.find_ancestor(obj, pred)
         if ancestor:
             return AXObject.get_name(ancestor)
         return ""
