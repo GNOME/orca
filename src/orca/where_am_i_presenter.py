@@ -552,21 +552,21 @@ class WhereAmIPresenter:
         if spreadsheet is not None and script.utilities.speak_selected_cell_range(spreadsheet):
             return True
 
-        container = script.utilities.get_selection_container(obj)
+        container = AXUtilities.get_selection_container(obj)
         if container is None:
             tokens = ["WHERE AM I PRESENTER: Selection container not found for", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return self.present_selected_text(script, event, obj)
 
-        selected_count = script.utilities.selected_child_count(container)
-        child_count = script.utilities.selectable_child_count(container)
+        selected_count = AXUtilities.selected_child_count(container)
+        child_count = AXUtilities.selectable_child_count(container)
         presentation_manager.get_manager().present_message(
             messages.selected_items_count(selected_count, child_count),
         )
         if not selected_count:
             return True
 
-        selected_items = script.utilities.selected_children(container)
+        selected_items = AXUtilities.selected_children(container)
         item_names = ",".join(map(AXObject.get_name, selected_items))
         presentation_manager.get_manager().speak_message(item_names)
         return True

@@ -142,7 +142,7 @@ class Script(default.Script):
 
         if (
             AXUtilities.is_layered_pane(event.source)
-            and self.utilities.selected_child_count(event.source) > 1
+            and AXUtilities.selected_child_count(event.source) > 1
         ):
             return True
 

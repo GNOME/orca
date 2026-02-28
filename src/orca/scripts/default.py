@@ -1103,7 +1103,7 @@ class Script(script.Script):
             # TODO - JD: We can potentially do some automatic reading here.
             flat_review_presenter.get_presenter().quit()
 
-        selected_children = self.utilities.selected_children(event.source)
+        selected_children = AXUtilities.selected_children(event.source)
         focus = focus_manager.get_manager().get_locus_of_focus()
         if focus in selected_children:
             msg = "DEFAULT: Ignoring event believed to be redundant to focus change"
@@ -1159,7 +1159,7 @@ class Script(script.Script):
             return True
 
         if AXObject.get_child_count(obj) and not AXUtilities.is_combo_box(obj):
-            selected_children = self.utilities.selected_children(obj)
+            selected_children = AXUtilities.selected_children(obj)
             if selected_children:
                 obj = selected_children[0]
 

@@ -48,7 +48,6 @@ from . import (
 )
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
-from .ax_selection import AXSelection
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
@@ -1024,89 +1023,11 @@ class Utilities:
         offset = max(0, AXText.get_character_count(root) - 1)
         return root, offset
 
-    def selected_children(self, obj: Atspi.Accessible) -> list[Atspi.Accessible]:
-        """Returns a list of selected children in obj."""
-
-        # TODO - JD: This was originally in the LO script. See if it is still an issue when
-        # lots of cells are selected.
-        if AXUtilities.is_spreadsheet_table(obj):
-            return []
-
-        return AXSelection.get_selected_children(obj)
-
     def speak_selected_cell_range(self, _obj: Atspi.Accessible) -> bool:
         """Speaks the selected cell range in obj."""
 
         # TODO - JD: This doesn't belong here.
         return False
-
-    def get_selection_container(self, obj: Atspi.Accessible) -> Atspi.Accessible | None:
-        """Returns the selection container for obj."""
-
-        # TODO - JD: Move this into AXUtilities. Or into the where am i presenter.
-        if not obj:
-            return None
-
-        # LO Writer implements the selection interface on paragraphs and possibly
-        # other things.
-        if AXUtilities.is_paragraph(obj) or AXUtilities.is_editable(obj):
-            return None
-
-        if AXObject.supports_selection(obj):
-            return obj
-
-        rolemap = {
-            Atspi.Role.CANVAS: [Atspi.Role.LAYERED_PANE],
-            Atspi.Role.ICON: [Atspi.Role.LAYERED_PANE],
-            Atspi.Role.LIST_ITEM: [Atspi.Role.LIST_BOX],
-            Atspi.Role.TREE_ITEM: [Atspi.Role.TREE, Atspi.Role.TREE_TABLE],
-            Atspi.Role.TABLE_CELL: [Atspi.Role.TABLE, Atspi.Role.TREE_TABLE],
-            Atspi.Role.TABLE_ROW: [Atspi.Role.TABLE, Atspi.Role.TREE_TABLE],
-        }
-
-        matching_roles = rolemap.get(AXObject.get_role(obj))
-
-        def is_match(x):
-            if matching_roles and AXObject.get_role(x) not in matching_roles:
-                return False
-            return AXObject.supports_selection(x)
-
-        return AXUtilities.find_ancestor(obj, is_match)
-
-    def selectable_child_count(self, obj: Atspi.Accessible) -> int:
-        """Returns the number of selectable children in obj."""
-
-        # TODO - JD: Move this into AXUtilities.
-
-        if not AXObject.supports_selection(obj):
-            return 0
-
-        if AXObject.supports_table(obj):
-            rows = AXTable.get_row_count(obj)
-            return max(0, rows)
-
-        rolemap = {
-            Atspi.Role.LIST_BOX: [Atspi.Role.LIST_ITEM],
-            Atspi.Role.TREE: [Atspi.Role.TREE_ITEM],
-        }
-
-        role = AXObject.get_role(obj)
-        if role not in rolemap:
-            return AXObject.get_child_count(obj)
-
-        def is_match(x):
-            return AXObject.get_role(x) in rolemap.get(role)
-
-        return len(self._find_all_descendants(obj, is_match))
-
-    def selected_child_count(self, obj: Atspi.Accessible) -> int:
-        """Returns the number of selected children in obj."""
-
-        # TODO - JD: Move this into AXUtilities.
-
-        if AXObject.supports_table(obj):
-            return AXTable.get_selected_row_count(obj)
-        return AXSelection.get_selected_child_count(obj)
 
     def is_clickable_element(
         self,
@@ -1286,38 +1207,11 @@ class Utilities:
 
         return False
 
-    def all_items_selected(self, obj: Atspi.Accessible) -> bool:
-        """Returns True if all items in obj are selected."""
-
-        # TODO - JD: Move this into AXUtilities.
-        if not AXObject.supports_selection(obj):
-            return False
-
-        if AXUtilities.is_expandable(obj) and not AXUtilities.is_expanded(obj):
-            return False
-
-        if AXUtilities.is_combo_box(obj) or AXUtilities.is_menu(obj):
-            return False
-
-        child_count = AXObject.get_child_count(obj)
-        if child_count == AXSelection.get_selected_child_count(obj):
-            # The selection interface gives us access to what is selected, which might
-            # not actually be a direct child.
-            child = AXSelection.get_selected_child(obj, 0)
-            if AXObject.get_parent(child) != obj:
-                return False
-
-            msg = f"SCRIPT UTILITIES: All {child_count} children believed to be selected"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        return AXUtilities.all_cells_are_selected(obj)
-
     def handle_container_selection_change(self, obj: Atspi.Accessible) -> bool:
         """Handles a change in a container that supports selection."""
 
         all_already_selected = self._script.point_of_reference.get("allItemsSelected")
-        all_currently_selected = self.all_items_selected(obj)
+        all_currently_selected = AXUtilities.all_items_selected(obj)
         if all_already_selected and all_currently_selected:
             return True
 

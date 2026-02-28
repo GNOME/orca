@@ -665,7 +665,7 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         child_count = AXObject.get_child_count(container)
-        selected_count = len(self._script.utilities.selected_children(container))
+        selected_count = len(AXUtilities.selected_children(container))
         result.append(messages.selected_items_count(selected_count, child_count))
         result.extend(self.voice(SYSTEM, obj=obj, **args))
         result.append(
@@ -686,7 +686,7 @@ class SpeechGenerator(generator.Generator):
             if not AXObject.supports_selection(container):
                 return []
 
-        selected_items = self._script.utilities.selected_children(container)
+        selected_items = AXUtilities.selected_children(container)
         return list(map(self._generate_accessible_label_and_name, selected_items))
 
     @log_generator_output
@@ -1958,7 +1958,7 @@ class SpeechGenerator(generator.Generator):
             ):
                 return []
         elif AXUtilities.is_layered_pane(parent):
-            if obj in self._script.utilities.selected_children(parent):
+            if obj in AXUtilities.selected_children(parent):
                 return []
         else:
             return []

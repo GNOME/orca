@@ -64,6 +64,7 @@ class TestAXUtilities:
             "orca.ax_utilities_event",
             "orca.ax_utilities_relation",
             "orca.ax_utilities_role",
+            "orca.ax_utilities_selection",
             "orca.ax_utilities_state",
             "orca.ax_utilities_table",
         ]
@@ -2006,8 +2007,10 @@ class TestAXUtilities:
             "orca.ax_utilities_role"
         ].AXUtilitiesRole.is_combo_box = test_context.Mock(return_value=True)
         essential_modules[
-            "orca.ax_selection"
-        ].AXSelection.get_selected_children = test_context.Mock(return_value=[mock_selected])
+            "orca.ax_utilities_selection"
+        ].AXUtilitiesSelection.get_selected_children = test_context.Mock(
+            return_value=[mock_selected],
+        )
         from orca.ax_utilities import AXUtilities
 
         test_context.patch_object(

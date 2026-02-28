@@ -670,7 +670,7 @@ class Generator:
             return []
 
         if AXObject.supports_selection(obj):
-            items = self._script.utilities.selected_children(obj)
+            items = AXUtilities.selected_children(obj)
         else:
             items = [AXUtilities.get_focused_object(obj)]
         if not (items and items[0]):
@@ -1340,8 +1340,8 @@ class Generator:
         if len(children) == 1:
             return AXText.get_all_text(children[0])
 
-        selected = self._script.utilities.selected_children(obj)
-        selected = selected or self._script.utilities.selected_children(AXObject.get_child(obj, 0))
+        selected = AXUtilities.selected_children(obj)
+        selected = selected or AXUtilities.selected_children(AXObject.get_child(obj, 0))
         if len(selected) == 1:
             return AXObject.get_name(selected[0]) or AXText.get_all_text(selected[0])
 

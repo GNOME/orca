@@ -47,7 +47,6 @@ from orca import (
     speech_presenter,
 )
 from orca.ax_object import AXObject
-from orca.ax_selection import AXSelection
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 
@@ -457,7 +456,7 @@ class SpellCheckPresenter:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        items = AXSelection.get_selected_children(event.source)
+        items = AXUtilities.get_selected_children(event.source)
         selected_item = items[0] if len(items) == 1 else None
 
         if AXUtilities.is_focused(event.source):
@@ -728,7 +727,7 @@ class SpellCheckPresenter:
         if detailed or self.get_spell_suggestion():
             presentation_manager.get_manager().spell_item(string)
 
-        items = AXSelection.get_selected_children(self._widgets.suggestions_list)
+        items = AXUtilities.get_selected_children(self._widgets.suggestions_list)
         if len(items) == 1:
             self._state.last_presented_suggestion = items[0]
 
@@ -749,7 +748,7 @@ class SpellCheckPresenter:
         if self._script is None:
             return False
 
-        items = AXSelection.get_selected_children(self._widgets.suggestions_list)
+        items = AXUtilities.get_selected_children(self._widgets.suggestions_list)
         if len(items) != 1:
             return False
 

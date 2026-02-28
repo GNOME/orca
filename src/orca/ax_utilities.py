@@ -40,7 +40,6 @@ from gi.repository import Atspi
 from . import debug
 from .ax_component import AXComponent
 from .ax_object import AXObject
-from .ax_selection import AXSelection
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities_action import AXUtilitiesAction
@@ -51,6 +50,7 @@ from .ax_utilities_event import AXUtilitiesEvent
 from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_relation import AXUtilitiesRelation
 from .ax_utilities_role import AXUtilitiesRole
+from .ax_utilities_selection import AXUtilitiesSelection
 from .ax_utilities_state import AXUtilitiesState
 from .ax_utilities_table import AXUtilitiesTable
 from .ax_utilities_text import AXUtilitiesText
@@ -762,7 +762,7 @@ class AXUtilities:
             return AXTable.get_row_count(AXUtilitiesTable.get_table(obj))
 
         if AXUtilitiesRole.is_combo_box(obj):
-            selected_children = AXSelection.get_selected_children(obj)
+            selected_children = AXUtilitiesSelection.get_selected_children(obj)
             if not selected_children:
                 return -1
             if len(selected_children) == 1:
@@ -826,7 +826,7 @@ class AXUtilities:
             return AXTable.get_cell_coordinates(obj)[0]
 
         if AXUtilitiesRole.is_combo_box(obj):
-            selected_children = AXSelection.get_selected_children(obj)
+            selected_children = AXUtilitiesSelection.get_selected_children(obj)
             if not selected_children:
                 return -1
             if len(selected_children) == 1:
@@ -1233,6 +1233,9 @@ for method_name, method in inspect.getmembers(AXUtilitiesRole, predicate=inspect
     setattr(AXUtilities, method_name, method)
 
 for method_name, method in inspect.getmembers(AXUtilitiesState, predicate=inspect.isfunction):
+    setattr(AXUtilities, method_name, method)
+
+for method_name, method in inspect.getmembers(AXUtilitiesSelection, predicate=inspect.isfunction):
     setattr(AXUtilities, method_name, method)
 
 for method_name, method in inspect.getmembers(AXUtilitiesCollection, predicate=inspect.isfunction):

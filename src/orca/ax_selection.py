@@ -27,9 +27,6 @@ from gi.repository import Atspi, GLib
 
 from . import debug
 from .ax_object import AXObject
-from .ax_utilities_collection import AXUtilitiesCollection
-from .ax_utilities_object import AXUtilitiesObject
-from .ax_utilities_role import AXUtilitiesRole
 
 
 class AXSelection:
@@ -82,47 +79,3 @@ class AXSelection:
         tokens = ["AXSelection:", child, "is selected child #", index, "of", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return child
-
-    @staticmethod
-    def get_selected_children(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
-        """Returns a list of all the selected children of obj."""
-
-        if obj is None:
-            return []
-
-        count = AXSelection.get_selected_child_count(obj)
-        if not count and AXUtilitiesRole.is_combo_box(obj):
-            if AXObject.supports_collection(obj):
-                container = AXUtilitiesCollection.find_first_with_role(
-                    obj, [Atspi.Role.MENU, Atspi.Role.LIST_BOX]
-                )
-            else:
-                container = AXUtilitiesObject.find_descendant(
-                    obj,
-                    lambda x: AXUtilitiesRole.is_menu(x) or AXUtilitiesRole.is_list_box(x),
-                )
-            return AXSelection.get_selected_children(container)
-
-        children = set()
-        for i in range(count):
-            try:
-                child = Atspi.Selection.get_selected_child(obj, i)
-            except GLib.GError as error:
-                tokens = ["AXSelection: Exception in get_selected_children:", error]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return []
-
-            if child is not None:
-                children.add(child)
-
-        if obj in children:
-            tokens = ["AXSelection:", obj, "claims to be its own selected child"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            children.remove(obj)
-
-        result = list(children)
-        if len(result) != count:
-            tokens = ["AXSelection: Selected child count of", obj, f"is {count}"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        return result

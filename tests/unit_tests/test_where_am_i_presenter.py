@@ -725,10 +725,10 @@ class TestWhereAmIPresenter:
         container = test_context.Mock()
         selected_items = [test_context.Mock(), test_context.Mock()]
         mock_script = test_context.Mock()
-        mock_script.utilities.get_selection_container.return_value = container
-        mock_script.utilities.selected_child_count.return_value = 2
-        mock_script.utilities.selectable_child_count.return_value = 5
-        mock_script.utilities.selected_children.return_value = selected_items
+        deps["orca.ax_utilities"].AXUtilities.get_selection_container.return_value = container
+        deps["orca.ax_utilities"].AXUtilities.selected_child_count.return_value = 2
+        deps["orca.ax_utilities"].AXUtilities.selectable_child_count.return_value = 5
+        deps["orca.ax_utilities"].AXUtilities.selected_children.return_value = selected_items
         pres_manager = deps["orca.presentation_manager"].get_manager()
         pres_manager.present_message.reset_mock()
         pres_manager.speak_message.reset_mock()
@@ -749,7 +749,7 @@ class TestWhereAmIPresenter:
 
         deps["orca.ax_utilities"].AXUtilities.find_ancestor.return_value = None
         mock_script = test_context.Mock()
-        mock_script.utilities.get_selection_container.return_value = None
+        deps["orca.ax_utilities"].AXUtilities.get_selection_container.return_value = None
         presenter = WhereAmIPresenter()
         presenter.present_selected_text = test_context.Mock(return_value=True)
         result = presenter.present_selection(mock_script)
