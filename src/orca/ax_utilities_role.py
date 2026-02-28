@@ -31,6 +31,7 @@ from gi.repository import Atspi
 from . import debug, object_properties
 from .ax_collection import AXCollection
 from .ax_object import AXObject
+from .ax_utilities_action import AXUtilitiesAction
 from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_state import AXUtilitiesState
 
@@ -95,29 +96,6 @@ class AXUtilitiesRole:
         if include_alert_as_dialog:
             roles.append(Atspi.Role.ALERT)
         return roles
-
-    @staticmethod
-    def get_description_list_terms(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
-        """Returns all description list terms in obj, excluding nested description lists."""
-
-        if not AXUtilitiesRole.is_description_list(obj):
-            return []
-
-        if AXObject.supports_collection(obj):
-            rule = AXCollection.create_match_rule(
-                roles=[Atspi.Role.DESCRIPTION_TERM],
-                role_match_type=Atspi.CollectionMatchType.ANY,
-            )
-            matches = AXCollection.get_all_matches(obj, rule)
-            return [
-                m
-                for m in matches
-                if AXUtilitiesObject.find_ancestor(m, AXUtilitiesRole.is_description_list) == obj
-            ]
-
-        return AXUtilitiesObject.find_all_descendants(
-            obj, AXUtilitiesRole.is_description_term, AXUtilitiesRole.is_description_list
-        )
 
     @staticmethod
     def get_document_roles() -> list[Atspi.Role]:
@@ -580,6 +558,17 @@ class AXUtilitiesRole:
         return role == Atspi.Role.ARROW
 
     @staticmethod
+    def is_anchor(obj: Atspi.Accessible) -> bool:
+        """Returns True if obj is an anchor."""
+
+        return (
+            AXUtilitiesRole.is_link(obj)
+            and not AXUtilitiesState.is_focusable(obj)
+            and not AXUtilitiesAction.has_action(obj, "jump")
+            and not AXUtilitiesRole.has_role_from_aria(obj)
+        )
+
+    @staticmethod
     def is_article(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has the article role"""
 
@@ -933,6 +922,22 @@ class AXUtilitiesRole:
         if role is None:
             role = AXObject.get_role(obj)
         return role == Atspi.Role.DOCUMENT_WEB
+
+    @staticmethod
+    def is_document_list(obj: Atspi.Accessible) -> bool:
+        """Returns True if obj is a list inside a document."""
+
+        if not (AXUtilitiesRole.is_list(obj) or AXUtilitiesRole.is_description_list(obj)):
+            return False
+        return AXUtilitiesObject.find_ancestor(obj, AXUtilitiesRole.is_document) is not None
+
+    @staticmethod
+    def is_document_panel(obj: Atspi.Accessible) -> bool:
+        """Returns True if obj is a panel inside a document."""
+
+        if not AXUtilitiesRole.is_panel(obj):
+            return False
+        return AXUtilitiesObject.find_ancestor(obj, AXUtilitiesRole.is_document) is not None
 
     @staticmethod
     def is_dpub(obj: Atspi.Accessible, _role: Atspi.Role | None = None) -> bool:

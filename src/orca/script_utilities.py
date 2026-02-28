@@ -122,29 +122,6 @@ class Utilities:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return nodes
 
-    def details_content_for_object(self, obj: Atspi.Accessible) -> list[str]:
-        """Returns a list of strings containing the details for obj."""
-
-        details = self._details_for_object(obj)
-        return list(map(AXText.get_all_text, details))
-
-    def _details_for_object(self, obj: Atspi.Accessible) -> list[Atspi.Accessible]:
-        """Return a list of objects containing details for obj."""
-
-        details = AXUtilities.get_details(obj)
-        if not details and AXUtilities.is_toggle_button(obj) and AXUtilities.is_expanded(obj):
-            details = list(AXObject.iter_children(obj))
-
-        text_objects = []
-        for detail in details:
-            text_objects.extend(
-                self._find_all_descendants(
-                    detail, lambda x: not AXUtilities.is_whitespace_or_empty(x)
-                ),
-            )
-
-        return text_objects
-
     def frame_and_dialog(
         self,
         obj: Atspi.Accessible | None = None,
@@ -210,33 +187,6 @@ class Utilities:
         """Returns a string description of the number of find-in-page results in root."""
 
         return ""
-
-    def is_anchor(self, obj: Atspi.Accessible) -> bool:
-        """Returns true if obj is an anchor."""
-
-        # TODO - JD: Move this into the AXUtilities.
-        return (
-            AXUtilities.is_link(obj)
-            and not AXUtilities.is_focusable(obj)
-            and not AXUtilities.has_action(obj, "jump")
-            and not AXUtilities.has_role_from_aria(obj)
-        )
-
-    def is_document_list(self, obj: Atspi.Accessible) -> bool:
-        """Returns true if obj is a list inside a document."""
-
-        # TODO - JD: Move this into AXUtilities.
-        if not (AXUtilities.is_list(obj) or AXUtilities.is_description_list(obj)):
-            return False
-        return AXUtilities.find_ancestor(obj, AXUtilities.is_document) is not None
-
-    def is_document_panel(self, obj: Atspi.Accessible) -> bool:
-        """Returns true if obj is a panel inside a document."""
-
-        # TODO - JD: Move this into AXUtilities.
-        if not AXUtilities.is_panel(obj):
-            return False
-        return AXUtilities.find_ancestor(obj, AXUtilities.is_document) is not None
 
     def is_document(self, obj: Atspi.Accessible, _exclude_document_frame=False) -> bool:
         """Returns True if obj is a document."""

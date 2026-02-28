@@ -271,6 +271,54 @@ class AXUtilities:
         return AXUtilitiesObject.find_descendant(obj, AXUtilitiesRole.is_default_button)
 
     @staticmethod
+    def get_details_content(obj: Atspi.Accessible) -> list[str]:
+        """Returns a list of non-empty text strings from the details of obj."""
+
+        details = AXUtilitiesRelation.get_details(obj)
+        if (
+            not details
+            and AXUtilitiesRole.is_toggle_button(obj)
+            and AXUtilitiesState.is_expanded(obj)
+        ):
+            details = list(AXObject.iter_children(obj))
+
+        result: list[str] = []
+        for detail in details:
+            texts = [
+                AXText.get_all_text(d).strip() for d in AXUtilities.get_text_descendants(detail)
+            ]
+            result.extend(t for t in texts if t)
+        return result
+
+    @staticmethod
+    def get_description_list_terms(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
+        """Returns all description list terms in obj, excluding nested description lists."""
+
+        if not AXUtilitiesRole.is_description_list(obj):
+            return []
+
+        if AXObject.supports_collection(obj):
+            matches = AXUtilitiesCollection.find_all_description_terms(obj)
+            return [
+                m
+                for m in matches
+                if AXUtilitiesObject.find_ancestor(m, AXUtilitiesRole.is_description_list) == obj
+            ]
+
+        return AXUtilitiesObject.find_all_descendants(
+            obj, AXUtilitiesRole.is_description_term, AXUtilitiesRole.is_description_list
+        )
+
+    @staticmethod
+    def get_text_descendants(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
+        """Returns all descendants of obj that implement the Text interface."""
+
+        if AXObject.supports_collection(obj):
+            return AXUtilitiesCollection.find_all_with_interfaces(obj, ["Text"])
+
+        return AXUtilitiesObject.find_all_descendants(obj, AXObject.supports_text)
+
+    @staticmethod
     def get_focused_object(obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Returns the focused descendant of obj"""
 

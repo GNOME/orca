@@ -2189,7 +2189,7 @@ class Utilities(script_utilities.Utilities):
         return False
 
     def _is_empty_anchor(self, obj: Atspi.Accessible) -> bool:
-        return self.is_anchor(obj) and not self.treat_as_text_object(obj)
+        return AXUtilities.is_anchor(obj) and not self.treat_as_text_object(obj)
 
     def _is_empty_tool_tip(self, obj: Atspi.Accessible) -> bool:
         return AXUtilities.is_tool_tip(obj) and not self.treat_as_text_object(obj)
@@ -2297,7 +2297,7 @@ class Utilities(script_utilities.Utilities):
             return rv
 
         rv = bool(
-            (AXUtilities.is_link(obj) and not self.is_anchor(obj))
+            (AXUtilities.is_link(obj) and not AXUtilities.is_anchor(obj))
             or (
                 AXUtilities.is_static(obj)
                 and AXUtilities.is_link(AXObject.get_parent(obj))

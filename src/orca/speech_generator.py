@@ -509,7 +509,7 @@ class SpeechGenerator(generator.Generator):
 
         if (
             AXUtilities.is_combo_box(AXObject.get_parent(obj))
-            or self._script.utilities.is_anchor(obj)
+            or AXUtilities.is_anchor(obj)
             or AXUtilities.is_desktop_frame(obj)
             or AXUtilities.is_docked_frame(obj)
         ):
@@ -872,12 +872,12 @@ class SpeechGenerator(generator.Generator):
             result = (
                 messages.leaving_n_blockquotes(count) if count > 1 else messages.LEAVING_BLOCKQUOTE
             )
-        elif self._script.utilities.is_document_list(obj):
+        elif AXUtilities.is_document_list(obj):
             result = messages.leaving_n_lists(count) if count > 1 else messages.LEAVING_LIST
         elif role == Atspi.Role.PANEL:
             if AXUtilities.is_figure(obj):
                 result = messages.LEAVING_FIGURE
-            elif self._script.utilities.is_document_panel(obj):
+            elif AXUtilities.is_document_panel(obj):
                 result = messages.LEAVING_PANEL
         elif role == Atspi.Role.TABLE and AXUtilities.is_text_document_table(obj):
             result = messages.LEAVING_TABLE

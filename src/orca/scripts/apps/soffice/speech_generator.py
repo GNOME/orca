@@ -157,7 +157,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def _generate_new_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if AXUtilities.is_spreadsheet_cell(
             obj,
-        ) and self._script.utilities.is_document_panel(AXObject.get_parent(args.get("priorObj"))):
+        ) and AXUtilities.is_document_panel(AXObject.get_parent(args.get("priorObj"))):
             return []
 
         return super()._generate_new_ancestors(obj, **args)

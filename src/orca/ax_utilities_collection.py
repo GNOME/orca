@@ -765,6 +765,19 @@ class AXUtilitiesCollection:
         return AXCollection.get_first_match(root, rule)
 
     @staticmethod
+    def find_all_with_interfaces(
+        root: Atspi.Accessible,
+        interface_list: list[str],
+    ) -> list[Atspi.Accessible]:
+        """Returns all descendants of root implementing all the specified interfaces"""
+
+        if not (root and interface_list):
+            return []
+
+        rule = AXCollection.create_match_rule(interfaces=interface_list)
+        return AXCollection.get_all_matches(root, rule)
+
+    @staticmethod
     def find_first_with_interfaces(
         root: Atspi.Accessible,
         interface_list: list[str],

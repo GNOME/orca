@@ -935,7 +935,7 @@ class Script(script.Script):
             return True
 
         self.present_object(event.source, alreadyFocused=True, interrupt=True)
-        details = self.utilities.details_content_for_object(event.source)
+        details = AXUtilities.get_details_content(event.source)
         for detail in details:
             presentation_manager.get_manager().speak_message(detail)
 

@@ -568,7 +568,7 @@ class Generator:
                 lambda: AXUtilities.is_dpub(obj, role) and AXUtilities.is_section(obj, role),
                 "ROLE_DPUB_SECTION",
             ),
-            (lambda: self._script.utilities.is_anchor(obj), Atspi.Role.STATIC),
+            (lambda: AXUtilities.is_anchor(obj), Atspi.Role.STATIC),
             (lambda: AXUtilities.is_block_quote(obj, role), Atspi.Role.BLOCK_QUOTE),
             (lambda: AXUtilities.is_comment(obj, role), Atspi.Role.COMMENT),
             (lambda: AXUtilities.is_description_list(obj, role), Atspi.Role.DESCRIPTION_LIST),

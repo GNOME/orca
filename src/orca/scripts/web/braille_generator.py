@@ -229,7 +229,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             args["role"] = Atspi.Role.LINK
         elif self._script.utilities.is_custom_image(obj):
             args["role"] = Atspi.Role.IMAGE
-        elif self._script.utilities.is_anchor(obj):
+        elif AXUtilities.is_anchor(obj):
             args["role"] = Atspi.Role.STATIC
         elif self._script.utilities.treat_as_div(obj, offset=args.get("startOffset")):
             args["role"] = Atspi.Role.SECTION

@@ -528,7 +528,7 @@ class Script(default.Script):
             tokens = ["WEB: New focus", new_focus, "content editable. Generating line."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.get_line_contents_at_offset(new_focus, caret_offset)
-        elif self.utilities.is_anchor(new_focus):
+        elif AXUtilities.is_anchor(new_focus):
             tokens = ["WEB: New focus", new_focus, "is anchor. Generating line."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.get_line_contents_at_offset(new_focus, 0)
@@ -1351,7 +1351,7 @@ class Script(default.Script):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        if self.utilities.is_anchor(obj):
+        if AXUtilities.is_anchor(obj):
             cause = "Context is anchor"
         elif not (self.utilities.is_link(obj) and not is_focused):
             cause = "Context is not a non-focused link"
