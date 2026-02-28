@@ -999,14 +999,11 @@ class AXUtilitiesEvent:
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return False
 
-        if AXUtilitiesRole.is_tree_or_tree_table(event.source):
-            active_window = focus_manager.get_manager().get_active_window()
-            if not AXUtilitiesObject.find_ancestor(
-                event.source, lambda x: x and x == active_window
-            ):
-                tokens = ["AXUtilitiesEvent:", event.source, "is not inside", active_window]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return False
+        active_window = focus_manager.get_manager().get_active_window()
+        if not AXUtilitiesObject.is_ancestor(event.source, active_window):
+            tokens = ["AXUtilitiesEvent:", event.source, "is not inside", active_window]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
 
         msg = "AXUtilitiesEvent: Event is presentable."
         debug.print_message(debug.LEVEL_INFO, msg, True)
