@@ -114,7 +114,6 @@ class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 label=guilabels.OBJECT_PRESENTATION_IS_DETAILED,
                 getter=presenter._get_verbosity_is_detailed,
                 setter=presenter._set_verbosity_is_detailed,
-                prefs_key="verbosity-level",
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.BRAILLE_SHOW_CONTEXT,
@@ -138,9 +137,10 @@ class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
         super().__init__(guilabels.VERBOSITY, controls)
 
     def save_settings(self, profile: str = "", app_name: str = "") -> dict[str, Any]:
-        """Save settings, adding integer value for rolename style."""
+        """Save settings, writing enum values for verbosity and rolename style."""
 
         result = super().save_settings(profile, app_name)
+        result["verbosity-level"] = self._presenter.get_verbosity_level()
         result["rolename-style"] = VerbosityLevel[
             self._presenter.get_rolename_style().upper()
         ].value

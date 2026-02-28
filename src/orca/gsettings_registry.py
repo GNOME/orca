@@ -623,6 +623,7 @@ class GSettingsRegistry:
         gsettings_migrator.apply_legacy_aliases(general)
         gsettings_migrator.hoist_keybindings_metadata(general)
         gsettings_migrator.force_navigation_enabled(general)
+        gsettings_migrator.fix_bool_enum_values(general)
 
         profile = gsettings_migrator.sanitize_gsettings_path(profile_name)
         skip_defaults = not app_name and profile_name == "default"
@@ -827,6 +828,7 @@ class GSettingsRegistry:
 
         gsettings_migrator.apply_legacy_aliases(profile_prefs)
         gsettings_migrator.force_navigation_enabled(profile_prefs)
+        gsettings_migrator.fix_bool_enum_values(profile_prefs)
         gsettings_migrator.hoist_keybindings_metadata(profile_prefs)
 
         skip_defaults = profile_name == "default"
@@ -951,6 +953,7 @@ class GSettingsRegistry:
             general = profile_data.get("general", {})
             gsettings_migrator.apply_legacy_aliases(general)
             gsettings_migrator.force_navigation_enabled(general)
+            gsettings_migrator.fix_bool_enum_values(general)
             pronunciations = profile_data.get("pronunciations", {})
             app_keybindings = profile_data.get("keybindings", {})
             if not general and not pronunciations and not app_keybindings:

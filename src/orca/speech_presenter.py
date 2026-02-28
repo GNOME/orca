@@ -276,7 +276,6 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.OBJECT_PRESENTATION_IS_DETAILED,
                 getter=presenter._get_verbosity_is_verbose,
                 setter=presenter._set_verbosity_from_bool,
-                prefs_key="verbosity-level",
                 member_of=guilabels.GENERAL,
             ),
             self._only_speak_displayed_control,
@@ -340,6 +339,13 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
         ]
 
         super().__init__(guilabels.VERBOSITY, controls)
+
+    def save_settings(self, profile: str = "", app_name: str = "") -> dict[str, Any]:
+        """Save settings, writing the verbosity-level enum from the presenter."""
+
+        result = super().save_settings(profile, app_name)
+        result["verbosity-level"] = self._presenter.get_verbosity_level()
+        return result
 
     def _only_speak_displayed_text_is_off(self) -> bool:
         """Returns True if only-speak-displayed-text is off in the UI."""

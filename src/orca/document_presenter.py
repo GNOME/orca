@@ -247,6 +247,7 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
     _gsettings_schema = "document"
 
     def __init__(self, presenter: DocumentPresenter) -> None:
+        self._presenter = presenter
         controls: list[preferences_grid_base.ControlType] = [
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.AUTOMATIC_FOCUS_MODE,
@@ -264,14 +265,12 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 label=guilabels.FIND_SPEAK_RESULTS,
                 getter=presenter.get_speak_find_results,
                 setter=presenter.set_speak_find_results,
-                prefs_key="find-results-verbosity",
                 member_of=guilabels.FIND_OPTIONS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.FIND_ONLY_SPEAK_CHANGED_LINES,
                 getter=presenter.get_only_speak_changed_lines,
                 setter=presenter.set_only_speak_changed_lines,
-                prefs_key="find-results-verbosity",
                 determine_sensitivity=presenter.get_speak_find_results,
                 member_of=guilabels.FIND_OPTIONS,
             ),
@@ -305,6 +304,15 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
             f"{guilabels.AUTO_STICKY_FOCUS_MODE_INFO}"
         )
         super().__init__(guilabels.NATIVE_NAVIGATION, controls, info_message=info)
+
+    def save_settings(self, profile: str = "", app_name: str = "") -> dict[str, Any]:
+        """Save settings, writing the find-results enum from the presenter."""
+
+        result = super().save_settings(profile, app_name)
+        verbosity = self._presenter._get_find_results_verbosity_name()
+        result["find-results-verbosity"] = verbosity
+        self._write_gsettings({"find-results-verbosity": verbosity}, profile, app_name)
+        return result
 
 
 class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):

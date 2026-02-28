@@ -1185,7 +1185,7 @@ class TestBraillePreferencesGridUI:
         detailed_switch.set_active(True)
 
         result = grid.save_settings()
-        assert result["verbosity-level"] == 1
+        assert result["verbosity-level"] == "verbose"
 
     def test_flash_messages_duration_initial_value(self, test_context: OrcaTestContext) -> None:
         """Test flash duration spinbutton shows correct initial value."""

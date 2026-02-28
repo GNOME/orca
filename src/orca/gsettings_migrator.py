@@ -117,6 +117,21 @@ def force_navigation_enabled(json_dict: dict) -> None:
 
 
 # TODO - JD: Delete this in v52 (remove -i/--import-dir support).
+def fix_bool_enum_values(json_dict: dict) -> None:
+    """Fix enum settings stored as booleans instead of integers in JSON."""
+
+    # Some enum-typed settings are booleans in user JSON files instead of the
+    # expected integers. Python's bool-is-int means False==0 and True==1,
+    # which silently resolve to the wrong enum nick during migration.
+    bool_enum_fixes: dict[str, dict[bool, int]] = {
+        "findResultsVerbosity": {True: 2, False: 2},  # FIND_SPEAK_ALL
+    }
+    for key, mapping in bool_enum_fixes.items():
+        if key in json_dict and isinstance(json_dict[key], bool):
+            json_dict[key] = mapping[json_dict[key]]
+
+
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def apply_legacy_aliases(json_dict: dict) -> None:
     """Copy legacy key names to their modern equivalents if modern key is absent."""
 
