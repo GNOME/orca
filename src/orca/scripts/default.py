@@ -847,6 +847,12 @@ class Script(script.Script):
         """Callback for object:text-caret-moved accessibility events."""
 
         reason = AXUtilities.get_text_event_reason(event)
+        if reason == TextEventReason.SEARCH_PRESENTABLE:
+            msg = "DEFAULT: Presenting line for search result change"
+            contents = self.utilities.get_line_contents_at_offset(event.source, event.detail1)
+            presentation_manager.get_manager().speak_contents(contents)
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
 
         manager = focus_manager.get_manager()
         focus = manager.get_locus_of_focus()
