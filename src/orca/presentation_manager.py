@@ -18,6 +18,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-public-methods
+
 """Module for managing presentation of information to the user via speech, braille, and sound."""
 
 from __future__ import annotations
@@ -134,10 +136,10 @@ class PresentationManager:
         sound_presenter.get_presenter().init_sound()
         speech_presenter.get_presenter().init_monitor()
 
-    def present_keyboard_event(self, script: default.Script, event: KeyboardEvent) -> None:
+    def present_keyboard_event(self, event: KeyboardEvent) -> None:
         """Presents the KeyboardEvent event."""
 
-        typing_echo_presenter.get_presenter().echo_keyboard_event(script, event)
+        typing_echo_presenter.get_presenter().echo_keyboard_event(event)
 
     def present_key_event(self, event: KeyboardEvent) -> None:
         """Presents a key event via speech (and potentially braille/sound in the future)."""

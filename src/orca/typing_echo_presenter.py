@@ -914,7 +914,7 @@ class TypingEchoPresenter:
             presentation_manager.get_manager().present_key_event(self._delayed_terminal_press)
             self._delayed_terminal_press = None
 
-    def echo_keyboard_event(self, script: default.Script, event: input_event.KeyboardEvent) -> None:
+    def echo_keyboard_event(self, event: input_event.KeyboardEvent) -> None:
         """Presents the KeyboardEvent event."""
 
         if not event.is_pressed_key():

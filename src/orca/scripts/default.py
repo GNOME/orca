@@ -842,6 +842,7 @@ class Script(script.Script):
         AXUtilities.clear_all_cache_now(event.source, "children-changed event.")
         return True
 
+    # pylint: disable-next=too-many-return-statements
     def _on_caret_moved(self, event: Atspi.Event) -> bool:
         """Callback for object:text-caret-moved accessibility events."""
 

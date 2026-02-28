@@ -207,13 +207,12 @@ class TestPresentationManager:
         from orca.presentation_manager import get_manager
 
         manager = get_manager()
-        mock_script = test_context.Mock()
         mock_event = test_context.Mock()
 
-        manager.present_keyboard_event(mock_script, mock_event)
+        manager.present_keyboard_event(mock_event)
 
         typing_echo = essential_modules["orca.typing_echo_presenter"].get_presenter()
-        typing_echo.echo_keyboard_event.assert_called_once_with(mock_script, mock_event)
+        typing_echo.echo_keyboard_event.assert_called_once_with(mock_event)
 
     def test_present_key_event_delegates(self, test_context: OrcaTestContext) -> None:
         """Test present_key_event delegates to speech_presenter."""

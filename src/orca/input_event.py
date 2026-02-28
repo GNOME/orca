@@ -611,7 +611,7 @@ class KeyboardEvent(InputEvent):
         if sleep_mode_manager.get_manager().is_active_for_app(self._script.app):
             return
 
-        presentation_manager.get_manager().present_keyboard_event(self._script, self)
+        presentation_manager.get_manager().present_keyboard_event(self)
 
     def process(self) -> None:
         """Processes this input event."""

@@ -309,7 +309,7 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
         """Save settings, writing the find-results enum from the presenter."""
 
         result = super().save_settings(profile, app_name)
-        verbosity = self._presenter._get_find_results_verbosity_name()
+        verbosity = self._presenter.get_find_results_verbosity_name()
         result["find-results-verbosity"] = verbosity
         self._write_gsettings({"find-results-verbosity": verbosity}, profile, app_name)
         return result
@@ -1166,7 +1166,7 @@ class DocumentPresenter:
         summary="Find results verbosity (none, if-line-changed, all)",
         migration_key="findResultsVerbosity",
     )
-    def _get_find_results_verbosity_name(self) -> str:
+    def get_find_results_verbosity_name(self) -> str:
         """Returns the find results verbosity level as a string name."""
 
         return gsettings_registry.get_registry().layered_lookup(
@@ -1181,7 +1181,7 @@ class DocumentPresenter:
     def get_speak_find_results(self) -> bool:
         """Returns whether to speak find results."""
 
-        return self._get_find_results_verbosity_name() != "none"
+        return self.get_find_results_verbosity_name() != "none"
 
     @dbus_service.setter
     def set_speak_find_results(self, value: bool) -> bool:
@@ -1204,7 +1204,7 @@ class DocumentPresenter:
     def get_only_speak_changed_lines(self) -> bool:
         """Returns whether to only speak changed lines during find."""
 
-        return self._get_find_results_verbosity_name() == "if-line-changed"
+        return self.get_find_results_verbosity_name() == "if-line-changed"
 
     @dbus_service.setter
     def set_only_speak_changed_lines(self, value: bool) -> bool:
@@ -1253,6 +1253,7 @@ class DocumentPresenter:
         )
         return True
 
+    # pylint: disable-next=too-many-locals
     def present_find_results(self, obj: Atspi.Accessible, offset: int) -> bool:
         """Presents find results if appropriate based on settings. Returns True if presented."""
 
