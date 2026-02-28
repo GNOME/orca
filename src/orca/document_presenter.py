@@ -1246,10 +1246,7 @@ class DocumentPresenter:
         return True
 
     def present_find_results(self, obj: Atspi.Accessible, offset: int) -> bool:
-        """Presents find results if appropriate based on settings.
-
-        Returns True if results were presented, False otherwise.
-        """
+        """Presents find results if appropriate based on settings. Returns True if presented."""
 
         script = script_manager.get_manager().get_active_script()
         if script is None:
@@ -1258,9 +1255,23 @@ class DocumentPresenter:
             return False
 
         document = script.utilities.get_document_for_object(obj)
-        start = AXUtilities.get_selection_start_offset(obj)
-        if not document or start < 0:
+        if document is None:
+            msg = "DOCUMENT PRESENTER: No document for find results presentation."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
+
+        start = AXUtilities.get_selection_start_offset(obj)
+        if start < 0:
+            msg = "DOCUMENT PRESENTER: Invalid selection start for find results presentation."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        tokens = [
+            "DOCUMENT PRESENTER: Find results",
+            obj,
+            f"offset: {offset}, selection start offset: {start}",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         offset = max(offset, start)
         context = script.utilities.get_caret_context(document)

@@ -116,11 +116,6 @@ class Script(default.Script):
 
         return Utilities(self)
 
-    def _present_find_results(self, obj: Atspi.Accessible, offset: int) -> None:
-        """Updates the context and presents the find results if appropriate."""
-
-        document_presenter.get_presenter().present_find_results(obj, offset)
-
     def is_loading_content(self) -> bool:
         """Returns True if we're currently loading content."""
 
@@ -809,6 +804,12 @@ class Script(default.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
+            if self.utilities.in_find_container():
+                msg = "WEB: Event handled: Presenting find results"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                document_presenter.get_presenter().present_find_results(event.source, event.detail1)
+                return True
+
             msg = "WEB: Event source is not in document content"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
@@ -863,12 +864,6 @@ class Script(default.Script):
         if reason == TextEventReason.FOCUS_CHANGE:
             msg = "WEB: Event ignored: Caret moved due to focus change."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        if self.utilities.in_find_container():
-            msg = "WEB: Event handled: Presenting find results"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            document_presenter.get_presenter().present_find_results(event.source, event.detail1)
             return True
 
         if not self.utilities.event_is_from_locus_of_focus_document(event):
@@ -1696,6 +1691,12 @@ class Script(default.Script):
         if self.utilities.event_is_browser_ui_noise_deprecated(event):
             msg = "WEB: Ignoring event believed to be browser UI noise"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if self.utilities.in_find_container():
+            msg = "WEB: Event handled: Presenting find results"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            document_presenter.get_presenter().present_find_results(event.source, 0)
             return True
 
         if not self.utilities.in_document_content(event.source):
