@@ -264,7 +264,7 @@ class Script(default.Script):
             if manager.focus_is_dead():
                 manager.set_locus_of_focus(event, event.source, False)
 
-            self.utilities.handle_undo_text_event(event)
+            presentation_manager.get_manager().present_command_announcement()
             row_count = AXTable.get_row_count(event.source)
             if active_row == row_count:
                 full = messages.TABLE_ROW_DELETED_FROM_END

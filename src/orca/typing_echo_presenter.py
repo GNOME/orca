@@ -918,7 +918,7 @@ class TypingEchoPresenter:
         """Presents the KeyboardEvent event."""
 
         if not event.is_pressed_key():
-            script.utilities.clear_cached_command_state_deprecated()
+            presentation_manager.get_manager().clear_command_announcement()
             return
 
         self._delayed_terminal_press = None

@@ -393,8 +393,7 @@ class Script(script.Script):
     def locus_of_focus_changed(self, event, old_focus, new_focus):
         """Called when the visual object with focus changes."""
 
-        if not self.utilities.handle_undo_locus_of_focus_change():
-            self.utilities.handle_paste_locus_of_focus_change()
+        presentation_manager.get_manager().present_command_announcement()
 
         if not new_focus:
             return True
@@ -1039,9 +1038,7 @@ class Script(script.Script):
         if not AXUtilities.is_presentable_selection_change(event):
             return True
 
-        if self.utilities.handle_paste_locus_of_focus_change():
-            if self.utilities.top_level_object_is_active_and_current(event.source):
-                focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
+        presentation_manager.get_manager().present_command_announcement()
 
         if self.utilities.handle_container_selection_change(event.source):
             return True
@@ -1151,7 +1148,7 @@ class Script(script.Script):
             return True
 
         reason = AXUtilities.get_text_event_reason(event)
-        self.utilities.handle_undo_text_event(event)
+        presentation_manager.get_manager().present_command_announcement()
         self.update_braille(event.source)
 
         if reason == TextEventReason.SELECTED_TEXT_DELETION:
@@ -1189,7 +1186,7 @@ class Script(script.Script):
             return True
 
         reason = AXUtilities.get_text_event_reason(event)
-        self.utilities.handle_undo_text_event(event)
+        presentation_manager.get_manager().present_command_announcement()
         self.update_braille(event.source)
 
         if reason == TextEventReason.SELECTED_TEXT_RESTORATION:

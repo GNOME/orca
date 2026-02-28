@@ -1122,63 +1122,6 @@ class Utilities:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return word, start, end
 
-    def clear_cached_command_state_deprecated(self) -> None:
-        """Clears the cached state for undo, redo, and paste commands."""
-
-        self._script.point_of_reference["undo"] = False
-        self._script.point_of_reference["redo"] = False
-        self._script.point_of_reference["paste"] = False
-
-    def handle_undo_text_event(self, event: Atspi.Event) -> bool:
-        """Handles a text-changed event resulting from an undo/redo."""
-
-        if input_event_manager.get_manager().last_event_was_undo():
-            if not self._script.point_of_reference.get("undo"):
-                presentation_manager.get_manager().present_message(messages.UNDO)
-                self._script.point_of_reference["undo"] = True
-            AXUtilities.update_cached_selected_text(event.source)
-            return True
-
-        if input_event_manager.get_manager().last_event_was_redo():
-            if not self._script.point_of_reference.get("redo"):
-                presentation_manager.get_manager().present_message(messages.REDO)
-                self._script.point_of_reference["redo"] = True
-            AXUtilities.update_cached_selected_text(event.source)
-            return True
-
-        return False
-
-    def handle_undo_locus_of_focus_change(self) -> bool:
-        """Presents an undo/redo message when the locus of focus changes."""
-
-        if input_event_manager.get_manager().last_event_was_undo():
-            if not self._script.point_of_reference.get("undo"):
-                presentation_manager.get_manager().present_message(messages.UNDO)
-                self._script.point_of_reference["undo"] = True
-            return True
-
-        if input_event_manager.get_manager().last_event_was_redo():
-            if not self._script.point_of_reference.get("redo"):
-                presentation_manager.get_manager().present_message(messages.REDO)
-                self._script.point_of_reference["redo"] = True
-            return True
-
-        return False
-
-    def handle_paste_locus_of_focus_change(self) -> bool:
-        """Presents a paste message when the locus of focus changes."""
-
-        if input_event_manager.get_manager().last_event_was_paste():
-            if not self._script.point_of_reference.get("paste"):
-                presentation_manager.get_manager().present_message(
-                    messages.CLIPBOARD_PASTED_FULL,
-                    messages.CLIPBOARD_PASTED_BRIEF,
-                )
-                self._script.point_of_reference["paste"] = True
-            return True
-
-        return False
-
     def handle_container_selection_change(self, obj: Atspi.Accessible) -> bool:
         """Handles a change in a container that supports selection."""
 

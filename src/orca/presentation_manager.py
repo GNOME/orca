@@ -22,13 +22,16 @@
 
 from __future__ import annotations
 
+import enum
 from typing import TYPE_CHECKING, Any
 
 from . import (
     braille_presenter,
     debug,
     focus_manager,
+    input_event_manager,
     live_region_presenter,
+    messages,
     script_manager,
     sound_presenter,
     speech_manager,
@@ -51,6 +54,14 @@ if TYPE_CHECKING:
     from .sound import Icon, Tone
 
 
+class _Command(enum.Enum):
+    """Commands whose announcement should be deduplicated."""
+
+    UNDO = enum.auto()
+    REDO = enum.auto()
+    PASTE = enum.auto()
+
+
 class PresentationManager:
     """Manages presentation of information to the user via speech, braille, and sound."""
 
@@ -68,6 +79,32 @@ class PresentationManager:
         if kill_flash:
             braille_presenter.get_presenter().kill_flash()
         live_region_presenter.get_presenter().flush_messages()
+
+    _announced_command: _Command | None = None
+
+    def present_command_announcement(self) -> None:
+        """Presents undo/redo/paste announcement once per command."""
+
+        manager = input_event_manager.get_manager()
+        if manager.last_event_was_undo():
+            if self._announced_command != _Command.UNDO:
+                self.present_message(messages.UNDO)
+                self._announced_command = _Command.UNDO
+        elif manager.last_event_was_redo():
+            if self._announced_command != _Command.REDO:
+                self.present_message(messages.REDO)
+                self._announced_command = _Command.REDO
+        elif manager.last_event_was_paste():
+            if self._announced_command != _Command.PASTE:
+                self.present_message(
+                    messages.CLIPBOARD_PASTED_FULL, messages.CLIPBOARD_PASTED_BRIEF
+                )
+                self._announced_command = _Command.PASTE
+
+    def clear_command_announcement(self) -> None:
+        """Clears the announced-command state."""
+
+        self._announced_command = None
 
     def refresh_presenters(self) -> None:
         """Refreshes braille and speech settings after profile/settings change."""
