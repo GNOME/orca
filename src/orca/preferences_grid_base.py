@@ -1183,12 +1183,14 @@ class PreferencesGridBase(Gtk.Grid):
 
         for child in children:
             if isinstance(child, Gtk.Frame):
-                self._focus_first_in_frame(child)
+                if self._focus_first_in_frame(child):
+                    return False
             elif isinstance(child, Gtk.ScrolledWindow):
                 self._focus_first_in_scrolled_window(child)
                 return False
             elif isinstance(child, Gtk.ListBox):
-                self._focus_first_listbox_row(child)
+                if self._focus_first_listbox_row(child):
+                    return False
 
         return False
 
