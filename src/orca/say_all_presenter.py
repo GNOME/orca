@@ -28,6 +28,7 @@
 
 from __future__ import annotations
 
+import unicodedata
 from enum import Enum
 from typing import TYPE_CHECKING
 
@@ -89,6 +90,14 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     _gsettings_schema = "say-all"
 
     def __init__(self, presenter: SayAllPresenter) -> None:
+        self._only_speak_displayed_control = preferences_grid_base.BooleanPreferenceControl(
+            label=guilabels.SPEECH_ONLY_SPEAK_DISPLAYED_TEXT,
+            getter=presenter.get_only_speak_displayed_text,
+            setter=presenter.set_only_speak_displayed_text,
+            prefs_key="only-speak-displayed-text",
+            member_of=guilabels.ANNOUNCEMENTS,
+        )
+
         controls: list[preferences_grid_base.ControlType] = [
             preferences_grid_base.EnumPreferenceControl(
                 label=guilabels.SAY_ALL_BY,
@@ -112,12 +121,14 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 prefs_key="structural-navigation",
                 member_of=guilabels.SAY_ALL_REWIND_AND_FAST_FORWARD_BY,
             ),
+            self._only_speak_displayed_control,
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_BLOCKQUOTES,
                 getter=presenter.get_announce_blockquote,
                 setter=presenter.set_announce_blockquote,
                 prefs_key="announce-blockquote",
                 member_of=guilabels.ANNOUNCEMENTS,
+                determine_sensitivity=self._only_speak_displayed_text_is_off,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_FORMS,
@@ -125,6 +136,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=presenter.set_announce_form,
                 prefs_key="announce-form",
                 member_of=guilabels.ANNOUNCEMENTS,
+                determine_sensitivity=self._only_speak_displayed_text_is_off,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_LANDMARKS,
@@ -132,6 +144,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=presenter.set_announce_landmark,
                 prefs_key="announce-landmark",
                 member_of=guilabels.ANNOUNCEMENTS,
+                determine_sensitivity=self._only_speak_displayed_text_is_off,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_LISTS,
@@ -139,6 +152,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=presenter.set_announce_list,
                 prefs_key="announce-list",
                 member_of=guilabels.ANNOUNCEMENTS,
+                determine_sensitivity=self._only_speak_displayed_text_is_off,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_PANELS,
@@ -146,6 +160,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=presenter.set_announce_grouping,
                 prefs_key="announce-grouping",
                 member_of=guilabels.ANNOUNCEMENTS,
+                determine_sensitivity=self._only_speak_displayed_text_is_off,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_TABLES,
@@ -153,6 +168,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=presenter.set_announce_table,
                 prefs_key="announce-table",
                 member_of=guilabels.ANNOUNCEMENTS,
+                determine_sensitivity=self._only_speak_displayed_text_is_off,
             ),
         ]
 
@@ -161,6 +177,14 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             f"\n\n{guilabels.SAY_ALL_CONTAINER_INFO}"
         )
         super().__init__(guilabels.GENERAL_SAY_ALL, controls, info_message=info)
+
+    def _only_speak_displayed_text_is_off(self) -> bool:
+        """Returns True if only-speak-displayed-text is off in the UI."""
+
+        widget = self.get_widget_for_control(self._only_speak_displayed_control)
+        if widget:
+            return not widget.get_active()
+        return True
 
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.SayAll", name="say-all")
@@ -360,6 +384,9 @@ class SayAllPresenter:
             return True, "start_offset equals end_offset"
         if AXUtilities.get_is_label_for(obj) and not AXUtilities.is_focusable(obj):
             return True, "is non-focusable label for other object"
+        stripped = _text.strip()
+        if stripped and all(unicodedata.category(c).startswith("P") for c in stripped):
+            return True, "is punctuation only"
         return False, ""
 
     def _advance_to_next(
@@ -397,6 +424,112 @@ class SayAllPresenter:
             focus_manager.get_manager().set_locus_of_focus(None, next_obj, notify_script=False)
 
         return next_obj, next_offset
+
+    def _build_displayed_text_context(
+        self,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+    ) -> tuple[speechserver.SayAllContext, ACSS] | None:
+        """Returns a single SayAllContext from displayed text, or None if empty."""
+
+        assert self._script is not None
+
+        parts: list[str] = []
+        first_obj, first_start, last_end = None, 0, 0
+        for content in contents:
+            content_obj, start, end, _text = content
+            skip, _reason = self._say_all_should_skip_content(content, contents)
+            if skip:
+                continue
+            expanded = self._script.utilities.expand_eocs(content_obj, start, end)
+            if not expanded.strip():
+                continue
+            if first_obj is None:
+                first_obj, first_start = content_obj, start
+            last_end = end
+            parts.append(expanded)
+
+        if first_obj is None or not parts:
+            return None
+
+        combined = " ".join(parts)
+        context = speechserver.SayAllContext(first_obj, combined, first_start, last_end)
+        self._contexts.append(context)
+        tokens = [
+            "SAY ALL PRESENTER: Speaking (displayed-text):",
+            first_obj,
+            f"'{combined}' ({first_start}-{last_end})",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        self._script.utilities.set_caret_offset(first_obj, first_start)
+        ax_event_synthesizer.get_synthesizer().scroll_into_view(
+            context.obj,
+            context.start_offset,
+            context.end_offset,
+        )
+        return context, ACSS()
+
+    def _generate_speech_contexts(
+        self,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+        prior_obj: Atspi.Accessible,
+    ) -> Generator[list[speechserver.SayAllContext | ACSS], None, None]:
+        """Yields [SayAllContext, ACSS] pairs for each content item."""
+
+        assert self._script is not None
+
+        for i, content in enumerate(contents):
+            content_obj, start, end, text = content
+            tokens = [
+                f"SAY ALL PRESENTER: CONTENT: {i}.",
+                content_obj,
+                f"'{text}' ({start}-{end})",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+            skip, reason = self._say_all_should_skip_content(content, contents)
+            if skip:
+                msg = f"SAY ALL PRESENTER: Skipping content - {reason}."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                continue
+
+            utterances = speech_presenter.get_presenter().generate_speech_contents(
+                self._script,
+                [content],
+                eliminatePauses=True,
+                priorObj=prior_obj,
+                index=i,
+                total=len(contents),
+            )
+            prior_obj = content_obj
+            elements, voices = self._parse_utterances(utterances)
+            if len(elements) != len(voices):
+                tokens = [
+                    "SAY ALL PRESENTER: Skipping content - elements/voices mismatch:",
+                    content_obj,
+                    f"'{text}', elements: {len(elements)}, voices: {len(voices)}",
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                continue
+
+            for element, voice in zip(elements, voices, strict=True):
+                if not element or (isinstance(element, str) and not element.strip()):
+                    continue
+
+                context = speechserver.SayAllContext(content_obj, element, start, end)
+                self._contexts.append(context)
+                tokens = [
+                    "SAY ALL PRESENTER: Speaking (contents):",
+                    content_obj,
+                    f"'{element}' ({start}-{end})",
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                self._script.utilities.set_caret_offset(content_obj, start)
+                ax_event_synthesizer.get_synthesizer().scroll_into_view(
+                    context.obj,
+                    context.start_offset,
+                    context.end_offset,
+                )
+                yield [context, voice]
 
     def _say_all_iter(
         self,
@@ -445,55 +578,12 @@ class SayAllPresenter:
 
             contents = self._script.utilities.filter_contents_for_presentation(contents)
             self._contents.extend(contents)
-            for i, content in enumerate(contents):
-                content_obj, start, end, text = content
-                tokens = [
-                    f"SAY ALL PRESENTER: CONTENT: {i}.",
-                    content_obj,
-                    f"'{text}' ({start}-{end})",
-                ]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-                skip, reason = self._say_all_should_skip_content(content, contents)
-                if skip:
-                    msg = f"SAY ALL PRESENTER: Skipping content - {reason}."
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
-                    continue
-
-                utterances = speech_presenter.get_presenter().generate_speech_contents(
-                    self._script,
-                    [content],
-                    eliminatePauses=True,
-                    priorObj=prior_obj,
-                    index=i,
-                    total=len(contents),
-                )
-                prior_obj = content_obj
-                elements, voices = self._parse_utterances(utterances)
-                if len(elements) != len(voices):
-                    tokens = [
-                        "SAY ALL PRESENTER: Skipping content - elements/voices mismatch:",
-                        content_obj,
-                        f"'{text}', elements: {len(elements)}, voices: {len(voices)}",
-                    ]
-                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                    continue
-
-                for element, voice in zip(elements, voices, strict=True):
-                    if not element or (isinstance(element, str) and not element.strip()):
-                        continue
-
-                    context = speechserver.SayAllContext(content_obj, element, start, end)
-                    self._contexts.append(context)
-                    tokens = [context]
-                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                    self._script.utilities.set_caret_offset(content_obj, start)
-                    ax_event_synthesizer.get_synthesizer().scroll_into_view(
-                        context.obj,
-                        context.start_offset,
-                        context.end_offset,
-                    )
-                    yield [context, voice]
+            if self.get_only_speak_displayed_text():
+                if (result := self._build_displayed_text_context(contents)) is not None:
+                    yield list(result)
+            else:
+                yield from self._generate_speech_contexts(contents, prior_obj)
 
             obj, offset = self._advance_to_next(obj, offset, contents, restrict_to)
 
@@ -754,6 +844,32 @@ class SayAllPresenter:
         msg = f"SAY ALL PRESENTER: Setting announce tables to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "announce-table", value)
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key="only-speak-displayed-text",
+        schema="say-all",
+        gtype="b",
+        default=False,
+        summary="Only speak displayed text",
+    )
+    @dbus_service.getter
+    def get_only_speak_displayed_text(self) -> bool:
+        """Returns whether Say All only speaks displayed text."""
+
+        return self._get_setting("only-speak-displayed-text", False)
+
+    @dbus_service.setter
+    def set_only_speak_displayed_text(self, value: bool) -> bool:
+        """Sets whether Say All only speaks displayed text."""
+
+        msg = f"SAY ALL PRESENTER: Setting only speak displayed text to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA,
+            "only-speak-displayed-text",
+            value,
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(

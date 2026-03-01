@@ -706,7 +706,6 @@ class SpeechPresenter:
         speech.set_monitor_callbacks(
             write_text=self.write_to_monitor,
             write_key=self.write_key_to_monitor,
-            write_character=self.write_character_to_monitor,
             begin_group=self._begin_monitor_group,
             end_group=self._end_monitor_group,
         )
@@ -2184,8 +2183,6 @@ class SpeechPresenter:
                 self._monitor.write_text(value)
             elif kind == "key":
                 self._monitor.write_key_event(value)
-            elif kind == "char":
-                self._monitor.write_character(value)
 
     def _monitor_is_writable(self) -> speech_monitor.SpeechMonitor | None:
         """Returns the monitor if it exists, is enabled, and doesn't have focus."""
@@ -2235,14 +2232,6 @@ class SpeechPresenter:
         if monitor is not None:
             monitor.write_key_event(key_description)
         self._append_to_history("key", key_description)
-
-    def write_character_to_monitor(self, character: str) -> None:
-        """Writes a character to the speech monitor if active and not focused."""
-
-        monitor = self._monitor_is_writable()
-        if monitor is not None:
-            monitor.write_character(character)
-        self._append_to_history("char", character)
 
     def present_key_event(self, event: KeyboardEvent) -> None:
         """Presents a key event via speech."""

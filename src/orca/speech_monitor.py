@@ -256,9 +256,4 @@ class SpeechMonitor(Gtk.Window):  # pylint: disable=too-many-instance-attributes
     def write_key_event(self, key_description: str) -> None:
         """Appends a formatted key event entry to the monitor."""
 
-        self._append_text(f"[key: {key_description}]\n")
-
-    def write_character(self, character: str) -> None:
-        """Appends a formatted character entry to the monitor."""
-
-        self._append_text(f"[char: {character}]\n")
+        self._append_text(f"[{key_description}]\n")

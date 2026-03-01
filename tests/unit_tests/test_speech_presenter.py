@@ -200,7 +200,6 @@ class TestSpeechPresenter:
         speech_mock.set_monitor_callbacks.assert_called_once_with(
             write_text=presenter.write_to_monitor,
             write_key=presenter.write_key_to_monitor,
-            write_character=presenter.write_character_to_monitor,
             begin_group=presenter._begin_monitor_group,
             end_group=presenter._end_monitor_group,
         )
@@ -1057,23 +1056,6 @@ class TestSpeechPresenter:
         presenter.write_key_to_monitor("Return")
 
         mock_monitor.write_key_event.assert_called_once_with("Return")
-
-    def test_write_character_to_monitor(self, test_context: OrcaTestContext) -> None:
-        """Test write_character_to_monitor writes character."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        speech_monitor_mock = essential_modules["orca.speech_monitor"]
-        from orca.speech_presenter import get_presenter
-
-        presenter = get_presenter()
-        presenter.set_monitor_is_enabled(True)
-        mock_monitor = test_context.Mock()
-        mock_monitor.has_toplevel_focus.return_value = False
-        speech_monitor_mock.SpeechMonitor.return_value = mock_monitor
-
-        presenter.write_character_to_monitor("a")
-
-        mock_monitor.write_character.assert_called_once_with("a")
 
     def test_destroy_monitor(self, test_context: OrcaTestContext) -> None:
         """Test destroy_monitor destroys existing speech monitor."""

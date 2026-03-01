@@ -43,7 +43,6 @@ class _State:  # pylint: disable=too-many-instance-attributes
     monitor_group_depth: int = 0
     write_text: Callable[[str], None] | None = None
     write_key: Callable[[str], None] | None = None
-    write_character: Callable[[str], None] | None = None
     begin_group: Callable[[], None] | None = None
     end_group: Callable[[], None] | None = None
 
@@ -72,7 +71,6 @@ def set_mute_speech(mute: bool) -> None:
 def set_monitor_callbacks(
     write_text: Callable[[str], None] | None = None,
     write_key: Callable[[str], None] | None = None,
-    write_character: Callable[[str], None] | None = None,
     begin_group: Callable[[], None] | None = None,
     end_group: Callable[[], None] | None = None,
 ) -> None:
@@ -80,7 +78,6 @@ def set_monitor_callbacks(
 
     _state.write_text = write_text
     _state.write_key = write_key
-    _state.write_character = write_character
     _state.begin_group = begin_group
     _state.end_group = end_group
 
@@ -102,6 +99,15 @@ def _resolve_acss(acss: ACSS | dict[str, Any] | list[dict[str, Any]] | None = No
     return ACSS({})
 
 
+def _say_all_with_monitor(utterance_iterator: Any) -> Any:
+    """Wraps the utterance iterator to write each utterance to the speech monitor."""
+
+    for context, acss in utterance_iterator:
+        if _state.write_text is not None:
+            _state.write_text(context.utterance)
+        yield context, acss
+
+
 def say_all(utterance_iterator: Any, progress_callback: Callable[..., Any]) -> None:
     """Speaks each item in the utterance_iterator."""
 
@@ -110,7 +116,7 @@ def say_all(utterance_iterator: Any, progress_callback: Callable[..., Any]) -> N
 
     server = _state.server
     if server:
-        server.say_all(utterance_iterator, progress_callback)
+        server.say_all(_say_all_with_monitor(utterance_iterator), progress_callback)
     else:
         for [context, _acss] in utterance_iterator:
             log_line = f"SPEECH OUTPUT: '{context.utterance}'"
@@ -260,5 +266,5 @@ def speak_character(
     server = _state.server
     if server:
         server.speak_character(character, acss=acss, cap_style=cap_style)
-    if _state.write_character is not None:
-        _state.write_character(character)
+    if _state.write_text is not None:
+        _state.write_text(character)

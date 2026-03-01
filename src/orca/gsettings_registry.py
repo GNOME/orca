@@ -546,6 +546,10 @@ class GSettingsRegistry:
         if gs is None:
             return
 
+        global_gs = None
+        if app_name:
+            global_gs = self.get_settings(schema_name, profile, app_name="")
+
         writers: dict[str, Callable[..., None]] = {
             "b": gs.set_boolean,
             "s": gs.set_string,
@@ -560,15 +564,21 @@ class GSettingsRegistry:
             "d": gs.get_double,
             "as": gs.get_strv,
         }
+        global_readers: dict[str, Callable[..., Any]] = {}
+        if global_gs is not None:
+            global_readers = {
+                "b": global_gs.get_boolean,
+                "s": global_gs.get_string,
+                "i": global_gs.get_int,
+                "d": global_gs.get_double,
+                "as": global_gs.get_strv,
+            }
 
         for key, value in settings.items():
             setting = self._descriptors.get((schema_name, key))
             if setting is None:
                 continue
-            if skip_defaults and value == setting.default:
-                if gs.get_user_value(key) is not None:
-                    gs.reset(key)
-                continue
+
             if setting.genum:
                 nick: str
                 if isinstance(value, str):
@@ -580,8 +590,25 @@ class GSettingsRegistry:
                     if resolved is None:
                         continue
                     nick = resolved
+                is_redundant = skip_defaults and nick == setting.default
+                if not is_redundant and global_gs is not None:
+                    is_redundant = nick == global_gs.get_string(key)
+                if is_redundant:
+                    if gs.get_user_value(key) is not None:
+                        gs.reset(key)
+                    continue
                 if gs.get_string(key) != nick:
                     gs.set_string(key, nick)
+                continue
+
+            is_redundant = skip_defaults and value == setting.default
+            if not is_redundant and global_gs is not None:
+                global_reader = global_readers.get(setting.gtype)
+                if global_reader is not None:
+                    is_redundant = value == global_reader(key)
+            if is_redundant:
+                if gs.get_user_value(key) is not None:
+                    gs.reset(key)
                 continue
             reader = readers.get(setting.gtype)
             if reader is not None and reader(key) == value:
