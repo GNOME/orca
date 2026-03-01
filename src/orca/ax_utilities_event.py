@@ -980,6 +980,11 @@ class AXUtilitiesEvent:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
+        if AXUtilitiesRole.is_menu(event.source):
+            msg = "AXUtilitiesEvent: Event is presentable: Source is a menu."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         if AXUtilitiesRole.is_combo_box(event.source) and not AXUtilitiesState.is_expanded(
             event.source
         ):
@@ -1007,7 +1012,7 @@ class AXUtilitiesEvent:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        msg = "AXUtilitiesEvent: Event is presentable."
+        msg = "AXUtilitiesEvent: Event is presentable: Not ruled out by any checks."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return True
 
