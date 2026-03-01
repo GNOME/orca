@@ -427,9 +427,9 @@ class Script(script.Script):
         if old_focus is None:
             old_focus = active_window
 
-        if self.utilities.should_interrupt_for_locus_of_focus_change(old_focus, new_focus, event):
-            presentation_manager.get_manager().interrupt_presentation()
-        presentation_manager.get_manager().present_object(self, new_focus, priorObj=old_focus)
+        manager = presentation_manager.get_manager()
+        manager.interrupt_if_needed_for_focus_change(old_focus, new_focus, event)
+        manager.present_object(self, new_focus, priorObj=old_focus)
         return True
 
     def activate(self) -> None:

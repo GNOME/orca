@@ -586,8 +586,9 @@ class Script(default.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
-        if self.utilities.should_interrupt_for_locus_of_focus_change(old_focus, new_focus, event):
-            presentation_manager.get_manager().interrupt_presentation()
+        presentation_manager.get_manager().interrupt_if_needed_for_focus_change(
+            old_focus, new_focus, event
+        )
 
         if contents:
             presentation_manager.get_manager().speak_contents(contents, **args)
@@ -1271,12 +1272,9 @@ class Script(default.Script):
 
             msg = "WEB: Event handled: Setting locusOfFocus to embedded descendant"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            if self.utilities.should_interrupt_for_locus_of_focus_change(
-                focus,
-                event.source,
-                event,
-            ):
-                presentation_manager.get_manager().interrupt_presentation()
+            presentation_manager.get_manager().interrupt_if_needed_for_focus_change(
+                focus, event.source, event
+            )
 
             focus_manager.get_manager().set_locus_of_focus(event, event.source)
             return True

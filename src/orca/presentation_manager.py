@@ -19,6 +19,7 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-public-methods
+# pylint: disable=too-many-return-statements
 
 """Module for managing presentation of information to the user via speech, braille, and sound."""
 
@@ -41,6 +42,7 @@ from . import (
     speechserver,
     typing_echo_presenter,
 )
+from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
 
@@ -81,6 +83,81 @@ class PresentationManager:
         if kill_flash:
             braille_presenter.get_presenter().kill_flash()
         live_region_presenter.get_presenter().flush_messages()
+
+    def interrupt_if_needed_for_focus_change(
+        self,
+        old_focus: Atspi.Accessible,
+        new_focus: Atspi.Accessible,
+        event: Atspi.Event | None = None,
+    ) -> None:
+        """Interrupts presentation if the focus change warrants it."""
+
+        if self._should_interrupt_for_focus_change(old_focus, new_focus, event):
+            self.interrupt_presentation()
+
+    @staticmethod
+    def _should_interrupt_for_focus_change(
+        old_focus: Atspi.Accessible,
+        new_focus: Atspi.Accessible,
+        event: Atspi.Event | None = None,
+    ) -> bool:
+        """Returns True if speech should be interrupted to present the new focus."""
+
+        msg = "PRESENTATION MANAGER: Not interrupting for locusOfFocus change: "
+        if (
+            event is None
+            or old_focus == new_focus
+            or event.type.startswith("object:active-descendant-changed")
+        ):
+            if event is None:
+                msg += "event is None"
+            elif old_focus == new_focus:
+                msg += "old locusOfFocus is same as new locusOfFocus"
+            else:
+                msg += "event is active-descendant-changed"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if (
+            AXUtilities.is_table_cell(old_focus)
+            and AXUtilities.is_text(new_focus)
+            and AXUtilities.is_editable(new_focus)
+        ):
+            msg += "suspected editable cell"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if not AXUtilities.is_menu_related(new_focus) and (
+            AXUtilities.is_check_menu_item(old_focus) or AXUtilities.is_radio_menu_item(old_focus)
+        ):
+            msg += "suspected menuitem state change"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if AXUtilities.is_ancestor(new_focus, old_focus):
+            if old_name := AXObject.get_name(old_focus):
+                if old_name == AXObject.get_name(new_focus):
+                    return True
+                msg += "old locusOfFocus is ancestor of new locusOfFocus, and has a name"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
+            if AXUtilities.is_dialog_or_window(old_focus):
+                if AXUtilities.is_menu(new_focus):
+                    return True
+                msg += "old locusOfFocus is ancestor dialog or window of the new locusOfFocus"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
+            return True
+
+        if AXUtilities.object_is_controlled_by(
+            old_focus,
+            new_focus,
+        ) or AXUtilities.object_is_controlled_by(new_focus, old_focus):
+            msg += "new locusOfFocus and old locusOfFocus have controls relation"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return True
 
     _announced_command: _Command | None = None
 
