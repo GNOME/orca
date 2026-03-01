@@ -95,7 +95,6 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             getter=presenter.get_only_speak_displayed_text,
             setter=presenter.set_only_speak_displayed_text,
             prefs_key="only-speak-displayed-text",
-            member_of=guilabels.ANNOUNCEMENTS,
         )
 
         controls: list[preferences_grid_base.ControlType] = [
@@ -107,6 +106,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=presenter.set_style_from_int,
                 prefs_key="style",
             ),
+            self._only_speak_displayed_control,
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.SAY_ALL_UP_AND_DOWN_ARROW,
                 getter=presenter.get_rewind_and_fast_forward_enabled,
@@ -121,7 +121,6 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 prefs_key="structural-navigation",
                 member_of=guilabels.SAY_ALL_REWIND_AND_FAST_FORWARD_BY,
             ),
-            self._only_speak_displayed_control,
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.ANNOUNCE_BLOCKQUOTES,
                 getter=presenter.get_announce_blockquote,
