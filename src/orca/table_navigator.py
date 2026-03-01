@@ -83,22 +83,12 @@ class TableNavigator:
         self._previous_reported_row: int | None = None
         self._previous_reported_col: int | None = None
         self._last_input_event: InputEvent | None = None
-        self._enabled: bool = True
-
-        # To make it possible for focus mode to suspend this navigation without
-        # changing the user's preferred setting.
-        self._suspended: bool = False
         self._initialized: bool = False
 
         msg = "TABLE NAVIGATOR: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("TableNavigator", self)
-
-    def is_enabled(self) -> bool:
-        """Returns true if table-navigation support is enabled."""
-
-        return self._enabled
 
     def last_input_event_was_navigation_command(self) -> bool:
         """Returns true if the last input event was a navigation command."""
@@ -227,7 +217,7 @@ class TableNavigator:
                 ),
             )
 
-        msg = f"TABLE NAVIGATOR: Commands set up. Suspended: {self._suspended}"
+        msg = "TABLE NAVIGATOR: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     @dbus_service.command
@@ -239,8 +229,6 @@ class TableNavigator:
     ) -> bool:
         """Toggles table navigation."""
 
-        self._enabled = not self._enabled
-
         tokens = [
             "TABLE NAVIGATOR: toggle_enabled. Script:",
             script,
@@ -251,8 +239,12 @@ class TableNavigator:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+        enabled = not command_manager.get_manager().is_group_enabled(
+            guilabels.KB_GROUP_TABLE_NAVIGATION,
+        )
+
         if notify_user:
-            if self._enabled:
+            if enabled:
                 presentation_manager.get_manager().present_message(
                     messages.TABLE_NAVIGATION_ENABLED,
                 )
@@ -261,28 +253,8 @@ class TableNavigator:
                     messages.TABLE_NAVIGATION_DISABLED,
                 )
 
-        self._last_input_event = None
-        command_manager.get_manager().set_group_enabled(
-            guilabels.KB_GROUP_TABLE_NAVIGATION,
-            self._enabled,
-        )
+        self.set_is_enabled(enabled)
         return True
-
-    def suspend_commands(self, _script: default.Script, suspended: bool, reason: str = "") -> None:
-        """Suspends table navigation independent of the enabled setting."""
-
-        if suspended == self._suspended:
-            return
-
-        msg = f"TABLE NAVIGATOR: Suspended: {suspended}"
-        if reason:
-            msg += f": {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        self._suspended = suspended
-        command_manager.get_manager().set_group_suspended(
-            guilabels.KB_GROUP_TABLE_NAVIGATION,
-            suspended,
-        )
 
     def _is_blank(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is empty or consists of only whitespace."""

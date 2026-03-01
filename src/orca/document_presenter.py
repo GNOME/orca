@@ -646,7 +646,6 @@ class DocumentPresenter:
         caret_navigator.get_navigator().suspend_commands(script, suspended, reason)
         structural_navigator.get_navigator().suspend_commands(script, suspended, reason)
         live_region_presenter.get_presenter().suspend_commands(script, suspended, reason)
-        table_navigator.get_navigator().suspend_commands(script, suspended, reason)
         return True
 
     def _enable_document_navigators(self, script: default.Script, reason: str) -> None:

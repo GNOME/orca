@@ -1201,11 +1201,7 @@ class TestDocumentPresenter:
             True,
             "test",
         )
-        table_nav.get_navigator.return_value.suspend_commands.assert_called_with(
-            mock_script,
-            True,
-            "test",
-        )
+        table_nav.get_navigator.return_value.suspend_commands.assert_not_called()
 
     def test_enable_sticky_focus_mode(self, test_context: OrcaTestContext) -> None:
         """Test enable_sticky_focus_mode sets sticky focus mode."""

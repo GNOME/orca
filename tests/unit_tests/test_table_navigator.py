@@ -185,7 +185,6 @@ class TestTableNavigator:
         assert navigator._previous_reported_col is None
         assert navigator._last_input_event is None
         assert navigator.get_is_enabled() is True
-        assert navigator._suspended is False
         # D-Bus registration and commands are registered during setup()
         navigator.set_up_commands()
         # Verify commands are registered in CommandManager
@@ -321,18 +320,15 @@ class TestTableNavigator:
         guilabels_mock.KB_GROUP_TABLE_NAVIGATION = "Table navigation"
 
         navigator = TableNavigator()
-        navigator._enabled = initial_enabled
+        mock_cmd_mgr.is_group_enabled.return_value = initial_enabled
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         pres_manager.present_message.reset_mock()
         result = navigator.toggle_enabled(mock_script, mock_event, notify_user=True)
         assert result is True
-        assert navigator.is_enabled() is expected_enabled
-        assert navigator._last_input_event is None
         expected_message = getattr(essential_modules["orca.messages"], expected_message_attr)
         pres_manager.present_message.assert_called_once_with(expected_message)
-        mock_cmd_mgr.set_group_enabled.assert_called_once()
 
     def test_toggle_enabled_no_notify(self, test_context: OrcaTestContext) -> None:
         """Test TableNavigator.toggle_enabled does not present message when notify_user=False."""
@@ -355,59 +351,14 @@ class TestTableNavigator:
         guilabels_mock.KB_GROUP_TABLE_NAVIGATION = "Table navigation"
 
         navigator = TableNavigator()
-        navigator._enabled = False  # Start disabled so toggle enables it
+        mock_cmd_mgr.is_group_enabled.return_value = False
         mock_script = test_context.Mock()
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         pres_manager.present_message.reset_mock()
         result = navigator.toggle_enabled(mock_script, mock_event, notify_user=False)
         assert result is True
-        assert navigator.is_enabled() is True
         pres_manager.present_message.assert_not_called()
-        mock_cmd_mgr.set_group_enabled.assert_called_once()
-
-    @pytest.mark.parametrize(
-        "initial_suspended,new_suspended,should_update_commands",
-        [
-            (False, True, True),
-            (True, False, True),
-            (False, False, False),
-            (True, True, False),
-        ],
-    )
-    def test_suspend_commands(
-        self,
-        test_context: OrcaTestContext,
-        initial_suspended: bool,
-        new_suspended: bool,
-        should_update_commands: bool,
-    ) -> None:
-        """Test TableNavigator.suspend_commands handles state changes appropriately."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        mock_controller = test_context.Mock()
-        essential_modules["orca.dbus_service"].get_remote_controller.return_value = mock_controller
-        mock_keybindings_class = test_context.Mock()
-        mock_keybindings_instance = test_context.Mock()
-        mock_keybindings_class.return_value = mock_keybindings_instance
-        test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
-            new=mock_keybindings_class,
-        )
-        mock_cmd_mgr = test_context.Mock()
-        essential_modules["orca.command_manager"].get_manager.return_value = mock_cmd_mgr
-        from orca.table_navigator import TableNavigator
-
-        navigator = TableNavigator()
-        navigator._suspended = initial_suspended
-        mock_script = test_context.Mock()
-        reason = "test reason" if new_suspended else ""
-        navigator.suspend_commands(mock_script, new_suspended, reason)
-        assert navigator._suspended is new_suspended
-        if should_update_commands:
-            mock_cmd_mgr.set_group_suspended.assert_called_once()
-        else:
-            mock_cmd_mgr.set_group_suspended.assert_not_called()
 
     @pytest.mark.parametrize(
         "is_focusable, has_name, has_children, is_whitespace, expected_result",
