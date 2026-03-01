@@ -98,22 +98,6 @@ class Script(gtk.Script):
 
         return super()._on_expanded_changed(event)
 
-    def _on_name_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:property-change:accessible-name events."""
-
-        if self.chat.is_in_buddy_list(event.source):
-            return True
-
-        return super()._on_name_changed(event)
-
-    def _on_text_deleted(self, event: Atspi.Event) -> bool:
-        """Callback for object:text-changed:delete accessibility events."""
-
-        if self.chat.is_in_buddy_list(event.source):
-            return True
-
-        return super()._on_text_deleted(event)
-
     def _on_text_inserted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:insert accessibility events."""
 
@@ -121,11 +105,3 @@ class Script(gtk.Script):
             return True
 
         return super()._on_text_inserted(event)
-
-    def _on_value_changed(self, event: Atspi.Event) -> bool:
-        """Callback for object:property-change:accessible-value accessibility events."""
-
-        if self.chat.is_in_buddy_list(event.source):
-            return True
-
-        return super()._on_value_changed(event)
