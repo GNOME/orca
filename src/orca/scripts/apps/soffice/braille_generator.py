@@ -82,5 +82,5 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         object_text = AXText.get_substring(obj, 0, -1)
         cell_name = AXUtilities.get_label_for_cell_coordinates(
             obj,
-        ) or self._script.utilities.spreadsheet_cell_name(obj)
+        ) or AXObject.get_name(obj)
         return [braille.Component(obj, f"{object_text} {cell_name}")]

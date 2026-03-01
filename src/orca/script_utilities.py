@@ -234,11 +234,6 @@ class Utilities:
         # TODO - JD: Replace callers of this function with the logic below.
         return AXUtilities.find_ancestor_inclusive(obj, self.is_document)
 
-    def convert_column_to_string(self, column: int) -> str:
-        """Converts a column number to a string representation."""
-
-        return str(column)
-
     def should_read_full_row(
         self,
         obj: Atspi.Accessible,
@@ -249,6 +244,7 @@ class Utilities:
         if (
             focus_manager.get_manager().in_say_all()
             or table_navigator.get_navigator().last_input_event_was_navigation_command()
+            or input_event_manager.get_manager().last_event_was_tab_navigation()
             or not AXUtilities.cell_row_changed(obj, previous_object)
         ):
             return False

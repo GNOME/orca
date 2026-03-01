@@ -135,7 +135,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         ):
             label = AXUtilities.get_label_for_cell_coordinates(
                 obj,
-            ) or self._script.utilities.spreadsheet_cell_name(obj)
+            ) or AXObject.get_name(obj)
             result.append(label)
 
         if self._script.utilities.should_read_full_row(obj, args.get("priorObj")):

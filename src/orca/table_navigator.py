@@ -842,8 +842,7 @@ class TableNavigator:
             AXUtilities.set_dynamic_row_headers_column(table, column)
             if notify_user:
                 presentation_manager.get_manager().present_message(
-                    messages.DYNAMIC_ROW_HEADER_SET
-                    % script.utilities.convert_column_to_string(column + 1),
+                    messages.DYNAMIC_ROW_HEADER_SET % AXUtilities.get_column_label(table, column),
                 )
 
         return True

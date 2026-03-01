@@ -1963,12 +1963,16 @@ class TestTableNavigator:
             return_value=None,
         )
         essential_modules["orca.messages"].DYNAMIC_ROW_HEADER_SET = "Row header column set to %s"
+        test_context.patch(
+            "orca.table_navigator.AXUtilities.get_column_label",
+            create=True,
+            return_value="B",
+        )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
         navigator._get_current_cell = test_context.Mock(return_value=mock_current_cell)
         mock_script = test_context.Mock()
-        mock_script.utilities.convert_column_to_string.return_value = "B"
         mock_event = test_context.Mock()
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         pres_manager.present_message.reset_mock()

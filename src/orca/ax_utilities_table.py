@@ -30,7 +30,9 @@ from typing import TYPE_CHECKING
 from . import debug, messages, object_properties
 from .ax_component import AXComponent
 from .ax_object import AXObject
+from .ax_selection import AXSelection
 from .ax_table import AXTable
+from .ax_text import AXText
 from .ax_utilities_component import AXUtilitiesComponent
 from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_role import AXUtilitiesRole
@@ -462,6 +464,23 @@ class AXUtilitiesTable:
         ) and col + 1 == AXTable.get_column_count(table, prefer_attribute=False)
 
     @staticmethod
+    @staticmethod
+    def get_column_label(table: Atspi.Accessible, column: int) -> str:
+        """Returns the column label for the given column index in table."""
+
+        cell = AXTable.get_cell_at(table, 0, column)
+        attrs = AXObject.get_attributes_dict(cell)
+        return attrs.get("colindextext", attrs.get("coltext", str(column + 1)))
+
+    @staticmethod
+    def get_row_label(table: Atspi.Accessible, row: int) -> str:
+        """Returns the row label for the given row index in table."""
+
+        cell = AXTable.get_cell_at(table, row, 0)
+        attrs = AXObject.get_attributes_dict(cell)
+        return attrs.get("rowindextext", attrs.get("rowtext", str(row + 1)))
+
+    @staticmethod
     def get_label_for_cell_coordinates(cell: Atspi.Accessible) -> str:
         """Returns the text that should be used instead of the numeric indices."""
 
@@ -643,6 +662,37 @@ class AXUtilitiesTable:
                         cell = child
                         break
                 yield cell
+
+    @staticmethod
+    def get_selected_cell_coordinates_range(
+        obj: Atspi.Accessible,
+    ) -> tuple[tuple[int, int], tuple[int, int]]:
+        """Returns the coordinates of the first and last selected cells in obj."""
+
+        if not (AXObject.supports_table(obj) and AXObject.supports_selection(obj)):
+            tokens = ["AXUtilitiesTable:", obj, "doesn't implement both selection and table"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return (-1, -1), (-1, -1)
+
+        first = AXSelection.get_selected_child(obj, 0)
+        last = AXSelection.get_selected_child(obj, -1)
+        return AXTable.get_cell_coordinates(first), AXTable.get_cell_coordinates(last)
+
+    @staticmethod
+    def get_cell_name_for_coordinates(
+        obj: Atspi.Accessible,
+        row: int,
+        col: int,
+        include_contents: bool = False,
+    ) -> str:
+        """Returns the name of the cell at row, col in obj, optionally with its text."""
+
+        cell = AXTable.get_cell_at(obj, row, col)
+        name = AXObject.get_name(cell)
+        if include_contents:
+            text = AXText.get_all_text(cell)
+            name = f"{text} {name}"
+        return name.strip()
 
     @staticmethod
     def get_showing_cells_in_same_row(

@@ -27,14 +27,11 @@ from orca import (
     caret_navigator,
     debug,
     focus_manager,
-    input_event_manager,
     messages,
     presentation_manager,
     script_utilities,
-    table_navigator,
 )
 from orca.ax_object import AXObject
-from orca.ax_selection import AXSelection
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
@@ -60,37 +57,9 @@ class Utilities(script_utilities.Utilities):
 
         parent = AXObject.get_parent(obj)
         if AXUtilities.is_panel(parent) or AXUtilities.is_extended(parent):
-            return self.spreadsheet_cell_name(parent)
+            return AXObject.get_name(parent)
 
         return False
-
-    def spreadsheet_cell_name(self, cell: Atspi.Accessible) -> str:
-        """Returns the accessible name of the cell."""
-
-        # TODO - JD: Is this still needed? See also _get_cell_name_for_coordinates.
-        name_list = AXObject.get_name(cell).split()
-        for name in name_list:
-            cleaned_name = name.replace(".", "")
-            if not cleaned_name.isalpha() and cleaned_name.isalnum():
-                return cleaned_name
-
-        return ""
-
-    def _get_cell_name_for_coordinates(
-        self,
-        obj: Atspi.Accessible,
-        row: int,
-        col: int,
-        include_contents: bool = False,
-    ) -> str:
-        # https://bugs.documentfoundation.org/show_bug.cgi?id=158030
-        cell = AXTable.get_cell_at(obj, row, col)
-        name = self.spreadsheet_cell_name(cell)
-        if include_contents:
-            text = AXText.get_all_text(cell)
-            name = f"{text} {name}"
-
-        return name.strip()
 
     def get_word_at_offset_adjusted_for_navigation(
         self,
@@ -104,21 +73,6 @@ class Utilities(script_utilities.Utilities):
 
         return AXText.get_word_at_offset(obj, offset)
 
-    def should_read_full_row(
-        self,
-        obj: Atspi.Accessible,
-        previous_object: Atspi.Accessible | None = None,
-    ) -> bool:
-        """Returns True if the full row in obj should be read."""
-
-        if table_navigator.get_navigator().last_input_event_was_navigation_command():
-            return False
-
-        if input_event_manager.get_manager().last_event_was_tab_navigation():
-            return False
-
-        return super().should_read_full_row(obj, previous_object)
-
     def _is_top_level_object(self, obj: Atspi.Accessible) -> bool:
         # https://bugs.documentfoundation.org/show_bug.cgi?id=160806
         if AXObject.get_parent(obj) is None and AXObject.get_role(obj) in self._top_level_roles():
@@ -128,51 +82,22 @@ class Utilities(script_utilities.Utilities):
 
         return super()._is_top_level_object(obj)
 
-    def convert_column_to_string(self, column: int):
-        """Converts a column index to a string representation."""
-
-        base26 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
-        if column <= len(base26):
-            return base26[column - 1]
-
-        res = ""
-        while column > 0:
-            digit = column % len(base26)
-            res = " " + base26[digit - 1] + res
-            column = int(column / len(base26))
-
-        return res
-
-    def _get_coordinates_for_selected_range(
-        self,
-        obj: Atspi.Accessible,
-    ) -> tuple[tuple[int, int], tuple[int, int]]:
-        if not (AXObject.supports_table(obj) and AXObject.supports_selection(obj)):
-            tokens = ["SOFFICE:", obj, "does not implement both selection and table"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return (-1, -1), (-1, -1)
-
-        first = AXSelection.get_selected_child(obj, 0)
-        last = AXSelection.get_selected_child(obj, -1)
-        return AXTable.get_cell_coordinates(first), AXTable.get_cell_coordinates(last)
-
     def speak_selected_cell_range(self, obj: Atspi.Accessible) -> bool:
         """Speaks the selected cell range."""
 
-        first_coords, last_coords = self._get_coordinates_for_selected_range(obj)
+        first_coords, last_coords = AXUtilities.get_selected_cell_coordinates_range(obj)
         if first_coords == (-1, -1) or last_coords == (-1, -1):
             return False
 
         presentation_manager.get_manager().interrupt_presentation()
 
         if first_coords == last_coords:
-            cell = self._get_cell_name_for_coordinates(obj, *first_coords, True)
+            cell = AXUtilities.get_cell_name_for_coordinates(obj, *first_coords, True)
             presentation_manager.get_manager().speak_message(messages.CELL_SELECTED % cell)
             return True
 
-        cell1 = self._get_cell_name_for_coordinates(obj, *first_coords, True)
-        cell2 = self._get_cell_name_for_coordinates(obj, *last_coords, True)
+        cell1 = AXUtilities.get_cell_name_for_coordinates(obj, *first_coords, True)
+        cell2 = AXUtilities.get_cell_name_for_coordinates(obj, *last_coords, True)
         presentation_manager.get_manager().speak_message(
             messages.CELL_RANGE_SELECTED % (cell1, cell2),
         )
@@ -182,7 +107,7 @@ class Utilities(script_utilities.Utilities):
     def handle_cell_selection_change(self, obj: Atspi.Accessible) -> bool:
         """Presents the selection change for obj."""
 
-        first_coords, last_coords = self._get_coordinates_for_selected_range(obj)
+        first_coords, last_coords = AXUtilities.get_selected_cell_coordinates_range(obj)
         if first_coords == (-1, -1) or last_coords == (-1, -1):
             return True
 
@@ -207,19 +132,31 @@ class Utilities(script_utilities.Utilities):
 
         msgs = []
         if len(unselected) == 1:
-            cell = self._get_cell_name_for_coordinates(obj, *unselected[0], include_contents=True)
+            cell = AXUtilities.get_cell_name_for_coordinates(
+                obj, *unselected[0], include_contents=True
+            )
             msgs.append(messages.CELL_UNSELECTED % cell)
         elif len(unselected) > 1:
-            cell1 = self._get_cell_name_for_coordinates(obj, *unselected[0], include_contents=True)
-            cell2 = self._get_cell_name_for_coordinates(obj, *unselected[-1], include_contents=True)
+            cell1 = AXUtilities.get_cell_name_for_coordinates(
+                obj, *unselected[0], include_contents=True
+            )
+            cell2 = AXUtilities.get_cell_name_for_coordinates(
+                obj, *unselected[-1], include_contents=True
+            )
             msgs.append(messages.CELL_RANGE_UNSELECTED % (cell1, cell2))
 
         if len(selected) == 1:
-            cell = self._get_cell_name_for_coordinates(obj, *selected[0], include_contents=True)
+            cell = AXUtilities.get_cell_name_for_coordinates(
+                obj, *selected[0], include_contents=True
+            )
             msgs.append(messages.CELL_SELECTED % cell)
         elif len(selected) > 1:
-            cell1 = self._get_cell_name_for_coordinates(obj, *selected[0], include_contents=True)
-            cell2 = self._get_cell_name_for_coordinates(obj, *selected[-1], include_contents=True)
+            cell1 = AXUtilities.get_cell_name_for_coordinates(
+                obj, *selected[0], include_contents=True
+            )
+            cell2 = AXUtilities.get_cell_name_for_coordinates(
+                obj, *selected[-1], include_contents=True
+            )
             msgs.append(messages.CELL_RANGE_SELECTED % (cell1, cell2))
 
         if msgs:
@@ -259,23 +196,23 @@ class Utilities(script_utilities.Utilities):
         cols = set(AXTable.get_selected_columns(obj))
         rows = set(AXTable.get_selected_rows(obj))
 
-        selected_cols = sorted(cols.difference(set(self._calc_selected_columns)))
-        unselected_cols = sorted(set(self._calc_selected_columns).difference(cols))
+        selected_col_labels = [
+            AXUtilities.get_column_label(obj, c)
+            for c in sorted(cols.difference(set(self._calc_selected_columns)))
+        ]
+        unselected_col_labels = [
+            AXUtilities.get_column_label(obj, c)
+            for c in sorted(set(self._calc_selected_columns).difference(cols))
+        ]
 
-        def convert_column(x):
-            return self.convert_column_to_string(x + 1)
-
-        def convert_row(x):
-            return x + 1
-
-        selected_cols = list(map(convert_column, selected_cols))
-        unselected_cols = list(map(convert_column, unselected_cols))
-
-        selected_rows = sorted(rows.difference(set(self._calc_selected_rows)))
-        unselected_rows = sorted(set(self._calc_selected_rows).difference(rows))
-
-        selected_rows = list(map(convert_row, selected_rows))
-        unselected_rows = list(map(convert_row, unselected_rows))
+        selected_row_labels = [
+            AXUtilities.get_row_label(obj, r)
+            for r in sorted(rows.difference(set(self._calc_selected_rows)))
+        ]
+        unselected_row_labels = [
+            AXUtilities.get_row_label(obj, r)
+            for r in sorted(set(self._calc_selected_rows).difference(rows))
+        ]
 
         self._calc_selected_columns = list(cols)
         self._calc_selected_rows = list(rows)
@@ -285,20 +222,20 @@ class Utilities(script_utilities.Utilities):
             presentation_manager.get_manager().speak_message(messages.DOCUMENT_SELECTED_ALL)
             return True
 
-        if not cols and len(unselected_cols) == column_count:
+        if not cols and len(unselected_col_labels) == column_count:
             presentation_manager.get_manager().speak_message(messages.DOCUMENT_UNSELECTED_ALL)
             return True
 
         msgs = self._build_selection_change_messages(
-            selected_cols,
-            unselected_cols,
+            selected_col_labels,
+            unselected_col_labels,
             (messages.TABLE_COLUMN_SELECTED, messages.TABLE_COLUMN_RANGE_SELECTED),
             (messages.TABLE_COLUMN_UNSELECTED, messages.TABLE_COLUMN_RANGE_UNSELECTED),
         )
         msgs.extend(
             self._build_selection_change_messages(
-                selected_rows,
-                unselected_rows,
+                selected_row_labels,
+                unselected_row_labels,
                 (messages.TABLE_ROW_SELECTED, messages.TABLE_ROW_RANGE_SELECTED),
                 (messages.TABLE_ROW_UNSELECTED, messages.TABLE_ROW_RANGE_UNSELECTED),
             )

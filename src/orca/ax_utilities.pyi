@@ -1331,6 +1331,21 @@ class AXUtilities:
         table: Atspi.Accessible,
     ) -> Generator[Atspi.Accessible]: ...
     @staticmethod
+    def get_selected_cell_coordinates_range(
+        obj: Atspi.Accessible,
+    ) -> tuple[tuple[int, int], tuple[int, int]]: ...
+    @staticmethod
+    def get_column_label(table: Atspi.Accessible, column: int) -> str: ...
+    @staticmethod
+    def get_row_label(table: Atspi.Accessible, row: int) -> str: ...
+    @staticmethod
+    def get_cell_name_for_coordinates(
+        obj: Atspi.Accessible,
+        row: int,
+        col: int,
+        include_contents: bool = False,
+    ) -> str: ...
+    @staticmethod
     def get_showing_cells_in_same_row(
         cell: Atspi.Accessible,
         clip_to_window: bool = False,
