@@ -1173,8 +1173,8 @@ class PreferencesGridBase(Gtk.Grid):
             for vp_child in viewport_children:
                 if isinstance(vp_child, Gtk.Grid):
                     for gc in reversed(self._get_children_via_foreach(vp_child)):
-                        if isinstance(gc, Gtk.ListBox):
-                            self._focus_first_listbox_row(gc)
+                        if isinstance(gc, Gtk.ListBox) and self._focus_first_listbox_row(gc):
+                            return
 
     def _multipage_focus_first_widget(self, grid: PreferencesGridBase) -> bool:
         """Focus the first focusable widget in a multi-page child grid."""
