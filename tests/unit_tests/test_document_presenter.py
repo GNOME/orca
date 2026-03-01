@@ -1185,7 +1185,6 @@ class TestDocumentPresenter:
 
         caret_nav = mocks["orca.caret_navigator"]
         struct_nav = mocks["orca.structural_navigator"]
-        table_nav = mocks["orca.table_navigator"]
 
         presenter = module.get_presenter()
         result = presenter.suspend_navigators(mock_script, True, "test")
@@ -1201,7 +1200,6 @@ class TestDocumentPresenter:
             True,
             "test",
         )
-        table_nav.get_navigator.return_value.suspend_commands.assert_not_called()
 
     def test_enable_sticky_focus_mode(self, test_context: OrcaTestContext) -> None:
         """Test enable_sticky_focus_mode sets sticky focus mode."""

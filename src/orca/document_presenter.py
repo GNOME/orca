@@ -49,7 +49,6 @@ from . import (
     input_event,
     input_event_manager,
     keybindings,
-    live_region_presenter,
     messages,
     preferences_grid_base,
     presentation_manager,
@@ -645,7 +644,6 @@ class DocumentPresenter:
 
         caret_navigator.get_navigator().suspend_commands(script, suspended, reason)
         structural_navigator.get_navigator().suspend_commands(script, suspended, reason)
-        live_region_presenter.get_presenter().suspend_commands(script, suspended, reason)
         return True
 
     def _enable_document_navigators(self, script: default.Script, reason: str) -> None:

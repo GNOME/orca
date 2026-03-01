@@ -655,7 +655,6 @@ class TestLiveRegionPresenter:
 
         assert presenter.msg_queue is not None
         assert len(presenter.msg_queue) == 0
-        assert presenter._suspended is False
         assert len(presenter.msg_cache) == 0
         assert presenter._monitoring is True
         assert presenter._current_index == 9  # QUEUE_SIZE
@@ -680,22 +679,6 @@ class TestLiveRegionPresenter:
         ]
         for cmd_name in expected_commands:
             assert cmd_manager.get_keyboard_command(cmd_name) is not None
-
-    def test_suspend_commands(self, test_context: OrcaTestContext) -> None:
-        """Test LiveRegionPresenter.suspend_commands."""
-
-        self._setup_dependencies(test_context)
-        from orca.live_region_presenter import LiveRegionPresenter
-
-        presenter = LiveRegionPresenter()
-        mock_script = test_context.Mock()
-        mock_script.key_bindings = test_context.Mock()
-        mock_script.key_bindings.remove = test_context.Mock()
-        mock_script.key_bindings.add = test_context.Mock()
-
-        assert presenter._suspended is False
-        presenter.suspend_commands(mock_script, True, "Test suspend")
-        assert presenter._suspended is True
 
     def test_reset(self, test_context: OrcaTestContext) -> None:
         """Test LiveRegionPresenter.reset."""

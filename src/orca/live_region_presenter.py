@@ -197,10 +197,6 @@ class LiveRegionPresenter:
     def __init__(self) -> None:
         self.msg_queue = LiveRegionMessageQueue(max_size=self.QUEUE_SIZE)
 
-        # To make it possible for focus mode to suspend commands without changing
-        # the user's preferred setting.
-        self._suspended = False
-
         self.msg_cache: list[str] = []
         self._politeness_overrides: dict[int, LivePoliteness] = {}
         self._restore_overrides: dict[int, LivePoliteness] = {}
@@ -286,24 +282,8 @@ class LiveRegionPresenter:
             ),
         )
 
-        msg = f"LIVE REGION PRESENTER: Commands set up. Suspended: {self._suspended}"
+        msg = "LIVE REGION PRESENTER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def suspend_commands(self, _script: default.Script, suspended: bool, reason: str = "") -> None:
-        """Suspends live region commands independent of the enabled setting."""
-
-        if suspended == self._suspended:
-            return
-
-        msg = f"LIVE REGION PRESENTER: Commands suspended: {suspended}"
-        if reason:
-            msg += f": {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        self._suspended = suspended
-        command_manager.get_manager().set_group_suspended(
-            guilabels.KB_GROUP_LIVE_REGIONS,
-            suspended,
-        )
 
     def reset(self) -> None:
         """Reset the live region presenter."""
