@@ -564,7 +564,7 @@ class SpeechGenerator(generator.Generator):
         if not text:
             return []
 
-        return [text, self.voice(SYSTEM, obj=obj, **args)]
+        return [text, *self.voice(SYSTEM, obj=obj, **args)]
 
     @log_generator_output
     def _generate_has_click_action(self, obj: Atspi.Accessible, **args) -> list[Any]:
@@ -1858,7 +1858,7 @@ class SpeechGenerator(generator.Generator):
         if AXUtilities.is_menu(obj) or not AXUtilities.has_popup(obj):
             return []
 
-        return [messages.HAS_POPUP, self.voice(SYSTEM, obj=obj, **args)]
+        return [messages.HAS_POPUP, *self.voice(SYSTEM, obj=obj, **args)]
 
     @log_generator_output
     def _generate_state_invalid(self, obj: Atspi.Accessible, **args) -> list[Any]:
@@ -4388,7 +4388,7 @@ class SpeechGenerator(generator.Generator):
                 string = ""
             else:
                 string = messages.BLANK
-            result = [[string, self.voice(DEFAULT, **args)]]
+            result = [[string, *self.voice(DEFAULT, **args)]]
 
         return result
 
@@ -4404,13 +4404,13 @@ class SpeechGenerator(generator.Generator):
         if not line or line == "\n":
             if not speech_presenter.get_presenter().get_speak_blank_lines():
                 return []
-            return [messages.BLANK, self.voice(DEFAULT)]
+            return [messages.BLANK, *self.voice(DEFAULT)]
 
         presenter = speech_presenter.get_presenter()
         split = self._script.utilities.split_substring_by_language(obj, start_offset, end_offset)
         if not split:
             text = presenter.adjust_for_presentation(obj, line)
-            return [text, self.voice(obj=obj, string=text)]
+            return [text, *self.voice(obj=obj, string=text)]
 
         result: list[Any] = []
         for start, _end, text, language, dialect in split:
@@ -4420,7 +4420,7 @@ class SpeechGenerator(generator.Generator):
             if not adjusted_text:
                 continue
             voice = self.voice(obj=obj, string=adjusted_text, language=language, dialect=dialect)
-            result.extend([adjusted_text, voice])
+            result.extend([adjusted_text, *voice])
 
         return result
 
@@ -4438,7 +4438,7 @@ class SpeechGenerator(generator.Generator):
         if not text:
             return []
         voice = self.voice(obj=obj, string=text)
-        return [text, voice]
+        return [text, *voice]
 
     def generate_word(self, obj: Atspi.Accessible, offset: int) -> list[Any]:
         """Generates speech for a word at offset. Overridden by web for DOM-walking."""

@@ -707,8 +707,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 string = ""
             else:
                 string = messages.BLANK
-            # TODO - Why not [[string, self.voice(speech_generator.DEFAULT, **args)]] ?
-            result = [string, self.voice(speech_generator.DEFAULT, **args)]
+            # TODO - Why not [[string, *self.voice(speech_generator.DEFAULT, **args)]] ?
+            result = [string, *self.voice(speech_generator.DEFAULT, **args)]
 
         return result
 
