@@ -56,67 +56,6 @@ class Utilities(web.Utilities):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
-    def _is_quick_find(self, obj: Atspi.Accessible | None) -> bool:
-        if not obj or self.in_document_content(obj):
-            return False
-
-        if obj == self._find_container:
-            return True
-
-        if not AXUtilities.is_tool_bar(obj):
-            return False
-
-        # TODO: This would be far easier if Gecko gave us an object attribute to look for....
-
-        if len(AXUtilities.find_all_entries(obj)) != 1:
-            tokens = ["GECKO:", obj, "not believed to be quick-find container (entry count)"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        if len(AXUtilities.find_all_push_buttons(obj)) != 1:
-            tokens = ["GECKO:", obj, "not believed to be quick-find container (button count)"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        tokens = ["GECKO:", obj, "believed to be quick-find container (accessibility tree)"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        self._find_container = obj
-        return True
-
-    def _is_find_container(self, obj: Atspi.Accessible | None = None) -> bool:
-        """Returns True if obj is a find-in-page container."""
-
-        if not obj or self.in_document_content(obj):
-            return False
-
-        if obj == self._find_container:
-            return True
-
-        if not AXUtilities.is_tool_bar(obj):
-            return False
-
-        result = self.get_find_results_count(obj)
-        if result:
-            tokens = ["GECKO:", obj, "believed to be find-in-page container (", result, ")"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            self._find_container = obj
-            return True
-
-        # TODO: This would be far easier if Gecko gave us an object attribute to look for....
-
-        if (
-            len(AXUtilities.find_all_entries(obj)) != 1
-            or len(AXUtilities.find_all_push_buttons(obj)) < 5
-        ):
-            tokens = ["GECKO:", obj, "not believed to be find-in-page container (widget counts)"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        tokens = ["GECKO:", obj, "believed to be find-in-page container (accessibility tree)"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        self._find_container = obj
-        return True
-
     def in_find_container(self, obj: Atspi.Accessible | None = None) -> bool:
         """Returns True if obj is in a find-in-page container."""
 
@@ -130,15 +69,13 @@ class Utilities(web.Utilities):
             return False
 
         toolbar = AXUtilities.find_ancestor(obj, AXUtilities.is_tool_bar)
-        result = self._is_find_container(toolbar)
-        if result:
-            tokens = ["GECKO:", obj, "believed to be find-in-page widget (toolbar)"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        if toolbar == self._find_container:
             return True
 
-        if self._is_quick_find(toolbar):
-            tokens = ["GECKO:", obj, "believed to be find-in-page widget (quick find)"]
+        if toolbar and AXObject.get_attribute(toolbar, "tag") == "findbar":
+            tokens = ["GECKO:", obj, "believed to be find-in-page widget"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            self._find_container = toolbar
             return True
 
         return False

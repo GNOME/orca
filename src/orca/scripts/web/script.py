@@ -805,7 +805,11 @@ class Script(default.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
-            if self.utilities.in_find_container():
+            if self.utilities.in_find_container() and reason not in (
+                TextEventReason.NAVIGATION_BY_CHARACTER,
+                TextEventReason.NAVIGATION_BY_WORD,
+                TextEventReason.NAVIGATION_TO_LINE_BOUNDARY,
+            ):
                 msg = "WEB: Event handled: Presenting find results"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 document_presenter.get_presenter().present_find_results(event.source, event.detail1)
