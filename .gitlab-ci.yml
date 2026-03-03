@@ -78,6 +78,7 @@ linters:
   script:
     - source ci/env.sh
     - status=0
+    - codespell src/orca || status=1
     - ruff format --check src/orca || status=1
     - ruff check src/orca || status=1
     - mypy src/orca || status=1

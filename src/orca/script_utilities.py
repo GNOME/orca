@@ -294,7 +294,7 @@ class Utilities:
 
     def _get_object_from_path(self, path):
         # TODO - JD: This broad exception is swallowing a pyatspism meaning the one caller
-        # (recovery code for web brokeness) is not recovering. Which suggests that code can
+        # (recovery code for web brokenness) is not recovering. Which suggests that code can
         # be removed.
         start = self._script.app
         rv = None

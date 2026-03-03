@@ -242,7 +242,7 @@ CLI_SPEECH_SYSTEM = _("Speech system")
 # system is unavailable. A speech system provides various synthesizers with
 # different voices and languages. The first string substituted in is the user-
 # provided speech system. The second string substituted is a comma separated
-# list of avaialable speech systems.
+# list of available speech systems.
 CLI_SPEECH_SYSTEM_ERROR = _("Speech system “%s” is unavailable (available: %s)")
 
 # Translators: This string indicates to the user what should be provided when

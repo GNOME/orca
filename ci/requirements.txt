@@ -5,6 +5,7 @@
 # installation of Python, because not all of the following packages
 # are available as distro RPMS.
 
+codespell
 ruff
 mypy
 pylint

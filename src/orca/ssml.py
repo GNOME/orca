@@ -105,7 +105,7 @@ class SSML(dict[str, Any]):
             elif c.isspace() and last_begin is not None:
                 # Word end
                 if is_numeric:
-                    # We had a wholy numeric word, possibly next word is as well.
+                    # We had a wholly numeric word, possibly next word is as well.
                     # Skip to next word
                     for j in range(i + 1, len(text)):
                         if not text[j].isspace():
