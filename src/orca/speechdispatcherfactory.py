@@ -208,10 +208,10 @@ class SpeechServer(speechserver.SpeechServer):
         if self._client is None:
             return
 
+        # "spell" is only applied per-character in speak_character() to
+        # prevent the synthesizer from announcing capitals in words and phrases.
         if style == CapitalizationStyle.ICON.value:
             sd_style = "icon"
-        elif style == CapitalizationStyle.SPELL.value:
-            sd_style = "spell"
         else:
             sd_style = "none"
 
@@ -582,7 +582,11 @@ class SpeechServer(speechserver.SpeechServer):
             msg = f"SPEECH DISPATCHER: Speaking '{character}' as char"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             if self._client is not None:
+                if cap_style == CapitalizationStyle.SPELL:
+                    self._send_command(self._client.set_cap_let_recogn, "spell")
                 self._send_command(self._client.char, character)
+                if cap_style == CapitalizationStyle.SPELL:
+                    self._send_command(self._client.set_cap_let_recogn, "none")
             return
 
         self.speak(name, acss)
