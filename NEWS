@@ -1,3 +1,67 @@
+50.rc - 3 March 2026
+
+New features:
+
+* Orca now uses GSettings. Existing settings will be migrated from JSON
+  automatically.
+
+* There is new Say All option to only speak displayed text, making
+  reading a long web page smoother.
+
+* There is new option to read chat room meesages from the active room
+  when in any application.
+
+Bug fixes and other improvements:
+
+* Fix multiple issues in the new preferences window.
+
+* Improve performance by using the collection interface where possible
+  to find a desired object.
+
+* Improve performance in combo boxes with many items.
+
+* Improve consistency between key echo and character presentation.
+
+* Fix "screen reader off" message being cut off and/or presented in the
+  wrong voice.
+
+* Key capture and matching: Support AltGr as a modifier, fix Super.
+
+* Improve the fallback logic for finding braille contraction tables.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  bg              Bulgarian                 Alexander Alexandrov Shopov
+  bg              Bulgarian                 twlvnn kraftwerk
+  ca              Catalan                   Jordi Mas
+  ca              Catalan                   Victor Dargallo
+  cs              Czech                     Daniel Rusek
+  da              Danish                    Alan Mortensen
+  de              German                    Christian Kirbach
+  el              Greek                     Efstathios Iosifidis
+  eo              Esperanto                 Kristjan ESPERANTO
+  es              Spanish                   Daniel Mustieles
+  eu              Basque                    Asier Saratsua Garmendia
+  fi              Finnish                   Jiri Grönroos
+  fr              French                    Julien Humbert
+  gl              Galician                  Fran Diéguez
+  hu              Hungarian                 Attila Hammer
+  ka              Georgian                  Ekaterine Papava
+  kk              Kazakh                    Baurzhan Muftakhidinov
+  lt              Lithuanian                Aurimas Aurimas Černius
+  pt_BR           Brazilian Portuguese      Álvaro Burns
+  pt_BR           Brazilian Portuguese      Ítalo Gregório
+  pt              Portuguese                Hugo Carvalho
+  ru              Russian                   Artur S0
+  sl              Slovenian                 Martin
+  sv              Swedish                   Anders Jonsson
+  tr              Turkish                   Emin Tufan Çetin
+  uk              Ukrainian                 Yuri Chornoivan
+  zh_CN           Chinese (China)           luming zh
+  zh_TW           Chinese (Taiwan)          Chao-Hsiung Liao
+
+=========
+
 50.beta - 1 February 2026
 
 New features:

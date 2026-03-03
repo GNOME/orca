@@ -208,6 +208,7 @@ These operations also work at the profile level:
 | `announce-landmark` | `b` | `true` | Announce landmarks |
 | `announce-list` | `b` | `true` | Announce lists |
 | `announce-table` | `b` | `true` | Announce tables |
+| `only-speak-displayed-text` | `b` | `false` | Only speak displayed text |
 | `rewind-and-fast-forward` | `b` | `false` | Enable rewind and fast forward in Say All |
 | `structural-navigation` | `b` | `false` | Enable structural navigation in Say All |
 | `style` | `enum`<br>`SayAllStyle` | `'sentence'` | Say All style (line, sentence) |

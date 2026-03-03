@@ -363,6 +363,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`AnnounceLandmark`:** Gets/Sets whether landmarks are announced when entered.
 - **`AnnounceList`:** Gets/Sets whether lists are announced when entered.
 - **`AnnounceTable`:** Gets/Sets whether tables are announced when entered.
+- **`OnlySpeakDisplayedText`:** Gets/Sets whether Say All only speaks displayed text.
 - **`RewindAndFastForwardEnabled`:** Gets/Sets whether Up and Down can be used in Say All.
 - **`StructuralNavigationEnabled`:** Gets/Sets whether structural navigation keys can be used in Say All.
 - **`Style`:** Gets/Sets the current Say All style.
