@@ -264,6 +264,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
         self.speech_grid = presenter.create_speech_preferences_grid(
             title_change_callback=update_title,
+            app_name=self._app_name or "",
         )
         self.stack.add_named(self.speech_grid, "speech")
         self._add_navigation_row("speech", self.speech_grid.get_label().get_text())
@@ -908,11 +909,14 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
     def _has_unsaved_changes(self, include_profiles: bool = False) -> bool:
         """Returns True if any preference grid has unsaved changes."""
 
-        return any(
-            grid.has_changes()
-            for grid in self._page_to_grid.values()
-            if grid is not self.profiles_grid or include_profiles
-        )
+        for name, grid in self._page_to_grid.items():
+            if grid is self.profiles_grid and not include_profiles:
+                continue
+            if grid.has_changes():
+                msg = f"PREFERENCES: Grid '{name}' has unsaved changes"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
+        return False
 
     def resume_events(self, reason: str = "") -> bool:
         """Re-register event listeners suspended during UI creation and teardown."""

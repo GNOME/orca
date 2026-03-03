@@ -2049,7 +2049,7 @@ class TestLayeredLookup:
         mock_handle.get_string.assert_called_once_with("verbosity-level", "", None)
 
     def test_passes_app_name_to_handle(self, test_context: OrcaTestContext) -> None:
-        """Test layered_lookup passes explicit app_name to handle accessor."""
+        """Test layered_lookup checks app dconf first for explicit app_name."""
 
         self._setup(test_context)
         from orca.gsettings_registry import GSettingsRegistry, GSettingsSchemaHandle
@@ -2058,12 +2058,18 @@ class TestLayeredLookup:
         registry._schemas["chat"] = "org.gnome.Orca.Chat"
 
         mock_handle = test_context.Mock(spec=GSettingsSchemaHandle)
-        mock_handle.get_boolean.return_value = True
+        mock_app_gs = mock_handle.get_for_app.return_value
+        mock_app_gs.get_user_value.return_value = test_context.Mock()
+        mock_app_gs.get_boolean.return_value = True
         registry._handles["chat"] = mock_handle
 
         result = registry.layered_lookup("chat", "speak-room-name", "b", app_name="Firefox")
         assert result is True
-        mock_handle.get_boolean.assert_called_once_with("speak-room-name", "", "Firefox")
+        mock_handle.get_for_app.assert_called_once_with(
+            "Firefox",
+            registry.get_active_profile(),
+            "",
+        )
 
     def test_app_name_none_uses_active_app(self, test_context: OrcaTestContext) -> None:
         """Test layered_lookup with app_name=None passes None (active app fallback)."""

@@ -123,20 +123,35 @@ class GSettingsRegistry:
     ) -> Any | None:
         """Returns a setting value via layered GSettings lookup, default, or None."""
 
+        handle = self._get_handle(schema)
+
+        sub_path = ""
+        if handle is not None and schema == "voice":
+            vt = voice_type or "default"
+            sub_path = f"voices/{gsettings_migrator.sanitize_gsettings_path(vt)}"
+
+        # For explicit app lookups, check app dconf before runtime overrides.
+        if app_name and handle is not None:
+            gs = handle.get_for_app(app_name, self.get_active_profile(), sub_path)
+            if gs is not None and gs.get_user_value(key) is not None:
+                extractors: dict[str, Callable[..., Any]] = {
+                    "b": gs.get_boolean,
+                    "s": gs.get_string,
+                    "i": gs.get_int,
+                    "d": gs.get_double,
+                }
+                extractor = extractors.get("s" if genum else gtype)
+                if extractor is not None:
+                    return extractor(key)
+
         runtime = self._runtime_values.get((schema, key, voice_type))
         if runtime is not None:
             msg = f"GSETTINGS REGISTRY: {schema}/{key} runtime override = {runtime!r}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return runtime
 
-        handle = self._get_handle(schema)
         if handle is None:
             return self._use_default(schema, key, default)
-
-        sub_path = ""
-        if schema == "voice":
-            vt = voice_type or "default"
-            sub_path = f"voices/{gsettings_migrator.sanitize_gsettings_path(vt)}"
 
         accessors: dict[str, Callable[..., Any | None]] = {
             "b": handle.get_boolean,
@@ -148,7 +163,9 @@ class GSettingsRegistry:
             "a{saas}": handle.get_dict,
         }
         accessor = accessors.get("s" if genum else gtype)
-        result = accessor(key, sub_path, app_name) if accessor is not None else None
+        # For explicit app lookups, skip the app layer (already checked above).
+        effective_app = "" if app_name else None
+        result = accessor(key, sub_path, effective_app) if accessor is not None else None
         if result is not None:
             return result
         return self._use_default(schema, key, default)
@@ -597,7 +614,7 @@ class GSettingsRegistry:
                     if gs.get_user_value(key) is not None:
                         gs.reset(key)
                     continue
-                if gs.get_string(key) != nick:
+                if not app_name or gs.get_user_value(key) is None or gs.get_string(key) != nick:
                     gs.set_string(key, nick)
                 continue
 
@@ -612,7 +629,8 @@ class GSettingsRegistry:
                 continue
             reader = readers.get(setting.gtype)
             if reader is not None and reader(key) == value:
-                continue
+                if not app_name or gs.get_user_value(key) is not None:
+                    continue
             writer = writers.get(setting.gtype)
             if writer is not None:
                 writer(key, value)

@@ -46,7 +46,6 @@ from . import (
     dbus_service,
     debug,
     focus_manager,
-    gsettings_migrator,
     gsettings_registry,
     guilabels,
     input_event,
@@ -71,7 +70,7 @@ if TYPE_CHECKING:
     from collections.abc import Callable, Iterable
 
     gi.require_version("Atspi", "2.0")
-    from gi.repository import Atspi
+    from gi.repository import Atspi, Gio
 
     from .acss import ACSS
     from .input_event import KeyboardEvent
@@ -518,10 +517,26 @@ class SpeechOSDPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     """Main speech preferences grid with enable toggle and categorized settings."""
 
+    _VOICE_PROPERTY_MAP = (
+        ("rate", "rate", "i", 50),
+        ("average-pitch", "pitch", "d", 5.0),
+        ("gain", "volume", "d", 10.0),
+        ("established", "established", "b", False),
+    )
+
+    _VOICE_FAMILY_MAP = (
+        ("name", "family-name"),
+        ("lang", "family-lang"),
+        ("dialect", "family-dialect"),
+        ("gender", "family-gender"),
+        ("variant", "family-variant"),
+    )
+
     def __init__(
         self,
         presenter: SpeechPresenter,
         title_change_callback: Callable[[str], None] | None = None,
+        app_name: str = "",
     ) -> None:
         super().__init__(guilabels.SPEECH)
         self._presenter = presenter
@@ -533,7 +548,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         manager = speech_manager.get_manager()
 
         # Create child grids (but don't attach them yet - they'll go in the stack detail)
-        self._voices_grid = manager.create_voices_preferences_grid()
+        self._voices_grid = manager.create_voices_preferences_grid(app_name=app_name)
         self._verbosity_grid = VerbosityPreferencesGrid(presenter)
         self._tables_grid = TablesPreferencesGrid(presenter)
         self._progress_bars_grid = ProgressBarsPreferencesGrid(presenter)
@@ -590,6 +605,80 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._osd_grid.reload()
         self._initializing = False
 
+    def _save_voice(self, voice_gs: Gio.Settings, voice_data: dict, skip_defaults: bool) -> None:
+        """Save voice properties and family for a profile."""
+
+        for acss_key, gs_key, gs_type, default in self._VOICE_PROPERTY_MAP:
+            if acss_key not in voice_data:
+                continue
+            value = voice_data[acss_key]
+            if skip_defaults:
+                if gs_type == "i" and int(value) == default:
+                    continue
+                if gs_type == "d" and float(value) == default:
+                    continue
+                if gs_type == "b" and bool(value) == default:
+                    continue
+            if gs_type == "i":
+                voice_gs.set_int(gs_key, int(value))
+            elif gs_type == "d":
+                voice_gs.set_double(gs_key, float(value))
+            else:
+                voice_gs.set_boolean(gs_key, bool(value))
+
+        family = voice_data.get("family", {})
+        if isinstance(family, dict):
+            for json_field, gs_key in self._VOICE_FAMILY_MAP:
+                val = family.get(json_field)
+                if val is not None and str(val):
+                    voice_gs.set_string(gs_key, str(val))
+
+    def _save_app_voice(
+        self,
+        voice_gs: Gio.Settings,
+        voice_data: dict,
+        profile_voice_gs: Gio.Settings,
+    ) -> None:
+        """Save voice properties for an app, only writing genuine overrides."""
+
+        for acss_key, gs_key, gs_type, _default in self._VOICE_PROPERTY_MAP:
+            if acss_key not in voice_data:
+                continue
+            value = voice_data[acss_key]
+            if (user_val := profile_voice_gs.get_user_value(gs_key)) is not None:
+                profile_value = user_val.unpack()
+            else:
+                profile_value = _default
+            if gs_type == "i":
+                matches = int(value) == profile_value
+            elif gs_type == "d":
+                matches = float(value) == profile_value
+            else:
+                matches = bool(value) == profile_value
+            if matches:
+                voice_gs.reset(gs_key)
+            elif gs_type == "i":
+                voice_gs.set_int(gs_key, int(value))
+            elif gs_type == "d":
+                voice_gs.set_double(gs_key, float(value))
+            else:
+                voice_gs.set_boolean(gs_key, bool(value))
+
+        family = voice_data.get("family", {})
+        if isinstance(family, dict):
+            for json_field, gs_key in self._VOICE_FAMILY_MAP:
+                val = family.get(json_field)
+                if val is None or not str(val):
+                    continue
+                if (user_val := profile_voice_gs.get_user_value(gs_key)) is not None:
+                    profile_val = user_val.unpack()
+                else:
+                    profile_val = ""
+                if str(val) == profile_val:
+                    voice_gs.reset(gs_key)
+                else:
+                    voice_gs.set_string(gs_key, str(val))
+
     def save_settings(self, profile: str = "", app_name: str = "") -> dict:
         """Save all settings from child grids."""
 
@@ -618,14 +707,20 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             registry.save_schema("speech", result, p, app_name, skip)
 
             voices = result.get("voices", {})
-            for voice_type in gsettings_migrator.VOICE_TYPES:
-                voice_data = voices.get(voice_type, {})
+            for voice_type, voice_data in voices.items():
                 if not voice_data:
                     continue
-                vt = gsettings_migrator.sanitize_gsettings_path(voice_type)
+                vt = registry.sanitize_gsettings_path(voice_type)
                 voice_gs = registry.get_settings("voice", p, f"voices/{vt}", app_name)
-                if voice_gs is not None:
-                    gsettings_migrator.import_voice(voice_gs, voice_data, skip)
+                if voice_gs is None:
+                    continue
+                if app_name:
+                    profile_voice_gs = registry.get_settings("voice", p, f"voices/{vt}")
+                    if profile_voice_gs is None:
+                        continue
+                    self._save_app_voice(voice_gs, voice_data, profile_voice_gs)
+                else:
+                    self._save_voice(voice_gs, voice_data, skip)
 
             if app_name and app_synth is not None:
                 profile_synth = registry.layered_lookup("speech", "synthesizer", "s")
@@ -2469,10 +2564,11 @@ class SpeechPresenter:
     def create_speech_preferences_grid(
         self,
         title_change_callback: Callable[[str], None] | None = None,
+        app_name: str = "",
     ) -> SpeechPreferencesGrid:
         """Returns the GtkGrid containing the combined speech preferences UI."""
 
-        return SpeechPreferencesGrid(self, title_change_callback)
+        return SpeechPreferencesGrid(self, title_change_callback, app_name=app_name)
 
     def get_speech_preferences(
         self,

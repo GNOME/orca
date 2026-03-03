@@ -80,15 +80,28 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         HYPERLINK = 2
         SYSTEM = 3
 
-    def __init__(self, manager: SpeechManager) -> None:
+    def __init__(self, manager: SpeechManager, app_name: str = "") -> None:
         super().__init__(guilabels.SPEECH)
         self._manager = manager
+        self._app_name: str = app_name
         self._initializing = True
 
-        self._default_voice = manager.get_voice_properties(speechserver.DEFAULT_VOICE)
-        self._uppercase_voice = manager.get_voice_properties(speechserver.UPPERCASE_VOICE)
-        self._hyperlink_voice = manager.get_voice_properties(speechserver.HYPERLINK_VOICE)
-        self._system_voice = manager.get_voice_properties(speechserver.SYSTEM_VOICE)
+        self._default_voice = manager.get_voice_properties(
+            speechserver.DEFAULT_VOICE,
+            app_name=self._app_name,
+        )
+        self._uppercase_voice = manager.get_voice_properties(
+            speechserver.UPPERCASE_VOICE,
+            app_name=self._app_name,
+        )
+        self._hyperlink_voice = manager.get_voice_properties(
+            speechserver.HYPERLINK_VOICE,
+            app_name=self._app_name,
+        )
+        self._system_voice = manager.get_voice_properties(
+            speechserver.SYSTEM_VOICE,
+            app_name=self._app_name,
+        )
 
         # All voice family dicts from server
         self._voice_families: list[speechserver.VoiceFamily] = []
@@ -483,10 +496,23 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def reload(self) -> None:
         """Reload settings from manager and refresh the UI."""
 
-        self._default_voice = self._manager.get_voice_properties(speechserver.DEFAULT_VOICE)
-        self._uppercase_voice = self._manager.get_voice_properties(speechserver.UPPERCASE_VOICE)
-        self._hyperlink_voice = self._manager.get_voice_properties(speechserver.HYPERLINK_VOICE)
-        self._system_voice = self._manager.get_voice_properties(speechserver.SYSTEM_VOICE)
+        app = self._app_name
+        self._default_voice = self._manager.get_voice_properties(
+            speechserver.DEFAULT_VOICE,
+            app_name=app,
+        )
+        self._uppercase_voice = self._manager.get_voice_properties(
+            speechserver.UPPERCASE_VOICE,
+            app_name=app,
+        )
+        self._hyperlink_voice = self._manager.get_voice_properties(
+            speechserver.HYPERLINK_VOICE,
+            app_name=app,
+        )
+        self._system_voice = self._manager.get_voice_properties(
+            speechserver.SYSTEM_VOICE,
+            app_name=app,
+        )
 
         self._voice_families = self._manager.get_voice_families()
         self._families_sorted = False
@@ -510,16 +536,21 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         result["synthesizer"] = self._manager.get_current_synthesizer()
         result["speechServerFactory"] = self._manager.get_speech_server_factory()
 
-        result["punctuation-level"] = self._manager.get_punctuation_level()
-        result["capitalization-style"] = self._manager.get_capitalization_style()
+        model = self._punctuation_combo.get_model()
+        active = self._punctuation_combo.get_active()
+        if model and active >= 0:
+            result["punctuation-level"] = PunctuationStyle(model[active][1]).string_name
 
-        result["speak-numbers-as-digits"] = self._manager.get_speak_numbers_as_digits()
-        result["use-color-names"] = self._manager.get_use_color_names()
-        result["insert-pauses-between-utterances"] = (
-            self._manager.get_insert_pauses_between_utterances()
-        )
-        result["use-pronunciation-dictionary"] = self._manager.get_use_pronunciation_dictionary()
-        result["auto-language-switching"] = self._manager.get_auto_language_switching()
+        model = self._capitalization_combo.get_model()
+        active = self._capitalization_combo.get_active()
+        if model and active >= 0:
+            result["capitalization-style"] = model[active][1]
+
+        result["speak-numbers-as-digits"] = self._speak_numbers_switch.get_active()
+        result["use-color-names"] = self._use_color_names_switch.get_active()
+        result["insert-pauses-between-utterances"] = self._enable_pause_breaks_switch.get_active()
+        result["use-pronunciation-dictionary"] = self._use_pronunciation_dict_switch.get_active()
+        result["auto-language-switching"] = self._auto_language_switching_switch.get_active()
 
         self._has_unsaved_changes = False
         return result
@@ -532,9 +563,12 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._populate_speech_systems()
         self._initializing = True
 
+        app = self._app_name
         model = self._punctuation_combo.get_model()
         if model:
-            current_level = PunctuationStyle[self._manager.get_punctuation_level().upper()].value
+            current_level = PunctuationStyle[
+                self._manager.get_punctuation_level(app_name=app).upper()
+            ].value
             for i, row in enumerate(model):
                 if row[1] == current_level:
                     self._punctuation_combo.set_active(i)
@@ -543,19 +577,25 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         model = self._capitalization_combo.get_model()
         if model:
             for i, row in enumerate(model):
-                if row[1] == self._manager.get_capitalization_style():
+                if row[1] == self._manager.get_capitalization_style(app_name=app):
                     self._capitalization_combo.set_active(i)
                     break
 
-        self._speak_numbers_switch.set_active(self._manager.get_speak_numbers_as_digits())
-        self._use_color_names_switch.set_active(self._manager.get_use_color_names())
+        self._speak_numbers_switch.set_active(
+            self._manager.get_speak_numbers_as_digits(app_name=app),
+        )
+        self._use_color_names_switch.set_active(
+            self._manager.get_use_color_names(app_name=app),
+        )
         self._enable_pause_breaks_switch.set_active(
-            self._manager.get_insert_pauses_between_utterances(),
+            self._manager.get_insert_pauses_between_utterances(app_name=app),
         )
         self._use_pronunciation_dict_switch.set_active(
-            self._manager.get_use_pronunciation_dictionary(),
+            self._manager.get_use_pronunciation_dictionary(app_name=app),
         )
-        self._auto_language_switching_switch.set_active(self._manager.get_auto_language_switching())
+        self._auto_language_switching_switch.set_active(
+            self._manager.get_auto_language_switching(app_name=app),
+        )
 
         # Note: Voice type widgets are created on-demand in dialogs, so no need to refresh them here
 
@@ -1214,7 +1254,7 @@ class SpeechManager:
     _SPEECH_SCHEMA = "speech"
     _VOICE_SCHEMA = "voice"
 
-    def _get_setting(self, key: str, gtype: str, default: Any) -> Any:
+    def _get_setting(self, key: str, gtype: str, default: Any, app_name: str | None = None) -> Any:
         """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
@@ -1222,26 +1262,37 @@ class SpeechManager:
             key,
             gtype,
             default=default,
+            app_name=app_name,
         )
 
-    def get_voice_properties(self, voice_type: str = "") -> ACSS:
+    def get_voice_properties(
+        self,
+        voice_type: str = "",
+        app_name: str | None = None,
+    ) -> ACSS:
         """Returns voice properties from dconf for the given voice type."""
 
         vtype = voice_type or speechserver.DEFAULT_VOICE
         lookup = gsettings_registry.get_registry().layered_lookup
         voice: dict[str, Any] = {}
 
-        established = lookup(self._VOICE_SCHEMA, "established", "b", voice_type=vtype)
+        established = lookup(
+            self._VOICE_SCHEMA,
+            "established",
+            "b",
+            voice_type=vtype,
+            app_name=app_name,
+        )
         if established is not None:
             voice["established"] = established
 
-        rate = lookup(self._VOICE_SCHEMA, "rate", "i", voice_type=vtype)
+        rate = lookup(self._VOICE_SCHEMA, "rate", "i", voice_type=vtype, app_name=app_name)
         if rate is not None:
             voice[ACSS.RATE] = rate
-        pitch = lookup(self._VOICE_SCHEMA, "pitch", "d", voice_type=vtype)
+        pitch = lookup(self._VOICE_SCHEMA, "pitch", "d", voice_type=vtype, app_name=app_name)
         if pitch is not None:
             voice[ACSS.AVERAGE_PITCH] = pitch
-        volume = lookup(self._VOICE_SCHEMA, "volume", "d", voice_type=vtype)
+        volume = lookup(self._VOICE_SCHEMA, "volume", "d", voice_type=vtype, app_name=app_name)
         if volume is not None:
             voice[ACSS.GAIN] = volume
 
@@ -1253,7 +1304,7 @@ class SpeechManager:
             ("family-gender", speechserver.VoiceFamily.GENDER),
             ("family-variant", speechserver.VoiceFamily.VARIANT),
         ):
-            value = lookup(self._VOICE_SCHEMA, dconf_key, "s", voice_type=vtype)
+            value = lookup(self._VOICE_SCHEMA, dconf_key, "s", voice_type=vtype, app_name=app_name)
             if value:
                 family[family_key] = value
         if family:
@@ -2276,7 +2327,7 @@ class SpeechManager:
         migration_key="capitalizationStyle",
     )
     @dbus_service.getter
-    def get_capitalization_style(self) -> str:
+    def get_capitalization_style(self, app_name: str | None = None) -> str:
         """Returns the current capitalization style."""
 
         value = gsettings_registry.get_registry().layered_lookup(
@@ -2285,6 +2336,7 @@ class SpeechManager:
             "",
             genum="org.gnome.Orca.CapitalizationStyle",
             default="none",
+            app_name=app_name,
         )
         return value
 
@@ -2367,7 +2419,7 @@ class SpeechManager:
         migration_key="verbalizePunctuationStyle",
     )
     @dbus_service.getter
-    def get_punctuation_level(self) -> str:
+    def get_punctuation_level(self, app_name: str | None = None) -> str:
         """Returns the current punctuation level."""
 
         value = gsettings_registry.get_registry().layered_lookup(
@@ -2376,6 +2428,7 @@ class SpeechManager:
             "",
             genum="org.gnome.Orca.PunctuationStyle",
             default="most",
+            app_name=app_name,
         )
         return value
 
@@ -2588,10 +2641,10 @@ class SpeechManager:
         migration_key="speakNumbersAsDigits",
     )
     @dbus_service.getter
-    def get_speak_numbers_as_digits(self) -> bool:
+    def get_speak_numbers_as_digits(self, app_name: str | None = None) -> bool:
         """Returns whether numbers are spoken as digits."""
 
-        return self._get_setting("speak-numbers-as-digits", "b", False)
+        return self._get_setting("speak-numbers-as-digits", "b", False, app_name=app_name)
 
     @dbus_service.setter
     def set_speak_numbers_as_digits(self, value: bool) -> bool:
@@ -2615,10 +2668,10 @@ class SpeechManager:
         migration_key="useColorNames",
     )
     @dbus_service.getter
-    def get_use_color_names(self) -> bool:
+    def get_use_color_names(self, app_name: str | None = None) -> bool:
         """Returns whether colors are announced by name or as RGB values."""
 
-        return self._get_setting("use-color-names", "b", True)
+        return self._get_setting("use-color-names", "b", True, app_name=app_name)
 
     @dbus_service.setter
     def set_use_color_names(self, value: bool) -> bool:
@@ -2642,10 +2695,10 @@ class SpeechManager:
         migration_key="enablePauseBreaks",
     )
     @dbus_service.getter
-    def get_insert_pauses_between_utterances(self) -> bool:
+    def get_insert_pauses_between_utterances(self, app_name: str | None = None) -> bool:
         """Returns whether pauses are inserted between utterances, e.g. between name and role."""
 
-        return self._get_setting("insert-pauses-between-utterances", "b", True)
+        return self._get_setting("insert-pauses-between-utterances", "b", True, app_name=app_name)
 
     @dbus_service.setter
     def set_insert_pauses_between_utterances(self, value: bool) -> bool:
@@ -2669,10 +2722,10 @@ class SpeechManager:
         migration_key="usePronunciationDictionary",
     )
     @dbus_service.getter
-    def get_use_pronunciation_dictionary(self) -> bool:
+    def get_use_pronunciation_dictionary(self, app_name: str | None = None) -> bool:
         """Returns whether the user's pronunciation dictionary should be applied."""
 
-        return self._get_setting("use-pronunciation-dictionary", "b", True)
+        return self._get_setting("use-pronunciation-dictionary", "b", True, app_name=app_name)
 
     @dbus_service.setter
     def set_use_pronunciation_dictionary(self, value: bool) -> bool:
@@ -2696,10 +2749,10 @@ class SpeechManager:
         migration_key="enableAutoLanguageSwitching",
     )
     @dbus_service.getter
-    def get_auto_language_switching(self) -> bool:
+    def get_auto_language_switching(self, app_name: str | None = None) -> bool:
         """Returns whether automatic language switching is enabled."""
 
-        return self._get_setting("auto-language-switching", "b", True)
+        return self._get_setting("auto-language-switching", "b", True, app_name=app_name)
 
     @dbus_service.setter
     def set_auto_language_switching(self, value: bool) -> bool:
@@ -2754,10 +2807,10 @@ class SpeechManager:
                 self.set_speech_is_muted(True)
         return True
 
-    def create_voices_preferences_grid(self) -> VoicesPreferencesGrid:
+    def create_voices_preferences_grid(self, app_name: str = "") -> VoicesPreferencesGrid:
         """Returns the GtkGrid containing the voices preferences UI."""
 
-        return VoicesPreferencesGrid(self)
+        return VoicesPreferencesGrid(self, app_name=app_name)
 
 
 _manager: SpeechManager = SpeechManager()

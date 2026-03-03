@@ -1276,6 +1276,13 @@ class TestVoicesPreferencesGridUI:
         grid_mock._hyperlink_voice = {}
         grid_mock._system_voice = {}
         grid_mock._has_unsaved_changes = True
+        grid_mock._punctuation_combo.get_model.return_value = None
+        grid_mock._capitalization_combo.get_model.return_value = None
+        grid_mock._speak_numbers_switch.get_active.return_value = False
+        grid_mock._use_color_names_switch.get_active.return_value = True
+        grid_mock._enable_pause_breaks_switch.get_active.return_value = True
+        grid_mock._use_pronunciation_dict_switch.get_active.return_value = True
+        grid_mock._auto_language_switching_switch.get_active.return_value = True
 
         result = VoicesPreferencesGrid.save_settings(grid_mock)
 
