@@ -2250,6 +2250,7 @@ class SpeechPresenter:
                 on_close=lambda: self.set_monitor_is_enabled(False),
             )
             self._monitor.show_all()  # pylint: disable=no-member
+            self._monitor.present_with_time(time.time())
             self._replay_history()
 
         return self._monitor
