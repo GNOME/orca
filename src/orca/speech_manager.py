@@ -1995,7 +1995,11 @@ class SpeechManager:
         if not isinstance(value, (int, float)):
             return False
 
-        gsettings_registry.get_registry().set_runtime_value(self._VOICE_SCHEMA, "rate", value)
+        registry = gsettings_registry.get_registry()
+        registry.set_runtime_value(self._VOICE_SCHEMA, "rate", value)
+        registry.set_runtime_value(
+            self._VOICE_SCHEMA, "rate", value, voice_type=speechserver.DEFAULT_VOICE
+        )
 
         msg = f"SPEECH MANAGER: Set rate to: {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -2027,6 +2031,7 @@ class SpeechManager:
             return True
 
         server.decrease_speech_rate()
+        self.set_rate(max(0, self.get_rate() - 5))
         if notify_user and script is not None:
             presentation_manager.get_manager().present_message(messages.SPEECH_SLOWER)
 
@@ -2058,6 +2063,7 @@ class SpeechManager:
             return True
 
         server.increase_speech_rate()
+        self.set_rate(min(99, self.get_rate() + 5))
         if notify_user and script is not None:
             presentation_manager.get_manager().present_message(messages.SPEECH_FASTER)
 
@@ -2088,7 +2094,11 @@ class SpeechManager:
         if not isinstance(value, (int, float)):
             return False
 
-        gsettings_registry.get_registry().set_runtime_value(self._VOICE_SCHEMA, "pitch", value)
+        registry = gsettings_registry.get_registry()
+        registry.set_runtime_value(self._VOICE_SCHEMA, "pitch", value)
+        registry.set_runtime_value(
+            self._VOICE_SCHEMA, "pitch", value, voice_type=speechserver.DEFAULT_VOICE
+        )
 
         msg = f"SPEECH MANAGER: Set pitch to: {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -2120,6 +2130,7 @@ class SpeechManager:
             return True
 
         server.decrease_speech_pitch()
+        self.set_pitch(max(0.0, self.get_pitch() - 0.5))
         if notify_user and script is not None:
             presentation_manager.get_manager().present_message(messages.SPEECH_LOWER)
 
@@ -2151,6 +2162,7 @@ class SpeechManager:
             return True
 
         server.increase_speech_pitch()
+        self.set_pitch(min(9.0, self.get_pitch() + 0.5))
         if notify_user and script is not None:
             presentation_manager.get_manager().present_message(messages.SPEECH_HIGHER)
 
@@ -2181,7 +2193,11 @@ class SpeechManager:
         if not isinstance(value, (int, float)):
             return False
 
-        gsettings_registry.get_registry().set_runtime_value(self._VOICE_SCHEMA, "volume", value)
+        registry = gsettings_registry.get_registry()
+        registry.set_runtime_value(self._VOICE_SCHEMA, "volume", value)
+        registry.set_runtime_value(
+            self._VOICE_SCHEMA, "volume", value, voice_type=speechserver.DEFAULT_VOICE
+        )
 
         msg = f"SPEECH MANAGER: Set volume to: {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -2213,6 +2229,7 @@ class SpeechManager:
             return True
 
         server.decrease_speech_volume()
+        self.set_volume(max(0.0, self.get_volume() - 0.5))
         if notify_user and script is not None:
             presentation_manager.get_manager().present_message(messages.SPEECH_SOFTER)
 
@@ -2244,6 +2261,7 @@ class SpeechManager:
             return True
 
         server.increase_speech_volume()
+        self.set_volume(min(9.0, self.get_volume() + 0.5))
         if notify_user and script is not None:
             presentation_manager.get_manager().present_message(messages.SPEECH_LOUDER)
 
