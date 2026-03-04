@@ -2343,14 +2343,8 @@ class SpeechPresenter:
         text = self.adjust_for_presentation(obj, text)
         speech.speak(text, voice[0] if voice else None)
 
-    def speak_message(
-        self,
-        text: str,
-        voice: ACSS | list[ACSS] | None = None,
-        reset_styles: bool = True,
-        obj: Atspi.Accessible | None = None,
-    ) -> None:
-        """Speaks a single string."""
+    def speak_message(self, text: str) -> None:
+        """Speaks a message using the system voice."""
 
         from . import speech_manager  # pylint: disable=import-outside-toplevel
 
@@ -2362,32 +2356,22 @@ class SpeechPresenter:
             debug.print_exception(debug.LEVEL_WARNING)
             return
 
-        if self.get_only_speak_displayed_text() and obj is None:
+        if self.get_only_speak_displayed_text():
             return
 
         mgr = speech_manager.get_manager()
-        system_voice = mgr.get_voice_properties(speechserver.SYSTEM_VOICE)
-        if voice is None:
-            voice = system_voice
-        voice = voice or system_voice
-        if voice == system_voice and reset_styles:
-            cap_style = mgr.get_capitalization_style()
-            mgr.set_capitalization_style("none")
+        voice = mgr.get_voice_properties(speechserver.SYSTEM_VOICE)
 
-            punct_style = mgr.get_punctuation_level()
-            mgr.set_punctuation_level("some")
+        cap_style = mgr.get_capitalization_style()
+        mgr.set_capitalization_style("none")
+        punct_style = mgr.get_punctuation_level()
+        mgr.set_punctuation_level("some")
 
-        text = self.adjust_for_presentation(obj, text)
-        voice_to_use: ACSS | dict[str, Any] | None = None
-        if isinstance(voice, list) and voice:
-            voice_to_use = voice[0]
-        elif not isinstance(voice, list):
-            voice_to_use = voice
-        speech.speak(text, voice_to_use)
+        text = self.adjust_for_presentation(None, text)
+        speech.speak(text, voice)
 
-        if voice == system_voice and reset_styles:
-            mgr.set_capitalization_style(cap_style)
-            mgr.set_punctuation_level(punct_style)
+        mgr.set_capitalization_style(cap_style)
+        mgr.set_punctuation_level(punct_style)
 
     def generate_speech_contents(
         self,
@@ -2522,16 +2506,6 @@ class SpeechPresenter:
 
         self.speak_character(character, voice_from=character, cap_style=cap_style)
 
-    def speak_string(self, text: str, voice: ACSS | list[ACSS] | None = None) -> None:
-        """Speaks a string using the specified voice."""
-
-        voice_to_use: ACSS | dict[str, Any] | None = None
-        if isinstance(voice, list) and voice:
-            voice_to_use = voice[0]
-        elif not isinstance(voice, list):
-            voice_to_use = voice
-        speech.speak(text, voice_to_use)
-
     def say_all(self, utterance_iterator: Any, progress_callback: Callable[..., Any]) -> None:
         """Speaks each item in the utterance_iterator."""
 
@@ -2560,7 +2534,7 @@ class SpeechPresenter:
         for character in item_string:
             voice = self._get_voice(text=character)
             phonetic_string = phonnames.get_phonetic_name(character.lower())
-            self.speak_message(phonetic_string, voice)
+            speech.speak(phonetic_string, voice[0] if voice else None)
 
     def create_speech_preferences_grid(
         self,

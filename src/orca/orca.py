@@ -116,7 +116,7 @@ def shutdown(_event=None, _signum=None):
 
     manager = presentation_manager.get_manager()
     manager.interrupt_presentation()
-    manager.present_message(messages.STOP_ORCA, reset_styles=False)
+    manager.present_message(messages.STOP_ORCA)
 
     dbus_service.get_remote_controller().shutdown()
     orca_modifier_manager.get_manager().unset_orca_modifiers("Shutting down.")

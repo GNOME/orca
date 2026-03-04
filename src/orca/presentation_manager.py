@@ -52,7 +52,6 @@ if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
-    from .acss import ACSS
     from .input_event import KeyboardEvent
     from .scripts import default
     from .sound import Icon, Tone
@@ -232,9 +231,6 @@ class PresentationManager:
         self,
         full: str,
         brief: str | None = None,
-        voice: ACSS | None = None,
-        reset_styles: bool = True,
-        obj: Atspi.Accessible | None = None,
     ) -> None:
         """Convenience method to speak a message and 'flash' it in braille."""
 
@@ -248,7 +244,7 @@ class PresentationManager:
             speech_pres = speech_presenter.get_presenter()
             message = full if speech_pres.get_messages_are_detailed() else brief
             if message:
-                speech_pres.speak_message(message, voice=voice, reset_styles=reset_styles, obj=obj)
+                speech_pres.speak_message(message)
 
         braille_pres = braille_presenter.get_presenter()
         if not (braille_pres.use_braille() and braille_pres.get_flash_messages_are_enabled()):
@@ -332,23 +328,12 @@ class PresentationManager:
             return
         speech_presenter.get_presenter().speak_accessible_text(obj, text)
 
-    def speak_message(
-        self,
-        text: str,
-        voice: ACSS | list[ACSS] | None = None,
-        reset_styles: bool = True,
-        obj: Atspi.Accessible | None = None,
-    ) -> None:
+    def speak_message(self, text: str) -> None:
         """Speaks a single string."""
 
         if speech_manager.get_manager().get_speech_is_muted():
             return
-        speech_presenter.get_presenter().speak_message(
-            text,
-            voice=voice,
-            reset_styles=reset_styles,
-            obj=obj,
-        )
+        speech_presenter.get_presenter().speak_message(text)
 
     # pylint: disable-next=too-many-arguments
     def present_object(

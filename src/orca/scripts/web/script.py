@@ -709,7 +709,7 @@ class Script(default.Script):
                     msg = AXObject.get_name(event.source)
                 else:
                     msg = messages.PAGE_LOADING_END_NAMED % AXObject.get_name(event.source)
-                presentation_manager.get_manager().present_message(msg, reset_styles=False)
+                presentation_manager.get_manager().present_message(msg)
             else:
                 presentation_manager.get_manager().present_message(messages.PAGE_LOADING_END)
 

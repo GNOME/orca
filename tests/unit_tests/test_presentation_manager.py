@@ -240,9 +240,6 @@ class TestPresentationManager:
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
         speech_pres.speak_message.assert_called_once_with(
             "This is a full message",
-            voice=None,
-            reset_styles=True,
-            obj=None,
         )
         braille_presenter = essential_modules["orca.braille_presenter"].get_presenter()
         braille_presenter.present_message.assert_called()
@@ -259,9 +256,6 @@ class TestPresentationManager:
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
         speech_pres.speak_message.assert_called_once_with(
             "Full message",
-            voice=None,
-            reset_styles=True,
-            obj=None,
         )
 
     def test_present_message_empty_string(self, test_context: OrcaTestContext) -> None:
@@ -307,9 +301,6 @@ class TestPresentationManager:
 
         speech_pres.speak_message.assert_called_once_with(
             "Brief",
-            voice=None,
-            reset_styles=True,
-            obj=None,
         )
 
     def test_present_message_speech_disabled(self, test_context: OrcaTestContext) -> None:
@@ -461,33 +452,6 @@ class TestPresentationManager:
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
         speech_pres.speak_message.assert_called_once_with(
             "Hello world",
-            voice=None,
-            reset_styles=True,
-            obj=None,
-        )
-
-    def test_speak_message_with_args_delegates(self, test_context: OrcaTestContext) -> None:
-        """Test speak_message passes all arguments to speech_presenter."""
-
-        essential_modules = self._setup_dependencies(test_context)
-        from orca.presentation_manager import get_manager
-
-        manager = get_manager()
-        mock_voice = test_context.Mock()
-        mock_obj = test_context.Mock()
-        manager.speak_message(
-            "Hello world",
-            voice=mock_voice,
-            reset_styles=False,
-            obj=mock_obj,
-        )
-
-        speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
-        speech_pres.speak_message.assert_called_once_with(
-            "Hello world",
-            voice=mock_voice,
-            reset_styles=False,
-            obj=mock_obj,
         )
 
     def test_speak_contents_delegates(self, test_context: OrcaTestContext) -> None:

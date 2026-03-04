@@ -1112,7 +1112,9 @@ class Script(script.Script):
                 self.get_speech_generator().get_localized_role_name(obj),
             )
             msg = self.utilities.get_notification_content(obj)
-            presentation_manager.get_manager().present_message(msg, reset_styles=False)
+            presenter = presentation_manager.get_manager()
+            presenter.speak_accessible_text(obj, msg)
+            presenter.present_braille_message(msg)
             notification_presenter.get_presenter().save_notification(msg)
             return True
 

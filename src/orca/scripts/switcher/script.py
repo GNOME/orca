@@ -76,11 +76,10 @@ class Script(default.Script):
         presentation_manager.get_manager().interrupt_presentation()
         focus_manager.get_manager().set_active_window(self.utilities.top_level_object(event.source))
         focus_manager.get_manager().set_locus_of_focus(event, event.source, False)
-        presentation_manager.get_manager().present_message(
-            self.utilities.get_selection_name(event.source),
-            reset_styles=False,
-            obj=event.source,
-        )
+        name = self.utilities.get_selection_name(event.source)
+        presenter = presentation_manager.get_manager()
+        presenter.speak_accessible_text(event.source, name)
+        presenter.present_braille_message(name)
         return True
 
     def locus_of_focus_changed(
