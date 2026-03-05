@@ -297,6 +297,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._categories: dict[str, list[KeyboardCommand]] = {}
         self._current_category: str | None = None
         self._captured_key: tuple[str, int, int] = ("", 0, 0)
+        self._orca_modifier_pressed_during_capture: bool = False
         self._binding_cleared: bool = False
         self._pending_key_bindings: dict[str, str] = {}
         self._pending_already_bound_message_id: int | None = None
@@ -608,10 +609,18 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         alloc_handler_id = capture_entry.connect("size-allocate", on_size_allocate)
 
         self._captured_key = ("", 0, 0)
+        self._orca_modifier_pressed_during_capture = False
         self._keybinding_being_edited = command.get_name()
 
+        def on_key_release(_widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
+            event_string = Gdk.keyval_name(event.keyval)
+            orca_mods = orca_modifier_manager.get_manager().get_orca_modifier_keys()
+            if event_string in orca_mods:
+                self._orca_modifier_pressed_during_capture = False
+            return False
+
         def on_key_press(_widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
-            if event.keyval == Gdk.KEY_Escape:
+            if event.keyval == Gdk.KEY_Escape and not self._orca_modifier_pressed_during_capture:
                 self._finish_inline_editing(
                     row,
                     command,
@@ -622,7 +631,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 )
                 return True
 
-            if event.keyval == Gdk.KEY_Return:
+            if event.keyval == Gdk.KEY_Return and not self._orca_modifier_pressed_during_capture:
                 if self._captured_key[0]:
                     key_name, modifiers, click_count = self._captured_key
                     handler_name = command.get_name()
@@ -690,6 +699,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             return True
 
         capture_entry.connect("key-press-event", on_key_press)
+        capture_entry.connect("key-release-event", on_key_release)
         row.capture_entry = capture_entry
 
         script = script_manager.get_manager().get_active_script()
@@ -800,6 +810,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         orca_mods = orca_modifier_manager.get_manager().get_orca_modifier_keys()
         if event_string in orca_mods:
+            self._orca_modifier_pressed_during_capture = True
             self._captured_key = ("", keybindings.ORCA_MODIFIER_MASK, 0)
             return False
 
@@ -826,7 +837,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         # Return and Escape are used to confirm/cancel editing, not as captured keys
         # Return False to let GTK process them normally
-        if event_string in ["Return", "Escape"]:
+        if event_string in ["Return", "Escape"] and not self._orca_modifier_pressed_during_capture:
             return False
 
         if not self._captured_key[0]:
