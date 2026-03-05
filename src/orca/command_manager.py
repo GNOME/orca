@@ -1336,6 +1336,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         new_is_desktop = not self._is_desktop
+        orca_modifier_manager.get_manager().set_modifiers_for_layout(new_is_desktop)
         self.set_keyboard_layout_is_desktop(new_is_desktop)
 
         if script is not None and notify_user:

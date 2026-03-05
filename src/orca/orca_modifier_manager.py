@@ -241,6 +241,8 @@ class OrcaModifierManager:
         else:
             new_keys = LAPTOP_MODIFIER_KEYS
 
+        self.unset_orca_modifiers("Keyboard layout changing.")
+
         gsettings_registry.get_registry().set_runtime_value(
             "keybindings",
             "orca-modifier-keys",

@@ -804,6 +804,8 @@ class ProfileManager:
 
         self.set_active_profile(profile_id)
 
+        orca_modifier_manager.get_manager().unset_orca_modifiers("Profile changing.")
+        command_manager.get_manager().set_keyboard_layout()
         orca_modifier_manager.get_manager().refresh_orca_modifiers("Profile changed.")
         presentation_manager.get_manager().refresh_presenters()
 
