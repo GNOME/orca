@@ -153,6 +153,7 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             volume_adj,
             changed_handler=self._on_volume_changed,
             include_top_separator=False,
+            digits=1,
         )
         self._volume_listbox.add_row_with_widget(volume_row, self._volume_scale)
         self._volume_listbox.set_sensitive(self._presenter.get_sound_is_enabled())

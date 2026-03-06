@@ -80,7 +80,7 @@ class AXValue:
             return value
 
         current = AXValue.get_current_value(obj)
-        if abs(current) < 1 and current != 0:
+        if current % 1:
             str_current = str(current)
             decimal_places = len(str_current.split(".")[1])
         else:

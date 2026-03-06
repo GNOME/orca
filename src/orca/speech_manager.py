@@ -392,6 +392,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             pitch_adj,
             changed_handler=on_pitch_changed,
             include_top_separator=False,
+            digits=1,
         )
         voice_listbox.add_row_with_widget(pitch_row, pitch_scale)
 
@@ -410,6 +411,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             volume_adj,
             changed_handler=on_volume_changed,
             include_top_separator=False,
+            digits=1,
         )
         voice_listbox.add_row_with_widget(volume_row, volume_scale)
 

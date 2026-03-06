@@ -684,10 +684,12 @@ class PreferencesGridBase(Gtk.Grid):
         adjustment: Gtk.Adjustment,
         changed_handler: Callable[[Gtk.Scale], None] | None = None,
         include_top_separator: bool = True,
+        digits: int = 0,
     ) -> tuple[Gtk.ListBoxRow, Gtk.Scale, Gtk.Label]:
         """Create a single listbox row with label and horizontal slider."""
 
         scale = Gtk.Scale(orientation=Gtk.Orientation.HORIZONTAL, adjustment=adjustment)
+        scale.set_digits(digits)
         scale.set_draw_value(True)
         scale.set_value_pos(Gtk.PositionType.RIGHT)
         scale.set_hexpand(True)
