@@ -81,8 +81,8 @@ MODULE_CONFIG = {
     "CommandManager": {
         "commands": ["ToggleKeyboardLayout"],
         "parameterized_commands": [],
-        "getters": ["KeyboardLayoutIsDesktop"],
-        "setters": ["KeyboardLayoutIsDesktop"],
+        "getters": ["DesktopModifierKeys", "KeyboardLayoutIsDesktop", "LaptopModifierKeys"],
+        "setters": ["DesktopModifierKeys", "KeyboardLayoutIsDesktop", "LaptopModifierKeys"],
         "ui_commands": [],
         "toggle_commands": ["ToggleKeyboardLayout"],
         "skip": [],
@@ -914,26 +914,30 @@ def get_test_value(
 ) -> str | float | bool:
     """Generate an appropriate test value for a property."""
 
+    if isinstance(current_value, bool):
+        return not current_value
     if isinstance(current_value, (int, float)):
         return current_value + 1 if current_value < 100 else current_value - 1
     if isinstance(current_value, str):
         return get_alternative_value(proxy, prop_name, current_value)
-    if isinstance(current_value, bool):
-        return not current_value
+    if isinstance(current_value, list):
+        return list(reversed(current_value)) if len(current_value) > 1 else current_value
     return current_value
 
 
-def to_variant(value: str | bool | float) -> Any:
+def to_variant(value: str | bool | float | list) -> Any:
     """Convert a Python value to GLib.Variant."""
 
-    if isinstance(value, str):
-        return GLib.Variant("s", value)
     if isinstance(value, bool):
         return GLib.Variant("b", value)
+    if isinstance(value, str):
+        return GLib.Variant("s", value)
     if isinstance(value, int):
         return GLib.Variant("i", value)
     if isinstance(value, float):
         return GLib.Variant("d", value)
+    if isinstance(value, list):
+        return GLib.Variant("as", value)
     return GLib.Variant("s", str(value))
 
 

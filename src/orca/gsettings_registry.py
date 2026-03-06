@@ -139,6 +139,7 @@ class GSettingsRegistry:
                     "s": gs.get_string,
                     "i": gs.get_int,
                     "d": gs.get_double,
+                    "as": gs.get_strv,
                 }
                 extractor = extractors.get("s" if genum else gtype)
                 if extractor is not None:
@@ -936,6 +937,17 @@ class GSettingsRegistry:
             gsettings_migrator.import_keybindings,
         ):
             wrote_any = True
+
+        if "keybindings" in self._schemas:
+            kb_gs = self.get_settings("keybindings", profile)
+            if kb_gs is not None:
+                if gsettings_migrator.populate_per_layout_modifier_keys(
+                    kb_gs,
+                    profile_prefs,
+                    skip_defaults,
+                ):
+                    wrote_any = True
+
         return wrote_any
 
     def _migrate_dict_schema(
@@ -1083,6 +1095,17 @@ class GSettingsRegistry:
             app_name,
         ):
             wrote_any = True
+
+        if "keybindings" in self._schemas:
+            kb_gs = self.get_settings("keybindings", profile_name, app_name=app_name)
+            if kb_gs is not None:
+                if gsettings_migrator.populate_per_layout_modifier_keys(
+                    kb_gs,
+                    general,
+                    skip_defaults=False,
+                ):
+                    wrote_any = True
+
         return wrote_any
 
 

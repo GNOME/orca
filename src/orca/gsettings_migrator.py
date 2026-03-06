@@ -169,6 +169,40 @@ def sink_keybindings_metadata(profile_data: dict, keybindings: dict) -> None:
 
 
 # TODO - JD: Delete this in v52 (remove -i/--import-dir support).
+DESKTOP_MODIFIER_KEYS_DEFAULT: list[str] = ["Insert", "KP_Insert"]
+LAPTOP_MODIFIER_KEYS_DEFAULT: list[str] = ["Caps_Lock", "Shift_Lock"]
+
+
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
+def populate_per_layout_modifier_keys(
+    gs: Gio.Settings,
+    profile_prefs: dict,
+    skip_defaults: bool,
+) -> bool:
+    """Populates desktop/laptop-modifier-keys from orcaModifierKeys during migration."""
+
+    modifier_keys = profile_prefs.get("orcaModifierKeys")
+    if modifier_keys is None:
+        return False
+
+    layout = profile_prefs.get("keyboardLayout", 1)
+    is_desktop = layout == 1
+
+    if is_desktop:
+        key = "desktop-modifier-keys"
+        default = DESKTOP_MODIFIER_KEYS_DEFAULT
+    else:
+        key = "laptop-modifier-keys"
+        default = LAPTOP_MODIFIER_KEYS_DEFAULT
+
+    if skip_defaults and modifier_keys == default:
+        return False
+
+    gs.set_strv(key, modifier_keys)
+    return True
+
+
+# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
 def _write_one_mapping(
     gs: Gio.Settings,
     m: SettingsMapping,

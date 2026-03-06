@@ -222,6 +222,19 @@ class TestSaveSchema:
         assert handle.get_string("synthesizer") == "espeak-ng"
         assert handle.get_int("repeated-character-limit") == 8
 
+    def test_round_trip_strv(self, gsettings_registry, gsettings_handle, gsettings_profile) -> None:
+        """String-array values should survive a save_schema round-trip."""
+
+        gsettings_registry.save_schema(
+            "keybindings",
+            {"desktop-modifier-keys": ["Insert"], "laptop-modifier-keys": ["Caps_Lock"]},
+            "default",
+        )
+
+        handle = gsettings_handle("keybindings")
+        assert handle.get_strv("desktop-modifier-keys") == ["Insert"]
+        assert handle.get_strv("laptop-modifier-keys") == ["Caps_Lock"]
+
     def test_app_override_isolation(
         self, gsettings_registry, gsettings_handle, gsettings_profile
     ) -> None:

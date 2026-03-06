@@ -30,7 +30,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import debug, gsettings_registry, sleep_mode_manager, speech_manager
+from . import command_manager, debug, gsettings_registry, sleep_mode_manager, speech_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .scripts import apps, default, sleepmode, toolkits
@@ -328,6 +328,7 @@ class ScriptManager:
         self._active_script = new_script
         if new_script is None:
             gsettings_registry.get_registry().set_active_app(None)
+            command_manager.get_manager().check_keyboard_settings()
             return
 
         gsettings_registry.get_registry().set_active_app(new_script.app_name)
@@ -337,6 +338,7 @@ class ScriptManager:
         new_script.activate()
 
         speech_manager.get_manager().check_speech_setting()
+        command_manager.get_manager().check_keyboard_settings()
 
     def reclaim_scripts(self) -> None:
         """Compares the list of known scripts to the list of known apps,

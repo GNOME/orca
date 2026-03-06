@@ -273,13 +273,7 @@ class TestOrcaModifierManager:
         manager._grabbed_modifiers = {"Insert": 1, "KP_Insert": 2} if case["is_grabbed"] else {}
         manager._modifiers_are_set = case.get("modifiers_are_set", False)
 
-        from orca import gsettings_registry  # pylint: disable=import-outside-toplevel
-
-        gsettings_registry.get_registry().set_runtime_value(
-            "keybindings",
-            "orca-modifier-keys",
-            case["orca_modifier_keys"],
-        )
+        manager._modifier_keys_override = case["orca_modifier_keys"]
         result = manager.is_orca_modifier(case["modifier"])
         assert result == case["expected_result"]
 
@@ -409,14 +403,8 @@ class TestOrcaModifierManager:
         from orca import orca_modifier_manager
 
         manager = orca_modifier_manager.OrcaModifierManager()
+        manager._modifier_keys_override = orca_modifier_keys
 
-        from orca import gsettings_registry  # pylint: disable=import-outside-toplevel
-
-        gsettings_registry.get_registry().set_runtime_value(
-            "keybindings",
-            "orca-modifier-keys",
-            orca_modifier_keys,
-        )
         mock_add_grab = test_context.Mock()
         test_context.patch_object(manager, "add_modifier_grab", new=mock_add_grab)
         manager.add_grabs_for_orca_modifiers()
@@ -449,14 +437,8 @@ class TestOrcaModifierManager:
         from orca import orca_modifier_manager
 
         manager = orca_modifier_manager.OrcaModifierManager()
+        manager._modifier_keys_override = orca_modifier_keys
 
-        from orca import gsettings_registry  # pylint: disable=import-outside-toplevel
-
-        gsettings_registry.get_registry().set_runtime_value(
-            "keybindings",
-            "orca-modifier-keys",
-            orca_modifier_keys,
-        )
         mock_remove_grab = test_context.Mock()
         test_context.patch_object(manager, "remove_modifier_grab", new=mock_remove_grab)
         manager.remove_grabs_for_orca_modifiers()
@@ -766,13 +748,7 @@ class TestOrcaModifierManager:
             orca_modifier_keys.append("Caps_Lock")
         if shift_lock_orca:
             orca_modifier_keys.append("Shift_Lock")
-        from orca import gsettings_registry  # pylint: disable=import-outside-toplevel
-
-        gsettings_registry.get_registry().set_runtime_value(
-            "keybindings",
-            "orca-modifier-keys",
-            orca_modifier_keys,
-        )
+        manager._modifier_keys_override = orca_modifier_keys
         mock_set_caps = test_context.Mock()
         test_context.patch_object(manager, "set_caps_lock_as_orca_modifier", new=mock_set_caps)
         manager._create_orca_xmodmap()

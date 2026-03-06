@@ -62,6 +62,7 @@ class TestScriptManager:
             "gi.repository",
             "gi.repository.Atspi",
             "orca.ax_utilities",
+            "orca.command_manager",
             "orca.scripts",
             "orca.scripts.apps",
             "orca.scripts.default",
@@ -116,6 +117,11 @@ class TestScriptManager:
         speech_manager_instance = test_context.Mock()
         speech_manager_instance.check_speech_setting = test_context.Mock()
         speech_verbosity_mock.get_manager = test_context.Mock(return_value=speech_manager_instance)
+
+        command_manager_mock = essential_modules["orca.command_manager"]
+        command_manager_instance = test_context.Mock()
+        command_manager_instance.check_keyboard_settings = test_context.Mock()
+        command_manager_mock.get_manager = test_context.Mock(return_value=command_manager_instance)
 
         scripts_mock = essential_modules["orca.scripts"]
         apps_mock = essential_modules["orca.scripts.apps"]

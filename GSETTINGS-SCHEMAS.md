@@ -157,9 +157,10 @@ These operations also work at the profile level:
 
 | Key | Type | Default | Summary |
 | --- | --- | --- | --- |
+| `desktop-modifier-keys` | `as` | `['Insert', 'KP_Insert']` | Keys used as the Orca modifier for the desktop layout |
 | `entries` | `a{saas}` | `@a{saas} {}` | User keybinding overrides |
 | `keyboard-layout` | `enum`<br>`KeyboardLayout` | `'desktop'` | Keyboard layout (desktop, laptop) |
-| `orca-modifier-keys` | `as` | `['Insert', 'KP_Insert']` | Keys used as the Orca modifier |
+| `laptop-modifier-keys` | `as` | `['Caps_Lock', 'Shift_Lock']` | Keys used as the Orca modifier for the laptop layout |
 
 ---
 

@@ -658,8 +658,9 @@ class KeyboardEvent(InputEvent):
             elif command is not None and command.is_enabled():
                 self._handler = lambda: command.execute(script, self)
 
-        if self.is_orca_modifier() and self._click_count == 2:
-            orca_modifier_manager.get_manager().toggle_modifier(self)
+        if self.is_orca_modifier():
+            if self._click_count == 2:
+                orca_modifier_manager.get_manager().toggle_modifier(self)
 
         if self.is_pressed_key() and self.keyval_name == "Num_Lock":
             numlock_on = self.get_locking_state()

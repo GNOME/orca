@@ -309,9 +309,6 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._original_keyboard_layout_is_desktop: bool = (
             get_manager().get_keyboard_layout_is_desktop()
         )
-        self._original_orca_modifier_keys: list[str] = list(
-            orca_modifier_manager.get_manager().get_orca_modifier_keys(),
-        )
 
         self.keyboard_layout_combo: Gtk.ComboBox | None = None
         self._orca_modifier_combo: Gtk.ComboBox | None = None
@@ -394,15 +391,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         current_is_desktop = get_manager().get_keyboard_layout_is_desktop()
         if current_is_desktop != self._original_keyboard_layout_is_desktop:
-            get_manager().set_keyboard_layout(self._original_keyboard_layout_is_desktop)
+            get_manager().load_keyboard_layout(self._original_keyboard_layout_is_desktop)
 
-        current_keys = orca_modifier_manager.get_manager().get_orca_modifier_keys()
-        if current_keys != self._original_orca_modifier_keys:
-            gsettings_registry.get_registry().set_runtime_value(
-                "keybindings",
-                "orca-modifier-keys",
-                self._original_orca_modifier_keys,
-            )
+        orca_modifier_manager.get_manager().set_modifier_keys_override(None)
 
     def _populate_keybindings(self) -> None:
         """Build categories dictionary and populate the categories list."""
@@ -595,18 +586,18 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     ) -> None:
         """Start inline editing of a keybinding."""
 
-        vbox.remove(binding_label)
+        binding_label.hide()
 
         capture_entry = self._create_capture_entry(command)
         vbox.pack_start(capture_entry, False, False, 0)
         capture_entry.show()
 
-        # Grab focus after the entry is allocated to avoid scroll position reset
-        def on_size_allocate(_widget, _allocation):
-            capture_entry.disconnect(alloc_handler_id)
+        def swap_widgets():
+            vbox.remove(binding_label)
             capture_entry.grab_focus()
+            return False
 
-        alloc_handler_id = capture_entry.connect("size-allocate", on_size_allocate)
+        GLib.idle_add(swap_widgets)
 
         self._captured_key = ("", 0, 0)
         self._orca_modifier_pressed_during_capture = False
@@ -626,7 +617,6 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     command,
                     vbox,
                     capture_entry,
-                    binding_label,
                     canceled=True,
                 )
                 return True
@@ -659,7 +649,6 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     command,
                     vbox,
                     capture_entry,
-                    binding_label,
                     canceled=False,
                 )
                 return True
@@ -710,14 +699,12 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         get_manager().set_active_commands({}, "Capturing keys")
         input_event_manager.get_manager().unmap_all_modifiers()
 
-    # pylint: disable-next=too-many-arguments, too-many-positional-arguments, too-many-locals
     def _finish_inline_editing(
         self,
         row: Gtk.ListBoxRow,
         command: KeyboardCommand,
         vbox: Gtk.Box,
         capture_entry: Gtk.Entry,
-        binding_label: Gtk.Label,
         canceled: bool,
     ) -> None:
         """Finish inline editing of a keybinding."""
@@ -756,17 +743,28 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
                     GLib.idle_add(present_confirmation)
 
-            binding = command.get_keybinding()
-            binding_text = self._format_keybinding_text(binding) or ""
-            binding_label.set_text(binding_text)
-
         get_manager().set_active_commands(self._saved_commands, "Done capturing keys")
         orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
 
-        vbox.remove(capture_entry)
-        vbox.pack_start(binding_label, False, False, 0)
-        binding_label.show()
-        row.grab_focus()
+        binding = command.get_keybinding()
+        binding_text = self._format_keybinding_text(binding) or ""
+        new_label = Gtk.Label(xalign=0)
+        new_label.set_markup(
+            f"<small>{GLib.markup_escape_text(binding_text, -1)}</small>",
+        )
+        new_label.get_style_context().add_class("dim-label")
+        row.binding_label = new_label
+
+        capture_entry.hide()
+        vbox.pack_start(new_label, False, False, 0)
+        new_label.show()
+
+        def swap_widgets():
+            vbox.remove(capture_entry)
+            row.grab_focus()
+            return False
+
+        GLib.idle_add(swap_widgets)
 
         self._captured_key = ("", 0, 0)
         self._keybinding_being_edited = None
@@ -1049,7 +1047,15 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             if tree_iter is not None:
                 model = self._orca_modifier_combo.get_model()
                 orca_modifier = model.get_value(tree_iter, 0)
-                general["orca-modifier-keys"] = orca_modifier.split(", ")
+                modifier_keys = orca_modifier.split(", ")
+
+                is_desktop = (
+                    get_manager().get_keyboard_layout_value() == KeyboardLayout.DESKTOP.value
+                )
+                if is_desktop:
+                    general["desktop-modifier-keys"] = modifier_keys
+                else:
+                    general["laptop-modifier-keys"] = modifier_keys
 
         for category_commands in self._categories.values():
             for cmd in category_commands:
@@ -1110,16 +1116,16 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         break
 
         if self._orca_modifier_combo is not None:
-            orca_modifier_keys = orca_modifier_manager.get_manager().get_orca_modifier_keys()
-            key_string = ", ".join(orca_modifier_keys)
+            is_desktop = get_manager().get_keyboard_layout_value() == KeyboardLayout.DESKTOP.value
+            app_name = AXObject.get_name(self._script.app) if self._script.app else ""
+            modifier_keys = get_manager().get_modifier_keys_for_layout(is_desktop, app_name)
+            key_string = ", ".join(modifier_keys)
             orca_model = self._orca_modifier_combo.get_model()
             if orca_model:
-                orca_iter = orca_model.get_iter_first()
-                for i in range(len(orca_model)):
-                    if orca_model.get_value(orca_iter, 0) == key_string:
+                for i, row in enumerate(orca_model):
+                    if row[0] == key_string:
                         self._orca_modifier_combo.set_active(i)
                         break
-                    orca_iter = orca_model.iter_next(orca_iter)
 
         self._initializing = False
 
@@ -1135,23 +1141,28 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             layout_value = model.get_value(tree_iter, 1)
 
             is_desktop = layout_value == KeyboardLayout.DESKTOP.value
-            get_manager().set_keyboard_layout(is_desktop)
+            get_manager().load_keyboard_layout(is_desktop)
 
             if self._orca_modifier_combo is not None:
-                if is_desktop:
-                    self._orca_modifier_combo.set_active(0)
-                    gsettings_registry.get_registry().set_runtime_value(
-                        "keybindings",
-                        "orca-modifier-keys",
-                        orca_modifier_manager.DESKTOP_MODIFIER_KEYS,
-                    )
-                else:
-                    self._orca_modifier_combo.set_active(3)
-                    gsettings_registry.get_registry().set_runtime_value(
-                        "keybindings",
-                        "orca-modifier-keys",
-                        orca_modifier_manager.LAPTOP_MODIFIER_KEYS,
-                    )
+                app_name = AXObject.get_name(self._script.app) if self._script.app else ""
+                saved_keys = get_manager().get_modifier_keys_for_layout(is_desktop, app_name)
+                key_string = ", ".join(saved_keys)
+                orca_model = self._orca_modifier_combo.get_model()
+                matched = False
+                for i, row in enumerate(orca_model):
+                    if row[0] == key_string:
+                        self._orca_modifier_combo.set_active(i)
+                        matched = True
+                        break
+
+                if not matched:
+                    if is_desktop:
+                        self._orca_modifier_combo.set_active(0)
+                    else:
+                        self._orca_modifier_combo.set_active(3)
+                    saved_keys = orca_model[self._orca_modifier_combo.get_active()][0].split(", ")
+
+                orca_modifier_manager.get_manager().set_modifier_keys_override(saved_keys)
 
         get_manager().apply_user_overrides()
         self._populate_keybindings()
@@ -1169,9 +1180,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         model = combo.get_model()
         orca_modifier = model.get_value(tree_iter, 0)
-        gsettings_registry.get_registry().set_runtime_value(
-            "keybindings",
-            "orca-modifier-keys",
+        orca_modifier_manager.get_manager().set_modifier_keys_override(
             orca_modifier.split(", "),
         )
         self._has_unsaved_changes = True
@@ -1270,11 +1279,6 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         layout_changed = self._is_desktop != is_desktop
         if layout_changed:
             self._is_desktop = is_desktop
-            gsettings_registry.get_registry().set_runtime_value(
-                self._SCHEMA,
-                "keyboard-layout",
-                "desktop" if is_desktop else "laptop",
-            )
 
         has_device = input_event_manager.get_manager().has_device()
 
@@ -1302,8 +1306,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return True
 
-    def set_keyboard_layout(self, is_desktop: bool | None = None) -> None:
-        """Sets the keyboard layout and updates all command keybindings."""
+    def load_keyboard_layout(self, is_desktop: bool | None = None) -> None:
+        """Loads the keyboard layout from dconf or sets it explicitly."""
 
         if is_desktop is None:
             layout = gsettings_registry.get_registry().layered_lookup(
@@ -1315,6 +1319,95 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             )
             is_desktop = layout == "desktop"
         self.set_keyboard_layout_is_desktop(is_desktop)
+
+    @gsettings_registry.get_registry().gsetting(
+        key="desktop-modifier-keys",
+        schema="keybindings",
+        gtype="as",
+        default=["Insert", "KP_Insert"],
+        summary="Keys used as the Orca modifier for the desktop layout",
+    )
+    @dbus_service.getter
+    def get_desktop_modifier_keys(self) -> list[str]:
+        """Returns the per-layout modifier keys for the desktop layout."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA,
+            "desktop-modifier-keys",
+            "as",
+            default=["Insert", "KP_Insert"],
+        )
+
+    @dbus_service.setter
+    def set_desktop_modifier_keys(self, keys: list[str]) -> bool:
+        """Sets the per-layout modifier keys for the desktop layout."""
+
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA,
+            "desktop-modifier-keys",
+            keys,
+        )
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key="laptop-modifier-keys",
+        schema="keybindings",
+        gtype="as",
+        default=["Caps_Lock", "Shift_Lock"],
+        summary="Keys used as the Orca modifier for the laptop layout",
+    )
+    @dbus_service.getter
+    def get_laptop_modifier_keys(self) -> list[str]:
+        """Returns the per-layout modifier keys for the laptop layout."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA,
+            "laptop-modifier-keys",
+            "as",
+            default=["Caps_Lock", "Shift_Lock"],
+        )
+
+    @dbus_service.setter
+    def set_laptop_modifier_keys(self, keys: list[str]) -> bool:
+        """Sets the per-layout modifier keys for the laptop layout."""
+
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA,
+            "laptop-modifier-keys",
+            keys,
+        )
+        return True
+
+    def get_modifier_keys_for_layout(self, is_desktop: bool, app_name: str = "") -> list[str]:
+        """Returns the per-layout modifier keys for the given layout."""
+
+        if app_name:
+            key = "desktop-modifier-keys" if is_desktop else "laptop-modifier-keys"
+            if (
+                keys := gsettings_registry.get_registry().layered_lookup(
+                    self._SCHEMA,
+                    key,
+                    "as",
+                    app_name=app_name,
+                )
+            ) is not None:
+                return keys
+        if is_desktop:
+            return self.get_desktop_modifier_keys()
+        return self.get_laptop_modifier_keys()
+
+    def check_keyboard_settings(self) -> None:
+        """Checks if keyboard layout or modifier keys changed and updates if needed."""
+
+        self.load_keyboard_layout()
+
+        mod_mgr = orca_modifier_manager.get_manager()
+        if not mod_mgr.needs_modifier_refresh():
+            return
+
+        msg = f"COMMAND MANAGER: Modifier keys changing to {mod_mgr.get_orca_modifier_keys()}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        mod_mgr.refresh_orca_modifiers("Keyboard settings changed.")
 
     @dbus_service.command
     def toggle_keyboard_layout(
@@ -1336,7 +1429,12 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         new_is_desktop = not self._is_desktop
-        orca_modifier_manager.get_manager().set_modifiers_for_layout(new_is_desktop)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA,
+            "keyboard-layout",
+            "desktop" if new_is_desktop else "laptop",
+        )
+        orca_modifier_manager.get_manager().set_modifiers_for_layout()
         self.set_keyboard_layout_is_desktop(new_is_desktop)
 
         if script is not None and notify_user:

@@ -185,7 +185,9 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Parameters:** `PropertyName` (string), `Value` (variant, setter only)
 
+- **`DesktopModifierKeys`:** Gets/Sets the per-layout modifier keys for the desktop layout.
 - **`KeyboardLayoutIsDesktop`:** Gets/Sets whether the keyboard layout is desktop (True) or laptop (False).
+- **`LaptopModifierKeys`:** Gets/Sets the per-layout modifier keys for the laptop layout.
 
 ---
 

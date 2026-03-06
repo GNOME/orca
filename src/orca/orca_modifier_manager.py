@@ -47,6 +47,7 @@ from . import debug, gsettings_registry, input_event_manager, keybindings
 
 DESKTOP_MODIFIER_KEYS: list[str] = ["Insert", "KP_Insert"]
 LAPTOP_MODIFIER_KEYS: list[str] = ["Caps_Lock", "Shift_Lock"]
+_SCHEMA = "keybindings"
 
 if TYPE_CHECKING:
     from .input_event import KeyboardEvent
@@ -56,6 +57,8 @@ class OrcaModifierManager:
     """Manages the Orca modifier."""
 
     def __init__(self) -> None:
+        self._modifier_keys_override: list[str] | None = None
+        self._applied_modifier_keys: list[str] = []
         self._grabbed_modifiers: dict = {}
         self._is_pressed: bool = False
         self._modifiers_are_set: bool = False
@@ -215,42 +218,53 @@ class OrcaModifierManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         GLib.timeout_add(1, toggle, keyboard_event.modifiers, modifier)
 
-    @gsettings_registry.get_registry().gsetting(
-        key="orca-modifier-keys",
-        schema="keybindings",
-        gtype="as",
-        default=["Insert", "KP_Insert"],
-        summary="Keys used as the Orca modifier",
-        migration_key="orcaModifierKeys",
-    )
     def get_orca_modifier_keys(self) -> list[str]:
-        """Returns the list of Orca modifier keys."""
+        """Returns the active Orca modifier keys via override or layered lookup."""
 
-        return gsettings_registry.get_registry().layered_lookup(
-            "keybindings",
-            "orca-modifier-keys",
+        if self._modifier_keys_override is not None:
+            return self._modifier_keys_override
+        return self._lookup_modifier_keys()
+
+    def _lookup_modifier_keys(self) -> list[str]:
+        """Returns modifier keys via two-part layered lookup: layout then per-layout keys."""
+
+        registry = gsettings_registry.get_registry()
+        layout = registry.layered_lookup(
+            _SCHEMA,
+            "keyboard-layout",
+            "",
+            genum="org.gnome.Orca.KeyboardLayout",
+            default="desktop",
+        )
+        if layout == "desktop":
+            return registry.layered_lookup(
+                _SCHEMA,
+                "desktop-modifier-keys",
+                "as",
+                default=DESKTOP_MODIFIER_KEYS,
+            )
+        return registry.layered_lookup(
+            _SCHEMA,
+            "laptop-modifier-keys",
             "as",
-            default=["Insert", "KP_Insert"],
+            default=LAPTOP_MODIFIER_KEYS,
         )
 
-    def set_modifiers_for_layout(self, is_desktop: bool) -> None:
-        """Sets the Orca modifier keys based on keyboard layout and refreshes."""
+    def set_modifier_keys_override(self, keys: list[str] | None) -> None:
+        """Sets or clears a temporary override for the modifier keys."""
 
-        if is_desktop:
-            new_keys = DESKTOP_MODIFIER_KEYS
-        else:
-            new_keys = LAPTOP_MODIFIER_KEYS
+        self._modifier_keys_override = keys
+
+    def needs_modifier_refresh(self) -> bool:
+        """Returns True if the current modifier keys differ from what was last applied."""
+
+        return self.get_orca_modifier_keys() != self._applied_modifier_keys
+
+    def set_modifiers_for_layout(self) -> None:
+        """Unsets and refreshes modifier keys for the current layout."""
 
         self.unset_orca_modifiers("Keyboard layout changing.")
-
-        gsettings_registry.get_registry().set_runtime_value(
-            "keybindings",
-            "orca-modifier-keys",
-            new_keys,
-        )
-
-        layout = "desktop" if is_desktop else "laptop"
-        self.refresh_orca_modifiers(f"Keyboard layout changed to {layout}.")
+        self.refresh_orca_modifiers("Keyboard layout changed.")
 
     def refresh_orca_modifiers(self, reason: str = "") -> None:
         """Refreshes the Orca modifier keys, including grabs and xmodmap."""
@@ -263,6 +277,7 @@ class OrcaModifierManager:
         for modifier in list(self._grabbed_modifiers.keys()):
             self.remove_modifier_grab(modifier)
         self._is_pressed = False
+        self._applied_modifier_keys = list(self.get_orca_modifier_keys())
         self.add_grabs_for_orca_modifiers()
         self._modifiers_are_set = True
 
