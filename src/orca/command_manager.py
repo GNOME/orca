@@ -380,6 +380,17 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def reload(self) -> None:
         """Reload keybindings from the script."""
 
+        app_name = AXObject.get_name(self._script.app) if self._script.app else ""
+        layout = gsettings_registry.get_registry().layered_lookup(
+            "keybindings",
+            "keyboard-layout",
+            "",
+            genum="org.gnome.Orca.KeyboardLayout",
+            app_name=app_name or None,
+            default="desktop",
+        )
+        get_manager().set_keyboard_layout_is_desktop(layout == "desktop")
+        self._original_keyboard_layout_is_desktop = get_manager().get_keyboard_layout_is_desktop()
         get_manager().apply_user_overrides()
         self._populate_keybindings()
         self._modified_keybindings.clear()
@@ -1057,6 +1068,14 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 else:
                     general["laptop-modifier-keys"] = modifier_keys
 
+        parent_overrides: dict[str, list[list[str]]] = {}
+        if profile and (profile != "default" or app_name):
+            registry = gsettings_registry.get_registry()
+            if profile != "default":
+                parent_overrides |= registry.get_keybindings("default", "")
+            if app_name:
+                parent_overrides |= registry.get_keybindings(profile, "")
+
         for category_commands in self._categories.values():
             for cmd in category_commands:
                 handler_name = cmd.get_name()
@@ -1064,15 +1083,18 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     current_kb = self._modified_keybindings[handler_name]
                 else:
                     current_kb = cmd.get_keybinding()
-                default_kb = cmd.get_default_keybinding()
 
                 current_text = self._format_keybinding_text(current_kb)
-                default_text = self._format_keybinding_text(default_kb)
 
-                if current_text != default_text:
+                if handler_name in parent_overrides:
+                    parent_text = self._format_binding_data_text(parent_overrides[handler_name])
+                else:
+                    parent_text = self._format_keybinding_text(cmd.get_default_keybinding())
+
+                if current_text != parent_text:
                     msg = (
                         f"KEYBINDINGS GRID: Saving {handler_name}: '{current_text}' "
-                        f"(was '{default_text}')"
+                        f"(parent '{parent_text}')"
                     )
                     debug.print_message(debug.LEVEL_INFO, msg, True)
                     if current_kb and current_kb.keysymstring:
@@ -1083,8 +1105,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                             str(current_kb.click_count),
                         ]
                         bindings[handler_name] = [binding_data]
-                    elif default_kb and default_kb.keysymstring:
-                        # Was unbound - save empty list to indicate unbinding
+                    elif parent_text is not None:
                         bindings[handler_name] = []
 
         self._modified_keybindings.clear()
@@ -1094,10 +1115,12 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             registry = gsettings_registry.get_registry()
             skip = not app_name and profile == "default"
             registry.save_schema("keybindings", general, profile, app_name, skip)
-            if bindings:
-                kb_gs = registry.get_settings("keybindings", profile, "keybindings", app_name)
-                if kb_gs is not None:
+            kb_gs = registry.get_settings("keybindings", profile, "keybindings", app_name)
+            if kb_gs is not None:
+                if bindings:
                     gsettings_migrator.import_keybindings(kb_gs, bindings)
+                elif kb_gs.get_user_value("entries") is not None:
+                    kb_gs.reset("entries")
 
         return general, bindings
 
@@ -1196,6 +1219,20 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             click_count_str = f" ({click_count_str})"
 
         return keybindings.get_modifier_names(kb.modifiers) + kb.keysymstring + click_count_str
+
+    @staticmethod
+    def _format_binding_data_text(binding_data: list[list[str]]) -> str | None:
+        """Format raw dconf binding data as text, matching _format_keybinding_text output."""
+
+        if not binding_data:
+            return None
+        entry = binding_data[0]
+        if len(entry) < 4 or not entry[0]:
+            return None
+        click_count_str = keynames.get_click_count_string(int(entry[3]))
+        if click_count_str:
+            click_count_str = f" ({click_count_str})"
+        return keybindings.get_modifier_names(int(entry[2])) + entry[0] + click_count_str
 
 
 @gsettings_registry.get_registry().gsettings_enum(

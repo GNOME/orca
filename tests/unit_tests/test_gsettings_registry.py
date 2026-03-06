@@ -2073,11 +2073,11 @@ class TestLayeredGetDict:
             gs.get_user_value.return_value = variant
         return gs
 
-    def test_non_default_profile_does_not_inherit_default(
+    def test_non_default_profile_inherits_default(
         self,
         test_context: OrcaTestContext,
     ) -> None:
-        """Test that dict lookup does not merge entries from the default profile."""
+        """Test that dict lookup merges entries from the default profile as base."""
 
         self._setup(test_context)
         from orca import gsettings_registry
@@ -2102,7 +2102,7 @@ class TestLayeredGetDict:
         test_context.patch_object(handle, "get_for_profile", side_effect=get_for_profile)
 
         result = handle.get_dict("entries")
-        assert result == {"b": "3", "c": "4"}
+        assert result == {"a": "1", "b": "3", "c": "4"}
         gsettings_registry.get_registry().set_active_profile("default")
 
     def test_merges_profile_and_app(self, test_context: OrcaTestContext) -> None:

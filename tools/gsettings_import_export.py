@@ -88,6 +88,7 @@ from orca.gsettings_migrator import (
     export_pronunciations,
     export_synthesizer,
     export_voice,
+    fix_bool_enum_values,
     force_navigation_enabled,
     gsettings_to_json,
     hoist_keybindings_metadata,
@@ -96,6 +97,7 @@ from orca.gsettings_migrator import (
     import_synthesizer,
     import_voice,
     json_to_gsettings,
+    populate_per_layout_modifier_keys,
     resolve_enum_nick,
     sanitize_gsettings_path,
 )
@@ -364,6 +366,46 @@ def _write_metadata(
     print(f"  Stored metadata for {label}")
 
 
+def _import_per_layout_modifier_keys(
+    source: SchemaSource,
+    profile_prefs: dict,
+    profile: str,
+    label: str,
+    dry_run: bool,
+    skip_defaults: bool = True,
+    app_name: str = "",
+) -> None:
+    """Import keyboard-layout and per-layout modifier keys from keybinding metadata."""
+    if dry_run:
+        layout = profile_prefs.get("keyboardLayout", 1)
+        nick = "desktop" if layout == 1 else "laptop"
+        modifier_keys = profile_prefs.get("orcaModifierKeys")
+        if not skip_defaults or nick != "desktop":
+            path = (
+                _build_app_path(app_name, profile, "keybindings")
+                if app_name
+                else _build_profile_path(profile, "keybindings")
+            )
+            print(f"  {path}keyboard-layout = {nick!r}")
+        if modifier_keys is not None:
+            key = "desktop-modifier-keys" if layout == 1 else "laptop-modifier-keys"
+            path = (
+                _build_app_path(app_name, profile, "keybindings")
+                if app_name
+                else _build_profile_path(profile, "keybindings")
+            )
+            print(f"  {path}{key} = {modifier_keys!r}")
+        return
+
+    if app_name:
+        path = _build_app_path(app_name, profile, "keybindings")
+    else:
+        path = _build_profile_path(profile, "keybindings")
+    gs = source.get_settings(SCHEMAS["keybindings"], path)
+    if populate_per_layout_modifier_keys(gs, profile_prefs, skip_defaults):
+        print(f"  Imported per-layout modifier keys for {label}")
+
+
 def _import_profile(
     source: SchemaSource,
     profile_name: str,
@@ -373,6 +415,7 @@ def _import_profile(
     """Import all settings for a single profile."""
     apply_legacy_aliases(profile_prefs)
     force_navigation_enabled(profile_prefs)
+    fix_bool_enum_values(profile_prefs)
     hoist_keybindings_metadata(profile_prefs)
     profile = sanitize_gsettings_path(profile_name)
     skip_defaults = profile_name == "default"
@@ -423,6 +466,10 @@ def _import_profile(
             source, keybindings_data, path, f"profile:{profile_name}", dry_run
         )
 
+    _import_per_layout_modifier_keys(
+        source, profile_prefs, profile, f"profile:{profile_name}", dry_run, skip_defaults
+    )
+
     profile_label = profile_prefs.get("profile", [profile_name])[0]
     metadata_path = _build_profile_path(profile, "metadata")
     _write_metadata(
@@ -448,6 +495,7 @@ def _import_app(
         general = profile_data.get("general", {})
         apply_legacy_aliases(general)
         force_navigation_enabled(general)
+        fix_bool_enum_values(general)
         pronunciations = profile_data.get("pronunciations", {})
         app_keybindings = profile_data.get("keybindings", {})
         if not general and not pronunciations and not app_keybindings:
@@ -484,6 +532,16 @@ def _import_app(
             path = _build_app_path(app_name, profile_name, "keybindings")
             _import_keybindings_for_path(source, app_keybindings, path, label, dry_run)
 
+        _import_per_layout_modifier_keys(
+            source,
+            general,
+            sanitize_gsettings_path(profile_name),
+            label,
+            dry_run,
+            skip_defaults=False,
+            app_name=app_name,
+        )
+
         metadata_path = _build_app_path(app_name, profile_name, "metadata")
         _write_metadata(source, metadata_path, app_name, profile_name, label, dry_run)
 
@@ -495,6 +553,88 @@ def _import_app(
             gs = source.get_settings(SCHEMAS["metadata"], profile_metadata_path)
             if gs.get_user_value("internal-name") is None:
                 gs.set_string("internal-name", profile_name)
+
+
+def _get_dict_entries(source: SchemaSource, schema_name: str, profile: str, app_name: str) -> dict:
+    """Read dict entries (keybindings or pronunciations) from a single dconf layer."""
+
+    if app_name:
+        path = _build_app_path(app_name, profile, schema_name)
+    else:
+        path = _build_profile_path(profile, schema_name)
+    gs = source.get_settings(SCHEMAS[schema_name], path)
+    user_value = gs.get_user_value("entries")
+    if user_value is None:
+        return {}
+    return user_value.unpack()
+
+
+def _strip_inherited_dict_entries(
+    source: SchemaSource,
+    settings_dir: str,
+    profile_names: list[str],
+) -> None:
+    """After import, strip dict entries that duplicate their parent layer."""
+
+    for schema_name in ("keybindings", "pronunciations"):
+        if schema_name not in SCHEMAS:
+            continue
+
+        default_entries = _get_dict_entries(source, schema_name, "default", "")
+
+        for profile_name in profile_names:
+            if profile_name == "default":
+                continue
+            profile = sanitize_gsettings_path(profile_name)
+            entries = _get_dict_entries(source, schema_name, profile, "")
+            if not entries:
+                continue
+            diff = {k: v for k, v in entries.items() if default_entries.get(k) != v}
+            if len(diff) == len(entries):
+                continue
+            path = _build_profile_path(profile, schema_name)
+            gs = source.get_settings(SCHEMAS[schema_name], path)
+            if not diff:
+                gs.reset("entries")
+            elif schema_name == "keybindings":
+                import_keybindings(gs, diff)
+            else:
+                import_pronunciations(gs, diff)
+            print(f"  Stripped {schema_name} for {profile_name}: {len(entries)} -> {len(diff)}")
+
+        app_dir = os.path.join(settings_dir, "app-settings")
+        if not os.path.isdir(app_dir):
+            continue
+        for filename in sorted(os.listdir(app_dir)):
+            if not filename.endswith(".conf"):
+                continue
+            app_name = filename[:-5]
+            try:
+                with open(os.path.join(app_dir, filename), encoding="utf-8") as f:
+                    app_prefs = json.load(f)
+            except (OSError, json.JSONDecodeError):
+                continue
+            for profile_name in app_prefs.get("profiles", {}):
+                profile = sanitize_gsettings_path(profile_name)
+                parent = dict(default_entries)
+                if profile_name != "default":
+                    parent |= _get_dict_entries(source, schema_name, profile, "")
+                entries = _get_dict_entries(source, schema_name, profile, app_name)
+                if not entries:
+                    continue
+                diff = {k: v for k, v in entries.items() if parent.get(k) != v}
+                if len(diff) == len(entries):
+                    continue
+                path = _build_app_path(app_name, profile, schema_name)
+                gs = source.get_settings(SCHEMAS[schema_name], path)
+                if not diff:
+                    gs.reset("entries")
+                elif schema_name == "keybindings":
+                    import_keybindings(gs, diff)
+                else:
+                    import_pronunciations(gs, diff)
+                target = f"{profile_name}/{app_name}"
+                print(f"  Stripped {schema_name} for {target}: {len(entries)} -> {len(diff)}")
 
 
 def import_settings(settings_dir: str, source: SchemaSource, dry_run: bool = False) -> None:
@@ -524,6 +664,9 @@ def import_settings(settings_dir: str, source: SchemaSource, dry_run: bool = Fal
             app_name = filename[:-5]
             print(f"App: {app_name}")
             _import_app(source, app_name, os.path.join(app_dir, filename), dry_run)
+
+    if not dry_run:
+        _strip_inherited_dict_entries(source, settings_dir, list(profiles.keys()))
 
 
 def _export_profile(source: SchemaSource, profile_name: str) -> dict:
@@ -739,13 +882,29 @@ def export_settings(source: SchemaSource, output_dir: str) -> None:
         _export_apps(source, sanitized_name, output_dir, original_name)
 
 
-_LEGACY_ROOT_KEYS = {"general", "keybindings", "pronunciations"}
+_LEGACY_ROOT_KEYS = {"general", "keybindings", "pronunciations", "startingProfile"}
 
-_KNOWN_UNMIGRATED_KEYS: set[str] = set()
+_KNOWN_UNMIGRATED_KEYS: set[str] = {
+    "doubleClickTimeout",
+    "enableExperimentalFeatures",
+    "enableSadPidginHack",
+    "playSoundForPositionInSet",
+    "playSoundForRole",
+    "playSoundForState",
+    "playSoundForValue",
+    "useGSettings",
+}
 
-_LEGACY_CONSTANT_KEYS: set[str] = set()
+_LEGACY_CONSTANT_KEYS: set[str] = {
+    "caretNavigationEnabled",
+    "structuralNavigationEnabled",
+}
 
 _LEGACY_ALIAS_KEYS = {"progressBarVerbosity", "progressBarUpdateInterval"}
+
+_BOOL_ENUM_FIXES: dict[str, dict[bool, int]] = {
+    "findResultsVerbosity": {True: 2, False: 2},
+}
 
 
 def _build_default_info() -> dict[str, tuple[Any, dict[int, str] | None]]:
@@ -831,21 +990,80 @@ def _classify_diff(kind: str, path: str, value: Any) -> str:
         leaf = parts[-1]
         if leaf in ("pronunciations", "keybindings") and isinstance(value, dict) and not value:
             return "empty_dict"
+        if leaf in ("pronunciations", "keybindings") and isinstance(value, dict):
+            if _is_stripped_inherited_dict(parts):
+                return "stripped_inherited"
+        if _is_stripped_inherited_entry(parts):
+            return "stripped_inherited"
         info = _get_default_info()
         if leaf in info:
             default, enum_map = info[leaf]
             if _values_match_default(value, default, enum_map):
                 return "default_value"
-        if leaf in KEYBINDINGS_METADATA_KEYS and _is_hoisted_keybinding_metadata(parts):
-            return "legacy_alias"
+            if leaf in _BOOL_ENUM_FIXES and isinstance(value, bool):
+                converted = _BOOL_ENUM_FIXES[leaf].get(value)
+                if converted is not None and _values_match_default(converted, default, enum_map):
+                    return "bool_enum_fix"
+        if leaf in KEYBINDINGS_METADATA_KEYS:
+            return "hoisted_metadata"
         if _is_empty_synthesizer(leaf, value):
             return "default_value"
+    if kind == "added" and parts[-1] in KEYBINDINGS_METADATA_KEYS:
+        return "hoisted_metadata"
+    if kind == "changed" and _is_bool_enum_fix(parts[-1], value):
+        return "bool_enum_fix"
     return ""
 
 
 def _is_hoisted_keybinding_metadata(parts: list[str]) -> bool:
     """Return True if this is a keyboardLayout/orcaModifierKeys inside a keybindings dict."""
     return len(parts) >= 3 and parts[-2] == "keybindings"
+
+
+def _is_stripped_inherited_dict(parts: list[str]) -> bool:
+    """Return True if this is a keybindings/pronunciations dict on a non-default profile."""
+    if len(parts) < 2 or parts[0] != "profiles":
+        return False
+    profile = parts[1]
+    if profile == "default":
+        return _has_app_context(parts)
+    return True
+
+
+def _is_stripped_inherited_entry(parts: list[str]) -> bool:
+    """Return True if this is an individual entry under a stripped keybindings/pronunciations."""
+    if len(parts) < 3 or parts[0] != "profiles":
+        return False
+    profile = parts[1]
+    parent = _find_dict_parent(parts)
+    if parent not in ("keybindings", "pronunciations"):
+        return False
+    if profile == "default":
+        return _has_app_context(parts)
+    return True
+
+
+def _has_app_context(parts: list[str]) -> bool:
+    """Return True if the path has an app-specific segment."""
+    return "apps" in parts
+
+
+def _find_dict_parent(parts: list[str]) -> str:
+    """Find the keybindings/pronunciations ancestor in a path, or empty string."""
+    for part in parts:
+        if part in ("keybindings", "pronunciations"):
+            return part
+    return ""
+
+
+def _is_bool_enum_fix(key: str, value: Any) -> bool:
+    """Return True if this is a bool→enum conversion from fix_bool_enum_values."""
+    if key != "findResultsVerbosity":
+        return False
+    if not isinstance(value, tuple):
+        return False
+    original, converted = value
+    return isinstance(original, bool) and isinstance(converted, int)
 
 
 def _is_empty_synthesizer(key: str, value: Any) -> bool:
@@ -893,6 +1111,9 @@ def _diff_json_files(
         "default_voice": "Voice entries with only default values",
         "default_value": "Settings at their schema default (normalized away)",
         "empty_dict": "Empty dicts",
+        "stripped_inherited": "Dict entries stripped (inherited from default profile)",
+        "hoisted_metadata": "Keybinding metadata hoisted to profile/app level",
+        "bool_enum_fix": "Boolean-to-enum conversion",
     }
 
     categories: dict[str, list[tuple[str, str, Any]]] = {}

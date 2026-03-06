@@ -19,9 +19,7 @@ Path variables:
 When Orca reads a setting, it checks several layers from most specific to least specific:
 
 - Scalars and enums: runtime override -> app override -> active profile -> `default` profile (if active profile is not `default`) -> schema default
-- Dictionary settings (pronunciation entries, keybinding overrides): runtime override -> profile dictionary with app dictionary overlaid on top -> schema default
-
-Dict settings do not inherit from the `default` profile because new profiles copy dict entries from the source profile when created; after that, each profile's dictionaries are independent. Removing an entry from one profile should not cause it to reappear via fallback to `default`.
+- Dictionary settings (pronunciation entries, keybinding overrides): runtime override -> `default` profile entries (base) merged with active profile entries, then app-specific entries overlaid on top -> schema default. An empty list (`[]`) explicitly unbinds an inherited keybinding; an empty-string replacement removes an inherited pronunciation.
 
 ## Inspecting and Modifying Settings
 

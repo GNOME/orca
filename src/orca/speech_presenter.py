@@ -638,6 +638,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         voice_gs: Gio.Settings,
         voice_data: dict,
         profile_voice_gs: Gio.Settings,
+        default_voice_gs: Gio.Settings | None,
     ) -> None:
         """Save voice properties for an app, only writing genuine overrides."""
 
@@ -645,10 +646,12 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             if acss_key not in voice_data:
                 continue
             value = voice_data[acss_key]
-            if (user_val := profile_voice_gs.get_user_value(gs_key)) is not None:
-                profile_value = user_val.unpack()
-            else:
-                profile_value = _default
+            profile_value = self._get_effective_voice_value(
+                gs_key,
+                profile_voice_gs,
+                default_voice_gs,
+                _default,
+            )
             if gs_type == "i":
                 matches = int(value) == profile_value
             elif gs_type == "d":
@@ -670,14 +673,31 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 val = family.get(json_field)
                 if val is None or not str(val):
                     continue
-                if (user_val := profile_voice_gs.get_user_value(gs_key)) is not None:
-                    profile_val = user_val.unpack()
-                else:
-                    profile_val = ""
+                profile_val = self._get_effective_voice_value(
+                    gs_key,
+                    profile_voice_gs,
+                    default_voice_gs,
+                    "",
+                )
                 if str(val) == profile_val:
                     voice_gs.reset(gs_key)
                 else:
                     voice_gs.set_string(gs_key, str(val))
+
+    @staticmethod
+    def _get_effective_voice_value(
+        gs_key: str,
+        profile_gs: Gio.Settings,
+        default_gs: Gio.Settings | None,
+        fallback: Any,
+    ) -> Any:
+        """Returns the effective profile voice value, checking default profile if needed."""
+
+        if (val := profile_gs.get_user_value(gs_key)) is not None:
+            return val.unpack()
+        if default_gs is not None and (val := default_gs.get_user_value(gs_key)) is not None:
+            return val.unpack()
+        return fallback
 
     def save_settings(self, profile: str = "", app_name: str = "") -> dict:
         """Save all settings from child grids."""
@@ -718,7 +738,19 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     profile_voice_gs = registry.get_settings("voice", p, f"voices/{vt}")
                     if profile_voice_gs is None:
                         continue
-                    self._save_app_voice(voice_gs, voice_data, profile_voice_gs)
+                    default_voice_gs = None
+                    if p != "default":
+                        default_voice_gs = registry.get_settings(
+                            "voice",
+                            "default",
+                            f"voices/{vt}",
+                        )
+                    self._save_app_voice(
+                        voice_gs,
+                        voice_data,
+                        profile_voice_gs,
+                        default_voice_gs,
+                    )
                 else:
                     self._save_voice(voice_gs, voice_data, skip)
 

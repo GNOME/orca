@@ -439,6 +439,7 @@ class GSettingsRegistry:
 
         self._migrate_display_names(prefs_dir, profiles)
         self._sync_missing_profiles(prefs_dir, profiles)
+        self._strip_inherited_dict_entries(profiles, prefs_dir)
         Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
         return migrated_any
 
@@ -739,6 +740,85 @@ class GSettingsRegistry:
             pronunciations = profile_data.get("pronunciations", {})
             keybindings = profile_data.get("keybindings", {})
             self._write_profile_settings(profile_name, profile_data, pronunciations, keybindings)
+
+    def _strip_inherited_dict_entries(self, profiles: list, prefs_dir: str) -> None:
+        """After migration, strip dict entries that duplicate their parent layer."""
+
+        for schema_name in ("keybindings", "pronunciations"):
+            if schema_name not in self._schemas:
+                continue
+
+            getter = (
+                self.get_keybindings if schema_name == "keybindings" else self.get_pronunciations
+            )
+            default_entries = getter("default", "")
+
+            for _label, profile_name in profiles:
+                if profile_name == "default":
+                    continue
+                self._strip_matching_dict(schema_name, profile_name, "", default_entries, getter)
+
+            app_dir = os.path.join(prefs_dir, "app-settings")
+            if not os.path.isdir(app_dir):
+                continue
+            for filename in os.listdir(app_dir):
+                if not filename.endswith(".conf"):
+                    continue
+                app_name = filename[:-5]
+                filepath = os.path.join(app_dir, filename)
+                try:
+                    with open(filepath, encoding="utf-8") as f:
+                        app_prefs = json.load(f)
+                except (OSError, json.JSONDecodeError):
+                    continue
+                for profile_name in app_prefs.get("profiles", {}):
+                    parent = dict(default_entries)
+                    if profile_name != "default":
+                        parent |= getter(profile_name, "")
+                    self._strip_matching_dict(
+                        schema_name,
+                        profile_name,
+                        app_name,
+                        parent,
+                        getter,
+                    )
+
+    def _strip_matching_dict(
+        self,
+        schema_name: str,
+        profile: str,
+        app_name: str,
+        parent_entries: dict,
+        getter: Callable[..., dict],
+    ) -> None:
+        """Remove dict entries from a dconf layer that match the parent."""
+
+        entries = getter(profile, app_name)
+        if not entries:
+            return
+
+        diff = {k: v for k, v in entries.items() if parent_entries.get(k) != v}
+        if len(diff) == len(entries):
+            return
+
+        gs = self.get_settings(schema_name, profile, schema_name, app_name)
+        if gs is None:
+            return
+
+        target = f"{profile}/{app_name}" if app_name else profile
+        if not diff:
+            gs.reset("entries")
+            msg = f"GSETTINGS REGISTRY: Reset {schema_name} entries for {target}"
+        else:
+            if schema_name == "keybindings":
+                gsettings_migrator.import_keybindings(gs, diff)
+            else:
+                gsettings_migrator.import_pronunciations(gs, diff)
+            msg = (
+                f"GSETTINGS REGISTRY: Stripped {schema_name} for"
+                f" {target}: {len(entries)} -> {len(diff)}"
+            )
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def rename_profile(self, old_name: str, new_label: str, new_internal_name: str) -> None:
         """Renames a profile by copying all keys to the new path and resetting the old."""
@@ -1278,12 +1358,11 @@ class GSettingsSchemaHandle:
         sub_path: str = "",
         app_name: str | None = None,
     ) -> dict | None:
-        """Returns a merged dict from profile and app layers, or None if neither has a value."""
+        """Returns a merged dict from default-profile, profile, and app layers.
 
-        # Unlike scalar lookups, dicts do NOT inherit from the default profile.
-        # Profile creation copies the default's dict entries into new profiles,
-        # so at runtime each profile already has everything it needs. Merging
-        # with default would make it impossible to delete inherited entries.
+        Later layers override earlier ones via dict merge, so profile entries
+        shadow inherited default-profile entries (e.g. [] unbinds a keybinding).
+        """
 
         if not self.has_key(key):
             return None
@@ -1296,6 +1375,14 @@ class GSettingsSchemaHandle:
         suffix = self._path_suffix
         result: dict = {}
         found_any = False
+
+        if profile != "default":
+            gs = self.get_for_profile("default", sub_path)
+            if gs is not None:
+                variant = gs.get_user_value(key)
+                if variant is not None:
+                    result |= variant.unpack()
+                    found_any = True
 
         gs = self.get_for_profile(profile, sub_path)
         if gs is not None:

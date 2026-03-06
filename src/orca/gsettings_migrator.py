@@ -179,14 +179,20 @@ def populate_per_layout_modifier_keys(
     profile_prefs: dict,
     skip_defaults: bool,
 ) -> bool:
-    """Populates desktop/laptop-modifier-keys from orcaModifierKeys during migration."""
-
-    modifier_keys = profile_prefs.get("orcaModifierKeys")
-    if modifier_keys is None:
-        return False
+    """Populates keyboard-layout and modifier keys from keybinding metadata during migration."""
 
     layout = profile_prefs.get("keyboardLayout", 1)
     is_desktop = layout == 1
+    wrote_any = False
+
+    layout_nick = "desktop" if is_desktop else "laptop"
+    if not skip_defaults or layout_nick != "desktop":
+        gs.set_string("keyboard-layout", layout_nick)
+        wrote_any = True
+
+    modifier_keys = profile_prefs.get("orcaModifierKeys")
+    if modifier_keys is None:
+        return wrote_any
 
     if is_desktop:
         key = "desktop-modifier-keys"
@@ -196,7 +202,7 @@ def populate_per_layout_modifier_keys(
         default = LAPTOP_MODIFIER_KEYS_DEFAULT
 
     if skip_defaults and modifier_keys == default:
-        return False
+        return wrote_any
 
     gs.set_strv(key, modifier_keys)
     return True

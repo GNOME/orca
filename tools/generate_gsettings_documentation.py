@@ -137,15 +137,10 @@ def generate_documentation(
     )
     lines.append(
         "- Dictionary settings (pronunciation entries, keybinding overrides): "
-        "runtime override -> profile dictionary with app dictionary overlaid on top -> "
-        "schema default"
-    )
-    lines.append("")
-    lines.append(
-        "Dict settings do not inherit from the `default` profile because new profiles "
-        "copy dict entries from the source profile when created; after that, each "
-        "profile's dictionaries are independent. Removing an entry from one profile "
-        "should not cause it to reappear via fallback to `default`."
+        "runtime override -> `default` profile entries (base) merged with active "
+        "profile entries, then app-specific entries overlaid on top -> schema default. "
+        "An empty list (`[]`) explicitly unbinds an inherited keybinding; "
+        "an empty-string replacement removes an inherited pronunciation."
     )
     lines.append("")
     lines.append("## Inspecting and Modifying Settings")

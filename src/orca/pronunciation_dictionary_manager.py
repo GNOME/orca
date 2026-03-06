@@ -58,6 +58,8 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         self._initializing: bool = True
 
         self._pronunciations: list[tuple[str, str]] = []
+        self._inherited_keys: set[str] = set()
+        self._deleted_inherited_keys: set[str] = set()
         self._listbox: Gtk.ListBox | None = None
         self._has_unsaved_changes: bool = False
         self._loaded_from_settings: bool = False
@@ -192,7 +194,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
             include_top_separator=include_top_separator,
             left_label_size_group=self._left_label_size_group,
         )
-        # Store row_index as Python attributes
+
         row.pronunciation_row_index = row_index
 
         if row.edit_button:
@@ -215,6 +217,10 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
 
         row_index = button.pronunciation_row_index
         phrase, _ = self._pronunciations[row_index]
+        key = phrase.lower()
+        if key in self._inherited_keys:
+            self._deleted_inherited_keys.add(key)
+            self._inherited_keys.discard(key)
         del self._pronunciations[row_index]
         self._has_unsaved_changes = True
         self.refresh()
@@ -361,6 +367,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
                 new_phrase = phrase_entry.get_text().strip()
                 new_substitution = substitution_entry.get_text().strip()
                 if new_phrase and new_substitution:
+                    self._inherited_keys.discard(phrase.lower())
                     self._pronunciations[row_index] = (new_phrase, new_substitution)
                     self._has_unsaved_changes = True
                     self.refresh()
@@ -375,6 +382,8 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         """Reload settings from the manager and refresh the UI."""
 
         self._pronunciations = []
+        self._inherited_keys = set()
+        self._deleted_inherited_keys = set()
         self._loaded_from_settings = False
         self._has_unsaved_changes = False
         self.refresh()
@@ -383,22 +392,39 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         """Save settings and return a dictionary of the current values for those settings."""
 
         self._manager.set_dictionary({})
-        result = {}
+        result: dict[str, list[str]] = {}
 
         for phrase, substitution in self._pronunciations:
             if phrase and substitution:
                 self._manager.set_pronunciation(phrase, substitution)
-                # Save in old format [actual, replacement] for backward compatibility.
-                # TODO - JD: When we migrate to gsettings, we can store as {actual: replacement}.
                 result[phrase.lower()] = [phrase, substitution]
 
         self._has_unsaved_changes = False
 
         if profile:
             registry = gsettings_registry.get_registry()
+            parent_pronunciations: dict[str, str] = {}
+            if profile != "default" or app_name:
+                if profile != "default":
+                    parent_pronunciations |= registry.get_pronunciations("default", "")
+                if app_name:
+                    parent_pronunciations |= registry.get_pronunciations(profile, "")
+
+            diff: dict[str, str] = {}
+            for key, value in result.items():
+                replacement = value[1]
+                if parent_pronunciations.get(key) != replacement:
+                    diff[key] = replacement
+            for key in self._deleted_inherited_keys:
+                if key in parent_pronunciations:
+                    diff[key] = ""
+
             pron_gs = registry.get_settings("pronunciations", profile, "pronunciations", app_name)
             if pron_gs is not None:
-                gsettings_migrator.import_pronunciations(pron_gs, result)
+                if diff:
+                    gsettings_migrator.import_pronunciations(pron_gs, diff)
+                elif pron_gs.get_user_value("entries") is not None:
+                    pron_gs.reset("entries")
 
         return result
 
@@ -422,14 +448,29 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
                 from .ax_object import AXObject  # pylint: disable=import-outside-toplevel
 
                 app_name = AXObject.get_name(self._script.app)
-            pronunciation_dict = registry.get_pronunciations(profile, app_name)
+
+            pronunciation_dict = registry.layered_lookup(
+                "pronunciations",
+                "entries",
+                "a{ss}",
+                app_name=app_name or None,
+                default={},
+            )
+            local_dict = registry.get_pronunciations(profile, app_name)
+            self._inherited_keys = set(pronunciation_dict.keys()) - set(local_dict.keys())
 
             for key in sorted(pronunciation_dict.keys()):
-                self._pronunciations.append((key, pronunciation_dict[key]))
+                if pronunciation_dict[key]:
+                    self._pronunciations.append((key, pronunciation_dict[key]))
 
         if self._pronunciations:
             for index, (phrase, substitution) in enumerate(self._pronunciations):
-                row = self._create_row(phrase, substitution, index, include_top_separator=index > 0)
+                row = self._create_row(
+                    phrase,
+                    substitution,
+                    index,
+                    include_top_separator=index > 0,
+                )
                 self._listbox.add(row)
         else:
             empty_row = self._create_info_row(guilabels.DICTIONARY_EMPTY)
@@ -492,7 +533,7 @@ class PronunciationDictionaryManager:
                 default={},
             )
 
-        return self._dictionary.get(word.lower(), word)
+        return self._dictionary.get(word.lower(), word) or word
 
     def set_pronunciation(self, word: str, replacement: str) -> None:
         """Adds word/replacement pair."""
