@@ -561,53 +561,6 @@ class TestGSettingsSchemaHandle:
         result = handle.get_boolean("some-key")
         assert result is None
 
-    def test_set_boolean_stamps_version(self, test_context: OrcaTestContext) -> None:
-        """Test set_boolean stamps version on first write."""
-
-        self._setup(test_context)
-
-        from orca import gsettings_registry
-        from orca.gsettings_registry import GSettingsSchemaHandle
-
-        handle = GSettingsSchemaHandle("org.gnome.Orca.Test", "test", version=2)
-
-        mock_schema = test_context.Mock()
-        mock_schema.has_key.return_value = True
-        test_context.patch_object(handle, "get_schema", return_value=mock_schema)
-
-        gsettings_registry.get_registry().set_active_app(None)
-        gsettings_registry.get_registry().set_active_profile("default")
-
-        mock_gs = test_context.Mock()
-        mock_gs.get_user_value.return_value = None  # version not yet set
-        test_context.patch_object(handle, "get_for_profile", return_value=mock_gs)
-
-        result = handle.set_boolean("some-key", True)
-        assert result is True
-        mock_gs.set_boolean.assert_called_once_with("some-key", True)
-        mock_gs.set_int.assert_not_called()
-
-    def test_is_current_version(self, test_context: OrcaTestContext) -> None:
-        """Test is_current_version checks version correctly."""
-
-        self._setup(test_context)
-        from orca.gsettings_registry import GSettingsSchemaHandle
-
-        handle = GSettingsSchemaHandle("org.gnome.Orca.Test", "test", version=2)
-
-        mock_schema = test_context.Mock()
-        mock_schema.has_key.return_value = True
-        test_context.patch_object(handle, "get_schema", return_value=mock_schema)
-
-        mock_gs = test_context.Mock()
-        mock_gs.get_int.return_value = 2
-        test_context.patch_object(handle, "get_for_profile", return_value=mock_gs)
-
-        assert handle.is_current_version("default") is True
-
-        mock_gs.get_int.return_value = 1
-        assert handle.is_current_version("default") is False
-
     def test_get_string_layered(self, test_context: OrcaTestContext) -> None:
         """Test get_string uses layered lookup."""
 
@@ -1534,8 +1487,7 @@ class TestMigrateAll:
             return False
 
         try:
-            test_context.patch_object(registry, "_is_migration_done", return_value=False)
-            test_context.patch_object(registry, "_stamp_migration_done")
+            test_context.patch_object(registry, "_has_dconf_keys", return_value=False)
             test_context.patch_object(registry, "_sync_missing_profiles")
             test_context.patch_object(registry, "_read_profiles_from_json", return_value=[])
             test_context.patch_object(registry, "migrate_schema", side_effect=tracking_migrate)
@@ -1564,8 +1516,7 @@ class TestMigrateAll:
             return schema_name == "test-m2"
 
         try:
-            test_context.patch_object(registry, "_is_migration_done", return_value=False)
-            test_context.patch_object(registry, "_stamp_migration_done")
+            test_context.patch_object(registry, "_has_dconf_keys", return_value=False)
             test_context.patch_object(registry, "_sync_missing_profiles")
             test_context.patch_object(registry, "_read_profiles_from_json", return_value=[])
             test_context.patch_object(registry, "migrate_schema", side_effect=selective_migrate)
@@ -1588,8 +1539,7 @@ class TestMigrateAll:
         registry._schemas["test-n1"] = "org.gnome.Orca.TestN1"
 
         try:
-            test_context.patch_object(registry, "_is_migration_done", return_value=False)
-            test_context.patch_object(registry, "_stamp_migration_done")
+            test_context.patch_object(registry, "_has_dconf_keys", return_value=False)
             test_context.patch_object(registry, "_sync_missing_profiles")
             test_context.patch_object(registry, "_read_profiles_from_json", return_value=[])
             test_context.patch_object(registry, "migrate_schema", return_value=False)
@@ -1617,8 +1567,7 @@ class TestMigrateAll:
             return False
 
         try:
-            test_context.patch_object(registry, "_is_migration_done", return_value=False)
-            test_context.patch_object(registry, "_stamp_migration_done")
+            test_context.patch_object(registry, "_has_dconf_keys", return_value=False)
             test_context.patch_object(registry, "_sync_missing_profiles")
             test_context.patch_object(registry, "_read_profiles_from_json", return_value=[])
             test_context.patch_object(registry, "migrate_schema", side_effect=capture_migrate)

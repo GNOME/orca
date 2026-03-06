@@ -254,13 +254,8 @@ def generate_schema_xml(src_dir: Path, output_path: str) -> None:
     for schema_name in sorted(schemas):
         schema_id = schemas[schema_name]
         settings = [s for s in all_settings if s.get("schema") == schema_name]
-        version_summary = schema_name.replace("-", " ").capitalize() + " settings version"
 
         schema = ET.SubElement(schemalist, "schema", id=schema_id)
-
-        key = ET.SubElement(schema, "key", name="version", type="i")
-        ET.SubElement(key, "default").text = "0"
-        ET.SubElement(key, "summary").text = version_summary
 
         for setting in settings:
             genum = setting.get("genum")

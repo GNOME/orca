@@ -98,7 +98,6 @@ from orca.gsettings_migrator import (
     json_to_gsettings,
     resolve_enum_nick,
     sanitize_gsettings_path,
-    stamp_version,
 )
 
 GSETTINGS_PATH_PREFIX = "/org/gnome/orca/"
@@ -221,7 +220,6 @@ def _import_mapped_settings(
 
     gs = source.get_settings(schema_id, path)
     if json_to_gsettings(json_dict, gs, mappings, skip_defaults):
-        stamp_version(gs)
         print(f"  Imported {schema_name} for {label}")
 
 
@@ -245,8 +243,6 @@ def _import_synthesizer_for_profile(
 
     gs = source.get_settings(SCHEMAS["speech"], path)
     if import_synthesizer(gs, profile_prefs):
-        if gs.get_user_value("version") is None:
-            stamp_version(gs)
         print(
             f"  Imported speech-server={speech_server_info[0]!r}, "
             f"synthesizer={speech_server_info[1]!r} for {label}"
@@ -285,7 +281,6 @@ def _import_voice_for_path(
 
     gs = source.get_settings(SCHEMAS["voice"], path)
     if import_voice(gs, voice_data, skip_defaults):
-        stamp_version(gs)
         print(f"  Imported {label}")
 
 
@@ -312,7 +307,6 @@ def _import_pronunciations_for_path(
 
     gs = source.get_settings(SCHEMAS["pronunciations"], path)
     if import_pronunciations(gs, pronunciations_dict):
-        stamp_version(gs)
         print(f"  Imported pronunciations for {label}")
 
 
@@ -346,7 +340,6 @@ def _import_keybindings_for_path(
 
     gs = source.get_settings(SCHEMAS["keybindings"], path)
     if import_keybindings(gs, keybindings_dict):
-        stamp_version(gs)
         print(f"  Imported keybindings for {label}")
 
 

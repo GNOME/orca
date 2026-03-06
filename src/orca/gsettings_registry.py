@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import json
 import os
+import subprocess
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, overload
 
@@ -402,63 +403,47 @@ class GSettingsRegistry:
             return False
         return gsettings_migrator.json_to_gsettings(prefs_dict, gs, mappings, skip_defaults)
 
-    def _is_migration_done(self) -> bool:
-        """Returns True if JSON-to-GSettings migration has already been completed."""
+    @staticmethod
+    def _has_dconf_keys() -> bool:
+        """Returns True if dconf has any entries under the Orca path."""
 
-        checked = 0
-        for name, schema_id in self._schemas.items():
-            handle = GSettingsSchemaHandle(schema_id, name)
-            if not handle.has_key("version"):
-                continue
-            checked += 1
-            if not handle.is_current_version():
-                msg = f"GSETTINGS REGISTRY: Schema '{name}' not at current version."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return False
-
-        if checked == 0:
-            msg = "GSETTINGS REGISTRY: No schemas with version key found."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+        try:
+            result = subprocess.run(
+                ["dconf", "list", GSETTINGS_PATH_PREFIX],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            return bool(result.stdout.strip())
+        except (subprocess.CalledProcessError, FileNotFoundError):
             return False
-
-        msg = f"GSETTINGS REGISTRY: Migration already done ({checked} schema(s) verified)."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return True
-
-    def _stamp_migration_done(self) -> None:
-        """Stamps version on all schemas to mark migration as complete."""
-
-        stamped = 0
-        for name, schema_id in self._schemas.items():
-            handle = GSettingsSchemaHandle(schema_id, name)
-            if handle.set_version():
-                stamped += 1
-
-        msg = f"GSETTINGS REGISTRY: Stamped migration version on {stamped} schema(s)."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def migrate_all(self, prefs_dir: str) -> bool:
         """Migrates all registered schemas from JSON to GSettings."""
 
+        if self._has_dconf_keys():
+            msg = "GSETTINGS REGISTRY: dconf already has settings; skipping migration."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        msg = "GSETTINGS REGISTRY: No dconf settings found; proceeding with migration."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
         profiles = self._read_profiles_from_json(prefs_dir)
         migrated_any = False
 
-        if not self._is_migration_done():
-            for name, schema_id in self._schemas.items():
-                handle = GSettingsSchemaHandle(schema_id, name)
-                if self.migrate_schema(handle, name, prefs_dir, profiles):
-                    migrated_any = True
+        for name, schema_id in self._schemas.items():
+            handle = GSettingsSchemaHandle(schema_id, name)
+            if self.migrate_schema(handle, name, prefs_dir, profiles):
+                migrated_any = True
 
-            self._migrate_display_names(prefs_dir, profiles)
-            self._sync_missing_profiles(prefs_dir, profiles)
-            self._stamp_migration_done()
+        self._migrate_display_names(prefs_dir, profiles)
+        self._sync_missing_profiles(prefs_dir, profiles)
         Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
         return migrated_any
 
     def import_from_dir(self, import_dir: str) -> None:
         """Imports settings from a directory by resetting dconf and re-migrating."""
-
-        import subprocess  # pylint: disable=import-outside-toplevel
 
         msg = f"GSETTINGS REGISTRY: Importing settings from '{import_dir}'."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1116,11 +1101,9 @@ class GSettingsSchemaHandle:
         self,
         schema_id: str,
         path_suffix: str,
-        version: int = 1,
     ) -> None:
         self._schema_id = schema_id
         self._path_suffix = path_suffix
-        self._version = version
         self._schema: Gio.SettingsSchema | None = None
         self._cache: dict[str, Gio.Settings] = {}
 
@@ -1377,32 +1360,6 @@ class GSettingsSchemaHandle:
     def set_double(self, key: str, value: float, sub_path: str = "") -> bool:
         """Sets a double in the current profile."""
         return self._set_value(key, lambda gs, k: gs.set_double(k, value), sub_path)
-
-    def stamp_version(self, gs: Gio.Settings) -> None:
-        """Stamps the current version on a Gio.Settings instance."""
-
-        gs.set_int("version", self._version)
-
-    def is_current_version(self, profile: str = "default") -> bool:
-        """Returns True if GSettings is at the current version for a profile."""
-
-        gs = self.get_for_profile(profile)
-        if gs is None:
-            return False
-        if not self.has_key("version"):
-            return False
-        return gs.get_int("version") >= self._version
-
-    def set_version(self, profile: str = "default") -> bool:
-        """Sets the GSettings version for a profile."""
-
-        gs = self.get_for_profile(profile)
-        if gs is None:
-            return False
-        if not self.has_key("version"):
-            return False
-        gs.set_int("version", self._version)
-        return True
 
 
 _registry: GSettingsRegistry = GSettingsRegistry()

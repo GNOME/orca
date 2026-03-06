@@ -454,10 +454,3 @@ def export_keybindings(gs: Gio.Settings) -> dict:
     if user_value is None:
         return {}
     return user_value.unpack()
-
-
-# TODO - JD: Delete this in v52 (remove -i/--import-dir support).
-def stamp_version(gs: Gio.Settings, version: int = 1) -> None:
-    """Stamps a version number on a Gio.Settings instance."""
-
-    gs.set_int("version", version)
