@@ -296,6 +296,27 @@ class Utilities(script_utilities.Utilities):
 
         return False
 
+    def get_find_results_count(self, root: Atspi.Accessible | None = None) -> str:
+        """Returns a string description of the number of find-in-page results in root."""
+
+        root = root or self._find_container
+        if not root:
+            return ""
+
+        def has_result_count(x: Atspi.Accessible) -> bool:
+            return len(re.findall(r"\d+", AXObject.get_name(x))) == 2
+
+        # Gecko uses a label, Chromium uses a status bar.
+        matches = AXUtilities.find_all_with_role(
+            root, [Atspi.Role.LABEL, Atspi.Role.STATUS_BAR], has_result_count
+        )
+        if len(matches) != 1:
+            return ""
+
+        match = matches[0]
+        AXObject.clear_cache(match, False, "Ensuring we have correct name for find results.")
+        return AXObject.get_name(match)
+
     def set_caret_offset(self, obj: Atspi.Accessible, offset: int) -> None:
         """Sets the caret offset via AtspiText."""
 

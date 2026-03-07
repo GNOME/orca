@@ -22,11 +22,9 @@
 
 from __future__ import annotations
 
-import re
 from typing import TYPE_CHECKING
 
 from orca import debug
-from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.scripts import web
 
@@ -55,24 +53,6 @@ class Utilities(web.Utilities):
         tokens = ["GECKO: Editable", obj, "not in an editable document"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
-
-    def get_find_results_count(self, root: Atspi.Accessible | None = None) -> str:
-        """Returns a string description of the number of find-in-page results in root."""
-
-        root = root or self._find_container
-        if not root:
-            return ""
-
-        def is_match(x: Atspi.Accessible) -> bool:
-            return len(re.findall(r"\d+", AXObject.get_name(x))) == 2
-
-        labels = AXUtilities.find_all_labels(root, is_match)
-        if len(labels) != 1:
-            return ""
-
-        label = labels[0]
-        AXObject.clear_cache(label, False, "Ensuring we have correct name for find results.")
-        return AXObject.get_name(label)
 
     def unrelated_labels(
         self,

@@ -31,8 +31,6 @@ from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.scripts import web
 
-from .script_utilities import Utilities
-
 if TYPE_CHECKING:
     import gi
 
@@ -43,10 +41,10 @@ if TYPE_CHECKING:
 class Script(web.ToolkitBridge):
     """Custom script for Chromium."""
 
-    def get_utilities(self) -> Utilities:
+    def get_utilities(self) -> web.Utilities:
         """Returns the utilities for this script."""
 
-        return Utilities(self)
+        return web.Utilities(self)
 
     def _on_caret_moved(self, event: Atspi.Event) -> bool:
         """Callback for object:text-caret-moved accessibility events."""
