@@ -1679,7 +1679,7 @@ class AXUtilitiesRole:
     def is_live_region(obj: Atspi.Accessible, _role: Atspi.Role | None = None) -> bool:
         """Returns True if obj is a live region."""
 
-        attrs = AXObject.get_attributes_dict(obj)
+        attrs = AXObject.get_attributes_dict(obj, use_cache=False)
         return "container-live" in attrs and attrs.get("container-live") in ["polite", "assertive"]
 
     @staticmethod
