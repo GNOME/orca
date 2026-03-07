@@ -94,6 +94,7 @@ class TextEventReason(enum.Enum):
     SELECTION_TO_FILE_BOUNDARY = enum.auto()
     SELECTION_TO_LINE_BOUNDARY = enum.auto()
     SPIN_BUTTON_VALUE_CHANGE = enum.auto()
+    SYSTEM_UPDATE = enum.auto()
     TYPING = enum.auto()
     TYPING_ECHOABLE = enum.auto()
     UI_UPDATE = enum.auto()
@@ -379,6 +380,8 @@ class AXUtilitiesEvent:
             reason = TextEventReason.UI_UPDATE
         elif AXUtilitiesRole.is_live_region(obj):
             reason = TextEventReason.LIVE_REGION_UPDATE
+        elif event.type.endswith("system"):
+            reason = TextEventReason.SYSTEM_UPDATE
         elif mgr.last_event_was_page_switch():
             reason = TextEventReason.PAGE_SWITCH
         elif AXUtilitiesState.is_editable(obj) or AXUtilitiesRole.is_terminal(obj):
@@ -543,6 +546,8 @@ class AXUtilitiesEvent:
             reason = TextEventReason.UI_UPDATE
         elif AXUtilitiesRole.is_live_region(obj):
             reason = TextEventReason.LIVE_REGION_UPDATE
+        elif event.type.endswith("system"):
+            reason = TextEventReason.SYSTEM_UPDATE
         elif mgr.last_event_was_page_switch():
             reason = TextEventReason.PAGE_SWITCH
         elif AXUtilitiesState.is_editable(obj) or AXUtilitiesRole.is_terminal(obj):

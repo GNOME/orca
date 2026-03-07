@@ -73,30 +73,6 @@ class Script(Gecko.Script):
 
         return super()._on_selection_changed(event)
 
-    def _on_text_deleted(self, event: Atspi.Event) -> bool:
-        """Callback for object:text-changed:delete accessibility events."""
-
-        if AXUtilities.is_label(event.source) and AXUtilities.is_status_bar(
-            AXObject.get_parent(event.source),
-        ):
-            return True
-
-        return super()._on_text_deleted(event)
-
-    def _on_text_inserted(self, event: Atspi.Event) -> bool:
-        """Callback for object:text-changed:insert accessibility events."""
-
-        parent = AXObject.get_parent(event.source)
-        if AXUtilities.is_label(event.source) and AXUtilities.is_status_bar(parent):
-            return True
-
-        # Try to stop unwanted chatter when a message is being replied to.
-        # See bgo#618484.
-        if event.type.endswith("system") and self._is_in_editable_message(event.source):
-            return True
-
-        return super()._on_text_inserted(event)
-
     def _on_window_deactivated(self, event: Atspi.Event) -> bool:
         """Callback for window:deactivate accessibility events."""
 

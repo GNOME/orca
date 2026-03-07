@@ -886,6 +886,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = "deleted text"
+        mock_event.type = "object:text-changed:delete"
 
         mock_input_manager = test_context.Mock()
         input_settings = {
@@ -949,6 +950,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = "1"
+        mock_event.type = "object:text-changed:delete"
 
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = False
@@ -997,6 +999,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = "selected text"
+        mock_event.type = "object:text-changed:delete"
 
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = False
@@ -1083,6 +1086,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = "inserted text"
+        mock_event.type = "object:text-changed:insert"
 
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = False
@@ -1156,6 +1160,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = "a"
+        mock_event.type = "object:text-changed:insert"
 
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = False
@@ -1222,6 +1227,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = "\n"
+        mock_event.type = "object:text-changed:insert"
 
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = False
@@ -2256,6 +2262,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = "test"
+        mock_event.type = "object:text-changed:insert"
 
         mock_input_manager = test_context.Mock()
         default_config = {
@@ -2301,6 +2308,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = "auto deleted"
+        mock_event.type = "object:text-changed:delete"
 
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = False
@@ -2348,6 +2356,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = "\ufffc"
+        mock_event.type = "object:text-changed:delete"
 
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = False
@@ -2385,6 +2394,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = "restored text"
+        mock_event.type = "object:text-changed:insert"
 
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = False
@@ -2442,6 +2452,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = "auto inserted text"
+        mock_event.type = "object:text-changed:insert"
 
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = False
@@ -2498,6 +2509,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = "auto inserted text"
+        mock_event.type = "object:text-changed:insert"
 
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = False
@@ -2552,6 +2564,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = "pasted text"
+        mock_event.type = "object:text-changed:insert"
 
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = False
@@ -2614,6 +2627,7 @@ class TestAXUtilitiesEvent:
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
+        mock_event.type = "object:text-changed:delete"
 
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = True
@@ -2650,6 +2664,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = "deleted text"
+        mock_event.type = "object:text-changed:delete"
 
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = False
@@ -2723,6 +2738,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = "deleted text"
+        mock_event.type = "object:text-changed:delete"
 
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = False
@@ -2760,6 +2776,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = "inserted text"
+        mock_event.type = "object:text-changed:insert"
 
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = False
@@ -2811,6 +2828,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = "selected text"
+        mock_event.type = "object:text-changed:insert"
 
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = False
@@ -3547,6 +3565,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = "x"
+        mock_event.type = "object:text-changed:insert"
 
         mock_input_manager = test_context.Mock()
         mock_input_manager.last_event_was_page_switch.return_value = False
