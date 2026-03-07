@@ -83,6 +83,10 @@ class StructuralNavigator:
     """Implements the structural navigation support available to scripts."""
 
     _SCHEMA = "structural-navigation"
+    KEY_WRAPS = "wraps"
+    KEY_LARGE_OBJECT_TEXT_LENGTH = "large-object-text-length"
+    KEY_ENABLED = "enabled"
+    KEY_TRIGGERS_FOCUS_MODE = "triggers-focus-mode"
 
     def _get_setting(self, key: str, gtype: str, default: Any) -> Any:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -497,7 +501,7 @@ class StructuralNavigator:
         return not self.get_triggers_focus_mode()
 
     @gsettings_registry.get_registry().gsetting(
-        key="wraps",
+        key=KEY_WRAPS,
         schema="structural-navigation",
         gtype="b",
         default=True,
@@ -508,7 +512,7 @@ class StructuralNavigator:
     def get_navigation_wraps(self) -> bool:
         """Returns whether navigation wraps when reaching the top/bottom of the document."""
 
-        return self._get_setting("wraps", "b", True)
+        return self._get_setting(self.KEY_WRAPS, "b", True)
 
     @dbus_service.setter
     def set_navigation_wraps(self, value: bool) -> bool:
@@ -516,11 +520,11 @@ class StructuralNavigator:
 
         msg = f"STRUCTURAL NAVIGATOR: Setting navigation wraps to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        gsettings_registry.get_registry().set_runtime_value("structural-navigation", "wraps", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_WRAPS, value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="large-object-text-length",
+        key=KEY_LARGE_OBJECT_TEXT_LENGTH,
         schema="structural-navigation",
         gtype="i",
         default=75,
@@ -531,7 +535,7 @@ class StructuralNavigator:
     def get_large_object_text_length(self) -> int:
         """Returns the minimum number of characters to be considered a 'large object'."""
 
-        return self._get_setting("large-object-text-length", "i", 75)
+        return self._get_setting(self.KEY_LARGE_OBJECT_TEXT_LENGTH, "i", 75)
 
     @dbus_service.setter
     def set_large_object_text_length(self, value: int) -> bool:
@@ -540,14 +544,14 @@ class StructuralNavigator:
         msg = f"STRUCTURAL NAVIGATOR: Setting large object text length to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            "structural-navigation",
-            "large-object-text-length",
+            self._SCHEMA,
+            self.KEY_LARGE_OBJECT_TEXT_LENGTH,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="enabled",
+        key=KEY_ENABLED,
         schema="structural-navigation",
         gtype="b",
         default=True,
@@ -558,7 +562,7 @@ class StructuralNavigator:
     def get_is_enabled(self) -> bool:
         """Returns whether structural navigation is enabled."""
 
-        return self._get_setting("enabled", "b", True)
+        return self._get_setting(self.KEY_ENABLED, "b", True)
 
     @dbus_service.setter
     def set_is_enabled(self, value: bool) -> bool:
@@ -576,8 +580,8 @@ class StructuralNavigator:
         msg = f"STRUCTURAL NAVIGATOR: Setting enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            "structural-navigation",
-            "enabled",
+            self._SCHEMA,
+            self.KEY_ENABLED,
             value,
         )
 
@@ -608,7 +612,7 @@ class StructuralNavigator:
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="triggers-focus-mode",
+        key=KEY_TRIGGERS_FOCUS_MODE,
         schema="structural-navigation",
         gtype="b",
         default=False,
@@ -619,7 +623,7 @@ class StructuralNavigator:
     def get_triggers_focus_mode(self) -> bool:
         """Returns whether structural navigation triggers focus mode."""
 
-        return self._get_setting("triggers-focus-mode", "b", False)
+        return self._get_setting(self.KEY_TRIGGERS_FOCUS_MODE, "b", False)
 
     @dbus_service.setter
     def set_triggers_focus_mode(self, value: bool) -> bool:
@@ -631,8 +635,8 @@ class StructuralNavigator:
         msg = f"STRUCTURAL NAVIGATOR: Setting triggers focus mode to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
-            "structural-navigation",
-            "triggers-focus-mode",
+            self._SCHEMA,
+            self.KEY_TRIGGERS_FOCUS_MODE,
             value,
         )
         return True

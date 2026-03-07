@@ -74,9 +74,26 @@ def _extract_gsettings_schemas(tree: ast.Module) -> list[tuple[str, str]]:
     return schemas
 
 
+def _collect_class_constants(tree: ast.Module) -> dict[str, Any]:
+    """Collect class-level NAME = CONSTANT assignments for resolving references."""
+
+    constants: dict[str, Any] = {}
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.ClassDef):
+            continue
+        for stmt in node.body:
+            if not isinstance(stmt, ast.Assign) or len(stmt.targets) != 1:
+                continue
+            target = stmt.targets[0]
+            if isinstance(target, ast.Name) and isinstance(stmt.value, ast.Constant):
+                constants[target.id] = stmt.value.value
+    return constants
+
+
 def _extract_gsetting_decorators(tree: ast.Module, source_path: str) -> list[dict]:
     """Extract @gsetting decorator arguments from a parsed AST."""
 
+    class_constants = _collect_class_constants(tree)
     settings: list[dict] = []
     for node in ast.walk(tree):
         if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
@@ -99,6 +116,8 @@ def _extract_gsetting_decorators(tree: ast.Module, source_path: str) -> list[dic
             for keyword in decorator.keywords:
                 if isinstance(keyword.value, ast.Constant):
                     setting[keyword.arg] = keyword.value.value
+                elif isinstance(keyword.value, ast.Name) and keyword.value.id in class_constants:
+                    setting[keyword.arg] = class_constants[keyword.value.id]
                 elif isinstance(keyword.value, ast.Dict):
                     d = {}
                     for k, v in zip(keyword.value.keys, keyword.value.values, strict=True):

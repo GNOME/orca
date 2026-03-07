@@ -66,13 +66,13 @@ class SoundProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid
                 label=guilabels.GENERAL_BEEP_UPDATES,
                 getter=presenter.get_beep_progress_bar_updates,
                 setter=presenter.set_beep_progress_bar_updates,
-                prefs_key="beep-progress-bar-updates",
+                prefs_key=SoundPresenter.KEY_BEEP_PROGRESS_BAR_UPDATES,
             ),
             preferences_grid_base.IntRangePreferenceControl(
                 label=guilabels.GENERAL_FREQUENCY_SECS,
                 getter=presenter.get_progress_bar_beep_interval,
                 setter=presenter.set_progress_bar_beep_interval,
-                prefs_key="progress-bar-beep-interval",
+                prefs_key=SoundPresenter.KEY_PROGRESS_BAR_BEEP_INTERVAL,
                 minimum=0,
                 maximum=100,
             ),
@@ -80,7 +80,7 @@ class SoundProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid
                 label=guilabels.GENERAL_APPLIES_TO,
                 getter=presenter.get_progress_bar_beep_verbosity,
                 setter=presenter.set_progress_bar_beep_verbosity,
-                prefs_key="progress-bar-beep-verbosity",
+                prefs_key=SoundPresenter.KEY_PROGRESS_BAR_BEEP_VERBOSITY,
                 options=[
                     guilabels.PROGRESS_BAR_ALL,
                     guilabels.PROGRESS_BAR_APPLICATION,
@@ -251,6 +251,11 @@ class SoundPresenter:
     """Provides sound presentation support."""
 
     _SCHEMA = "sound"
+    KEY_ENABLED = "enabled"
+    KEY_VOLUME = "volume"
+    KEY_BEEP_PROGRESS_BAR_UPDATES = "beep-progress-bar-updates"
+    KEY_PROGRESS_BAR_BEEP_INTERVAL = "progress-bar-beep-interval"
+    KEY_PROGRESS_BAR_BEEP_VERBOSITY = "progress-bar-beep-verbosity"
 
     def _get_setting(self, key: str, gtype: str, default: Any) -> Any:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -278,7 +283,7 @@ class SoundPresenter:
         return SoundPreferencesGrid(self, title_change_callback)
 
     @gsettings_registry.get_registry().gsetting(
-        key="enabled",
+        key=KEY_ENABLED,
         schema="sound",
         gtype="b",
         default=True,
@@ -289,7 +294,7 @@ class SoundPresenter:
     def get_sound_is_enabled(self) -> bool:
         """Returns whether sound is enabled."""
 
-        return self._get_setting("enabled", "b", True)
+        return self._get_setting(self.KEY_ENABLED, "b", True)
 
     @dbus_service.setter
     def set_sound_is_enabled(self, value: bool) -> bool:
@@ -297,11 +302,11 @@ class SoundPresenter:
 
         msg = f"SOUND PRESENTER: Setting enable sound to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "enabled", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_ENABLED, value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="volume",
+        key=KEY_VOLUME,
         schema="sound",
         gtype="d",
         default=0.5,
@@ -312,7 +317,7 @@ class SoundPresenter:
     def get_sound_volume(self) -> float:
         """Returns the sound volume (0.0 to 1.0)."""
 
-        return self._get_setting("volume", "d", 0.5)
+        return self._get_setting(self.KEY_VOLUME, "d", 0.5)
 
     @dbus_service.setter
     def set_sound_volume(self, value: float) -> bool:
@@ -320,11 +325,11 @@ class SoundPresenter:
 
         msg = f"SOUND PRESENTER: Setting sound volume to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "volume", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_VOLUME, value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="beep-progress-bar-updates",
+        key=KEY_BEEP_PROGRESS_BAR_UPDATES,
         schema="sound",
         gtype="b",
         default=False,
@@ -335,7 +340,7 @@ class SoundPresenter:
     def get_beep_progress_bar_updates(self) -> bool:
         """Returns whether beep progress bar updates are enabled."""
 
-        return self._get_setting("beep-progress-bar-updates", "b", False)
+        return self._get_setting(self.KEY_BEEP_PROGRESS_BAR_UPDATES, "b", False)
 
     @dbus_service.setter
     def set_beep_progress_bar_updates(self, value: bool) -> bool:
@@ -345,13 +350,13 @@ class SoundPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "beep-progress-bar-updates",
+            self.KEY_BEEP_PROGRESS_BAR_UPDATES,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="progress-bar-beep-interval",
+        key=KEY_PROGRESS_BAR_BEEP_INTERVAL,
         schema="sound",
         gtype="i",
         default=0,
@@ -362,7 +367,7 @@ class SoundPresenter:
     def get_progress_bar_beep_interval(self) -> int:
         """Returns the beep progress bar update interval in seconds."""
 
-        return self._get_setting("progress-bar-beep-interval", "i", 0)
+        return self._get_setting(self.KEY_PROGRESS_BAR_BEEP_INTERVAL, "i", 0)
 
     @dbus_service.setter
     def set_progress_bar_beep_interval(self, value: int) -> bool:
@@ -372,13 +377,13 @@ class SoundPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "progress-bar-beep-interval",
+            self.KEY_PROGRESS_BAR_BEEP_INTERVAL,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="progress-bar-beep-verbosity",
+        key=KEY_PROGRESS_BAR_BEEP_VERBOSITY,
         schema="sound",
         genum="org.gnome.Orca.ProgressBarVerbosity",
         default="application",
@@ -391,7 +396,7 @@ class SoundPresenter:
 
         nick = gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            "progress-bar-beep-verbosity",
+            self.KEY_PROGRESS_BAR_BEEP_VERBOSITY,
             "",
             genum="org.gnome.Orca.ProgressBarVerbosity",
             default="application",
@@ -407,7 +412,7 @@ class SoundPresenter:
         level = ProgressBarVerbosity(value)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "progress-bar-beep-verbosity",
+            self.KEY_PROGRESS_BAR_BEEP_VERBOSITY,
             level.name.lower(),
         )
         return True

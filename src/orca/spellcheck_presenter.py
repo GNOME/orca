@@ -87,6 +87,9 @@ class SpellCheckPresenter:
     """Singleton presenter for spell check support and preferences."""
 
     _SCHEMA = "spellcheck"
+    KEY_SPELL_ERROR = "spell-error"
+    KEY_SPELL_SUGGESTION = "spell-suggestion"
+    KEY_PRESENT_CONTEXT = "present-context"
 
     def _get_setting(self, key: str, default: bool) -> bool:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -110,7 +113,7 @@ class SpellCheckPresenter:
         controller.register_decorated_module("SpellCheckPresenter", self)
 
     @gsettings_registry.get_registry().gsetting(
-        key="spell-error",
+        key=KEY_SPELL_ERROR,
         schema="spellcheck",
         gtype="b",
         default=True,
@@ -121,7 +124,7 @@ class SpellCheckPresenter:
     def get_spell_error(self) -> bool:
         """Returns whether misspelled word should be spelled."""
 
-        return self._get_setting("spell-error", True)
+        return self._get_setting(self.KEY_SPELL_ERROR, True)
 
     @dbus_service.setter
     def set_spell_error(self, value: bool) -> bool:
@@ -132,11 +135,13 @@ class SpellCheckPresenter:
 
         msg = f"SPELLCHECK PRESENTER: Setting spell error to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "spell-error", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, self.KEY_SPELL_ERROR, value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="spell-suggestion",
+        key=KEY_SPELL_SUGGESTION,
         schema="spellcheck",
         gtype="b",
         default=True,
@@ -147,7 +152,7 @@ class SpellCheckPresenter:
     def get_spell_suggestion(self) -> bool:
         """Returns whether the suggested correction should be spelled."""
 
-        return self._get_setting("spell-suggestion", True)
+        return self._get_setting(self.KEY_SPELL_SUGGESTION, True)
 
     @dbus_service.setter
     def set_spell_suggestion(self, value: bool) -> bool:
@@ -158,11 +163,13 @@ class SpellCheckPresenter:
 
         msg = f"SPELLCHECK PRESENTER: Setting spell suggestion to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "spell-suggestion", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, self.KEY_SPELL_SUGGESTION, value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="present-context",
+        key=KEY_PRESENT_CONTEXT,
         schema="spellcheck",
         gtype="b",
         default=True,
@@ -173,7 +180,7 @@ class SpellCheckPresenter:
     def get_present_context(self) -> bool:
         """Returns whether to present the context/surrounding sentence."""
 
-        return self._get_setting("present-context", True)
+        return self._get_setting(self.KEY_PRESENT_CONTEXT, True)
 
     @dbus_service.setter
     def set_present_context(self, value: bool) -> bool:
@@ -184,7 +191,9 @@ class SpellCheckPresenter:
 
         msg = f"SPELLCHECK PRESENTER: Setting present context to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "present-context", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, self.KEY_PRESENT_CONTEXT, value
+        )
         return True
 
     def create_preferences_grid(self) -> SpellCheckPreferencesGrid:
@@ -926,19 +935,19 @@ class SpellCheckPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.SPELL_CHECK_SPELL_ERROR,
                 getter=presenter.get_spell_error,
                 setter=presenter.set_spell_error,
-                prefs_key="spell-error",
+                prefs_key=SpellCheckPresenter.KEY_SPELL_ERROR,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.SPELL_CHECK_SPELL_SUGGESTION,
                 getter=presenter.get_spell_suggestion,
                 setter=presenter.set_spell_suggestion,
-                prefs_key="spell-suggestion",
+                prefs_key=SpellCheckPresenter.KEY_SPELL_SUGGESTION,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.SPELL_CHECK_PRESENT_CONTEXT,
                 getter=presenter.get_present_context,
                 setter=presenter.set_present_context,
-                prefs_key="present-context",
+                prefs_key=SpellCheckPresenter.KEY_PRESENT_CONTEXT,
             ),
         ]
 

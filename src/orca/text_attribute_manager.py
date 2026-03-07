@@ -394,8 +394,8 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
                 brailled_attributes.append(key)
 
         result = {
-            "attributes-to-speak": spoken_attributes,
-            "attributes-to-braille": brailled_attributes,
+            TextAttributeManager.KEY_ATTRIBUTES_TO_SPEAK: spoken_attributes,
+            TextAttributeManager.KEY_ATTRIBUTES_TO_BRAILLE: brailled_attributes,
         }
 
         if profile and self._has_unsaved_changes:
@@ -422,6 +422,8 @@ class TextAttributeManager:
     """Manager for text attribute presentation settings."""
 
     _SCHEMA = "text-attributes"
+    KEY_ATTRIBUTES_TO_SPEAK = "attributes-to-speak"
+    KEY_ATTRIBUTES_TO_BRAILLE = "attributes-to-braille"
 
     def _get_setting(self, key: str, gtype: str, default: Any) -> Any:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -445,7 +447,7 @@ class TextAttributeManager:
         return TextAttributePreferencesGrid()
 
     @gsettings_registry.get_registry().gsetting(
-        key="attributes-to-speak",
+        key=KEY_ATTRIBUTES_TO_SPEAK,
         schema="text-attributes",
         gtype="as",
         default=[],
@@ -456,7 +458,7 @@ class TextAttributeManager:
     def get_attributes_to_speak(self) -> list[str]:
         """Returns the list of text attributes to speak."""
 
-        return self._get_setting("attributes-to-speak", "as", [])
+        return self._get_setting(self.KEY_ATTRIBUTES_TO_SPEAK, "as", [])
 
     @dbus_service.setter
     def set_attributes_to_speak(self, value: list[str]) -> bool:
@@ -469,13 +471,13 @@ class TextAttributeManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "attributes-to-speak",
+            self.KEY_ATTRIBUTES_TO_SPEAK,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="attributes-to-braille",
+        key=KEY_ATTRIBUTES_TO_BRAILLE,
         schema="text-attributes",
         gtype="as",
         default=[],
@@ -486,7 +488,7 @@ class TextAttributeManager:
     def get_attributes_to_braille(self) -> list[str]:
         """Returns the list of text attributes to mark in braille."""
 
-        return self._get_setting("attributes-to-braille", "as", [])
+        return self._get_setting(self.KEY_ATTRIBUTES_TO_BRAILLE, "as", [])
 
     @dbus_service.setter
     def set_attributes_to_braille(self, value: list[str]) -> bool:
@@ -499,7 +501,7 @@ class TextAttributeManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "attributes-to-braille",
+            self.KEY_ATTRIBUTES_TO_BRAILLE,
             value,
         )
         return True

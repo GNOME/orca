@@ -180,6 +180,8 @@ class LiveRegionPresenter:
     """Presents live region announcements."""
 
     _SCHEMA = "live-regions"
+    KEY_ENABLED = "enabled"
+    KEY_PRESENT_FROM_INACTIVE_TAB = "present-from-inactive-tab"
 
     def _get_setting(self, key: str, default: bool) -> bool:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -542,7 +544,7 @@ class LiveRegionPresenter:
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="enabled",
+        key=KEY_ENABLED,
         schema="live-regions",
         gtype="b",
         default=True,
@@ -552,7 +554,7 @@ class LiveRegionPresenter:
     def get_is_enabled(self) -> bool:
         """Returns whether live region support is enabled."""
 
-        return self._get_setting("enabled", True)
+        return self._get_setting(self.KEY_ENABLED, True)
 
     def set_is_enabled(self, value: bool) -> bool:
         """Sets whether live region support is enabled."""
@@ -562,11 +564,11 @@ class LiveRegionPresenter:
 
         msg = f"LIVE REGION PRESENTER: Setting enabled to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "enabled", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_ENABLED, value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="present-from-inactive-tab",
+        key=KEY_PRESENT_FROM_INACTIVE_TAB,
         schema="live-regions",
         gtype="b",
         default=False,
@@ -576,7 +578,7 @@ class LiveRegionPresenter:
     def get_present_live_region_from_inactive_tab(self) -> bool:
         """Returns whether live region messages are presented from inactive tabs."""
 
-        return self._get_setting("present-from-inactive-tab", False)
+        return self._get_setting(self.KEY_PRESENT_FROM_INACTIVE_TAB, False)
 
     def set_present_live_region_from_inactive_tab(self, value: bool) -> bool:
         """Sets whether live region messages are presented from inactive tabs."""
@@ -588,7 +590,7 @@ class LiveRegionPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "present-from-inactive-tab",
+            self.KEY_PRESENT_FROM_INACTIVE_TAB,
             value,
         )
         return True

@@ -119,7 +119,7 @@ class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 label=guilabels.BRAILLE_SHOW_CONTEXT,
                 getter=presenter.get_display_ancestors,
                 setter=presenter.set_display_ancestors,
-                prefs_key="display-ancestors",
+                prefs_key=BraillePresenter.KEY_DISPLAY_ANCESTORS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.BRAILLE_ABBREVIATED_ROLE_NAMES,
@@ -130,7 +130,7 @@ class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                 label=guilabels.PRESENT_OBJECT_MNEMONICS,
                 getter=presenter.get_present_mnemonics,
                 setter=presenter.set_present_mnemonics,
-                prefs_key="present-mnemonics",
+                prefs_key=BraillePresenter.KEY_PRESENT_MNEMONICS,
             ),
         ]
 
@@ -140,8 +140,8 @@ class BrailleVerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
         """Save settings, writing enum values for verbosity and rolename style."""
 
         result = super().save_settings(profile, app_name)
-        result["verbosity-level"] = self._presenter.get_verbosity_level()
-        result["rolename-style"] = VerbosityLevel[
+        result[BraillePresenter.KEY_VERBOSITY_LEVEL] = self._presenter.get_verbosity_level()
+        result[BraillePresenter.KEY_ROLENAME_STYLE] = VerbosityLevel[
             self._presenter.get_rolename_style().upper()
         ].value
         return result
@@ -159,7 +159,7 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
             label=guilabels.BRAILLE_ENABLE_CONTRACTED_BRAILLE,
             getter=presenter.get_contracted_braille_is_enabled,
             setter=presenter.set_contracted_braille_is_enabled,
-            prefs_key="contracted-braille",
+            prefs_key=BraillePresenter.KEY_CONTRACTED_BRAILLE,
         )
 
         controls: list[
@@ -170,20 +170,20 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                 label=guilabels.BRAILLE_ENABLE_END_OF_LINE_SYMBOL,
                 getter=presenter.get_end_of_line_indicator_is_enabled,
                 setter=presenter.set_end_of_line_indicator_is_enabled,
-                prefs_key="end-of-line-indicator",
+                prefs_key=BraillePresenter.KEY_END_OF_LINE_INDICATOR,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.BRAILLE_ENABLE_WORD_WRAP,
                 getter=presenter.get_word_wrap_is_enabled,
                 setter=presenter.set_word_wrap_is_enabled,
-                prefs_key="word-wrap",
+                prefs_key=BraillePresenter.KEY_WORD_WRAP,
             ),
             self._enable_contracted_control,
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.BRAILLE_COMPUTER_BRAILLE_AT_CURSOR,
                 getter=presenter.get_computer_braille_at_cursor_is_enabled,
                 setter=presenter.set_computer_braille_at_cursor_is_enabled,
-                prefs_key="computer-braille-at-cursor",
+                prefs_key=BraillePresenter.KEY_COMPUTER_BRAILLE_AT_CURSOR,
                 determine_sensitivity=self._contracted_enabled,
             ),
             preferences_grid_base.EnumPreferenceControl(
@@ -192,7 +192,7 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                 values=table_paths,
                 getter=presenter.get_contraction_table_path,
                 setter=presenter.set_contraction_table_from_path,
-                prefs_key="contraction-table",
+                prefs_key=BraillePresenter.KEY_CONTRACTION_TABLE,
                 determine_sensitivity=self._contracted_enabled,
             ),
             preferences_grid_base.EnumPreferenceControl(
@@ -211,7 +211,7 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                 ],
                 getter=presenter._get_link_indicator_as_int,
                 setter=presenter.set_link_indicator_from_int,
-                prefs_key="link-indicator",
+                prefs_key=BraillePresenter.KEY_LINK_INDICATOR,
                 member_of=guilabels.BRAILLE_INDICATORS,
             ),
             preferences_grid_base.EnumPreferenceControl(
@@ -230,7 +230,7 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                 ],
                 getter=presenter._get_selector_indicator_as_int,
                 setter=presenter.set_selector_indicator_from_int,
-                prefs_key="selector-indicator",
+                prefs_key=BraillePresenter.KEY_SELECTOR_INDICATOR,
                 member_of=guilabels.BRAILLE_INDICATORS,
             ),
             preferences_grid_base.EnumPreferenceControl(
@@ -249,7 +249,7 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                 ],
                 getter=presenter._get_text_attributes_indicator_as_int,
                 setter=presenter.set_text_attributes_indicator_from_int,
-                prefs_key="text-attributes-indicator",
+                prefs_key=BraillePresenter.KEY_TEXT_ATTRIBUTES_INDICATOR,
                 member_of=guilabels.BRAILLE_INDICATORS,
             ),
         ]
@@ -272,7 +272,7 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
             label=guilabels.BRAILLE_MESSAGES_ARE_PERSISTENT,
             getter=presenter.get_flash_messages_are_persistent,
             setter=presenter.set_flash_messages_are_persistent,
-            prefs_key="flash-messages-persistent",
+            prefs_key=BraillePresenter.KEY_FLASH_MESSAGES_PERSISTENT,
         )
 
         controls: list[
@@ -283,13 +283,13 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
                 label=guilabels.BRAILLE_ENABLE_FLASH_MESSAGES,
                 getter=presenter.get_flash_messages_are_enabled,
                 setter=presenter.set_flash_messages_are_enabled,
-                prefs_key="flash-messages",
+                prefs_key=BraillePresenter.KEY_FLASH_MESSAGES,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.BRAILLE_MESSAGES_ARE_DETAILED,
                 getter=presenter.get_flash_messages_are_detailed,
                 setter=presenter.set_flash_messages_are_detailed,
-                prefs_key="flash-messages-detailed",
+                prefs_key=BraillePresenter.KEY_FLASH_MESSAGES_DETAILED,
             ),
             self._flash_persistent_control,
             preferences_grid_base.IntRangePreferenceControl(
@@ -314,7 +314,9 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
         """Persist staged values, including flash-message-duration in milliseconds."""
 
         result = super().save_settings(profile, app_name)
-        result["flash-message-duration"] = self._presenter.get_flash_message_duration()
+        result[BraillePresenter.KEY_FLASH_MESSAGE_DURATION] = (
+            self._presenter.get_flash_message_duration()
+        )
         return result
 
 
@@ -327,13 +329,13 @@ class BrailleProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGr
                 label=guilabels.GENERAL_BRAILLE_UPDATES,
                 getter=presenter.get_braille_progress_bar_updates,
                 setter=presenter.set_braille_progress_bar_updates,
-                prefs_key="braille-progress-bar-updates",
+                prefs_key=BraillePresenter.KEY_BRAILLE_PROGRESS_BAR_UPDATES,
             ),
             preferences_grid_base.IntRangePreferenceControl(
                 label=guilabels.GENERAL_FREQUENCY_SECS,
                 getter=presenter.get_progress_bar_braille_interval,
                 setter=presenter.set_progress_bar_braille_interval,
-                prefs_key="progress-bar-braille-interval",
+                prefs_key=BraillePresenter.KEY_PROGRESS_BAR_BRAILLE_INTERVAL,
                 minimum=0,
                 maximum=100,
             ),
@@ -341,7 +343,7 @@ class BrailleProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGr
                 label=guilabels.GENERAL_APPLIES_TO,
                 getter=presenter.get_progress_bar_braille_verbosity,
                 setter=presenter.set_progress_bar_braille_verbosity,
-                prefs_key="progress-bar-braille-verbosity",
+                prefs_key=BraillePresenter.KEY_PROGRESS_BAR_BRAILLE_VERBOSITY,
                 options=[
                     guilabels.PROGRESS_BAR_ALL,
                     guilabels.PROGRESS_BAR_APPLICATION,
@@ -367,7 +369,7 @@ class BrailleOSDPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.BRAILLE_MONITOR_CELL_COUNT,
                 getter=presenter.get_monitor_cell_count,
                 setter=presenter.set_monitor_cell_count,
-                prefs_key="monitor-cell-count",
+                prefs_key=BraillePresenter.KEY_MONITOR_CELL_COUNT,
                 minimum=1,
                 maximum=80,
             ),
@@ -375,19 +377,19 @@ class BrailleOSDPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.BRAILLE_MONITOR_SHOW_DOTS,
                 getter=presenter.get_monitor_show_dots,
                 setter=presenter.set_monitor_show_dots,
-                prefs_key="monitor-show-dots",
+                prefs_key=BraillePresenter.KEY_MONITOR_SHOW_DOTS,
             ),
             preferences_grid_base.ColorPreferenceControl(
                 label=guilabels.BRAILLE_MONITOR_FOREGROUND,
                 getter=presenter.get_monitor_foreground,
                 setter=presenter.set_monitor_foreground,
-                prefs_key="monitor-foreground",
+                prefs_key=BraillePresenter.KEY_MONITOR_FOREGROUND,
             ),
             preferences_grid_base.ColorPreferenceControl(
                 label=guilabels.BRAILLE_MONITOR_BACKGROUND,
                 getter=presenter.get_monitor_background,
                 setter=presenter.set_monitor_background,
-                prefs_key="monitor-background",
+                prefs_key=BraillePresenter.KEY_MONITOR_BACKGROUND,
             ),
         ]
 
@@ -469,7 +471,7 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         assert self._multipage_enable_switch is not None
         result: dict[str, Any] = {}
-        result["enabled"] = self._multipage_enable_switch.get_active()
+        result[BraillePresenter.KEY_ENABLED] = self._multipage_enable_switch.get_active()
         result.update(self._verbosity_grid.save_settings())
         result.update(self._display_settings_grid.save_settings())
         result.update(self._flash_messages_grid.save_settings())
@@ -517,6 +519,31 @@ class BraillePresenter:
     """Provides braille presentation support."""
 
     _SCHEMA = "braille"
+
+    KEY_ENABLED = "enabled"
+    KEY_VERBOSITY_LEVEL = "verbosity-level"
+    KEY_ROLENAME_STYLE = "rolename-style"
+    KEY_PRESENT_MNEMONICS = "present-mnemonics"
+    KEY_DISPLAY_ANCESTORS = "display-ancestors"
+    KEY_BRAILLE_PROGRESS_BAR_UPDATES = "braille-progress-bar-updates"
+    KEY_PROGRESS_BAR_BRAILLE_INTERVAL = "progress-bar-braille-interval"
+    KEY_PROGRESS_BAR_BRAILLE_VERBOSITY = "progress-bar-braille-verbosity"
+    KEY_CONTRACTED_BRAILLE = "contracted-braille"
+    KEY_COMPUTER_BRAILLE_AT_CURSOR = "computer-braille-at-cursor"
+    KEY_CONTRACTION_TABLE = "contraction-table"
+    KEY_END_OF_LINE_INDICATOR = "end-of-line-indicator"
+    KEY_WORD_WRAP = "word-wrap"
+    KEY_FLASH_MESSAGES = "flash-messages"
+    KEY_FLASH_MESSAGE_DURATION = "flash-message-duration"
+    KEY_FLASH_MESSAGES_PERSISTENT = "flash-messages-persistent"
+    KEY_FLASH_MESSAGES_DETAILED = "flash-messages-detailed"
+    KEY_SELECTOR_INDICATOR = "selector-indicator"
+    KEY_LINK_INDICATOR = "link-indicator"
+    KEY_TEXT_ATTRIBUTES_INDICATOR = "text-attributes-indicator"
+    KEY_MONITOR_CELL_COUNT = "monitor-cell-count"
+    KEY_MONITOR_SHOW_DOTS = "monitor-show-dots"
+    KEY_MONITOR_FOREGROUND = "monitor-foreground"
+    KEY_MONITOR_BACKGROUND = "monitor-background"
 
     def _get_setting(self, key: str, gtype: str, default: Any) -> Any:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -742,7 +769,7 @@ class BraillePresenter:
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="monitor-cell-count",
+        key=KEY_MONITOR_CELL_COUNT,
         schema="braille",
         gtype="i",
         default=32,
@@ -753,7 +780,7 @@ class BraillePresenter:
     def get_monitor_cell_count(self) -> int:
         """Returns the configured braille monitor cell count."""
 
-        return self._get_setting("monitor-cell-count", "i", 32)
+        return self._get_setting(self.KEY_MONITOR_CELL_COUNT, "i", 32)
 
     @dbus_service.setter
     def set_monitor_cell_count(self, value: int) -> bool:
@@ -763,14 +790,14 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "monitor-cell-count",
+            self.KEY_MONITOR_CELL_COUNT,
             value,
         )
         self.destroy_monitor()
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="monitor-show-dots",
+        key=KEY_MONITOR_SHOW_DOTS,
         schema="braille",
         gtype="b",
         default=False,
@@ -781,7 +808,7 @@ class BraillePresenter:
     def get_monitor_show_dots(self) -> bool:
         """Returns whether the braille monitor shows Unicode braille dots."""
 
-        return self._get_setting("monitor-show-dots", "b", False)
+        return self._get_setting(self.KEY_MONITOR_SHOW_DOTS, "b", False)
 
     @dbus_service.setter
     def set_monitor_show_dots(self, value: bool) -> bool:
@@ -791,13 +818,13 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "monitor-show-dots",
+            self.KEY_MONITOR_SHOW_DOTS,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="monitor-foreground",
+        key=KEY_MONITOR_FOREGROUND,
         schema="braille",
         gtype="s",
         default="#000000",
@@ -808,7 +835,7 @@ class BraillePresenter:
     def get_monitor_foreground(self) -> str:
         """Returns the braille monitor foreground color."""
 
-        return self._get_setting("monitor-foreground", "s", "#000000")
+        return self._get_setting(self.KEY_MONITOR_FOREGROUND, "s", "#000000")
 
     @dbus_service.setter
     def set_monitor_foreground(self, value: str) -> bool:
@@ -818,7 +845,7 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "monitor-foreground",
+            self.KEY_MONITOR_FOREGROUND,
             value,
         )
         if self._monitor is not None:
@@ -826,7 +853,7 @@ class BraillePresenter:
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="monitor-background",
+        key=KEY_MONITOR_BACKGROUND,
         schema="braille",
         gtype="s",
         default="#ffffff",
@@ -837,7 +864,7 @@ class BraillePresenter:
     def get_monitor_background(self) -> str:
         """Returns the braille monitor background color."""
 
-        return self._get_setting("monitor-background", "s", "#ffffff")
+        return self._get_setting(self.KEY_MONITOR_BACKGROUND, "s", "#ffffff")
 
     @dbus_service.setter
     def set_monitor_background(self, value: str) -> bool:
@@ -847,7 +874,7 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "monitor-background",
+            self.KEY_MONITOR_BACKGROUND,
             value,
         )
         if self._monitor is not None:
@@ -927,7 +954,7 @@ class BraillePresenter:
             )
 
     @gsettings_registry.get_registry().gsetting(
-        key="enabled",
+        key=KEY_ENABLED,
         schema="braille",
         gtype="b",
         default=True,
@@ -938,7 +965,7 @@ class BraillePresenter:
     def get_braille_is_enabled(self) -> bool:
         """Returns whether braille is enabled."""
 
-        return self._get_setting("enabled", "b", True)
+        return self._get_setting(self.KEY_ENABLED, "b", True)
 
     @dbus_service.setter
     def set_braille_is_enabled(self, value: bool) -> bool:
@@ -949,7 +976,7 @@ class BraillePresenter:
 
         msg = f"BRAILLE PRESENTER: Setting enable braille to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "enabled", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_ENABLED, value)
         braille.set_enable_braille(value)
 
         if value:
@@ -965,7 +992,7 @@ class BraillePresenter:
         return self.get_verbosity_level() == "verbose"
 
     @gsettings_registry.get_registry().gsetting(
-        key="verbosity-level",
+        key=KEY_VERBOSITY_LEVEL,
         schema="braille",
         genum="org.gnome.Orca.VerbosityLevel",
         default="verbose",
@@ -978,7 +1005,7 @@ class BraillePresenter:
 
         return gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            "verbosity-level",
+            self.KEY_VERBOSITY_LEVEL,
             "",
             genum="org.gnome.Orca.VerbosityLevel",
             default="verbose",
@@ -999,7 +1026,7 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "verbosity-level",
+            self.KEY_VERBOSITY_LEVEL,
             level.string_name,
         )
         return True
@@ -1010,7 +1037,7 @@ class BraillePresenter:
         return self.get_rolename_style() == "verbose"
 
     @gsettings_registry.get_registry().gsetting(
-        key="rolename-style",
+        key=KEY_ROLENAME_STYLE,
         schema="braille",
         genum="org.gnome.Orca.VerbosityLevel",
         default="verbose",
@@ -1023,7 +1050,7 @@ class BraillePresenter:
 
         return gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            "rolename-style",
+            self.KEY_ROLENAME_STYLE,
             "",
             genum="org.gnome.Orca.VerbosityLevel",
             default="verbose",
@@ -1044,13 +1071,13 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "rolename-style",
+            self.KEY_ROLENAME_STYLE,
             level.string_name,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="present-mnemonics",
+        key=KEY_PRESENT_MNEMONICS,
         schema="braille",
         gtype="b",
         default=True,
@@ -1061,7 +1088,7 @@ class BraillePresenter:
     def get_present_mnemonics(self) -> bool:
         """Returns whether mnemonics are presented on the braille display."""
 
-        return self._get_setting("present-mnemonics", "b", True)
+        return self._get_setting(self.KEY_PRESENT_MNEMONICS, "b", True)
 
     @dbus_service.setter
     def set_present_mnemonics(self, value: bool) -> bool:
@@ -1071,13 +1098,13 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "present-mnemonics",
+            self.KEY_PRESENT_MNEMONICS,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="display-ancestors",
+        key=KEY_DISPLAY_ANCESTORS,
         schema="braille",
         gtype="b",
         default=True,
@@ -1088,7 +1115,7 @@ class BraillePresenter:
     def get_display_ancestors(self) -> bool:
         """Returns whether ancestors of the current object will be displayed."""
 
-        return self._get_setting("display-ancestors", "b", True)
+        return self._get_setting(self.KEY_DISPLAY_ANCESTORS, "b", True)
 
     @dbus_service.setter
     def set_display_ancestors(self, value: bool) -> bool:
@@ -1098,13 +1125,13 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "display-ancestors",
+            self.KEY_DISPLAY_ANCESTORS,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="braille-progress-bar-updates",
+        key=KEY_BRAILLE_PROGRESS_BAR_UPDATES,
         schema="braille",
         gtype="b",
         default=False,
@@ -1115,7 +1142,7 @@ class BraillePresenter:
     def get_braille_progress_bar_updates(self) -> bool:
         """Returns whether braille progress bar updates are enabled."""
 
-        return self._get_setting("braille-progress-bar-updates", "b", False)
+        return self._get_setting(self.KEY_BRAILLE_PROGRESS_BAR_UPDATES, "b", False)
 
     @dbus_service.setter
     def set_braille_progress_bar_updates(self, value: bool) -> bool:
@@ -1125,13 +1152,13 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "braille-progress-bar-updates",
+            self.KEY_BRAILLE_PROGRESS_BAR_UPDATES,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="progress-bar-braille-interval",
+        key=KEY_PROGRESS_BAR_BRAILLE_INTERVAL,
         schema="braille",
         gtype="i",
         default=10,
@@ -1142,7 +1169,7 @@ class BraillePresenter:
     def get_progress_bar_braille_interval(self) -> int:
         """Returns the braille progress bar update interval in seconds."""
 
-        return self._get_setting("progress-bar-braille-interval", "i", 10)
+        return self._get_setting(self.KEY_PROGRESS_BAR_BRAILLE_INTERVAL, "i", 10)
 
     @dbus_service.setter
     def set_progress_bar_braille_interval(self, value: int) -> bool:
@@ -1152,13 +1179,13 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "progress-bar-braille-interval",
+            self.KEY_PROGRESS_BAR_BRAILLE_INTERVAL,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="progress-bar-braille-verbosity",
+        key=KEY_PROGRESS_BAR_BRAILLE_VERBOSITY,
         schema="braille",
         genum="org.gnome.Orca.ProgressBarVerbosity",
         default="application",
@@ -1171,7 +1198,7 @@ class BraillePresenter:
 
         nick = gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            "progress-bar-braille-verbosity",
+            self.KEY_PROGRESS_BAR_BRAILLE_VERBOSITY,
             "",
             genum="org.gnome.Orca.ProgressBarVerbosity",
             default="application",
@@ -1187,7 +1214,7 @@ class BraillePresenter:
         level = ProgressBarVerbosity(value)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "progress-bar-braille-verbosity",
+            self.KEY_PROGRESS_BAR_BRAILLE_VERBOSITY,
             level.name.lower(),
         )
         return True
@@ -1229,7 +1256,7 @@ class BraillePresenter:
         return present
 
     @gsettings_registry.get_registry().gsetting(
-        key="contracted-braille",
+        key=KEY_CONTRACTED_BRAILLE,
         schema="braille",
         gtype="b",
         default=False,
@@ -1240,7 +1267,7 @@ class BraillePresenter:
     def get_contracted_braille_is_enabled(self) -> bool:
         """Returns whether contracted braille is enabled."""
 
-        return self._get_setting("contracted-braille", "b", False)
+        return self._get_setting(self.KEY_CONTRACTED_BRAILLE, "b", False)
 
     @dbus_service.setter
     def set_contracted_braille_is_enabled(self, value: bool) -> bool:
@@ -1250,14 +1277,14 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "contracted-braille",
+            self.KEY_CONTRACTED_BRAILLE,
             value,
         )
         braille.set_enable_contracted_braille(value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="computer-braille-at-cursor",
+        key=KEY_COMPUTER_BRAILLE_AT_CURSOR,
         schema="braille",
         gtype="b",
         default=True,
@@ -1268,7 +1295,7 @@ class BraillePresenter:
     def get_computer_braille_at_cursor_is_enabled(self) -> bool:
         """Returns whether computer braille is used at the cursor position."""
 
-        return self._get_setting("computer-braille-at-cursor", "b", True)
+        return self._get_setting(self.KEY_COMPUTER_BRAILLE_AT_CURSOR, "b", True)
 
     @dbus_service.setter
     def set_computer_braille_at_cursor_is_enabled(self, value: bool) -> bool:
@@ -1278,7 +1305,7 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "computer-braille-at-cursor",
+            self.KEY_COMPUTER_BRAILLE_AT_CURSOR,
             value,
         )
         braille.set_enable_computer_braille_at_cursor(value)
@@ -1289,14 +1316,14 @@ class BraillePresenter:
 
         value = gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            "contraction-table",
+            self.KEY_CONTRACTION_TABLE,
             "s",
             default="",
         )
         return value or braille.get_default_contraction_table()
 
     @gsettings_registry.get_registry().gsetting(
-        key="contraction-table",
+        key=KEY_CONTRACTION_TABLE,
         schema="braille",
         gtype="s",
         default="",
@@ -1309,7 +1336,7 @@ class BraillePresenter:
 
         full_path = gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            "contraction-table",
+            self.KEY_CONTRACTION_TABLE,
             "s",
             default="",
         )
@@ -1356,7 +1383,7 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "contraction-table",
+            self.KEY_CONTRACTION_TABLE,
             full_path,
         )
         return True
@@ -1377,14 +1404,14 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "contraction-table",
+            self.KEY_CONTRACTION_TABLE,
             file_path,
         )
         braille.set_contraction_table(file_path)
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="end-of-line-indicator",
+        key=KEY_END_OF_LINE_INDICATOR,
         schema="braille",
         gtype="b",
         default=True,
@@ -1395,7 +1422,7 @@ class BraillePresenter:
     def get_end_of_line_indicator_is_enabled(self) -> bool:
         """Returns whether the end-of-line indicator is enabled."""
 
-        return self._get_setting("end-of-line-indicator", "b", True)
+        return self._get_setting(self.KEY_END_OF_LINE_INDICATOR, "b", True)
 
     @dbus_service.setter
     def set_end_of_line_indicator_is_enabled(self, value: bool) -> bool:
@@ -1405,14 +1432,14 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "end-of-line-indicator",
+            self.KEY_END_OF_LINE_INDICATOR,
             value,
         )
         braille.set_enable_eol(value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="word-wrap",
+        key=KEY_WORD_WRAP,
         schema="braille",
         gtype="b",
         default=False,
@@ -1423,7 +1450,7 @@ class BraillePresenter:
     def get_word_wrap_is_enabled(self) -> bool:
         """Returns whether braille word wrap is enabled."""
 
-        return self._get_setting("word-wrap", "b", False)
+        return self._get_setting(self.KEY_WORD_WRAP, "b", False)
 
     @dbus_service.setter
     def set_word_wrap_is_enabled(self, value: bool) -> bool:
@@ -1431,12 +1458,12 @@ class BraillePresenter:
 
         msg = f"BRAILLE PRESENTER: Setting enable word wrap to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "word-wrap", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_WORD_WRAP, value)
         braille.set_enable_word_wrap(value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="flash-messages",
+        key=KEY_FLASH_MESSAGES,
         schema="braille",
         gtype="b",
         default=True,
@@ -1447,7 +1474,7 @@ class BraillePresenter:
     def get_flash_messages_are_enabled(self) -> bool:
         """Returns whether 'flash' messages (i.e. announcements) are enabled."""
 
-        return self._get_setting("flash-messages", "b", True)
+        return self._get_setting(self.KEY_FLASH_MESSAGES, "b", True)
 
     @dbus_service.setter
     def set_flash_messages_are_enabled(self, value: bool) -> bool:
@@ -1455,7 +1482,9 @@ class BraillePresenter:
 
         msg = f"BRAILLE PRESENTER: Setting enable flash messages to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "flash-messages", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, self.KEY_FLASH_MESSAGES, value
+        )
         return True
 
     def get_flashtime_from_settings(self) -> int:
@@ -1466,7 +1495,7 @@ class BraillePresenter:
         return self.get_flash_message_duration()
 
     @gsettings_registry.get_registry().gsetting(
-        key="flash-message-duration",
+        key=KEY_FLASH_MESSAGE_DURATION,
         schema="braille",
         gtype="i",
         default=5000,
@@ -1477,7 +1506,7 @@ class BraillePresenter:
     def get_flash_message_duration(self) -> int:
         """Returns flash message duration in milliseconds."""
 
-        return self._get_setting("flash-message-duration", "i", 5000)
+        return self._get_setting(self.KEY_FLASH_MESSAGE_DURATION, "i", 5000)
 
     @dbus_service.setter
     def set_flash_message_duration(self, value: int) -> bool:
@@ -1487,7 +1516,7 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "flash-message-duration",
+            self.KEY_FLASH_MESSAGE_DURATION,
             value,
         )
         return True
@@ -1500,7 +1529,7 @@ class BraillePresenter:
         indicator = BrailleIndicator(value)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "selector-indicator",
+            self.KEY_SELECTOR_INDICATOR,
             indicator.string_name,
         )
         braille.set_selector_indicator(value)
@@ -1514,7 +1543,7 @@ class BraillePresenter:
         indicator = BrailleIndicator(value)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "link-indicator",
+            self.KEY_LINK_INDICATOR,
             indicator.string_name,
         )
         braille.set_link_indicator(value)
@@ -1528,14 +1557,14 @@ class BraillePresenter:
         indicator = BrailleIndicator(value)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "text-attributes-indicator",
+            self.KEY_TEXT_ATTRIBUTES_INDICATOR,
             indicator.string_name,
         )
         braille.set_text_attributes_indicator(value)
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="flash-messages-persistent",
+        key=KEY_FLASH_MESSAGES_PERSISTENT,
         schema="braille",
         gtype="b",
         default=False,
@@ -1546,7 +1575,7 @@ class BraillePresenter:
     def get_flash_messages_are_persistent(self) -> bool:
         """Returns whether 'flash' messages are persistent (as opposed to temporary)."""
 
-        return self._get_setting("flash-messages-persistent", "b", False)
+        return self._get_setting(self.KEY_FLASH_MESSAGES_PERSISTENT, "b", False)
 
     @dbus_service.setter
     def set_flash_messages_are_persistent(self, value: bool) -> bool:
@@ -1556,13 +1585,13 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "flash-messages-persistent",
+            self.KEY_FLASH_MESSAGES_PERSISTENT,
             value,
         )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="flash-messages-detailed",
+        key=KEY_FLASH_MESSAGES_DETAILED,
         schema="braille",
         gtype="b",
         default=True,
@@ -1573,7 +1602,7 @@ class BraillePresenter:
     def get_flash_messages_are_detailed(self) -> bool:
         """Returns whether 'flash' messages are detailed (as opposed to brief)."""
 
-        return self._get_setting("flash-messages-detailed", "b", True)
+        return self._get_setting(self.KEY_FLASH_MESSAGES_DETAILED, "b", True)
 
     @dbus_service.setter
     def set_flash_messages_are_detailed(self, value: bool) -> bool:
@@ -1583,7 +1612,7 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "flash-messages-detailed",
+            self.KEY_FLASH_MESSAGES_DETAILED,
             value,
         )
         return True
@@ -1593,7 +1622,7 @@ class BraillePresenter:
 
         nick = gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            "selector-indicator",
+            self.KEY_SELECTOR_INDICATOR,
             "",
             genum="org.gnome.Orca.BrailleIndicator",
             default="dots78",
@@ -1604,7 +1633,7 @@ class BraillePresenter:
         return value
 
     @gsettings_registry.get_registry().gsetting(
-        key="selector-indicator",
+        key=KEY_SELECTOR_INDICATOR,
         schema="braille",
         genum="org.gnome.Orca.BrailleIndicator",
         default="dots78",
@@ -1617,7 +1646,7 @@ class BraillePresenter:
 
         return gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            "selector-indicator",
+            self.KEY_SELECTOR_INDICATOR,
             "",
             genum="org.gnome.Orca.BrailleIndicator",
             default="dots78",
@@ -1638,7 +1667,7 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "selector-indicator",
+            self.KEY_SELECTOR_INDICATOR,
             indicator.string_name,
         )
         braille.set_selector_indicator(indicator.value)
@@ -1649,7 +1678,7 @@ class BraillePresenter:
 
         nick = gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            "link-indicator",
+            self.KEY_LINK_INDICATOR,
             "",
             genum="org.gnome.Orca.BrailleIndicator",
             default="dots78",
@@ -1660,7 +1689,7 @@ class BraillePresenter:
         return value
 
     @gsettings_registry.get_registry().gsetting(
-        key="link-indicator",
+        key=KEY_LINK_INDICATOR,
         schema="braille",
         genum="org.gnome.Orca.BrailleIndicator",
         default="dots78",
@@ -1673,7 +1702,7 @@ class BraillePresenter:
 
         return gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            "link-indicator",
+            self.KEY_LINK_INDICATOR,
             "",
             genum="org.gnome.Orca.BrailleIndicator",
             default="dots78",
@@ -1694,7 +1723,7 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "link-indicator",
+            self.KEY_LINK_INDICATOR,
             indicator.string_name,
         )
         braille.set_link_indicator(indicator.value)
@@ -1705,7 +1734,7 @@ class BraillePresenter:
 
         nick = gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            "text-attributes-indicator",
+            self.KEY_TEXT_ATTRIBUTES_INDICATOR,
             "",
             genum="org.gnome.Orca.BrailleIndicator",
             default="none",
@@ -1716,7 +1745,7 @@ class BraillePresenter:
         return value
 
     @gsettings_registry.get_registry().gsetting(
-        key="text-attributes-indicator",
+        key=KEY_TEXT_ATTRIBUTES_INDICATOR,
         schema="braille",
         genum="org.gnome.Orca.BrailleIndicator",
         default="none",
@@ -1729,7 +1758,7 @@ class BraillePresenter:
 
         return gsettings_registry.get_registry().layered_lookup(
             self._SCHEMA,
-            "text-attributes-indicator",
+            self.KEY_TEXT_ATTRIBUTES_INDICATOR,
             "",
             genum="org.gnome.Orca.BrailleIndicator",
             default="none",
@@ -1750,7 +1779,7 @@ class BraillePresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            "text-attributes-indicator",
+            self.KEY_TEXT_ATTRIBUTES_INDICATOR,
             indicator.string_name,
         )
         braille.set_text_attributes_indicator(indicator.value)

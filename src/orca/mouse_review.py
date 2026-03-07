@@ -387,13 +387,13 @@ class MousePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 label=guilabels.GENERAL_PRESENT_TOOLTIPS,
                 getter=reviewer.get_present_tooltips,
                 setter=reviewer.set_present_tooltips,
-                prefs_key="present-tooltips",
+                prefs_key=MouseReviewer.KEY_PRESENT_TOOLTIPS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.GENERAL_SPEAK_OBJECT_UNDER_MOUSE,
                 getter=reviewer.get_is_enabled,
                 setter=reviewer.set_is_enabled,
-                prefs_key="enabled",
+                prefs_key=MouseReviewer.KEY_ENABLED,
             ),
         ]
 
@@ -408,6 +408,8 @@ class MouseReviewer:
     """Main class for the mouse-review feature."""
 
     _SCHEMA = "mouse-review"
+    KEY_PRESENT_TOOLTIPS = "present-tooltips"
+    KEY_ENABLED = "enabled"
 
     def _get_setting(self, key: str, default: bool) -> bool:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -551,7 +553,7 @@ class MouseReviewer:
         return obj
 
     @gsettings_registry.get_registry().gsetting(
-        key="present-tooltips",
+        key=KEY_PRESENT_TOOLTIPS,
         schema="mouse-review",
         gtype="b",
         default=False,
@@ -562,7 +564,7 @@ class MouseReviewer:
     def get_present_tooltips(self) -> bool:
         """Returns whether tooltips displayed due to mouse hover are spoken (requires X11)."""
 
-        return self._get_setting("present-tooltips", False)
+        return self._get_setting(self.KEY_PRESENT_TOOLTIPS, False)
 
     @dbus_service.setter
     def set_present_tooltips(self, value: bool) -> bool:
@@ -570,11 +572,13 @@ class MouseReviewer:
 
         msg = f"MOUSE REVIEW: Setting present tooltips to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "present-tooltips", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, self.KEY_PRESENT_TOOLTIPS, value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="enabled",
+        key=KEY_ENABLED,
         schema="mouse-review",
         gtype="b",
         default=False,
@@ -585,7 +589,7 @@ class MouseReviewer:
     def get_is_enabled(self) -> bool:
         """Returns whether mouse review is enabled (requires Wnck)."""
 
-        return self._get_setting("enabled", False)
+        return self._get_setting(self.KEY_ENABLED, False)
 
     @dbus_service.setter
     def set_is_enabled(self, value: bool) -> bool:
@@ -601,7 +605,7 @@ class MouseReviewer:
         if value == self._active:
             return True
 
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "enabled", value)
+        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, self.KEY_ENABLED, value)
         if value:
             self.activate()
         else:

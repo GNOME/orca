@@ -68,6 +68,7 @@ class FlatReviewPresenter:
     """Provides access to on-screen objects via flat-review."""
 
     _SCHEMA = "flat-review"
+    KEY_RESTRICTED = "restricted"
 
     def _get_setting(self, key: str, default: bool) -> bool:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -1325,7 +1326,7 @@ class FlatReviewPresenter:
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="restricted",
+        key=KEY_RESTRICTED,
         schema="flat-review",
         gtype="b",
         default=False,
@@ -1336,7 +1337,7 @@ class FlatReviewPresenter:
     def get_is_restricted(self) -> bool:
         """Returns whether flat review is restricted to the current object."""
 
-        return self._get_setting("restricted", False)
+        return self._get_setting(self.KEY_RESTRICTED, False)
 
     @dbus_service.setter
     def set_is_restricted(self, value: bool) -> bool:
@@ -1344,7 +1345,9 @@ class FlatReviewPresenter:
 
         msg = f"FLAT REVIEW PRESENTER: Setting is-restricted to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "restricted", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, self.KEY_RESTRICTED, value
+        )
         return True
 
     @dbus_service.command

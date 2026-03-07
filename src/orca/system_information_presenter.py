@@ -125,7 +125,7 @@ class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 values=date_values,
                 getter=presenter._get_date_format_string,
                 setter=presenter._set_date_format_string,
-                prefs_key="date-format",
+                prefs_key=SystemInformationPresenter.KEY_DATE_FORMAT,
                 member_of=guilabels.TIME_AND_DATE,
             ),
             preferences_grid_base.EnumPreferenceControl(
@@ -134,7 +134,7 @@ class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 values=time_values,
                 getter=presenter._get_time_format_string,
                 setter=presenter._set_time_format_string,
-                prefs_key="time-format",
+                prefs_key=SystemInformationPresenter.KEY_TIME_FORMAT,
                 member_of=guilabels.TIME_AND_DATE,
             ),
         ]
@@ -154,6 +154,8 @@ class SystemInformationPresenter:
     """Provides commands to present system information."""
 
     _SCHEMA = "system-information"
+    KEY_DATE_FORMAT = "date-format"
+    KEY_TIME_FORMAT = "time-format"
 
     def _get_setting(self, key: str, gtype: str, default: Any) -> Any:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -228,27 +230,31 @@ class SystemInformationPresenter:
     def _get_date_format_string(self) -> str:
         """Returns the current date format string for internal use."""
 
-        return self._get_setting("date-format", "s", "%x")
+        return self._get_setting(self.KEY_DATE_FORMAT, "s", "%x")
 
     def _get_time_format_string(self) -> str:
         """Returns the current time format string for internal use."""
 
-        return self._get_setting("time-format", "s", "%X")
+        return self._get_setting(self.KEY_TIME_FORMAT, "s", "%X")
 
     def _set_date_format_string(self, value: str) -> bool:
         """Sets the date format string directly for internal use."""
 
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "date-format", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, self.KEY_DATE_FORMAT, value
+        )
         return True
 
     def _set_time_format_string(self, value: str) -> bool:
         """Sets the time format string directly for internal use."""
 
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "time-format", value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, self.KEY_TIME_FORMAT, value
+        )
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key="date-format",
+        key=KEY_DATE_FORMAT,
         schema="system-information",
         gtype="s",
         default="%x",
@@ -278,7 +284,9 @@ class SystemInformationPresenter:
 
         msg = f"SYSTEM INFORMATION PRESENTER: Setting date format to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "date-format", fmt.value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, self.KEY_DATE_FORMAT, fmt.value
+        )
         return True
 
     @dbus_service.getter
@@ -288,7 +296,7 @@ class SystemInformationPresenter:
         return [fmt.string_name for fmt in DateFormat]
 
     @gsettings_registry.get_registry().gsetting(
-        key="time-format",
+        key=KEY_TIME_FORMAT,
         schema="system-information",
         gtype="s",
         default="%X",
@@ -318,7 +326,9 @@ class SystemInformationPresenter:
 
         msg = f"SYSTEM INFORMATION PRESENTER: Setting time format to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        gsettings_registry.get_registry().set_runtime_value(self._SCHEMA, "time-format", fmt.value)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, self.KEY_TIME_FORMAT, fmt.value
+        )
         return True
 
     @dbus_service.getter
