@@ -26,7 +26,6 @@ from __future__ import annotations
 import re
 from typing import TYPE_CHECKING
 
-from orca import debug, focus_manager
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.scripts import web
@@ -59,30 +58,3 @@ class Utilities(web.Utilities):
             return AXObject.get_name(status_bar)
 
         return ""
-
-    def in_find_container(self, obj: Atspi.Accessible | None = None) -> bool:
-        """Returns True if obj is in a find-in-page container."""
-
-        if not obj:
-            obj = focus_manager.get_manager().get_locus_of_focus()
-
-        if not obj or self.in_document_content(obj):
-            return False
-
-        if not (AXUtilities.is_entry(obj) or AXUtilities.is_push_button(obj)):
-            return False
-
-        def is_find_bar(x: Atspi.Accessible) -> bool:
-            return AXObject.get_attribute(x, "class") == "FindBarView"
-
-        container = AXUtilities.find_ancestor(obj, is_find_bar)
-        if container == self._find_container:
-            return True
-
-        if container:
-            tokens = ["CHROMIUM:", obj, "believed to be find-in-page widget"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            self._find_container = container
-            return True
-
-        return False

@@ -25,7 +25,7 @@ from __future__ import annotations
 import re
 from typing import TYPE_CHECKING
 
-from orca import debug, focus_manager
+from orca import debug
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.scripts import web
@@ -54,30 +54,6 @@ class Utilities(web.Utilities):
 
         tokens = ["GECKO: Editable", obj, "not in an editable document"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return False
-
-    def in_find_container(self, obj: Atspi.Accessible | None = None) -> bool:
-        """Returns True if obj is in a find-in-page container."""
-
-        if not obj:
-            obj = focus_manager.get_manager().get_locus_of_focus()
-
-        if not obj or self.in_document_content(obj):
-            return False
-
-        if not (AXUtilities.is_entry(obj) or AXUtilities.is_push_button(obj)):
-            return False
-
-        toolbar = AXUtilities.find_ancestor(obj, AXUtilities.is_tool_bar)
-        if toolbar == self._find_container:
-            return True
-
-        if toolbar and AXObject.get_attribute(toolbar, "tag") == "findbar":
-            tokens = ["GECKO:", obj, "believed to be find-in-page widget"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            self._find_container = toolbar
-            return True
-
         return False
 
     def get_find_results_count(self, root: Atspi.Accessible | None = None) -> str:

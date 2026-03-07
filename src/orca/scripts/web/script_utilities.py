@@ -266,13 +266,35 @@ class Utilities(script_utilities.Utilities):
             AXObject.clear_cache(obj, False, "Set caret in object.")
 
     def in_find_container(self, obj: Atspi.Accessible | None = None) -> bool:
+        """Returns True if obj is in a find-in-page container."""
+
         if not obj:
             obj = focus_manager.get_manager().get_locus_of_focus()
 
-        if self.in_document_content(obj):
+        if not obj or self.in_document_content(obj):
             return False
 
-        return super().in_find_container(obj)
+        if not (AXUtilities.is_entry(obj) or AXUtilities.is_push_button(obj)):
+            return False
+
+        # Gecko: tag=findbar, Chromium: class=FindBarView
+        def is_find_bar(x: Atspi.Accessible) -> bool:
+            return (
+                AXObject.get_attribute(x, "tag") == "findbar"
+                or AXObject.get_attribute(x, "class") == "FindBarView"
+            )
+
+        container = AXUtilities.find_ancestor(obj, is_find_bar)
+        if container == self._find_container:
+            return True
+
+        if container:
+            tokens = ["WEB:", obj, "believed to be find-in-page widget"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            self._find_container = container
+            return True
+
+        return False
 
     def set_caret_offset(self, obj: Atspi.Accessible, offset: int) -> None:
         """Sets the caret offset via AtspiText."""
