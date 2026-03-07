@@ -53,13 +53,3 @@ class Utilities(web.Utilities):
         tokens = ["GECKO: Editable", obj, "not in an editable document"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
-
-    def unrelated_labels(
-        self,
-        root: Atspi.Accessible | None = None,
-        only_showing: bool = True,
-        minimum_words: int = 3,
-    ) -> list[Atspi.Accessible]:
-        """Returns a list of labels in root that lack a relationship."""
-
-        return super().unrelated_labels(root, only_showing, minimum_words=1)
