@@ -382,10 +382,15 @@ class Generator:
             Generator.CACHED_DESCRIPTION[obj_hash] = []
             return []
 
+        # TODO - JD: The table-cell check is a workaround for
+        # https://bugreports.qt.io/browse/QTBUG-128558 in which Qt gives us a different
+        # object each time we ask for the cell, causing obj != focus even though they are
+        # functionally the same object.
         focus = focus_manager.get_manager().get_locus_of_focus()
         if (
             focus
             and obj != focus
+            and not (AXUtilities.is_table_cell(obj) and AXUtilities.is_table_cell(focus))
             and description in [AXObject.get_name(focus), AXObject.get_description(focus)]
         ):
             Generator.CACHED_DESCRIPTION[obj_hash] = []
