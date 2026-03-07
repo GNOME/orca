@@ -60,54 +60,29 @@ class Utilities(web.Utilities):
 
         return ""
 
-    def _is_find_container(self, obj: Atspi.Accessible | None = None) -> bool:
-        """Returns True if obj is a find-in-page container."""
+    def in_find_container(self, obj: Atspi.Accessible | None = None) -> bool:
+        """Returns True if obj is in a find-in-page container."""
+
+        if not obj:
+            obj = focus_manager.get_manager().get_locus_of_focus()
 
         if not obj or self.in_document_content(obj):
             return False
 
-        if obj == self._find_container:
-            return True
-
-        result = self.get_find_results_count(obj)
-        if result:
-            tokens = ["CHROMIUM:", obj, "believed to be find-in-page container (", result, ")"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            self._find_container = obj
-            return True
-
-        # When there are no results due to the absence of a search term, the status
-        # bar lacks a name. When there are no results due to lack of match, the name
-        # of the status bar is "No results" (presumably localized). Therefore fall
-        # back on the widgets. TODO: This would be far easier if Chromium gave us an
-        # object attribute we could look for....
-
-        if (
-            len(AXUtilities.find_all_entries(obj)) != 1
-            or len(AXUtilities.find_all_push_buttons(obj)) != 3
-            or len(AXUtilities.find_all_separators(obj)) != 1
-        ):
-            tokens = ["CHROMIUM:", obj, "not believed to be find-in-page container (widget counts)"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        tokens = ["CHROMIUM:", obj, "believed to be find-in-page container (accessibility tree)"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        self._find_container = obj
-        return True
-
-    def in_find_container(self, obj: Atspi.Accessible | None = None) -> bool:
-        """Returns True if obj is in a find-in-page container."""
-
-        obj = obj or focus_manager.get_manager().get_locus_of_focus()
         if not (AXUtilities.is_entry(obj) or AXUtilities.is_push_button(obj)):
             return False
-        if self.in_document_content(obj):
-            return False
 
-        result = AXUtilities.find_ancestor(obj, self._is_find_container)
-        if result:
+        def is_find_bar(x: Atspi.Accessible) -> bool:
+            return AXObject.get_attribute(x, "class") == "FindBarView"
+
+        container = AXUtilities.find_ancestor(obj, is_find_bar)
+        if container == self._find_container:
+            return True
+
+        if container:
             tokens = ["CHROMIUM:", obj, "believed to be find-in-page widget"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            self._find_container = container
+            return True
 
-        return bool(result)
+        return False
