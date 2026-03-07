@@ -464,7 +464,6 @@ class AXUtilitiesTable:
         ) and col + 1 == AXTable.get_column_count(table, prefer_attribute=False)
 
     @staticmethod
-    @staticmethod
     def get_column_label(table: Atspi.Accessible, column: int) -> str:
         """Returns the column label for the given column index in table."""
 
