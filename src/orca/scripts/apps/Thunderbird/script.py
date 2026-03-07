@@ -34,20 +34,21 @@ if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
-    from orca.scripts.toolkits.Gecko.script_utilities import Utilities
-
 
 class Script(Gecko.Script):
     """The script for Thunderbird."""
 
-    # Override the base class type annotations
-    utilities: Utilities
+    def _is_in_editable_message(self, obj: Atspi.Accessible) -> bool:
+        """Returns True if obj is in an editable message."""
+
+        return AXUtilities.is_editable(obj) and bool(
+            AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_editable_document)
+        )
 
     def _on_busy_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:busy accessibility events."""
 
-        # TODO - JD: Can this logic be moved to the web script?
-        if self.utilities.is_editable_message(event.source):
+        if self._is_in_editable_message(event.source):
             return True
 
         if document_presenter.get_presenter().in_focus_mode(self.app):
@@ -58,7 +59,7 @@ class Script(Gecko.Script):
     def _on_caret_moved(self, event: Atspi.Event) -> bool:
         """Callback for object:text-caret-moved accessibility events."""
 
-        if self.utilities.is_editable_message(event.source) and event.detail1 == -1:
+        if self._is_in_editable_message(event.source) and event.detail1 == -1:
             return True
 
         return super()._on_caret_moved(event)
@@ -91,7 +92,7 @@ class Script(Gecko.Script):
 
         # Try to stop unwanted chatter when a message is being replied to.
         # See bgo#618484.
-        if event.type.endswith("system") and self.utilities.is_editable_message(event.source):
+        if event.type.endswith("system") and self._is_in_editable_message(event.source):
             return True
 
         return super()._on_text_inserted(event)

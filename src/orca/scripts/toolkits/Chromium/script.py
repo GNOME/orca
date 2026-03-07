@@ -41,11 +41,6 @@ if TYPE_CHECKING:
 class Script(web.ToolkitBridge):
     """Custom script for Chromium."""
 
-    def get_utilities(self) -> web.Utilities:
-        """Returns the utilities for this script."""
-
-        return web.Utilities(self)
-
     def _on_caret_moved(self, event: Atspi.Event) -> bool:
         """Callback for object:text-caret-moved accessibility events."""
 

@@ -29,8 +29,6 @@ from orca import debug, focus_manager
 from orca.ax_utilities import AXUtilities
 from orca.scripts import web
 
-from .script_utilities import Utilities
-
 if TYPE_CHECKING:
     import gi
 
@@ -40,11 +38,6 @@ if TYPE_CHECKING:
 
 class Script(web.ToolkitBridge):
     """Custom script for Gecko."""
-
-    def get_utilities(self) -> Utilities:
-        """Returns the utilities for this script."""
-
-        return Utilities(self)
 
     def _on_focused_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:focused accessibility events."""

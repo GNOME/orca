@@ -876,6 +876,15 @@ class AXUtilitiesRole:
         return role in roles
 
     @staticmethod
+    def is_editable_document(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
+        """Returns True if obj has a document role and the editable state"""
+
+        return AXUtilitiesRole.is_document(obj, role) and AXObject.has_state(
+            obj,
+            Atspi.StateType.EDITABLE,
+        )
+
+    @staticmethod
     def is_document_email(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has the document email role"""
 
