@@ -44,7 +44,7 @@ You can read and write individual Orca settings with `dconf`.
 
 ## Migrating to GSettings
 
-On first launch after upgrading to GSettings, Orca automatically migrates JSON settings from `~/.local/share/orca/` into dconf. The migration is stamped so it only runs once.
+On launch, Orca automatically migrates JSON settings from `~/.local/share/orca/` into dconf if there are no dconf settings found.
 
 `orca -i DIR` / `orca --import-dir DIR` can also import JSON settings manually. This replaces the current `/org/gnome/orca/` settings in dconf, so back up first if needed (see Transferring, Backing Up, and Restoring Settings).
 

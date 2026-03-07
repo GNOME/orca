@@ -175,9 +175,8 @@ def generate_documentation(
     lines.append("## Migrating to GSettings")
     lines.append("")
     lines.append(
-        "On first launch after upgrading to GSettings, Orca automatically migrates "
-        "JSON settings from `~/.local/share/orca/` into dconf. The migration is "
-        "stamped so it only runs once."
+        "On launch, Orca automatically migrates JSON settings from `~/.local/share/orca/` "
+        "into dconf if there are no dconf settings found."
     )
     lines.append("")
     lines.append(
