@@ -18,9 +18,11 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-arguments
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-nested-blocks
+# pylint: disable=too-many-positional-arguments
 
 """Base class for preference grid UI components."""
 
@@ -35,7 +37,7 @@ import gi
 gi.require_version("Atk", "1.0")
 gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
-from gi.repository import Atk, Gdk, GLib, Gtk
+from gi.repository import Atk, Gdk, GLib, Gtk  # pylint: disable=no-name-in-module
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Sequence

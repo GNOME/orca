@@ -20,6 +20,7 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=too-many-lines
+# pylint: disable=too-many-return-statements
 
 """Utilities for accessible events."""
 

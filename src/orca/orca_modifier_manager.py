@@ -22,7 +22,7 @@
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-positional-arguments
-
+# pylint: disable=too-many-instance-attributes
 
 """Manages the Orca modifier key."""
 

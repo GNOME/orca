@@ -20,9 +20,14 @@
 
 """Shared GSettings infrastructure for Orca modules."""
 
-# pylint: disable=too-many-arguments,too-many-positional-arguments
-# pylint: disable=too-many-locals,too-many-instance-attributes,too-many-lines
-# pylint: disable=too-many-public-methods,too-many-branches
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-branches
+# pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-lines
+# pylint: disable=too-many-locals
+# pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-public-methods
+# pylint: disable=too-many-statements
 
 from __future__ import annotations
 

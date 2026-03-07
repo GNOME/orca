@@ -17,6 +17,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-branches
+
 """Manager for user's pronunciation dictionary that maps words to what they sound like."""
 
 from __future__ import annotations

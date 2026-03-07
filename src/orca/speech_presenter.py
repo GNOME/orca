@@ -24,6 +24,7 @@
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=too-many-instance-attributes
 # pylint: disable=too-many-locals
+# pylint: disable=too-many-branches
 
 """Configures verbosity settings and adjusts strings for speech presentation."""
 
