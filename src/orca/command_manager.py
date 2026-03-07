@@ -1119,7 +1119,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             if kb_gs is not None:
                 if bindings:
                     gsettings_migrator.import_keybindings(kb_gs, bindings)
-                elif kb_gs.get_user_value("entries") is not None:
+                elif self._categories and kb_gs.get_user_value("entries") is not None:
                     kb_gs.reset("entries")
 
         return general, bindings
