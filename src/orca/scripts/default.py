@@ -756,10 +756,16 @@ class Script(script.Script):
         """Performs a right mouse button click on the current item."""
 
         if flat_review_presenter.get_presenter().is_active():
+            obj = flat_review_presenter.get_presenter().get_current_object(self, event)
+            if ax_event_synthesizer.get_synthesizer().try_all_right_click_actions(obj):
+                return True
             flat_review_presenter.get_presenter().right_click_on_object(self, event)
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
+        if ax_event_synthesizer.get_synthesizer().try_all_right_click_actions(focus):
+            return True
+
         if ax_event_synthesizer.get_synthesizer().click_character(focus, None, 3):
             return True
 

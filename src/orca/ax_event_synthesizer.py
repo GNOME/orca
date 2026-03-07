@@ -387,6 +387,29 @@ class AXEventSynthesizer:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
+    @staticmethod
+    def try_all_right_click_actions(obj: Atspi.Accessible) -> bool:
+        """Attempts to perform a right-click-like action if one is available."""
+
+        actions = ["show-context-menu"]
+        for action in actions:
+            if AXUtilitiesAction.do_named_action(obj, action):
+                tokens = ["AXEventSynthesizer: '", action, "' on", obj, "performed successfully"]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return True
+
+        if debug.debugLevel > debug.LEVEL_INFO:
+            return False
+
+        tokens = [
+            "AXEventSynthesizer: Actions on",
+            obj,
+            ":",
+            AXUtilitiesDebugging.actions_as_string(obj),
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return False
+
 
 _synthesizer = AXEventSynthesizer()
 
