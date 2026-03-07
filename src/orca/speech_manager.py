@@ -2120,9 +2120,11 @@ class SpeechManager:
             return True
 
         server.decrease_speech_rate()
-        self.set_rate(max(0, self.get_rate() - 5))
+        new_rate = max(0, self.get_rate() - 5)
+        self.set_rate(new_rate)
         if notify_user and script is not None:
-            presentation_manager.get_manager().present_message(messages.SPEECH_SLOWER)
+            full = f"{messages.SPEECH_SLOWER} {new_rate}"
+            presentation_manager.get_manager().present_message(full, str(new_rate))
 
         return True
 
@@ -2152,9 +2154,11 @@ class SpeechManager:
             return True
 
         server.increase_speech_rate()
-        self.set_rate(min(99, self.get_rate() + 5))
+        new_rate = min(99, self.get_rate() + 5)
+        self.set_rate(new_rate)
         if notify_user and script is not None:
-            presentation_manager.get_manager().present_message(messages.SPEECH_FASTER)
+            full = f"{messages.SPEECH_FASTER} {new_rate}"
+            presentation_manager.get_manager().present_message(full, str(new_rate))
 
         return True
 
@@ -2219,9 +2223,11 @@ class SpeechManager:
             return True
 
         server.decrease_speech_pitch()
-        self.set_pitch(max(0.0, self.get_pitch() - 0.5))
+        new_pitch = max(0.0, self.get_pitch() - 0.5)
+        self.set_pitch(new_pitch)
         if notify_user and script is not None:
-            presentation_manager.get_manager().present_message(messages.SPEECH_LOWER)
+            full = f"{messages.SPEECH_LOWER} {new_pitch:g}"
+            presentation_manager.get_manager().present_message(full, f"{new_pitch:g}")
 
         return True
 
@@ -2251,9 +2257,11 @@ class SpeechManager:
             return True
 
         server.increase_speech_pitch()
-        self.set_pitch(min(9.0, self.get_pitch() + 0.5))
+        new_pitch = min(9.0, self.get_pitch() + 0.5)
+        self.set_pitch(new_pitch)
         if notify_user and script is not None:
-            presentation_manager.get_manager().present_message(messages.SPEECH_HIGHER)
+            full = f"{messages.SPEECH_HIGHER} {new_pitch:g}"
+            presentation_manager.get_manager().present_message(full, f"{new_pitch:g}")
 
         return True
 
@@ -2318,9 +2326,11 @@ class SpeechManager:
             return True
 
         server.decrease_speech_volume()
-        self.set_volume(max(0.0, self.get_volume() - 0.5))
+        new_volume = max(0.0, self.get_volume() - 0.5)
+        self.set_volume(new_volume)
         if notify_user and script is not None:
-            presentation_manager.get_manager().present_message(messages.SPEECH_SOFTER)
+            full = f"{messages.SPEECH_SOFTER} {new_volume:g}"
+            presentation_manager.get_manager().present_message(full, f"{new_volume:g}")
 
         return True
 
@@ -2350,9 +2360,11 @@ class SpeechManager:
             return True
 
         server.increase_speech_volume()
-        self.set_volume(min(9.0, self.get_volume() + 0.5))
+        new_volume = min(9.0, self.get_volume() + 0.5)
+        self.set_volume(new_volume)
         if notify_user and script is not None:
-            presentation_manager.get_manager().present_message(messages.SPEECH_LOUDER)
+            full = f"{messages.SPEECH_LOUDER} {new_volume:g}"
+            presentation_manager.get_manager().present_message(full, f"{new_volume:g}")
 
         return True
 
