@@ -340,7 +340,10 @@ class Utilities(script_utilities.Utilities):
         next_obj, next_offset = self.find_next_caret_in_order(obj, offset)
         if skip_space:
             seen = {(next_obj, next_offset)}
-            while AXText.get_character_at_offset(next_obj, next_offset)[0].isspace():
+            while (
+                self.treat_as_text_object(next_obj)
+                and AXText.get_character_at_offset(next_obj, next_offset)[0].isspace()
+            ):
                 next_obj, next_offset = self.find_next_caret_in_order(next_obj, next_offset)
                 if (next_obj, next_offset) in seen:
                     msg = "WEB: Cycle detected in next_context skip_space. Breaking."
@@ -365,7 +368,10 @@ class Utilities(script_utilities.Utilities):
         prev_obj, prev_offset = self.find_previous_caret_in_order(obj, offset)
         if skip_space:
             seen = {(prev_obj, prev_offset)}
-            while AXText.get_character_at_offset(prev_obj, prev_offset)[0].isspace():
+            while (
+                self.treat_as_text_object(prev_obj)
+                and AXText.get_character_at_offset(prev_obj, prev_offset)[0].isspace()
+            ):
                 prev_obj, prev_offset = self.find_previous_caret_in_order(prev_obj, prev_offset)
                 if (prev_obj, prev_offset) in seen:
                     msg = "WEB: Cycle detected in previous_context skip_space. Breaking."

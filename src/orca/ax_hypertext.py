@@ -201,14 +201,22 @@ class AXHypertext:
 
     @staticmethod
     def find_child_at_offset(obj: Atspi.Accessible, offset: int) -> Atspi.Accessible | None:
-        """Attempts to correct for off-by-one brokenness in implementations"""
+        """Returns the child at offset, correcting for broken hypertext offset mappings."""
 
         if child := AXHypertext.get_child_at_offset(obj, offset):
-            return child
+            if AXHypertext.get_character_offset_in_parent(child) == offset:
+                return child
+            tokens = [
+                f"AXHypertext: Child at offset {offset} in",
+                obj,
+                "is",
+                child,
+                f"but reports offset {AXHypertext.get_character_offset_in_parent(child)}",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if child_before := AXHypertext.get_child_at_offset(obj, offset - 1):
-            offset_in_parent = AXHypertext.get_character_offset_in_parent(child_before)
-            if offset_in_parent == offset:
+            if AXHypertext.get_character_offset_in_parent(child_before) == offset:
                 tokens = [
                     f"AXHypertext: Corrected child at offset {offset} in",
                     obj,
@@ -220,8 +228,7 @@ class AXHypertext:
                 return child_before
 
         if child_after := AXHypertext.get_child_at_offset(obj, offset + 1):
-            offset_in_parent = AXHypertext.get_character_offset_in_parent(child_after)
-            if offset_in_parent == offset:
+            if AXHypertext.get_character_offset_in_parent(child_after) == offset:
                 tokens = [
                     f"AXHypertext: Corrected child at offset {offset} in",
                     obj,
@@ -231,6 +238,25 @@ class AXHypertext:
                 ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return child_after
+
+        for i in range(AXHypertext._get_link_count(obj)):
+            link = AXHypertext._get_link_at_index(obj, i)
+            if link is not None and AXHypertext.get_link_start_offset(link) == offset:
+                try:
+                    child = Atspi.Hyperlink.get_object(link, 0)
+                except GLib.GError as error:
+                    msg = f"AXHypertext: Exception in find_child_at_offset: {error}"
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                    continue
+                if child is not None:
+                    tokens = [
+                        f"AXHypertext: Child at offset {offset} in",
+                        obj,
+                        "found via link enumeration:",
+                        child,
+                    ]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                    return child
 
         return None
 
