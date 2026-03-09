@@ -4,6 +4,7 @@
 #
 # scootergrisen, 2020-2022.
 # Gennemgået Ask Hjorth Larsen <asklarsen@gmail.com>, 2022.
+# Alan Mortensen <alanmortensen.am@gmail.com>, 2026.
 #
 # Ordliste:
 #
@@ -17,8 +18,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
-"POT-Creation-Date: 2023-01-25 21:42+0000\n"
-"PO-Revision-Date: 2023-02-25 15:42+0100\n"
+"POT-Creation-Date: 2026-03-05 11:48+0000\n"
+"PO-Revision-Date: 2026-03-05 16:50+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -26,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -38,140 +39,6 @@ msgstr ""
 "Dansk-gruppen\n"
 "Webside http://dansk-gruppen.dk\n"
 "E-mail <dansk@dansk-gruppen.dk>"
-
-#. (itstool) path: info/title
-#: C/commands_bookmarks.page:6
-msgctxt "sort"
-msgid "4. Bookmarks"
-msgstr "4. Bogmærker"
-
-#. (itstool) path: info/title
-#: C/commands_bookmarks.page:7
-msgctxt "link"
-msgid "Bookmarks"
-msgstr "Bogmærker"
-
-#. (itstool) path: info/desc
-#: C/commands_bookmarks.page:8
-msgid "Commands to bookmark and retrieve objects"
-msgstr "Kommandoer til at bruge bogmærker og hente objekter"
-
-#. (itstool) path: credit/name
-#: C/commands_bookmarks.page:12 C/commands_braille.page:12
-#: C/commands_chat.page:12 C/commands_controlling_orca.page:11
-#: C/commands_debugging.page:10 C/commands_find.page:12
-#: C/commands_flat_review.page:12 C/commands_live_regions.page:12
-#: C/commands_mouse.page:13 C/commands.page:8 C/commands_profiles.page:12
-#: C/commands_reading.page:14 C/commands_speech_settings.page:12
-#: C/commands_structural_navigation.page:12 C/commands_table.page:12
-#: C/commands_time_date_notifications.page:12 C/commands_where_am_i.page:12
-#: C/howto_bookmarks.page:7 C/howto_documents.page:10
-#: C/howto_flat_review.page:8 C/howto_forms.page:10 C/howto_key_bindings.page:8
-#: C/howto_keyboard_layout.page:8 C/howto_learn_modes.page:10
-#: C/howto_live_regions.page:10 C/howto_mouse_review.page:8
-#: C/howto_notifications.page:8 C/howto_orca_find.page:8
-#: C/howto_profiles.page:8 C/howto_setting_up_orca.page:12
-#: C/howto_structural_navigation.page:12 C/howto_tables.page:10
-#: C/howto_text_attributes.page:10 C/howto_the_orca_modifier.page:11
-#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:9
-#: C/introduction.page:10 C/preferences_braille.page:11
-#: C/preferences_chat.page:11 C/preferences_web.page:12
-#: C/preferences_general.page:11 C/preferences_introduction.page:8
-#: C/preferences_key_bindings.page:12 C/preferences_key_echo.page:11
-#: C/preferences.page:7 C/preferences_pronunciation.page:12
-#: C/preferences_speech.page:11 C/preferences_spellcheck.page:10
-#: C/preferences_table_navigation.page:14 C/preferences_text_attributes.page:13
-#: C/preferences_voice.page:11
-msgid "Joanmarie Diggs"
-msgstr "Joanmarie Diggs"
-
-#. (itstool) path: license/p
-#: C/commands_bookmarks.page:16 C/commands_braille.page:16
-#: C/commands_chat.page:16 C/commands_controlling_orca.page:15
-#: C/commands_debugging.page:14 C/commands_find.page:16
-#: C/commands_flat_review.page:16 C/commands_live_regions.page:16
-#: C/commands_mouse.page:17 C/commands.page:12 C/commands_profiles.page:16
-#: C/commands_reading.page:18 C/commands_speech_settings.page:16
-#: C/commands_structural_navigation.page:16 C/commands_table.page:16
-#: C/commands_time_date_notifications.page:16 C/commands_where_am_i.page:16
-#: C/howto_bookmarks.page:11 C/howto_documents.page:14
-#: C/howto_flat_review.page:12 C/howto_forms.page:14
-#: C/howto_key_bindings.page:12 C/howto_keyboard_layout.page:12
-#: C/howto_learn_modes.page:14 C/howto_live_regions.page:14
-#: C/howto_mouse_review.page:12 C/howto_notifications.page:12
-#: C/howto_orca_find.page:12 C/howto_profiles.page:12
-#: C/howto_setting_up_orca.page:16 C/howto_structural_navigation.page:16
-#: C/howto_tables.page:14 C/howto_text_attributes.page:14
-#: C/howto_the_orca_modifier.page:15 C/howto_toggling_caps_lock.page:12
-#: C/howto_whereami.page:14 C/index.page:13 C/introduction.page:14
-#: C/preferences_braille.page:15 C/preferences_chat.page:15
-#: C/preferences_web.page:16 C/preferences_general.page:15
-#: C/preferences_introduction.page:12 C/preferences_key_bindings.page:16
-#: C/preferences_key_echo.page:15 C/preferences.page:11
-#: C/preferences_pronunciation.page:16 C/preferences_speech.page:15
-#: C/preferences_spellcheck.page:14 C/preferences_table_navigation.page:18
-#: C/preferences_text_attributes.page:17 C/preferences_voice.page:15
-msgid "Creative Commons Share Alike 3.0"
-msgstr "Creative Commons Deling på samme vilkår 3.0"
-
-#. (itstool) path: page/title
-#: C/commands_bookmarks.page:19
-msgid "Bookmark Commands"
-msgstr "Kommandoer for bogmærker"
-
-#. (itstool) path: page/p
-#: C/commands_bookmarks.page:20
-msgid ""
-"<app>Orca</app> provides several commands which can be used to \"bookmark\" "
-"a given object for the purpose of navigating back to it later."
-msgstr ""
-"<app>Orca</app> har adskillige kommandoer, som kan bruges til at tilføje et "
-"“bogmærke” ved et givent objekt, så der kan navigeres tilbage til det senere."
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:26
-msgid ""
-"Save a bookmark to the numbered slot: <keyseq><key>Orca Modifier</key> "
-"<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
-msgstr ""
-"Gem et bogmærke på en nummereret plads: <keyseq><key>Orca-ændringstast</key> "
-"<key>Alt</key><key>1</key></keyseq>–<key>6</key>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:32
-msgid ""
-"Save the defined bookmarks for the application or page: <keyseq><key>Orca "
-"Modifier</key><key>Alt</key><key>B</key></keyseq>"
-msgstr ""
-"Gem de angivne bogmærker i programmet eller på siden: <keyseq><key>Orca-"
-"ændringstast</key><key>Alt</key><key>B</key></keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:38
-msgid ""
-"Go to a specific, numbered bookmark: <keyseq><key>Orca Modifier</key> "
-"<key>1</key></keyseq>-<key>6</key>"
-msgstr ""
-"Gå til et bestemt nummereret bogmærke: <keyseq><key>Orca-ændringstast</key> "
-"<key>1</key></keyseq>–<key>6</key>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:44
-msgid ""
-"Go to the previous bookmark for the application or page: <keyseq><key>Orca "
-"Modifier</key><key>Shift</key><key>B</key> </keyseq>"
-msgstr ""
-"Gå til det forrige bogmærke i programmet eller på siden: <keyseq><key>Orca-"
-"ændringstast</key><key>Skift</key><key>B</key> </keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_bookmarks.page:51
-msgid ""
-"Go to the next bookmark for the application or page: <keyseq><key>Orca "
-"Modifier</key><key>B</key></keyseq>"
-msgstr ""
-"Gå til det næste bogmærke i programmet eller på siden: <keyseq><key>Orca-"
-"ændringstast</key><key>B</key></keyseq>"
 
 #. (itstool) path: info/title
 #: C/commands_braille.page:6
@@ -190,8 +57,65 @@ msgstr "Punktskrift"
 msgid "Commands executable on braille displays"
 msgstr "Kommandoer som kan køres på punktskriftsdisplays"
 
+#. (itstool) path: credit/name
+#: C/commands_braille.page:12 C/commands_chat.page:12
+#: C/commands_controlling_orca.page:11 C/commands_debugging.page:10
+#: C/commands_find.page:12 C/commands_flat_review.page:12
+#: C/commands_live_regions.page:12 C/commands_mouse.page:13 C/commands.page:8
+#: C/commands_profiles.page:12 C/commands_reading.page:14
+#: C/commands_speech_settings.page:12 C/commands_structural_navigation.page:12
+#: C/commands_table.page:12 C/commands_time_date_notifications.page:12
+#: C/commands_where_am_i.page:12 C/howto_documents.page:10
+#: C/howto_flat_review.page:8 C/howto_forms.page:10 C/howto_key_bindings.page:8
+#: C/howto_keyboard_layout.page:8 C/howto_learn_modes.page:10
+#: C/howto_live_regions.page:10 C/howto_mouse_review.page:8
+#: C/howto_notifications.page:7 C/howto_orca_find.page:8
+#: C/howto_profiles.page:8 C/howto_setting_up_orca.page:12
+#: C/howto_structural_navigation.page:12 C/howto_tables.page:10
+#: C/howto_text_attributes.page:10 C/howto_the_orca_modifier.page:11
+#: C/howto_toggling_caps_lock.page:8 C/howto_whereami.page:10 C/index.page:10
+#: C/introduction.page:10 C/preferences_braille.page:11
+#: C/preferences_chat.page:11 C/preferences_general.page:11
+#: C/preferences_introduction.page:8 C/preferences_key_bindings.page:12
+#: C/preferences_key_echo.page:11 C/preferences.page:7
+#: C/preferences_pronunciation.page:12 C/preferences_speech.page:11
+#: C/preferences_spellcheck.page:10 C/preferences_table_navigation.page:14
+#: C/preferences_text_attributes.page:13 C/preferences_voice.page:11
+#: C/preferences_web.page:12
+msgid "Joanmarie Diggs"
+msgstr "Joanmarie Diggs"
+
+#. (itstool) path: license/p
+#: C/commands_braille.page:16 C/commands_chat.page:16
+#: C/commands_controlling_orca.page:15 C/commands_debugging.page:14
+#: C/commands_find.page:16 C/commands_flat_review.page:16
+#: C/commands_live_regions.page:16 C/commands_mouse.page:17 C/commands.page:12
+#: C/commands_profiles.page:16 C/commands_reading.page:18
+#: C/commands_speech_settings.page:16 C/commands_structural_navigation.page:16
+#: C/commands_table.page:16 C/commands_time_date_notifications.page:16
+#: C/commands_where_am_i.page:16 C/howto_documents.page:14
+#: C/howto_flat_review.page:12 C/howto_forms.page:14
+#: C/howto_key_bindings.page:12 C/howto_keyboard_layout.page:12
+#: C/howto_learn_modes.page:14 C/howto_live_regions.page:14
+#: C/howto_mouse_review.page:12 C/howto_notifications.page:11
+#: C/howto_orca_find.page:12 C/howto_profiles.page:12
+#: C/howto_setting_up_orca.page:16 C/howto_structural_navigation.page:16
+#: C/howto_tables.page:14 C/howto_text_attributes.page:14
+#: C/howto_the_orca_modifier.page:15 C/howto_toggling_caps_lock.page:12
+#: C/howto_whereami.page:14 C/index.page:14 C/introduction.page:14
+#: C/preferences_braille.page:15 C/preferences_chat.page:15
+#: C/preferences_general.page:15 C/preferences_introduction.page:12
+#: C/preferences_key_bindings.page:16 C/preferences_key_echo.page:15
+#: C/preferences.page:11 C/preferences_pronunciation.page:16
+#: C/preferences_speech.page:15 C/preferences_spellcheck.page:14
+#: C/preferences_table_navigation.page:18 C/preferences_text_attributes.page:17
+#: C/preferences_voice.page:15 C/preferences_web.page:16
+msgid "Creative Commons Share Alike 3.0"
+msgstr "Creative Commons Deling på samme vilkår 3.0"
+
 #. (itstool) path: page/title
-#: C/commands_braille.page:19
+#. (itstool) path: section/title
+#: C/commands_braille.page:19 C/commands_controlling_orca.page:73
 msgid "Braille Commands"
 msgstr "Kommandoer for punktskrift"
 
@@ -304,29 +228,35 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_chat.page:30
-msgid ""
-"Present previous chat room messages: <keyseq><key>Orca Modifier</"
-"key><key>F1</key></keyseq> through <key>F9</key>"
-msgstr ""
-"Præsenter tidligere meddelelser fra chatrum: <keyseq><key>Orca-ændringstast</"
-"key><key>F1</key></keyseq> til <key>F9</key>"
+msgid "Present previous chat room message: (Unbound)"
+msgstr "Præsenter forrige chatrumsmeddelelse: (ubundet)"
 
 #. (itstool) path: item/p
-#: C/commands_chat.page:36
+#: C/commands_chat.page:35
+msgid "Present next chat room message: (Unbound)"
+msgstr "Præsenter næste chatrumsmeddelelse: (ubundet)"
+
+#. (itstool) path: item/p
+#: C/commands_chat.page:40
 msgid "Enable/disable announcement of room name with messages: (Unbound)"
 msgstr ""
-"Aktivér/deaktivér bekendtgørelse af rumnavn, som har meddelelser: (Ubundet)"
+"Aktivér/deaktivér bekendtgørelse af rumnavn, som har meddelelser: (ubundet)"
 
 #. (itstool) path: item/p
-#: C/commands_chat.page:41
+#: C/commands_chat.page:45
+msgid "Toggle chat room specific message histories: (unbound)"
+msgstr "Slå chatrumsspecifik historik til og fra: (ubundet)"
+
+#. (itstool) path: item/p
+#: C/commands_chat.page:50
 msgid "Enable/disable announcement of buddy typing status: (Unbound)"
 msgstr ""
 "Aktivér/deaktivér bekendtgørelse af status for venner, som skriver: (Ubundet)"
 
 #. (itstool) path: item/p
-#: C/commands_chat.page:44
-msgid "Enable/disable room-specific histories: (Unbound)"
-msgstr "Aktivér/deaktivér rumspecifik historik: (Ubundet)"
+#: C/commands_chat.page:53
+msgid "Toggle room name presentation: (Unbound)"
+msgstr "Slå præsentation af rumnavn til og fra: (ubundet)"
 
 #. (itstool) path: info/title
 #: C/commands_controlling_orca.page:5
@@ -370,11 +300,11 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:29
 msgid ""
-"Toggle <app>Orca</app> on and off in GNOME: <keyseq><key>Super</"
-"key><key>Alt</key><key>S</key></keyseq>."
+"Toggle <app>Orca</app> on and off in supported desktop environments: "
+"<keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
 msgstr ""
-"Slå <app>Orca</app> til og fra i GNOME: <keyseq><key>Super</key><key>Alt</"
-"key><key>S</key></keyseq>."
+"Slå <app>Orca</app> til og fra i understøttede skrivebordsmiljøer: "
+"<keyseq><key>Super</key><key>Alt</key><key>S</key></keyseq>."
 
 #. (itstool) path: note/p
 #: C/commands_controlling_orca.page:34
@@ -412,20 +342,59 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_controlling_orca.page:56
 msgid ""
-"Pass the next command on to the current application: <keyseq><key>Orca "
-"Modifier</key><key>BackSpace</key></keyseq>"
+"Toggle all Orca command keys: <keyseq><key>Alt&gt;</key><key>BackSpace</"
+"key></keyseq>"
 msgstr ""
-"Videresend den næste kommando til det nuværende program: <keyseq><key>Orca-"
-"ændringstast</key><key>BackSpace</key></keyseq>"
+"Slå alle Orca-kommandotaster til og fra: <keyseq><key>Alt&gt;</"
+"key><key>Tilbage-tast</key></keyseq>"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:62
+msgid "Toggle keyboard layout: (Unbound)"
+msgstr "Slå tastaturlayout til og fra: (ubundet)"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:65 C/commands_speech_settings.page:57
+msgid "Cycle to the next key echo level: (Unbound)"
+msgstr "Skift til det næste tasteekkoniveau: (Ubundet)"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:68
+msgid "Quit the screen reader: (Unbound)"
+msgstr "Afslut skærmlæseren: (ubundet)"
+
+#. (itstool) path: section/p
+#: C/commands_controlling_orca.page:74
+msgid ""
+"The following commands can be used to control and customize Orca's braille "
+"output."
+msgstr ""
+"Følgende kommandoer kan bruges til at styre og tilpasse Orcas "
+"punktskriftoutput."
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:77
+msgid "Pan the braille display to the left: (Unbound)"
+msgstr "Panorer punktdisplayet til venstre: (ubundet)"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:80
+msgid "Pan the braille display to the right: (Unbound)"
+msgstr "Panorer punktdisplayet til højre: (ubundet)"
+
+#. (itstool) path: item/p
+#: C/commands_controlling_orca.page:83
+msgid "Turn contracted braille on and off: (Unbound)"
+msgstr "Slå forkortet punktskrift til og fra"
 
 #. (itstool) path: section/title
-#: C/commands_controlling_orca.page:64
+#: C/commands_controlling_orca.page:88
 msgid "Commands for Learning to Use <app>Orca</app>"
 msgstr "Kommandoer til at lære at bruge <app>Orca</app>"
 
 #. (itstool) path: section/p
 #. (itstool) path: page/p
-#: C/commands_controlling_orca.page:65 C/howto_learn_modes.page:18
+#: C/commands_controlling_orca.page:89 C/howto_learn_modes.page:18
 msgid ""
 "In Learn Mode, <app>Orca</app> will announce each keystroke you pressed "
 "along with any associated <app>Orca</app> command that keystroke is bound "
@@ -438,14 +407,14 @@ msgstr ""
 "alle de <app>Orca</app>-kommandoer, du kan bruge."
 
 #. (itstool) path: item/p
-#: C/commands_controlling_orca.page:73
+#: C/commands_controlling_orca.page:97
 msgid "Enter Learn Mode: <keyseq><key>Orca Modifier</key><key>H</key></keyseq>"
 msgstr ""
 "Start tilstanden lær: <keyseq><key>Orca-ændringstast</key><key>H</key></"
 "keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_controlling_orca.page:79
+#: C/commands_controlling_orca.page:103
 msgid "Exit Learn Mode: <keyseq><key>Esc</key></keyseq>"
 msgstr "Afslut tilstanden lær: <keyseq><key>Esc</key></keyseq>"
 
@@ -487,8 +456,18 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/commands_debugging.page:26
+msgid "Capture snapshot for debugging: (Unbound)"
+msgstr "Tag øjebliksbillede til fejlsøgning: (ubundet)"
+
+#. (itstool) path: item/p
+#: C/commands_debugging.page:29
 msgid "Cycle to the next debug level: (Unbound)"
 msgstr "Skift til det næste fejlfindingsniveau: (Ubundet)"
+
+#. (itstool) path: item/p
+#: C/commands_debugging.page:32
+msgid "Clear the AT-SPI cache for the current application: (Unbound)"
+msgstr "Ryd AT-SPI-cachen for det nuværende program: (ubundet)"
 
 #. (itstool) path: info/title
 #: C/commands_find.page:6
@@ -1051,6 +1030,23 @@ msgstr "Kopiér indholdet under flad gennemgang til udklipsholderen: (Ubundet)"
 msgid "Append the contents under flat review to the clipboard: (Unbound)"
 msgstr "Tilføj indholdet under flad gennemgang til udklipsholderen: (Ubundet)"
 
+#. (itstool) path: item/p
+#: C/commands_flat_review.page:197
+msgid "Move flat review to the bottom left: (Unbound)"
+msgstr "Flyt flad gennemgang nederst til venstre: (ubundet)"
+
+#. (itstool) path: item/p
+#: C/commands_flat_review.page:198
+msgid "Show flat review contents: (Unbound)"
+msgstr "Vis indholdet af flad gennemgang: (ubundet)"
+
+#. (itstool) path: item/p
+#: C/commands_flat_review.page:199
+msgid "Toggle restricting flat review to the current object: (Unbound)"
+msgstr ""
+"Slå begrænsning af flad gennemgang til det aktuelle objekt til eller fra: "
+"(ubundet)"
+
 #. (itstool) path: info/title
 #: C/commands_live_regions.page:6
 msgctxt "sort"
@@ -1085,54 +1081,44 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:27
 msgid ""
-"Monitor live regions: <keyseq><key>Orca Modifier</key><key>Shift</"
-"key><key>Backslash</key></keyseq>"
+"Monitor live regions: <keyseq><key>Orca Modifier</key><key>Backslash</key></"
+"keyseq>"
 msgstr ""
-"Overvåg liveområder: <keyseq><key>Orca-ændringstast</key><key>Skift</"
-"key><key>Omvendt skråstreg</key></keyseq>"
+"Overvåg liveområder: <keyseq><key>Orca-ændringstast</key><key><key>Omvendt "
+"skråstreg</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_live_regions.page:33
-msgid "Advance live region politeness setting: <key>Backslash</key>"
-msgstr ""
-"Skift til næste høflighedsindstilling for liveområder: <key>Omvendt "
-"skråstreg</key>"
+msgid "Advance live region politeness setting: (Unbound)"
+msgstr "Skift til næste høflighedsindstilling for liveområder: (ubundet)"
 
 #. (itstool) path: item/p
-#: C/commands_live_regions.page:38
+#: C/commands_live_regions.page:36
+msgid "Set default politeness level to off: (Unbound)"
+msgstr "Sæt standardhøflighedsniveau for liveområder til “fra”: (ubundet)"
+
+#. (itstool) path: item/p
+#: C/commands_live_regions.page:39
 msgid ""
-"Set default politeness level to off: <keyseq><key>Shift</key><key>Backslash</"
-"key></keyseq>"
+"Go to next/previous live region in the document's reading order: "
+"<keyseq><key>D</key></keyseq>/<keyseq><key>Shift</key><key>D</key></keyseq>"
 msgstr ""
-"Indstil standardhøflighedsniveau til “fra”: <keyseq><key>Skift</"
-"key><key>Omvendt skråstreg</key></keyseq>"
+"Gå til næste/forrige liveområde i dokumentets læserækkefølge: "
+"<keyseq><key>D</key></keyseq>/<keyseq><key>Skift</key><key>D</key></keyseq>"
 
 #. (itstool) path: item/p
-#: C/commands_live_regions.page:44
-msgid ""
-"Go to next/previous live region: <keyseq><key>D</key></keyseq>/"
-"<keyseq><key>Shift</key><key>D</key></keyseq>"
-msgstr ""
-"Gå til næste/forrige liveområde: <keyseq><key>D</key></keyseq>/"
-"<keyseq><key>Skift</key><key>D</key></keyseq>"
+#: C/commands_live_regions.page:45
+msgid "Review the next/previous saved live region message: (Unbound)"
+msgstr "Gennemse den næste/forrige gemte meddelelse om liveområde: (ubundet)"
 
 #. (itstool) path: item/p
-#: C/commands_live_regions.page:50
+#: C/commands_live_regions.page:48
 msgid ""
 "Go to last live region which made an announcement: <keyseq><key>Y</key></"
 "keyseq>"
 msgstr ""
 "Gå til sidste liveområde, som lavede en bekendtgørelse: <keyseq><key>Y</"
 "key></keyseq>"
-
-#. (itstool) path: item/p
-#: C/commands_live_regions.page:56
-msgid ""
-"Review live region announcements: <keyseq><key>Orca Modifier</key><key>F1</"
-"key></keyseq> through <key>F9</key>"
-msgstr ""
-"Gennemgå bekendtgørelser for liveområder: <keyseq><key>Orca-ændringstast</"
-"key><key>F1</key></keyseq> til <key>F9</key>"
 
 #. (itstool) path: info/title
 #: C/commands_mouse.page:5
@@ -1280,7 +1266,7 @@ msgid "<app>Orca</app>'s Commands"
 msgstr "<app>Orca</app>s kommandoer"
 
 #. (itstool) path: section/title
-#: C/commands.page:17 C/index.page:36
+#: C/commands.page:17 C/index.page:35
 msgid "Getting Started"
 msgstr "Kom godt i gang"
 
@@ -1295,7 +1281,7 @@ msgid "Reading Web Pages and Other Documents"
 msgstr "Læs websider og andre dokumenter"
 
 #. (itstool) path: section/title
-#: C/commands.page:26 C/index.page:42
+#: C/commands.page:26 C/index.page:41
 msgid "Reviewing and Interacting with Screen Contents"
 msgstr "Gennemgang af og interaktion med indholdet på skærmen"
 
@@ -1355,6 +1341,11 @@ msgstr ""
 #: C/commands_profiles.page:30
 msgid "Cycle to the next profile: (Unbound)"
 msgstr "Skift til den næste profil: (Ubundet)"
+
+#. (itstool) path: item/p
+#: C/commands_profiles.page:35
+msgid "Present the current profile: (Unbound)"
+msgstr "Præsenter den aktuelle profil: (ubundet)"
 
 #. (itstool) path: info/title
 #: C/commands_reading.page:8
@@ -1662,8 +1653,8 @@ msgstr "Kommandoer til at tilpasse <app>Orca</app>s output"
 
 #. (itstool) path: page/title
 #: C/commands_speech_settings.page:19
-msgid "Speech Settings Commands"
-msgstr "Kommandoer for tale"
+msgid "Speech And Verbosity Settings Commands"
+msgstr "Kommandoer for indstillinger til tale og uddybning"
 
 #. (itstool) path: page/p
 #: C/commands_speech_settings.page:20
@@ -1721,11 +1712,6 @@ msgid "Cycle to the next spoken punctuation level: (Unbound)"
 msgstr "Skift til det næste niveau for oplæsning af tegnsætning: (Ubundet)"
 
 #. (itstool) path: item/p
-#: C/commands_speech_settings.page:57
-msgid "Cycle to the next key echo level: (Unbound)"
-msgstr "Skift til det næste tasteekkoniveau: (Ubundet)"
-
-#. (itstool) path: item/p
 #: C/commands_speech_settings.page:60
 msgid "Cycle to the next capitalization style: (Unbound)"
 msgstr "Skift til den næste stil for ord med stort: (Ubundet)"
@@ -1759,6 +1745,11 @@ msgstr "Skru ned for lydstyrken: (Ubundet)"
 #: C/commands_speech_settings.page:78
 msgid "Increase the volume: (Unbound)"
 msgstr "Skru op for lydstyrken: (Ubundet)"
+
+#. (itstool) path: item/p
+#: C/commands_speech_settings.page:81
+msgid "Cycle to the next speech synthesizer: (Unbound)"
+msgstr "Skift til den næste talesynthesizer: (ubundet)"
 
 #. (itstool) path: info/title
 #: C/commands_structural_navigation.page:6
@@ -1941,13 +1932,11 @@ msgstr "Formularer"
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:133
 msgid ""
-"Next and previous form field: <keyseq><key>Orca Modifier</key><key>Tab</"
-"key></keyseq> and <keyseq><key>Orca Modifier</key><key>Shift</key><key>Tab</"
-"key></keyseq>"
+"Next and previous form field: <keyseq><key>F</key></keyseq> and "
+"<keyseq><key>Shift</key><key>F</key></keyseq>"
 msgstr ""
-"Næste og forrige formularfelt: <keyseq><key>Orca-ændringstast</"
-"key><key>Tabulator</key></keyseq> og <keyseq><key>Orca-ændringstast</"
-"key><key>Skift</key><key>Tabulator</key></keyseq>"
+"Næste og forrige formularfelt: <keyseq><key>F</key></keyseq> og "
+"<keyseq><key>Skift</key><key>F</key></keyseq>"
 
 #. (itstool) path: item/p
 #: C/commands_structural_navigation.page:140
@@ -2511,6 +2500,11 @@ msgstr "Præsentér den forrige underretning: (Ubundet)"
 
 #. (itstool) path: item/p
 #: C/commands_time_date_notifications.page:56
+msgid "Present the next notification message: (Unbound)"
+msgstr "Præsenter den næste underretning: (ubundet)"
+
+#. (itstool) path: item/p
+#: C/commands_time_date_notifications.page:59
 msgid "Present list of all notification messages: (Unbound)"
 msgstr "Præsentér liste over alle underretninger: (Ubundet)"
 
@@ -2613,94 +2607,6 @@ msgstr ""
 msgid "Present size and location of current object in pixels: (Unbound)"
 msgstr ""
 "Præsentér størrelse og placering på nuværende objekt i pixels: (Ubundet)"
-
-#. (itstool) path: info/title
-#: C/howto_bookmarks.page:4
-msgctxt "sort"
-msgid "6. Bookmarks"
-msgstr "6. Bogmærker"
-
-#. (itstool) path: info/desc
-#: C/howto_bookmarks.page:5
-msgid "Storing and retrieving objects"
-msgstr "Gemme og hente objekter"
-
-#. (itstool) path: page/title
-#: C/howto_bookmarks.page:14
-msgid "Bookmarks"
-msgstr "Bogmærker"
-
-# scootergrisen: fra gennemlæsning: Det lyder lidt engelsk.  Skriv (som altid) gerne om, så det virker som
-# scootergrisen: fra gennemlæsning: var det oprindeligt skrevet på dansk:
-# scootergrisen: fra gennemlæsning:
-# scootergrisen: fra gennemlæsning: "Orcas bogmærkefunktion lader dig markere objekter af særlig interesse."
-#. (itstool) path: page/p
-#: C/howto_bookmarks.page:15
-msgid ""
-"<app>Orca</app>'s Bookmarks support allows you to indicate that an object is "
-"of interest. It includes the following features:"
-msgstr ""
-"<app>Orca</app>s bogmærker lader dig markere objekter af særlig interesse. "
-"De har følgende egenskaber:"
-
-#. (itstool) path: item/p
-#: C/howto_bookmarks.page:21
-msgid ""
-"You are not limited to a single object: You can set up to six bookmarks per "
-"environment. You can also save bookmarks so that they will persist from Orca "
-"session to Orca session."
-msgstr ""
-"Du er ikke begrænset til et enkelt objekt: Du kan indstille op til seks "
-"bogmærker pr. miljø. Du kan også gemme bogmærker, så de huskes fra Orca-"
-"session til Orca-session."
-
-# scootergrisen: fra gennemlæsning: Sætningen bliver lidt lang og svær at læse.  Foreslår at opdele, f.eks.:
-# scootergrisen: fra gennemlæsning:
-# scootergrisen: fra gennemlæsning: Når et bogmærke er indstillet, kan du navigere tilbage til det senere.
-# scootergrisen: fra gennemlæsning: Dette gælder uanset om du har gemt bogmærkerne fra dit nuværende miljø
-# scootergrisen: fra gennemlæsning: permanent.
-#. (itstool) path: item/p
-#: C/howto_bookmarks.page:28
-msgid ""
-"Having set a bookmark you can navigate to it later, and do so regardless of "
-"whether or not you have chosen to permanently save the bookmarks associated "
-"with your current environment. Navigation can be based on the number of the "
-"bookmark should you wish to jump directly to a specific item. Alternatively, "
-"you can navigate to the next or previous bookmark just like you can a <link "
-"xref=\"howto_structural_navigation\">Structural Navigation</link> object."
-msgstr ""
-"Når et bogmærke er indstillet, kan du navigere til det senere. Dette er "
-"muligt uanset om du har gemt bogmærkerne tilknyttet dit nuværende miljø. "
-"Navigation kan være baseret på bogmærkets nummer, hvis du ønsker at hoppe "
-"direkte til et bestemt punkt. Eller du kan navigere til det næste eller "
-"forrige bogmærke, ligesom du kan med et <link "
-"xref=\"howto_structural_navigation\">Strukturel navigation</link>-objekt."
-
-#. (itstool) path: item/p
-#: C/howto_bookmarks.page:39
-msgid ""
-"Bookmarkable objects can be widgets within an application or objects on the "
-"web page you are reading. Which environment you are in determines what "
-"happens as you navigate amongst bookmarks: If you are in web content, the "
-"caret will be moved to the bookmark so that you can continue reading; "
-"otherwise, <link xref=\"howto_flat_review\">Flat Review</link> will be "
-"activated with the bookmark becoming the current review item."
-msgstr ""
-"Objekter, som kan bogmærkes, kan være kontroller i et program eller objekter "
-"på den webside, du læser. Det nuværende miljø afgør hvad, der sker, "
-"efterhånden som du navigerer blandt bogmærkerne: Hvis du er i webindhold, "
-"flyttes markøren til bogmærket, så du kan fortsætte med at læse; ellers "
-"aktiveres <link xref=\"howto_flat_review\">flad gennemgang</link>, hvorved "
-"bogmærket bliver det nuværende punkt til gennemgang."
-
-#. (itstool) path: page/p
-#: C/howto_bookmarks.page:50
-msgid ""
-"The specific keybindings associated with each of the above tasks can be "
-"found in <link xref=\"commands_bookmarks\">Bookmark Commands</link>."
-msgstr ""
-"De specifikke tastebindinger som er tilknyttet hver opgave ovenfor kan "
-"findes i <link xref=\"commands_bookmarks\">Kommandoer for bogmærker</link>."
 
 #. (itstool) path: info/title
 #: C/howto_documents.page:5
@@ -3373,14 +3279,14 @@ msgid ""
 "Live regions have an associated \"politeness\" level which is set by the "
 "author as a means to convey the importance of the information and to suggest "
 "when users should be informed by their assistive technology of updates made "
-"within that region. Live regions can be \"off\", \"polite\", or "
-"\"assertive\" to the point of being \"rude.\""
+"within that region. Live regions can be \"off\", \"polite\", or \"assertive."
+"\""
 msgstr ""
 "Liveområder har et tilknyttet “høflighedsniveau”, som indstilles af "
 "forfatteren som en måde til at formidle, hvor vigtig informationen er, og "
 "til at foreslå hvornår brugere skal informeres af deres assisterende "
 "teknologi om opdateringer, der sker i området. Liveområder kan være “fra”, "
-"“høflig” eller “hævdende” til punktet, hvor det bliver “uhøfligt”."
+"“høflig” eller “hævdende”."
 
 #. (itstool) path: section/title
 #: C/howto_live_regions.page:37
@@ -3506,23 +3412,23 @@ msgstr ""
 "uafhængige af hinanden."
 
 #. (itstool) path: info/title
-#: C/howto_notifications.page:5
+#: C/howto_notifications.page:4
 msgctxt "sort"
 msgid "5. Notifications"
 msgstr "5. Underretninger"
 
 #. (itstool) path: info/desc
-#: C/howto_notifications.page:6
+#: C/howto_notifications.page:5
 msgid "Reading previously-received messages"
 msgstr "Læs meddelelser, som tidligere er blevet modtaget"
 
 #. (itstool) path: page/title
-#: C/howto_notifications.page:15
+#: C/howto_notifications.page:14
 msgid "Notifications"
 msgstr "Underretninger"
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:16
+#: C/howto_notifications.page:15
 msgid ""
 "The GNOME Desktop includes a \"notification area\" which can be used by "
 "applications to present information to the user. Examples of notifications "
@@ -3537,7 +3443,7 @@ msgstr ""
 "advarsler om, at dit batteriniveau er lavt."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:23
+#: C/howto_notifications.page:22
 msgid ""
 "Because notifications are intended to present information to users without "
 "interrupting what the user is doing, these messages tend to appear and "
@@ -3557,22 +3463,22 @@ msgstr ""
 "at få adgang til underretningser, som tidligere er blevet vist:"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:35
+#: C/howto_notifications.page:34
 msgid "Present the last (most recent) notification message"
 msgstr "Præsentér den sidste (nyeste) underretning"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:38
+#: C/howto_notifications.page:37
 msgid "Present the previous notification message"
 msgstr "Præsentér den forrige underretning"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:41
+#: C/howto_notifications.page:40
 msgid "Present list of all notification messages"
 msgstr "Præsentér liste over alle underretninger"
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:44
+#: C/howto_notifications.page:43
 msgid ""
 "The first two commands are designed mainly for quick access to a message you "
 "just received. The last command is the most powerful as it stores your "
@@ -3583,7 +3489,7 @@ msgstr ""
 "eftersom den gemmer din historik for underretninger."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:49
+#: C/howto_notifications.page:48
 msgid ""
 "When you enter the list of notification messages, you will be told the size "
 "of the list and prompted with the following choices:"
@@ -3592,37 +3498,37 @@ msgstr ""
 "vide og bliver spurgt med følgende valg:"
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:54
+#: C/howto_notifications.page:53
 msgid "Press H for help."
 msgstr "Tryk på H for hjælp."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:55
+#: C/howto_notifications.page:54
 msgid "Use Up, Down, Home or End to navigate in the list."
 msgstr "Brug Op, Ned, Home eller End til at navigere i listen."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:56
+#: C/howto_notifications.page:55
 msgid "Press Escape to exit."
 msgstr "Tryk på Escape for at afslutte."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:57
+#: C/howto_notifications.page:56
 msgid "Press Space to repeat the last message read."
 msgstr "Tryk på Mellemrum for at gentage den meddelelse, der blev læst sidst."
 
 #. (itstool) path: item/p
-#: C/howto_notifications.page:58
+#: C/howto_notifications.page:57
 msgid "Press one digit to read a specific message."
 msgstr "Tryk på et tal for at læse en bestemt meddelelse."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:60
+#: C/howto_notifications.page:59
 msgid "Note that the most recently-received message is at the top of the list."
 msgstr "Bemærk, at den senest modtagne meddelelse er øverst i listen."
 
 #. (itstool) path: page/p
-#: C/howto_notifications.page:63
+#: C/howto_notifications.page:62
 msgid ""
 "Each of <app>Orca</app>'s notification review commands is unbound by "
 "default. You can bind any or all of them to the shortcut or shortcuts you "
@@ -4897,17 +4803,23 @@ msgstr ""
 #. (itstool) path: info/title
 #: C/index.page:6
 msgctxt "text"
-msgid "Orca Screen Reader"
-msgstr "Skærmlæseren Orca"
+msgid "<app>Orca</app> Screen Reader"
+msgstr "Skærmlæseren <app>Orca</app>"
 
 #. (itstool) path: info/title
 #: C/index.page:7
+msgctxt "link:trail"
+msgid "<app>Orca</app> Screen Reader"
+msgstr "Skærmlæseren <app>Orca</app>"
+
+#. (itstool) path: info/title
+#: C/index.page:8
 msgctxt "link"
-msgid "Introduction to the <app>Orca</app> Screen Reader"
-msgstr "Introduktion til Skærmlæseren <app>Orca</app>"
+msgid "<app>Orca</app> Screen Reader"
+msgstr "Skærmlæseren <app>Orca</app>"
 
 #. (itstool) path: info/desc
-#: C/index.page:16
+#: C/index.page:17
 msgid ""
 "Orca is a free, open source, flexible, and extensible screen reader that "
 "provides access to the graphical desktop via speech and refreshable braille."
@@ -4916,23 +4828,18 @@ msgstr ""
 "udvidelser. Orca giver adgang til det grafiske skrivebord gennem tale og "
 "punktskrift, der kan opdateres dynamisk."
 
-#. (itstool) path: media/span
-#: C/index.page:23
-msgid "<app>Orca</app>'s logo"
-msgstr "<app>Orca</app>s logo"
-
 #. (itstool) path: page/title
-#: C/index.page:21
+#: C/index.page:22
 msgid "<_:media-1/> <app>Orca</app> Screen Reader"
 msgstr "<_:media-1/> Skærmlæseren <app>Orca</app>"
 
 #. (itstool) path: note/title
-#: C/index.page:28
+#: C/index.page:27
 msgid "Before You Begin"
 msgstr "Inden du begynder"
 
 #. (itstool) path: note/p
-#: C/index.page:29
+#: C/index.page:28
 msgid ""
 "If you are not yet familiar with the navigation commands provided by your "
 "desktop environment, you are encouraged to read that documentation first."
@@ -4942,12 +4849,12 @@ msgstr ""
 "først."
 
 #. (itstool) path: section/title
-#: C/index.page:39
+#: C/index.page:38
 msgid "Reading Documents and Web Pages"
 msgstr "Læsning af dokumenter og websider"
 
 #. (itstool) path: section/title
-#: C/index.page:45
+#: C/index.page:44
 msgid "Quick Reference"
 msgstr "Kvikreference"
 
@@ -5180,17 +5087,17 @@ msgstr ""
 #: C/preferences_braille.page:62 C/preferences_braille.page:75
 #: C/preferences_braille.page:85 C/preferences_braille.page:166
 #: C/preferences_chat.page:31 C/preferences_chat.page:42
-#: C/preferences_chat.page:54 C/preferences_web.page:58
-#: C/preferences_web.page:100 C/preferences_web.page:205
-#: C/preferences_general.page:52 C/preferences_general.page:70
-#: C/preferences_general.page:119 C/preferences_general.page:228
-#: C/preferences_general.page:239 C/preferences_key_echo.page:112
-#: C/preferences_key_echo.page:122 C/preferences_key_echo.page:157
-#: C/preferences_key_echo.page:179 C/preferences_speech.page:105
-#: C/preferences_speech.page:135 C/preferences_speech.page:160
-#: C/preferences_speech.page:171 C/preferences_speech.page:183
-#: C/preferences_speech.page:343 C/preferences_table_navigation.page:65
-#: C/preferences_voice.page:122 C/preferences_voice.page:133
+#: C/preferences_chat.page:54 C/preferences_general.page:52
+#: C/preferences_general.page:70 C/preferences_general.page:119
+#: C/preferences_general.page:228 C/preferences_general.page:239
+#: C/preferences_key_echo.page:112 C/preferences_key_echo.page:122
+#: C/preferences_key_echo.page:157 C/preferences_key_echo.page:179
+#: C/preferences_speech.page:105 C/preferences_speech.page:135
+#: C/preferences_speech.page:160 C/preferences_speech.page:171
+#: C/preferences_speech.page:183 C/preferences_speech.page:343
+#: C/preferences_table_navigation.page:65 C/preferences_voice.page:118
+#: C/preferences_web.page:58 C/preferences_web.page:100
+#: C/preferences_web.page:205
 msgid "Default value: not checked"
 msgstr "Standardværdi: fravalgt"
 
@@ -5390,25 +5297,25 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/preferences_braille.page:141 C/preferences_braille.page:154
-#: C/preferences_web.page:35 C/preferences_web.page:78
-#: C/preferences_web.page:123 C/preferences_web.page:165
-#: C/preferences_web.page:193 C/preferences_general.page:140
-#: C/preferences_general.page:217 C/preferences_key_echo.page:28
-#: C/preferences_key_echo.page:37 C/preferences_key_echo.page:47
-#: C/preferences_key_echo.page:57 C/preferences_key_echo.page:67
-#: C/preferences_key_echo.page:77 C/preferences_key_echo.page:87
-#: C/preferences_key_echo.page:99 C/preferences_speech.page:26
-#: C/preferences_speech.page:123 C/preferences_speech.page:148
-#: C/preferences_speech.page:195 C/preferences_speech.page:208
-#: C/preferences_speech.page:220 C/preferences_speech.page:234
-#: C/preferences_speech.page:251 C/preferences_speech.page:265
-#: C/preferences_speech.page:279 C/preferences_speech.page:293
-#: C/preferences_speech.page:307 C/preferences_speech.page:319
-#: C/preferences_speech.page:331 C/preferences_spellcheck.page:41
-#: C/preferences_spellcheck.page:51 C/preferences_spellcheck.page:61
-#: C/preferences_table_navigation.page:34
+#: C/preferences_general.page:140 C/preferences_general.page:217
+#: C/preferences_key_echo.page:28 C/preferences_key_echo.page:37
+#: C/preferences_key_echo.page:47 C/preferences_key_echo.page:57
+#: C/preferences_key_echo.page:67 C/preferences_key_echo.page:77
+#: C/preferences_key_echo.page:87 C/preferences_key_echo.page:99
+#: C/preferences_speech.page:26 C/preferences_speech.page:123
+#: C/preferences_speech.page:148 C/preferences_speech.page:195
+#: C/preferences_speech.page:208 C/preferences_speech.page:220
+#: C/preferences_speech.page:234 C/preferences_speech.page:251
+#: C/preferences_speech.page:265 C/preferences_speech.page:279
+#: C/preferences_speech.page:293 C/preferences_speech.page:307
+#: C/preferences_speech.page:319 C/preferences_speech.page:331
+#: C/preferences_spellcheck.page:41 C/preferences_spellcheck.page:51
+#: C/preferences_spellcheck.page:61 C/preferences_table_navigation.page:34
 #: C/preferences_table_navigation.page:44
 #: C/preferences_table_navigation.page:54 C/preferences_voice.page:107
+#: C/preferences_web.page:35 C/preferences_web.page:78
+#: C/preferences_web.page:123 C/preferences_web.page:165
+#: C/preferences_web.page:193
 msgid "Default value: checked"
 msgstr "Standardværdi: tilvalgt"
 
@@ -5582,345 +5489,6 @@ msgstr "<gui>Alle kanaler, når et vilkårligt chatvindue er aktivt</gui>"
 #: C/preferences_chat.page:75
 msgid "Default value: all channels"
 msgstr "Standardværdi: alle kanaler"
-
-#. (itstool) path: info/title
-#: C/preferences_web.page:5
-msgctxt "sort"
-msgid "1. Web Navigation"
-msgstr "1. Webnavigation"
-
-#. (itstool) path: info/title
-#: C/preferences_web.page:6
-msgctxt "link"
-msgid "Web Navigation"
-msgstr "Webnavigation"
-
-#. (itstool) path: info/desc
-#: C/preferences_web.page:7
-msgid ""
-"Configuring <app>Orca</app>'s support for <app>Firefox</app>, "
-"<app>Thunderbird</app>, and <app>Chrome</app>/<app>Chromium</app>"
-msgstr ""
-"Konfiguration af <app>Orca</app>s understøttelse af <app>Firefox</app>, "
-"<app>Thunderbird</app> og <app>Chrome</app>/<app>Chromium</app>"
-
-#. (itstool) path: page/title
-#: C/preferences_web.page:19
-msgid "Web Navigation Preferences"
-msgstr "Indstillinger for webnavigation"
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:21
-msgid "Page Navigation"
-msgstr "Sidenavigation"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:22
-msgid ""
-"The <gui>Page Navigation</gui> group of controls make it possible for you to "
-"customize how <app>Orca</app> presents, and allow you to interact with, text "
-"and other content."
-msgstr ""
-"Gruppen af styringer, <gui>Sidenavigation</gui>, giver dig mulighed for at "
-"tilpasse den måde, <app>Orca</app> præsenterer på, og giver dig mulighed for "
-"at interagere med tekst og andet indhold."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:28
-msgid "Control caret navigation"
-msgstr "Styr markørnavigation"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:29
-msgid ""
-"This checkbox toggles <app>Orca</app>'s caret navigation on and off. When it "
-"is on, <app>Orca</app> takes control of the caret as you arrow around within "
-"a page; when it is off, the browser's native caret navigation is active."
-msgstr ""
-"Afkrydsningsboksen slår <app>Orca</app>s markørnavigation til og fra. Når "
-"den er slået til, tager <app>Orca</app> styring over markøren, når du "
-"flytter pilen rundt på en side; når den er slået fra, er browserens "
-"indbyggede markørnavigation aktiv."
-
-#. (itstool) path: note/title
-#: C/preferences_web.page:39 C/preferences_web.page:82
-#: C/preferences_voice.page:76
-msgid "This setting can be toggled on the fly"
-msgstr "Indstillingen kan slås til/fra løbende"
-
-#. (itstool) path: note/p
-#: C/preferences_web.page:40
-msgid ""
-"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
-"Modifier</key><key>F12</key></keyseq>."
-msgstr ""
-"For straks at skifte indstillingen uden at gemme den, bruges "
-"<keyseq><key>Orca-ændringstast</key><key>F12</key></keyseq>."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:47
-msgid "Automatic focus mode during caret navigation"
-msgstr "Automatisk fokustilstand under markørnavigation"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:48
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will automatically turn on "
-"focus mode when you use caret navigation commands to navigate to a form "
-"field. For example, pressing <key>Down</key> would allow you to move into an "
-"entry but once you had done so, Orca would switch to focus mode and "
-"subsequent presses of <key>Down</key> would be controlled by the web browser "
-"and not by Orca. If this checkbox is not checked, <app>Orca</app> would "
-"continue to control what happens when you press <key>Down</key>, thus making "
-"it possible to arrow out of the entry and continue reading."
-msgstr ""
-"Hvis afkrydsningsboksen er tilvalgt, slår <app>Orca</app> automatisk "
-"fokustilstand til, når du bruger kommandoer for markørnavigation til at "
-"navigere til et formularfelt. F.eks. vil tryk på <key>Ned</key> give dig "
-"mulighed for at flytte ind i et tekstfelt, men når du har gjort det, skifter "
-"Orca til fokustilstand, og efterfølgende tryk på <key>Ned</key> vil blive "
-"styret af webbrowseren og ikke af Orca. Hvis afkrydsningsboksen er fravalgt, "
-"vil <app>Orca</app> fortsætte med at styre, hvad der sker, når du trykker på "
-"<key>Ned</key>, hvorved det bliver muligt at flytte pilen ud af tekstfeltet "
-"og fortsætte læsningen."
-
-#. (itstool) path: note/title
-#: C/preferences_web.page:62 C/preferences_web.page:104
-#: C/preferences_web.page:127
-msgid "Manually switching between browse mode and focus mode"
-msgstr "Manuelt skift mellem gennemsynstilstand og fokustilstand"
-
-#. (itstool) path: note/p
-#: C/preferences_web.page:63 C/preferences_web.page:105
-#: C/preferences_web.page:128
-msgid ""
-"In order to start or stop interacting with the focused form field, use "
-"<keyseq><key>Orca Modifier</key><key>A</key></keyseq> to switch between "
-"browse mode and focus mode."
-msgstr ""
-"For at starte og stoppe interaktion med det formularfelt, som har fokus, "
-"bruges <keyseq><key>Orca-ændringstast</key><key>A</key></keyseq> til at "
-"skifte mellem gennemsyns- og fokustilstand."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:71
-msgid "Enable structural navigation"
-msgstr "Aktivér strukturel navigation"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:72
-msgid ""
-"This checkbox toggles <app>Orca</app>'s <link "
-"xref=\"howto_structural_navigation\">Structural Navigation</link> on and "
-"off. Structural Navigation allows you to navigate by elements such as "
-"headings, links, and form fields."
-msgstr ""
-"Afkrydsningsboksen slår <app>Orca</app>s <link "
-"xref=\"howto_structural_navigation\">Strukturel navigation</link> til og "
-"fra. Strukturel navigation giver dig mulighed for at navigere mellem "
-"elementer såsom overskrifter, links og formularfelter."
-
-#. (itstool) path: note/p
-#: C/preferences_web.page:83
-msgid ""
-"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
-"Modifier</key><key>Z</key></keyseq>."
-msgstr ""
-"For straks at skifte indstillingen uden at gemme den bruges "
-"<keyseq><key>Orca-ændringstast</key><key>Z</key></keyseq>."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:90
-msgid "Automatic focus mode during structural navigation"
-msgstr "Automatisk fokustilstand under strukturel navigation"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:91
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will automatically turn on "
-"focus mode when you use structural navigation commands to navigate to a form "
-"field. For example, pressing <key>E</key> to move to the next entry would "
-"move focus there and also turn focus mode on so that your next press of "
-"<key>E</key> would type an \"e\" into that entry. If this checkbox is not "
-"checked, then <app>Orca</app> will leave you in browse mode and your next "
-"press of <key>E</key> would move you to the next entry on the page."
-msgstr ""
-"Hvis afkrydsningsboksen er tilvalgt, slår <app>Orca</app> automatisk "
-"fokustilstand til, når du bruger kommandoer for strukturel navigation til at "
-"navigere til et formularfelt. F.eks. vil tryk på <key>E</key> for at flytte "
-"til det næste tekstfelt flytte fokus dertil og også slå fokustilstand til, "
-"så dit næste tryk på <key>E</key> skriver “e” i tekstfeltet. Hvis "
-"afkrydsningsboksen er fravalgt, efterlader <app>Orca</app> dig i "
-"gennemsynstilstand, og dit næste tryk på <key>E</key> flytter dig til det "
-"næste tekstfelt på siden."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:113
-msgid "Automatic focus mode during native navigation"
-msgstr "Automatisk fokustilstand under indbygget navigation"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:114
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will automatically turn on "
-"focus mode when you use native browser navigation commands to navigate to a "
-"form field. For example, pressing <key>Tab</key> to move to the next entry "
-"would move focus there and also turn focus mode on so that your next press "
-"of <key>E</key> would type an \"e\" into that entry. If this checkbox is not "
-"checked, then <app>Orca</app> will leave you in browse mode and your next "
-"press of <key>E</key> would move you to the next entry on the page."
-msgstr ""
-"Hvis afkrydsningsboksen er tilvalgt, slår <app>Orca</app> automatisk "
-"fokustilstand til, når du bruger kommandoer for indbygget browsernavigation "
-"til at navigere til et formularfelt. F.eks. vil tryk på <key>Tab</key> for "
-"at flytte til det næste tekstfelt flytte fokus dertil og også slå "
-"fokustilstand til, så dit næste tryk på <key>E</key> skriver “e” i "
-"tekstfeltet. Hvis afkrydsningsboksen er fravalgt, efterlader <app>Orca</app> "
-"dig i gennemsynstilstand, og dit næste tryk på <key>E</key> flytter dig til "
-"det næste tekstfelt på siden."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:136
-msgid "Automatically start speaking a page when it is first loaded"
-msgstr "Oplæs automatisk en side, når den først indlæses"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:137
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will perform a Say All on the "
-"newly opened web page or email."
-msgstr ""
-"Hvis afkrydsningsboksen er tilvalgt, udfører <app>Orca</app> en Oplæs Alt på "
-"den webside eller e-mail, som lige er blevet åbnet."
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:141 C/preferences_web.page:152
-msgid "Default value: checked for Firefox; not checked for Thunderbird"
-msgstr "Standardværdi: tilvalgt til Firefox; fravalgt til Thunderbird"
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:146
-msgid "Present summary of a page when it is first loaded"
-msgstr "Præsentér opsummering af en side første gang, den indlæses"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:147
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will summarize details about "
-"the newly opened web page or email, such as the number of headings, "
-"landmarks, and links."
-msgstr ""
-"Hvis afkrydsningsboksen er tilvalgt, opsummerer <app>Orca</app> detaljer om "
-"den webside eller e-mail, som lige er blevet åbnet, såsom antallet af "
-"overskrifter, kendemærker og links."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:157
-msgid "Enable layout mode for content"
-msgstr "Aktivér layouttilstand for indhold"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:158
-msgid ""
-"If this checkbox is checked, <app>Orca</app>'s caret navigation will respect "
-"the on-screen layout of the content and present the full line, including any "
-"links or form fields on that line. If this checkbox is not checked, "
-"<app>Orca</app> will treat objects such as links and form fields as if they "
-"were on separate lines, both for presentation and navigation."
-msgstr ""
-"Hvis afkrydsningsboksen er tilvalgt, respekterer <app>Orca</app>s "
-"markørnavigation layoutet på skærmen og præsenterer hele linjen inklusive "
-"links eller formularfelter på linjen. Hvis afkrydsningsboksen er fravalgt, "
-"behandler <app>Orca</app> objekter såsom links og formularfelter som om, de "
-"er på separate linjer, både for præsentation og navigation."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:171
-msgid "Table Options"
-msgstr "Indstillinger for tabel"
-
-#. (itstool) path: note/p
-#: C/preferences_web.page:173
-msgid ""
-"To learn more about <app>Orca</app>'s options for navigating within tables, "
-"please see <link xref=\"preferences_table_navigation\">Table Navigation "
-"Preferences</link>."
-msgstr ""
-"Yderligere oplysninger om <app>Orca</app>s indstillinger til navigation i "
-"tabeller kan findes i <link "
-"xref=\"preferences_table_navigation\">Indstillinger for tabelnavigation</"
-"link>."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:181
-msgid "Find Options"
-msgstr "Indstillinger for Find"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:182
-msgid ""
-"The <gui>Find Options</gui> group of controls make it possible for you to "
-"customize how <app>Orca</app> presents the results of a search conducted "
-"using the application's built-in search functionality."
-msgstr ""
-"<gui>Søgeindstillinger</gui> giver dig mulighed for at tilpasse den måde, "
-"<app>Orca</app> præsenterer resultaterne af en søgning på, som er foretaget "
-"med programmets indbyggede søgefunktionalitet."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:188
-msgid "Speak results during find"
-msgstr "Oplæs resultater under søgning"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:189
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will read the line which "
-"matches your current search query."
-msgstr ""
-"Hvis afkrydsningsboksen er tilvalgt, oplæser <app>Orca</app> den linje, som "
-"matcher din nuværende søgeforespørgsel."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:198
-msgid "Only speak changed lines during find"
-msgstr "Oplæs kun ændrede linjer ved søgning"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:199
-msgid ""
-"If this checkbox is checked, <app>Orca</app> will not present the matching "
-"line if it is the same line as the previous match. This option is designed "
-"to prevent \"chattiness\" on a line with multiple instances of the string "
-"for which you are searching."
-msgstr ""
-"Hvis afkrydsningsboksen er tilvalgt, præsenterer <app>Orca</app> ikke den "
-"matchende linje, hvis det er den samme linje som det forrige match. "
-"Indstillingen er designet til at forhindre overdreven “snakkesalighed” på en "
-"linje med flere forekomster af den streng, du søger efter."
-
-#. (itstool) path: section/title
-#: C/preferences_web.page:210
-msgid "Minimum length of matched text"
-msgstr "Minimumslængde på fundne tekst"
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:211
-msgid ""
-"This editable spin button is where you can specify the number of characters "
-"which must match before <app>Orca</app> announces the matching line. This "
-"option is also designed to prevent \"chattiness\" as there are many matches "
-"when you first begin typing the string for which you are searching."
-msgstr ""
-"Den redigerbare rulleknap er til at angive antallet af tegn, som skal "
-"matche, inden <app>Orca</app> bekendtgør den matchende linje. Handlingen er "
-"også designet til at forhindre “snakkesalighed”, eftersom der er mange "
-"matches, når du først begynder at skrive den streng, du søger efter."
-
-#. (itstool) path: section/p
-#: C/preferences_web.page:218
-msgid "Default value: 4"
-msgstr "Standardværdi: 4"
 
 #. (itstool) path: info/title
 #: C/preferences_general.page:3
@@ -8091,6 +7659,12 @@ msgstr "<gui>Stav</gui>: Siger ordet “med stort”"
 msgid "<gui>None</gui>"
 msgstr "<gui>Ingen</gui>"
 
+#. (itstool) path: note/title
+#: C/preferences_voice.page:76 C/preferences_web.page:39
+#: C/preferences_web.page:82
+msgid "This setting can be toggled on the fly"
+msgstr "Indstillingen kan slås til/fra løbende"
+
 #. (itstool) path: note/p
 #: C/preferences_voice.page:77
 msgid ""
@@ -8149,35 +7723,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/preferences_voice.page:112
-msgid "Speak multicase strings as words"
-msgstr "Oplæs strenge med en blanding af store og små bogstaver som ord"
-
-#. (itstool) path: section/p
-#: C/preferences_voice.page:113
-msgid ""
-"In some text, and especially when working with code, one often comes across "
-"a \"word\" consisting of several words with alternating case, such as "
-"\"MultiCaseString.\" Speech synthesizers do not always pronounce such "
-"multicase strings correctly. Checking the <gui>Speak multicase strings as "
-"words</gui> checkbox will cause <app>Orca</app> to break a word like "
-"\"MultiCaseString\" into separate words (\"Multi,\" \"Case,\" and "
-"\"String\") prior to passing it along to the speech synthesizer."
-msgstr ""
-"I noget tekst, særligt i programmering, kan man ofte støde på et “ord”, som "
-"består af flere ord med skiftende store/små bogstaver såsom "
-"“StoreSmåBogstaver”. Talesynthesizere udtaler ikke altid disse strenge "
-"korrekt. Tilvælges afkrydsningsboksen <gui>Oplæs strenge med en blanding af "
-"store og små bogstaver som ord</gui>, vil det få <app>Orca</app> til at "
-"opdele et ord som “StoreSmåBogstaver” i separate ord (“Store”, “Små” og "
-"“Bogstaver”) inden, de videregives til talesynthesizeren."
-
-#. (itstool) path: section/title
-#: C/preferences_voice.page:127
 msgid "Speak numbers as digits"
 msgstr "Oplæs tal som cifre"
 
 #. (itstool) path: section/p
-#: C/preferences_voice.page:128
+#: C/preferences_voice.page:113
 msgid ""
 "Checking the <gui>Speak numbers as digits</gui> checkbox will cause "
 "<app>Orca</app> to break a number like \"123\" into separate digits (\"1,\" "
@@ -8186,3 +7736,546 @@ msgstr ""
 "Tilvalg af afkrydsningsboksen <gui>Oplæs tal som cifre</gui> får <app>Orca</"
 "app> til at opdele et tal såsom “123” i separate cifre (“1”, “2” og “3”) "
 "inden, de videregives til talesynthesizeren."
+
+#. (itstool) path: info/title
+#: C/preferences_web.page:5
+msgctxt "sort"
+msgid "1. Web Navigation"
+msgstr "1. Webnavigation"
+
+#. (itstool) path: info/title
+#: C/preferences_web.page:6
+msgctxt "link"
+msgid "Web Navigation"
+msgstr "Webnavigation"
+
+#. (itstool) path: info/desc
+#: C/preferences_web.page:7
+msgid ""
+"Configuring <app>Orca</app>'s support for <app>Firefox</app>, "
+"<app>Thunderbird</app>, and <app>Chrome</app>/<app>Chromium</app>"
+msgstr ""
+"Konfiguration af <app>Orca</app>s understøttelse af <app>Firefox</app>, "
+"<app>Thunderbird</app> og <app>Chrome</app>/<app>Chromium</app>"
+
+#. (itstool) path: page/title
+#: C/preferences_web.page:19
+msgid "Web Navigation Preferences"
+msgstr "Indstillinger for webnavigation"
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:21
+msgid "Page Navigation"
+msgstr "Sidenavigation"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:22
+msgid ""
+"The <gui>Page Navigation</gui> group of controls make it possible for you to "
+"customize how <app>Orca</app> presents, and allow you to interact with, text "
+"and other content."
+msgstr ""
+"Gruppen af styringer, <gui>Sidenavigation</gui>, giver dig mulighed for at "
+"tilpasse den måde, <app>Orca</app> præsenterer på, og giver dig mulighed for "
+"at interagere med tekst og andet indhold."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:28
+msgid "Control caret navigation"
+msgstr "Styr markørnavigation"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:29
+msgid ""
+"This checkbox toggles <app>Orca</app>'s caret navigation on and off. When it "
+"is on, <app>Orca</app> takes control of the caret as you arrow around within "
+"a page; when it is off, the browser's native caret navigation is active."
+msgstr ""
+"Afkrydsningsboksen slår <app>Orca</app>s markørnavigation til og fra. Når "
+"den er slået til, tager <app>Orca</app> styring over markøren, når du "
+"flytter pilen rundt på en side; når den er slået fra, er browserens "
+"indbyggede markørnavigation aktiv."
+
+#. (itstool) path: note/p
+#: C/preferences_web.page:40
+msgid ""
+"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
+"Modifier</key><key>F12</key></keyseq>."
+msgstr ""
+"For straks at skifte indstillingen uden at gemme den, bruges "
+"<keyseq><key>Orca-ændringstast</key><key>F12</key></keyseq>."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:47
+msgid "Automatic focus mode during caret navigation"
+msgstr "Automatisk fokustilstand under markørnavigation"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:48
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use caret navigation commands to navigate to a form "
+"field. For example, pressing <key>Down</key> would allow you to move into an "
+"entry but once you had done so, Orca would switch to focus mode and "
+"subsequent presses of <key>Down</key> would be controlled by the web browser "
+"and not by Orca. If this checkbox is not checked, <app>Orca</app> would "
+"continue to control what happens when you press <key>Down</key>, thus making "
+"it possible to arrow out of the entry and continue reading."
+msgstr ""
+"Hvis afkrydsningsboksen er tilvalgt, slår <app>Orca</app> automatisk "
+"fokustilstand til, når du bruger kommandoer for markørnavigation til at "
+"navigere til et formularfelt. F.eks. vil tryk på <key>Ned</key> give dig "
+"mulighed for at flytte ind i et tekstfelt, men når du har gjort det, skifter "
+"Orca til fokustilstand, og efterfølgende tryk på <key>Ned</key> vil blive "
+"styret af webbrowseren og ikke af Orca. Hvis afkrydsningsboksen er fravalgt, "
+"vil <app>Orca</app> fortsætte med at styre, hvad der sker, når du trykker på "
+"<key>Ned</key>, hvorved det bliver muligt at flytte pilen ud af tekstfeltet "
+"og fortsætte læsningen."
+
+#. (itstool) path: note/title
+#: C/preferences_web.page:62 C/preferences_web.page:104
+#: C/preferences_web.page:127
+msgid "Manually switching between browse mode and focus mode"
+msgstr "Manuelt skift mellem gennemsynstilstand og fokustilstand"
+
+#. (itstool) path: note/p
+#: C/preferences_web.page:63 C/preferences_web.page:105
+#: C/preferences_web.page:128
+msgid ""
+"In order to start or stop interacting with the focused form field, use "
+"<keyseq><key>Orca Modifier</key><key>A</key></keyseq> to switch between "
+"browse mode and focus mode."
+msgstr ""
+"For at starte og stoppe interaktion med det formularfelt, som har fokus, "
+"bruges <keyseq><key>Orca-ændringstast</key><key>A</key></keyseq> til at "
+"skifte mellem gennemsyns- og fokustilstand."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:71
+msgid "Enable structural navigation"
+msgstr "Aktivér strukturel navigation"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:72
+msgid ""
+"This checkbox toggles <app>Orca</app>'s <link "
+"xref=\"howto_structural_navigation\">Structural Navigation</link> on and "
+"off. Structural Navigation allows you to navigate by elements such as "
+"headings, links, and form fields."
+msgstr ""
+"Afkrydsningsboksen slår <app>Orca</app>s <link "
+"xref=\"howto_structural_navigation\">Strukturel navigation</link> til og "
+"fra. Strukturel navigation giver dig mulighed for at navigere mellem "
+"elementer såsom overskrifter, links og formularfelter."
+
+#. (itstool) path: note/p
+#: C/preferences_web.page:83
+msgid ""
+"To toggle this setting on the fly without saving it, use <keyseq><key>Orca "
+"Modifier</key><key>Z</key></keyseq>."
+msgstr ""
+"For straks at skifte indstillingen uden at gemme den bruges "
+"<keyseq><key>Orca-ændringstast</key><key>Z</key></keyseq>."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:90
+msgid "Automatic focus mode during structural navigation"
+msgstr "Automatisk fokustilstand under strukturel navigation"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:91
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use structural navigation commands to navigate to a form "
+"field. For example, pressing <key>E</key> to move to the next entry would "
+"move focus there and also turn focus mode on so that your next press of "
+"<key>E</key> would type an \"e\" into that entry. If this checkbox is not "
+"checked, then <app>Orca</app> will leave you in browse mode and your next "
+"press of <key>E</key> would move you to the next entry on the page."
+msgstr ""
+"Hvis afkrydsningsboksen er tilvalgt, slår <app>Orca</app> automatisk "
+"fokustilstand til, når du bruger kommandoer for strukturel navigation til at "
+"navigere til et formularfelt. F.eks. vil tryk på <key>E</key> for at flytte "
+"til det næste tekstfelt flytte fokus dertil og også slå fokustilstand til, "
+"så dit næste tryk på <key>E</key> skriver “e” i tekstfeltet. Hvis "
+"afkrydsningsboksen er fravalgt, efterlader <app>Orca</app> dig i "
+"gennemsynstilstand, og dit næste tryk på <key>E</key> flytter dig til det "
+"næste tekstfelt på siden."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:113
+msgid "Automatic focus mode during native navigation"
+msgstr "Automatisk fokustilstand under indbygget navigation"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:114
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will automatically turn on "
+"focus mode when you use native browser navigation commands to navigate to a "
+"form field. For example, pressing <key>Tab</key> to move to the next entry "
+"would move focus there and also turn focus mode on so that your next press "
+"of <key>E</key> would type an \"e\" into that entry. If this checkbox is not "
+"checked, then <app>Orca</app> will leave you in browse mode and your next "
+"press of <key>E</key> would move you to the next entry on the page."
+msgstr ""
+"Hvis afkrydsningsboksen er tilvalgt, slår <app>Orca</app> automatisk "
+"fokustilstand til, når du bruger kommandoer for indbygget browsernavigation "
+"til at navigere til et formularfelt. F.eks. vil tryk på <key>Tab</key> for "
+"at flytte til det næste tekstfelt flytte fokus dertil og også slå "
+"fokustilstand til, så dit næste tryk på <key>E</key> skriver “e” i "
+"tekstfeltet. Hvis afkrydsningsboksen er fravalgt, efterlader <app>Orca</app> "
+"dig i gennemsynstilstand, og dit næste tryk på <key>E</key> flytter dig til "
+"det næste tekstfelt på siden."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:136
+msgid "Automatically start speaking a page when it is first loaded"
+msgstr "Oplæs automatisk en side, når den først indlæses"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:137
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will perform a Say All on the "
+"newly opened web page or email."
+msgstr ""
+"Hvis afkrydsningsboksen er tilvalgt, udfører <app>Orca</app> en Oplæs Alt på "
+"den webside eller e-mail, som lige er blevet åbnet."
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:141 C/preferences_web.page:152
+msgid "Default value: checked for Firefox; not checked for Thunderbird"
+msgstr "Standardværdi: tilvalgt til Firefox; fravalgt til Thunderbird"
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:146
+msgid "Present summary of a page when it is first loaded"
+msgstr "Præsentér opsummering af en side første gang, den indlæses"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:147
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will summarize details about "
+"the newly opened web page or email, such as the number of headings, "
+"landmarks, and links."
+msgstr ""
+"Hvis afkrydsningsboksen er tilvalgt, opsummerer <app>Orca</app> detaljer om "
+"den webside eller e-mail, som lige er blevet åbnet, såsom antallet af "
+"overskrifter, kendemærker og links."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:157
+msgid "Enable layout mode for content"
+msgstr "Aktivér layouttilstand for indhold"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:158
+msgid ""
+"If this checkbox is checked, <app>Orca</app>'s caret navigation will respect "
+"the on-screen layout of the content and present the full line, including any "
+"links or form fields on that line. If this checkbox is not checked, "
+"<app>Orca</app> will treat objects such as links and form fields as if they "
+"were on separate lines, both for presentation and navigation."
+msgstr ""
+"Hvis afkrydsningsboksen er tilvalgt, respekterer <app>Orca</app>s "
+"markørnavigation layoutet på skærmen og præsenterer hele linjen inklusive "
+"links eller formularfelter på linjen. Hvis afkrydsningsboksen er fravalgt, "
+"behandler <app>Orca</app> objekter såsom links og formularfelter som om, de "
+"er på separate linjer, både for præsentation og navigation."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:171
+msgid "Table Options"
+msgstr "Indstillinger for tabel"
+
+#. (itstool) path: note/p
+#: C/preferences_web.page:173
+msgid ""
+"To learn more about <app>Orca</app>'s options for navigating within tables, "
+"please see <link xref=\"preferences_table_navigation\">Table Navigation "
+"Preferences</link>."
+msgstr ""
+"Yderligere oplysninger om <app>Orca</app>s indstillinger til navigation i "
+"tabeller kan findes i <link "
+"xref=\"preferences_table_navigation\">Indstillinger for tabelnavigation</"
+"link>."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:181
+msgid "Find Options"
+msgstr "Indstillinger for Find"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:182
+msgid ""
+"The <gui>Find Options</gui> group of controls make it possible for you to "
+"customize how <app>Orca</app> presents the results of a search conducted "
+"using the application's built-in search functionality."
+msgstr ""
+"<gui>Søgeindstillinger</gui> giver dig mulighed for at tilpasse den måde, "
+"<app>Orca</app> præsenterer resultaterne af en søgning på, som er foretaget "
+"med programmets indbyggede søgefunktionalitet."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:188
+msgid "Speak results during find"
+msgstr "Oplæs resultater under søgning"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:189
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will read the line which "
+"matches your current search query."
+msgstr ""
+"Hvis afkrydsningsboksen er tilvalgt, oplæser <app>Orca</app> den linje, som "
+"matcher din nuværende søgeforespørgsel."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:198
+msgid "Only speak changed lines during find"
+msgstr "Oplæs kun ændrede linjer ved søgning"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:199
+msgid ""
+"If this checkbox is checked, <app>Orca</app> will not present the matching "
+"line if it is the same line as the previous match. This option is designed "
+"to prevent \"chattiness\" on a line with multiple instances of the string "
+"for which you are searching."
+msgstr ""
+"Hvis afkrydsningsboksen er tilvalgt, præsenterer <app>Orca</app> ikke den "
+"matchende linje, hvis det er den samme linje som det forrige match. "
+"Indstillingen er designet til at forhindre overdreven “snakkesalighed” på en "
+"linje med flere forekomster af den streng, du søger efter."
+
+#. (itstool) path: section/title
+#: C/preferences_web.page:210
+msgid "Minimum length of matched text"
+msgstr "Minimumslængde på fundne tekst"
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:211
+msgid ""
+"This editable spin button is where you can specify the number of characters "
+"which must match before <app>Orca</app> announces the matching line. This "
+"option is also designed to prevent \"chattiness\" as there are many matches "
+"when you first begin typing the string for which you are searching."
+msgstr ""
+"Den redigerbare rulleknap er til at angive antallet af tegn, som skal "
+"matche, inden <app>Orca</app> bekendtgør den matchende linje. Handlingen er "
+"også designet til at forhindre “snakkesalighed”, eftersom der er mange "
+"matches, når du først begynder at skrive den streng, du søger efter."
+
+#. (itstool) path: section/p
+#: C/preferences_web.page:218
+msgid "Default value: 4"
+msgstr "Standardværdi: 4"
+
+#~ msgctxt "sort"
+#~ msgid "4. Bookmarks"
+#~ msgstr "4. Bogmærker"
+
+#~ msgctxt "link"
+#~ msgid "Bookmarks"
+#~ msgstr "Bogmærker"
+
+#~ msgid "Commands to bookmark and retrieve objects"
+#~ msgstr "Kommandoer til at bruge bogmærker og hente objekter"
+
+#~ msgid "Bookmark Commands"
+#~ msgstr "Kommandoer for bogmærker"
+
+#~ msgid ""
+#~ "<app>Orca</app> provides several commands which can be used to "
+#~ "\"bookmark\" a given object for the purpose of navigating back to it "
+#~ "later."
+#~ msgstr ""
+#~ "<app>Orca</app> har adskillige kommandoer, som kan bruges til at tilføje "
+#~ "et “bogmærke” ved et givent objekt, så der kan navigeres tilbage til det "
+#~ "senere."
+
+#~ msgid ""
+#~ "Save a bookmark to the numbered slot: <keyseq><key>Orca Modifier</key> "
+#~ "<key>Alt</key><key>1</key></keyseq>-<key>6</key>"
+#~ msgstr ""
+#~ "Gem et bogmærke på en nummereret plads: <keyseq><key>Orca-ændringstast</"
+#~ "key> <key>Alt</key><key>1</key></keyseq>–<key>6</key>"
+
+#~ msgid ""
+#~ "Save the defined bookmarks for the application or page: <keyseq><key>Orca "
+#~ "Modifier</key><key>Alt</key><key>B</key></keyseq>"
+#~ msgstr ""
+#~ "Gem de angivne bogmærker i programmet eller på siden: <keyseq><key>Orca-"
+#~ "ændringstast</key><key>Alt</key><key>B</key></keyseq>"
+
+#~ msgid ""
+#~ "Go to a specific, numbered bookmark: <keyseq><key>Orca Modifier</key> "
+#~ "<key>1</key></keyseq>-<key>6</key>"
+#~ msgstr ""
+#~ "Gå til et bestemt nummereret bogmærke: <keyseq><key>Orca-ændringstast</"
+#~ "key> <key>1</key></keyseq>–<key>6</key>"
+
+#~ msgid ""
+#~ "Go to the previous bookmark for the application or page: "
+#~ "<keyseq><key>Orca Modifier</key><key>Shift</key><key>B</key> </keyseq>"
+#~ msgstr ""
+#~ "Gå til det forrige bogmærke i programmet eller på siden: "
+#~ "<keyseq><key>Orca-ændringstast</key><key>Skift</key><key>B</key> </keyseq>"
+
+#~ msgid ""
+#~ "Go to the next bookmark for the application or page: <keyseq><key>Orca "
+#~ "Modifier</key><key>B</key></keyseq>"
+#~ msgstr ""
+#~ "Gå til det næste bogmærke i programmet eller på siden: <keyseq><key>Orca-"
+#~ "ændringstast</key><key>B</key></keyseq>"
+
+#~ msgid ""
+#~ "Present previous chat room messages: <keyseq><key>Orca Modifier</"
+#~ "key><key>F1</key></keyseq> through <key>F9</key>"
+#~ msgstr ""
+#~ "Præsenter tidligere meddelelser fra chatrum: <keyseq><key>Orca-"
+#~ "ændringstast</key><key>F1</key></keyseq> til <key>F9</key>"
+
+#~ msgid "Enable/disable room-specific histories: (Unbound)"
+#~ msgstr "Aktivér/deaktivér rumspecifik historik: (Ubundet)"
+
+#~ msgid ""
+#~ "Toggle <app>Orca</app> on and off in GNOME: <keyseq><key>Super</"
+#~ "key><key>Alt</key><key>S</key></keyseq>."
+#~ msgstr ""
+#~ "Slå <app>Orca</app> til og fra i GNOME: <keyseq><key>Super</key><key>Alt</"
+#~ "key><key>S</key></keyseq>."
+
+#~ msgid ""
+#~ "Pass the next command on to the current application: <keyseq><key>Orca "
+#~ "Modifier</key><key>BackSpace</key></keyseq>"
+#~ msgstr ""
+#~ "Videresend den næste kommando til det nuværende program: "
+#~ "<keyseq><key>Orca-ændringstast</key><key>BackSpace</key></keyseq>"
+
+#~ msgid ""
+#~ "Set default politeness level to off: <keyseq><key>Shift</"
+#~ "key><key>Backslash</key></keyseq>"
+#~ msgstr ""
+#~ "Indstil standardhøflighedsniveau til “fra”: <keyseq><key>Skift</"
+#~ "key><key>Omvendt skråstreg</key></keyseq>"
+
+#~ msgid ""
+#~ "Review live region announcements: <keyseq><key>Orca Modifier</"
+#~ "key><key>F1</key></keyseq> through <key>F9</key>"
+#~ msgstr ""
+#~ "Gennemgå bekendtgørelser for liveområder: <keyseq><key>Orca-ændringstast</"
+#~ "key><key>F1</key></keyseq> til <key>F9</key>"
+
+#~ msgid ""
+#~ "Next and previous form field: <keyseq><key>Orca Modifier</key><key>Tab</"
+#~ "key></keyseq> and <keyseq><key>Orca Modifier</key><key>Shift</"
+#~ "key><key>Tab</key></keyseq>"
+#~ msgstr ""
+#~ "Næste og forrige formularfelt: <keyseq><key>Orca-ændringstast</"
+#~ "key><key>Tabulator</key></keyseq> og <keyseq><key>Orca-ændringstast</"
+#~ "key><key>Skift</key><key>Tabulator</key></keyseq>"
+
+#~ msgctxt "sort"
+#~ msgid "6. Bookmarks"
+#~ msgstr "6. Bogmærker"
+
+#~ msgid "Storing and retrieving objects"
+#~ msgstr "Gemme og hente objekter"
+
+#~ msgid "Bookmarks"
+#~ msgstr "Bogmærker"
+
+# scootergrisen: fra gennemlæsning: Det lyder lidt engelsk.  Skriv (som altid) gerne om, så det virker som
+# scootergrisen: fra gennemlæsning: var det oprindeligt skrevet på dansk:
+# scootergrisen: fra gennemlæsning:
+# scootergrisen: fra gennemlæsning: "Orcas bogmærkefunktion lader dig markere objekter af særlig interesse."
+#~ msgid ""
+#~ "<app>Orca</app>'s Bookmarks support allows you to indicate that an object "
+#~ "is of interest. It includes the following features:"
+#~ msgstr ""
+#~ "<app>Orca</app>s bogmærker lader dig markere objekter af særlig "
+#~ "interesse. De har følgende egenskaber:"
+
+#~ msgid ""
+#~ "You are not limited to a single object: You can set up to six bookmarks "
+#~ "per environment. You can also save bookmarks so that they will persist "
+#~ "from Orca session to Orca session."
+#~ msgstr ""
+#~ "Du er ikke begrænset til et enkelt objekt: Du kan indstille op til seks "
+#~ "bogmærker pr. miljø. Du kan også gemme bogmærker, så de huskes fra Orca-"
+#~ "session til Orca-session."
+
+# scootergrisen: fra gennemlæsning: Sætningen bliver lidt lang og svær at læse.  Foreslår at opdele, f.eks.:
+# scootergrisen: fra gennemlæsning:
+# scootergrisen: fra gennemlæsning: Når et bogmærke er indstillet, kan du navigere tilbage til det senere.
+# scootergrisen: fra gennemlæsning: Dette gælder uanset om du har gemt bogmærkerne fra dit nuværende miljø
+# scootergrisen: fra gennemlæsning: permanent.
+#~ msgid ""
+#~ "Having set a bookmark you can navigate to it later, and do so regardless "
+#~ "of whether or not you have chosen to permanently save the bookmarks "
+#~ "associated with your current environment. Navigation can be based on the "
+#~ "number of the bookmark should you wish to jump directly to a specific "
+#~ "item. Alternatively, you can navigate to the next or previous bookmark "
+#~ "just like you can a <link xref=\"howto_structural_navigation\">Structural "
+#~ "Navigation</link> object."
+#~ msgstr ""
+#~ "Når et bogmærke er indstillet, kan du navigere til det senere. Dette er "
+#~ "muligt uanset om du har gemt bogmærkerne tilknyttet dit nuværende miljø. "
+#~ "Navigation kan være baseret på bogmærkets nummer, hvis du ønsker at hoppe "
+#~ "direkte til et bestemt punkt. Eller du kan navigere til det næste eller "
+#~ "forrige bogmærke, ligesom du kan med et <link "
+#~ "xref=\"howto_structural_navigation\">Strukturel navigation</link>-objekt."
+
+#~ msgid ""
+#~ "Bookmarkable objects can be widgets within an application or objects on "
+#~ "the web page you are reading. Which environment you are in determines "
+#~ "what happens as you navigate amongst bookmarks: If you are in web "
+#~ "content, the caret will be moved to the bookmark so that you can continue "
+#~ "reading; otherwise, <link xref=\"howto_flat_review\">Flat Review</link> "
+#~ "will be activated with the bookmark becoming the current review item."
+#~ msgstr ""
+#~ "Objekter, som kan bogmærkes, kan være kontroller i et program eller "
+#~ "objekter på den webside, du læser. Det nuværende miljø afgør hvad, der "
+#~ "sker, efterhånden som du navigerer blandt bogmærkerne: Hvis du er i "
+#~ "webindhold, flyttes markøren til bogmærket, så du kan fortsætte med at "
+#~ "læse; ellers aktiveres <link xref=\"howto_flat_review\">flad gennemgang</"
+#~ "link>, hvorved bogmærket bliver det nuværende punkt til gennemgang."
+
+#~ msgid ""
+#~ "The specific keybindings associated with each of the above tasks can be "
+#~ "found in <link xref=\"commands_bookmarks\">Bookmark Commands</link>."
+#~ msgstr ""
+#~ "De specifikke tastebindinger som er tilknyttet hver opgave ovenfor kan "
+#~ "findes i <link xref=\"commands_bookmarks\">Kommandoer for bogmærker</"
+#~ "link>."
+
+#~ msgctxt "text"
+#~ msgid "Orca Screen Reader"
+#~ msgstr "Skærmlæseren Orca"
+
+#~ msgctxt "link"
+#~ msgid "Introduction to the <app>Orca</app> Screen Reader"
+#~ msgstr "Introduktion til Skærmlæseren <app>Orca</app>"
+
+#~ msgid "<app>Orca</app>'s logo"
+#~ msgstr "<app>Orca</app>s logo"
+
+#~ msgid "Speak multicase strings as words"
+#~ msgstr "Oplæs strenge med en blanding af store og små bogstaver som ord"
+
+#~ msgid ""
+#~ "In some text, and especially when working with code, one often comes "
+#~ "across a \"word\" consisting of several words with alternating case, such "
+#~ "as \"MultiCaseString.\" Speech synthesizers do not always pronounce such "
+#~ "multicase strings correctly. Checking the <gui>Speak multicase strings as "
+#~ "words</gui> checkbox will cause <app>Orca</app> to break a word like "
+#~ "\"MultiCaseString\" into separate words (\"Multi,\" \"Case,\" and "
+#~ "\"String\") prior to passing it along to the speech synthesizer."
+#~ msgstr ""
+#~ "I noget tekst, særligt i programmering, kan man ofte støde på et “ord”, "
+#~ "som består af flere ord med skiftende store/små bogstaver såsom "
+#~ "“StoreSmåBogstaver”. Talesynthesizere udtaler ikke altid disse strenge "
+#~ "korrekt. Tilvælges afkrydsningsboksen <gui>Oplæs strenge med en blanding "
+#~ "af store og små bogstaver som ord</gui>, vil det få <app>Orca</app> til "
+#~ "at opdele et ord som “StoreSmåBogstaver” i separate ord (“Store”, “Små” "
+#~ "og “Bogstaver”) inden, de videregives til talesynthesizeren."
