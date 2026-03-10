@@ -2192,6 +2192,12 @@ def kill_flash(restore_saved: bool = True) -> None:
         _STATE.flash_event_source_id = 0
 
 
+def is_flash_active() -> bool:
+    """Returns True if a flash message is currently being displayed."""
+
+    return _STATE.flash_event_source_id != 0
+
+
 def _reset_flash_timer() -> None:
     """Resets the flash timer if a flash is currently active."""
 

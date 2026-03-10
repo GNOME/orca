@@ -288,7 +288,7 @@ class Script(script.Script):
                 cmdnames.SET_CONTRACTED_BRAILLE,
                 True,
             ),
-            ("goBrailleHomeHandler", self.go_braille_home, cmdnames.GO_BRAILLE_HOME, True),
+            ("goBrailleHomeHandler", self.go_braille_home, cmdnames.GO_BRAILLE_HOME, False),
             (
                 "processRoutingKeyHandler",
                 self.process_routing_key,

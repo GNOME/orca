@@ -73,6 +73,11 @@ class PresentationManager:
 
         return script_manager.get_manager().get_active_script()
 
+    def is_flash_message_displayed(self) -> bool:
+        """Returns True if a flash message is currently being displayed on braille."""
+
+        return braille_presenter.get_presenter().is_flash_active()
+
     def interrupt_presentation(self, kill_flash: bool = True) -> None:
         """Convenience method to interrupt whatever is being presented at the moment."""
 

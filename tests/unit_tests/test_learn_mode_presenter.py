@@ -573,7 +573,7 @@ class TestLearnModePresenter:
         assert result is True
 
     def test_handle_braille_event_with_command(self, test_context: OrcaTestContext) -> None:
-        """Test handle_braille_event speaks description and checks executes_in_learn_mode."""
+        """Test handle_braille_event presents description and returns True."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         from orca.learn_mode_presenter import LearnModePresenter
@@ -588,10 +588,11 @@ class TestLearnModePresenter:
         result = presenter.handle_braille_event(script, event, command)
         assert result is True  # Don't execute
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
-        pres_manager.speak_message.assert_called_with("Pan braille left")
+        pres_manager.present_message.assert_called_with("Pan braille left")
+        command.execute.assert_not_called()
 
-    def test_handle_braille_event_pan_command(self, test_context: OrcaTestContext) -> None:
-        """Test handle_braille_event returns False for pan commands (should execute)."""
+    def test_handle_braille_event_pan_command_no_flash(self, test_context: OrcaTestContext) -> None:
+        """Test handle_braille_event presents description when no flash is active."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         from orca.learn_mode_presenter import LearnModePresenter
@@ -603,7 +604,31 @@ class TestLearnModePresenter:
         command = test_context.Mock()
         command.get_description.return_value = "Pan braille left"
         command.executes_in_learn_mode.return_value = True
-        result = presenter.handle_braille_event(script, event, command)
-        assert result is False  # Should execute
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
-        pres_manager.speak_message.assert_called_with("Pan braille left")
+        pres_manager.is_flash_message_displayed.return_value = False
+        result = presenter.handle_braille_event(script, event, command)
+        assert result is True
+        pres_manager.present_message.assert_called_with("Pan braille left")
+        command.execute.assert_not_called()
+
+    def test_handle_braille_event_pan_command_with_flash(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test handle_braille_event executes pan command when flash is active."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        from orca.learn_mode_presenter import LearnModePresenter
+
+        presenter = LearnModePresenter()
+        script_manager = essential_modules["orca.script_manager"]
+        script = script_manager.get_manager.return_value.get_active_script.return_value
+        event = test_context.Mock()
+        command = test_context.Mock()
+        command.get_description.return_value = "Pan braille left"
+        command.executes_in_learn_mode.return_value = True
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.is_flash_message_displayed.return_value = True
+        result = presenter.handle_braille_event(script, event, command)
+        assert result is True
+        command.execute.assert_called_once_with(script, event)
+        pres_manager.present_message.assert_not_called()

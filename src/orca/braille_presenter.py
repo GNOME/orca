@@ -1785,6 +1785,11 @@ class BraillePresenter:
         braille.set_text_attributes_indicator(indicator.value)
         return True
 
+    def is_flash_active(self) -> bool:
+        """Returns True if a flash message is currently being displayed."""
+
+        return braille.is_flash_active()
+
     def kill_flash(self, restore_saved: bool = True) -> None:
         """Kills any flashed message currently being displayed."""
 

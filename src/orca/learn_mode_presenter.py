@@ -169,8 +169,8 @@ class LearnModePresenter:
 
     def handle_braille_event(
         self,
-        _script: default.Script,
-        _event: input_event.BrailleEvent,
+        script: default.Script,
+        event: input_event.BrailleEvent,
         command: command_manager.BrailleCommand | None,
     ) -> bool:
         """Handles braille event in learn mode. Returns True if command should not execute."""
@@ -178,11 +178,16 @@ class LearnModePresenter:
         if command is None:
             return True
 
+        manager = presentation_manager.get_manager()
+        if command.executes_in_learn_mode() and manager.is_flash_message_displayed():
+            command.execute(script, event)
+            return True
+
         description = command.get_description()
         if description:
-            presentation_manager.get_manager().speak_message(description)
+            manager.present_message(description)
 
-        return not command.executes_in_learn_mode()
+        return True
 
     def list_orca_shortcuts(self, script: default.Script, event: input_event.KeyboardEvent) -> bool:
         """Shows a simple gui listing Orca's bound commands."""

@@ -307,7 +307,6 @@ class FlatReviewPresenter:
             )
             if name in braille_bindings:
                 bb = braille_bindings[name]
-                # All flat review braille commands are navigation and should execute in learn mode
                 manager.add_command(
                     command_manager.BrailleCommand(
                         name,
@@ -315,7 +314,6 @@ class FlatReviewPresenter:
                         group_label,
                         description,
                         braille_bindings=bb,
-                        executes_in_learn_mode=True,
                     ),
                 )
 
