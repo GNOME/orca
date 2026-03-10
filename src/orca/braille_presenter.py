@@ -1830,6 +1830,14 @@ class BraillePresenter:
             braille.refresh(pan_to_cursor=False, stop_flash=False)
         return moved
 
+    def refresh_braille(self, pan_to_cursor: bool = True) -> None:
+        """Refreshes the braille display without rebuilding the line."""
+
+        if not self.use_braille():
+            return
+
+        braille.refresh(pan_to_cursor=pan_to_cursor)
+
     def pan_to_beginning(self) -> None:
         """Pans the braille display all the way to the beginning of the line."""
 

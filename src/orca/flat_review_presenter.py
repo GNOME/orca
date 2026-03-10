@@ -1108,7 +1108,7 @@ class FlatReviewPresenter:
         self._context = self.get_or_create_context(script)
         regions, focused_region = self._context.get_current_braille_regions()
         if not regions:
-            braille.refresh(True)
+            braille_presenter.get_presenter().refresh_braille()
             return
 
         braille_presenter.get_presenter().present_regions(
@@ -1150,10 +1150,11 @@ class FlatReviewPresenter:
         if braille_region and not hasattr(braille_region, "zone"):
             self._context.go_to_start_of(flat_review.Context.LINE)
             self._context.go_previous_character()
+            self._update_braille(script)
         elif braille_region and hasattr(braille_region, "zone"):
             self._context.set_current_zone(braille_region.zone, offset_in_zone)
+            braille_presenter.get_presenter().refresh_braille(pan_to_cursor=False)
 
-        self._update_braille(script)
         return True
 
     def pan_braille_right(
@@ -1188,10 +1189,11 @@ class FlatReviewPresenter:
 
         if braille_region and not hasattr(braille_region, "zone"):
             self._context.go_next_line()
+            self._update_braille(script)
         elif braille_region and hasattr(braille_region, "zone"):
             self._context.set_current_zone(braille_region.zone, offset_in_zone)
+            braille_presenter.get_presenter().refresh_braille(pan_to_cursor=False)
 
-        self._update_braille(script)
         return True
 
     def _get_all_lines(
