@@ -80,6 +80,12 @@ class GSettingsRegistry:
         self._extras_migrated: set[str] = set()
         self._handles: dict[str, GSettingsSchemaHandle] = {}
         self._runtime_values: dict[tuple[str, str, str | None], Any] = {}
+        self._ignore_runtime: bool = False
+
+    def set_ignore_runtime(self, ignore: bool) -> None:
+        """Sets whether layered_lookup should skip runtime overrides."""
+
+        self._ignore_runtime = ignore
 
     def _get_handle(self, schema_name: str) -> GSettingsSchemaHandle | None:
         """Returns a cached GSettingsSchemaHandle for a schema name."""
@@ -151,11 +157,12 @@ class GSettingsRegistry:
                 if extractor is not None:
                     return extractor(key)
 
-        runtime = self._runtime_values.get((schema, key, voice_type))
-        if runtime is not None:
-            msg = f"GSETTINGS REGISTRY: {schema}/{key} runtime override = {runtime!r}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return runtime
+        if not self._ignore_runtime:
+            runtime = self._runtime_values.get((schema, key, voice_type))
+            if runtime is not None:
+                msg = f"GSETTINGS REGISTRY: {schema}/{key} runtime override = {runtime!r}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return runtime
 
         if handle is None:
             return self._use_default(schema, key, default)

@@ -51,6 +51,7 @@ from . import (
     document_presenter,
     event_manager,
     focus_manager,
+    gsettings_registry,
     guilabels,
     learn_mode_presenter,
     messages,
@@ -242,6 +243,11 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
         self.add(main_vbox)
 
+        # Ignore runtime overrides while creating preference grids so that
+        # on-the-fly changes (e.g. speech rate) don't influence the values shown.
+        registry = gsettings_registry.get_registry()
+        registry.set_ignore_runtime(True)
+
         # Create all preference grids
         # Profiles grid controls are insensitive for app-specific prefs
         prof_manager = profile_manager.get_manager()
@@ -334,6 +340,8 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self.time_and_date_grid = system_info_presenter.create_time_and_date_preferences_grid()
         self.stack.add_named(self.time_and_date_grid, "time_and_date")
         self._add_navigation_row("time_and_date", self.time_and_date_grid.get_label().get_text())
+
+        registry.set_ignore_runtime(False)
 
         self._page_to_grid = {
             "speech": self.speech_grid,
@@ -533,10 +541,13 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
     def _reload_all_grids(self, include_profiles: bool = False) -> None:
         """Reload all preference grids from settings."""
 
+        registry = gsettings_registry.get_registry()
+        registry.set_ignore_runtime(True)
         for grid in self._page_to_grid.values():
             if grid is self.profiles_grid and not include_profiles:
                 continue
             grid.reload()
+        registry.set_ignore_runtime(False)
 
     def apply_button_clicked(self, _widget: Gtk.Button) -> None:
         """Handle Apply button click to save and apply preferences."""
