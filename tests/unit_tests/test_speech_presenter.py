@@ -825,7 +825,11 @@ class TestSpeechPresenter:
 
         script_manager = essential_modules["orca.script_manager"].get_manager()
         script = script_manager.get_active_script()
-        script.get_speech_generator().voice.assert_called_with(obj=None, string="test")
+        script.get_speech_generator().voice.assert_called_once()
+        kwargs = script.get_speech_generator().voice.call_args.kwargs
+        assert kwargs["obj"] is None
+        assert kwargs["string"] == "test"
+        assert kwargs["context"].in_preferences_window is False
         assert voice == [{"family": "default"}]
 
     def test_get_voice_no_active_script(self, test_context: OrcaTestContext) -> None:

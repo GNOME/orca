@@ -2193,7 +2193,9 @@ class SpeechPresenter:
         """Returns the voice to use for the given string."""
 
         if active_script := self._get_active_script():
-            return active_script.get_speech_generator().voice(obj=obj, string=text)
+            generator = active_script.get_speech_generator()
+            context = self._build_generator_context()
+            return generator.voice(obj=obj, string=text, context=context)
         return []
 
     @dbus_service.getter
