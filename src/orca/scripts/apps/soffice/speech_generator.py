@@ -23,10 +23,11 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-from orca import debug, focus_manager, messages, speech_generator, speech_presenter, table_navigator
+from orca import debug, messages, speech_generator, table_navigator
 from orca.ax_object import AXObject
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
+from orca.generator import WhereAmI
 
 if TYPE_CHECKING:
     import gi
@@ -115,23 +116,22 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_real_table_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if focus_manager.get_manager().in_say_all():
+        if self._context.in_say_all:
             return []
 
         result = super()._generate_real_table_cell(obj, **args)
 
-        presenter = speech_presenter.get_presenter()
         if not AXUtilities.is_spreadsheet_cell(obj):
             if table_navigator.get_navigator().last_input_event_was_navigation_command():
                 return result
 
-            if presenter.get_announce_cell_coordinates():
+            if self._context.announce_cell_coordinates:
                 result.append(AXObject.get_name(obj))
             return result
 
         if (
-            presenter.get_announce_spreadsheet_cell_coordinates()
-            or args.get("formatType") == "basicWhereAmI"
+            self._context.announce_spreadsheet_cell_coordinates
+            or self._context.where_am_i_type == WhereAmI.BASIC
         ):
             label = AXUtilities.get_label_for_cell_coordinates(
                 obj,

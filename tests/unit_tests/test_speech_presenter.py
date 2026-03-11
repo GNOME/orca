@@ -50,6 +50,7 @@ class TestSpeechPresenter:
         """Set up mocks for speech_presenter dependencies."""
 
         additional_modules = [
+            "orca.document_presenter",
             "orca.mathsymbols",
             "orca.object_properties",
             "orca.phonnames",
@@ -67,8 +68,12 @@ class TestSpeechPresenter:
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
-        focus_manager_mock = essential_modules["orca.focus_manager"]
-        focus_manager_mock.get_manager.return_value = test_context.Mock()
+        document_presenter_mock = essential_modules["orca.document_presenter"]
+        document_presenter_instance = test_context.Mock()
+        document_presenter_instance.get_in_focus_mode = test_context.Mock(return_value=False)
+        document_presenter_mock.get_presenter = test_context.Mock(
+            return_value=document_presenter_instance,
+        )
 
         dbus_service_mock = essential_modules["orca.dbus_service"]
         dbus_service_mock.get_remote_controller.return_value = test_context.Mock()

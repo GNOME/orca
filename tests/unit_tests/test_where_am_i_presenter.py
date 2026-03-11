@@ -798,7 +798,9 @@ class TestWhereAmIPresenter:
         result = presenter._do_where_am_i(mock_script, basic_only=False)
         assert result is True
         call_args = mock_script.present_object.call_args
-        assert call_args[1]["formatType"] == "detailedWhereAmI"
+        from orca.generator import WhereAmI
+
+        assert call_args[1]["where_am_i_type"] == WhereAmI.DETAILED
 
     def test_do_where_am_i_dead_object(self, test_context: OrcaTestContext) -> None:
         """Test WhereAmIPresenter._do_where_am_i with dead focus object."""

@@ -25,6 +25,7 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
 import gi
@@ -34,9 +35,7 @@ from gi.repository import Atspi
 
 from . import (
     braille,
-    braille_presenter,
     debug,
-    focus_manager,
     generator,
     messages,
     object_properties,
@@ -46,9 +45,20 @@ from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .braille_rolenames import short_role_names
+from .generator import GeneratorContext, GeneratorMode
 
 if TYPE_CHECKING:
     from . import script
+
+
+@dataclass(frozen=True)
+class BrailleGeneratorContext(GeneratorContext):
+    """Settings context for braille generators."""
+
+    full_rolenames: bool
+    display_ancestors: bool
+    end_of_line_indicator: bool
+    present_mnemonics: bool
 
 
 class Space:
@@ -65,6 +75,8 @@ SPACE = [Space()]
 class BrailleGenerator(generator.Generator):
     """Produces a list of braille Regions for accessible objects."""
 
+    _context: BrailleGeneratorContext
+
     SKIP_CONTEXT_ROLES = (
         Atspi.Role.MENU,
         Atspi.Role.MENU_BAR,
@@ -75,7 +87,7 @@ class BrailleGenerator(generator.Generator):
     )
 
     def __init__(self, script: script.Script) -> None:
-        super().__init__(script, "braille")
+        super().__init__(script, GeneratorMode.BRAILLE)
 
     @staticmethod
     def log_generator_output(func):
@@ -89,13 +101,22 @@ class BrailleGenerator(generator.Generator):
 
         return wrapper
 
-    def generate_braille(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def generate_braille(
+        self,
+        obj: Atspi.Accessible,
+        context: BrailleGeneratorContext,
+        **args,
+    ) -> list[Any]:
         """Returns a [result, focused_region] list for presenting obj."""
 
-        if not braille_presenter.get_presenter().use_braille():
+        self._context = context
+        return self._generate_braille(obj, **args)
+
+    def _generate_braille(self, obj: Atspi.Accessible, **args) -> list[Any]:
+        if not self._context.enabled:
             return [[], None]
 
-        if obj == focus_manager.get_manager().get_locus_of_focus() and not args.get("formatType"):
+        if obj == self._context.focus and not args.get("formatType"):
             args["formatType"] = "focused"
         result = self.generate(obj, **args)
 
@@ -171,10 +192,19 @@ class BrailleGenerator(generator.Generator):
     def generate_contents(  # type: ignore[override]
         self,
         contents: list[tuple[Atspi.Accessible, int, int, str]],
+        context: BrailleGeneratorContext,
         **args,
     ) -> tuple[list[list[Any]], Atspi.Accessible | None]:
         """Generates braille for the specified contents."""
 
+        self._context = context
+        return self._generate_contents(contents, **args)
+
+    def _generate_contents(
+        self,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+        **args,
+    ) -> tuple[list[list[Any]], Atspi.Accessible | None]:
         result = []
         last_region = None
         focused_region = None
@@ -183,6 +213,7 @@ class BrailleGenerator(generator.Generator):
             acc, start, end, string = content
             regions, f_region = self.generate_braille(
                 acc,
+                self._context,
                 startOffset=start,
                 endOffset=end,
                 caretOffset=offset,
@@ -211,7 +242,7 @@ class BrailleGenerator(generator.Generator):
         return result, focused_region
 
     def get_localized_role_name(self, obj: Atspi.Accessible, **args) -> str:
-        if not braille_presenter.get_presenter().use_full_rolenames():
+        if not self._context.full_rolenames:
             rv = short_role_names.get(args.get("role", AXObject.get_role(obj)))
             if rv:
                 return rv
@@ -263,7 +294,7 @@ class BrailleGenerator(generator.Generator):
         if AXUtilities.is_list_box(AXObject.get_parent(obj)):
             do_not_present.append(AXObject.get_role(obj))
 
-        is_verbose = braille_presenter.get_presenter().use_verbose_braille()
+        is_verbose = self._context.verbose
         if not is_verbose:
             do_not_present.extend([Atspi.Role.ICON, Atspi.Role.CANVAS])
 
@@ -285,7 +316,7 @@ class BrailleGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if not braille_presenter.get_presenter().get_display_ancestors():
+        if not self._context.display_ancestors:
             return []
         if table_navigator.get_navigator().last_input_event_was_navigation_command():
             return []
@@ -311,7 +342,7 @@ class BrailleGenerator(generator.Generator):
     ################################### KEYBOARD ###################################
 
     def _generate_keyboard_accelerator(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if not braille_presenter.get_presenter().use_verbose_braille():
+        if not self._context.verbose:
             return []
 
         result = []
@@ -321,10 +352,7 @@ class BrailleGenerator(generator.Generator):
         return result
 
     def _generate_keyboard_mnemonic(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if not (
-            braille_presenter.get_presenter().get_present_mnemonics()
-            or args.get("forceMnemonic", False)
-        ):
+        if not (self._context.present_mnemonics or args.get("forceMnemonic", False)):
             return []
 
         return super()._generate_keyboard_mnemonic(obj, **args)
@@ -343,7 +371,7 @@ class BrailleGenerator(generator.Generator):
     @log_generator_output
     def _generate_progress_bar_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
         result = self._generate_value_as_percentage(obj, **args)
-        if obj == focus_manager.get_manager().get_locus_of_focus() and not result:
+        if obj == self._context.focus and not result:
             return [""]
 
         return result
@@ -352,7 +380,7 @@ class BrailleGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_eol(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if not braille_presenter.get_presenter().get_end_of_line_indicator_is_enabled():
+        if not self._context.end_of_line_indicator:
             return []
 
         if not (AXUtilities.is_editable(obj) or AXUtilities.is_code(obj)):

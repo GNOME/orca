@@ -38,6 +38,8 @@ from . import (
     command_manager,
     dbus_service,
     debug,
+    document_presenter,
+    focus_manager,
     gsettings_registry,
     guilabels,
     input_event,
@@ -45,10 +47,13 @@ from . import (
     messages,
     preferences_grid_base,
 )
+from .braille_generator import BrailleGeneratorContext
 from .orca_platform import tablesdir  # pylint: disable=import-error
 
 if TYPE_CHECKING:
     import gi
+
+    from .generator import WhereAmI
 
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
@@ -909,6 +914,29 @@ class BraillePresenter:
             stop_flash=stop_flash,
         )
 
+    def _build_generator_context(
+        self,
+        where_am_i_type: WhereAmI | None = None,
+    ) -> BrailleGeneratorContext:
+        """Builds the settings context for braille generators."""
+
+        mgr = focus_manager.get_manager()
+        active_mode, _obj = mgr.get_active_mode_and_object_of_interest()
+
+        return BrailleGeneratorContext(
+            enabled=self.use_braille(),
+            verbose=self.use_verbose_braille(),
+            focus=mgr.get_locus_of_focus(),
+            in_say_all=mgr.in_say_all(),
+            in_focus_mode=document_presenter.get_presenter().get_in_focus_mode(),
+            active_mode=active_mode,
+            where_am_i_type=where_am_i_type,
+            full_rolenames=self.use_full_rolenames(),
+            display_ancestors=self.get_display_ancestors(),
+            end_of_line_indicator=self.get_end_of_line_indicator_is_enabled(),
+            present_mnemonics=self.get_present_mnemonics(),
+        )
+
     def display_generated_contents(
         self,
         script: default.Script,
@@ -920,8 +948,10 @@ class BraillePresenter:
         if not self.use_braille():
             return
 
+        context = self._build_generator_context()
         regions_list, focused_region = script.get_braille_generator().generate_contents(
             contents,
+            context,
             **args,
         )
         if not regions_list:
@@ -945,7 +975,10 @@ class BraillePresenter:
         if not self.use_braille():
             return
 
-        result, focused_region = script.get_braille_generator().generate_braille(obj, **args)
+        where_am_i_type = args.pop("where_am_i_type", None)
+        context = self._build_generator_context(where_am_i_type)
+        generator = script.get_braille_generator()
+        result, focused_region = generator.generate_braille(obj, context, **args)
         if result:
             self.present_regions(
                 list(result),

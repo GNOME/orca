@@ -182,7 +182,13 @@ class OrcaTestContext:
             manager_instance = self.mocker.Mock()
             manager_instance.get_locus_of_focus = self.mocker.Mock(return_value=None)
             manager_instance.set_locus_of_focus = self.mocker.Mock()
+            manager_instance.in_say_all = self.mocker.Mock(return_value=False)
+            manager_instance.is_in_preferences_window = self.mocker.Mock(return_value=False)
+            manager_instance.get_active_mode_and_object_of_interest = self.mocker.Mock(
+                return_value=(None, None),
+            )
             focus_manager_mock.get_manager = self.mocker.Mock(return_value=manager_instance)
+            focus_manager_mock.OBJECT_NAVIGATOR = "object-navigator"
             essential_modules["focus_manager_instance"] = manager_instance
 
         if "orca.dbus_service" in essential_modules:

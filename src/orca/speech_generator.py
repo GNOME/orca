@@ -23,6 +23,7 @@
 # pylint: disable=unused-argument
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-instance-attributes
 
 """Produces speech presentation for accessible objects."""
 
@@ -32,6 +33,7 @@ import contextlib
 import urllib.error
 import urllib.parse
 import urllib.request
+from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
 import gi
@@ -47,7 +49,6 @@ from . import (
     mathsymbols,
     messages,
     object_properties,
-    say_all_presenter,
     speech_manager,
     speech_presenter,
     speechserver,
@@ -60,12 +61,36 @@ from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
+from .generator import GeneratorContext, GeneratorMode, WhereAmI
 from .speechserver import VoiceFamily
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
     from . import script
+
+
+@dataclass(frozen=True)
+class SpeechGeneratorContext(GeneratorContext):
+    """Settings context for speech generators."""
+
+    in_preferences_window: bool
+    only_displayed_text: bool
+    speak_description: bool
+    speak_tutorial_messages: bool
+    speak_position_in_set: bool
+    speak_widget_mnemonic: bool
+    speak_blank_lines: bool
+    speak_indentation: bool
+    announce_cell_headers: bool
+    announce_cell_coordinates: bool
+    announce_spreadsheet_cell_coordinates: bool
+    announce_blockquote: bool
+    announce_form: bool
+    announce_landmark: bool
+    announce_list: bool
+    announce_grouping: bool
+    announce_table: bool
 
 
 class Pause:
@@ -101,8 +126,10 @@ voice_type = {
 class SpeechGenerator(generator.Generator):
     """Produces speech presentation for accessible objects."""
 
+    _context: SpeechGeneratorContext
+
     def __init__(self, script: script.Script) -> None:
-        super().__init__(script, "speech")
+        super().__init__(script, GeneratorMode.SPEECH)
 
     @staticmethod
     def log_generator_output(func):
@@ -116,15 +143,20 @@ class SpeechGenerator(generator.Generator):
 
         return wrapper
 
-    def generate_speech(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def generate_speech(
+        self,
+        obj: Atspi.Accessible,
+        context: SpeechGeneratorContext,
+        **args,
+    ) -> list[Any]:
         """Generates speech presentation for obj."""
 
+        self._context = context
         rv = self.generate(obj, **args)
         if rv and not list(filter(lambda x: not isinstance(x, Pause), rv)):
             tokens = ["SPEECH GENERATOR: Results for", obj, "are pauses only"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = []
-
         return rv
 
     def get_name(self, obj: Atspi.Accessible, **args) -> str:
@@ -161,9 +193,18 @@ class SpeechGenerator(generator.Generator):
 
         return ""
 
-    def generate_window_title(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def generate_window_title(
+        self,
+        obj: Atspi.Accessible,
+        context: SpeechGeneratorContext,
+        **args,
+    ) -> list[Any]:
         """Returns an array of strings the represents details about the window title for obj."""
 
+        self._context = context
+        return self._generate_window_title_contents(obj, **args)
+
+    def _generate_window_title_contents(self, obj: Atspi.Accessible, **args) -> list[Any]:
         result = []
         frame, dialog = self._script.utilities.frame_and_dialog(obj)
         if frame:
@@ -191,7 +232,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _only_speak_displayed_text(self) -> bool:
-        return speech_presenter.get_presenter().get_only_speak_displayed_text()
+        return self._context.only_displayed_text
 
     def _generate_result_separator(self, obj: Atspi.Accessible, **args) -> list[Any]:
         return PAUSE
@@ -265,8 +306,7 @@ class SpeechGenerator(generator.Generator):
                 family.update(voice_override[ACSS.FAMILY])
 
         auto_lang_switching = (
-            not focus_manager.get_manager().is_in_preferences_window()
-            and mgr.get_auto_language_switching()
+            not self._context.in_preferences_window and mgr.get_auto_language_switching()
         )
         # Only update the language if it has changed from the user's preferred voice.
         # If that occurred, changing the dialect should not be problematic/bothersome.
@@ -370,10 +410,7 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_accessible_description(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if (
-            not speech_presenter.get_presenter().get_speak_description()
-            or self._only_speak_displayed_text()
-        ):
+        if not self._context.speak_description or self._only_speak_displayed_text():
             return []
 
         prior_obj = args.get("priorObj")
@@ -385,8 +422,7 @@ class SpeechGenerator(generator.Generator):
 
         result = super()._generate_accessible_description(obj, **args)
         if result:
-            manager = speech_presenter.get_presenter()
-            result[0] = manager.adjust_for_presentation(obj, result[0])
+            result[0] = speech_presenter.get_presenter().adjust_for_presentation(obj, result[0])
             result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
@@ -426,8 +462,7 @@ class SpeechGenerator(generator.Generator):
     def _generate_accessible_label_and_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
         result = super()._generate_accessible_label_and_name(obj, **args)
         if result:
-            manager = speech_presenter.get_presenter()
-            result[0] = manager.adjust_for_presentation(obj, result[0])
+            result[0] = speech_presenter.get_presenter().adjust_for_presentation(obj, result[0])
             if len(result) == 1:
                 result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
@@ -436,8 +471,7 @@ class SpeechGenerator(generator.Generator):
     def _generate_accessible_placeholder_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
         result = super()._generate_accessible_placeholder_text(obj, **args)
         if result:
-            manager = speech_presenter.get_presenter()
-            result[0] = manager.adjust_for_presentation(obj, result[0])
+            result[0] = speech_presenter.get_presenter().adjust_for_presentation(obj, result[0])
             result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
 
@@ -459,8 +493,7 @@ class SpeechGenerator(generator.Generator):
         if self._only_speak_displayed_text():
             return False
 
-        mode, _acc = focus_manager.get_manager().get_active_mode_and_object_of_interest()
-        if mode == focus_manager.OBJECT_NAVIGATOR:
+        if self._context.active_mode == focus_manager.OBJECT_NAVIGATOR:
             return True
 
         role = args.get("role", AXObject.get_role(obj))
@@ -484,11 +517,11 @@ class SpeechGenerator(generator.Generator):
                 Atspi.Role.UNKNOWN,
             ]
         )
-        if not speech_presenter.get_presenter().use_verbose_speech():
+        if not self._context.verbose:
             do_not_speak.extend([Atspi.Role.CANVAS, Atspi.Role.ICON])
         if args.get("string"):
             do_not_speak.append("ROLE_CONTENT_SUGGESTION")
-        if args.get("formatType") != "basicWhereAmI":
+        if self._context.where_am_i_type != WhereAmI.BASIC:
             do_not_speak.extend([Atspi.Role.LIST, Atspi.Role.LIST_ITEM])
         if args.get("startOffset") is not None or args.get("endOffset") is not None:
             do_not_speak.extend(
@@ -554,10 +587,7 @@ class SpeechGenerator(generator.Generator):
     def _generate_tutorial(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Provides the tutorial message for obj."""
 
-        if not speech_presenter.get_presenter().get_speak_tutorial_messages() and not args.get(
-            "formatType",
-            "",
-        ).endswith("WhereAmI"):
+        if not self._context.speak_tutorial_messages and self._context.where_am_i_type is None:
             return []
 
         text = AXObject.get_help_text(obj)
@@ -617,10 +647,7 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_number_of_children(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if (
-            self._only_speak_displayed_text()
-            or not speech_presenter.get_presenter().use_verbose_speech()
-        ):
+        if self._only_speak_displayed_text() or not self._context.verbose:
             return []
 
         if AXUtilities.find_ancestor(obj, AXUtilities.is_tree_or_tree_table):
@@ -725,20 +752,15 @@ class SpeechGenerator(generator.Generator):
 
         enabled, disabled = [], []
 
-        if focus_manager.get_manager().in_say_all():
-            provider = say_all_presenter.get_presenter()
-        else:
-            provider = speech_presenter.get_presenter()
-
-        if provider.get_announce_blockquote():
+        if self._context.announce_blockquote:
             enabled.append(Atspi.Role.BLOCK_QUOTE)
-        if provider.get_announce_landmark():
+        if self._context.announce_landmark:
             enabled.extend([Atspi.Role.LANDMARK, "ROLE_DPUB_LANDMARK"])
-        if provider.get_announce_list():
+        if self._context.announce_list:
             enabled.append(Atspi.Role.LIST)
             enabled.append(Atspi.Role.DESCRIPTION_LIST)
             enabled.append("ROLE_FEED")
-        if provider.get_announce_grouping():
+        if self._context.announce_grouping:
             enabled.extend(
                 [
                     Atspi.Role.PANEL,
@@ -751,9 +773,9 @@ class SpeechGenerator(generator.Generator):
                     "ROLE_DPUB_SECTION",
                 ],
             )
-        if provider.get_announce_form():
+        if self._context.announce_form:
             enabled.append(Atspi.Role.FORM)
-        if provider.get_announce_table():
+        if self._context.announce_table:
             enabled.append(Atspi.Role.TABLE)
 
         disabled = list(set(all_roles).symmetric_difference(enabled))
@@ -1022,7 +1044,9 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_old_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if self._only_speak_displayed_text() or self._script.utilities.in_find_container():
+        if self._only_speak_displayed_text() or self._script.utilities.in_find_container(
+            self._context.focus,
+        ):
             return []
 
         prior_obj = args.get("priorObj")
@@ -1080,7 +1104,9 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_new_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if self._only_speak_displayed_text() or self._script.utilities.in_find_container():
+        if self._only_speak_displayed_text() or self._script.utilities.in_find_container(
+            self._context.focus,
+        ):
             return []
 
         prior_obj = args.get("priorObj")
@@ -1117,9 +1143,9 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generate_parent_role_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if args.get("role", AXObject.get_role(obj)) == Atspi.Role.ICON and args.get(
-            "formatType",
-        ) in ["basicWhereAmI", "detailedWhereAmI"]:
+        if args.get("role", AXObject.get_role(obj)) == Atspi.Role.ICON and (
+            self._context.where_am_i_type is not None
+        ):
             return [object_properties.ROLE_ICON_PANEL]
 
         parent = AXObject.get_parent(obj)
@@ -1131,18 +1157,12 @@ class SpeechGenerator(generator.Generator):
     def _generate_position_in_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if (
             self._only_speak_displayed_text()
-            or not (
-                speech_presenter.get_presenter().get_speak_position_in_set()
-                or args.get("forceList", False)
-            )
+            or not (self._context.speak_position_in_set or args.get("forceList", False))
             or args.get("formatType") == "ancestor"
         ):
             return []
 
-        if (
-            args.get("index", 0) + 1 < args.get("total", 1)
-            or obj != focus_manager.get_manager().get_locus_of_focus()
-        ):
+        if args.get("index", 0) + 1 < args.get("total", 1) or obj != self._context.focus:
             return []
 
         result = []
@@ -1185,10 +1205,7 @@ class SpeechGenerator(generator.Generator):
         if self._only_speak_displayed_text():
             return []
 
-        if not (
-            speech_presenter.get_presenter().get_speak_widget_mnemonic()
-            or args.get("forceMnemonic", False)
-        ):
+        if not (self._context.speak_widget_mnemonic or args.get("forceMnemonic", False)):
             return []
 
         if result := super()._generate_keyboard_mnemonic(obj, **args):
@@ -1849,10 +1866,7 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_state_has_popup(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if (
-            self._only_speak_displayed_text()
-            or not speech_presenter.get_presenter().use_verbose_speech()
-        ):
+        if self._only_speak_displayed_text() or not self._context.verbose:
             return []
 
         if AXUtilities.is_menu(obj) or not AXUtilities.has_popup(obj):
@@ -2022,7 +2036,7 @@ class SpeechGenerator(generator.Generator):
         result = super()._generate_real_table_cell(obj, **args)
         if (
             not (result and result[0])
-            and speech_presenter.get_presenter().get_speak_blank_lines()
+            and self._context.speak_blank_lines
             and not args.get("readingRow", False)
             and args.get("formatType") != "ancestor"
         ):
@@ -2037,16 +2051,19 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_table_cell_column_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if not speech_presenter.get_presenter().get_announce_cell_headers():
+        if not self._context.announce_cell_headers:
             return []
 
-        if focus_manager.get_manager().in_say_all():
+        if self._context.in_say_all:
             return []
 
-        if not AXUtilities.cell_column_changed(
-            obj,
-            args.get("priorObj"),
-        ) and not args.get("formatType", "").endswith("WhereAmI"):
+        if (
+            not AXUtilities.cell_column_changed(
+                obj,
+                args.get("priorObj"),
+            )
+            and self._context.where_am_i_type is None
+        ):
             return []
 
         args["newOnly"] = not self._get_is_nameless_toggle(obj)
@@ -2060,16 +2077,15 @@ class SpeechGenerator(generator.Generator):
         if args.get("readingRow"):
             return []
 
-        if not speech_presenter.get_presenter().get_announce_cell_headers():
+        if not self._context.announce_cell_headers:
             return []
 
-        if focus_manager.get_manager().in_say_all():
+        if self._context.in_say_all:
             return []
 
-        if not AXUtilities.cell_row_changed(obj, args.get("priorObj")) and not args.get(
-            "formatType",
-            "",
-        ).endswith("WhereAmI"):
+        if not AXUtilities.cell_row_changed(obj, args.get("priorObj")) and (
+            self._context.where_am_i_type is None
+        ):
             return []
 
         args["newOnly"] = True
@@ -2088,7 +2104,7 @@ class SpeechGenerator(generator.Generator):
         ):
             return []
 
-        if not speech_presenter.get_presenter().use_verbose_speech():
+        if not self._context.verbose:
             return self._generate_accessible_role(obj, **args)
 
         if AXUtilities.is_text_document_table(obj):
@@ -2118,7 +2134,7 @@ class SpeechGenerator(generator.Generator):
         if args.get("readingRow"):
             return []
 
-        if not speech_presenter.get_presenter().get_announce_cell_coordinates():
+        if not self._context.announce_cell_coordinates:
             return []
 
         if not AXUtilities.cell_column_changed(obj):
@@ -2140,7 +2156,7 @@ class SpeechGenerator(generator.Generator):
         if args.get("readingRow"):
             return []
 
-        if not speech_presenter.get_presenter().get_announce_cell_coordinates():
+        if not self._context.announce_cell_coordinates:
             return []
 
         row = AXTable.get_cell_coordinates(obj, find_cell=True)[0]
@@ -2178,7 +2194,7 @@ class SpeechGenerator(generator.Generator):
         if not formula:
             return []
 
-        if args.get("formatType") == "basicWhereAmI":
+        if self._context.where_am_i_type == WhereAmI.BASIC:
             result: list[Any] = [f"{messages.HAS_FORMULA}. {formula}"]
         else:
             result = [messages.HAS_FORMULA]
@@ -2199,15 +2215,14 @@ class SpeechGenerator(generator.Generator):
             if args.get("total", 1) > 1:
                 return [""]
             if (
-                speech_presenter.get_presenter().get_speak_blank_lines()
-                and not focus_manager.get_manager().in_say_all()
+                self._context.speak_blank_lines
+                and not self._context.in_say_all
                 and not AXUtilities.is_table_cell_or_header(obj)
                 and args.get("formatType") != "ancestor"
             ):
                 result[0] = messages.BLANK
 
-        manager = speech_presenter.get_presenter()
-        result[0] = manager.adjust_for_presentation(obj, result[0])
+        result[0] = speech_presenter.get_presenter().adjust_for_presentation(obj, result[0])
         return result
 
     @log_generator_output
@@ -2225,8 +2240,8 @@ class SpeechGenerator(generator.Generator):
                 return [""]
 
             if (
-                speech_presenter.get_presenter().get_speak_blank_lines()
-                and not focus_manager.get_manager().in_say_all()
+                self._context.speak_blank_lines
+                and not self._context.in_say_all
                 and not AXUtilities.is_table_cell_or_header(obj)
                 and args.get("formatType") != "ancestor"
             ):
@@ -2253,8 +2268,8 @@ class SpeechGenerator(generator.Generator):
                 args.pop("string")
 
             voice = self.voice(string=cleaned_string, obj=obj, **args)
-            manager = speech_presenter.get_presenter()
-            rv: list[Any] = [manager.adjust_for_presentation(obj, cleaned_string, start)]
+            presenter = speech_presenter.get_presenter()
+            rv: list[Any] = [presenter.adjust_for_presentation(obj, cleaned_string, start)]
             rv.extend(voice)
 
             # TODO - JD: speech.speak() has a bug which causes a list of utterances to
@@ -2281,8 +2296,7 @@ class SpeechGenerator(generator.Generator):
             if charname and charname != string:
                 result[0] = charname
 
-        manager = speech_presenter.get_presenter()
-        result[0] = manager.adjust_for_presentation(obj, result[0])
+        result[0] = speech_presenter.get_presenter().adjust_for_presentation(obj, result[0])
         result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
 
@@ -2300,15 +2314,14 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_text_indentation(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if not speech_presenter.get_presenter().get_speak_indentation_and_justification():
+        if not self._context.speak_indentation:
             return []
 
         if input_event_manager.get_manager().last_event_was_word_navigation():
             return []
 
-        format_type = args.get("formatType", "unfocused")
         only_if_changed = None
-        if format_type.endswith("WhereAmI"):
+        if self._context.where_am_i_type is not None:
             only_if_changed = False
 
         line = AXText.get_line_at_offset(obj, args.get("startOffset"))[0]
@@ -2362,7 +2375,7 @@ class SpeechGenerator(generator.Generator):
                 obj,
                 **args,
             )
-        if format_type == "detailedWhereAmI":
+        if self._context.where_am_i_type == WhereAmI.DETAILED:
             return self._generate_ancestors(obj, **args)
         return []
 
@@ -2400,7 +2413,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = []
-        if format_type.endswith("WhereAmI"):
+        if self._context.where_am_i_type is not None:
             result += self._generate_tutorial(obj, **args)
             if result and not isinstance(result[-1], Pause):
                 result += self._generate_pause(obj, **args)
@@ -2522,8 +2535,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the canvas role."""
 
         result = self._generate_default_prefix(obj, **args)
-        format_type = args.get("formatType", "unfocused")
-        if format_type.endswith("WhereAmI"):
+        if self._context.where_am_i_type is not None:
             result += self._generate_parent_role_name(obj, **args)
             result += self._generate_pause(obj, **args)
 
@@ -2534,7 +2546,7 @@ class SpeechGenerator(generator.Generator):
         ) or self._generate_accessible_role(obj, **args)
         result += self._generate_pause(obj, **args)
 
-        if format_type.endswith("WhereAmI"):
+        if self._context.where_am_i_type is not None:
             result += self._generate_selected_item_count(obj, **args)
             result += self._generate_pause(obj, **args)
             result += self._generate_selected_items(obj, **args)
@@ -2591,7 +2603,7 @@ class SpeechGenerator(generator.Generator):
             return self._generate_state_checked(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        if format_type.endswith("WhereAmI"):
+        if self._context.where_am_i_type is not None:
             result += self._generate_ancestors(obj, **args)
             result += self._generate_pause(obj, **args)
 
@@ -2620,7 +2632,7 @@ class SpeechGenerator(generator.Generator):
         result += self._generate_accessible_role(obj, **args)
         result += self._generate_value(obj, **args)
 
-        if format_type.endswith("WhereAmI"):
+        if self._context.where_am_i_type is not None:
             result += self._generate_value_as_percentage(obj, **args)
 
         result += self._generate_default_suffix(obj, **args)
@@ -2772,7 +2784,7 @@ class SpeechGenerator(generator.Generator):
                 **args,
             ) or self._generate_text_line(obj, **args)
 
-        if speech_presenter.get_presenter().get_announce_list():
+        if self._context.announce_list:
             if args.get("index", 0) + 1 < args.get("total", 1):
                 return result
 
@@ -2798,7 +2810,7 @@ class SpeechGenerator(generator.Generator):
             **args,
         )
 
-        if speech_presenter.get_presenter().get_announce_list():
+        if self._context.announce_list:
             if args.get("index", 0) + 1 < args.get("total", 1):
                 return result
 
@@ -3143,8 +3155,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the icon role."""
 
         result = self._generate_default_prefix(obj, **args)
-        format_type = args.get("formatType", "unfocused")
-        if format_type.endswith("WhereAmI"):
+        if self._context.where_am_i_type is not None:
             result += self._generate_parent_role_name(obj, **args)
             result += self._generate_pause(obj, **args)
 
@@ -3155,7 +3166,7 @@ class SpeechGenerator(generator.Generator):
         ) or self._generate_accessible_role(obj, **args)
         result += self._generate_pause(obj, **args)
 
-        if format_type.endswith("WhereAmI"):
+        if self._context.where_am_i_type is not None:
             result += self._generate_selected_item_count(obj, **args)
             result += self._generate_pause(obj, **args)
             result += self._generate_selected_items(obj, **args)
@@ -3252,8 +3263,7 @@ class SpeechGenerator(generator.Generator):
         result += self._generate_state_sensitive(obj, **args)
         result += self._generate_number_of_children(obj, **args)
 
-        format_type = args.get("formatType", "unfocused")
-        if not format_type.endswith("WhereAmI"):
+        if self._context.where_am_i_type is None:
             return result
 
         result += self._generate_selected_item_count(obj, **args)
@@ -3283,8 +3293,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the link role."""
 
         result = self._generate_default_prefix(obj, **args)
-        format_type = args.get("formatType", "unfocused")
-        if format_type.endswith("WhereAmI"):
+        if self._context.where_am_i_type is not None:
             result += self._generate_link_info(obj, **args)
             result += self._generate_pause(obj, **args)
             result += self._generate_link_site_description(obj, **args)
@@ -3534,7 +3543,7 @@ class SpeechGenerator(generator.Generator):
             result += self._generate_accessible_role(obj, **args)
             return result
 
-        if format_type.endswith("WhereAmI"):
+        if self._context.where_am_i_type is not None:
             result += self._generate_ancestors(obj, **args) or self._generate_parent_role_name(
                 obj,
                 **args,
@@ -3571,7 +3580,7 @@ class SpeechGenerator(generator.Generator):
             return self._generate_state_expanded(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        if format_type.endswith("WhereAmI"):
+        if self._context.where_am_i_type is not None:
             result += self._generate_ancestors(obj, **args)
             result += self._generate_pause(obj, **args)
 
@@ -3748,7 +3757,7 @@ class SpeechGenerator(generator.Generator):
             return self._generate_state_selected_for_radio_button(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        if format_type.endswith("WhereAmI"):
+        if self._context.where_am_i_type is not None:
             result += self._generate_radio_button_group(obj, **args)
         else:
             result += self._generate_new_radio_button_group(obj, **args)
@@ -3776,7 +3785,7 @@ class SpeechGenerator(generator.Generator):
             return self._generate_state_selected_for_radio_button(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        if format_type.endswith("WhereAmI"):
+        if self._context.where_am_i_type is not None:
             result += self._generate_ancestors(obj, **args)
             result += self._generate_pause(obj, **args)
 
@@ -3875,14 +3884,10 @@ class SpeechGenerator(generator.Generator):
     def _generate_section(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the section role."""
 
-        # pylint: disable-next=import-outside-toplevel
-        from . import document_presenter
-
         format_type = args.get("formatType", "unfocused")
         result = self._generate_default_prefix(obj, **args)
         if AXUtilities.is_focusable(obj) and (
-            AXUtilities.has_explicit_name(obj)
-            or document_presenter.get_presenter().get_in_focus_mode()
+            AXUtilities.has_explicit_name(obj) or self._context.in_focus_mode
         ):
             result += self._generate_accessible_label_and_name(obj, **args)
             result += self._generate_pause(obj, **args)
@@ -4135,7 +4140,7 @@ class SpeechGenerator(generator.Generator):
             result += self._generate_table_cell_column_index(obj, **args)
             return result
 
-        if format_type.endswith("WhereAmI"):
+        if self._context.where_am_i_type is not None:
             result = self._generate_row_header(obj, **args)
             if result and not isinstance(result[-1], Pause):
                 result += self._generate_pause(obj, **args)
@@ -4220,8 +4225,7 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the terminal role."""
 
         result = self._generate_default_prefix(obj, **args)
-        format_type = args.get("formatType", "unfocused")
-        if not format_type.endswith("WhereAmI"):
+        if self._context.where_am_i_type is None:
             return result + self._generate_text_line(obj, **args)
 
         result += self._generate_accessible_label_and_name(obj, **args)
@@ -4316,7 +4320,7 @@ class SpeechGenerator(generator.Generator):
             return self._generate_state_expanded(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
-        if format_type.endswith("WhereAmI"):
+        if self._context.where_am_i_type is not None:
             result += self._generate_ancestors(obj, **args)
             result += self._generate_pause(obj, **args)
 
@@ -4363,13 +4367,15 @@ class SpeechGenerator(generator.Generator):
 
         return self._generate_default_presentation(obj, **args)
 
-    def generate_contents(
+    def generate_contents(  # type: ignore[override]
         self,
         contents: list[tuple[Atspi.Accessible, int, int, str]],
+        context: SpeechGeneratorContext,
         **args,
     ) -> list[Any]:
         """Generates speech for a list of [obj, start, end, string] contents."""
 
+        self._context = context
         result = []
         for content in contents:
             obj, _start, _end, text = content
@@ -4381,8 +4387,8 @@ class SpeechGenerator(generator.Generator):
 
         if not result or (len(result) == 1 and result[0][0] == "\n"):
             if (
-                focus_manager.get_manager().in_say_all()
-                or not speech_presenter.get_presenter().get_speak_blank_lines()
+                self._context.in_say_all
+                or not self._context.speak_blank_lines
                 or args.get("formatType") == "ancestor"
             ):
                 string = ""
@@ -4398,11 +4404,12 @@ class SpeechGenerator(generator.Generator):
         start_offset: int,
         end_offset: int,
         line: str,
+        context: SpeechGeneratorContext,
     ) -> list[Any]:
         """Generates speech for a line of text, handling language splitting and voice selection."""
 
         if not line or line == "\n":
-            if not speech_presenter.get_presenter().get_speak_blank_lines():
+            if not self._context.speak_blank_lines:
                 return []
             return [messages.BLANK, *self.voice(DEFAULT)]
 
@@ -4430,6 +4437,7 @@ class SpeechGenerator(generator.Generator):
         start_offset: int,
         end_offset: int,
         phrase: str,
+        context: SpeechGeneratorContext,
     ) -> list[Any]:
         """Generates speech for a phrase of text with voice selection and text adjustment."""
 
@@ -4440,7 +4448,12 @@ class SpeechGenerator(generator.Generator):
         voice = self.voice(obj=obj, string=text)
         return [text, *voice]
 
-    def generate_word(self, obj: Atspi.Accessible, offset: int) -> list[Any]:
+    def generate_word(
+        self,
+        obj: Atspi.Accessible,
+        offset: int,
+        context: SpeechGeneratorContext,
+    ) -> list[Any]:
         """Generates speech for a word at offset. Overridden by web for DOM-walking."""
 
         return []

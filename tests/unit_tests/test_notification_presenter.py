@@ -645,6 +645,8 @@ class TestNotificationListGUI:
             "gi.repository.Atspi",
             "gi.repository.GObject",
             "gi.repository.Gtk",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
@@ -770,6 +772,8 @@ class TestNotificationPresenterModule:
             "gi.repository.Atspi",
             "gi.repository.GObject",
             "gi.repository.Gtk",
+            "orca.braille_presenter",
+            "orca.presentation_manager",
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 

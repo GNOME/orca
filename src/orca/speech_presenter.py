@@ -46,6 +46,7 @@ from . import (
     command_manager,
     dbus_service,
     debug,
+    document_presenter,
     focus_manager,
     gsettings_registry,
     guilabels,
@@ -58,7 +59,9 @@ from . import (
     preferences_grid_base,
     presentation_manager,
     pronunciation_dictionary_manager,
+    say_all_presenter,
     speech,
+    speech_manager,
     speech_monitor,
     speechserver,
 )
@@ -69,6 +72,9 @@ from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterable
+
+    from .generator import WhereAmI
+    from .speech_generator import SpeechGeneratorContext
 
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi, Gio
@@ -544,8 +550,6 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._initializing = True
         self._title_change_callback = title_change_callback
 
-        from . import speech_manager  # pylint: disable=import-outside-toplevel
-
         manager = speech_manager.get_manager()
 
         # Create child grids (but don't attach them yet - they'll go in the stack detail)
@@ -561,8 +565,6 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
     def _build(self) -> None:
         row = 0
-
-        from . import speech_manager  # pylint: disable=import-outside-toplevel
 
         manager = speech_manager.get_manager()
 
@@ -1519,8 +1521,6 @@ class SpeechPresenter:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        from . import speech_manager  # pylint: disable=import-outside-toplevel
-
         mgr = speech_manager.get_manager()
         speak_digits = mgr.get_speak_numbers_as_digits()
         if speak_digits:
@@ -1775,8 +1775,6 @@ class SpeechPresenter:
 
     def _speech_enabled_and_only_speak_displayed_text_is_off(self) -> bool:
         """Returns True if speech is enabled AND only-speak-displayed-text is off."""
-
-        from . import speech_manager  # pylint: disable=import-outside-toplevel
 
         return (
             speech_manager.get_manager().get_speech_is_enabled()
@@ -2056,7 +2054,6 @@ class SpeechPresenter:
         # If the user has set their punctuation level to All, then the synthesizer will
         # do the work for us. If the user has set their punctuation level to None, then
         # they really don't want punctuation and we mustn't override that.
-        from . import speech_manager  # pylint: disable=import-outside-toplevel
 
         punct_level = speech_manager.get_manager().get_punctuation_level()
         return punct_level not in ("all", "none")
@@ -2077,8 +2074,6 @@ class SpeechPresenter:
 
     def _apply_pronunciation_dictionary(self, text: str) -> str:
         """Applies the pronunciation dictionary to the text."""
-
-        from . import speech_manager  # pylint: disable=import-outside-toplevel
 
         if not speech_manager.get_manager().get_use_pronunciation_dictionary():
             return text
@@ -2420,8 +2415,6 @@ class SpeechPresenter:
     def speak_message(self, text: str) -> None:
         """Speaks a message using the system voice."""
 
-        from . import speech_manager  # pylint: disable=import-outside-toplevel
-
         try:
             assert isinstance(text, str)
         except AssertionError:
@@ -2447,6 +2440,52 @@ class SpeechPresenter:
         mgr.set_capitalization_style(cap_style)
         mgr.set_punctuation_level(punct_style)
 
+    def _build_generator_context(
+        self,
+        where_am_i_type: WhereAmI | None = None,
+    ) -> SpeechGeneratorContext:
+        """Builds the settings context for speech generators."""
+
+        from .speech_generator import (  # pylint: disable=import-outside-toplevel
+            SpeechGeneratorContext,
+        )
+
+        mgr = focus_manager.get_manager()
+        in_say_all = mgr.in_say_all()
+        if in_say_all:
+            p = say_all_presenter.get_presenter()
+        else:
+            p = self  # type: ignore[assignment]
+
+        active_mode, _obj = mgr.get_active_mode_and_object_of_interest()
+
+        return SpeechGeneratorContext(
+            enabled=speech_manager.get_manager().get_speech_is_enabled(),
+            verbose=self.use_verbose_speech(),
+            focus=mgr.get_locus_of_focus(),
+            in_say_all=in_say_all,
+            in_focus_mode=document_presenter.get_presenter().get_in_focus_mode(),
+            active_mode=active_mode,
+            where_am_i_type=where_am_i_type,
+            in_preferences_window=mgr.is_in_preferences_window(),
+            only_displayed_text=self.get_only_speak_displayed_text(),
+            speak_description=self.get_speak_description(),
+            speak_tutorial_messages=self.get_speak_tutorial_messages(),
+            speak_position_in_set=self.get_speak_position_in_set(),
+            speak_widget_mnemonic=self.get_speak_widget_mnemonic(),
+            speak_blank_lines=self.get_speak_blank_lines(),
+            speak_indentation=self.get_speak_indentation_and_justification(),
+            announce_cell_headers=self.get_announce_cell_headers(),
+            announce_cell_coordinates=self.get_announce_cell_coordinates(),
+            announce_spreadsheet_cell_coordinates=self.get_announce_spreadsheet_cell_coordinates(),
+            announce_blockquote=p.get_announce_blockquote(),
+            announce_form=p.get_announce_form(),
+            announce_landmark=p.get_announce_landmark(),
+            announce_list=p.get_announce_list(),
+            announce_grouping=p.get_announce_grouping(),
+            announce_table=p.get_announce_table(),
+        )
+
     def generate_speech_contents(
         self,
         script: default.Script,
@@ -2455,13 +2494,15 @@ class SpeechPresenter:
     ) -> list:
         """Generates speech utterances for contents without speaking them."""
 
-        return script.get_speech_generator().generate_contents(contents, **args)
+        context = self._build_generator_context()
+        return script.get_speech_generator().generate_contents(contents, context, **args)
 
     def generate_speech_string(self, script: default.Script, obj: Atspi.Accessible) -> str:
         """Generates speech for obj and returns it as a string."""
 
+        context = self._build_generator_context()
         generator = script.get_speech_generator()
-        utterances = generator.generate_speech(obj)
+        utterances = generator.generate_speech(obj, context)
         return generator.utterances_to_string(utterances)
 
     def generate_window_title_strings(
@@ -2471,7 +2512,8 @@ class SpeechPresenter:
     ) -> list[str]:
         """Returns the window title as a list of strings."""
 
-        return [s for s, _ in script.get_speech_generator().generate_window_title(obj)]
+        context = self._build_generator_context()
+        return [s for s, _ in script.get_speech_generator().generate_window_title(obj, context)]
 
     def speak_contents(
         self,
@@ -2486,7 +2528,9 @@ class SpeechPresenter:
         if not (active_script := self._get_active_script()):
             return
 
-        utterances = active_script.get_speech_generator().generate_contents(contents, **args)
+        context = self._build_generator_context()
+        generator = active_script.get_speech_generator()
+        utterances = generator.generate_contents(contents, context, **args)
         speech.speak(utterances)
 
     def present_generated_speech(
@@ -2497,7 +2541,9 @@ class SpeechPresenter:
     ) -> None:
         """Generates speech for obj using the script's speech generator and speaks it."""
 
-        utterances = script.get_speech_generator().generate_speech(obj, **args)
+        where_am_i_type = args.pop("where_am_i_type", None)
+        context = self._build_generator_context(where_am_i_type)
+        utterances = script.get_speech_generator().generate_speech(obj, context, **args)
         speech.speak(utterances)
 
     def speak_line(
@@ -2514,8 +2560,9 @@ class SpeechPresenter:
         if indentation:
             self.speak_message(indentation)
 
+        context = self._build_generator_context()
         generator = script.get_speech_generator()
-        utterances = generator.generate_line(obj, start_offset, end_offset, line)
+        utterances = generator.generate_line(obj, start_offset, end_offset, line, context)
         speech.speak(utterances)
 
     def speak_phrase(
@@ -2536,8 +2583,9 @@ class SpeechPresenter:
         if indentation:
             self.speak_message(indentation)
 
+        context = self._build_generator_context()
         generator = script.get_speech_generator()
-        utterances = generator.generate_phrase(obj, start_offset, end_offset, phrase)
+        utterances = generator.generate_phrase(obj, start_offset, end_offset, phrase, context)
         speech.speak(utterances)
 
     def speak_word(
@@ -2548,7 +2596,8 @@ class SpeechPresenter:
     ) -> None:
         """Generates and speaks a word using the script's speech generator."""
 
-        utterances = script.get_speech_generator().generate_word(obj, offset)
+        context = self._build_generator_context()
+        utterances = script.get_speech_generator().generate_word(obj, offset, context)
         speech.speak(utterances)
 
     def speak_character_at_offset(

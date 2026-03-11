@@ -32,11 +32,13 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from orca import braille, braille_generator, debug, focus_manager, messages, object_properties
+from orca import braille, braille_generator, debug, messages, object_properties
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
+    from orca.braille_generator import BrailleGeneratorContext
+
     from . import script
 
 
@@ -112,10 +114,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
             return result
 
-        if (
-            self._script.utilities.is_link(obj)
-            and obj == focus_manager.get_manager().get_locus_of_focus()
-        ):
+        if self._script.utilities.is_link(obj) and obj == self._context.focus:
             if AXUtilities.is_image(AXObject.get_parent(obj)):
                 result.append(messages.IMAGE_MAP_LINK)
 
@@ -213,11 +212,16 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         rad = AXUtilities.active_descendant(obj)
         return self._generate_text_content(rad, **args)
 
-    def generate_braille(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def generate_braille(
+        self,
+        obj: Atspi.Accessible,
+        context: BrailleGeneratorContext,
+        **args,
+    ) -> list[Any]:
         if not self._script.utilities.in_document_content(obj):
             tokens = ["WEB:", obj, "is not in document content. Calling default braille generator."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return super().generate_braille(obj, **args)
+            return super().generate_braille(obj, context, **args)
 
         tokens = ["WEB: Generating braille for document object", obj, args]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
@@ -238,11 +242,20 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             combo_box = AXUtilities.find_ancestor(obj, AXUtilities.is_combo_box)
             if combo_box and not AXUtilities.is_expanded(combo_box):
                 obj = combo_box
-        result.extend(super().generate_braille(obj, **args))
+        result.extend(super().generate_braille(obj, context, **args))
         del args["includeContext"]
         return result
 
     def generate_contents(  # type: ignore[override]
+        self,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+        context: BrailleGeneratorContext,
+        **args,
+    ) -> tuple[list[list[Any]], Atspi.Accessible | None]:
+        self._context = context
+        return self._generate_web_braille_contents(contents, **args)
+
+    def _generate_web_braille_contents(
         self,
         contents: list[tuple[Atspi.Accessible, int, int, str]],
         **args,
@@ -263,6 +276,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             acc, start, end, string = content
             regions, f_region = self.generate_braille(
                 acc,
+                self._context,
                 startOffset=start,
                 endOffset=end,
                 caretOffset=offset,

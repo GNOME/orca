@@ -24,6 +24,8 @@
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-statements
 # pylint: disable=too-many-boolean-expressions
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-positional-arguments
 
 """Produces speech presentation for accessible objects."""
 
@@ -39,20 +41,20 @@ from gi.repository import Atspi
 from orca import (
     caret_navigator,
     debug,
-    document_presenter,
-    focus_manager,
     input_event_manager,
     messages,
     object_properties,
     speech_generator,
-    speech_presenter,
 )
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
+from orca.generator import WhereAmI
 
 if TYPE_CHECKING:
+    from orca.speech_generator import SpeechGeneratorContext
+
     from . import script
 
 
@@ -197,14 +199,15 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._prefer_description_over_name(obj):
             return []
 
-        if obj != focus_manager.get_manager().get_locus_of_focus():
+        if obj != self._context.focus:
             if AXUtilities.is_dialog_or_alert(obj, args.get("role")):
                 return super()._generate_accessible_description(obj, **args)
             if not args.get("inMouseReview"):
                 return []
 
-        format_type = args.get("formatType")
-        if AXUtilities.is_text(obj, args.get("role")) and format_type != "basicWhereAmI":
+        if AXUtilities.is_text(obj, args.get("role")) and (
+            self._context.where_am_i_type != WhereAmI.BASIC
+        ):
             return []
 
         if (
@@ -297,7 +300,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if args.get("leaving"):
             return []
 
-        if focus_manager.get_manager().in_say_all():
+        if self._context.in_say_all:
             return []
 
         manager = input_event_manager.get_manager()
@@ -416,7 +419,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._script.utilities.in_document_content(
             obj,
         ) and not self._script.utilities.in_document_content(
-            focus_manager.get_manager().get_locus_of_focus(),
+            self._context.focus,
         ):
             result: list[Any] = [""]
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
@@ -435,10 +438,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_number_of_children(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if (
-            self._only_speak_displayed_text()
-            or not speech_presenter.get_presenter().use_verbose_speech()
-        ):
+        if self._only_speak_displayed_text() or not self._context.verbose:
             return []
 
         # We handle things even for non-document content due to issues in
@@ -523,7 +523,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if is_editable and not self._script.utilities.is_content_editable_with_embedded_objects(
             obj,
         ):
-            if focus_manager.get_manager().in_say_all() and start:
+            if self._context.in_say_all and start:
                 return []
             if mgr.last_event_was_forward_caret_navigation() and start:
                 return []
@@ -588,7 +588,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if args.get("index", 0) + 1 < args.get("total", 1):
                 return []
 
-        if args.get("formatType") not in ["basicWhereAmI", "detailedWhereAmI"]:
+        if self._context.where_am_i_type is None:
             if args.get("priorObj") == obj:
                 return []
 
@@ -596,7 +596,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_state_unselected(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if not document_presenter.get_presenter().in_focus_mode(self._script.app):
+        if not self._context.in_focus_mode:
             return []
 
         return super()._generate_state_unselected(obj, **args)
@@ -606,10 +606,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     @log_generator_output
     def _generate_real_table_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
         result = super()._generate_real_table_cell(obj, **args)
-        if not document_presenter.get_presenter().in_focus_mode(self._script.app):
+        if not self._context.in_focus_mode:
             return result
 
-        if speech_presenter.get_presenter().get_announce_cell_coordinates():
+        if self._context.announce_cell_coordinates:
             label = AXUtilities.get_label_for_cell_coordinates(obj)
             if label:
                 result.append(label)
@@ -626,11 +626,16 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return result
 
-    def generate_speech(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def generate_speech(
+        self,
+        obj: Atspi.Accessible,
+        context: SpeechGeneratorContext,
+        **args,
+    ) -> list[Any]:
         if not self._script.utilities.in_document_content(obj):
             tokens = ["WEB:", obj, "is not in document content. Calling default speech generator."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return super().generate_speech(obj, **args)
+            return super().generate_speech(obj, context, **args)
 
         tokens = ["WEB: Generating speech for document object", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -655,13 +660,22 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         )
 
         if not result:
-            result = list(filter(lambda x: x, super().generate_speech(obj, **args)))
+            result = list(filter(lambda x: x, super().generate_speech(obj, context, **args)))
 
         tokens = ["WEB: Speech generation for document object", obj, "complete."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
 
-    def generate_contents(
+    def generate_contents(  # type: ignore[override]
+        self,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+        context: SpeechGeneratorContext,
+        **args,
+    ) -> list[Any]:
+        self._context = context
+        return self._generate_web_contents(contents, **args)
+
+    def _generate_web_contents(
         self,
         contents: list[tuple[Atspi.Accessible, int, int, str]],
         **args,
@@ -681,6 +695,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             total = args.pop("total", len(contents))
             utterance = self.generate_speech(
                 obj,
+                self._context,
                 startOffset=start,
                 endOffset=end,
                 string=string,
@@ -700,8 +715,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if not result:
             if (
-                focus_manager.get_manager().in_say_all()
-                or not speech_presenter.get_presenter().get_speak_blank_lines()
+                self._context.in_say_all
+                or not self._context.speak_blank_lines
                 or args.get("formatType") == "ancestor"
             ):
                 string = ""
@@ -718,14 +733,15 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         start_offset: int,
         end_offset: int,
         line: str,
+        context: SpeechGeneratorContext,
     ) -> list[Any]:
         """Generates speech for a web document line via DOM-walking contents."""
 
         if not self._script.utilities.in_document_content(obj):
-            return super().generate_line(obj, start_offset, end_offset, line)
+            return super().generate_line(obj, start_offset, end_offset, line, context)
 
         if AXUtilities.is_editable(obj) and "\ufffc" not in line:
-            return super().generate_line(obj, start_offset, end_offset, line)
+            return super().generate_line(obj, start_offset, end_offset, line, context)
 
         document = self._script.utilities.get_top_level_document_for_object(obj)
         prior_context = self._script.utilities.get_prior_context(document=document)
@@ -736,9 +752,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             start_offset,
             use_cache=True,
         )
-        return self.generate_contents(contents, priorObj=prior_obj)
+        return self.generate_contents(contents, self._context, priorObj=prior_obj)
 
-    def generate_word(self, obj: Atspi.Accessible, offset: int) -> list[Any]:
+    def generate_word(
+        self,
+        obj: Atspi.Accessible,
+        offset: int,
+        context: SpeechGeneratorContext,
+    ) -> list[Any]:
         """Generates speech for a web document word via DOM-walking contents."""
 
         word_contents = self._script.utilities.get_word_contents_at_offset(
@@ -751,5 +772,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         text_obj = word_contents[0][0]
         return self.generate_contents(
             word_contents,
+            self._context,
             alreadyFocused=AXUtilities.is_text_input(text_obj),
         )

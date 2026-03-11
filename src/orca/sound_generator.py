@@ -47,7 +47,7 @@ class SoundGenerator(generator.Generator):
     """Takes accessible objects and produces the sound(s) to be played."""
 
     def __init__(self, script: script.Script) -> None:
-        super().__init__(script, "sound")
+        super().__init__(script, generator.GeneratorMode.SOUND)
         prefs_dir = os.path.join(GLib.get_user_data_dir(), "orca")  # pylint: disable=no-value-for-parameter
         self._sounds = os.path.join(prefs_dir, "sounds")
 

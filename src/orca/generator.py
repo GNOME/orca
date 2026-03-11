@@ -27,7 +27,9 @@ from __future__ import annotations
 
 import threading
 import time
+from dataclasses import dataclass
 from difflib import SequenceMatcher
+from enum import Enum
 from typing import TYPE_CHECKING, Any
 
 import gi
@@ -35,7 +37,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import braille, debug, focus_manager, messages, object_properties, speech_presenter
+from . import braille, debug, messages, object_properties
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -46,7 +48,35 @@ if TYPE_CHECKING:
     from collections.abc import Callable
     from typing import ClassVar
 
-    from . import script
+    from .script import Script
+
+
+class GeneratorMode(Enum):
+    """The type of output a generator produces."""
+
+    SPEECH = "speech"
+    BRAILLE = "braille"
+    SOUND = "sound"
+
+
+class WhereAmI(Enum):
+    """Where-am-I detail level."""
+
+    BASIC = "basic"
+    DETAILED = "detailed"
+
+
+@dataclass(frozen=True)
+class GeneratorContext:
+    """Base settings context shared by all generators."""
+
+    enabled: bool
+    verbose: bool
+    focus: Atspi.Accessible | None
+    in_say_all: bool
+    in_focus_mode: bool
+    active_mode: str | None
+    where_am_i_type: WhereAmI | None
 
 
 class Generator:
@@ -68,9 +98,10 @@ class Generator:
 
     _lock = threading.Lock()
 
-    def __init__(self, script: script.Script, mode: str) -> None:
-        self._mode = mode
-        self._script = script
+    def __init__(self, script: Script, mode: GeneratorMode) -> None:
+        self._mode: GeneratorMode = mode
+        self._script: Script = script
+        self._context: GeneratorContext = None  # type: ignore[assignment]
         self._active_progress_bars: dict[Atspi.Accessible, tuple[float, Any]] = {}
         self._generators = {
             Atspi.Role.ALERT: self._generate_alert,
@@ -239,7 +270,7 @@ class Generator:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return similarity >= threshold
 
-    def generate_contents(self, contents: Any, **args) -> list[Any]:
+    def generate_contents(self, contents: Any, context: GeneratorContext, **args) -> list[Any]:
         """Returns presentation for a list of [obj, start, end, string]."""
 
         return []
@@ -259,7 +290,7 @@ class Generator:
             args.get("role") or AXObject.get_role(obj),
         )
         if _generator is None:
-            tokens = [f"{self._mode.upper()} GENERATOR:", obj, "lacks dedicated generator"]
+            tokens = [f"{self._mode.name} GENERATOR:", obj, "lacks dedicated generator"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             _generator = self._generate_default_presentation
 
@@ -269,11 +300,11 @@ class Generator:
             else:
                 args["formatType"] = "unfocused"
 
-        tokens = [f"{self._mode.upper()} GENERATOR:", _generator, "for", obj, "args:", args]
+        tokens = [f"{self._mode.name} GENERATOR:", _generator, "for", obj, "args:", args]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         result = _generator(obj, **args)  # type: ignore[misc]
-        tokens = [f"{self._mode.upper()} GENERATOR: Results:", result]
+        tokens = [f"{self._mode.name} GENERATOR: Results:", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if args.get("isProgressBarUpdate") and result and result[0]:
@@ -386,7 +417,7 @@ class Generator:
         # https://bugreports.qt.io/browse/QTBUG-128558 in which Qt gives us a different
         # object each time we ask for the cell, causing obj != focus even though they are
         # functionally the same object.
-        focus = focus_manager.get_manager().get_locus_of_focus()
+        focus: Atspi.Accessible | None = self._context.focus
         if (
             focus
             and obj != focus
@@ -422,7 +453,7 @@ class Generator:
 
     @log_generator_output
     def _generate_accessible_label_and_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        focus = focus_manager.get_manager().get_locus_of_focus()
+        focus: Atspi.Accessible | None = self._context.focus
 
         # TODO - JD: The role check is a quick workaround for issue #535 in which we stopped
         # presenting Qt table cells because Qt keeps giving us a different object each and
@@ -743,11 +774,11 @@ class Generator:
 
     @log_generator_output
     def _generate_state_checked(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if self._mode == "braille":
+        if self._mode is GeneratorMode.BRAILLE:
             indicators = object_properties.CHECK_BOX_INDICATORS_BRAILLE
-        elif self._mode == "speech":
+        elif self._mode is GeneratorMode.SPEECH:
             indicators = object_properties.CHECK_BOX_INDICATORS_SPEECH
-        elif self._mode == "sound":
+        elif self._mode is GeneratorMode.SOUND:
             indicators = object_properties.CHECK_BOX_INDICATORS_SOUND
         else:
             return []
@@ -770,11 +801,11 @@ class Generator:
 
     @log_generator_output
     def _generate_state_checked_for_switch(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if self._mode == "braille":
+        if self._mode is GeneratorMode.BRAILLE:
             indicators = object_properties.SWITCH_INDICATORS_BRAILLE
-        elif self._mode == "speech":
+        elif self._mode is GeneratorMode.SPEECH:
             indicators = object_properties.SWITCH_INDICATORS_SPEECH
-        elif self._mode == "sound":
+        elif self._mode is GeneratorMode.SOUND:
             indicators = object_properties.SWITCH_INDICATORS_SOUND
         else:
             return []
@@ -795,11 +826,11 @@ class Generator:
 
     @log_generator_output
     def _generate_state_expanded(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if self._mode == "braille":
+        if self._mode is GeneratorMode.BRAILLE:
             indicators = object_properties.EXPANSION_INDICATORS_BRAILLE
-        elif self._mode == "speech":
+        elif self._mode is GeneratorMode.SPEECH:
             indicators = object_properties.EXPANSION_INDICATORS_SPEECH
-        elif self._mode == "sound":
+        elif self._mode is GeneratorMode.SOUND:
             indicators = object_properties.EXPANSION_INDICATORS_SOUND
         else:
             return []
@@ -826,11 +857,11 @@ class Generator:
         if error == "false":
             return []
 
-        if self._mode == "braille":
+        if self._mode is GeneratorMode.BRAILLE:
             indicators = object_properties.INVALID_INDICATORS_BRAILLE
-        elif self._mode == "speech":
+        elif self._mode is GeneratorMode.SPEECH:
             indicators = object_properties.INVALID_INDICATORS_SPEECH
-        elif self._mode == "sound":
+        elif self._mode is GeneratorMode.SOUND:
             indicators = object_properties.INVALID_INDICATORS_SOUND
         else:
             return []
@@ -860,19 +891,19 @@ class Generator:
         # TODO - JD: There is no braille property and the braille generation
         # doesn't generate this state. Shouldn't it be presented in braille?
 
-        if self._mode == "speech":
+        if self._mode is GeneratorMode.SPEECH:
             return [object_properties.STATE_MULTISELECT_SPEECH]
-        if self._mode == "sound":
+        if self._mode is GeneratorMode.SOUND:
             return [object_properties.STATE_MULTISELECT_SOUND]
         return []
 
     @log_generator_output
     def _generate_state_pressed(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if self._mode == "braille":
+        if self._mode is GeneratorMode.BRAILLE:
             indicators = object_properties.TOGGLE_BUTTON_INDICATORS_BRAILLE
-        elif self._mode == "speech":
+        elif self._mode is GeneratorMode.SPEECH:
             indicators = object_properties.TOGGLE_BUTTON_INDICATORS_SPEECH
-        elif self._mode == "sound":
+        elif self._mode is GeneratorMode.SOUND:
             indicators = object_properties.TOGGLE_BUTTON_INDICATORS_SOUND
         else:
             return []
@@ -886,11 +917,11 @@ class Generator:
         if not AXUtilities.is_read_only(obj):
             return []
 
-        if self._mode == "braille":
+        if self._mode is GeneratorMode.BRAILLE:
             return [object_properties.STATE_READ_ONLY_BRAILLE]
-        if self._mode == "speech":
+        if self._mode is GeneratorMode.SPEECH:
             return [object_properties.STATE_READ_ONLY_SPEECH]
-        if self._mode == "sound":
+        if self._mode is GeneratorMode.SOUND:
             return [object_properties.STATE_READ_ONLY_SOUND]
 
         return []
@@ -903,22 +934,22 @@ class Generator:
         if not is_required:
             return []
 
-        if self._mode == "braille":
+        if self._mode is GeneratorMode.BRAILLE:
             return [object_properties.STATE_REQUIRED_BRAILLE]
-        if self._mode == "speech":
+        if self._mode is GeneratorMode.SPEECH:
             return [object_properties.STATE_REQUIRED_SPEECH]
-        if self._mode == "sound":
+        if self._mode is GeneratorMode.SOUND:
             return [object_properties.STATE_REQUIRED_SOUND]
 
         return []
 
     @log_generator_output
     def _generate_state_selected_for_radio_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if self._mode == "braille":
+        if self._mode is GeneratorMode.BRAILLE:
             indicators = object_properties.RADIO_BUTTON_INDICATORS_BRAILLE
-        elif self._mode == "speech":
+        elif self._mode is GeneratorMode.SPEECH:
             indicators = object_properties.RADIO_BUTTON_INDICATORS_SPEECH
-        elif self._mode == "sound":
+        elif self._mode is GeneratorMode.SOUND:
             indicators = object_properties.RADIO_BUTTON_INDICATORS_SOUND
         else:
             return []
@@ -935,11 +966,11 @@ class Generator:
         if AXUtilities.is_editable(obj):
             return []
 
-        if self._mode == "braille":
+        if self._mode is GeneratorMode.BRAILLE:
             return [object_properties.STATE_INSENSITIVE_BRAILLE]
-        if self._mode == "speech":
+        if self._mode is GeneratorMode.SPEECH:
             return [object_properties.STATE_INSENSITIVE_SPEECH]
-        if self._mode == "sound":
+        if self._mode is GeneratorMode.SOUND:
             return [object_properties.STATE_INSENSITIVE_SOUND]
 
         return []
@@ -1068,9 +1099,9 @@ class Generator:
         if not level:
             return []
 
-        if self._mode == "braille":
+        if self._mode is GeneratorMode.BRAILLE:
             return [object_properties.NESTING_LEVEL_BRAILLE % (level)]
-        if self._mode == "speech":
+        if self._mode is GeneratorMode.SPEECH:
             return [object_properties.NESTING_LEVEL_SPEECH % (level)]
         return []
 
@@ -1097,9 +1128,9 @@ class Generator:
             if old_level == level:
                 return []
 
-        if self._mode == "braille":
+        if self._mode is GeneratorMode.BRAILLE:
             return [object_properties.NODE_LEVEL_BRAILLE % (level + 1)]
-        if self._mode == "speech":
+        if self._mode is GeneratorMode.SPEECH:
             return [object_properties.NODE_LEVEL_SPEECH % (level + 1)]
         return []
 
@@ -1177,7 +1208,7 @@ class Generator:
     def _generate_table_cell_row(self, obj: Atspi.Accessible, **args) -> list[Any]:
         present_all = (
             args.get("readingRow") is True
-            or args.get("formatType") == "detailedWhereAmI"
+            or self._context.where_am_i_type == WhereAmI.DETAILED
             or self._script.utilities.should_read_full_row(obj, args.get("priorObj"))
         )
 
@@ -1206,7 +1237,7 @@ class Generator:
                 cell_result = self._generate_real_table_cell(cell, **args)
             else:
                 cell_result = self._generate_real_table_cell(cell, **other_cell_args)
-            if cell_result and result and self._mode == "braille":
+            if cell_result and result and self._mode is GeneratorMode.BRAILLE:
                 result.append(braille.Region(object_properties.TABLE_CELL_DELIMITER_BRAILLE))
             result.extend(cell_result)
 
@@ -1275,12 +1306,10 @@ class Generator:
         text = ". ".join(tokens)
         if not self._get_is_nameless_toggle(obj):
             role_string = self.get_localized_role_name(obj, role=Atspi.Role.COLUMN_HEADER)
-            if self._mode == "speech":
-                if speech_presenter.get_presenter().use_verbose_speech() and args.get(
-                    "formatType",
-                ) not in ["basicWhereAmI", "detailedWhereAmI"]:
+            if self._mode is GeneratorMode.SPEECH:
+                if self._context.verbose and self._context.where_am_i_type is None:
                     text = f"{text} {role_string}"
-            elif self._mode == "braille":
+            elif self._mode is GeneratorMode.BRAILLE and self._context.verbose:
                 text = f"{text} {role_string}"
 
         result.append(text)
@@ -1312,12 +1341,10 @@ class Generator:
 
         text = ". ".join(tokens)
         role_string = self.get_localized_role_name(obj, role=Atspi.Role.ROW_HEADER)
-        if self._mode == "speech":
-            if speech_presenter.get_presenter().use_verbose_speech() and args.get(
-                "formatType",
-            ) not in ["basicWhereAmI", "detailedWhereAmI"]:
+        if self._mode is GeneratorMode.SPEECH:
+            if self._context.verbose and self._context.where_am_i_type is None:
                 text = f"{text} {role_string}"
-        elif self._mode == "braille":
+        elif self._mode is GeneratorMode.BRAILLE and self._context.verbose:
             text = f"{text} {role_string}"
 
         result.append(text)

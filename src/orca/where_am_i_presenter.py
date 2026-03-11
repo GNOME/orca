@@ -44,6 +44,7 @@ from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
+from .generator import WhereAmI
 
 if TYPE_CHECKING:
     import gi
@@ -595,9 +596,9 @@ class WhereAmIPresenter:
             return True
 
         if basic_only:
-            format_type = "basicWhereAmI"
+            where_am_i_type = WhereAmI.BASIC
         else:
-            format_type = "detailedWhereAmI"
+            where_am_i_type = WhereAmI.DETAILED
 
         def real_object(acc: Atspi.Accessible) -> Atspi.Accessible:
             if AXUtilities.is_focused(acc):
@@ -617,7 +618,7 @@ class WhereAmIPresenter:
         script.present_object(
             real_object(obj),
             alreadyFocused=True,
-            formatType=format_type,
+            where_am_i_type=where_am_i_type,
             forceMnemonic=True,
             forceList=True,
             forceTutorial=True,

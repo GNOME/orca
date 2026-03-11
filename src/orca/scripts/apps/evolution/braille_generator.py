@@ -34,6 +34,8 @@ if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
+    from orca.braille_generator import BrailleGeneratorContext
+
     from . import script
 
 
@@ -66,8 +68,13 @@ class BrailleGenerator(web.BrailleGenerator, braille_generator.BrailleGenerator)
 
         return super()._generate_real_active_descendant_displayed_text(obj, **args)
 
-    def generate_braille(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        result, focused_region = super().generate_braille(obj, **args)
+    def generate_braille(
+        self,
+        obj: Atspi.Accessible,
+        context: BrailleGeneratorContext,
+        **args,
+    ) -> list[Any]:
+        result, focused_region = super().generate_braille(obj, context, **args)
         if not result or focused_region != result[0]:
             return [result, focused_region]
 
