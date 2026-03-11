@@ -286,6 +286,7 @@ class SpeechGenerator(generator.Generator):
         voice_props: ACSS,
         family: dict,
         obj: Atspi.Accessible | None,
+        context: SpeechGeneratorContext,
         server: speechserver.SpeechServer,
         language: str,
         dialect: str,
@@ -306,7 +307,7 @@ class SpeechGenerator(generator.Generator):
                 family.update(voice_override[ACSS.FAMILY])
 
         auto_lang_switching = (
-            not self._context.in_preferences_window and mgr.get_auto_language_switching()
+            not context.in_preferences_window and mgr.get_auto_language_switching()
         )
         # Only update the language if it has changed from the user's preferred voice.
         # If that occurred, changing the dialect should not be problematic/bothersome.
@@ -336,8 +337,21 @@ class SpeechGenerator(generator.Generator):
 
         return family
 
-    def voice(self, key: str | None = None, **args) -> list[ACSS]:
+    def voice(
+        self,
+        key: str | None = None,
+        context: SpeechGeneratorContext | None = None,
+        **args,
+    ) -> list[ACSS]:
         """Returns an array containing a voice."""
+
+        effective_context = context or self._context
+        try:
+            assert effective_context is not None
+        except AssertionError:
+            tokens = ["SPEECH GENERATOR: voice called without context for", args.get("obj")]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True, True)
+            return []
 
         voicename = voice_type.get(key or DEFAULT, voice_type[DEFAULT])
         mgr = speech_manager.get_manager()
@@ -377,6 +391,7 @@ class SpeechGenerator(generator.Generator):
                 voice,
                 family,
                 obj,
+                effective_context,
                 server,
                 language,
                 dialect,
