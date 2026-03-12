@@ -2431,16 +2431,17 @@ class SpeechPresenter:
         mgr = speech_manager.get_manager()
         voice = mgr.get_voice_properties(speechserver.SYSTEM_VOICE)
 
-        cap_style = mgr.get_capitalization_style()
-        mgr.set_capitalization_style("none")
-        punct_style = mgr.get_punctuation_level()
-        mgr.set_punctuation_level("some")
+        server = mgr.get_server()
+        if server is not None:
+            server.update_capitalization_style("none")
+            server.update_punctuation_level(speechserver.PunctuationStyle.SOME)
 
         text = self.adjust_for_presentation(None, text)
         speech.speak(text, voice)
 
-        mgr.set_capitalization_style(cap_style)
-        mgr.set_punctuation_level(punct_style)
+        if server is not None:
+            mgr.update_capitalization_style()
+            mgr.update_punctuation_level()
 
     def _build_generator_context(
         self,
