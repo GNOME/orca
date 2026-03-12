@@ -523,14 +523,14 @@ class AXUtilitiesEvent:
     ) -> TextEventReason:
         """Returns the reason for unclassified text insertions."""
 
-        if len(event.any_data) == 1:
-            return TextEventReason.UNKNOWN
         if mgr.last_event_was_tab() and event.any_data != "\t":
             return TextEventReason.AUTO_INSERTION_PRESENTABLE
         if mgr.last_event_was_return() and event.any_data != "\n":
             if AXUtilitiesState.is_single_line(event.source):
                 return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
             return TextEventReason.AUTO_INSERTION_PRESENTABLE
+        if len(event.any_data) == 1:
+            return TextEventReason.UNKNOWN
         return TextEventReason.UNKNOWN
 
     @staticmethod
