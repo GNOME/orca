@@ -2434,7 +2434,9 @@ class SpeechPresenter:
         server = mgr.get_server()
         if server is not None:
             server.update_capitalization_style("none")
-            server.update_punctuation_level(speechserver.PunctuationStyle.SOME)
+            user_level = speechserver.PunctuationStyle[mgr.get_punctuation_level().upper()]
+            level = max(user_level, speechserver.PunctuationStyle.SOME, key=lambda s: s.value)
+            server.update_punctuation_level(level)
 
         text = self.adjust_for_presentation(None, text)
         speech.speak(text, voice)
