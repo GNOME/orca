@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-02-23 12:32+0000\n"
-"PO-Revision-Date: 2026-03-12 00:00-0400\n"
+"PO-Revision-Date: 2026-03-12 15:03-0400\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur Computer Science Association <UKIJ@yahoogroups.com>\n"
 "Language: ug\n"
@@ -7825,25 +7825,25 @@ msgstr "كېپىنەك تۈگۈن"
 #: src/orca/mathsymbols.py:1976
 msgctxt "math symbol"
 msgid "left normal factor semidirect product"
-msgstr ""
+msgstr "سول نورمال ھەسسىلەنگەن يېرىم بىۋاسىتە ھاسىلات"
 
 #. Translators: this is the spoken representation for the character '⋊' (U+22ca)
 #: src/orca/mathsymbols.py:1979
 msgctxt "math symbol"
 msgid "right normal factor semidirect product"
-msgstr ""
+msgstr "ئوڭ نورمال ھەسسىلەنگەن يېرىم بىۋاسىتە ھاسىلات"
 
 #. Translators: this is the spoken representation for the character '⋋' (U+22cb)
 #: src/orca/mathsymbols.py:1982
 msgctxt "math symbol"
 msgid "left semidirect product"
-msgstr ""
+msgstr "سول يېرىم بىۋاسىتە ھاسىلات"
 
 #. Translators: this is the spoken representation for the character '⋌' (U+22cc)
 #: src/orca/mathsymbols.py:1985
 msgctxt "math symbol"
 msgid "right semidirect product"
-msgstr ""
+msgstr "ئوڭ يېرىم بىۋاسىتە ھاسىلات"
 
 #. Translators: this is the spoken representation for the character '⋍' (U+22cd)
 #: src/orca/mathsymbols.py:1988
@@ -8071,83 +8071,83 @@ msgstr "سول ئۈستىدىن ئوڭ ئاستىغا دىياگونال كۆپ 
 #: src/orca/mathsymbols.py:2099
 msgctxt "math symbol"
 msgid "element of with long horizontal stroke"
-msgstr ""
+msgstr "ئۇزۇن توغرا سىزىقلىق ئەزاسى"
 
 #. Translators: this is the spoken representation for the character '⋳' (U+22f3)
 #: src/orca/mathsymbols.py:2102
 msgctxt "math symbol"
 msgid "element of with vertical bar at end of horizontal stroke"
-msgstr ""
+msgstr "تىك بالداقلىق ئاخىرىدا توغرا سىزىقى بار ئېلېمېنتى"
 
 #: src/orca/mathsymbols.py:2107
 msgctxt "math symbol"
 msgid "small element of with vertical bar at end of horizontal stroke"
-msgstr ""
+msgstr "تىك بالداقلىق ئاخىرىدا توغرا سىزىقى بار كىچىك ئېلېمېنتى"
 
 #. Translators: this is the spoken representation for the character '⋵' (U+22f5)
 #: src/orca/mathsymbols.py:2111
 msgctxt "math symbol"
 msgid "element of with dot above"
-msgstr ""
+msgstr "ئۈستى چېكىتلىك ئېلېمېنت"
 
 #. Translators: this is the spoken representation for the character '⋶' (U+22f6)
 #: src/orca/mathsymbols.py:2114
 msgctxt "math symbol"
 msgid "element of with overbar"
-msgstr ""
+msgstr "ئۈستى سىزىقلىق ئېلېمېنت"
 
 #. Translators: this is the spoken representation for the character '⋷' (U+22f7)
 #: src/orca/mathsymbols.py:2117
 msgctxt "math symbol"
 msgid "small element of with overbar"
-msgstr ""
+msgstr "ئۈستى سىزىقلىق كىچىك ئېلېمېنت"
 
 #. Translators: this is the spoken representation for the character '⋸' (U+22f8)
 #: src/orca/mathsymbols.py:2120
 msgctxt "math symbol"
 msgid "element of with underbar"
-msgstr ""
+msgstr "ئاستى سىزىقلىق ئېلېمېنت"
 
 #. Translators: this is the spoken representation for the character '⋹' (U+22f9)
 #: src/orca/mathsymbols.py:2123
 msgctxt "math symbol"
 msgid "element of with two horizontal strokes"
-msgstr ""
+msgstr "ئىككى توغرا سىزىقلىق ئېلېمېنت"
 
 #. Translators: this is the spoken representation for the character '⋺' (U+22fa)
 #: src/orca/mathsymbols.py:2126
 msgctxt "math symbol"
 msgid "contains with long horizontal stroke"
-msgstr ""
+msgstr "ئۇزۇن توغرا سىزىقلىق  ئەزاسى"
 
 #. Translators: this is the spoken representation for the character '⋻' (U+22fb)
 #: src/orca/mathsymbols.py:2129
 msgctxt "math symbol"
 msgid "contains with vertical bar at end of horizontal stroke"
-msgstr ""
+msgstr "تىك بالداقلىق ئاخىرىدا توغرا سىزىقى بار ئەزاسى"
 
 #: src/orca/mathsymbols.py:2134
 msgctxt "math symbol"
 msgid "small contains with vertical bar at end of horizontal stroke"
-msgstr ""
+msgstr "تىك بالداقلىق ئاخىرىدا توغرا سىزىقى بار كىچىك ئەزاسى"
 
 #. Translators: this is the spoken representation for the character '⋽' (U+22fd)
 #: src/orca/mathsymbols.py:2138
 msgctxt "math symbol"
 msgid "contains with overbar"
-msgstr ""
+msgstr "ئۈستى سىزىقلىق ئەزاسى"
 
 #. Translators: this is the spoken representation for the character '⋾' (U+22fe)
 #: src/orca/mathsymbols.py:2141
 msgctxt "math symbol"
 msgid "small contains with overbar"
-msgstr ""
+msgstr "ئۈستى سىزىقلىق كىچىك ئەزاسى"
 
 #. Translators: this is the spoken representation for the character '⋿' (U+22ff)
 #: src/orca/mathsymbols.py:2144
 msgctxt "math symbol"
 msgid "z notation bag membership"
-msgstr ""
+msgstr "z بەلگە توپلىمىنىڭ ئەزاسىس"
 
 #. Translators: this is the spoken representation for the character '⌈' (U+2308)
 #: src/orca/mathsymbols.py:2147
@@ -8577,6 +8577,9 @@ msgid ""
 "To back up first: dconf dump /org/gnome/orca/ > backup.ini\n"
 "To restore: dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < backup.ini"
 msgstr ""
+"تەڭشەكنى DIR دىن dconf (نۆۋەتتىكى تەڭشەكنى قاپلايدۇ) غا ئەكىرىدۇ.\n"
+"ئالدى بىلەن زاپاسلاش: dconf dump /org/gnome/orca/ > backup.ini\n"
+"ئەسلىگە قايتۇرۇش: dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < backup.ini"
 
 #. Translators: This string indicates to the user what should be provided when
 #. using the '-i, --import-dir' command line option.
