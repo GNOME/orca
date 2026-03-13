@@ -2581,7 +2581,7 @@ class SpeechPresenter:
         """Generates and speaks a phrase using the script's speech generator."""
 
         if len(phrase) <= 1 and not phrase.isalnum():
-            self.speak_character(phrase)
+            self.speak_character(phrase, obj=obj)
             return
 
         indentation = self.get_indentation_description(phrase)
@@ -2632,7 +2632,7 @@ class SpeechPresenter:
         if error := self.get_error_description(obj, offset):
             self.speak_message(error)
 
-        self.speak_character(character, voice_from=character, cap_style=cap_style)
+        self.speak_character(character, voice_from=character, cap_style=cap_style, obj=obj)
 
     def say_all(self, utterance_iterator: Any, progress_callback: Callable[..., Any]) -> None:
         """Speaks each item in the utterance_iterator."""
@@ -2644,10 +2644,11 @@ class SpeechPresenter:
         character: str,
         voice_from: str = "",
         cap_style: speechserver.CapitalizationStyle | None = None,
+        obj: Atspi.Accessible | None = None,
     ) -> None:
         """Speaks a single character using the voice for voice_from."""
 
-        voice = self._get_voice(text=voice_from or character)
+        voice = self._get_voice(text=voice_from or character, obj=obj)
         speech.speak_character(character, voice[0] if voice else None, cap_style=cap_style)
 
     def spell_item(self, text: str) -> None:

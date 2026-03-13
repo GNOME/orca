@@ -301,13 +301,18 @@ class PresentationManager:
             return speechserver.CapitalizationStyle(style_str)
         return None
 
-    def speak_character(self, character: str) -> None:
+    def speak_character(
+        self,
+        character: str,
+        obj: Atspi.Accessible | None = None,
+    ) -> None:
         """Speaks a single character."""
 
         speech_presenter.get_presenter().speak_character(
             character,
             voice_from=character,
             cap_style=self._get_cap_style(character),
+            obj=obj,
         )
 
     def speak_character_at_offset(

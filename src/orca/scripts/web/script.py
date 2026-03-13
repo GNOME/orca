@@ -163,7 +163,7 @@ class Script(default.Script):
         if string:
             if error := speech_pres.get_error_description(obj, start):
                 presenter.speak_message(error)
-            presenter.speak_character(string)
+            presenter.speak_character(string, obj=obj)
         else:
             presenter.speak_contents(contents)
 
