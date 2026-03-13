@@ -956,7 +956,9 @@ class Script(default.Script):
             msg = "WEB: Editable object is not (yet) the locus of focus."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             notify = force = handled = (
-                i_e_manager.last_event_was_line_navigation() or i_e_manager.last_event_was_return()
+                i_e_manager.last_event_was_line_navigation()
+                or i_e_manager.last_event_was_return()
+                or i_e_manager.last_event_was_command()
             )
 
         elif i_e_manager.last_event_was_caret_navigation():
