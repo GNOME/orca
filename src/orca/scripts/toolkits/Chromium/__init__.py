@@ -21,4 +21,6 @@
 
 """Custom script for Chromium."""
 
-from .script import Script as Script
+from .script import Script
+
+__all__ = ["Script"]

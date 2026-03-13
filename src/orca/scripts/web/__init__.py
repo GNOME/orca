@@ -21,8 +21,10 @@
 
 """Custom script for web content."""
 
-from .braille_generator import BrailleGenerator as BrailleGenerator
-from .script import Script as Script
-from .script_utilities import Utilities as Utilities
-from .speech_generator import SpeechGenerator as SpeechGenerator
-from .toolkit_bridge import ToolkitBridge as ToolkitBridge
+from .braille_generator import BrailleGenerator
+from .script import Script
+from .script_utilities import Utilities
+from .speech_generator import SpeechGenerator
+from .toolkit_bridge import ToolkitBridge
+
+__all__ = ["BrailleGenerator", "Script", "SpeechGenerator", "ToolkitBridge", "Utilities"]

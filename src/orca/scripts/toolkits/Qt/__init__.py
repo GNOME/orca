@@ -23,4 +23,6 @@
 
 # pylint: disable=invalid-name
 
-from .script import Script as Script
+from .script import Script
+
+__all__ = ["Script"]

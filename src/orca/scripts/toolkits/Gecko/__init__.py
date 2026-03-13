@@ -23,4 +23,6 @@
 
 """Custom script for Gecko."""
 
-from .script import Script as Script
+from .script import Script
+
+__all__ = ["Script"]

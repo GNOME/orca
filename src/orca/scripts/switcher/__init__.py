@@ -19,5 +19,7 @@
 
 """Custom script for basic switchers like Metacity."""
 
-from .script import Script as Script
-from .script_utilities import Utilities as Utilities
+from .script import Script
+from .script_utilities import Utilities
+
+__all__ = ["Script", "Utilities"]
