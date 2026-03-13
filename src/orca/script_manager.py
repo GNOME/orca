@@ -156,9 +156,12 @@ class ScriptManager:
             except OSError as error:
                 tokens = ["EXCEPTION: Could not import", module_name, ":", error]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
+                continue
 
             tokens = ["SCRIPT MANAGER: Found", module_name]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            with contextlib.suppress(ImportError):
+                module = importlib.import_module(f"{module_name}.script")
             try:
                 if hasattr(module, "get_script"):
                     script = module.get_script(app)

@@ -19,7 +19,5 @@
 
 """Custom script for basic switchers like Metacity."""
 
-# https://gitlab.gnome.org/GNOME/orca/-/issues/358
-# ruff: noqa: F401
-from .script import Script
-from .script_utilities import Utilities
+from .script import Script as Script
+from .script_utilities import Utilities as Utilities

@@ -21,10 +21,8 @@
 
 """Custom script for web content."""
 
-# https://gitlab.gnome.org/GNOME/orca/-/issues/358
-# ruff: noqa: F401
-from .braille_generator import BrailleGenerator
-from .script import Script
-from .script_utilities import Utilities
-from .speech_generator import SpeechGenerator
-from .toolkit_bridge import ToolkitBridge
+from .braille_generator import BrailleGenerator as BrailleGenerator
+from .script import Script as Script
+from .script_utilities import Utilities as Utilities
+from .speech_generator import SpeechGenerator as SpeechGenerator
+from .toolkit_bridge import ToolkitBridge as ToolkitBridge

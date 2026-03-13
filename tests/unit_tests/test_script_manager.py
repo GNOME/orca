@@ -513,7 +513,7 @@ class TestScriptManager:
         "case",
         [
             {
-                "id": "os_error_causes_unboundlocal",
+                "id": "os_error_returns_none",
                 "exception_type": "OSError",
             },
             {
@@ -540,8 +540,8 @@ class TestScriptManager:
 
         if case["exception_type"] == "OSError":
             mock_import.side_effect = OSError("Permission denied")
-            with pytest.raises(UnboundLocalError):
-                manager._new_named_script(mock_app, "test")
+            result = manager._new_named_script(mock_app, "test")
+            assert result is None
         else:
             mock_module = type("MockModule", (), {})()
             mock_module.Script = test_context.Mock(
