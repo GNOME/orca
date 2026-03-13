@@ -1351,12 +1351,10 @@ class DocumentPresenter:
             return True, "focus mode is sticky"
         if self.browse_mode_is_sticky(script.app):
             return False, "browse mode is sticky"
-        if (
-            focus_manager.get_manager().in_say_all()
-            or table_navigator.get_navigator().last_input_event_was_navigation_command()
-        ):
-            reason = "SayAll is active" if focus_manager.get_manager().in_say_all() else "table nav"
-            return False, reason
+        if focus_manager.get_manager().in_say_all():
+            return False, "SayAll is active"
+        if table_navigator.get_navigator().last_input_event_was_navigation_command():
+            return self.in_focus_mode(script.app), "table nav preserves current mode"
 
         _structural_navigator = structural_navigator.get_navigator()
         _caret_navigator = caret_navigator.get_navigator()
