@@ -892,7 +892,7 @@ class MouseReviewer:
         msg += "^^^^^ PROCESS POINTER-MOVED EVENT ^^^^^\n"
         debug.print_message(debug.LEVEL_INFO, msg, False)
 
-    def _on_pointer_moved(self, device, obj, x, y) -> None:
+    def _on_pointer_moved(self, _device, obj, x, y) -> None:
         """Listener for pointer-moved events from devices."""
 
         self._event_queue.append([obj, x, y])
