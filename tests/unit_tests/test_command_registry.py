@@ -459,6 +459,7 @@ class TestCommandRegistry:
         atspi_mock.Accessible = Fake
         atspi_mock.MatchRule = Fake
         atspi_mock.Relation = Fake
+        atspi_mock.get_version = test_context.Mock(return_value=(2, 52, 0))
         gi_repository_mock.Atspi = atspi_mock
 
         gtk_mock = essential_modules["gi.repository.Gtk"]
