@@ -770,6 +770,9 @@ class SpeechGenerator(generator.Generator):
             Atspi.Role.TOOL_TIP,
         ]
 
+        if self._context is None:
+            return list(all_roles), []
+
         enabled, disabled = [], []
 
         if self._context.announce_blockquote:
