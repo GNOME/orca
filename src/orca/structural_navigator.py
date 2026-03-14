@@ -87,6 +87,7 @@ class StructuralNavigator:
     KEY_LARGE_OBJECT_TEXT_LENGTH = "large-object-text-length"
     KEY_ENABLED = "enabled"
     KEY_TRIGGERS_FOCUS_MODE = "triggers-focus-mode"
+    KEY_SKIP_UNLABELED_IMAGES = "skip-unlabeled-images"
 
     def _get_setting(self, key: str, gtype: str, default: Any) -> Any:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -637,6 +638,32 @@ class StructuralNavigator:
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_TRIGGERS_FOCUS_MODE,
+            value,
+        )
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_SKIP_UNLABELED_IMAGES,
+        schema="structural-navigation",
+        gtype="b",
+        default=False,
+        summary="Skip unlabeled images during navigation",
+    )
+    @dbus_service.getter
+    def get_skip_unlabeled_images(self) -> bool:
+        """Returns whether unlabeled images are skipped during navigation."""
+
+        return self._get_setting(self.KEY_SKIP_UNLABELED_IMAGES, "b", False)
+
+    @dbus_service.setter
+    def set_skip_unlabeled_images(self, value: bool) -> bool:
+        """Sets whether unlabeled images are skipped during navigation."""
+
+        msg = f"STRUCTURAL NAVIGATOR: Setting skip unlabeled images to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA,
+            self.KEY_SKIP_UNLABELED_IMAGES,
             value,
         )
         return True
@@ -2476,10 +2503,24 @@ class StructuralNavigator:
     #                      #
     ########################
 
+    @staticmethod
+    def _image_is_labeled(obj: Atspi.Accessible) -> bool:
+        """Returns True if the image has an accessible name or description."""
+
+        return bool(
+            AXObject.get_name(obj)
+            or AXObject.get_description(obj)
+            or AXObject.get_image_description(obj)
+        )
+
     def _get_all_images(self, script: default.Script) -> list[Atspi.Accessible]:
-        pred = None
-        if self.get_mode(script) == NavigationMode.GUI:
-            pred = self._is_non_document_object
+        is_gui_mode = self.get_mode(script) == NavigationMode.GUI
+        skip_unlabeled = self.get_skip_unlabeled_images()
+
+        def pred(obj):
+            if is_gui_mode and not self._is_non_document_object(obj):
+                return False
+            return not (skip_unlabeled and not self._image_is_labeled(obj))
 
         root = self._determine_root_container(script)
         return AXUtilities.find_all_images_and_image_maps(root, pred=pred)

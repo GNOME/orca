@@ -641,6 +641,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`IsEnabled`:** Gets/Sets whether structural navigation is enabled.
 - **`LargeObjectTextLength`:** Gets/Sets the minimum number of characters to be considered a 'large object'.
 - **`NavigationWraps`:** Gets/Sets whether navigation wraps when reaching the top/bottom of the document.
+- **`SkipUnlabeledImages`:** Gets/Sets whether unlabeled images are skipped during navigation.
 - **`TriggersFocusMode`:** Gets/Sets whether structural navigation triggers focus mode.
 
 ---

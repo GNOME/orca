@@ -21,7 +21,9 @@
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-instance-attributes
-# pylint: disable=too-many-arguments, too-many-positional-arguments
+# pylint: disable=too-many-arguments,
+# pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-return-statements
 
 """Module for document-related presentation and navigation settings."""
 
@@ -190,6 +192,13 @@ class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesG
                 getter=nav.get_large_object_text_length,
                 setter=nav.set_large_object_text_length,
                 prefs_key=structural_navigator.StructuralNavigator.KEY_LARGE_OBJECT_TEXT_LENGTH,
+                determine_sensitivity=is_enabled,
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.STRUCTURAL_NAVIGATION_SKIP_UNLABELED_IMAGES,
+                getter=nav.get_skip_unlabeled_images,
+                setter=nav.set_skip_unlabeled_images,
+                prefs_key=structural_navigator.StructuralNavigator.KEY_SKIP_UNLABELED_IMAGES,
                 determine_sensitivity=is_enabled,
             ),
         ]

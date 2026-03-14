@@ -503,12 +503,14 @@ MODULE_CONFIG = {
             "IsEnabled",
             "LargeObjectTextLength",
             "NavigationWraps",
+            "SkipUnlabeledImages",
             "TriggersFocusMode",
         ],
         "setters": [
             "IsEnabled",
             "LargeObjectTextLength",
             "NavigationWraps",
+            "SkipUnlabeledImages",
             "TriggersFocusMode",
         ],
         "ui_commands": [

@@ -563,6 +563,11 @@ LARGE_OBJECT_INFO = _(
     "must have to be included when using the large object navigation shortcuts.",
 )
 
+# Translators: This is a label for a switch that controls whether images
+# without accessible names or descriptions are skipped during image
+# navigation (e.g. pressing G to jump to next image).
+STRUCTURAL_NAVIGATION_SKIP_UNLABELED_IMAGES = _("Skip unlabeled images")
+
 # Translators: This string is a label for the group of Orca commands which
 # are related to table navigation, such as moving to the next cell in a
 # given direction.

@@ -292,6 +292,7 @@ These operations also work at the profile level:
 | --- | --- | --- | --- |
 | `enabled` | `b` | `true` | Enable structural navigation |
 | `large-object-text-length` | `i` | `75` | Minimum text length for large objects |
+| `skip-unlabeled-images` | `b` | `false` | Skip unlabeled images during navigation |
 | `triggers-focus-mode` | `b` | `false` | Structural navigation triggers focus mode |
 | `wraps` | `b` | `true` | Wrap when reaching top/bottom |
 
