@@ -438,6 +438,7 @@ class TestPresentationManager:
             "a",
             voice_from="a",
             cap_style=None,
+            obj=None,
         )
 
     def test_speak_message_delegates(self, test_context: OrcaTestContext) -> None:
