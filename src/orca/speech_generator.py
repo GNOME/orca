@@ -232,6 +232,8 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _only_speak_displayed_text(self) -> bool:
+        if self._context is None:
+            return False
         return self._context.only_displayed_text
 
     def _generate_result_separator(self, obj: Atspi.Accessible, **args) -> list[Any]:
@@ -508,7 +510,10 @@ class SpeechGenerator(generator.Generator):
         if self._only_speak_displayed_text():
             return False
 
-        if self._context.active_mode == focus_manager.OBJECT_NAVIGATOR:
+        if (
+            self._context is not None
+            and self._context.active_mode == focus_manager.OBJECT_NAVIGATOR
+        ):
             return True
 
         role = args.get("role", AXObject.get_role(obj))
@@ -532,11 +537,11 @@ class SpeechGenerator(generator.Generator):
                 Atspi.Role.UNKNOWN,
             ]
         )
-        if not self._context.verbose:
+        if self._context is not None and not self._context.verbose:
             do_not_speak.extend([Atspi.Role.CANVAS, Atspi.Role.ICON])
         if args.get("string"):
             do_not_speak.append("ROLE_CONTENT_SUGGESTION")
-        if self._context.where_am_i_type != WhereAmI.BASIC:
+        if self._context is not None and self._context.where_am_i_type != WhereAmI.BASIC:
             do_not_speak.extend([Atspi.Role.LIST, Atspi.Role.LIST_ITEM])
         if args.get("startOffset") is not None or args.get("endOffset") is not None:
             do_not_speak.extend(
