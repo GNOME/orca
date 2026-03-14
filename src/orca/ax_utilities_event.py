@@ -987,9 +987,15 @@ class AXUtilitiesEvent:
             return False
 
         if AXUtilitiesRole.is_menu(event.source):
-            msg = "AXUtilitiesEvent: Event is presentable: Source is a menu."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
+            if AXUtilitiesState.is_showing(event.source) and AXUtilitiesState.is_visible(
+                event.source
+            ):
+                msg = "AXUtilitiesEvent: Event is presentable: Source is a menu."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
+            tokens = ["AXUtilitiesEvent: Menu lacks showing + visible:", event.source]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return False
 
         if AXUtilitiesRole.is_combo_box(event.source) and not AXUtilitiesState.is_expanded(
             event.source
