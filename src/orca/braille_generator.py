@@ -242,7 +242,7 @@ class BrailleGenerator(generator.Generator):
         return result, focused_region
 
     def get_localized_role_name(self, obj: Atspi.Accessible, **args) -> str:
-        if not self._context.full_rolenames:
+        if self._context is not None and not self._context.full_rolenames:
             rv = short_role_names.get(args.get("role", AXObject.get_role(obj)))
             if rv:
                 return rv
@@ -371,7 +371,7 @@ class BrailleGenerator(generator.Generator):
     @log_generator_output
     def _generate_progress_bar_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
         result = self._generate_value_as_percentage(obj, **args)
-        if obj == self._context.focus and not result:
+        if self._context is not None and obj == self._context.focus and not result:
             return [""]
 
         return result
