@@ -62,6 +62,7 @@ from . import (
     profile_manager,
     pronunciation_dictionary_manager,
     say_all_presenter,
+    sleep_mode_manager,
     sound_presenter,
     speech_presenter,
     spellcheck_presenter,
@@ -261,6 +262,12 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self._add_navigation_row("profiles", self.profiles_grid.get_label().get_text())
         self.update_menu_labels()
 
+        if not self._app_name:
+            sleep_mgr = sleep_mode_manager.get_manager()
+            self.sleep_mode_grid = sleep_mgr.create_preferences_grid()
+            self.stack.add_named(self.sleep_mode_grid, "sleep_mode")
+            self._add_navigation_row("sleep_mode", self.sleep_mode_grid.get_label().get_text())
+
         presenter = speech_presenter.get_presenter()
 
         def update_title(title: str) -> None:
@@ -343,7 +350,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
         registry.set_ignore_runtime(False)
 
-        self._page_to_grid = {
+        self._page_to_grid: dict[str, preferences_grid_base.PreferencesGridBase] = {
             "speech": self.speech_grid,
             "braille": self.braille_grid,
             "keybindings": self.keybindings_grid,
@@ -359,6 +366,8 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             "text_attributes": self.text_attributes_grid,
             "profiles": self.profiles_grid,
         }
+        if not self._app_name:
+            self._page_to_grid["sleep_mode"] = self.sleep_mode_grid
 
         for grid in self._page_to_grid.values():
             grid.set_focus_sidebar_callback(self._focus_sidebar)

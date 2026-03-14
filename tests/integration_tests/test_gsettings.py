@@ -53,6 +53,7 @@ class TestSchemaRegistration:
             "mouse-review",
             "pronunciations",
             "say-all",
+            "sleep-mode",
             "sound",
             "speech",
             "spellcheck",
@@ -234,6 +235,20 @@ class TestSaveSchema:
         handle = gsettings_handle("keybindings")
         assert handle.get_strv("desktop-modifier-keys") == ["Insert"]
         assert handle.get_strv("laptop-modifier-keys") == ["Caps_Lock"]
+
+    def test_round_trip_sleep_mode_apps(
+        self, gsettings_registry, gsettings_handle, gsettings_profile
+    ) -> None:
+        """Sleep mode app list should survive a save_schema round-trip."""
+
+        gsettings_registry.save_schema(
+            "sleep-mode",
+            {"apps": ["chromium-browser", "virt-manager"]},
+            "default",
+        )
+
+        handle = gsettings_handle("sleep-mode")
+        assert handle.get_strv("apps") == ["chromium-browser", "virt-manager"]
 
     def test_app_override_isolation(
         self, gsettings_registry, gsettings_handle, gsettings_profile

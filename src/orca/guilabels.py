@@ -515,6 +515,21 @@ KB_GROUP_LIVE_REGIONS = _("Live regions")
 # are related to sleep mode.
 KB_GROUP_SLEEP_MODE = _("Sleep mode")
 
+# Translators: This is an informational message on the Sleep Mode preferences page
+# explaining what sleep mode does. When translating "Commands", please use
+# terminology consistent with that of `COMMANDS = _("Commands")` above.
+SLEEP_MODE_INFO = _(
+    "Sleep mode causes Orca to behave as if it were not running for a given "
+    "application. The default keybinding to toggle sleep mode on or off is "
+    "Shift+Alt+Ctrl+Q. This can be changed in Commands. An application must "
+    "be running to add it to the list below.",
+)
+
+# Translators: This label appears above a list of applications on the Sleep Mode
+# preferences page. The user can select which applications should automatically
+# have sleep mode enabled.
+SLEEP_MODE_APPS = _("Always use sleep mode with these applications")
+
 # Translators: This string is a label for the group of Orca commands which
 # are related to presenting the object under the mouse pointer in speech
 # and/or braille. The translation should be consistent with the string

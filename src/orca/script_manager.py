@@ -326,7 +326,10 @@ class ScriptManager:
         if self._active_script is not None:
             tokens = ["SCRIPT MANAGER: Deactivating", self._active_script, "reason:", reason]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            old_app = self._active_script.app
             self._active_script.deactivate()
+            if old_app is not None and (new_script is None or new_script.app != old_app):
+                sleep_mode_manager.get_manager().on_app_deactivated(old_app)
 
         self._active_script = new_script
         if new_script is None:

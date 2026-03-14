@@ -384,6 +384,14 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 - **`ToggleSleepMode`:** Toggles sleep mode for the active application.
 
+#### Settings
+
+**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+
+**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
+
+- **`SleepModeApps`:** Gets/Sets the list of apps that should automatically use sleep mode.
+
 ---
 
 ### SoundPresenter

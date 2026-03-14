@@ -49,7 +49,7 @@ class TestSleepModeManager:
         """Returns dependencies for sleep_mode_manager module testing."""
 
         essential_modules = test_context.setup_shared_dependencies(
-            ["orca.braille_presenter", "orca.presentation_manager"],
+            ["orca.braille_presenter", "orca.presentation_manager", "orca.ax_utilities"],
         )
 
         debug_mock = essential_modules["orca.debug"]
@@ -59,7 +59,13 @@ class TestSleepModeManager:
         debug_mock.LEVEL_INFO = 800
 
         ax_object_mock = essential_modules["orca.ax_object"]
-        ax_object_mock.get_name = test_context.Mock(return_value="TestApp")
+        ax_object_mock.AXObject.get_name = test_context.Mock(return_value="TestApp")
+
+        ax_utilities_mock = essential_modules["orca.ax_utilities"]
+        ax_utilities_class_mock = test_context.Mock()
+        ax_utilities_class_mock.get_all_applications = test_context.Mock(return_value=[])
+        ax_utilities_class_mock.get_process_id = test_context.Mock(return_value=0)
+        ax_utilities_mock.AXUtilities = ax_utilities_class_mock
 
         braille_presenter_mock = essential_modules["orca.braille_presenter"]
         braille_presenter_instance = test_context.Mock()
@@ -77,6 +83,8 @@ class TestSleepModeManager:
         controller_mock.register_decorated_module = test_context.Mock()
         dbus_service_mock.get_remote_controller = test_context.Mock(return_value=controller_mock)
         dbus_service_mock.command = lambda func: func
+        dbus_service_mock.getter = lambda func: func
+        dbus_service_mock.setter = lambda func: func
 
         input_event_mock = essential_modules["orca.input_event"]
         input_event_handler_mock = test_context.Mock()
@@ -121,6 +129,7 @@ class TestSleepModeManager:
 
         manager = SleepModeManager()
         assert not manager._apps
+        assert not manager._runtime_exceptions
         # Commands are registered during setup(), not __init__()
         manager.set_up_commands()
         cmd_manager = command_manager.get_manager()
@@ -143,25 +152,84 @@ class TestSleepModeManager:
         assert cmd_manager.get_keyboard_command("toggle_sleep_mode") is not None
         essential_modules["orca.debug"].print_message.assert_called()
 
-    def test_is_active_for_app_with_active_app(self, test_context: OrcaTestContext) -> None:
-        """Test SleepModeManager.is_active_for_app returns True for active app."""
+    def test_is_active_for_app_with_runtime_toggle(self, test_context: OrcaTestContext) -> None:
+        """Test is_active_for_app returns True for app in runtime toggle list."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.sleep_mode_manager import SleepModeManager
 
         manager = SleepModeManager()
         mock_app = test_context.Mock(spec=Atspi.Accessible)
-        app_hash = hash(mock_app)
-        manager._apps.append(app_hash)
+        manager._apps.append(hash(mock_app))
 
-        essential_modules["orca.debug"].print_tokens.reset_mock()
         result = manager.is_active_for_app(mock_app)
         assert result is True
-        essential_modules["orca.debug"].print_tokens.assert_called_with(
-            essential_modules["orca.debug"].LEVEL_INFO,
-            ["SLEEP MODE MANAGER: Is active for", mock_app],
-            True,
-        )
+
+    def test_is_active_for_app_with_persistent_list(self, test_context: OrcaTestContext) -> None:
+        """Test is_active_for_app returns True for app on persistent sleep list."""
+
+        self._setup_dependencies(test_context)
+        from orca.sleep_mode_manager import SleepModeManager
+
+        manager = SleepModeManager()
+        mock_app = test_context.Mock(spec=Atspi.Accessible)
+
+        # AXObject.get_name returns "TestApp" by default in our mock setup
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().set_runtime_value("sleep-mode", "apps", ["TestApp"])
+
+        result = manager.is_active_for_app(mock_app)
+        assert result is True
+
+        # Clean up
+        gsettings_registry.get_registry().set_runtime_value("sleep-mode", "apps", [])
+
+    def test_is_active_for_app_with_runtime_exception(self, test_context: OrcaTestContext) -> None:
+        """Test is_active_for_app returns False when app has a runtime exception."""
+
+        self._setup_dependencies(test_context)
+        from orca import gsettings_registry
+        from orca.sleep_mode_manager import SleepModeManager
+
+        manager = SleepModeManager()
+        mock_app = test_context.Mock(spec=Atspi.Accessible)
+
+        # App is on persistent list but has a runtime exception
+        gsettings_registry.get_registry().set_runtime_value("sleep-mode", "apps", ["TestApp"])
+        manager._runtime_exceptions.add("TestApp")
+
+        result = manager.is_active_for_app(mock_app)
+        assert result is False
+
+        # Clean up
+        gsettings_registry.get_registry().set_runtime_value("sleep-mode", "apps", [])
+
+    def test_on_app_deactivated_clears_exception(self, test_context: OrcaTestContext) -> None:
+        """Test on_app_deactivated clears runtime exceptions."""
+
+        self._setup_dependencies(test_context)
+        from orca.sleep_mode_manager import SleepModeManager
+
+        manager = SleepModeManager()
+        mock_app = test_context.Mock(spec=Atspi.Accessible)
+        manager._runtime_exceptions.add("TestApp")
+
+        manager.on_app_deactivated(mock_app)
+        assert "TestApp" not in manager._runtime_exceptions
+
+    def test_on_app_deactivated_no_exception(self, test_context: OrcaTestContext) -> None:
+        """Test on_app_deactivated is a no-op when there's no exception."""
+
+        self._setup_dependencies(test_context)
+        from orca.sleep_mode_manager import SleepModeManager
+
+        manager = SleepModeManager()
+        mock_app = test_context.Mock(spec=Atspi.Accessible)
+
+        # Should not raise
+        manager.on_app_deactivated(mock_app)
+        assert not manager._runtime_exceptions
 
     def test_setup_handlers(self, test_context: OrcaTestContext) -> None:
         """Test that commands are registered with CommandManager during setup."""
@@ -297,3 +365,38 @@ class TestSleepModeManager:
                 sleep_script,
                 "Sleep mode toggled on",
             )
+
+    def test_toggle_off_persistent_app_adds_exception(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test that toggling off a persistently-sleeping app adds a runtime exception."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca import gsettings_registry
+        from orca.sleep_mode_manager import SleepModeManager
+
+        manager = SleepModeManager()
+        mock_script = test_context.Mock()
+        mock_app = test_context.Mock()
+        mock_script.app = mock_app
+
+        # Put app on persistent list and in runtime list
+        gsettings_registry.get_registry().set_runtime_value("sleep-mode", "apps", ["TestApp"])
+        manager._apps.append(hash(mock_app))
+
+        script_manager_instance = essential_modules["script_manager_instance"]
+        new_script = test_context.Mock()
+        script_manager_instance.get_script = test_context.Mock(return_value=new_script)
+        test_context.patch(
+            "orca.sleep_mode_manager.script_manager.get_manager",
+            return_value=script_manager_instance,
+        )
+
+        manager.toggle_sleep_mode(mock_script, notify_user=False)
+
+        assert "TestApp" in manager._runtime_exceptions
+        assert hash(mock_app) not in manager._apps
+
+        # Clean up
+        gsettings_registry.get_registry().set_runtime_value("sleep-mode", "apps", [])

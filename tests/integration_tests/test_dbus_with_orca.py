@@ -228,8 +228,8 @@ MODULE_CONFIG = {
     "SleepModeManager": {
         "commands": ["ToggleSleepMode"],
         "parameterized_commands": [],
-        "getters": [],
-        "setters": [],
+        "getters": ["SleepModeApps"],
+        "setters": ["SleepModeApps"],
         "ui_commands": [],
         "toggle_commands": ["ToggleSleepMode"],
         "skip": [],

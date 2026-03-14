@@ -214,6 +214,14 @@ These operations also work at the profile level:
 
 ---
 
+### `org.gnome.Orca.SleepMode` (schema-name: `sleep-mode`)
+
+| Key | Type | Default | Summary |
+| --- | --- | --- | --- |
+| `apps` | `as` | `@as []` | Applications that automatically use sleep mode |
+
+---
+
 ### `org.gnome.Orca.Sound` (schema-name: `sound`)
 
 | Key | Type | Default | Summary |
