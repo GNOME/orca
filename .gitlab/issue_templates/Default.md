@@ -1,10 +1,10 @@
 ## Orca Version
-*Note that versions prior to version 48.x are unsupported for non-critical issues. If you are
+*Note that versions prior to version 49.x are unsupported for non-critical issues. If you are
 reporting a non-critical issue for an unsupported version, your bug report may be closed for
 that reason.*
 
-* Version of Orca where the bug is present
-* If known, version of Orca where the bug is not present
+* Version of Orca where the bug is present (obtained via `orca -v`)
+* If known, version of Orca where the bug is not present (is this a regression?)
 
 ## Steps to Reproduce the Problem
 1. Step 1

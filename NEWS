@@ -1,3 +1,49 @@
+50.0 - 14 March 2026
+
+Bug fixes and other improvements:
+
+* Refactor mouse review to use the new AtspiDevice API when available.
+
+* Fix multiple issues related to settings and the preferences window.
+
+* Fix presentation when using Google Docs' native navigation.
+
+* Fix caret navigation sticking on named links with broken hypertext
+  offsets.
+
+* Don't toggle browse/focus modes when using the table navigator.
+
+* Fix presentation of characters when automatic language switching is
+  enabled.
+
+* Attempt to use the action interface when synthesizing a right click.
+
+* Fix flat review braille panning viewport jump.
+
+* Fix presentation of autoinsertions of one character.
+
+* Include the new value when changing rate, pitch, or volume on the fly.
+
+* Add per-layout Orca modifier key settings so preferred modifiers are
+  remembered when switching layouts.
+
+* Add another workaround for https://bugreports.qt.io/browse/QTBUG-128558
+  so that Mumble status cells are presented.
+
+* Fix on-screen speech display not initially focused on MATE.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  ca              Catalan                   Victor Dargallo
+  da              Danish                    Alan Mortensen
+  en_GB           British English           Bruce Cowan
+  oc              Occitan                   Quentin PAGÈS
+  pl              Polish                    Victoria
+  pt_BR           Brazilian Portuguese      Juliano de Souza Camargo
+  ug              Uighur                    Abduqadir Abliz
+
+=========
+
 50.rc - 3 March 2026
 
 New features:
@@ -8,7 +54,7 @@ New features:
 * There is new Say All option to only speak displayed text, making
   reading a long web page smoother.
 
-* There is new option to read chat room meesages from the active room
+* There is new option to read chat room messages from the active room
   when in any application.
 
 Bug fixes and other improvements:
@@ -1684,7 +1730,7 @@ General:
 
 * Treat KP_Delete as Delete for the purpose of identifying text deletions
 
-* Fix several issues related to prefering the TableCell interface
+* Fix several issues related to preferring the TableCell interface
 
 * Fix presentation of name-changed events for Qt push buttons
 
@@ -2271,7 +2317,7 @@ Chromium:
 
 Braille:
 
- * Attempt to be smarter about the default contraction table, prefering
+ * Attempt to be smarter about the default contraction table, preferring
    the current locale and literary braille tables
 
  * Fix bug in presentation of tree items
@@ -3655,7 +3701,7 @@ Web + Email:
 
  * Filter out bogus load events from Firefox extensions
 
- * Correcly update caret position when Page Up/Down used in editable text
+ * Correctly update caret position when Page Up/Down used in editable text
 
  * Fix focus mode staying toggled off after leaving context menu
 
@@ -3677,7 +3723,7 @@ General:
 
  * Do a better job of determining the focused object upon launch
 
- * Ensure the expanded state of tree rows is annnounced
+ * Ensure the expanded state of tree rows is announced
 
  * Support synthesizing caps lock for double-orca support
    (requires AT-SPI2 2.30 or later)
@@ -4415,7 +4461,7 @@ Other:
 
  * Improve reliability of profile-based synthesis switching
 
- * Do not supress presentation of locking keys in password fields
+ * Do not suppress presentation of locking keys in password fields
 
  * Make the progressbar update intervals independent so beeps are always
    presented when that is desired
@@ -4587,7 +4633,7 @@ General:
  * Fix restoration of location when returning to nested document after
    find in page
 
- * Work around unforunate event order when switching page tabs in Gecko
+ * Work around unfortunate event order when switching page tabs in Gecko
    applications
 
  * Eliminate several clipboard/selection-related-presentation false
@@ -5182,7 +5228,7 @@ General:
 
   * Add support for status bar notifications
 
-  * Remove the old "inacessible" metacity/marco hack
+  * Remove the old "inaccessible" metacity/marco hack
 
   * Stop using gnome-autogen.sh
 
@@ -5678,7 +5724,7 @@ New and updated translations (THANKS EVERYONE!!!):
 
 Gecko:
 
-  * Create Browse and Focus modes to make acceess to web content and web
+  * Create Browse and Focus modes to make access to web content and web
     apps more reliable
 
   * Add support for presentation of longdesc and "clickable" elements
@@ -6577,7 +6623,7 @@ New and updated translations (THANKS EVERYONE!!!):
 
 New Features
 
-  * Signifcant work and progress on profile-based, on-the-fly language
+  * Significant work and progress on profile-based, on-the-fly language
     switching. It's nearly here! :)
 
 New and updated translations (THANKS EVERYONE!!!):
@@ -6668,7 +6714,7 @@ Bug Fixes
   * Much better handling of egg-list-box for the new panels in
     gnome-control-center
 
-  * Fix for bug 693159 - Orca doesnt echo words in gnome-terminal
+  * Fix for bug 693159 - Orca doesn't echo words in gnome-terminal
 
   * Do not attempt to store an AtspiTable in a dictionary (fixes the
     presentation of cells when navigating in LibreOffice Calc)
@@ -8000,7 +8046,7 @@ General:
     globally
 
   * Fix for bug #645278 - Orca is writing out application
-    prefences it should not
+    preferences it should not
 
   * Fix for bug #643969 - When switching from desktop to
     laptop mode, new keybindings don't take effect
@@ -8419,7 +8465,7 @@ General:
   * Fix for bug #630142 - Two incorrectly named chat settings in
     userCustomizableSettings
 
-  * Aditional fix for bug #609900 - Speech page speechdispatcher
+  * Additional fix for bug #609900 - Speech page speechdispatcher
     defaults to zh
 
 OpenOffice:
@@ -8845,7 +8891,7 @@ OpenOffice:
     keys the OOo script uses to determine when to speak toggle button
     state changes
 
-  * Fix for bgo#619949 - Atrributes in oowriter are not being presented
+  * Fix for bgo#619949 - Attributes in oowriter are not being presented
 
   * Fix for bgo#613299 - Orca should not present changes in the active
     descendant for unfocused widgets in OOo
@@ -11667,7 +11713,7 @@ General:
   greyed out if the filters are not available
 
 * Fix for bug #508679 - The second time to enable the Braille Monitor,
-  it can not be lauched
+  it can not be launched
 
 * Fix for bug #508777 - HTTP-based Recording ability should not be
   enabled by default
@@ -12948,7 +12994,7 @@ New and updated translations (THANKS EVERYONE!!!):
   speaking characters inserted into password entry fields.
 
 * Fix for bug 398009 to present the tooltip text for an object.
-  NOTE TO USERS: the standard toolkit method for brining up a tooltip
+  NOTE TO USERS: the standard toolkit method for bringing up a tooltip
   is Ctrl+F1 when the object has focus.
 
 * Fix for bug 368626 to prevent gnome-panel from crashing when it

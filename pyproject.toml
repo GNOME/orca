@@ -144,4 +144,4 @@ disable_error_code = ["method-assign", "attr-defined"]
 
 [tool.codespell]
 skip = "po,help,_build,subprojects,*.svg,*.doap,src/orca/braille_rolenames.py"
-ignore-words-list = "punctuations,implementor,implementors,doubleclick"
+ignore-words-list = "punctuations,implementor,implementors,doubleclick,re-use,te,outloud"
