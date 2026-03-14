@@ -274,12 +274,12 @@ gdbus call --session --dest org.gnome.Orca.Service \
     --method org.gnome.Orca.Module.ExecuteCommand 'InterruptSpeech' true
 ```
 
-In those cases Orca will ingore the value of `notify_user`.
+In those cases Orca will ignore the value of `notify_user`.
 
 **Setting `notify_user=false` is not a guarantee that Orca will remain silent**, though for the
 most part Orca will try to respect this value. The exceptions are:
 
-1. If excecuting the command has resulted in UI being shown, such as a dialog or menu, the
+1. If executing the command has resulted in UI being shown, such as a dialog or menu, the
    newly-shown UI will be presented in speech and/or braille based on the user's settings.
    Failure to announce that the user has been removed from one window and placed in another
    could be extremely confusing.
@@ -310,26 +310,3 @@ Given the keyboard-centric nature of Orca's commands, there may be instances in 
 Remote Controller for navigation and Orca fails to correctly update its location in response. If
 Orca correctly updates its location when the same navigation command is executed via keyboard,
 please report the Remote Controller failure as a new bug in Orca's gitlab.
-
-### The "Stickiness" (or Lack Thereof) of On-The-Fly Settings Changes
-
-Orca has a number of keyboard commands to temporarily change settings such as speech rate, pitch,
-volume; capitalization style; punctuation level; etc., etc. The question is: how long should
-on-the-fly modifications to settings persist?
-
-Early on in Orca's development, the conclusion was that on-the-fly settings changes should be
-seen as quite temporary, presumed to be used to address a specific one-time need. For instance,
-if reading some difficult-to-understand text, one might want to reduce the speed just for that text.
-If one were doing a final proofread of some content, one might want to briefly set the punctuation
-level to all. If one needs slow speed and/or verbose punctuation all the time, those should be set
-in Orca's Preferences dialogs -- either globally or on a per-app basis. Orca also has a profile
-feature through which the user can save settings and quickly load/unload them by switching profiles.
-
-Whether or not that historical decision was the right decision goes beyond the scope of the
-Remote Controller. The primary purpose of the Remote Controller is to provide D-Bus access to
-commands and runtime settings as if they were performed by the user via keyboard command. Thus if
-a setting changed via Remote Controller persists (or fails to persist) in the same way as when
-changed via keyboard command, it is not a Remote Controller bug. (It may be a general Orca
-bug or feature request, and you are encouraged to file it as such.) On the other hand, if the
-behavior of the Remote Controller differs from that of the corresponding or related keyboard
-command, please report that Remote Controller failure as a new bug in Orca's gitlab.
