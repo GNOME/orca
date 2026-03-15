@@ -335,11 +335,18 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             [guilabels.KEYBOARD_LAYOUT_LAPTOP, KeyboardLayout.LAPTOP.value],
         )
 
-        orca_model = Gtk.ListStore(str)
-        orca_model.append(["Insert, KP_Insert"])
-        orca_model.append(["KP_Insert"])
-        orca_model.append(["Insert"])
-        orca_model.append(["Caps_Lock, Shift_Lock"])
+        insert_and_kp = f"{guilabels.MODIFIER_INSERT}, {guilabels.MODIFIER_KP_INSERT}"
+        caps_and_shift = f"{guilabels.MODIFIER_CAPS_LOCK}, {guilabels.MODIFIER_SHIFT_LOCK}"
+
+        orca_model = Gtk.ListStore(str, str)
+        modifier_options = [
+            (insert_and_kp, "Insert, KP_Insert"),
+            (guilabels.MODIFIER_KP_INSERT, "KP_Insert"),
+            (guilabels.MODIFIER_INSERT, "Insert"),
+            (caps_and_shift, "Caps_Lock, Shift_Lock"),
+        ]
+        for label, keys in modifier_options:
+            orca_model.append([label, keys])
 
         self._combos_listbox = preferences_grid_base.FocusManagedListBox()
         combo_size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
@@ -1067,7 +1074,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             tree_iter = self._orca_modifier_combo.get_active_iter()
             if tree_iter is not None:
                 model = self._orca_modifier_combo.get_model()
-                orca_modifier = model.get_value(tree_iter, 0)
+                orca_modifier = model.get_value(tree_iter, 1)
                 modifier_keys = orca_modifier.split(", ")
 
                 if is_desktop:
@@ -1153,7 +1160,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             orca_model = self._orca_modifier_combo.get_model()
             if orca_model:
                 for i, row in enumerate(orca_model):
-                    if row[0] == key_string:
+                    if row[1] == key_string:
                         self._orca_modifier_combo.set_active(i)
                         break
 
@@ -1180,7 +1187,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 orca_model = self._orca_modifier_combo.get_model()
                 matched = False
                 for i, row in enumerate(orca_model):
-                    if row[0] == key_string:
+                    if row[1] == key_string:
                         self._orca_modifier_combo.set_active(i)
                         matched = True
                         break
@@ -1190,7 +1197,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         self._orca_modifier_combo.set_active(0)
                     else:
                         self._orca_modifier_combo.set_active(3)
-                    saved_keys = orca_model[self._orca_modifier_combo.get_active()][0].split(", ")
+                    saved_keys = orca_model[self._orca_modifier_combo.get_active()][1].split(", ")
 
                 orca_modifier_manager.get_manager().set_modifier_keys_override(saved_keys)
 
@@ -1209,7 +1216,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             return
 
         model = combo.get_model()
-        orca_modifier = model.get_value(tree_iter, 0)
+        orca_modifier = model.get_value(tree_iter, 1)
         orca_modifier_manager.get_manager().set_modifier_keys_override(
             orca_modifier.split(", "),
         )

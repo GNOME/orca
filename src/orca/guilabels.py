@@ -1625,6 +1625,20 @@ GENERAL_FREQUENCY_SECS = C_("ProgressBar", "Frequency (secs):")
 # which key(s) should be used as the Orca modifier.
 KEY_BINDINGS_SCREEN_READER_MODIFIER_KEY_S = _("Screen Reader _Modifier Key(s):")
 
+# Translators: This refers to the Insert key being used as the Orca modifier.
+MODIFIER_INSERT = _("Insert")
+
+# Translators: This refers to the keypad Insert key being used as the Orca modifier.
+# It is important that the translation be different from the one for "Insert" so
+# that users can distinguish between the two keys.
+MODIFIER_KP_INSERT = _("Keypad Insert")
+
+# Translators: This refers to the Caps Lock key being used as the Orca modifier.
+MODIFIER_CAPS_LOCK = _("Caps Lock")
+
+# Translators: This refers to the Shift Lock key being used as the Orca modifier.
+MODIFIER_SHIFT_LOCK = _("Shift Lock")
+
 # Translators: Orca can optionally speak additional details as the user
 # navigates (e.g. via the arrow keys) within document content. If this widget
 # is enabled, Orca will announce that a form has been entered as the user
