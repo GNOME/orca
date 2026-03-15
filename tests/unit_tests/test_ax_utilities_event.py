@@ -3117,8 +3117,21 @@ class TestAXUtilitiesEvent:
 
         mock_input_manager.last_event_was_command.return_value = False
         mock_input_manager.last_event_was_printable_key.return_value = True
+
+        from orca.ax_utilities_text import AXUtilitiesText
+
+        test_context.patch_object(
+            AXUtilitiesText, "get_cached_selected_text", return_value=("", 0, 0)
+        )
+        test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
         result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
         assert result == TextEventReason.TYPING
+
+        test_context.patch_object(
+            AXUtilitiesText, "get_selected_text", return_value=("n.wikipedia.org/", 1, 17)
+        )
+        result = AXUtilitiesEvent._get_text_selection_changed_event_reason(mock_event)
+        assert result == TextEventReason.AUTO_SELECTION
 
         mock_input_manager.last_event_was_printable_key.return_value = False
         mock_input_manager.last_event_was_up_or_down.return_value = True
