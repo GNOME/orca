@@ -1251,6 +1251,9 @@ class Script(script.Script):
         ]:
             return True
 
+        if AXText.get_selected_ranges(event.source):
+            return True
+
         presenter = typing_echo_presenter.get_presenter()
         if presenter.echo_previous_sentence(event.source):
             return True
