@@ -1240,6 +1240,8 @@ class Generator:
             if cell_result and result and self._mode is GeneratorMode.BRAILLE:
                 result.append(braille.Region(object_properties.TABLE_CELL_DELIMITER_BRAILLE))
             result.extend(cell_result)
+            args["priorObj"] = cell
+            other_cell_args["priorObj"] = cell
 
         result.extend(self._generate_position_in_list(obj, **args))
         return result
