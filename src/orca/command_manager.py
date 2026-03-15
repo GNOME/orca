@@ -1055,8 +1055,14 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         general: dict[str, int | list[str]] = {}
         bindings: dict[str, list[list[Any]]] = {}
 
-        general["keyboard-layout"] = get_manager().get_keyboard_layout_value()
+        layout_value = get_manager().get_keyboard_layout_value()
+        if self.keyboard_layout_combo is not None:
+            layout_iter = self.keyboard_layout_combo.get_active_iter()
+            if layout_iter is not None:
+                layout_value = self.keyboard_layout_combo.get_model().get_value(layout_iter, 1)
+        general["keyboard-layout"] = layout_value
 
+        is_desktop = layout_value == KeyboardLayout.DESKTOP.value
         if self._orca_modifier_combo is not None:
             tree_iter = self._orca_modifier_combo.get_active_iter()
             if tree_iter is not None:
@@ -1064,9 +1070,6 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 orca_modifier = model.get_value(tree_iter, 0)
                 modifier_keys = orca_modifier.split(", ")
 
-                is_desktop = (
-                    get_manager().get_keyboard_layout_value() == KeyboardLayout.DESKTOP.value
-                )
                 if is_desktop:
                     general["desktop-modifier-keys"] = modifier_keys
                 else:
