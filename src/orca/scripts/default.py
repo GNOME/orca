@@ -1295,6 +1295,11 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             AXUtilities.update_cached_selected_text(event.source)
             return True
+        if reason == TextEventReason.AUTO_SELECTION:
+            msg = "DEFAULT: Ignoring auto-selection believed to be side effect of typing"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            AXUtilities.update_cached_selected_text(event.source)
+            return True
 
         self.utilities.handle_text_selection_change(event.source)
         self.update_braille(event.source)
