@@ -43,6 +43,7 @@ from .ax_text import AXText
 from .ax_utilities_collection import AXUtilitiesCollection
 from .ax_utilities_component import AXUtilitiesComponent
 from .ax_utilities_object import AXUtilitiesObject
+from .ax_utilities_relation import AXUtilitiesRelation
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 from .ax_utilities_text import AXUtilitiesText
@@ -1009,6 +1010,17 @@ class AXUtilitiesEvent:
                 return False
 
         focus = focus_manager.get_manager().get_locus_of_focus()
+
+        mgr = input_event_manager.get_manager()
+        if (
+            AXUtilitiesState.supports_autocompletion(focus)
+            and not mgr.last_event_was_up_or_down()
+            and not mgr.last_event_was_page_up_or_page_down()
+        ):
+            if AXUtilitiesRelation.object_is_controlled_by(event.source, focus):
+                msg = "AXUtilitiesEvent: Source is autocomplete for focused widget; not presenting."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
         if event.source != focus and not (
             AXUtilitiesState.is_showing(event.source) and AXUtilitiesState.is_visible(event.source)
         ):
