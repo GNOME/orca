@@ -63,6 +63,7 @@ class TextEventReason(enum.Enum):
     AUTO_INSERTION_PRESENTABLE = enum.auto()
     AUTO_INSERTION_UNPRESENTABLE = enum.auto()
     AUTO_SELECTION = enum.auto()
+    AUTO_UNSELECTION = enum.auto()
     BACKSPACE = enum.auto()
     CHILDREN_CHANGE = enum.auto()
     CUT = enum.auto()
@@ -577,11 +578,15 @@ class AXUtilitiesEvent:
         if mgr.last_event_was_command():
             return TextEventReason.UNSPECIFIED_COMMAND
         if mgr.last_event_was_printable_key():
-            cached_text, _old_start, _old_end = AXUtilitiesText.get_cached_selected_text(obj)
+            cached_text, old_start, old_end = AXUtilitiesText.get_cached_selected_text(obj)
             if not cached_text:
                 _current, new_start, new_end = AXUtilitiesText.get_selected_text(obj)
                 if new_start < new_end:
                     return TextEventReason.AUTO_SELECTION
+            else:
+                _current, new_start, new_end = AXUtilitiesText.get_selected_text(obj)
+                if new_start == old_start + 1 and new_end == old_end:
+                    return TextEventReason.AUTO_UNSELECTION
             return TextEventReason.TYPING
         if mgr.last_event_was_up_or_down() or mgr.last_event_was_page_up_or_page_down():
             if AXUtilitiesRole.is_spin_button(obj) or AXUtilitiesObject.find_ancestor(
