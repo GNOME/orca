@@ -1113,6 +1113,12 @@ class Link(Component):
     def get_attribute_mask(self, _indicate_links: bool = True) -> str:
         """Return an attrOr mask that marks link cells."""
 
+        if _STATE.link_indicator != INDICATOR_NONE and self.string:
+            msg = (
+                f"BRAILLE: Link underline for link region: "
+                f"'{self.string}' ({len(self.string)} cells)"
+            )
+            debug.print_message(debug.LEVEL_INFO, msg, True)
         return chr(_STATE.link_indicator) * len(self.string)
 
 
@@ -1272,6 +1278,16 @@ class Text(Region):
                 end_offset = AXHypertext.get_link_end_offset(link)
                 mask_start = max(start_offset - self.line_offset, 0)
                 mask_end = min(end_offset - self.line_offset, string_length)
+                if mask_start < mask_end:
+                    link_text = self._raw_line[mask_start:mask_end]
+                    msg = (
+                        f"BRAILLE: Link underline in text region: "
+                        f"text offsets [{start_offset}, {end_offset}), "
+                        f"line_offset {self.line_offset}, "
+                        f"mask cells [{mask_start}, {mask_end}), "
+                        f"text '{link_text}'"
+                    )
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
                 for i in range(mask_start, mask_end):
                     region_mask[i] |= link_indicator
 
@@ -2038,6 +2054,16 @@ def _paint_display(line_info: _LineInfo, start_position: int, end_position: int)
         submask = ""
 
     submask += "\x00" * (len(substring) - len(submask))
+
+    if any(ord(c) for c in submask):
+        indicator_map = "".join("^" if ord(c) else " " for c in submask)
+        msg = (
+            f"BRAILLE: Attribute mask for visible region "
+            f"[{start_position}, {end_position}):\n"
+            f"         TEXT: '{substring}'\n"
+            f"         MASK:  {indicator_map}"
+        )
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     if _STATE.enable_braille:
         _enable_braille()
