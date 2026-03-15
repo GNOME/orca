@@ -566,7 +566,6 @@ class BraillePresenter:
         controller = dbus_service.get_remote_controller()
         controller.register_decorated_module("BraillePresenter", self)
         self._command_names: dict[int, str] | None = None
-        self._table_names: dict[str, str] | None = None
         self._monitor: braille_monitor.BrailleMonitor | None = None
         self._monitor_enabled_override: bool | None = None
         self._initialized = False
@@ -625,51 +624,10 @@ class BraillePresenter:
                 presentation_manager.get_manager().present_message(messages.BRAILLE_MONITOR_ENABLED)
         return True
 
-    @staticmethod
-    def _build_table_names() -> dict[str, str]:
-        """Returns display names for braille translation tables."""
-
-        return {
-            "Cz-Cz-g1": brltablenames.CZ_CZ_G1,
-            "Es-Es-g1": brltablenames.ES_ES_G1,
-            "Fr-Ca-g2": brltablenames.FR_CA_G2,
-            "Fr-Fr-g2": brltablenames.FR_FR_G2,
-            "Lv-Lv-g1": brltablenames.LV_LV_G1,
-            "Nl-Nl-g1": brltablenames.NL_NL_G1,
-            "No-No-g0": brltablenames.NO_NO_G0,
-            "No-No-g1": brltablenames.NO_NO_G1,
-            "No-No-g2": brltablenames.NO_NO_G2,
-            "No-No-g3": brltablenames.NO_NO_G3,
-            "Pl-Pl-g1": brltablenames.PL_PL_G1,
-            "Pt-Pt-g1": brltablenames.PT_PT_G1,
-            "Se-Se-g1": brltablenames.SE_SE_G1,
-            "ar-ar-g1": brltablenames.AR_AR_G1,
-            "cy-cy-g1": brltablenames.CY_CY_G1,
-            "cy-cy-g2": brltablenames.CY_CY_G2,
-            "de-de-g0": brltablenames.DE_DE_G0,
-            "de-de-g1": brltablenames.DE_DE_G1,
-            "de-de-g2": brltablenames.DE_DE_G2,
-            "en-GB-g2": brltablenames.EN_GB_G2,
-            "en-gb-g1": brltablenames.EN_GB_G1,
-            "en-us-g1": brltablenames.EN_US_G1,
-            "en-us-g2": brltablenames.EN_US_G2,
-            "fr-ca-g1": brltablenames.FR_CA_G1,
-            "fr-fr-g1": brltablenames.FR_FR_G1,
-            "gr-gr-g1": brltablenames.GR_GR_G1,
-            "hi-in-g1": brltablenames.HI_IN_G1,
-            "hu-hu-comp8": brltablenames.HU_HU_8DOT,
-            "hu-hu-g1": brltablenames.HU_HU_G1,
-            "hu-hu-g2": brltablenames.HU_HU_G2,
-            "it-it-g1": brltablenames.IT_IT_G1,
-            "nl-be-g1": brltablenames.NL_BE_G1,
-        }
-
     def get_table_names(self) -> dict[str, str]:
-        """Returns table aliases mapped to localized display names."""
+        """Returns table filenames mapped to localized display names."""
 
-        if self._table_names is None:
-            self._table_names = self._build_table_names()
-        return dict(self._table_names)
+        return dict(brltablenames.TABLE_NAMES)
 
     @staticmethod
     def _build_command_names() -> dict[int, str]:
@@ -1390,8 +1348,8 @@ class BraillePresenter:
         names = self.get_table_names()
         tables = {}
         for fname in self._get_table_files():
-            alias = fname[:-4]
-            tables[names.get(alias, alias)] = os.path.join(tablesdir, fname)
+            display_name = names.get(fname, os.path.splitext(fname)[0])
+            tables[display_name] = os.path.join(tablesdir, fname)
         return tables
 
     @dbus_service.setter

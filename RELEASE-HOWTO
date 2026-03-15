@@ -18,6 +18,9 @@ Make sure you are up to date:
 Run the `generate_gsettings_documentation.py` and `generate_dbus_documentation.py` tools.
 Note that the latter requires that Orca is running.
 
+Early in the release cycle, i.e. before string freeze, run the `generate_braille_table_names.py`
+tool to update `brltablenames.py`.
+
 Update ./NEWS with changes from the last tagged release. You can use
 commands like the following:
 
