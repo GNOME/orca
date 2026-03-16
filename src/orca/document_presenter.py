@@ -37,7 +37,7 @@ import gi
 
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gtk", "3.0")
-from gi.repository import Atspi, Gtk
+from gi.repository import Atspi, Gtk  # pylint: disable=no-name-in-module
 
 from . import (
     caret_navigator,

@@ -23,6 +23,7 @@
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=too-many-public-methods
+# pylint: disable=too-many-return-statements
 
 """The default Script for presenting information to the user."""
 

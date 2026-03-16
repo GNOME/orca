@@ -112,6 +112,7 @@ class SleepModePreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def refresh(self) -> None:
         """Rebuild the app list with a fresh FocusManagedListBox."""
 
+        # pylint: disable=no-member
         self._app_switches.clear()
         self._listbox = preferences_grid_base.FocusManagedListBox()
         self._listbox.get_accessible().set_name(guilabels.SLEEP_MODE_APPS)
@@ -128,6 +129,7 @@ class SleepModePreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self._scrolled.remove(child)
         self._scrolled.add(self._listbox)
         self._scrolled.show_all()
+        # pylint: enable=no-member
 
     def save_settings(self, profile: str = "", app_name: str = "") -> dict[str, list[str]]:
         """Save the list of sleep-mode apps to dconf."""

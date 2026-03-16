@@ -123,6 +123,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._default_families_combo: Gtk.ComboBox | None = None
         self._default_rate_scale: Gtk.Scale | None = None
         self._default_pitch_scale: Gtk.Scale | None = None
+        self._default_pitch_range_scale: Gtk.Scale | None = None
         self._default_volume_scale: Gtk.Scale | None = None
 
         # Hyperlink voice widgets (created on-demand in dialogs)
@@ -130,6 +131,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._hyperlink_families_combo: Gtk.ComboBox | None = None
         self._hyperlink_rate_scale: Gtk.Scale | None = None
         self._hyperlink_pitch_scale: Gtk.Scale | None = None
+        self._hyperlink_pitch_range_scale: Gtk.Scale | None = None
         self._hyperlink_volume_scale: Gtk.Scale | None = None
 
         # Uppercase voice widgets (created on-demand in dialogs)
@@ -137,6 +139,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._uppercase_families_combo: Gtk.ComboBox | None = None
         self._uppercase_rate_scale: Gtk.Scale | None = None
         self._uppercase_pitch_scale: Gtk.Scale | None = None
+        self._uppercase_pitch_range_scale: Gtk.Scale | None = None
         self._uppercase_volume_scale: Gtk.Scale | None = None
 
         # System voice widgets (created on-demand in dialogs)
@@ -144,6 +147,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._system_families_combo: Gtk.ComboBox | None = None
         self._system_rate_scale: Gtk.Scale | None = None
         self._system_pitch_scale: Gtk.Scale | None = None
+        self._system_pitch_range_scale: Gtk.Scale | None = None
         self._system_volume_scale: Gtk.Scale | None = None
 
         self._families_sorted: bool = False
