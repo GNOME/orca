@@ -279,7 +279,7 @@ class Script(default.Script):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             replicant = AXUtilities.find_descendant(
                 document,
-                lambda x: AXObject.get_name(x) == name and AXObject.get_role(obj) == role,
+                lambda x: AXObject.get_name(x) == name and AXObject.get_role(x) == role,
             )
             if replicant:
                 obj = replicant
@@ -366,7 +366,7 @@ class Script(default.Script):
         # such side effects from happening in the first place.
         offset = args.get("offset")
         if offset is None:
-            obj, offset = self.utilities.get_caret_context(document, get_replicant=True)
+            obj, offset = self.utilities.get_caret_context(document)
         if offset > 0 and is_content_editable and self.utilities.treat_as_text_object(obj):
             offset = min(offset, AXText.get_character_count(obj))
 
@@ -819,7 +819,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        obj, offset = self.utilities.get_caret_context(document, False, False)
+        obj, offset = self.utilities.get_caret_context(document, search_if_needed=False)
         tokens = ["WEB: Context: ", obj, ", ", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -1030,11 +1030,6 @@ class Script(default.Script):
         if AXUtilities.is_busy(document):
             tokens = ["WEB: Ignoring because", document, "is busy."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        if self.utilities.handle_event_from_context_replicant(event, event.any_data):
-            msg = "WEB: Event handled by updating locusOfFocus and context to child."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         if AXUtilities.is_alert(event.any_data):
@@ -1298,11 +1293,6 @@ class Script(default.Script):
                 msg = "WEB: Event handled: Setting locusOfFocus to event source"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 focus_manager.get_manager().set_locus_of_focus(event, event.source)
-            return True
-
-        if self.utilities.handle_event_from_context_replicant(event, event.source):
-            msg = "WEB: Event handled by updating locusOfFocus and context to source."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         obj, offset = self.utilities.get_caret_context()
@@ -1569,7 +1559,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        obj, _offset = self.utilities.get_caret_context(get_replicant=False)
+        obj, _offset = self.utilities.get_caret_context()
         if (
             obj
             and obj != event.source
@@ -1585,7 +1575,7 @@ class Script(default.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
-            obj, _offset = self.utilities.get_caret_context(get_replicant=True)
+            obj, _offset = self.utilities.get_caret_context()
             if obj:
                 focus_manager.get_manager().set_locus_of_focus(event, obj, notify_script=False)
 

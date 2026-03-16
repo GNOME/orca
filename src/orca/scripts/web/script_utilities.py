@@ -72,8 +72,6 @@ class Utilities(script_utilities.Utilities):
         self._cached_caret_contexts: dict[int, tuple[Atspi.Accessible, int]] = {}
         self._cached_prior_contexts: dict[int, tuple[Atspi.Accessible, int]] = {}
         self._cached_can_have_caret_context_decision: dict[int, bool] = {}
-        self._cached_context_paths_roles_and_names: dict[int, tuple] = {}
-        self._cached_paths: dict[int, list] = {}
         self._cached_in_document_content: dict[int, bool] = {}
         self._cached_is_text_block_element: dict[int, bool] = {}
         self._cached_is_content_editable_with_embedded_objects: dict[int, bool] = {}
@@ -174,8 +172,6 @@ class Utilities(script_utilities.Utilities):
         self._cached_should_infer_label_for = {}
         self._cached_treat_as_text_object = {}
         self._cached_treat_as_div = {}
-        self._cached_paths = {}
-        self._cached_context_paths_roles_and_names = {}
         self._cached_can_have_caret_context_decision = {}
         self._cleanup_contexts()
         self._cached_prior_contexts = {}
@@ -3021,7 +3017,6 @@ class Utilities(script_utilities.Utilities):
     def get_caret_context(
         self,
         document: Atspi.Accessible | None = None,
-        get_replicant: bool = False,
         search_if_needed: bool = True,
     ) -> tuple[Atspi.Accessible, int]:
         """Returns an (obj, offset) tuple representing the current location."""
@@ -3066,16 +3061,6 @@ class Utilities(script_utilities.Utilities):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return None, -1
             obj, offset = self.search_for_caret_context(document)
-        elif not get_replicant:
-            obj, offset = context
-        elif not AXObject.is_valid(context[0]):
-            msg = "WEB: Context is not valid. Searching for replicant."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            obj, offset = self._find_context_replicant_deprecated()
-            if obj:
-                caret_obj, caret_offset = self.search_for_caret_context(AXObject.get_parent(obj))
-                if caret_obj and AXObject.is_valid(caret_obj):
-                    obj, offset = caret_obj, caret_offset
         else:
             obj, offset = context
 
@@ -3083,20 +3068,6 @@ class Utilities(script_utilities.Utilities):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self.set_caret_context(obj, offset, document)
         return obj, offset
-
-    def _get_caret_context_path_role_and_name(
-        self,
-        document: Atspi.Accessible | None = None,
-    ) -> tuple[list[int], Atspi.Role | None, str | None]:
-        document = document or self.active_document()
-        if not document:
-            return [-1], None, None
-
-        rv = self._cached_context_paths_roles_and_names.get(hash(AXObject.get_parent(document)))
-        if not rv:
-            return [-1], None, None
-
-        return rv
 
     def clear_caret_context(self, document: Atspi.Accessible | None = None) -> None:
         """Clears the caret context."""
@@ -3110,53 +3081,6 @@ class Utilities(script_utilities.Utilities):
         parent = AXObject.get_parent(document)
         self._cached_caret_contexts.pop(hash(parent), None)
         self._cached_prior_contexts.pop(hash(parent), None)
-
-    def handle_event_from_context_replicant(self, event, replicant):
-        """Attempts to clean up when we can an event from a replacement of the focused object."""
-
-        if AXObject.is_dead(replicant):
-            msg = "WEB: Context replicant is dead."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        if not focus_manager.get_manager().focus_is_dead():
-            msg = "WEB: Not event from context replicant, locus of focus is not dead."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        path, role, name = self._get_caret_context_path_role_and_name()
-        replicant_path = AXObject.get_path(replicant)
-        if path != replicant_path:
-            tokens = [
-                "WEB: Not event from context replicant. Path",
-                path,
-                " != replicant path",
-                replicant_path,
-            ]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        replicant_role = AXObject.get_role(replicant)
-        if role != replicant_role:
-            tokens = [
-                "WEB: Not event from context replicant. Role",
-                role,
-                " != replicant role",
-                replicant_role,
-            ]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        notify = AXObject.get_name(replicant) != name
-        document = self.active_document()
-        _obj, offset = self._cached_caret_contexts.get(hash(AXObject.get_parent(document)))
-
-        tokens = ["WEB: Is event from context replicant. Notify:", notify]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        focus_manager.get_manager().set_locus_of_focus(event, replicant, notify)
-        self.set_caret_context(replicant, offset, document)
-        return True
 
     def _handle_event_for_removed_selectable_child(self, event):
         container = None
@@ -3283,28 +3207,6 @@ class Utilities(script_utilities.Utilities):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
-    def _find_context_replicant_deprecated(
-        self,
-        document: Atspi.Accessible | None = None,
-        match_role: bool = True,
-        match_name: bool = True,
-    ) -> tuple[Atspi.Accessible | None, int]:
-        path, old_role, old_name = self._get_caret_context_path_role_and_name(document)
-        obj = self._get_object_from_path(path)
-        if obj and match_role:
-            if AXObject.get_role(obj) != old_role:
-                obj = None
-        if obj and match_name:
-            if AXObject.get_name(obj) != old_name:
-                obj = None
-        if not obj:
-            return None, -1
-
-        obj, offset = self.first_context(obj, 0)
-        tokens = ["WEB: Context replicant is", obj, ", ", offset]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return obj, offset
-
     def get_prior_context(
         self,
         document: Atspi.Accessible | None = None,
@@ -3320,15 +3222,6 @@ class Utilities(script_utilities.Utilities):
                 return context
 
         return None, -1
-
-    def _get_path(self, obj: Atspi.Accessible) -> list[int]:
-        rv = self._cached_paths.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = AXObject.get_path(obj) or [-1]
-        self._cached_paths[hash(obj)] = rv
-        return rv
 
     def set_caret_context(
         self,
@@ -3346,11 +3239,6 @@ class Utilities(script_utilities.Utilities):
         old_obj, old_offset = self._cached_caret_contexts.get(hash(parent), (obj, offset))
         self._cached_prior_contexts[hash(parent)] = old_obj, old_offset
         self._cached_caret_contexts[hash(parent)] = obj, offset
-
-        path = self._get_path(obj)
-        role = AXObject.get_role(obj)
-        name = AXObject.get_name(obj)
-        self._cached_context_paths_roles_and_names[hash(parent)] = path, role, name
 
     def first_context(self, obj: Atspi.Accessible, offset: int) -> tuple[Atspi.Accessible, int]:
         """Returns the first viable/valid caret context given obj and offset."""

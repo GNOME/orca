@@ -292,24 +292,6 @@ class Utilities:
 
         return AXUtilities.is_link(obj)
 
-    def _get_object_from_path(self, path):
-        # TODO - JD: This broad exception is swallowing a pyatspism meaning the one caller
-        # (recovery code for web brokenness) is not recovering. Which suggests that code can
-        # be removed.
-        start = self._script.app
-        rv = None
-        for p in path:
-            if p == -1:
-                continue
-            try:
-                start = start[p]
-            except (IndexError, TypeError, AttributeError):
-                break
-        else:
-            rv = start
-
-        return rv
-
     def _top_level_roles(self) -> list[Atspi.Role]:
         # TODO - JD: Move this into AXUtilities.
         roles = [
@@ -632,7 +614,6 @@ class Utilities:
     def get_caret_context(
         self,
         document: Atspi.Accessible | None = None,  # pylint: disable=unused-argument
-        get_replicant: bool = False,  # pylint: disable=unused-argument
         search_if_needed: bool = True,  # pylint: disable=unused-argument
     ) -> tuple[Atspi.Accessible, int]:
         """Returns an (obj, offset) tuple representing the current location."""
