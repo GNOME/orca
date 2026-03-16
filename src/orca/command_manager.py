@@ -1773,26 +1773,6 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
                 return cmd
         return None
 
-    def get_command_for_keybinding(
-        self,
-        keysymstring: str,
-        modifiers: int,
-        click_count: int,
-    ) -> KeyboardCommand | None:
-        """Returns the keyboard command matching the keybinding properties, or None."""
-
-        for cmd in self._keyboard_commands.values():
-            kb = cmd.get_keybinding()
-            if kb is None:
-                continue
-            if (
-                kb.keysymstring == keysymstring
-                and kb.modifiers == modifiers
-                and kb.click_count == click_count
-            ):
-                return cmd
-        return None
-
     def has_multi_click_bindings(self, keyval: int, keycode: int, modifiers: int) -> bool:
         """Returns True if there are any bindings for this key with click_count > 1."""
 
