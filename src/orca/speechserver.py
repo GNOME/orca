@@ -250,6 +250,12 @@ class SpeechServer:
     def decrease_speech_volume(self, step: float = 0.5) -> None:
         """Decreases the speech volume."""
 
+    def increase_speech_inflection(self, step: float = 0.5) -> None:
+        """Increases the speech inflection (pitch range)."""
+
+    def decrease_speech_inflection(self, step: float = 0.5) -> None:
+        """Decreases the speech inflection (pitch range)."""
+
     def update_capitalization_style(self, style: str) -> None:
         """Updates the capitalization style used by the speech server."""
 

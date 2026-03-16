@@ -426,9 +426,11 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`CyclePunctuationLevel`:** Cycles through punctuation levels for speech.
 - **`CycleSynthesizer`:** Cycles through available speech synthesizers.
 - **`DecreasePitch`:** Decreases the speech pitch
+- **`DecreasePitchRange`:** Decreases the speech inflection (pitch range).
 - **`DecreaseRate`:** Decreases the speech rate.
 - **`DecreaseVolume`:** Decreases the speech volume
 - **`IncreasePitch`:** Increase the speech pitch
+- **`IncreasePitchRange`:** Increases the speech inflection (pitch range).
 - **`IncreaseRate`:** Increases the speech rate.
 - **`IncreaseVolume`:** Increases the speech volume
 - **`InterruptSpeech`:** Interrupts the speech server.
@@ -459,6 +461,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`CurrentVoice`:** Gets/Sets the current voice for the active synthesizer.
 - **`InsertPausesBetweenUtterances`:** Gets/Sets whether pauses are inserted between utterances, e.g. between name and role.
 - **`Pitch`:** Gets/Sets the current speech pitch (0.0-10.0, default: 5.0).
+- **`PitchRange`:** Gets/Sets the current speech inflection / pitch range (0.0-10.0, default: 5.0).
 - **`PunctuationLevel`:** Gets/Sets the punctuation level.
 - **`Rate`:** Gets/Sets the current speech rate (0-100, default: 50).
 - **`SpeakNumbersAsDigits`:** Gets/Sets whether numbers are spoken as digits.

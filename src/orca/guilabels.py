@@ -2117,6 +2117,11 @@ VOICE_PITCH = _("Pi_tch:")
 # volume of the current voice.
 VOICE_VOLUME = _("Vo_lume:")
 
+# Translators: This is the label for a widget from which the user can set the
+# inflection (pitch range) of the current voice. More inflection means the voice
+# varies its pitch more when speaking; less inflection means it sounds more monotone.
+VOICE_INFLECTION = _("_Inflection:")
+
 # Translators: Having multiple voice types in Orca makes it possible for the
 # user to more quickly identify properties of text non-visually, such as the
 # fact that text is written in capital letters or is a link; or that text is

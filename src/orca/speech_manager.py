@@ -396,6 +396,25 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         )
         voice_listbox.add_row_with_widget(pitch_row, pitch_scale)
 
+        def on_pitch_range_changed(widget: Gtk.Scale) -> None:
+            self._on_pitch_range_changed(widget, voice_type)
+
+        pitch_range_adj = Gtk.Adjustment(
+            value=5.0,
+            lower=0,
+            upper=10,
+            step_increment=0.1,
+            page_increment=1,
+        )
+        pitch_range_row, pitch_range_scale, _pitch_range_label = self._create_slider_row(
+            guilabels.VOICE_INFLECTION,
+            pitch_range_adj,
+            changed_handler=on_pitch_range_changed,
+            include_top_separator=False,
+            digits=1,
+        )
+        voice_listbox.add_row_with_widget(pitch_range_row, pitch_range_scale)
+
         def on_volume_changed(widget: Gtk.Scale) -> None:
             self._on_volume_changed(widget, voice_type)
 
@@ -423,31 +442,37 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self._default_families_combo = families_combo
             self._default_rate_scale = rate_scale
             self._default_pitch_scale = pitch_scale
+            self._default_pitch_range_scale = pitch_range_scale
             self._default_volume_scale = volume_scale
         elif voice_type == self.VoiceType.HYPERLINK:
             self._hyperlink_languages_combo = languages_combo
             self._hyperlink_families_combo = families_combo
             self._hyperlink_rate_scale = rate_scale
             self._hyperlink_pitch_scale = pitch_scale
+            self._hyperlink_pitch_range_scale = pitch_range_scale
             self._hyperlink_volume_scale = volume_scale
         elif voice_type == self.VoiceType.UPPERCASE:
             self._uppercase_languages_combo = languages_combo
             self._uppercase_families_combo = families_combo
             self._uppercase_rate_scale = rate_scale
             self._uppercase_pitch_scale = pitch_scale
+            self._uppercase_pitch_range_scale = pitch_range_scale
             self._uppercase_volume_scale = volume_scale
         elif voice_type == self.VoiceType.SYSTEM:
             self._system_languages_combo = languages_combo
             self._system_families_combo = families_combo
             self._system_rate_scale = rate_scale
             self._system_pitch_scale = pitch_scale
+            self._system_pitch_range_scale = pitch_range_scale
             self._system_volume_scale = volume_scale
 
         self._populate_languages_for_voice_type(voice_type)
         self._populate_families_for_voice_type(voice_type, apply_changes=False)
 
         self._initializing = True
-        self._refresh_voice_widgets(voice_type, rate_scale, pitch_scale, volume_scale)
+        self._refresh_voice_widgets(
+            voice_type, rate_scale, pitch_scale, pitch_range_scale, volume_scale
+        )
         self._initializing = False
 
         def on_response(dlg, response_id):
@@ -616,6 +641,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         voice_type: VoicesPreferencesGrid.VoiceType,
         rate_scale: Gtk.Scale,
         pitch_scale: Gtk.Scale,
+        pitch_range_scale: Gtk.Scale,
         volume_scale: Gtk.Scale,
     ) -> None:
         """Update widgets for a specific voice type."""
@@ -627,6 +653,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         pitch = voice_acss.get(ACSS.AVERAGE_PITCH, 5.0)
         pitch_scale.set_value(pitch)
+
+        pitch_range = voice_acss.get(ACSS.PITCH_RANGE, 5.0)
+        pitch_range_scale.set_value(pitch_range)
 
         volume = voice_acss.get(ACSS.GAIN, 10.0)
         volume_scale.set_value(volume)
@@ -986,6 +1015,13 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 voice[ACSS.AVERAGE_PITCH],
                 voice_type=settings_key,
             )
+        if ACSS.PITCH_RANGE in voice:
+            registry.set_runtime_value(
+                schema,
+                SpeechManager.KEY_PITCH_RANGE,
+                voice[ACSS.PITCH_RANGE],
+                voice_type=settings_key,
+            )
         if ACSS.GAIN in voice:
             registry.set_runtime_value(
                 schema, SpeechManager.KEY_VOLUME, voice[ACSS.GAIN], voice_type=settings_key
@@ -1042,6 +1078,23 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         pitch = widget.get_value()
         voice_acss = self._get_acss_for_voice_type(voice_type)
         voice_acss[ACSS.AVERAGE_PITCH] = pitch
+        voice_acss["established"] = True
+        self._sync_voice_to_settings(voice_type)
+        self._has_unsaved_changes = True
+
+    def _on_pitch_range_changed(
+        self,
+        widget: Gtk.Scale,
+        voice_type: VoicesPreferencesGrid.VoiceType,
+    ) -> None:
+        """Handle inflection (pitch range) slider change for a specific voice type."""
+
+        if self._initializing:
+            return
+
+        pitch_range = widget.get_value()
+        voice_acss = self._get_acss_for_voice_type(voice_type)
+        voice_acss[ACSS.PITCH_RANGE] = pitch_range
         voice_acss["established"] = True
         self._sync_voice_to_settings(voice_type)
         self._has_unsaved_changes = True
@@ -1283,6 +1336,7 @@ class SpeechManager:
     KEY_ESTABLISHED = "established"
     KEY_RATE = "rate"
     KEY_PITCH = "pitch"
+    KEY_PITCH_RANGE = "pitch-range"
     KEY_VOLUME = "volume"
     KEY_FAMILY_NAME = "family-name"
     KEY_FAMILY_LANG = "family-lang"
@@ -1328,6 +1382,11 @@ class SpeechManager:
         pitch = lookup(self._VOICE_SCHEMA, self.KEY_PITCH, "d", voice_type=vtype, app_name=app_name)
         if pitch is not None:
             voice[ACSS.AVERAGE_PITCH] = pitch
+        pitch_range = lookup(
+            self._VOICE_SCHEMA, self.KEY_PITCH_RANGE, "d", voice_type=vtype, app_name=app_name
+        )
+        if pitch_range is not None:
+            voice[ACSS.PITCH_RANGE] = pitch_range
         volume = lookup(
             self._VOICE_SCHEMA, self.KEY_VOLUME, "d", voice_type=vtype, app_name=app_name
         )
@@ -1422,6 +1481,20 @@ class SpeechManager:
                 "increaseSpeechPitchHandler",
                 self.increase_pitch,
                 cmdnames.INCREASE_SPEECH_PITCH,
+                None,
+                None,
+            ),
+            (
+                "decreaseSpeechInflectionHandler",
+                self.decrease_pitch_range,
+                cmdnames.DECREASE_SPEECH_INFLECTION,
+                None,
+                None,
+            ),
+            (
+                "increaseSpeechInflectionHandler",
+                self.increase_pitch_range,
+                cmdnames.INCREASE_SPEECH_INFLECTION,
                 None,
                 None,
             ),
@@ -2262,6 +2335,109 @@ class SpeechManager:
         if notify_user and script is not None:
             full = f"{messages.SPEECH_HIGHER} {new_pitch:g}"
             presentation_manager.get_manager().present_message(full, f"{new_pitch:g}")
+
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_PITCH_RANGE,
+        schema="voice",
+        gtype="d",
+        default=5.0,
+        summary="Speech inflection / pitch range (0.0-10.0)",
+    )
+    @dbus_service.getter
+    def get_pitch_range(self) -> float:
+        """Returns the current speech inflection (pitch range)."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._VOICE_SCHEMA,
+            self.KEY_PITCH_RANGE,
+            "d",
+            default=5.0,
+        )
+
+    @dbus_service.setter
+    def set_pitch_range(self, value: float) -> bool:
+        """Sets the current speech inflection / pitch range (0.0-10.0, default: 5.0)."""
+
+        if not isinstance(value, (int, float)):
+            return False
+
+        registry = gsettings_registry.get_registry()
+        registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_PITCH_RANGE, value)
+        registry.set_runtime_value(
+            self._VOICE_SCHEMA, self.KEY_PITCH_RANGE, value, voice_type=speechserver.DEFAULT_VOICE
+        )
+
+        msg = f"SPEECH MANAGER: Set pitch range to: {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return True
+
+    @dbus_service.command
+    def decrease_pitch_range(
+        self,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Decreases the speech inflection (pitch range)."""
+
+        tokens = [
+            "SPEECH MANAGER: decrease_pitch_range. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        server = self._get_server()
+        if server is None:
+            msg = "SPEECH MANAGER: Cannot get speech server."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        server.decrease_speech_inflection()
+        new_pitch_range = max(0.0, self.get_pitch_range() - 0.5)
+        self.set_pitch_range(new_pitch_range)
+        if notify_user and script is not None:
+            full = f"{messages.SPEECH_LESS_INFLECTION} {new_pitch_range:g}"
+            presentation_manager.get_manager().present_message(full, f"{new_pitch_range:g}")
+
+        return True
+
+    @dbus_service.command
+    def increase_pitch_range(
+        self,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Increases the speech inflection (pitch range)."""
+
+        tokens = [
+            "SPEECH MANAGER: increase_pitch_range. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        server = self._get_server()
+        if server is None:
+            msg = "SPEECH MANAGER: Cannot get speech server."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        server.increase_speech_inflection()
+        new_pitch_range = min(10.0, self.get_pitch_range() + 0.5)
+        self.set_pitch_range(new_pitch_range)
+        if notify_user and script is not None:
+            full = f"{messages.SPEECH_MORE_INFLECTION} {new_pitch_range:g}"
+            presentation_manager.get_manager().present_message(full, f"{new_pitch_range:g}")
 
         return True
 

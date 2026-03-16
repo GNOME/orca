@@ -428,6 +428,14 @@ INCREASE_SPEECH_VOLUME = _("Increase the speech volume")
 # speech synthesis engine will generate speech.
 DECREASE_SPEECH_VOLUME = _("Decrease the speech volume")
 
+# Translators: the speech inflection is the pitch range used by the
+# speech synthesis engine. More inflection means more variation in pitch.
+INCREASE_SPEECH_INFLECTION = _("Increase the speech inflection")
+
+# Translators: the speech inflection is the pitch range used by the
+# speech synthesis engine. Less inflection means a more monotone voice.
+DECREASE_SPEECH_INFLECTION = _("Decrease the speech inflection")
+
 # Translators: Orca allows the user to turn speech synthesis on or off.
 #  We call it 'silencing'.
 TOGGLE_SPEECH = _("Toggle the silencing of speech")

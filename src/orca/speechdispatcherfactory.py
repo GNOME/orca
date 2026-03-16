@@ -131,6 +131,7 @@ class SpeechServer(speechserver.SpeechServer):
             (ACSS.FAMILY, self._set_family),
             (ACSS.RATE, self._set_rate),
             (ACSS.AVERAGE_PITCH, self._set_pitch),
+            (ACSS.PITCH_RANGE, self._set_pitch_range),
             (ACSS.GAIN, self._set_volume),
         )
         if not _SPEECHD_AVAILABLE:
@@ -264,6 +265,12 @@ class SpeechServer(speechserver.SpeechServer):
         pitch = int(20 * max(0, min(9, acss_pitch)) - 90)
         self._send_command(self._client.set_pitch, pitch)
 
+    def _set_pitch_range(self, acss_pitch_range: float) -> None:
+        if self._client is None:
+            return
+        pitch_range = int(20 * max(0, min(10, acss_pitch_range)) - 100)
+        self._send_command(self._client.set_pitch_range, pitch_range)
+
     def _set_volume(self, acss_volume: float) -> None:
         if self._client is None:
             return
@@ -333,6 +340,7 @@ class SpeechServer(speechserver.SpeechServer):
             f"SPEECH DISPATCHER: {prefix}\n"
             f"ORCA rate {self._current_voice_properties.get(ACSS.RATE)}, "
             f"pitch {self._current_voice_properties.get(ACSS.AVERAGE_PITCH)}, "
+            f"pitch-range {self._current_voice_properties.get(ACSS.PITCH_RANGE)}, "
             f"volume {self._current_voice_properties.get(ACSS.GAIN)}, "
             f"language {self._get_language_and_dialect(family)[0]}, "
             f"punctuation: {punctuation_style}\n"
@@ -353,6 +361,9 @@ class SpeechServer(speechserver.SpeechServer):
                     current[acss_property] = value
             elif acss_property == ACSS.AVERAGE_PITCH:
                 self._set_pitch(5.0)
+                current[acss_property] = 5.0
+            elif acss_property == ACSS.PITCH_RANGE:
+                self._set_pitch_range(5.0)
                 current[acss_property] = 5.0
             elif acss_property == ACSS.GAIN:
                 self._set_volume(10.0)
@@ -459,6 +470,16 @@ class SpeechServer(speechserver.SpeechServer):
         self._set_volume(new_volume)
         self._current_voice_properties[ACSS.GAIN] = new_volume
         msg = f"SPEECH DISPATCHER: Volume set to {new_volume}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    def _change_default_speech_pitch_range(self, step: float, decrease: bool = False) -> None:
+        delta = step * (-1 if decrease else 1)
+        pitch_range = self._default_voice.get(ACSS.PITCH_RANGE, 5)
+        new_pitch_range = max(0, min(10, pitch_range + delta))
+        self._default_voice[ACSS.PITCH_RANGE] = new_pitch_range
+        self._set_pitch_range(new_pitch_range)
+        self._current_voice_properties[ACSS.PITCH_RANGE] = new_pitch_range
+        msg = f"SPEECH DISPATCHER: Pitch range set to {new_pitch_range}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def get_info(self) -> list[str]:
@@ -632,6 +653,12 @@ class SpeechServer(speechserver.SpeechServer):
 
     def decrease_speech_volume(self, step: float = 0.5) -> None:
         self._change_default_speech_volume(step, decrease=True)
+
+    def increase_speech_inflection(self, step: float = 0.5) -> None:
+        self._change_default_speech_pitch_range(step)
+
+    def decrease_speech_inflection(self, step: float = 0.5) -> None:
+        self._change_default_speech_pitch_range(step, decrease=True)
 
     def _normalized_language_and_dialect(self, language: str, dialect: str = "") -> tuple[str, str]:
         """Attempts to ensure consistency across inconsistent formats."""

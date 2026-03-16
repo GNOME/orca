@@ -2160,6 +2160,12 @@ SPEECH_LOUDER = _("louder.")
 # Translators: This string announces speech volume change.
 SPEECH_SOFTER = _("softer.")
 
+# Translators: This string announces speech inflection (pitch range) change.
+SPEECH_MORE_INFLECTION = _("more inflection.")
+
+# Translators: This string announces speech inflection (pitch range) change.
+SPEECH_LESS_INFLECTION = _("less inflection.")
+
 # Translators: Orca's verbosity levels control how much (or how little)
 # Orca will speak when presenting objects as the user navigates within
 # applications and reads content. The two levels are "brief" and "verbose".

@@ -345,6 +345,18 @@ class TestSpeechManager:
                 "expected_result": True,
             },
             {
+                "id": "decrease_pitch_range",
+                "method_name": "decrease_pitch_range",
+                "method_args": [],
+                "expected_result": True,
+            },
+            {
+                "id": "increase_pitch_range",
+                "method_name": "increase_pitch_range",
+                "method_args": [],
+                "expected_result": True,
+            },
+            {
                 "id": "decrease_volume",
                 "method_name": "decrease_volume",
                 "method_args": [],
@@ -813,6 +825,37 @@ class TestSpeechManager:
         "case",
         [
             {
+                "id": "decrease_pitch_range",
+                "method_name": "decrease_pitch_range",
+                "server_method": "decrease_speech_inflection",
+            },
+            {
+                "id": "increase_pitch_range",
+                "method_name": "increase_pitch_range",
+                "server_method": "increase_speech_inflection",
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_pitch_range_adjustment_with_server(
+        self, test_context: OrcaTestContext, case: dict
+    ) -> None:
+        """Test pitch range adjustment methods delegate to the speech server."""
+
+        mock_server = test_context.Mock()
+        self._setup_dependencies(test_context)
+        from orca.speech_manager import SpeechManager
+
+        manager = SpeechManager()
+        test_context.patch_object(manager, "_get_server", return_value=mock_server)
+        result = getattr(manager, case["method_name"])()
+        assert result is True
+        getattr(mock_server, case["server_method"]).assert_called_once()
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
                 "id": "decrease_volume",
                 "method_name": "decrease_volume",
                 "server_method": "decrease_speech_volume",
@@ -861,6 +904,18 @@ class TestSpeechManager:
         result = manager.set_volume(8.0)
         assert result is True
         assert manager.get_volume() == 8.0
+
+    def test_set_pitch_range_valid(self, test_context: OrcaTestContext) -> None:
+        """Test set_pitch_range method with valid value."""
+
+        self._setup_dependencies(test_context)
+        from orca.speech_manager import SpeechManager
+
+        manager = SpeechManager()
+
+        result = manager.set_pitch_range(7.0)
+        assert result is True
+        assert manager.get_pitch_range() == 7.0
 
     def test_update_synthesizer_with_server(self, test_context: OrcaTestContext) -> None:
         """Test update_synthesizer method with server and different synthesizer ID."""

@@ -364,6 +364,7 @@ These operations also work at the profile level:
 | `family-name` | `s` | `''` | Voice family name |
 | `family-variant` | `s` | `''` | Voice family variant |
 | `pitch` | `d` | `5.0` | Speech pitch (0.0-10.0) |
+| `pitch-range` | `d` | `5.0` | Speech inflection / pitch range (0.0-10.0) |
 | `rate` | `i` | `50` | Speech rate (0-100) |
 | `volume` | `d` | `10.0` | Speech volume (0.0-10.0) |
 

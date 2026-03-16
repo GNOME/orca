@@ -527,6 +527,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     _VOICE_PROPERTY_MAP = (
         ("rate", "rate", "i", 50),
         ("average-pitch", "pitch", "d", 5.0),
+        ("pitch-range", "pitch-range", "d", 5.0),
         ("gain", "volume", "d", 10.0),
         ("established", "established", "b", False),
     )
