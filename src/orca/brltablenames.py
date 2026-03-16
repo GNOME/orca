@@ -79,7 +79,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "ar-ar-g1.utb": _("ar-ar-g1"),
+    "ar-ar-g1.utb": _("Arabic, uncontracted"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -91,13 +91,13 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "as-in-g1.utb": _("as-in-g1"),
+    "as-in-g1.utb": _("Assamese"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "aw-in-g1.utb": _("aw-in-g1"),
+    "aw-in-g1.utb": _("Awadhi"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -109,7 +109,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "be-in-g1.utb": _("be-in-g1"),
+    "be-in-g1.utb": _("Bengali"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -133,7 +133,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "bg.ctb": _("bg"),
+    "bg.ctb": _("Bulgarian, computer"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -145,13 +145,13 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "bh.ctb": _("bh"),
+    "bh.ctb": _("Bihari"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "bo.ctb": _("bo"),
+    "bo.ctb": _("Tibetan, computer"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -163,13 +163,13 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "br-in-g1.utb": _("br-in-g1"),
+    "br-in-g1.utb": _("Braj"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "ca-g1.ctb": _("ca-g1"),
+    "ca-g1.ctb": _("Catalan"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -181,7 +181,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "ckb-g1.ctb": _("ckb-g1"),
+    "ckb-g1.ctb": _("Kurdish"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -205,7 +205,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "cs-g1.ctb": _("cs-g1"),
+    "cs-g1.ctb": _("Czech"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -229,7 +229,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "cy-cy-g2.ctb": _("cy-cy-g2"),
+    "cy-cy-g2.ctb": _("Welsh, contracted"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -379,7 +379,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "dra.ctb": _("dra"),
+    "dra.ctb": _("Dravidian, computer"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -415,7 +415,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "en-GB-g2.ctb": _("en-GB-g2"),
+    "en-GB-g2.ctb": _("English, U.K., contracted"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -457,7 +457,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "en-us-comp8-ext.utb": _("en-us-comp8-ext"),
+    "en-us-comp8-ext.utb": _("English, U.S., computer, 8-dot"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -475,7 +475,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "en-us-g2.ctb": _("en-us-g2"),
+    "en-us-g2.ctb": _("English, U.S., contracted"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -493,7 +493,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "en_CA.ctb": _("en_CA"),
+    "en_CA.ctb": _("English, Canada, computer"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -505,7 +505,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "eo-g1.ctb": _("eo-g1"),
+    "eo-g1.ctb": _("Esperanto"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -517,7 +517,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "es-g1.ctb": _("es-g1"),
+    "es-g1.ctb": _("Spanish, uncontracted"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -541,13 +541,13 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "et.ctb": _("et"),
+    "et.ctb": _("Estonian, computer"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "ethio-g1.ctb": _("ethio-g1"),
+    "ethio-g1.ctb": _("Ethiopic"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -613,13 +613,13 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "gd.ctb": _("gd"),
+    "gd.ctb": _("Scottish Gaelic, computer"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "gon.ctb": _("gon"),
+    "gon.ctb": _("Gondi"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -643,7 +643,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "gu-in-g1.utb": _("gu-in-g1"),
+    "gu-in-g1.utb": _("Gujarati"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -685,19 +685,19 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "hi-in-g1.utb": _("hi-in-g1"),
+    "hi-in-g1.utb": _("Hindi"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "hr-comp8.utb": _("hr-comp8"),
+    "hr-comp8.utb": _("Croatian, computer"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "hr-g1.ctb": _("hr-g1"),
+    "hr-g1.ctb": _("Croatian"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -709,7 +709,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "hu-hu-g1.ctb": _("hu-hu-g1"),
+    "hu-hu-g1.ctb": _("Hungarian, partially contracted"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -721,7 +721,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "hy.ctb": _("hy"),
+    "hy.ctb": _("Armenian, computer"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -775,7 +775,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "ka-in-g1.utb": _("ka-in-g1"),
+    "ka-in-g1.utb": _("Kannada"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -787,7 +787,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "kh-in-g1.utb": _("kh-in-g1"),
+    "kh-in-g1.utb": _("Khasi"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -829,13 +829,13 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "kok.ctb": _("kok"),
+    "kok.ctb": _("Konkani"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "kru.ctb": _("kru"),
+    "kru.ctb": _("Kurukh"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -877,7 +877,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "Lv-Lv-g1.utb": _("Lv-Lv-g1"),
+    "Lv-Lv-g1.utb": _("Latvian"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -895,13 +895,13 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "ml-in-g1.utb": _("ml-in-g1"),
+    "ml-in-g1.utb": _("Malayalam"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "mn-in-g1.utb": _("mn-in-g1"),
+    "mn-in-g1.utb": _("Manipuri"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -919,7 +919,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "mr-in-g1.utb": _("mr-in-g1"),
+    "mr-in-g1.utb": _("Marathi"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -931,19 +931,19 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "mt.ctb": _("mt"),
+    "mt.ctb": _("Maltese, computer"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "mun.ctb": _("mun"),
+    "mun.ctb": _("Munda"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "mwr.ctb": _("mwr"),
+    "mwr.ctb": _("Marwari"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -1021,7 +1021,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "np-in-g1.utb": _("np-in-g1"),
+    "np-in-g1.utb": _("Nepali"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -1045,13 +1045,13 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "or-in-g1.utb": _("or-in-g1"),
+    "or-in-g1.utb": _("Oriya"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "pi.ctb": _("pi"),
+    "pi.ctb": _("Pali"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -1063,7 +1063,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "Pl-Pl-g1.utb": _("Pl-Pl-g1"),
+    "Pl-Pl-g1.utb": _("Polish"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -1087,13 +1087,13 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "pt-pt-g2.ctb": _("pt-pt-g2"),
+    "pt-pt-g2.ctb": _("Portuguese, contracted"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "pu-in-g1.utb": _("pu-in-g1"),
+    "pu-in-g1.utb": _("Punjabi"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -1105,7 +1105,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "ro.ctb": _("ro"),
+    "ro.ctb": _("Romanian, computer"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -1147,7 +1147,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "sa-in-g1.utb": _("sa-in-g1"),
+    "sa-in-g1.utb": _("Sanskrit"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -1165,7 +1165,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "si-in-g1.utb": _("si-in-g1"),
+    "si-in-g1.utb": _("Sindhi"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -1201,7 +1201,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "sl-si-g1.utb": _("sl-si-g1"),
+    "sl-si-g1.utb": _("Slovenian"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -1309,13 +1309,13 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "ta.ctb": _("ta"),
+    "ta.ctb": _("Tamil, computer"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "te-in-g1.utb": _("te-in-g1"),
+    "te-in-g1.utb": _("Telugu"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -1351,13 +1351,13 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "tr-g2.ctb": _("tr-g2"),
+    "tr-g2.ctb": _("Turkish, contracted"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "tr.ctb": _("tr"),
+    "tr.ctb": _("Turkish, computer"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -1489,7 +1489,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "zh-chn.ctb": _("zh-chn"),
+    "zh-chn.ctb": _("Mandarin, mainland China, without tones"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,

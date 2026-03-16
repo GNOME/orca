@@ -26,7 +26,8 @@
 """Generate brltablenames.py from liblouis table metadata.
 
 Parses metadata comments from each .ctb and .utb file in a liblouis tables directory.
-Uses #-index-name as the display name, falling back to #-display-name, then the filename stem.
+Uses #-index-name as the display name, falling back to #-display-name, then metadata
+from a .tbl wrapper that includes the table, then the filename stem.
 
 Usage:
     python tools/generate_braille_table_names.py /path/to/liblouis/tables
@@ -40,6 +41,7 @@ from pathlib import Path
 _TABLE_EXTENSIONS = {".ctb", ".utb"}
 _INDEX_NAME_RE = re.compile(r"^#-index-name:\s*(.+)$")
 _DISPLAY_NAME_RE = re.compile(r"^#-display-name:\s*(.+)$")
+_INCLUDE_RE = re.compile(r"^include\s+(\S+)")
 
 _FILE_HEADER = '''\
 # Orca
@@ -106,15 +108,38 @@ def _get_table_name(table_path):
     return index_name or display_name or table_path.stem
 
 
+def _build_tbl_name_map(tables_path):
+    """Build a mapping from included .ctb/.utb filenames to .tbl metadata names."""
+
+    name_map = {}
+    for tbl_file in tables_path.glob("*.tbl"):
+        name = _get_table_name(tbl_file)
+        if name == tbl_file.stem:
+            continue
+        try:
+            with open(tbl_file, encoding="utf-8", errors="replace") as f:
+                for line in f:
+                    if match := _INCLUDE_RE.match(line):
+                        included = match.group(1)
+                        if Path(included).suffix in _TABLE_EXTENSIONS:
+                            name_map[included] = name
+        except OSError:
+            pass
+    return name_map
+
+
 def _get_table_entries(tables_dir):
     """Scan tables_dir for table files and extract their names."""
 
     tables_path = Path(tables_dir)
+    tbl_names = _build_tbl_name_map(tables_path)
     entries = []
     for table_file in sorted(tables_path.iterdir(), key=lambda p: p.name.lower()):
         if table_file.suffix not in _TABLE_EXTENSIONS:
             continue
         name = _get_table_name(table_file)
+        if name == table_file.stem:
+            name = tbl_names.get(table_file.name, name)
         entries.append((table_file.name, name))
 
     return entries
