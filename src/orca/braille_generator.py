@@ -719,6 +719,9 @@ class BrailleGenerator(generator.Generator):
     def _generate_combo_box(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the combo-box role."""
 
+        if AXUtilities.is_editable(obj):
+            return self._generate_text_object(obj, **args)
+
         result = self._generate_default_prefix(obj, **args)
         label = self._generate_accessible_label_and_name(obj, **args)
         if label:
