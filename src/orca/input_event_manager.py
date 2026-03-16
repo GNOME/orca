@@ -421,7 +421,7 @@ class InputEventManager:
             and event1.keyval_name == event2.keyval_name
         )
 
-        if result and not event1.is_modifier_key:
+        if result and not event1.is_modifier_key():
             result = event1.modifiers == event2.modifiers
 
         msg = (

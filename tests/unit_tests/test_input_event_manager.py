@@ -917,6 +917,32 @@ class TestInputEventManager:
                 "same_modifiers": True,
                 "expected_result": True,
             },
+            {
+                "id": "modifier_key_different_modifiers",
+                "event1": "mock_event1",
+                "event2": "mock_event2",
+                "event1_pressed": False,
+                "event2_pressed": True,
+                "same_id": True,
+                "same_hw_code": True,
+                "same_keyval": True,
+                "event1_modifier": True,
+                "same_modifiers": False,
+                "expected_result": True,
+            },
+            {
+                "id": "non_modifier_different_modifiers",
+                "event1": "mock_event1",
+                "event2": "mock_event2",
+                "event1_pressed": False,
+                "event2_pressed": True,
+                "same_id": True,
+                "same_hw_code": True,
+                "same_keyval": True,
+                "event1_modifier": False,
+                "same_modifiers": False,
+                "expected_result": False,
+            },
         ],
         ids=lambda case: case["id"],
     )
@@ -946,7 +972,7 @@ class TestInputEventManager:
             event2.hw_code = 42
             event1.keyval_name = "a" if case["same_keyval"] else "b"
             event2.keyval_name = "a"
-            event1.is_modifier_key = case["event1_modifier"]
+            event1.is_modifier_key.return_value = case["event1_modifier"]
             event1.modifiers = 4 if case["same_modifiers"] else 8
             event2.modifiers = 4
             event1.as_single_line_string.return_value = "event1"
