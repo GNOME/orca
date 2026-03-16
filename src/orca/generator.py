@@ -622,6 +622,10 @@ class Generator:
 
         if self._script.utilities.is_document(obj) and AXObject.supports_image(obj):
             return Atspi.Role.IMAGE
+
+        if AXUtilities.is_menu_item(obj, role) and AXUtilities.has_action(obj, "show-menu"):
+            return Atspi.Role.MENU
+
         return role
 
     @log_generator_output
