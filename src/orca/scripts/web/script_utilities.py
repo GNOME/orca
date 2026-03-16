@@ -2151,28 +2151,6 @@ class Utilities(script_utilities.Utilities):
         self._cached_is_off_screen_label[hash(obj)] = rv
         return rv
 
-    def _is_detached_document(self, obj: Atspi.Accessible) -> bool:
-        if AXUtilities.is_document(obj) and not AXObject.is_valid(AXObject.get_parent(obj)):
-            tokens = ["WEB:", obj, "is a detached document"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return True
-
-        return False
-
-    def _iframe_for_detached_document(
-        self,
-        obj: Atspi.Accessible,
-        root: Atspi.Accessible | None = None,
-    ) -> Atspi.Accessible | None:
-        root = root or self.active_document()
-        for iframe in AXUtilities.find_all_internal_frames(root):
-            if AXObject.get_parent(obj) == iframe:
-                tokens = ["WEB: Returning", iframe, "as iframe parent of detached", obj]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return iframe
-
-        return None
-
     def is_link_ancestor_of_image_in_contents(
         self,
         link: Atspi.Accessible,
@@ -3437,11 +3415,6 @@ class Utilities(script_utilities.Utilities):
             return None, -1
 
         while obj and (parent := AXObject.get_parent(obj)):
-            # TODO - JD: Is this detached document logic still needed?
-            if self._is_detached_document(parent):
-                obj = self._iframe_for_detached_document(parent)
-                continue
-
             if not AXObject.is_valid(parent):
                 msg = "WEB: Finding next caret in order. Parent is not valid."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -3530,11 +3503,6 @@ class Utilities(script_utilities.Utilities):
             return None, -1
 
         while obj and (parent := AXObject.get_parent(obj)):
-            # TODO - JD: Is this detached document logic still needed?
-            if self._is_detached_document(parent):
-                obj = self._iframe_for_detached_document(parent)
-                continue
-
             if not AXObject.is_valid(parent):
                 msg = "WEB: Finding previous caret in order. Parent is not valid."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
