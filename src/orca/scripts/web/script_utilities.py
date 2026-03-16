@@ -285,7 +285,7 @@ class Utilities(script_utilities.Utilities):
             )
 
         container = AXUtilities.find_ancestor(obj, is_find_bar)
-        if container == self._find_container:
+        if container is not None and container == self._find_container:
             return True
 
         if container:
