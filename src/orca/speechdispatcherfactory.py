@@ -256,13 +256,13 @@ class SpeechServer(speechserver.SpeechServer):
     def _set_rate(self, acss_rate: float) -> None:
         if self._client is None:
             return
-        rate = int(2 * max(0, min(99, acss_rate)) - 98)
+        rate = int(2 * max(0, min(100, acss_rate)) - 100)
         self._send_command(self._client.set_rate, rate)
 
     def _set_pitch(self, acss_pitch: float) -> None:
         if self._client is None:
             return
-        pitch = int(20 * max(0, min(9, acss_pitch)) - 90)
+        pitch = int(20 * max(0, min(10, acss_pitch)) - 100)
         self._send_command(self._client.set_pitch, pitch)
 
     def _set_pitch_range(self, acss_pitch_range: float) -> None:
@@ -274,7 +274,7 @@ class SpeechServer(speechserver.SpeechServer):
     def _set_volume(self, acss_volume: float) -> None:
         if self._client is None:
             return
-        volume = int(15 * max(0, min(9, acss_volume)) - 35)
+        volume = int(20 * max(0, min(10, acss_volume)) - 100)
         self._send_command(self._client.set_volume, volume)
 
     def _get_language_and_dialect(self, acss_family: dict[str, Any] | None) -> tuple[str, str]:
@@ -445,7 +445,7 @@ class SpeechServer(speechserver.SpeechServer):
     def _change_default_speech_rate(self, step: int, decrease: bool = False) -> None:
         delta = step * (-1 if decrease else 1)
         rate = self._default_voice.get(ACSS.RATE, 50)
-        new_rate = max(0, min(99, rate + delta))
+        new_rate = max(0, min(100, rate + delta))
         self._default_voice[ACSS.RATE] = new_rate
         self._set_rate(new_rate)
         self._current_voice_properties[ACSS.RATE] = new_rate
@@ -455,7 +455,7 @@ class SpeechServer(speechserver.SpeechServer):
     def _change_default_speech_pitch(self, step: float, decrease: bool = False) -> None:
         delta = step * (-1 if decrease else 1)
         pitch = self._default_voice.get(ACSS.AVERAGE_PITCH, 5)
-        new_pitch = max(0, min(9, pitch + delta))
+        new_pitch = max(0, min(10, pitch + delta))
         self._default_voice[ACSS.AVERAGE_PITCH] = new_pitch
         self._set_pitch(new_pitch)
         self._current_voice_properties[ACSS.AVERAGE_PITCH] = new_pitch
@@ -465,7 +465,7 @@ class SpeechServer(speechserver.SpeechServer):
     def _change_default_speech_volume(self, step: float, decrease: bool = False) -> None:
         delta = step * (-1 if decrease else 1)
         volume = self._default_voice.get(ACSS.GAIN, 10)
-        new_volume = max(0, min(9, volume + delta))
+        new_volume = max(0, min(10, volume + delta))
         self._default_voice[ACSS.GAIN] = new_volume
         self._set_volume(new_volume)
         self._current_voice_properties[ACSS.GAIN] = new_volume
