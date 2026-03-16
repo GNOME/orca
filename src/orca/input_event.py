@@ -94,6 +94,263 @@ class InputEvent:
 class KeyboardEvent(InputEvent):
     """Provides support for handling keyboard events."""
 
+    _NAVIGATION_KEYS: frozenset[int] = frozenset()
+    _ACTION_KEYS: frozenset[int] = frozenset()
+    _DIACRITICAL_KEYS: frozenset[int] = frozenset()
+    _FUNCTION_KEYS: frozenset[int] = frozenset()
+    _LOCKING_KEYS: frozenset[int] = frozenset()
+    _MODIFIER_KEYS: frozenset[int] = frozenset()
+    _NUMERIC_KEYS: frozenset[int] = frozenset()
+    _PUNCTUATION_KEYS: frozenset[int] = frozenset()
+    _KEYPAD_KEYCODES: frozenset[int] = frozenset()
+    _key_sets_initialized: bool = False
+
+    @classmethod
+    def _initialize_key_sets(cls) -> None:
+        """Initializes key sets on first use."""
+
+        if cls._key_sets_initialized:
+            return
+
+        cls._NAVIGATION_KEYS = frozenset(
+            {
+                Gdk.KEY_Down,
+                Gdk.KEY_End,
+                Gdk.KEY_Home,
+                Gdk.KEY_Left,
+                Gdk.KEY_Right,
+                Gdk.KEY_Up,
+            }
+        )
+
+        cls._ACTION_KEYS = frozenset(
+            {
+                Gdk.KEY_BackSpace,
+                Gdk.KEY_Delete,
+                Gdk.KEY_Escape,
+                Gdk.KEY_KP_Enter,
+                Gdk.KEY_Page_Down,
+                Gdk.KEY_Page_Up,
+                Gdk.KEY_Return,
+                Gdk.KEY_Tab,
+            }
+        )
+
+        cls._DIACRITICAL_KEYS = frozenset(
+            {
+                Gdk.KEY_dead_A,
+                Gdk.KEY_dead_a,
+                Gdk.KEY_dead_abovecomma,
+                Gdk.KEY_dead_abovedot,
+                Gdk.KEY_dead_abovereversedcomma,
+                Gdk.KEY_dead_abovering,
+                Gdk.KEY_dead_aboveverticalline,
+                Gdk.KEY_dead_acute,
+                Gdk.KEY_dead_belowbreve,
+                Gdk.KEY_dead_belowcircumflex,
+                Gdk.KEY_dead_belowcomma,
+                Gdk.KEY_dead_belowdiaeresis,
+                Gdk.KEY_dead_belowdot,
+                Gdk.KEY_dead_belowmacron,
+                Gdk.KEY_dead_belowring,
+                Gdk.KEY_dead_belowtilde,
+                Gdk.KEY_dead_belowverticalline,
+                Gdk.KEY_dead_breve,
+                Gdk.KEY_dead_capital_schwa,
+                Gdk.KEY_dead_caron,
+                Gdk.KEY_dead_cedilla,
+                Gdk.KEY_dead_circumflex,
+                Gdk.KEY_dead_currency,
+                Gdk.KEY_dead_dasia,
+                Gdk.KEY_dead_diaeresis,
+                Gdk.KEY_dead_doubleacute,
+                Gdk.KEY_dead_doublegrave,
+                Gdk.KEY_dead_E,
+                Gdk.KEY_dead_e,
+                Gdk.KEY_dead_grave,
+                Gdk.KEY_dead_greek,
+                Gdk.KEY_dead_hook,
+                Gdk.KEY_dead_horn,
+                Gdk.KEY_dead_I,
+                Gdk.KEY_dead_i,
+                Gdk.KEY_dead_invertedbreve,
+                Gdk.KEY_dead_iota,
+                Gdk.KEY_dead_longsolidusoverlay,
+                Gdk.KEY_dead_lowline,
+                Gdk.KEY_dead_macron,
+                Gdk.KEY_dead_O,
+                Gdk.KEY_dead_o,
+                Gdk.KEY_dead_ogonek,
+                Gdk.KEY_dead_perispomeni,
+                Gdk.KEY_dead_psili,
+                Gdk.KEY_dead_semivoiced_sound,
+                Gdk.KEY_dead_small_schwa,
+                Gdk.KEY_dead_stroke,
+                Gdk.KEY_dead_tilde,
+                Gdk.KEY_dead_U,
+                Gdk.KEY_dead_u,
+                Gdk.KEY_dead_voiced_sound,
+            }
+        )
+
+        cls._FUNCTION_KEYS = frozenset(
+            {
+                Gdk.KEY_F1,
+                Gdk.KEY_F2,
+                Gdk.KEY_F3,
+                Gdk.KEY_F4,
+                Gdk.KEY_F5,
+                Gdk.KEY_F6,
+                Gdk.KEY_F7,
+                Gdk.KEY_F8,
+                Gdk.KEY_F9,
+                Gdk.KEY_F10,
+                Gdk.KEY_F11,
+                Gdk.KEY_F12,
+            }
+        )
+
+        cls._LOCKING_KEYS = frozenset(
+            {
+                Gdk.KEY_Caps_Lock,
+                Gdk.KEY_Num_Lock,
+                Gdk.KEY_Scroll_Lock,
+                Gdk.KEY_Shift_Lock,
+            }
+        )
+
+        cls._MODIFIER_KEYS = frozenset(
+            {
+                Gdk.KEY_Alt_L,
+                Gdk.KEY_Alt_R,
+                Gdk.KEY_Control_L,
+                Gdk.KEY_Control_R,
+                Gdk.KEY_Meta_L,
+                Gdk.KEY_Meta_R,
+                Gdk.KEY_Super_L,
+                Gdk.KEY_Super_R,
+                Gdk.KEY_Shift_L,
+                Gdk.KEY_Shift_R,
+                Gdk.KEY_ISO_Level3_Shift,
+            }
+        )
+
+        cls._NUMERIC_KEYS = frozenset(
+            {
+                Gdk.KEY_0,
+                Gdk.KEY_1,
+                Gdk.KEY_2,
+                Gdk.KEY_3,
+                Gdk.KEY_4,
+                Gdk.KEY_5,
+                Gdk.KEY_6,
+                Gdk.KEY_7,
+                Gdk.KEY_8,
+                Gdk.KEY_9,
+                Gdk.KEY_KP_0,
+                Gdk.KEY_KP_1,
+                Gdk.KEY_KP_2,
+                Gdk.KEY_KP_3,
+                Gdk.KEY_KP_4,
+                Gdk.KEY_KP_5,
+                Gdk.KEY_KP_6,
+                Gdk.KEY_KP_7,
+                Gdk.KEY_KP_8,
+                Gdk.KEY_KP_9,
+            }
+        )
+
+        cls._PUNCTUATION_KEYS = frozenset(
+            {
+                Gdk.KEY_acute,
+                Gdk.KEY_ampersand,
+                Gdk.KEY_apostrophe,
+                Gdk.KEY_asciicircum,
+                Gdk.KEY_asciitilde,
+                Gdk.KEY_asterisk,
+                Gdk.KEY_at,
+                Gdk.KEY_backslash,
+                Gdk.KEY_bar,
+                Gdk.KEY_braceleft,
+                Gdk.KEY_braceright,
+                Gdk.KEY_bracketleft,
+                Gdk.KEY_bracketright,
+                Gdk.KEY_brokenbar,
+                Gdk.KEY_cedilla,
+                Gdk.KEY_cent,
+                Gdk.KEY_colon,
+                Gdk.KEY_comma,
+                Gdk.KEY_copyright,
+                Gdk.KEY_currency,
+                Gdk.KEY_degree,
+                Gdk.KEY_diaeresis,
+                Gdk.KEY_dollar,
+                Gdk.KEY_EuroSign,
+                Gdk.KEY_equal,
+                Gdk.KEY_exclam,
+                Gdk.KEY_exclamdown,
+                Gdk.KEY_grave,
+                Gdk.KEY_greater,
+                Gdk.KEY_guillemotleft,
+                Gdk.KEY_guillemotright,
+                Gdk.KEY_hyphen,
+                Gdk.KEY_KP_Decimal,
+                Gdk.KEY_KP_Add,
+                Gdk.KEY_KP_Divide,
+                Gdk.KEY_KP_Multiply,
+                Gdk.KEY_KP_Subtract,
+                Gdk.KEY_less,
+                Gdk.KEY_macron,
+                Gdk.KEY_minus,
+                Gdk.KEY_notsign,
+                Gdk.KEY_numbersign,
+                Gdk.KEY_paragraph,
+                Gdk.KEY_parenleft,
+                Gdk.KEY_parenright,
+                Gdk.KEY_percent,
+                Gdk.KEY_period,
+                Gdk.KEY_periodcentered,
+                Gdk.KEY_plus,
+                Gdk.KEY_plusminus,
+                Gdk.KEY_question,
+                Gdk.KEY_questiondown,
+                Gdk.KEY_quotedbl,
+                Gdk.KEY_quoteleft,
+                Gdk.KEY_quoteright,
+                Gdk.KEY_registered,
+                Gdk.KEY_section,
+                Gdk.KEY_semicolon,
+                Gdk.KEY_slash,
+                Gdk.KEY_sterling,
+                Gdk.KEY_underscore,
+                Gdk.KEY_yen,
+            }
+        )
+
+        cls._KEYPAD_KEYCODES = frozenset(
+            {
+                63,
+                77,
+                79,
+                80,
+                81,
+                82,
+                83,
+                84,
+                85,
+                86,
+                87,
+                88,
+                89,
+                90,
+                91,
+                104,
+                106,
+            }
+        )
+
+        cls._key_sets_initialized = True
+
     # pylint:disable=too-many-arguments
     # pylint:disable=too-many-positional-arguments
     def __init__(self, pressed: bool, keycode: int, keysym: int, modifiers: int, text: str) -> None:
@@ -108,6 +365,7 @@ class KeyboardEvent(InputEvent):
         """
 
         super().__init__(KEYBOARD_EVENT)
+        self._initialize_key_sets()
         self.id: int = keysym
         self.type: Atspi.EventType = (
             Atspi.EventType.KEY_PRESSED_EVENT if pressed else Atspi.EventType.KEY_RELEASED_EVENT
@@ -206,30 +464,12 @@ class KeyboardEvent(InputEvent):
     def is_navigation_key(self) -> bool:
         """Return True if this is a navigation key."""
 
-        keys = [
-            Gdk.KEY_Down,
-            Gdk.KEY_End,
-            Gdk.KEY_Home,
-            Gdk.KEY_Left,
-            Gdk.KEY_Right,
-            Gdk.KEY_Up,
-        ]
-        return self.id in keys
+        return self.id in self._NAVIGATION_KEYS
 
     def is_action_key(self) -> bool:
         """Return True if this is an action key."""
 
-        keys = [
-            Gdk.KEY_BackSpace,
-            Gdk.KEY_Delete,
-            Gdk.KEY_Escape,
-            Gdk.KEY_KP_Enter,
-            Gdk.KEY_Page_Down,
-            Gdk.KEY_Page_Up,
-            Gdk.KEY_Return,
-            Gdk.KEY_Tab,
-        ]
-        return self.id in keys
+        return self.id in self._ACTION_KEYS
 
     def is_alphabetic_key(self) -> bool:
         """Return True if this is an alphabetic key."""
@@ -243,62 +483,7 @@ class KeyboardEvent(InputEvent):
     def is_diacritical_key(self) -> bool:
         """Return True if this is a non-spacing diacritical key."""
 
-        keys = [
-            Gdk.KEY_dead_A,
-            Gdk.KEY_dead_a,
-            Gdk.KEY_dead_abovecomma,
-            Gdk.KEY_dead_abovedot,
-            Gdk.KEY_dead_abovereversedcomma,
-            Gdk.KEY_dead_abovering,
-            Gdk.KEY_dead_aboveverticalline,
-            Gdk.KEY_dead_acute,
-            Gdk.KEY_dead_belowbreve,
-            Gdk.KEY_dead_belowcircumflex,
-            Gdk.KEY_dead_belowcomma,
-            Gdk.KEY_dead_belowdiaeresis,
-            Gdk.KEY_dead_belowdot,
-            Gdk.KEY_dead_belowmacron,
-            Gdk.KEY_dead_belowring,
-            Gdk.KEY_dead_belowtilde,
-            Gdk.KEY_dead_belowverticalline,
-            Gdk.KEY_dead_breve,
-            Gdk.KEY_dead_capital_schwa,
-            Gdk.KEY_dead_caron,
-            Gdk.KEY_dead_cedilla,
-            Gdk.KEY_dead_circumflex,
-            Gdk.KEY_dead_currency,
-            Gdk.KEY_dead_dasia,
-            Gdk.KEY_dead_diaeresis,
-            Gdk.KEY_dead_doubleacute,
-            Gdk.KEY_dead_doublegrave,
-            Gdk.KEY_dead_E,
-            Gdk.KEY_dead_e,
-            Gdk.KEY_dead_grave,
-            Gdk.KEY_dead_greek,
-            Gdk.KEY_dead_hook,
-            Gdk.KEY_dead_horn,
-            Gdk.KEY_dead_I,
-            Gdk.KEY_dead_i,
-            Gdk.KEY_dead_invertedbreve,
-            Gdk.KEY_dead_iota,
-            Gdk.KEY_dead_longsolidusoverlay,
-            Gdk.KEY_dead_lowline,
-            Gdk.KEY_dead_macron,
-            Gdk.KEY_dead_O,
-            Gdk.KEY_dead_o,
-            Gdk.KEY_dead_ogonek,
-            Gdk.KEY_dead_perispomeni,
-            Gdk.KEY_dead_psili,
-            Gdk.KEY_dead_semivoiced_sound,
-            Gdk.KEY_dead_small_schwa,
-            Gdk.KEY_dead_stroke,
-            Gdk.KEY_dead_tilde,
-            Gdk.KEY_dead_U,
-            Gdk.KEY_dead_u,
-            Gdk.KEY_dead_voiced_sound,
-        ]
-
-        if self.id in keys:
+        if self.id in self._DIACRITICAL_KEYS:
             return True
 
         name = self.get_key_name()
@@ -313,21 +498,7 @@ class KeyboardEvent(InputEvent):
     def is_function_key(self) -> bool:
         """Return True if this is a function key."""
 
-        keys = [
-            Gdk.KEY_F1,
-            Gdk.KEY_F2,
-            Gdk.KEY_F3,
-            Gdk.KEY_F4,
-            Gdk.KEY_F5,
-            Gdk.KEY_F6,
-            Gdk.KEY_F7,
-            Gdk.KEY_F8,
-            Gdk.KEY_F9,
-            Gdk.KEY_F10,
-            Gdk.KEY_F11,
-            Gdk.KEY_F12,
-        ]
-        return self.id in keys
+        return self.id in self._FUNCTION_KEYS
 
     def is_locking_key(self) -> bool:
         """Return True if this is a locking key."""
@@ -335,58 +506,17 @@ class KeyboardEvent(InputEvent):
         if self.is_orca_modifier():
             return self._click_count == 2
 
-        keys = [
-            Gdk.KEY_Caps_Lock,
-            Gdk.KEY_Num_Lock,
-            Gdk.KEY_Scroll_Lock,
-            Gdk.KEY_Shift_Lock,
-        ]
-        return self.id in keys
+        return self.id in self._LOCKING_KEYS
 
     def is_modifier_key(self) -> bool:
         """Return True if this is a modifier key."""
 
-        keys = [
-            Gdk.KEY_Alt_L,
-            Gdk.KEY_Alt_R,
-            Gdk.KEY_Control_L,
-            Gdk.KEY_Control_R,
-            Gdk.KEY_Meta_L,
-            Gdk.KEY_Meta_R,
-            Gdk.KEY_Super_L,
-            Gdk.KEY_Super_R,
-            Gdk.KEY_Shift_L,
-            Gdk.KEY_Shift_R,
-            Gdk.KEY_ISO_Level3_Shift,
-        ]
-        return self.id in keys or self.is_orca_modifier()
+        return self.id in self._MODIFIER_KEYS or self.is_orca_modifier()
 
     def is_numeric_key(self) -> bool:
         """Return True if this is a numeric key."""
 
-        keys = [
-            Gdk.KEY_0,
-            Gdk.KEY_1,
-            Gdk.KEY_2,
-            Gdk.KEY_3,
-            Gdk.KEY_4,
-            Gdk.KEY_5,
-            Gdk.KEY_6,
-            Gdk.KEY_7,
-            Gdk.KEY_8,
-            Gdk.KEY_9,
-            Gdk.KEY_KP_0,
-            Gdk.KEY_KP_1,
-            Gdk.KEY_KP_2,
-            Gdk.KEY_KP_3,
-            Gdk.KEY_KP_4,
-            Gdk.KEY_KP_5,
-            Gdk.KEY_KP_6,
-            Gdk.KEY_KP_7,
-            Gdk.KEY_KP_8,
-            Gdk.KEY_KP_9,
-        ]
-        return self.id in keys
+        return self.id in self._NUMERIC_KEYS
 
     def is_orca_modifier(self) -> bool:
         """Return True if this is the Orca modifier key."""
@@ -409,8 +539,7 @@ class KeyboardEvent(InputEvent):
 
         if self.keyval_name.startswith("KP"):
             return True
-        keypad_keycodes = {63, 77, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 104, 106}
-        return self.hw_code in keypad_keycodes
+        return self.hw_code in self._KEYPAD_KEYCODES
 
     def is_keypad_key_with_numlock_on(self) -> bool:
         """Return True if this is a key pad key with numlock on."""
@@ -434,71 +563,7 @@ class KeyboardEvent(InputEvent):
     def is_punctuation_key(self) -> bool:
         """Return True if this is a punctuation key."""
 
-        keys = [
-            Gdk.KEY_acute,
-            Gdk.KEY_ampersand,
-            Gdk.KEY_apostrophe,
-            Gdk.KEY_asciicircum,
-            Gdk.KEY_asciitilde,
-            Gdk.KEY_asterisk,
-            Gdk.KEY_at,
-            Gdk.KEY_backslash,
-            Gdk.KEY_bar,
-            Gdk.KEY_braceleft,
-            Gdk.KEY_braceright,
-            Gdk.KEY_bracketleft,
-            Gdk.KEY_bracketright,
-            Gdk.KEY_brokenbar,
-            Gdk.KEY_cedilla,
-            Gdk.KEY_cent,
-            Gdk.KEY_colon,
-            Gdk.KEY_comma,
-            Gdk.KEY_copyright,
-            Gdk.KEY_currency,
-            Gdk.KEY_degree,
-            Gdk.KEY_diaeresis,
-            Gdk.KEY_dollar,
-            Gdk.KEY_EuroSign,
-            Gdk.KEY_equal,
-            Gdk.KEY_exclam,
-            Gdk.KEY_exclamdown,
-            Gdk.KEY_grave,
-            Gdk.KEY_greater,
-            Gdk.KEY_guillemotleft,
-            Gdk.KEY_guillemotright,
-            Gdk.KEY_hyphen,
-            Gdk.KEY_KP_Decimal,
-            Gdk.KEY_KP_Add,
-            Gdk.KEY_KP_Divide,
-            Gdk.KEY_KP_Multiply,
-            Gdk.KEY_KP_Subtract,
-            Gdk.KEY_less,
-            Gdk.KEY_macron,
-            Gdk.KEY_minus,
-            Gdk.KEY_notsign,
-            Gdk.KEY_numbersign,
-            Gdk.KEY_paragraph,
-            Gdk.KEY_parenleft,
-            Gdk.KEY_parenright,
-            Gdk.KEY_percent,
-            Gdk.KEY_period,
-            Gdk.KEY_periodcentered,
-            Gdk.KEY_plus,
-            Gdk.KEY_plusminus,
-            Gdk.KEY_question,
-            Gdk.KEY_questiondown,
-            Gdk.KEY_quotedbl,
-            Gdk.KEY_quoteleft,
-            Gdk.KEY_quoteright,
-            Gdk.KEY_registered,
-            Gdk.KEY_section,
-            Gdk.KEY_semicolon,
-            Gdk.KEY_slash,
-            Gdk.KEY_sterling,
-            Gdk.KEY_underscore,
-            Gdk.KEY_yen,
-        ]
-        return self.id in keys
+        return self.id in self._PUNCTUATION_KEYS
 
     def is_space(self) -> bool:
         """Return True if this is the space key."""
