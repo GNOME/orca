@@ -1,3 +1,28 @@
+49.6 - 16 March 2026
+
+General:
+
+* Fix braille presentation of the Gecko address bar.
+
+* Don't announce indentation during word navigation.
+
+* Don't interrupt speech when the old focus and new focus are the same.
+
+* Adjust when we present label/name for focusable sections.
+
+* Fix several issues related to Say All.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  de              German                    Christian Kirbach
+  en_GB           British English           Bruce Cowan
+  eu              Basque                    Asier Saratsua Garmendia
+  kk              Kazakh                    Baurzhan Muftakhidinov
+  nb              Norwegian Bokmål          Kjartan Maraas
+  th              Thai                      Aefgh Threenine
+
+=========
+
 49.5 - 25 November 2025
 
 Web:
