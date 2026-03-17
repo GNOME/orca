@@ -20,18 +20,11 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-branches
+
 """The main entry point for starting Orca."""
 
 from __future__ import annotations
-
-# pylint: disable=too-many-branches
-
-__id__        = "$Id$"
-__version__   = "$Revision$"
-__date__      = "$Date$"
-__copyright__ = "Copyright (c) 2010-2012 The Orca Team" \
-                "Copyright (c) 2012 Igalia, S.L."
-__license__   = "LGPL"
 
 import argparse
 import os
@@ -338,6 +331,9 @@ def main() -> int:
     _create_prefs_dirs(prefs_dir)
     sys.path.insert(0, prefs_dir)
     _load_customizations(prefs_dir)
+
+    if os.environ.get("ORCA_PROFILING"):
+        debug.debugLevel = debug.LEVEL_OFF
 
     if args.profile:
         try:
