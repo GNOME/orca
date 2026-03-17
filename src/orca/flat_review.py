@@ -301,11 +301,6 @@ class Zone:
         if AXUtilities.is_scroll_bar(self._obj) or AXUtilities.is_scroll_bar(zone.get_object()):
             return self._obj == zone.get_object()
 
-        this_parent = AXObject.get_parent(self._obj)
-        zone_parent = AXObject.get_parent(zone.get_object())
-        if AXUtilities.is_menu(this_parent) or AXUtilities.is_menu(zone_parent):
-            return this_parent == zone_parent
-
         this_rect = self._rect
         zone_rect = zone.get_rect()
         if this_rect.width == 0 and this_rect.height == 0:
@@ -641,7 +636,9 @@ class Context:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         self._rect = AXComponent.get_rect(self._top_level)
 
-        container = AXUtilities.find_ancestor_inclusive(self._focus_obj, AXUtilities.is_menu)
+        container = AXUtilities.find_ancestor(self._focus_obj, AXUtilities.is_menu)
+        if container is None and AXUtilities.is_menu(self._focus_obj):
+            container = self._focus_obj
         self._container = container or self._top_level
 
         self._zones = self._get_showing_zones(self._container)
@@ -836,7 +833,12 @@ class Context:
         if boundingbox is None:
             boundingbox = self._rect
 
-        objs = AXUtilities.get_on_screen_objects(root, boundingbox)
+        if AXUtilities.is_menu(root):
+            objs = []
+            for child in AXObject.iter_children(root):
+                objs.extend(AXUtilities.get_on_screen_objects(child))
+        else:
+            objs = AXUtilities.get_on_screen_objects(root, boundingbox)
         tokens = ["FLAT REVIEW:", len(objs), "on-screen objects found for", root]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
