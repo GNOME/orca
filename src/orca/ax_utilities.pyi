@@ -35,6 +35,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
+from .ax_text import AXTextAttribute
 from .ax_utilities_event import TextEventReason
 from .ax_utilities_text import TextUnit
 
@@ -1554,6 +1555,14 @@ class AXUtilities:
     def get_cached_selected_text(obj: Atspi.Accessible) -> tuple[str, int, int]: ...
     @staticmethod
     def update_cached_selected_text(obj: Atspi.Accessible) -> None: ...
+    @staticmethod
+    def get_cached_text_attributes() -> dict[str, str]: ...
+    @staticmethod
+    def update_cached_text_attributes(obj: Atspi.Accessible, offset: int | None = None) -> None: ...
+    @staticmethod
+    def get_text_attribute_changes(
+        obj: Atspi.Accessible, offset: int | None = None
+    ) -> list[tuple[AXTextAttribute, str | None, str | None]]: ...
     @staticmethod
     def get_selected_text(obj: Atspi.Accessible) -> tuple[str, int, int]: ...
     @staticmethod

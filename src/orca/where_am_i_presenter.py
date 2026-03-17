@@ -190,7 +190,9 @@ class WhereAmIPresenter:
         msg = "WHERE AM I PRESENTER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _localize_text_attribute(self, key, value):
+    def _localize_text_attribute(self, key: str, value: str | None) -> str:
+        """Returns a localized description of the text attribute for Orca+F readout."""
+
         if value is None:
             return ""
 
@@ -201,6 +203,9 @@ class WhereAmIPresenter:
             return messages.MISSPELLED
 
         ax_text_attribute = AXTextAttribute.from_string(key)
+        if ax_text_attribute is None:
+            return ""
+
         localized_key = ax_text_attribute.get_localized_name()
         localized_value = ax_text_attribute.get_localized_value(value)
         return f"{localized_key}: {localized_value}"

@@ -58,6 +58,7 @@ class TextUnit(enum.Enum):
 class AXUtilitiesText:
     """Utilities for accessible text."""
 
+    CACHED_TEXT_ATTRIBUTES: ClassVar[dict[str, str]] = {}
     CACHED_TEXT_SELECTION: ClassVar[dict[int, tuple[str, int, int]]] = {}
     LAST_TEXT_UNIT_SPOKEN: ClassVar[TextUnit | None] = None
 
@@ -72,6 +73,106 @@ class AXUtilitiesText:
         """Sets the last text unit spoken."""
 
         AXUtilitiesText.LAST_TEXT_UNIT_SPOKEN = unit
+
+    @staticmethod
+    def get_cached_text_attributes() -> dict[str, str]:
+        """Returns the cached text attributes dict."""
+
+        return AXUtilitiesText.CACHED_TEXT_ATTRIBUTES
+
+    @staticmethod
+    def update_cached_text_attributes(obj: Atspi.Accessible, offset: int | None = None) -> None:
+        """Updates the cached text attributes for the current position."""
+
+        AXUtilitiesText.CACHED_TEXT_ATTRIBUTES = AXText.get_text_attributes_at_offset(obj, offset)[
+            0
+        ]
+
+    @staticmethod
+    def _get_raw_attribute_changes(
+        cached_attrs: dict[str, str],
+        current_attrs: dict[str, str],
+    ) -> dict[str, tuple[str | None, str | None]]:
+        """Returns raw attribute changes between cached and current, filtering spurious spelling."""
+
+        raw_changes: dict[str, tuple[str | None, str | None]] = {}
+        for key in set(cached_attrs) | set(current_attrs):
+            old_value = cached_attrs.get(key)
+            new_value = current_attrs.get(key)
+            if old_value != new_value:
+                raw_changes[key] = (old_value, new_value)
+
+        # Spelling/grammar keys fluctuate between absent and present without a real
+        # status change. Only treat them as changed if the error status truly differs.
+        spelling_keys = ("invalid", "text-spelling")
+        error_values = {"spelling", "misspelled", "grammar"}
+        old_errors = {cached_attrs.get(k) for k in spelling_keys} & error_values
+        new_errors = {current_attrs.get(k) for k in spelling_keys} & error_values
+        if old_errors == new_errors:
+            for key in spelling_keys:
+                raw_changes.pop(key, None)
+
+        return raw_changes
+
+    @staticmethod
+    def get_text_attribute_changes(
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> list[tuple[AXTextAttribute, str | None, str | None]]:
+        """Returns a list of (attribute, old_value, new_value) for attributes that changed."""
+
+        current_attrs = AXText.get_text_attributes_at_offset(obj, offset)[0]
+        cached_attrs = AXUtilitiesText.CACHED_TEXT_ATTRIBUTES
+
+        all_raw_changes = AXUtilitiesText._get_raw_attribute_changes(cached_attrs, current_attrs)
+
+        # When text is selected, the caret might be on a character that already had the
+        # formatting. Walk the attribute runs within the selection to catch changes.
+        if not all_raw_changes and AXUtilitiesText.has_selected_text(obj):
+            sel_start = AXUtilitiesText.get_selection_start_offset(obj)
+            sel_end = AXUtilitiesText.get_selection_end_offset(obj)
+            for _start, _end, run_attrs in AXUtilitiesText.get_all_text_attributes(
+                obj, sel_start, sel_end
+            ):
+                all_raw_changes = AXUtilitiesText._get_raw_attribute_changes(
+                    cached_attrs, run_attrs
+                )
+                if all_raw_changes:
+                    break
+
+        if all_raw_changes:
+            tokens = ["AXText: All attribute changes for", obj, f": {all_raw_changes}"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        changes: list[tuple[AXTextAttribute, str | None, str | None]] = []
+        changed_attrs: set[AXTextAttribute] = set()
+        for attr in AXTextAttribute:
+            key = attr.get_attribute_name()
+            if key in all_raw_changes:
+                old_value, new_value = all_raw_changes[key]
+                changes.append((attr, old_value, new_value))
+                changed_attrs.add(attr)
+
+        # A paragraph style change subsumes individual formatting changes.
+        if AXTextAttribute.PARAGRAPH_STYLE in changed_attrs:
+            changes = [(a, o, n) for a, o, n in changes if a == AXTextAttribute.PARAGRAPH_STYLE]
+        # Many simultaneous changes indicate a bulk operation (e.g. style re-application).
+        # Announce the current paragraph style so the user knows what was applied.
+        elif len(changes) > 3:
+            style = current_attrs.get("paragraph-style", "")
+            if style:
+                changes = [(AXTextAttribute.PARAGRAPH_STYLE, None, style)]
+            else:
+                changes = []
+        # TEXT_DECORATION is redundant when UNDERLINE or STRIKETHROUGH also changed.
+        elif AXTextAttribute.TEXT_DECORATION in changed_attrs and changed_attrs & {
+            AXTextAttribute.UNDERLINE,
+            AXTextAttribute.STRIKETHROUGH,
+        }:
+            changes = [(a, o, n) for a, o, n in changes if a != AXTextAttribute.TEXT_DECORATION]
+
+        AXUtilitiesText.CACHED_TEXT_ATTRIBUTES = current_attrs
+        return changes
 
     @staticmethod
     def get_character_at_point(obj: Atspi.Accessible, x: int, y: int) -> tuple[str, int, int]:

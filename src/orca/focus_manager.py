@@ -248,6 +248,7 @@ class FocusManager:
         # before doing so.
         self.set_last_cursor_position(obj, AXText.get_caret_offset(obj))
         AXUtilities.update_cached_selected_text(obj)
+        AXUtilities.update_cached_text_attributes(obj)
 
         # We save additional information about the object for events that were received at the same
         # time as the prioritized focus-change event so we don't double-present aspects about obj.

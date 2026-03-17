@@ -885,6 +885,7 @@ class Script(script.Script):
         # TODO - JD: These need to be harmonized / unified / simplified.
         manager.set_last_cursor_position(event.source, offset)
         self.utilities.set_caret_context(event.source, offset)
+        AXUtilities.update_cached_text_attributes(event.source, offset)
 
         ignore = [
             TextEventReason.CUT,
@@ -1147,13 +1148,18 @@ class Script(script.Script):
         if not AXUtilities.is_presentable_text_attributes_change(event):
             return True
 
+        changes = AXUtilities.get_text_attribute_changes(event.source)
+
         word, start, _end = AXText.get_word_at_offset(event.source)
         if not word.strip():
             word, start, _end = AXText.get_word_at_offset(event.source, start - 1)
 
         speech_pres = speech_presenter.get_presenter()
-        if error := speech_pres.get_error_description(event.source, start, False):
+        if error := speech_pres.get_error_description(event.source, start):
             presentation_manager.get_manager().speak_message(error)
+
+        for attr, _old_value, new_value in changes:
+            presentation_manager.get_manager().speak_message(attr.get_change_description(new_value))
 
         return True
 

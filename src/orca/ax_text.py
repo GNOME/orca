@@ -26,6 +26,7 @@
 
 from __future__ import annotations
 
+import contextlib
 import enum
 import locale
 import re
@@ -156,7 +157,7 @@ class AXTextAttribute(enum.Enum):
 
         if self == AXTextAttribute.SCALE:
             return float(value) == 1.0
-        if self == AXTextAttribute.TEXT_POSITION:
+        if self in (AXTextAttribute.TEXT_POSITION, AXTextAttribute.VERTICAL_ALIGN):
             return value == "baseline"
         if self == AXTextAttribute.WEIGHT:
             return value == "400"
@@ -165,6 +166,42 @@ class AXTextAttribute(enum.Enum):
             return value == loc[:2]
 
         return False
+
+    def get_change_description(self, new_value: str | None) -> str:
+        """Returns a localized description for announcing a change."""
+
+        if self == AXTextAttribute.WEIGHT:
+            if new_value and (
+                new_value == "bold" or (new_value.isdigit() and int(new_value) > 400)
+            ):
+                return messages.BOLD
+            return messages.TEXT_ATTRIBUTE_OFF % messages.BOLD
+
+        if self == AXTextAttribute.STYLE:
+            localized_italic = self.get_localized_value("italic")
+            if new_value in ("italic", "oblique"):
+                return self.get_localized_value(new_value)
+            return messages.TEXT_ATTRIBUTE_OFF % localized_italic
+
+        if self in (AXTextAttribute.UNDERLINE, AXTextAttribute.STRIKETHROUGH):
+            if self.value_is_default(new_value):
+                return messages.TEXT_ATTRIBUTE_OFF % self.get_localized_name()
+            if new_value in ("single", "solid", "true"):
+                return self.get_localized_name()
+            return f"{self.get_localized_name()}: {self.get_localized_value(new_value)}"
+
+        if self in (AXTextAttribute.TEXT_POSITION, AXTextAttribute.VERTICAL_ALIGN):
+            if self.value_is_default(new_value):
+                return messages.TEXT_ATTRIBUTE_OFF % self.get_localized_name()
+            localized = self.get_localized_value(new_value)
+            # TODO - JD: LO reports percentages instead of "super"/"sub".
+            if localized == new_value and new_value and new_value.endswith("%"):
+                value = new_value.removesuffix("%")
+                with contextlib.suppress(ValueError):
+                    localized = self.get_localized_value("super" if float(value) > 0 else "sub")
+            return localized
+
+        return f"{self.get_localized_name()}: {self.get_localized_value(new_value)}"
 
 
 class AXText:

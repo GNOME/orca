@@ -51,6 +51,11 @@ BLANK = _("blank")
 # Translators: This refers to font weight.
 BOLD = _("bold")
 
+# Translators: This indicates a text formatting attribute is no longer applied.
+# The string substitution is the localized attribute name (e.g. "bold", "italic").
+# See text_attribute_names.py for the localized attribute names.
+TEXT_ATTRIBUTE_OFF = _("%s off")
+
 # Translators: Orca has a command which toggles all (other) Orca commands so that
 # the associated keystroke can by consumed by the native application. For example,
 # if there were an Orca command bound to Alt+Down, normally pressing Alt+Down
