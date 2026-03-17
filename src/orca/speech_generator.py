@@ -176,7 +176,7 @@ class SpeechGenerator(generator.Generator):
         return ""
 
     def get_localized_role_name(self, obj: Atspi.Accessible, **args) -> str:
-        if AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_editable_combo_box):
+        if AXUtilities.is_editable_combo_box_descendant(obj, inclusive=True):
             return object_properties.ROLE_EDITABLE_COMBO_BOX
 
         if AXUtilities.is_link(obj, args.get("role")) and AXUtilities.is_visited(obj):
@@ -670,7 +670,7 @@ class SpeechGenerator(generator.Generator):
         if self._only_speak_displayed_text() or not self._context.verbose:
             return []
 
-        if AXUtilities.find_ancestor(obj, AXUtilities.is_tree_or_tree_table):
+        if AXUtilities.is_tree_or_tree_table_descendant(obj):
             child_nodes = self._script.utilities.child_nodes(obj)
             result: list[Any] = [messages.item_count(len(child_nodes))] if child_nodes else []
             if result:

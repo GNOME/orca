@@ -862,7 +862,7 @@ class Script(default.Script):
             msg = "WEB: Event handled: Last command was mouse button"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self.utilities.set_caret_context(event.source, event.detail1)
-            notify = AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_entry) is None
+            notify = not AXUtilities.is_entry_descendant(obj, inclusive=True)
             focus_manager.get_manager().set_locus_of_focus(event, event.source, notify, True)
             return True
 
@@ -1263,7 +1263,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if AXUtilities.find_ancestor(event.source, AXUtilities.is_embedded):
+        if AXUtilities.is_embedded_descendant(event.source):
             if AXUtilities.is_tool_tip(event.source) and AXUtilities.is_ancestor(
                 focus, event.source
             ):
@@ -1456,7 +1456,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if AXUtilities.find_ancestor(event.source, AXUtilities.is_embedded):
+        if AXUtilities.is_embedded_descendant(event.source):
             if document_presenter.get_presenter().in_focus_mode(self.app):
                 # Because we cannot count on the app firing the right state-changed events
                 # for descendants.

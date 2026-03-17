@@ -800,7 +800,7 @@ class Script(script.Script):
             source_is_active_window = window == focus_manager.get_manager().get_active_window()
             if source_is_active_window and not event.detail1:
                 focus = focus_manager.get_manager().get_locus_of_focus()
-                if AXUtilities.find_ancestor_inclusive(focus, AXUtilities.is_menu):
+                if AXUtilities.is_menu_descendant(focus, inclusive=True):
                     msg = "DEFAULT: Ignoring event. In menu."
                     debug.print_message(debug.LEVEL_INFO, msg, True)
                     return True
@@ -1406,7 +1406,7 @@ class Script(script.Script):
 
         manager = focus_manager.get_manager()
         focus = manager.get_locus_of_focus()
-        if AXUtilities.find_ancestor_inclusive(focus, AXUtilities.is_menu):
+        if AXUtilities.is_menu_descendant(focus, inclusive=True):
             msg = "DEFAULT: Ignoring event. In menu."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True

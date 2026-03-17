@@ -296,14 +296,15 @@ class AXUtilitiesCollection:
 
         def is_match(obj):
             result = AXUtilitiesAction.has_action(obj, "click")
-            tokens = [
-                "AXUtilitiesCollection:",
-                obj,
-                AXUtilitiesDebugging.actions_as_string(obj),
-                "has click Action:",
-                result,
-            ]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            if debug.debugLevel <= debug.LEVEL_INFO:
+                tokens = [
+                    "AXUtilitiesCollection:",
+                    obj,
+                    AXUtilitiesDebugging.actions_as_string(obj),
+                    "has click Action:",
+                    result,
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if not result:
                 return False
             return pred is None or pred(obj)
@@ -395,14 +396,15 @@ class AXUtilitiesCollection:
 
         def is_match(obj):
             result = AXUtilitiesAction.has_action(obj, "click-ancestor")
-            tokens = [
-                "AXUtilitiesCollection:",
-                obj,
-                AXUtilitiesDebugging.actions_as_string(obj),
-                "has click-ancestor Action:",
-                result,
-            ]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            if debug.debugLevel <= debug.LEVEL_INFO:
+                tokens = [
+                    "AXUtilitiesCollection:",
+                    obj,
+                    AXUtilitiesDebugging.actions_as_string(obj),
+                    "has click-ancestor Action:",
+                    result,
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if not result:
                 return False
             return pred is None or pred(obj)

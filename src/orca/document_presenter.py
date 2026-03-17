@@ -749,15 +749,12 @@ class DocumentPresenter:
     ) -> tuple[bool, str]:
         """Returns (True, reason) if obj's ancestry makes it a focus mode widget."""
 
-        ancestor_checks: list[tuple[Callable[[Atspi.Accessible], bool], str]] = [
-            (AXUtilities.is_grid, "it's a grid descendant"),
-            (AXUtilities.is_menu, "it's a menu descendant"),
-            (AXUtilities.is_tool_bar, "it's a toolbar descendant"),
-        ]
-        for predicate, reason in ancestor_checks:
-            if AXUtilities.find_ancestor(obj, predicate) is not None:
-                return True, reason
-
+        if AXUtilities.is_grid_descendant(obj):
+            return True, "it's a grid descendant"
+        if AXUtilities.is_menu_descendant(obj):
+            return True, "it's a menu descendant"
+        if AXUtilities.is_tool_bar_descendant(obj):
+            return True, "it's a toolbar descendant"
         if script.utilities.is_content_editable_with_embedded_objects(obj):
             return True, "it's content editable"
 
@@ -1334,7 +1331,7 @@ class DocumentPresenter:
     ) -> bool:
         """Returns True if we should force browse mode for web-app descendant obj."""
 
-        if not AXUtilities.find_ancestor(obj, AXUtilities.is_embedded):
+        if not AXUtilities.is_embedded_descendant(obj):
             return False
 
         if AXUtilities.is_tool_tip(obj):
@@ -1369,7 +1366,7 @@ class DocumentPresenter:
         _caret_navigator = caret_navigator.get_navigator()
         caret_prevents = (
             _caret_navigator.last_command_prevents_focus_mode()
-            and AXUtilities.find_ancestor_inclusive(prev_obj, AXUtilities.is_tool_tip) is None
+            and not AXUtilities.is_tool_tip_descendant(prev_obj, inclusive=True)
         )
         if _structural_navigator.last_command_prevents_focus_mode() or caret_prevents:
             struct_prevents = _structural_navigator.last_command_prevents_focus_mode()
@@ -1422,8 +1419,8 @@ class DocumentPresenter:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 
-        was_in_app = AXUtilities.find_ancestor(prev_obj, AXUtilities.is_embedded)
-        is_in_app = AXUtilities.find_ancestor(obj, AXUtilities.is_embedded)
+        was_in_app = AXUtilities.is_embedded_descendant(prev_obj)
+        is_in_app = AXUtilities.is_embedded_descendant(obj)
         if is_in_app:
             if not was_in_app:
                 msg = "DOCUMENT PRESENTER: Using focus mode: just entered a web application"

@@ -1061,7 +1061,7 @@ class StructuralNavigator:
         return root
 
     def _is_non_document_object(self, obj: Atspi.Accessible, must_be_showing: bool = True) -> bool:
-        if AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_document) is not None:
+        if AXUtilities.is_document_descendant(obj, inclusive=True):
             return False
         return not (must_be_showing and not AXUtilities.is_showing(obj))
 

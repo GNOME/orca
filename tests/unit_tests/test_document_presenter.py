@@ -702,7 +702,7 @@ class TestDocumentPresenter:
         ax_object.AXObject.is_dead.return_value = False
 
         ax_utilities = mocks["orca.ax_utilities"]
-        ax_utilities.AXUtilities.find_ancestor_inclusive.return_value = None
+        ax_utilities.AXUtilities.is_tool_tip_descendant.return_value = False
 
         presenter = module.get_presenter()
         result = presenter.use_focus_mode(MagicMock(), MagicMock())
@@ -768,10 +768,9 @@ class TestDocumentPresenter:
         ax_utilities = mocks["orca.ax_utilities"]
         ax_utilities.AXUtilities.is_link.return_value = False
         ax_utilities.AXUtilities.is_radio_button.return_value = False
-        ax_utilities.AXUtilities.is_embedded = MagicMock()
 
         # prev_obj not in app, obj in app
-        ax_utilities.AXUtilities.find_ancestor.side_effect = [None, MagicMock()]
+        ax_utilities.AXUtilities.is_embedded_descendant.side_effect = [False, True]
 
         presenter = module.get_presenter()
         with patch.object(presenter, "is_focus_mode_widget", return_value=False):
@@ -807,9 +806,7 @@ class TestDocumentPresenter:
         ax_utilities = mocks["orca.ax_utilities"]
         ax_utilities.AXUtilities.is_link.return_value = False
         ax_utilities.AXUtilities.is_radio_button.return_value = False
-        ax_utilities.AXUtilities.is_embedded = MagicMock()
-
-        ax_utilities.AXUtilities.find_ancestor.return_value = None
+        ax_utilities.AXUtilities.is_embedded_descendant.return_value = False
 
         presenter = module.get_presenter()
         with patch.object(presenter, "is_focus_mode_widget", return_value=False):
@@ -1798,13 +1795,12 @@ class TestDocumentPresenter:
         ax_utilities.AXUtilities.is_link.return_value = True
         ax_utilities.AXUtilities.is_list_box_item.return_value = False
         ax_utilities.AXUtilities.is_button_with_popup.return_value = False
-        ax_utilities.AXUtilities.is_grid = MagicMock()
-        ax_utilities.AXUtilities.is_menu = MagicMock()
-        ax_utilities.AXUtilities.is_tool_bar = MagicMock()
+        ax_utilities.AXUtilities.is_grid_descendant.return_value = False
+        ax_utilities.AXUtilities.is_menu_descendant.return_value = False
+        ax_utilities.AXUtilities.is_tool_bar_descendant.return_value = False
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.LINK
-        ax_utilities.AXUtilities.find_ancestor.return_value = None
 
         mock_script = MagicMock()
         mock_script.utilities.is_content_editable_with_embedded_objects.return_value = False
@@ -1990,11 +1986,10 @@ class TestDocumentPresenter:
         ax_utilities.AXUtilities.is_expandable.return_value = False
         ax_utilities.AXUtilities.is_list_box_item.return_value = False
         ax_utilities.AXUtilities.is_button_with_popup.return_value = False
-        ax_utilities.AXUtilities.is_grid = MagicMock()
+        ax_utilities.AXUtilities.is_grid_descendant.return_value = True
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.PARAGRAPH
-        ax_utilities.AXUtilities.find_ancestor.return_value = MagicMock()
 
         ax_utilities.AXUtilities.is_layout_table.return_value = False
 
@@ -2024,12 +2019,11 @@ class TestDocumentPresenter:
         ax_utilities.AXUtilities.is_expandable.return_value = False
         ax_utilities.AXUtilities.is_list_box_item.return_value = False
         ax_utilities.AXUtilities.is_button_with_popup.return_value = False
-        ax_utilities.AXUtilities.is_grid = MagicMock()
-        ax_utilities.AXUtilities.is_menu = MagicMock()
+        ax_utilities.AXUtilities.is_grid_descendant.return_value = False
+        ax_utilities.AXUtilities.is_menu_descendant.return_value = True
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.PARAGRAPH
-        ax_utilities.AXUtilities.find_ancestor.side_effect = [None, MagicMock()]
 
         ax_utilities.AXUtilities.is_layout_table.return_value = False
 
@@ -2059,13 +2053,12 @@ class TestDocumentPresenter:
         ax_utilities.AXUtilities.is_expandable.return_value = False
         ax_utilities.AXUtilities.is_list_box_item.return_value = False
         ax_utilities.AXUtilities.is_button_with_popup.return_value = False
-        ax_utilities.AXUtilities.is_grid = MagicMock()
-        ax_utilities.AXUtilities.is_menu = MagicMock()
-        ax_utilities.AXUtilities.is_tool_bar = MagicMock()
+        ax_utilities.AXUtilities.is_grid_descendant.return_value = False
+        ax_utilities.AXUtilities.is_menu_descendant.return_value = False
+        ax_utilities.AXUtilities.is_tool_bar_descendant.return_value = True
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.PARAGRAPH
-        ax_utilities.AXUtilities.find_ancestor.side_effect = [None, None, MagicMock()]
 
         ax_utilities.AXUtilities.is_layout_table.return_value = False
 
@@ -2095,13 +2088,12 @@ class TestDocumentPresenter:
         ax_utilities.AXUtilities.is_expandable.return_value = False
         ax_utilities.AXUtilities.is_list_box_item.return_value = False
         ax_utilities.AXUtilities.is_button_with_popup.return_value = False
-        ax_utilities.AXUtilities.is_grid = MagicMock()
-        ax_utilities.AXUtilities.is_menu = MagicMock()
-        ax_utilities.AXUtilities.is_tool_bar = MagicMock()
+        ax_utilities.AXUtilities.is_grid_descendant.return_value = False
+        ax_utilities.AXUtilities.is_menu_descendant.return_value = False
+        ax_utilities.AXUtilities.is_tool_bar_descendant.return_value = False
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.PARAGRAPH
-        ax_utilities.AXUtilities.find_ancestor.return_value = None
 
         ax_utilities.AXUtilities.is_layout_table.return_value = False
 
@@ -2132,13 +2124,12 @@ class TestDocumentPresenter:
         ax_utilities.AXUtilities.is_expandable.return_value = False
         ax_utilities.AXUtilities.is_list_box_item.return_value = False
         ax_utilities.AXUtilities.is_button_with_popup.return_value = False
-        ax_utilities.AXUtilities.is_grid = MagicMock()
-        ax_utilities.AXUtilities.is_menu = MagicMock()
-        ax_utilities.AXUtilities.is_tool_bar = MagicMock()
+        ax_utilities.AXUtilities.is_grid_descendant.return_value = False
+        ax_utilities.AXUtilities.is_menu_descendant.return_value = False
+        ax_utilities.AXUtilities.is_tool_bar_descendant.return_value = False
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.PARAGRAPH
-        ax_utilities.AXUtilities.find_ancestor.return_value = None
 
         ax_utilities.AXUtilities.is_layout_table.return_value = False
 
@@ -2169,13 +2160,12 @@ class TestDocumentPresenter:
         ax_utilities.AXUtilities.is_expandable.return_value = False
         ax_utilities.AXUtilities.is_list_box_item.return_value = False
         ax_utilities.AXUtilities.is_button_with_popup.return_value = False
-        ax_utilities.AXUtilities.is_grid = MagicMock()
-        ax_utilities.AXUtilities.is_menu = MagicMock()
-        ax_utilities.AXUtilities.is_tool_bar = MagicMock()
+        ax_utilities.AXUtilities.is_grid_descendant.return_value = False
+        ax_utilities.AXUtilities.is_menu_descendant.return_value = False
+        ax_utilities.AXUtilities.is_tool_bar_descendant.return_value = False
 
         ax_object = mocks["orca.ax_object"]
         ax_object.AXObject.get_role.return_value = Atspi.Role.TABLE_CELL
-        ax_utilities.AXUtilities.find_ancestor.return_value = None
 
         ax_utilities.AXUtilities.get_table.return_value = MagicMock()
         ax_utilities.AXUtilities.is_layout_table.return_value = False

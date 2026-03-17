@@ -56,6 +56,7 @@ from .ax_utilities_table import AXUtilitiesTable
 from .ax_utilities_text import AXUtilitiesText
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
     from typing import ClassVar
 
 
@@ -67,6 +68,20 @@ class AXUtilities:
     # Things we cache.
     SET_MEMBERS: ClassVar[dict[int, list[Atspi.Accessible]]] = {}
     IS_LAYOUT_ONLY: ClassVar[dict[int, tuple[bool, str]]] = {}
+    IS_BLOCK_LIST_DESCENDANT: ClassVar[dict[int, bool]] = {}
+    IS_COMBO_BOX_DESCENDANT: ClassVar[dict[int, bool]] = {}
+    IS_DOCUMENT_DESCENDANT: ClassVar[dict[int, bool]] = {}
+    IS_EDITABLE_COMBO_BOX_DESCENDANT: ClassVar[dict[int, bool]] = {}
+    IS_EMBEDDED_DESCENDANT: ClassVar[dict[int, bool]] = {}
+    IS_ENTRY_DESCENDANT: ClassVar[dict[int, bool]] = {}
+    IS_GRID_DESCENDANT: ClassVar[dict[int, bool]] = {}
+    IS_INLINE_LIST_ITEM_DESCENDANT: ClassVar[dict[int, bool]] = {}
+    IS_LIST_DESCENDANT: ClassVar[dict[int, bool]] = {}
+    IS_MENU_DESCENDANT: ClassVar[dict[int, bool]] = {}
+    IS_SUBSCRIPT_OR_SUPERSCRIPT_TEXT_DESCENDANT: ClassVar[dict[int, bool]] = {}
+    IS_TOOL_BAR_DESCENDANT: ClassVar[dict[int, bool]] = {}
+    IS_TOOL_TIP_DESCENDANT: ClassVar[dict[int, bool]] = {}
+    IS_TREE_OR_TREE_TABLE_DESCENDANT: ClassVar[dict[int, bool]] = {}
 
     _lock = threading.Lock()
 
@@ -96,6 +111,20 @@ class AXUtilities:
         with AXUtilities._lock:
             AXUtilities.SET_MEMBERS.clear()
             AXUtilities.IS_LAYOUT_ONLY.clear()
+            AXUtilities.IS_BLOCK_LIST_DESCENDANT.clear()
+            AXUtilities.IS_COMBO_BOX_DESCENDANT.clear()
+            AXUtilities.IS_DOCUMENT_DESCENDANT.clear()
+            AXUtilities.IS_EDITABLE_COMBO_BOX_DESCENDANT.clear()
+            AXUtilities.IS_EMBEDDED_DESCENDANT.clear()
+            AXUtilities.IS_ENTRY_DESCENDANT.clear()
+            AXUtilities.IS_GRID_DESCENDANT.clear()
+            AXUtilities.IS_INLINE_LIST_ITEM_DESCENDANT.clear()
+            AXUtilities.IS_LIST_DESCENDANT.clear()
+            AXUtilities.IS_MENU_DESCENDANT.clear()
+            AXUtilities.IS_SUBSCRIPT_OR_SUPERSCRIPT_TEXT_DESCENDANT.clear()
+            AXUtilities.IS_TOOL_BAR_DESCENDANT.clear()
+            AXUtilities.IS_TOOL_TIP_DESCENDANT.clear()
+            AXUtilities.IS_TREE_OR_TREE_TABLE_DESCENDANT.clear()
 
     @staticmethod
     def clear_all_cache_now(obj: Atspi.Accessible | None = None, reason: str = "") -> None:
@@ -498,7 +527,7 @@ class AXUtilities:
     def _is_layout_only_menu_or_list(obj: Atspi.Accessible) -> tuple[bool, str]:
         """Returns True with reason if this menu or list in a combo box is layout-only."""
 
-        if AXUtilitiesObject.find_ancestor(obj, AXUtilitiesRole.is_combo_box) is not None:
+        if AXUtilities.is_combo_box_descendant(obj):
             return True, "is inside combo box"
         return False, ""
 
@@ -629,6 +658,240 @@ class AXUtilities:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result
+
+    @staticmethod
+    def _is_descendant(
+        cache: dict[int, bool],
+        obj: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool],
+        inclusive: bool = False,
+    ) -> bool:
+        """Returns True if obj (or an ancestor) matches pred."""
+
+        if inclusive and pred(obj):
+            return True
+
+        obj_hash = hash(obj)
+        rv = cache.get(obj_hash)
+        if rv is not None:
+            return rv
+
+        parent = AXObject.get_parent(obj)
+        if parent is not None:
+            parent_hash = hash(parent)
+            parent_rv = cache.get(parent_hash)
+            if parent_rv is False:
+                cache[obj_hash] = False
+                return False
+            if parent_rv is None:
+                parent_rv = AXUtilitiesObject.find_ancestor(parent, pred) is not None
+                cache[parent_hash] = parent_rv
+                if not parent_rv:
+                    cache[obj_hash] = False
+                    return False
+
+        rv = AXUtilitiesObject.find_ancestor(obj, pred) is not None
+        cache[obj_hash] = rv
+        return rv
+
+    @staticmethod
+    def is_block_list_descendant(obj: Atspi.Accessible) -> bool:
+        """Returns True if obj is in a list but not in an inline list item."""
+
+        obj_hash = hash(obj)
+        rv = AXUtilities.IS_BLOCK_LIST_DESCENDANT.get(obj_hash)
+        if rv is not None:
+            return rv
+
+        if not AXUtilities.is_list_descendant(obj):
+            rv = False
+        else:
+            rv = not AXUtilities.is_inline_list_item_descendant(obj, inclusive=True)
+
+        AXUtilities.IS_BLOCK_LIST_DESCENDANT[obj_hash] = rv
+        return rv
+
+    @staticmethod
+    def is_combo_box_descendant(
+        obj: Atspi.Accessible,
+        inclusive: bool = False,
+    ) -> bool:
+        """Returns True if obj has a combo box ancestor."""
+
+        return AXUtilities._is_descendant(
+            AXUtilities.IS_COMBO_BOX_DESCENDANT,
+            obj,
+            AXUtilitiesRole.is_combo_box,
+            inclusive,
+        )
+
+    @staticmethod
+    def is_document_descendant(
+        obj: Atspi.Accessible,
+        inclusive: bool = False,
+    ) -> bool:
+        """Returns True if obj has a document ancestor."""
+
+        return AXUtilities._is_descendant(
+            AXUtilities.IS_DOCUMENT_DESCENDANT,
+            obj,
+            AXUtilitiesRole.is_document,
+            inclusive,
+        )
+
+    @staticmethod
+    def is_editable_combo_box_descendant(
+        obj: Atspi.Accessible,
+        inclusive: bool = False,
+    ) -> bool:
+        """Returns True if obj has an editable combo box ancestor."""
+
+        return AXUtilities._is_descendant(
+            AXUtilities.IS_EDITABLE_COMBO_BOX_DESCENDANT,
+            obj,
+            AXUtilitiesRole.is_editable_combo_box,
+            inclusive,
+        )
+
+    @staticmethod
+    def is_embedded_descendant(
+        obj: Atspi.Accessible,
+        inclusive: bool = False,
+    ) -> bool:
+        """Returns True if obj has an embedded ancestor."""
+
+        return AXUtilities._is_descendant(
+            AXUtilities.IS_EMBEDDED_DESCENDANT,
+            obj,
+            AXUtilitiesRole.is_embedded,
+            inclusive,
+        )
+
+    @staticmethod
+    def is_entry_descendant(
+        obj: Atspi.Accessible,
+        inclusive: bool = False,
+    ) -> bool:
+        """Returns True if obj has an entry ancestor."""
+
+        return AXUtilities._is_descendant(
+            AXUtilities.IS_ENTRY_DESCENDANT,
+            obj,
+            AXUtilitiesRole.is_entry,
+            inclusive,
+        )
+
+    @staticmethod
+    def is_inline_list_item_descendant(
+        obj: Atspi.Accessible,
+        inclusive: bool = False,
+    ) -> bool:
+        """Returns True if obj has an inline list item ancestor."""
+
+        return AXUtilities._is_descendant(
+            AXUtilities.IS_INLINE_LIST_ITEM_DESCENDANT,
+            obj,
+            AXUtilitiesRole.is_inline_list_item,
+            inclusive,
+        )
+
+    @staticmethod
+    def is_grid_descendant(
+        obj: Atspi.Accessible,
+        inclusive: bool = False,
+    ) -> bool:
+        """Returns True if obj has a grid ancestor."""
+
+        return AXUtilities._is_descendant(
+            AXUtilities.IS_GRID_DESCENDANT,
+            obj,
+            AXUtilitiesRole.is_grid,
+            inclusive,
+        )
+
+    @staticmethod
+    def is_list_descendant(
+        obj: Atspi.Accessible,
+        inclusive: bool = False,
+    ) -> bool:
+        """Returns True if obj has a list ancestor."""
+
+        return AXUtilities._is_descendant(
+            AXUtilities.IS_LIST_DESCENDANT,
+            obj,
+            AXUtilitiesRole.is_list,
+            inclusive,
+        )
+
+    @staticmethod
+    def is_menu_descendant(
+        obj: Atspi.Accessible,
+        inclusive: bool = False,
+    ) -> bool:
+        """Returns True if obj has a menu ancestor."""
+
+        return AXUtilities._is_descendant(
+            AXUtilities.IS_MENU_DESCENDANT,
+            obj,
+            AXUtilitiesRole.is_menu,
+            inclusive,
+        )
+
+    @staticmethod
+    def is_subscript_or_superscript_text_descendant(
+        obj: Atspi.Accessible,
+        inclusive: bool = False,
+    ) -> bool:
+        """Returns True if obj has a subscript or superscript ancestor."""
+
+        return AXUtilities._is_descendant(
+            AXUtilities.IS_SUBSCRIPT_OR_SUPERSCRIPT_TEXT_DESCENDANT,
+            obj,
+            AXUtilitiesRole.is_subscript_or_superscript_text,
+            inclusive,
+        )
+
+    @staticmethod
+    def is_tool_bar_descendant(
+        obj: Atspi.Accessible,
+        inclusive: bool = False,
+    ) -> bool:
+        """Returns True if obj has a toolbar ancestor."""
+
+        return AXUtilities._is_descendant(
+            AXUtilities.IS_TOOL_BAR_DESCENDANT,
+            obj,
+            AXUtilitiesRole.is_tool_bar,
+            inclusive,
+        )
+
+    @staticmethod
+    def is_tool_tip_descendant(
+        obj: Atspi.Accessible,
+        inclusive: bool = False,
+    ) -> bool:
+        """Returns True if obj has a tooltip ancestor."""
+
+        return AXUtilities._is_descendant(
+            AXUtilities.IS_TOOL_TIP_DESCENDANT,
+            obj,
+            AXUtilitiesRole.is_tool_tip,
+            inclusive,
+        )
+
+    @staticmethod
+    def is_tree_or_tree_table_descendant(
+        obj: Atspi.Accessible,
+        inclusive: bool = False,
+    ) -> bool:
+        """Returns True if obj has a tree or tree table ancestor."""
+
+        return AXUtilities._is_descendant(
+            AXUtilities.IS_TREE_OR_TREE_TABLE_DESCENDANT,
+            obj,
+            AXUtilitiesRole.is_tree_or_tree_table,
+            inclusive,
+        )
 
     @staticmethod
     def is_message_dialog(obj: Atspi.Accessible) -> bool:

@@ -73,6 +73,8 @@ class Utilities(script_utilities.Utilities):
         self._cached_prior_contexts: dict[int, tuple[Atspi.Accessible, int]] = {}
         self._cached_can_have_caret_context_decision: dict[int, bool] = {}
         self._cached_in_document_content: dict[int, bool] = {}
+        self._cached_document_for_object: dict[int, Atspi.Accessible | None] = {}
+        self._cached_top_level_document_for_object: dict[int, Atspi.Accessible | None] = {}
         self._cached_is_text_block_element: dict[int, bool] = {}
         self._cached_is_content_editable_with_embedded_objects: dict[int, bool] = {}
         self._cached_has_grid_descendant: dict[int, bool] = {}
@@ -87,6 +89,7 @@ class Utilities(script_utilities.Utilities):
             None,
         )
         self._cached_is_link: dict[int, bool] = {}
+        self._cached_banner_ancestor: dict[int, Atspi.Accessible | None] = {}
         self._cached_is_custom_image: dict[int, bool] = {}
         self._cached_is_useless_image: dict[int, bool] = {}
         self._cached_is_redundant_svg: dict[int, bool] = {}
@@ -154,6 +157,8 @@ class Utilities(script_utilities.Utilities):
 
         debug.print_message(debug.LEVEL_INFO, "WEB: cleaning up cached objects", True)
         self._cached_in_document_content = {}
+        self._cached_document_for_object = {}
+        self._cached_top_level_document_for_object = {}
         self._cached_is_text_block_element = {}
         self._cached_is_content_editable_with_embedded_objects = {}
         self._cached_has_grid_descendant = {}
@@ -162,6 +167,7 @@ class Utilities(script_utilities.Utilities):
         self._cached_element_lines_are_single_words = {}
         self._cached_is_clickable_element = {}
         self._cached_is_link = {}
+        self._cached_banner_ancestor = {}
         self._cached_is_custom_image = {}
         self._cached_is_useless_image = {}
         self._cached_is_redundant_svg = {}
@@ -189,11 +195,12 @@ class Utilities(script_utilities.Utilities):
     def is_document(self, obj: Atspi.Accessible, exclude_document_frame: bool = True) -> bool:
         """Returns True if obj is a document."""
 
-        if AXUtilities.is_document_web(obj) or AXUtilities.is_embedded(obj):
+        role = AXObject.get_role(obj)
+        if AXUtilities.is_document_web(obj, role) or AXUtilities.is_embedded(obj, role):
             return True
 
         if not exclude_document_frame:
-            return AXUtilities.is_document_frame(obj)
+            return AXUtilities.is_document_frame(obj, role)
 
         return False
 
@@ -211,6 +218,39 @@ class Utilities(script_utilities.Utilities):
         document = self.get_document_for_object(obj)
         rv = document is not None
         self._cached_in_document_content[hash(obj)] = rv
+        return rv
+
+    def get_document_for_object(self, obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns the nearest document ancestor of obj, or obj if it is a document."""
+
+        obj_hash = hash(obj)
+        rv = self._cached_document_for_object.get(obj_hash)
+        if rv is not None:
+            return rv
+
+        if obj_hash in self._cached_document_for_object:
+            return None
+
+        rv = super().get_document_for_object(obj)
+        self._cached_document_for_object[obj_hash] = rv
+        return rv
+
+    def get_top_level_document_for_object(
+        self,
+        obj: Atspi.Accessible,
+    ) -> Atspi.Accessible | None:
+        """Returns the top-level document containing obj."""
+
+        obj_hash = hash(obj)
+        rv = self._cached_top_level_document_for_object.get(obj_hash)
+        if rv is not None:
+            return rv
+
+        if obj_hash in self._cached_top_level_document_for_object:
+            return None
+
+        rv = super().get_top_level_document_for_object(obj)
+        self._cached_top_level_document_for_object[obj_hash] = rv
         return rv
 
     def grab_focus_when_setting_caret(self, obj: Atspi.Accessible) -> bool:
@@ -1354,12 +1394,12 @@ class Utilities(script_utilities.Utilities):
         else:
             rect = self._get_extents(obj, offset, offset + 1)
 
-        if AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_inline_list_item) is not None:
+        if AXUtilities.is_inline_list_item_descendant(obj, inclusive=True):
             container = AXUtilities.find_ancestor(obj, AXUtilities.is_list)
             if container:
                 rect = self._get_extents(container, 0, 1)
 
-        obj_banner = AXUtilities.find_ancestor(obj, AXUtilities.is_landmark_banner)
+        obj_banner = self._get_banner_ancestor(obj)
         obj_row = AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_table_row)
 
         def _include(x):
@@ -1376,14 +1416,15 @@ class Utilities(script_utilities.Utilities):
                 if AXUtilities.is_landmark(obj) and AXUtilities.is_landmark(x_obj):
                     return False
                 if self.is_link(obj) and self.is_link(x_obj):
-                    x_obj_banner = AXUtilities.find_ancestor(x_obj, AXUtilities.is_landmark_banner)
+                    x_obj_banner = self._get_banner_ancestor(x_obj)
                     if (obj_banner or x_obj_banner) and obj_banner != x_obj_banner:
                         return False
                     if abs(rect.x - x_rect.x) <= 1 and abs(rect.y - x_rect.y) <= 1:
                         # This happens with dynamic skip links such as found on Wikipedia.
                         return False
                 elif (
-                    self._is_block_list_descendant(obj) != self._is_block_list_descendant(x_obj)
+                    AXUtilities.is_block_list_descendant(obj)
+                    != AXUtilities.is_block_list_descendant(x_obj)
                     or (AXUtilities.is_tree_related(obj) and AXUtilities.is_tree_related(x_obj))
                     or (AXUtilities.is_heading(obj) and AXUtilities.has_no_size(obj))
                     or (AXUtilities.is_heading(x_obj) and AXUtilities.has_no_size(x_obj))
@@ -1392,10 +1433,7 @@ class Utilities(script_utilities.Utilities):
 
             if AXUtilities.is_math(x_obj) or AXUtilities.is_math_related(obj):
                 on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect, rect.height)
-            elif AXUtilities.find_ancestor_inclusive(
-                x_obj,
-                AXUtilities.is_subscript_or_superscript_text,
-            ):
+            elif AXUtilities.is_subscript_or_superscript_text_descendant(x_obj, inclusive=True):
                 on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect, x_rect.height)
             else:
                 on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect)
@@ -2007,7 +2045,7 @@ class Utilities(script_utilities.Utilities):
         if not super().should_read_full_row(obj, previous_object):
             return False
 
-        if AXUtilities.find_ancestor(obj, AXUtilities.is_grid) is not None:
+        if AXUtilities.is_grid_descendant(obj):
             return not document_presenter.get_presenter().in_focus_mode(self._script.app)
 
         if input_event_manager.get_manager().last_event_was_line_navigation():
@@ -2301,6 +2339,9 @@ class Utilities(script_utilities.Utilities):
         if AXUtilities.is_editable(obj):
             return False
 
+        if not AXUtilities.is_entry_descendant(obj):
+            return False
+
         entry_name = AXObject.get_name(AXUtilities.find_ancestor(obj, AXUtilities.is_entry))
         if not entry_name:
             return False
@@ -2315,13 +2356,6 @@ class Utilities(script_utilities.Utilities):
             return True
 
         return AXUtilities.find_descendant(obj, _is_match) is not None
-
-    def _is_block_list_descendant(self, obj: Atspi.Accessible) -> bool:
-        # TODO - JD: Move into AXUtilities.
-        if AXUtilities.find_ancestor(obj, AXUtilities.is_list) is None:
-            return False
-
-        return AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_inline_list_item) is None
 
     def is_link(self, obj: Atspi.Accessible) -> bool:
         if not obj:
@@ -2341,6 +2375,17 @@ class Utilities(script_utilities.Utilities):
         )
 
         self._cached_is_link[hash(obj)] = rv
+        return rv
+
+    def _get_banner_ancestor(self, obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns the landmark banner ancestor of obj, or None."""
+
+        obj_hash = hash(obj)
+        if obj_hash in self._cached_banner_ancestor:
+            return self._cached_banner_ancestor[obj_hash]
+
+        rv = AXUtilities.find_ancestor(obj, AXUtilities.is_landmark_banner)
+        self._cached_banner_ancestor[obj_hash] = rv
         return rv
 
     def has_useless_canvas_descendant(self, obj: Atspi.Accessible) -> bool:
@@ -2528,9 +2573,7 @@ class Utilities(script_utilities.Utilities):
         return rv
 
     def _should_infer_label_for(self, obj: Atspi.Accessible) -> bool:
-        if not self.in_document_content() or AXUtilities.find_ancestor(
-            obj, AXUtilities.is_embedded
-        ):
+        if not self.in_document_content():
             return False
 
         rv = self._cached_should_infer_label_for.get(hash(obj))
@@ -2538,6 +2581,10 @@ class Utilities(script_utilities.Utilities):
             return not focus_manager.get_manager().in_say_all()
         if rv is False:
             return rv
+
+        if AXUtilities.is_embedded_descendant(obj):
+            self._cached_should_infer_label_for[hash(obj)] = False
+            return False
 
         role = AXObject.get_role(obj)
         if AXObject.get_name(obj) or AXUtilities.has_role_from_aria(obj):
@@ -2785,10 +2832,10 @@ class Utilities(script_utilities.Utilities):
             return False
 
         old_focus = old_focus or focus_manager.get_manager().get_locus_of_focus()
-        if AXUtilities.find_ancestor(old_focus, AXUtilities.is_grid) is None:
+        if not AXUtilities.is_grid_descendant(old_focus):
             return False
 
-        return AXUtilities.find_ancestor(event.source, AXUtilities.is_grid) is None
+        return not AXUtilities.is_grid_descendant(event.source)
 
     def caret_moved_to_same_page_fragment(self, event, old_focus=None):
         """Returns true if the caret moved to a same-page fragment."""

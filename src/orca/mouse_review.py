@@ -825,7 +825,7 @@ class MouseReviewer:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         script = script_manager.get_manager().get_script(AXUtilities.get_application(window), obj)
-        if menu and obj and not AXUtilities.find_ancestor(obj, AXUtilities.is_menu):
+        if menu and obj and not AXUtilities.is_menu_descendant(obj):
             if AXUtilities.objects_overlap(obj, menu):
                 tokens = ["MOUSE REVIEW:", obj, "believed to be under", menu]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)

@@ -68,7 +68,7 @@ class Utilities:
     def node_level(self, obj: Atspi.Accessible) -> int:
         """Returns the node level of the specified tree item."""
 
-        if not AXUtilities.find_ancestor(obj, AXUtilities.is_tree_or_tree_table):
+        if not AXUtilities.is_tree_or_tree_table_descendant(obj):
             return -1
 
         attrs = AXObject.get_attributes_dict(obj)
@@ -181,7 +181,7 @@ class Utilities:
         if not AXUtilities.is_entry(obj):
             return False
 
-        return AXUtilities.find_ancestor(obj, AXUtilities.is_tool_bar) is not None
+        return AXUtilities.is_tool_bar_descendant(obj)
 
     def get_find_results_count(self, _root: Atspi.Accessible | None = None) -> str:
         """Returns a string description of the number of find-in-page results in root."""
