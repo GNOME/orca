@@ -64,6 +64,7 @@ class FocusManager:
         self._last_cursor_position: tuple[Atspi.Accessible | None, int] = (None, -1)
         self._penultimate_cursor_position: tuple[Atspi.Accessible | None, int] = (None, -1)
         self._in_preferences_window: bool = False
+        self._old_focus_was_dead: bool = False
 
     def clear_state(self, reason: str = "") -> None:
         """Clears everything we're tracking."""
@@ -76,6 +77,7 @@ class FocusManager:
         self._window = None
         self._object_of_interest = None
         self._active_mode = None
+        self._old_focus_was_dead = False
 
     def is_in_preferences_window(self) -> bool:
         """Returns True if the Orca preferences window is open."""
@@ -251,6 +253,11 @@ class FocusManager:
         # time as the prioritized focus-change event so we don't double-present aspects about obj.
         AXUtilities.save_object_info_for_events(obj)
 
+    def old_focus_was_dead(self) -> bool:
+        """Returns True if the previous locus of focus was dead when last replaced."""
+
+        return self._old_focus_was_dead
+
     def set_locus_of_focus(
         self,
         event: Atspi.Event | None,
@@ -281,7 +288,8 @@ class FocusManager:
             script_manager.get_manager().set_active_script(script, "Setting locus of focus")
 
         old_focus = self._focus
-        if AXObject.is_dead(old_focus):
+        self._old_focus_was_dead = AXObject.is_dead(old_focus)
+        if self._old_focus_was_dead:
             old_focus = None
 
         if obj is None:
