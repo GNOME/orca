@@ -1031,7 +1031,7 @@ class DocumentPresenter:
             caret_navigator.get_navigator().set_enabled_for_script(script, False)
             return True
 
-        if old_doc is None:
+        if old_doc is None and not focus_manager.get_manager().old_focus_was_dead():
             return self._handle_entering_document(script, new_focus, old_focus)
 
         # Focus change within document

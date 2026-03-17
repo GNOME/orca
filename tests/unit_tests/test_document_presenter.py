@@ -1435,6 +1435,9 @@ class TestDocumentPresenter:
         mock_doc = MagicMock()
         mock_script.utilities.get_top_level_document_for_object.side_effect = [None, mock_doc]
 
+        focus_manager = mocks["orca.focus_manager"]
+        focus_manager.get_manager.return_value.old_focus_was_dead.return_value = False
+
         presenter = module.get_presenter()
         presenter._app_states[hash(mock_app)] = module._AppModeState(
             in_focus_mode=True,
@@ -1461,6 +1464,9 @@ class TestDocumentPresenter:
         mock_script.app = mock_app
         mock_doc = MagicMock()
         mock_script.utilities.get_top_level_document_for_object.side_effect = [None, mock_doc]
+
+        focus_manager = mocks["orca.focus_manager"]
+        focus_manager.get_manager.return_value.old_focus_was_dead.return_value = False
 
         struct_nav = mocks["orca.structural_navigator"]
         caret_nav = mocks["orca.caret_navigator"]
@@ -1510,6 +1516,7 @@ class TestDocumentPresenter:
         nav_mock.last_input_event_was_navigation_command.return_value = False
         focus_manager = mocks["orca.focus_manager"]
         focus_manager.get_manager.return_value.in_say_all.return_value = False
+        focus_manager.get_manager.return_value.old_focus_was_dead.return_value = False
 
         script_manager = mocks["orca.script_manager"]
         script_manager.get_manager.return_value.get_active_script.return_value = mock_script
@@ -1589,7 +1596,7 @@ class TestDocumentPresenter:
 
         from unittest.mock import MagicMock, patch
 
-        module, _mocks = self._setup_presenter(test_context)
+        module, mocks = self._setup_presenter(test_context)
 
         mock_app = MagicMock()
         mock_script = MagicMock()
@@ -1597,6 +1604,9 @@ class TestDocumentPresenter:
         mock_doc = MagicMock()
         mock_script.utilities.get_top_level_document_for_object.side_effect = [None, mock_doc]
         mock_script.utilities.in_document_content.return_value = True
+
+        focus_manager = mocks["orca.focus_manager"]
+        focus_manager.get_manager.return_value.old_focus_was_dead.return_value = False
 
         presenter = module.get_presenter()
 
@@ -1697,7 +1707,7 @@ class TestDocumentPresenter:
 
         from unittest.mock import MagicMock, patch
 
-        module, _mocks = self._setup_presenter(test_context)
+        module, mocks = self._setup_presenter(test_context)
 
         mock_app = MagicMock()
         mock_script = MagicMock()
@@ -1705,6 +1715,9 @@ class TestDocumentPresenter:
         mock_doc = MagicMock()
         mock_script.utilities.get_top_level_document_for_object.side_effect = [None, mock_doc]
         mock_script.utilities.in_document_content.return_value = True
+
+        focus_manager = mocks["orca.focus_manager"]
+        focus_manager.get_manager.return_value.old_focus_was_dead.return_value = False
 
         presenter = module.get_presenter()
 
