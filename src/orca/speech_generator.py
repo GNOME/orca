@@ -805,8 +805,7 @@ class SpeechGenerator(generator.Generator):
         return enabled, disabled
 
     @log_generator_output
-    @staticmethod
-    def _get_dpub_landmark_leaving_message(obj: Atspi.Accessible) -> str:
+    def _get_dpub_landmark_leaving_message(self, obj: Atspi.Accessible) -> str:
         """Returns the leaving message for a DPUB landmark."""
 
         dpub_landmark_checks: list[tuple[Callable, str]] = [
