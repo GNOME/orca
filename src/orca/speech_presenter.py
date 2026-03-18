@@ -1,7 +1,7 @@
 # Orca
 #
 # Copyright 2005-2008 Sun Microsystems Inc.
-# Copyright 2011-2025 Igalia, S.L.
+# Copyright 2011-2026 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -67,8 +67,9 @@ from . import (
 )
 from .ax_document import AXDocument
 from .ax_hypertext import AXHypertext
-from .ax_text import AXText
+from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
+from .text_attribute_manager import TextAttributeChangeMode
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterable
@@ -270,7 +271,7 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             determine_sensitivity=self._only_speak_displayed_text_is_off,
         )
 
-        controls = [
+        controls: list[preferences_grid_base.ControlType] = [
             preferences_grid_base.BooleanPreferenceControl(
                 label=general_prefs[0].label,
                 getter=general_prefs[0].getter,
@@ -330,6 +331,24 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 getter=text_speak_misspelled.getter,
                 setter=text_speak_misspelled.setter,
                 prefs_key=text_speak_misspelled.prefs_key,
+                member_of=guilabels.SPEECH_OBJECT_DETAILS,
+                determine_sensitivity=self._only_speak_displayed_text_is_off,
+            ),
+            preferences_grid_base.EnumPreferenceControl(
+                label=guilabels.TEXT_ATTRIBUTE_CHANGES,
+                options=[
+                    guilabels.TEXT_ATTRIBUTE_CHANGES_OFF,
+                    guilabels.TEXT_ATTRIBUTE_CHANGES_EDITABLE,
+                    guilabels.TEXT_ATTRIBUTE_CHANGES_ALWAYS,
+                ],
+                values=[
+                    TextAttributeChangeMode.OFF.value,
+                    TextAttributeChangeMode.EDITABLE_ONLY.value,
+                    TextAttributeChangeMode.ALWAYS.value,
+                ],
+                getter=presenter.get_text_attribute_change_mode_as_int,
+                setter=presenter.set_text_attribute_change_mode_from_int,
+                prefs_key=SpeechPresenter.KEY_SPEAK_TEXT_ATTRIBUTE_CHANGES,
                 member_of=guilabels.SPEECH_OBJECT_DETAILS,
                 determine_sensitivity=self._only_speak_displayed_text_is_off,
             ),
@@ -833,6 +852,7 @@ class SpeechPresenter:
     KEY_VERBOSITY_LEVEL = "verbosity-level"
     KEY_SPEAK_INDENTATION_AND_JUSTIFICATION = "speak-indentation-and-justification"
     KEY_SPEAK_INDENTATION_ONLY_IF_CHANGED = "speak-indentation-only-if-changed"
+    KEY_SPEAK_TEXT_ATTRIBUTE_CHANGES = "speak-text-attribute-changes"
     KEY_MONITOR_FONT_SIZE = "monitor-font-size"
     KEY_MONITOR_FOREGROUND = "monitor-foreground"
     KEY_MONITOR_BACKGROUND = "monitor-background"
@@ -856,6 +876,7 @@ class SpeechPresenter:
         self._speech_history: list[tuple[str, str]] = []
         self._group_buffer: list[str] | None = None
         self._progress_bar_cache: dict = {}
+        self._text_attribute_change_mode_override: TextAttributeChangeMode | None = None
 
         msg = "SPEECH PRESENTER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -920,6 +941,13 @@ class SpeechPresenter:
                 cmdnames.TOGGLE_SPEECH_MONITOR,
                 kb_shift_d,
                 kb_shift_d,
+            ),
+            (
+                "cycle_text_attribute_change_mode",
+                self.cycle_text_attribute_change_mode,
+                cmdnames.CYCLE_TEXT_ATTRIBUTE_CHANGE_MODE,
+                None,
+                None,
             ),
         ]
 
@@ -1867,6 +1895,118 @@ class SpeechPresenter:
         )
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_SPEAK_TEXT_ATTRIBUTE_CHANGES,
+        schema="speech",
+        genum="org.gnome.Orca.TextAttributeChangeMode",
+        default="off",
+        summary="When to speak text attribute changes during navigation",
+    )
+    @dbus_service.getter
+    def get_speak_text_attribute_changes(self) -> str:
+        """Returns when text attribute changes are spoken during navigation."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA,
+            self.KEY_SPEAK_TEXT_ATTRIBUTE_CHANGES,
+            "",
+            genum="org.gnome.Orca.TextAttributeChangeMode",
+            default="off",
+        )
+
+    @dbus_service.setter
+    def set_speak_text_attribute_changes(self, value: str) -> bool:
+        """Sets when text attribute changes are spoken during navigation."""
+
+        msg = f"SPEECH PRESENTER: Setting speak text attribute changes to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA,
+            self.KEY_SPEAK_TEXT_ATTRIBUTE_CHANGES,
+            value,
+        )
+        return True
+
+    def get_text_attribute_change_mode(self) -> TextAttributeChangeMode:
+        """Returns the text attribute change mode enum."""
+
+        name = self.get_speak_text_attribute_changes().upper().replace("-", "_")
+        for mode in TextAttributeChangeMode:
+            if mode.name == name:
+                return mode
+        return TextAttributeChangeMode.OFF
+
+    def get_text_attribute_change_mode_as_int(self) -> int:
+        """Returns the text attribute change mode as an int for the UI."""
+
+        return self.get_text_attribute_change_mode().value
+
+    def set_text_attribute_change_mode_from_int(self, value: int) -> bool:
+        """Sets the text attribute change mode from an int for the UI."""
+
+        name = TextAttributeChangeMode(value).name.lower().replace("_", "-")
+        return self.set_speak_text_attribute_changes(name)
+
+    def should_speak_text_attribute_changes(self, obj: Atspi.Accessible) -> bool:
+        """Returns True if text attribute changes should be spoken for obj."""
+
+        if self._text_attribute_change_mode_override is not None:
+            mode = self._text_attribute_change_mode_override
+        elif focus_manager.get_manager().in_say_all():
+            mode = say_all_presenter.get_presenter().get_text_attribute_change_mode()
+        else:
+            mode = self.get_text_attribute_change_mode()
+
+        if mode == TextAttributeChangeMode.OFF:
+            return False
+        if mode == TextAttributeChangeMode.ALWAYS:
+            return True
+        return AXUtilities.is_editable(obj)
+
+    @dbus_service.command
+    def cycle_text_attribute_change_mode(
+        self,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Cycles through text attribute change announcement modes."""
+
+        tokens = [
+            "SPEECH PRESENTER: cycle_text_attribute_change_mode. ",
+            "Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        if self._text_attribute_change_mode_override is not None:
+            mode = self._text_attribute_change_mode_override
+        elif focus_manager.get_manager().in_say_all():
+            mode = say_all_presenter.get_presenter().get_text_attribute_change_mode()
+        else:
+            mode = self.get_text_attribute_change_mode()
+
+        mode_cycle = {
+            TextAttributeChangeMode.OFF: TextAttributeChangeMode.EDITABLE_ONLY,
+            TextAttributeChangeMode.EDITABLE_ONLY: TextAttributeChangeMode.ALWAYS,
+            TextAttributeChangeMode.ALWAYS: TextAttributeChangeMode.OFF,
+        }
+        self._text_attribute_change_mode_override = mode_cycle[mode]
+        new_mode = self._text_attribute_change_mode_override
+
+        msg_map = {
+            TextAttributeChangeMode.OFF: messages.TEXT_ATTRIBUTE_CHANGES_OFF,
+            TextAttributeChangeMode.EDITABLE_ONLY: messages.TEXT_ATTRIBUTE_CHANGES_EDITABLE_ONLY,
+            TextAttributeChangeMode.ALWAYS: messages.TEXT_ATTRIBUTE_CHANGES_ON,
+        }
+        if notify_user:
+            presentation_manager.get_manager().present_message(msg_map[new_mode])
+        return True
+
     @dbus_service.command
     def toggle_indentation_and_justification(
         self,
@@ -2160,6 +2300,15 @@ class SpeechPresenter:
 
         if error := self.get_error_description(obj, offset):
             self.speak_message(error)
+
+        if not self.should_speak_text_attribute_changes(obj):
+            return
+
+        for attr, _old, new in AXUtilities.get_text_attribute_changes(obj, offset):
+            if attr == AXTextAttribute.INVALID:
+                continue
+            if desc := attr.get_change_description(new):
+                self.speak_message(desc)
 
     def adjust_for_presentation(
         self,
@@ -2500,7 +2649,9 @@ class SpeechPresenter:
             announce_list=p.get_announce_list(),
             announce_grouping=p.get_announce_grouping(),
             announce_table=p.get_announce_table(),
-            announce_text_attribute_changes=False,
+            text_attribute_change_mode=self._text_attribute_change_mode_override.value
+            if self._text_attribute_change_mode_override is not None
+            else p.get_text_attribute_change_mode().value,
         )
 
     def generate_speech_contents(

@@ -369,6 +369,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`RewindAndFastForwardEnabled`:** Gets/Sets whether Up and Down can be used in Say All.
 - **`StructuralNavigationEnabled`:** Gets/Sets whether structural navigation keys can be used in Say All.
 - **`Style`:** Gets/Sets the current Say All style.
+- **`TextAttributeChangeModeAsString`:** Gets/Sets when text attribute changes are spoken during Say All.
 
 ---
 
@@ -484,6 +485,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 **Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 - **`ChangeNumberStyle`:** Changes spoken number style between digits and words.
+- **`CycleTextAttributeChangeMode`:** Cycles through text attribute change announcement modes.
 - **`ToggleIndentationAndJustification`:** Toggles the speaking of indentation and justification.
 - **`ToggleMonitor`:** Toggles the speech monitor on and off.
 - **`ToggleTableCellReadingMode`:** Toggles between speak cell and speak row.
@@ -525,6 +527,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`SpeakRowInDocumentTable`:** Gets/Sets whether Up/Down in text-document tables speaks the row or just the cell.
 - **`SpeakRowInGuiTable`:** Gets/Sets whether Up/Down in GUI tables speaks the row or just the cell.
 - **`SpeakRowInSpreadsheet`:** Gets/Sets whether Up/Down in spreadsheets speaks the row or just the cell.
+- **`SpeakTextAttributeChanges`:** Gets/Sets when text attribute changes are spoken during navigation.
 - **`SpeakTutorialMessages`:** Gets/Sets whether tutorial messages are spoken.
 - **`SpeakWidgetMnemonic`:** Gets/Sets whether widget mnemonics are spoken.
 - **`VerbosityLevel`:** Gets/Sets the speech verbosity level for object presentation.

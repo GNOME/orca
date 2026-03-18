@@ -92,7 +92,7 @@ class SpeechGeneratorContext(GeneratorContext):
     announce_list: bool
     announce_grouping: bool
     announce_table: bool
-    announce_text_attribute_changes: bool
+    text_attribute_change_mode: int
 
 
 class Pause:
@@ -136,8 +136,16 @@ class SpeechGenerator(generator.Generator):
     def _should_announce_attribute_changes(self, obj: Atspi.Accessible) -> bool:
         """Returns True if text attribute changes should be announced for obj."""
 
-        # TODO - JD: Implement this.
-        return False
+        if self._context is None:
+            return False
+        mode = text_attribute_manager.TextAttributeChangeMode(
+            self._context.text_attribute_change_mode,
+        )
+        if mode == text_attribute_manager.TextAttributeChangeMode.OFF:
+            return False
+        if mode == text_attribute_manager.TextAttributeChangeMode.ALWAYS:
+            return True
+        return AXUtilities.is_editable(obj)
 
     @staticmethod
     def log_generator_output(func):
@@ -2366,6 +2374,11 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_text_content(self, obj: Atspi.Accessible, **args) -> list[Any]:
+        if AXObject.supports_text(obj) and (
+            AXUtilities.is_editable(obj) or self._should_announce_attribute_changes(obj)
+        ):
+            return self._generate_text_line(obj, **args)
+
         result = self._generate_text_substring(obj, **args)
         if result and result[0]:
             return result
@@ -4466,12 +4479,14 @@ class SpeechGenerator(generator.Generator):
             if not text:
                 continue
 
-            if self._should_announce_attribute_changes(obj):
+            announce_formatting = self._should_announce_attribute_changes(obj)
+            if AXUtilities.is_editable(obj) or announce_formatting:
                 utterances = self._generate_text_with_attribute_changes(
                     obj,
                     start,
                     end,
                     dict(args),
+                    announce_formatting,
                 )
                 if utterances:
                     result.append(utterances)

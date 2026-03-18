@@ -46,6 +46,18 @@ class PresentationMode(enum.IntEnum):
     SPEAK_AND_BRAILLE = 3
 
 
+@gsettings_registry.get_registry().gsettings_enum(
+    "org.gnome.Orca.TextAttributeChangeMode",
+    values={"off": 0, "editable-only": 1, "always": 2},
+)
+class TextAttributeChangeMode(enum.Enum):
+    """When to announce text attribute changes during navigation."""
+
+    OFF = 0
+    EDITABLE_ONLY = 1
+    ALWAYS = 2
+
+
 class TextAttributePreferencesGrid(PreferencesGridBase):
     """Preferences grid for text attribute presentation settings."""
 

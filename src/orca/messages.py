@@ -56,6 +56,19 @@ BOLD = _("bold")
 # See text_attribute_names.py for the localized attribute names.
 TEXT_ATTRIBUTE_OFF = _("%s off")
 
+# Translators: This is presented when the user cycles the text attribute change
+# announcement mode. In this mode, formatting changes are not announced.
+TEXT_ATTRIBUTE_CHANGES_OFF = _("Text attributes: off.")
+
+# Translators: This is presented when the user cycles the text attribute change
+# announcement mode. In this mode, formatting changes are only announced in
+# editable content.
+TEXT_ATTRIBUTE_CHANGES_EDITABLE_ONLY = _("Text attributes: editable text.")
+
+# Translators: This is presented when the user cycles the text attribute change
+# announcement mode. In this mode, formatting changes are always announced.
+TEXT_ATTRIBUTE_CHANGES_ON = _("Text attributes: on.")
+
 # Translators: Orca has a command which toggles all (other) Orca commands so that
 # the associated keystroke can by consumed by the native application. For example,
 # if there were an Orca command bound to Alt+Down, normally pressing Alt+Down

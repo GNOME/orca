@@ -1733,6 +1733,21 @@ SPEECH_INDENTATION_ONLY_IF_CHANGED = _("Only speak indentation if changed")
 # the word is misspelled.
 SPEECH_SPEAK_MISSPELLED_WORD_INDICATOR = _("Misspelled-word indicator")
 
+# Translators: This is a label for a widget associated with when Orca will
+# announce text formatting changes (e.g. bold, italic) when navigating.
+TEXT_ATTRIBUTE_CHANGES = _("Text attribute changes")
+
+# Translators: This is an option for the text attribute changes setting.
+TEXT_ATTRIBUTE_CHANGES_OFF = C_("text attribute changes", "Off")
+
+# Translators: This is an option for the text attribute changes setting.
+# When selected, formatting changes are only announced in editable content.
+TEXT_ATTRIBUTE_CHANGES_EDITABLE = C_("text attribute changes", "Editable text only")
+
+# Translators: This is an option for the text attribute changes setting.
+# When selected, formatting changes are always announced.
+TEXT_ATTRIBUTE_CHANGES_ALWAYS = C_("text attribute changes", "Always")
+
 # Translators: This is a label for a widget associated with whether Orca will
 # speak blank lines when navigating in document content.
 SPEECH_SPEAK_BLANK_LINES = _("Blank lines")

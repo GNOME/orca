@@ -45,6 +45,7 @@ from orca import (
     messages,
     object_properties,
     speech_generator,
+    speechserver,
 )
 from orca.ax_object import AXObject
 from orca.ax_table import AXTable
@@ -687,10 +688,28 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         contents = self._script.utilities.filter_contents_for_presentation(contents, True)
         tokens = ["WEB: Generating speech contents (length:", len(contents), ")"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        announce_attrs = len(contents) > 1 and self._should_announce_attribute_changes(
+            contents[0][0],
+        )
+        prev_attrs: dict[str, str] = {}
+        system_voice = self.voice(speechserver.SYSTEM_VOICE) if announce_attrs else []
+
         for i, content in enumerate(contents):
             obj, start, end, string = content
             tokens = [f"ITEM {i}: ", obj, f"start: {start}, end: {end} '{string}'"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+            if announce_attrs and i > 0:
+                curr_attrs = AXText.get_text_attributes_at_offset(obj, start)[0]
+                result.extend(
+                    [desc, *system_voice]
+                    for desc in self._get_attribute_change_descriptions(prev_attrs, curr_attrs)
+                )
+                prev_attrs = curr_attrs
+            elif announce_attrs:
+                prev_attrs = AXText.get_text_attributes_at_offset(obj, start)[0]
+
             index = args.pop("index", i)
             total = args.pop("total", len(contents))
             utterance = self.generate_speech(

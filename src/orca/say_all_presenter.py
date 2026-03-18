@@ -1,7 +1,7 @@
 # Orca
 #
 # Copyright 2005-2009 Sun Microsystems Inc.
-# Copyright 2011-2025 Igalia, S.L.
+# Copyright 2011-2026 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -23,6 +23,7 @@
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-lines
 
 """Module for commands related to the current accessible object."""
 
@@ -50,6 +51,7 @@ from . import (
     speech_presenter,
     speechserver,
     structural_navigator,
+    text_attribute_manager,
 )
 from .acss import ACSS
 from .ax_object import AXObject
@@ -169,6 +171,24 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 member_of=guilabels.ANNOUNCEMENTS,
                 determine_sensitivity=self._only_speak_displayed_text_is_off,
             ),
+            preferences_grid_base.EnumPreferenceControl(
+                label=guilabels.TEXT_ATTRIBUTE_CHANGES,
+                options=[
+                    guilabels.TEXT_ATTRIBUTE_CHANGES_OFF,
+                    guilabels.TEXT_ATTRIBUTE_CHANGES_EDITABLE,
+                    guilabels.TEXT_ATTRIBUTE_CHANGES_ALWAYS,
+                ],
+                values=[
+                    text_attribute_manager.TextAttributeChangeMode.OFF.value,
+                    text_attribute_manager.TextAttributeChangeMode.EDITABLE_ONLY.value,
+                    text_attribute_manager.TextAttributeChangeMode.ALWAYS.value,
+                ],
+                getter=presenter.get_text_attribute_change_mode_as_int,
+                setter=presenter.set_text_attribute_change_mode_from_int,
+                prefs_key=SayAllPresenter.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
+                member_of=guilabels.ANNOUNCEMENTS,
+                determine_sensitivity=self._only_speak_displayed_text_is_off,
+            ),
         ]
 
         info = (
@@ -199,6 +219,7 @@ class SayAllPresenter:
     KEY_ANNOUNCE_TABLE = "announce-table"
     KEY_ONLY_SPEAK_DISPLAYED_TEXT = "only-speak-displayed-text"
     KEY_REWIND_AND_FAST_FORWARD = "rewind-and-fast-forward"
+    KEY_TEXT_ATTRIBUTE_CHANGE_MODE = "text-attribute-change-mode"
     KEY_STRUCTURAL_NAVIGATION = "structural-navigation"
     KEY_STYLE = "style"
 
@@ -308,6 +329,7 @@ class SayAllPresenter:
             presentation_manager.get_manager().present_message(messages.LOCATION_NOT_FOUND_FULL)
             return True
 
+        focus_manager.get_manager().emit_region_changed(obj, mode=focus_manager.SAY_ALL)
         speech_presenter.get_presenter().say_all(
             self._say_all_iter(obj, offset),
             self._progress_callback,
@@ -982,6 +1004,55 @@ class SayAllPresenter:
             value,
         )
         return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
+        schema="say-all",
+        genum="org.gnome.Orca.TextAttributeChangeMode",
+        default="off",
+        summary="When to speak text attribute changes during Say All",
+    )
+    @dbus_service.getter
+    def get_text_attribute_change_mode_as_string(self) -> str:
+        """Returns when text attribute changes are spoken during Say All."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA,
+            self.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
+            "",
+            genum="org.gnome.Orca.TextAttributeChangeMode",
+            default="off",
+        )
+
+    @dbus_service.setter
+    def set_text_attribute_change_mode_as_string(self, value: str) -> bool:
+        """Sets when text attribute changes are spoken during Say All."""
+
+        msg = f"SAY ALL PRESENTER: Setting text attribute change mode to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA,
+            self.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
+            value,
+        )
+        return True
+
+    def get_text_attribute_change_mode(self) -> text_attribute_manager.TextAttributeChangeMode:
+        """Returns the text attribute change mode enum."""
+
+        name = self.get_text_attribute_change_mode_as_string()
+        return text_attribute_manager.TextAttributeChangeMode[name.upper().replace("-", "_")]
+
+    def get_text_attribute_change_mode_as_int(self) -> int:
+        """Returns the text attribute change mode as an int for the UI."""
+
+        return self.get_text_attribute_change_mode().value
+
+    def set_text_attribute_change_mode_from_int(self, value: int) -> bool:
+        """Sets the text attribute change mode from an int for the UI."""
+
+        name = text_attribute_manager.TextAttributeChangeMode(value).name.lower().replace("_", "-")
+        return self.set_text_attribute_change_mode_as_string(name)
 
 
 _presenter: SayAllPresenter = SayAllPresenter()

@@ -211,6 +211,7 @@ These operations also work at the profile level:
 | `rewind-and-fast-forward` | `b` | `false` | Enable rewind and fast forward in Say All |
 | `structural-navigation` | `b` | `false` | Enable structural navigation in Say All |
 | `style` | `enum`<br>`SayAllStyle` | `'sentence'` | Say All style (line, sentence) |
+| `text-attribute-change-mode` | `enum`<br>`TextAttributeChangeMode` | `'off'` | When to speak text attribute changes during Say All |
 
 ---
 
@@ -273,6 +274,7 @@ These operations also work at the profile level:
 | `speak-row-in-document-table` | `b` | `true` | Speak full row in document tables |
 | `speak-row-in-gui-table` | `b` | `true` | Speak full row in GUI tables |
 | `speak-row-in-spreadsheet` | `b` | `false` | Speak full row in spreadsheets |
+| `speak-text-attribute-changes` | `enum`<br>`TextAttributeChangeMode` | `'off'` | When to speak text attribute changes during navigation |
 | `speak-tutorial-messages` | `b` | `true` | Speak tutorial messages |
 | `speak-widget-mnemonic` | `b` | `true` | Speak widget mnemonics |
 | `speech-server` | `s` | `''` | Speech server name |

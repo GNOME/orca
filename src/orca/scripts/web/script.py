@@ -161,8 +161,7 @@ class Script(default.Script):
 
         presenter = presentation_manager.get_manager()
         if string:
-            if error := speech_pres.get_error_description(obj, start):
-                presenter.speak_message(error)
+            speech_pres.present_text_attribute_state(obj, start)
             presenter.speak_character(string, obj=obj)
         else:
             presenter.speak_contents(contents)
@@ -191,10 +190,9 @@ class Script(default.Script):
         word_contents = self.utilities.get_word_contents_at_offset(obj, offset, use_cache=True)
         text_obj, start_offset, _end_offset, _word = word_contents[0]
 
-        if error := speech_presenter.get_presenter().get_error_description(text_obj, start_offset):
-            presentation_manager.get_manager().speak_message(error)
-
-        speech_presenter.get_presenter().speak_word(self, obj, offset)
+        speech_pres = speech_presenter.get_presenter()
+        speech_pres.present_text_attribute_state(text_obj, start_offset)
+        speech_pres.speak_word(self, obj, offset)
         AXUtilities.set_last_text_unit_spoken(TextUnit.WORD)
 
     def say_line(self, obj: Atspi.Accessible, offset: int | None = None) -> None:

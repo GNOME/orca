@@ -1,7 +1,7 @@
 # Orca
 #
 # Copyright 2004-2009 Sun Microsystems Inc.
-# Copyright 2011-2025 Igalia, S.L.
+# Copyright 2011-2026 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -893,7 +893,6 @@ class Script(script.Script):
         # TODO - JD: These need to be harmonized / unified / simplified.
         manager.set_last_cursor_position(event.source, offset)
         self.utilities.set_caret_context(event.source, offset)
-        AXUtilities.update_cached_text_attributes(event.source, offset)
 
         ignore = [
             TextEventReason.CUT,
@@ -1622,9 +1621,7 @@ class Script(script.Script):
         msg = f"DEFAULT: Final word at offset {offset} is '{text}' ({start_offset}-{end_offset})"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        if error := speech_presenter.get_presenter().get_error_description(obj, start_offset):
-            presentation_manager.get_manager().speak_message(error)
-
+        speech_presenter.get_presenter().present_text_attribute_state(obj, start_offset)
         self.say_phrase(obj, start_offset, end_offset)
         AXUtilities.set_last_text_unit_spoken(TextUnit.WORD)
 

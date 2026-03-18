@@ -551,6 +551,11 @@ CYCLE_CAPITALIZATION_STYLE = _("Cycle to the next capitalization style")
 # choose which type of echo is being used.
 CYCLE_KEY_ECHO = _("Cycle to the next key echo level")
 
+# Translators: When the user is navigating through text, Orca can optionally
+# announce formatting changes such as bold, italic, etc. This command cycles
+# through the available modes: off, editable text only, and always.
+CYCLE_TEXT_ATTRIBUTE_CHANGE_MODE = _("Cycle to the next text attribute change mode")
+
 # Translators: this is a debug message that Orca users will not normally see. It
 # describes a debug routine that allows the user to adjust the level of debug
 # information that Orca generates at run time.

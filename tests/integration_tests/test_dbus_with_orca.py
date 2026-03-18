@@ -321,6 +321,7 @@ MODULE_CONFIG = {
     "SpeechPresenter": {
         "commands": [
             "ChangeNumberStyle",
+            "CycleTextAttributeChangeMode",
             "ToggleIndentationAndJustification",
             "ToggleMonitor",
             "ToggleTableCellReadingMode",
@@ -354,6 +355,7 @@ MODULE_CONFIG = {
             "SpeakRowInDocumentTable",
             "SpeakRowInGuiTable",
             "SpeakRowInSpreadsheet",
+            "SpeakTextAttributeChanges",
             "SpeakTutorialMessages",
             "SpeakWidgetMnemonic",
             "MonitorIsEnabled",
@@ -389,6 +391,7 @@ MODULE_CONFIG = {
             "SpeakRowInDocumentTable",
             "SpeakRowInGuiTable",
             "SpeakRowInSpreadsheet",
+            "SpeakTextAttributeChanges",
             "SpeakTutorialMessages",
             "SpeakWidgetMnemonic",
             "MonitorIsEnabled",
@@ -706,6 +709,7 @@ MODULE_CONFIG = {
             "Style",
             "StructuralNavigationEnabled",
             "RewindAndFastForwardEnabled",
+            "TextAttributeChangeModeAsString",
         ],
         "setters": [
             "AnnounceBlockquote",
@@ -718,6 +722,7 @@ MODULE_CONFIG = {
             "Style",
             "StructuralNavigationEnabled",
             "RewindAndFastForwardEnabled",
+            "TextAttributeChangeModeAsString",
         ],
         "ui_commands": [],
         "toggle_commands": [],
