@@ -124,11 +124,18 @@ class AXUtilitiesText:
         current_attrs = AXText.get_text_attributes_at_offset(obj, offset)[0]
         cached_attrs = AXUtilitiesText.CACHED_TEXT_ATTRIBUTES
 
-        all_raw_changes = AXUtilitiesText._get_raw_attribute_changes(cached_attrs, current_attrs)
+        # An empty cache means focus moved to a non-text object (e.g. the frame),
+        # so there is no baseline to diff against. Use the caret position's attributes
+        # as the baseline so the selection walk below can find the actual change.
+        if not cached_attrs:
+            cached_attrs = current_attrs
 
-        # When text is selected, the caret might be on a character that already had the
-        # formatting. Walk the attribute runs within the selection to catch changes.
-        if not all_raw_changes and AXUtilitiesText.has_selected_text(obj):
+        all_raw_changes: dict[str, tuple[str | None, str | None]] = {}
+
+        # When text is selected, the formatting change is in the selection, not at the
+        # caret. Walk the selection first and cache the run attrs so subsequent changes
+        # (e.g. italic after bold) are detected against the selected text's state.
+        if AXUtilitiesText.has_selected_text(obj):
             sel_start = AXUtilitiesText.get_selection_start_offset(obj)
             sel_end = AXUtilitiesText.get_selection_end_offset(obj)
             for _start, _end, run_attrs in AXUtilitiesText.get_all_text_attributes(
@@ -138,7 +145,14 @@ class AXUtilitiesText:
                     cached_attrs, run_attrs
                 )
                 if all_raw_changes:
+                    current_attrs = run_attrs
                     break
+
+        # Fall back to checking the caret position when there is no selection.
+        if not all_raw_changes:
+            all_raw_changes = AXUtilitiesText._get_raw_attribute_changes(
+                cached_attrs, current_attrs
+            )
 
         if all_raw_changes:
             tokens = ["AXText: All attribute changes for", obj, f": {all_raw_changes}"]

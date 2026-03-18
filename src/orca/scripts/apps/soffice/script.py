@@ -197,6 +197,9 @@ class Script(default.Script):
             msg = "SOFFICE: Neither source nor child have focused state. Clearing cache on table."
             AXObject.clear_cache(event.source, False, msg)
 
+        if not AXUtilities.is_focused(event.source) and not AXUtilities.is_focused(event.any_data):
+            return super()._on_active_descendant_changed(event)
+
         if event.source != focus and not AXUtilities.find_ancestor(
             focus, lambda x: x == event.source
         ):
