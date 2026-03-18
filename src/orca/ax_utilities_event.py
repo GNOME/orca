@@ -1042,7 +1042,7 @@ class AXUtilitiesEvent:
                 return False
 
         active_window = focus_manager.get_manager().get_active_window()
-        if not AXUtilitiesObject.is_ancestor(event.source, active_window):
+        if active_window and not AXUtilitiesObject.is_ancestor(event.source, active_window):
             tokens = ["AXUtilitiesEvent:", event.source, "is not inside", active_window]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
