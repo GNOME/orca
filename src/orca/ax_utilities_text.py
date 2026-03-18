@@ -792,7 +792,7 @@ class AXUtilitiesText:
         while offset < end_offset:
             attrs, start, end = AXText.get_text_attributes_at_offset(obj, offset)
             if start <= end:
-                rv.append((max(start, offset), end, attrs))
+                rv.append((max(start, offset), min(end, end_offset), attrs))
             else:
                 # TODO - JD: We're sometimes seeing this from WebKit, e.g. in Evo gitlab messages.
                 msg = f"AXText: Start offset {start} > end offset {end}"
