@@ -873,9 +873,17 @@ class Script(script.Script):
 
         obj, offset = manager.get_last_cursor_position()
         if offset == event.detail1 and obj == event.source:
-            msg = "DEFAULT: Event is for last saved cursor position"
+            navigation_reasons = {
+                TextEventReason.NAVIGATION_BY_WORD,
+                TextEventReason.NAVIGATION_BY_CHARACTER,
+            }
+            if reason not in navigation_reasons:
+                msg = "DEFAULT: Event is for last saved cursor position"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
+            msg = "DEFAULT: Position matches but proceeding due to navigation reason"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
+            presentation_manager.get_manager().interrupt_presentation()
 
         if flat_review_presenter.get_presenter().is_active():
             flat_review_presenter.get_presenter().quit()
