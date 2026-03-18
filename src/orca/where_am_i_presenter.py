@@ -248,7 +248,7 @@ class WhereAmIPresenter:
 
         for ax_text_attr in attr_list:
             key = ax_text_attr.get_attribute_name()
-            value = attrs.get(key)
+            value = ax_text_attr.get_value_from_attrs(attrs)
             if not ax_text_attr.value_is_default(value):
                 presentation_manager.get_manager().speak_message(
                     self._localize_text_attribute(key, value),

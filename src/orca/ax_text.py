@@ -41,6 +41,14 @@ from .ax_object import AXObject
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 
+_TEXT_ATTRIBUTE_ALIASES: dict[str, str] = {
+    "font-style": "style",
+    "font-weight": "weight",
+    "font-size": "size",
+    "font-family": "family-name",
+    "text-decoration-line": "text-decoration",
+}
+
 
 class AXTextAttribute(enum.Enum):
     """Enum representing an accessible text attribute."""
@@ -90,8 +98,9 @@ class AXTextAttribute(enum.Enum):
     def from_string(cls, string: str) -> AXTextAttribute | None:
         """Returns the AXTextAttribute for the specified string."""
 
+        canonical = _TEXT_ATTRIBUTE_ALIASES.get(string, string)
         for attribute in cls:
-            if attribute.get_attribute_name() == string:
+            if attribute.get_attribute_name() == canonical:
                 return attribute
 
         return None
@@ -110,6 +119,20 @@ class AXTextAttribute(enum.Enum):
         """Returns the non-localized name of the attribute."""
 
         return self.value[0]
+
+    def get_value_from_attrs(self, attrs: dict[str, str]) -> str | None:
+        """Returns the value for this attribute from an attrs dict, checking aliases."""
+
+        key = self.value[0]
+        value = attrs.get(key)
+        if value is not None:
+            return value
+        for alias, canonical in _TEXT_ATTRIBUTE_ALIASES.items():
+            if canonical == key:
+                value = attrs.get(alias)
+                if value is not None:
+                    return value
+        return None
 
     def get_localized_name(self) -> str:
         """Returns the localized name of the attribute."""

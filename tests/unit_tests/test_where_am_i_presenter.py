@@ -154,6 +154,7 @@ class TestWhereAmIPresenter:
         ax_text_attribute_instance.get_localized_value = test_context.Mock(return_value="Bold")
         ax_text_attribute_instance.value_is_default = test_context.Mock(return_value=False)
         ax_text_attribute_instance.get_attribute_name = test_context.Mock(return_value="weight")
+        ax_text_attribute_instance.get_value_from_attrs = test_context.Mock(return_value="bold")
         ax_text_mock.AXTextAttribute = test_context.Mock()
         ax_text_mock.AXTextAttribute.from_string = test_context.Mock(
             return_value=ax_text_attribute_instance,
@@ -317,6 +318,7 @@ class TestWhereAmIPresenter:
 
         default_attr = test_context.Mock()
         default_attr.get_attribute_name.return_value = "weight"
+        default_attr.get_value_from_attrs.return_value = "bold"
         default_attr.value_is_default.return_value = False
         deps["orca.ax_utilities"].AXUtilities.get_all_supported_text_attributes.return_value = [
             default_attr
