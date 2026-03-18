@@ -36,7 +36,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
 
-from . import colornames, debug, messages, text_attribute_names
+from . import colornames, debug, messages, object_properties, text_attribute_names
 from .ax_object import AXObject
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
@@ -212,6 +212,13 @@ class AXTextAttribute(enum.Enum):
             if new_value in ("single", "solid", "true"):
                 return self.get_localized_name()
             return f"{self.get_localized_name()}: {self.get_localized_value(new_value)}"
+
+        if self == AXTextAttribute.INVALID:
+            if new_value == "spelling":
+                return messages.MISSPELLED
+            if new_value == "grammar":
+                return object_properties.STATE_INVALID_GRAMMAR_SPEECH
+            return ""
 
         if self in (AXTextAttribute.TEXT_POSITION, AXTextAttribute.VERTICAL_ALIGN):
             if self.value_is_default(new_value):

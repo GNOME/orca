@@ -52,13 +52,14 @@ from . import (
     speech_manager,
     speech_presenter,
     speechserver,
+    text_attribute_manager,
 )
 from .acss import ACSS
 from .ax_document import AXDocument
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
-from .ax_text import AXText
+from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
 from .generator import GeneratorContext, GeneratorMode, WhereAmI
@@ -91,6 +92,7 @@ class SpeechGeneratorContext(GeneratorContext):
     announce_list: bool
     announce_grouping: bool
     announce_table: bool
+    announce_text_attribute_changes: bool
 
 
 class Pause:
@@ -130,6 +132,12 @@ class SpeechGenerator(generator.Generator):
 
     def __init__(self, script: script.Script) -> None:
         super().__init__(script, GeneratorMode.SPEECH)
+
+    def _should_announce_attribute_changes(self, obj: Atspi.Accessible) -> bool:
+        """Returns True if text attribute changes should be announced for obj."""
+
+        # TODO - JD: Implement this.
+        return False
 
     @staticmethod
     def log_generator_output(func):
@@ -2252,9 +2260,16 @@ class SpeechGenerator(generator.Generator):
         if args.get("inMouseReview") and AXUtilities.is_editable(obj):
             return []
 
-        result = self._generate_text_substring(obj, **args)
-        if result:
-            return result
+        announce_formatting = self._should_announce_attribute_changes(obj)
+
+        if not announce_formatting:
+            result = self._generate_text_substring(obj, **args)
+            if result:
+                return result
+
+        content_start = args.pop("startOffset", None)
+        content_end = args.pop("endOffset", None)
+        args.pop("string", None)
 
         text, start_offset = AXText.get_line_at_offset(obj)[0:2]
         if text == "\n":
@@ -2271,34 +2286,81 @@ class SpeechGenerator(generator.Generator):
                 result.extend(self.voice(string=text, obj=obj, **args))
                 return result
 
-        end_offset = start_offset + len(text)
-        for (
-            start,
-            _end,
-            string,
-            language,
-            dialect,
-        ) in self._script.utilities.split_substring_by_language(obj, start_offset, end_offset):
-            cleaned_string = string.replace("\ufffc", "")
-            if not cleaned_string:
+        if content_start is not None and content_end is not None:
+            start_offset = content_start
+            end_offset = content_end
+        else:
+            end_offset = start_offset + len(text)
+
+        return self._generate_text_with_attribute_changes(
+            obj,
+            start_offset,
+            end_offset,
+            args,
+            announce_formatting,
+        )
+
+    def _generate_text_with_attribute_changes(
+        self,
+        obj: Atspi.Accessible,
+        start_offset: int,
+        end_offset: int,
+        args: dict[str, Any],
+        announce_formatting: bool = True,
+    ) -> list[Any]:
+        """Generates speech for a text range with inline attribute change annotations."""
+
+        # TODO - JD: braille.py also walks attribute runs for the same range to apply
+        # dot indicators. Investigate sharing the attribute-run data between speech and
+        # braille to avoid redundant AT-SPI queries.
+        result: list[Any] = []
+        presenter = speech_presenter.get_presenter()
+        system_voice = self.voice(speechserver.SYSTEM_VOICE)
+
+        attr_runs = AXUtilities.get_all_text_attributes(obj, start_offset, end_offset)
+        prev_had_spelling = False
+        prev_had_grammar = False
+        prev_attrs: dict[str, str] = {}
+        for i, (run_start, run_end, attrs) in enumerate(attr_runs):
+            if i > 0 and announce_formatting:
+                for desc in self._get_attribute_change_descriptions(prev_attrs, attrs):
+                    result.extend([desc, *system_voice])
+
+            has_spelling = AXUtilities.string_has_spelling_error(obj, run_start)
+            has_grammar = AXUtilities.string_has_grammar_error(obj, run_start)
+            if has_spelling and not prev_had_spelling:
+                result.extend([messages.MISSPELLED, *system_voice])
+            elif has_grammar and not prev_had_grammar:
+                result.extend(
+                    [
+                        object_properties.STATE_INVALID_GRAMMAR_SPEECH,
+                        *system_voice,
+                    ]
+                )
+            prev_had_spelling = has_spelling
+            prev_had_grammar = has_grammar
+            prev_attrs = attrs
+
+            string = AXText.get_substring(obj, run_start, run_end).replace("\ufffc", "")
+            if not string:
                 continue
+
+            language = attrs.get("language", "")
+            dialect = ""
+            if "-" in language:
+                language, dialect = language.split("-", 1)
+
             args["language"], args["dialect"] = language, dialect
             if "string" in args:
-                existing = args.get("string")
-                msg = f"INFO: Found existing string '{existing}'; using '{cleaned_string}'"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
                 args.pop("string")
 
-            voice = self.voice(string=cleaned_string, obj=obj, **args)
-            presenter = speech_presenter.get_presenter()
-            rv: list[Any] = [presenter.adjust_for_presentation(obj, cleaned_string, start)]
-            rv.extend(voice)
-
-            # TODO - JD: speech.speak() has a bug which causes a list of utterances to
-            # be presented before a string+voice pair that comes first. Until we can
-            # fix speak() properly, we'll avoid triggering it here.
-            # result.append(rv)
-            result.extend(rv)
+            voice = self.voice(string=string, obj=obj, **args)
+            adjusted = presenter.adjust_for_presentation(obj, string, run_start)
+            if adjusted:
+                # TODO - JD: speech.speak() has a bug which causes a list of utterances
+                # to be presented before a string+voice pair that comes first. Until we
+                # can fix speak() properly, we'll avoid triggering it here.
+                result.extend([adjusted, *voice])
 
         return result
 
@@ -4400,12 +4462,28 @@ class SpeechGenerator(generator.Generator):
         self._context = context
         result = []
         for content in contents:
-            obj, _start, _end, text = content
+            obj, start, end, text = content
             if not text:
                 continue
+
+            if self._should_announce_attribute_changes(obj):
+                utterances = self._generate_text_with_attribute_changes(
+                    obj,
+                    start,
+                    end,
+                    dict(args),
+                )
+                if utterances:
+                    result.append(utterances)
+                    if end >= AXText.get_character_count(obj):
+                        result.append(self._generate_accessible_role(obj))
+                    continue
+
             voices = self.voice(obj=obj, string=text)
             voice = voices[0] if voices and isinstance(voices, list) else voices
             result.append([text, voice])
+            if end >= AXText.get_character_count(obj):
+                result.append(self._generate_accessible_role(obj))
 
         if not result or (len(result) == 1 and result[0][0] == "\n"):
             if (
@@ -4420,6 +4498,34 @@ class SpeechGenerator(generator.Generator):
 
         return result
 
+    def _get_attribute_change_descriptions(
+        self,
+        prev_attrs: dict[str, str],
+        curr_attrs: dict[str, str],
+    ) -> list[str]:
+        """Returns descriptions for presentable attribute changes between two runs."""
+
+        allowed = set(text_attribute_manager.get_manager().get_resolved_attributes_to_speak())
+        allowed.discard(AXTextAttribute.TEXT_DECORATION)
+
+        descriptions: list[str] = []
+        seen: set[AXTextAttribute] = set()
+        for key in set(prev_attrs) | set(curr_attrs):
+            if prev_attrs.get(key) == curr_attrs.get(key):
+                continue
+            attr = AXTextAttribute.from_string(key)
+            if attr is None or attr not in allowed or attr in seen:
+                continue
+            seen.add(attr)
+            if desc := attr.get_change_description(curr_attrs.get(key)):
+                descriptions.append(desc)
+
+        return descriptions
+
+    # TODO - JD: generate_line duplicates _generate_text_line. speak_line (the sole
+    # caller of generate_line) should be consolidated with the _generate_text_line
+    # path used by present_object/generate_speech so there is one code path for
+    # line presentation.
     def generate_line(
         self,
         obj: Atspi.Accessible,
@@ -4430,28 +4536,21 @@ class SpeechGenerator(generator.Generator):
     ) -> list[Any]:
         """Generates speech for a line of text, handling language splitting and voice selection."""
 
+        self._context = context
+
         if not line or line == "\n":
             if not self._context.speak_blank_lines:
                 return []
             return [messages.BLANK, *self.voice(DEFAULT)]
 
-        presenter = speech_presenter.get_presenter()
-        split = self._script.utilities.split_substring_by_language(obj, start_offset, end_offset)
-        if not split:
-            text = presenter.adjust_for_presentation(obj, line)
-            return [text, *self.voice(obj=obj, string=text)]
-
-        result: list[Any] = []
-        for start, _end, text, language, dialect in split:
-            if not text:
-                continue
-            adjusted_text = presenter.adjust_for_presentation(obj, text, start).lstrip()
-            if not adjusted_text:
-                continue
-            voice = self.voice(obj=obj, string=adjusted_text, language=language, dialect=dialect)
-            result.extend([adjusted_text, *voice])
-
-        return result
+        args: dict[str, Any] = {}
+        return self._generate_text_with_attribute_changes(
+            obj,
+            start_offset,
+            end_offset,
+            args,
+            self._should_announce_attribute_changes(obj),
+        )
 
     def generate_phrase(
         self,

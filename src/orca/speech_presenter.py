@@ -2151,6 +2151,16 @@ class SpeechPresenter:
         self._last_error_description = msg
         return msg
 
+    def present_text_attribute_state(
+        self,
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> None:
+        """Presents error indicators and text attribute changes at the given offset."""
+
+        if error := self.get_error_description(obj, offset):
+            self.speak_message(error)
+
     def adjust_for_presentation(
         self,
         obj: Atspi.Accessible | None,
@@ -2490,6 +2500,7 @@ class SpeechPresenter:
             announce_list=p.get_announce_list(),
             announce_grouping=p.get_announce_grouping(),
             announce_table=p.get_announce_table(),
+            announce_text_attribute_changes=False,
         )
 
     def generate_speech_contents(
@@ -2630,9 +2641,7 @@ class SpeechPresenter:
                 self.speak_message(messages.BLANK)
             return
 
-        if error := self.get_error_description(obj, offset):
-            self.speak_message(error)
-
+        self.present_text_attribute_state(obj, offset)
         self.speak_character(character, voice_from=character, cap_style=cap_style, obj=obj)
 
     def say_all(self, utterance_iterator: Any, progress_callback: Callable[..., Any]) -> None:

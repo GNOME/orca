@@ -460,6 +460,16 @@ class TextAttributeManager:
 
         return self._get_setting(self.KEY_ATTRIBUTES_TO_SPEAK, "as", [])
 
+    def get_resolved_attributes_to_speak(self) -> list[AXTextAttribute]:
+        """Returns the resolved list of attributes to speak, falling back to defaults."""
+
+        result = list(
+            filter(None, map(AXTextAttribute.from_string, self.get_attributes_to_speak()))
+        )
+        if not result:
+            result = [a for a in AXTextAttribute if a.should_present_by_default()]
+        return result
+
     @dbus_service.setter
     def set_attributes_to_speak(self, value: list[str]) -> bool:
         """Sets the list of text attributes to speak."""
