@@ -118,6 +118,7 @@ class TestWhereAmIPresenter:
             "style",
             "underline",
         ]
+        text_attr_mgr.get_manager.return_value.get_resolved_attributes_to_speak.return_value = []
 
         speech_verbosity_instance = test_context.Mock()
         speech_verbosity_instance.get_indentation_description = test_context.Mock(return_value="")
@@ -284,13 +285,13 @@ class TestWhereAmIPresenter:
             5,
         )
 
+        mock_attr = test_context.Mock()
+        mock_attr.get_attribute_name.return_value = "weight"
+        mock_attr.get_value_from_attrs.return_value = "bold"
+        mock_attr.value_is_default.return_value = False
         deps[
             "orca.text_attribute_manager"
-        ].get_manager.return_value.get_attributes_to_speak.return_value = [
-            "weight",
-            "style",
-            "underline",
-        ]
+        ].get_manager.return_value.get_resolved_attributes_to_speak.return_value = [mock_attr]
 
         pres_manager = deps["orca.presentation_manager"].get_manager()
         pres_manager.speak_message.reset_mock()
@@ -300,8 +301,6 @@ class TestWhereAmIPresenter:
         assert result is True
         pres_manager.speak_message.assert_called()
         assert pres_manager.speak_message.call_count >= 1
-        call_args = pres_manager.speak_message.call_args_list
-        assert len(call_args) > 0, "Expected at least one call to speak_message for attributes"
 
     def test_present_character_attributes_no_custom_attributes(
         self,
@@ -312,17 +311,14 @@ class TestWhereAmIPresenter:
         deps = self._setup_dependencies(test_context)
         from orca.where_am_i_presenter import WhereAmIPresenter
 
-        deps[
-            "orca.text_attribute_manager"
-        ].get_manager.return_value.get_attributes_to_speak.return_value = []
-
         default_attr = test_context.Mock()
         default_attr.get_attribute_name.return_value = "weight"
         default_attr.get_value_from_attrs.return_value = "bold"
         default_attr.value_is_default.return_value = False
-        deps["orca.ax_utilities"].AXUtilities.get_all_supported_text_attributes.return_value = [
-            default_attr
-        ]
+        deps[
+            "orca.text_attribute_manager"
+        ].get_manager.return_value.get_resolved_attributes_to_speak.return_value = [default_attr]
+
         pres_manager = deps["orca.presentation_manager"].get_manager()
         pres_manager.speak_message.reset_mock()
         mock_script = test_context.Mock()
@@ -330,7 +326,6 @@ class TestWhereAmIPresenter:
         result = presenter.present_character_attributes(mock_script)
         assert result is True
         pres_manager.speak_message.assert_called()
-        deps["orca.ax_utilities"].AXUtilities.get_all_supported_text_attributes.assert_called_once()
 
     def test_present_size_and_position_flat_review(self, test_context: OrcaTestContext) -> None:
         """Test WhereAmIPresenter.present_size_and_position in flat review mode."""

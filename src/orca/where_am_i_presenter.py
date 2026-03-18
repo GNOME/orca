@@ -232,19 +232,7 @@ class WhereAmIPresenter:
         focus = focus_manager.get_manager().get_locus_of_focus()
         attrs = AXText.get_text_attributes_at_offset(focus)[0]
 
-        # Get a dictionary of text attributes that the user cares about, falling back on the
-        # default presentable attributes if the user has not specified any.
-        attr_list = list(
-            filter(
-                None,
-                map(
-                    AXTextAttribute.from_string,
-                    text_attribute_manager.get_manager().get_attributes_to_speak(),
-                ),
-            ),
-        )
-        if not attr_list:
-            attr_list = AXUtilities.get_all_supported_text_attributes()
+        attr_list = text_attribute_manager.get_manager().get_resolved_attributes_to_speak()
 
         for ax_text_attr in attr_list:
             key = ax_text_attr.get_attribute_name()
