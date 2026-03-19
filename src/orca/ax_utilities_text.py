@@ -791,8 +791,15 @@ class AXUtilitiesText:
         offset = start_offset
         while offset < end_offset:
             attrs, start, end = AXText.get_text_attributes_at_offset(obj, offset)
-            if start <= end:
-                rv.append((max(start, offset), min(end, end_offset), attrs))
+            clamped_start = max(start, offset)
+            clamped_end = min(end, end_offset)
+            if clamped_start < clamped_end:
+                rv.append((clamped_start, clamped_end, attrs))
+            elif rv and clamped_start == clamped_end:
+                # Zero-length run after clamping. The character at this offset is not
+                # covered by any run. Extend the previous run to include it.
+                prev_start, _prev_end, prev_attrs = rv[-1]
+                rv[-1] = (prev_start, min(offset + 1, end_offset), prev_attrs)
             else:
                 # TODO - JD: We're sometimes seeing this from WebKit, e.g. in Evo gitlab messages.
                 msg = f"AXText: Start offset {start} > end offset {end}"
