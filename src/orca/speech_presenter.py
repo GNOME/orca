@@ -616,11 +616,13 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 continue
             value = voice_data[acss_key]
             if skip_defaults:
-                if gs_type == "i" and int(value) == default:
-                    continue
-                if gs_type == "d" and float(value) == default:
-                    continue
-                if gs_type == "b" and bool(value) == default:
+                is_default = (
+                    (gs_type == "i" and int(value) == default)
+                    or (gs_type == "d" and float(value) == default)
+                    or (gs_type == "b" and bool(value) == default)
+                )
+                if is_default:
+                    voice_gs.reset(gs_key)
                     continue
             if gs_type == "i":
                 voice_gs.set_int(gs_key, int(value))
