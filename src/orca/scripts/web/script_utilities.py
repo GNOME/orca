@@ -2470,9 +2470,10 @@ class Utilities(script_utilities.Utilities):
             rv = False
         if rv and AXUtilities.is_focusable(obj):
             rv = False
-        if rv and AXUtilities.is_link(AXObject.get_parent(obj)) and not has_explicit_name:
-            uri = AXHypertext.get_link_uri(AXObject.get_parent(obj))
-            if uri and not uri.startswith("javascript"):
+        parent = AXObject.get_parent(obj)
+        if rv and AXUtilities.is_link(parent) and not has_explicit_name:
+            uri = AXHypertext.get_link_uri(parent)
+            if uri and not uri.startswith("javascript") and not AXObject.get_name(parent):
                 rv = False
         if rv and AXObject.supports_image(obj):
             if AXObject.get_image_description(obj):
