@@ -217,6 +217,7 @@ class SayAllPresenter:
         self._contents: list[tuple[Atspi.Accessible, int, int, str]] = []
         self._contexts: list[speechserver.SayAllContext] = []
         self._current_context: speechserver.SayAllContext | None = None
+        self._prior_obj: Atspi.Accessible | None = None
         self._say_all_is_running: bool = False
         self._initialized: bool = False
 
@@ -289,6 +290,7 @@ class SayAllPresenter:
         self._contexts = []
         self._contents = []
         self._current_context = None
+        self._prior_obj = None
         self._say_all_is_running = False
 
         tokens = [
@@ -360,6 +362,7 @@ class SayAllPresenter:
         self._contexts = []
         self._contents = []
         self._current_context = None
+        self._prior_obj = None
         self._say_all_is_running = False
         focus_manager.get_manager().reset_active_mode("SAY ALL PRESENTER: Stopped Say All.")
 
@@ -482,7 +485,6 @@ class SayAllPresenter:
     def _generate_speech_contexts(
         self,
         contents: list[tuple[Atspi.Accessible, int, int, str]],
-        prior_obj: Atspi.Accessible,
     ) -> Generator[list[speechserver.SayAllContext | ACSS], None, None]:
         """Yields [SayAllContext, ACSS] pairs for each content item."""
 
@@ -507,11 +509,11 @@ class SayAllPresenter:
                 self._script,
                 [content],
                 eliminatePauses=True,
-                priorObj=prior_obj,
+                priorObj=self._prior_obj,
                 index=i,
                 total=len(contents),
             )
-            prior_obj = content_obj
+            self._prior_obj = content_obj
             elements, voices = self._parse_utterances(utterances)
             if len(elements) != len(voices):
                 tokens = [
@@ -551,7 +553,7 @@ class SayAllPresenter:
 
         assert self._script is not None, "Script must be set before calling _say_all_iter."
 
-        prior_obj = obj
+        self._prior_obj = obj
         say_all_by_sentence = self.get_style() == "sentence"
 
         if offset is None:
@@ -594,7 +596,7 @@ class SayAllPresenter:
                 if (result := self._build_displayed_text_context(filtered)) is not None:
                     yield list(result)
             else:
-                yield from self._generate_speech_contexts(filtered, prior_obj)
+                yield from self._generate_speech_contexts(filtered)
 
             obj, offset = self._advance_to_next(obj, offset, contents, restrict_to)
 
