@@ -587,14 +587,14 @@ class SayAllPresenter:
                     use_cache=False,
                 )
 
-            contents = self._script.utilities.filter_contents_for_presentation(contents)
-            self._contents.extend(contents)
+            filtered = self._script.utilities.filter_contents_for_presentation(contents)
+            self._contents.extend(filtered)
 
             if self.get_only_speak_displayed_text():
-                if (result := self._build_displayed_text_context(contents)) is not None:
+                if (result := self._build_displayed_text_context(filtered)) is not None:
                     yield list(result)
             else:
-                yield from self._generate_speech_contexts(contents, prior_obj)
+                yield from self._generate_speech_contexts(filtered, prior_obj)
 
             obj, offset = self._advance_to_next(obj, offset, contents, restrict_to)
 
