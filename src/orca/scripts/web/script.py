@@ -931,7 +931,8 @@ class Script(default.Script):
         notify = force = handled = False
         AXObject.clear_cache(event.source, False, "Updating state for caret moved event.")
 
-        if document_presenter.get_presenter().in_focus_mode(self.app):
+        in_focus_mode = document_presenter.get_presenter().in_focus_mode(self.app)
+        if in_focus_mode:
             obj, offset = event.source, event.detail1
         else:
             obj, offset = self.utilities.first_context(event.source, event.detail1)
@@ -959,9 +960,20 @@ class Script(default.Script):
                 or i_e_manager.last_event_was_command()
             )
 
-        elif i_e_manager.last_event_was_caret_navigation():
-            msg = "WEB: Caret moved due to native caret navigation."
+        elif reason in (
+            TextEventReason.NAVIGATION_BY_CHARACTER,
+            TextEventReason.NAVIGATION_BY_WORD,
+        ):
+            msg = f"WEB: Caret moved due to {reason}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            if (
+                in_focus_mode
+                and not AXUtilities.is_editable(event.source)
+                and (obj, offset) == focus_manager.get_manager().get_last_cursor_position()
+            ):
+                msg = "WEB: Event ignored. In focus mode and caret hasn't moved."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                handled = True
 
         tokens = ["WEB: Setting context and focus to: ", obj, ", ", offset, f", notify: {notify}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
