@@ -2630,6 +2630,9 @@ class AXUtilitiesRole:
     ) -> bool:
         """Returns True if obj is a widget controlled by line navigation"""
 
+        if AXUtilitiesState.is_multi_line(obj):
+            return False
+
         if role is None:
             role = AXObject.get_role(obj)
 
