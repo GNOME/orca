@@ -1,3 +1,9 @@
+option('mathcat',
+  description: 'Build MathCAT support for math speech and braille',
+         type: 'boolean',
+        value: true,
+)
+
 option('spiel',
   description: 'Build experimental Spiel support',
          type: 'boolean',

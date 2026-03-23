@@ -9,3 +9,5 @@ __pycache__/
 *.pyc
 subprojects/*/
 !subprojects/*.wrap
+!subprojects/packagefiles/
+!subprojects/packagefiles/mathcat-py/

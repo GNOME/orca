@@ -278,6 +278,23 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 ---
 
+### MathPresenter
+
+**Object Path:** `/org/gnome/Orca/Service/MathPresenter`
+
+#### Settings
+
+**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+
+**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
+
+- **`BrailleCode`:** Gets/Sets the math braille code.
+- **`Language`:** Gets/Sets the math language.
+- **`SpeechStyle`:** Gets/Sets the math speech style.
+- **`Verbosity`:** Gets/Sets the math speech verbosity.
+
+---
+
 ### NotificationPresenter
 
 **Object Path:** `/org/gnome/Orca/Service/NotificationPresenter`

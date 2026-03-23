@@ -19,6 +19,7 @@ schema_sources = files(
   '../src/orca/spellcheck_presenter.py',
   '../src/orca/mouse_review.py',
   '../src/orca/live_region_presenter.py',
+  '../src/orca/math_presenter.py',
   '../src/orca/system_information_presenter.py',
   '../src/orca/pronunciation_dictionary_manager.py',
   '../src/orca/command_manager.py',

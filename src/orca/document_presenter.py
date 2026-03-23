@@ -51,6 +51,7 @@ from . import (
     input_event,
     input_event_manager,
     keybindings,
+    math_presenter,
     messages,
     preferences_grid_base,
     presentation_manager,
@@ -342,6 +343,7 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._structural_grid = StructuralNavigationPreferencesGrid()
         self._table_grid = TableNavigationPreferencesGrid()
         self._native_grid = NativeNavigationPreferencesGrid(presenter)
+        self._math_grid = math_presenter.get_presenter().create_preferences_grid()
 
         self._build()
         self._initializing = False
@@ -352,6 +354,7 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             (guilabels.KB_GROUP_STRUCTURAL_NAVIGATION, "structural", self._structural_grid),
             (guilabels.KB_GROUP_TABLE_NAVIGATION, "table", self._table_grid),
             (guilabels.NATIVE_NAVIGATION, "native", self._native_grid),
+            (guilabels.MATH_PRESENTATION, "math", self._math_grid),
         ]
 
         _enable_listbox, stack, _categories_listbox = self._create_multi_page_stack(
@@ -379,6 +382,7 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._structural_grid.reload()
         self._table_grid.reload()
         self._native_grid.reload()
+        self._math_grid.reload()
         self._initializing = False
 
     def save_settings(self, profile: str = "", app_name: str = "") -> dict:
@@ -389,6 +393,7 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         result.update(self._structural_grid.save_settings(profile, app_name))
         result.update(self._table_grid.save_settings(profile, app_name))
         result.update(self._native_grid.save_settings(profile, app_name))
+        result.update(self._math_grid.save_settings(profile, app_name))
 
         return result
 
@@ -401,6 +406,7 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             or self._structural_grid.has_changes()
             or self._table_grid.has_changes()
             or self._native_grid.has_changes()
+            or self._math_grid.has_changes()
         )
 
     def refresh(self) -> None:
@@ -411,6 +417,7 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._structural_grid.refresh()
         self._table_grid.refresh()
         self._native_grid.refresh()
+        self._math_grid.refresh()
         self._initializing = False
 
 

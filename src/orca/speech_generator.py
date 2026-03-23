@@ -46,6 +46,7 @@ from . import (
     focus_manager,
     generator,
     input_event_manager,
+    math_presenter,
     mathsymbols,
     messages,
     object_properties,
@@ -3510,7 +3511,11 @@ class SpeechGenerator(generator.Generator):
     def _generate_math(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the math role."""
 
-        # TODO - JD: Move this logic here.
+        if speech := math_presenter.get_presenter().get_speech_for_math(obj):
+            result: list[Any] = [speech]
+            result.extend(self.voice(DEFAULT, obj=obj, **args))
+            return result
+
         return self._generate_math_contents(obj, **args)
 
     def _generate_math_enclosed(self, obj: Atspi.Accessible, **args) -> list[Any]:

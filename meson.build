@@ -59,6 +59,20 @@ foreach module, description : optional_modules
   endif
 endforeach
 
+# MathCAT support for presentation of math in speech and braille
+mathcat_rules_dir = ''
+if get_option('mathcat')
+  cargo = find_program('cargo', required: false)
+  if not cargo.found()
+    error('MathML support comes from MathCAT. Install cargo or run setup with -Dmathcat=false.')
+  endif
+  subproject('mathcat-py')
+  mathcat_rules_dir = get_option('prefix') / get_option('datadir') / 'mathcat' / 'Rules'
+  summary += {'mathcat': 'yes (found cargo, building MathCATForPython)'}
+else
+  summary += {'mathcat': 'no (disabled)'}
+endif
+
 # Optional synthesizer services
 speech_output = []
 if python.find_installation('python3', modules:['speechd'], required: false).found()

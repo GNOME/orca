@@ -1952,6 +1952,37 @@ MOUSE_WAYLAND_WARNING = _("These settings may not work on Wayland.")
 # speech synthesizer to say what the user finds most helpful.
 PRONUNCIATION = _("Pronunciation")
 
+# Translators: This is the title of the math presentation settings. Math here refers
+# to mathematical expressions such as equations, fractions, and formulas encountered
+# in documents and web pages. Presentation refers to how they are spoken and brailled.
+MATH_PRESENTATION = _("Math presentation")
+
+# Translators: This refers to a human language such as English, Spanish, or German.
+LANGUAGE = _("Language:")
+
+# Translators: This is the style used when speaking mathematical expressions.
+# "ClearSpeak" produces natural-sounding speech (e.g. "x squared") while
+# "SimpleSpeak" is more literal and structured (e.g. "x superscript 2 end superscript").
+MATH_SPEECH_STYLE = _("Speech style:")
+
+# Translators: This is a verbosity level for speaking mathematical expressions.
+# "Terse" provides minimal information, for example "square root x" instead of
+# "the square root of x".
+MATH_VERBOSITY_TERSE = _("Terse")
+
+# Translators: This is a verbosity level for speaking mathematical expressions.
+# "Medium" is the default and provides a moderate amount of detail.
+MATH_VERBOSITY_MEDIUM = _("Medium")
+
+# Translators: This is a verbosity level for speaking mathematical expressions.
+# "Verbose" provides the most detail, for example "the square root of x" instead
+# of "square root x".
+MATH_VERBOSITY_VERBOSE = _("Verbose")
+
+# Translators: This is the braille code used to represent mathematical expressions.
+# Examples include "Nemeth" (common in the US) and "UEB" (Unified English Braille).
+MATH_BRAILLE_CODE = _("Braille code:")
+
 # Translators: This is the label of the Sound page in the Orca Preferences dialog.
 # On that page there are settings related to sound output, including volume
 # and progress bar beep notifications.

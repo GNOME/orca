@@ -37,6 +37,7 @@ from . import (
     braille,
     debug,
     generator,
+    math_presenter,
     messages,
     object_properties,
     table_navigator,
@@ -1228,6 +1229,9 @@ class BrailleGenerator(generator.Generator):
 
     def _generate_math(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the math role."""
+
+        if braille_string := math_presenter.get_presenter().get_braille_for_math(obj):
+            return [braille.Component(obj, braille_string, contracted=False)]
 
         return self._generate_default_presentation(obj, **args)
 

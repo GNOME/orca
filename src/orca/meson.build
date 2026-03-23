@@ -43,6 +43,7 @@ orca_platform_py = configure_file(
     'VERSION': meson.project_version(),
     'REVISION': revision,
     'LOUIS_TABLE_DIR': louis_tables_dir,
+    'MATHCAT_RULES_DIR': mathcat_rules_dir,
   }
 )
 
@@ -68,6 +69,7 @@ lib_sources = [
   'ax_utilities_component.py',
   'ax_utilities_debugging.py',
   'ax_utilities_event.py',
+  'ax_utilities_math.py',
   'ax_utilities_object.py',
   'ax_utilities_relation.py',
   'ax_utilities_role.py',
@@ -110,6 +112,7 @@ lib_sources = [
   'label_inference.py',
   'learn_mode_presenter.py',
   'live_region_presenter.py',
+  'math_presenter.py',
   'mathsymbols.py',
   'messages.py',
   'mouse_review.py',

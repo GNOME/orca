@@ -896,12 +896,21 @@ if LOUIS:
 class Region:
     """Base braille region with optional contraction and cursor tracking."""
 
-    def __init__(self, string: str, cursor_offset: int = 0, expand_on_cursor: bool = False) -> None:
+    def __init__(
+        self,
+        string: str,
+        cursor_offset: int = 0,
+        expand_on_cursor: bool = False,
+        contracted: bool | None = None,
+    ) -> None:
         if not string:
             string = ""
 
         # If LOUIS is None, then we don't go into contracted mode.
-        self._contracted = _STATE.enable_contracted_braille and LOUIS is not None
+        if contracted is not None:
+            self._contracted = contracted
+        else:
+            self._contracted = _STATE.enable_contracted_braille and LOUIS is not None
         self._expand_on_cursor = expand_on_cursor
 
         # The uncontracted string for the line.
@@ -918,7 +927,10 @@ class Region:
             )
         else:
             if string.strip():
-                if not _STATE.enable_contracted_braille:
+                if contracted is False:
+                    msg = f"BRAILLE: Not contracting '{string}' because caller opted out."
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                elif not _STATE.enable_contracted_braille:
                     msg = (
                         f"BRAILLE: Not contracting '{string}' "
                         f"because contracted braille is not enabled."
@@ -1057,8 +1069,9 @@ class Component(Region):
         cursor_offset: int = 0,
         indicator: str = "",
         expand_on_cursor: bool = False,
+        contracted: bool | None = None,
     ) -> None:
-        Region.__init__(self, string, cursor_offset, expand_on_cursor)
+        Region.__init__(self, string, cursor_offset, expand_on_cursor, contracted)
         if indicator:
             if self.string:
                 self.string = indicator + " " + self.string

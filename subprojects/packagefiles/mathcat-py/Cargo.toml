@@ -1,0 +1,24 @@
+[package]
+name = "MathCatForPython"
+version = "0.7.6-beta.3"
+authors = ["Neil Soiffer <soiffer@alum.mit.edu>"]
+edition = "2018"
+resolver = "2"
+
+[lib]
+name = "libmathcat_py"
+crate-type = ["cdylib"]
+
+[dependencies.mathcat]
+version = "=0.7.6-beta.3"
+
+[dependencies.pyo3]
+version = "0.27"
+features = ["extension-module", "abi3"]
+
+[build-dependencies]
+zip = { version = "8.2", default-features = false, features = ["bzip2"] }
+mathcat = {version = "=0.7.6-beta.3", features = ["include-zip"]}
+
+[profile.release]
+lto = true

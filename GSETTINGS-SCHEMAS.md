@@ -171,6 +171,17 @@ These operations also work at the profile level:
 
 ---
 
+### `org.gnome.Orca.MathPresentation` (schema-name: `math-presentation`)
+
+| Key | Type | Default | Summary |
+| --- | --- | --- | --- |
+| `braille-code` | `s` | `'Nemeth'` | Math braille code |
+| `language` | `s` | `'Auto'` | Math speech language (Auto uses system locale) |
+| `speech-style` | `s` | `'ClearSpeak'` | Math speech style |
+| `verbosity` | `s` | `'Medium'` | Math speech verbosity |
+
+---
+
 ### `org.gnome.Orca.MouseReview` (schema-name: `mouse-review`)
 
 | Key | Type | Default | Summary |

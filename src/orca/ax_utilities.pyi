@@ -1211,6 +1211,10 @@ class AXUtilities:
     @staticmethod
     def object_is_unrelated(obj: Atspi.Accessible) -> bool: ...
 
+    # From ax_utilities_math.py
+    @staticmethod
+    def get_mathml(obj: Atspi.Accessible) -> str: ...
+
     # From ax_utilities_object.py
     @staticmethod
     def get_common_ancestor(

@@ -1,0 +1,6 @@
+[wrap-git]
+directory=mathcat-py
+url=https://github.com/daisy/MathCATForPython.git
+revision=HEAD
+depth=1
+patch_directory=mathcat-py

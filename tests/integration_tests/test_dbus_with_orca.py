@@ -211,6 +211,15 @@ MODULE_CONFIG = {
         "toggle_commands": [],
         "skip": [],
     },
+    "MathPresenter": {
+        "commands": [],
+        "parameterized_commands": [],
+        "getters": ["BrailleCode", "Language", "SpeechStyle", "Verbosity"],
+        "setters": ["BrailleCode", "Language", "SpeechStyle", "Verbosity"],
+        "ui_commands": [],
+        "toggle_commands": [],
+        "skip": [],
+    },
     "NotificationPresenter": {
         "commands": [
             "PresentLastNotification",

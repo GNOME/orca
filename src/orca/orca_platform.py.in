@@ -38,3 +38,6 @@ datadir = os.path.join('@prefix@','@datadir@')
 
 # The directory where we could find liblouis translation tables.
 tablesdir = "@LOUIS_TABLE_DIR@"
+
+# The directory where MathCAT Rules are installed (empty if MathCAT not built).
+mathcat_rules_dir = "@MATHCAT_RULES_DIR@"

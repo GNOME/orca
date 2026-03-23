@@ -49,6 +49,7 @@ class TestSchemaRegistration:
             "flat-review",
             "keybindings",
             "live-regions",
+            "math-presentation",
             "metadata",
             "mouse-review",
             "pronunciations",

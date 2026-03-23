@@ -47,6 +47,7 @@ from .ax_utilities_application import AXUtilitiesApplication
 from .ax_utilities_collection import AXUtilitiesCollection
 from .ax_utilities_component import AXUtilitiesComponent
 from .ax_utilities_event import AXUtilitiesEvent
+from .ax_utilities_math import AXUtilitiesMath
 from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_relation import AXUtilitiesRelation
 from .ax_utilities_role import AXUtilitiesRole
@@ -1553,6 +1554,9 @@ for method_name, method in inspect.getmembers(AXUtilitiesSelection, predicate=in
 for method_name, method in inspect.getmembers(AXUtilitiesCollection, predicate=inspect.isfunction):
     if method_name.startswith("find"):
         setattr(AXUtilities, method_name, method)
+
+for method_name, method in inspect.getmembers(AXUtilitiesMath, predicate=inspect.isfunction):
+    setattr(AXUtilities, method_name, method)
 
 for method_name, method in inspect.getmembers(AXUtilitiesObject, predicate=inspect.isfunction):
     setattr(AXUtilities, method_name, method)
