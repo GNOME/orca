@@ -737,7 +737,7 @@ class Script(default.Script):
 
         obj, offset = self.utilities.get_caret_context()
         if not AXUtilities.is_busy(event.source):
-            document_presenter.get_presenter().update_mode_if_needed(self, None, obj)
+            document_presenter.get_presenter().update_mode_if_needed(self, focus, obj)
 
         if not obj:
             msg = "WEB: Could not get caret context"
