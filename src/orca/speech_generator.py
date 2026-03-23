@@ -2763,6 +2763,11 @@ class SpeechGenerator(generator.Generator):
         result += self._generate_accessible_role(obj, **args)
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
+            if AXUtilities.is_editable(obj):
+                text_substring = self._generate_text_substring(obj, **args)
+                if text_substring:
+                    result += text_substring
+                    return result
             result += self._generate_state_expanded(obj, **args)
             return result
 
