@@ -430,6 +430,17 @@ class Script(script.Script):
 
         manager = presentation_manager.get_manager()
         manager.interrupt_if_needed_for_focus_change(old_focus, new_focus, event)
+
+        if input_event_manager.get_manager().last_event_was_caret_selection():
+            handled = False
+            if AXObject.supports_text(old_focus):
+                handled = self.utilities.handle_text_selection_change(old_focus) or handled
+            if AXObject.supports_text(new_focus):
+                handled = self.utilities.handle_text_selection_change(new_focus) or handled
+            if handled:
+                self.update_braille(new_focus)
+                return True
+
         manager.present_object(self, new_focus, priorObj=old_focus)
         return True
 
