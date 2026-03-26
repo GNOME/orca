@@ -690,6 +690,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`PresentBatteryStatus`:** Presents the battery status.
 - **`PresentCpuAndMemoryUsage`:** Presents the cpu and memory usage.
 - **`PresentDate`:** Presents the current date.
+- **`PresentModifierKeysState`:** Presents the state of locked modifier keys. Requires AT-SPI 2.59.0 or later.
 - **`PresentTime`:** Presents the current time.
 
 #### Settings

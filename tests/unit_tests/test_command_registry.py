@@ -132,6 +132,7 @@ SYSTEM_INFORMATION_PRESENTER_HANDLERS = frozenset(
         "presentDateHandler",
         "present_battery_status",
         "present_cpu_and_memory_usage",
+        "present_modifier_keys_state",
     },
 )
 

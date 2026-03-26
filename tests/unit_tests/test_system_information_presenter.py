@@ -49,7 +49,13 @@ class TestSystemInformationPresenter:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Set up mocks for system_information_presenter dependencies."""
 
-        additional_modules = ["psutil", "orca.braille_presenter", "orca.presentation_manager"]
+        additional_modules = [
+            "psutil",
+            "orca.ax_device_manager",
+            "orca.braille_presenter",
+            "orca.keynames",
+            "orca.presentation_manager",
+        ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         cmdnames_mock = essential_modules["orca.cmdnames"]
@@ -57,6 +63,7 @@ class TestSystemInformationPresenter:
         cmdnames_mock.PRESENT_CURRENT_DATE = "presentCurrentDate"
         cmdnames_mock.PRESENT_BATTERY_STATUS = "presentBatteryStatus"
         cmdnames_mock.PRESENT_CPU_AND_MEMORY_USAGE = "presentCpuAndMemoryUsage"
+        cmdnames_mock.PRESENT_MODIFIER_KEYS_STATE = "presentModifierKeysState"
 
         debug_mock = essential_modules["orca.debug"]
         debug_mock.print_message = test_context.Mock()
@@ -96,6 +103,9 @@ class TestSystemInformationPresenter:
         messages_mock.CPU_AND_MEMORY_USAGE_LEVELS = "CPU: %d%%. Memory: %d%%"
         messages_mock.memory_usage_gb = test_context.Mock(return_value="5.2GB / 16GB")
         messages_mock.memory_usage_mb = test_context.Mock(return_value="512MB / 1024MB")
+        messages_mock.LOCKING_KEY_STATE_ON = "on"
+        messages_mock.LOCKING_KEY_STATE_OFF = "off"
+        messages_mock.MODIFIER_KEYS_STATE_UNAVAILABLE = "Modifier key state is not available."
 
         messages_mock.TIME_FORMAT_LOCALE = "%X"
         messages_mock.TIME_FORMAT_24_HMS = "%H:%M:%S"
@@ -104,6 +114,19 @@ class TestSystemInformationPresenter:
         messages_mock.TIME_FORMAT_12_HMS = "%I:%M:%S %p"
         messages_mock.TIME_FORMAT_24_HMS_WITH_WORDS = "%H hours, %M minutes and %S seconds"
         messages_mock.TIME_FORMAT_24_HM_WITH_WORDS = "%H hours and %M minutes"
+
+        ax_device_manager_mock = essential_modules["orca.ax_device_manager"]
+        device_manager_instance = test_context.Mock()
+        device_manager_instance.is_active = test_context.Mock(return_value=True)
+        device_manager_instance.get_locked_modifiers = test_context.Mock(return_value=0)
+        ax_device_manager_mock.get_manager = test_context.Mock(
+            return_value=device_manager_instance,
+        )
+
+        keynames_mock = essential_modules["orca.keynames"]
+        keynames_mock.get_key_name = test_context.Mock(
+            side_effect={"Caps_Lock": "caps lock", "Num_Lock": "num lock"}.get,
+        )
 
         psutil_mock = essential_modules["psutil"]
         battery_mock = test_context.Mock()
@@ -118,6 +141,7 @@ class TestSystemInformationPresenter:
         memory_mock.used = 8 * 1024**3
         psutil_mock.virtual_memory = test_context.Mock(return_value=memory_mock)
 
+        essential_modules["device_manager"] = device_manager_instance
         essential_modules["controller"] = controller_mock
         essential_modules["input_event_handler"] = input_event_handler_class
         essential_modules["battery"] = battery_mock
@@ -156,6 +180,7 @@ class TestSystemInformationPresenter:
         assert cmd_manager.get_keyboard_command("presentDateHandler") is not None
         assert cmd_manager.get_keyboard_command("present_battery_status") is not None
         assert cmd_manager.get_keyboard_command("present_cpu_and_memory_usage") is not None
+        assert cmd_manager.get_keyboard_command("present_modifier_keys_state") is not None
 
         mock_controller.register_decorated_module.assert_called_with(
             "SystemInformationPresenter",
@@ -178,6 +203,7 @@ class TestSystemInformationPresenter:
             "presentDateHandler",
             "present_battery_status",
             "present_cpu_and_memory_usage",
+            "present_modifier_keys_state",
         ]
         for command_name in expected_commands:
             assert manager.get_keyboard_command(command_name) is not None
@@ -199,6 +225,7 @@ class TestSystemInformationPresenter:
             "presentDateHandler",
             "present_battery_status",
             "present_cpu_and_memory_usage",
+            "present_modifier_keys_state",
         ]
         for cmd_name in expected_commands:
             assert cmd_manager.get_keyboard_command(cmd_name) is not None
@@ -378,6 +405,57 @@ class TestSystemInformationPresenter:
 
         if check_debug:
             essential_modules["orca.debug"].print_tokens.assert_called_once()
+
+    @pytest.mark.parametrize(
+        "locked_mods,expected_message",
+        [
+            (0, "caps lock off. num lock off"),
+            (0x2, "caps lock on. num lock off"),
+            (0x4000, "caps lock off. num lock on"),
+            (0x4002, "caps lock on. num lock on"),
+        ],
+    )
+    def test_present_modifier_keys_state(
+        self,
+        test_context: OrcaTestContext,
+        locked_mods: int,
+        expected_message: str,
+    ) -> None:
+        """Test present_modifier_keys_state with different modifier bitmasks."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        essential_modules["device_manager"].get_locked_modifiers.return_value = locked_mods
+
+        from orca.system_information_presenter import SystemInformationPresenter
+
+        presenter = SystemInformationPresenter()
+        mock_script = test_context.Mock()
+        result = presenter.present_modifier_keys_state(mock_script)
+
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.assert_called_once_with(expected_message)
+        assert result
+
+    def test_present_modifier_keys_state_device_inactive(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test present_modifier_keys_state when device is not active."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        essential_modules["device_manager"].is_active.return_value = False
+
+        from orca.system_information_presenter import SystemInformationPresenter
+
+        presenter = SystemInformationPresenter()
+        mock_script = test_context.Mock()
+        result = presenter.present_modifier_keys_state(mock_script)
+
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.assert_called_once_with(
+            "Modifier key state is not available.",
+        )
+        assert result
 
     def test_get_presenter_singleton(self, test_context: OrcaTestContext) -> None:
         """Test system_information_presenter.get_presenter singleton functionality."""

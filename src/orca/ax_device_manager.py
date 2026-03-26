@@ -3,6 +3,9 @@
 # Copyright 2026 SUSE LLC.
 # Author: Mike Gorse <mgorse@suse.com>
 #
+# Copyright 2026 Igalia, S.L.
+# Author: Joanmarie Diggs <jdiggs@igalia.com>
+#
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
 # License as published by the Free Software Foundation; either
@@ -23,7 +26,9 @@
 import gi
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
+from gi.repository import Atspi, GLib
+
+from . import debug
 
 
 class AXDeviceManager:
@@ -52,6 +57,27 @@ class AXDeviceManager:
         """Returns the AT-SPI device."""
 
         return self._device
+
+    def get_locked_modifiers(self) -> int:
+        """Returns a bitmask of locked modifiers, or 0 if unavailable."""
+
+        # Requires at-spi2-core >= 2.59.0. Earlier versions always return 0.
+
+        if self._device is None:
+            msg = "AXDeviceManager: get_locked_modifiers called with no device"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return 0
+
+        try:
+            result = self._device.get_locked_modifiers()
+        except GLib.GError as error:
+            msg = f"AXDeviceManager: Exception in get_locked_modifiers: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return 0
+
+        msg = f"AXDeviceManager: get_locked_modifiers returned {result} ({result:#x})"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return result
 
 
 _manager: AXDeviceManager = AXDeviceManager()

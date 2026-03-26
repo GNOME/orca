@@ -588,6 +588,10 @@ PRESENT_CURRENT_TIME = _("Present current time")
 # braille.
 PRESENT_CURRENT_DATE = _("Present current date")
 
+# Translators: Orca has a command to present the state of modifier keys such as
+# Caps Lock and Num Lock (e.g. "caps lock on. num lock off.").
+PRESENT_MODIFIER_KEYS_STATE = _("Present the state of modifier keys")
+
 # Translators: Orca has a command to present the pixel size and location of
 # the current object. This string is how this command is described in the list
 # of keyboard shortcuts.

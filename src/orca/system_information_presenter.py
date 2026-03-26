@@ -1,7 +1,7 @@
 # Orca
 #
 # Copyright 2005-2008 Sun Microsystems Inc.
-# Copyright 2016-2024 Igalia, S.L.
+# Copyright 2016-2026 Igalia, S.L.
 # Copyright 2024 GNOME Foundation Inc.
 #
 # This library is free software; you can redistribute it and/or
@@ -19,6 +19,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-locals
+
 """Module for presenting system information"""
 
 from __future__ import annotations
@@ -26,6 +28,11 @@ from __future__ import annotations
 import time
 from enum import Enum
 from typing import TYPE_CHECKING, Any
+
+import gi
+
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi
 
 _PSUTIL_AVAILABLE = False  # pylint: disable=invalid-name
 try:
@@ -36,6 +43,7 @@ except ModuleNotFoundError:
     pass
 
 from . import (
+    ax_device_manager,
     cmdnames,
     command_manager,
     dbus_service,
@@ -44,6 +52,7 @@ from . import (
     guilabels,
     input_event,
     keybindings,
+    keynames,
     messages,
     preferences_grid_base,
     presentation_manager,
@@ -203,6 +212,12 @@ class SystemInformationPresenter:
                 "present_cpu_and_memory_usage",
                 self.present_cpu_and_memory_usage,
                 cmdnames.PRESENT_CPU_AND_MEMORY_USAGE,
+                None,
+            ),
+            (
+                "present_modifier_keys_state",
+                self.present_modifier_keys_state,
+                cmdnames.PRESENT_MODIFIER_KEYS_STATE,
                 None,
             ),
         ]
@@ -454,6 +469,59 @@ class SystemInformationPresenter:
 
         msg = f"{messages.CPU_AND_MEMORY_USAGE_LEVELS % (cpu_usage, memory_percent)}. {details}"
         presentation_manager.get_manager().present_message(msg)
+        return True
+
+    @dbus_service.command
+    def present_modifier_keys_state(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Presents the state of locked modifier keys. Requires AT-SPI 2.59.0 or later."""
+
+        tokens = [
+            "SYSTEM INFORMATION PRESENTER: present_modifier_keys_state. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        manager = ax_device_manager.get_manager()
+        if not manager.is_active():
+            presentation_manager.get_manager().present_message(
+                messages.MODIFIER_KEYS_STATE_UNAVAILABLE,
+            )
+            return True
+
+        locked = manager.get_locked_modifiers()
+        modifiers = [
+            ("Caps_Lock", Atspi.ModifierType.SHIFTLOCK),
+            ("Num_Lock", Atspi.ModifierType.NUMLOCK),
+        ]
+
+        parts: list[str] = []
+        for key_name, modifier_type in modifiers:
+            bit = 1 << modifier_type
+            is_locked = bool(locked & bit)
+            msg = (
+                f"SYSTEM INFORMATION PRESENTER: {key_name}: "
+                f"modifier_type={modifier_type}, bit={bit:#x}, "
+                f"locked & bit={locked & bit:#x}, is_locked={is_locked}"
+            )
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
+            localized_name = keynames.get_key_name(key_name) or key_name
+            if is_locked:
+                state = messages.LOCKING_KEY_STATE_ON
+            else:
+                state = messages.LOCKING_KEY_STATE_OFF
+            parts.append(f"{localized_name} {state}")
+
+        presentation_manager.get_manager().present_message(". ".join(parts))
         return True
 
 

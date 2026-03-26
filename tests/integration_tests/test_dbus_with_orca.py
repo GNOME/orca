@@ -565,6 +565,7 @@ MODULE_CONFIG = {
             "PresentBatteryStatus",
             "PresentCpuAndMemoryUsage",
             "PresentDate",
+            "PresentModifierKeysState",
             "PresentTime",
         ],
         "parameterized_commands": [],

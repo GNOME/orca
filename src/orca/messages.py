@@ -1605,6 +1605,10 @@ LOCKING_KEY_STATE_OFF = C_("locking key state", "off")
 # keys in the future.
 LOCKING_KEY_STATE_ON = C_("locking key state", "on")
 
+# Translators: Orca has a command to present the state of modifier keys. This message
+# is presented if the modifier key state cannot be obtained from the system.
+MODIFIER_KEYS_STATE_UNAVAILABLE = _("Modifier key state is not available.")
+
 # Translators: This is to inform the user of the presence of the red squiggly
 # line which indicates that a given word is not spelled correctly.
 MISSPELLED = _("misspelled")
