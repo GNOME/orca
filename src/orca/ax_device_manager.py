@@ -45,6 +45,7 @@ class AXDeviceManager:
         self._device: Atspi.Device | None = None
         self._key_pressed_id: int = 0
         self._key_released_id: int = 0
+        self._pointer_moved_id: int = 0
         self._mapped_keycodes: list[int] = []
         self._mapped_keysyms: list[int] = []
 
@@ -108,6 +109,44 @@ class AXDeviceManager:
             self._key_pressed_id = 0
             self._key_released_id = 0
 
+    def enable_pointer_monitoring(self) -> bool:
+        """Enables pointer monitoring on the device. Returns True on success."""
+
+        if self._device is None:
+            return False
+
+        try:
+            caps = self._device.get_capabilities()
+            caps = self._device.set_capabilities(
+                caps | Atspi.DeviceCapability.POINTER_MONITOR,
+            )
+        except GLib.GError as error:
+            msg = f"AXDeviceManager: Exception in enable_pointer_monitoring: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        return bool(caps & Atspi.DeviceCapability.POINTER_MONITOR)
+
+    def start_pointer_watcher(self, on_pointer_moved: Callable[..., Any]) -> None:
+        """Connects a pointer-moved signal handler to the device."""
+
+        if self._device is None:
+            return
+
+        self._pointer_moved_id = self._device.connect(
+            "pointer-moved",
+            on_pointer_moved,
+        )
+
+    def stop_pointer_watcher(self) -> None:
+        """Disconnects the pointer-moved signal handler from the device."""
+
+        if self._device is None or self._pointer_moved_id == 0:
+            return
+
+        self._device.disconnect(self._pointer_moved_id)
+        self._pointer_moved_id = 0
+
     def add_grab_for_modifier(self, modifier: str, keysym: int, keycode: int) -> int:
         """Adds a key grab for a modifier key, returns the grab ID."""
 
@@ -165,7 +204,7 @@ class AXDeviceManager:
             return
 
         try:
-            Atspi.Device.grab_keyboard(self._device)
+            self._device.grab_keyboard()
         except GLib.GError as error:
             msg = f"AXDeviceManager: Exception in grab_keyboard: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -182,7 +221,7 @@ class AXDeviceManager:
             return
 
         try:
-            Atspi.Device.ungrab_keyboard(self._device)
+            self._device.ungrab_keyboard()
         except GLib.GError as error:
             msg = f"AXDeviceManager: Exception in ungrab_keyboard: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -232,6 +271,20 @@ class AXDeviceManager:
 
         self._mapped_keycodes.clear()
         self._mapped_keysyms.clear()
+
+    def generate_mouse_event(self, obj: Atspi.Accessible, x: int, y: int, event: str) -> bool:
+        """Generates a mouse event at the given coordinates on obj."""
+
+        if self._device is None:
+            return False
+
+        try:
+            self._device.generate_mouse_event(obj, x, y, event)
+        except GLib.GError as error:
+            msg = f"AXDeviceManager: Exception in generate_mouse_event: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+        return True
 
     def get_locked_modifiers(self) -> int:
         """Returns a bitmask of locked modifiers, or 0 if unavailable."""

@@ -428,8 +428,6 @@ class MouseReviewer:
         self._all_windows: list[Wnck.Window] = []
         self._handler_ids: dict[int, Wnck.Screen] = {}
         self._event_listener: Atspi.EventListener = Atspi.EventListener.new(self._listener)
-        self._pointer_moved_id = None
-        self._device: Atspi.Device = None
         self.in_mouse_event: bool = False
         self._event_queue: deque = deque()
         self._initialized: bool = False
@@ -446,11 +444,9 @@ class MouseReviewer:
 
         try:
             if self._use_atspi:
-                ax_device_manager.get_manager().activate()
-                self._device = ax_device_manager.get_manager().get_device()
-                caps = self._device.get_capabilities()
-                caps = self._device.set_capabilities(caps | Atspi.DeviceCapability.POINTER_MONITOR)
-                if caps & Atspi.DeviceCapability.POINTER_MONITOR:
+                manager = ax_device_manager.get_manager()
+                manager.activate()
+                if manager.enable_pointer_monitoring():
                     self._mouse_review_capable = True
             else:
                 self._mouse_review_capable = Wnck.Screen.get_default() is not None  # pylint: disable=no-value-for-parameter
@@ -523,7 +519,7 @@ class MouseReviewer:
         self._current_mouse_over = _ItemContext(obj=obj, frame=frame, script=script)
 
         if self._use_atspi:
-            self._pointer_moved_id = self._device.connect("pointer-moved", self._on_pointer_moved)
+            ax_device_manager.get_manager().start_pointer_watcher(self._on_pointer_moved)
         else:
             self._event_listener.register("mouse:abs")
             screen = Wnck.Screen.get_default()  # pylint: disable=no-value-for-parameter
@@ -553,9 +549,7 @@ class MouseReviewer:
         """Deactivates mouse review."""
 
         if self._use_atspi:
-            if self._pointer_moved_id is not None:
-                self._device.disconnect(self._pointer_moved_id)
-                self._pointer_moved_id = None
+            ax_device_manager.get_manager().stop_pointer_watcher()
         else:
             try:
                 self._event_listener.deregister("mouse:abs")

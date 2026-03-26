@@ -26,7 +26,7 @@ import gi
 
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gtk", "3.0")
-from gi.repository import Atspi, GLib
+from gi.repository import Atspi
 
 from . import ax_device_manager, debug
 from .ax_component import AXComponent
@@ -107,14 +107,12 @@ class AXEventSynthesizer:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        try:
-            device = ax_device_manager.get_manager().get_device()
-            Atspi.Device.generate_mouse_event(device, obj, relative_x, relative_y, event)
-        except GLib.GError as error:
-            message = f"AXEventSynthesizer: Exception in _generate_mouse_event_new: {error}"
-            debug.print_message(debug.LEVEL_INFO, message, True)
-            return False
-        return True
+        return ax_device_manager.get_manager().generate_mouse_event(
+            obj,
+            relative_x,
+            relative_y,
+            event,
+        )
 
     @staticmethod
     def _mouse_event_on_character(obj: Atspi.Accessible, offset: int | None, event: str) -> bool:
