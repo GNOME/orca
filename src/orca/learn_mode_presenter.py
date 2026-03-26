@@ -32,12 +32,12 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GObject, Gtk
 
 from . import (
+    ax_device_manager,
     cmdnames,
     command_manager,
     debug,
     guilabels,
     input_event,
-    input_event_manager,
     keybindings,
     messages,
     presentation_manager,
@@ -103,7 +103,7 @@ class LearnModePresenter:
         presenter.speak_message(messages.LEARN_MODE_START_SPEECH)
         presenter.present_braille_message(messages.LEARN_MODE_START_BRAILLE)
 
-        input_event_manager.get_manager().grab_keyboard("Entering learn mode")
+        ax_device_manager.get_manager().grab_keyboard("Entering learn mode")
         msg = "LEARN MODE PRESENTER: Is now active"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._is_active = True
@@ -125,7 +125,7 @@ class LearnModePresenter:
         presenter = presentation_manager.get_manager()
         presenter.present_message(messages.LEARN_MODE_STOP)
 
-        input_event_manager.get_manager().ungrab_keyboard("Exiting learn mode")
+        ax_device_manager.get_manager().ungrab_keyboard("Exiting learn mode")
         msg = "LEARN MODE PRESENTER: Is now inactive"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._is_active = False

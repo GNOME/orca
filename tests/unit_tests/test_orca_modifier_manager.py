@@ -50,7 +50,7 @@ class TestOrcaModifierManager:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Returns dependencies for orca_modifier_manager module testing."""
 
-        additional_modules = ["orca.input_event_manager", "gi.repository"]
+        additional_modules = ["orca.ax_device_manager", "orca.input_event_manager", "gi.repository"]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         debug_mock = essential_modules["orca.debug"]
@@ -60,12 +60,13 @@ class TestOrcaModifierManager:
         keybindings_mock = essential_modules["orca.keybindings"]
         keybindings_mock.get_keycodes = test_context.Mock(return_value=(0, 0))
 
-        input_event_manager_mock = essential_modules["orca.input_event_manager"]
-        input_manager_instance = test_context.Mock()
-        input_manager_instance.add_grab_for_modifier = test_context.Mock(return_value=123)
-        input_manager_instance.remove_grab_for_modifier = test_context.Mock()
-        input_event_manager_mock.get_manager = test_context.Mock(
-            return_value=input_manager_instance,
+        ax_device_manager_mock = essential_modules["orca.ax_device_manager"]
+        ax_device_mgr_instance = test_context.Mock()
+        ax_device_mgr_instance.add_grab_for_modifier = test_context.Mock(return_value=123)
+        ax_device_mgr_instance.remove_grab_for_modifier = test_context.Mock()
+        ax_device_mgr_instance.unmap_all_modifiers = test_context.Mock()
+        ax_device_manager_mock.get_manager = test_context.Mock(
+            return_value=ax_device_mgr_instance,
         )
 
         gi_repository_mock = essential_modules["gi.repository"]
@@ -91,7 +92,7 @@ class TestOrcaModifierManager:
         glib_mock.timeout_add = test_context.Mock()
         gi_repository_mock.GLib = glib_mock
 
-        essential_modules["input_manager_instance"] = input_manager_instance
+        essential_modules["ax_device_mgr_instance"] = ax_device_mgr_instance
         essential_modules["gdk"] = gdk_mock
         essential_modules["atspi"] = atspi_mock
         essential_modules["glib"] = glib_mock
@@ -452,7 +453,7 @@ class TestOrcaModifierManager:
         [
             pytest.param("new", False, 123, True, True, True, id="new_modifier"),
             pytest.param("existing", True, None, False, False, True, id="existing_modifier"),
-            pytest.param("failed", False, -1, True, True, False, id="failed_grab"),
+            pytest.param("failed", False, 0, True, True, False, id="failed_grab"),
         ],
     )
     def test_add_modifier_grab(
@@ -481,15 +482,13 @@ class TestOrcaModifierManager:
                 "orca.orca_modifier_manager.keybindings.get_keycodes",
                 new=mock_get_keycodes,
             )
-            mock_iem = test_context.Mock()
-            test_context.patch(
-                "orca.orca_modifier_manager.input_event_manager.get_manager",
-                new=mock_iem,
-            )
             mock_get_keycodes.return_value = (65379, 110)
-            mock_input_manager = test_context.Mock()
-            mock_input_manager.add_grab_for_modifier.return_value = grab_result
-            mock_iem.return_value = mock_input_manager
+            mock_device_mgr = test_context.Mock()
+            mock_device_mgr.add_grab_for_modifier.return_value = grab_result
+            test_context.patch(
+                "orca.orca_modifier_manager.ax_device_manager.get_manager",
+                return_value=mock_device_mgr,
+            )
 
         manager.add_modifier_grab("Insert")
 
@@ -499,9 +498,9 @@ class TestOrcaModifierManager:
             essential_modules["orca.keybindings"].get_keycodes.assert_not_called()
 
         if expects_grab_call:
-            mock_input_manager.add_grab_for_modifier.assert_called_once_with("Insert", 65379, 110)
+            mock_device_mgr.add_grab_for_modifier.assert_called_once_with("Insert", 65379, 110)
         elif scenario == "existing":
-            essential_modules["input_manager_instance"].add_grab_for_modifier.assert_not_called()
+            essential_modules["ax_device_mgr_instance"].add_grab_for_modifier.assert_not_called()
 
         if expects_in_dict:
             if scenario in ("new", "existing"):
@@ -531,21 +530,19 @@ class TestOrcaModifierManager:
 
         if has_grabbed:
             manager._grabbed_modifiers["Insert"] = 123
-            mock_iem = test_context.Mock()
+            mock_device_mgr = test_context.Mock()
             test_context.patch(
-                "orca.orca_modifier_manager.input_event_manager.get_manager",
-                new=mock_iem,
+                "orca.orca_modifier_manager.ax_device_manager.get_manager",
+                return_value=mock_device_mgr,
             )
-            mock_input_manager = test_context.Mock()
-            mock_iem.return_value = mock_input_manager
 
         manager.remove_modifier_grab("Insert")
 
         if expects_call:
-            mock_input_manager.remove_grab_for_modifier.assert_called_once_with("Insert", 123)
+            mock_device_mgr.remove_grab_for_modifier.assert_called_once_with("Insert", 123)
             assert "Insert" not in manager._grabbed_modifiers
         else:
-            essential_modules["input_manager_instance"].remove_grab_for_modifier.assert_not_called()
+            essential_modules["ax_device_mgr_instance"].remove_grab_for_modifier.assert_not_called()
 
     @pytest.mark.parametrize(
         "keyval_name, expected_method",
@@ -791,11 +788,11 @@ class TestOrcaModifierManager:
         test_context.patch("orca.orca_modifier_manager.subprocess.Popen", new=mock_popen)
 
         mock_unmap = test_context.Mock()
-        mock_iem = test_context.Mock()
-        mock_iem.unmap_all_modifiers = mock_unmap
+        mock_device_mgr = test_context.Mock()
+        mock_device_mgr.unmap_all_modifiers = mock_unmap
         test_context.patch(
-            "orca.orca_modifier_manager.input_event_manager.get_manager",
-            return_value=mock_iem,
+            "orca.orca_modifier_manager.ax_device_manager.get_manager",
+            return_value=mock_device_mgr,
         )
 
         if has_xmodmap:

@@ -23,7 +23,14 @@
 
 """Handle activating and providing access to the AT-SPI device."""
 
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any
+
 import gi
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
@@ -36,6 +43,10 @@ class AXDeviceManager:
 
     def __init__(self) -> None:
         self._device: Atspi.Device | None = None
+        self._key_pressed_id: int = 0
+        self._key_released_id: int = 0
+        self._mapped_keycodes: list[int] = []
+        self._mapped_keysyms: list[int] = []
 
     def activate(self) -> None:
         """Called when this device manager is activated."""
@@ -57,6 +68,170 @@ class AXDeviceManager:
         """Returns the AT-SPI device."""
 
         return self._device
+
+    def start_key_watcher(
+        self,
+        on_pressed: Callable[..., Any],
+        on_released: Callable[..., Any],
+        legacy_callback: Callable[..., Any],
+    ) -> None:
+        """Connects key event handlers to the device."""
+
+        msg = "AXDeviceManager: Starting key watcher."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        if self._device is None:
+            msg = "AXDeviceManager: No device for key watcher."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        atspi_version = Atspi.get_version()  # pylint: disable=no-value-for-parameter
+        if atspi_version[0] > 2 or atspi_version[1] >= 60:
+            self._key_pressed_id = self._device.connect("key-pressed", on_pressed)
+            self._key_released_id = self._device.connect("key-released", on_released)
+        else:
+            self._device.add_key_watcher(legacy_callback)
+
+    def stop_key_watcher(self) -> None:
+        """Disconnects key event handlers from the device."""
+
+        msg = "AXDeviceManager: Stopping key watcher."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        if self._device is None:
+            return
+
+        atspi_version = Atspi.get_version()  # pylint: disable=no-value-for-parameter
+        if atspi_version[0] > 2 or atspi_version[1] >= 60:
+            self._device.disconnect(self._key_pressed_id)
+            self._device.disconnect(self._key_released_id)
+            self._key_pressed_id = 0
+            self._key_released_id = 0
+
+    def add_grab_for_modifier(self, modifier: str, keysym: int, keycode: int) -> int:
+        """Adds a key grab for a modifier key, returns the grab ID."""
+
+        kd = Atspi.KeyDefinition()
+        kd.keysym = keysym
+        kd.keycode = keycode
+        kd.modifiers = 0
+        grab_id = self.add_key_grab(kd)
+
+        msg = f"AXDeviceManager: Grab id for {modifier}: {grab_id}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return grab_id
+
+    def remove_grab_for_modifier(self, modifier: str, grab_id: int) -> None:
+        """Removes a key grab for a modifier key."""
+
+        self.remove_key_grab(grab_id)
+        msg = f"AXDeviceManager: Grab id removed for {modifier}: {grab_id}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    def add_key_grab(self, key_definition: Atspi.KeyDefinition, callback: object = None) -> int:
+        """Adds a key grab, returns the grab ID or 0 on failure."""
+
+        if self._device is None:
+            return 0
+
+        try:
+            return self._device.add_key_grab(key_definition, callback)
+        except GLib.GError as error:
+            msg = f"AXDeviceManager: Exception in add_key_grab: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return 0
+
+    def remove_key_grab(self, grab_id: int) -> None:
+        """Removes a key grab."""
+
+        if self._device is None:
+            return
+
+        try:
+            self._device.remove_key_grab(grab_id)
+        except GLib.GError as error:
+            msg = f"AXDeviceManager: Exception in remove_key_grab: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    def grab_keyboard(self, reason: str = "") -> None:
+        """Grabs the entire keyboard."""
+
+        msg = "AXDeviceManager: Grabbing keyboard"
+        if reason:
+            msg += f": {reason}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        if self._device is None:
+            return
+
+        try:
+            Atspi.Device.grab_keyboard(self._device)
+        except GLib.GError as error:
+            msg = f"AXDeviceManager: Exception in grab_keyboard: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    def ungrab_keyboard(self, reason: str = "") -> None:
+        """Releases the keyboard grab."""
+
+        msg = "AXDeviceManager: Ungrabbing keyboard"
+        if reason:
+            msg += f": {reason}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        if self._device is None:
+            return
+
+        try:
+            Atspi.Device.ungrab_keyboard(self._device)
+        except GLib.GError as error:
+            msg = f"AXDeviceManager: Exception in ungrab_keyboard: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    def map_keysym_to_modifier(self, keysym: int) -> int:
+        """Maps keysym as a modifier, returns the mapped modifier or 0 on failure."""
+
+        if self._device is None:
+            return 0
+
+        self._mapped_keysyms.append(keysym)
+        try:
+            return self._device.map_keysym_modifier(keysym)
+        except GLib.GError as error:
+            msg = f"AXDeviceManager: Exception in map_keysym_modifier: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return 0
+
+    def _unmap_modifier(self, keycode: int) -> None:
+        """Unmaps a single modifier keycode. Only called when device is active."""
+
+        assert self._device is not None
+        try:
+            self._device.unmap_modifier(keycode)
+        except GLib.GError as error:
+            msg = f"AXDeviceManager: Exception in unmap_modifier: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    def _unmap_keysym_modifier(self, keysym: int) -> None:
+        """Unmaps a single keysym modifier. Only called when device is active."""
+
+        assert self._device is not None
+        try:
+            self._device.unmap_keysym_modifier(keysym)
+        except GLib.GError as error:
+            msg = f"AXDeviceManager: Exception in unmap_keysym_modifier: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    def unmap_all_modifiers(self) -> None:
+        """Unmaps all previously mapped modifiers."""
+
+        if self._device is not None:
+            for keycode in self._mapped_keycodes:
+                self._unmap_modifier(keycode)
+            for keysym in self._mapped_keysyms:
+                self._unmap_keysym_modifier(keysym)
+
+        self._mapped_keycodes.clear()
+        self._mapped_keysyms.clear()
 
     def get_locked_modifiers(self) -> int:
         """Returns a bitmask of locked modifiers, or 0 if unavailable."""

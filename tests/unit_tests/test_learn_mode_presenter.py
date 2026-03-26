@@ -53,6 +53,7 @@ class TestLearnModePresenter:
 
         additional_modules = [
             "gi.repository",
+            "orca.ax_device_manager",
             "orca.command_manager",
             "orca.input_event_manager",
             "time",
@@ -292,8 +293,8 @@ class TestLearnModePresenter:
         pres_manager.present_message.assert_called_with(messages.VERSION)
         pres_manager.speak_message.assert_called_with(messages.LEARN_MODE_START_SPEECH)
         pres_manager.present_braille_message.assert_called_with(messages.LEARN_MODE_START_BRAILLE)
-        input_manager = essential_modules["orca.input_event_manager"].get_manager.return_value
-        input_manager.grab_keyboard.assert_called_with("Entering learn mode")
+        device_manager = essential_modules["orca.ax_device_manager"].get_manager.return_value
+        device_manager.grab_keyboard.assert_called_with("Entering learn mode")
 
     @pytest.mark.parametrize(
         "is_active,script_provided,script_manager_returns_none,expected_debug_called",
@@ -351,8 +352,8 @@ class TestLearnModePresenter:
         pres_manager = essential_modules["orca.presentation_manager"].get_manager()
         messages = essential_modules["orca.messages"]
         pres_manager.present_message.assert_called_with(messages.LEARN_MODE_STOP)
-        input_manager = essential_modules["orca.input_event_manager"].get_manager.return_value
-        input_manager.ungrab_keyboard.assert_called_with("Exiting learn mode")
+        device_manager = essential_modules["orca.ax_device_manager"].get_manager.return_value
+        device_manager.ungrab_keyboard.assert_called_with("Exiting learn mode")
 
     @pytest.mark.parametrize(
         "is_active,script_provided,script_manager_returns_none,expected_debug_called",

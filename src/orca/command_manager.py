@@ -42,6 +42,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GLib, Gtk  # pylint: disable=no-name-in-module
 
 from . import (
+    ax_device_manager,
     cmdnames,
     dbus_service,
     debug,
@@ -49,7 +50,6 @@ from . import (
     gsettings_registry,
     guilabels,
     input_event,
-    input_event_manager,
     keybindings,
     keynames,
     messages,
@@ -719,7 +719,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._saved_commands = get_manager().get_keyboard_commands()
         orca_modifier_manager.get_manager().remove_grabs_for_orca_modifiers()
         get_manager().set_active_commands({}, "Capturing keys")
-        input_event_manager.get_manager().unmap_all_modifiers()
+        ax_device_manager.get_manager().unmap_all_modifiers()
 
     def _finish_inline_editing(
         self,
@@ -1036,7 +1036,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         saved_commands = get_manager().get_keyboard_commands()
         orca_modifier_manager.get_manager().remove_grabs_for_orca_modifiers()
         get_manager().set_active_commands({}, "Capturing keys")
-        input_event_manager.get_manager().unmap_all_modifiers()
+        ax_device_manager.get_manager().unmap_all_modifiers()
 
         response = dialog.run()
 
@@ -1331,7 +1331,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         if layout_changed:
             self._is_desktop = is_desktop
 
-        has_device = input_event_manager.get_manager().has_device()
+        has_device = ax_device_manager.get_manager().is_active()
 
         if has_device:
             old_bindings = self._get_active_bindings(self._keyboard_commands)

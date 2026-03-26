@@ -43,7 +43,7 @@ from gi.repository import (
     GLib,
 )
 
-from . import debug, gsettings_registry, input_event_manager, keybindings
+from . import ax_device_manager, debug, gsettings_registry, keybindings
 
 DESKTOP_MODIFIER_KEYS: list[str] = ["Insert", "KP_Insert"]
 LAPTOP_MODIFIER_KEYS: list[str] = ["Caps_Lock", "Shift_Lock"]
@@ -140,8 +140,8 @@ class OrcaModifierManager:
             return
 
         keyval, keycode = keybindings.get_keycodes(modifier)
-        grab_id = input_event_manager.get_manager().add_grab_for_modifier(modifier, keyval, keycode)
-        if grab_id != -1:
+        grab_id = ax_device_manager.get_manager().add_grab_for_modifier(modifier, keyval, keycode)
+        if grab_id != 0:
             self._grabbed_modifiers[modifier] = grab_id
 
     def remove_modifier_grab(self, modifier: str) -> None:
@@ -151,7 +151,7 @@ class OrcaModifierManager:
         if grab_id is None:
             return
 
-        input_event_manager.get_manager().remove_grab_for_modifier(modifier, grab_id)
+        ax_device_manager.get_manager().remove_grab_for_modifier(modifier, grab_id)
         del self._grabbed_modifiers[modifier]
 
     def toggle_modifier(self, keyboard_event: KeyboardEvent) -> None:
@@ -320,7 +320,7 @@ class OrcaModifierManager:
 
         self._modifiers_are_set = False
         self._restore_original_xkbcomp()
-        input_event_manager.get_manager().unmap_all_modifiers()
+        ax_device_manager.get_manager().unmap_all_modifiers()
 
     def _restore_original_xkbcomp(self) -> None:
         """Restores the original xkbcomp keymap."""

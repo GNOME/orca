@@ -30,7 +30,7 @@ gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi, Gdk
 
-from . import input_event_manager, keynames
+from . import ax_device_manager, debug, keynames
 
 _keycode_cache = {}
 
@@ -187,12 +187,12 @@ class KeyBinding:
         if modifiers & ORCA_MODIFIER_MASK:
             modifier_list = []
             other_modifiers = modifiers & ~ORCA_MODIFIER_MASK
-            manager = input_event_manager.get_manager()
+            device_manager = ax_device_manager.get_manager()
             for key in orca_modifiers:
                 mod_keyval, mod_keycode = get_keycodes(key)
                 if mod_keycode == 0 and key == "Shift_Lock":
                     mod_keyval, mod_keycode = get_keycodes("Caps_Lock")
-                mod = manager.map_keysym_to_modifier(mod_keyval)
+                mod = device_manager.map_keysym_to_modifier(mod_keyval)
                 if mod:
                     modifier_list.append(mod | other_modifiers)
         else:
@@ -277,13 +277,26 @@ class KeyBinding:
     def add_grabs(self, orca_modifiers: list[str]) -> None:
         """Adds key grabs for this KeyBinding."""
 
-        self._grab_ids = input_event_manager.get_manager().add_grabs_for_keybinding(
-            self,
-            orca_modifiers,
-        )
+        if self._grab_ids:
+            tokens = ["KEYBINDINGS:", self, "already has grabs."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return
+
+        manager = ax_device_manager.get_manager()
+        for kd in self.key_definitions(orca_modifiers):
+            grab_id = manager.add_key_grab(kd, None)
+            # When we have double/triple-click bindings, the single-click binding will be
+            # registered first, and subsequent attempts to register what is externally the
+            # same grab will fail. If we only have a double/triple-click, it succeeds.
+            # A grab id of 0 indicates failure.
+            if grab_id == 0:
+                continue
+            self._grab_ids.append(grab_id)
 
     def remove_grabs(self) -> None:
         """Removes key grabs for this KeyBinding."""
 
-        input_event_manager.get_manager().remove_grabs_for_keybinding(self)
+        manager = ax_device_manager.get_manager()
+        for grab_id in self._grab_ids:
+            manager.remove_key_grab(grab_id)
         self._grab_ids = []
