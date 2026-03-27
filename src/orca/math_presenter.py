@@ -18,6 +18,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=too-many-public-methods
+
 """Provides MathCAT-based math presentation support for speech and braille."""
 
 from __future__ import annotations
@@ -25,6 +27,7 @@ from __future__ import annotations
 import contextlib
 import locale
 import os
+from enum import Enum
 from typing import TYPE_CHECKING
 
 from . import (  # pylint: disable=no-name-in-module
@@ -50,6 +53,19 @@ if TYPE_CHECKING:
 
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
+
+
+@gsettings_registry.get_registry().gsettings_enum(
+    "org.gnome.Orca.MathCopyFormat",
+    values={"mathml": 0, "latex": 1, "asciimath": 2, "speech": 3},
+)
+class MathCopyFormat(Enum):
+    """Format for copying math content to the clipboard."""
+
+    MATHML = 0
+    LATEX = 1
+    ASCIIMATH = 2
+    SPEECH = 3
 
 
 class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
@@ -100,6 +116,14 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=presenter.set_braille_code,
                 prefs_key=MathPresenter.KEY_BRAILLE_CODE,
             ),
+            preferences_grid_base.EnumPreferenceControl(
+                label=guilabels.MATH_COPY_FORMAT,
+                options=["MathML", "LaTeX", "ASCIIMath", guilabels.SPEECH],
+                values=["mathml", "latex", "asciimath", "speech"],
+                getter=presenter.get_copy_format,
+                setter=presenter.set_copy_format,
+                prefs_key=MathPresenter.KEY_COPY_FORMAT,
+            ),
         ]
         super().__init__(guilabels.MATH_PRESENTATION, controls)
 
@@ -116,6 +140,7 @@ class MathPresenter:
     KEY_SPEECH_STYLE = "speech-style"
     KEY_VERBOSITY = "verbosity"
     KEY_BRAILLE_CODE = "braille-code"
+    KEY_COPY_FORMAT = "copy-format"
 
     def __init__(self) -> None:
         msg = "MATH PRESENTER: Registering D-Bus commands."
@@ -362,6 +387,77 @@ class MathPresenter:
             return libmathcat_py.GetSupportedBrailleCodes()
         except OSError:
             return ["Nemeth", "UEB"]
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_COPY_FORMAT,
+        schema="math-presentation",
+        genum="org.gnome.Orca.MathCopyFormat",
+        default="mathml",
+        summary="Format for copying math content to clipboard",
+        migration_key="mathCopyFormat",
+    )
+    @dbus_service.getter
+    def get_copy_format(self) -> str:
+        """Returns the format used when copying math content."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA,
+            self.KEY_COPY_FORMAT,
+            "",
+            genum="org.gnome.Orca.MathCopyFormat",
+            default="mathml",
+        )
+
+    @dbus_service.setter
+    def set_copy_format(self, value: str) -> bool:
+        """Sets the format used when copying math content."""
+
+        msg = f"MATH PRESENTER: Setting copy format to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA,
+            self.KEY_COPY_FORMAT,
+            value,
+        )
+        return True
+
+    # pylint: disable-next=too-many-return-statements
+    def get_navigation_content_for_copy(self) -> str:
+        """Returns the current navigation node content in the configured copy format."""
+
+        copy_format = self.get_copy_format()
+
+        if copy_format == "mathml":
+            try:
+                mathml, _offset = libmathcat_py.GetNavigationMathML()
+                return mathml.strip()
+            except OSError as err:
+                msg = f"MATH PRESENTER: GetNavigationMathML failed: {err}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return ""
+
+        if copy_format == "speech":
+            try:
+                return libmathcat_py.GetSpokenText()
+            except OSError as err:
+                msg = f"MATH PRESENTER: GetSpokenText failed: {err}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return ""
+
+        if copy_format in ("latex", "asciimath"):
+            braille_code = "LaTeX" if copy_format == "latex" else "ASCIIMath"
+            original_code = self.get_braille_code()
+            try:
+                libmathcat_py.SetPreference("BrailleCode", braille_code)
+                return libmathcat_py.GetNavigationBraille()
+            except OSError as err:
+                msg = f"MATH PRESENTER: GetNavigationBraille({braille_code}) failed: {err}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return ""
+            finally:
+                libmathcat_py.SetPreference("BrailleCode", original_code)
+
+        return ""
 
     def create_preferences_grid(self) -> MathPreferencesGrid:
         """Returns the GtkGrid containing the math preferences UI."""

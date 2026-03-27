@@ -1987,6 +1987,10 @@ MATH_VERBOSITY_VERBOSE = _("Verbose")
 # Examples include "Nemeth" (common in the US) and "UEB" (Unified English Braille).
 MATH_BRAILLE_CODE = _("Braille code:")
 
+# Translators: This is the format used when copying math content to the clipboard.
+# Options include MathML, LaTeX, ASCIIMath, and Speech.
+MATH_COPY_FORMAT = _("Copy format:")
+
 # Translators: This is the label of the Sound page in the Orca Preferences dialog.
 # On that page there are settings related to sound output, including volume
 # and progress bar beep notifications.

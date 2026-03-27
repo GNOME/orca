@@ -278,6 +278,36 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 ---
 
+### MathNavigator
+
+**Object Path:** `/org/gnome/Orca/Service/MathNavigator`
+
+#### Commands
+
+**Method:** `org.gnome.Orca.Module.ExecuteCommand`
+
+**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+
+- **`CopyToClipboard`:** Copies the current math navigation node to the clipboard.
+- **`ExitMathMode`:** Exits math navigation mode.
+
+#### Parameterized Commands
+
+**Method:** `org.gnome.Orca.Module.ExecuteParameterizedCommand`
+
+- **`ExecuteMathcatCommand`:** Executes a MathCAT navigation command. Use get_supported_commands for valid values. Parameters: `mathcat_command` (str), `notify_user` (bool)
+
+#### Settings
+
+**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+
+**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
+
+- **`IsActive`:** Returns True if currently navigating a math expression. (getter only)
+- **`SupportedCommands`:** Returns the MathCAT navigation commands supported by this navigator. (getter only)
+
+---
+
 ### MathPresenter
 
 **Object Path:** `/org/gnome/Orca/Service/MathPresenter`
@@ -289,6 +319,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 **Parameters:** `PropertyName` (string), `Value` (variant, setter only)
 
 - **`BrailleCode`:** Gets/Sets the math braille code.
+- **`CopyFormat`:** Gets/Sets the format used when copying math content.
 - **`Language`:** Gets/Sets the math language.
 - **`SpeechStyle`:** Gets/Sets the math speech style.
 - **`Verbosity`:** Gets/Sets the math speech verbosity.

@@ -27,6 +27,7 @@ from typing import TYPE_CHECKING
 
 from . import (
     braille,
+    clipboard,
     cmdnames,
     command_manager,
     dbus_service,
@@ -226,6 +227,7 @@ class MathNavigator:
             ("math_where_am_i", "WhereAmI", cmdnames.MATH_NAV_WHERE_AM_I, None),
             ("math_where_am_i_all", "WhereAmIAll", cmdnames.MATH_NAV_WHERE_AM_I_ALL, None),
             ("math_exit", "Exit", cmdnames.MATH_NAV_EXIT, kb("Escape", no_mod)),
+            ("math_copy", "Copy", cmdnames.MATH_NAV_COPY, None),
         ]
 
     # pylint: disable-next=too-many-locals
@@ -242,6 +244,8 @@ class MathNavigator:
         for name, mathcat_cmd, description, binding in self._get_commands_data():
             if mathcat_cmd == "Exit":
                 handler = self.exit_math_mode
+            elif mathcat_cmd == "Copy":
+                handler = self.copy_to_clipboard
             else:
                 handler = partial(self._execute_command, mathcat_cmd)
             manager.add_command(
@@ -363,6 +367,25 @@ class MathNavigator:
             presentation_manager.get_manager().present_message(
                 messages.MATH_NAVIGATION_EXITED,
             )
+        return True
+
+    @dbus_service.command
+    def copy_to_clipboard(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Copies the current math navigation node to the clipboard."""
+
+        if not self._active:
+            return False
+
+        content = math_presenter.get_presenter().get_navigation_content_for_copy()
+        if not content:
+            return False
+
+        clipboard.get_presenter().set_text(content)
         return True
 
     @dbus_service.parameterized_command

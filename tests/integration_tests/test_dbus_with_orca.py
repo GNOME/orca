@@ -214,8 +214,8 @@ MODULE_CONFIG = {
     "MathPresenter": {
         "commands": [],
         "parameterized_commands": [],
-        "getters": ["BrailleCode", "Language", "SpeechStyle", "Verbosity"],
-        "setters": ["BrailleCode", "Language", "SpeechStyle", "Verbosity"],
+        "getters": ["BrailleCode", "CopyFormat", "Language", "SpeechStyle", "Verbosity"],
+        "setters": ["BrailleCode", "CopyFormat", "Language", "SpeechStyle", "Verbosity"],
         "ui_commands": [],
         "toggle_commands": [],
         "skip": [],
@@ -657,7 +657,7 @@ MODULE_CONFIG = {
         "skip": [],
     },
     "MathNavigator": {
-        "commands": ["ExitMathMode"],
+        "commands": ["CopyToClipboard", "ExitMathMode"],
         "parameterized_commands": ["ExecuteMathcatCommand"],
         "getters": ["IsActive", "SupportedCommands"],
         "setters": [],

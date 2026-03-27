@@ -1292,6 +1292,12 @@ MATH_NAV_READ_PLACE_MARKER = C_("mathcat", "Read place marker")
 # a math expression, identified by a digit 0-9. This command describes one.
 MATH_NAV_DESCRIBE_PLACE_MARKER = C_("mathcat", "Describe place marker")
 
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command copies the current
+# navigation node to the clipboard in the user's preferred format
+# (MathML, LaTeX, ASCIIMath, or Speech).
+MATH_NAV_COPY = C_("mathcat", "Copy to clipboard")
+
 # Translators: When presenting the content of a line on a web page, Orca by
 # default presents the full line, including any links or form fields on that
 # line, in order to reflect the on-screen layout as seen by sighted users.

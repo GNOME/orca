@@ -176,6 +176,7 @@ These operations also work at the profile level:
 | Key | Type | Default | Summary |
 | --- | --- | --- | --- |
 | `braille-code` | `s` | `'Nemeth'` | Math braille code |
+| `copy-format` | `enum`<br>`MathCopyFormat` | `'mathml'` | Format for copying math content to clipboard |
 | `language` | `s` | `'Auto'` | Math speech language (Auto uses system locale) |
 | `speech-style` | `s` | `'ClearSpeak'` | Math speech style |
 | `verbosity` | `s` | `'Medium'` | Math speech verbosity |
