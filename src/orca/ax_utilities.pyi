@@ -1213,6 +1213,8 @@ class AXUtilities:
 
     # From ax_utilities_math.py
     @staticmethod
+    def find_math_root(obj: Atspi.Accessible) -> Atspi.Accessible | None: ...
+    @staticmethod
     def get_mathml(obj: Atspi.Accessible) -> str: ...
 
     # From ax_utilities_object.py

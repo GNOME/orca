@@ -600,7 +600,12 @@ class Utilities(script_utilities.Utilities):
             rv = False
 
         elif rv and not AXUtilities.is_live_region(obj):
-            not_text_roles = [Atspi.Role.LIST_BOX, Atspi.Role.TABLE, Atspi.Role.TABLE_ROW]
+            not_text_roles = [
+                Atspi.Role.LIST_BOX,
+                Atspi.Role.TABLE,
+                Atspi.Role.TABLE_ROW,
+                Atspi.Role.MATH,
+            ]
             role = AXObject.get_role(obj)
             if rv and role in not_text_roles:
                 tokens = ["WEB: Treating", obj, "as non-text due to role."]
@@ -651,6 +656,7 @@ class Utilities(script_utilities.Utilities):
             Atspi.Role.CHECK_BOX,
             Atspi.Role.CHECK_MENU_ITEM,
             Atspi.Role.LIST_BOX,
+            Atspi.Role.MATH,
             Atspi.Role.MENU_ITEM,
             Atspi.Role.PAGE_TAB,
             Atspi.Role.RADIO_MENU_ITEM,

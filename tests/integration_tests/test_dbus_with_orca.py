@@ -656,6 +656,15 @@ MODULE_CONFIG = {
         "toggle_commands": [],
         "skip": [],
     },
+    "MathNavigator": {
+        "commands": ["ExitMathMode"],
+        "parameterized_commands": ["ExecuteMathcatCommand"],
+        "getters": ["IsActive", "SupportedCommands"],
+        "setters": [],
+        "ui_commands": [],
+        "toggle_commands": [],
+        "skip": [],
+    },
     "CaretNavigator": {
         "commands": [
             "ToggleEnabled",
@@ -825,6 +834,7 @@ MODULE_CONFIG = {
 
 PARAMETERIZED_TEST_PARAMS = {
     "GetVoicesForLanguage": {"language": "en", "variant": "", "notify_user": False},
+    "ExecuteMathcatCommand": {"mathcat_command": "ReadCurrent"},
 }
 
 

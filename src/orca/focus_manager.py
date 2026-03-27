@@ -36,6 +36,8 @@ from .ax_text import AXText
 from .ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     import gi
 
     gi.require_version("Atspi", "2.0")
@@ -45,6 +47,7 @@ CARET_TRACKING = "caret-tracking"
 CARET_NAVIGATOR = "caret-navigator"
 FOCUS_TRACKING = "focus-tracking"
 FLAT_REVIEW = "flat-review"
+MATH_NAVIGATOR = "math-navigator"
 MOUSE_REVIEW = "mouse-review"
 OBJECT_NAVIGATOR = "object-navigator"
 SAY_ALL = "say-all"
@@ -65,6 +68,15 @@ class FocusManager:
         self._penultimate_cursor_position: tuple[Atspi.Accessible | None, int] = (None, -1)
         self._in_preferences_window: bool = False
         self._old_focus_was_dead: bool = False
+        self._region_changed_listeners: list[Callable[[Atspi.Accessible, str], None]] = []
+
+    def add_region_changed_listener(
+        self,
+        callback: Callable[[Atspi.Accessible, str], None],
+    ) -> None:
+        """Registers a callback to be called when the region of interest changes."""
+
+        self._region_changed_listeners.append(callback)
 
     def clear_state(self, reason: str = "") -> None:
         """Clears everything we're tracking."""
@@ -172,6 +184,9 @@ class FocusManager:
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._object_of_interest = obj
+
+        for listener in self._region_changed_listeners:
+            listener(obj, mode)
 
     def in_say_all(self) -> bool:
         """Returns True if we are in say-all mode."""

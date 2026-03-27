@@ -34,6 +34,8 @@ from . import (
     guilabels,
     input_event,
     keybindings,
+    math_navigator,
+    math_presenter,
     messages,
     presentation_manager,
     speech_presenter,
@@ -577,6 +579,15 @@ class WhereAmIPresenter:
         presenter = spellcheck_presenter.get_presenter()
         if presenter.is_active():
             presenter.present_error_details(not basic_only, script)
+
+        if math_navigator.get_navigator().is_active():
+            if basic_only:
+                speech = math_presenter.get_presenter().get_where_am_i()
+            else:
+                speech = math_presenter.get_presenter().get_where_am_i_all()
+            if speech:
+                presentation_manager.get_manager().present_message(speech)
+            return True
 
         if obj is None:
             obj = focus_manager.get_manager().get_locus_of_focus()

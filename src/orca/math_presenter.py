@@ -414,6 +414,26 @@ class MathPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return braille
 
+    def get_where_am_i(self) -> str:
+        """Returns MathCAT's where-am-I speech for the current navigation position."""
+
+        try:
+            return libmathcat_py.DoNavigateCommand("WhereAmI")
+        except OSError as err:
+            msg = f"MATH PRESENTER: WhereAmI failed: {err}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return ""
+
+    def get_where_am_i_all(self) -> str:
+        """Returns MathCAT's detailed where-am-I speech for the current navigation position."""
+
+        try:
+            return libmathcat_py.DoNavigateCommand("WhereAmIAll")
+        except OSError as err:
+            msg = f"MATH PRESENTER: WhereAmIAll failed: {err}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return ""
+
 
 _presenter: MathPresenter = MathPresenter()
 

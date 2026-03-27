@@ -61,7 +61,7 @@ class AXUtilitiesMath:
     def get_mathml(obj: Atspi.Accessible) -> str:
         """Returns a MathML string reconstructed from the accessible tree rooted at obj."""
 
-        math_root = AXUtilitiesMath._find_math_root(obj)
+        math_root = AXUtilitiesMath.find_math_root(obj)
         if math_root is None:
             return ""
 
@@ -73,7 +73,7 @@ class AXUtilitiesMath:
         return result
 
     @staticmethod
-    def _find_math_root(obj: Atspi.Accessible) -> Atspi.Accessible | None:
+    def find_math_root(obj: Atspi.Accessible) -> Atspi.Accessible | None:
         """Walks up the tree to find the top-level math element."""
 
         if not AXObject.is_valid(obj):

@@ -25,7 +25,7 @@ have been put in their own module so that we can present them in
 the correct language when users change the synthesizer language
 on the fly without having to reload a bunch of modules."""
 
-from .orca_i18n import _  # pylint: disable=import-error
+from .orca_i18n import C_, _  # pylint: disable=import-error
 
 # Translators: this command will move the mouse pointer to the current item,
 # typically a widget, without clicking on it.
@@ -1124,6 +1124,173 @@ TABLE_CELL_TOP_OF_COLUMN = _("Go to the top of the column")
 
 # Translators: this is for navigating among table cells in a document.
 TABLE_CELL_BOTTOM_OF_COLUMN = _("Go to the bottom of the column")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command exits that mode.
+MATH_NAV_EXIT = C_("mathcat", "Exit math navigation mode")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command moves to the next sibling
+# at the current level of the math expression tree.
+MATH_NAV_MOVE_NEXT = C_("mathcat", "Move to next item")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command moves to the previous
+# sibling at the current level of the math expression tree.
+MATH_NAV_MOVE_PREVIOUS = C_("mathcat", "Move to previous item")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command moves from an item down
+# into its children, e.g. from a fraction into its numerator and denominator.
+MATH_NAV_ZOOM_IN = C_("mathcat", "Zoom in")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command moves from an item back
+# up to its parent, e.g. from a numerator back to the containing fraction.
+MATH_NAV_ZOOM_OUT = C_("mathcat", "Zoom out")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command descends as deep as
+# possible into the current item, going straight to the innermost child.
+MATH_NAV_ZOOM_IN_ALL = C_("mathcat", "Zoom in completely")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command goes all the way back
+# up to the root of the math expression.
+MATH_NAV_ZOOM_OUT_ALL = C_("mathcat", "Zoom out completely")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command moves to the first item.
+MATH_NAV_MOVE_START = C_("mathcat", "Move to start")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command moves to the last item.
+MATH_NAV_MOVE_END = C_("mathcat", "Move to end")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command moves to the start of
+# the current line in a multi-line math expression.
+MATH_NAV_MOVE_LINE_START = C_("mathcat", "Move to line start")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command moves to the end of
+# the current line in a multi-line math expression.
+MATH_NAV_MOVE_LINE_END = C_("mathcat", "Move to line end")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command moves to the top of the
+# current column in a math table (matrix, determinant, etc.).
+MATH_NAV_MOVE_COLUMN_START = C_("mathcat", "Move to column start")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command moves to the bottom of
+# the current column in a math table (matrix, determinant, etc.).
+MATH_NAV_MOVE_COLUMN_END = C_("mathcat", "Move to column end")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command moves to the previous
+# cell in a math table or columnar arithmetic expression.
+MATH_NAV_MOVE_CELL_PREVIOUS = C_("mathcat", "Move to previous cell")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command moves to the next cell
+# in a math table or columnar arithmetic expression.
+MATH_NAV_MOVE_CELL_NEXT = C_("mathcat", "Move to next cell")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command moves up one cell in
+# a math table or columnar arithmetic expression.
+MATH_NAV_MOVE_CELL_UP = C_("mathcat", "Move up one cell")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command moves down one cell in
+# a math table or columnar arithmetic expression.
+MATH_NAV_MOVE_CELL_DOWN = C_("mathcat", "Move down one cell")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command cycles the navigation
+# granularity to coarser (Enhanced, Simple, or Character level).
+MATH_NAV_TOGGLE_ZOOM_LOCK_UP = C_("mathcat", "Increase navigation granularity")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command cycles the navigation
+# granularity to finer (Enhanced, Simple, or Character level).
+MATH_NAV_TOGGLE_ZOOM_LOCK_DOWN = C_("mathcat", "Decrease navigation granularity")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command toggles whether navigation
+# reads the math content or describes its structure.
+MATH_NAV_TOGGLE_SPEECH_MODE = C_("mathcat", "Toggle speech mode")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command speaks the previous math
+# item as you would say it aloud.
+MATH_NAV_READ_PREVIOUS = C_("mathcat", "Read previous item")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command speaks the next math
+# item as you would say it aloud.
+MATH_NAV_READ_NEXT = C_("mathcat", "Read next item")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command speaks the current math
+# item as you would say it aloud.
+MATH_NAV_READ_CURRENT = C_("mathcat", "Read current item")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command speaks the content of
+# the current cell in a math table.
+MATH_NAV_READ_CELL_CURRENT = C_("mathcat", "Read current cell")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command gives a structural
+# summary of the previous math item rather than reading its content.
+MATH_NAV_DESCRIBE_PREVIOUS = C_("mathcat", "Describe previous item")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command gives a structural
+# summary of the next math item rather than reading its content.
+MATH_NAV_DESCRIBE_NEXT = C_("mathcat", "Describe next item")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command gives a structural
+# summary of the current math item rather than reading its content.
+MATH_NAV_DESCRIBE_CURRENT = C_("mathcat", "Describe current item")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command announces the user's
+# current position within the math expression.
+MATH_NAV_WHERE_AM_I = C_("mathcat", "Where am I")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command announces the user's
+# full context within the math expression.
+MATH_NAV_WHERE_AM_I_ALL = C_("mathcat", "Where am I (detailed)")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command returns to the position
+# the user was at before the last navigation move.
+MATH_NAV_MOVE_LAST_LOCATION = C_("mathcat", "Return to last position")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). Place markers are bookmarks within
+# a math expression, identified by a digit 0-9. This command jumps to one.
+MATH_NAV_GOTO_PLACE_MARKER = C_("mathcat", "Go to place marker")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). Place markers are bookmarks within
+# a math expression, identified by a digit 0-9. This command sets one.
+MATH_NAV_SET_PLACE_MARKER = C_("mathcat", "Set place marker")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). Place markers are bookmarks within
+# a math expression, identified by a digit 0-9. This command reads one.
+MATH_NAV_READ_PLACE_MARKER = C_("mathcat", "Read place marker")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). Place markers are bookmarks within
+# a math expression, identified by a digit 0-9. This command describes one.
+MATH_NAV_DESCRIBE_PLACE_MARKER = C_("mathcat", "Describe place marker")
 
 # Translators: When presenting the content of a line on a web page, Orca by
 # default presents the full line, including any links or form fields on that

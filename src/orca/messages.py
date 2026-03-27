@@ -2305,6 +2305,19 @@ TABLE_NAVIGATION_DISABLED = _("Table navigation disabled.")
 # presented when those commands are enabled.
 TABLE_NAVIGATION_ENABLED = _("Table navigation enabled.")
 
+# Translators: Orca has a modal math navigation mode for exploring math
+# expressions via MathCAT. This string is presented when entering that mode.
+MATH_NAVIGATION_ENTERED = _("MathCAT on.")
+
+# Translators: Orca has a modal math navigation mode for exploring math
+# expressions via MathCAT. This string is presented when leaving that mode.
+MATH_NAVIGATION_EXITED = _("MathCAT off.")
+
+# Translators: Orca has a modal math navigation mode for exploring math
+# expressions via MathCAT. This hint is presented when the user reaches the
+# edge of the expression and cannot move further in the current direction.
+MATH_NAVIGATION_ESCAPE_HINT = _("Press Escape to exit.")
+
 # Translators: This is a message presented to users when the columns in a table
 # have been reordered.
 TABLE_REORDERED_COLUMNS = _("Columns reordered")

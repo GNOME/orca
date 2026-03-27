@@ -652,6 +652,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         modifiers,
                         click_count,
                         handler_name,
+                        command.get_group_label(),
                     )
                     if description_dup:
 
@@ -797,10 +798,15 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         modifiers: int,
         click_count: int,
         exclude_handler: str | None = None,
+        group_label: str = "",
     ) -> str | None:
         """Find if a keybinding is already used and return its description."""
 
-        for category_commands in self._categories.values():
+        mgr = get_manager()
+        for category_label, category_commands in self._categories.items():
+            if group_label and mgr.are_groups_exclusive(group_label, category_label):
+                continue
+
             for cmd in category_commands:
                 if exclude_handler and cmd.get_name() == exclude_handler:
                     continue
@@ -935,6 +941,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         event: Gdk.EventKey,
         entry: Gtk.Entry,
         handler_name: str,
+        group_label: str,
         dialog: Gtk.Dialog,
     ) -> bool:
         """Handles a key press event in the key capture dialog."""
@@ -971,6 +978,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             modifiers,
             click_count,
             handler_name,
+            group_label,
         )
         if description_dup:
             msg = messages.KB_ALREADY_BOUND % description_dup
@@ -1020,7 +1028,13 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         assert script
 
         def on_key_press(_widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
-            return self._handle_dialog_key_press(event, entry, handler_name, dialog)
+            return self._handle_dialog_key_press(
+                event,
+                entry,
+                handler_name,
+                command.get_group_label(),
+                dialog,
+            )
 
         entry.connect("key-press-event", on_key_press)
 
@@ -1286,6 +1300,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         self._is_desktop: bool = True
         self._initialized: bool = False
         self._group_enabled: dict[str, bool | None] = {}
+        self._exclusive_groups: list[set[str]] = []
         self._numlock_on: bool = False
         self._learn_mode_active: bool = False
 
@@ -1786,6 +1801,21 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             if kb.matches(keyval, keycode, modifiers) and kb.click_count > 1:
                 return True
         return False
+
+    def add_exclusive_groups(self, *group_labels: str) -> None:
+        """Registers a set of groups as mutually exclusive."""
+
+        # Groups that are mutually exclusive can share key bindings because
+        # only one group in the set is active at a time. The key binding
+        # preferences UI will not flag shared bindings as conflicts.
+        self._exclusive_groups.append(set(group_labels))
+
+    def are_groups_exclusive(self, group_a: str, group_b: str) -> bool:
+        """Returns True if the two groups are mutually exclusive."""
+
+        return any(
+            group_a in group_set and group_b in group_set for group_set in self._exclusive_groups
+        )
 
     def is_group_enabled(self, group_label: str) -> bool:
         """Returns the enabled state of the specified command group."""

@@ -112,6 +112,7 @@ lib_sources = [
   'label_inference.py',
   'learn_mode_presenter.py',
   'live_region_presenter.py',
+  'math_navigator.py',
   'math_presenter.py',
   'mathsymbols.py',
   'messages.py',

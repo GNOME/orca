@@ -51,6 +51,7 @@ from . import (
     input_event,
     input_event_manager,
     keybindings,
+    math_navigator,
     math_presenter,
     messages,
     preferences_grid_base,
@@ -460,6 +461,10 @@ class DocumentPresenter:
             return
         self._initialized = True
 
+        focus_manager.get_manager().add_region_changed_listener(
+            self._on_region_changed,
+        )
+
         manager = command_manager.get_manager()
         group_label = guilabels.KB_GROUP_DOCUMENTS
 
@@ -501,6 +506,19 @@ class DocumentPresenter:
                     laptop_keybinding=kb,
                 ),
             )
+
+        manager.add_exclusive_groups(
+            guilabels.KB_GROUP_MATH_NAVIGATION,
+            guilabels.KB_GROUP_CARET_NAVIGATION,
+        )
+        manager.add_exclusive_groups(
+            guilabels.KB_GROUP_MATH_NAVIGATION,
+            guilabels.KB_GROUP_STRUCTURAL_NAVIGATION,
+        )
+        manager.add_exclusive_groups(
+            guilabels.KB_GROUP_MATH_NAVIGATION,
+            guilabels.KB_GROUP_TABLE_NAVIGATION,
+        )
 
         msg = "DOCUMENT PRESENTER: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -666,9 +684,42 @@ class DocumentPresenter:
     def suspend_navigators(self, script: default.Script, suspended: bool, reason: str) -> bool:
         """Suspends or unsuspends navigation commands. Returns True if state changed."""
 
+        if not suspended and math_navigator.get_navigator().is_active():
+            msg = "DOCUMENT PRESENTER: Not unsuspending navigators: math navigation is active."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
         caret_navigator.get_navigator().suspend_commands(script, suspended, reason)
         structural_navigator.get_navigator().suspend_commands(script, suspended, reason)
         return True
+
+    def _on_region_changed(self, obj: Atspi.Accessible | None, mode: str) -> None:
+        """Handles region-changed notifications from the focus manager."""
+
+        if obj is None or not AXUtilities.is_math_related(obj):
+            return
+
+        if math_navigator.get_navigator().is_active():
+            return
+
+        if script := script_manager.get_manager().get_active_script():
+            self._enter_math_navigation(script, obj)
+
+    def _enter_math_navigation(self, script: default.Script, obj: Atspi.Accessible) -> bool:
+        """Enters math navigation mode for the given math object."""
+
+        if not math_navigator.get_navigator().enter_math_mode(obj):
+            return False
+
+        self.suspend_navigators(script, True, "math navigation")
+        math_navigator.get_navigator().suspend_commands(script, False, "math navigation")
+        return True
+
+    def exit_math_navigation(self, script: default.Script) -> None:
+        """Exits math navigation mode and restores normal navigation."""
+
+        math_navigator.get_navigator().suspend_commands(script, True, "leaving math navigation")
+        self.suspend_navigators(script, False, "leaving math navigation")
 
     def _enable_document_navigators(self, script: default.Script, reason: str) -> None:
         """Enables document navigators for the given script."""

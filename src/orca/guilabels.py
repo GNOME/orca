@@ -482,6 +482,10 @@ KB_GROUP_DOCUMENTS = _("Documents")
 # toggled on in other applications.
 KB_GROUP_CARET_NAVIGATION = _("Caret navigation")
 
+# Translators: This string is a label for the group of Orca commands which
+# are related to math navigation via MathCAT.
+KB_GROUP_MATH_NAVIGATION = _("Math navigation")
+
 # Translators: This is an informational message on the Caret Navigation
 # preferences page explaining what caret navigation does.
 CARET_NAVIGATION_INFO = _(
