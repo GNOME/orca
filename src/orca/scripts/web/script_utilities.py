@@ -3032,6 +3032,8 @@ class Utilities(script_utilities.Utilities):
                 obj = None
             else:
                 context_obj, context_offset = obj, offset
+                if AXUtilities.is_math(obj):
+                    break
                 child = AXHypertext.find_child_at_offset(obj, offset)
                 if child:
                     obj = child
