@@ -39,6 +39,51 @@ from .ax_utilities_state import AXUtilitiesState
 class AXUtilitiesRole:
     """Utilities for accessible roles."""
 
+    _MATH_TAGS = frozenset(
+        (
+            "math",
+            "maction",
+            "maligngroup",
+            "malignmark",
+            "menclose",
+            "merror",
+            "mfenced",
+            "mfrac",
+            "mglyph",
+            "mi",
+            "mlabeledtr",
+            "mlongdiv",
+            "mmultiscripts",
+            "mn",
+            "mo",
+            "mover",
+            "mpadded",
+            "mphantom",
+            "mprescripts",
+            "mroot",
+            "mrow",
+            "ms",
+            "mscarries",
+            "mscarry",
+            "msgroup",
+            "msline",
+            "mspace",
+            "msqrt",
+            "msrow",
+            "mstack",
+            "mstyle",
+            "msub",
+            "msup",
+            "msubsup",
+            "mtable",
+            "mtd",
+            "mtext",
+            "mtr",
+            "munder",
+            "munderover",
+        )
+    )
+
     @staticmethod
     def _get_display_style(obj: Atspi.Accessible) -> str:
         attrs = AXObject.get_attributes_dict(obj)
@@ -1773,54 +1818,20 @@ class AXUtilitiesRole:
 
     @staticmethod
     def is_math_related(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
-        """Returns True if obj has a math-related role"""
+        """Returns True if obj has a math-related role or is a text leaf inside math."""
+
+        if obj is None:
+            return False
 
         if role is None:
             role = AXObject.get_role(obj)
         if role in [Atspi.Role.MATH, Atspi.Role.MATH_FRACTION, Atspi.Role.MATH_ROOT]:
             return True
-        return AXUtilitiesRole._get_tag(obj) in [
-            "math",
-            "maction",
-            "maligngroup",
-            "malignmark",
-            "menclose",
-            "merror",
-            "mfenced",
-            "mfrac",
-            "mglyph",
-            "mi",
-            "mlabeledtr",
-            "mlongdiv",
-            "mmultiscripts",
-            "mn",
-            "mo",
-            "mover",
-            "mpadded",
-            "mphantom",
-            "mprescripts",
-            "mroot",
-            "mrow",
-            "ms",
-            "mscarries",
-            "mscarry",
-            "msgroup",
-            "msline",
-            "mspace",
-            "msqrt",
-            "msrow",
-            "mstack",
-            "mstyle",
-            "msub",
-            "msup",
-            "msubsup",
-            "mtable",
-            "mtd",
-            "mtext",
-            "mtr",
-            "munder",
-            "munderover",
-        ]
+
+        if tag := AXUtilitiesRole._get_tag(obj):
+            return tag in AXUtilitiesRole._MATH_TAGS
+
+        return AXUtilitiesRole.is_math_related(AXObject.get_parent(obj))
 
     @staticmethod
     def is_math_root(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
