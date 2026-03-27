@@ -293,6 +293,16 @@ class MathNavigator:
             True,
         )
 
+        manager.add_command(
+            command_manager.KeyboardCommand(
+                "math_enter",
+                self.enter_math_mode_command,
+                group_label,
+                cmdnames.MATH_NAV_ENTER,
+                is_group_toggle=True,
+            ),
+        )
+
         msg = "MATH NAVIGATOR: Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -330,12 +340,40 @@ class MathNavigator:
     def enter_math_mode(self, obj: Atspi.Accessible) -> bool:
         """Enters math navigation mode for the expression containing obj."""
 
-        if not self._enter(obj):
+        already_active = self._active
+        if not already_active and not self._enter(obj):
             return False
 
-        presentation_manager.get_manager().present_message(
-            messages.MATH_NAVIGATION_ENTERED,
-        )
+        if not already_active:
+            presentation_manager.get_manager().present_message(
+                messages.MATH_NAVIGATION_ENTERED,
+            )
+
+        math_obj = self._math_object or obj
+        speech = math_presenter.get_presenter().get_speech_for_math(math_obj)
+        if speech:
+            presentation_manager.get_manager().speak_accessible_text(math_obj, speech)
+
+        return True
+
+    @dbus_service.command
+    def enter_math_mode_command(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Enters math navigation mode if the current focus is on math."""
+
+        obj = focus_manager.get_manager().get_locus_of_focus()
+        if not (math_root := AXUtilitiesMath.find_math_root(obj)):
+            if notify_user:
+                presentation_manager.get_manager().present_message(
+                    messages.MATH_NAVIGATION_NOT_IN_MATH,
+                )
+            return True
+
+        document_presenter.get_presenter().enter_math_navigation(script, math_root)
         return True
 
     @dbus_service.command
@@ -361,7 +399,8 @@ class MathNavigator:
             return False
 
         self._do_command("Exit")
-        self._exit(script)
+        self.reset(script)
+        document_presenter.get_presenter().exit_math_navigation(script)
 
         if notify_user:
             presentation_manager.get_manager().present_message(
@@ -442,12 +481,8 @@ class MathNavigator:
                 )
         return True
 
-    def _enter(self, obj: Atspi.Accessible) -> bool:
-        """Enters math navigation for the expression containing obj."""
-
-        math_root = AXUtilitiesMath.find_math_root(obj)
-        if math_root is None:
-            return False
+    def _enter(self, math_root: Atspi.Accessible) -> bool:
+        """Enters math navigation for the given math root element."""
 
         mathml = AXUtilitiesMath.get_mathml(math_root)
         if not mathml:
@@ -477,16 +512,14 @@ class MathNavigator:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return True
 
-    def _exit(self, script: default.Script) -> None:
-        """Exits math navigation and positions the caret appropriately."""
+    def reset(self, script: default.Script) -> None:
+        """Resets navigator state and positions the caret on the math object."""
 
         math_obj = self._math_object
         self._active = False
         self._math_object = None
         self._last_command = ""
         self._last_nav_id = ("", 0)
-
-        document_presenter.get_presenter().exit_math_navigation(script)
 
         if math_obj is not None:
             script.utilities.set_caret_position(math_obj, 0)

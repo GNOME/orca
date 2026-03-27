@@ -584,6 +584,9 @@ class Script(default.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
 
+        if document_presenter.get_presenter().update_mode_if_needed(self, old_focus, new_focus):
+            return True
+
         presentation_manager.get_manager().interrupt_if_needed_for_focus_change(
             old_focus, new_focus, event
         )
@@ -597,8 +600,6 @@ class Script(default.Script):
                 generate_braille=False,
                 **args,  # type: ignore[arg-type]
             )
-
-        document_presenter.get_presenter().update_mode_if_needed(self, old_focus, new_focus)
         return True
 
     def _on_active_changed(self, event: Atspi.Event) -> bool:

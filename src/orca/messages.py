@@ -2314,6 +2314,11 @@ MATH_NAVIGATION_ENTERED = _("MathCAT on.")
 MATH_NAVIGATION_EXITED = _("MathCAT off.")
 
 # Translators: Orca has a modal math navigation mode for exploring math
+# expressions via MathCAT. This is presented when the user tries to enter
+# math navigation but is not on a math element.
+MATH_NAVIGATION_NOT_IN_MATH = _("Not in math.")
+
+# Translators: Orca has a modal math navigation mode for exploring math
 # expressions via MathCAT. This hint is presented when the user reaches the
 # edge of the expression and cannot move further in the current direction.
 MATH_NAVIGATION_ESCAPE_HINT = _("Press Escape to exit.")

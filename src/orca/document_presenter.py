@@ -64,6 +64,7 @@ from .ax_document import AXDocument
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .ax_utilities_math import AXUtilitiesMath
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -696,16 +697,16 @@ class DocumentPresenter:
     def _on_region_changed(self, obj: Atspi.Accessible | None, mode: str) -> None:
         """Handles region-changed notifications from the focus manager."""
 
-        if obj is None or not AXUtilities.is_math_related(obj):
+        if obj is None or math_navigator.get_navigator().is_active():
             return
 
-        if math_navigator.get_navigator().is_active():
+        if not (math_root := AXUtilitiesMath.find_math_root(obj)):
             return
 
         if script := script_manager.get_manager().get_active_script():
-            self._enter_math_navigation(script, obj)
+            self.enter_math_navigation(script, math_root)
 
-    def _enter_math_navigation(self, script: default.Script, obj: Atspi.Accessible) -> bool:
+    def enter_math_navigation(self, script: default.Script, obj: Atspi.Accessible) -> bool:
         """Enters math navigation mode for the given math object."""
 
         if not math_navigator.get_navigator().enter_math_mode(obj):
@@ -718,7 +719,10 @@ class DocumentPresenter:
     def exit_math_navigation(self, script: default.Script) -> None:
         """Exits math navigation mode and restores normal navigation."""
 
-        math_navigator.get_navigator().suspend_commands(script, True, "leaving math navigation")
+        nav = math_navigator.get_navigator()
+        if nav.is_active():
+            nav.reset(script)
+        nav.suspend_commands(script, True, "leaving math navigation")
         self.suspend_navigators(script, False, "leaving math navigation")
 
     def _enable_document_navigators(self, script: default.Script, reason: str) -> None:
@@ -1086,6 +1090,8 @@ class DocumentPresenter:
 
         if new_doc is None:
             self.reset_find_announcement_state()
+            if math_navigator.get_navigator().is_active():
+                self.exit_math_navigation(script)
             reason = "locus of focus no longer in document"
             self.suspend_navigators(script, False, reason)
             structural_navigator.get_navigator().set_mode(
@@ -1093,6 +1099,11 @@ class DocumentPresenter:
                 structural_navigator.NavigationMode.OFF,
             )
             caret_navigator.get_navigator().set_enabled_for_script(script, False)
+            return True
+
+        if math_root := AXUtilitiesMath.find_math_root(new_focus):
+            if not math_navigator.get_navigator().is_active():
+                self.enter_math_navigation(script, math_root)
             return True
 
         if old_doc is None and not focus_manager.get_manager().old_focus_was_dead():

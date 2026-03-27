@@ -1126,6 +1126,11 @@ TABLE_CELL_TOP_OF_COLUMN = _("Go to the top of the column")
 TABLE_CELL_BOTTOM_OF_COLUMN = _("Go to the bottom of the column")
 
 # Translators: Orca has a modal math navigation mode powered by MathCAT
+# (https://daisy.github.io/MathCAT). This command enters that mode when
+# the user is on a math element.
+MATH_NAV_ENTER = C_("mathcat", "Enter math navigation mode")
+
+# Translators: Orca has a modal math navigation mode powered by MathCAT
 # (https://daisy.github.io/MathCAT). This command exits that mode.
 MATH_NAV_EXIT = C_("mathcat", "Exit math navigation mode")
 

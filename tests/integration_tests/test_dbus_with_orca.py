@@ -657,7 +657,7 @@ MODULE_CONFIG = {
         "skip": [],
     },
     "MathNavigator": {
-        "commands": ["CopyToClipboard", "ExitMathMode"],
+        "commands": ["CopyToClipboard", "EnterMathModeCommand", "ExitMathMode"],
         "parameterized_commands": ["ExecuteMathcatCommand"],
         "getters": ["IsActive", "SupportedCommands"],
         "setters": [],

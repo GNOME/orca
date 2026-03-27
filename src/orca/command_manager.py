@@ -1873,6 +1873,9 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         removed_count = 0
 
         for cmd in self._get_keyboard_commands_by_group_label(group_label):
+            if cmd.is_group_toggle():
+                continue
+
             was_active = cmd.is_active()
             cmd.set_suspended(suspended)
             is_active = cmd.is_active()
