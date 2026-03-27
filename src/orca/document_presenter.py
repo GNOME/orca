@@ -700,6 +700,9 @@ class DocumentPresenter:
         if obj is None or math_navigator.get_navigator().is_active():
             return
 
+        if not AXUtilities.is_math_related(obj):
+            return
+
         if not (math_root := AXUtilitiesMath.find_math_root(obj)):
             return
 
