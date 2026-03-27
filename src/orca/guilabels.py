@@ -1991,6 +1991,61 @@ MATH_BRAILLE_CODE = _("Braille code:")
 # Options include MathML, LaTeX, ASCIIMath, and Speech.
 MATH_COPY_FORMAT = _("Copy format:")
 
+# Translators: Orca has a math navigation mode powered by MathCAT. This is
+# the label for a setting that controls navigation granularity. In Enhanced
+# mode, MathCAT groups related items (e.g. treating "x+1" as one unit). In
+# Simple mode, each element is visited individually. In Character mode,
+# individual symbols are visited one at a time.
+MATH_NAV_MODE = _("Navigation mode:")
+
+# Translators: Orca has a math navigation mode powered by MathCAT. This is
+# the label for a setting that controls how the current position is indicated
+# on a braille display during math navigation. Dots 7 and 8 are used to mark
+# the position. The options control which cells get those dots: none, only the
+# first character, the first and last characters, or all characters.
+MATH_BRAILLE_NAV_HIGHLIGHT = _("Braille navigation highlight:")
+
+# Translators: Orca has a math navigation mode powered by MathCAT. When this
+# setting is enabled, navigating past the edge of a 2D structure like a matrix
+# or table automatically moves back to the containing expression rather than
+# staying inside the structure.
+MATH_AUTO_ZOOM_OUT = _("Automatically exit 2D math structures")
+
+# Translators: Orca has a math navigation mode powered by MathCAT. This is
+# one of the navigation granularity options. In Enhanced mode, MathCAT groups
+# related items together for faster navigation.
+MATH_NAV_MODE_ENHANCED = _("Enhanced")
+
+# Translators: Orca has a math navigation mode powered by MathCAT. This is
+# one of the navigation granularity options. In Simple mode, each math
+# element is visited individually.
+MATH_NAV_MODE_SIMPLE = _("Simple")
+
+# Translators: Orca has a math navigation mode powered by MathCAT. This is
+# one of the navigation granularity options. In Character mode, individual
+# symbols are visited one at a time.
+MATH_NAV_MODE_CHARACTER = _("Character")
+
+# Translators: Orca has a math navigation mode powered by MathCAT. This is
+# one of the braille highlight options. When set to None, the current position
+# during math navigation is not highlighted on the braille display.
+MATH_BRAILLE_HIGHLIGHT_NONE = C_("braille nav highlight", "None")
+
+# Translators: Orca has a math navigation mode powered by MathCAT. This is
+# one of the braille highlight options. When set to First character, only the
+# first cell of the current math item is highlighted with dots 7 and 8.
+MATH_BRAILLE_HIGHLIGHT_FIRST_CHAR = _("First character")
+
+# Translators: Orca has a math navigation mode powered by MathCAT. This is
+# one of the braille highlight options. When set to End points, the first and
+# last cells of the current math item are highlighted with dots 7 and 8.
+MATH_BRAILLE_HIGHLIGHT_END_POINTS = _("End points")
+
+# Translators: Orca has a math navigation mode powered by MathCAT. This is
+# one of the braille highlight options. When set to All cells, every cell of
+# the current math item is highlighted with dots 7 and 8.
+MATH_BRAILLE_HIGHLIGHT_ALL = _("All cells")
+
 # Translators: This is the label of the Sound page in the Orca Preferences dialog.
 # On that page there are settings related to sound output, including volume
 # and progress bar beep notifications.

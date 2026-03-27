@@ -289,6 +289,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 **Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
 
 - **`CopyToClipboard`:** Copies the current math navigation node to the clipboard.
+- **`EnterMathModeCommand`:** Enters math navigation mode if the current focus is on math.
 - **`ExitMathMode`:** Exits math navigation mode.
 
 #### Parameterized Commands
@@ -318,9 +319,12 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Parameters:** `PropertyName` (string), `Value` (variant, setter only)
 
+- **`AutoZoomOut`:** Gets/Sets whether auto zoom out is enabled.
 - **`BrailleCode`:** Gets/Sets the math braille code.
+- **`BrailleNavHighlight`:** Gets/Sets the braille navigation highlight style.
 - **`CopyFormat`:** Gets/Sets the format used when copying math content.
 - **`Language`:** Gets/Sets the math language.
+- **`NavMode`:** Gets/Sets the math navigation mode.
 - **`SpeechStyle`:** Gets/Sets the math speech style.
 - **`Verbosity`:** Gets/Sets the math speech verbosity.
 

@@ -175,9 +175,12 @@ These operations also work at the profile level:
 
 | Key | Type | Default | Summary |
 | --- | --- | --- | --- |
+| `auto-zoom-out` | `b` | `false` | Automatically exit 2D math structures when moving past the edge |
 | `braille-code` | `s` | `'Nemeth'` | Math braille code |
+| `braille-nav-highlight` | `enum`<br>`MathBrailleNavHighlight` | `'off'` | Braille navigation highlight style (off, first-char, end-points, all) |
 | `copy-format` | `enum`<br>`MathCopyFormat` | `'mathml'` | Format for copying math content to clipboard |
 | `language` | `s` | `'Auto'` | Math speech language (Auto uses system locale) |
+| `nav-mode` | `enum`<br>`MathNavMode` | `'enhanced'` | Math navigation granularity (enhanced, simple, character) |
 | `speech-style` | `s` | `'ClearSpeak'` | Math speech style |
 | `verbosity` | `s` | `'Medium'` | Math speech verbosity |
 

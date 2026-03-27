@@ -68,6 +68,31 @@ class MathCopyFormat(Enum):
     SPEECH = 3
 
 
+@gsettings_registry.get_registry().gsettings_enum(
+    "org.gnome.Orca.MathNavMode",
+    values={"enhanced": 0, "simple": 1, "character": 2},
+)
+class MathNavMode(Enum):
+    """Navigation granularity for math exploration."""
+
+    ENHANCED = 0
+    SIMPLE = 1
+    CHARACTER = 2
+
+
+@gsettings_registry.get_registry().gsettings_enum(
+    "org.gnome.Orca.MathBrailleNavHighlight",
+    values={"off": 0, "first-char": 1, "end-points": 2, "all": 3},
+)
+class MathBrailleNavHighlight(Enum):
+    """Braille navigation highlight style for the current math node."""
+
+    OFF = 0
+    FIRST_CHAR = 1
+    END_POINTS = 2
+    ALL = 3
+
+
 class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """Sub-grid for math settings within the Documents page."""
 
@@ -124,6 +149,37 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=presenter.set_copy_format,
                 prefs_key=MathPresenter.KEY_COPY_FORMAT,
             ),
+            preferences_grid_base.EnumPreferenceControl(
+                label=guilabels.MATH_NAV_MODE,
+                options=[
+                    guilabels.MATH_NAV_MODE_ENHANCED,
+                    guilabels.MATH_NAV_MODE_SIMPLE,
+                    guilabels.MATH_NAV_MODE_CHARACTER,
+                ],
+                values=["enhanced", "simple", "character"],
+                getter=presenter.get_nav_mode,
+                setter=presenter.set_nav_mode,
+                prefs_key=MathPresenter.KEY_NAV_MODE,
+            ),
+            preferences_grid_base.EnumPreferenceControl(
+                label=guilabels.MATH_BRAILLE_NAV_HIGHLIGHT,
+                options=[
+                    guilabels.MATH_BRAILLE_HIGHLIGHT_NONE,
+                    guilabels.MATH_BRAILLE_HIGHLIGHT_FIRST_CHAR,
+                    guilabels.MATH_BRAILLE_HIGHLIGHT_END_POINTS,
+                    guilabels.MATH_BRAILLE_HIGHLIGHT_ALL,
+                ],
+                values=["off", "first-char", "end-points", "all"],
+                getter=presenter.get_braille_nav_highlight,
+                setter=presenter.set_braille_nav_highlight,
+                prefs_key=MathPresenter.KEY_BRAILLE_NAV_HIGHLIGHT,
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.MATH_AUTO_ZOOM_OUT,
+                getter=presenter.get_auto_zoom_out,
+                setter=presenter.set_auto_zoom_out,
+                prefs_key=MathPresenter.KEY_AUTO_ZOOM_OUT,
+            ),
         ]
         super().__init__(guilabels.MATH_PRESENTATION, controls)
 
@@ -141,6 +197,9 @@ class MathPresenter:
     KEY_VERBOSITY = "verbosity"
     KEY_BRAILLE_CODE = "braille-code"
     KEY_COPY_FORMAT = "copy-format"
+    KEY_NAV_MODE = "nav-mode"
+    KEY_BRAILLE_NAV_HIGHLIGHT = "braille-nav-highlight"
+    KEY_AUTO_ZOOM_OUT = "auto-zoom-out"
 
     def __init__(self) -> None:
         msg = "MATH PRESENTER: Registering D-Bus commands."
@@ -244,6 +303,23 @@ class MathPresenter:
 
         if braille_code := self.get_braille_code():
             libmathcat_py.SetPreference("BrailleCode", braille_code)
+
+        if nav_mode := self.get_nav_mode():
+            libmathcat_py.SetPreference("NavMode", nav_mode.capitalize())
+
+        if braille_highlight := self.get_braille_nav_highlight():
+            nick_to_mathcat = {
+                "off": "Off",
+                "first-char": "FirstChar",
+                "end-points": "EndPoints",
+                "all": "All",
+            }
+            libmathcat_py.SetPreference(
+                "BrailleNavHighlight",
+                nick_to_mathcat.get(braille_highlight, "Off"),
+            )
+
+        libmathcat_py.SetPreference("AutoZoomOut", str(self.get_auto_zoom_out()).lower())
 
     @gsettings_registry.get_registry().gsetting(
         key=KEY_LANGUAGE,
@@ -421,6 +497,117 @@ class MathPresenter:
         )
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_NAV_MODE,
+        schema="math-presentation",
+        genum="org.gnome.Orca.MathNavMode",
+        default="enhanced",
+        summary="Math navigation granularity (enhanced, simple, character)",
+        migration_key="mathNavMode",
+    )
+    @dbus_service.getter
+    def get_nav_mode(self) -> str:
+        """Returns the math navigation mode."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA,
+            self.KEY_NAV_MODE,
+            "",
+            genum="org.gnome.Orca.MathNavMode",
+            default="enhanced",
+        )
+
+    @dbus_service.setter
+    def set_nav_mode(self, value: str) -> bool:
+        """Sets the math navigation mode."""
+
+        msg = f"MATH PRESENTER: Setting nav mode to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA,
+            self.KEY_NAV_MODE,
+            value,
+        )
+        if self._available:
+            mathcat_value = value.capitalize()
+            libmathcat_py.SetPreference("NavMode", mathcat_value)
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_BRAILLE_NAV_HIGHLIGHT,
+        schema="math-presentation",
+        genum="org.gnome.Orca.MathBrailleNavHighlight",
+        default="off",
+        summary="Braille navigation highlight style (off, first-char, end-points, all)",
+        migration_key="mathBrailleNavHighlight",
+    )
+    @dbus_service.getter
+    def get_braille_nav_highlight(self) -> str:
+        """Returns the braille navigation highlight style."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA,
+            self.KEY_BRAILLE_NAV_HIGHLIGHT,
+            "",
+            genum="org.gnome.Orca.MathBrailleNavHighlight",
+            default="off",
+        )
+
+    @dbus_service.setter
+    def set_braille_nav_highlight(self, value: str) -> bool:
+        """Sets the braille navigation highlight style."""
+
+        msg = f"MATH PRESENTER: Setting braille nav highlight to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA,
+            self.KEY_BRAILLE_NAV_HIGHLIGHT,
+            value,
+        )
+        if self._available:
+            nick_to_mathcat = {
+                "off": "Off",
+                "first-char": "FirstChar",
+                "end-points": "EndPoints",
+                "all": "All",
+            }
+            libmathcat_py.SetPreference("BrailleNavHighlight", nick_to_mathcat.get(value, "Off"))
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_AUTO_ZOOM_OUT,
+        schema="math-presentation",
+        gtype="b",
+        default=False,
+        summary="Automatically exit 2D math structures when moving past the edge",
+        migration_key="mathAutoZoomOut",
+    )
+    @dbus_service.getter
+    def get_auto_zoom_out(self) -> bool:
+        """Returns whether auto zoom out is enabled."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA,
+            self.KEY_AUTO_ZOOM_OUT,
+            "b",
+            default=False,
+        )
+
+    @dbus_service.setter
+    def set_auto_zoom_out(self, value: bool) -> bool:
+        """Sets whether auto zoom out is enabled."""
+
+        msg = f"MATH PRESENTER: Setting auto zoom out to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA,
+            self.KEY_AUTO_ZOOM_OUT,
+            value,
+        )
+        if self._available:
+            libmathcat_py.SetPreference("AutoZoomOut", str(value).lower())
+        return True
+
     # pylint: disable-next=too-many-return-statements
     def get_navigation_content_for_copy(self) -> str:
         """Returns the current navigation node content in the configured copy format."""
@@ -484,7 +671,11 @@ class MathPresenter:
         lang = libmathcat_py.GetPreference("Language")
         style = libmathcat_py.GetPreference("SpeechStyle")
         verbosity = libmathcat_py.GetPreference("Verbosity")
-        msg = f"MATH PRESENTER: Speech ({lang}, {style}, {verbosity}): {speech}"
+        nav_mode = libmathcat_py.GetPreference("NavMode")
+        msg = (
+            f"MATH PRESENTER: Speech ({lang}, {style},"
+            f" verbosity={verbosity}, nav={nav_mode}): {speech}"
+        )
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return speech
 
@@ -506,7 +697,8 @@ class MathPresenter:
             return ""
 
         code = libmathcat_py.GetPreference("BrailleCode")
-        msg = f"MATH PRESENTER: Braille ({code}): {braille}"
+        highlight = libmathcat_py.GetPreference("BrailleNavHighlight")
+        msg = f"MATH PRESENTER: Braille ({code}, highlight={highlight}): {braille}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return braille
 
