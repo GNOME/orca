@@ -152,11 +152,15 @@ class LearnModePresenter:
             self.quit(script, event)
             return True
 
-        if event.keyval_name == "F1" and not event.modifiers:
+        if event.keyval_name == "F1" and not (
+            event.modifiers & keybindings.NON_LOCKING_MODIFIER_MASK
+        ):
             self.show_help(script, event)
             return True
 
-        if event.keyval_name == "F2" and not event.modifiers:
+        if event.keyval_name == "F2" and not (
+            event.modifiers & keybindings.NON_LOCKING_MODIFIER_MASK
+        ):
             self.list_orca_shortcuts(script, event)
             return True
 

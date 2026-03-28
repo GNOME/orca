@@ -177,6 +177,9 @@ class TestLearnModePresenter:
         keybindings_mock.KeyBinding = test_context.Mock(return_value=key_binding_mock)
         keybindings_mock.DEFAULT_MODIFIER_MASK = 0
         keybindings_mock.ORCA_MODIFIER_MASK = 1 << 26
+        keybindings_mock.NON_LOCKING_MODIFIER_MASK = (
+            1 << 0 | 1 << 2 | 1 << 3 | 1 << 5 | 1 << 7 | 1 << 8
+        )
 
         messages_mock = essential_modules["orca.messages"]
         messages_mock.VERSION = "Orca Version Information"
@@ -447,11 +450,11 @@ class TestLearnModePresenter:
         pres_manager.spell_phonetically.assert_called_with("a")
 
     @pytest.mark.parametrize(
-        "key_name,method_name,has_modifiers",
+        "key_name,method_name",
         [
-            ("Escape", "quit", False),
-            ("F1", "show_help", True),
-            ("F2", "list_orca_shortcuts", True),
+            ("Escape", "quit"),
+            ("F1", "show_help"),
+            ("F2", "list_orca_shortcuts"),
         ],
     )
     def test_handle_event_special_keys(
@@ -459,7 +462,6 @@ class TestLearnModePresenter:
         test_context: OrcaTestContext,
         key_name: str,
         method_name: str,
-        has_modifiers: bool,
     ) -> None:
         """Test LearnModePresenter.handle_event with special function keys."""
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
@@ -469,8 +471,36 @@ class TestLearnModePresenter:
         keyboard_event_cls = essential_modules["orca.input_event"].KeyboardEvent
         event = keyboard_event_cls()
         event.keyval_name = key_name
-        if has_modifiers:
-            event.modifiers = 0
+        event.modifiers = 0
+        script_manager = essential_modules["orca.script_manager"]
+        script_instance = script_manager.get_manager.return_value.get_active_script.return_value
+        mock_method = test_context.patch_object(presenter, method_name, return_value=True)
+        result = presenter.handle_event(event, None)
+        assert result is True
+        mock_method.assert_called_with(script_instance, event)
+
+    @pytest.mark.parametrize(
+        "key_name,method_name",
+        [
+            ("F1", "show_help"),
+            ("F2", "list_orca_shortcuts"),
+        ],
+    )
+    def test_handle_event_special_keys_with_numlock(
+        self,
+        test_context: OrcaTestContext,
+        key_name: str,
+        method_name: str,
+    ) -> None:
+        """Test F1/F2 still work when NumLock is on."""
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        from orca.learn_mode_presenter import LearnModePresenter
+
+        presenter = LearnModePresenter()
+        keyboard_event_cls = essential_modules["orca.input_event"].KeyboardEvent
+        event = keyboard_event_cls()
+        event.keyval_name = key_name
+        event.modifiers = 1 << 14  # NumLock (not in NON_LOCKING_MODIFIER_MASK)
         script_manager = essential_modules["orca.script_manager"]
         script_instance = script_manager.get_manager.return_value.get_active_script.return_value
         mock_method = test_context.patch_object(presenter, method_name, return_value=True)
