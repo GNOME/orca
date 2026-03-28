@@ -19,6 +19,7 @@
 
 """Handles writing debugging messages to the debug file or stderr."""
 
+import contextlib
 import inspect
 import re
 import sys
@@ -124,6 +125,11 @@ def _print_text(level: int, text: str = "", timestamp: bool = False, stack: bool
         except (TypeError, ValueError, UnicodeEncodeError) as error:
             text = f"Exception trying to write text to file: {error}"
             debugFile.writelines([text, "\n"])
+        if level >= LEVEL_SEVERE:
+            with contextlib.suppress(
+                AttributeError, OSError, TypeError, ValueError, UnicodeEncodeError
+            ):
+                sys.stderr.writelines([text, "\n"])
     else:
         try:
             sys.stderr.writelines([text, "\n"])

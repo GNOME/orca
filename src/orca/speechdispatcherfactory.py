@@ -33,7 +33,7 @@ from typing import TYPE_CHECKING, Any
 
 from gi.repository import GLib
 
-from . import debug, guilabels, speechserver
+from . import debug, guilabels, speechserver, systemd
 from .acss import ACSS
 from .speechserver import CapitalizationStyle, PunctuationStyle
 from .ssml import SSML, SSMLCapabilities
@@ -178,6 +178,7 @@ class SpeechServer(speechserver.SpeechServer):
             msg = f"ERROR: Failed to connect to Speech Dispatcher: {error}"
             debug.print_message(debug.LEVEL_SEVERE, msg, True)
             self._client = None
+            systemd.get_manager().set_status("Speech", f"not connected ({error})")
             return
         client.set_priority(speechd.Priority.MESSAGE)
 
@@ -844,6 +845,10 @@ class SpeechServer(speechserver.SpeechServer):
         finally:
             self.clear_voice_families_cache()
             self._init()
+            if self._client is not None:
+                systemd.get_manager().set_status("Speech", "reconnected")
+            else:
+                systemd.get_manager().set_status("Speech", "not connected")
 
     def list_output_modules(self) -> tuple[str, ...]:
         """Return names of available output modules as a tuple of strings."""

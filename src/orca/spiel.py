@@ -43,7 +43,7 @@ try:
 except Exception:
     _SPIEL_AVAILABLE = False
 
-from . import debug, guilabels, speechserver
+from . import debug, guilabels, speechserver, systemd
 from .acss import ACSS
 from .speechserver import CapitalizationStyle, PunctuationStyle, VoiceFamily
 from .ssml import SSML, SSMLCapabilities
@@ -358,6 +358,7 @@ class SpeechServer(speechserver.SpeechServer):
         if not SpeechServer._active_providers:
             msg = "ERROR: No Spiel providers available."
             debug.print_message(debug.LEVEL_WARNING, msg, True)
+            systemd.get_manager().set_status("Speech", "not connected")
             return
 
         self._provider = SpeechServer._active_providers.get(self._id)
@@ -749,6 +750,10 @@ class SpeechServer(speechserver.SpeechServer):
                 debug.print_message(debug.LEVEL_WARNING, msg, True)
                 self._voices_id = None
         self._init()
+        if self._provider is not None:
+            systemd.get_manager().set_status("Speech", "reconnected")
+        else:
+            systemd.get_manager().set_status("Speech", "not connected")
 
     def clear_cached_voice_properties(self) -> None:
         """Clear cached voice properties to force reapplication on next speech."""

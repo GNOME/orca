@@ -41,7 +41,7 @@ from typing import TYPE_CHECKING, Any, cast
 
 from gi.repository import GLib
 
-from . import debug, script_manager, text_attribute_manager
+from . import debug, script_manager, systemd, text_attribute_manager
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
@@ -433,7 +433,7 @@ def _stop_brlapi_worker() -> None:
     _STATE.brlapi_worker = None
 
 
-def _mark_brlapi_dead() -> None:
+def _mark_brlapi_dead(reason: str = "") -> None:
     """Reset BrlAPI state after failure and schedule a reconnect."""
 
     if _STATE.brlapi_running:
@@ -459,6 +459,8 @@ def _mark_brlapi_dead() -> None:
     _STATE.brlapi_retry_delay_ms = _BRLAPI_RETRY_DELAY_MS
     _stop_brlapi_worker()
     _schedule_brlapi_retry()
+    status = f"not connected ({reason})" if reason else "not connected"
+    systemd.get_manager().set_status("Braille", status)
 
 
 def _handle_brlapi_failure(token: int, action: str, error: BaseException) -> bool:
@@ -468,7 +470,7 @@ def _handle_brlapi_failure(token: int, action: str, error: BaseException) -> boo
         return False
     msg = f"BRAILLE: {action} failed ({type(error).__name__}): {error}"
     debug.print_message(debug.LEVEL_WARNING, msg, True)
-    _mark_brlapi_dead()
+    _mark_brlapi_dead(f"{action} failed: {error}")
     return False
 
 
@@ -520,7 +522,7 @@ def _brlapi_task_timeout() -> bool:
     elapsed = time.monotonic() - _STATE.brlapi_inflight_since
     msg = f"BRAILLE: BrlAPI action timed out after {elapsed:.1f}s: {action}"
     debug.print_message(debug.LEVEL_INFO, msg, True)
-    _mark_brlapi_dead()
+    _mark_brlapi_dead(f"{action} timed out")
     return False
 
 
@@ -571,7 +573,7 @@ def _enqueue_brlapi_task(
     if _STATE.brlapi_worker is None or not _STATE.brlapi_worker.is_alive():
         msg = f"BRAILLE: Cannot {action}: BrlAPI worker not running."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        _mark_brlapi_dead()
+        _mark_brlapi_dead("worker not running")
         return False
     _STATE.brlapi_queue.put(_BrlapiTask(action, func, brlapi, on_success, on_failure))
     return True
@@ -766,6 +768,8 @@ def _finish_brlapi_connection(
             else ("WARNING: Braille initialization failed.")
         )
         debug.print_message(debug.LEVEL_WARNING, msg, True)
+        status = f"not connected ({error})" if error else "not connected"
+        systemd.get_manager().set_status("Braille", status)
 
         _STATE.brlapi_running = False
         _STATE.brlapi = None
@@ -813,6 +817,7 @@ def _finish_brlapi_connection(
 
     msg = "BRAILLE: Initialized"
     debug.print_message(debug.LEVEL_INFO, msg, True)
+    systemd.get_manager().set_status("Braille", "connected")
     return False
 
 
@@ -1781,7 +1786,7 @@ def _clear_braille() -> None:
         if not _enqueue_brlapi_task("clear braille", lambda brlapi: brlapi.writeText("", 0)):
             msg = "BRAILLE: Cannot clear braille: BrlAPI connection unavailable."
             debug.print_message(debug.LEVEL_WARNING, msg, True)
-            _mark_brlapi_dead()
+            _mark_brlapi_dead("connection unavailable")
             return
         _idle_braille()
 
@@ -2454,14 +2459,14 @@ def _brlapi_key_reader(_source: Any, _condition: Any) -> bool:
     if brlapi is None:
         msg = "WARNING: BrlAPI connection unavailable; cannot read key."
         debug.print_message(debug.LEVEL_WARNING, msg, True)
-        _mark_brlapi_dead()
+        _mark_brlapi_dead("connection unavailable")
         return False
     try:
         key = brlapi.readKey(False)
     except BRLAPI_ERRORS as error:
         msg = f"WARNING: Could not read BrlApi key: {error}"
         debug.print_message(debug.LEVEL_WARNING, msg, True)
-        _mark_brlapi_dead()
+        _mark_brlapi_dead(f"key read failed: {error}")
         return False
     if key:
         _process_braille_event(brlapi.expandKeyCode(key))
@@ -2573,6 +2578,7 @@ def init(callback: Callable[[Any], bool] | None = None) -> bool:
     """Initialize braille and start an asynchronous BrlAPI connection."""
 
     if not _STATE.enable_braille:
+        systemd.get_manager().set_status("Braille", "disabled")
         return False
 
     tokens = ["BRAILLE: Initializing. Callback:", callback]
@@ -2581,6 +2587,7 @@ def init(callback: Callable[[Any], bool] | None = None) -> bool:
     if BRLAPI is None:
         msg = "BRAILLE: Initialization failed: BrlApi is not defined."
         debug.print_message(debug.LEVEL_WARNING, msg, True)
+        systemd.get_manager().set_status("Braille", "unavailable (no BrlAPI)")
         return False
 
     if _STATE.brlapi_running:
@@ -2654,4 +2661,5 @@ def shutdown() -> bool:
 
     msg = "BRAILLE: Braille shutdown complete."
     debug.print_message(debug.LEVEL_INFO, msg, True)
+    systemd.get_manager().set_status("Braille", "disabled")
     return True

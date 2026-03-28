@@ -37,6 +37,7 @@ class Systemd:
         self._notify_socket: socket.socket | None = None
         self._watchdog_interval: int | None = None
         self._last_ping: float = 0.0
+        self._component_statuses: dict[str, str] = {}
 
         socket_path = os.environ.get("NOTIFY_SOCKET")
         if socket_path:
@@ -66,6 +67,19 @@ class Systemd:
                 True,
             )
             self._notify_socket.sendall(message)
+
+    def set_status(self, component: str, status: str) -> None:
+        """Update a component's status and push the combined line to systemd."""
+        old_status = self._component_statuses.get(component)
+        if old_status == status:
+            return
+        self._component_statuses[component] = status
+        if not self._notify_socket:
+            return
+        combined = "; ".join(
+            f"{name}: {value}" for name, value in sorted(self._component_statuses.items())
+        )
+        self._notify(f"STATUS={combined}".encode())
 
     def notify_ready(self) -> None:
         """Tell systemd that Orca has finished starting up / reloading"""

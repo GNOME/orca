@@ -55,6 +55,7 @@ from . import (
     presentation_manager,
     speech,
     speechserver,
+    systemd,
 )
 from .acss import ACSS
 from .speechserver import CapitalizationStyle, PunctuationStyle
@@ -2005,10 +2006,13 @@ class SpeechManager:
         else:
             msg = "SPEECH MANAGER: Speech not available"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            systemd.get_manager().set_status("Speech", "not available")
 
         speech.set_server(self._server)
         speech.set_mute_speech(self.get_speech_is_muted())
         debug.print_message(debug.LEVEL_INFO, "SPEECH MANAGER: Server initialized", True)
+        if self._server:
+            systemd.get_manager().set_status("Speech", "enabled")
 
     @staticmethod
     def _init_server_from_module(
@@ -2858,9 +2862,11 @@ class SpeechManager:
         if value:
             self.start_speech()
             presentation_manager.get_manager().present_message(messages.SPEECH_ENABLED)
+            systemd.get_manager().set_status("Speech", "enabled")
         else:
             presentation_manager.get_manager().present_message(messages.SPEECH_DISABLED)
             self.shutdown_speech()
+            systemd.get_manager().set_status("Speech", "disabled")
 
         return True
 
