@@ -715,10 +715,15 @@ class AXUtilitiesRole:
     def is_code(obj: Atspi.Accessible, _role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has the code or code-like role"""
 
-        return "code" in AXUtilitiesRole._get_xml_roles(obj) or AXUtilitiesRole._get_tag(obj) in [
-            "code",
-            "pre",
-        ]
+        if "code" in AXUtilitiesRole._get_xml_roles(obj):
+            return True
+        tag = AXUtilitiesRole._get_tag(obj)
+        if tag == "code":
+            return True
+        # Thunderbird uses <pre class="moz-quote-pre"> for quoted email replies.
+        if tag == "pre":
+            return "quote" not in AXObject.get_attributes_dict(obj).get("class", "")
+        return False
 
     @staticmethod
     def is_code_block(obj: Atspi.Accessible, _role: Atspi.Role | None = None) -> bool:
