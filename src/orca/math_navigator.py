@@ -365,6 +365,16 @@ class MathNavigator:
     ) -> bool:
         """Enters math navigation mode if the current focus is on math."""
 
+        tokens = [
+            "MATH NAVIGATOR: enter_math_mode_command. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         obj = focus_manager.get_manager().get_locus_of_focus()
         if not (math_root := AXUtilitiesMath.find_math_root(obj)):
             if notify_user:
@@ -416,6 +426,16 @@ class MathNavigator:
         notify_user: bool = True,
     ) -> bool:
         """Copies the current math navigation node to the clipboard."""
+
+        tokens = [
+            "MATH NAVIGATOR: copy_to_clipboard. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not self._active:
             return False

@@ -703,6 +703,9 @@ class DocumentPresenter:
         if not AXUtilities.is_math_related(obj):
             return
 
+        tokens = ["DOCUMENT PRESENTER: Math object found via", mode, ":", obj]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         if not (math_root := AXUtilitiesMath.find_math_root(obj)):
             return
 
