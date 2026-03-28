@@ -32,7 +32,7 @@ from __future__ import annotations
 import contextlib
 import time
 from enum import Enum
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, ClassVar
 
 import gi
 
@@ -315,13 +315,18 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         )
 
         self.keyboard_layout_combo: Gtk.ComboBox | None = None
-        self._orca_modifier_combo: Gtk.ComboBox | None = None
-        self._combos_listbox: preferences_grid_base.FocusManagedListBox | None = None
+        self._modifier_switches: dict[str, Gtk.Switch] = {}
+        self._settings_listbox: preferences_grid_base.FocusManagedListBox | None = None
 
         self._build()
         self._initializing = False
 
-    # pylint: disable-next=too-many-locals
+    _MODIFIER_KEY_OPTIONS: ClassVar[list[tuple[str, list[str]]]] = [
+        (guilabels.MODIFIER_INSERT, ["Insert"]),
+        (guilabels.MODIFIER_KP_INSERT, ["KP_Insert"]),
+        (guilabels.MODIFIER_CAPS_LOCK, ["Caps_Lock", "Shift_Lock"]),
+    ]
+
     def _build(self) -> None:
         """Build the keybindings UI."""
 
@@ -335,47 +340,37 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             [guilabels.KEYBOARD_LAYOUT_LAPTOP, KeyboardLayout.LAPTOP.value],
         )
 
-        insert_and_kp = f"{guilabels.MODIFIER_INSERT}, {guilabels.MODIFIER_KP_INSERT}"
-        caps_and_shift = f"{guilabels.MODIFIER_CAPS_LOCK}, {guilabels.MODIFIER_SHIFT_LOCK}"
+        self._settings_listbox = preferences_grid_base.FocusManagedListBox()
 
-        orca_model = Gtk.ListStore(str, str)
-        modifier_options = [
-            (insert_and_kp, "Insert, KP_Insert"),
-            (guilabels.MODIFIER_KP_INSERT, "KP_Insert"),
-            (guilabels.MODIFIER_INSERT, "Insert"),
-            (caps_and_shift, "Caps_Lock, Shift_Lock"),
-        ]
-        for label, keys in modifier_options:
-            orca_model.append([label, keys])
+        layout_row, layout_combo, _label = self._create_combo_box_row(
+            guilabels.KEYBOARD_LAYOUT,
+            keyboard_layout_model,
+            self._on_keyboard_layout_changed,
+            include_top_separator=False,
+        )
+        self._settings_listbox.add_row_with_widget(layout_row, layout_combo)
+        self.keyboard_layout_combo = layout_combo
 
-        self._combos_listbox = preferences_grid_base.FocusManagedListBox()
-        combo_size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
+        self.attach(self._settings_listbox, 0, row, 1, 1)
+        row += 1
 
-        row_data = [
-            (guilabels.KEYBOARD_LAYOUT, keyboard_layout_model, self._on_keyboard_layout_changed),
-            (
-                guilabels.KEY_BINDINGS_SCREEN_READER_MODIFIER_KEY_S,
-                orca_model,
-                self._on_orca_modifier_changed,
-            ),
-        ]
+        modifier_listbox = preferences_grid_base.FocusManagedListBox(guilabels.MODIFIER_KEYS)
 
-        combos: list[Gtk.ComboBox] = []
-        for label_text, model, changed_handler in row_data:
-            row_widget, combo, _label = self._create_combo_box_row(
-                label_text,
-                model,
-                changed_handler,
+        for label, keys in self._MODIFIER_KEY_OPTIONS:
+            switch_row, switch, _label = self._create_switch_row(
+                label,
+                self._on_modifier_switch_toggled,
+                state=False,
                 include_top_separator=False,
             )
-            combo_size_group.add_widget(combo)
-            self._combos_listbox.add_row_with_widget(row_widget, combo)
-            combos.append(combo)
+            self._modifier_switches[keys[0]] = switch
+            modifier_listbox.add_row_with_widget(switch_row, switch)
 
-        self.keyboard_layout_combo = combos[0]
-        self._orca_modifier_combo = combos[1]
+        self.attach(modifier_listbox.get_container(), 0, row, 1, 1)
+        row += 1
 
-        self.attach(self._combos_listbox, 0, row, 1, 1)
+        commands_heading = self._create_heading_label(guilabels.COMMANDS)
+        self.attach(commands_heading, 0, row, 1, 1)
         row += 1
 
         stack, _categories_listbox, _detail_listbox = self._create_stacked_preferences(
@@ -386,7 +381,11 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self._categories_listbox.get_accessible().set_name(guilabels.COMMANDS)
         self.attach(stack, 0, row, 1, 1)
 
-        self._register_stack_disable_widgets(self._combos_listbox)
+        self._register_stack_disable_widgets(
+            self._settings_listbox,
+            modifier_listbox.get_container(),
+            commands_heading,
+        )
 
     def reload(self) -> None:
         """Reload keybindings from the script."""
@@ -1084,13 +1083,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         general["keyboard-layout"] = layout_value
 
         is_desktop = layout_value == KeyboardLayout.DESKTOP.value
-        if self._orca_modifier_combo is not None:
-            tree_iter = self._orca_modifier_combo.get_active_iter()
-            if tree_iter is not None:
-                model = self._orca_modifier_combo.get_model()
-                orca_modifier = model.get_value(tree_iter, 1)
-                modifier_keys = orca_modifier.split(", ")
-
+        if self._modifier_switches:
+            modifier_keys = self._get_selected_modifier_keys()
+            if modifier_keys:
                 if is_desktop:
                     general["desktop-modifier-keys"] = modifier_keys
                 else:
@@ -1166,17 +1161,12 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         self.keyboard_layout_combo.set_active(i)
                         break
 
-        if self._orca_modifier_combo is not None:
+        if self._modifier_switches:
             is_desktop = get_manager().get_keyboard_layout_value() == KeyboardLayout.DESKTOP.value
             app_name = AXObject.get_name(self._script.app) if self._script.app else ""
             modifier_keys = get_manager().get_modifier_keys_for_layout(is_desktop, app_name)
-            key_string = ", ".join(modifier_keys)
-            orca_model = self._orca_modifier_combo.get_model()
-            if orca_model:
-                for i, row in enumerate(orca_model):
-                    if row[1] == key_string:
-                        self._orca_modifier_combo.set_active(i)
-                        break
+            for primary_key, switch in self._modifier_switches.items():
+                switch.set_active(primary_key in modifier_keys)
 
         self._initializing = False
 
@@ -1194,46 +1184,42 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             is_desktop = layout_value == KeyboardLayout.DESKTOP.value
             get_manager().load_keyboard_layout(is_desktop)
 
-            if self._orca_modifier_combo is not None:
+            if self._modifier_switches:
+                self._initializing = True
                 app_name = AXObject.get_name(self._script.app) if self._script.app else ""
                 saved_keys = get_manager().get_modifier_keys_for_layout(is_desktop, app_name)
-                key_string = ", ".join(saved_keys)
-                orca_model = self._orca_modifier_combo.get_model()
-                matched = False
-                for i, row in enumerate(orca_model):
-                    if row[1] == key_string:
-                        self._orca_modifier_combo.set_active(i)
-                        matched = True
-                        break
-
-                if not matched:
-                    if is_desktop:
-                        self._orca_modifier_combo.set_active(0)
-                    else:
-                        self._orca_modifier_combo.set_active(3)
-                    saved_keys = orca_model[self._orca_modifier_combo.get_active()][1].split(", ")
-
-                orca_modifier_manager.get_manager().set_modifier_keys_override(saved_keys)
+                for primary_key, switch in self._modifier_switches.items():
+                    switch.set_active(primary_key in saved_keys)
+                self._initializing = False
+                orca_modifier_manager.get_manager().set_modifier_keys_override(
+                    self._get_selected_modifier_keys(),
+                )
 
         get_manager().apply_user_overrides()
         self._populate_keybindings()
         self._has_unsaved_changes = True
 
-    def _on_orca_modifier_changed(self, combo: Gtk.ComboBox) -> None:
-        """Handle orca modifier combo box changes."""
+    def _get_selected_modifier_keys(self) -> list[str]:
+        """Returns the list of modifier keys from the current switch states."""
+
+        keys: list[str] = []
+        for _label, key_names in self._MODIFIER_KEY_OPTIONS:
+            if self._modifier_switches.get(key_names[0], Gtk.Switch()).get_active():
+                keys.extend(key_names)
+        return keys
+
+    def _on_modifier_switch_toggled(self, switch: Gtk.Switch, _pspec: Any) -> None:
+        """Handle modifier key switch toggles."""
 
         if self._initializing:
             return
 
-        tree_iter = combo.get_active_iter()
-        if tree_iter is None:
+        selected = self._get_selected_modifier_keys()
+        if not selected:
+            switch.set_active(True)
             return
 
-        model = combo.get_model()
-        orca_modifier = model.get_value(tree_iter, 1)
-        orca_modifier_manager.get_manager().set_modifier_keys_override(
-            orca_modifier.split(", "),
-        )
+        orca_modifier_manager.get_manager().set_modifier_keys_override(selected)
         self._has_unsaved_changes = True
 
     def _format_keybinding_text(self, kb: keybindings.KeyBinding | None) -> str | None:

@@ -125,22 +125,22 @@ class StackedPreferencesHelper:
         self.on_category_activated_callback: Callable[[Gtk.ListBoxRow], None] | None = None
 
     def show_categories(self) -> None:
-        """Switch to categories view and enable registered widgets."""
+        """Switch to categories view and show registered widgets."""
 
         if self.stack:
             self.stack.set_visible_child_name("categories")
 
         for widget in self.disable_widgets:
-            widget.set_sensitive(True)
+            widget.show()
 
     def show_detail(self) -> None:
-        """Switch to detail view and disable registered widgets."""
+        """Switch to detail view and hide registered widgets."""
 
         if self.stack:
             self.stack.set_visible_child_name("detail")
 
         for widget in self.disable_widgets:
-            widget.set_sensitive(False)
+            widget.hide()
 
     def register_disable_widgets(self, *widgets: Gtk.Widget) -> None:
         """Register widgets that should be disabled when in detail view."""
@@ -237,7 +237,7 @@ class SelectionPreferenceControl:  # pylint: disable=too-many-instance-attribute
 class FocusManagedListBox(Gtk.ListBox):
     """A ListBox that automatically manages focus for interactive widgets in rows."""
 
-    def __init__(self):
+    def __init__(self, heading: str = ""):
         super().__init__()
         self.set_selection_mode(Gtk.SelectionMode.NONE)
         self.get_style_context().add_class("frame")
@@ -246,9 +246,24 @@ class FocusManagedListBox(Gtk.ListBox):
         # Show separators between rows
         self.set_header_func(self._separator_header_func, None)
 
-        self._widgets = []
-        self._rows = []
+        self._widgets: list[Gtk.Widget] = []
+        self._rows: list[Gtk.ListBoxRow] = []
         self._exiting_backward = [False]
+        self._container: Gtk.Box | None = None
+
+        if heading:
+            label = PreferencesGridBase._create_heading_label(heading)
+            self._container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+            self._container.pack_start(label, False, False, 0)
+            self._container.pack_start(self, False, False, 0)
+            relation_set = self.get_accessible().ref_relation_set()
+            relation_set.add(
+                Atk.Relation.new([label.get_accessible()], Atk.RelationType.LABELLED_BY),
+            )
+
+    def get_container(self) -> Gtk.Widget:
+        """Returns the container to attach to a grid, or self if no heading."""
+        return self._container or self
 
     @staticmethod
     def _separator_header_func(row, before, _user_data):
@@ -354,6 +369,16 @@ class FocusManagedListBox(Gtk.ListBox):
 # pylint: disable-next=too-many-instance-attributes
 class PreferencesGridBase(Gtk.Grid):
     """Base class for all preferences grid widgets with common UI helpers."""
+
+    @staticmethod
+    def _create_heading_label(text: str, margin_top: int = 12) -> Gtk.Label:
+        """Create a heading label for use above a group of controls."""
+
+        label = Gtk.Label(label=text, xalign=0)
+        label.get_style_context().add_class("heading")
+        label.set_margin_top(margin_top)
+        label.set_margin_bottom(6)
+        return label
 
     # pylint: disable=no-member
     def __init__(self, tab_label: str) -> None:

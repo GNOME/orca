@@ -1627,7 +1627,7 @@ GENERAL_FREQUENCY_SECS = C_("ProgressBar", "Frequency (secs):")
 # The default Orca modifier is KP_Insert for the "desktop" keyboard layout and
 # Caps Lock for the "laptop" keyboard layout. This string is a label for choosing
 # which key(s) should be used as the Orca modifier.
-KEY_BINDINGS_SCREEN_READER_MODIFIER_KEY_S = _("Screen Reader _Modifier Key(s):")
+MODIFIER_KEYS = _("Screen Reader Modifier Keys")
 
 # Translators: This refers to the Insert key being used as the Orca modifier.
 MODIFIER_INSERT = _("Insert")

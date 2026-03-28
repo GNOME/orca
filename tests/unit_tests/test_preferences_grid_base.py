@@ -241,7 +241,7 @@ class TestHelperClasses:
         assert button1 in helper.disable_widgets
 
     def test_stacked_preferences_helper_show_categories(self) -> None:
-        """Test StackedPreferencesHelper show_categories enables registered widgets."""
+        """Test StackedPreferencesHelper show_categories shows registered widgets."""
 
         helper = StackedPreferencesHelper()
         helper.stack = Gtk.Stack()
@@ -255,16 +255,16 @@ class TestHelperClasses:
         helper.stack.set_visible_child_name("detail")
 
         button = Gtk.Button()
-        button.set_sensitive(False)
+        button.hide()
         helper.register_disable_widgets(button)
 
         helper.show_categories()
-        assert button.get_sensitive() is True
+        assert button.get_visible() is True
         # Verify the visible child is the categories child
         assert helper.stack.get_visible_child() is cat_label
 
     def test_stacked_preferences_helper_show_detail(self) -> None:
-        """Test StackedPreferencesHelper show_detail disables registered widgets."""
+        """Test StackedPreferencesHelper show_detail hides registered widgets."""
 
         helper = StackedPreferencesHelper()
         helper.stack = Gtk.Stack()
@@ -278,11 +278,11 @@ class TestHelperClasses:
         helper.stack.set_visible_child_name("categories")
 
         button = Gtk.Button()
-        button.set_sensitive(True)
+        button.show()
         helper.register_disable_widgets(button)
 
         helper.show_detail()
-        assert button.get_sensitive() is False
+        assert button.get_visible() is False
         # Verify the visible child is the detail child
         assert helper.stack.get_visible_child() is det_label
 
