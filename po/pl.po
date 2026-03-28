@@ -8,23 +8,23 @@
 # Piotr Drąg <piotrdrag@gmail.com>, 2010-2025.
 # Paweł Żołnowski <pawel@zolnowski.name>, 2014.
 # Aviary.pl <community-poland@mozilla.org>, 2007-2025.
-# Victoria <royal.victoria@proton.me>, 2026.
+# Victoria Niedzielska <victorian@gnome.org>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-02-23 12:32+0000\n"
-"PO-Revision-Date: 2026-03-06 22:25+0100\n"
-"Last-Translator: Victoria <royal.victoria@proton.me>\n"
-"Language-Team: Polish\n"
+"PO-Revision-Date: 2026-03-28 14:16+0100\n"
+"Last-Translator: Victoria Niedzielska <victorian@gnome.org>\n"
+"Language-Team: Polish <https://l10n.gnome.org/teams/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Gtranslator 49.0\n"
+"X-Generator: Gtranslator 50.0\n"
 
 #: orca-autostart.desktop.in:3
 msgid "Orca Screen Reader"
@@ -4144,7 +4144,7 @@ msgstr "_Nazwa profilu:"
 #. is about to remove a user profile, and action that cannot be undone.
 #: src/orca/guilabels.py:723
 msgid "Remove user profile"
-msgstr "Usuń profil użytkownika"
+msgstr "Usuń profil osoby"
 
 #: src/orca/guilabels.py:732
 #, python-format
@@ -5521,7 +5521,7 @@ msgstr "Pozycja w formularzu"
 #. row; if it is disabled, Orca will only speak the cell with focus.
 #: src/orca/guilabels.py:1716
 msgid "Speak full row in _GUI tables"
-msgstr "Odczytywanie całych rzędów w tabelach _interfejsu użytkownika"
+msgstr "Odczytywanie całych rzędów w tabelach _interfejsu"
 
 #. Translators: This widget is associated with the setting that determines
 #. what happens if a user presses Up or Down arrow to move row by row in a
@@ -8782,7 +8782,7 @@ msgstr "PLIK"
 #. that will place the user in Orca's GUI preferences dialog.
 #: src/orca/messages.py:283
 msgid "Set up user preferences (GUI version)"
-msgstr "Preferencje użytkownika (wersja graficzna)"
+msgstr "Preferencje osoby (wersja graficzna)"
 
 #. Translators: This text is the description displayed when Orca is launched
 #. from the command line and the help text is displayed.
@@ -11459,7 +11459,7 @@ msgstr "Tryb dokumentu"
 #. navigating within the GUI of the current application.
 #: src/orca/messages.py:2217
 msgid "GUI mode"
-msgstr "Tryb interfejsu użytkownika"
+msgstr "Tryb interfejsu"
 
 #. Translators: Orca has a command that allows the user to move to the next
 #. structural navigation object. In Orca, "structural navigation" refers to
@@ -13899,350 +13899,3 @@ msgstr "pełna"
 msgctxt "textattr"
 msgid "spelling"
 msgstr "pisownia"
-
-#~ msgid "Capture snapshot for debugging"
-#~ msgstr "Przechwyć migawkę dla debugowania"
-
-#~ msgid "Prevent use of option"
-#~ msgstr "Zabrania używania opcji"
-
-#~ msgid "Force use of option"
-#~ msgstr "Wymusza użycie opcji"
-
-#~ msgid "OPTION"
-#~ msgstr "OPCJA"
-
-#~ msgid "Use alternate directory for user preferences"
-#~ msgstr "Korzysta z alternatywnego katalogu dla preferencji użytkownika"
-
-#~ msgid "Capturing debugging snapshot"
-#~ msgstr "Przechwytywanie migawki debugowania"
-
-#~ msgid "Debugging snapshot captured"
-#~ msgstr "Przechwycono migawkę debugowania"
-
-#~ msgid "Bookmark where am I with respect to current position"
-#~ msgstr "Powiadom o bieżącej pozycji względem wybranej zakładki"
-
-#~ msgid "Go to previous bookmark location"
-#~ msgstr "Przejdź do poprzedniego położenia zakładki"
-
-#~ msgid "Go to bookmark"
-#~ msgstr "Przejdź do zakładki"
-
-#~ msgid "Go to next bookmark location"
-#~ msgstr "Przejdź do następnego położenia zakładki"
-
-#~ msgid "Add bookmark"
-#~ msgstr "Dodaj zakładkę"
-
-#~ msgid "Save bookmarks"
-#~ msgstr "Zapisz zakładki"
-
-#~ msgid "Speak and braille a previous chat room message"
-#~ msgstr ""
-#~ "Odczytaj i wyświetl na monitorze brajlowskim ostatniej wiadomości "
-#~ "z pokoju rozmów"
-
-#~ msgid "Toggle whether we announce when our buddies are typing"
-#~ msgstr "Przełącz informowanie o pisaniu wiadomości przez znajomych"
-
-#~ msgid "Toggle whether we provide chat room specific message histories"
-#~ msgstr "Przełącz dostęp do historii poszczególnych pokojów rozmów"
-
-#~ msgid ""
-#~ "Toggle whether we prefix chat room messages with the name of the chat room"
-#~ msgstr ""
-#~ "Przełącz poprzedzanie odczytywania wiadomości z pokojów rozmów "
-#~ "odczytaniem nazwy pokoju"
-
-#~ msgid "Present the contents of the input line"
-#~ msgstr "Przedstaw zawartość wiersza wejściowego"
-
-#~ msgid "Automatic focus mode during structural navigation"
-#~ msgstr "Automatyczny tryb zaznaczania podczas nawigacji strukturalnej"
-
-#~ msgid "Automatic focus mode during native navigation"
-#~ msgstr "Automatyczny tryb zaznaczania podczas natywnej nawigacji"
-
-#~ msgid "All cha_nnels"
-#~ msgstr "Wszystkich ka_nałów"
-
-#~ msgid "A channel only if its _window is active"
-#~ msgstr "Kanału, którego okno jest akty_wne"
-
-#~ msgid "Enable layout mode for content"
-#~ msgstr "Tryb układu dla treści"
-
-#~ msgid "Enable echo by cha_racter"
-#~ msgstr "Echo _znaków"
-
-#~ msgid "Enable non-spacing _diacritical keys"
-#~ msgstr "Klawisze znaków _diakrytycznych"
-
-#~ msgid "Braille Bindings"
-#~ msgstr "Przypisania monitora brajlowskiego"
-
-#~ msgid "Bookmarks"
-#~ msgstr "Zakładki"
-
-#~ msgid "Date and time"
-#~ msgstr "Data i czas"
-
-#~ msgctxt "keybindings"
-#~ msgid "Modified"
-#~ msgstr "Zmodyfikowane"
-
-#~ msgid "Present Unless"
-#~ msgstr "Aktywny poza"
-
-#~ msgid "Save Profile As Conflict"
-#~ msgstr "Zapisz profil jako konflikt"
-
-#~ msgid "User Profile Conflict!"
-#~ msgstr "Konflikt profili użytkownika"
-
-#~ msgid ""
-#~ "You are about to change the active profile. If you\n"
-#~ "have just made changes in your preferences, they will\n"
-#~ "be dropped at profile load.\n"
-#~ "\n"
-#~ "Continue loading profile discarding previous changes?"
-#~ msgstr ""
-#~ "Wprowadzone zostaną zmiany w aktywnym profilu. Jeśli\n"
-#~ "w tym samym czasie użytkownik wprowadził zmiany w\n"
-#~ "preferencjach, to zostaną one odrzucone podczas\n"
-#~ "wczytywania profilu.\n"
-#~ "\n"
-#~ "Kontynuować wczytywanie profilu, odrzucając poprzednie zmiany?"
-
-#~ msgctxt "punctuation level"
-#~ msgid "_None"
-#~ msgstr "Br_ak"
-
-#~ msgid "So_me"
-#~ msgstr "Niektór_e"
-
-#~ msgid "M_ost"
-#~ msgstr "Wię_kszość"
-
-#~ msgctxt "structural navigation"
-#~ msgid "Selected Item"
-#~ msgstr "Zaznaczony element"
-
-#~ msgctxt "structural navigation"
-#~ msgid "Text"
-#~ msgstr "Tekst"
-
-#~ msgid "Break speech into ch_unks between pauses"
-#~ msgstr "Dzielenie odczytywanego tekstu na _segmenty pomiędzy pauzami"
-
-#~ msgid "Table Navigation"
-#~ msgstr "Poruszanie się po tabelach"
-
-#~ msgid "Speak _cell"
-#~ msgstr "Odczytywanie _komórki"
-
-#~ msgid "Attribute Name"
-#~ msgstr "Nazwa atrybutu"
-
-#~ msgid "Control caret navigation"
-#~ msgstr "Kontrola nawigacji karetki"
-
-#~ msgid "Enable _structural navigation"
-#~ msgstr "Nawigacja _strukturalna"
-
-#~ msgid "Brie_f"
-#~ msgstr "N_iska"
-
-#~ msgid "Insert"
-#~ msgstr "Insert"
-
-#~ msgid "Caps_Lock"
-#~ msgstr "Caps Lock"
-
-#~ msgid "Alt_R"
-#~ msgstr "Prawy Alt"
-
-#~ msgid "Meta2"
-#~ msgstr "Meta2"
-
-#~ msgid "Alt"
-#~ msgstr "Alt"
-
-#~ msgid "Ctrl"
-#~ msgstr "Ctrl"
-
-#~ msgid "Shift"
-#~ msgstr "Shift"
-
-#~ msgctxt "generic name"
-#~ msgid "application"
-#~ msgstr "program"
-
-#~ msgid "bookmark entered"
-#~ msgstr "zakładka wprowadzona"
-
-#~ msgid "bookmarks saved"
-#~ msgstr "zakładki zapisane"
-
-#~ msgid "bookmarks could not be saved"
-#~ msgstr "nie można zapisać zakładek"
-
-#~ msgid "No bookmarks found."
-#~ msgstr "Nie odnaleziono zakładek."
-
-#~ msgid "Bookmark not found."
-#~ msgstr "Nie odnaleziono zakładki."
-
-#, python-format
-#~ msgid "Cell %s"
-#~ msgstr "Komórka %s"
-
-#~ msgid "Could not activate the settings manager. Exiting."
-#~ msgstr "Nie można aktywować menedżera ustawień. Kończenie działania."
-
-#~ msgid "Set up user preferences (text version)"
-#~ msgstr "Preferencje użytkownika (wersja tekstowa)"
-
-#~ msgid "End of container."
-#~ msgstr "Koniec kontenera."
-
-#, python-format
-#~ msgid " subscript %s"
-#~ msgstr " %s w indeksie dolnym"
-
-#, python-format
-#~ msgid " superscript %s"
-#~ msgstr " %s w indeksie górnym"
-
-#~ msgid "No files found."
-#~ msgstr "Nie odnaleziono plików."
-
-#~ msgid "root start"
-#~ msgstr "początek pierwiastka"
-
-#~ msgid "inaccessible"
-#~ msgstr "niedostępny"
-
-#~ msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
-#~ msgstr ""
-#~ "Klawisze strzałek w górę i w dół: nawigacja na liście. Klawisz Escape: "
-#~ "wyjście."
-
-#, python-format
-#~ msgid "politeness level %s"
-#~ msgstr "poziom grzeczności %s"
-
-#~ msgid "Live regions monitoring off"
-#~ msgstr "Monitorowanie obszarów dynamicznych zostało wyłączone"
-
-#~ msgid "Live regions monitoring on"
-#~ msgstr "Monitorowanie obszarów dynamicznych zostało włączone"
-
-#, python-format
-#~ msgid "To enable focus mode press %s."
-#~ msgstr "Naciśnięcie %s włącza tryb zaznaczania."
-
-#~ msgid "Error: Could not create list of objects."
-#~ msgstr "Błąd: nie można utworzyć listy obiektów."
-
-#~ msgid "New item has been added"
-#~ msgstr "Nowy element został dodany"
-
-#~ msgid "No focus"
-#~ msgstr "Brak zaznaczenia"
-
-#~ msgid "No application has focus."
-#~ msgstr "Żaden program nie jest zaznaczony."
-
-#~ msgid ""
-#~ "You already have an instance of an Orca preferences dialog open.\n"
-#~ "Please close it before opening a new one."
-#~ msgstr ""
-#~ "Jedno okno konfiguracyjne programu Orca zostało już otwarte.\n"
-#~ "Proszę zamknąć je przed otwarciem nowego."
-
-#, python-format
-#~ msgid "slide %(position)d of %(count)d"
-#~ msgstr "slajd %(position)d z %(count)d"
-
-#~ msgid "Searching."
-#~ msgstr "Wyszukiwanie."
-
-#~ msgid "Search complete."
-#~ msgstr "Wyszukiwanie ukończone."
-
-#~ msgid " dot dot dot"
-#~ msgstr " wielokropek"
-
-#~ msgid "Not in a spreadsheet."
-#~ msgstr "Brak obiektu na arkuszu."
-
-#~ msgid "Speech is unavailable."
-#~ msgstr "Mowa jest niedostępna."
-
-#~ msgid "End of table"
-#~ msgstr "Koniec tabeli"
-
-#, python-format
-#~ msgid "%(count)d Screen reader shortcut for %(application)s found."
-#~ msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
-#~ msgstr[0] ""
-#~ "Odnaleziono %(count)d skrót czytnika ekranowego dla programu "
-#~ "%(application)s."
-#~ msgstr[1] ""
-#~ "Odnaleziono %(count)d skróty czytnika ekranowego dla programu "
-#~ "%(application)s."
-#~ msgstr[2] ""
-#~ "Odnaleziono %(count)d skrótów czytnika ekranowego dla programu "
-#~ "%(application)s."
-
-#~ msgid "10"
-#~ msgstr "10"
-
-#~ msgid "Enable _structural navigation in Say All"
-#~ msgstr "Nawigacja _strukturalna w odczytywaniu wszystkiego"
-
-#~ msgid "_Enable speech"
-#~ msgstr "Mo_wa"
-
-#~ msgid "_All"
-#~ msgstr "Wszys_tkie"
-
-#~ msgid "Spea_k object mnemonics"
-#~ msgstr "Odczytywanie _obiektu pod kursorem myszy"
-
-#~ msgid "Speak child p_osition"
-#~ msgstr "Odczytywanie pozycji _potomnej"
-
-#~ msgid "Speak _description"
-#~ msgstr "Odczytywanie _opisów"
-
-#~ msgctxt "braille dots"
-#~ msgid "_None"
-#~ msgstr "Br_ak"
-
-#~ msgid "Selection Indicator"
-#~ msgstr "Wskaźnik zaznaczenia"
-
-#~ msgid "Hyperlink Indicator"
-#~ msgstr "Wskaźnik odnośnika"
-
-#~ msgid "Enable _key echo"
-#~ msgstr "Powtarzanie _klawiszy"
-
-#~ msgid "Enable _punctuation keys"
-#~ msgstr "Klawisze _interpunkcji"
-
-#~ msgid "Enable _space"
-#~ msgstr "_Spacja"
-
-#~ msgid "Enable ac_tion keys"
-#~ msgstr "Klawisze ak_cyjne"
-
-#~ msgid "Enable echo by _word"
-#~ msgstr "Powtarzanie _słów"
-
-#~ msgid "Enable echo by _sentence"
-#~ msgstr "Powtarzanie _zdań"
