@@ -33,9 +33,8 @@ from typing import TYPE_CHECKING, Any
 
 from gi.repository import GLib
 
-from . import debug, focus_manager, guilabels, mathsymbols, speechserver
+from . import debug, guilabels, speechserver
 from .acss import ACSS
-from .ax_utilities import AXUtilities
 from .speechserver import CapitalizationStyle, PunctuationStyle
 from .ssml import SSML, SSMLCapabilities
 
@@ -588,12 +587,6 @@ class SpeechServer(speechserver.SpeechServer):
             character = character.lower()
 
         name = character
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if AXUtilities.is_math_related(focus):
-            # TODO - JD: If we're reaching this point without the name having been adjusted, we're
-            # doing it wrong.
-            name = mathsymbols.get_character_name(character)
-
         if not name or name == character:
             if cap_style == CapitalizationStyle.ICON:
                 # char() does not reliably trigger the icon sound whereas

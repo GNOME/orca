@@ -47,7 +47,6 @@ from . import (
     generator,
     input_event_manager,
     math_presenter,
-    mathsymbols,
     messages,
     object_properties,
     speech_manager,
@@ -2023,12 +2022,6 @@ class SpeechGenerator(generator.Generator):
         result = super()._generate_text_content(obj, **args)
         if not (result and result[0]):
             return []
-
-        string = result[0].strip()
-        if len(string) == 1 and AXUtilities.is_math_related(obj):
-            charname = mathsymbols.get_character_name(string)
-            if charname and charname != string:
-                result[0] = charname
 
         result[0] = speech_presenter.get_presenter().adjust_for_presentation(obj, result[0])
         result.extend(self.voice(DEFAULT, obj=obj, **args))

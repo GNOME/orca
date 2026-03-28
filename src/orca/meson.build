@@ -114,7 +114,6 @@ lib_sources = [
   'live_region_presenter.py',
   'math_navigator.py',
   'math_presenter.py',
-  'mathsymbols.py',
   'messages.py',
   'mouse_review.py',
   'notification_presenter.py',

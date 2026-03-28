@@ -52,7 +52,6 @@ from . import (
     guilabels,
     input_event,
     keybindings,
-    mathsymbols,
     messages,
     object_properties,
     phonnames,
@@ -2326,9 +2325,6 @@ class SpeechPresenter:
             f"start_offset: {start_offset}",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if obj is not None and AXUtilities.is_math_related(obj):
-            text = mathsymbols.adjust_for_speech(text)
 
         if start_offset is not None and obj is not None:
             text = self._adjust_for_links(obj, text, start_offset)
