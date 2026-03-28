@@ -70,6 +70,7 @@ class AXUtilities:
     SET_MEMBERS: ClassVar[dict[int, list[Atspi.Accessible]]] = {}
     IS_LAYOUT_ONLY: ClassVar[dict[int, tuple[bool, str]]] = {}
     IS_BLOCK_LIST_DESCENDANT: ClassVar[dict[int, bool]] = {}
+    IS_CODE_BLOCK_DESCENDANT: ClassVar[dict[int, bool]] = {}
     IS_COMBO_BOX_DESCENDANT: ClassVar[dict[int, bool]] = {}
     IS_DOCUMENT_DESCENDANT: ClassVar[dict[int, bool]] = {}
     IS_EDITABLE_COMBO_BOX_DESCENDANT: ClassVar[dict[int, bool]] = {}
@@ -113,6 +114,7 @@ class AXUtilities:
             AXUtilities.SET_MEMBERS.clear()
             AXUtilities.IS_LAYOUT_ONLY.clear()
             AXUtilities.IS_BLOCK_LIST_DESCENDANT.clear()
+            AXUtilities.IS_CODE_BLOCK_DESCENDANT.clear()
             AXUtilities.IS_COMBO_BOX_DESCENDANT.clear()
             AXUtilities.IS_DOCUMENT_DESCENDANT.clear()
             AXUtilities.IS_EDITABLE_COMBO_BOX_DESCENDANT.clear()
@@ -572,6 +574,8 @@ class AXUtilities:
             return False, "is focusable"
         if AXUtilitiesAction.has_action(obj, "click"):
             return False, "has click action"
+        if AXUtilitiesRole.is_code_block(obj):
+            return False, "is code block"
         return True, "is not interactive"
 
     @staticmethod
@@ -685,7 +689,9 @@ class AXUtilities:
                 cache[obj_hash] = False
                 return False
             if parent_rv is None:
-                parent_rv = AXUtilitiesObject.find_ancestor(parent, pred) is not None
+                parent_rv = (
+                    pred(parent) or AXUtilitiesObject.find_ancestor(parent, pred) is not None
+                )
                 cache[parent_hash] = parent_rv
                 if not parent_rv:
                     cache[obj_hash] = False
@@ -711,6 +717,20 @@ class AXUtilities:
 
         AXUtilities.IS_BLOCK_LIST_DESCENDANT[obj_hash] = rv
         return rv
+
+    @staticmethod
+    def is_code_block_descendant(
+        obj: Atspi.Accessible,
+        inclusive: bool = False,
+    ) -> bool:
+        """Returns True if obj has a code block ancestor."""
+
+        return AXUtilities._is_descendant(
+            AXUtilities.IS_CODE_BLOCK_DESCENDANT,
+            obj,
+            AXUtilitiesRole.is_code_block,
+            inclusive,
+        )
 
     @staticmethod
     def is_combo_box_descendant(

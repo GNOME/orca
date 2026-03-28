@@ -132,47 +132,13 @@ class AnnouncementsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 
         controls = [
             preferences_grid_base.BooleanPreferenceControl(
-                label=announcements_prefs[0].label,
-                getter=announcements_prefs[0].getter,
-                setter=announcements_prefs[0].setter,
-                prefs_key=announcements_prefs[0].prefs_key,
+                label=pref.label,
+                getter=pref.getter,
+                setter=pref.setter,
+                prefs_key=pref.prefs_key,
                 member_of=guilabels.ANNOUNCE_WHEN_ENTERING,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=announcements_prefs[1].label,
-                getter=announcements_prefs[1].getter,
-                setter=announcements_prefs[1].setter,
-                prefs_key=announcements_prefs[1].prefs_key,
-                member_of=guilabels.ANNOUNCE_WHEN_ENTERING,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=announcements_prefs[2].label,
-                getter=announcements_prefs[2].getter,
-                setter=announcements_prefs[2].setter,
-                prefs_key=announcements_prefs[2].prefs_key,
-                member_of=guilabels.ANNOUNCE_WHEN_ENTERING,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=announcements_prefs[3].label,
-                getter=announcements_prefs[3].getter,
-                setter=announcements_prefs[3].setter,
-                prefs_key=announcements_prefs[3].prefs_key,
-                member_of=guilabels.ANNOUNCE_WHEN_ENTERING,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=announcements_prefs[4].label,
-                getter=announcements_prefs[4].getter,
-                setter=announcements_prefs[4].setter,
-                prefs_key=announcements_prefs[4].prefs_key,
-                member_of=guilabels.ANNOUNCE_WHEN_ENTERING,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=announcements_prefs[5].label,
-                getter=announcements_prefs[5].getter,
-                setter=announcements_prefs[5].setter,
-                prefs_key=announcements_prefs[5].prefs_key,
-                member_of=guilabels.ANNOUNCE_WHEN_ENTERING,
-            ),
+            )
+            for pref in announcements_prefs
         ]
 
         super().__init__(guilabels.ANNOUNCEMENTS, controls)
@@ -840,12 +806,15 @@ class SpeechPresenter:
         "always-announce-selected-range-in-spreadsheet"
     )
     KEY_ANNOUNCE_CELL_HEADERS = "announce-cell-headers"
+    KEY_ANNOUNCE_ARTICLE = "announce-article"
     KEY_ANNOUNCE_BLOCKQUOTE = "announce-blockquote"
+    KEY_ANNOUNCE_CODE_BLOCK = "announce-code-block"
     KEY_ANNOUNCE_FORM = "announce-form"
     KEY_ANNOUNCE_GROUPING = "announce-grouping"
     KEY_ANNOUNCE_LANDMARK = "announce-landmark"
     KEY_ANNOUNCE_LIST = "announce-list"
     KEY_ANNOUNCE_TABLE = "announce-table"
+    KEY_ANNOUNCE_TRACKED_CHANGES = "announce-tracked-changes"
     KEY_ONLY_SPEAK_DISPLAYED_TEXT = "only-speak-displayed-text"
     KEY_SPEAK_PROGRESS_BAR_UPDATES = "speak-progress-bar-updates"
     KEY_PROGRESS_BAR_SPEECH_INTERVAL = "progress-bar-speech-interval"
@@ -1371,6 +1340,32 @@ class SpeechPresenter:
         return True
 
     @gsettings_registry.get_registry().gsetting(
+        key=KEY_ANNOUNCE_ARTICLE,
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Announce articles",
+    )
+    @dbus_service.getter
+    def get_announce_article(self) -> bool:
+        """Returns whether articles are announced when entered."""
+
+        return self._get_setting(self.KEY_ANNOUNCE_ARTICLE, "b", True)
+
+    @dbus_service.setter
+    def set_announce_article(self, value: bool) -> bool:
+        """Sets whether articles are announced when entered."""
+
+        msg = f"SPEECH PRESENTER: Setting announce articles to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA,
+            self.KEY_ANNOUNCE_ARTICLE,
+            value,
+        )
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
         key=KEY_ANNOUNCE_BLOCKQUOTE,
         schema="speech",
         gtype="b",
@@ -1393,6 +1388,32 @@ class SpeechPresenter:
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_BLOCKQUOTE,
+            value,
+        )
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_ANNOUNCE_CODE_BLOCK,
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Announce code blocks",
+    )
+    @dbus_service.getter
+    def get_announce_code_block(self) -> bool:
+        """Returns whether code blocks are announced when entered."""
+
+        return self._get_setting(self.KEY_ANNOUNCE_CODE_BLOCK, "b", True)
+
+    @dbus_service.setter
+    def set_announce_code_block(self, value: bool) -> bool:
+        """Sets whether code blocks are announced when entered."""
+
+        msg = f"SPEECH PRESENTER: Setting announce code blocks to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA,
+            self.KEY_ANNOUNCE_CODE_BLOCK,
             value,
         )
         return True
@@ -1523,6 +1544,32 @@ class SpeechPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_ANNOUNCE_TABLE, value
+        )
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_ANNOUNCE_TRACKED_CHANGES,
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Announce tracked changes",
+    )
+    @dbus_service.getter
+    def get_announce_tracked_changes(self) -> bool:
+        """Returns whether tracked changes are announced when entered."""
+
+        return self._get_setting(self.KEY_ANNOUNCE_TRACKED_CHANGES, "b", True)
+
+    @dbus_service.setter
+    def set_announce_tracked_changes(self, value: bool) -> bool:
+        """Sets whether tracked changes are announced when entered."""
+
+        msg = f"SPEECH PRESENTER: Setting announce tracked changes to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA,
+            self.KEY_ANNOUNCE_TRACKED_CHANGES,
+            value,
         )
         return True
 
@@ -2754,12 +2801,15 @@ class SpeechPresenter:
             announce_cell_headers=self.get_announce_cell_headers(),
             announce_cell_coordinates=self.get_announce_cell_coordinates(),
             announce_spreadsheet_cell_coordinates=self.get_announce_spreadsheet_cell_coordinates(),
+            announce_article=p.get_announce_article(),
             announce_blockquote=p.get_announce_blockquote(),
+            announce_code_block=p.get_announce_code_block(),
             announce_form=p.get_announce_form(),
+            announce_grouping=p.get_announce_grouping(),
             announce_landmark=p.get_announce_landmark(),
             announce_list=p.get_announce_list(),
-            announce_grouping=p.get_announce_grouping(),
             announce_table=p.get_announce_table(),
+            announce_tracked_changes=p.get_announce_tracked_changes(),
             text_attribute_change_mode=self._text_attribute_change_mode_override.value
             if self._text_attribute_change_mode_override is not None
             else p.get_text_attribute_change_mode().value,
@@ -3024,10 +3074,22 @@ class SpeechPresenter:
 
         announcements = (
             SpeechPreference(
+                self.KEY_ANNOUNCE_ARTICLE,
+                guilabels.ANNOUNCE_ARTICLES,
+                self.get_announce_article,
+                self.set_announce_article,
+            ),
+            SpeechPreference(
                 self.KEY_ANNOUNCE_BLOCKQUOTE,
                 guilabels.ANNOUNCE_BLOCKQUOTES,
                 self.get_announce_blockquote,
                 self.set_announce_blockquote,
+            ),
+            SpeechPreference(
+                self.KEY_ANNOUNCE_CODE_BLOCK,
+                guilabels.ANNOUNCE_CODE_BLOCKS,
+                self.get_announce_code_block,
+                self.set_announce_code_block,
             ),
             SpeechPreference(
                 self.KEY_ANNOUNCE_FORM,
@@ -3058,6 +3120,12 @@ class SpeechPresenter:
                 guilabels.ANNOUNCE_TABLES,
                 self.get_announce_table,
                 self.set_announce_table,
+            ),
+            SpeechPreference(
+                self.KEY_ANNOUNCE_TRACKED_CHANGES,
+                guilabels.ANNOUNCE_TRACKED_CHANGES,
+                self.get_announce_tracked_changes,
+                self.set_announce_tracked_changes,
             ),
         )
 

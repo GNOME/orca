@@ -425,6 +425,16 @@ CHAT_LIST_BOTTOM = C_("chat", "Bottom")
 CHAT_NO_MESSAGES = _("No chat messages")
 
 # Translators: This phrase is spoken to inform the user that what is about to
+# be said is code or preformatted text, such as content inside an HTML 'pre'
+# or 'code' element.
+CONTENT_CODE_START = C_("content", "code start")
+
+# Translators: This phrase is spoken to inform the user that they have reached
+# the end of code or preformatted text, such as content inside an HTML 'pre'
+# or 'code' element.
+CONTENT_CODE_END = C_("content", "code end")
+
+# Translators: This phrase is spoken to inform the user that what is about to
 # be said is content marked for deletion in a document, such as content which
 # is inside an HTML 'del' element, or the removed code in a diff.
 CONTENT_DELETION_START = C_("content", "deletion start")
@@ -919,9 +929,17 @@ LEARN_MODE_START_SPEECH = _(
     "To exit learn mode, press the escape key.",
 )
 
+# Translators: This message is presented when a user is navigating within
+# an article and then navigates out of it.
+LEAVING_ARTICLE = C_("role", "leaving article.")
+
 # Translators: This message is presented when a user is navigating within a
 # blockquote and then navigates out of it.
 LEAVING_BLOCKQUOTE = _("leaving blockquote.")
+
+# Translators: This message is presented when a user is navigating within
+# a code block and then navigates out of it.
+LEAVING_CODE = C_("role", "leaving code.")
 
 # Translators: In web content, authors can identify an element which contains
 # detailed information about another element. For instance, for a password

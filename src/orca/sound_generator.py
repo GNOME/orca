@@ -410,6 +410,11 @@ class SoundGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
+    def _generate_code_block(self, obj: Atspi.Accessible, **args) -> list[Any]:
+        """Generates sound for the code block role."""
+
+        return self._generate_default_presentation(obj, **args)
+
     def _generate_comment(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates sound for the comment role."""
 

@@ -86,12 +86,15 @@ class SpeechGeneratorContext(GeneratorContext):
     announce_cell_headers: bool
     announce_cell_coordinates: bool
     announce_spreadsheet_cell_coordinates: bool
+    announce_article: bool
     announce_blockquote: bool
+    announce_code_block: bool
     announce_form: bool
+    announce_grouping: bool
     announce_landmark: bool
     announce_list: bool
-    announce_grouping: bool
     announce_table: bool
+    announce_tracked_changes: bool
     text_attribute_change_mode: int
 
 
@@ -533,7 +536,7 @@ class SpeechGenerator(generator.Generator):
             return True
 
         role = args.get("role", AXObject.get_role(obj))
-        _enabled, disabled = self._get_enabled_and_disabled_context_roles()
+        enabled, disabled = self._get_enabled_and_disabled_context_roles()
 
         do_not_speak = list(disabled)
         do_not_speak.extend(
@@ -573,7 +576,8 @@ class SpeechGenerator(generator.Generator):
         if args.get("total", 1) > 1:
             do_not_speak.append(Atspi.Role.ROW_HEADER)
 
-        if role in do_not_speak:
+        is_enabled_ancestor = args.get("formatType") == "ancestor" and role in enabled
+        if role in do_not_speak and not is_enabled_ancestor:
             return False
 
         if (
@@ -765,23 +769,24 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _get_enabled_and_disabled_context_roles(self):
-        # TODO - JD: Move to the speech and verbosity manager.
         all_roles = [
+            Atspi.Role.ARTICLE,
             Atspi.Role.BLOCK_QUOTE,
+            "ROLE_CODE_BLOCK",
             Atspi.Role.CONTENT_DELETION,
             Atspi.Role.CONTENT_INSERTION,
-            Atspi.Role.MARK,
-            Atspi.Role.SUGGESTION,
+            Atspi.Role.DESCRIPTION_LIST,
             "ROLE_DPUB_LANDMARK",
             "ROLE_DPUB_SECTION",
-            Atspi.Role.DESCRIPTION_LIST,
             "ROLE_FEED",
             Atspi.Role.FORM,
             Atspi.Role.GROUPING,
             Atspi.Role.LANDMARK,
             Atspi.Role.LIST,
+            Atspi.Role.MARK,
             Atspi.Role.PANEL,
             "ROLE_REGION",
+            Atspi.Role.SUGGESTION,
             Atspi.Role.TABLE,
             Atspi.Role.TOOL_TIP,
         ]
@@ -789,33 +794,40 @@ class SpeechGenerator(generator.Generator):
         if self._context is None:
             return list(all_roles), []
 
-        enabled, disabled = [], []
+        enabled = []
 
+        if self._context.announce_article:
+            enabled.append(Atspi.Role.ARTICLE)
         if self._context.announce_blockquote:
             enabled.append(Atspi.Role.BLOCK_QUOTE)
-        if self._context.announce_landmark:
-            enabled.extend([Atspi.Role.LANDMARK, "ROLE_DPUB_LANDMARK"])
-        if self._context.announce_list:
-            enabled.append(Atspi.Role.LIST)
-            enabled.append(Atspi.Role.DESCRIPTION_LIST)
-            enabled.append("ROLE_FEED")
+        if self._context.announce_code_block:
+            enabled.append("ROLE_CODE_BLOCK")
+        if self._context.announce_form:
+            enabled.append(Atspi.Role.FORM)
         if self._context.announce_grouping:
             enabled.extend(
                 [
                     Atspi.Role.PANEL,
                     Atspi.Role.TOOL_TIP,
-                    Atspi.Role.CONTENT_DELETION,
-                    Atspi.Role.CONTENT_INSERTION,
                     Atspi.Role.GROUPING,
-                    Atspi.Role.MARK,
-                    Atspi.Role.SUGGESTION,
                     "ROLE_DPUB_SECTION",
                 ],
             )
-        if self._context.announce_form:
-            enabled.append(Atspi.Role.FORM)
+        if self._context.announce_landmark:
+            enabled.extend([Atspi.Role.LANDMARK, "ROLE_DPUB_LANDMARK", "ROLE_REGION"])
+        if self._context.announce_list:
+            enabled.extend([Atspi.Role.LIST, Atspi.Role.DESCRIPTION_LIST, "ROLE_FEED"])
         if self._context.announce_table:
             enabled.append(Atspi.Role.TABLE)
+        if self._context.announce_tracked_changes:
+            enabled.extend(
+                [
+                    Atspi.Role.CONTENT_DELETION,
+                    Atspi.Role.CONTENT_INSERTION,
+                    Atspi.Role.MARK,
+                    Atspi.Role.SUGGESTION,
+                ],
+            )
 
         disabled = list(set(all_roles).symmetric_difference(enabled))
         return enabled, disabled
@@ -916,6 +928,8 @@ class SpeechGenerator(generator.Generator):
         """Returns the leaving message for the given object and role."""
 
         simple_role_messages: dict[Atspi.Role | str, str] = {
+            Atspi.Role.ARTICLE: messages.LEAVING_ARTICLE,
+            "ROLE_CODE_BLOCK": messages.LEAVING_CODE,
             "ROLE_FEED": messages.LEAVING_FEED,
             Atspi.Role.GROUPING: messages.LEAVING_GROUPING,
             Atspi.Role.FORM: messages.LEAVING_FORM,
@@ -1105,20 +1119,22 @@ class SpeechGenerator(generator.Generator):
 
         args["leaving"] = True
         args["includeOnly"] = [
+            Atspi.Role.ARTICLE,
             Atspi.Role.BLOCK_QUOTE,
-            Atspi.Role.DESCRIPTION_LIST,
-            Atspi.Role.FORM,
-            Atspi.Role.LANDMARK,
+            "ROLE_CODE_BLOCK",
             Atspi.Role.CONTENT_DELETION,
             Atspi.Role.CONTENT_INSERTION,
-            Atspi.Role.MARK,
-            Atspi.Role.SUGGESTION,
+            Atspi.Role.DESCRIPTION_LIST,
             "ROLE_DPUB_LANDMARK",
             "ROLE_DPUB_SECTION",
             "ROLE_FEED",
+            Atspi.Role.FORM,
+            Atspi.Role.LANDMARK,
             Atspi.Role.LIST,
+            Atspi.Role.MARK,
             Atspi.Role.PANEL,
             "ROLE_REGION",
+            Atspi.Role.SUGGESTION,
             Atspi.Role.TABLE,
             Atspi.Role.TOOL_TIP,
         ]
@@ -1449,6 +1465,40 @@ class SpeechGenerator(generator.Generator):
                 result.extend(self._generate_pause(obj, **args))
                 result.extend(self._generate_has_details(container))
 
+        return result
+
+    @log_generator_output
+    def _generate_start_of_code(self, obj: Atspi.Accessible, **args) -> list[Any]:
+        if self._only_speak_displayed_text():
+            return []
+
+        if self._context is not None and not self._context.announce_code_block:
+            return []
+
+        start_offset = args.get("startOffset", 0)
+        if start_offset != 0:
+            return []
+
+        result: list[Any] = [messages.CONTENT_CODE_START]
+        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        return result
+
+    @log_generator_output
+    def _generate_end_of_code(self, obj: Atspi.Accessible, **args) -> list[Any]:
+        if self._only_speak_displayed_text():
+            return []
+
+        if self._context is not None and not self._context.announce_code_block:
+            return []
+
+        end_offset = args.get("endOffset")
+        if end_offset is not None:
+            length = AXText.get_character_count(obj)
+            if length and length != end_offset:
+                return []
+
+        result: list[Any] = [messages.CONTENT_CODE_END]
+        result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
     @log_generator_output
@@ -2199,14 +2249,17 @@ class SpeechGenerator(generator.Generator):
     def _generate_article(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the article role."""
 
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            result = self._generate_leaving(obj, **args)
+            if not result:
+                result += self._generate_accessible_label_and_name(obj, **args)
+                result += self._generate_accessible_role(obj, **args)
+            return result
+
         result = self._generate_default_prefix(obj, **args)
         result += self._generate_accessible_label_and_name(obj, **args)
         result += self._generate_accessible_role(obj, **args)
-
-        format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
-            return result
-
         result += self._generate_pause(obj, **args)
         result += self._generate_text_line(obj, **args)
         result += self._generate_default_suffix(obj, **args)
@@ -2224,6 +2277,27 @@ class SpeechGenerator(generator.Generator):
         result += self._generate_position_in_list(obj, **args)
         result += self._generate_default_suffix(obj, **args)
         return self._generate_default_prefix(obj, **args) + result
+
+    def _generate_code_block(self, obj: Atspi.Accessible, **args) -> list[Any]:
+        """Generates speech for the code block role."""
+
+        format_type = args.get("formatType", "unfocused")
+        if format_type in ["focused", "ancestor"]:
+            result = self._generate_leaving(obj, **args)
+            if not result:
+                result += self._generate_accessible_label_and_name(obj, **args)
+                result += self._generate_accessible_role(obj, **args)
+            return result
+
+        result = self._generate_default_prefix(obj, **args)
+        result += self._generate_start_of_code(obj, **args)
+        result += self._generate_pause(obj, **args)
+        result += self._generate_text_indentation(obj, **args)
+        result += self._generate_text_line(obj, **args)
+        result += self._generate_pause(obj, **args)
+        result += self._generate_end_of_code(obj, **args)
+        result += self._generate_default_suffix(obj, **args)
+        return result
 
     def _generate_audio(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the audio role."""

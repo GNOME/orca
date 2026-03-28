@@ -1431,6 +1431,8 @@ class Utilities(script_utilities.Utilities):
                 elif (
                     AXUtilities.is_block_list_descendant(obj)
                     != AXUtilities.is_block_list_descendant(x_obj)
+                    or AXUtilities.is_code_block_descendant(obj, inclusive=True)
+                    != AXUtilities.is_code_block_descendant(x_obj, inclusive=True)
                     or (AXUtilities.is_tree_related(obj) and AXUtilities.is_tree_related(x_obj))
                     or (AXUtilities.is_heading(obj) and AXUtilities.has_no_size(obj))
                     or (AXUtilities.is_heading(x_obj) and AXUtilities.has_no_size(x_obj))

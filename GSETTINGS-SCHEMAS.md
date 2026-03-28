@@ -216,12 +216,15 @@ These operations also work at the profile level:
 
 | Key | Type | Default | Summary |
 | --- | --- | --- | --- |
+| `announce-article` | `b` | `true` | Announce articles |
 | `announce-blockquote` | `b` | `true` | Announce blockquotes |
+| `announce-code-block` | `b` | `true` | Announce code blocks |
 | `announce-form` | `b` | `true` | Announce non-landmark forms |
 | `announce-grouping` | `b` | `true` | Announce groupings |
 | `announce-landmark` | `b` | `true` | Announce landmarks |
 | `announce-list` | `b` | `true` | Announce lists |
 | `announce-table` | `b` | `true` | Announce tables |
+| `announce-tracked-changes` | `b` | `true` | Announce tracked changes |
 | `only-speak-displayed-text` | `b` | `false` | Only speak displayed text |
 | `rewind-and-fast-forward` | `b` | `false` | Enable rewind and fast forward in Say All |
 | `structural-navigation` | `b` | `false` | Enable structural navigation in Say All |
@@ -255,16 +258,19 @@ These operations also work at the profile level:
 | Key | Type | Default | Summary |
 | --- | --- | --- | --- |
 | `always-announce-selected-range-in-spreadsheet` | `b` | `false` | Always announce selected range in spreadsheets |
+| `announce-article` | `b` | `true` | Announce articles |
 | `announce-blockquote` | `b` | `true` | Announce blockquotes |
 | `announce-cell-coordinates` | `b` | `true` | Announce cell coordinates |
 | `announce-cell-headers` | `b` | `true` | Announce cell headers |
 | `announce-cell-span` | `b` | `true` | Announce cell span |
+| `announce-code-block` | `b` | `true` | Announce code blocks |
 | `announce-form` | `b` | `true` | Announce forms |
 | `announce-grouping` | `b` | `true` | Announce groupings/panels |
 | `announce-landmark` | `b` | `true` | Announce landmarks |
 | `announce-list` | `b` | `true` | Announce lists |
 | `announce-spreadsheet-cell-coordinates` | `b` | `true` | Announce spreadsheet cell coordinates |
 | `announce-table` | `b` | `true` | Announce tables |
+| `announce-tracked-changes` | `b` | `true` | Announce tracked changes |
 | `auto-language-switching` | `b` | `true` | Automatically switch voice based on text language |
 | `capitalization-style` | `enum`<br>`CapitalizationStyle` | `'none'` | Capitalization style (none, spell, icon) |
 | `enable` | `b` | `true` | Enable speech output |

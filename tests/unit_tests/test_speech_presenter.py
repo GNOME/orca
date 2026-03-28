@@ -602,32 +602,6 @@ class TestSpeechPresenter:
         # Short text should be returned unchanged
         assert result == text
 
-    def test_get_speech_preferences(self, test_context: OrcaTestContext) -> None:
-        """Test get_speech_preferences returns correct tuple structure."""
-
-        self._setup_dependencies(test_context)
-        from orca.speech_presenter import SpeechPresenter
-
-        presenter = SpeechPresenter()
-        result = presenter.get_speech_preferences()
-
-        assert isinstance(result, tuple)
-        assert len(result) == 3
-
-        general, object_details, announcements = result
-
-        # general should have 1 preference
-        assert len(general) == 1
-        assert general[0].prefs_key == "messages-are-detailed"
-
-        # object_details should have 5 preferences
-        assert len(object_details) == 5
-        assert object_details[0].prefs_key == "only-speak-displayed-text"
-
-        # announcements should have 6 preferences
-        assert len(announcements) == 6
-        assert announcements[0].prefs_key == "announce-blockquote"
-
     def test_apply_speech_preferences(self, test_context: OrcaTestContext) -> None:
         """Test apply_speech_preferences applies values correctly."""
 

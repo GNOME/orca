@@ -749,6 +749,11 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
+    def _generate_code_block(self, obj: Atspi.Accessible, **args) -> list[Any]:
+        """Generates braille for the code block role."""
+
+        return self._generate_text_object(obj, **args)
+
     def _generate_comment(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the comment role."""
 

@@ -117,6 +117,7 @@ class Generator:
             Atspi.Role.COLOR_CHOOSER: self._generate_color_chooser,
             Atspi.Role.COLUMN_HEADER: self._generate_column_header,
             Atspi.Role.COMBO_BOX: self._generate_combo_box,
+            "ROLE_CODE_BLOCK": self._generate_code_block,
             Atspi.Role.COMMENT: self._generate_comment,
             Atspi.Role.CONTENT_DELETION: self._generate_content_deletion,
             Atspi.Role.CONTENT_INSERTION: self._generate_content_insertion,
@@ -579,6 +580,7 @@ class Generator:
             (lambda: AXUtilities.is_description_list(obj, role), Atspi.Role.DESCRIPTION_LIST),
             (lambda: AXUtilities.is_description_term(obj, role), Atspi.Role.DESCRIPTION_TERM),
             (lambda: AXUtilities.is_description_value(obj, role), Atspi.Role.DESCRIPTION_VALUE),
+            (lambda: AXUtilities.is_code_block(obj), "ROLE_CODE_BLOCK"),
             (lambda: AXUtilities.is_feed_article(obj, role), "ROLE_ARTICLE_IN_FEED"),
             (lambda: AXUtilities.is_feed(obj, role), "ROLE_FEED"),
         ]
@@ -1476,6 +1478,11 @@ class Generator:
 
     def _generate_combo_box(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates presentation for the combo-box role."""
+
+        return []
+
+    def _generate_code_block(self, obj: Atspi.Accessible, **args) -> list[Any]:
+        """Generates presentation for the code block role."""
 
         return []
 

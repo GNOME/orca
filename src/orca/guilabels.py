@@ -36,9 +36,21 @@ ACTIVATE = _("_Activate")
 
 # Translators: Some users want to hear additional information when entering
 # different types of content. If this checkbox is checked, Orca will announce
+# that an article has been entered before speaking the contents. At the end of
+# the article, Orca will announce that the article is being exited.
+ANNOUNCE_ARTICLES = C_("Context", "Articles")
+
+# Translators: Some users want to hear additional information when entering
+# different types of content. If this checkbox is checked, Orca will announce
 # that a blockquote has been entered before speaking the text. At the end of
 # the text, Orca will announce that the blockquote is being exited.
 ANNOUNCE_BLOCKQUOTES = C_("Context", "Blockquotes")
+
+# Translators: Some users want to hear additional information when entering
+# different types of content. If this checkbox is checked, Orca will announce
+# that a code block has been entered before speaking the contents of that code
+# block. At the end of the code block, Orca will announce that it is being exited.
+ANNOUNCE_CODE_BLOCKS = C_("Context", "Code blocks")
 
 # Translators: Some users want to hear additional information when entering
 # different types of content. If this checkbox is checked, Orca will announce
@@ -74,6 +86,12 @@ ANNOUNCE_PANELS = C_("Context", "Panels")
 # content of that table. At the end of the table content, Orca will announce
 # that the table is being exited.
 ANNOUNCE_TABLES = C_("Context", "Tables")
+
+# Translators: Some users want to hear additional information when entering
+# different types of content. If this checkbox is checked, Orca will announce
+# tracked changes (insertions, deletions, highlights, suggestions) when navigating
+# through document content containing revision markup.
+ANNOUNCE_TRACKED_CHANGES = C_("Context", "Tracked changes")
 
 # Translators: This is a shorter version of "Automatic focus mode during caret/structural
 # navigation" used on sub-pages where the navigation type context is already clear.

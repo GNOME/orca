@@ -123,54 +123,72 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 prefs_key=SayAllPresenter.KEY_STRUCTURAL_NAVIGATION,
                 member_of=guilabels.SAY_ALL_REWIND_AND_FAST_FORWARD_BY,
             ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.ANNOUNCE_BLOCKQUOTES,
-                getter=presenter.get_announce_blockquote,
-                setter=presenter.set_announce_blockquote,
-                prefs_key=SayAllPresenter.KEY_ANNOUNCE_BLOCKQUOTE,
-                member_of=guilabels.ANNOUNCEMENTS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.ANNOUNCE_FORMS,
-                getter=presenter.get_announce_form,
-                setter=presenter.set_announce_form,
-                prefs_key=SayAllPresenter.KEY_ANNOUNCE_FORM,
-                member_of=guilabels.ANNOUNCEMENTS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.ANNOUNCE_LANDMARKS,
-                getter=presenter.get_announce_landmark,
-                setter=presenter.set_announce_landmark,
-                prefs_key=SayAllPresenter.KEY_ANNOUNCE_LANDMARK,
-                member_of=guilabels.ANNOUNCEMENTS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.ANNOUNCE_LISTS,
-                getter=presenter.get_announce_list,
-                setter=presenter.set_announce_list,
-                prefs_key=SayAllPresenter.KEY_ANNOUNCE_LIST,
-                member_of=guilabels.ANNOUNCEMENTS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.ANNOUNCE_PANELS,
-                getter=presenter.get_announce_grouping,
-                setter=presenter.set_announce_grouping,
-                prefs_key=SayAllPresenter.KEY_ANNOUNCE_GROUPING,
-                member_of=guilabels.ANNOUNCEMENTS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.ANNOUNCE_TABLES,
-                getter=presenter.get_announce_table,
-                setter=presenter.set_announce_table,
-                prefs_key=SayAllPresenter.KEY_ANNOUNCE_TABLE,
-                member_of=guilabels.ANNOUNCEMENTS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off,
-            ),
+            *[
+                preferences_grid_base.BooleanPreferenceControl(
+                    label=label,
+                    getter=getter,
+                    setter=setter,
+                    prefs_key=key,
+                    member_of=guilabels.ANNOUNCEMENTS,
+                    determine_sensitivity=self._only_speak_displayed_text_is_off,
+                )
+                for label, getter, setter, key in [
+                    (
+                        guilabels.ANNOUNCE_ARTICLES,
+                        presenter.get_announce_article,
+                        presenter.set_announce_article,
+                        SayAllPresenter.KEY_ANNOUNCE_ARTICLE,
+                    ),
+                    (
+                        guilabels.ANNOUNCE_BLOCKQUOTES,
+                        presenter.get_announce_blockquote,
+                        presenter.set_announce_blockquote,
+                        SayAllPresenter.KEY_ANNOUNCE_BLOCKQUOTE,
+                    ),
+                    (
+                        guilabels.ANNOUNCE_CODE_BLOCKS,
+                        presenter.get_announce_code_block,
+                        presenter.set_announce_code_block,
+                        SayAllPresenter.KEY_ANNOUNCE_CODE_BLOCK,
+                    ),
+                    (
+                        guilabels.ANNOUNCE_FORMS,
+                        presenter.get_announce_form,
+                        presenter.set_announce_form,
+                        SayAllPresenter.KEY_ANNOUNCE_FORM,
+                    ),
+                    (
+                        guilabels.ANNOUNCE_LANDMARKS,
+                        presenter.get_announce_landmark,
+                        presenter.set_announce_landmark,
+                        SayAllPresenter.KEY_ANNOUNCE_LANDMARK,
+                    ),
+                    (
+                        guilabels.ANNOUNCE_LISTS,
+                        presenter.get_announce_list,
+                        presenter.set_announce_list,
+                        SayAllPresenter.KEY_ANNOUNCE_LIST,
+                    ),
+                    (
+                        guilabels.ANNOUNCE_PANELS,
+                        presenter.get_announce_grouping,
+                        presenter.set_announce_grouping,
+                        SayAllPresenter.KEY_ANNOUNCE_GROUPING,
+                    ),
+                    (
+                        guilabels.ANNOUNCE_TABLES,
+                        presenter.get_announce_table,
+                        presenter.set_announce_table,
+                        SayAllPresenter.KEY_ANNOUNCE_TABLE,
+                    ),
+                    (
+                        guilabels.ANNOUNCE_TRACKED_CHANGES,
+                        presenter.get_announce_tracked_changes,
+                        presenter.set_announce_tracked_changes,
+                        SayAllPresenter.KEY_ANNOUNCE_TRACKED_CHANGES,
+                    ),
+                ]
+            ],
             preferences_grid_base.EnumPreferenceControl(
                 label=guilabels.TEXT_ATTRIBUTE_CHANGES,
                 options=[
@@ -211,12 +229,15 @@ class SayAllPresenter:
     """Module for commands related to the current accessible object."""
 
     _SCHEMA = "say-all"
+    KEY_ANNOUNCE_ARTICLE = "announce-article"
     KEY_ANNOUNCE_BLOCKQUOTE = "announce-blockquote"
+    KEY_ANNOUNCE_CODE_BLOCK = "announce-code-block"
     KEY_ANNOUNCE_FORM = "announce-form"
     KEY_ANNOUNCE_GROUPING = "announce-grouping"
     KEY_ANNOUNCE_LANDMARK = "announce-landmark"
     KEY_ANNOUNCE_LIST = "announce-list"
     KEY_ANNOUNCE_TABLE = "announce-table"
+    KEY_ANNOUNCE_TRACKED_CHANGES = "announce-tracked-changes"
     KEY_ONLY_SPEAK_DISPLAYED_TEXT = "only-speak-displayed-text"
     KEY_REWIND_AND_FAST_FORWARD = "rewind-and-fast-forward"
     KEY_TEXT_ATTRIBUTE_CHANGE_MODE = "text-attribute-change-mode"
@@ -732,6 +753,32 @@ class SayAllPresenter:
         self._script.utilities.set_caret_context(context.obj, context.current_offset)
 
     @gsettings_registry.get_registry().gsetting(
+        key=KEY_ANNOUNCE_ARTICLE,
+        schema="say-all",
+        gtype="b",
+        default=True,
+        summary="Announce articles",
+    )
+    @dbus_service.getter
+    def get_announce_article(self) -> bool:
+        """Returns whether articles are announced when entered."""
+
+        return self._get_setting(self.KEY_ANNOUNCE_ARTICLE, True)
+
+    @dbus_service.setter
+    def set_announce_article(self, value: bool) -> bool:
+        """Sets whether articles are announced when entered."""
+
+        msg = f"SAY ALL PRESENTER: Setting announce articles to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA,
+            self.KEY_ANNOUNCE_ARTICLE,
+            value,
+        )
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
         key=KEY_ANNOUNCE_BLOCKQUOTE,
         schema="say-all",
         gtype="b",
@@ -754,6 +801,32 @@ class SayAllPresenter:
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_BLOCKQUOTE,
+            value,
+        )
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_ANNOUNCE_CODE_BLOCK,
+        schema="say-all",
+        gtype="b",
+        default=True,
+        summary="Announce code blocks",
+    )
+    @dbus_service.getter
+    def get_announce_code_block(self) -> bool:
+        """Returns whether code blocks are announced when entered."""
+
+        return self._get_setting(self.KEY_ANNOUNCE_CODE_BLOCK, True)
+
+    @dbus_service.setter
+    def set_announce_code_block(self, value: bool) -> bool:
+        """Sets whether code blocks are announced when entered."""
+
+        msg = f"SAY ALL PRESENTER: Setting announce code blocks to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA,
+            self.KEY_ANNOUNCE_CODE_BLOCK,
             value,
         )
         return True
@@ -884,6 +957,32 @@ class SayAllPresenter:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_ANNOUNCE_TABLE, value
+        )
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_ANNOUNCE_TRACKED_CHANGES,
+        schema="say-all",
+        gtype="b",
+        default=True,
+        summary="Announce tracked changes",
+    )
+    @dbus_service.getter
+    def get_announce_tracked_changes(self) -> bool:
+        """Returns whether tracked changes are announced when entered."""
+
+        return self._get_setting(self.KEY_ANNOUNCE_TRACKED_CHANGES, True)
+
+    @dbus_service.setter
+    def set_announce_tracked_changes(self, value: bool) -> bool:
+        """Sets whether tracked changes are announced when entered."""
+
+        msg = f"SAY ALL PRESENTER: Setting announce tracked changes to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA,
+            self.KEY_ANNOUNCE_TRACKED_CHANGES,
+            value,
         )
         return True
 

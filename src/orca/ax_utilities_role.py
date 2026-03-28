@@ -489,7 +489,9 @@ class AXUtilitiesRole:
         """Returns the localized role name for misc role overrides, or empty string."""
 
         name = ""
-        if AXUtilitiesRole.is_suggestion(obj, role):
+        if AXUtilitiesRole.is_code_block(obj):
+            name = object_properties.ROLE_CODE_BLOCK
+        elif AXUtilitiesRole.is_suggestion(obj, role):
             name = object_properties.ROLE_CONTENT_SUGGESTION
         elif AXUtilitiesRole.is_feed(obj, role):
             name = object_properties.ROLE_FEED
@@ -717,6 +719,16 @@ class AXUtilitiesRole:
             "code",
             "pre",
         ]
+
+    @staticmethod
+    def is_code_block(obj: Atspi.Accessible, _role: Atspi.Role | None = None) -> bool:
+        """Returns True if obj is a block-level code element."""
+
+        if not AXUtilitiesRole.is_code(obj):
+            return False
+        if AXUtilitiesRole._get_tag(obj) == "pre":
+            return True
+        return "inline" not in AXUtilitiesRole._get_display_style(obj)
 
     @staticmethod
     def is_color_chooser(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:

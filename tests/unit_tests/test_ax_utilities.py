@@ -323,6 +323,7 @@ class TestAXUtilities:
                 "mocks_config": {
                     "ax_utilities_role.is_section": True,
                     "ax_utilities_state.is_focusable": False,
+                    "ax_utilities_role.is_code_block": False,
                 },
                 "expected": True,
             },

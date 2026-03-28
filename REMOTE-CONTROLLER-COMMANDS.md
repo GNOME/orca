@@ -411,12 +411,15 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Parameters:** `PropertyName` (string), `Value` (variant, setter only)
 
+- **`AnnounceArticle`:** Gets/Sets whether articles are announced when entered.
 - **`AnnounceBlockquote`:** Gets/Sets whether blockquotes are announced when entered.
+- **`AnnounceCodeBlock`:** Gets/Sets whether code blocks are announced when entered.
 - **`AnnounceForm`:** Gets/Sets whether non-landmark forms are announced when entered.
 - **`AnnounceGrouping`:** Gets/Sets whether groupings are announced when entered.
 - **`AnnounceLandmark`:** Gets/Sets whether landmarks are announced when entered.
 - **`AnnounceList`:** Gets/Sets whether lists are announced when entered.
 - **`AnnounceTable`:** Gets/Sets whether tables are announced when entered.
+- **`AnnounceTrackedChanges`:** Gets/Sets whether tracked changes are announced when entered.
 - **`OnlySpeakDisplayedText`:** Gets/Sets whether Say All only speaks displayed text.
 - **`RewindAndFastForwardEnabled`:** Gets/Sets whether Up and Down can be used in Say All.
 - **`StructuralNavigationEnabled`:** Gets/Sets whether structural navigation keys can be used in Say All.
@@ -550,16 +553,19 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 **Parameters:** `PropertyName` (string), `Value` (variant, setter only)
 
 - **`AlwaysAnnounceSelectedRangeInSpreadsheet`:** Gets/Sets whether the selected range in spreadsheets is always announced.
+- **`AnnounceArticle`:** Gets/Sets whether articles are announced when entered.
 - **`AnnounceBlockquote`:** Gets/Sets whether blockquotes are announced when entered.
 - **`AnnounceCellCoordinates`:** Gets/Sets whether (non-spreadsheet) cell coordinates are announced.
 - **`AnnounceCellHeaders`:** Gets/Sets whether cell headers are announced.
 - **`AnnounceCellSpan`:** Gets/Sets whether cell spans are announced when greater than 1.
+- **`AnnounceCodeBlock`:** Gets/Sets whether code blocks are announced when entered.
 - **`AnnounceForm`:** Gets/Sets whether non-landmark forms are announced when entered.
 - **`AnnounceGrouping`:** Gets/Sets whether groupings are announced when entered.
 - **`AnnounceLandmark`:** Gets/Sets whether landmarks are announced when entered.
 - **`AnnounceList`:** Gets/Sets whether lists are announced when entered.
 - **`AnnounceSpreadsheetCellCoordinates`:** Gets/Sets whether spreadsheet cell coordinates are announced.
 - **`AnnounceTable`:** Gets/Sets whether tables are announced when entered.
+- **`AnnounceTrackedChanges`:** Gets/Sets whether tracked changes are announced when entered.
 - **`MessagesAreDetailed`:** Gets/Sets whether informative messages will be detailed or brief.
 - **`MonitorBackground`:** Gets/Sets the speech monitor background color.
 - **`MonitorFontSize`:** Gets/Sets the speech monitor font size.
