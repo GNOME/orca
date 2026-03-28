@@ -62,7 +62,6 @@ class TestSpeechPresenter:
             "orca.ax_document",
             "orca.presentation_manager",
             "orca.preferences_grid_base",
-            "orca.speech",
             "orca.speech_manager",
             "orca.speech_monitor",
         ]
@@ -186,28 +185,6 @@ class TestSpeechPresenter:
         assert cmd_manager.get_command("toggleSpeechVerbosityHandler") is not None
         assert cmd_manager.get_command("toggleSpeakingIndentationJustificationHandler") is not None
         assert cmd_manager.get_command("toggleTableCellReadModeHandler") is not None
-
-    def test_set_up_commands_registers_monitor_callbacks(
-        self,
-        test_context: OrcaTestContext,
-    ) -> None:
-        """Test that set_up_commands registers speech monitor callbacks."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.speech_presenter import SpeechPresenter
-
-        presenter = SpeechPresenter()
-        speech_mock = essential_modules["orca.speech"]
-        speech_mock.set_monitor_callbacks.reset_mock()
-
-        presenter.set_up_commands()
-
-        speech_mock.set_monitor_callbacks.assert_called_once_with(
-            write_text=presenter.write_to_monitor,
-            write_key=presenter.write_key_to_monitor,
-            begin_group=presenter._begin_monitor_group,
-            end_group=presenter._end_monitor_group,
-        )
 
     @pytest.mark.parametrize(
         "case",
@@ -778,17 +755,11 @@ class TestSpeechPresenter:
 
         essential_modules = self._setup_dependencies(test_context)
 
-        # Add speech module mock
-        speech_mock = essential_modules["orca.speech"]
-        speech_mock.speak = test_context.Mock()
-        speech_mock.speak_character = test_context.Mock()
-        speech_mock.speak_key_event = test_context.Mock()
-
         # Add phonnames module mock
         phonnames_mock = essential_modules["orca.phonnames"]
         phonnames_mock.get_phonetic_name = test_context.Mock(side_effect=lambda c: f"phonetic_{c}")
 
-        # Add speech_manager mock
+        # Add speech_manager mock with a mock server
         speech_manager_mock = essential_modules["orca.speech_manager"]
         speech_manager_instance = test_context.Mock()
         speech_manager_instance.get_speech_is_muted = test_context.Mock(return_value=False)
@@ -799,13 +770,18 @@ class TestSpeechPresenter:
         speech_manager_instance.set_capitalization_style = test_context.Mock()
         speech_manager_instance.get_punctuation_level = test_context.Mock(return_value="all")
         speech_manager_instance.set_punctuation_level = test_context.Mock()
+        mock_server = test_context.Mock()
+        speech_manager_instance.get_server = test_context.Mock(return_value=mock_server)
         speech_manager_mock.get_manager = test_context.Mock(return_value=speech_manager_instance)
+        essential_modules["_mock_server"] = mock_server
 
         # Add script_manager mock for _get_active_script / _get_voice
         script_manager_mock = essential_modules["orca.script_manager"]
         mock_script = test_context.Mock()
         speech_gen = test_context.Mock()
-        speech_gen.voice = test_context.Mock(return_value=[{"family": "default"}])
+        speech_gen.voice = test_context.Mock(
+            return_value=[{"family": {"name": "default"}}],
+        )
         speech_gen.generate_contents = test_context.Mock(return_value=["generated speech"])
         mock_script.get_speech_generator = test_context.Mock(return_value=speech_gen)
         script_manager_instance = test_context.Mock()
@@ -830,7 +806,7 @@ class TestSpeechPresenter:
         assert kwargs["obj"] is None
         assert kwargs["string"] == "test"
         assert kwargs["context"].in_preferences_window is False
-        assert voice == [{"family": "default"}]
+        assert voice == [{"family": {"name": "default"}}]
 
     def test_get_voice_no_active_script(self, test_context: OrcaTestContext) -> None:
         """Test _get_voice returns empty list when no active script."""
@@ -847,7 +823,7 @@ class TestSpeechPresenter:
         assert voice == []
 
     def test_speak_message(self, test_context: OrcaTestContext) -> None:
-        """Test speak_message speaks text via speech module."""
+        """Test speak_message speaks text via the speech server."""
 
         essential_modules = self._setup_speech_output_dependencies(test_context)
         from orca.speech_presenter import SpeechPresenter
@@ -855,7 +831,7 @@ class TestSpeechPresenter:
         presenter = SpeechPresenter()
         presenter.speak_message("Hello world")
 
-        essential_modules["orca.speech"].speak.assert_called()
+        essential_modules["_mock_server"].speak.assert_called()
 
     def test_speak_message_non_string(self, test_context: OrcaTestContext) -> None:
         """Test speak_message with non-string returns early."""
@@ -867,7 +843,7 @@ class TestSpeechPresenter:
         presenter.speak_message(123)  # type: ignore
 
         essential_modules["orca.debug"].print_exception.assert_called()
-        essential_modules["orca.speech"].speak.assert_not_called()
+        essential_modules["_mock_server"].speak.assert_not_called()
 
     def test_speak_message_only_displayed_text(self, test_context: OrcaTestContext) -> None:
         """Test speak_message when only_speak_displayed_text is true."""
@@ -886,7 +862,7 @@ class TestSpeechPresenter:
         presenter = SpeechPresenter()
         presenter.speak_message("Hello world")
 
-        essential_modules["orca.speech"].speak.assert_not_called()
+        essential_modules["_mock_server"].speak.assert_not_called()
 
     def test_speak_character(self, test_context: OrcaTestContext) -> None:
         """Test speak_character speaks a single character."""
@@ -897,7 +873,7 @@ class TestSpeechPresenter:
         presenter = SpeechPresenter()
         presenter.speak_character("a")
 
-        essential_modules["orca.speech"].speak_character.assert_called_once()
+        essential_modules["_mock_server"].speak_character.assert_called_once()
 
     def test_spell_item(self, test_context: OrcaTestContext) -> None:
         """Test spell_item speaks each character."""
@@ -908,7 +884,7 @@ class TestSpeechPresenter:
         presenter = SpeechPresenter()
         presenter.spell_item("abc")
 
-        assert essential_modules["orca.speech"].speak_character.call_count == 3
+        assert essential_modules["_mock_server"].speak_character.call_count == 3
 
     def test_spell_phonetically(self, test_context: OrcaTestContext) -> None:
         """Test spell_phonetically speaks phonetic names."""
@@ -920,7 +896,7 @@ class TestSpeechPresenter:
         presenter.spell_phonetically("ab")
 
         essential_modules["orca.phonnames"].get_phonetic_name.assert_called()
-        assert essential_modules["orca.speech"].speak.call_count >= 2
+        assert essential_modules["_mock_server"].speak.call_count >= 2
 
     def test_speak_contents(self, test_context: OrcaTestContext) -> None:
         """Test speak_contents generates and speaks contents."""
@@ -935,7 +911,7 @@ class TestSpeechPresenter:
         script_manager = essential_modules["orca.script_manager"].get_manager()
         script = script_manager.get_active_script()
         script.get_speech_generator().generate_contents.assert_called_once()
-        essential_modules["orca.speech"].speak.assert_called()
+        essential_modules["_mock_server"].speak.assert_called()
 
     def test_speak_contents_no_active_script(self, test_context: OrcaTestContext) -> None:
         """Test speak_contents returns early when no active script."""
@@ -950,10 +926,10 @@ class TestSpeechPresenter:
         mock_contents = [(test_context.Mock(), 0, 10, "test text")]
         presenter.speak_contents(mock_contents)
 
-        essential_modules["orca.speech"].speak.assert_not_called()
+        essential_modules["_mock_server"].speak.assert_not_called()
 
     def test_present_key_event(self, test_context: OrcaTestContext) -> None:
-        """Test present_key_event speaks key via speech module."""
+        """Test present_key_event speaks key via the speech server."""
 
         essential_modules = self._setup_speech_output_dependencies(test_context)
         from orca.speech_presenter import SpeechPresenter
@@ -962,9 +938,10 @@ class TestSpeechPresenter:
         mock_event = test_context.Mock()
         mock_event.is_printable_key.return_value = True
         mock_event.get_key_name.return_value = "a"
+        mock_event.get_locking_state_string.return_value = ""
         presenter.present_key_event(mock_event)
 
-        essential_modules["orca.speech"].speak_key_event.assert_called_once()
+        essential_modules["_mock_server"].speak_key_event.assert_called_once()
 
     def test_get_set_monitor_is_enabled(self, test_context: OrcaTestContext) -> None:
         """Test getting and setting speech monitor enabled status."""

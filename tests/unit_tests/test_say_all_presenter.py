@@ -190,12 +190,12 @@ class TestSayAllPresenter:
         """Test SayAllPresenter._parse_utterances with various input formats."""
 
         self._setup_dependencies(test_context)
-        from orca import speech
+        from orca.acss import ACSS
         from orca.say_all_presenter import SayAllPresenter
 
         presenter = SayAllPresenter()
 
-        mock_acss = test_context.Mock(spec=speech.ACSS)
+        mock_acss = test_context.Mock(spec=ACSS)
 
         elements, voices = presenter._parse_utterances([])
         assert len(elements) == 0
@@ -577,9 +577,9 @@ class TestSayAllPresenter:
         debug_mock.LEVEL_INFO = 800
         debug_mock.print_tokens = test_context.Mock()
 
-        from orca import speech
+        from orca import speech_presenter
 
-        test_context.patch_object(speech, "say_all", return_value=None)
+        test_context.patch_object(speech_presenter.get_presenter(), "say_all", return_value=None)
 
         mock_script.utilities.get_caret_context.return_value = ("obj", 10)
 

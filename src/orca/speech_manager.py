@@ -53,7 +53,6 @@ from . import (
     messages,
     preferences_grid_base,
     presentation_manager,
-    speech,
     speechserver,
     systemd,
 )
@@ -1417,6 +1416,7 @@ class SpeechManager:
     def __init__(self) -> None:
         self._families_sorted: bool = False
         self._initialized: bool = False
+        self._mute_speech: bool = False
         self._server: SpeechServer | None = None
 
         msg = "SPEECH MANAGER: Registering D-Bus commands."
@@ -2008,8 +2008,6 @@ class SpeechManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             systemd.get_manager().set_status("Speech", "not available")
 
-        speech.set_server(self._server)
-        speech.set_mute_speech(self.get_speech_is_muted())
         debug.print_message(debug.LEVEL_INFO, "SPEECH MANAGER: Server initialized", True)
         if self._server:
             systemd.get_manager().set_status("Speech", "enabled")
@@ -2100,7 +2098,6 @@ class SpeechManager:
         if server := self._get_server():
             server.shutdown_active_servers()
             self._server = None
-            speech.set_server(None)
 
         return True
 
@@ -2821,7 +2818,7 @@ class SpeechManager:
     def get_speech_is_muted(self) -> bool:
         """Returns whether speech output is temporarily muted."""
 
-        return speech.get_mute_speech()
+        return self._mute_speech
 
     @dbus_service.setter
     def set_speech_is_muted(self, value: bool) -> bool:
@@ -2829,7 +2826,7 @@ class SpeechManager:
 
         msg = f"SPEECH MANAGER: Setting speech muted to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        speech.set_mute_speech(value)
+        self._mute_speech = value
         return True
 
     @gsettings_registry.get_registry().gsetting(

@@ -1,6 +1,6 @@
 # Orca
 #
-# Copyright 2005-2008 Sun Microsystems Inc.
+# Copyright 2004-2009 Sun Microsystems Inc.
 # Copyright 2011-2026 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
@@ -59,15 +59,17 @@ from . import (
     presentation_manager,
     pronunciation_dictionary_manager,
     say_all_presenter,
-    speech,
+    speech_generator,
     speech_manager,
     speech_monitor,
     speechserver,
 )
+from .acss import ACSS
 from .ax_document import AXDocument
 from .ax_hypertext import AXHypertext
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
+from .speechserver import VoiceFamily
 from .text_attribute_manager import TextAttributeChangeMode
 
 if TYPE_CHECKING:
@@ -79,7 +81,6 @@ if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi, Gio
 
-    from .acss import ACSS
     from .input_event import KeyboardEvent
     from .scripts import default
 
@@ -890,13 +891,6 @@ class SpeechPresenter:
         if self._initialized:
             return
         self._initialized = True
-
-        speech.set_monitor_callbacks(
-            write_text=self.write_to_monitor,
-            write_key=self.write_key_to_monitor,
-            begin_group=self._begin_monitor_group,
-            end_group=self._end_monitor_group,
-        )
 
         manager = command_manager.get_manager()
         group_label = guilabels.KB_GROUP_SPEECH_VERBOSITY
@@ -2558,19 +2552,138 @@ class SpeechPresenter:
             monitor.write_key_event(key_description)
         self._append_to_history("key", key_description)
 
+    @staticmethod
+    def _resolve_acss(acss: ACSS | dict[str, Any] | list[dict[str, Any]] | None = None) -> ACSS:
+        """Normalizes various voice property formats to an ACSS instance."""
+
+        if isinstance(acss, ACSS):
+            family = acss.get(acss.FAMILY)
+            if family is not None:
+                try:
+                    family = VoiceFamily(family)
+                except (TypeError, ValueError):
+                    family = VoiceFamily({})
+                acss[acss.FAMILY] = family
+            return acss
+        if isinstance(acss, list) and len(acss) == 1:
+            return ACSS(acss[0])
+        if isinstance(acss, dict):
+            return ACSS(acss)
+        return ACSS({})
+
+    def _speak_single(self, text: str, acss: ACSS | dict[str, Any] | None) -> None:
+        """Speaks an individual string using the given ACSS."""
+
+        server = speech_manager.get_manager().get_server()
+        if not server:
+            msg = f"SPEECH OUTPUT: '{text}' {acss}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
+        resolved_voice = self._resolve_acss(acss)
+        msg = f"SPEECH OUTPUT: '{text}' {resolved_voice}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        server.speak(text, resolved_voice)
+        self.write_to_monitor(text)
+
+    # pylint: disable-next=too-many-branches
+    def _speak_list(self, content: list, acss: ACSS | dict[str, Any] | None) -> None:
+        """Processes a list of speech content items."""
+
+        valid_types = (str, list, speech_generator.Pause, ACSS)
+
+        to_speak: list[str] = []
+        active_voice = ACSS(acss) if acss is not None else acss
+
+        for element in content:
+            if not isinstance(element, valid_types):
+                msg = f"SPEECH: Bad content sent to speak(): {element}"
+                debug.print_message(debug.LEVEL_INFO, msg, True, True)
+            elif isinstance(element, list):
+                self._speak_list(element, acss)
+            elif isinstance(element, str):
+                if element:
+                    to_speak.append(element)
+            elif to_speak:
+                new_voice = ACSS(acss)
+                new_items_to_speak: list[str] = []
+                if isinstance(element, speech_generator.Pause):
+                    if to_speak[-1] and to_speak[-1][-1].isalnum():
+                        to_speak[-1] += "."
+                elif isinstance(element, ACSS):
+                    new_voice.update(element)
+                    if active_voice is None:
+                        active_voice = new_voice
+                    if new_voice == active_voice:
+                        continue
+                    tokens = ["SPEECH: New voice", new_voice, " != active voice", active_voice]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                    new_items_to_speak.append(to_speak.pop())
+
+                if to_speak:
+                    self._speak_single(" ".join(to_speak), active_voice)
+                active_voice = new_voice
+                to_speak = new_items_to_speak
+
+        if to_speak:
+            self._speak_single(" ".join(to_speak), active_voice)
+
+    def _speak(self, content: Any, acss: ACSS | dict[str, Any] | None = None) -> None:
+        """Speaks the given content, which can be a string or a list from the speech generator."""
+
+        if speech_manager.get_manager().get_speech_is_muted():
+            return
+
+        if isinstance(content, str):
+            msg = f"SPEECH: Speak '{content}' acss: {acss}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            self._speak_single(content, acss)
+            return
+
+        if isinstance(content, list):
+            tokens = ["SPEECH: Speak", content, ", acss:", acss]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            self._begin_monitor_group()
+            try:
+                self._speak_list(content, acss)
+            finally:
+                self._end_monitor_group()
+            return
+
+        if not isinstance(content, (speech_generator.Pause, ACSS)):
+            msg = f"SPEECH: Bad content sent to speak(): {content}"
+            debug.print_message(debug.LEVEL_INFO, msg, True, True)
+
     def present_key_event(self, event: KeyboardEvent) -> None:
         """Presents a key event via speech."""
 
+        if speech_manager.get_manager().get_speech_is_muted():
+            return
+
         key_name = event.get_key_name() if event.is_printable_key() else None
         voice = self._get_voice(text=key_name or "")
-        speech.speak_key_event(event, voice[0] if voice else None)
+        acss = self._resolve_acss(voice[0] if voice else None)
+
+        event_string = event.get_key_name()
+        locking_state_string = event.get_locking_state_string()
+        event_string = f"{event_string} {locking_state_string}".strip()
+        msg = f"SPEECH OUTPUT: '{event_string}' {acss}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        server = speech_manager.get_manager().get_server()
+        if server:
+            server.speak_key_event(event, acss)
+        if key_name:
+            self.write_key_to_monitor(key_name)
+        else:
+            self.write_key_to_monitor(event.get_key_name())
 
     def speak_accessible_text(self, obj: Atspi.Accessible | None, text: str) -> None:
         """Speaks text from an accessible object, determining voice automatically."""
 
         voice = self._get_voice(text, obj)
         text = self.adjust_for_presentation(obj, text)
-        speech.speak(text, voice[0] if voice else None)
+        self._speak(text, voice[0] if voice else None)
 
     def speak_message(self, text: str) -> None:
         """Speaks a message using the system voice."""
@@ -2597,7 +2710,7 @@ class SpeechPresenter:
             server.update_punctuation_level(level)
 
         text = self.adjust_for_presentation(None, text)
-        speech.speak(text, voice)
+        self._speak(text, voice)
 
         if server is not None:
             mgr.update_capitalization_style()
@@ -2697,7 +2810,7 @@ class SpeechPresenter:
         context = self._build_generator_context()
         generator = active_script.get_speech_generator()
         utterances = generator.generate_contents(contents, context, **args)
-        speech.speak(utterances)
+        self._speak(utterances)
 
     def present_generated_speech(
         self,
@@ -2710,7 +2823,7 @@ class SpeechPresenter:
         where_am_i_type = args.pop("where_am_i_type", None)
         context = self._build_generator_context(where_am_i_type)
         utterances = script.get_speech_generator().generate_speech(obj, context, **args)
-        speech.speak(utterances)
+        self._speak(utterances)
 
     def speak_line(
         self,
@@ -2729,7 +2842,7 @@ class SpeechPresenter:
         context = self._build_generator_context()
         generator = script.get_speech_generator()
         utterances = generator.generate_line(obj, start_offset, end_offset, line, context)
-        speech.speak(utterances)
+        self._speak(utterances)
 
     def speak_phrase(
         self,
@@ -2752,7 +2865,7 @@ class SpeechPresenter:
         context = self._build_generator_context()
         generator = script.get_speech_generator()
         utterances = generator.generate_phrase(obj, start_offset, end_offset, phrase, context)
-        speech.speak(utterances)
+        self._speak(utterances)
 
     def speak_word(
         self,
@@ -2764,7 +2877,7 @@ class SpeechPresenter:
 
         context = self._build_generator_context()
         utterances = script.get_speech_generator().generate_word(obj, offset, context)
-        speech.speak(utterances)
+        self._speak(utterances)
 
     def speak_character_at_offset(
         self,
@@ -2796,7 +2909,21 @@ class SpeechPresenter:
     def say_all(self, utterance_iterator: Any, progress_callback: Callable[..., Any]) -> None:
         """Speaks each item in the utterance_iterator."""
 
-        speech.say_all(utterance_iterator, progress_callback)
+        if speech_manager.get_manager().get_speech_is_muted():
+            return
+
+        def _with_monitor(iterator: Any) -> Any:
+            for context, acss in iterator:
+                self.write_to_monitor(context.utterance)
+                yield context, acss
+
+        server = speech_manager.get_manager().get_server()
+        if server:
+            server.say_all(_with_monitor(utterance_iterator), progress_callback)
+        else:
+            for context, _acss in utterance_iterator:
+                msg = f"SPEECH OUTPUT: '{context.utterance}'"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def speak_character(
         self,
@@ -2807,8 +2934,19 @@ class SpeechPresenter:
     ) -> None:
         """Speaks a single character using the voice for voice_from."""
 
+        if speech_manager.get_manager().get_speech_is_muted():
+            return
+
         voice = self._get_voice(text=voice_from or character, obj=obj)
-        speech.speak_character(character, voice[0] if voice else None, cap_style=cap_style)
+        acss = self._resolve_acss(voice[0] if voice else None)
+        msg = f"SPEECH OUTPUT: '{character}'"
+        tokens = [msg, acss]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        server = speech_manager.get_manager().get_server()
+        if server:
+            server.speak_character(character, acss=acss, cap_style=cap_style)
+        self.write_to_monitor(character)
 
     def spell_item(self, text: str) -> None:
         """Speak the characters in the string one by one."""
@@ -2822,7 +2960,7 @@ class SpeechPresenter:
         for character in item_string:
             voice = self._get_voice(text=character)
             phonetic_string = phonnames.get_phonetic_name(character.lower())
-            speech.speak(phonetic_string, voice[0] if voice else None)
+            self._speak(phonetic_string, voice[0] if voice else None)
 
     def create_speech_preferences_grid(
         self,

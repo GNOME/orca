@@ -82,7 +82,6 @@ class TestSpeechManager:
         """Set up mocks for speech_manager dependencies."""
 
         additional_modules = [
-            "orca.speech",
             "orca.speechserver",
             "orca.acss",
             "orca.presentation_manager",
@@ -103,10 +102,6 @@ class TestSpeechManager:
         dbus_service_mock.setter = passthrough_decorator
         dbus_service_mock.command = passthrough_decorator
         dbus_service_mock.parameterized_command = passthrough_decorator
-
-        speech_mock = essential_modules["orca.speech"]
-        speech_mock.speak.return_value = None
-        speech_mock.get_mute_speech.return_value = False
 
         debug_mock = essential_modules["orca.debug"]
         debug_mock.print_message.return_value = None
@@ -599,12 +594,12 @@ class TestSpeechManager:
     def test_get_speech_is_muted(self, test_context: OrcaTestContext, case: dict) -> None:
         """Test get_speech_is_muted method."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.speech"].get_mute_speech.return_value = case["setting_value"]
+        self._setup_dependencies(test_context)
 
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
+        manager._mute_speech = case["setting_value"]
 
         result = manager.get_speech_is_muted()
         assert result == case["expected"]
@@ -646,13 +641,13 @@ class TestSpeechManager:
     ) -> None:
         """Test get_speech_is_enabled_and_not_muted method."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        essential_modules["orca.speech"].get_mute_speech.return_value = case["silence_speech"]
+        self._setup_dependencies(test_context)
 
         from orca import gsettings_registry
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
+        manager._mute_speech = case["silence_speech"]
         gsettings_registry.get_registry().set_runtime_value(
             "speech",
             "enable",
@@ -1203,17 +1198,16 @@ class TestSpeechManager:
     def test_toggle_speech_unmutes_when_muted(self, test_context: OrcaTestContext) -> None:
         """Test toggle_speech unmutes when speech is currently muted."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        speech_mock = essential_modules["orca.speech"]
-        speech_mock.get_mute_speech.return_value = True
+        self._setup_dependencies(test_context)
 
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
+        manager._mute_speech = True
         script = test_context.Mock()
         manager.toggle_speech(script)
 
-        speech_mock.set_mute_speech.assert_called_with(False)
+        assert manager._mute_speech is False
 
     def test_toggle_speech_enables_when_disabled(self, test_context: OrcaTestContext) -> None:
         """Test toggle_speech enables speech when enableSpeech is False."""
@@ -1238,8 +1232,7 @@ class TestSpeechManager:
     ) -> None:
         """Test toggle_speech mutes when the app profile has enableSpeech=True."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        speech_mock = essential_modules["orca.speech"]
+        self._setup_dependencies(test_context)
 
         from orca.speech_manager import SpeechManager
 
@@ -1247,7 +1240,7 @@ class TestSpeechManager:
         script = test_context.Mock()
         manager.toggle_speech(script)
 
-        speech_mock.set_mute_speech.assert_called_with(True)
+        assert manager._mute_speech is True
         assert manager.get_speech_is_enabled() is True
 
     def test_toggle_speech_disables_when_app_profile_has_speech_disabled(
@@ -1280,7 +1273,6 @@ class TestVoicesPreferencesGridUI:
         """Set up mocks for VoicesPreferencesGrid dependencies."""
 
         additional_modules = [
-            "orca.speech",
             "orca.speechserver",
             "orca.acss",
             "orca.presentation_manager",
