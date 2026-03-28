@@ -1059,10 +1059,15 @@ class AXUtilities:
         return filtered
 
     @staticmethod
-    def get_set_size(obj: Atspi.Accessible) -> int:
+    def get_set_size(obj: Atspi.Accessible) -> int:  # pylint: disable=too-many-return-statements
         """Returns the total number of objects in this container."""
 
         result = AXObject.get_attribute(obj, "setsize", False)
+        if isinstance(result, str) and result.isnumeric():
+            return int(result)
+
+        parent = AXObject.get_parent(obj)
+        result = AXObject.get_attribute(parent, "setsize", False)
         if isinstance(result, str) and result.isnumeric():
             return int(result)
 
@@ -1070,7 +1075,7 @@ class AXUtilities:
             return AXTable.get_row_count(AXUtilitiesTable.get_table(obj))
 
         if AXUtilitiesRole.is_table_cell_or_header(obj) and not AXUtilitiesRole.is_table_row(
-            AXObject.get_parent(obj),
+            parent,
         ):
             return AXTable.get_row_count(AXUtilitiesTable.get_table(obj))
 
@@ -1084,7 +1089,7 @@ class AXUtilities:
         if AXUtilitiesRole.is_list(obj) or AXUtilitiesRole.is_list_box(obj):
             obj = AXUtilities.get_list_item(obj)
 
-        child_count = AXObject.get_child_count(AXObject.get_parent(obj))
+        child_count = AXObject.get_child_count(parent)
         if child_count > 500:
             return child_count
 
@@ -1100,6 +1105,9 @@ class AXUtilities:
 
         attrs = AXObject.get_attributes_dict(obj, False)
         if attrs.get("setsize") == "-1":
+            return True
+
+        if AXObject.get_attribute(AXObject.get_parent(obj), "setsize", False) == "-1":
             return True
 
         if AXUtilitiesRole.is_table(obj):
