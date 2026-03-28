@@ -104,7 +104,6 @@ lib_sources = [
   'gsettings_migrator.py',
   'gsettings_registry.py',
   'guilabels.py',
-  'highlighter.py',
   'input_event.py',
   'input_event_manager.py',
   'keybindings.py',
