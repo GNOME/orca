@@ -1235,51 +1235,6 @@ class BrailleGenerator(generator.Generator):
 
         return self._generate_default_presentation(obj, **args)
 
-    def _generate_math_enclosed(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Generates braille for the math-enclosed role."""
-
-        return self._generate_default_presentation(obj, **args)
-
-    def _generate_math_fenced(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Generates braille for the math-fenced role."""
-
-        return self._generate_default_presentation(obj, **args)
-
-    def _generate_math_fraction(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Generates braille for the math-fraction role."""
-
-        return self._generate_default_presentation(obj, **args)
-
-    def _generate_math_multiscript(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Generates braille for the math-multiscript role."""
-
-        return self._generate_default_presentation(obj, **args)
-
-    def _generate_math_root(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Generates braille for the math-root role."""
-
-        return self._generate_default_presentation(obj, **args)
-
-    def _generate_math_row(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Generates braille for the math-row role."""
-
-        return self._generate_default_presentation(obj, **args)
-
-    def _generate_math_script_subsuper(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Generates braille for the math script subsuper role."""
-
-        return self._generate_default_presentation(obj, **args)
-
-    def _generate_math_script_underover(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Generates braille for the math script underover role."""
-
-        return self._generate_default_presentation(obj, **args)
-
-    def _generate_math_table(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Generates braille for the math-table role."""
-
-        return self._generate_default_presentation(obj, **args)
-
     def _generate_menu(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the menu role."""
 

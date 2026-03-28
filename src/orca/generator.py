@@ -158,15 +158,6 @@ class Generator:
             Atspi.Role.LIST_BOX: self._generate_list_box,
             Atspi.Role.LIST_ITEM: self._generate_list_item,
             Atspi.Role.MATH: self._generate_math,
-            "ROLE_MATH_ENCLOSED": self._generate_math_enclosed,
-            "ROLE_MATH_FENCED": self._generate_math_fenced,
-            Atspi.Role.MATH_FRACTION: self._generate_math_fraction,
-            Atspi.Role.MATH_ROOT: self._generate_math_root,
-            "ROLE_MATH_MULTISCRIPT": self._generate_math_multiscript,
-            "ROLE_MATH_SCRIPT_SUBSUPER": self._generate_math_script_subsuper,
-            "ROLE_MATH_SCRIPT_UNDEROVER": self._generate_math_script_underover,
-            "ROLE_MATH_TABLE": self._generate_math_table,
-            "ROLE_MATH_TABLE_ROW": self._generate_math_row,
             Atspi.Role.MARK: self._generate_mark,
             Atspi.Role.MENU: self._generate_menu,
             Atspi.Role.MENU_ITEM: self._generate_menu_item,
@@ -571,30 +562,8 @@ class Generator:
         return result
 
     @log_generator_output
-    def _get_functional_math_role(self, obj: Atspi.Accessible) -> str | None:
-        """Returns the functional math role string, or None if not a recognized math role."""
-
-        math_checks: list[tuple[Callable[[Atspi.Accessible], bool], str]] = [
-            (AXUtilities.is_math_sub_or_super_script, "ROLE_MATH_SCRIPT_SUBSUPER"),
-            (AXUtilities.is_math_under_or_over_script, "ROLE_MATH_SCRIPT_UNDEROVER"),
-            (AXUtilities.is_math_multi_script, "ROLE_MATH_MULTISCRIPT"),
-            (AXUtilities.is_math_enclose, "ROLE_MATH_ENCLOSED"),
-            (AXUtilities.is_math_fenced, "ROLE_MATH_FENCED"),
-            (AXUtilities.is_math_table, "ROLE_MATH_TABLE"),
-            (AXUtilities.is_math_table_row, "ROLE_MATH_TABLE_ROW"),
-        ]
-        for predicate, result in math_checks:
-            if predicate(obj):
-                return result
-        return None
-
-    @log_generator_output
     def _get_functional_role(self, obj, **args):
         role = args.get("role", AXObject.get_role(obj))
-        if AXUtilities.is_math_related(obj):
-            math_role = self._get_functional_math_role(obj)
-            if math_role is not None:
-                return math_role
         role_checks: list[tuple[Callable[[], bool], Atspi.Role | str]] = [
             (
                 lambda: AXUtilities.is_dpub(obj, role) and AXUtilities.is_landmark(obj),
@@ -1792,51 +1761,6 @@ class Generator:
 
     def _generate_math(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates presentation for the math role."""
-
-        return []
-
-    def _generate_math_enclosed(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Generates presentation for the math-enclosed role."""
-
-        return []
-
-    def _generate_math_fenced(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Generates presentation for the math-fenced role."""
-
-        return []
-
-    def _generate_math_fraction(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Generates presentation for the math-fraction role."""
-
-        return []
-
-    def _generate_math_multiscript(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Generates presentation for the math-multiscript role."""
-
-        return []
-
-    def _generate_math_root(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Generates presentation for the math-root role."""
-
-        return []
-
-    def _generate_math_row(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Generates presentation for the math-row role."""
-
-        return []
-
-    def _generate_math_script_subsuper(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Generates presentation for the math script subsuper role."""
-
-        return []
-
-    def _generate_math_script_underover(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Generates presentation for the math script underover role."""
-
-        return []
-
-    def _generate_math_table(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Generates presentation for the math-table role."""
 
         return []
 
