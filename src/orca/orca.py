@@ -35,7 +35,6 @@ gi.require_version("Gdk", "3.0")
 from gi.repository import (
     Atspi,
     Gdk,  # pylint: disable=no-name-in-module
-    Gio,
     GLib,
 )
 
@@ -216,31 +215,6 @@ def _ensure_accessibility_enabled() -> int | None:
     return None
 
 
-def _setup_legacy_gsettings_monitoring() -> Gio.Settings | None:
-    """Sets up legacy GSettings monitoring for non-systemd environments."""
-
-    def _on_enabled_changed(gsetting, key):
-        enabled = gsetting.get_boolean(key)
-        msg = f"ORCA: {key} changed to {enabled}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        if key == "screen-reader-enabled" and not enabled:
-            shutdown()
-
-    try:
-        gsetting = Gio.Settings(schema_id="org.gnome.desktop.a11y.applications")
-        connection = gsetting.connect("changed", _on_enabled_changed)
-        msg = f"ORCA: Connected to a11y applications gsetting: {bool(connection)}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        return gsetting
-    except GLib.Error as error:
-        msg = f"ORCA: EXCEPTION connecting to a11y applications (schema may be missing): {error}"
-        debug.print_message(debug.LEVEL_SEVERE, msg, True)
-    except (AttributeError, TypeError) as error:
-        msg = f"ORCA: EXCEPTION connecting to a11y applications (version incompatibility):{error}"
-        debug.print_message(debug.LEVEL_SEVERE, msg, True)
-    return None
-
-
 def _activate_services():
     """Activates Orca services and attempts to find the focused object."""
 
@@ -291,11 +265,6 @@ def main(import_dir: str | None = None, prefs_dir: str = ""):
     is_systemd_managed = systemd.get_manager().is_systemd_managed()
     msg = f"ORCA: Running under systemd: {is_systemd_managed}"
     debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    # Keep a reference to prevent garbage collection of the GSettings connection.
-    _gsettings_ref = None
-    if not is_systemd_managed:
-        _gsettings_ref = _setup_legacy_gsettings_monitoring()
 
     dbus_service.get_remote_controller().start()
     presentation_manager.get_manager().present_message(messages.START_ORCA)
