@@ -1394,7 +1394,7 @@ class Utilities(script_utilities.Utilities):
                 or document_presenter.get_presenter().in_focus_mode(self._script.app)
             )
 
-        objects = []
+        objects: list[tuple[Atspi.Accessible, int, int, str]] = []
         if offset > 0 and self.treat_as_end_of_line(obj, offset):
             rect = self._get_extents(obj, offset - 1, offset)
         else:
@@ -1415,6 +1415,13 @@ class Utilities(script_utilities.Utilities):
             x_obj, x_start, x_end, _x_string = x
             if x_start == x_end:
                 return False
+
+            # Contiguous ranges from the same text object are different AT-SPI
+            # lines. Character extents at wrap boundaries can be unreliable.
+            if x_obj == obj and AXObject.supports_text(obj):
+                for existing_obj, e_start, e_end, _e_string in objects:
+                    if existing_obj == x_obj and (x_start == e_end or x_end == e_start):
+                        return False
 
             x_rect = self._get_extents(x_obj, x_start, x_start + 1)
 
