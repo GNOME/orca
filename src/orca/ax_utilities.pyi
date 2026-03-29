@@ -275,6 +275,8 @@ class AXUtilities:
         role: Atspi.Role | None = None,
     ) -> bool: ...
     @staticmethod
+    def get_annotation_roles() -> list[Atspi.Role]: ...
+    @staticmethod
     def get_dialog_roles(include_alert_as_dialog: bool = True) -> list[Atspi.Role]: ...
     @staticmethod
     def get_document_roles() -> list[Atspi.Role]: ...
@@ -968,6 +970,11 @@ class AXUtilities:
     def find_all_with_states(
         root: Atspi.Accessible,
         state_list: list[Atspi.StateType],
+        pred: Callable | None = None,
+    ) -> list[Atspi.Accessible]: ...
+    @staticmethod
+    def find_all_annotations(
+        root: Atspi.Accessible,
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod

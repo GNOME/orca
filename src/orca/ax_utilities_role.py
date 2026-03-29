@@ -134,6 +134,20 @@ class AXUtilitiesRole:
         return False
 
     @staticmethod
+    def get_annotation_roles() -> list[Atspi.Role]:
+        """Returns the list of roles we consider annotations."""
+
+        # TODO - JD: Enable suggestion once we bump to a version of AT-SPI2 that contains the
+        # fix for https://gitlab.gnome.org/GNOME/at-spi2-core/-/issues/222.
+        roles = [
+            Atspi.Role.CONTENT_DELETION,
+            Atspi.Role.CONTENT_INSERTION,
+            Atspi.Role.MARK,
+            # Atspi.Role.SUGGESTION,
+        ]
+        return roles
+
+    @staticmethod
     def get_dialog_roles(include_alert_as_dialog: bool = True) -> list[Atspi.Role]:
         """Returns the list of roles we consider documents"""
 

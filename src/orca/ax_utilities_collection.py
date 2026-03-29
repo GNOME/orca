@@ -224,6 +224,16 @@ class AXUtilitiesCollection:
         )
 
     @staticmethod
+    def find_all_annotations(
+        root: Atspi.Accessible,
+        pred: Callable[[Atspi.Accessible], bool] | None = None,
+    ) -> list[Atspi.Accessible]:
+        """Returns all descendants of root with an annotation-related role."""
+
+        roles = AXUtilitiesRole.get_annotation_roles()
+        return AXUtilitiesCollection.find_all_with_role(root, roles, pred)
+
+    @staticmethod
     def find_all_block_quotes(
         root: Atspi.Accessible,
         pred: Callable[[Atspi.Accessible], bool] | None = None,

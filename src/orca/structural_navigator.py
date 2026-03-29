@@ -311,11 +311,17 @@ class StructuralNavigator:
             keybindings.NO_MODIFIER_MASK,
         )
         # Commands with no bindings
+        cmd_bindings["previous_annotation"] = None
+        cmd_bindings["next_annotation"] = None
+        cmd_bindings["list_annotations"] = None
         cmd_bindings["previous_iframe"] = None
         cmd_bindings["next_iframe"] = None
         cmd_bindings["list_iframes"] = None
 
         commands_data = [
+            ("previous_annotation", self.previous_annotation, cmdnames.ANNOTATION_PREV),
+            ("next_annotation", self.next_annotation, cmdnames.ANNOTATION_NEXT),
+            ("list_annotations", self.list_annotations, cmdnames.ANNOTATION_LIST),
             ("previous_blockquote", self.previous_blockquote, cmdnames.BLOCKQUOTE_PREV),
             ("next_blockquote", self.next_blockquote, cmdnames.BLOCKQUOTE_NEXT),
             ("list_blockquotes", self.list_blockquotes, cmdnames.BLOCKQUOTE_LIST),
@@ -1064,6 +1070,113 @@ class StructuralNavigator:
         if AXUtilities.is_document_descendant(obj, inclusive=True):
             return False
         return not (must_be_showing and not AXUtilities.is_showing(obj))
+
+    ########################
+    #                      #
+    # Annotations          #
+    #                      #
+    ########################
+
+    def _get_all_annotations(self, script: default.Script) -> list[Atspi.Accessible]:
+        pred = None
+        if self.get_mode(script) == NavigationMode.GUI:
+            pred = self._is_non_document_object
+
+        root = self._determine_root_container(script)
+        return AXUtilities.find_all_annotations(root, pred=pred)
+
+    @dbus_service.command
+    def previous_annotation(
+        self,
+        script: default.Script,
+        event: InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Goes to the previous annotation."""
+
+        tokens = [
+            "STRUCTURAL NAVIGATOR: previous_annotation. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        self._last_input_event = event
+        matches = self._get_all_annotations(script)
+        result = self._get_object_in_direction(script, matches, False)
+        self._present_object(
+            script,
+            result,
+            messages.NO_MORE_ANNOTATIONS,
+            notify_user=notify_user,
+        )
+        return True
+
+    @dbus_service.command
+    def next_annotation(
+        self,
+        script: default.Script,
+        event: InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Goes to the next annotation."""
+
+        tokens = [
+            "STRUCTURAL NAVIGATOR: next_annotation. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        self._last_input_event = event
+        matches = self._get_all_annotations(script)
+        result = self._get_object_in_direction(script, matches, True)
+        self._present_object(
+            script,
+            result,
+            messages.NO_MORE_ANNOTATIONS,
+            notify_user=notify_user,
+        )
+        return True
+
+    @dbus_service.command
+    def list_annotations(
+        self,
+        script: default.Script,
+        event: InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Displays a list of annotations."""
+
+        tokens = [
+            "STRUCTURAL NAVIGATOR: list_annotations. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        self._last_input_event = event
+        self._present_object_list(
+            script,
+            self._get_all_annotations(script),
+            guilabels.SN_TITLE_ANNOTATION,
+            [guilabels.SN_HEADER_ANNOTATION, guilabels.SN_HEADER_ROLE],
+            lambda obj: [
+                self._get_item_string(script, obj),
+                AXUtilities.get_localized_role_name(obj),
+            ],
+            notify_user=notify_user,
+        )
+        return True
 
     ########################
     #                      #

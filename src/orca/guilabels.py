@@ -852,6 +852,13 @@ SAY_ALL_STRUCTURAL_NAVIGATION = _("Structural navigation")
 
 # Translators: Orca has a command that presents a list of structural navigation
 # objects in a dialog box so that users can navigate more quickly than they
+# could with native keyboard navigation. Annotations include content insertions,
+# content deletions, suggestions, and highlights. This is the title for a column
+# which contains the text of an annotation.
+SN_HEADER_ANNOTATION = C_("structural navigation", "Annotation")
+
+# Translators: Orca has a command that presents a list of structural navigation
+# objects in a dialog box so that users can navigate more quickly than they
 # could with native keyboard navigation. This is the title for a column which
 # contains the text of a blockquote.
 SN_HEADER_BLOCKQUOTE = C_("structural navigation", "Blockquote")
@@ -992,6 +999,12 @@ SN_HEADER_URI = C_("structural navigation", "URI")
 # could with native keyboard navigation. This is the title for a column which
 # contains the value of a form field.
 SN_HEADER_VALUE = C_("structural navigation", "Value")
+
+# Translators: Orca has a command that presents a list of structural navigation
+# objects in a dialog box so that users can navigate more quickly than they
+# could with native keyboard navigation. Annotations include content insertions,
+# content deletions, suggestions, and highlights. This is the title of such a dialog box.
+SN_TITLE_ANNOTATION = C_("structural navigation", "Annotations")
 
 # Translators: Orca has a command that presents a list of structural navigation
 # objects in a dialog box so that users can navigate more quickly than they

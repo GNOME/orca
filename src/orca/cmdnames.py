@@ -848,6 +848,18 @@ STRUCTURAL_NAVIGATION_MODE_CYCLE = _("Cycles to the next structural navigation m
 # which enables/disables this support.
 TABLE_NAVIGATION_TOGGLE = _("Toggle table navigation keys")
 
+# Translators: this is for navigating among annotations in a document.
+# Annotations include content insertions, content deletions, suggestions, and highlights.
+ANNOTATION_PREV = _("Go to previous annotation")
+
+# Translators: this is for navigating among annotations in a document.
+# Annotations include content insertions, content deletions, suggestions, and highlights.
+ANNOTATION_NEXT = _("Go to next annotation")
+
+# Translators: this is for navigating among annotations in a document.
+# Annotations include content insertions, content deletions, suggestions, and highlights.
+ANNOTATION_LIST = _("Display a list of annotations")
+
 # Translators: this is for navigating among blockquotes in a document.
 BLOCKQUOTE_PREV = _("Go to previous blockquote")
 

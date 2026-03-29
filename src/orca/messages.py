@@ -1513,6 +1513,12 @@ NAVIGATOR_SIMPLIFIED_DISABLED = _("Simplified navigation disabled.")
 # localized rolename if it does not.
 NO_ACTIONS_FOUND_ON = _("No actions found on: %s")
 
+# Translators: This is for navigating document content by moving from annotation
+# to annotation. Annotations include content insertions, content deletions,
+# suggestions, and highlights. This is a detailed message which will be presented to
+# the user if no more annotations can be found.
+NO_MORE_ANNOTATIONS = _("No more annotations.")
+
 # Translators: This is for navigating document content by moving from blockquote
 # to blockquote. This is a detailed message which will be presented to the user
 # if no more blockquotes can be found.

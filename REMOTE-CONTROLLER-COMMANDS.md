@@ -621,6 +621,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`ContainerEnd`:** Moves to the end of the current container.
 - **`ContainerStart`:** Moves to the start of the current container.
 - **`CycleMode`:** Cycles among the structural navigation modes.
+- **`ListAnnotations`:** Displays a list of annotations.
 - **`ListBlockquotes`:** Displays a list of blockquotes.
 - **`ListButtons`:** Displays a list of buttons.
 - **`ListCheckboxes`:** Displays a list of checkboxes.
@@ -647,6 +648,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`ListTables`:** Displays a list of tables.
 - **`ListUnvisitedLinks`:** Displays a list of unvisited links.
 - **`ListVisitedLinks`:** Displays a list of visited links.
+- **`NextAnnotation`:** Goes to the next annotation.
 - **`NextBlockquote`:** Goes to the next blockquote.
 - **`NextButton`:** Goes to the next button.
 - **`NextCheckbox`:** Goes to the next checkbox.
@@ -675,6 +677,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`NextTable`:** Goes to the next table.
 - **`NextUnvisitedLink`:** Goes to the next unvisited link.
 - **`NextVisitedLink`:** Goes to the next visited link.
+- **`PreviousAnnotation`:** Goes to the previous annotation.
 - **`PreviousBlockquote`:** Goes to the previous blockquote.
 - **`PreviousButton`:** Goes to the previous button.
 - **`PreviousCheckbox`:** Goes to the previous checkbox.
