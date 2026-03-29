@@ -185,14 +185,22 @@ class EventManager:
                 and x.any_data == event.any_data
             )
 
+        event_is_skippable_same_type = event.type.startswith(
+            EventManager._SKIPPABLE_SAME_TYPE_PREFIXES
+        )
+        event_is_skippable_sibling = event.type.startswith(EventManager._SKIPPABLE_SIBLING_PREFIXES)
+        event_is_window = event.type.startswith(EventManager._SKIPPABLE_WINDOW_PREFIXES)
+
         def obsoletes_if_same_type_and_object(x):
+            if not event_is_skippable_same_type:
+                return False
             if x.type != event.type:
                 return False
-            if x.source != event.source:
-                return False
-            return x.type.startswith(EventManager._SKIPPABLE_SAME_TYPE_PREFIXES)
+            return x.source == event.source
 
         def obsoletes_if_same_type_in_sibling(x):
+            if not event_is_skippable_sibling:
+                return False
             if (
                 x.type != event.type
                 or x.detail1 != event.detail1
@@ -200,17 +208,14 @@ class EventManager:
                 or x.any_data != event.any_data
             ):
                 return False
-
-            if not x.type.startswith(EventManager._SKIPPABLE_SIBLING_PREFIXES):
-                return False
             return AXObject.get_parent(x.source) == AXObject.get_parent(event.source)
 
         def obsoletes_window_event(x):
-            if not x.type.startswith(EventManager._SKIPPABLE_WINDOW_PREFIXES):
+            if not event_is_window:
                 return False
-            if not event.type.startswith(EventManager._SKIPPABLE_WINDOW_PREFIXES):
+            if x.source != event.source:
                 return False
-            return x.source == event.source
+            return x.type.startswith(EventManager._SKIPPABLE_WINDOW_PREFIXES)
 
         with self._event_queue.mutex:
             try:
