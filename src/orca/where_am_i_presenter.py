@@ -231,8 +231,16 @@ class WhereAmIPresenter:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        attrs = AXText.get_text_attributes_at_offset(focus)[0]
+        reviewer = flat_review_presenter.get_presenter()
+        if reviewer.is_active():
+            context = reviewer.get_or_create_context(script)
+            obj = context.get_current_object()
+            offset = context.get_current_text_offset()
+        else:
+            obj = focus_manager.get_manager().get_locus_of_focus()
+            offset = None
+
+        attrs = AXText.get_text_attributes_at_offset(obj, offset)[0]
 
         attr_list = text_attribute_manager.get_manager().get_resolved_attributes_to_speak()
 
