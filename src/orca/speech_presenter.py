@@ -2813,6 +2813,7 @@ class SpeechPresenter:
             text_attribute_change_mode=self._text_attribute_change_mode_override.value
             if self._text_attribute_change_mode_override is not None
             else p.get_text_attribute_change_mode().value,
+            speak_misspelled_indicator=self.get_speak_misspelled_indicator(),
         )
 
     def generate_speech_contents(

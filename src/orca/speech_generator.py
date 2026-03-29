@@ -96,6 +96,7 @@ class SpeechGeneratorContext(GeneratorContext):
     announce_table: bool
     announce_tracked_changes: bool
     text_attribute_change_mode: int
+    speak_misspelled_indicator: bool
 
 
 class Pause:
@@ -1955,11 +1956,11 @@ class SpeechGenerator(generator.Generator):
             return []
 
         announce_formatting = self._should_announce_attribute_changes(obj)
-
-        if not announce_formatting:
-            result = self._generate_text_substring(obj, **args)
-            if result:
-                return result
+        if not announce_formatting and not AXUtilities.is_editable(obj):
+            if self._context is None or not self._context.speak_misspelled_indicator:
+                result = self._generate_text_substring(obj, **args)
+                if result:
+                    return result
 
         content_start = args.pop("startOffset", None)
         content_end = args.pop("endOffset", None)
