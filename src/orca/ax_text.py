@@ -213,6 +213,11 @@ class AXTextAttribute(enum.Enum):
                 return self.get_localized_name()
             return f"{self.get_localized_name()}: {self.get_localized_value(new_value)}"
 
+        if self == AXTextAttribute.MARK:
+            if self.value_is_default(new_value):
+                return messages.TEXT_ATTRIBUTE_OFF % self.get_localized_name()
+            return self.get_localized_name()
+
         if self == AXTextAttribute.INVALID:
             if new_value == "spelling":
                 return messages.MISSPELLED
