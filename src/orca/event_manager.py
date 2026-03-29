@@ -186,9 +186,11 @@ class EventManager:
             )
 
         def obsoletes_if_same_type_and_object(x):
-            if not x.type.startswith(EventManager._SKIPPABLE_SAME_TYPE_PREFIXES):
+            if x.type != event.type:
                 return False
-            return x.source == event.source and x.type == event.type
+            if x.source != event.source:
+                return False
+            return x.type.startswith(EventManager._SKIPPABLE_SAME_TYPE_PREFIXES)
 
         def obsoletes_if_same_type_in_sibling(x):
             if (
