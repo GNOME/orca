@@ -64,6 +64,25 @@ class EventManager:
     PRIORITY_LOWER = 5
     PRIORITY_LOW = 6
 
+    _SKIPPABLE_SAME_TYPE_PREFIXES = (
+        "document:page-changed",
+        "object:active-descendant-changed",
+        "object:children-changed",
+        "object:property-change",
+        "object:selection-changed",
+        "object:state-changed",
+        "object:text-caret-moved",
+        "object:text-selection-changed",
+        "window",
+    )
+
+    _SKIPPABLE_SIBLING_PREFIXES = ("object:state-changed:focused",)
+
+    _SKIPPABLE_WINDOW_PREFIXES = (
+        "window:activate",
+        "window:deactivate",
+    )
+
     def __init__(self) -> None:
         debug.print_message(debug.LEVEL_INFO, "EVENT MANAGER: Initializing", True)
         self._script_listener_counts: dict[str, int] = {}
@@ -167,18 +186,7 @@ class EventManager:
             )
 
         def obsoletes_if_same_type_and_object(x):
-            skippable = {
-                "document:page-changed",
-                "object:active-descendant-changed",
-                "object:children-changed",
-                "object:property-change",
-                "object:state-changed",
-                "object:selection-changed",
-                "object:text-caret-moved",
-                "object:text-selection-changed",
-                "window",
-            }
-            if not any(x.type.startswith(etype) for etype in skippable):
+            if not x.type.startswith(EventManager._SKIPPABLE_SAME_TYPE_PREFIXES):
                 return False
             return x.source == event.source and x.type == event.type
 
@@ -191,21 +199,14 @@ class EventManager:
             ):
                 return False
 
-            skippable = {
-                "object:state-changed:focused",
-            }
-            if not any(x.type.startswith(etype) for etype in skippable):
+            if not x.type.startswith(EventManager._SKIPPABLE_SIBLING_PREFIXES):
                 return False
             return AXObject.get_parent(x.source) == AXObject.get_parent(event.source)
 
         def obsoletes_window_event(x):
-            skippable = {
-                "window:activate",
-                "window:deactivate",
-            }
-            if not any(x.type.startswith(etype) for etype in skippable):
+            if not x.type.startswith(EventManager._SKIPPABLE_WINDOW_PREFIXES):
                 return False
-            if not any(event.type.startswith(etype) for etype in skippable):
+            if not event.type.startswith(EventManager._SKIPPABLE_WINDOW_PREFIXES):
                 return False
             return x.source == event.source
 
