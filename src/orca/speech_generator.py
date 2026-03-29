@@ -4118,6 +4118,7 @@ class SpeechGenerator(generator.Generator):
 
         allowed = set(text_attribute_manager.get_manager().get_resolved_attributes_to_speak())
         allowed.discard(AXTextAttribute.TEXT_DECORATION)
+        allowed.discard(AXTextAttribute.INVALID)
 
         descriptions: list[str] = []
         seen: set[AXTextAttribute] = set()
