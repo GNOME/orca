@@ -1596,8 +1596,14 @@ class Script(default.Script):
         if not AXUtilities.is_editable(
             event.source,
         ) and not self.utilities.is_content_editable_with_embedded_objects(event.source):
-            msg = "WEB: Done processing non-editable source"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            focus = focus_manager.get_manager().get_locus_of_focus()
+            if focus in (event.source, AXObject.get_parent(event.source)):
+                msg = "WEB: Non-editable source is locus of focus. Updating braille."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                self.update_braille(event.source)
+            else:
+                msg = "WEB: Done processing non-editable source"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
         return False
@@ -1676,6 +1682,11 @@ class Script(default.Script):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 focus_manager.get_manager().set_locus_of_focus(None, event.source, force=True)
                 return True
+
+            msg = "WEB: Non-editable source is locus of focus. Updating braille."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            self.update_braille(event.source)
+            return True
 
         if (
             not source_is_focus
