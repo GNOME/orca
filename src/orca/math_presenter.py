@@ -274,7 +274,11 @@ class MathPresenter:
         if lang and lang != "Auto":
             return lang
 
-        return (locale.getlocale()[0] or "").split("_")[0]
+        system_locale = locale.getlocale()[0]
+        if system_locale:
+            return system_locale.split("_")[0]
+
+        return "en"
 
     def _apply_preferences(self) -> None:
         """Applies stored preferences to MathCAT."""
@@ -287,12 +291,20 @@ class MathPresenter:
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 supported = []
 
-            if lang_code in supported:
+            if lang_code not in supported:
+                msg = f"MATH PRESENTER: Language {lang_code} not supported, "
+                if "en" in supported:
+                    lang_code = "en"
+                elif supported:
+                    lang_code = supported[0]
+                else:
+                    lang_code = ""
+                msg += f"falling back to {lang_code!r}"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+
+            if lang_code:
                 libmathcat_py.SetPreference("Language", lang_code)
                 msg = f"MATH PRESENTER: Language set to {lang_code}"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-            else:
-                msg = f"MATH PRESENTER: Language {lang_code} not supported"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
 
         if speech_style := self.get_speech_style():
