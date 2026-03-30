@@ -513,11 +513,8 @@ class PronunciationDictionaryManager:
 
         self._suppressed = False
 
-    def get_pronunciation(self, word: str) -> str:
-        """Returns the pronunciation for word, or word if not found."""
-
-        if self._suppressed:
-            return word
+    def _ensure_dictionary_current(self) -> dict[str, str]:
+        """Reloads the pronunciation dictionary if the app or profile has changed."""
 
         registry = gsettings_registry.get_registry()
         current_app = registry.get_active_app()
@@ -535,7 +532,23 @@ class PronunciationDictionaryManager:
                 default={},
             )
 
-        return self._dictionary.get(word.lower(), word) or word
+        return self._dictionary
+
+    def get_pronunciation(self, word: str) -> str:
+        """Returns the pronunciation for word, or word if not found."""
+
+        if self._suppressed:
+            return word
+        dictionary = self._ensure_dictionary_current()
+        return dictionary.get(word.lower(), word) or word
+
+    def apply_to_words(self, words: list[str]) -> str:
+        """Applies pronunciation dictionary to a list of words and joins the result."""
+
+        if self._suppressed:
+            return "".join(words)
+        dictionary = self._ensure_dictionary_current()
+        return "".join(dictionary.get(w.lower(), w) or w for w in words)
 
     def set_pronunciation(self, word: str, replacement: str) -> None:
         """Adds word/replacement pair."""

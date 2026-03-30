@@ -2263,7 +2263,7 @@ class SpeechPresenter:
 
         manager = pronunciation_dictionary_manager.get_manager()
         words = re.split(r"(\W+)", text)
-        return "".join(map(manager.get_pronunciation, words))
+        return manager.apply_to_words(words)
 
     def get_indentation_description(self, line: str, only_if_changed: bool | None = None) -> str:
         """Returns a description of the indentation in the given line."""
