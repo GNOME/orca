@@ -548,13 +548,19 @@ class AXObject:
         return parent
 
     @staticmethod
-    def get_child(obj: Atspi.Accessible, index: int) -> Atspi.Accessible | None:
+    def get_child(
+        obj: Atspi.Accessible,
+        index: int,
+        n_children: int | None = None,
+    ) -> Atspi.Accessible | None:
         """Returns the nth child of obj. See also get_child_checked."""
 
         if not AXObject.is_valid(obj):
             return None
 
-        n_children = AXObject.get_child_count(obj)
+        if n_children is None:
+            n_children = AXObject.get_child_count(obj)
+
         if n_children <= 0:
             return None
 
@@ -818,7 +824,7 @@ class AXObject:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
 
         for index in range(child_count):
-            child = AXObject.get_child(obj, index)
+            child = AXObject.get_child(obj, index, child_count)
             if child is None and not AXObject.is_valid(obj):
                 tokens = ["AXObject:", obj, "is no longer valid"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)

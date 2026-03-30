@@ -132,6 +132,9 @@ class TestSpeechPresenter:
         pronunciation_dict_mock = essential_modules["orca.pronunciation_dictionary_manager"]
         pron_manager_instance = test_context.Mock()
         pron_manager_instance.get_pronunciation = test_context.Mock(side_effect=lambda x: x)
+        pron_manager_instance.apply_to_words = test_context.Mock(
+            side_effect=lambda words: "".join(words)
+        )
         pronunciation_dict_mock.get_manager = test_context.Mock(return_value=pron_manager_instance)
 
         from orca import gsettings_registry

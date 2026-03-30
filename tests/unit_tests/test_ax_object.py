@@ -2931,7 +2931,7 @@ class TestAXObject:
 
         child_calls = [0]
 
-        def mock_get_child(parent, index):  # pylint: disable=unused-argument
+        def mock_get_child(parent, index, _n_children=None):  # pylint: disable=unused-argument
             if case["becomes_invalid"] and child_calls[0] >= 1:
                 return None
             child_calls[0] += 1
