@@ -96,6 +96,7 @@ class EventManager:
         self._gidle_lock = threading.Lock()
         self._listener: Atspi.EventListener = Atspi.EventListener.new(self._enqueue_object_event)
         self._event_history: dict[str, tuple[int | None, float]] = {}
+        self._latest_event: dict[tuple[str, int], int] = {}
         debug.print_message(debug.LEVEL_INFO, "Event manager initialized", True)
 
     def activate(self) -> None:
@@ -122,6 +123,7 @@ class EventManager:
         input_event_manager.get_manager().stop_key_watcher()
         self._active = False
         self._event_queue = queue.PriorityQueue(0)
+        self._latest_event = {}
         self._script_listener_counts = {}
         debug.print_message(debug.LEVEL_INFO, "EVENT MANAGER: Deactivated", True)
 
@@ -138,6 +140,7 @@ class EventManager:
         self._paused = pause
         if clear_queue:
             self._event_queue = queue.PriorityQueue(0)
+            self._latest_event = {}
         input_event_manager.get_manager().pause_key_watcher(pause, reason)
 
     def _get_priority(self, event: Atspi.Event) -> int:
@@ -173,8 +176,28 @@ class EventManager:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return priority
 
-    def _is_obsoleted_by(self, event: Atspi.Event) -> Atspi.Event | None:
+    # pylint: disable-next=too-many-return-statements
+    def _is_obsoleted_by(self, event: Atspi.Event, counter: int = -1) -> Atspi.Event | None:
         """Returns the event which renders this one no longer worthy of being processed."""
+
+        if event.type.startswith(EventManager._SKIPPABLE_SAME_TYPE_PREFIXES):
+            key = (event.type, hash(event.source))
+            latest = self._latest_event.get(key, -1)
+            if latest > counter >= 0:
+                tokens = [
+                    "EVENT MANAGER:",
+                    event,
+                    f"(#{counter}) obsoleted: a newer {event.type} for same source"
+                    f" is queued (#{latest})",
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return event
+
+        event_is_skippable_sibling = event.type.startswith(EventManager._SKIPPABLE_SIBLING_PREFIXES)
+        event_is_window = event.type.startswith(EventManager._SKIPPABLE_WINDOW_PREFIXES)
+
+        if not event_is_skippable_sibling and not event_is_window:
+            return None
 
         def is_same(x):
             return (
@@ -184,19 +207,6 @@ class EventManager:
                 and x.detail2 == event.detail2
                 and x.any_data == event.any_data
             )
-
-        event_is_skippable_same_type = event.type.startswith(
-            EventManager._SKIPPABLE_SAME_TYPE_PREFIXES
-        )
-        event_is_skippable_sibling = event.type.startswith(EventManager._SKIPPABLE_SIBLING_PREFIXES)
-        event_is_window = event.type.startswith(EventManager._SKIPPABLE_WINDOW_PREFIXES)
-
-        def obsoletes_if_same_type_and_object(x):
-            if not event_is_skippable_same_type:
-                return False
-            if x.type != event.type:
-                return False
-            return x.source == event.source
 
         def obsoletes_if_same_type_in_sibling(x):
             if not event_is_skippable_sibling:
@@ -221,7 +231,7 @@ class EventManager:
             try:
                 events = list(reversed(self._event_queue.queue))
             except queue.Empty as error:
-                msg = f"EVENT MANAGER: Exception in _isObsoletedBy: {error}"
+                msg = f"EVENT MANAGER: Exception in _is_obsoleted_by: {error}"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 events = []
 
@@ -230,16 +240,6 @@ class EventManager:
                 return None
             if is_same(e):
                 tokens = ["EVENT MANAGER:", event, "obsoleted by", e, "more recent duplicate"]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return e
-            if obsoletes_if_same_type_and_object(e):
-                tokens = [
-                    "EVENT MANAGER:",
-                    event,
-                    "obsoleted by",
-                    e,
-                    "more recent event of same type for same object",
-                ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return e
             if obsoletes_if_same_type_in_sibling(e):
@@ -640,6 +640,8 @@ class EventManager:
             priority = self._get_priority(e)
             counter = next(self._counter)
             self._event_queue.put((priority, counter, e))
+            if e.type.startswith(EventManager._SKIPPABLE_SAME_TYPE_PREFIXES):
+                self._latest_event[(e.type, hash(e.source))] = counter
             tokens = ["EVENT MANAGER: Queued", e, f"priority: {priority}, counter: {counter}"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if not self._gidle_id:
@@ -671,7 +673,7 @@ class EventManager:
                 f"(queue size: {self._event_queue.qsize()}) vvvvv"
             )
             debug.print_message(debug.LEVEL_INFO, msg, False)
-            self._process_object_event(event)
+            self._process_object_event(event, counter)
             msg = (
                 f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"
                 f"\n^^^^^ FINISHED PRIORITY-{priority} OBJECT EVENT {event.type.upper()} ^^^^^\n"
@@ -944,10 +946,10 @@ class EventManager:
 
         return None
 
-    def _process_object_event(self, event: Atspi.Event) -> None:
+    def _process_object_event(self, event: Atspi.Event, counter: int = -1) -> None:
         """Handles all object events destined for scripts."""
 
-        if self._is_obsoleted_by(event) or self._handle_early_event_processing(event):
+        if self._is_obsoleted_by(event, counter) or self._handle_early_event_processing(event):
             return
 
         if debug.debugLevel <= debug.LEVEL_INFO:

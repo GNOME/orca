@@ -376,42 +376,31 @@ class TestEventManager:
         "case",
         [
             {
-                "id": "duplicate_events",
-                "new_type": "object:text-changed:insert",
-                "new_detail1": 5,
-                "new_detail2": 10,
-                "new_data": "test",
-                "existing_type": "object:text-changed:insert",
-                "existing_detail1": 5,
-                "existing_detail2": 10,
-                "existing_data": "test",
-                "priority": 4,
+                "id": "skippable_type_obsoleted",
+                "event_type": "object:state-changed:focused",
+                "counter": 5,
+                "latest_counter": 10,
                 "should_obsolete": True,
             },
             {
-                "id": "window_events",
-                "new_type": "window:activate",
-                "new_detail1": 0,
-                "new_detail2": 0,
-                "new_data": None,
-                "existing_type": "window:deactivate",
-                "existing_detail1": 0,
-                "existing_detail2": 0,
-                "existing_data": None,
-                "priority": 2,
-                "should_obsolete": True,
+                "id": "skippable_type_not_obsoleted_if_latest",
+                "event_type": "object:state-changed:focused",
+                "counter": 10,
+                "latest_counter": 10,
+                "should_obsolete": False,
             },
             {
-                "id": "no_obsolescence",
-                "new_type": "object:text-changed:insert",
-                "new_detail1": 0,
-                "new_detail2": 0,
-                "new_data": None,
-                "existing_type": None,
-                "existing_detail1": None,
-                "existing_detail2": None,
-                "existing_data": None,
-                "priority": None,
+                "id": "non_skippable_type_not_obsoleted",
+                "event_type": "object:other-event",
+                "counter": 5,
+                "latest_counter": 10,
+                "should_obsolete": False,
+            },
+            {
+                "id": "empty_index_not_obsoleted",
+                "event_type": "object:text-caret-moved",
+                "counter": 5,
+                "latest_counter": None,
                 "should_obsolete": False,
             },
         ],
@@ -422,28 +411,20 @@ class TestEventManager:
         test_context: OrcaTestContext,
         case: dict,
     ) -> None:
-        """Test EventManager._is_obsoleted_by for various obsolescence scenarios."""
+        """Test EventManager._is_obsoleted_by uses the latest-event index."""
         self._setup_dependencies(test_context)
         from orca.event_manager import EventManager
 
         manager = EventManager()
         mock_event = test_context.Mock(spec=Atspi.Event)
-        mock_event.type = case["new_type"]
+        mock_event.type = case["event_type"]
         mock_event.source = test_context.Mock()
-        mock_event.detail1 = case["new_detail1"]
-        mock_event.detail2 = case["new_detail2"]
-        mock_event.any_data = case["new_data"]
 
-        if case["existing_type"] is not None and case["priority"] is not None:
-            existing_event = test_context.Mock(spec=Atspi.Event)
-            existing_event.type = case["existing_type"]
-            existing_event.source = mock_event.source
-            existing_event.detail1 = case["existing_detail1"]
-            existing_event.detail2 = case["existing_detail2"]
-            existing_event.any_data = case["existing_data"]
-            manager._event_queue.put((case["priority"], 1, existing_event))
+        if case["latest_counter"] is not None:
+            key = (mock_event.type, hash(mock_event.source))
+            manager._latest_event[key] = case["latest_counter"]
 
-        result = manager._is_obsoleted_by(mock_event)
+        result = manager._is_obsoleted_by(mock_event, case["counter"])
         if case["should_obsolete"]:
             assert result is not None
         else:
@@ -1244,70 +1225,50 @@ class TestEventManager:
         result2 = manager._ignore(mock_event)
         assert result2 is True
 
-    def test_is_obsoleted_by_identical_events(self, test_context: OrcaTestContext) -> None:
-        """Test EventManager._is_obsoleted_by with identical events in queue."""
+    def test_is_obsoleted_by_index_check(self, test_context: OrcaTestContext) -> None:
+        """Test that _is_obsoleted_by uses the _latest_event index."""
 
         self._setup_dependencies(test_context)
         from orca.event_manager import EventManager
 
         manager = EventManager()
         mock_event = test_context.Mock(spec=Atspi.Event)
-        mock_event.type = "object:test-event"
+        mock_event.type = "object:text-caret-moved"
         mock_event.source = test_context.Mock()
-        mock_event.detail1 = 1
-        mock_event.detail2 = 2
-        mock_event.any_data = "test_data"
 
-        identical_event = test_context.Mock(spec=Atspi.Event)
-        identical_event.type = "object:test-event"
-        identical_event.source = mock_event.source
-        identical_event.detail1 = 1
-        identical_event.detail2 = 2
-        identical_event.any_data = "test_data"
+        assert manager._is_obsoleted_by(mock_event, 5) is None
 
-        queue_data = [(4, 1, identical_event)]
-        with manager._event_queue.mutex:
-            manager._event_queue.queue = queue_data
-
-        result = manager._is_obsoleted_by(mock_event)
-        assert result == identical_event
+        key = (mock_event.type, hash(mock_event.source))
+        manager._latest_event[key] = 10
+        assert manager._is_obsoleted_by(mock_event, 5) is not None
+        assert manager._is_obsoleted_by(mock_event, 10) is None
 
     @pytest.mark.parametrize(
         "case",
         [
             {
                 "id": "active_descendant_obsoletes",
-                "existing_type": "object:active-descendant-changed",
-                "existing_source_same": True,
-                "new_type": "object:active-descendant-changed",
+                "event_type": "object:active-descendant-changed",
                 "should_obsolete": True,
             },
             {
                 "id": "state_changed_obsoletes",
-                "existing_type": "object:state-changed:focused",
-                "existing_source_same": True,
-                "new_type": "object:state-changed:focused",
+                "event_type": "object:state-changed:focused",
                 "should_obsolete": True,
             },
             {
                 "id": "caret_moved_obsoletes",
-                "existing_type": "object:text-caret-moved",
-                "existing_source_same": True,
-                "new_type": "object:text-caret-moved",
+                "event_type": "object:text-caret-moved",
                 "should_obsolete": True,
             },
             {
                 "id": "window_activate_obsoletes",
-                "existing_type": "window:activate",
-                "existing_source_same": True,
-                "new_type": "window:activate",
+                "event_type": "window:activate",
                 "should_obsolete": True,
             },
             {
                 "id": "non_skippable_does_not_obsolete",
-                "existing_type": "object:other-event",
-                "existing_source_same": True,
-                "new_type": "object:other-event",
+                "event_type": "object:other-event",
                 "should_obsolete": False,
             },
         ],
@@ -1326,28 +1287,15 @@ class TestEventManager:
         manager = EventManager()
         mock_source = test_context.Mock()
         mock_event = test_context.Mock(spec=Atspi.Event)
-        mock_event.type = case["new_type"]
+        mock_event.type = case["event_type"]
         mock_event.source = mock_source
-        mock_event.detail1 = 0
-        mock_event.detail2 = 0
-        mock_event.any_data = None
 
-        existing_event = test_context.Mock(spec=Atspi.Event)
-        existing_event.type = case["existing_type"]
-        existing_event.source = mock_source if case["existing_source_same"] else test_context.Mock()
-        existing_event.detail1 = (
-            0 if case["should_obsolete"] else 1
-        )  # Make it different for non-obsoleting case
-        existing_event.detail2 = 0
-        existing_event.any_data = None
+        key = (mock_event.type, hash(mock_source))
+        manager._latest_event[key] = 10
 
-        queue_data = [(4, 1, existing_event)]
-        with manager._event_queue.mutex:
-            manager._event_queue.queue = queue_data
-
-        result = manager._is_obsoleted_by(mock_event)
+        result = manager._is_obsoleted_by(mock_event, 5)
         if case["should_obsolete"]:
-            assert result == existing_event
+            assert result is not None
         else:
             assert result is None
 
@@ -1402,16 +1350,10 @@ class TestEventManager:
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_event.type = "window:activate"
         mock_event.source = mock_source
-        mock_event.detail1 = 0
-        mock_event.detail2 = 0
-        mock_event.any_data = None
 
         existing_event = test_context.Mock(spec=Atspi.Event)
-        existing_event.type = "window:activate"
+        existing_event.type = "window:deactivate"
         existing_event.source = mock_source
-        existing_event.detail1 = 0
-        existing_event.detail2 = 0
-        existing_event.any_data = None
 
         queue_data = [(4, 1, existing_event)]
         with manager._event_queue.mutex:
