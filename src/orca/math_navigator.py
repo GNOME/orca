@@ -238,6 +238,11 @@ class MathNavigator:
             return
         self._initialized = True
 
+        if libmathcat_py is None:
+            msg = "MATH NAVIGATOR: MathCAT not available. Skipping command setup."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
+
         manager = command_manager.get_manager()
         group_label = guilabels.KB_GROUP_MATH_NAVIGATION
 
