@@ -245,8 +245,13 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             ),
             (
                 guilabels.AUTO_LANGUAGE_SWITCHING,
-                self._on_auto_language_switching_toggled,
+                self._on_auto_language_switching_content_toggled,
                 self._manager.get_auto_language_switching(),
+            ),
+            (
+                guilabels.AUTO_LANGUAGE_SWITCHING_UI,
+                self._on_auto_language_switching_ui_toggled,
+                self._manager.get_auto_language_switching_ui(),
             ),
         ]
 
@@ -265,7 +270,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._use_color_names_switch = switches[1]
         self._enable_pause_breaks_switch = switches[2]
         self._use_pronunciation_dict_switch = switches[3]
-        self._auto_language_switching_switch = switches[4]
+        self._auto_language_switching_content_switch = switches[4]
+        self._auto_language_switching_ui_switch = switches[5]
 
         global_content.add(global_listbox)  # pylint: disable=no-member
         self.attach(self._global_frame, 0, row, 1, 1)
@@ -588,7 +594,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self._use_pronunciation_dict_switch.get_active()
         )
         result[SpeechManager.KEY_AUTO_LANGUAGE_SWITCHING] = (
-            self._auto_language_switching_switch.get_active()
+            self._auto_language_switching_content_switch.get_active()
+        )
+        result[SpeechManager.KEY_AUTO_LANGUAGE_SWITCHING_UI] = (
+            self._auto_language_switching_ui_switch.get_active()
         )
 
         self._has_unsaved_changes = False
@@ -632,8 +641,11 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._use_pronunciation_dict_switch.set_active(
             self._manager.get_use_pronunciation_dictionary(app_name=app),
         )
-        self._auto_language_switching_switch.set_active(
+        self._auto_language_switching_content_switch.set_active(
             self._manager.get_auto_language_switching(app_name=app),
+        )
+        self._auto_language_switching_ui_switch.set_active(
+            self._manager.get_auto_language_switching_ui(app_name=app),
         )
 
         # Note: Voice type widgets are created on-demand in dialogs, so no need to refresh them here
@@ -1192,11 +1204,18 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._manager.set_use_pronunciation_dictionary(switch.get_active())
         self._has_unsaved_changes = True
 
-    def _on_auto_language_switching_toggled(self, switch: Gtk.Switch, _state: Any) -> None:
-        """Handle auto language switching switch change."""
+    def _on_auto_language_switching_content_toggled(self, switch: Gtk.Switch, _state: Any) -> None:
+        """Handle auto language switching for document content switch change."""
         if self._initializing:
             return
         self._manager.set_auto_language_switching(switch.get_active())
+        self._has_unsaved_changes = True
+
+    def _on_auto_language_switching_ui_toggled(self, switch: Gtk.Switch, _state: Any) -> None:
+        """Handle auto language switching for UI elements switch change."""
+        if self._initializing:
+            return
+        self._manager.set_auto_language_switching_ui(switch.get_active())
         self._has_unsaved_changes = True
 
     def _on_speech_system_changed(self, widget: Gtk.ComboBox) -> None:
@@ -1334,6 +1353,7 @@ class SpeechManager:
     KEY_INSERT_PAUSES_BETWEEN_UTTERANCES = "insert-pauses-between-utterances"
     KEY_USE_PRONUNCIATION_DICTIONARY = "use-pronunciation-dictionary"
     KEY_AUTO_LANGUAGE_SWITCHING = "auto-language-switching"
+    KEY_AUTO_LANGUAGE_SWITCHING_UI = "auto-language-switching-ui"
     KEY_CAPITALIZATION_STYLE = "capitalization-style"
     KEY_PUNCTUATION_LEVEL = "punctuation-level"
 
@@ -2984,24 +3004,50 @@ class SpeechManager:
         schema="speech",
         gtype="b",
         default=True,
-        summary="Automatically switch voice based on text language",
+        summary="Automatically switch voice based on document content language",
         migration_key="enableAutoLanguageSwitching",
     )
     @dbus_service.getter
     def get_auto_language_switching(self, app_name: str | None = None) -> bool:
-        """Returns whether automatic language switching is enabled."""
+        """Returns whether automatic language switching for document content is enabled."""
 
         return self._get_setting(self.KEY_AUTO_LANGUAGE_SWITCHING, "b", True, app_name=app_name)
 
     @dbus_service.setter
     def set_auto_language_switching(self, value: bool) -> bool:
-        """Sets whether automatic language switching is enabled."""
+        """Sets whether automatic language switching for document content is enabled."""
 
-        msg = f"SPEECH MANAGER: Setting auto language switching to {value}."
+        msg = f"SPEECH MANAGER: Setting auto language switching for content to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
             self.KEY_AUTO_LANGUAGE_SWITCHING,
+            value,
+        )
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_AUTO_LANGUAGE_SWITCHING_UI,
+        schema="speech",
+        gtype="b",
+        default=False,
+        summary="Automatically switch voice based on UI element language",
+    )
+    @dbus_service.getter
+    def get_auto_language_switching_ui(self, app_name: str | None = None) -> bool:
+        """Returns whether automatic language switching for UI elements is enabled."""
+
+        return self._get_setting(self.KEY_AUTO_LANGUAGE_SWITCHING_UI, "b", False, app_name=app_name)
+
+    @dbus_service.setter
+    def set_auto_language_switching_ui(self, value: bool) -> bool:
+        """Sets whether automatic language switching for UI elements is enabled."""
+
+        msg = f"SPEECH MANAGER: Setting auto language switching for UI to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self.SPEECH_SCHEMA,
+            self.KEY_AUTO_LANGUAGE_SWITCHING_UI,
             value,
         )
         return True

@@ -271,7 +271,8 @@ These operations also work at the profile level:
 | `announce-spreadsheet-cell-coordinates` | `b` | `true` | Announce spreadsheet cell coordinates |
 | `announce-table` | `b` | `true` | Announce tables |
 | `announce-tracked-changes` | `b` | `true` | Announce tracked changes |
-| `auto-language-switching` | `b` | `true` | Automatically switch voice based on text language |
+| `auto-language-switching` | `b` | `true` | Automatically switch voice based on document content language |
+| `auto-language-switching-ui` | `b` | `false` | Automatically switch voice based on UI element language |
 | `capitalization-style` | `enum`<br>`CapitalizationStyle` | `'none'` | Capitalization style (none, spell, icon) |
 | `enable` | `b` | `true` | Enable speech output |
 | `insert-pauses-between-utterances` | `b` | `true` | Insert pauses between utterances |

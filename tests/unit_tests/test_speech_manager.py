@@ -1195,6 +1195,57 @@ class TestSpeechManager:
         assert result == case["expected"]
         assert manager.get_auto_language_switching() == case["input_value"]
 
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "ui_true", "setting_value": True, "expected": True},
+            {"id": "ui_false", "setting_value": False, "expected": False},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_auto_language_switching_ui(
+        self, test_context: OrcaTestContext, case: dict
+    ) -> None:
+        """Test get_auto_language_switching_ui method."""
+
+        self._setup_dependencies(test_context)
+
+        from orca import gsettings_registry
+        from orca.speech_manager import SpeechManager
+
+        manager = SpeechManager()
+        gsettings_registry.get_registry().set_runtime_value(
+            "speech",
+            "auto-language-switching-ui",
+            case["setting_value"],
+        )
+
+        result = manager.get_auto_language_switching_ui()
+        assert result == case["expected"]
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {"id": "set_ui_true", "input_value": True, "expected": True},
+            {"id": "set_ui_false", "input_value": False, "expected": True},
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_set_auto_language_switching_ui(
+        self, test_context: OrcaTestContext, case: dict
+    ) -> None:
+        """Test set_auto_language_switching_ui method."""
+
+        self._setup_dependencies(test_context)
+
+        from orca.speech_manager import SpeechManager
+
+        manager = SpeechManager()
+
+        result = manager.set_auto_language_switching_ui(case["input_value"])
+        assert result == case["expected"]
+        assert manager.get_auto_language_switching_ui() == case["input_value"]
+
     def test_toggle_speech_unmutes_when_muted(self, test_context: OrcaTestContext) -> None:
         """Test toggle_speech unmutes when speech is currently muted."""
 
@@ -1329,7 +1380,8 @@ class TestVoicesPreferencesGridUI:
         grid_mock._use_color_names_switch.get_active.return_value = True
         grid_mock._enable_pause_breaks_switch.get_active.return_value = True
         grid_mock._use_pronunciation_dict_switch.get_active.return_value = True
-        grid_mock._auto_language_switching_switch.get_active.return_value = True
+        grid_mock._auto_language_switching_content_switch.get_active.return_value = True
+        grid_mock._auto_language_switching_ui_switch.get_active.return_value = True
 
         result = VoicesPreferencesGrid.save_settings(grid_mock)
 

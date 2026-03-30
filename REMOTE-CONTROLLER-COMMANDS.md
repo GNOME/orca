@@ -507,7 +507,8 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Parameters:** `PropertyName` (string), `Value` (variant, setter only)
 
-- **`AutoLanguageSwitching`:** Gets/Sets whether automatic language switching is enabled.
+- **`AutoLanguageSwitching`:** Gets/Sets whether automatic language switching for document content is enabled.
+- **`AutoLanguageSwitchingUi`:** Gets/Sets whether automatic language switching for UI elements is enabled.
 - **`AvailableServers`:** Returns a list of available servers. (getter only)
 - **`AvailableSynthesizers`:** Returns a list of available synthesizers of the speech server. (getter only)
 - **`AvailableVoices`:** Returns a list of available voices for the current synthesizer. (getter only)

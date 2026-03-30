@@ -76,6 +76,8 @@ class SpeechGeneratorContext(GeneratorContext):
     """Settings context for speech generators."""
 
     in_preferences_window: bool
+    auto_language_switching_content: bool
+    auto_language_switching_ui: bool
     only_displayed_text: bool
     speak_description: bool
     speak_tutorial_messages: bool
@@ -313,6 +315,7 @@ class SpeechGenerator(generator.Generator):
         language: str,
         dialect: str,
         string: str,
+        language_from_content: bool = False,
     ) -> dict:
         """Applies voice overrides and auto-language-switching for default voice key."""
 
@@ -328,9 +331,12 @@ class SpeechGenerator(generator.Generator):
             if ACSS.FAMILY in voice_override:
                 family.update(voice_override[ACSS.FAMILY])
 
-        auto_lang_switching = (
-            not context.in_preferences_window and mgr.get_auto_language_switching()
-        )
+        if context is None or context.in_preferences_window:
+            auto_lang_switching = False
+        elif language_from_content:
+            auto_lang_switching = context.auto_language_switching_content
+        else:
+            auto_lang_switching = context.auto_language_switching_ui
         # Only update the language if it has changed from the user's preferred voice.
         # If that occurred, changing the dialect should not be problematic/bothersome.
         # For now, ignore dialect changes for the same language to avoid two potential
@@ -382,6 +388,7 @@ class SpeechGenerator(generator.Generator):
         obj = args.get("obj")
         language = args.get("language", "")
         dialect = args.get("dialect", "")
+        language_from_content = bool(language)
         family = voice.get(ACSS.FAMILY, {}).copy()
         tokens = [
             f"SPEECH GENERATOR: {key} voice requested for",
@@ -418,6 +425,7 @@ class SpeechGenerator(generator.Generator):
                 language,
                 dialect,
                 args.get("string", ""),
+                language_from_content,
             )
         else:
             override = mgr.get_voice_properties(voicename)

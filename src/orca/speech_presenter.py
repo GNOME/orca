@@ -2781,9 +2781,10 @@ class SpeechPresenter:
             p = self  # type: ignore[assignment]
 
         active_mode, _obj = mgr.get_active_mode_and_object_of_interest()
+        speech_mgr = speech_manager.get_manager()
 
         return SpeechGeneratorContext(
-            enabled=speech_manager.get_manager().get_speech_is_enabled(),
+            enabled=speech_mgr.get_speech_is_enabled(),
             verbose=self.use_verbose_speech(),
             focus=mgr.get_locus_of_focus(),
             in_say_all=in_say_all,
@@ -2791,6 +2792,8 @@ class SpeechPresenter:
             active_mode=active_mode,
             where_am_i_type=where_am_i_type,
             in_preferences_window=mgr.is_in_preferences_window(),
+            auto_language_switching_content=speech_mgr.get_auto_language_switching(),
+            auto_language_switching_ui=speech_mgr.get_auto_language_switching_ui(),
             only_displayed_text=self.get_only_speak_displayed_text(),
             speak_description=self.get_speak_description(),
             speak_tutorial_messages=self.get_speak_tutorial_messages(),

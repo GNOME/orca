@@ -304,6 +304,7 @@ MODULE_CONFIG = {
         "parameterized_commands": ["GetVoicesForLanguage"],
         "getters": [
             "AutoLanguageSwitching",
+            "AutoLanguageSwitchingUi",
             "AvailableServers",
             "AvailableSynthesizers",
             "AvailableVoices",
@@ -325,6 +326,7 @@ MODULE_CONFIG = {
         ],
         "setters": [
             "AutoLanguageSwitching",
+            "AutoLanguageSwitchingUi",
             "CapitalizationStyle",
             "CurrentServer",
             "CurrentSynthesizer",
