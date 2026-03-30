@@ -279,7 +279,7 @@ class EventManager:
 
         if AXUtilities.is_frame(event.source):
             app = AXUtilities.get_application(event.source)
-            ignore = AXObject.get_name(app) == "mutter-x11-frames"
+            ignore = AXUtilities.is_mutter_x11_frames(app)
             prefix = "Ignoring" if ignore else "Not ignoring"
             reason = "application" if ignore else "role"
             msg = f"EVENT MANAGER: {prefix} {event_type} based on {reason}"
@@ -361,7 +361,7 @@ class EventManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if AXObject.get_name(app) == "mutter-x11-frames":
+        if AXUtilities.is_mutter_x11_frames(app):
             msg = f"EVENT MANAGER: Ignoring {event_type} based on application"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True

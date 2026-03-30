@@ -175,6 +175,7 @@ class TestEventManager:
         ax_utilities_mock.is_defunct = test_context.Mock(return_value=False)
         ax_utilities_mock.is_application_in_desktop = test_context.Mock(return_value=True)
         ax_utilities_mock.is_iconified = test_context.Mock(return_value=False)
+        ax_utilities_mock.is_mutter_x11_frames = test_context.Mock(return_value=False)
 
         glib_mock = test_context.Mock()
         glib_mock.idle_add = test_context.Mock(return_value=123)
@@ -546,7 +547,7 @@ class TestEventManager:
         test_context.patch("orca.event_manager.AXUtilities.is_window", return_value=False)
         test_context.patch("orca.event_manager.AXUtilities.is_frame", return_value=True)
         test_context.patch("orca.event_manager.AXUtilities.get_application", return_value=mock_app)
-        test_context.patch("orca.event_manager.AXObject.get_name", return_value="mutter-x11-frames")
+        test_context.patch("orca.event_manager.AXUtilities.is_mutter_x11_frames", return_value=True)
         assert manager._ignore(mock_event) is True
 
         regular_app = test_context.Mock()
@@ -556,7 +557,9 @@ class TestEventManager:
             "orca.event_manager.AXUtilities.get_application",
             return_value=regular_app,
         )
-        test_context.patch("orca.event_manager.AXObject.get_name", return_value="regular-app")
+        test_context.patch(
+            "orca.event_manager.AXUtilities.is_mutter_x11_frames", return_value=False
+        )
         assert manager._ignore(mock_event) is False
 
     def test_ignore_text_events(self, test_context: OrcaTestContext) -> None:
@@ -635,6 +638,9 @@ class TestEventManager:
 
         ax_utilities.is_notification.return_value = False
         ax_utilities.is_alert.return_value = False
+        test_context.patch(
+            "orca.event_manager.AXUtilities.is_mutter_x11_frames", return_value=False
+        )
         getattr(ax_utilities, case["utility_method"]).return_value = case["utility_value"]
 
         assert manager._ignore(mock_event) is case["expected_result"]
@@ -654,6 +660,10 @@ class TestEventManager:
         mock_event.any_data = test_context.Mock()
         ax_utilities = essential_modules["orca.ax_utilities"]
         focus_mgr = essential_modules["focus_manager_instance"]
+
+        test_context.patch(
+            "orca.event_manager.AXUtilities.is_mutter_x11_frames", return_value=False
+        )
 
         focus_mgr.get_locus_of_focus.return_value = mock_event.source
         assert manager._ignore(mock_event) is False
@@ -730,6 +740,9 @@ class TestEventManager:
         ax_utilities.is_selected.return_value = False
         ax_utilities.is_focused.return_value = False
         ax_utilities.is_section.return_value = True
+        test_context.patch(
+            "orca.event_manager.AXUtilities.is_mutter_x11_frames", return_value=False
+        )
 
         ax_object.get_attribute.return_value = "polite"
         assert manager._ignore(mock_event) is False
@@ -779,7 +792,9 @@ class TestEventManager:
         test_context.patch("orca.event_manager.AXUtilities.is_section", return_value=False)
         test_context.patch("orca.event_manager.AXUtilities.manages_descendants", return_value=False)
         test_context.patch("orca.event_manager.AXUtilities.get_application", return_value=mock_app)
-        test_context.patch("orca.event_manager.AXObject.get_name", return_value="regular-app")
+        test_context.patch(
+            "orca.event_manager.AXUtilities.is_mutter_x11_frames", return_value=False
+        )
         test_context.patch("orca.event_manager.AXObject.get_attribute", return_value=None)
         test_context.patch("orca.event_manager.focus_manager.get_manager", return_value=focus_mgr)
         assert manager._ignore(mock_event) is False
@@ -795,7 +810,9 @@ class TestEventManager:
         test_context.patch("orca.event_manager.AXUtilities.is_section", return_value=False)
         test_context.patch("orca.event_manager.AXUtilities.manages_descendants", return_value=False)
         test_context.patch("orca.event_manager.AXUtilities.get_application", return_value=mock_app)
-        test_context.patch("orca.event_manager.AXObject.get_name", return_value="regular-app")
+        test_context.patch(
+            "orca.event_manager.AXUtilities.is_mutter_x11_frames", return_value=False
+        )
         test_context.patch("orca.event_manager.AXObject.get_attribute", return_value=None)
         test_context.patch("orca.event_manager.focus_manager.get_manager", return_value=focus_mgr)
         assert manager._ignore(mock_event) is True
@@ -811,7 +828,9 @@ class TestEventManager:
         test_context.patch("orca.event_manager.AXUtilities.is_section", return_value=False)
         test_context.patch("orca.event_manager.AXUtilities.manages_descendants", return_value=False)
         test_context.patch("orca.event_manager.AXUtilities.get_application", return_value=mock_app)
-        test_context.patch("orca.event_manager.AXObject.get_name", return_value="regular-app")
+        test_context.patch(
+            "orca.event_manager.AXUtilities.is_mutter_x11_frames", return_value=False
+        )
         test_context.patch("orca.event_manager.AXObject.get_attribute", return_value=None)
         test_context.patch("orca.event_manager.focus_manager.get_manager", return_value=focus_mgr)
         assert manager._ignore(mock_event) is False
@@ -854,7 +873,7 @@ class TestEventManager:
         test_context.patch("orca.event_manager.AXUtilities.is_section", return_value=False)
         test_context.patch("orca.event_manager.AXUtilities.manages_descendants", return_value=False)
         test_context.patch("orca.event_manager.AXUtilities.get_application", return_value=mock_app)
-        test_context.patch("orca.event_manager.AXObject.get_name", return_value="mutter-x11-frames")
+        test_context.patch("orca.event_manager.AXUtilities.is_mutter_x11_frames", return_value=True)
         test_context.patch("orca.event_manager.AXObject.get_attribute", return_value=None)
         test_context.patch("orca.event_manager.focus_manager.get_manager", return_value=focus_mgr)
         manager._event_history = {}
@@ -1118,7 +1137,9 @@ class TestEventManager:
             ),
         )
         test_context.patch("orca.event_manager.AXUtilities.get_application", return_value=mock_app)
-        test_context.patch("orca.event_manager.AXObject.get_name", return_value="regular-app")
+        test_context.patch(
+            "orca.event_manager.AXUtilities.is_mutter_x11_frames", return_value=False
+        )
 
         result = manager._ignore(mock_event)
         assert result is case["expected_ignore"]
@@ -1156,7 +1177,9 @@ class TestEventManager:
         test_context.patch("orca.event_manager.AXUtilities.is_section", return_value=True)
         test_context.patch("orca.event_manager.AXUtilities.manages_descendants", return_value=False)
         test_context.patch("orca.event_manager.AXUtilities.get_application", return_value=mock_app)
-        test_context.patch("orca.event_manager.AXObject.get_name", return_value="regular-app")
+        test_context.patch(
+            "orca.event_manager.AXUtilities.is_mutter_x11_frames", return_value=False
+        )
         test_context.patch(
             "orca.event_manager.AXObject.get_attribute",
             side_effect=lambda obj, attr: "polite" if attr == "live" else None,
@@ -1206,7 +1229,9 @@ class TestEventManager:
         test_context.patch("orca.event_manager.AXUtilities.is_section", return_value=False)
         test_context.patch("orca.event_manager.AXUtilities.manages_descendants", return_value=False)
         test_context.patch("orca.event_manager.AXUtilities.get_application", return_value=mock_app)
-        test_context.patch("orca.event_manager.AXObject.get_name", return_value="regular-app")
+        test_context.patch(
+            "orca.event_manager.AXUtilities.is_mutter_x11_frames", return_value=False
+        )
         test_context.patch("orca.event_manager.AXObject.get_attribute", return_value=None)
 
         # First call should not be ignored
@@ -1462,7 +1487,9 @@ class TestEventManager:
         test_context.patch("orca.event_manager.AXUtilities.is_section", return_value=False)
         test_context.patch("orca.event_manager.AXUtilities.manages_descendants", return_value=False)
         test_context.patch("orca.event_manager.AXUtilities.get_application", return_value=mock_app)
-        test_context.patch("orca.event_manager.AXObject.get_name", return_value="regular-app")
+        test_context.patch(
+            "orca.event_manager.AXUtilities.is_mutter_x11_frames", return_value=False
+        )
         test_context.patch("orca.event_manager.AXObject.get_attribute", return_value=None)
 
         result = manager._ignore(mock_event)

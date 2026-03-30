@@ -162,7 +162,7 @@ class AXUtilities:
         elif AXUtilitiesState.is_iconified(window):
             tokens.append("is iconified")
             can_be_active = False
-        elif AXObject.get_name(app) == "mutter-x11-frames":
+        elif AXUtilitiesApplication.is_mutter_x11_frames(app):
             tokens.append("is from app that cannot have the real active window")
             can_be_active = False
         elif app and not AXUtilitiesApplication.is_application_in_desktop(app):

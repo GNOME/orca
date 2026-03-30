@@ -35,6 +35,9 @@ from .ax_object import AXObject
 class AXUtilitiesApplication:
     """Utilities for accessible applications."""
 
+    _mutter_x11_frames: Atspi.Accessible | None = None
+    _mutter_x11_frames_checked: bool = False
+
     @staticmethod
     def application_as_string(obj: Atspi.Accessible) -> str:
         """Returns the application details of obj as a string."""
@@ -65,13 +68,19 @@ class AXUtilitiesApplication:
         def pred(obj: Atspi.Accessible) -> bool:
             if exclude_unresponsive and AXUtilitiesApplication.is_application_unresponsive(obj):
                 return False
-            if AXObject.get_name(obj) == "mutter-x11-frames":
+            if AXUtilitiesApplication.is_mutter_x11_frames(obj):
                 return is_debug
             if must_have_window:
                 return AXObject.get_child_count(obj) > 0
             return True
 
-        return list(AXObject.iter_children(desktop, pred))
+        result = list(AXObject.iter_children(desktop, pred))
+        if not AXUtilitiesApplication._mutter_x11_frames_checked:
+            AXUtilitiesApplication._mutter_x11_frames_checked = True
+            if AXUtilitiesApplication._mutter_x11_frames is None:
+                msg = "AXUtilitiesApplication: mutter-x11-frames not found on this desktop"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+        return result
 
     @staticmethod
     def get_application(obj: Atspi.Accessible) -> Atspi.Accessible | None:
@@ -160,6 +169,23 @@ class AXUtilitiesApplication:
             return -1
 
         return pid
+
+    @staticmethod
+    def is_mutter_x11_frames(app: Atspi.Accessible) -> bool:
+        """Returns True if app is the mutter-x11-frames application."""
+
+        if app is None:
+            return False
+        if AXUtilitiesApplication._mutter_x11_frames is not None:
+            return app == AXUtilitiesApplication._mutter_x11_frames
+        if AXUtilitiesApplication._mutter_x11_frames_checked:
+            return False
+        if AXObject.get_name(app) == "mutter-x11-frames":
+            tokens = ["AXUtilitiesApplication: Caching mutter-x11-frames app:", app]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            AXUtilitiesApplication._mutter_x11_frames = app
+            return True
+        return False
 
     @staticmethod
     def is_application_in_desktop(app: Atspi.Accessible) -> bool:

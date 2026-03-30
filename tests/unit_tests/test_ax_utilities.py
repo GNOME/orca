@@ -155,6 +155,7 @@ class TestAXUtilities:
         app_class_mock = test_context.Mock()
         app_class_mock.get_application = test_context.Mock(return_value=test_context.Mock())
         app_class_mock.is_application_in_desktop = test_context.Mock(return_value=True)
+        app_class_mock.is_mutter_x11_frames = test_context.Mock(return_value=False)
         essential_modules["orca.ax_utilities_application"].AXUtilitiesApplication = app_class_mock
 
         table_class_mock = test_context.Mock()
