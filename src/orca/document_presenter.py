@@ -359,6 +359,9 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             (guilabels.MATH_PRESENTATION, "math", self._math_grid),
         ]
 
+        if not math_presenter.get_presenter().is_available():
+            categories.remove((guilabels.MATH_PRESENTATION, "math", self._math_grid))
+
         _enable_listbox, stack, _categories_listbox = self._create_multi_page_stack(
             enable_label=None,
             enable_getter=None,
