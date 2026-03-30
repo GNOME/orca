@@ -66,11 +66,21 @@ def _print_orca_stats(all_stats: dict) -> None:
     sorted_keys = [key for key in all_stats if "/orca/" in key[0]]
     sorted_keys.sort(key=lambda k: all_stats[k][2], reverse=True)
 
-    print(f"{'ncalls':>16s}   {'tottime':>8s}   {'cumtime':>8s}   filename:lineno(function)")
+    print(
+        f"{'ncalls':>16s}   {'tottime':>8s}   {'cumtime':>8s}"
+        f"   {'percall':>8s}   filename:lineno(function)"
+    )
     for key in sorted_keys[:_TOP_N]:
         cc, nc, tt, ct, _callers = all_stats[key]
         calls_str = str(nc) if cc == nc else f"{nc}/{cc}"
-        print(f"{calls_str:>16s}   {tt:>8.3f}   {ct:>8.3f}   {_format_key(key)}")
+        per_call = tt / nc if nc else 0
+        if per_call >= 0.001:
+            per_call_str = f"{per_call:.3f}s"
+        else:
+            per_call_str = f"{per_call * 1e6:.0f}µs"
+        print(
+            f"{calls_str:>16s}   {tt:>8.3f}   {ct:>8.3f}   {per_call_str:>8s}   {_format_key(key)}"
+        )
 
 
 def _print_callers(all_stats: dict) -> None:

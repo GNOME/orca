@@ -716,12 +716,19 @@ class KeyboardEvent(InputEvent):
             if learn_mode:
                 tokens = ["KEYBOARD EVENT: Learn mode is active"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                self._handler = lambda: learn_mode_presenter.get_presenter().handle_event(
-                    self,
-                    command,
-                )
+
+                def _handle_learn_mode(cmd=command) -> bool:
+                    learn_mode_presenter.get_presenter().handle_event(self, cmd)
+                    return True
+
+                self._handler = _handle_learn_mode
             elif command is not None and command.is_enabled():
-                self._handler = lambda: command.execute(script, self)
+
+                def _execute_command(cmd=command, scr=script) -> bool:
+                    cmd.execute(scr, self)
+                    return True
+
+                self._handler = _execute_command
 
         if self.is_orca_modifier():
             if self._click_count == 2:
