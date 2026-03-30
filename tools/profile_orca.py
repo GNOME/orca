@@ -90,11 +90,11 @@ def _print_callers(all_stats: dict) -> None:
     sorted_keys.sort(key=lambda k: all_stats[k][2], reverse=True)
 
     for key in sorted_keys[:_CALLERS_FOR]:
-        _cc, _nc, _tt, _ct, callers = all_stats[key]
+        _cc, nc, _tt, _ct, callers = all_stats[key]
         if not callers:
             continue
 
-        print(f"\n  Callers of {_format_key(key)}:")
+        print(f"\n  Callers of {_format_key(key)} (called {nc} times):")
         print(f"  {'ncalls':>12s}   caller")
 
         caller_list = []
