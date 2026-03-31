@@ -565,7 +565,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         result[SpeechManager.KEY_SPEECH_SERVER] = self._manager.get_current_server()
         result[SpeechManager.KEY_SYNTHESIZER] = self._manager.get_current_synthesizer()
-        result["speechServerFactory"] = self._manager.get_speech_server_factory()
+        result[SpeechManager.KEY_SPEECH_SERVER_FACTORY] = self._manager.get_speech_server_factory()
 
         model = self._punctuation_combo.get_model()
         active = self._punctuation_combo.get_active()
