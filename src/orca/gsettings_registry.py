@@ -630,6 +630,10 @@ class GSettingsRegistry:
             if reader is not None and reader(key) == value:
                 if not app_name or gs.get_user_value(key) is not None:
                     continue
+            if value is None:
+                msg = f"GSETTINGS: Skipping None value for {schema_name}/{key}"
+                debug.print_message(debug.LEVEL_WARNING, msg, True)
+                continue
             writer = writers.get(setting.gtype)
             if writer is not None:
                 writer(key, value)
