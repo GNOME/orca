@@ -295,7 +295,11 @@ class Generator:
             _generator = self._generate_default_presentation
 
         if not args.get("formatType"):
-            if args.get("alreadyFocused", False) and self._context.where_am_i_type is None:
+            if (
+                args.get("alreadyFocused", False)
+                and self._context is not None
+                and self._context.where_am_i_type is None
+            ):
                 args["formatType"] = "focused"
             else:
                 args["formatType"] = "unfocused"
