@@ -1250,7 +1250,7 @@ class TestVoicesPreferencesGridUI:
         self,
         test_context: OrcaTestContext,
     ) -> None:
-        """Test save_settings includes speechServerFactory."""
+        """Test save_settings includes speech-server-factory."""
 
         self._setup_dependencies(test_context)
 
@@ -1286,6 +1286,6 @@ class TestVoicesPreferencesGridUI:
 
         result = VoicesPreferencesGrid.save_settings(grid_mock)
 
-        assert result["speechServerFactory"] == "spiel"
+        assert result["speech-server-factory"] == "spiel"
         assert result["speech-server"] == "Spiel"
         assert result["synthesizer"] == "Piper"
