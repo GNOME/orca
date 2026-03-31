@@ -49,7 +49,6 @@ from . import (
     math_presenter,
     messages,
     object_properties,
-    speech_manager,
     speech_presenter,
     speechserver,
     text_attribute_manager,
@@ -78,6 +77,13 @@ class SpeechGeneratorContext(GeneratorContext):
     in_preferences_window: bool
     auto_language_switching_content: bool
     auto_language_switching_ui: bool
+    insert_pauses_between_utterances: bool
+    punctuation_level: str
+    default_voice: ACSS
+    hyperlink_voice: ACSS
+    uppercase_voice: ACSS
+    system_voice: ACSS
+    speech_server: speechserver.SpeechServer | None
     only_displayed_text: bool
     speak_description: bool
     speak_tutorial_messages: bool
@@ -262,13 +268,14 @@ class SpeechGenerator(generator.Generator):
         return PAUSE
 
     def _generate_pause(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if not speech_manager.get_manager().get_insert_pauses_between_utterances() or args.get(
-            "eliminatePauses",
-            False,
-        ):
+        context = self._context
+        if context is None:
+            return PAUSE
+
+        if not context.insert_pauses_between_utterances or args.get("eliminatePauses", False):
             return []
 
-        if speech_manager.get_manager().get_punctuation_level() == "all":
+        if context.punctuation_level == "all":
             return []
 
         return PAUSE
@@ -319,12 +326,11 @@ class SpeechGenerator(generator.Generator):
     ) -> dict:
         """Applies voice overrides and auto-language-switching for default voice key."""
 
-        mgr = speech_manager.get_manager()
         voice_override: ACSS | None = None
         if AXUtilities.is_link(obj):
-            voice_override = mgr.get_voice_properties(voice_type[HYPERLINK])
+            voice_override = context.hyperlink_voice if context else None
         elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
-            voice_override = mgr.get_voice_properties(voice_type[UPPERCASE])
+            voice_override = context.uppercase_voice if context else None
 
         if voice_override:
             voice_props.update(voice_override)
@@ -381,9 +387,7 @@ class SpeechGenerator(generator.Generator):
             debug.print_tokens(debug.LEVEL_WARNING, tokens, True, True)
             return []
 
-        voicename = voice_type.get(key or DEFAULT, voice_type[DEFAULT])
-        mgr = speech_manager.get_manager()
-        voice = mgr.get_voice_properties(voice_type[DEFAULT])
+        voice = ACSS(dict(effective_context.default_voice))
 
         obj = args.get("obj")
         language = args.get("language", "")
@@ -398,10 +402,7 @@ class SpeechGenerator(generator.Generator):
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        server = mgr.get_server()
-        # TODO - JD: We probably never should have gotten to this point if there is no speech
-        # server. Thus we should probably return early in generate_speech() instead. For now,
-        # this check is in place of an assertion that was being reached on a user's system.
+        server = effective_context.speech_server
         if server is None:
             msg = "SPEECH GENERATOR: No speech server available"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -428,7 +429,13 @@ class SpeechGenerator(generator.Generator):
                 language_from_content,
             )
         else:
-            override = mgr.get_voice_properties(voicename)
+            voice_type_name = voice_type.get(key or DEFAULT, voice_type[DEFAULT])
+            voice_types = {
+                voice_type[HYPERLINK]: effective_context.hyperlink_voice,
+                voice_type[UPPERCASE]: effective_context.uppercase_voice,
+                voice_type[SYSTEM]: effective_context.system_voice,
+            }
+            override = voice_types.get(voice_type_name)
             if override:
                 voice.update(override)
                 if ACSS.FAMILY in override:
