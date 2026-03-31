@@ -721,21 +721,17 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             for voice_type, voice_data in voices.items():
                 if not voice_data:
                     continue
-                vt = registry.sanitize_gsettings_path(voice_type)
-                voice_gs = registry.get_settings("voice", p, f"voices/{vt}", app_name)
+                sub = gsettings_registry.voice_set_sub_path(voice_type)
+                voice_gs = registry.get_settings("voice", p, sub, app_name)
                 if voice_gs is None:
                     continue
                 if app_name:
-                    profile_voice_gs = registry.get_settings("voice", p, f"voices/{vt}")
+                    profile_voice_gs = registry.get_settings("voice", p, sub)
                     if profile_voice_gs is None:
                         continue
                     default_voice_gs = None
                     if p != "default":
-                        default_voice_gs = registry.get_settings(
-                            "voice",
-                            "default",
-                            f"voices/{vt}",
-                        )
+                        default_voice_gs = registry.get_settings("voice", "default", sub)
                     self._save_app_voice(
                         voice_gs,
                         voice_data,

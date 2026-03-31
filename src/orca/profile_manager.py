@@ -707,9 +707,9 @@ class ProfileManager:
                 from . import gsettings_migrator  # pylint: disable=import-outside-toplevel
 
                 for voice_type in gsettings_migrator.VOICE_TYPES:
-                    vt = gsettings_migrator.sanitize_gsettings_path(voice_type)
-                    old_gs = registry.get_settings("voice", old_profile, f"voices/{vt}")
-                    new_gs = registry.get_settings("voice", new_name, f"voices/{vt}")
+                    sub = gsettings_registry.voice_set_sub_path(voice_type)
+                    old_gs = registry.get_settings("voice", old_profile, sub)
+                    new_gs = registry.get_settings("voice", new_name, sub)
                     registry.copy_user_keys(old_gs, new_gs)
                 continue
             old_gs = registry.get_settings(schema_name, old_profile)

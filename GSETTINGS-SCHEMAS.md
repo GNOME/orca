@@ -7,13 +7,16 @@
 Orca stores settings under `/org/gnome/orca/`.
 - Profile-level settings: `/org/gnome/orca/<profile>/<schema-name>/`
 - App-specific overrides: `/org/gnome/orca/<profile>/apps/<app>/<schema-name>/`
-- Voice settings: `/org/gnome/orca/<profile>/voices/<voice-type>/`
-- App-specific voice overrides: `/org/gnome/orca/<profile>/apps/<app>/voices/<voice-type>/`
+- Voice settings: `/org/gnome/orca/<profile>/voice-sets/<voice-set>/<voice-type>/`
+- App-specific voice overrides: `/org/gnome/orca/<profile>/apps/<app>/voice-sets/<voice-set>/<voice-type>/`
+- Voice settings (deprecated): `/org/gnome/orca/<profile>/voices/<voice-type>/`
+- App-specific voice overrides (deprecated): `/org/gnome/orca/<profile>/apps/<app>/voices/<voice-type>/`
 
 Path variables:
 - `<profile>`: profile ID. `default` is the standard profile; users can add others, e.g. `italian`.
 - `<schema-name>`: Orca schema name, e.g. `typing-echo`, `speech`, `braille`.
 - `<app>`: app ID used for app-specific overrides.
+- `<voice-set>`: voice set name. `primary` is the main set; language-specific sets use language codes.
 - `<voice-type>`: voice type (`default`, `uppercase`, `hyperlink`, `system`).
 
 When Orca reads a setting, it checks several layers from most specific to least specific:

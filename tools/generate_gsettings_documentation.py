@@ -112,9 +112,16 @@ def generate_documentation(
     lines.append("Orca stores settings under `/org/gnome/orca/`.")
     lines.append("- Profile-level settings: `/org/gnome/orca/<profile>/<schema-name>/`")
     lines.append("- App-specific overrides: `/org/gnome/orca/<profile>/apps/<app>/<schema-name>/`")
-    lines.append("- Voice settings: `/org/gnome/orca/<profile>/voices/<voice-type>/`")
+    lines.append(
+        "- Voice settings: `/org/gnome/orca/<profile>/voice-sets/<voice-set>/<voice-type>/`"
+    )
     lines.append(
         "- App-specific voice overrides: "
+        "`/org/gnome/orca/<profile>/apps/<app>/voice-sets/<voice-set>/<voice-type>/`"
+    )
+    lines.append("- Voice settings (deprecated): `/org/gnome/orca/<profile>/voices/<voice-type>/`")
+    lines.append(
+        "- App-specific voice overrides (deprecated): "
         "`/org/gnome/orca/<profile>/apps/<app>/voices/<voice-type>/`"
     )
     lines.append("")
@@ -125,6 +132,10 @@ def generate_documentation(
     )
     lines.append("- `<schema-name>`: Orca schema name, e.g. `typing-echo`, `speech`, `braille`.")
     lines.append("- `<app>`: app ID used for app-specific overrides.")
+    lines.append(
+        "- `<voice-set>`: voice set name. `primary` is the main set; "
+        "language-specific sets use language codes."
+    )
     lines.append("- `<voice-type>`: voice type (`default`, `uppercase`, `hyperlink`, `system`).")
     lines.append("")
     lines.append(

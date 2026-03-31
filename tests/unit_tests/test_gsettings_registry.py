@@ -368,8 +368,10 @@ class TestGSettingsSchemaHandle:
         from orca.gsettings_registry import GSettingsSchemaHandle
 
         handle = GSettingsSchemaHandle("org.gnome.Orca.Voice", "voices")
-        path = handle._build_profile_path("default", sub_path="voices/uppercase")
-        assert path == "/org/gnome/orca/default/voices/uppercase/"
+        from orca.gsettings_registry import voice_set_sub_path
+
+        path = handle._build_profile_path("default", sub_path=voice_set_sub_path("uppercase"))
+        assert path == "/org/gnome/orca/default/voice-sets/primary/uppercase/"
 
     def test_build_app_path(self, test_context: OrcaTestContext) -> None:
         """Test _build_app_path produces correct dconf path."""
@@ -388,8 +390,10 @@ class TestGSettingsSchemaHandle:
         from orca.gsettings_registry import GSettingsSchemaHandle
 
         handle = GSettingsSchemaHandle("org.gnome.Orca.Voice", "voices")
-        path = handle._build_app_path("Firefox", "spanish", sub_path="voices/default")
-        assert path == "/org/gnome/orca/spanish/apps/firefox/voices/default/"
+        from orca.gsettings_registry import voice_set_sub_path
+
+        path = handle._build_app_path("Firefox", "spanish", sub_path=voice_set_sub_path("default"))
+        assert path == "/org/gnome/orca/spanish/apps/firefox/voice-sets/primary/default/"
 
     def test_get_for_profile_returns_none_without_schema(
         self,
@@ -1956,10 +1960,14 @@ class TestLayeredLookup:
 
         result = registry.layered_lookup("voice", "pitch", "d", voice_type="default")
         assert result == 7.5
-        mock_handle.get_double.assert_called_once_with("pitch", "voices/default", None)
+        mock_handle.get_double.assert_called_once_with(
+            "pitch",
+            "voice-sets/primary/default",
+            None,
+        )
 
     def test_voice_sub_path(self, test_context: OrcaTestContext) -> None:
-        """Test layered_lookup uses voices/{voice_type} sub_path for voice schema."""
+        """Test layered_lookup uses voice-sets/primary/{voice_type} sub_path for voice schema."""
 
         self._setup(test_context)
         from orca.gsettings_registry import GSettingsRegistry, GSettingsSchemaHandle
@@ -1973,7 +1981,7 @@ class TestLayeredLookup:
 
         result = registry.layered_lookup("voice", "rate", "i", voice_type="uppercase")
         assert result == 56
-        mock_handle.get_int.assert_called_once_with("rate", "voices/uppercase", None)
+        mock_handle.get_int.assert_called_once_with("rate", "voice-sets/primary/uppercase", None)
 
     def test_enum_returns_string(self, test_context: OrcaTestContext) -> None:
         """Test layered_lookup returns string nick for enum settings."""

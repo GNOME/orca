@@ -260,6 +260,7 @@ def main(import_dir: str | None = None, prefs_dir: str = ""):
     else:
         registry.migrate_all(prefs_dir)  # TODO - JD: Delete this in v51.
 
+    registry.migrate_voice_paths()
     load_user_settings(is_reload=False)
 
     is_systemd_managed = systemd.get_manager().is_systemd_managed()

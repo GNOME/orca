@@ -45,6 +45,13 @@ if TYPE_CHECKING:
     from collections.abc import Callable
 
 GSETTINGS_PATH_PREFIX = "/org/gnome/orca/"
+PRIMARY_VOICE_SET = "primary"
+
+
+def voice_set_sub_path(voice_type: str, voice_set: str = PRIMARY_VOICE_SET) -> str:
+    """Returns the dconf sub-path for a voice type within a voice set."""
+
+    return f"voice-sets/{voice_set}/{gsettings_migrator.sanitize_gsettings_path(voice_type)}"
 
 
 @dataclass
@@ -139,8 +146,7 @@ class GSettingsRegistry:
 
         sub_path = ""
         if handle is not None and schema == "voice":
-            vt = voice_type or "default"
-            sub_path = f"voices/{gsettings_migrator.sanitize_gsettings_path(vt)}"
+            sub_path = voice_set_sub_path(voice_type or "default")
 
         # For explicit app lookups, check app dconf before runtime overrides.
         if app_name and handle is not None:
@@ -455,6 +461,57 @@ class GSettingsRegistry:
         Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
         return migrated_any
 
+    def migrate_voice_paths(self) -> None:
+        """Migrates voice settings from voices/{type}/ to voice-sets/primary/{type}/."""
+
+        profiles = self._dconf_list(GSETTINGS_PATH_PREFIX)
+        if not profiles:
+            return
+
+        migrated = False
+        for profile in profiles:
+            if self._migrate_voice_paths_for(profile):
+                migrated = True
+            for app in self._dconf_list(f"{GSETTINGS_PATH_PREFIX}{profile}/apps/"):
+                if self._migrate_voice_paths_for(profile, app):
+                    migrated = True
+
+        if migrated:
+            Gio.Settings.sync()  # pylint: disable=no-value-for-parameter
+            msg = "GSETTINGS REGISTRY: Migrated voice settings to voice-sets/primary/."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    def _migrate_voice_paths_for(self, profile: str, app_name: str = "") -> bool:
+        """Migrates voice paths for a single profile or app. Returns True if anything migrated."""
+
+        migrated = False
+        for vt in gsettings_migrator.VOICE_TYPES:
+            old_gs = self.get_settings("voice", profile, f"voices/{vt}", app_name)
+            new_gs = self.get_settings("voice", profile, voice_set_sub_path(vt), app_name)
+            if old_gs is None or new_gs is None:
+                continue
+            has_old = any(old_gs.get_user_value(k) is not None for k in old_gs.list_keys())
+            has_new = any(new_gs.get_user_value(k) is not None for k in new_gs.list_keys())
+            if has_old and not has_new:
+                self.copy_user_keys(old_gs, new_gs)
+                migrated = True
+        return migrated
+
+    @staticmethod
+    def _dconf_list(path: str) -> list[str]:
+        """Returns directory entries under a dconf path, stripped of trailing slashes."""
+
+        try:
+            result = subprocess.run(
+                ["dconf", "list", path],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            return []
+        return [e.strip("/") for e in result.stdout.strip().splitlines() if e.strip("/")]
+
     def import_from_dir(self, import_dir: str) -> None:
         """Imports settings from a directory by resetting dconf and re-migrating."""
 
@@ -688,7 +745,7 @@ class GSettingsRegistry:
                 if not voice_data:
                     continue
                 vt = gsettings_migrator.sanitize_gsettings_path(voice_type)
-                voice_gs = self.get_settings("voice", profile, f"voices/{vt}", app_name)
+                voice_gs = self.get_settings("voice", profile, voice_set_sub_path(vt), app_name)
                 if voice_gs is not None:
                     gsettings_migrator.import_voice(voice_gs, voice_data, skip_defaults)
 
@@ -846,8 +903,8 @@ class GSettingsRegistry:
             if schema_name == "voice":
                 for voice_type in gsettings_migrator.VOICE_TYPES:
                     vt = gsettings_migrator.sanitize_gsettings_path(voice_type)
-                    old_gs = self.get_settings("voice", old_profile, f"voices/{vt}")
-                    new_gs = self.get_settings("voice", new_profile, f"voices/{vt}")
+                    old_gs = self.get_settings("voice", old_profile, voice_set_sub_path(vt))
+                    new_gs = self.get_settings("voice", new_profile, voice_set_sub_path(vt))
                     self.copy_user_keys(old_gs, new_gs)
                 continue
             old_gs = self.get_settings(schema_name, old_profile)
@@ -869,7 +926,7 @@ class GSettingsRegistry:
             if schema_name == "voice":
                 for voice_type in gsettings_migrator.VOICE_TYPES:
                     vt = gsettings_migrator.sanitize_gsettings_path(voice_type)
-                    gs = self.get_settings("voice", profile, f"voices/{vt}")
+                    gs = self.get_settings("voice", profile, voice_set_sub_path(vt))
                     if gs is not None:
                         self._reset_all_keys(gs)
                 continue
@@ -993,7 +1050,7 @@ class GSettingsRegistry:
                 if not voice_data:
                     continue
                 vt = gsettings_migrator.sanitize_gsettings_path(voice_type)
-                voice_gs = self.get_settings("voice", profile, f"voices/{vt}")
+                voice_gs = self.get_settings("voice", profile, voice_set_sub_path(vt))
                 if voice_gs is not None:
                     if gsettings_migrator.import_voice(voice_gs, voice_data, skip_defaults):
                         wrote_any = True
@@ -1148,8 +1205,8 @@ class GSettingsRegistry:
                 voice_data = voices.get(voice_type, {})
                 if not voice_data:
                     continue
-                vt = gsettings_migrator.sanitize_gsettings_path(voice_type)
-                voice_gs = self.get_settings("voice", profile_name, f"voices/{vt}", app_name)
+                sub = voice_set_sub_path(voice_type)
+                voice_gs = self.get_settings("voice", profile_name, sub, app_name)
                 if voice_gs is not None:
                     if gsettings_migrator.import_voice(voice_gs, voice_data, False):
                         wrote_any = True

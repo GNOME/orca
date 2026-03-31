@@ -172,11 +172,17 @@ class TestRegistryLookup:
     def test_voice_type_routes_to_correct_sub_path(
         self, gsettings_registry, gsettings_handle, gsettings_profile
     ) -> None:
-        """voice_type='uppercase' should read from voices/uppercase, not voices/default."""
+        """voice_type='uppercase' should read from voice-sets/primary/uppercase."""
+
+        from orca.gsettings_registry import voice_set_sub_path
 
         handle = gsettings_handle("voice")
-        handle.get_for_profile("default", sub_path="voices/default").set_double("pitch", 1.0)
-        handle.get_for_profile("default", sub_path="voices/uppercase").set_double("pitch", 9.0)
+        handle.get_for_profile("default", sub_path=voice_set_sub_path("default")).set_double(
+            "pitch", 1.0
+        )
+        handle.get_for_profile("default", sub_path=voice_set_sub_path("uppercase")).set_double(
+            "pitch", 9.0
+        )
 
         default_pitch = gsettings_registry.layered_lookup(
             "voice", "pitch", "d", voice_type="default"
