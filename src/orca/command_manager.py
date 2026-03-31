@@ -1289,6 +1289,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         self._exclusive_groups: list[set[str]] = []
         self._numlock_on: bool = False
         self._learn_mode_active: bool = False
+        self._prior_suspended: set[str] = set()
 
         msg = "COMMAND MANAGER: Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1887,6 +1888,11 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
     def set_all_suspended(self, suspended: bool, exceptions: frozenset[str] | None = None) -> None:
         """Sets the suspended state for all commands, optionally excluding exceptions."""
 
+        if suspended:
+            self._prior_suspended = {
+                cmd.get_name() for cmd in self._keyboard_commands.values() if cmd.is_suspended()
+            }
+
         orca_modifiers = orca_modifier_manager.get_manager().get_orca_modifier_keys()
         added_count = 0
         removed_count = 0
@@ -1894,8 +1900,10 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         for cmd in self._keyboard_commands.values():
             if exceptions and cmd.get_name() in exceptions:
                 continue
+
+            target_suspended = suspended or cmd.get_name() in self._prior_suspended
             was_active = cmd.is_active()
-            cmd.set_suspended(suspended)
+            cmd.set_suspended(target_suspended)
             is_active = cmd.is_active()
 
             kb = cmd.get_keybinding()
@@ -1908,6 +1916,9 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             elif not was_active and is_active and not kb.has_grabs():
                 kb.add_grabs(orca_modifiers)
                 added_count += 1
+
+        if not suspended:
+            self._prior_suspended = set()
 
         if removed_count or added_count:
             msg = (
