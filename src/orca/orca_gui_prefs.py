@@ -561,6 +561,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         # (profiles are global, not saved for app-specific preferences)
         if not self._app_name:
             self.profiles_grid.save_settings()
+            self._profile_name = profile_manager.get_manager().get_active_profile()
 
         for grid in self._page_to_grid.values():
             if grid is not self.profiles_grid:

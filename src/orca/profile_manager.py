@@ -104,7 +104,6 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 getter=self._get_active_profile,
                 setter=self._set_active_profile,
                 values=profile_values,
-                prefs_key="activeProfile",
                 member_of=guilabels.CURRENT_PROFILE,
                 get_actions_for_option=None if self._is_app_specific else self._get_profile_actions,
                 tracks_changes=False,
@@ -481,7 +480,7 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         result = {}
 
         if self._pending_renames:
-            result.update(self._apply_pending_renames())
+            self._apply_pending_renames()
 
         if self._auto_grid:
             result.update(self._auto_grid.save_settings())
@@ -505,10 +504,9 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if self._auto_grid:
             self._auto_grid.set_focus_sidebar_callback(callback)
 
-    def _apply_pending_renames(self) -> dict:
-        """Apply all pending profile renames and return updated settings."""
+    def _apply_pending_renames(self) -> None:
+        """Apply all pending profile renames."""
 
-        result = {}
         active_profile_name = self._manager.get_active_profile()
 
         for old_internal_name, pending_profile in self._pending_renames.items():
@@ -520,12 +518,9 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
             if active_profile_name == old_internal_name:
                 self._manager.set_active_profile(new_internal_name)
-                result["activeProfile"] = new_profile
                 active_profile_name = new_internal_name
 
         self._pending_renames.clear()
-
-        return result
 
     def refresh(self) -> None:
         """Update UI to reflect current profiles and settings."""
