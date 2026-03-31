@@ -45,7 +45,7 @@ except Exception:
 
 from . import debug, guilabels, speechserver, systemd
 from .acss import ACSS
-from .speechserver import CapitalizationStyle, PunctuationStyle, VoiceFamily
+from .speechserver import CapitalizationStyle, VoiceFamily
 from .ssml import SSML, SSMLCapabilities
 
 if TYPE_CHECKING:
@@ -59,18 +59,16 @@ class SpeechServer(speechserver.SpeechServer):
     """Spiel speech server for Orca."""
 
     _active_providers: ClassVar[dict[str, Any]] = {}
-    _active_servers: ClassVar[dict[str, SpeechServer]] = {}
+    _LOG_PREFIX: ClassVar[str] = "SPIEL"
 
     DEFAULT_SPEAKER: Any = None
-    DEFAULT_SERVER_ID = "default"
-    _SERVER_NAMES: ClassVar[dict[str, str]] = {DEFAULT_SERVER_ID: guilabels.DEFAULT_SYNTHESIZER}
 
     @staticmethod
     def get_factory_name() -> str:
         return guilabels.SPIEL
 
     @staticmethod
-    def get_speech_servers() -> list[SpeechServer]:
+    def get_speech_servers() -> list[speechserver.SpeechServer]:
         servers = []
         default = SpeechServer._get_speech_server(SpeechServer.DEFAULT_SERVER_ID)
         if default is not None:
@@ -99,6 +97,7 @@ class SpeechServer(speechserver.SpeechServer):
         # Update the default server's voices
         if len(providers) > 0 and cls.DEFAULT_SERVER_ID in cls._active_servers:
             server = cls._active_servers[cls.DEFAULT_SERVER_ID]
+            assert isinstance(server, SpeechServer)
             server.update_voices(providers[0].props.voices)
 
     def update_voices(self, voices: Any) -> None:
@@ -119,38 +118,9 @@ class SpeechServer(speechserver.SpeechServer):
         msg = f"SPIEL: Updated voice profiles: {len(voice_profiles)} profiles"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    @classmethod
-    def _get_speech_server(cls, server_id: str) -> SpeechServer | None:
-        """Return an active server for given id.
-
-        Attempt to create the server if it doesn't exist yet.  Returns None
-        when it is not possible to create the server.
-
-        """
-        if server_id not in cls._active_servers:
-            cls(server_id)
-        # Don't return the instance, unless it is successfully added
-        # to `_active_servers'.
-        return cls._active_servers.get(server_id)
-
-    @staticmethod
-    def get_speech_server(info: list[str] | None = None) -> SpeechServer | None:
-        """Gets a given SpeechServer based upon the info."""
-
-        this_id = info[1] if info is not None else SpeechServer.DEFAULT_SERVER_ID
-        return SpeechServer._get_speech_server(this_id)
-
-    @staticmethod
-    def shutdown_active_servers() -> None:
-        servers = list(SpeechServer._active_servers.values())
-        for server in servers:
-            server.shutdown()
-
     # *** Instance methods ***
 
     def __init__(self, server_id: str) -> None:
-        super().__init__()
-
         # The speechServerInfo setting is not connected to the speechServerFactory. As a result,
         # the user's chosen server (synthesizer) might be from speech-dispatcher.
         if (
@@ -159,22 +129,13 @@ class SpeechServer(speechserver.SpeechServer):
         ):
             server_id = SpeechServer.DEFAULT_SERVER_ID
 
-        self._id = server_id
+        super().__init__(server_id)
         self._speaker: Any = None
-        self._default_voice: dict[str, Any] = {}
         self._current_voice_profiles = ()
-        self._current_voice_properties: dict[str, Any] = {}
-        self._current_punctuation_level: PunctuationStyle = PunctuationStyle.MOST
         self._provider: Any = None
         self._voices_id: int | None = None
         self._default_voice_name: str = ""
         self._current_voice: Any = None
-        self._acss_defaults = (
-            (ACSS.RATE, 50),
-            (ACSS.AVERAGE_PITCH, 5.0),
-            (ACSS.GAIN, 5.0),
-            (ACSS.FAMILY, {}),
-        )
         if not _SPIEL_AVAILABLE:
             msg = "ERROR: Spiel is not available"
             debug.print_message(debug.LEVEL_WARNING, msg, True)
@@ -207,26 +168,6 @@ class SpeechServer(speechserver.SpeechServer):
         # The default 5.0 (0-10.0) to Spiel's 1.0 (0-2.0)
         volume = acss_volume / 10.0
         return max(0.0, min(volume, 2.0))
-
-    def _get_language_and_dialect(self, acss_family: dict[str, Any] | None) -> tuple[str, str]:
-        # Duplicate of what's in speechdispatcherfactory.py
-        if acss_family is None:
-            acss_family = VoiceFamily(None)
-
-        language = acss_family.get(speechserver.VoiceFamily.LANG)
-        dialect = acss_family.get(speechserver.VoiceFamily.DIALECT)
-
-        if not language:
-            family_locale, _encoding = locale.getlocale()
-
-            language, dialect = "", ""
-            if family_locale:
-                locale_values = family_locale.split("_")
-                language = locale_values[0]
-                if len(locale_values) == 2:
-                    dialect = locale_values[1]
-
-        return str(language), str(dialect)
 
     def _get_language(self, acss_family: VoiceFamily | None) -> str:
         lang, dialect = self._get_language_and_dialect(acss_family)
@@ -316,28 +257,6 @@ class SpeechServer(speechserver.SpeechServer):
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def set_default_voice(self, default_voice: dict[str, Any]) -> None:
-        """Sets the default voice ACSS properties for fallback use."""
-
-        self._default_voice = default_voice
-
-    def update_punctuation_level(self, level: PunctuationStyle) -> None:
-        """Stores the punctuation level for debug display."""
-
-        self._current_punctuation_level = level
-
-    def _apply_acss(self, acss: ACSS | None) -> None:
-        merged: dict[str, Any] = dict(self._default_voice)
-        if acss is not None:
-            merged.update(acss)
-        current = self._current_voice_properties
-        for acss_property, default in self._acss_defaults:
-            value = merged.get(acss_property)
-            if value is not None:
-                current[acss_property] = value
-            else:
-                current[acss_property] = default
-
     def _init(self) -> None:
         # Maintain a speaker singleton for all providers
         if SpeechServer.DEFAULT_SPEAKER is None:
@@ -418,9 +337,6 @@ class SpeechServer(speechserver.SpeechServer):
         self._debug_spiel_values(f"Speaking '{utterance.props.text}' ")
         if self._speaker is not None:
             self._speaker.speak(utterance)
-
-    def get_info(self) -> list[str]:
-        return [self._SERVER_NAMES.get(self._id, self._id), self._id]
 
     def get_voice_families(self) -> list[speechserver.VoiceFamily]:
         # Always offer the configured default voice with a language
@@ -650,33 +566,6 @@ class SpeechServer(speechserver.SpeechServer):
 
             self._speak_utterance(spiel_utterance, acss)
 
-    def _change_default_speech_rate(self, step: int, decrease: bool = False) -> None:
-        delta = step * (-1 if decrease else 1)
-        rate = self._default_voice.get(ACSS.RATE, 50)
-        new_rate = max(0, min(100, rate + delta))
-        self._default_voice[ACSS.RATE] = new_rate
-        self._current_voice_properties[ACSS.RATE] = new_rate
-        msg = f"SPIEL: Rate set to {new_rate}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _change_default_speech_pitch(self, step: float, decrease: bool = False) -> None:
-        delta = step * (-1 if decrease else 1)
-        pitch = self._default_voice.get(ACSS.AVERAGE_PITCH, 5)
-        new_pitch = max(0, min(10, pitch + delta))
-        self._default_voice[ACSS.AVERAGE_PITCH] = new_pitch
-        self._current_voice_properties[ACSS.AVERAGE_PITCH] = new_pitch
-        msg = f"SPIEL: Pitch set to {new_pitch}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _change_default_speech_volume(self, step: float, decrease: bool = False) -> None:
-        delta = step * (-1 if decrease else 1)
-        volume = self._default_voice.get(ACSS.GAIN, 10)
-        new_volume = max(0, min(10, volume + delta))
-        self._default_voice[ACSS.GAIN] = new_volume
-        self._current_voice_properties[ACSS.GAIN] = new_volume
-        msg = f"SPIEL: Volume set to {new_volume}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
     def _maybe_shutdown(self) -> bool:
         # If we're not the last speaker, don't shut down.
         if len(SpeechServer._active_servers) > 1:
@@ -698,24 +587,6 @@ class SpeechServer(speechserver.SpeechServer):
 
         SpeechServer.DEFAULT_SPEAKER = None
         return True
-
-    def increase_speech_rate(self, step: int = 5) -> None:
-        self._change_default_speech_rate(step)
-
-    def decrease_speech_rate(self, step: int = 5) -> None:
-        self._change_default_speech_rate(step, decrease=True)
-
-    def increase_speech_pitch(self, step: float = 0.5) -> None:
-        self._change_default_speech_pitch(step)
-
-    def decrease_speech_pitch(self, step: float = 0.5) -> None:
-        self._change_default_speech_pitch(step, decrease=True)
-
-    def increase_speech_volume(self, step: float = 0.5) -> None:
-        self._change_default_speech_volume(step)
-
-    def decrease_speech_volume(self, step: float = 0.5) -> None:
-        self._change_default_speech_volume(step, decrease=True)
 
     def stop(self) -> None:
         if self._speaker is not None:
@@ -755,13 +626,6 @@ class SpeechServer(speechserver.SpeechServer):
         else:
             systemd.get_manager().set_status("Speech", "not connected")
 
-    def clear_cached_voice_properties(self) -> None:
-        """Clear cached voice properties to force reapplication on next speech."""
-
-        msg = "SPIEL: Clearing cached voice properties"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        self._current_voice_properties.clear()
-
     def get_voice_families_for_language(
         self,
         language: str,
@@ -794,18 +658,6 @@ class SpeechServer(speechserver.SpeechServer):
                 break
 
         return result
-
-    def _normalized_language_and_dialect(self, language: str, dialect: str = "") -> tuple[str, str]:
-        """Attempts to ensure consistency across inconsistent formats."""
-
-        if "-" in language:
-            normalized_language = language.split("-", 1)[0].lower()
-            normalized_dialect = language.split("-", 1)[-1].lower()
-        else:
-            normalized_language = language.lower()
-            normalized_dialect = dialect.lower()
-
-        return normalized_language, normalized_dialect
 
     def get_output_module(self) -> str:
         """Returns the output module associated with this speech server."""

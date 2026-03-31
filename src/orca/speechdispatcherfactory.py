@@ -62,17 +62,14 @@ else:
 class SpeechServer(speechserver.SpeechServer):
     """Speech Dispatcher speech server for Orca."""
 
-    _active_servers: ClassVar[dict[str, SpeechServer]] = {}
-
-    DEFAULT_SERVER_ID = "default"
-    _SERVER_NAMES: ClassVar[dict[str, str]] = {DEFAULT_SERVER_ID: guilabels.DEFAULT_SYNTHESIZER}
+    _LOG_PREFIX: ClassVar[str] = "SPEECH DISPATCHER"
 
     @staticmethod
     def get_factory_name() -> str:
         return guilabels.SPEECH_DISPATCHER
 
     @staticmethod
-    def get_speech_servers() -> list[SpeechServer]:
+    def get_speech_servers() -> list[speechserver.SpeechServer]:
         servers = []
         default = SpeechServer._get_speech_server(SpeechServer.DEFAULT_SERVER_ID)
         if default is not None:
@@ -83,56 +80,18 @@ class SpeechServer(speechserver.SpeechServer):
                     servers.append(server)
         return servers
 
-    @classmethod
-    def _get_speech_server(cls, server_id: str) -> SpeechServer | None:
-        """Return an active server for given id.
-
-        Attempt to create the server if it doesn't exist yet.  Returns None
-        when it is not possible to create the server.
-        """
-
-        if server_id not in cls._active_servers:
-            cls(server_id)
-        # Don't return the instance, unless it is successfully added
-        # to `_active_Servers'.
-        return cls._active_servers.get(server_id)
-
-    @staticmethod
-    def get_speech_server(info: list[str] | None = None) -> SpeechServer | None:
-        """Gets a given SpeechServer based upon the info."""
-
-        this_id = info[1] if info is not None else SpeechServer.DEFAULT_SERVER_ID
-        return SpeechServer._get_speech_server(this_id)
-
-    @staticmethod
-    def shutdown_active_servers() -> None:
-        servers = list(SpeechServer._active_servers.values())
-        for server in servers:
-            server.shutdown()
-
     # *** Instance methods ***
 
     def __init__(self, server_id: str) -> None:
-        super().__init__()
-        self._id = server_id
+        super().__init__(server_id)
         self._client: Any = None
         self._output_module: str | None = None
-        self._default_voice: dict[str, Any] = {}
-        self._current_voice_properties: dict[str, Any] = {}
         self._current_synthesis_voice: str | None = None
-        self._current_punctuation_level: PunctuationStyle = PunctuationStyle.MOST
         self._current_capitalization_style: str = CapitalizationStyle.NONE.value
         self._voice_families_cache: dict[
             tuple[str, str, str | None, int | None],
             list[tuple[str, str, str | None]],
         ] = {}
-        self._acss_manipulators = (
-            (ACSS.FAMILY, self._set_family),
-            (ACSS.RATE, self._set_rate),
-            (ACSS.AVERAGE_PITCH, self._set_pitch),
-            (ACSS.PITCH_RANGE, self._set_pitch_range),
-            (ACSS.GAIN, self._set_volume),
-        )
         if not _SPEECHD_AVAILABLE:
             msg = "ERROR: Speech Dispatcher is not available"
             debug.print_message(debug.LEVEL_WARNING, msg, True)
@@ -229,7 +188,7 @@ class SpeechServer(speechserver.SpeechServer):
 
     def update_punctuation_level(self, level: PunctuationStyle) -> None:
         """Punctuation level changed, inform this speechServer."""
-        self._current_punctuation_level = level
+        super().update_punctuation_level(level)
         if self._client is None:
             return
         mode = self._punctuation_mode_map[level]
@@ -277,25 +236,6 @@ class SpeechServer(speechserver.SpeechServer):
         volume = int(20 * max(0, min(10, acss_volume)) - 100)
         self._send_command(self._client.set_volume, volume)
 
-    def _get_language_and_dialect(self, acss_family: dict[str, Any] | None) -> tuple[str, str]:
-        if acss_family is None:
-            acss_family = {}
-
-        language = acss_family.get(speechserver.VoiceFamily.LANG)
-        dialect = acss_family.get(speechserver.VoiceFamily.DIALECT)
-
-        if not language:
-            family_locale, _encoding = locale.getlocale()
-
-            language, dialect = "", ""
-            if family_locale:
-                locale_values = family_locale.split("_")
-                language = locale_values[0]
-                if len(locale_values) == 2:
-                    dialect = locale_values[1]
-
-        return str(language), str(dialect)
-
     def _set_family(self, acss_family: dict[str, Any] | None) -> None:
         if self._client is None:
             return
@@ -311,11 +251,6 @@ class SpeechServer(speechserver.SpeechServer):
             if name := acss_family.get(speechserver.VoiceFamily.NAME):
                 self._send_command(self._client.set_synthesis_voice, name)
                 self._current_synthesis_voice = name
-
-    def set_default_voice(self, default_voice: dict[str, Any]) -> None:
-        """Sets the default voice ACSS properties for fallback use."""
-
-        self._default_voice = default_voice
 
     def _debug_sd_values(self, prefix: str = "") -> None:
         if debug.debugLevel > debug.LEVEL_INFO:
@@ -349,31 +284,20 @@ class SpeechServer(speechserver.SpeechServer):
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _apply_acss(self, acss: dict[str, Any] | None) -> None:
-        merged: dict[str, Any] = dict(self._default_voice)
-        if acss is not None:
-            merged.update(acss)
+        super()._apply_acss(acss)
+        self._apply_voice_to_backend()
+
+    def _apply_voice_to_backend(self) -> None:
+        """Push current voice properties to the speech-dispatcher connection."""
+
+        if self._client is None:
+            return
         current = self._current_voice_properties
-        for acss_property, method in self._acss_manipulators:
-            value = merged.get(acss_property)
-            if value is not None:
-                if current.get(acss_property) != value:
-                    method(value)
-                    current[acss_property] = value
-            elif acss_property == ACSS.AVERAGE_PITCH:
-                self._set_pitch(5.0)
-                current[acss_property] = 5.0
-            elif acss_property == ACSS.PITCH_RANGE:
-                self._set_pitch_range(5.0)
-                current[acss_property] = 5.0
-            elif acss_property == ACSS.GAIN:
-                self._set_volume(10.0)
-                current[acss_property] = 10.0
-            elif acss_property == ACSS.RATE:
-                self._set_rate(50.0)
-                current[acss_property] = 50.0
-            elif acss_property == ACSS.FAMILY:
-                self._set_family({})
-                current[acss_property] = {}
+        self._set_family(current.get(ACSS.FAMILY))
+        self._set_rate(current.get(ACSS.RATE, 50))
+        self._set_pitch(current.get(ACSS.AVERAGE_PITCH, 5.0))
+        self._set_pitch_range(current.get(ACSS.PITCH_RANGE, 5.0))
+        self._set_volume(current.get(ACSS.GAIN, 10.0))
 
     def _speak(self, text: str, acss: dict[str, Any] | None, **kwargs: Any) -> None:
         if isinstance(text, ACSS):
@@ -441,49 +365,6 @@ class SpeechServer(speechserver.SpeechServer):
     def _cancel(self) -> None:
         if self._client is not None:
             self._send_command(self._client.cancel)
-
-    def _change_default_speech_rate(self, step: int, decrease: bool = False) -> None:
-        delta = step * (-1 if decrease else 1)
-        rate = self._default_voice.get(ACSS.RATE, 50)
-        new_rate = max(0, min(100, rate + delta))
-        self._default_voice[ACSS.RATE] = new_rate
-        self._set_rate(new_rate)
-        self._current_voice_properties[ACSS.RATE] = new_rate
-        msg = f"SPEECH DISPATCHER: Rate set to {new_rate}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _change_default_speech_pitch(self, step: float, decrease: bool = False) -> None:
-        delta = step * (-1 if decrease else 1)
-        pitch = self._default_voice.get(ACSS.AVERAGE_PITCH, 5)
-        new_pitch = max(0, min(10, pitch + delta))
-        self._default_voice[ACSS.AVERAGE_PITCH] = new_pitch
-        self._set_pitch(new_pitch)
-        self._current_voice_properties[ACSS.AVERAGE_PITCH] = new_pitch
-        msg = f"SPEECH DISPATCHER: Pitch set to {new_pitch}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _change_default_speech_volume(self, step: float, decrease: bool = False) -> None:
-        delta = step * (-1 if decrease else 1)
-        volume = self._default_voice.get(ACSS.GAIN, 10)
-        new_volume = max(0, min(10, volume + delta))
-        self._default_voice[ACSS.GAIN] = new_volume
-        self._set_volume(new_volume)
-        self._current_voice_properties[ACSS.GAIN] = new_volume
-        msg = f"SPEECH DISPATCHER: Volume set to {new_volume}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def _change_default_speech_pitch_range(self, step: float, decrease: bool = False) -> None:
-        delta = step * (-1 if decrease else 1)
-        pitch_range = self._default_voice.get(ACSS.PITCH_RANGE, 5)
-        new_pitch_range = max(0, min(10, pitch_range + delta))
-        self._default_voice[ACSS.PITCH_RANGE] = new_pitch_range
-        self._set_pitch_range(new_pitch_range)
-        self._current_voice_properties[ACSS.PITCH_RANGE] = new_pitch_range
-        msg = f"SPEECH DISPATCHER: Pitch range set to {new_pitch_range}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-    def get_info(self) -> list[str]:
-        return [self._SERVER_NAMES.get(self._id, self._id), self._id]
 
     def _get_default_voice_language(
         self,
@@ -630,55 +511,12 @@ class SpeechServer(speechserver.SpeechServer):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self.speak(event_string, acss=acss)
 
-    def increase_speech_rate(self, step: int = 5) -> None:
-        self._change_default_speech_rate(step)
-
-    def decrease_speech_rate(self, step: int = 5) -> None:
-        self._change_default_speech_rate(step, decrease=True)
-
-    def increase_speech_pitch(self, step: float = 0.5) -> None:
-        self._change_default_speech_pitch(step)
-
-    def decrease_speech_pitch(self, step: float = 0.5) -> None:
-        self._change_default_speech_pitch(step, decrease=True)
-
-    def increase_speech_volume(self, step: float = 0.5) -> None:
-        self._change_default_speech_volume(step)
-
-    def decrease_speech_volume(self, step: float = 0.5) -> None:
-        self._change_default_speech_volume(step, decrease=True)
-
-    def increase_speech_inflection(self, step: float = 0.5) -> None:
-        self._change_default_speech_pitch_range(step)
-
-    def decrease_speech_inflection(self, step: float = 0.5) -> None:
-        self._change_default_speech_pitch_range(step, decrease=True)
-
-    def _normalized_language_and_dialect(self, language: str, dialect: str = "") -> tuple[str, str]:
-        """Attempts to ensure consistency across inconsistent formats."""
-
-        if "-" in language:
-            normalized_language = language.split("-", 1)[0].lower()
-            normalized_dialect = language.split("-", 1)[-1].lower()
-        else:
-            normalized_language = language.lower()
-            normalized_dialect = dialect.lower()
-
-        return normalized_language, normalized_dialect
-
     def clear_voice_families_cache(self) -> None:
         """Clear the cache for voice family lookups."""
 
         msg = "SPEECH DISPATCHER: Clearing voice families cache"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._voice_families_cache.clear()
-
-    def clear_cached_voice_properties(self) -> None:
-        """Clear cached voice properties to force reapplication on next speech."""
-
-        msg = "SPEECH DISPATCHER: Clearing cached voice properties"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        self._current_voice_properties.clear()
 
     def _filter_voices_for_language(
         self,
