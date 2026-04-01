@@ -1267,10 +1267,15 @@ class SpeechManager:
         self,
         voice_type: str = "",
         app_name: str | None = None,
+        voice_set: str = gsettings_registry.PRIMARY_VOICE_SET,
     ) -> ACSS:
-        """Returns voice properties from dconf for the given voice type."""
+        """Returns voice properties from dconf for the given voice type and set."""
 
         vtype = voice_type or speechserver.VoiceType.DEFAULT
+
+        if voice_set != gsettings_registry.PRIMARY_VOICE_SET:
+            return self._get_voice_set_properties(vtype, voice_set)
+
         lookup = gsettings_registry.get_registry().layered_lookup
         voice: dict[str, Any] = {}
 
@@ -1316,6 +1321,93 @@ class SpeechManager:
             voice[ACSS.FAMILY] = family
 
         return ACSS(voice)
+
+    def _get_voice_set_properties(self, voice_type: str, voice_set: str) -> ACSS:
+        """Returns voice properties for a non-primary voice set."""
+
+        registry = gsettings_registry.get_registry()
+        sub = gsettings_registry.voice_set_sub_path(voice_type, voice_set)
+        gs = registry.get_settings("voice", registry.get_active_profile(), sub)
+        if gs is None:
+            return ACSS({})
+
+        voice: dict[str, Any] = {}
+        for key, acss_key in (
+            (self.KEY_RATE, ACSS.RATE),
+            (self.KEY_PITCH, ACSS.AVERAGE_PITCH),
+            (self.KEY_PITCH_RANGE, ACSS.PITCH_RANGE),
+            (self.KEY_VOLUME, ACSS.GAIN),
+        ):
+            if gs.get_user_value(key) is not None:
+                voice[acss_key] = gs.get_value(key).unpack()
+
+        established = gs.get_user_value(self.KEY_ESTABLISHED)
+        if established is not None:
+            voice["established"] = established.get_boolean()
+
+        family: dict[str, str] = {}
+        for dconf_key, family_key in (
+            (self.KEY_FAMILY_NAME, speechserver.VoiceFamily.NAME),
+            (self.KEY_FAMILY_LANG, speechserver.VoiceFamily.LANG),
+            (self.KEY_FAMILY_DIALECT, speechserver.VoiceFamily.DIALECT),
+            (self.KEY_FAMILY_GENDER, speechserver.VoiceFamily.GENDER),
+            (self.KEY_FAMILY_VARIANT, speechserver.VoiceFamily.VARIANT),
+        ):
+            val = gs.get_user_value(dconf_key)
+            if val is not None:
+                family[family_key] = val.get_string()
+        if family:
+            voice[ACSS.FAMILY] = family
+
+        return ACSS(voice)
+
+    def set_voice_set_properties(self, voice_type: str, voice_set: str, properties: ACSS) -> None:
+        """Stores voice properties for a voice set."""
+
+        registry = gsettings_registry.get_registry()
+        sub = gsettings_registry.voice_set_sub_path(voice_type, voice_set)
+        gs = registry.get_settings("voice", registry.get_active_profile(), sub)
+        if gs is None:
+            return
+
+        gs.set_boolean(self.KEY_ESTABLISHED, True)
+
+        for key, acss_key, setter in (
+            (self.KEY_RATE, ACSS.RATE, gs.set_int),
+            (self.KEY_PITCH, ACSS.AVERAGE_PITCH, gs.set_double),
+            (self.KEY_PITCH_RANGE, ACSS.PITCH_RANGE, gs.set_double),
+            (self.KEY_VOLUME, ACSS.GAIN, gs.set_double),
+        ):
+            if acss_key in properties:
+                setter(key, properties[acss_key])
+
+        family = properties.get(ACSS.FAMILY, {})
+        for dconf_key, family_key in (
+            (self.KEY_FAMILY_NAME, speechserver.VoiceFamily.NAME),
+            (self.KEY_FAMILY_LANG, speechserver.VoiceFamily.LANG),
+            (self.KEY_FAMILY_DIALECT, speechserver.VoiceFamily.DIALECT),
+            (self.KEY_FAMILY_GENDER, speechserver.VoiceFamily.GENDER),
+            (self.KEY_FAMILY_VARIANT, speechserver.VoiceFamily.VARIANT),
+        ):
+            if family_key in family:
+                gs.set_string(dconf_key, family[family_key])
+
+    def get_voice_set_names(self) -> list[str]:
+        """Returns the names of configured voice sets (excluding primary)."""
+
+        registry = gsettings_registry.get_registry()
+        profile = registry.get_active_profile()
+        gs = registry.get_settings(
+            "voice", profile, f"voice-sets/{gsettings_registry.PRIMARY_VOICE_SET}/default"
+        )
+        if gs is None:
+            return []
+
+        entries = gsettings_registry.GSettingsRegistry._dconf_list(
+            f"{gsettings_registry.GSETTINGS_PATH_PREFIX}"
+            f"{gsettings_registry.GSettingsRegistry.sanitize_gsettings_path(profile)}/voice-sets/"
+        )
+        return [e for e in entries if e != gsettings_registry.PRIMARY_VOICE_SET]
 
     def __init__(self) -> None:
         self._families_sorted: bool = False

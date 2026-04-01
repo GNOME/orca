@@ -324,12 +324,16 @@ class SpeechGenerator(generator.Generator):
         """Applies voice overrides and auto-language-switching for default voice key."""
 
         voice_override: ACSS | None = None
+        resolved_voice_type = speechserver.VoiceType.DEFAULT
         if context is not None:
             if AXUtilities.is_link(obj):
                 voice_override = context.voices.get(speechserver.VoiceType.HYPERLINK)
+                resolved_voice_type = speechserver.VoiceType.HYPERLINK
             elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
                 voice_override = context.voices.get(speechserver.VoiceType.UPPERCASE)
+                resolved_voice_type = speechserver.VoiceType.UPPERCASE
 
+        voice_props[ACSS.VOICE_TYPE] = resolved_voice_type
         if voice_override:
             voice_props.update(voice_override)
             if ACSS.FAMILY in voice_override:
@@ -428,6 +432,7 @@ class SpeechGenerator(generator.Generator):
             )
         else:
             voice_type_name = voice_type.get(key or DEFAULT, voice_type[DEFAULT])
+            voice[ACSS.VOICE_TYPE] = voice_type_name
             override = effective_context.voices.get(voice_type_name)
             if override:
                 voice.update(override)

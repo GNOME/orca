@@ -45,6 +45,7 @@ class ACSS(dict):
     STRESS = "stress"
     RICHNESS = "richness"
     PUNCTUATIONS = "punctuations"
+    VOICE_TYPE = "voice-type"
 
     settings: ClassVar[dict[str, str | int | None]] = {
         FAMILY: None,  # None means use the engine's default value.

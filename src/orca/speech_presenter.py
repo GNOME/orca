@@ -2616,6 +2616,40 @@ class SpeechPresenter:
             return ACSS(acss)
         return ACSS({})
 
+    def _apply_voice_set_overrides(self, voice: ACSS) -> ACSS:
+        """Applies voice set overrides if a matching set exists for the voice's language."""
+
+        family = voice.get(ACSS.FAMILY)
+        if not family:
+            return voice
+
+        language = family.get(VoiceFamily.LANG, "")
+        if not language:
+            return voice
+
+        mgr = speech_manager.get_manager()
+        if language not in mgr.get_voice_set_names():
+            return voice
+
+        voice_type = voice.pop(ACSS.VOICE_TYPE, speechserver.VoiceType.DEFAULT)
+        config = mgr.get_voice_properties(voice_type, voice_set=language)
+        if not config or not config.get("established"):
+            config = mgr.get_voice_properties(speechserver.VoiceType.DEFAULT, voice_set=language)
+        if not config or not config.get("established"):
+            return voice
+
+        msg = f"SPEECH PRESENTER: Applying voice set overrides for {language} ({voice_type})"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        if ACSS.FAMILY in config:
+            family.update(config[ACSS.FAMILY])
+            voice[ACSS.FAMILY] = family
+        for prop in (ACSS.RATE, ACSS.AVERAGE_PITCH, ACSS.PITCH_RANGE, ACSS.GAIN):
+            if prop in config:
+                voice[prop] = config[prop]
+
+        return voice
+
     def _speak_single(self, text: str, acss: ACSS | dict[str, Any] | None) -> None:
         """Speaks an individual string using the given ACSS."""
 
@@ -2625,7 +2659,7 @@ class SpeechPresenter:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        resolved_voice = self._resolve_acss(acss)
+        resolved_voice = self._apply_voice_set_overrides(self._resolve_acss(acss))
         msg = f"SPEECH OUTPUT: '{text}' {resolved_voice}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         server.speak(text, resolved_voice)
