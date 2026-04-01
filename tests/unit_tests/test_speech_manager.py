@@ -124,10 +124,13 @@ class TestSpeechManager:
         speechserver_mock.VoiceFamily.VARIANT = "variant"
         speechserver_mock.PunctuationStyle = PunctuationStyle
         speechserver_mock.CapitalizationStyle = CapitalizationStyle
-        speechserver_mock.DEFAULT_VOICE = "default"
-        speechserver_mock.UPPERCASE_VOICE = "uppercase"
-        speechserver_mock.HYPERLINK_VOICE = "hyperlink"
-        speechserver_mock.SYSTEM_VOICE = "system"
+        from orca.speechserver import VoiceType
+
+        speechserver_mock.VoiceType = VoiceType
+        speechserver_mock.DEFAULT_VOICE = VoiceType.DEFAULT
+        speechserver_mock.UPPERCASE_VOICE = VoiceType.UPPERCASE
+        speechserver_mock.HYPERLINK_VOICE = VoiceType.HYPERLINK
+        speechserver_mock.SYSTEM_VOICE = VoiceType.SYSTEM
 
         orca_i18n_mock = essential_modules["orca.orca_i18n"]
         orca_i18n_mock._ = lambda x: x
@@ -1333,10 +1336,13 @@ class TestVoicesPreferencesGridUI:
         speechserver_mock = essential_modules["orca.speechserver"]
         speechserver_mock.PunctuationStyle = PunctuationStyle
         speechserver_mock.CapitalizationStyle = CapitalizationStyle
-        speechserver_mock.DEFAULT_VOICE = "default"
-        speechserver_mock.UPPERCASE_VOICE = "uppercase"
-        speechserver_mock.HYPERLINK_VOICE = "hyperlink"
-        speechserver_mock.SYSTEM_VOICE = "system"
+        from orca.speechserver import VoiceType
+
+        speechserver_mock.VoiceType = VoiceType
+        speechserver_mock.DEFAULT_VOICE = VoiceType.DEFAULT
+        speechserver_mock.UPPERCASE_VOICE = VoiceType.UPPERCASE
+        speechserver_mock.HYPERLINK_VOICE = VoiceType.HYPERLINK
+        speechserver_mock.SYSTEM_VOICE = VoiceType.SYSTEM
 
         from orca import gsettings_registry
 
@@ -1369,10 +1375,12 @@ class TestVoicesPreferencesGridUI:
 
         grid_mock = test_context.Mock()
         grid_mock._manager = manager
-        grid_mock._default_voice = {}
-        grid_mock._uppercase_voice = {}
-        grid_mock._hyperlink_voice = {}
-        grid_mock._system_voice = {}
+        grid_mock._voices = {
+            "default": {},
+            "uppercase": {},
+            "hyperlink": {},
+            "system": {},
+        }
         grid_mock._has_unsaved_changes = True
         grid_mock._punctuation_combo.get_model.return_value = None
         grid_mock._capitalization_combo.get_model.return_value = None

@@ -2745,7 +2745,7 @@ class SpeechPresenter:
             return
 
         mgr = speech_manager.get_manager()
-        voice = mgr.get_voice_properties(speechserver.SYSTEM_VOICE)
+        voice = mgr.get_voice_properties(speechserver.VoiceType.SYSTEM)
 
         server = mgr.get_server()
         if server is not None:
@@ -2794,10 +2794,7 @@ class SpeechPresenter:
             auto_language_switching_ui=speech_mgr.get_auto_language_switching_ui(),
             insert_pauses_between_utterances=speech_mgr.get_insert_pauses_between_utterances(),
             punctuation_level=speech_mgr.get_punctuation_level(),
-            default_voice=speech_mgr.get_voice_properties(speechserver.DEFAULT_VOICE),
-            hyperlink_voice=speech_mgr.get_voice_properties(speechserver.HYPERLINK_VOICE),
-            uppercase_voice=speech_mgr.get_voice_properties(speechserver.UPPERCASE_VOICE),
-            system_voice=speech_mgr.get_voice_properties(speechserver.SYSTEM_VOICE),
+            voices={vt: speech_mgr.get_voice_properties(vt) for vt in speechserver.VoiceType},
             speech_server=speech_mgr.get_server(),
             only_displayed_text=self.get_only_speak_displayed_text(),
             speak_description=self.get_speak_description(),

@@ -693,7 +693,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             contents[0][0],
         )
         prev_attrs: dict[str, str] = {}
-        system_voice = self.voice(speechserver.SYSTEM_VOICE) if announce_attrs else []
+        system_voice = self.voice(speechserver.VoiceType.SYSTEM) if announce_attrs else []
 
         for i, content in enumerate(contents):
             obj, start, end, string = content

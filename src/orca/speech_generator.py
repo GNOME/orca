@@ -79,10 +79,7 @@ class SpeechGeneratorContext(GeneratorContext):
     auto_language_switching_ui: bool
     insert_pauses_between_utterances: bool
     punctuation_level: str
-    default_voice: ACSS
-    hyperlink_voice: ACSS
-    uppercase_voice: ACSS
-    system_voice: ACSS
+    voices: dict[str, ACSS]
     speech_server: speechserver.SpeechServer | None
     only_displayed_text: bool
     speak_description: bool
@@ -128,12 +125,12 @@ STATE = "state"  # Candidate for sound
 VALUE = "value"  # Candidate for sound
 
 voice_type = {
-    DEFAULT: speechserver.DEFAULT_VOICE,
-    UPPERCASE: speechserver.UPPERCASE_VOICE,
-    HYPERLINK: speechserver.HYPERLINK_VOICE,
-    SYSTEM: speechserver.SYSTEM_VOICE,
-    STATE: speechserver.SYSTEM_VOICE,  # Users may prefer DEFAULT_VOICE here
-    VALUE: speechserver.SYSTEM_VOICE,  # Users may prefer DEFAULT_VOICE here
+    DEFAULT: speechserver.VoiceType.DEFAULT,
+    UPPERCASE: speechserver.VoiceType.UPPERCASE,
+    HYPERLINK: speechserver.VoiceType.HYPERLINK,
+    SYSTEM: speechserver.VoiceType.SYSTEM,
+    STATE: speechserver.VoiceType.SYSTEM,  # Users may prefer VoiceType.DEFAULT here
+    VALUE: speechserver.VoiceType.SYSTEM,  # Users may prefer VoiceType.DEFAULT here
 }
 
 
@@ -327,10 +324,11 @@ class SpeechGenerator(generator.Generator):
         """Applies voice overrides and auto-language-switching for default voice key."""
 
         voice_override: ACSS | None = None
-        if AXUtilities.is_link(obj):
-            voice_override = context.hyperlink_voice if context else None
-        elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
-            voice_override = context.uppercase_voice if context else None
+        if context is not None:
+            if AXUtilities.is_link(obj):
+                voice_override = context.voices.get(speechserver.VoiceType.HYPERLINK)
+            elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
+                voice_override = context.voices.get(speechserver.VoiceType.UPPERCASE)
 
         if voice_override:
             voice_props.update(voice_override)
@@ -387,7 +385,7 @@ class SpeechGenerator(generator.Generator):
             debug.print_tokens(debug.LEVEL_WARNING, tokens, True, True)
             return []
 
-        voice = ACSS(dict(effective_context.default_voice))
+        voice = ACSS(dict(effective_context.voices[speechserver.VoiceType.DEFAULT]))
 
         obj = args.get("obj")
         language = args.get("language", "")
@@ -430,12 +428,7 @@ class SpeechGenerator(generator.Generator):
             )
         else:
             voice_type_name = voice_type.get(key or DEFAULT, voice_type[DEFAULT])
-            voice_types = {
-                voice_type[HYPERLINK]: effective_context.hyperlink_voice,
-                voice_type[UPPERCASE]: effective_context.uppercase_voice,
-                voice_type[SYSTEM]: effective_context.system_voice,
-            }
-            override = voice_types.get(voice_type_name)
+            override = effective_context.voices.get(voice_type_name)
             if override:
                 voice.update(override)
                 if ACSS.FAMILY in override:
@@ -2025,7 +2018,7 @@ class SpeechGenerator(generator.Generator):
         # braille to avoid redundant AT-SPI queries.
         result: list[Any] = []
         presenter = speech_presenter.get_presenter()
-        system_voice = self.voice(speechserver.SYSTEM_VOICE)
+        system_voice = self.voice(speechserver.VoiceType.SYSTEM)
 
         attr_runs = AXUtilities.get_all_text_attributes(obj, start_offset, end_offset)
         prev_had_spelling = False

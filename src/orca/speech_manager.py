@@ -33,7 +33,6 @@ import importlib
 import locale
 import queue
 import threading
-from enum import Enum
 from typing import TYPE_CHECKING, Any
 
 import gi
@@ -72,44 +71,20 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
     _VOICE_SCHEMA = "voice"
 
-    class VoiceType(Enum):
-        """Voice type enumeration for voice settings."""
-
-        DEFAULT = 0
-        UPPERCASE = 1
-        HYPERLINK = 2
-        SYSTEM = 3
-
     def __init__(self, manager: SpeechManager, app_name: str = "") -> None:
         super().__init__(guilabels.SPEECH)
         self._manager = manager
         self._app_name: str = app_name
         self._initializing = True
 
-        self._default_voice = manager.get_voice_properties(
-            speechserver.DEFAULT_VOICE,
-            app_name=self._app_name,
-        )
-        self._uppercase_voice = manager.get_voice_properties(
-            speechserver.UPPERCASE_VOICE,
-            app_name=self._app_name,
-        )
-        self._hyperlink_voice = manager.get_voice_properties(
-            speechserver.HYPERLINK_VOICE,
-            app_name=self._app_name,
-        )
-        self._system_voice = manager.get_voice_properties(
-            speechserver.SYSTEM_VOICE,
-            app_name=self._app_name,
-        )
+        self._voices: dict[str, ACSS] = {}
+        for vt in speechserver.VoiceType:
+            self._voices[vt] = manager.get_voice_properties(vt, app_name=self._app_name)
 
-        # All voice family dicts from server
         self._voice_families: list[speechserver.VoiceFamily] = []
-        # Filtered families for each voice type
-        self._default_family_choices: list[speechserver.VoiceFamily] = []
-        self._hyperlink_family_choices: list[speechserver.VoiceFamily] = []
-        self._uppercase_family_choices: list[speechserver.VoiceFamily] = []
-        self._system_family_choices: list[speechserver.VoiceFamily] = []
+        self._family_choices: dict[str, list[speechserver.VoiceFamily]] = {
+            vt: [] for vt in speechserver.VoiceType
+        }
 
         self._speech_systems_combo: Gtk.ComboBox
         self._speech_synthesizers_combo: Gtk.ComboBox
@@ -118,37 +93,17 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._global_frame: Gtk.Frame | None = None
         self._voice_types_frame: Gtk.Frame | None = None
 
-        # Default voice widgets (created on-demand in dialogs)
-        self._default_languages_combo: Gtk.ComboBox | None = None
-        self._default_families_combo: Gtk.ComboBox | None = None
-        self._default_rate_scale: Gtk.Scale | None = None
-        self._default_pitch_scale: Gtk.Scale | None = None
-        self._default_pitch_range_scale: Gtk.Scale | None = None
-        self._default_volume_scale: Gtk.Scale | None = None
-
-        # Hyperlink voice widgets (created on-demand in dialogs)
-        self._hyperlink_languages_combo: Gtk.ComboBox | None = None
-        self._hyperlink_families_combo: Gtk.ComboBox | None = None
-        self._hyperlink_rate_scale: Gtk.Scale | None = None
-        self._hyperlink_pitch_scale: Gtk.Scale | None = None
-        self._hyperlink_pitch_range_scale: Gtk.Scale | None = None
-        self._hyperlink_volume_scale: Gtk.Scale | None = None
-
-        # Uppercase voice widgets (created on-demand in dialogs)
-        self._uppercase_languages_combo: Gtk.ComboBox | None = None
-        self._uppercase_families_combo: Gtk.ComboBox | None = None
-        self._uppercase_rate_scale: Gtk.Scale | None = None
-        self._uppercase_pitch_scale: Gtk.Scale | None = None
-        self._uppercase_pitch_range_scale: Gtk.Scale | None = None
-        self._uppercase_volume_scale: Gtk.Scale | None = None
-
-        # System voice widgets (created on-demand in dialogs)
-        self._system_languages_combo: Gtk.ComboBox | None = None
-        self._system_families_combo: Gtk.ComboBox | None = None
-        self._system_rate_scale: Gtk.Scale | None = None
-        self._system_pitch_scale: Gtk.Scale | None = None
-        self._system_pitch_range_scale: Gtk.Scale | None = None
-        self._system_volume_scale: Gtk.Scale | None = None
+        self._voice_widgets: dict[str, dict[str, Gtk.Widget | None]] = {
+            vt: {
+                "languages_combo": None,
+                "families_combo": None,
+                "rate_scale": None,
+                "pitch_scale": None,
+                "pitch_range_scale": None,
+                "volume_scale": None,
+            }
+            for vt in speechserver.VoiceType
+        }
 
         self._families_sorted: bool = False
 
@@ -278,16 +233,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self.show_all()  # pylint: disable=no-member
 
-    def _show_voice_settings_dialog(self, voice_type: VoicesPreferencesGrid.VoiceType) -> None:
+    def _show_voice_settings_dialog(self, voice_type: str) -> None:
         """Show a dialog for editing settings for a specific voice type."""
 
-        voice_type_labels = {
-            self.VoiceType.DEFAULT: guilabels.SPEECH_VOICE_TYPE_DEFAULT,
-            self.VoiceType.HYPERLINK: guilabels.SPEECH_VOICE_TYPE_HYPERLINK,
-            self.VoiceType.UPPERCASE: guilabels.SPEECH_VOICE_TYPE_UPPERCASE,
-            self.VoiceType.SYSTEM: guilabels.SPEECH_VOICE_TYPE_SYSTEM,
-        }
-        title = voice_type_labels.get(voice_type, "Voice Settings")
+        title = guilabels.VOICE_TYPE_LABELS.get(voice_type, voice_type)
 
         # Save current ACSS state in case user cancels
         voice_acss = self._get_acss_for_voice_type(voice_type)
@@ -397,37 +346,14 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         )
         voice_listbox.add_row_with_widget(volume_row, volume_scale)
 
-        languages_combo = lang_combo
-        families_combo = person_combo
-
-        if voice_type == self.VoiceType.DEFAULT:
-            self._default_languages_combo = languages_combo
-            self._default_families_combo = families_combo
-            self._default_rate_scale = rate_scale
-            self._default_pitch_scale = pitch_scale
-            self._default_pitch_range_scale = pitch_range_scale
-            self._default_volume_scale = volume_scale
-        elif voice_type == self.VoiceType.HYPERLINK:
-            self._hyperlink_languages_combo = languages_combo
-            self._hyperlink_families_combo = families_combo
-            self._hyperlink_rate_scale = rate_scale
-            self._hyperlink_pitch_scale = pitch_scale
-            self._hyperlink_pitch_range_scale = pitch_range_scale
-            self._hyperlink_volume_scale = volume_scale
-        elif voice_type == self.VoiceType.UPPERCASE:
-            self._uppercase_languages_combo = languages_combo
-            self._uppercase_families_combo = families_combo
-            self._uppercase_rate_scale = rate_scale
-            self._uppercase_pitch_scale = pitch_scale
-            self._uppercase_pitch_range_scale = pitch_range_scale
-            self._uppercase_volume_scale = volume_scale
-        elif voice_type == self.VoiceType.SYSTEM:
-            self._system_languages_combo = languages_combo
-            self._system_families_combo = families_combo
-            self._system_rate_scale = rate_scale
-            self._system_pitch_scale = pitch_scale
-            self._system_pitch_range_scale = pitch_range_scale
-            self._system_volume_scale = volume_scale
+        self._voice_widgets[voice_type] = {
+            "languages_combo": lang_combo,
+            "families_combo": person_combo,
+            "rate_scale": rate_scale,
+            "pitch_scale": pitch_scale,
+            "pitch_range_scale": pitch_range_scale,
+            "volume_scale": volume_scale,
+        }
 
         self._populate_languages_for_voice_type(voice_type)
         self._populate_families_for_voice_type(voice_type, apply_changes=False)
@@ -487,22 +413,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         """Reload settings from manager and refresh the UI."""
 
         app = self._app_name
-        self._default_voice = self._manager.get_voice_properties(
-            speechserver.DEFAULT_VOICE,
-            app_name=app,
-        )
-        self._uppercase_voice = self._manager.get_voice_properties(
-            speechserver.UPPERCASE_VOICE,
-            app_name=app,
-        )
-        self._hyperlink_voice = self._manager.get_voice_properties(
-            speechserver.HYPERLINK_VOICE,
-            app_name=app,
-        )
-        self._system_voice = self._manager.get_voice_properties(
-            speechserver.SYSTEM_VOICE,
-            app_name=app,
-        )
+        for vt in speechserver.VoiceType:
+            self._voices[vt] = self._manager.get_voice_properties(vt, app_name=app)
 
         self._voice_families = self._manager.get_voice_families()
         self._families_sorted = False
@@ -514,12 +426,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         """Save settings and return a dictionary of the current values for those settings."""
 
         result: dict[str, dict | list | int | str | bool] = {
-            "voices": {
-                speechserver.DEFAULT_VOICE: dict(self._default_voice),
-                speechserver.UPPERCASE_VOICE: dict(self._uppercase_voice),
-                speechserver.HYPERLINK_VOICE: dict(self._hyperlink_voice),
-                speechserver.SYSTEM_VOICE: dict(self._system_voice),
-            },
+            "voices": {vt: dict(acss) for vt, acss in self._voices.items()},
         }
 
         result[SpeechManager.KEY_SPEECH_SERVER] = self._manager.get_current_server()
@@ -607,7 +514,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
     def _refresh_voice_widgets(
         self,
-        voice_type: VoicesPreferencesGrid.VoiceType,
+        voice_type: str,
         rate_scale: Gtk.Scale,
         pitch_scale: Gtk.Scale,
         pitch_range_scale: Gtk.Scale,
@@ -629,70 +536,32 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         volume = voice_acss.get(ACSS.GAIN, 10.0)
         volume_scale.set_value(volume)
 
-    def _get_acss_for_voice_type(self, voice_type: VoicesPreferencesGrid.VoiceType) -> ACSS:
+    def _get_acss_for_voice_type(self, voice_type: str) -> ACSS:
         """Return the local ACSS copy for the given voice type."""
 
-        if voice_type == self.VoiceType.DEFAULT:
-            return self._default_voice
-        if voice_type == self.VoiceType.UPPERCASE:
-            return self._uppercase_voice
-        if voice_type == self.VoiceType.HYPERLINK:
-            return self._hyperlink_voice
-        if voice_type == self.VoiceType.SYSTEM:
-            return self._system_voice
-        return self._default_voice
+        return self._voices.get(voice_type, self._voices[speechserver.VoiceType.DEFAULT])
 
     def _get_widgets_for_voice_type(
         self,
-        voice_type: VoicesPreferencesGrid.VoiceType,
+        voice_type: str,
     ) -> tuple[Gtk.ComboBox, Gtk.ComboBox, list[speechserver.VoiceFamily]]:
         """Return the widgets and family choices for a given voice type."""
 
-        if voice_type == self.VoiceType.DEFAULT:
-            return (
-                self._default_languages_combo,
-                self._default_families_combo,
-                self._default_family_choices,
-            )
-        if voice_type == self.VoiceType.HYPERLINK:
-            return (
-                self._hyperlink_languages_combo,
-                self._hyperlink_families_combo,
-                self._hyperlink_family_choices,
-            )
-        if voice_type == self.VoiceType.UPPERCASE:
-            return (
-                self._uppercase_languages_combo,
-                self._uppercase_families_combo,
-                self._uppercase_family_choices,
-            )
-        if voice_type == self.VoiceType.SYSTEM:
-            return (
-                self._system_languages_combo,
-                self._system_families_combo,
-                self._system_family_choices,
-            )
-        return (
-            self._default_languages_combo,
-            self._default_families_combo,
-            self._default_family_choices,
-        )
+        w = self._voice_widgets.get(voice_type, self._voice_widgets[speechserver.VoiceType.DEFAULT])
+        languages_combo = w["languages_combo"]
+        families_combo = w["families_combo"]
+        assert isinstance(languages_combo, Gtk.ComboBox)
+        assert isinstance(families_combo, Gtk.ComboBox)
+        return (languages_combo, families_combo, self._family_choices.get(voice_type, []))
 
     def _set_family_choices_for_voice_type(
         self,
-        voice_type: VoicesPreferencesGrid.VoiceType,
+        voice_type: str,
         choices: list[speechserver.VoiceFamily],
     ) -> None:
         """Set the family choices for a given voice type."""
 
-        if voice_type == self.VoiceType.DEFAULT:
-            self._default_family_choices = choices
-        elif voice_type == self.VoiceType.HYPERLINK:
-            self._hyperlink_family_choices = choices
-        elif voice_type == self.VoiceType.UPPERCASE:
-            self._uppercase_family_choices = choices
-        elif voice_type == self.VoiceType.SYSTEM:
-            self._system_family_choices = choices
+        self._family_choices[voice_type] = choices
 
     def _populate_speech_systems(self) -> None:
         """Populate the speech systems combo."""
@@ -776,7 +645,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     # pylint: disable-next=too-many-branches
     def _populate_languages_for_voice_type(
         self,
-        voice_type: VoicesPreferencesGrid.VoiceType,
+        voice_type: str,
     ) -> None:
         """Populate the languages combo for a specific voice type."""
 
@@ -843,7 +712,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 saved_language = f"{lang}-{dialect}"
             else:
                 saved_language = lang
-        elif voice_type == self.VoiceType.DEFAULT:
+        elif voice_type == speechserver.VoiceType.DEFAULT:
             family_locale, _encoding = locale.getlocale(locale.LC_MESSAGES)
             if family_locale:
                 locale_parts = family_locale.split("_")
@@ -873,7 +742,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     # pylint: disable-next=too-many-branches
     def _populate_families_for_voice_type(
         self,
-        voice_type: VoicesPreferencesGrid.VoiceType,
+        voice_type: str,
         apply_changes: bool = True,
     ) -> None:
         """Populate the families/persons combo for a specific voice type."""
@@ -953,23 +822,16 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 self._sync_voice_to_settings(voice_type)
 
                 # Only set as current voice if this is the default voice type
-                if voice_type == self.VoiceType.DEFAULT:
+                if voice_type == speechserver.VoiceType.DEFAULT:
                     self._manager.set_current_voice(voice_name)
 
         self._initializing = False
 
-    def _sync_voice_to_settings(self, voice_type: VoicesPreferencesGrid.VoiceType) -> None:
+    def _sync_voice_to_settings(self, voice_type: str) -> None:
         """Sync local voice copy to runtime values for immediate preview."""
 
-        voice_map = {
-            self.VoiceType.DEFAULT: (self._default_voice, speechserver.DEFAULT_VOICE),
-            self.VoiceType.UPPERCASE: (self._uppercase_voice, speechserver.UPPERCASE_VOICE),
-            self.VoiceType.HYPERLINK: (self._hyperlink_voice, speechserver.HYPERLINK_VOICE),
-            self.VoiceType.SYSTEM: (self._system_voice, speechserver.SYSTEM_VOICE),
-        }
-
-        local_voice, settings_key = voice_map[voice_type]
-        voice = ACSS(local_voice)
+        voice = ACSS(self._voices[voice_type])
+        settings_key = voice_type
         registry = gsettings_registry.get_registry()
         schema = self._VOICE_SCHEMA
 
@@ -1013,14 +875,14 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         server = self._manager.get_server()
         if server is not None:
-            if settings_key == speechserver.DEFAULT_VOICE:
+            if settings_key == speechserver.VoiceType.DEFAULT:
                 server.set_default_voice(voice)
             server.clear_cached_voice_properties()
 
     def _on_rate_changed(
         self,
         widget: Gtk.Scale,
-        voice_type: VoicesPreferencesGrid.VoiceType,
+        voice_type: str,
     ) -> None:
         """Handle rate slider change for a specific voice type."""
 
@@ -1037,7 +899,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _on_pitch_changed(
         self,
         widget: Gtk.Scale,
-        voice_type: VoicesPreferencesGrid.VoiceType,
+        voice_type: str,
     ) -> None:
         """Handle pitch slider change for a specific voice type."""
 
@@ -1054,7 +916,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _on_pitch_range_changed(
         self,
         widget: Gtk.Scale,
-        voice_type: VoicesPreferencesGrid.VoiceType,
+        voice_type: str,
     ) -> None:
         """Handle inflection (pitch range) slider change for a specific voice type."""
 
@@ -1071,7 +933,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _on_volume_changed(
         self,
         widget: Gtk.Scale,
-        voice_type: VoicesPreferencesGrid.VoiceType,
+        voice_type: str,
     ) -> None:
         """Handle volume slider change for a specific voice type."""
 
@@ -1213,12 +1075,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         # from the new synthesizer. Without this, import_voice only writes
         # keys present in the ACSS dict, so old family values persist in dconf.
         default_family = self._voice_families[0] if self._voice_families else None
-        for voice_type in [
-            self.VoiceType.DEFAULT,
-            self.VoiceType.HYPERLINK,
-            self.VoiceType.UPPERCASE,
-            self.VoiceType.SYSTEM,
-        ]:
+        for voice_type in speechserver.VoiceType:
             voice_acss = self._get_acss_for_voice_type(voice_type)
             if ACSS.FAMILY in voice_acss:
                 del voice_acss[ACSS.FAMILY]
@@ -1230,7 +1087,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _on_speech_language_changed(
         self,
         widget: Gtk.ComboBox,
-        voice_type: VoicesPreferencesGrid.VoiceType,
+        voice_type: str,
     ) -> None:
         """Handle speech language combo change for a specific voice type."""
 
@@ -1240,19 +1097,20 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._populate_families_for_voice_type(voice_type)
         self._has_unsaved_changes = True
 
-        if voice_type == self.VoiceType.DEFAULT:
+        if voice_type == speechserver.VoiceType.DEFAULT:
             self._propagate_language_to_other_voices(widget)
 
     def _propagate_language_to_other_voices(self, _language_combo: Gtk.ComboBox) -> None:
         """Update other voice types to use the same voice family as the Default voice."""
 
-        default_voice = self._get_acss_for_voice_type(self.VoiceType.DEFAULT)
+        default_voice = self._get_acss_for_voice_type(speechserver.VoiceType.DEFAULT)
         default_family = default_voice.get(ACSS.FAMILY)
         if not default_family:
             return
 
-        voice_types = [self.VoiceType.HYPERLINK, self.VoiceType.UPPERCASE, self.VoiceType.SYSTEM]
-        for voice_type in voice_types:
+        for voice_type in speechserver.VoiceType:
+            if voice_type == speechserver.VoiceType.DEFAULT:
+                continue
             voice_acss = self._get_acss_for_voice_type(voice_type)
             voice_acss[ACSS.FAMILY] = default_family
             voice_acss["established"] = True
@@ -1261,14 +1119,14 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _on_speech_family_changed(
         self,
         widget: Gtk.ComboBox,
-        voice_type: VoicesPreferencesGrid.VoiceType,
+        voice_type: str,
     ) -> None:
         """Handle speech family combo change for a specific voice type."""
 
         if self._initializing:
             return
 
-        _, _, family_choices = self._get_widgets_for_voice_type(voice_type)
+        _lang_combo, _fam_combo, family_choices = self._get_widgets_for_voice_type(voice_type)
 
         active = widget.get_active()
         if active < 0 or active >= len(family_choices):
@@ -1282,8 +1140,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         voice_acss["established"] = True
         self._sync_voice_to_settings(voice_type)
 
-        # Only set as current voice if this is the default voice type
-        if voice_type == self.VoiceType.DEFAULT:
+        if voice_type == speechserver.VoiceType.DEFAULT:
             self._manager.set_current_voice(voice_name)
 
         self._has_unsaved_changes = True
@@ -1311,28 +1168,28 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     guilabels.SPEECH_VOICE_TYPE_DEFAULT,
                     "applications-system-symbolic",
                     lambda _btn: self._voices_grid._show_voice_settings_dialog(
-                        VoicesPreferencesGrid.VoiceType.DEFAULT
+                        speechserver.VoiceType.DEFAULT
                     ),
                 ),
                 (
                     guilabels.SPEECH_VOICE_TYPE_HYPERLINK,
                     "applications-system-symbolic",
                     lambda _btn: self._voices_grid._show_voice_settings_dialog(
-                        VoicesPreferencesGrid.VoiceType.HYPERLINK
+                        speechserver.VoiceType.HYPERLINK
                     ),
                 ),
                 (
                     guilabels.SPEECH_VOICE_TYPE_UPPERCASE,
                     "applications-system-symbolic",
                     lambda _btn: self._voices_grid._show_voice_settings_dialog(
-                        VoicesPreferencesGrid.VoiceType.UPPERCASE
+                        speechserver.VoiceType.UPPERCASE
                     ),
                 ),
                 (
                     guilabels.SPEECH_VOICE_TYPE_SYSTEM,
                     "applications-system-symbolic",
                     lambda _btn: self._voices_grid._show_voice_settings_dialog(
-                        VoicesPreferencesGrid.VoiceType.SYSTEM
+                        speechserver.VoiceType.SYSTEM
                     ),
                 ),
             ],
@@ -1413,7 +1270,7 @@ class SpeechManager:
     ) -> ACSS:
         """Returns voice properties from dconf for the given voice type."""
 
-        vtype = voice_type or speechserver.DEFAULT_VOICE
+        vtype = voice_type or speechserver.VoiceType.DEFAULT
         lookup = gsettings_registry.get_registry().layered_lookup
         voice: dict[str, Any] = {}
 
@@ -2212,7 +2069,7 @@ class SpeechManager:
         registry = gsettings_registry.get_registry()
         registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_RATE, value)
         registry.set_runtime_value(
-            self._VOICE_SCHEMA, self.KEY_RATE, value, voice_type=speechserver.DEFAULT_VOICE
+            self._VOICE_SCHEMA, self.KEY_RATE, value, voice_type=speechserver.VoiceType.DEFAULT
         )
 
         msg = f"SPEECH MANAGER: Set rate to: {value}."
@@ -2315,7 +2172,7 @@ class SpeechManager:
         registry = gsettings_registry.get_registry()
         registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_PITCH, value)
         registry.set_runtime_value(
-            self._VOICE_SCHEMA, self.KEY_PITCH, value, voice_type=speechserver.DEFAULT_VOICE
+            self._VOICE_SCHEMA, self.KEY_PITCH, value, voice_type=speechserver.VoiceType.DEFAULT
         )
 
         msg = f"SPEECH MANAGER: Set pitch to: {value}."
@@ -2418,7 +2275,10 @@ class SpeechManager:
         registry = gsettings_registry.get_registry()
         registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_PITCH_RANGE, value)
         registry.set_runtime_value(
-            self._VOICE_SCHEMA, self.KEY_PITCH_RANGE, value, voice_type=speechserver.DEFAULT_VOICE
+            self._VOICE_SCHEMA,
+            self.KEY_PITCH_RANGE,
+            value,
+            voice_type=speechserver.VoiceType.DEFAULT,
         )
 
         msg = f"SPEECH MANAGER: Set pitch range to: {value}."
@@ -2521,7 +2381,7 @@ class SpeechManager:
         registry = gsettings_registry.get_registry()
         registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_VOLUME, value)
         registry.set_runtime_value(
-            self._VOICE_SCHEMA, self.KEY_VOLUME, value, voice_type=speechserver.DEFAULT_VOICE
+            self._VOICE_SCHEMA, self.KEY_VOLUME, value, voice_type=speechserver.VoiceType.DEFAULT
         )
 
         msg = f"SPEECH MANAGER: Set volume to: {value}."
