@@ -540,6 +540,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         # Create child grids (but don't attach them yet - they'll go in the stack detail)
         self._voices_grid = manager.create_voices_preferences_grid(app_name=app_name)
+        self._voice_types_grid = manager.create_voice_types_preferences_grid(self._voices_grid)
         self._verbosity_grid = VerbosityPreferencesGrid(presenter)
         self._tables_grid = TablesPreferencesGrid(presenter)
         self._progress_bars_grid = ProgressBarsPreferencesGrid(presenter)
@@ -555,7 +556,8 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         manager = speech_manager.get_manager()
 
         categories = [
-            (guilabels.VOICE, "voice", self._voices_grid),
+            (guilabels.VOICE_GLOBAL_VOICE_SETTINGS, "voice", self._voices_grid),
+            (guilabels.VOICE_TYPES, "voice-types", self._voice_types_grid),
             (guilabels.VERBOSITY, "verbosity", self._verbosity_grid),
             (guilabels.TABLES, "tables", self._tables_grid),
             (guilabels.PROGRESS_BARS, "progress-bars", self._progress_bars_grid),

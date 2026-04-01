@@ -2119,6 +2119,11 @@ TEXT_ATTRIBUTES_INFO = _(
 # dialog.
 VOICE = _("Voice")
 
+# Translators: This is the label of the Voice Types page in the Orca
+# Preferences dialog, where users configure voices for different contexts
+# (e.g. default, uppercase, hyperlink, system).
+VOICE_TYPES = _("Voice Types")
+
 # Translators: This is the label for a group of settings on the Voice preferences
 # page. It contains widgets that control whether speech is enabled and how
 # certain content (numbers, colors) is spoken.

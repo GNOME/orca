@@ -275,53 +275,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         global_content.add(global_listbox)  # pylint: disable=no-member
         self.attach(self._global_frame, 0, row, 1, 1)
-        row += 1
-
-        self._voice_types_frame, voice_types_content = self._create_frame(
-            guilabels.VOICE_VOICE_TYPE_SETTINGS,
-            margin_top=12,
-        )
-
-        voice_types_listbox, voice_buttons = self._create_button_listbox(
-            [
-                (
-                    guilabels.SPEECH_VOICE_TYPE_DEFAULT,
-                    "applications-system-symbolic",
-                    lambda _btn: self._show_voice_settings_dialog(self.VoiceType.DEFAULT),
-                ),
-                (
-                    guilabels.SPEECH_VOICE_TYPE_HYPERLINK,
-                    "applications-system-symbolic",
-                    lambda _btn: self._show_voice_settings_dialog(self.VoiceType.HYPERLINK),
-                ),
-                (
-                    guilabels.SPEECH_VOICE_TYPE_UPPERCASE,
-                    "applications-system-symbolic",
-                    lambda _btn: self._show_voice_settings_dialog(self.VoiceType.UPPERCASE),
-                ),
-                (
-                    guilabels.SPEECH_VOICE_TYPE_SYSTEM,
-                    "applications-system-symbolic",
-                    lambda _btn: self._show_voice_settings_dialog(self.VoiceType.SYSTEM),
-                ),
-            ],
-        )
-
-        voice_type_labels = [
-            guilabels.SPEECH_VOICE_TYPE_DEFAULT,
-            guilabels.SPEECH_VOICE_TYPE_HYPERLINK,
-            guilabels.SPEECH_VOICE_TYPE_UPPERCASE,
-            guilabels.SPEECH_VOICE_TYPE_SYSTEM,
-        ]
-        for button, voice_label in zip(voice_buttons, voice_type_labels, strict=True):
-            accessible_name = guilabels.VOICE_TYPE_SETTINGS % voice_label
-            button.set_tooltip_text(accessible_name)
-            accessible = button.get_accessible()
-            if accessible:
-                accessible.set_name(accessible_name)
-
-        voice_types_content.add(voice_types_listbox)  # pylint: disable=no-member
-        self.attach(self._voice_types_frame, 0, row, 1, 1)
 
         self.show_all()  # pylint: disable=no-member
 
@@ -1334,6 +1287,80 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self._manager.set_current_voice(voice_name)
 
         self._has_unsaved_changes = True
+
+
+class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
+    """GtkGrid containing voice type selection buttons (Default, Uppercase, etc.)."""
+
+    def __init__(self, voices_grid: VoicesPreferencesGrid) -> None:
+        super().__init__(guilabels.VOICE_TYPES)
+        self._voices_grid = voices_grid
+        self._build()
+
+    def _build(self) -> None:
+        row = 0
+
+        voice_types_frame, voice_types_content = self._create_frame(
+            guilabels.VOICE_VOICE_TYPE_SETTINGS,
+            margin_top=12,
+        )
+
+        voice_types_listbox, voice_buttons = self._create_button_listbox(
+            [
+                (
+                    guilabels.SPEECH_VOICE_TYPE_DEFAULT,
+                    "applications-system-symbolic",
+                    lambda _btn: self._voices_grid._show_voice_settings_dialog(
+                        VoicesPreferencesGrid.VoiceType.DEFAULT
+                    ),
+                ),
+                (
+                    guilabels.SPEECH_VOICE_TYPE_HYPERLINK,
+                    "applications-system-symbolic",
+                    lambda _btn: self._voices_grid._show_voice_settings_dialog(
+                        VoicesPreferencesGrid.VoiceType.HYPERLINK
+                    ),
+                ),
+                (
+                    guilabels.SPEECH_VOICE_TYPE_UPPERCASE,
+                    "applications-system-symbolic",
+                    lambda _btn: self._voices_grid._show_voice_settings_dialog(
+                        VoicesPreferencesGrid.VoiceType.UPPERCASE
+                    ),
+                ),
+                (
+                    guilabels.SPEECH_VOICE_TYPE_SYSTEM,
+                    "applications-system-symbolic",
+                    lambda _btn: self._voices_grid._show_voice_settings_dialog(
+                        VoicesPreferencesGrid.VoiceType.SYSTEM
+                    ),
+                ),
+            ],
+        )
+
+        voice_type_labels = [
+            guilabels.SPEECH_VOICE_TYPE_DEFAULT,
+            guilabels.SPEECH_VOICE_TYPE_HYPERLINK,
+            guilabels.SPEECH_VOICE_TYPE_UPPERCASE,
+            guilabels.SPEECH_VOICE_TYPE_SYSTEM,
+        ]
+        for button, voice_label in zip(voice_buttons, voice_type_labels, strict=True):
+            accessible_name = guilabels.VOICE_TYPE_SETTINGS % voice_label
+            button.set_tooltip_text(accessible_name)
+            accessible = button.get_accessible()
+            if accessible:
+                accessible.set_name(accessible_name)
+
+        voice_types_content.add(voice_types_listbox)  # pylint: disable=no-member
+        self.attach(voice_types_frame, 0, row, 1, 1)
+        self.show_all()  # pylint: disable=no-member
+
+    def save_settings(self) -> dict[str, dict | list | int | str | bool]:
+        """Voice type settings are saved through the voices grid."""
+        return {}
+
+    def refresh(self) -> None:
+        """Voice type widgets are created on-demand in dialogs; nothing to refresh."""
 
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Speech", name="speech")
@@ -3100,6 +3127,13 @@ class SpeechManager:
         """Returns the GtkGrid containing the voices preferences UI."""
 
         return VoicesPreferencesGrid(self, app_name=app_name)
+
+    def create_voice_types_preferences_grid(
+        self, voices_grid: VoicesPreferencesGrid
+    ) -> VoiceTypesPreferencesGrid:
+        """Returns the GtkGrid containing the voice types preferences UI."""
+
+        return VoiceTypesPreferencesGrid(voices_grid)
 
 
 _manager: SpeechManager = SpeechManager()
