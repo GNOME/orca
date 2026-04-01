@@ -305,6 +305,7 @@ MODULE_CONFIG = {
         "getters": [
             "AutoLanguageSwitching",
             "AutoLanguageSwitchingUi",
+            "OnlySwitchConfiguredLanguages",
             "AvailableServers",
             "AvailableSynthesizers",
             "AvailableVoices",
@@ -327,6 +328,7 @@ MODULE_CONFIG = {
         "setters": [
             "AutoLanguageSwitching",
             "AutoLanguageSwitchingUi",
+            "OnlySwitchConfiguredLanguages",
             "CapitalizationStyle",
             "CurrentServer",
             "CurrentSynthesizer",

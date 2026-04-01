@@ -2825,6 +2825,8 @@ class SpeechPresenter:
             where_am_i_type=where_am_i_type,
             in_preferences_window=mgr.is_in_preferences_window(),
             auto_language_switching_content=speech_mgr.get_auto_language_switching(),
+            only_switch_configured_languages=speech_mgr.get_only_switch_configured_languages(),
+            voice_set_languages=tuple(speech_mgr.get_voice_set_names()),
             auto_language_switching_ui=speech_mgr.get_auto_language_switching_ui(),
             insert_pauses_between_utterances=speech_mgr.get_insert_pauses_between_utterances(),
             punctuation_level=speech_mgr.get_punctuation_level(),

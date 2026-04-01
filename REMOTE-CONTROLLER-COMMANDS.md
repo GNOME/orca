@@ -517,6 +517,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`CurrentSynthesizer`:** Gets/Sets the current synthesizer of the active speech server.
 - **`CurrentVoice`:** Gets/Sets the current voice for the active synthesizer.
 - **`InsertPausesBetweenUtterances`:** Gets/Sets whether pauses are inserted between utterances, e.g. between name and role.
+- **`OnlySwitchConfiguredLanguages`:** Gets/Sets whether language switching is limited to configured voice sets.
 - **`Pitch`:** Gets/Sets the current speech pitch (0.0-10.0, default: 5.0).
 - **`PitchRange`:** Gets/Sets the current speech inflection / pitch range (0.0-10.0, default: 5.0).
 - **`PunctuationLevel`:** Gets/Sets the punctuation level.

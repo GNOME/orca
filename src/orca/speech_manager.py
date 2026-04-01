@@ -1238,6 +1238,7 @@ class SpeechManager:
     KEY_USE_PRONUNCIATION_DICTIONARY = "use-pronunciation-dictionary"
     KEY_AUTO_LANGUAGE_SWITCHING = "auto-language-switching"
     KEY_AUTO_LANGUAGE_SWITCHING_UI = "auto-language-switching-ui"
+    KEY_ONLY_SWITCH_CONFIGURED_LANGUAGES = "only-switch-configured-languages"
     KEY_CAPITALIZATION_STYLE = "capitalization-style"
     KEY_PUNCTUATION_LEVEL = "punctuation-level"
 
@@ -3027,6 +3028,34 @@ class SpeechManager:
         gsettings_registry.get_registry().set_runtime_value(
             self.SPEECH_SCHEMA,
             self.KEY_AUTO_LANGUAGE_SWITCHING_UI,
+            value,
+        )
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_ONLY_SWITCH_CONFIGURED_LANGUAGES,
+        schema="speech",
+        gtype="b",
+        default=False,
+        summary="Only switch languages that have a configured voice set",
+    )
+    @dbus_service.getter
+    def get_only_switch_configured_languages(self, app_name: str | None = None) -> bool:
+        """Returns whether language switching is limited to configured voice sets."""
+
+        return self._get_setting(
+            self.KEY_ONLY_SWITCH_CONFIGURED_LANGUAGES, "b", False, app_name=app_name
+        )
+
+    @dbus_service.setter
+    def set_only_switch_configured_languages(self, value: bool) -> bool:
+        """Sets whether language switching is limited to configured voice sets."""
+
+        msg = f"SPEECH MANAGER: Setting only switch configured languages to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self.SPEECH_SCHEMA,
+            self.KEY_ONLY_SWITCH_CONFIGURED_LANGUAGES,
             value,
         )
         return True

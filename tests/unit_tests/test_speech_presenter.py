@@ -747,6 +747,10 @@ class TestSpeechPresenter:
         speech_manager_instance.set_capitalization_style = test_context.Mock()
         speech_manager_instance.get_punctuation_level = test_context.Mock(return_value="all")
         speech_manager_instance.set_punctuation_level = test_context.Mock()
+        speech_manager_instance.get_only_switch_configured_languages = test_context.Mock(
+            return_value=False,
+        )
+        speech_manager_instance.get_voice_set_names = test_context.Mock(return_value=[])
         mock_server = test_context.Mock()
         speech_manager_instance.get_server = test_context.Mock(return_value=mock_server)
         speech_manager_mock.get_manager = test_context.Mock(return_value=speech_manager_instance)

@@ -77,6 +77,8 @@ class SpeechGeneratorContext(GeneratorContext):
     in_preferences_window: bool
     auto_language_switching_content: bool
     auto_language_switching_ui: bool
+    only_switch_configured_languages: bool
+    voice_set_languages: tuple[str, ...]
     insert_pauses_between_utterances: bool
     punctuation_level: str
     voices: dict[str, ACSS]
@@ -354,6 +356,11 @@ class SpeechGenerator(generator.Generator):
         # pauses when either the user or the object lacks a dialect because the families
         # won't match.
         if auto_lang_switching and language and language != family.get(VoiceFamily.LANG):
+            if (
+                context.only_switch_configured_languages
+                and language not in context.voice_set_languages
+            ):
+                return family
             family[VoiceFamily.LANG] = language
             family[VoiceFamily.DIALECT] = dialect
             if families := server.get_voice_families_for_language(

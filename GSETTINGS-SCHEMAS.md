@@ -284,6 +284,7 @@ These operations also work at the profile level:
 | `monitor-font-size` | `i` | `14` | Speech monitor font size |
 | `monitor-foreground` | `s` | `'#ffffff'` | Speech monitor foreground color |
 | `only-speak-displayed-text` | `b` | `false` | Only speak displayed text |
+| `only-switch-configured-languages` | `b` | `false` | Only switch languages that have a configured voice set |
 | `progress-bar-speech-interval` | `i` | `10` | Progress bar speech update interval in seconds |
 | `progress-bar-speech-verbosity` | `enum`<br>`ProgressBarVerbosity` | `'application'` | Progress bar speech verbosity (all, application, window) |
 | `punctuation-level` | `enum`<br>`PunctuationStyle` | `'most'` | Punctuation verbosity level (none, some, most, all) |
