@@ -21,6 +21,8 @@
 
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-lines
+# pylint: disable=too-many-locals
+# pylint: disable=too-many-branches
 
 """Utilities for accessible text."""
 

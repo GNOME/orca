@@ -464,7 +464,7 @@ class GSettingsRegistry:
     def migrate_voice_paths(self) -> None:
         """Migrates voice settings from voices/{type}/ to voice-sets/primary/{type}/."""
 
-        profiles = self._dconf_list(GSETTINGS_PATH_PREFIX)
+        profiles = self.dconf_list(GSETTINGS_PATH_PREFIX)
         if not profiles:
             return
 
@@ -472,7 +472,7 @@ class GSettingsRegistry:
         for profile in profiles:
             if self._migrate_voice_paths_for(profile):
                 migrated = True
-            for app in self._dconf_list(f"{GSETTINGS_PATH_PREFIX}{profile}/apps/"):
+            for app in self.dconf_list(f"{GSETTINGS_PATH_PREFIX}{profile}/apps/"):
                 if self._migrate_voice_paths_for(profile, app):
                     migrated = True
 
@@ -498,7 +498,7 @@ class GSettingsRegistry:
         return migrated
 
     @staticmethod
-    def _dconf_list(path: str) -> list[str]:
+    def dconf_list(path: str) -> list[str]:
         """Returns directory entries under a dconf path, stripped of trailing slashes."""
 
         try:

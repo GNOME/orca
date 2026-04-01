@@ -20,6 +20,7 @@
 
 # pylint: disable=too-many-instance-attributes
 # pylint: disable=too-many-locals
+# pylint: disable=too-many-lines
 
 """Manager for accessible object events."""
 

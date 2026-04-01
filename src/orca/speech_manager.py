@@ -233,7 +233,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self.show_all()  # pylint: disable=no-member
 
-    def _show_voice_settings_dialog(self, voice_type: str) -> None:
+    def show_voice_settings_dialog(self, voice_type: str) -> None:
         """Show a dialog for editing settings for a specific voice type."""
 
         title = guilabels.VOICE_TYPE_LABELS.get(voice_type, voice_type)
@@ -1167,28 +1167,28 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 (
                     guilabels.SPEECH_VOICE_TYPE_DEFAULT,
                     "applications-system-symbolic",
-                    lambda _btn: self._voices_grid._show_voice_settings_dialog(
+                    lambda _btn: self._voices_grid.show_voice_settings_dialog(
                         speechserver.VoiceType.DEFAULT
                     ),
                 ),
                 (
                     guilabels.SPEECH_VOICE_TYPE_HYPERLINK,
                     "applications-system-symbolic",
-                    lambda _btn: self._voices_grid._show_voice_settings_dialog(
+                    lambda _btn: self._voices_grid.show_voice_settings_dialog(
                         speechserver.VoiceType.HYPERLINK
                     ),
                 ),
                 (
                     guilabels.SPEECH_VOICE_TYPE_UPPERCASE,
                     "applications-system-symbolic",
-                    lambda _btn: self._voices_grid._show_voice_settings_dialog(
+                    lambda _btn: self._voices_grid.show_voice_settings_dialog(
                         speechserver.VoiceType.UPPERCASE
                     ),
                 ),
                 (
                     guilabels.SPEECH_VOICE_TYPE_SYSTEM,
                     "applications-system-symbolic",
-                    lambda _btn: self._voices_grid._show_voice_settings_dialog(
+                    lambda _btn: self._voices_grid.show_voice_settings_dialog(
                         speechserver.VoiceType.SYSTEM
                     ),
                 ),
@@ -1403,7 +1403,7 @@ class SpeechManager:
         if gs is None:
             return []
 
-        entries = gsettings_registry.GSettingsRegistry._dconf_list(
+        entries = gsettings_registry.GSettingsRegistry.dconf_list(
             f"{gsettings_registry.GSETTINGS_PATH_PREFIX}"
             f"{gsettings_registry.GSettingsRegistry.sanitize_gsettings_path(profile)}/voice-sets/"
         )

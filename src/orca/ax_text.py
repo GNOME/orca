@@ -21,6 +21,8 @@
 
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-lines
+# pylint: disable=too-many-branches
+# pylint: disable=too-many-return-statements
 
 """Wrapper for the Atspi.Text interface."""
 
