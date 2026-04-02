@@ -2145,15 +2145,27 @@ VOICE_SPEECH_SETTINGS = _("Speech Settings")
 # with the voice type name (e.g., "Default", "Uppercase", "Hyperlink", "System").
 VOICE_TYPE_SETTINGS = C_("VoiceType", "%s Settings")
 
+# Translators: This is the heading for a group of language switching settings
+# in the Voice preferences dialog.
+LANGUAGE_SWITCHING = _("Language Switching")
+
 # Translators: This is a label for a setting that controls whether Orca will
 # automatically switch the speech synthesizer's language based on the language
 # of document content being spoken (e.g. text in a web page or word processor).
-AUTO_LANGUAGE_SWITCHING = _("Automatic language switching for document content")
+# It appears under a "Language Switching" group heading.
+AUTO_LANGUAGE_SWITCHING = _("Document content")
 
 # Translators: This is a label for a setting that controls whether Orca will
 # automatically switch the speech synthesizer's language based on the language
 # of UI elements being spoken (e.g. buttons, labels, and menus).
-AUTO_LANGUAGE_SWITCHING_UI = _("Automatic language switching for UI elements")
+# It appears under a "Language Switching" group heading.
+AUTO_LANGUAGE_SWITCHING_UI = _("UI elements")
+
+# Translators: This is a label for a setting that controls whether Orca will
+# only switch to languages that the user has explicitly configured a voice for.
+# When enabled, encountering text in an unconfigured language will not trigger
+# a voice change. It appears under a "Language Switching" group heading.
+ONLY_SWITCH_CONFIGURED_LANGUAGES = _("Limit switching to configured voices")
 
 # Translators: This label is for a group of buttons on the Text Attributes
 # pane of the Orca Preferences dialog. On that pane there is a long list of

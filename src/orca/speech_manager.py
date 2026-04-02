@@ -198,16 +198,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 self._on_use_pronunciation_dict_toggled,
                 self._manager.get_use_pronunciation_dictionary(),
             ),
-            (
-                guilabels.AUTO_LANGUAGE_SWITCHING,
-                self._on_auto_language_switching_content_toggled,
-                self._manager.get_auto_language_switching(),
-            ),
-            (
-                guilabels.AUTO_LANGUAGE_SWITCHING_UI,
-                self._on_auto_language_switching_ui_toggled,
-                self._manager.get_auto_language_switching_ui(),
-            ),
         ]
 
         switches = []
@@ -225,11 +215,52 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._use_color_names_switch = switches[1]
         self._enable_pause_breaks_switch = switches[2]
         self._use_pronunciation_dict_switch = switches[3]
-        self._auto_language_switching_content_switch = switches[4]
-        self._auto_language_switching_ui_switch = switches[5]
 
         global_content.add(global_listbox)  # pylint: disable=no-member
         self.attach(self._global_frame, 0, row, 1, 1)
+        row += 1
+
+        lang_switch_frame, lang_switch_content = self._create_frame(
+            guilabels.LANGUAGE_SWITCHING,
+            margin_top=12,
+        )
+
+        lang_switch_data = [
+            (
+                guilabels.AUTO_LANGUAGE_SWITCHING,
+                self._on_auto_language_switching_content_toggled,
+                self._manager.get_auto_language_switching(),
+            ),
+            (
+                guilabels.AUTO_LANGUAGE_SWITCHING_UI,
+                self._on_auto_language_switching_ui_toggled,
+                self._manager.get_auto_language_switching_ui(),
+            ),
+            (
+                guilabels.ONLY_SWITCH_CONFIGURED_LANGUAGES,
+                self._on_only_switch_configured_languages_toggled,
+                self._manager.get_only_switch_configured_languages(),
+            ),
+        ]
+
+        lang_switch_listbox = preferences_grid_base.FocusManagedListBox()
+        lang_switches = []
+        for label_text, handler, state in lang_switch_data:
+            row_widget, switch, _label = self._create_switch_row(
+                label_text,
+                handler,
+                state,
+                include_top_separator=False,
+            )
+            lang_switch_listbox.add_row_with_widget(row_widget, switch)
+            lang_switches.append(switch)
+
+        self._auto_language_switching_content_switch = lang_switches[0]
+        self._auto_language_switching_ui_switch = lang_switches[1]
+        self._only_switch_configured_languages_switch = lang_switches[2]
+
+        lang_switch_content.add(lang_switch_listbox)  # pylint: disable=no-member
+        self.attach(lang_switch_frame, 0, row, 1, 1)
 
         self.show_all()  # pylint: disable=no-member
 
@@ -459,6 +490,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         result[SpeechManager.KEY_AUTO_LANGUAGE_SWITCHING_UI] = (
             self._auto_language_switching_ui_switch.get_active()
         )
+        result[SpeechManager.KEY_ONLY_SWITCH_CONFIGURED_LANGUAGES] = (
+            self._only_switch_configured_languages_switch.get_active()
+        )
 
         self._has_unsaved_changes = False
         return result
@@ -506,6 +540,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         )
         self._auto_language_switching_ui_switch.set_active(
             self._manager.get_auto_language_switching_ui(app_name=app),
+        )
+        self._only_switch_configured_languages_switch.set_active(
+            self._manager.get_only_switch_configured_languages(app_name=app),
         )
 
         # Note: Voice type widgets are created on-demand in dialogs, so no need to refresh them here
@@ -1031,6 +1068,13 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if self._initializing:
             return
         self._manager.set_auto_language_switching_ui(switch.get_active())
+        self._has_unsaved_changes = True
+
+    def _on_only_switch_configured_languages_toggled(self, switch: Gtk.Switch, _state: Any) -> None:
+        """Handle only-switch-configured-languages switch change."""
+        if self._initializing:
+            return
+        self._manager.set_only_switch_configured_languages(switch.get_active())
         self._has_unsaved_changes = True
 
     def _on_speech_system_changed(self, widget: Gtk.ComboBox) -> None:
