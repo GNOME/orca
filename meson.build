@@ -43,6 +43,7 @@ endif
 
 # Optional python modules with their descriptions
 optional_modules = {
+  'babel': 'language display names',
   'brlapi': 'braille output',
   'louis': 'contracted braille',
   'psutil': 'system information commands',

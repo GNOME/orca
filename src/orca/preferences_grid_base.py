@@ -32,6 +32,13 @@ import contextlib
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
+try:
+    from babel import Locale as _BabelLocale
+    from babel.core import UnknownLocaleError as _UnknownLocaleError
+except ImportError:
+    _BabelLocale = None  # type: ignore[assignment, misc]
+    _UnknownLocaleError = None  # type: ignore[assignment, misc]
+
 import gi
 
 gi.require_version("Atk", "1.0")
@@ -573,6 +580,30 @@ class PreferencesGridBase(Gtk.Grid):
 
         return row
 
+    @staticmethod
+    def _get_language_display_name(lang: str, dialect: str = "") -> str:
+        """Returns a human-readable display name for a language code."""
+
+        if _BabelLocale is not None:
+            try:
+                locale_id = f"{lang}_{dialect}" if dialect else lang
+                if display := _BabelLocale.parse(locale_id).get_display_name(
+                    _BabelLocale.default()
+                ):
+                    return display
+            except (ValueError, _UnknownLocaleError):
+                pass
+        return f"{lang}-{dialect}" if dialect else lang
+
+    @staticmethod
+    def _create_listbox() -> Gtk.ListBox:
+        """Creates a styled, non-selectable ListBox."""
+
+        listbox = Gtk.ListBox()
+        listbox.set_selection_mode(Gtk.SelectionMode.NONE)
+        listbox.get_style_context().add_class("frame")
+        return listbox
+
     def _create_info_listbox(
         self,
         message: str,
@@ -580,9 +611,7 @@ class PreferencesGridBase(Gtk.Grid):
     ) -> Gtk.ListBox:
         """Create a listbox with a single info row with proper accessibility."""
 
-        listbox = Gtk.ListBox()
-        listbox.set_selection_mode(Gtk.SelectionMode.NONE)
-        listbox.get_style_context().add_class("frame")
+        listbox = self._create_listbox()
 
         listbox_accessible = listbox.get_accessible()
         if listbox_accessible:
@@ -821,6 +850,50 @@ class PreferencesGridBase(Gtk.Grid):
         combo.set_hexpand(False)
         combo.connect("changed", changed_handler)
         return combo
+
+    @staticmethod
+    def _enable_first_letter_nav(combo: Gtk.ComboBoxText) -> None:
+        """Enables first-letter navigation on a ComboBoxText."""
+
+        def on_key_press(_widget: Gtk.Widget, event: Any) -> bool:
+            char = event.string.lower()
+            if not char or not char.isalpha():
+                return False
+            model = combo.get_model()
+            current = max(combo.get_active(), 0)
+            for offset in range(1, len(model) + 1):
+                idx = (current + offset) % len(model)
+                text = (model[idx][0] or "").lower()
+                if text.startswith(char):
+                    combo.set_active(idx)
+                    return True
+            return False
+
+        combo.connect("key-press-event", on_key_press)
+
+    def _create_combo_box_text_row(
+        self,
+        label_text: str,
+        items: list[tuple[str, str]],
+        include_top_separator: bool = True,
+    ) -> tuple[Gtk.ListBoxRow, Gtk.ComboBoxText, Gtk.Label | None]:
+        """Creates a row with a label and a ComboBoxText populated from (id, display) pairs."""
+
+        combo = Gtk.ComboBoxText()
+        for item_id, display_text in items:
+            combo.append(item_id, display_text)
+        if items:
+            combo.set_active(0)
+        self._enable_first_letter_nav(combo)
+
+        row, _hbox, label = self._create_row_structure(
+            include_top_separator,
+            label_text,
+            combo,
+            label_halign=Gtk.Align.START,
+        )
+
+        return row, combo, label
 
     def _create_scrolled_window(self, widget: Gtk.Widget) -> Gtk.ScrolledWindow:
         """Create a scrolled window containing the widget with standard settings."""

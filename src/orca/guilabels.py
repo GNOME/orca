@@ -2128,6 +2128,41 @@ TEXT_ATTRIBUTES_INFO = _(
 # dialog.
 VOICE = _("Voice")
 
+# Translators: This is the label for a section in the Voice Types preferences
+# page where users can select and manage voice sets for different languages.
+LANGUAGE_VOICE_SETTINGS = _("Voice Sets")
+
+# Translators: This is a label for a combo box that selects which voice set
+# to configure. A voice set is a named collection of voice settings, such as
+# the primary set or a language-specific set (e.g. Italian).
+VOICE_SET = _("Voice set:")
+
+# Translators: This is the title of a confirmation dialog shown when the user
+# is about to delete a voice set. The %s is replaced with the voice set name.
+VOICE_SET_DELETE_CONFIRMATION = _("Delete voice set '%s'?")
+
+# Translators: This is the label for the global (default) voice set in the
+# voice set selector combo box. It represents the main voice configuration
+# for the current profile.
+VOICE_SET_GLOBAL = C_("VoiceSet", "Global")
+
+# Translators: This is the accessible name for a button that creates a new
+# voice set for a specific language.
+VOICE_SET_CREATE_NEW = _("New Voice Set")
+
+# Translators: This is an informational message shown at the top of the Voice
+# Types page explaining what voice sets are. The "%s" is replaced with the
+# name of the global voice set (e.g. "Global").
+VOICE_SET_INFO = (
+    _(
+        "Voice sets are collections of voice types (such as default, uppercase, "
+        'hyperlink, and system). The "%s" voice set contains the voice types '
+        "for the current profile. Additional voice sets can be created for "
+        "specific languages.",
+    )
+    % VOICE_SET_GLOBAL
+)
+
 # Translators: This is the label of the Voice Types page in the Orca
 # Preferences dialog, where users configure voices for different contexts
 # (e.g. default, uppercase, hyperlink, system).

@@ -557,7 +557,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         categories = [
             (guilabels.VOICE_GLOBAL_VOICE_SETTINGS, "voice", self._voices_grid),
-            (guilabels.VOICE_TYPES, "voice-types", self._voice_types_grid),
+            (guilabels.LANGUAGE_VOICE_SETTINGS, "voice-sets", self._voice_types_grid),
             (guilabels.VERBOSITY, "verbosity", self._verbosity_grid),
             (guilabels.TABLES, "tables", self._tables_grid),
             (guilabels.PROGRESS_BARS, "progress-bars", self._progress_bars_grid),
@@ -589,6 +589,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._initializing = True
         self._has_unsaved_changes = False
         self._voices_grid.reload()
+        self._voice_types_grid.reload()
         self._verbosity_grid.reload()
         self._tables_grid.reload()
         self._progress_bars_grid.reload()
@@ -699,6 +700,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         result: dict[str, Any] = {}
         result["enable"] = self._multipage_enable_switch.get_active()
         result.update(self._voices_grid.save_settings())
+        result.update(self._voice_types_grid.save_settings())
         result.update(self._verbosity_grid.save_settings())
         result.update(self._tables_grid.save_settings())
         result.update(self._progress_bars_grid.save_settings())
@@ -761,6 +763,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         return (
             self._has_unsaved_changes
             or self._voices_grid.has_changes()
+            or self._voice_types_grid.has_changes()
             or self._verbosity_grid.has_changes()
             or self._tables_grid.has_changes()
             or self._progress_bars_grid.has_changes()
@@ -773,6 +776,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self._initializing = True
         self._voices_grid.refresh()
+        self._voice_types_grid.refresh()
         self._verbosity_grid.refresh()
         self._tables_grid.refresh()
         self._progress_bars_grid.refresh()

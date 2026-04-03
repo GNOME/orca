@@ -27,19 +27,19 @@ community, and where to log bugs and feature requests.
 
 Orca has the following dependencies:
 
-* meson            - The build system used by Orca
-* Python 3         - Python platform
-* pygobject-3.0    - Python bindings for the GObject library
-* gtk+-3.0         - GTK+ toolkit
-* python3-dasbus   - Dasbus (<https://dasbus.readthedocs.io/>) support for remote control of Orca
-* python-speechd   - Python bindings for Speech Dispatcher (optional)
-* BrlTTY           - BrlTTY (<https://mielke.cc/brltty/>) support for braille (optional)
-* BrlAPI           - BrlAPI support for braille (optional)
-* liblouis         - Liblouis (<https://liblouis.io/>) support for contracted braille (optional)
-* py-setproctitle  - Python library to set the process title (optional)
-* gstreamer-1.0    - GStreamer - Streaming media framework (optional)
-* python3-psutil   - Process and system utilities (optional)
-* libwnck3         - Used for mouse review in X11 (optional)
+* meson: The build system used by Orca
+* Python 3: Python platform
+* pygobject-3.0: Python bindings for the GObject library
+* gtk+-3.0: GTK+ toolkit
+* python3-babel: Babel support for localized language display names (optional)
+* python3-brlapi: BrlAPI (<https://mielke.cc/brltty/>) support for braille (optional)
+* python3-dasbus: Dasbus (<https://dasbus.readthedocs.io/>) support for remote control of Orca
+* python3-louis: Liblouis (<https://liblouis.io/>) support for contracted braille (optional)
+* python3-psutil: Process and system utilities (optional)
+* python3-setproctitle: Python library to set the process title (optional)
+* python3-speechd: Python bindings for Speech Dispatcher (optional)
+* gstreamer-1.0: GStreamer - Streaming media framework (optional)
+* libwnck3: Used for mouse review in X11 (optional, deprecated)
 
 You are strongly encouraged to also have the latest stable versions
 of AT-SPI2 and ATK for the GNOME 50.x release.
