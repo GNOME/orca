@@ -2627,12 +2627,18 @@ class SpeechPresenter:
         if not family:
             return voice
 
-        language = family.get(VoiceFamily.LANG, "")
-        if not language:
+        lang = family.get(VoiceFamily.LANG, "")
+        if not lang:
             return voice
 
+        dialect = family.get(VoiceFamily.DIALECT, "")
+        language = f"{lang}-{dialect}" if dialect else lang
+
         mgr = speech_manager.get_manager()
-        if language not in mgr.get_voice_set_names():
+        voice_set_names = mgr.get_voice_set_names()
+        if language not in voice_set_names:
+            language = lang
+        if language not in voice_set_names:
             return voice
 
         voice_type = voice.pop(ACSS.VOICE_TYPE, speechserver.VoiceType.DEFAULT)

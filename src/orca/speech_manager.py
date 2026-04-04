@@ -1203,25 +1203,43 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         return list(self._voice_families)
 
-    def get_primary_language(self) -> str:
-        """Returns the language code of the primary default voice."""
+    def get_primary_voice_family(self) -> dict[str, str]:
+        """Returns the family dict of the primary default voice."""
+
+        return self._voices.get(speechserver.VoiceType.DEFAULT, ACSS({})).get(ACSS.FAMILY, {})
+
+    def get_primary_language_codes(self) -> list[str]:
+        """Returns the language codes of the primary default voice."""
 
         family = self._voices.get(speechserver.VoiceType.DEFAULT, ACSS({})).get(ACSS.FAMILY, {})
-        return family.get(speechserver.VoiceFamily.LANG, "")
+        lang = family.get(speechserver.VoiceFamily.LANG, "")
+        if not lang:
+            return []
+        dialect = family.get(speechserver.VoiceFamily.DIALECT, "")
+        full = f"{lang}-{dialect}" if dialect else ""
+        codes = [lang]
+        if lang.lower() != lang:
+            codes.append(lang.lower())
+        if full:
+            codes.append(full)
+            if full.lower() != full:
+                codes.append(full.lower())
+        return codes
 
     def get_available_languages(self) -> list[tuple[str, str]]:
         """Returns (lang_code, display_name) pairs from available voice families."""
 
-        done: set[str] = set()
+        done: set[tuple[str, str]] = set()
         languages: list[tuple[str, str]] = []
         for family in self._voice_families:
             lang = family.get(speechserver.VoiceFamily.LANG, "")
-            if not lang or lang in done:
-                continue
-            done.add(lang)
             dialect = family.get(speechserver.VoiceFamily.DIALECT, "")
+            if not lang or (lang, dialect) in done:
+                continue
+            done.add((lang, dialect))
+            code = f"{lang}-{dialect}" if dialect else lang
             display = self._get_language_display_name(lang, dialect)
-            languages.append((lang, display))
+            languages.append((code, display))
         return sorted(languages, key=lambda x: x[1])
 
 
@@ -1246,7 +1264,18 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _get_voice_set_items(self) -> list[tuple[str, str]]:
         """Returns (id, label) pairs for the voice set combo."""
 
-        items = [(gsettings_registry.PRIMARY_VOICE_SET, self._PRIMARY_LABEL)]
+        primary_family = self._voices_grid.get_primary_voice_family()
+        primary_lang_display = ""
+        if primary_family:
+            lang = primary_family.get(speechserver.VoiceFamily.LANG, "")
+            dialect = primary_family.get(speechserver.VoiceFamily.DIALECT, "")
+            if lang:
+                primary_lang_display = self._get_language_display_name(lang, dialect)
+        if primary_lang_display:
+            primary_label = f"{self._PRIMARY_LABEL}: {primary_lang_display}"
+        else:
+            primary_label = self._PRIMARY_LABEL
+        items = [(gsettings_registry.PRIMARY_VOICE_SET, primary_label)]
         names = set(self._manager.get_voice_set_names())
         names.update(self._staged_configs.keys())
         names -= self._deleted_sets
@@ -1363,26 +1392,36 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         existing = set(self._manager.get_voice_set_names()) - self._deleted_sets
         existing.update(self._staged_configs.keys())
 
-        primary_lang = self._voices_grid.get_primary_language()
-        if primary_lang:
-            existing.add(primary_lang)
+        existing.update(self._voices_grid.get_primary_language_codes())
 
         synth_languages = {
             code: display
             for code, display in self._voices_grid.get_available_languages()
             if code not in existing
         }
-        other_languages = {}
+        other_languages: dict[str, str] = {}
+        seen_display_names: set[str] = set()
+        all_existing = set(synth_languages) | existing
         for alias_key in locale.locale_alias:
-            code = alias_key.split("_")[0].lower()
-            if (
-                len(code) == 2
-                and code.isalpha()
-                and code not in synth_languages
-                and code not in existing
-                and code not in other_languages
-            ):
-                other_languages[code] = self._get_language_display_name(code)
+            stripped = alias_key.split(".")[0].split("@")[0]
+            parts = stripped.split("_")
+            lang = parts[0].lower()
+            if len(lang) != 2 or not lang.isalpha():
+                continue
+
+            region = parts[1] if len(parts) > 1 and len(parts[1]) >= 2 else ""
+            codes_to_try = [(lang, "")]
+            if region:
+                codes_to_try.append((f"{lang}-{region}", region))
+
+            for code, dialect in codes_to_try:
+                if code in all_existing or code in other_languages:
+                    continue
+                display = self._get_language_display_name(lang, dialect)
+                if display in seen_display_names:
+                    continue
+                seen_display_names.add(display)
+                other_languages[code] = display
 
         result = sorted(synth_languages.items(), key=lambda x: x[1])
         if result and other_languages:
@@ -1521,9 +1560,11 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         def populate_persons(voice_language: str) -> None:
             person_choices.clear()
             person_combo.remove_all()
+            match_lang, _sep, match_dialect = voice_language.partition("-")
             for family in all_families:
                 lang = family.get(speechserver.VoiceFamily.LANG, "")
-                if lang != voice_language:
+                dialect = family.get(speechserver.VoiceFamily.DIALECT, "")
+                if lang != match_lang or (match_dialect and dialect != match_dialect):
                     continue
                 name = family.get(speechserver.VoiceFamily.NAME, "")
                 variant = family.get(speechserver.VoiceFamily.VARIANT, "")

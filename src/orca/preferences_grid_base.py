@@ -584,6 +584,9 @@ class PreferencesGridBase(Gtk.Grid):
     def _get_language_display_name(lang: str, dialect: str = "") -> str:
         """Returns a human-readable display name for a language code."""
 
+        if not dialect and "-" in lang:
+            lang, dialect = lang.split("-", 1)
+
         if _BabelLocale is not None:
             try:
                 locale_id = f"{lang}_{dialect}" if dialect else lang
