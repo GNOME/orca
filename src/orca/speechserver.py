@@ -476,7 +476,7 @@ class SpeechServer:
             )
             if normalized_language != target_language:
                 continue
-            if variant is not None and voice[2] != variant:
+            if variant not in (None, "none", "None") and voice[2] != variant:
                 continue
             if normalized_dialect == target_dialect or (
                 not normalized_dialect and target_dialect == normalized_language
