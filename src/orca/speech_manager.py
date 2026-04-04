@@ -1576,22 +1576,21 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         voice_lang_combo.connect("changed", on_voice_lang_changed)
 
-        # Set initial language selection to match the voice set
-        for i, (_lc, _ld) in enumerate(available_languages):
-            if _lc == voice_set:
-                voice_lang_combo.set_active(i)
-                break
-
-        # Load existing config overrides
+        # Select the language that matches the config, or the voice set's language
         config_family = config.get(ACSS.FAMILY, {})
         config_lang = config_family.get(speechserver.VoiceFamily.LANG, "")
-        if config_lang and config_lang != voice_set:
-            config_dialect = config_family.get(speechserver.VoiceFamily.DIALECT, "")
-            config_display = f"{config_lang}-{config_dialect}" if config_dialect else config_lang
-            for i, (_lc, ld) in enumerate(available_languages):
-                if ld == config_display or _lc == config_lang:
-                    voice_lang_combo.set_active(i)
-                    break
+        config_dialect = config_family.get(speechserver.VoiceFamily.DIALECT, "")
+        if config_lang:
+            target = (
+                f"{config_lang}-{config_dialect}".lower() if config_dialect else config_lang.lower()
+            )
+        else:
+            target = voice_set.lower()
+
+        for i, (lc, _ld) in enumerate(available_languages):
+            if lc.lower() == target or lc.lower() == target.split("-")[0]:
+                voice_lang_combo.set_active(i)
+                break
 
         populate_persons(voice_lang_combo.get_active_id() or "")
         config_name = config_family.get(speechserver.VoiceFamily.NAME, "")

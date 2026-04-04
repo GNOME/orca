@@ -347,36 +347,33 @@ class SpeechGenerator(generator.Generator):
             auto_lang_switching = context.auto_language_switching_content
         else:
             auto_lang_switching = context.auto_language_switching_ui
-        # Only update the language if it has changed from the user's preferred voice.
-        # If that occurred, changing the dialect should not be problematic/bothersome.
-        # For now, ignore dialect changes for the same language to avoid two potential
-        # problems: 1) Unexpected voice changes when we have both a user-specified and
-        # object-specified dialect (e.g. American English versus British English). In
-        # the future, we can make this change opt-in. 2) Unexpected voice changes and/or
-        # pauses when either the user or the object lacks a dialect because the families
-        # won't match.
-        if auto_lang_switching and language and language != family.get(VoiceFamily.LANG):
-            if (
-                context.only_switch_configured_languages
-                and language not in context.voice_set_languages
-            ):
+        if not auto_lang_switching or not language:
+            return family
+
+        same_language = language == family.get(VoiceFamily.LANG)
+        different_dialect = dialect and dialect != family.get(VoiceFamily.DIALECT, "")
+        dialect_code = f"{language}-{dialect}".lower() if dialect else ""
+
+        if same_language:
+            if not different_dialect or dialect_code not in context.voice_set_languages:
                 return family
-            family[VoiceFamily.LANG] = language
-            family[VoiceFamily.DIALECT] = dialect
-            if families := server.get_voice_families_for_language(
-                language,
-                dialect,
-                family.get(VoiceFamily.VARIANT),
-            ):
-                family[VoiceFamily.NAME] = families[0][0]
-            else:
-                # On occasions (e.g. SD + espeak + "zh"), we might not get any matching
-                # family. When that occurs, setting/updating the language but leaving the
-                # original name can cause the voice to not be updated, whereas clearing the
-                # name seems to be enough to trigger the correct language to be used.
-                family[VoiceFamily.NAME] = ""
-            tokens = ["SPEECH GENERATOR: Family updated to", family]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        elif (
+            context.only_switch_configured_languages and language not in context.voice_set_languages
+        ):
+            return family
+
+        family[VoiceFamily.LANG] = language
+        family[VoiceFamily.DIALECT] = dialect
+        if families := server.get_voice_families_for_language(
+            language,
+            dialect,
+            family.get(VoiceFamily.VARIANT),
+        ):
+            family[VoiceFamily.NAME] = families[0][0]
+        else:
+            family[VoiceFamily.NAME] = ""
+        tokens = ["SPEECH GENERATOR: Family updated to", family]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return family
 

@@ -2632,12 +2632,12 @@ class SpeechPresenter:
             return voice
 
         dialect = family.get(VoiceFamily.DIALECT, "")
-        language = f"{lang}-{dialect}" if dialect else lang
+        language = f"{lang}-{dialect}".lower() if dialect else lang.lower()
 
         mgr = speech_manager.get_manager()
         voice_set_names = mgr.get_voice_set_names()
         if language not in voice_set_names:
-            language = lang
+            language = lang.lower()
         if language not in voice_set_names:
             return voice
 
