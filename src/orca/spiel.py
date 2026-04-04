@@ -23,13 +23,11 @@
 # pylint: disable=too-many-instance-attributes
 # pylint: disable=too-many-statements
 # pylint: disable=too-many-locals
-# pylint: disable=too-many-public-methods
 
 """Provides an Orca speech server for Spiel backend."""
 
 from __future__ import annotations
 
-import locale
 import time
 from typing import TYPE_CHECKING, Any
 
@@ -339,48 +337,7 @@ class SpeechServer(speechserver.SpeechServer):
             self._speaker.speak(utterance)
 
     def get_voice_families(self) -> list[speechserver.VoiceFamily]:
-        # Always offer the configured default voice with a language
-        # set according to the current locale.
-        current_locale = locale.getlocale(locale.LC_MESSAGES)[0]
-        if current_locale is None or "_" not in current_locale:
-            locale_language = None
-        else:
-            locale_lang, locale_dialect = current_locale.split("_")
-            locale_language = locale_lang + "-" + locale_dialect
-
-        voices: tuple[tuple[str, str, str | None], ...] = self._current_voice_profiles
-
-        default_lang = ""
-        if locale_language:
-            # Check whether how it appears in the server list
-            for _name, lang, _variant in voices:
-                if lang == locale_language:
-                    default_lang = locale_language
-                    break
-            if not default_lang:
-                for _name, lang, _variant in voices:
-                    if lang == locale_lang:
-                        default_lang = locale_lang
-            if not default_lang:
-                default_lang = locale_language
-
-        voices = ((self._default_voice_name, default_lang, None), *voices)
-
-        families = []
-        for name, lang, variant in voices:
-            families.append(
-                speechserver.VoiceFamily(
-                    {
-                        speechserver.VoiceFamily.NAME: name,
-                        # speechserver.VoiceFamily.GENDER: speechserver.VoiceFamily.MALE,
-                        speechserver.VoiceFamily.LANG: lang.partition("-")[0],
-                        speechserver.VoiceFamily.DIALECT: lang.partition("-")[2],
-                        speechserver.VoiceFamily.VARIANT: variant,
-                    },
-                ),
-            )
-
-        return families
+        return self._build_voice_families(self._current_voice_profiles)
 
     def speak_character(
         self,
@@ -639,25 +596,16 @@ class SpeechServer(speechserver.SpeechServer):
             language, dialect = self._get_language_and_dialect(None)
 
         target_language, target_dialect = self._normalized_language_and_dialect(language, dialect)
-
-        result: list[tuple[str, str, str | None]] = []
-        all_voices = self._current_voice_profiles
-        for voice in all_voices:
-            normalized_language, normalized_dialect = self._normalized_language_and_dialect(
-                voice[1],
-            )
-            if normalized_language != target_language:
-                continue
-            if variant is not None and voice[2] != variant:
-                continue
-            if normalized_dialect == target_dialect or (
-                not normalized_dialect and target_dialect == normalized_language
-            ):
-                result.append(voice)
-            if maximum is not None and len(result) >= maximum:
-                break
-
-        return result
+        candidates, fallbacks = self._filter_voices_for_language(
+            self._current_voice_profiles,
+            target_language,
+            target_dialect,
+            variant=variant,
+            maximum=maximum,
+        )
+        if not candidates and fallbacks:
+            return fallbacks
+        return candidates
 
     def get_output_module(self) -> str:
         """Returns the output module associated with this speech server."""

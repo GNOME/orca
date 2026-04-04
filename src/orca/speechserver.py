@@ -20,6 +20,8 @@
 
 # pylint: disable=too-many-public-methods
 # pylint: disable=unused-argument
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-positional-arguments
 
 """Functionality for working with speech servers."""
 
@@ -193,6 +195,7 @@ class SpeechServer:
     def __init__(self, server_id: str = "") -> None:
         self._id = server_id
         self._default_voice: dict[str, Any] = {}
+        self._default_voice_name: str = ""
         self._current_voice_properties: dict[str, Any] = {}
         self._current_punctuation_level: PunctuationStyle = PunctuationStyle.MOST
 
@@ -244,6 +247,49 @@ class SpeechServer:
         """Returns a list of all known VoiceFamily instances provided by the server."""
 
         return []
+
+    def _get_default_voice_language(
+        self,
+        voices: tuple[tuple[str, str, str | None], ...],
+    ) -> str:
+        """Returns the default language string based on the current locale and available voices."""
+
+        current_locale = locale.getlocale(locale.LC_MESSAGES)[0]
+        if current_locale is None or "_" not in current_locale:
+            return ""
+
+        locale_lang, locale_dialect = current_locale.split("_")
+        locale_language = f"{locale_lang}-{locale_dialect}"
+        for _name, lang, _variant in voices:
+            if lang == locale_language:
+                return locale_language
+        for _name, lang, _variant in voices:
+            if lang == locale_lang:
+                return locale_lang
+        return locale_language
+
+    def _build_voice_families(
+        self,
+        voices: tuple[tuple[str, str, str | None], ...],
+    ) -> list[VoiceFamily]:
+        """Builds VoiceFamily list from raw voice tuples, prepending the default voice."""
+
+        default_lang = self._get_default_voice_language(voices)
+        voices = ((self._default_voice_name, default_lang, None), *voices)
+
+        families = []
+        for name, lang, variant in voices:
+            families.append(
+                VoiceFamily(
+                    {
+                        VoiceFamily.NAME: name,
+                        VoiceFamily.LANG: lang.partition("-")[0],
+                        VoiceFamily.DIALECT: lang.partition("-")[2],
+                        VoiceFamily.VARIANT: variant,
+                    },
+                ),
+            )
+        return families
 
     def get_voice_family(self) -> VoiceFamily:
         """Returns the current voice family as a VoiceFamily dictionary."""
@@ -411,6 +457,39 @@ class SpeechServer:
         """Returns the families for language available in the current synthesizer."""
 
         return []
+
+    def _filter_voices_for_language(
+        self,
+        voices: tuple[tuple[str, str, str | None], ...] | list[tuple[str, str, str | None]],
+        target_language: str,
+        target_dialect: str,
+        variant: str | None = None,
+        maximum: int | None = None,
+    ) -> tuple[list[tuple[str, str, str | None]], list[tuple[str, str, str | None]]]:
+        """Filters voices by language and dialect, returning candidates and fallbacks."""
+
+        candidates: list[tuple[str, str, str | None]] = []
+        fallbacks: list[tuple[str, str, str | None]] = []
+        for voice in voices:
+            normalized_language, normalized_dialect = self._normalized_language_and_dialect(
+                voice[1],
+            )
+            if normalized_language != target_language:
+                continue
+            if variant is not None and voice[2] != variant:
+                continue
+            if normalized_dialect == target_dialect or (
+                not normalized_dialect and target_dialect == normalized_language
+            ):
+                candidates.append(voice)
+            elif not target_dialect:
+                if normalized_dialect == target_language:
+                    candidates.append(voice)
+                if len(normalized_dialect) == 2:
+                    fallbacks.append(voice)
+            if maximum is not None and len(candidates) >= maximum:
+                break
+        return candidates, fallbacks
 
     def _get_language_and_dialect(self, acss_family: dict[str, Any] | None) -> tuple[str, str]:
         """Returns the language and dialect from the ACSS family dictionary."""

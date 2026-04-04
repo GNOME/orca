@@ -18,7 +18,6 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=broad-exception-caught
-# pylint: disable=too-many-public-methods
 # pylint: disable=too-many-instance-attributes
 # pylint: disable=too-many-locals
 
@@ -27,7 +26,6 @@
 from __future__ import annotations
 
 import gc
-import locale
 import time
 from typing import TYPE_CHECKING, Any
 
@@ -366,26 +364,6 @@ class SpeechServer(speechserver.SpeechServer):
         if self._client is not None:
             self._send_command(self._client.cancel)
 
-    def _get_default_voice_language(
-        self,
-        voices: tuple[tuple[str, str, str | None], ...],
-    ) -> str:
-        """Returns the default language string based on the current locale and available voices."""
-
-        current_locale = locale.getlocale(locale.LC_MESSAGES)[0]
-        if current_locale is None or "_" not in current_locale:
-            return ""
-
-        locale_lang, locale_dialect = current_locale.split("_")
-        locale_language = locale_lang + "-" + locale_dialect
-        for _name, lang, _variant in voices:
-            if lang == locale_language:
-                return locale_language
-        for _name, lang, _variant in voices:
-            if lang == locale_lang:
-                return locale_lang
-        return locale_language
-
     def get_voice_families(self) -> list[speechserver.VoiceFamily]:
         """Returns the list of voice families available in the current synthesizer."""
 
@@ -404,24 +382,7 @@ class SpeechServer(speechserver.SpeechServer):
                 except Exception:
                     pass
 
-        default_lang = self._get_default_voice_language(voices)
-        voices = ((self._default_voice_name, default_lang, None), *voices)
-
-        families = []
-        for name, lang, variant in voices:
-            families.append(
-                speechserver.VoiceFamily(
-                    {
-                        speechserver.VoiceFamily.NAME: name,
-                        # speechserver.VoiceFamily.GENDER: speechserver.VoiceFamily.MALE,
-                        speechserver.VoiceFamily.LANG: lang.partition("-")[0],
-                        speechserver.VoiceFamily.DIALECT: lang.partition("-")[2],
-                        speechserver.VoiceFamily.VARIANT: variant,
-                    },
-                ),
-            )
-
-        return families
+        return self._build_voice_families(voices)
 
     def speak(self, text: str | None = None, acss: dict[str, Any] | None = None) -> None:
         if not text:
@@ -518,36 +479,6 @@ class SpeechServer(speechserver.SpeechServer):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._voice_families_cache.clear()
 
-    def _filter_voices_for_language(
-        self,
-        voices: list[tuple[str, str, str | None]],
-        target_language: str,
-        target_dialect: str,
-        maximum: int | None,
-    ) -> tuple[list[tuple[str, str, str | None]], list[tuple[str, str, str | None]]]:
-        """Filters voices by language and dialect, returning candidates and fallbacks."""
-
-        candidates: list[tuple[str, str, str | None]] = []
-        fallbacks: list[tuple[str, str, str | None]] = []
-        for voice in voices:
-            normalized_language, normalized_dialect = self._normalized_language_and_dialect(
-                voice[1],
-            )
-            if normalized_language != target_language:
-                continue
-            if normalized_dialect == target_dialect or (
-                not normalized_dialect and target_dialect == normalized_language
-            ):
-                candidates.append(voice)
-            elif not target_dialect:
-                if normalized_dialect == target_language:
-                    candidates.append(voice)
-                if len(normalized_dialect) == 2:
-                    fallbacks.append(voice)
-            if maximum is not None and len(candidates) >= maximum:
-                break
-        return candidates, fallbacks
-
     def get_voice_families_for_language(
         self,
         language: str,
@@ -612,7 +543,7 @@ class SpeechServer(speechserver.SpeechServer):
             voices,
             target_language,
             target_dialect,
-            maximum,
+            maximum=maximum,
         )
 
         msg = (
