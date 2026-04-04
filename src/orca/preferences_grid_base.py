@@ -588,15 +588,37 @@ class PreferencesGridBase(Gtk.Grid):
             lang, dialect = lang.split("-", 1)
 
         if _BabelLocale is not None:
+            default_locale = _BabelLocale.default()
             try:
                 locale_id = f"{lang}_{dialect}" if dialect else lang
-                if display := _BabelLocale.parse(locale_id).get_display_name(
-                    _BabelLocale.default()
-                ):
+                if display := _BabelLocale.parse(locale_id).get_display_name(default_locale):
+                    if dialect:
+                        base_display = _BabelLocale.parse(lang).get_display_name(default_locale)
+                        if display == base_display:
+                            return f"{display} ({dialect})"
                     return display
             except (ValueError, _UnknownLocaleError):
-                pass
+                try:
+                    if dialect and (
+                        base := _BabelLocale.parse(lang).get_display_name(default_locale)
+                    ):
+                        return f"{base} ({dialect})"
+                except (ValueError, _UnknownLocaleError):
+                    pass
         return f"{lang}-{dialect}" if dialect else lang
+
+    @staticmethod
+    def _is_standard_locale(lang: str, dialect: str) -> bool:
+        """Returns True if babel recognizes the lang+dialect as a distinct locale."""
+
+        if _BabelLocale is None:
+            return len(dialect) <= 3 and dialect.isalpha()
+        try:
+            full = _BabelLocale.parse(f"{lang}_{dialect}")
+            base = _BabelLocale.parse(lang)
+            return full.get_display_name() != base.get_display_name()
+        except (ValueError, _UnknownLocaleError):
+            return False
 
     @staticmethod
     def _create_listbox() -> Gtk.ListBox:

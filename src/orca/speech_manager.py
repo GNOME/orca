@@ -1236,6 +1236,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             dialect = family.get(speechserver.VoiceFamily.DIALECT, "")
             if not lang or (lang, dialect) in done:
                 continue
+            if dialect and not self._is_standard_locale(lang, dialect):
+                continue
             done.add((lang, dialect))
             code = f"{lang}-{dialect}" if dialect else lang
             display = self._get_language_display_name(lang, dialect)
@@ -1394,14 +1396,8 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         existing.update(self._voices_grid.get_primary_language_codes())
 
-        synth_languages = {
-            code: display
-            for code, display in self._voices_grid.get_available_languages()
-            if code not in existing
-        }
-        other_languages: dict[str, str] = {}
+        languages: dict[str, str] = {}
         seen_display_names: set[str] = set()
-        all_existing = set(synth_languages) | existing
         for alias_key in locale.locale_alias:
             stripped = alias_key.split(".")[0].split("@")[0]
             parts = stripped.split("_")
@@ -1415,19 +1411,19 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 codes_to_try.append((f"{lang}-{region}", region))
 
             for code, dialect in codes_to_try:
-                if code in all_existing or code in other_languages:
+                if code in existing or code in languages:
                     continue
                 display = self._get_language_display_name(lang, dialect)
+                if display == code:
+                    continue
+                if dialect and not self._is_standard_locale(lang, dialect):
+                    continue
                 if display in seen_display_names:
                     continue
                 seen_display_names.add(display)
-                other_languages[code] = display
+                languages[code] = display
 
-        result = sorted(synth_languages.items(), key=lambda x: x[1])
-        if result and other_languages:
-            result.append(("", "―――"))
-        result.extend(sorted(other_languages.items(), key=lambda x: x[1]))
-        return result
+        return sorted(languages.items(), key=lambda x: x[1])
 
     def _on_add_voice_set(self, _button: Gtk.Button) -> None:
         """Handle add voice set button click."""
