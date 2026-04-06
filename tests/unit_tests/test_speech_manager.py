@@ -786,6 +786,8 @@ class TestSpeechManager:
 
         manager = SpeechManager()
         test_context.patch_object(manager, "_get_server", return_value=mock_server)
+        test_context.patch_object(manager, "set_rate", return_value=True)
+        test_context.patch_object(manager, "set_pitch", return_value=True)
         result = getattr(manager, case["method_name"])()
         assert result is True
         getattr(mock_server, case["server_method"]).assert_called_once()
@@ -815,6 +817,8 @@ class TestSpeechManager:
 
         manager = SpeechManager()
         test_context.patch_object(manager, "_get_server", return_value=mock_server)
+        test_context.patch_object(manager, "set_rate", return_value=True)
+        test_context.patch_object(manager, "set_pitch", return_value=True)
         result = getattr(manager, case["method_name"])()
         assert result is True
         getattr(mock_server, case["server_method"]).assert_called_once()
@@ -846,6 +850,7 @@ class TestSpeechManager:
 
         manager = SpeechManager()
         test_context.patch_object(manager, "_get_server", return_value=mock_server)
+        test_context.patch_object(manager, "set_pitch_range", return_value=True)
         result = getattr(manager, case["method_name"])()
         assert result is True
         getattr(mock_server, case["server_method"]).assert_called_once()
@@ -875,6 +880,7 @@ class TestSpeechManager:
 
         manager = SpeechManager()
         test_context.patch_object(manager, "_get_server", return_value=mock_server)
+        test_context.patch_object(manager, "set_volume", return_value=True)
         result = getattr(manager, case["method_name"])()
         assert result is True
         getattr(mock_server, case["server_method"]).assert_called_once()
@@ -886,6 +892,7 @@ class TestSpeechManager:
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
+        test_context.patch_object(manager, "_sync_runtime_value_to_all_voice_types")
 
         result = manager.set_rate(75)
         assert result is True
@@ -898,6 +905,7 @@ class TestSpeechManager:
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
+        test_context.patch_object(manager, "_sync_runtime_value_to_all_voice_types")
 
         result = manager.set_volume(8.0)
         assert result is True
@@ -910,6 +918,7 @@ class TestSpeechManager:
         from orca.speech_manager import SpeechManager
 
         manager = SpeechManager()
+        test_context.patch_object(manager, "_sync_runtime_value_to_all_voice_types")
 
         result = manager.set_pitch_range(7.0)
         assert result is True
@@ -1390,6 +1399,7 @@ class TestVoicesPreferencesGridUI:
         grid_mock._use_pronunciation_dict_switch.get_active.return_value = True
         grid_mock._auto_language_switching_content_switch.get_active.return_value = True
         grid_mock._auto_language_switching_ui_switch.get_active.return_value = True
+        grid_mock._only_switch_configured_languages_switch.get_active.return_value = False
 
         result = VoicesPreferencesGrid.save_settings(grid_mock)
 

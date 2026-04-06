@@ -2642,6 +2642,13 @@ class SpeechManager:
             default=50,
         )
 
+    def _sync_runtime_value_to_all_voice_types(self, key: str, value: Any) -> None:
+        """Sets a runtime value override for all voice types."""
+
+        registry = gsettings_registry.get_registry()
+        for vtype in speechserver.VoiceType:
+            registry.set_runtime_value(self._VOICE_SCHEMA, key, value, voice_type=vtype)
+
     @dbus_service.setter
     def set_rate(self, value: int) -> bool:
         """Sets the current speech rate (0-100, default: 50)."""
@@ -2651,8 +2658,7 @@ class SpeechManager:
 
         registry = gsettings_registry.get_registry()
         registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_RATE, value)
-        for vtype in speechserver.VoiceType:
-            registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_RATE, value, voice_type=vtype)
+        self._sync_runtime_value_to_all_voice_types(self.KEY_RATE, value)
 
         msg = f"SPEECH MANAGER: Set rate to: {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -2753,8 +2759,7 @@ class SpeechManager:
 
         registry = gsettings_registry.get_registry()
         registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_PITCH, value)
-        for vtype in speechserver.VoiceType:
-            registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_PITCH, value, voice_type=vtype)
+        self._sync_runtime_value_to_all_voice_types(self.KEY_PITCH, value)
 
         msg = f"SPEECH MANAGER: Set pitch to: {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -2855,10 +2860,7 @@ class SpeechManager:
 
         registry = gsettings_registry.get_registry()
         registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_PITCH_RANGE, value)
-        for vtype in speechserver.VoiceType:
-            registry.set_runtime_value(
-                self._VOICE_SCHEMA, self.KEY_PITCH_RANGE, value, voice_type=vtype
-            )
+        self._sync_runtime_value_to_all_voice_types(self.KEY_PITCH_RANGE, value)
 
         msg = f"SPEECH MANAGER: Set pitch range to: {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -2959,8 +2961,7 @@ class SpeechManager:
 
         registry = gsettings_registry.get_registry()
         registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_VOLUME, value)
-        for vtype in speechserver.VoiceType:
-            registry.set_runtime_value(self._VOICE_SCHEMA, self.KEY_VOLUME, value, voice_type=vtype)
+        self._sync_runtime_value_to_all_voice_types(self.KEY_VOLUME, value)
 
         msg = f"SPEECH MANAGER: Set volume to: {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
