@@ -1159,7 +1159,7 @@ class TestDBusService:
         from orca import dbus_service
 
         service = dbus_service.OrcaDBusServiceInterface()
-        assert service._registered_modules == set()
+        assert service._registered_modules == {}
 
     def test_orca_dbus_service_for_publication(self, test_context: OrcaTestContext) -> None:
         """Test OrcaDBusServiceInterface.for_publication."""
@@ -1199,7 +1199,7 @@ class TestDBusService:
 
         mock_bus = test_context.Mock()
         service = dbus_service.OrcaDBusServiceInterface()
-        service._registered_modules.add("TestModule")
+        service._registered_modules["TestModule"] = test_context.Mock()
         handlers: list[dbus_service._HandlerInfo] = []
         mock_module_iface = test_context.Mock()
         test_context.patch_object(
@@ -1222,7 +1222,7 @@ class TestDBusService:
         mock_bus = test_context.Mock()
         mock_bus.unpublish_object.side_effect = mock_dbus_error("Unpublish failed")
         service = dbus_service.OrcaDBusServiceInterface()
-        service._registered_modules.add("TestModule")
+        service._registered_modules["TestModule"] = test_context.Mock()
         handlers: list[dbus_service._HandlerInfo] = []
         mock_module_iface = test_context.Mock()
         test_context.patch_object(
@@ -1267,7 +1267,7 @@ class TestDBusService:
 
         mock_bus = test_context.Mock()
         service = dbus_service.OrcaDBusServiceInterface()
-        service._registered_modules.add("TestModule")
+        service._registered_modules["TestModule"] = test_context.Mock()
         result = service.remove_module_interface("TestModule", mock_bus, "/test/path")
         assert result is True
         assert "TestModule" not in service._registered_modules
@@ -1295,7 +1295,7 @@ class TestDBusService:
         mock_bus = test_context.Mock()
         mock_bus.unpublish_object.side_effect = mock_dbus_error("Unpublish failed")
         service = dbus_service.OrcaDBusServiceInterface()
-        service._registered_modules.add("TestModule")
+        service._registered_modules["TestModule"] = test_context.Mock()
 
         result = service.remove_module_interface("TestModule", mock_bus, "/test/path")
         assert result is False
@@ -1308,7 +1308,8 @@ class TestDBusService:
         from orca import dbus_service
 
         service = dbus_service.OrcaDBusServiceInterface()
-        service._registered_modules.update(["Module1", "Module2", "Module3"])
+        for name in ("Module1", "Module2", "Module3"):
+            service._registered_modules[name] = test_context.Mock()
         modules = service.ListModules()
         assert set(modules) == {"Module1", "Module2", "Module3"}
 
@@ -1443,7 +1444,8 @@ class TestDBusService:
 
         mock_bus = test_context.Mock()
         service = dbus_service.OrcaDBusServiceInterface()
-        service._registered_modules.update(["Module1", "Module2"])
+        for name in ("Module1", "Module2"):
+            service._registered_modules[name] = test_context.Mock()
         service.shutdown_service(mock_bus, "/test/path")
         assert len(service._registered_modules) == 0
         assert mock_bus.unpublish_object.call_count == 2
@@ -1460,7 +1462,7 @@ class TestDBusService:
         mock_bus = test_context.Mock()
         mock_bus.unpublish_object.side_effect = mock_dbus_error("Unpublish failed")
         service = dbus_service.OrcaDBusServiceInterface()
-        service._registered_modules.update(["Module1"])
+        service._registered_modules["Module1"] = test_context.Mock()
 
         service.shutdown_service(mock_bus, "/test/path")
         assert len(service._registered_modules) == 0

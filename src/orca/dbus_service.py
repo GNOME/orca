@@ -367,7 +367,7 @@ class OrcaDBusServiceInterface(Publishable):
 
     def __init__(self) -> None:
         super().__init__()
-        self._registered_modules: set[str] = set()
+        self._registered_modules: dict[str, OrcaModuleDBusInterface] = {}
 
     def for_publication(self):
         """Returns the D-Bus interface XML for publication."""
@@ -392,11 +392,11 @@ class OrcaDBusServiceInterface(Publishable):
             except DBusError as e:
                 msg = f"DBUS SERVICE: Error unpublishing old interface for {module_name}: {e}"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._registered_modules.discard(module_name)
+            self._registered_modules.pop(module_name, None)
         try:
             module_iface = OrcaModuleDBusInterface(module_name, handlers_info)
             bus.publish_object(object_path, module_iface)
-            self._registered_modules.add(module_name)
+            self._registered_modules[module_name] = module_iface
             msg = f"DBUS SERVICE: Successfully published {module_name} at {object_path}."
             debug.print_message(debug.LEVEL_INFO, msg, True)
         except DBusError as e:
@@ -422,7 +422,7 @@ class OrcaDBusServiceInterface(Publishable):
         object_path = f"{object_path_base}/{module_name}"
         try:
             bus.unpublish_object(object_path)
-            self._registered_modules.discard(module_name)
+            self._registered_modules.pop(module_name, None)
             msg = f"DBUS SERVICE: Successfully removed {module_name} from {object_path}."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -823,6 +823,77 @@ class OrcaRemoteController:
         """Checks if the D-Bus service is currently running."""
 
         return self._is_running
+
+    def present_message_internal(self, message: str) -> bool:
+        """Presents a message via speech and/or braille without a D-Bus round-trip."""
+
+        if self._dbus_service_interface is None:
+            msg = "REMOTE CONTROLLER: Cannot present message; service not started."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        return self._dbus_service_interface.PresentMessage(message)
+
+    def execute_command_internal(
+        self,
+        module_name: str,
+        command_name: str,
+        notify_user: bool = True,
+    ) -> bool:
+        """Executes a module command without a D-Bus round-trip."""
+
+        module = self._get_module_interface(module_name)
+        if module is None:
+            return False
+
+        return module.ExecuteCommand(command_name, notify_user)
+
+    def get_value_internal(self, module_name: str, property_name: str) -> object:
+        """Gets a runtime value from a module without a D-Bus round-trip."""
+
+        module = self._get_module_interface(module_name)
+        if module is None:
+            return None
+
+        handler = module._getters.get(property_name)  # pylint: disable=protected-access
+        if handler is None:
+            msg = f"REMOTE CONTROLLER: Unknown getter '{property_name}' in '{module_name}'."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return None
+
+        return handler.action()
+
+    def set_value_internal(self, module_name: str, property_name: str, value: object) -> bool:
+        """Sets a runtime value on a module without a D-Bus round-trip."""
+
+        module = self._get_module_interface(module_name)
+        if module is None:
+            return False
+
+        handler = module._setters.get(property_name)  # pylint: disable=protected-access
+        if handler is None:
+            msg = f"REMOTE CONTROLLER: Unknown setter '{property_name}' in '{module_name}'."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        return handler.action(value)
+
+    def _get_module_interface(self, module_name: str) -> OrcaModuleDBusInterface | None:
+        """Returns the module interface for the given name, or None."""
+
+        if self._dbus_service_interface is None:
+            msg = f"REMOTE CONTROLLER: Cannot access module '{module_name}'; service not started."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return None
+
+        module = self._dbus_service_interface._registered_modules.get(  # pylint: disable=protected-access
+            module_name
+        )
+        if module is None:
+            msg = f"REMOTE CONTROLLER: Module '{module_name}' not found."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+
+        return module
 
     def _count_system_commands(self) -> int:
         """Counts the system-wide D-Bus commands available on the main service interface."""
