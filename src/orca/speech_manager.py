@@ -1587,10 +1587,16 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         else:
             target = voice_set.lower()
 
+        partial_match = -1
         for i, (lc, _ld) in enumerate(available_languages):
-            if lc.lower() == target or lc.lower() == target.split("-")[0]:
+            if lc.lower() == target:
                 voice_lang_combo.set_active(i)
                 break
+            if partial_match < 0 and lc.lower() == target.split("-")[0]:
+                partial_match = i
+        else:
+            if partial_match >= 0:
+                voice_lang_combo.set_active(partial_match)
 
         populate_persons(voice_lang_combo.get_active_id() or "")
         config_name = config_family.get(speechserver.VoiceFamily.NAME, "")
