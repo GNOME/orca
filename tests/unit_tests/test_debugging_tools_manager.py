@@ -32,7 +32,7 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
-from unittest.mock import call
+from unittest.mock import call, mock_open
 
 import gi
 import pytest
@@ -58,7 +58,6 @@ class TestDebuggingToolsManager:
             "orca.ax_utilities",
             "orca.ax_utilities_debugging",
             "faulthandler",
-            "subprocess",
             "orca.braille_presenter",
             "orca.presentation_manager",
         ]
@@ -131,10 +130,6 @@ class TestDebuggingToolsManager:
 
         faulthandler_mock = essential_modules["faulthandler"]
         faulthandler_mock.enable = test_context.Mock()
-
-        subprocess_mock = essential_modules["subprocess"]
-        subprocess_mock.getoutput = test_context.Mock(return_value="test_command")
-        subprocess_mock.SubprocessError = Exception
 
         essential_modules["input_event_handler"] = input_event_handler_mock
         essential_modules["key_bindings_instance"] = key_bindings_instance
@@ -391,8 +386,8 @@ class TestDebuggingToolsManager:
                 return_value="TestApp",
             )
             test_context.patch(
-                "orca.debugging_tools_manager.subprocess.getoutput",
-                return_value="test_command",
+                "builtins.open",
+                new=mock_open(read_data="test_command"),
             )
 
             result_list = list(

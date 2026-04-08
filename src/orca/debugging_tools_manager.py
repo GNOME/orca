@@ -25,7 +25,6 @@ from __future__ import annotations
 
 import faulthandler
 import os
-import subprocess
 import time
 from typing import TYPE_CHECKING
 
@@ -169,11 +168,10 @@ class DebuggingToolsManager:
             else:
                 name = AXObject.get_name(app) or "[DEAD]"
             try:
-                cmdline = subprocess.getoutput(f"cat /proc/{pid}/cmdline")
-            except subprocess.SubprocessError as error:
+                with open(f"/proc/{pid}/cmdline", encoding="utf-8") as f:
+                    cmdline = f.read().replace("\x00", " ")
+            except OSError as error:
                 cmdline = f"EXCEPTION: {error}"
-            else:
-                cmdline = cmdline.replace("\x00", " ")
             if is_command_line:
                 prefix = f"{time.strftime('%H:%M:%S', time.localtime()):<12}"
             else:

@@ -204,9 +204,10 @@ def in_graphical_desktop() -> bool:
 def other_orcas() -> list[int]:
     """Returns the pid of any other instances of Orca owned by this user."""
 
-    with subprocess.Popen(f"pgrep -u {os.getuid()} -x orca",
-                          shell=True,
-                          stdout=subprocess.PIPE) as proc:
+    with subprocess.Popen(
+        ["pgrep", "-u", str(os.getuid()), "-x", "orca"],
+        stdout=subprocess.PIPE,
+    ) as proc:
         pids = proc.stdout.read() if proc.stdout else b""
 
     orcas = [int(p) for p in pids.split()]

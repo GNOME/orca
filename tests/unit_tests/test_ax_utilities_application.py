@@ -30,6 +30,7 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
+from unittest.mock import mock_open
 
 import gi
 import pytest
@@ -48,8 +49,7 @@ class TestAXUtilitiesApplication:
     def _setup_dependencies(self, test_context: OrcaTestContext):
         """Set up mocks for ax_utilities_application dependencies."""
 
-        additional_modules = ["subprocess"]
-        essential_modules = test_context.setup_shared_dependencies(additional_modules)
+        essential_modules = test_context.setup_shared_dependencies()
 
         debug_mock = essential_modules["orca.debug"]
         debug_mock.print_message = test_context.Mock()
@@ -63,9 +63,6 @@ class TestAXUtilitiesApplication:
         ax_object_class_mock.get_parent = test_context.Mock(return_value=None)
         ax_object_class_mock.iter_children = test_context.Mock(return_value=[])
         essential_modules["orca.ax_object"].AXObject = ax_object_class_mock
-
-        subprocess_mock = essential_modules["subprocess"]
-        subprocess_mock.getoutput = test_context.Mock(return_value="")
 
         return essential_modules
 
@@ -473,18 +470,18 @@ class TestAXUtilitiesApplication:
         assert result is expected_found
 
     @pytest.mark.parametrize(
-        "process_state,expected_unresponsive",
+        "file_content,expected_unresponsive",
         [
-            ("State: Z (zombie)", True),
-            ("State: T (stopped)", True),
-            ("State: R (running)", False),
+            ("Name:\tbash\nState:\tZ (zombie)\n", True),
+            ("Name:\tbash\nState:\tT (stopped)\n", True),
+            ("Name:\tbash\nState:\tR (running)\n", False),
             ("", False),
         ],
     )
     def test_is_application_unresponsive(
         self,
         test_context: OrcaTestContext,
-        process_state: str,
+        file_content: str,
         expected_unresponsive: bool,
     ) -> None:
         """Test AXUtilitiesApplication.is_application_unresponsive with different process states."""
@@ -494,6 +491,6 @@ class TestAXUtilitiesApplication:
 
         mock_app = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXUtilitiesApplication, "get_process_id", return_value=1234)
-        test_context.patch("subprocess.getoutput", return_value=process_state)
+        test_context.patch("builtins.open", new=mock_open(read_data=file_content))
         result = AXUtilitiesApplication.is_application_unresponsive(mock_app)
         assert result is expected_unresponsive

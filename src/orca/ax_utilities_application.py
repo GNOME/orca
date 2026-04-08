@@ -21,8 +21,6 @@
 
 """Utilities for accessible applications."""
 
-import subprocess
-
 import gi
 
 gi.require_version("Atspi", "2.0")
@@ -206,9 +204,13 @@ class AXUtilitiesApplication:
 
         pid = AXUtilitiesApplication.get_process_id(app)
         try:
-            state = subprocess.getoutput(f"cat /proc/{pid}/status | grep State")
-            state = state.split()[1]
-        except (GLib.GError, IndexError) as error:
+            with open(f"/proc/{pid}/status", encoding="utf-8") as f:
+                state = ""
+                for line in f:
+                    if line.startswith("State:"):
+                        state = line.split()[1]
+                        break
+        except (OSError, IndexError) as error:
             tokens = [f"AXUtilitiesApplication: Exception checking state of pid {pid}: {error}"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
