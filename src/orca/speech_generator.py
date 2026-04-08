@@ -2036,7 +2036,8 @@ class SpeechGenerator(generator.Generator):
         prev_attrs: dict[str, str] = {}
         for i, (run_start, run_end, attrs) in enumerate(attr_runs):
             if i > 0 and announce_formatting:
-                for desc in self._get_attribute_change_descriptions(prev_attrs, attrs):
+                exclude = AXUtilities.get_redundant_text_attributes(obj, run_start, run_end)
+                for desc in self._get_attribute_change_descriptions(prev_attrs, attrs, exclude):
                     result.extend([desc, *system_voice])
 
             has_spelling = AXUtilities.string_has_spelling_error(obj, run_start)
@@ -4132,12 +4133,14 @@ class SpeechGenerator(generator.Generator):
         self,
         prev_attrs: dict[str, str],
         curr_attrs: dict[str, str],
+        exclude: frozenset[AXTextAttribute] = frozenset(),
     ) -> list[str]:
         """Returns descriptions for presentable attribute changes between two runs."""
 
         allowed = set(text_attribute_manager.get_manager().get_resolved_attributes_to_speak())
         allowed.discard(AXTextAttribute.TEXT_DECORATION)
         allowed.discard(AXTextAttribute.INVALID)
+        allowed -= exclude
 
         descriptions: list[str] = []
         seen: set[AXTextAttribute] = set()
@@ -4193,11 +4196,19 @@ class SpeechGenerator(generator.Generator):
     ) -> list[Any]:
         """Generates speech for a phrase of text with voice selection and text adjustment."""
 
+        self._context = context
         presenter = speech_presenter.get_presenter()
-        text = presenter.adjust_for_presentation(obj, phrase)
+        text = presenter.adjust_for_presentation(obj, phrase, start_offset)
         if not text:
             return []
-        voice = self.voice(obj=obj, string=text)
+
+        attrs = AXText.get_text_attributes_at_offset(obj, start_offset)[0]
+        lang = attrs.get("language", "")
+        dialect = ""
+        if "-" in lang:
+            lang, dialect = lang.split("-", 1)
+
+        voice = self.voice(obj=obj, string=text, language=lang, dialect=dialect)
         return [text, *voice]
 
     def generate_word(

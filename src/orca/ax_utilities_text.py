@@ -34,6 +34,7 @@ from typing import TYPE_CHECKING
 
 from . import debug
 from .ax_component import AXComponent
+from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities_role import AXUtilitiesRole
@@ -63,6 +64,12 @@ class AXUtilitiesText:
     CACHED_TEXT_ATTRIBUTES: ClassVar[dict[str, str]] = {}
     CACHED_TEXT_SELECTION: ClassVar[dict[int, tuple[str, int, int]]] = {}
     LAST_TEXT_UNIT_SPOKEN: ClassVar[TextUnit | None] = None
+    LINK_STYLING_ATTRIBUTES: ClassVar[frozenset[AXTextAttribute]] = frozenset(
+        {
+            AXTextAttribute.FG_COLOR,
+            AXTextAttribute.UNDERLINE,
+        }
+    )
 
     @staticmethod
     def get_last_text_unit_spoken() -> TextUnit | None:
@@ -89,6 +96,33 @@ class AXUtilitiesText:
         AXUtilitiesText.CACHED_TEXT_ATTRIBUTES = AXText.get_text_attributes_at_offset(obj, offset)[
             0
         ]
+
+    @staticmethod
+    def is_at_link_boundary(
+        obj: Atspi.Accessible,
+        run_start: int,
+        run_end: int,
+    ) -> bool:
+        """Returns True if any hyperlink boundary coincides with a boundary of the text run."""
+
+        for link in AXHypertext.get_all_links(obj):
+            link_start = AXHypertext.get_link_start_offset(link)
+            link_end = AXHypertext.get_link_end_offset(link)
+            if link_start in (run_start, run_end) or link_end in (run_start, run_end):
+                return True
+        return False
+
+    @staticmethod
+    def get_redundant_text_attributes(
+        obj: Atspi.Accessible,
+        run_start: int,
+        run_end: int,
+    ) -> frozenset[AXTextAttribute]:
+        """Returns text attributes that are redundant at this position."""
+
+        if AXUtilitiesText.is_at_link_boundary(obj, run_start, run_end):
+            return AXUtilitiesText.LINK_STYLING_ATTRIBUTES
+        return frozenset()
 
     @staticmethod
     def _get_raw_attribute_changes(
@@ -123,7 +157,7 @@ class AXUtilitiesText:
     ) -> list[tuple[AXTextAttribute, str | None, str | None]]:
         """Returns a list of (attribute, old_value, new_value) for attributes that changed."""
 
-        current_attrs = AXText.get_text_attributes_at_offset(obj, offset)[0]
+        current_attrs, run_start, run_end = AXText.get_text_attributes_at_offset(obj, offset)
         cached_attrs = AXUtilitiesText.CACHED_TEXT_ATTRIBUTES
 
         # An empty cache means focus moved to a non-text object (e.g. the frame),
@@ -171,7 +205,11 @@ class AXUtilitiesText:
 
         # A paragraph style change subsumes individual formatting changes.
         if AXTextAttribute.PARAGRAPH_STYLE in changed_attrs:
-            changes = [(a, o, n) for a, o, n in changes if a == AXTextAttribute.PARAGRAPH_STYLE]
+            changes = [
+                (attr, old, new)
+                for attr, old, new in changes
+                if attr == AXTextAttribute.PARAGRAPH_STYLE
+            ]
         # Many simultaneous changes indicate a bulk operation (e.g. style re-application).
         # Announce the current paragraph style so the user knows what was applied.
         elif len(changes) > 3:
@@ -185,7 +223,21 @@ class AXUtilitiesText:
             AXTextAttribute.UNDERLINE,
             AXTextAttribute.STRIKETHROUGH,
         }:
-            changes = [(a, o, n) for a, o, n in changes if a != AXTextAttribute.TEXT_DECORATION]
+            changes = [
+                (attr, old, new)
+                for attr, old, new in changes
+                if attr != AXTextAttribute.TEXT_DECORATION
+            ]
+
+        # Link styling attributes (underline, fg-color) are redundant when the change
+        # is at a hyperlink boundary because the link role is already announced.
+        if changed_attrs & AXUtilitiesText.LINK_STYLING_ATTRIBUTES and offset is not None:
+            if AXUtilitiesText.is_at_link_boundary(obj, run_start, run_end):
+                changes = [
+                    (attr, old, new)
+                    for attr, old, new in changes
+                    if attr not in AXUtilitiesText.LINK_STYLING_ATTRIBUTES
+                ]
 
         AXUtilitiesText.CACHED_TEXT_ATTRIBUTES = current_attrs
         return changes

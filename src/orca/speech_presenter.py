@@ -2351,8 +2351,31 @@ class SpeechPresenter:
         for attr, _old, new in AXUtilities.get_text_attribute_changes(obj, offset):
             if attr == AXTextAttribute.INVALID:
                 continue
+            if attr == AXTextAttribute.LANGUAGE and self._language_switch_is_active(new):
+                continue
             if desc := attr.get_change_description(new):
                 self.speak_message(desc)
+
+    def _language_switch_is_active(self, language_value: str | None) -> bool:
+        """Returns True if auto language switching is enabled and supported for the language."""
+
+        if not language_value or not speech_manager.get_manager().get_auto_language_switching():
+            return False
+
+        parts = language_value.lower().split("-", 1)
+        lang = parts[0]
+        dialect = parts[1] if len(parts) > 1 else ""
+        full = f"{lang}-{dialect}" if dialect else lang
+
+        mgr = speech_manager.get_manager()
+        voice_set_names = mgr.get_voice_set_names()
+        if full in voice_set_names or lang in voice_set_names:
+            return True
+
+        primary = mgr.get_voice_properties()
+        primary_family = primary.get(ACSS.FAMILY, {})
+        primary_lang = primary_family.get(VoiceFamily.LANG, "").lower()
+        return lang == primary_lang
 
     def adjust_for_presentation(
         self,
@@ -2390,13 +2413,21 @@ class SpeechPresenter:
 
         return script_manager.get_manager().get_active_script()
 
-    def _get_voice(self, text: str = "", obj: Atspi.Accessible | None = None) -> list[ACSS]:
+    def _get_voice(
+        self,
+        text: str = "",
+        obj: Atspi.Accessible | None = None,
+        language: str = "",
+        dialect: str = "",
+    ) -> list[ACSS]:
         """Returns the voice to use for the given string."""
 
         if active_script := self._get_active_script():
             generator = active_script.get_speech_generator()
             context = self._build_generator_context()
-            return generator.voice(obj=obj, string=text, context=context)
+            return generator.voice(
+                obj=obj, string=text, context=context, language=language, dialect=dialect
+            )
         return []
 
     @dbus_service.getter
@@ -2643,8 +2674,6 @@ class SpeechPresenter:
 
         voice_type = voice.pop(ACSS.VOICE_TYPE, speechserver.VoiceType.DEFAULT)
         config = mgr.get_voice_properties(voice_type, voice_set=language)
-        if not config or not config.get("established"):
-            config = mgr.get_voice_properties(speechserver.VoiceType.DEFAULT, voice_set=language)
         if not config or not config.get("established"):
             return voice
 
@@ -2958,7 +2987,12 @@ class SpeechPresenter:
         """Generates and speaks a phrase using the script's speech generator."""
 
         if len(phrase) <= 1 and not phrase.isalnum():
-            self.speak_character(phrase, obj=obj)
+            attrs = AXText.get_text_attributes_at_offset(obj, start_offset)[0]
+            lang = attrs.get("language", "")
+            dialect = ""
+            if "-" in lang:
+                lang, dialect = lang.split("-", 1)
+            self.speak_character(phrase, obj=obj, language=lang, dialect=dialect)
             return
 
         indentation = self.get_indentation_description(phrase)
@@ -3007,7 +3041,21 @@ class SpeechPresenter:
             return
 
         self.present_text_attribute_state(obj, offset)
-        self.speak_character(character, voice_from=character, cap_style=cap_style, obj=obj)
+
+        attrs = AXText.get_text_attributes_at_offset(obj, offset)[0]
+        lang = attrs.get("language", "")
+        dialect = ""
+        if "-" in lang:
+            lang, dialect = lang.split("-", 1)
+
+        self.speak_character(
+            character,
+            voice_from=character,
+            cap_style=cap_style,
+            obj=obj,
+            language=lang,
+            dialect=dialect,
+        )
 
     def say_all(self, utterance_iterator: Any, progress_callback: Callable[..., Any]) -> None:
         """Speaks each item in the utterance_iterator."""
@@ -3034,14 +3082,18 @@ class SpeechPresenter:
         voice_from: str = "",
         cap_style: speechserver.CapitalizationStyle | None = None,
         obj: Atspi.Accessible | None = None,
+        language: str = "",
+        dialect: str = "",
     ) -> None:
         """Speaks a single character using the voice for voice_from."""
 
         if speech_manager.get_manager().get_speech_is_muted():
             return
 
-        voice = self._get_voice(text=voice_from or character, obj=obj)
-        acss = self._resolve_acss(voice[0] if voice else None)
+        voice = self._get_voice(
+            text=voice_from or character, obj=obj, language=language, dialect=dialect
+        )
+        acss = self._apply_voice_set_overrides(self._resolve_acss(voice[0] if voice else None))
         msg = f"SPEECH OUTPUT: '{character}'"
         tokens = [msg, acss]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)

@@ -701,10 +701,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             if announce_attrs and i > 0:
-                curr_attrs = AXText.get_text_attributes_at_offset(obj, start)[0]
+                curr_attrs, run_start, run_end = AXText.get_text_attributes_at_offset(obj, start)
+                exclude = AXUtilities.get_redundant_text_attributes(obj, run_start, run_end)
                 result.extend(
                     [desc, *system_voice]
-                    for desc in self._get_attribute_change_descriptions(prev_attrs, curr_attrs)
+                    for desc in self._get_attribute_change_descriptions(
+                        prev_attrs, curr_attrs, exclude
+                    )
                 )
                 prev_attrs = curr_attrs
             elif announce_attrs:
