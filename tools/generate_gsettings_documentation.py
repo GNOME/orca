@@ -25,11 +25,10 @@
 
 import argparse
 import sys
-import tempfile
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-from generate_gsettings_schemas import _discover_schemas, generate_schema_xml
+from generate_gsettings_schemas import _discover_schemas, build_schema_tree
 
 
 def _normalize_summary(summary: str | None) -> str:
@@ -83,10 +82,7 @@ def generate_documentation(
 ) -> str:
     """Generate markdown documentation from generated schema XML."""
 
-    with tempfile.TemporaryDirectory(prefix="orca-gsettings-") as tmpdir:
-        xml_path = Path(tmpdir) / "org.gnome.Orca.gschema.xml"
-        generate_schema_xml(src_dir, str(xml_path))
-        root = ET.parse(xml_path).getroot()
+    root = build_schema_tree(src_dir)
 
     schemas, _settings, _enums = _discover_schemas(src_dir)
     schema_names_by_id = {schema_id: schema_name for schema_name, schema_id in schemas.items()}

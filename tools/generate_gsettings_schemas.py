@@ -32,7 +32,6 @@ import ast
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Any
-from xml.dom import minidom
 
 REQUIRED_SETTING_FIELDS = {"key", "schema", "default"}
 
@@ -258,8 +257,8 @@ def _format_default(gtype: str, default: Any, key_name: str) -> str:  # pylint: 
 
 
 # pylint: disable-next=too-many-locals
-def generate_schema_xml(src_dir: Path, output_path: str) -> None:
-    """Generate schema XML from @gsetting decorators in source files."""
+def build_schema_tree(src_dir: Path) -> ET.Element:
+    """Build schema XML element tree from @gsetting decorators in source files."""
 
     schemas, all_settings, all_enums = _discover_schemas(src_dir)
 
@@ -292,16 +291,17 @@ def generate_schema_xml(src_dir: Path, output_path: str) -> None:
             ET.SubElement(key, "default").text = default_str
             ET.SubElement(key, "summary").text = setting.get("summary", "")
 
-    rough_string = ET.tostring(schemalist, encoding="unicode")
-    reparsed = minidom.parseString(rough_string)
-    pretty_xml = reparsed.toprettyxml(indent="  ")
+    return schemalist
 
-    lines = pretty_xml.split("\n")
-    lines[0] = '<?xml version="1.0" encoding="UTF-8"?>'
-    clean_lines = [line for line in lines if line.strip()]
 
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write("\n".join(clean_lines))
+def generate_schema_xml(src_dir: Path, output_path: str) -> None:
+    """Generate schema XML file from @gsetting decorators in source files."""
+
+    schemalist = build_schema_tree(src_dir)
+    ET.indent(schemalist, space="  ")
+    tree = ET.ElementTree(schemalist)
+    tree.write(output_path, encoding="UTF-8", xml_declaration=True)
+    with open(output_path, "a", encoding="utf-8") as f:
         f.write("\n")
 
 

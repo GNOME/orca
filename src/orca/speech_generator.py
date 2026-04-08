@@ -1367,8 +1367,8 @@ class SpeechGenerator(generator.Generator):
         if not uri:
             return result
         try:
-            request = urllib.request.Request(uri, method="HEAD")
-            with urllib.request.urlopen(request, timeout=5) as x, contextlib.suppress(KeyError):
+            request = urllib.request.Request(uri, method="HEAD")  # noqa: S310 - URI comes from accessible hyperlink; file: scheme is expected
+            with urllib.request.urlopen(request, timeout=5) as x, contextlib.suppress(KeyError):  # noqa: S310
                 size_string = x.info()["Content-length"]
         except (ValueError, urllib.error.URLError, OSError):
             pass

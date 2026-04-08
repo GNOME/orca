@@ -634,8 +634,8 @@ class ProfileManager:
         """Returns available profiles by enumerating stored metadata."""
 
         try:
-            result = subprocess.run(
-                ["dconf", "list", gsettings_registry.GSETTINGS_PATH_PREFIX],
+            result = subprocess.run(  # noqa: S603 - dconf is a system dependency, not untrusted input
+                ["dconf", "list", gsettings_registry.GSETTINGS_PATH_PREFIX],  # noqa: S607 - full path would break across distros
                 capture_output=True,
                 text=True,
                 check=True,
@@ -745,7 +745,10 @@ class ProfileManager:
         sanitized_name = registry.sanitize_gsettings_path(internal_name)
         path = f"{gsettings_registry.GSETTINGS_PATH_PREFIX}{sanitized_name}/"
         try:
-            subprocess.run(["dconf", "reset", "-f", path], check=True)
+            subprocess.run(  # noqa: S603 - dconf is a system dependency, not untrusted input
+                ["dconf", "reset", "-f", path],  # noqa: S607 - full path would break across distros
+                check=True,
+            )
             msg = f"PROFILE MANAGER: Cleared GSettings for profile: {internal_name}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
         except (subprocess.CalledProcessError, FileNotFoundError) as e:

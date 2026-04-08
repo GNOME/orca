@@ -181,8 +181,9 @@ class SpeechServer(speechserver.SpeechServer):
             self.reset()
             if self._client is not None:
                 self._client.set_cap_let_recogn(sd_style)
-        except Exception:
-            pass
+        except Exception as error:
+            msg = f"SPEECH DISPATCHER: set_cap_let_recogn failed: {error}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
 
     def update_punctuation_level(self, level: PunctuationStyle) -> None:
         """Punctuation level changed, inform this speechServer."""
@@ -379,8 +380,9 @@ class SpeechServer(speechserver.SpeechServer):
                     result = self._send_command(list_synthesis_voices)
                     if result:
                         voices = tuple(result)
-                except Exception:
-                    pass
+                except Exception as error:
+                    msg = f"SPEECH DISPATCHER: list_synthesis_voices failed: {error}"
+                    debug.print_message(debug.LEVEL_WARNING, msg, True)
 
         return self._build_voice_families(voices)
 

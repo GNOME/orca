@@ -31,6 +31,7 @@ lint.select = [
   "Q",      # flake8-quotes: consistent quote style
   "RET",    # flake8-return: return statement checks
   "RUF",    # ruff-specific rules
+  "S",      # flake8-bandit: security checks
   "SIM",    # flake8-simplify: simplifiable code patterns
   "T20",    # flake8-print: no stray print statements
   "TC",     # flake8-type-checking: move imports behind TYPE_CHECKING
@@ -56,6 +57,7 @@ lint.ignore = [
   "RUF003", # Ambiguous unicode in comments — intentional in mathsymbols.py
   "SIM102", # Collapsible if — often split deliberately for readability
   "COM812", # Trailing comma — handled by ruff format; conflicts with formatter
+  "S101",   # assert used for mypy type narrowing
   "SIM108", # Ternary operator — can harm readability for complex conditions
 ]
 
@@ -64,7 +66,7 @@ known-first-party = ["orca", "generate_gsettings_schemas"]
 
 [tool.ruff.lint.per-file-ignores]
 "src/orca/dbus_service.py" = ["FA100", "TC002"]  # dasbus needs runtime type hints; future annotations breaks it
-"tests/*" = ["T201"]  # print used for test output
+"tests/*" = ["T201", "S108", "S603", "S607"]  # print for output; /tmp paths and subprocess calls are fine in tests
 "tools/*" = ["T201", "PERF203"]  # print used for CLI output; try-except in loops is fine
 
 [tool.pylint.master]

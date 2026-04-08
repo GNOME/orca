@@ -44,7 +44,7 @@ try:
     if os.environ.get("XDG_SESSION_TYPE", "").lower() != "wayland":
         gi.require_version("Wnck", "3.0")
         from gi.repository import Wnck  # pylint: disable=no-name-in-module
-except Exception:
+except Exception:  # noqa: S110 - Wnck is optional; unavailable on Wayland
     pass
 
 from . import (

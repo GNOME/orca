@@ -288,8 +288,8 @@ class OrcaModifierManager:
             return
 
         self._restore_original_xkbcomp()
-        with subprocess.Popen(
-            ["xkbcomp", display, "-"],
+        with subprocess.Popen(  # noqa: S603 - xkbcomp is a system dependency, not untrusted input
+            ["xkbcomp", display, "-"],  # noqa: S607 - full path would break across distros
             stdout=subprocess.PIPE,
             stderr=subprocess.DEVNULL,
         ) as p:
@@ -337,8 +337,8 @@ class OrcaModifierManager:
             return
 
         self._caps_lock_cleared = False
-        with subprocess.Popen(
-            ["xkbcomp", "-w0", "-", display],
+        with subprocess.Popen(  # noqa: S603 - xkbcomp is a system dependency, not untrusted input
+            ["xkbcomp", "-w0", "-", display],  # noqa: S607 - full path would break across distros
             stdin=subprocess.PIPE,
             stdout=None,
             stderr=None,
@@ -448,8 +448,8 @@ class OrcaModifierManager:
         msg = "ORCA MODIFIER MANAGER: Updating xmodmap"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        with subprocess.Popen(
-            ["xkbcomp", "-w0", "-", display],
+        with subprocess.Popen(  # noqa: S603 - xkbcomp is a system dependency, not untrusted input
+            ["xkbcomp", "-w0", "-", display],  # noqa: S607 - full path would break across distros
             stdin=subprocess.PIPE,
             stdout=None,
             stderr=None,
