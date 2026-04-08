@@ -145,7 +145,7 @@ class ScriptManager:
         if not (app and name):
             return None
 
-        packages = ["orca-scripts", "orca.scripts", "orca.scripts.apps", "orca.scripts.toolkits"]
+        packages = ["orca.scripts", "orca.scripts.apps", "orca.scripts.toolkits"]
         script = None
         for package in packages:
             module_name = f"{package}.{name}"
