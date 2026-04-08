@@ -2909,7 +2909,8 @@ class SpeechPresenter:
         if not (active_script := self._get_active_script()):
             return
 
-        context = self._build_generator_context()
+        where_am_i_type = args.pop("where_am_i_type", None)
+        context = self._build_generator_context(where_am_i_type)
         generator = active_script.get_speech_generator()
         utterances = generator.generate_contents(contents, context, **args)
         self._speak(utterances)

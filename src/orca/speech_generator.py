@@ -1367,7 +1367,8 @@ class SpeechGenerator(generator.Generator):
         if not uri:
             return result
         try:
-            with urllib.request.urlopen(uri) as x, contextlib.suppress(KeyError):
+            request = urllib.request.Request(uri, method="HEAD")
+            with urllib.request.urlopen(request, timeout=5) as x, contextlib.suppress(KeyError):
                 size_string = x.info()["Content-length"]
         except (ValueError, urllib.error.URLError, OSError):
             pass
