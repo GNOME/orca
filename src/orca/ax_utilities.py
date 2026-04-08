@@ -1494,7 +1494,6 @@ class AXUtilities:
             tokens = ["AXUtilities: Desktop is", desktop]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        worker_thread.join()
         tokens = [f"AXUtilities: {len(result)} onscreen objects found in", root]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result
