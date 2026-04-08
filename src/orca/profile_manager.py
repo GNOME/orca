@@ -252,20 +252,23 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
     ) -> tuple[bool, str]:
         """Validate a profile name and return (is_valid, error_message)."""
 
-        internal_name = name.replace(" ", "_").lower()
+        registry = gsettings_registry.get_registry()
+        internal_name = registry.sanitize_gsettings_path(name)
+        if not internal_name:
+            return (False, guilabels.PROFILE_CONFLICT_MESSAGE % name)
 
         saved_profiles = self._manager.get_available_profiles()
 
         for profile in saved_profiles:
             if exclude_internal_name and profile[1] == exclude_internal_name:
                 continue
-            if profile[1].lower() == internal_name:
+            if registry.sanitize_gsettings_path(profile[1]) == internal_name:
                 return (False, guilabels.PROFILE_CONFLICT_MESSAGE % name)
 
         for old_name, new_profile in self._pending_renames.items():
             if exclude_internal_name and old_name == exclude_internal_name:
                 continue
-            if new_profile[1].lower() == internal_name:
+            if registry.sanitize_gsettings_path(new_profile[1]) == internal_name:
                 return (False, guilabels.PROFILE_CONFLICT_MESSAGE % name)
 
         return (True, "")
@@ -511,7 +514,7 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         for old_internal_name, pending_profile in self._pending_renames.items():
             new_name = pending_profile[0]
-            new_internal_name = new_name.replace(" ", "_").lower()
+            new_internal_name = gsettings_registry.get_registry().sanitize_gsettings_path(new_name)
             new_profile = [new_name, new_internal_name]
 
             self._manager.rename_profile(old_internal_name, new_profile)
