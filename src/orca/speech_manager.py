@@ -1902,6 +1902,7 @@ class SpeechManager:
 
     def __init__(self) -> None:
         self._families_sorted: bool = False
+        self._health_check_pending: bool = False
         self._initialized: bool = False
         self._mute_speech: bool = False
         self._server: SpeechServer | None = None
@@ -2035,11 +2036,20 @@ class SpeechManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return None
 
+        if self._health_check_pending:
+            msg = "SPEECH MANAGER: Health check already in progress."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return None
+
+        self._health_check_pending = True
         result_queue: queue.Queue[bool] = queue.Queue()
 
         def health_check_thread():
-            result.get_output_module()
-            result_queue.put(True)
+            try:
+                result.get_output_module()
+                result_queue.put(True)
+            finally:
+                self._health_check_pending = False
 
         thread = threading.Thread(target=health_check_thread, daemon=True)
         thread.start()
