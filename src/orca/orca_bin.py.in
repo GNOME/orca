@@ -252,15 +252,13 @@ class _DeprecatedSettingsStub(ModuleType):
 def _create_prefs_dirs(prefs_dir: str) -> None:
     """Creates the preferences directory structure."""
 
-    scripts_dir = os.path.join(prefs_dir, "orca-scripts")
     sounds_dir = os.path.join(prefs_dir, "sounds")
-    for dir_path in [prefs_dir, scripts_dir, sounds_dir]:
+    for dir_path in [prefs_dir, sounds_dir]:
         os.makedirs(dir_path, exist_ok=True)
 
-    for init_path in [os.path.join(prefs_dir, "__init__.py"),
-                      os.path.join(scripts_dir, "__init__.py")]:
-        if not os.path.exists(init_path):
-            os.close(os.open(init_path, os.O_CREAT, 0o700))
+    init_path = os.path.join(prefs_dir, "__init__.py")
+    if not os.path.exists(init_path):
+        os.close(os.open(init_path, os.O_CREAT, 0o700))
 
     customizations_file = os.path.join(prefs_dir, "orca-customizations.py")
     if not os.path.exists(customizations_file):
