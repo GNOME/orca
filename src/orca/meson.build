@@ -30,8 +30,11 @@ else
   revision = ''
 endif
 
-r = run_command('pkg-config', '--variable=tablesdir', 'liblouis', check: false)
-louis_tables_dir = r.stdout().strip()
+liblouis_dep = dependency('liblouis', required: false)
+louis_tables_dir = liblouis_dep.get_variable(
+  'tablesdir',
+  default_value: ''
+)
 
 orca_platform_py = configure_file(
   input: 'orca_platform.py.in',
