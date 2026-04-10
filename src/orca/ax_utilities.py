@@ -79,6 +79,7 @@ class AXUtilities:
     IS_ENTRY_DESCENDANT: ClassVar[dict[int, bool]] = {}
     IS_GRID_DESCENDANT: ClassVar[dict[int, bool]] = {}
     IS_INLINE_LIST_ITEM_DESCENDANT: ClassVar[dict[int, bool]] = {}
+    IS_LABEL_OR_CAPTION_DESCENDANT: ClassVar[dict[int, bool]] = {}
     IS_LIST_DESCENDANT: ClassVar[dict[int, bool]] = {}
     IS_MENU_DESCENDANT: ClassVar[dict[int, bool]] = {}
     IS_SUBSCRIPT_OR_SUPERSCRIPT_TEXT_DESCENDANT: ClassVar[dict[int, bool]] = {}
@@ -124,6 +125,7 @@ class AXUtilities:
             AXUtilities.IS_ENTRY_DESCENDANT.clear()
             AXUtilities.IS_GRID_DESCENDANT.clear()
             AXUtilities.IS_INLINE_LIST_ITEM_DESCENDANT.clear()
+            AXUtilities.IS_LABEL_OR_CAPTION_DESCENDANT.clear()
             AXUtilities.IS_LIST_DESCENDANT.clear()
             AXUtilities.IS_MENU_DESCENDANT.clear()
             AXUtilities.IS_PRESENTATIONAL_CHILD.clear()
@@ -873,6 +875,20 @@ class AXUtilities:
             AXUtilities.IS_GRID_DESCENDANT,
             obj,
             AXUtilitiesRole.is_grid,
+            inclusive,
+        )
+
+    @staticmethod
+    def is_label_or_caption_descendant(
+        obj: Atspi.Accessible,
+        inclusive: bool = False,
+    ) -> bool:
+        """Returns True if obj has a label or caption ancestor."""
+
+        return AXUtilities._is_descendant(
+            AXUtilities.IS_LABEL_OR_CAPTION_DESCENDANT,
+            obj,
+            AXUtilitiesRole.is_label_or_caption,
             inclusive,
         )
 

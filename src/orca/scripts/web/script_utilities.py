@@ -2139,14 +2139,14 @@ class Utilities(script_utilities.Utilities):
         obj: Atspi.Accessible,
         contents: list[tuple[Atspi.Accessible, int, int, str]] | None = None,
     ) -> bool:
-        if document_presenter.get_presenter().is_focus_mode_widget(self._script, obj):
+        if AXUtilities.is_widget(obj):
             return False
 
         targets = AXUtilities.get_is_label_for(obj)
         if not contents:
             if targets:
                 return True
-            return AXUtilities.find_ancestor(obj, AXUtilities.is_label_or_caption) is not None
+            return AXUtilities.is_label_or_caption_descendant(obj)
 
         for acc, _start, _end, _string in contents:
             if acc in targets:
@@ -2155,11 +2155,11 @@ class Utilities(script_utilities.Utilities):
         if not self.is_text_block_element(obj):
             return False
 
-        if AXUtilities.find_ancestor(obj, AXUtilities.is_label_or_caption) is None:
+        if not AXUtilities.is_label_or_caption_descendant(obj):
             return False
 
         for acc, _start, _end, _string in contents:
-            if AXUtilities.find_ancestor(acc, AXUtilities.is_label_or_caption) is None:
+            if not AXUtilities.is_label_or_caption_descendant(acc):
                 continue
             if self.is_text_block_element(acc):
                 continue
