@@ -131,7 +131,8 @@ class AXHypertext:
 
         if isinstance(obj, Atspi.Hyperlink):
             link = obj
-            obj = Atspi.Hyperlink.get_object(link, 0)
+            if debug.debugLevel <= debug.LEVEL_INFO:
+                obj = Atspi.Hyperlink.get_object(link, 0)
         else:
             link = Atspi.Accessible.get_hyperlink(obj)
 
@@ -157,7 +158,8 @@ class AXHypertext:
 
         if isinstance(obj, Atspi.Hyperlink):
             link = obj
-            obj = Atspi.Hyperlink.get_object(link, 0)
+            if debug.debugLevel <= debug.LEVEL_INFO:
+                obj = Atspi.Hyperlink.get_object(link, 0)
         else:
             link = Atspi.Accessible.get_hyperlink(obj)
 

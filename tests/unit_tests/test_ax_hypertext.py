@@ -54,6 +54,7 @@ class TestAXHypertext:
         debug_mock.print_message = test_context.Mock()
         debug_mock.print_tokens = test_context.Mock()
         debug_mock.LEVEL_INFO = 800
+        debug_mock.debugLevel = 1000
 
         ax_object_class_mock = test_context.Mock()
         ax_object_class_mock.supports_hypertext = test_context.Mock(return_value=True)
@@ -369,10 +370,6 @@ class TestAXHypertext:
             )
             input_obj = mock_accessible
         else:
-            test_context.patch(
-                "orca.ax_hypertext.Atspi.Hyperlink.get_object",
-                return_value=mock_accessible,
-            )
             input_obj = mock_hyperlink
         test_context.patch(
             "orca.ax_hypertext.Atspi.Hyperlink.get_start_index",
@@ -402,10 +399,6 @@ class TestAXHypertext:
         def raise_glib_error(link) -> None:
             raise GLib.GError("Test error")
 
-        test_context.patch(
-            "orca.ax_hypertext.Atspi.Hyperlink.get_object",
-            return_value=mock_hyperlink,
-        )
         test_context.patch(
             "orca.ax_hypertext.Atspi.Hyperlink.get_start_index",
             side_effect=raise_glib_error,
@@ -445,10 +438,6 @@ class TestAXHypertext:
             )
             input_obj = mock_accessible
         else:
-            test_context.patch(
-                "orca.ax_hypertext.Atspi.Hyperlink.get_object",
-                return_value=mock_accessible,
-            )
             input_obj = mock_hyperlink
         test_context.patch(
             "orca.ax_hypertext.Atspi.Hyperlink.get_end_index",
@@ -478,10 +467,6 @@ class TestAXHypertext:
         def raise_glib_error(link) -> None:
             raise GLib.GError("Test error")
 
-        test_context.patch(
-            "orca.ax_hypertext.Atspi.Hyperlink.get_object",
-            return_value=mock_hyperlink,
-        )
         test_context.patch(
             "orca.ax_hypertext.Atspi.Hyperlink.get_end_index",
             side_effect=raise_glib_error,
