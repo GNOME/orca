@@ -2068,113 +2068,96 @@ class Utilities(script_utilities.Utilities):
 
         return not input_event_manager.get_manager().last_event_was_mouse_button()
 
+    def _check_element_line_pattern(self, obj: Atspi.Accessible) -> None:
+        """Checks if element lines are single words or single chars, caching both results."""
+
+        obj_hash = hash(obj)
+
+        if not (obj and self.in_document_content(obj)) or self.is_document(obj):
+            self._cached_element_lines_are_single_words[obj_hash] = False
+            self._cached_element_lines_are_single_chars[obj_hash] = False
+            return
+
+        if AXUtilities.has_non_inline_children(obj):
+            self._cached_element_lines_are_single_words[obj_hash] = False
+            self._cached_element_lines_are_single_chars[obj_hash] = False
+            return
+
+        n_chars = AXText.get_character_count(obj)
+        if not n_chars or not self.treat_as_text_object(obj):
+            self._cached_element_lines_are_single_words[obj_hash] = False
+            self._cached_element_lines_are_single_chars[obj_hash] = False
+            return
+
+        # If we have a series of embedded object characters, there's a reasonable chance
+        # they'll look like the one-word/char-per-line CSSified text we're trying to detect.
+        # We don't want that false positive. By the same token, the one-word/char-per-line
+        # CSSified text we're trying to detect can have embedded object characters. So
+        # if we have more than 30% EOCs, don't use this workaround. (The 30% is based on
+        # testing with problematic text.)
+        string = AXText.get_all_text(obj)
+        if string.count("\ufffc") / n_chars > 0.3:
+            self._cached_element_lines_are_single_words[obj_hash] = False
+            self._cached_element_lines_are_single_chars[obj_hash] = False
+            return
+
+        # Note: We cannot check for the editable-text interface, because Gecko
+        # seems to be exposing that for non-editable things. Thanks Gecko.
+        is_editable = AXUtilities.is_editable(obj) or AXUtilities.is_text_input(obj)
+        if is_editable:
+            self._cached_element_lines_are_single_words[obj_hash] = False
+            self._cached_element_lines_are_single_chars[obj_hash] = False
+            return
+
+        # TODO - JD: Can we remove this?
+        AXObject.clear_cache(obj, False, "Checking if element lines are single words/chars.")
+
+        # Check for single-char lines.
+        is_single_chars = True
+        for i in range(n_chars):
+            char = AXText.get_character_at_offset(obj, i)[0]
+            if char.isspace() or char in ["\ufffc", "\ufffd"]:
+                continue
+            line_string = AXText.get_line_at_offset(obj, i)[0]
+            if len(line_string.strip()) > 1:
+                is_single_chars = False
+                break
+        self._cached_element_lines_are_single_chars[obj_hash] = is_single_chars
+
+        # Check for single-word lines (also requires not being code).
+        is_single_words = False
+        if not AXUtilities.is_code(obj):
+            tokens = list(filter(None, re.split(r"[\s\ufffc]", string)))
+            if len(tokens) > 1:
+                is_single_words = True
+                i = 0
+                while i < n_chars:
+                    line_string, _start, end = AXText.get_line_at_offset(obj, i)
+                    if len(line_string.split()) != 1:
+                        is_single_words = False
+                        break
+                    i = max(i + 1, end)
+        self._cached_element_lines_are_single_words[obj_hash] = is_single_words
+
     def _element_lines_are_single_words(self, obj: Atspi.Accessible) -> bool:
-        if not (obj and self.in_document_content(obj)):
-            return False
-
-        if AXUtilities.is_code(obj):
-            return False
-
-        if self.is_document(obj):
-            return False
+        """Returns True if each line of obj's text contains a single word."""
 
         rv = self._cached_element_lines_are_single_words.get(hash(obj))
         if rv is not None:
             return rv
 
-        if AXUtilities.has_non_inline_children(obj):
-            return False
-
-        n_chars = AXText.get_character_count(obj)
-        if not n_chars:
-            return False
-
-        if not self.treat_as_text_object(obj):
-            return False
-
-        # If we have a series of embedded object characters, there's a reasonable chance
-        # they'll look like the one-word-per-line CSSified text we're trying to detect.
-        # We don't want that false positive. By the same token, the one-word-per-line
-        # CSSified text we're trying to detect can have embedded object characters. So
-        # if we have more than 30% EOCs, don't use this workaround. (The 30% is based on
-        # testing with problematic text.)
-        string = AXText.get_all_text(obj)
-        eocs = re.findall("\ufffc", string)
-        if len(eocs) / n_chars > 0.3:
-            return False
-
-        # TODO - JD: Can we remove this?
-        AXObject.clear_cache(obj, False, "Checking if element lines are single words.")
-        tokens = list(filter(lambda x: x, re.split(r"[\s\ufffc]", string)))
-
-        # Note: We cannot check for the editable-text interface, because Gecko
-        # seems to be exposing that for non-editable things. Thanks Gecko.
-        rv = len(tokens) > 1 and not (
-            AXUtilities.is_editable(obj) or AXUtilities.is_text_input(obj)
-        )
-        if rv:
-            i = 0
-            while i < n_chars:
-                string, _start, end = AXText.get_line_at_offset(obj, i)
-                if len(string.split()) != 1:
-                    rv = False
-                    break
-                i = max(i + 1, end)
-
-        self._cached_element_lines_are_single_words[hash(obj)] = rv
-        return rv
+        self._check_element_line_pattern(obj)
+        return self._cached_element_lines_are_single_words.get(hash(obj), False)
 
     def _element_lines_are_single_chars(self, obj: Atspi.Accessible) -> bool:
-        if not (obj and self.in_document_content(obj)):
-            return False
-
-        if self.is_document(obj):
-            return False
+        """Returns True if each line of obj's text contains a single character."""
 
         rv = self._cached_element_lines_are_single_chars.get(hash(obj))
         if rv is not None:
             return rv
 
-        if AXUtilities.has_non_inline_children(obj):
-            return False
-
-        n_chars = AXText.get_character_count(obj)
-        if not n_chars:
-            return False
-
-        if not self.treat_as_text_object(obj):
-            return False
-
-        # If we have a series of embedded object characters, there's a reasonable chance
-        # they'll look like the one-char-per-line CSSified text we're trying to detect.
-        # We don't want that false positive. By the same token, the one-char-per-line
-        # CSSified text we're trying to detect can have embedded object characters. So
-        # if we have more than 30% EOCs, don't use this workaround. (The 30% is based on
-        # testing with problematic text.)
-        string = AXText.get_all_text(obj)
-        eocs = re.findall("\ufffc", string)
-        if len(eocs) / n_chars > 0.3:
-            return False
-
-        # TODO - JD: Can we remove this?
-        AXObject.clear_cache(obj, False, "Checking if element lines are single chars.")
-
-        # Note: We cannot check for the editable-text interface, because Gecko
-        # seems to be exposing that for non-editable things. Thanks Gecko.
-        rv = not (AXUtilities.is_editable(obj) or AXUtilities.is_text_input(obj))
-        if rv:
-            for i in range(n_chars):
-                char = AXText.get_character_at_offset(obj, i)[0]
-                if char.isspace() or char in ["\ufffc", "\ufffd"]:
-                    continue
-
-                string = AXText.get_line_at_offset(obj, i)[0]
-                if len(string.strip()) > 1:
-                    rv = False
-                    break
-
-        self._cached_element_lines_are_single_chars[hash(obj)] = rv
-        return rv
+        self._check_element_line_pattern(obj)
+        return self._cached_element_lines_are_single_chars.get(hash(obj), False)
 
     def _label_is_ancestor_of_labelled(self, label: Atspi.Accessible) -> bool:
         # TODO - JD: Move into AXUtilities.
