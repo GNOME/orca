@@ -849,10 +849,6 @@ class Utilities(script_utilities.Utilities):
                 return [(obj, 0, len(string), string)]
 
         if granularity == Atspi.TextGranularity.LINE:
-            if AXUtilities.is_math_related(obj):
-                math = AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_math)
-                return [(math, 0, 1, "")]
-
             treat_as_text = self.treat_as_text_object(obj)
             if self._element_lines_are_single_chars(obj):
                 if AXObject.get_name(obj) and treat_as_text:
@@ -1442,7 +1438,7 @@ class Utilities(script_utilities.Utilities):
                 ):
                     return False
 
-            if AXUtilities.is_math(x_obj) or AXUtilities.is_math_related(obj):
+            if AXUtilities.is_math(x_obj):
                 on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect, rect.height)
             elif AXUtilities.is_subscript_or_superscript_text_descendant(x_obj, inclusive=True):
                 on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect, x_rect.height)
@@ -1465,7 +1461,7 @@ class Utilities(script_utilities.Utilities):
             return []
 
         first_obj, first_start, first_end, first_string = objects[0]
-        if (rect.width == 0 and rect.height == 0) or AXUtilities.is_math_related(first_obj):
+        if rect.width == 0 and rect.height == 0:
             rect = self._get_extents(first_obj, first_start, first_end)
 
         last_obj, _last_start, last_end, _last_string = objects[-1]
@@ -1816,27 +1812,6 @@ class Utilities(script_utilities.Utilities):
         if not (root and self.in_document_content(root)):
             return super().unrelated_labels(root, only_showing, minimum_words)
         return []
-
-    def is_focusable_with_math_child(self, obj: Atspi.Accessible) -> bool:
-        """Returns true if obj is focusable, not a document, and has a math child."""
-
-        # TODO - JD: This could go in the AXUtilities.
-        if not (obj and self.in_document_content(obj)):
-            return False
-
-        return (
-            AXUtilities.is_focusable(obj)
-            and not self.is_document(obj)
-            and any(AXObject.iter_children(obj, AXUtilities.is_math))
-        )
-
-    def is_focused_with_math_child(self, obj: Atspi.Accessible) -> bool:
-        """Returns true if obj is focused, not a document, and has a math child."""
-
-        # TODO - JD: This could go in the AXUtilities.
-        if not self.is_focusable_with_math_child(obj):
-            return False
-        return AXUtilities.is_focused(obj)
 
     def _advance_caret_in_empty_object(self, obj: Atspi.Accessible) -> bool:
         if AXUtilities.is_table_cell(obj) and not self.treat_as_text_object(obj):

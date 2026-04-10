@@ -538,10 +538,6 @@ class Script(default.Script):
             tokens = ["WEB: New focus", new_focus, "was scrolled to. Generating line."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             contents = self.utilities.get_line_contents_at_offset(new_focus, caret_offset)
-        elif self.utilities.is_focused_with_math_child(new_focus):
-            tokens = ["WEB: New focus", new_focus, "has math child. Generating line."]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            contents = self.utilities.get_line_contents_at_offset(new_focus, caret_offset)
         elif AXUtilities.is_heading(new_focus):
             tokens = ["WEB: New focus", new_focus, "is heading. Generating object."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)

@@ -548,7 +548,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
         elif role == Atspi.Role.HEADING:
-            if index == total - 1 or not self._script.utilities.is_focusable_with_math_child(obj):
+            if index == total - 1:
                 level = AXUtilities.get_heading_level(obj)
                 if level:
                     result.append(
@@ -568,9 +568,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 if self._script.utilities.has_useless_canvas_descendant(obj):
                     result.append(self.get_localized_role_name(obj, role=Atspi.Role.IMAGE))
                     result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
-                if index == total - 1 or not self._script.utilities.is_focusable_with_math_child(
-                    obj,
-                ):
+                if index == total - 1:
                     result.append(self.get_localized_role_name(obj, **args))
                     result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
 
