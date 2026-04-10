@@ -1258,7 +1258,10 @@ class Utilities:
     def is_text_block_element(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is a text block element like a paragraph or heading."""
 
-        return False
+        if not AXUtilities.is_text_block(obj, exclude_editable=True, exclude_focusable=True):
+            return False
+
+        return not self.has_name_and_action_and_no_useful_children(obj)
 
     def has_name_and_action_and_no_useful_children(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj has a name, supports action, and has no useful children."""

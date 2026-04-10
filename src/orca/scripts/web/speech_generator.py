@@ -644,7 +644,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result: list[Any] = []
         if self._script.utilities.is_link(obj):
             args["role"] = Atspi.Role.LINK
-        elif self._script.utilities.is_custom_image(obj):
+        elif AXUtilities.is_custom_image(obj):
             args["role"] = Atspi.Role.IMAGE
         elif self._script.utilities.treat_as_div(obj, offset=args.get("startOffset")):
             args["role"] = Atspi.Role.SECTION

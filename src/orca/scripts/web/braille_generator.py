@@ -231,7 +231,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         args["includeContext"] = not self._script.utilities.in_document_content(obj)
         if self._script.utilities.is_clickable_element(obj) or self._script.utilities.is_link(obj):
             args["role"] = Atspi.Role.LINK
-        elif self._script.utilities.is_custom_image(obj):
+        elif AXUtilities.is_custom_image(obj):
             args["role"] = Atspi.Role.IMAGE
         elif AXUtilities.is_anchor(obj):
             args["role"] = Atspi.Role.STATIC

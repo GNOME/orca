@@ -791,10 +791,11 @@ class DocumentPresenter:
         if role in always_focus_mode_roles:
             return True, "due to its role"
 
-        if role in [Atspi.Role.TABLE_CELL, Atspi.Role.TABLE] and AXUtilities.is_layout_table(
-            AXUtilities.get_table(obj),
-        ):
-            return False, "it's layout only"
+        if role in (Atspi.Role.TABLE_CELL, Atspi.Role.TABLE):
+            if AXUtilities.is_layout_table(AXUtilities.get_table(obj)):
+                return False, "it's layout only"
+            if AXDocument.is_pdf(script.utilities.get_document_for_object(obj)):
+                return False, "it's in a PDF"
 
         if AXUtilities.is_list_box_item(obj, role):
             return True, "it's a listbox item"
@@ -802,14 +803,13 @@ class DocumentPresenter:
         if AXUtilities.is_button_with_popup(obj, role):
             return True, "it's a button with popup"
 
-        focus_mode_roles = [Atspi.Role.EMBEDDED, Atspi.Role.TABLE_CELL, Atspi.Role.TABLE]
-        if (
-            role in focus_mode_roles
-            and not script.utilities.is_text_block_element(obj)
-            and not script.utilities.has_name_and_action_and_no_useful_children(obj)
-            and not AXDocument.is_pdf(script.utilities.get_document_for_object(obj))
-        ):
+        if role == Atspi.Role.EMBEDDED:
+            if script.utilities.has_name_and_action_and_no_useful_children(obj):
+                return False, "has name and action and no useful children"
             return True, "based on presumed functionality"
+
+        if role == Atspi.Role.TABLE and AXUtilities.is_grid(obj, role):
+            return True, "it's a grid"
 
         return None, ""
 

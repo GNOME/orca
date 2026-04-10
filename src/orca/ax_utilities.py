@@ -28,6 +28,7 @@ from __future__ import annotations
 import functools
 import inspect
 import queue
+import re
 import threading
 import time
 from typing import TYPE_CHECKING
@@ -733,6 +734,49 @@ class AXUtilities:
             AXUtilitiesRole.is_code_block,
             inclusive,
         )
+
+    @staticmethod
+    def is_custom_image(obj: Atspi.Accessible) -> bool:
+        """Returns True if obj is a custom web element acting as an image."""
+
+        if not AXUtilitiesRole.is_web_element_custom(obj):
+            return False
+
+        if not (
+            AXUtilitiesRole.is_section(obj)
+            and AXUtilities.has_explicit_name(obj)
+            and AXObject.supports_text(obj)
+            and not re.search(r"[^\s\ufffc]", AXText.get_all_text(obj))
+        ):
+            return False
+
+        return all(
+            AXUtilitiesRole.is_image_or_canvas(child) or AXUtilitiesRole.is_svg(child)
+            for child in AXObject.iter_children(obj)
+        )
+
+    @staticmethod
+    def is_text_block(
+        obj: Atspi.Accessible,
+        role: Atspi.Role | None = None,
+        exclude_editable: bool = False,
+        exclude_focusable: bool = False,
+    ) -> bool:
+        """Returns True if obj is a non-interactive text block."""
+
+        if not AXObject.supports_text(obj):
+            return False
+        if exclude_editable and AXUtilitiesState.is_editable(obj):
+            return False
+        if exclude_focusable and AXUtilitiesState.is_focusable(obj):
+            return False
+        if AXUtilities.is_custom_image(obj):
+            return False
+        if role is None:
+            role = AXObject.get_role(obj)
+        if role == Atspi.Role.TABLE_CELL:
+            return not AXUtilitiesRole.is_grid_cell(obj)
+        return role in AXUtilitiesRole.get_text_block_roles()
 
     @staticmethod
     def is_combo_box_descendant(

@@ -75,7 +75,6 @@ class Utilities(script_utilities.Utilities):
         self._cached_in_document_content: dict[int, bool] = {}
         self._cached_document_for_object: dict[int, Atspi.Accessible | None] = {}
         self._cached_top_level_document_for_object: dict[int, Atspi.Accessible | None] = {}
-        self._cached_is_text_block_element: dict[int, bool] = {}
         self._cached_is_content_editable_with_embedded_objects: dict[int, bool] = {}
         self._cached_has_grid_descendant: dict[int, bool] = {}
         self._cached_is_off_screen_label: dict[int, bool] = {}
@@ -90,7 +89,6 @@ class Utilities(script_utilities.Utilities):
         )
         self._cached_is_link: dict[int, bool] = {}
         self._cached_banner_ancestor: dict[int, Atspi.Accessible | None] = {}
-        self._cached_is_custom_image: dict[int, bool] = {}
         self._cached_is_useless_image: dict[int, bool] = {}
         self._cached_is_redundant_svg: dict[int, bool] = {}
         self._cached_is_useless_empty_element: dict[int, bool] = {}
@@ -159,7 +157,6 @@ class Utilities(script_utilities.Utilities):
         self._cached_in_document_content = {}
         self._cached_document_for_object = {}
         self._cached_top_level_document_for_object = {}
-        self._cached_is_text_block_element = {}
         self._cached_is_content_editable_with_embedded_objects = {}
         self._cached_has_grid_descendant = {}
         self._cached_is_off_screen_label = {}
@@ -168,7 +165,6 @@ class Utilities(script_utilities.Utilities):
         self._cached_is_clickable_element = {}
         self._cached_is_link = {}
         self._cached_banner_ancestor = {}
-        self._cached_is_custom_image = {}
         self._cached_is_useless_image = {}
         self._cached_is_redundant_svg = {}
         self._cached_is_useless_empty_element = {}
@@ -719,13 +715,13 @@ class Utilities(script_utilities.Utilities):
         if self._is_fake_placeholder_for_entry(obj):
             return True
 
-        if self.is_custom_image(obj):
+        if AXUtilities.is_custom_image(obj):
             return True
 
         # Example: Some StackExchange instances have a focusable "note"/comment role
         # with a name (e.g. "Accepted"), and a single child div which is empty.
         if (
-            role in self._text_block_element_roles()
+            AXUtilities.is_text_block(obj, role)
             and AXUtilities.is_focusable(obj)
             and AXUtilities.has_explicit_name(obj)
         ):
@@ -1809,38 +1805,6 @@ class Utilities(script_utilities.Utilities):
 
         return True
 
-    def _text_block_element_roles(self) -> list[Atspi.Role]:
-        # TODO - JD: Move to AXUtilities.
-        roles = [
-            Atspi.Role.ARTICLE,
-            Atspi.Role.CAPTION,
-            Atspi.Role.COLUMN_HEADER,
-            Atspi.Role.COMMENT,
-            Atspi.Role.CONTENT_DELETION,
-            Atspi.Role.CONTENT_INSERTION,
-            Atspi.Role.DEFINITION,
-            Atspi.Role.DESCRIPTION_LIST,
-            Atspi.Role.DESCRIPTION_TERM,
-            Atspi.Role.DESCRIPTION_VALUE,
-            Atspi.Role.DOCUMENT_FRAME,
-            Atspi.Role.DOCUMENT_WEB,
-            Atspi.Role.FOOTER,
-            Atspi.Role.FORM,
-            Atspi.Role.HEADING,
-            Atspi.Role.LIST,
-            Atspi.Role.LIST_ITEM,
-            Atspi.Role.MARK,
-            Atspi.Role.PARAGRAPH,
-            Atspi.Role.ROW_HEADER,
-            Atspi.Role.SECTION,
-            Atspi.Role.STATIC,
-            Atspi.Role.SUGGESTION,
-            Atspi.Role.TEXT,
-            Atspi.Role.TABLE_CELL,
-        ]
-
-        return roles
-
     def unrelated_labels(
         self,
         root: Atspi.Accessible | None = None,
@@ -1873,35 +1837,6 @@ class Utilities(script_utilities.Utilities):
         if not self.is_focusable_with_math_child(obj):
             return False
         return AXUtilities.is_focused(obj)
-
-    def is_text_block_element(self, obj: Atspi.Accessible) -> bool:
-        """Returns true if obj is a text block element."""
-
-        if not (obj and self.in_document_content(obj)):
-            return False
-
-        rv = self._cached_is_text_block_element.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        if (
-            AXObject.get_role(obj) not in self._text_block_element_roles()
-            or not AXObject.supports_text(obj)
-            or AXUtilities.is_editable(obj)
-            or AXUtilities.is_grid_cell(obj)
-        ):
-            rv = False
-        elif AXUtilities.is_document(obj):
-            rv = True
-        elif self.is_custom_image(obj):
-            rv = False
-        elif not AXUtilities.is_focusable(obj):
-            rv = not self.has_name_and_action_and_no_useful_children(obj)
-        else:
-            rv = False
-
-        self._cached_is_text_block_element[hash(obj)] = rv
-        return rv
 
     def _advance_caret_in_empty_object(self, obj: Atspi.Accessible) -> bool:
         if AXUtilities.is_table_cell(obj) and not self.treat_as_text_object(obj):
@@ -2419,35 +2354,6 @@ class Utilities(script_utilities.Utilities):
         self._cached_is_redundant_svg[hash(obj)] = rv
         return rv
 
-    def is_custom_image(self, obj: Atspi.Accessible) -> bool:
-        """Returns true if obj is a custom image."""
-
-        # TODO - JD: Move into the AXUtilities.
-
-        if not (obj and self.in_document_content(obj)):
-            return False
-
-        rv = self._cached_is_custom_image.get(hash(obj))
-        if rv is not None:
-            return rv
-
-        rv = False
-        if (
-            AXUtilities.is_web_element_custom(obj)
-            and AXUtilities.has_explicit_name(obj)
-            and AXUtilities.is_section(obj)
-            and AXObject.supports_text(obj)
-            and not re.search(r"[^\s\ufffc]", AXText.get_all_text(obj))
-        ):
-            for child in AXObject.iter_children(obj):
-                if not (AXUtilities.is_image_or_canvas(child) or AXUtilities.is_svg(child)):
-                    break
-            else:
-                rv = True
-
-        self._cached_is_custom_image[hash(obj)] = rv
-        return rv
-
     def _is_useless_image(self, obj: Atspi.Accessible) -> bool:
         if not (obj and self.in_document_content(obj)):
             return False
@@ -2890,7 +2796,7 @@ class Utilities(script_utilities.Utilities):
 
         def has_text_block_role(x):
             return (
-                AXObject.get_role(x) in self._text_block_element_roles()
+                AXUtilities.is_text_block(x)
                 and not self._is_fake_placeholder_for_entry(x)
                 and AXUtilities.is_web_element(x)
             )

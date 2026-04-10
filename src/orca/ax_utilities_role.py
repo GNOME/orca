@@ -39,6 +39,8 @@ from .ax_utilities_state import AXUtilitiesState
 class AXUtilitiesRole:
     """Utilities for accessible roles."""
 
+    _TEXT_BLOCK_ROLES: frozenset[Atspi.Role] | None = None
+
     _MATH_TAGS = frozenset(
         (
             "math",
@@ -340,6 +342,42 @@ class AXUtilitiesRole:
         if include_caption:
             roles.append(Atspi.Role.CAPTION)
         return roles
+
+    @staticmethod
+    def get_text_block_roles() -> frozenset[Atspi.Role]:
+        """Returns the set of roles we consider text blocks."""
+
+        if AXUtilitiesRole._TEXT_BLOCK_ROLES is None:
+            AXUtilitiesRole._TEXT_BLOCK_ROLES = frozenset(
+                {
+                    Atspi.Role.ARTICLE,
+                    Atspi.Role.CAPTION,
+                    Atspi.Role.COLUMN_HEADER,
+                    Atspi.Role.COMMENT,
+                    Atspi.Role.CONTENT_DELETION,
+                    Atspi.Role.CONTENT_INSERTION,
+                    Atspi.Role.DEFINITION,
+                    Atspi.Role.DESCRIPTION_LIST,
+                    Atspi.Role.DESCRIPTION_TERM,
+                    Atspi.Role.DESCRIPTION_VALUE,
+                    Atspi.Role.DOCUMENT_FRAME,
+                    Atspi.Role.DOCUMENT_WEB,
+                    Atspi.Role.FOOTER,
+                    Atspi.Role.FORM,
+                    Atspi.Role.HEADING,
+                    Atspi.Role.LIST,
+                    Atspi.Role.LIST_ITEM,
+                    Atspi.Role.MARK,
+                    Atspi.Role.PARAGRAPH,
+                    Atspi.Role.ROW_HEADER,
+                    Atspi.Role.SECTION,
+                    Atspi.Role.STATIC,
+                    Atspi.Role.SUGGESTION,
+                    Atspi.Role.TABLE_CELL,
+                    Atspi.Role.TEXT,
+                }
+            )
+        return AXUtilitiesRole._TEXT_BLOCK_ROLES
 
     @staticmethod
     def get_text_ui_roles() -> list[Atspi.Role]:
