@@ -3002,7 +3002,7 @@ class Utilities(script_utilities.Utilities):
             tokens = ["WEB: Fake placeholder for entry cannot have caret context", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = False
-        elif AXUtilities.find_ancestor(obj, AXUtilities.children_are_presentational):
+        elif AXUtilities.is_presentational_child(obj):
             tokens = ["WEB: Presentational child cannot have caret context", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = False

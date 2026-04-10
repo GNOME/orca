@@ -83,6 +83,7 @@ class AXUtilities:
     IS_SUBSCRIPT_OR_SUPERSCRIPT_TEXT_DESCENDANT: ClassVar[dict[int, bool]] = {}
     IS_TOOL_BAR_DESCENDANT: ClassVar[dict[int, bool]] = {}
     IS_TOOL_TIP_DESCENDANT: ClassVar[dict[int, bool]] = {}
+    IS_PRESENTATIONAL_CHILD: ClassVar[dict[int, bool]] = {}
     IS_TREE_OR_TREE_TABLE_DESCENDANT: ClassVar[dict[int, bool]] = {}
 
     _lock = threading.Lock()
@@ -124,6 +125,7 @@ class AXUtilities:
             AXUtilities.IS_INLINE_LIST_ITEM_DESCENDANT.clear()
             AXUtilities.IS_LIST_DESCENDANT.clear()
             AXUtilities.IS_MENU_DESCENDANT.clear()
+            AXUtilities.IS_PRESENTATIONAL_CHILD.clear()
             AXUtilities.IS_SUBSCRIPT_OR_SUPERSCRIPT_TEXT_DESCENDANT.clear()
             AXUtilities.IS_TOOL_BAR_DESCENDANT.clear()
             AXUtilities.IS_TOOL_TIP_DESCENDANT.clear()
@@ -870,6 +872,16 @@ class AXUtilities:
             obj,
             AXUtilitiesRole.is_subscript_or_superscript_text,
             inclusive,
+        )
+
+    @staticmethod
+    def is_presentational_child(obj: Atspi.Accessible) -> bool:
+        """Returns True if obj has an ancestor with presentational children."""
+
+        return AXUtilities._is_descendant(
+            AXUtilities.IS_PRESENTATIONAL_CHILD,
+            obj,
+            AXUtilitiesRole.children_are_presentational,
         )
 
     @staticmethod

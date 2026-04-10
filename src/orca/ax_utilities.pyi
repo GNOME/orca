@@ -124,6 +124,8 @@ class AXUtilities:
         inclusive: bool = False,
     ) -> bool: ...
     @staticmethod
+    def is_presentational_child(obj: Atspi.Accessible) -> bool: ...
+    @staticmethod
     def is_tool_bar_descendant(
         obj: Atspi.Accessible,
         inclusive: bool = False,
