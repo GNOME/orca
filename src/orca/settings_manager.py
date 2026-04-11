@@ -191,25 +191,11 @@ class SettingsManager:
         orca_dir = self._prefs_dir
         _create_dir(orca_dir)
 
-        # Set up $XDG_DATA_HOME/orca/orca-scripts as a Python package
-        #
-        orca_script_dir = os.path.join(orca_dir, "orca-scripts")
-        _create_dir(orca_script_dir)
-        initFile = os.path.join(orca_script_dir, "__init__.py")
-        if not os.path.exists(initFile):
-            os.close(os.open(initFile, os.O_CREAT, 0o700))
-
         orcaSettingsDir = os.path.join(orca_dir, "app-settings")
         _create_dir(orcaSettingsDir)
 
         orcaSoundsDir = os.path.join(orca_dir, "sounds")
         _create_dir(orcaSoundsDir)
-
-        # Set up $XDG_DATA_HOME/orca/orca-customizations.py empty file and
-        # define orca_dir as a Python package.
-        initFile = os.path.join(orca_dir, "__init__.py")
-        if not os.path.exists(initFile):
-            os.close(os.open(initFile, os.O_CREAT, 0o700))
 
         userCustomFile = os.path.join(orca_dir, "orca-customizations.py")
         if not os.path.exists(userCustomFile):

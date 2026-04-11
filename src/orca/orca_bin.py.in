@@ -296,7 +296,6 @@ def main() -> int:
 
     debug.print_message(debug.LEVEL_INFO, "INFO: About to activate settings manager.", True)
     manager.activate(args.user_prefs, settings_dict)
-    sys.path.insert(0, manager.get_prefs_dir())
 
     if args.profile:
         try:
