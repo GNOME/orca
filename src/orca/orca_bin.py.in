@@ -62,8 +62,6 @@ if os.path.isdir(_share_dir):
 
 import importlib
 import importlib.util
-from types import ModuleType
-
 from gi.repository import GLib
 
 from orca import debug
@@ -233,22 +231,6 @@ def cleanup(sigval: int) -> None:
     while other_orcas():
         time.sleep(0.5)
 
-# TODO - JD: Remove _DeprecatedSettingsStub in Orca v51.
-class _DeprecatedSettingsStub(ModuleType):
-    """Stub for the removed orca.settings module."""
-
-    _has_warned: bool = False
-
-    def __setattr__(self, name: str, value: object) -> None:
-        if not name.startswith("_") and not _DeprecatedSettingsStub._has_warned:
-            _DeprecatedSettingsStub._has_warned = True
-            msg = (
-                "WARNING: orca.settings has been removed. "
-                "Please update your orca-customizations.py to remove references to it."
-            )
-            debug.print_message(debug.LEVEL_SEVERE, msg, True)
-        super().__setattr__(name, value)
-
 def _create_prefs_dirs(prefs_dir: str) -> None:
     """Creates the preferences directory structure."""
 
@@ -273,10 +255,6 @@ def _load_customizations(prefs_dir: str) -> None:
     try:
         spec = importlib.util.spec_from_file_location("orca-customizations", module_path)
         if spec is not None and spec.loader is not None:
-            if "orca.settings" not in sys.modules:
-                settings_stub = _DeprecatedSettingsStub("orca.settings")
-                sys.modules["orca.settings"] = settings_stub
-                sys.modules["orca"].settings = settings_stub  # type: ignore[attr-defined]
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
             tokens.extend(["from", module_path, "succeeded."])
