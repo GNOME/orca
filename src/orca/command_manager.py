@@ -902,7 +902,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     parent_text = self._format_binding_data_text(parent_overrides[handler_name])
                 else:
                     parent_text = self._format_keybinding_text(
-                        cmd.get_default_keybinding(self._is_desktop),
+                        cmd.get_default_keybinding(get_manager().is_desktop_layout()),
                     )
 
                 if current_text != parent_text:
