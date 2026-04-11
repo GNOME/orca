@@ -45,6 +45,7 @@ from . import (
 )
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .extension import Extension
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterable
@@ -188,8 +189,11 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.TypingEcho", name="typing-echo")
-class TypingEchoPresenter:
+class TypingEchoPresenter(Extension):
     """Provides typing echo support."""
+
+    MODULE_NAME = "TypingEchoPresenter"
+    GROUP_LABEL = guilabels.KB_GROUP_DEFAULT
 
     _SCHEMA = "typing-echo"
     KEY_KEY_ECHO = "key-echo"
@@ -218,36 +222,22 @@ class TypingEchoPresenter:
 
     def __init__(self) -> None:
         self._delayed_terminal_press: input_event.KeyboardEvent | None = None
-        self._initialized: bool = False
         self._present_locking_keys: bool | None = None
-        msg = "TYPING ECHO PRESENTER: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("TypingEchoPresenter", self)
+        super().__init__()
 
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
+    def _get_commands(self) -> list[command_manager.Command]:
+        """Returns commands for registration."""
 
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_DEFAULT
-
-        manager.add_command(
+        return [
             command_manager.KeyboardCommand(
                 "cycleKeyEchoHandler",
                 self.cycle_key_echo,
-                group_label,
+                self.GROUP_LABEL,
                 cmdnames.CYCLE_KEY_ECHO,
                 desktop_keybinding=None,
                 laptop_keybinding=None,
             ),
-        )
-
-        msg = "TYPING ECHO PRESENTER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        ]
 
     def create_preferences_grid(self) -> TypingEchoPreferencesGrid:
         """Returns the GtkGrid containing the Typing Echo preferences UI."""

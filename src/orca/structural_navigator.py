@@ -59,6 +59,7 @@ from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .extension import Extension
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -79,7 +80,7 @@ class NavigationMode(Enum):
     "org.gnome.Orca.StructuralNavigation",
     name="structural-navigation",
 )
-class StructuralNavigator:
+class StructuralNavigator(Extension):
     """Implements the structural navigation support available to scripts."""
 
     _SCHEMA = "structural-navigation"
@@ -99,6 +100,9 @@ class StructuralNavigator:
             default=default,
         )
 
+    MODULE_NAME = "StructuralNavigator"
+    GROUP_LABEL = guilabels.KB_GROUP_STRUCTURAL_NAVIGATION
+
     def __init__(self) -> None:
         self._last_input_event: InputEvent | None = None
 
@@ -107,38 +111,10 @@ class StructuralNavigator:
         self._suspended: bool = False
         self._mode_for_script: dict[default.Script, NavigationMode] = {}
         self._previous_mode_for_script: dict[default.Script, NavigationMode] = {}
-        self._initialized: bool = False
-
-        msg = "STRUCTURAL NAVIGATOR: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("StructuralNavigator", self)
+        super().__init__()
 
     # pylint: disable-next=too-many-locals
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_STRUCTURAL_NAVIGATION
-
-        # Mode cycle command
-        kb_z = keybindings.KeyBinding("z", keybindings.ORCA_MODIFIER_MASK)
-        manager.add_command(
-            command_manager.KeyboardCommand(
-                "structural_navigator_mode_cycle",
-                self.cycle_mode,
-                group_label,
-                cmdnames.STRUCTURAL_NAVIGATION_MODE_CYCLE,
-                desktop_keybinding=kb_z,
-                laptop_keybinding=kb_z,
-                is_group_toggle=True,
-            ),
-        )
-
+    def _get_commands(self) -> list[command_manager.Command]:
         # Navigation bindings - (key, prev_mod, next_mod, list_mod, base_name)
         nav_bindings = [
             (
@@ -281,7 +257,6 @@ class StructuralNavigator:
         for key, prev_mod, next_mod, list_mod, base_name in nav_bindings:
             cmd_bindings[f"previous_{base_name}"] = keybindings.KeyBinding(key, prev_mod)
             cmd_bindings[f"next_{base_name}"] = keybindings.KeyBinding(key, next_mod)
-            # Handle plurals for list commands
             if base_name == "entry":
                 plural = "entries"
             elif base_name in ("checkbox", "combobox"):
@@ -290,27 +265,21 @@ class StructuralNavigator:
                 plural = f"{base_name}s"
             cmd_bindings[f"list_{plural}"] = keybindings.KeyBinding(key, list_mod)
 
-        # Additional bindings
         cmd_bindings["previous_separator"] = keybindings.KeyBinding(
-            "s",
-            keybindings.SHIFT_MODIFIER_MASK,
+            "s", keybindings.SHIFT_MODIFIER_MASK
         )
         cmd_bindings["next_separator"] = keybindings.KeyBinding("s", keybindings.NO_MODIFIER_MASK)
         cmd_bindings["previous_live_region"] = keybindings.KeyBinding(
-            "d",
-            keybindings.SHIFT_MODIFIER_MASK,
+            "d", keybindings.SHIFT_MODIFIER_MASK
         )
         cmd_bindings["next_live_region"] = keybindings.KeyBinding("d", keybindings.NO_MODIFIER_MASK)
         cmd_bindings["last_live_region"] = keybindings.KeyBinding("y", keybindings.NO_MODIFIER_MASK)
         cmd_bindings["container_start"] = keybindings.KeyBinding(
-            "comma",
-            keybindings.SHIFT_MODIFIER_MASK,
+            "comma", keybindings.SHIFT_MODIFIER_MASK
         )
         cmd_bindings["container_end"] = keybindings.KeyBinding(
-            "comma",
-            keybindings.NO_MODIFIER_MASK,
+            "comma", keybindings.NO_MODIFIER_MASK
         )
-        # Commands with no bindings
         cmd_bindings["previous_annotation"] = None
         cmd_bindings["next_annotation"] = None
         cmd_bindings["list_annotations"] = None
@@ -391,20 +360,32 @@ class StructuralNavigator:
             ("container_end", self.container_end, cmdnames.CONTAINER_END),
         ]
 
+        kb_z = keybindings.KeyBinding("z", keybindings.ORCA_MODIFIER_MASK)
+        commands: list[command_manager.Command] = [
+            command_manager.KeyboardCommand(
+                "structural_navigator_mode_cycle",
+                self.cycle_mode,
+                self.GROUP_LABEL,
+                cmdnames.STRUCTURAL_NAVIGATION_MODE_CYCLE,
+                desktop_keybinding=kb_z,
+                laptop_keybinding=kb_z,
+                is_group_toggle=True,
+            ),
+        ]
+
         for name, function, description in commands_data:
             kb = cmd_bindings.get(name)
-            manager.add_command(
+            commands.append(
                 command_manager.KeyboardCommand(
                     name,
                     function,
-                    group_label,
+                    self.GROUP_LABEL,
                     description,
                     desktop_keybinding=kb,
                     laptop_keybinding=kb,
                 ),
             )
 
-        # Heading levels 1-6
         for i in range(1, 7):
             kb_prev = keybindings.KeyBinding(str(i), keybindings.SHIFT_MODIFIER_MASK)
             kb_next = keybindings.KeyBinding(str(i), keybindings.NO_MODIFIER_MASK)
@@ -431,19 +412,18 @@ class StructuralNavigator:
                 ),
             ]
             for name, function, description, kb in heading_commands:
-                manager.add_command(
+                commands.append(
                     command_manager.KeyboardCommand(
                         name,
                         function,
-                        group_label,
+                        self.GROUP_LABEL,
                         description,
                         desktop_keybinding=kb,
                         laptop_keybinding=kb,
                     ),
                 )
 
-        msg = f"STRUCTURAL NAVIGATOR: Commands set up. Suspended: {self._suspended}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return commands
 
     def _is_active_script(self, script):
         active_script = script_manager.get_manager().get_active_script()

@@ -59,6 +59,7 @@ from . import (
     script_manager,
 )
 from .ax_object import AXObject
+from .extension import Extension
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -1271,8 +1272,11 @@ class KeyboardLayout(Enum):
     "org.gnome.Orca.Keybindings",
     name="keybindings",
 )
-class CommandManager:  # pylint: disable=too-many-instance-attributes
+class CommandManager(Extension):  # pylint: disable=too-many-instance-attributes
     """Singleton manager for coordinating commands between scripts and UI."""
+
+    MODULE_NAME = "CommandManager"
+    GROUP_LABEL = guilabels.KB_GROUP_DEFAULT
 
     _SCHEMA = "keybindings"
 
@@ -1284,17 +1288,12 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         self._commands_by_keyval: dict[int, list[KeyboardCommand]] = {}
         self._commands_by_keycode: dict[int, list[KeyboardCommand]] = {}
         self._is_desktop: bool = True
-        self._initialized: bool = False
         self._group_enabled: dict[str, bool | None] = {}
         self._exclusive_groups: list[set[str]] = []
         self._numlock_on: bool = False
         self._learn_mode_active: bool = False
         self._prior_suspended: set[str] = set()
-
-        msg = "COMMAND MANAGER: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("CommandManager", self)
+        super().__init__()
 
     def is_desktop_layout(self) -> bool:
         """Returns True if the current keyboard layout is desktop."""
@@ -1550,26 +1549,19 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
 
         GLib.idle_add(update_grabs)
 
-    def set_up_commands(self) -> None:
-        """Sets up commands owned by CommandManager."""
+    def _get_commands(self) -> list[Command]:
+        """Returns commands for registration."""
 
-        if self._initialized:
-            return
-        self._initialized = True
-
-        msg = "COMMAND MANAGER: Setting up commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        self.add_command(
+        return [
             KeyboardCommand(
                 "toggle_keyboard_layout",
                 self.toggle_keyboard_layout,
-                guilabels.KB_GROUP_DEFAULT,
+                self.GROUP_LABEL,
                 cmdnames.TOGGLE_KEYBOARD_LAYOUT,
                 desktop_keybinding=None,
                 laptop_keybinding=None,
             ),
-        )
+        ]
 
     def _apply_layout_to_commands(self) -> None:
         """Updates all keyboard commands' active keybindings based on current layout."""

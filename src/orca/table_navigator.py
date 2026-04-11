@@ -49,6 +49,7 @@ from . import (
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_utilities import AXUtilities
+from .extension import Extension
 
 if TYPE_CHECKING:
     import gi
@@ -64,7 +65,7 @@ if TYPE_CHECKING:
     "org.gnome.Orca.TableNavigation",
     name="table-navigation",
 )
-class TableNavigator:
+class TableNavigator(Extension):
     """Provides Orca-controlled navigation for tabular content."""
 
     _SCHEMA = "table-navigation"
@@ -81,16 +82,14 @@ class TableNavigator:
             default=default,
         )
 
+    MODULE_NAME = "TableNavigator"
+    GROUP_LABEL = guilabels.KB_GROUP_TABLE_NAVIGATION
+
     def __init__(self) -> None:
         self._previous_reported_row: int | None = None
         self._previous_reported_col: int | None = None
         self._last_input_event: InputEvent | None = None
-        self._initialized: bool = False
-
-        msg = "TABLE NAVIGATOR: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("TableNavigator", self)
+        super().__init__()
 
     def last_input_event_was_navigation_command(self) -> bool:
         """Returns true if the last input event was a navigation command."""
@@ -110,17 +109,7 @@ class TableNavigator:
         return result
 
     # pylint: disable-next=too-many-locals
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_TABLE_NAVIGATION
-
-        # Keybindings (same for desktop and laptop)
+    def _get_commands(self) -> list[command_manager.Command]:
         kb_t = keybindings.KeyBinding("t", keybindings.ORCA_SHIFT_MODIFIER_MASK)
         kb_left = keybindings.KeyBinding("Left", keybindings.SHIFT_ALT_MODIFIER_MASK)
         kb_right = keybindings.KeyBinding("Right", keybindings.SHIFT_ALT_MODIFIER_MASK)
@@ -137,20 +126,19 @@ class TableNavigator:
         kb_c = keybindings.KeyBinding("c", keybindings.ORCA_SHIFT_MODIFIER_MASK)
         kb_c_2 = keybindings.KeyBinding("c", keybindings.ORCA_SHIFT_MODIFIER_MASK, click_count=2)
 
-        manager.add_command(
+        commands: list[command_manager.Command] = [
             command_manager.KeyboardCommand(
                 "table_navigator_toggle_enabled",
                 self.toggle_enabled,
-                group_label,
+                self.GROUP_LABEL,
                 cmdnames.TABLE_NAVIGATION_TOGGLE,
                 desktop_keybinding=kb_t,
                 laptop_keybinding=kb_t,
                 is_group_toggle=True,
             ),
-        )
+        ]
 
-        # (name, function, description, keybinding)
-        commands_data = [
+        nav_commands = [
             ("table_cell_left", self.move_left, cmdnames.TABLE_CELL_LEFT, kb_left),
             ("table_cell_right", self.move_right, cmdnames.TABLE_CELL_RIGHT, kb_right),
             ("table_cell_up", self.move_up, cmdnames.TABLE_CELL_UP, kb_up),
@@ -207,20 +195,19 @@ class TableNavigator:
             ),
         ]
 
-        for name, function, description, kb in commands_data:
-            manager.add_command(
+        for name, function, description, kb in nav_commands:
+            commands.append(
                 command_manager.KeyboardCommand(
                     name,
                     function,
-                    group_label,
+                    self.GROUP_LABEL,
                     description,
                     desktop_keybinding=kb,
                     laptop_keybinding=kb,
                 ),
             )
 
-        msg = "TABLE NAVIGATOR: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return commands
 
     @dbus_service.command
     def toggle_enabled(

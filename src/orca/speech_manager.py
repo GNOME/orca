@@ -56,6 +56,7 @@ from . import (
     systemd,
 )
 from .acss import ACSS
+from .extension import Extension
 from .speechserver import CapitalizationStyle, PunctuationStyle
 
 if TYPE_CHECKING:
@@ -1712,8 +1713,11 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Speech", name="speech")
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Voice", name="voice")
-class SpeechManager:
+class SpeechManager(Extension):
     """Manages the speech engine: server, synthesizer, voice, and output parameters."""
+
+    MODULE_NAME = "SpeechManager"
+    GROUP_LABEL = guilabels.KB_GROUP_SPEECH_VERBOSITY
 
     SPEECH_SCHEMA = "speech"
     _VOICE_SCHEMA = "voice"
@@ -1903,29 +1907,15 @@ class SpeechManager:
     def __init__(self) -> None:
         self._families_sorted: bool = False
         self._health_check_pending: bool = False
-        self._initialized: bool = False
         self._mute_speech: bool = False
         self._server: SpeechServer | None = None
+        super().__init__()
 
-        msg = "SPEECH MANAGER: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("SpeechManager", self)
+    def _get_commands(self) -> list[command_manager.Command]:
+        """Returns commands for registration."""
 
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_SPEECH_VERBOSITY
-
-        # Common keybindings (same for desktop and laptop)
         kb_s = keybindings.KeyBinding("s", keybindings.ORCA_MODIFIER_MASK)
 
-        # (name, function, description, desktop_kb, laptop_kb)
         commands_data = [
             (
                 "cycleCapitalizationStyleHandler",
@@ -2007,20 +1997,17 @@ class SpeechManager:
             ),
         ]
 
-        for name, function, description, desktop_kb, laptop_kb in commands_data:
-            manager.add_command(
-                command_manager.KeyboardCommand(
-                    name,
-                    function,
-                    group_label,
-                    description,
-                    desktop_keybinding=desktop_kb,
-                    laptop_keybinding=laptop_kb,
-                ),
+        return [
+            command_manager.KeyboardCommand(
+                name,
+                function,
+                self.GROUP_LABEL,
+                description,
+                desktop_keybinding=desktop_kb,
+                laptop_keybinding=laptop_kb,
             )
-
-        msg = "SPEECH MANAGER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            for name, function, description, desktop_kb, laptop_kb in commands_data
+        ]
 
     def get_server(self) -> SpeechServer | None:
         """Returns the speech server instance, or None if not initialized."""

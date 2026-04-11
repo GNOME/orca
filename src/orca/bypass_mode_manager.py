@@ -35,41 +35,35 @@ from . import (
     orca_modifier_manager,
     presentation_manager,
 )
+from .extension import Extension
 
 if TYPE_CHECKING:
     from .scripts import default
 
 
-class BypassModeManager:
+class BypassModeManager(Extension):
     """Provides means to pass keyboard events to the app being used."""
 
+    MODULE_NAME = "BypassModeManager"
+    GROUP_LABEL = guilabels.KB_GROUP_DEFAULT
     COMMAND_NAME = "bypass_mode_toggle"
 
     def __init__(self) -> None:
         self._is_active: bool = False
-        self._initialized: bool = False
+        super().__init__()
 
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_DEFAULT
+    def _get_commands(self) -> list[command_manager.Command]:
         kb = keybindings.KeyBinding("BackSpace", keybindings.ALT_MODIFIER_MASK)
-
-        manager.add_command(
+        return [
             command_manager.KeyboardCommand(
                 self.COMMAND_NAME,
                 self.toggle_enabled,
-                group_label,
+                self.GROUP_LABEL,
                 cmdnames.BYPASS_MODE_TOGGLE,
                 desktop_keybinding=kb,
                 laptop_keybinding=kb,
             ),
-        )
+        ]
 
     def is_active(self) -> bool:
         """Returns True if bypass mode is active."""

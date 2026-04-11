@@ -43,43 +43,35 @@ from . import (
     presentation_manager,
     script_manager,
 )
+from .extension import Extension
 
 if TYPE_CHECKING:
     from .scripts import default
 
 
-class LearnModePresenter:
+class LearnModePresenter(Extension):
     """Provides implementation of learn mode"""
+
+    MODULE_NAME = "LearnModePresenter"
+    GROUP_LABEL = guilabels.KB_GROUP_LEARN_MODE
 
     def __init__(self) -> None:
         self._is_active: bool = False
         self._gui: CommandListGUI | None = None
-        self._initialized: bool = False
+        super().__init__()
 
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_LEARN_MODE
+    def _get_commands(self) -> list[command_manager.Command]:
         kb = keybindings.KeyBinding("h", keybindings.ORCA_MODIFIER_MASK)
-
-        manager.add_command(
+        return [
             command_manager.KeyboardCommand(
                 "enterLearnModeHandler",
                 self.start,
-                group_label,
+                self.GROUP_LABEL,
                 cmdnames.ENTER_LEARN_MODE,
                 desktop_keybinding=kb,
                 laptop_keybinding=kb,
             ),
-        )
-
-        msg = "LEARN MODE PRESENTER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        ]
 
     def is_active(self) -> bool:
         """Returns True if we're in learn mode"""

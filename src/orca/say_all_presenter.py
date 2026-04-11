@@ -57,6 +57,7 @@ from .acss import ACSS
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .extension import Extension
 
 if TYPE_CHECKING:
     from collections.abc import Generator
@@ -225,7 +226,7 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.SayAll", name="say-all")
-class SayAllPresenter:
+class SayAllPresenter(Extension):
     """Module for commands related to the current accessible object."""
 
     _SCHEMA = "say-all"
@@ -254,6 +255,9 @@ class SayAllPresenter:
             default=default,
         )
 
+    MODULE_NAME = "SayAllPresenter"
+    GROUP_LABEL = guilabels.KB_GROUP_DEFAULT
+
     def __init__(self) -> None:
         self._script: default.Script | None = None
         self._contents: list[tuple[Atspi.Accessible, int, int, str]] = []
@@ -261,40 +265,25 @@ class SayAllPresenter:
         self._current_context: speechserver.SayAllContext | None = None
         self._prior_obj: Atspi.Accessible | None = None
         self._say_all_is_running: bool = False
-        self._initialized: bool = False
+        super().__init__()
 
-        msg = "SAY ALL PRESENTER: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("SayAllPresenter", self)
-
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_DEFAULT
-
-        # Layout-specific keybindings
-        kb_desktop = keybindings.KeyBinding("KP_Add", keybindings.NO_MODIFIER_MASK)
-        kb_laptop = keybindings.KeyBinding("semicolon", keybindings.ORCA_MODIFIER_MASK)
-
-        manager.add_command(
+    def _get_commands(self) -> list[command_manager.Command]:
+        return [
             command_manager.KeyboardCommand(
                 "sayAllHandler",
                 self.say_all,
-                group_label,
+                self.GROUP_LABEL,
                 cmdnames.SAY_ALL,
-                desktop_keybinding=kb_desktop,
-                laptop_keybinding=kb_laptop,
+                desktop_keybinding=keybindings.KeyBinding(
+                    "KP_Add",
+                    keybindings.NO_MODIFIER_MASK,
+                ),
+                laptop_keybinding=keybindings.KeyBinding(
+                    "semicolon",
+                    keybindings.ORCA_MODIFIER_MASK,
+                ),
             ),
-        )
-
-        msg = "SAY ALL PRESENTER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        ]
 
     def create_preferences_grid(self) -> SayAllPreferencesGrid:
         """Returns the GtkGrid containing the Say All preferences UI."""

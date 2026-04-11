@@ -44,6 +44,7 @@ from . import (
     messages,
     presentation_manager,
 )
+from .extension import Extension
 from .flat_review import Context
 
 
@@ -107,8 +108,11 @@ class SearchQuery:
         return string
 
 
-class FlatReviewFinder:
+class FlatReviewFinder(Extension):
     """Provides tools to search the current window's flat-review contents."""
+
+    MODULE_NAME = "FlatReviewFinder"
+    GROUP_LABEL = guilabels.KB_GROUP_FIND
 
     def __init__(self) -> None:
         self._gui: FlatReviewFinderGUI | None = None
@@ -117,57 +121,53 @@ class FlatReviewFinder:
         self._wrapped: bool = False
         self._match: _SearchQueryMatch | None = None
         self._focus: Atspi.Accessible | None = None
-        self._initialized: bool = False
+        super().__init__()
 
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_FIND
-
-        # (name, function, description, desktop_binding, laptop_binding)
-        commands_data = [
-            (
+    def _get_commands(self) -> list[command_manager.Command]:
+        return [
+            command_manager.KeyboardCommand(
                 "findHandler",
                 self.show_dialog,
+                self.GROUP_LABEL,
                 cmdnames.SHOW_FIND_GUI,
-                keybindings.KeyBinding("KP_Delete", keybindings.NO_MODIFIER_MASK),
-                keybindings.KeyBinding("bracketleft", keybindings.ORCA_MODIFIER_MASK),
+                desktop_keybinding=keybindings.KeyBinding(
+                    "KP_Delete",
+                    keybindings.NO_MODIFIER_MASK,
+                ),
+                laptop_keybinding=keybindings.KeyBinding(
+                    "bracketleft",
+                    keybindings.ORCA_MODIFIER_MASK,
+                ),
             ),
-            (
+            command_manager.KeyboardCommand(
                 "findNextHandler",
                 self.find_next,
+                self.GROUP_LABEL,
                 cmdnames.FIND_NEXT,
-                keybindings.KeyBinding("KP_Delete", keybindings.ORCA_MODIFIER_MASK),
-                keybindings.KeyBinding("bracketright", keybindings.ORCA_MODIFIER_MASK),
+                desktop_keybinding=keybindings.KeyBinding(
+                    "KP_Delete",
+                    keybindings.ORCA_MODIFIER_MASK,
+                ),
+                laptop_keybinding=keybindings.KeyBinding(
+                    "bracketright",
+                    keybindings.ORCA_MODIFIER_MASK,
+                ),
             ),
-            (
+            command_manager.KeyboardCommand(
                 "findPreviousHandler",
                 self.find_previous,
+                self.GROUP_LABEL,
                 cmdnames.FIND_PREVIOUS,
-                keybindings.KeyBinding("KP_Delete", keybindings.ORCA_SHIFT_MODIFIER_MASK),
-                keybindings.KeyBinding("bracketright", keybindings.ORCA_CTRL_MODIFIER_MASK),
+                desktop_keybinding=keybindings.KeyBinding(
+                    "KP_Delete",
+                    keybindings.ORCA_SHIFT_MODIFIER_MASK,
+                ),
+                laptop_keybinding=keybindings.KeyBinding(
+                    "bracketright",
+                    keybindings.ORCA_CTRL_MODIFIER_MASK,
+                ),
             ),
         ]
-
-        for name, function, description, desktop_kb, laptop_kb in commands_data:
-            manager.add_command(
-                command_manager.KeyboardCommand(
-                    name,
-                    function,
-                    group_label,
-                    description,
-                    desktop_keybinding=desktop_kb,
-                    laptop_keybinding=laptop_kb,
-                ),
-            )
-
-        msg = "FLAT REVIEW FINDER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _on_query(self, query: SearchQuery) -> None:
         """Handler after a query has been made via the Find dialog."""

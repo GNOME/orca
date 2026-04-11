@@ -45,6 +45,7 @@ from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .extension import Extension
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -420,7 +421,7 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Chat", name="chat")
-class ChatPresenter:
+class ChatPresenter(Extension):
     """Presenter for chat preferences and commands."""
 
     _SCHEMA = "chat"
@@ -440,61 +441,45 @@ class ChatPresenter:
             default=default,
         )
 
+    MODULE_NAME = "ChatPresenter"
+    GROUP_LABEL = guilabels.KB_GROUP_CHAT
+
     def __init__(self) -> None:
-        self._initialized: bool = False
-        msg = "CHAT PRESENTER: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("ChatPresenter", self)
+        super().__init__()
 
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_CHAT
-
-        commands_data = [
-            (
+    def _get_commands(self) -> list[command_manager.Command]:
+        return [
+            command_manager.KeyboardCommand(
                 "chat_toggle_room_name_prefix",
                 self.toggle_prefix,
+                self.GROUP_LABEL,
                 cmdnames.CHAT_TOGGLE_ROOM_NAME_PREFIX,
             ),
-            (
+            command_manager.KeyboardCommand(
                 "chat_toggle_buddy_typing",
                 self.toggle_buddy_typing,
+                self.GROUP_LABEL,
                 cmdnames.CHAT_TOGGLE_BUDDY_TYPING,
             ),
-            (
+            command_manager.KeyboardCommand(
                 "chat_toggle_message_histories",
                 self.toggle_message_histories,
+                self.GROUP_LABEL,
                 cmdnames.CHAT_TOGGLE_MESSAGE_HISTORIES,
             ),
-            (
+            command_manager.KeyboardCommand(
                 "chat_previous_message",
                 self.present_previous_message,
+                self.GROUP_LABEL,
                 cmdnames.CHAT_PREVIOUS_MESSAGE,
             ),
-            ("chat_next_message", self.present_next_message, cmdnames.CHAT_NEXT_MESSAGE),
+            command_manager.KeyboardCommand(
+                "chat_next_message",
+                self.present_next_message,
+                self.GROUP_LABEL,
+                cmdnames.CHAT_NEXT_MESSAGE,
+            ),
         ]
-
-        for name, function, description in commands_data:
-            manager.add_command(
-                command_manager.KeyboardCommand(
-                    name,
-                    function,
-                    group_label,
-                    description,
-                    desktop_keybinding=None,
-                    laptop_keybinding=None,
-                ),
-            )
-
-        msg = "CHAT PRESENTER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def create_preferences_grid(self) -> ChatPreferencesGrid:
         """Create and return the chat preferences grid."""

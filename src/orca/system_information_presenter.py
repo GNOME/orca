@@ -57,6 +57,7 @@ from . import (
     preferences_grid_base,
     presentation_manager,
 )
+from .extension import Extension
 
 
 class DateFormat(Enum):
@@ -159,7 +160,7 @@ if TYPE_CHECKING:
     "org.gnome.Orca.SystemInformation",
     name="system-information",
 )
-class SystemInformationPresenter:
+class SystemInformationPresenter(Extension):
     """Provides commands to present system information."""
 
     _SCHEMA = "system-information"
@@ -176,66 +177,52 @@ class SystemInformationPresenter:
             default=default,
         )
 
+    MODULE_NAME = "SystemInformationPresenter"
+    GROUP_LABEL = guilabels.KB_GROUP_SYSTEM_INFORMATION
+
     def __init__(self) -> None:
-        self._initialized: bool = False
+        super().__init__()
 
-        msg = "SYSTEM INFORMATION PRESENTER: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("SystemInformationPresenter", self)
-
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_SYSTEM_INFORMATION
-
-        # Keybindings (same for desktop and laptop)
+    def _get_commands(self) -> list[command_manager.Command]:
         kb_t = keybindings.KeyBinding("t", keybindings.ORCA_MODIFIER_MASK)
         kb_t_2 = keybindings.KeyBinding("t", keybindings.ORCA_MODIFIER_MASK, click_count=2)
 
-        # (name, function, description, keybinding)
-        commands_data = [
-            ("presentTimeHandler", self.present_time, cmdnames.PRESENT_CURRENT_TIME, kb_t),
-            ("presentDateHandler", self.present_date, cmdnames.PRESENT_CURRENT_DATE, kb_t_2),
-            (
+        return [
+            command_manager.KeyboardCommand(
+                "presentTimeHandler",
+                self.present_time,
+                self.GROUP_LABEL,
+                cmdnames.PRESENT_CURRENT_TIME,
+                desktop_keybinding=kb_t,
+                laptop_keybinding=kb_t,
+            ),
+            command_manager.KeyboardCommand(
+                "presentDateHandler",
+                self.present_date,
+                self.GROUP_LABEL,
+                cmdnames.PRESENT_CURRENT_DATE,
+                desktop_keybinding=kb_t_2,
+                laptop_keybinding=kb_t_2,
+            ),
+            command_manager.KeyboardCommand(
                 "present_battery_status",
                 self.present_battery_status,
+                self.GROUP_LABEL,
                 cmdnames.PRESENT_BATTERY_STATUS,
-                None,
             ),
-            (
+            command_manager.KeyboardCommand(
                 "present_cpu_and_memory_usage",
                 self.present_cpu_and_memory_usage,
+                self.GROUP_LABEL,
                 cmdnames.PRESENT_CPU_AND_MEMORY_USAGE,
-                None,
             ),
-            (
+            command_manager.KeyboardCommand(
                 "present_modifier_keys_state",
                 self.present_modifier_keys_state,
+                self.GROUP_LABEL,
                 cmdnames.PRESENT_MODIFIER_KEYS_STATE,
-                None,
             ),
         ]
-
-        for name, function, description, kb in commands_data:
-            manager.add_command(
-                command_manager.KeyboardCommand(
-                    name,
-                    function,
-                    group_label,
-                    description,
-                    desktop_keybinding=kb,
-                    laptop_keybinding=kb,
-                ),
-            )
-
-        msg = "SYSTEM INFORMATION PRESENTER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def create_time_and_date_preferences_grid(self) -> TimeAndDatePreferencesGrid:
         """Returns the GtkGrid containing the time and date preferences UI."""

@@ -46,6 +46,7 @@ from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
+from .extension import Extension
 from .generator import WhereAmI
 
 if TYPE_CHECKING:
@@ -57,28 +58,14 @@ if TYPE_CHECKING:
     from .scripts import default
 
 
-class WhereAmIPresenter:
+class WhereAmIPresenter(Extension):
     """Module for commands related to the current accessible object."""
 
-    def __init__(self) -> None:
-        self._initialized: bool = False
-
-        msg = "WHERE AM I PRESENTER: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("WhereAmIPresenter", self)
+    MODULE_NAME = "WhereAmIPresenter"
+    GROUP_LABEL = guilabels.KB_GROUP_WHERE_AM_I
 
     # pylint: disable-next=too-many-locals
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_WHERE_AM_I
-
+    def _get_commands(self) -> list[command_manager.Command]:
         # Common keybindings (same for desktop and laptop)
         kb_f = keybindings.KeyBinding("f", keybindings.ORCA_MODIFIER_MASK)
         kb_e = keybindings.KeyBinding("e", keybindings.ORCA_MODIFIER_MASK)
@@ -109,88 +96,83 @@ class WhereAmIPresenter:
             click_count=2,
         )
 
-        # (name, function, description, desktop_kb, laptop_kb)
-        commands_data = [
-            (
+        return [
+            command_manager.KeyboardCommand(
                 "readCharAttributesHandler",
                 self.present_character_attributes,
+                self.GROUP_LABEL,
                 cmdnames.READ_CHAR_ATTRIBUTES,
-                kb_f,
-                kb_f,
+                desktop_keybinding=kb_f,
+                laptop_keybinding=kb_f,
             ),
-            (
+            command_manager.KeyboardCommand(
                 "presentSizeAndPositionHandler",
                 self.present_size_and_position,
+                self.GROUP_LABEL,
                 cmdnames.PRESENT_SIZE_AND_POSITION,
-                None,
-                None,
             ),
-            (
+            command_manager.KeyboardCommand(
                 "getTitleHandler",
                 self.present_title,
+                self.GROUP_LABEL,
                 cmdnames.PRESENT_TITLE,
-                kb_kp_enter_orca,
-                kb_slash,
+                desktop_keybinding=kb_kp_enter_orca,
+                laptop_keybinding=kb_slash,
             ),
-            (
+            command_manager.KeyboardCommand(
                 "getStatusBarHandler",
                 self.present_status_bar,
+                self.GROUP_LABEL,
                 cmdnames.PRESENT_STATUS_BAR,
-                kb_kp_enter_orca_2,
-                kb_slash_2,
+                desktop_keybinding=kb_kp_enter_orca_2,
+                laptop_keybinding=kb_slash_2,
             ),
-            (
+            command_manager.KeyboardCommand(
                 "present_default_button",
                 self.present_default_button,
+                self.GROUP_LABEL,
                 cmdnames.PRESENT_DEFAULT_BUTTON,
-                kb_e,
-                kb_e,
+                desktop_keybinding=kb_e,
+                laptop_keybinding=kb_e,
             ),
-            (
+            command_manager.KeyboardCommand(
                 "present_cell_formula",
                 self.present_cell_formula,
+                self.GROUP_LABEL,
                 cmdnames.PRESENT_CELL_FORMULA,
-                kb_equal,
-                None,
+                desktop_keybinding=kb_equal,
             ),
-            (
+            command_manager.KeyboardCommand(
                 "whereAmIBasicHandler",
                 self.where_am_i_basic,
+                self.GROUP_LABEL,
                 cmdnames.WHERE_AM_I_BASIC,
-                kb_kp_enter,
-                kb_return,
+                desktop_keybinding=kb_kp_enter,
+                laptop_keybinding=kb_return,
             ),
-            (
+            command_manager.KeyboardCommand(
                 "whereAmIDetailedHandler",
                 self.where_am_i_detailed,
+                self.GROUP_LABEL,
                 cmdnames.WHERE_AM_I_DETAILED,
-                kb_kp_enter_2,
-                kb_return_2,
+                desktop_keybinding=kb_kp_enter_2,
+                laptop_keybinding=kb_return_2,
             ),
-            ("whereAmILinkHandler", self.present_link, cmdnames.WHERE_AM_I_LINK, None, None),
-            (
+            command_manager.KeyboardCommand(
+                "whereAmILinkHandler",
+                self.present_link,
+                self.GROUP_LABEL,
+                cmdnames.WHERE_AM_I_LINK,
+            ),
+            command_manager.KeyboardCommand(
                 "whereAmISelectionHandler",
                 self.present_selection,
+                self.GROUP_LABEL,
                 cmdnames.WHERE_AM_I_SELECTION,
-                kb_up,
-                kb_up,
+                desktop_keybinding=kb_up,
+                laptop_keybinding=kb_up,
             ),
         ]
-
-        for name, function, description, desktop_kb, laptop_kb in commands_data:
-            manager.add_command(
-                command_manager.KeyboardCommand(
-                    name,
-                    function,
-                    group_label,
-                    description,
-                    desktop_keybinding=desktop_kb,
-                    laptop_keybinding=laptop_kb,
-                ),
-            )
-
-        msg = "WHERE AM I PRESENTER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _localize_text_attribute(self, key: str, value: str | None) -> str:
         """Returns a localized description of the text attribute for Orca+F readout."""

@@ -39,6 +39,7 @@ from . import (  # pylint: disable=no-name-in-module
     preferences_grid_base,
 )
 from .ax_utilities_math import AXUtilitiesMath
+from .extension import Extension
 
 try:
     from . import libmathcat_py  # type: ignore[attr-defined]
@@ -187,8 +188,10 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 @gsettings_registry.get_registry().gsettings_schema(
     "org.gnome.Orca.MathPresentation", name="math-presentation"
 )
-class MathPresenter:
+class MathPresenter(Extension):
     """Provides MathCAT-based math presentation support."""
+
+    MODULE_NAME = "MathPresenter"
 
     _SCHEMA = "math-presentation"
 
@@ -202,12 +205,9 @@ class MathPresenter:
     KEY_AUTO_ZOOM_OUT = "auto-zoom-out"
 
     def __init__(self) -> None:
-        msg = "MATH PRESENTER: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("MathPresenter", self)
         self._initialized = False
         self._available = False
+        super().__init__()
 
     def _get_setting(self, key: str, gtype: str, default: str) -> str:
         """Returns the dconf value for key, or default if not in dconf."""

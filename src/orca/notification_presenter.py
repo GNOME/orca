@@ -47,6 +47,7 @@ from . import (
     messages,
     presentation_manager,
 )
+from .extension import Extension
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -54,8 +55,11 @@ if TYPE_CHECKING:
     from .scripts import default
 
 
-class NotificationPresenter:
+class NotificationPresenter(Extension):
     """Provides access to the notification history."""
+
+    MODULE_NAME = "NotificationPresenter"
+    GROUP_LABEL = guilabels.KB_GROUP_NOTIFICATIONS
 
     def __init__(self) -> None:
         self._gui: NotificationListGUI | None = None
@@ -67,60 +71,35 @@ class NotificationPresenter:
         # notification message.
         self._notifications: list[tuple[str, float]] = []
         self._current_index: int = -1
-        self._initialized: bool = False
+        super().__init__()
 
-        msg = "NOTIFICATION PRESENTER: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("NotificationPresenter", self)
-
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_NOTIFICATIONS
-
-        commands_data = [
-            (
+    def _get_commands(self) -> list[command_manager.Command]:
+        return [
+            command_manager.KeyboardCommand(
                 "present_last_notification",
                 self.present_last_notification,
+                self.GROUP_LABEL,
                 cmdnames.NOTIFICATION_MESSAGES_LAST,
             ),
-            (
+            command_manager.KeyboardCommand(
                 "present_next_notification",
                 self.present_next_notification,
+                self.GROUP_LABEL,
                 cmdnames.NOTIFICATION_MESSAGES_NEXT,
             ),
-            (
+            command_manager.KeyboardCommand(
                 "present_previous_notification",
                 self.present_previous_notification,
+                self.GROUP_LABEL,
                 cmdnames.NOTIFICATION_MESSAGES_PREVIOUS,
             ),
-            (
+            command_manager.KeyboardCommand(
                 "show_notification_list",
                 self.show_notification_list,
+                self.GROUP_LABEL,
                 cmdnames.NOTIFICATION_MESSAGES_LIST,
             ),
         ]
-
-        for name, function, description in commands_data:
-            manager.add_command(
-                command_manager.KeyboardCommand(
-                    name,
-                    function,
-                    group_label,
-                    description,
-                    desktop_keybinding=None,
-                    laptop_keybinding=None,
-                ),
-            )
-
-        msg = "NOTIFICATION PRESENTER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def save_notification(self, message: str) -> None:
         """Adds message to the list of notification messages."""

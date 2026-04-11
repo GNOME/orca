@@ -48,6 +48,7 @@ from . import (
     preferences_grid_base,
 )
 from .braille_generator import BrailleGeneratorContext
+from .extension import Extension
 from .orca_platform import tablesdir  # pylint: disable=import-error
 
 if TYPE_CHECKING:
@@ -520,8 +521,11 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Braille", name="braille")
-class BraillePresenter:
+class BraillePresenter(Extension):
     """Provides braille presentation support."""
+
+    MODULE_NAME = "BraillePresenter"
+    GROUP_LABEL = guilabels.BRAILLE
 
     _SCHEMA = "braille"
 
@@ -561,35 +565,23 @@ class BraillePresenter:
         )
 
     def __init__(self) -> None:
-        msg = "BRAILLE PRESENTER: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("BraillePresenter", self)
         self._command_names: dict[int, str] | None = None
         self._monitor: braille_monitor.BrailleMonitor | None = None
         self._monitor_enabled_override: bool | None = None
-        self._initialized = False
         self._progress_bar_cache: dict = {}
+        super().__init__()
 
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
+    def _get_commands(self) -> list[command_manager.Command]:
+        """Returns commands for registration."""
 
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        manager.add_command(
+        return [
             command_manager.KeyboardCommand(
                 "toggle_braille_monitor",
                 self.toggle_monitor,
-                guilabels.BRAILLE,
+                self.GROUP_LABEL,
                 cmdnames.TOGGLE_BRAILLE_MONITOR,
             ),
-        )
-
-        msg = "BRAILLE PRESENTER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        ]
 
     @dbus_service.command
     def toggle_monitor(

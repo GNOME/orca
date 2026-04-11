@@ -46,6 +46,7 @@ from . import (  # pylint: disable=no-name-in-module
 )
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
+from .extension import Extension
 
 if TYPE_CHECKING:
     from collections.abc import Generator
@@ -53,50 +54,34 @@ if TYPE_CHECKING:
     from .scripts import default
 
 
-class DebuggingToolsManager:
+class DebuggingToolsManager(Extension):
     """Provides debugging tools."""
 
-    def __init__(self) -> None:
-        self._initialized: bool = False
+    MODULE_NAME = "DebuggingToolsManager"
+    GROUP_LABEL = guilabels.KB_GROUP_DEBUGGING_TOOLS
 
+    def __init__(self) -> None:
         if debug.debugFile and os.path.exists(debug.debugFile.name):
             faulthandler.enable(file=debug.debugFile, all_threads=True)
         else:
             faulthandler.enable(all_threads=False)
+        super().__init__()
 
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_DEBUGGING_TOOLS
-
-        commands_data = [
-            ("cycleDebugLevelHandler", self._cycle_debug_level, cmdnames.DEBUG_CYCLE_LEVEL),
-            (
+    def _get_commands(self) -> list[command_manager.Command]:
+        return [
+            command_manager.KeyboardCommand(
+                "cycleDebugLevelHandler",
+                self._cycle_debug_level,
+                self.GROUP_LABEL,
+                cmdnames.DEBUG_CYCLE_LEVEL,
+            ),
+            command_manager.KeyboardCommand(
                 "clear_atspi_app_cache",
                 self._clear_atspi_app_cache,
+                self.GROUP_LABEL,
                 cmdnames.DEBUG_CLEAR_ATSPI_CACHE_FOR_APPLICATION,
             ),
         ]
-
-        for name, function, description in commands_data:
-            manager.add_command(
-                command_manager.KeyboardCommand(
-                    name,
-                    function,
-                    group_label,
-                    description,
-                    desktop_keybinding=None,
-                    laptop_keybinding=None,
-                ),
-            )
-
-        msg = "DEBUGGING TOOLS MANAGER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _cycle_debug_level(
         self,

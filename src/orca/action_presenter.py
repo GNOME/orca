@@ -47,6 +47,7 @@ from . import (
 from .ax_action import AXAction
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
+from .extension import Extension
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -57,44 +58,30 @@ if TYPE_CHECKING:
     from .scripts import default
 
 
-class ActionPresenter:
+class ActionPresenter(Extension):
     """Provides a list for performing accessible actions on an object."""
+
+    MODULE_NAME = "ActionPresenter"
+    GROUP_LABEL = guilabels.KB_GROUP_ACTIONS
 
     def __init__(self) -> None:
         self._gui: ActionList | None = None
         self._obj: Atspi.Accessible | None = None
         self._window: Atspi.Accessible | None = None
-        self._initialized: bool = False
+        super().__init__()
 
-        msg = "ACTION PRESENTER: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("ActionPresenter", self)
-
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_ACTIONS
+    def _get_commands(self) -> list[command_manager.Command]:
         kb = keybindings.KeyBinding("a", keybindings.ORCA_SHIFT_MODIFIER_MASK)
-
-        manager.add_command(
+        return [
             command_manager.KeyboardCommand(
                 "show_actions_list",
                 self.show_actions_list,
-                group_label,
+                self.GROUP_LABEL,
                 cmdnames.SHOW_ACTIONS_LIST,
                 desktop_keybinding=kb,
                 laptop_keybinding=kb,
             ),
-        )
-
-        msg = "ACTION PRESENTER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        ]
 
     def _restore_focus(self) -> None:
         """Restores focus to the object associated with the actions list."""

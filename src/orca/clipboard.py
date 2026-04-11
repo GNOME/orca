@@ -49,6 +49,7 @@ from . import (
     script_manager,
 )
 from .ax_utilities import AXUtilities
+from .extension import Extension
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -319,44 +320,28 @@ class _ClipboardManagerKlipper(_ClipboardManager):
         self._klipper_proxy.setClipboardContents(text)
 
 
-class ClipboardPresenter:
+class ClipboardPresenter(Extension):
     """Manages clipboard-related functionality."""
+
+    MODULE_NAME = "ClipboardPresenter"
+    GROUP_LABEL = guilabels.KB_GROUP_CLIPBOARD
 
     def __init__(self) -> None:
         self._event_listener: Atspi.EventListener = Atspi.EventListener.new(self._listener)
         self._last_clipboard_update_text: str = ""
         self._last_clipboard_update_time: float = time.time()
         self._manager: _ClipboardManager | None = None
-        self._initialized: bool = False
+        super().__init__()
 
-        msg = "CLIPBOARD PRESENTER: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("ClipboardPresenter", self)
-
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_CLIPBOARD
-
-        manager.add_command(
+    def _get_commands(self) -> list[command_manager.Command]:
+        return [
             command_manager.KeyboardCommand(
                 "present_clipboard_contents",
                 self.present_clipboard_contents,
-                group_label,
+                self.GROUP_LABEL,
                 cmdnames.CLIPBOARD_PRESENT_CONTENTS,
-                desktop_keybinding=None,
-                laptop_keybinding=None,
             ),
-        )
-
-        msg = "CLIPBOARD PRESENTER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        ]
 
     @dbus_service.command
     def present_clipboard_contents(

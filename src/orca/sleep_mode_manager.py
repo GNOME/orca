@@ -46,6 +46,7 @@ from . import (
 )
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
+from .extension import Extension
 
 if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
@@ -154,46 +155,34 @@ class SleepModePreferencesGrid(preferences_grid_base.PreferencesGridBase):
     "org.gnome.Orca.SleepMode",
     name="sleep-mode",
 )
-class SleepModeManager:
+class SleepModeManager(Extension):
     """Provides sleep mode implementation."""
 
+    MODULE_NAME = "SleepModeManager"
+    GROUP_LABEL = guilabels.KB_GROUP_SLEEP_MODE
     COMMAND_NAME = "toggle_sleep_mode"
     _SCHEMA = "sleep-mode"
 
     def __init__(self) -> None:
         self._apps: list[int] = []
         self._runtime_exceptions: set[str] = set()
-        self._initialized: bool = False
+        super().__init__()
 
-        msg = "SLEEP MODE MANAGER: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("SleepModeManager", self)
+    def _get_commands(self) -> list[command_manager.Command]:
+        """Returns commands for registration."""
 
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_SLEEP_MODE
         kb = keybindings.KeyBinding("q", keybindings.SHIFT_ALT_CTRL_MODIFIER_MASK)
 
-        manager.add_command(
+        return [
             command_manager.KeyboardCommand(
                 self.COMMAND_NAME,
                 self.toggle_sleep_mode,
-                group_label,
+                self.GROUP_LABEL,
                 cmdnames.TOGGLE_SLEEP_MODE,
                 desktop_keybinding=kb,
                 laptop_keybinding=kb,
             ),
-        )
-
-        msg = "SLEEP MODE MANAGER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        ]
 
     def _is_on_persistent_list(self, app: Atspi.Accessible) -> bool:
         """Returns True if the app is on the persistent sleep mode list."""

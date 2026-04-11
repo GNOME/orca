@@ -99,6 +99,7 @@ lib_sources = [
   'debugging_tools_manager.py',
   'document_presenter.py',
   'event_manager.py',
+  'extension.py',
   'flat_review.py',
   'flat_review_finder.py',
   'flat_review_presenter.py',

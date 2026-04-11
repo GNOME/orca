@@ -69,6 +69,7 @@ from .ax_document import AXDocument
 from .ax_hypertext import AXHypertext
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
+from .extension import Extension
 from .speechserver import VoiceFamily
 from .text_attribute_manager import TextAttributeChangeMode
 
@@ -786,8 +787,11 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Speech", name="speech")
-class SpeechPresenter:
+class SpeechPresenter(Extension):
     """Configures verbosity settings and adjusts strings for speech presentation."""
+
+    MODULE_NAME = "SpeechPresenter"
+    GROUP_LABEL = guilabels.KB_GROUP_SPEECH_VERBOSITY
 
     _SCHEMA = "speech"
 
@@ -843,35 +847,21 @@ class SpeechPresenter:
     def __init__(self) -> None:
         self._last_indentation_description: str = ""
         self._last_error_description: str = ""
-        self._initialized: bool = False
         self._monitor: speech_monitor.SpeechMonitor | None = None
         self._monitor_enabled_override: bool | None = None
         self._speech_history: list[tuple[str, str]] = []
         self._group_buffer: list[str] | None = None
         self._progress_bar_cache: dict = {}
         self._text_attribute_change_mode_override: TextAttributeChangeMode | None = None
+        super().__init__()
 
-        msg = "SPEECH PRESENTER: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("SpeechPresenter", self)
+    def _get_commands(self) -> list[command_manager.Command]:
+        """Returns commands for registration."""
 
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_SPEECH_VERBOSITY
-
-        # Common keybindings (same for desktop and laptop)
         kb_v = keybindings.KeyBinding("v", keybindings.ORCA_MODIFIER_MASK)
         kb_f11 = keybindings.KeyBinding("F11", keybindings.ORCA_MODIFIER_MASK)
         kb_shift_d = keybindings.KeyBinding("d", keybindings.ORCA_SHIFT_MODIFIER_MASK)
 
-        # (name, function, description, desktop_kb, laptop_kb)
         commands_data = [
             (
                 "changeNumberStyleHandler",
@@ -917,20 +907,17 @@ class SpeechPresenter:
             ),
         ]
 
-        for name, function, description, desktop_kb, laptop_kb in commands_data:
-            manager.add_command(
-                command_manager.KeyboardCommand(
-                    name,
-                    function,
-                    group_label,
-                    description,
-                    desktop_keybinding=desktop_kb,
-                    laptop_keybinding=laptop_kb,
-                ),
+        return [
+            command_manager.KeyboardCommand(
+                name,
+                function,
+                self.GROUP_LABEL,
+                description,
+                desktop_keybinding=desktop_kb,
+                laptop_keybinding=laptop_kb,
             )
-
-        msg = "SPEECH PRESENTER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            for name, function, description, desktop_kb, laptop_kb in commands_data
+        ]
 
     @gsettings_registry.get_registry().gsetting(
         key=KEY_SPEAK_MISSPELLED_INDICATOR,

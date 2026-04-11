@@ -47,6 +47,7 @@ from . import (
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .extension import Extension
 
 if TYPE_CHECKING:
     import gi
@@ -61,7 +62,7 @@ if TYPE_CHECKING:
     "org.gnome.Orca.CaretNavigation",
     name="caret-navigation",
 )
-class CaretNavigator:
+class CaretNavigator(Extension):
     """Implements the caret navigation support available to scripts."""
 
     _SCHEMA = "caret-navigation"
@@ -79,30 +80,18 @@ class CaretNavigator:
             default=default,
         )
 
+    MODULE_NAME = "CaretNavigator"
+    GROUP_LABEL = guilabels.KB_GROUP_CARET_NAVIGATION
+
     def __init__(self) -> None:
         # To make it possible for focus mode to suspend this navigation without
         # changing the user's preferred setting.
         self._suspended: bool = False
         self._last_input_event: input_event.InputEvent | None = None
         self._enabled_for_script: dict[default.Script, bool] = {}
-        self._initialized: bool = False
+        super().__init__()
 
-        msg = "CARET NAVIGATOR: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("CaretNavigator", self)
-
-    def set_up_commands(self) -> None:
-        """Sets up the caret-navigation commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_CARET_NAVIGATION
-
-        # Keybindings (same for desktop and laptop)
+    def _get_commands(self) -> list[command_manager.Command]:
         kb_f12 = keybindings.KeyBinding("F12", keybindings.ORCA_MODIFIER_MASK)
         kb_right = keybindings.KeyBinding("Right", keybindings.NO_MODIFIER_MASK)
         kb_left = keybindings.KeyBinding("Left", keybindings.NO_MODIFIER_MASK)
@@ -115,23 +104,22 @@ class CaretNavigator:
         kb_end_ctrl = keybindings.KeyBinding("End", keybindings.CTRL_MODIFIER_MASK)
         kb_home_ctrl = keybindings.KeyBinding("Home", keybindings.CTRL_MODIFIER_MASK)
 
-        manager.add_command(
+        enabled = self.get_is_enabled() and not self._suspended
+
+        commands: list[command_manager.Command] = [
             command_manager.KeyboardCommand(
                 "toggle_enabled",
                 self.toggle_enabled,
-                group_label,
+                self.GROUP_LABEL,
                 cmdnames.CARET_NAVIGATION_TOGGLE,
                 desktop_keybinding=kb_f12,
                 laptop_keybinding=kb_f12,
                 enabled=not self._suspended,
                 is_group_toggle=True,
             ),
-        )
+        ]
 
-        enabled = self.get_is_enabled() and not self._suspended
-
-        # (name, function, description, keybinding)
-        commands_data = [
+        nav_commands = [
             ("next_character", self.next_character, cmdnames.CARET_NAVIGATION_NEXT_CHAR, kb_right),
             (
                 "previous_character",
@@ -159,12 +147,12 @@ class CaretNavigator:
             ("end_of_line", self.end_of_line, cmdnames.CARET_NAVIGATION_LINE_END, kb_end),
         ]
 
-        for name, function, description, kb in commands_data:
-            manager.add_command(
+        for name, function, description, kb in nav_commands:
+            commands.append(
                 command_manager.KeyboardCommand(
                     name,
                     function,
-                    group_label,
+                    self.GROUP_LABEL,
                     description,
                     desktop_keybinding=kb,
                     laptop_keybinding=kb,
@@ -172,18 +160,17 @@ class CaretNavigator:
                 ),
             )
 
-        manager.add_command(
+        commands.append(
             command_manager.KeyboardCommand(
                 "toggle_layout_mode",
                 self.toggle_layout_mode,
-                group_label,
+                self.GROUP_LABEL,
                 cmdnames.TOGGLE_LAYOUT_MODE,
                 enabled=enabled,
             ),
         )
 
-        msg = f"CARET NAVIGATOR: Commands set up. Suspended: {self._suspended}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return commands
 
     def _is_active_script(self, script):
         active_script = script_manager.get_manager().get_active_script()

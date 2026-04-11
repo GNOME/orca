@@ -51,6 +51,7 @@ from . import (
     preferences_grid_base,
     presentation_manager,
 )
+from .extension import Extension
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -538,8 +539,11 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
     "org.gnome.Orca.ProfileMetadata",
     name="metadata",
 )
-class ProfileManager:
+class ProfileManager(Extension):
     """Manager for Orca profiles."""
+
+    MODULE_NAME = "ProfileManager"
+    GROUP_LABEL = guilabels.GENERAL_PROFILES
 
     @gsettings_registry.get_registry().gsetting(
         key="display-name",
@@ -566,24 +570,11 @@ class ProfileManager:
         return gsettings_registry.get_registry().get_active_profile()
 
     def __init__(self) -> None:
-        self._initialized: bool = False
+        super().__init__()
 
-        msg = "PROFILE MANAGER: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("ProfileManager", self)
+    def _get_commands(self) -> list[command_manager.Command]:
+        """Returns commands for registration."""
 
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.GENERAL_PROFILES
-
-        # (name, function, description, desktop_binding, laptop_binding)
         commands_data = [
             (
                 "cycleSettingsProfileHandler",
@@ -601,20 +592,17 @@ class ProfileManager:
             ),
         ]
 
-        for name, function, description, desktop_kb, laptop_kb in commands_data:
-            manager.add_command(
-                command_manager.KeyboardCommand(
-                    name,
-                    function,
-                    group_label,
-                    description,
-                    desktop_keybinding=desktop_kb,
-                    laptop_keybinding=laptop_kb,
-                ),
+        return [
+            command_manager.KeyboardCommand(
+                name,
+                function,
+                self.GROUP_LABEL,
+                description,
+                desktop_keybinding=desktop_kb,
+                laptop_keybinding=laptop_kb,
             )
-
-        msg = "PROFILE MANAGER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            for name, function, description, desktop_kb, laptop_kb in commands_data
+        ]
 
     @dbus_service.getter
     def get_available_profiles(self) -> list[list[str]]:

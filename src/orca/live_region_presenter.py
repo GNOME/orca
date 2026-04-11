@@ -34,7 +34,6 @@ from gi.repository import GLib
 from . import (
     cmdnames,
     command_manager,
-    dbus_service,
     debug,
     focus_manager,
     gsettings_registry,
@@ -47,6 +46,7 @@ from . import (
 )
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
+from .extension import Extension
 
 if TYPE_CHECKING:
     import gi
@@ -176,7 +176,7 @@ class LiveRegionMessageQueue:
     "org.gnome.Orca.LiveRegions",
     name="live-regions",
 )
-class LiveRegionPresenter:
+class LiveRegionPresenter(Extension):
     """Presents live region announcements."""
 
     _SCHEMA = "live-regions"
@@ -196,6 +196,9 @@ class LiveRegionPresenter:
     # Maximum size for message queue and cache
     QUEUE_SIZE = 9
 
+    MODULE_NAME = "LiveRegionPresenter"
+    GROUP_LABEL = guilabels.KB_GROUP_LIVE_REGIONS
+
     def __init__(self) -> None:
         self.msg_queue = LiveRegionMessageQueue(max_size=self.QUEUE_SIZE)
 
@@ -207,85 +210,46 @@ class LiveRegionPresenter:
         self._monitoring: bool = True
         # Use QUEUE_SIZE as sentinel to indicate "not yet navigating"
         self._current_index: int = self.QUEUE_SIZE
-        self._initialized: bool = False
+        super().__init__()
 
-        msg = "LIVE REGION PRESENTER: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("LiveRegionPresenter", self)
-
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_LIVE_REGIONS
-
-        # Keybinding (same for desktop and laptop)
+    def _get_commands(self) -> list[command_manager.Command]:
         kb_backslash = keybindings.KeyBinding("backslash", keybindings.ORCA_MODIFIER_MASK)
-
-        manager.add_command(
+        return [
             command_manager.KeyboardCommand(
                 "toggle_live_region_support",
                 self.toggle_monitoring,
-                group_label,
+                self.GROUP_LABEL,
                 cmdnames.LIVE_REGIONS_MONITOR,
                 desktop_keybinding=kb_backslash,
                 laptop_keybinding=kb_backslash,
                 is_group_toggle=True,
             ),
-        )
-
-        manager.add_command(
             command_manager.KeyboardCommand(
                 "present_previous_live_region_message",
                 self.present_previous_live_region_message,
-                group_label,
+                self.GROUP_LABEL,
                 cmdnames.LIVE_REGIONS_PREVIOUS,
-                desktop_keybinding=None,
-                laptop_keybinding=None,
             ),
-        )
-
-        manager.add_command(
             command_manager.KeyboardCommand(
                 "advance_live_politeness",
                 self._advance_politeness_level,
-                group_label,
+                self.GROUP_LABEL,
                 cmdnames.LIVE_REGIONS_ADVANCE_POLITENESS,
-                desktop_keybinding=None,
-                laptop_keybinding=None,
             ),
-        )
-
-        manager.add_command(
             command_manager.KeyboardCommand(
                 "toggle_live_region_presentation",
                 self.toggle_live_region_presentation,
-                group_label,
+                self.GROUP_LABEL,
                 cmdnames.LIVE_REGIONS_ARE_ANNOUNCED,
-                desktop_keybinding=None,
-                laptop_keybinding=None,
                 is_group_toggle=True,
             ),
-        )
-
-        manager.add_command(
             command_manager.KeyboardCommand(
                 "present_next_live_region_message",
                 self.present_next_live_region_message,
-                group_label,
+                self.GROUP_LABEL,
                 cmdnames.LIVE_REGIONS_NEXT,
-                desktop_keybinding=None,
-                laptop_keybinding=None,
             ),
-        )
-
-        msg = "LIVE REGION PRESENTER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        ]
 
     def reset(self) -> None:
         """Reset the live region presenter."""

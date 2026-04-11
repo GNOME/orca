@@ -43,6 +43,7 @@ from . import (
     script_manager,
 )
 from .ax_utilities_math import AXUtilitiesMath
+from .extension import Extension
 
 try:
     from . import libmathcat_py  # type: ignore[attr-defined]
@@ -58,9 +59,11 @@ if TYPE_CHECKING:
     from .scripts import default
 
 
-class MathNavigator:
+class MathNavigator(Extension):
     """Provides interactive exploration of math expressions via MathCAT."""
 
+    MODULE_NAME = "MathNavigator"
+    GROUP_LABEL = guilabels.KB_GROUP_MATH_NAVIGATION
     _PLACE_MARKER_PREFIXES = ("MoveTo", "SetPlacemarker", "Read", "Describe")
 
     def __init__(self) -> None:
@@ -68,13 +71,8 @@ class MathNavigator:
         self._math_object: Atspi.Accessible | None = None
         self._last_command: str = ""
         self._last_nav_id: tuple[str, int] = ("", 0)
-        self._initialized: bool = False
         self._suspended: bool = True
-
-        msg = "MATH NAVIGATOR: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("MathNavigator", self)
+        super().__init__()
 
     @dbus_service.getter
     def is_active(self) -> bool:
@@ -231,20 +229,13 @@ class MathNavigator:
         ]
 
     # pylint: disable-next=too-many-locals
-    def set_up_commands(self) -> None:
-        """Sets up the math navigation commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
+    def _register_commands(self) -> None:
         if libmathcat_py is None:
-            msg = "MATH NAVIGATOR: MathCAT not available. Skipping command setup."
+            msg = f"EXTENSION: {self.MODULE_NAME} MathCAT not available. Skipping command setup."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
         manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_MATH_NAVIGATION
 
         for name, mathcat_cmd, description, binding in self._get_commands_data():
             if mathcat_cmd == "Exit":
@@ -257,7 +248,7 @@ class MathNavigator:
                 command_manager.KeyboardCommand(
                     name,
                     handler,
-                    group_label,
+                    self.GROUP_LABEL,
                     description,
                     desktop_keybinding=binding,
                     laptop_keybinding=binding,
@@ -286,29 +277,26 @@ class MathNavigator:
                     command_manager.KeyboardCommand(
                         cmd_name,
                         partial(self._execute_command, f"{cmd_prefix}{digit}"),
-                        group_label,
+                        self.GROUP_LABEL,
                         description,
                         desktop_keybinding=keybindings.KeyBinding(digit, modifier_mask),
                         laptop_keybinding=keybindings.KeyBinding(digit, modifier_mask),
                     ),
                 )
 
-        command_manager.get_manager().set_group_suspended(
-            guilabels.KB_GROUP_MATH_NAVIGATION,
-            True,
-        )
+        manager.set_group_suspended(self.GROUP_LABEL, True)
 
         manager.add_command(
             command_manager.KeyboardCommand(
                 "math_enter",
                 self.enter_math_mode_command,
-                group_label,
+                self.GROUP_LABEL,
                 cmdnames.MATH_NAV_ENTER,
                 is_group_toggle=True,
             ),
         )
 
-        msg = "MATH NAVIGATOR: Commands set up."
+        msg = f"EXTENSION: {self.MODULE_NAME} Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _is_active_script(self, script):

@@ -66,6 +66,7 @@ from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .extension import Extension
 
 if TYPE_CHECKING:
     from .scripts import default
@@ -403,7 +404,7 @@ class MousePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     "org.gnome.Orca.MouseReview",
     name="mouse-review",
 )
-class MouseReviewer:
+class MouseReviewer(Extension):
     """Main class for the mouse-review feature."""
 
     _SCHEMA = "mouse-review"
@@ -420,6 +421,9 @@ class MouseReviewer:
             default=default,
         )
 
+    MODULE_NAME = "MouseReviewer"
+    GROUP_LABEL = guilabels.KB_GROUP_MOUSE_REVIEW
+
     def __init__(self) -> None:
         self._active: bool = False
         self._current_mouse_over: _ItemContext = _ItemContext()
@@ -430,7 +434,6 @@ class MouseReviewer:
         self._event_listener: Atspi.EventListener = Atspi.EventListener.new(self._listener)
         self.in_mouse_event: bool = False
         self._event_queue: deque = deque()
-        self._initialized: bool = False
         self._mouse_review_capable: bool = False
         self._use_atspi: bool = False
 
@@ -459,36 +462,18 @@ class MouseReviewer:
             else:
                 msg = "MOUSE REVIEW ERROR: Wnck or at-spi2-core >= 2.60 required"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
 
-        msg = "MOUSE REVIEW: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("MouseReviewer", self)
+        super().__init__()
 
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_MOUSE_REVIEW
-
-        manager.add_command(
+    def _get_commands(self) -> list[command_manager.Command]:
+        return [
             command_manager.KeyboardCommand(
                 "toggleMouseReviewHandler",
                 self.toggle,
-                group_label,
+                self.GROUP_LABEL,
                 cmdnames.MOUSE_REVIEW_TOGGLE,
-                desktop_keybinding=None,
-                laptop_keybinding=None,
             ),
-        )
-
-        msg = "MOUSE REVIEW: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        ]
 
     def create_preferences_grid(self) -> MousePreferencesGrid:
         """Returns the GtkGrid containing the mouse preferences UI."""

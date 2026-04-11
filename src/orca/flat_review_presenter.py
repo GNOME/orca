@@ -55,6 +55,7 @@ from . import (
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_text import AXText
+from .extension import Extension
 
 if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
@@ -64,7 +65,7 @@ if TYPE_CHECKING:
 
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.FlatReview", name="flat-review")
-class FlatReviewPresenter:
+class FlatReviewPresenter(Extension):
     """Provides access to on-screen objects via flat-review."""
 
     _SCHEMA = "flat-review"
@@ -80,30 +81,18 @@ class FlatReviewPresenter:
             default=default,
         )
 
+    MODULE_NAME = "FlatReviewPresenter"
+    GROUP_LABEL = guilabels.KB_GROUP_FLAT_REVIEW
+
     def __init__(self) -> None:
         self._context: flat_review.Context | None = None
         self._current_contents: str = ""
         self._restrict: bool = self.get_is_restricted()
         self._gui: FlatReviewContextGUI | None = None
-        self._initialized: bool = False
-
-        msg = "FLAT REVIEW PRESENTER: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("FlatReviewPresenter", self)
+        super().__init__()
 
     # pylint: disable-next=too-many-locals
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_FLAT_REVIEW
-
-        # Build keybinding mapping: cmd_name -> (desktop_kb, laptop_kb)
+    def _get_commands(self) -> list[command_manager.Command]:
         def kb(keysym: str, mod: int, clicks: int = 1) -> keybindings.KeyBinding:
             return keybindings.KeyBinding(keysym, mod, click_count=clicks)
 
@@ -203,12 +192,6 @@ class FlatReviewPresenter:
                 kb("KP_Page_Down", keybindings.NO_MODIFIER_MASK),
                 kb("period", keybindings.ORCA_MODIFIER_MASK),
             ),
-            # Commands with no keybinding
-            "reviewBottomLeftHandler": (None, None),
-            "showContentsHandler": (None, None),
-            "flatReviewCopyHandler": (None, None),
-            "flatReviewAppendHandler": (None, None),
-            "flatReviewToggleRestrictHandler": (None, None),
         }
 
         commands_data = [
@@ -290,35 +273,34 @@ class FlatReviewPresenter:
             if key is not None:
                 braille_bindings[name] = (key,)
         if not braille_bindings:
-            msg = "FLAT REVIEW PRESENTER: Braille bindings unavailable."
+            msg = "EXTENSION: FlatReviewPresenter Braille bindings unavailable."
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
+        commands: list[command_manager.Command] = []
         for name, function, description in commands_data:
             desktop_kb, laptop_kb = cmd_bindings.get(name, (None, None))
-            manager.add_command(
+            commands.append(
                 command_manager.KeyboardCommand(
                     name,
                     function,
-                    group_label,
+                    self.GROUP_LABEL,
                     description,
                     desktop_keybinding=desktop_kb,
                     laptop_keybinding=laptop_kb,
                 ),
             )
             if name in braille_bindings:
-                bb = braille_bindings[name]
-                manager.add_command(
+                commands.append(
                     command_manager.BrailleCommand(
                         name,
                         function,
-                        group_label,
+                        self.GROUP_LABEL,
                         description,
-                        braille_bindings=bb,
+                        braille_bindings=braille_bindings[name],
                     ),
                 )
 
-        msg = "FLAT REVIEW PRESENTER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return commands
 
     def is_active(self) -> bool:
         """Returns True if the flat review presenter is active."""

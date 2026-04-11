@@ -39,6 +39,7 @@ from . import (
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
+from .extension import Extension
 
 if TYPE_CHECKING:
     import gi
@@ -49,93 +50,58 @@ if TYPE_CHECKING:
     from .scripts import default
 
 
-class ObjectNavigator:
+class ObjectNavigator(Extension):
     """Provides ability to navigate objects hierarchically."""
+
+    MODULE_NAME = "ObjectNavigator"
+    GROUP_LABEL = guilabels.KB_GROUP_OBJECT_NAVIGATION
 
     def __init__(self) -> None:
         self._navigator_focus: Atspi.Accessible | None = None
         self._last_navigator_focus: Atspi.Accessible | None = None
         self._last_locus_of_focus: Atspi.Accessible | None = None
         self._simplify: bool = True
-        self._initialized: bool = False
+        super().__init__()
 
-        msg = "OBJECT NAVIGATOR: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("ObjectNavigator", self)
-
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
-
-        manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_OBJECT_NAVIGATION
-
-        # (name, function, description, keysymstring, modifiers)
-        # Same bindings on desktop and laptop
+    def _get_commands(self) -> list[command_manager.Command]:
         commands_data = [
-            (
-                "object_navigator_up",
-                self.move_to_parent,
-                cmdnames.NAVIGATOR_UP,
-                "Up",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
-            ),
-            (
-                "object_navigator_down",
-                self.move_to_first_child,
-                cmdnames.NAVIGATOR_DOWN,
-                "Down",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
-            ),
-            (
-                "object_navigator_next",
-                self.move_to_next_sibling,
-                cmdnames.NAVIGATOR_NEXT,
-                "Right",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
-            ),
+            ("object_navigator_up", self.move_to_parent, cmdnames.NAVIGATOR_UP, "Up"),
+            ("object_navigator_down", self.move_to_first_child, cmdnames.NAVIGATOR_DOWN, "Down"),
+            ("object_navigator_next", self.move_to_next_sibling, cmdnames.NAVIGATOR_NEXT, "Right"),
             (
                 "object_navigator_previous",
                 self.move_to_previous_sibling,
                 cmdnames.NAVIGATOR_PREVIOUS,
                 "Left",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
             ),
             (
                 "object_navigator_perform_action",
                 self.perform_action,
                 cmdnames.NAVIGATOR_PERFORM_ACTION,
                 "Return",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
             ),
             (
                 "object_navigator_toggle_simplify",
                 self.toggle_simplify,
                 cmdnames.NAVIGATOR_TOGGLE_SIMPLIFIED,
                 "s",
-                keybindings.ORCA_CTRL_MODIFIER_MASK,
             ),
         ]
 
-        for name, function, description, keysym, modifiers in commands_data:
-            kb = keybindings.KeyBinding(keysym, modifiers)
-            manager.add_command(
+        commands: list[command_manager.Command] = []
+        for name, function, description, keysym in commands_data:
+            kb = keybindings.KeyBinding(keysym, keybindings.ORCA_CTRL_MODIFIER_MASK)
+            commands.append(
                 command_manager.KeyboardCommand(
                     name,
                     function,
-                    group_label,
+                    self.GROUP_LABEL,
                     description,
                     desktop_keybinding=kb,
                     laptop_keybinding=kb,
                 ),
             )
-
-        msg = "OBJECT NAVIGATOR: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return commands
 
     def _include_in_simple_navigation(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj should be included in simple navigation."""

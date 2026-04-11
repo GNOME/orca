@@ -65,6 +65,7 @@ from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_utilities_math import AXUtilitiesMath
+from .extension import Extension
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -427,8 +428,11 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Document", name="document")
-class DocumentPresenter:
+class DocumentPresenter(Extension):
     """Manages document-related presentation and navigation settings."""
+
+    MODULE_NAME = "DocumentPresenter"
+    GROUP_LABEL = guilabels.KB_GROUP_DOCUMENTS
 
     _SCHEMA = "document"
     KEY_NATIVE_NAV_TRIGGERS_FOCUS_MODE = "native-nav-triggers-focus-mode"
@@ -451,33 +455,38 @@ class DocumentPresenter:
     def __init__(self) -> None:
         self._made_find_announcement = False
         self._app_states: dict[int, _AppModeState] = {}
-        self._initialized: bool = False
+        super().__init__()
 
-        msg = "DOCUMENT PRESENTER: Registering D-Bus commands."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module("DocumentPresenter", self)
+    def _register_commands(self) -> None:
+        """Registers commands and sets up exclusive groups."""
 
-    def set_up_commands(self) -> None:
-        """Sets up commands with CommandManager."""
-
-        if self._initialized:
-            return
-        self._initialized = True
+        super()._register_commands()
 
         focus_manager.get_manager().add_region_changed_listener(
             self._on_region_changed,
         )
 
         manager = command_manager.get_manager()
-        group_label = guilabels.KB_GROUP_DOCUMENTS
+        manager.add_exclusive_groups(
+            guilabels.KB_GROUP_MATH_NAVIGATION,
+            guilabels.KB_GROUP_CARET_NAVIGATION,
+        )
+        manager.add_exclusive_groups(
+            guilabels.KB_GROUP_MATH_NAVIGATION,
+            guilabels.KB_GROUP_STRUCTURAL_NAVIGATION,
+        )
+        manager.add_exclusive_groups(
+            guilabels.KB_GROUP_MATH_NAVIGATION,
+            guilabels.KB_GROUP_TABLE_NAVIGATION,
+        )
 
-        # Keybindings (same for desktop and laptop)
+    def _get_commands(self) -> list[command_manager.Command]:
+        """Returns commands for registration."""
+
         kb_a = keybindings.KeyBinding("a", keybindings.ORCA_MODIFIER_MASK)
         kb_a_2 = keybindings.KeyBinding("a", keybindings.ORCA_MODIFIER_MASK, click_count=2)
         kb_a_3 = keybindings.KeyBinding("a", keybindings.ORCA_MODIFIER_MASK, click_count=3)
 
-        # (name, function, description, keybinding)
         commands_data = [
             (
                 "toggle_presentation_mode",
@@ -499,33 +508,17 @@ class DocumentPresenter:
             ),
         ]
 
-        for name, function, description, kb in commands_data:
-            manager.add_command(
-                command_manager.KeyboardCommand(
-                    name,
-                    function,
-                    group_label,
-                    description,
-                    desktop_keybinding=kb,
-                    laptop_keybinding=kb,
-                ),
+        return [
+            command_manager.KeyboardCommand(
+                name,
+                function,
+                self.GROUP_LABEL,
+                description,
+                desktop_keybinding=kb,
+                laptop_keybinding=kb,
             )
-
-        manager.add_exclusive_groups(
-            guilabels.KB_GROUP_MATH_NAVIGATION,
-            guilabels.KB_GROUP_CARET_NAVIGATION,
-        )
-        manager.add_exclusive_groups(
-            guilabels.KB_GROUP_MATH_NAVIGATION,
-            guilabels.KB_GROUP_STRUCTURAL_NAVIGATION,
-        )
-        manager.add_exclusive_groups(
-            guilabels.KB_GROUP_MATH_NAVIGATION,
-            guilabels.KB_GROUP_TABLE_NAVIGATION,
-        )
-
-        msg = "DOCUMENT PRESENTER: Commands set up."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            for name, function, description, kb in commands_data
+        ]
 
     def _get_state_for_app(self, app: Atspi.Accessible | None) -> _AppModeState:
         """Returns the mode state for the given app, creating if needed."""
