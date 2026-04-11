@@ -20,9 +20,14 @@
 
 """Base class for Orca extensions."""
 
-from typing import ClassVar
+from __future__ import annotations
 
-from . import command_manager, dbus_service, debug
+from typing import TYPE_CHECKING, ClassVar
+
+from . import dbus_service, debug
+
+if TYPE_CHECKING:
+    from . import command_manager
 
 
 class Extension:
@@ -54,6 +59,8 @@ class Extension:
             msg = f"EXTENSION: {self.MODULE_NAME} No commands to register."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
+
+        from . import command_manager  # pylint: disable=import-outside-toplevel
 
         manager = command_manager.get_manager()
         for cmd in commands:
