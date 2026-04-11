@@ -83,7 +83,6 @@ class TableNavigator(Extension):
             default=default,
         )
 
-    MODULE_NAME = "TableNavigator"
     GROUP_LABEL = guilabels.KB_GROUP_TABLE_NAVIGATION
 
     def __init__(self) -> None:

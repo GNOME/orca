@@ -45,7 +45,6 @@ if TYPE_CHECKING:
 class BypassModeManager(Extension):
     """Provides means to pass keyboard events to the app being used."""
 
-    MODULE_NAME = "BypassModeManager"
     GROUP_LABEL = guilabels.KB_GROUP_DEFAULT
     COMMAND_NAME = "bypass_mode_toggle"
 

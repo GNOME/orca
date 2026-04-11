@@ -192,7 +192,6 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 class TypingEchoPresenter(Extension):
     """Provides typing echo support."""
 
-    MODULE_NAME = "TypingEchoPresenter"
     GROUP_LABEL = guilabels.KB_GROUP_DEFAULT
 
     _SCHEMA = "typing-echo"

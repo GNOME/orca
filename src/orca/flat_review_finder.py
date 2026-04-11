@@ -111,7 +111,6 @@ class SearchQuery:
 class FlatReviewFinder(Extension):
     """Provides tools to search the current window's flat-review contents."""
 
-    MODULE_NAME = "FlatReviewFinder"
     GROUP_LABEL = guilabels.KB_GROUP_FIND
 
     def __init__(self) -> None:

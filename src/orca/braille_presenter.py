@@ -524,7 +524,6 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
 class BraillePresenter(Extension):
     """Provides braille presentation support."""
 
-    MODULE_NAME = "BraillePresenter"
     GROUP_LABEL = guilabels.BRAILLE
 
     _SCHEMA = "braille"

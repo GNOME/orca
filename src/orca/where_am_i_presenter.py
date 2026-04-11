@@ -61,7 +61,6 @@ if TYPE_CHECKING:
 class WhereAmIPresenter(Extension):
     """Module for commands related to the current accessible object."""
 
-    MODULE_NAME = "WhereAmIPresenter"
     GROUP_LABEL = guilabels.KB_GROUP_WHERE_AM_I
 
     # pylint: disable-next=too-many-locals

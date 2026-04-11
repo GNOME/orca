@@ -432,7 +432,6 @@ class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 class DocumentPresenter(Extension):
     """Manages document-related presentation and navigation settings."""
 
-    MODULE_NAME = "DocumentPresenter"
     GROUP_LABEL = guilabels.KB_GROUP_DOCUMENTS
 
     _SCHEMA = "document"

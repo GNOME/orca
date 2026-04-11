@@ -158,7 +158,6 @@ class SleepModePreferencesGrid(preferences_grid_base.PreferencesGridBase):
 class SleepModeManager(Extension):
     """Provides sleep mode implementation."""
 
-    MODULE_NAME = "SleepModeManager"
     GROUP_LABEL = guilabels.KB_GROUP_SLEEP_MODE
     COMMAND_NAME = "toggle_sleep_mode"
     _SCHEMA = "sleep-mode"

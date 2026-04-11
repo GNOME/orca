@@ -63,7 +63,6 @@ if TYPE_CHECKING:
 class MathNavigator(Extension):
     """Provides interactive exploration of math expressions via MathCAT."""
 
-    MODULE_NAME = "MathNavigator"
     GROUP_LABEL = guilabels.KB_GROUP_MATH_NAVIGATION
     _PLACE_MARKER_PREFIXES = ("MoveTo", "SetPlacemarker", "Read", "Describe")
 
@@ -232,7 +231,7 @@ class MathNavigator(Extension):
     # pylint: disable-next=too-many-locals
     def _register_commands(self) -> None:
         if libmathcat_py is None:
-            msg = f"EXTENSION: {self.MODULE_NAME} MathCAT not available. Skipping command setup."
+            msg = f"EXTENSION: {self.module_name} MathCAT not available. Skipping command setup."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
@@ -297,7 +296,7 @@ class MathNavigator(Extension):
             ),
         )
 
-        msg = f"EXTENSION: {self.MODULE_NAME} Commands set up."
+        msg = f"EXTENSION: {self.module_name} Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _is_active_script(self, script):

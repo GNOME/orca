@@ -81,7 +81,6 @@ class FlatReviewPresenter(Extension):
             default=default,
         )
 
-    MODULE_NAME = "FlatReviewPresenter"
     GROUP_LABEL = guilabels.KB_GROUP_FLAT_REVIEW
 
     def __init__(self) -> None:

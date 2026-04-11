@@ -421,7 +421,6 @@ class MouseReviewer(Extension):
             default=default,
         )
 
-    MODULE_NAME = "MouseReviewer"
     GROUP_LABEL = guilabels.KB_GROUP_MOUSE_REVIEW
 
     def __init__(self) -> None:

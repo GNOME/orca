@@ -1716,7 +1716,6 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 class SpeechManager(Extension):
     """Manages the speech engine: server, synthesizer, voice, and output parameters."""
 
-    MODULE_NAME = "SpeechManager"
     GROUP_LABEL = guilabels.KB_GROUP_SPEECH_VERBOSITY
 
     SPEECH_SCHEMA = "speech"

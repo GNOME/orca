@@ -57,7 +57,6 @@ if TYPE_CHECKING:
 class DebuggingToolsManager(Extension):
     """Provides debugging tools."""
 
-    MODULE_NAME = "DebuggingToolsManager"
     GROUP_LABEL = guilabels.KB_GROUP_DEBUGGING_TOOLS
 
     def __init__(self) -> None:

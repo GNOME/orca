@@ -196,7 +196,6 @@ class LiveRegionPresenter(Extension):
     # Maximum size for message queue and cache
     QUEUE_SIZE = 9
 
-    MODULE_NAME = "LiveRegionPresenter"
     GROUP_LABEL = guilabels.KB_GROUP_LIVE_REGIONS
 
     def __init__(self) -> None:

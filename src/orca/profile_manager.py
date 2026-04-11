@@ -543,7 +543,6 @@ class ProfilePreferencesGrid(preferences_grid_base.PreferencesGridBase):
 class ProfileManager(Extension):
     """Manager for Orca profiles."""
 
-    MODULE_NAME = "ProfileManager"
     GROUP_LABEL = guilabels.GENERAL_PROFILES
 
     @gsettings_registry.get_registry().gsetting(

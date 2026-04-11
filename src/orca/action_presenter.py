@@ -61,7 +61,6 @@ if TYPE_CHECKING:
 class ActionPresenter(Extension):
     """Provides a list for performing accessible actions on an object."""
 
-    MODULE_NAME = "ActionPresenter"
     GROUP_LABEL = guilabels.KB_GROUP_ACTIONS
 
     def __init__(self) -> None:

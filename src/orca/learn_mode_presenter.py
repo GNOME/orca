@@ -53,7 +53,6 @@ if TYPE_CHECKING:
 class LearnModePresenter(Extension):
     """Provides implementation of learn mode"""
 
-    MODULE_NAME = "LearnModePresenter"
     GROUP_LABEL = guilabels.KB_GROUP_LEARN_MODE
 
     def __init__(self) -> None:

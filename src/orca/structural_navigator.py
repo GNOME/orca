@@ -101,7 +101,6 @@ class StructuralNavigator(Extension):
             default=default,
         )
 
-    MODULE_NAME = "StructuralNavigator"
     GROUP_LABEL = guilabels.KB_GROUP_STRUCTURAL_NAVIGATION
 
     def __init__(self) -> None:

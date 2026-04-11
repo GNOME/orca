@@ -790,7 +790,6 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 class SpeechPresenter(Extension):
     """Configures verbosity settings and adjusts strings for speech presentation."""
 
-    MODULE_NAME = "SpeechPresenter"
     GROUP_LABEL = guilabels.KB_GROUP_SPEECH_VERBOSITY
 
     _SCHEMA = "speech"

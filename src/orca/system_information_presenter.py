@@ -177,7 +177,6 @@ class SystemInformationPresenter(Extension):
             default=default,
         )
 
-    MODULE_NAME = "SystemInformationPresenter"
     GROUP_LABEL = guilabels.KB_GROUP_SYSTEM_INFORMATION
 
     def _get_commands(self) -> list[Command]:

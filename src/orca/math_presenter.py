@@ -191,8 +191,6 @@ class MathPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 class MathPresenter(Extension):
     """Provides MathCAT-based math presentation support."""
 
-    MODULE_NAME = "MathPresenter"
-
     _SCHEMA = "math-presentation"
 
     KEY_LANGUAGE = "language"

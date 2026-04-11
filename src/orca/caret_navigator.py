@@ -81,7 +81,6 @@ class CaretNavigator(Extension):
             default=default,
         )
 
-    MODULE_NAME = "CaretNavigator"
     GROUP_LABEL = guilabels.KB_GROUP_CARET_NAVIGATION
 
     def __init__(self) -> None:

@@ -255,7 +255,6 @@ class SayAllPresenter(Extension):
             default=default,
         )
 
-    MODULE_NAME = "SayAllPresenter"
     GROUP_LABEL = guilabels.KB_GROUP_DEFAULT
 
     def __init__(self) -> None:

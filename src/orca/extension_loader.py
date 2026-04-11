@@ -171,13 +171,13 @@ class ExtensionLoader:
             if extension is None:
                 continue
 
-            if extension.MODULE_NAME in disabled:
-                msg = f"EXTENSION LOADER: Extension {extension.MODULE_NAME} is disabled. Skipping."
+            if extension.module_name in disabled:
+                msg = f"EXTENSION LOADER: Extension {extension.module_name} is disabled. Skipping."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 continue
 
             self._user_extensions.append(extension)
-            msg = f"EXTENSION LOADER: Loaded extension {extension.MODULE_NAME} from {filename}"
+            msg = f"EXTENSION LOADER: Loaded extension {extension.module_name} from {filename}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def set_up_all_commands(self) -> None:
@@ -187,20 +187,20 @@ class ExtensionLoader:
 
         for getter, _group_label in self._builtins:
             ext = getter()
-            if ext.MODULE_NAME in disabled:
-                msg = f"EXTENSION LOADER: {ext.MODULE_NAME} is disabled. Skipping."
+            if ext.module_name in disabled:
+                msg = f"EXTENSION LOADER: {ext.module_name} is disabled. Skipping."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 continue
-            msg = f"EXTENSION LOADER: Loading built-in extension {ext.MODULE_NAME}"
+            msg = f"EXTENSION LOADER: Loading built-in extension {ext.module_name}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             ext.set_up_commands()
 
         for ext in self._user_extensions:
-            if ext.MODULE_NAME in disabled:
-                msg = f"EXTENSION LOADER: {ext.MODULE_NAME} is disabled. Skipping."
+            if ext.module_name in disabled:
+                msg = f"EXTENSION LOADER: {ext.module_name} is disabled. Skipping."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 continue
-            msg = f"EXTENSION LOADER: Loading user extension {ext.MODULE_NAME}"
+            msg = f"EXTENSION LOADER: Loading user extension {ext.module_name}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             ext.set_up_commands()
 

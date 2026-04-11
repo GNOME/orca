@@ -53,7 +53,6 @@ if TYPE_CHECKING:
 class ObjectNavigator(Extension):
     """Provides ability to navigate objects hierarchically."""
 
-    MODULE_NAME = "ObjectNavigator"
     GROUP_LABEL = guilabels.KB_GROUP_OBJECT_NAVIGATION
 
     def __init__(self) -> None:

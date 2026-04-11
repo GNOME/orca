@@ -323,7 +323,6 @@ class _ClipboardManagerKlipper(_ClipboardManager):
 class ClipboardPresenter(Extension):
     """Manages clipboard-related functionality."""
 
-    MODULE_NAME = "ClipboardPresenter"
     GROUP_LABEL = guilabels.KB_GROUP_CLIPBOARD
 
     def __init__(self) -> None:

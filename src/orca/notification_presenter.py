@@ -58,7 +58,6 @@ if TYPE_CHECKING:
 class NotificationPresenter(Extension):
     """Provides access to the notification history."""
 
-    MODULE_NAME = "NotificationPresenter"
     GROUP_LABEL = guilabels.KB_GROUP_NOTIFICATIONS
 
     def __init__(self) -> None:
