@@ -262,10 +262,6 @@ def _create_prefs_dirs(prefs_dir: str) -> None:
     for dir_path in [prefs_dir, sounds_dir]:
         os.makedirs(dir_path, exist_ok=True)
 
-    init_path = os.path.join(prefs_dir, "__init__.py")
-    if not os.path.exists(init_path):
-        os.close(os.open(init_path, os.O_CREAT, 0o700))
-
     customizations_file = os.path.join(prefs_dir, "orca-customizations.py")
     if not os.path.exists(customizations_file):
         os.close(os.open(customizations_file, os.O_CREAT, 0o700))
@@ -334,7 +330,6 @@ def main() -> int:
     debug.print_message(debug.LEVEL_INFO, "INFO: Preparing to launch.", True)
     prefs_dir = os.path.join(GLib.get_user_data_dir(), "orca")  # pylint: disable=no-value-for-parameter
     _create_prefs_dirs(prefs_dir)
-    sys.path.insert(0, prefs_dir)
     _load_customizations(prefs_dir)
 
     if args.profile:
