@@ -39,6 +39,7 @@ from gi.repository import Atspi
 
 from . import debug, focus_manager
 from .ax_object import AXObject
+from .ax_selection import AXSelection
 from .ax_text import AXText
 from .ax_utilities_collection import AXUtilitiesCollection
 from .ax_utilities_component import AXUtilitiesComponent
@@ -1005,6 +1006,23 @@ class AXUtilitiesEvent:
                 msg = "AXUtilitiesEvent: Event is presentable: Source is a menu."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
+
+            # This is a sad workaround for GTK2 menu items with submenus losing their showing state
+            # when submenu children become selected.
+            child = AXSelection.get_selected_child(event.source, 0)
+            if (
+                child is not None
+                and AXUtilitiesState.is_showing(child)
+                and AXUtilitiesState.is_visible(child)
+            ):
+                tokens = [
+                    "AXUtilitiesEvent: Event is presentable: Selected child",
+                    child,
+                    "is showing and visible",
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return True
+
             tokens = ["AXUtilitiesEvent: Menu lacks showing + visible:", event.source]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
