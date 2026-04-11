@@ -6,7 +6,7 @@ The service can be accessed at:
 - **Main Object Path:** `/org/gnome/Orca/Service`
 - **Module Object Paths:** `/org/gnome/Orca/Service/ModuleName`
 
-Additional information about using the remote controller can be found in [README-REMOTE-CONTROLLER.md](README-REMOTE-CONTROLLER.md).
+Additional information about using the remote controller can be found in [remote-controller.md](remote-controller.md).
 
 ---
 
@@ -35,7 +35,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`ShowActionsList`:** Shows a list of all the accessible actions exposed by the focused object.
 
@@ -49,7 +49,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`ToggleMonitor`:** Toggles the braille monitor on and off.
 
@@ -96,7 +96,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`EndOfFile`:** Moves to the end of the file.
 - **`EndOfLine`:** Moves to the end of the line.
@@ -131,7 +131,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`PresentNextMessage`:** Navigate to and present the next chat message in the history.
 - **`PresentPreviousMessage`:** Navigate to and present the previous chat message in the history.
@@ -161,7 +161,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`PresentClipboardContents`:** Presents the clipboard contents.
 
@@ -175,7 +175,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`ToggleKeyboardLayout`:** Toggles between desktop and laptop keyboard layout.
 
@@ -199,7 +199,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`EnableStickyBrowseMode`:** Enables sticky browse mode.
 - **`EnableStickyFocusMode`:** Enables sticky focus mode.
@@ -232,7 +232,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`AppendToClipboard`:** Appends the string just presented to the clipboard.
 - **`CopyToClipboard`:** Copies the string just presented to the clipboard.
@@ -286,7 +286,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`CopyToClipboard`:** Copies the current math navigation node to the clipboard.
 - **`EnterMathModeCommand`:** Enters math navigation mode if the current focus is on math.
@@ -330,6 +330,29 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 ---
 
+### MouseReviewer
+
+**Object Path:** `/org/gnome/Orca/Service/MouseReviewer`
+
+#### Commands
+
+**Method:** `org.gnome.Orca.Module.ExecuteCommand`
+
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
+
+- **`Toggle`:** Toggle mouse reviewing on or off (requires Wnck).
+
+#### Settings
+
+**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+
+**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
+
+- **`IsEnabled`:** Gets/Sets whether mouse review is enabled (requires Wnck).
+- **`PresentTooltips`:** Gets/Sets whether tooltips displayed due to mouse hover are spoken (requires X11).
+
+---
+
 ### NotificationPresenter
 
 **Object Path:** `/org/gnome/Orca/Service/NotificationPresenter`
@@ -338,7 +361,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`PresentLastNotification`:** Presents the last notification.
 - **`PresentNextNotification`:** Presents the next notification.
@@ -355,7 +378,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`MoveToFirstChild`:** Moves the navigator focus to the first child of the current focus.
 - **`MoveToNextSibling`:** Moves the navigator focus to the next sibling of the current focus.
@@ -374,7 +397,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`CycleSettingsProfile`:** Cycle through the user's existing settings profiles.
 - **`PresentCurrentProfile`:** Present the name of the currently active profile.
@@ -399,7 +422,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`FastForward`:** Jumps forward in the current Say All.
 - **`Rewind`:** Jumps back in the current Say All.
@@ -436,7 +459,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`ToggleSleepMode`:** Toggles sleep mode for the active application.
 
@@ -476,7 +499,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`CycleCapitalizationStyle`:** Cycle through the speech-dispatcher capitalization styles.
 - **`CyclePunctuationLevel`:** Cycles through punctuation levels for speech.
@@ -539,7 +562,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`ChangeNumberStyle`:** Changes spoken number style between digits and words.
 - **`CycleTextAttributeChangeMode`:** Cycles through text attribute change announcement modes.
@@ -618,7 +641,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`ContainerEnd`:** Moves to the end of the current container.
 - **`ContainerStart`:** Moves to the start of the current container.
@@ -731,7 +754,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`PresentBatteryStatus`:** Presents the battery status.
 - **`PresentCpuAndMemoryUsage`:** Presents the cpu and memory usage.
@@ -760,7 +783,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`ClearDynamicColumnHeadersRow`:** Clears the row for the dynamic column headers.
 - **`ClearDynamicRowHeadersColumn`:** Clears the column for the dynamic row headers.
@@ -812,7 +835,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`CycleKeyEcho`:** Cycle through the key echo levels.
 
@@ -847,7 +870,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 **Method:** `org.gnome.Orca.Module.ExecuteCommand`
 
-**Parameters:** `CommandName` (string), [`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)
+**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`PresentCellFormula`:** Presents the formula associated with the current spreadsheet cell.
 - **`PresentCharacterAttributes`:** Presents the font and formatting details for the current character.

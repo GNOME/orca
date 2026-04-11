@@ -5,7 +5,7 @@
 ## Attention Application Developers
 
 If you are an application developer trying to make your application work with Orca, please see the
-[README for application developers](README-APPLICATION-DEVELOPERS.md).
+[README for application developers](docs/application-developers.md).
 
 ## Introduction
 
@@ -112,12 +112,12 @@ they live in navigators, presenters, and other such modules.
 
 Orca provides a D-Bus interface that allows external applications to remotely control Orca's
 functionality and present messages to users. For detailed usage instructions, examples, and
-API documentation, see [README-REMOTE-CONTROLLER.md](README-REMOTE-CONTROLLER.md).
+API documentation, see [remote-controller.md](docs/remote-controller.md).
 
 ## GSettings Support
 
 Starting with Orca v50, Orca uses GSettings for its configuration. A list of Orca's
-schemas, keys, defaults, and enums is available in [GSETTINGS-SCHEMAS.md](GSETTINGS-SCHEMAS.md).
+schemas, keys, defaults, and enums is available in [gsettings-schemas.md](docs/gsettings-schemas.md).
 
 ## Spiel Text-to-Speech Support
 

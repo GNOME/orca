@@ -11,7 +11,7 @@ Orca exposes a D-Bus service at:
 - **Module Object Paths**: `/org/gnome/Orca/Service/ModuleName`
   (e.g., `/org/gnome/Orca/Service/SpeechAndVerbosityManager`)
 
-See [REMOTE-CONTROLLER-COMMANDS.md](REMOTE-CONTROLLER-COMMANDS.md) for a complete
+See [remote-controller-commands.md](remote-controller-commands.md) for a complete
 list of available commands.
 
 ## Dependencies

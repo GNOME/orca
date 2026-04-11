@@ -146,6 +146,15 @@ These operations also work at the profile level:
 
 ---
 
+### `org.gnome.Orca.Extensions` (schema-name: `extensions`)
+
+| Key | Type | Default | Summary |
+| --- | --- | --- | --- |
+| `approved-user-extensions` | `a{ss}` | `@a{ss} {}` | Approved user extensions (filename to SHA256 hash) |
+| `disabled-extensions` | `as` | `@as []` | Extensions disabled by the user (by MODULE_NAME) |
+
+---
+
 ### `org.gnome.Orca.FlatReview` (schema-name: `flat-review`)
 
 | Key | Type | Default | Summary |

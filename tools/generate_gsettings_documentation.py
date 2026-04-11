@@ -283,8 +283,8 @@ def main() -> int:
     parser.add_argument(
         "output",
         nargs="?",
-        default=str(Path(__file__).resolve().parent.parent / "GSETTINGS-SCHEMAS.md"),
-        help="Output markdown path (default: ../GSETTINGS-SCHEMAS.md)",
+        default=str(Path(__file__).resolve().parent.parent / "docs" / "gsettings-schemas.md"),
+        help="Output markdown path (default: ../docs/gsettings-schemas.md)",
     )
     parser.add_argument(
         "--enum-allowed",

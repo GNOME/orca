@@ -392,7 +392,7 @@ print("Done announcing Hello, world!")
 
 **New in Orca v49.0:** For headless applications, Orca now provides a much simpler D-Bus API
 called `PresentMessage` that eliminates the need for the complex AT-SPI2 setup shown above.
-See [README-REMOTE-CONTROLLER.md](README-REMOTE-CONTROLLER.md) for details on using this
+See [remote-controller.md](remote-controller.md) for details on using this
 streamlined interface.
 
 ## Providing Context-Sensitive Help Messages

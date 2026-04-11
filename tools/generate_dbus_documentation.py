@@ -111,7 +111,7 @@ def format_module_commands(module_name, info):
         lines.append("")
         lines.append(
             "**Parameters:** `CommandName` (string), "
-            "[`NotifyUser`](README-REMOTE-CONTROLLER.md#user-notification-applicability) (boolean)"
+            "[`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)"
         )
         lines.append("")
         for name, description in info["commands"]:
@@ -215,7 +215,7 @@ def generate_documentation():
     lines.append("")
     lines.append(
         "Additional information about using the remote controller can be found in "
-        "[README-REMOTE-CONTROLLER.md](README-REMOTE-CONTROLLER.md)."
+        "[remote-controller.md](remote-controller.md)."
     )
     lines.append("")
     lines.append("---")
@@ -247,7 +247,7 @@ def main():
     # Write to parent directory since script is in tools/
     script_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(script_dir)
-    output_file = os.path.join(parent_dir, "REMOTE-CONTROLLER-COMMANDS.md")
+    output_file = os.path.join(parent_dir, "docs", "remote-controller-commands.md")
 
     print("Generating D-Bus documentation...", file=sys.stderr)
     documentation = generate_documentation()
