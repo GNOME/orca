@@ -86,6 +86,11 @@ class Command:
 
         return self._function
 
+    def set_function(self, function: Callable[..., bool]) -> None:
+        """Sets the command function."""
+
+        self._function = function
+
     def get_group_label(self) -> str:
         """Returns the group label for display grouping."""
 

@@ -38,10 +38,11 @@ class Extension:
 
     def __init__(self) -> None:
         self._commands_initialized: bool = False
+        self._is_user_extension: bool = False
+        self.controller = dbus_service.get_remote_controller()
         msg = f"EXTENSION: {self.MODULE_NAME} Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        controller = dbus_service.get_remote_controller()
-        controller.register_decorated_module(self.MODULE_NAME, self)
+        self.controller.register_decorated_module(self.MODULE_NAME, self)
 
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""
@@ -62,12 +63,28 @@ class Extension:
 
         manager = command_manager.get_manager()
         for cmd in commands:
+            if self._is_user_extension:
+                cmd.set_function(self._wrap_function(cmd.get_function()))
             manager.add_command(cmd)
 
         msg = f"EXTENSION: {self.MODULE_NAME} {len(commands)} command(s) registered."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
+    def mark_as_user_extension(self) -> None:
+        """Marks this extension as user-provided so commands get wrapped."""
+
+        self._is_user_extension = True
+
     def _get_commands(self) -> list[Command]:
         """Override to provide commands for registration."""
 
         return []
+
+    @staticmethod
+    def _wrap_function(func):
+        """Wraps a user extension method so it accepts and discards script and event."""
+
+        def wrapper(_script, _event):
+            return func()
+
+        return wrapper

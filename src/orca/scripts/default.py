@@ -47,6 +47,7 @@ from orca import (
     debugging_tools_manager,
     document_presenter,
     event_manager,
+    extension_loader,
     flat_review_finder,
     flat_review_presenter,
     focus_manager,
@@ -101,14 +102,14 @@ class Script(script.Script):
 
     _commands_initialized: bool = False
 
-    def _get_all_extensions(self) -> list[tuple[Callable, str]]:
-        """Returns (extension_getter, localized_name) for each extension."""
+    def _register_builtin_extensions(self) -> None:
+        """Registers built-in extensions with the extension loader."""
 
-        return [
+        loader = extension_loader.get_loader()
+        builtins = [
             (braille_presenter.get_presenter, guilabels.BRAILLE),
             (notification_presenter.get_presenter, guilabels.KB_GROUP_NOTIFICATIONS),
             (clipboard.get_presenter, guilabels.KB_GROUP_CLIPBOARD),
-            (command_manager.get_manager, guilabels.KB_GROUP_DEFAULT),
             (say_all_presenter.get_presenter, guilabels.KB_GROUP_DEFAULT),
             (typing_echo_presenter.get_presenter, guilabels.KB_GROUP_DEFAULT),
             (speech_manager.get_manager, guilabels.KB_GROUP_SPEECH_VERBOSITY),
@@ -133,6 +134,8 @@ class Script(script.Script):
             (chat_presenter.get_presenter, guilabels.KB_GROUP_CHAT),
             (profile_manager.get_manager, guilabels.GENERAL_PROFILES),
         ]
+        for getter, group_label in builtins:
+            loader.register_builtin(getter, group_label)
 
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""
@@ -148,6 +151,7 @@ class Script(script.Script):
         Script._commands_initialized = True
 
         manager = command_manager.get_manager()
+        manager.set_up_commands()
         group_label = guilabels.KB_GROUP_DEFAULT
 
         kb_kp_divide_orca = keybindings.KeyBinding("KP_Divide", keybindings.ORCA_MODIFIER_MASK)
@@ -326,8 +330,8 @@ class Script(script.Script):
                 ),
             )
 
-        for extension_getter, _localized_name in self._get_all_extensions():
-            extension_getter().set_up_commands()
+        self._register_builtin_extensions()
+        extension_loader.get_loader().set_up_all_commands()
 
         all_braille_keys: set[int] = set()
         for cmd in manager.get_all_braille_commands():

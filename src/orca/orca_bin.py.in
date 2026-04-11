@@ -66,6 +66,7 @@ from gi.repository import GLib
 
 from orca import debug
 from orca import debugging_tools_manager
+from orca import extension_loader
 from orca import gsettings_registry
 from orca import messages
 from orca import script_manager
@@ -234,8 +235,9 @@ def cleanup(sigval: int) -> None:
 def _create_prefs_dirs(prefs_dir: str) -> None:
     """Creates the preferences directory structure."""
 
+    extensions_dir = os.path.join(prefs_dir, "extensions")
     sounds_dir = os.path.join(prefs_dir, "sounds")
-    for dir_path in [prefs_dir, sounds_dir]:
+    for dir_path in [prefs_dir, extensions_dir, sounds_dir]:
         os.makedirs(dir_path, exist_ok=True)
 
     customizations_file = os.path.join(prefs_dir, "orca-customizations.py")
@@ -303,6 +305,9 @@ def main() -> int:
     prefs_dir = os.path.join(GLib.get_user_data_dir(), "orca")  # pylint: disable=no-value-for-parameter
     _create_prefs_dirs(prefs_dir)
     _load_customizations(prefs_dir)
+
+    extensions_dir = os.path.join(prefs_dir, "extensions")
+    extension_loader.get_loader().discover_and_load(extensions_dir)
 
     if os.environ.get("ORCA_PROFILING"):
         debug.debugLevel = debug.LEVEL_OFF

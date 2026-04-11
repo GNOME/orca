@@ -27,6 +27,7 @@ schema_sources = files(
   '../src/orca/profile_manager.py',
   '../src/orca/orca_modifier_manager.py',
   '../src/orca/sleep_mode_manager.py',
+  '../src/orca/extension_loader.py',
 )
 
 generated_schema = custom_target(

@@ -46,6 +46,7 @@ class TestSchemaRegistration:
             "caret-navigation",
             "chat",
             "document",
+            "extensions",
             "flat-review",
             "keybindings",
             "live-regions",
