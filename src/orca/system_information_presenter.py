@@ -45,7 +45,6 @@ except ModuleNotFoundError:
 from . import (
     ax_device_manager,
     cmdnames,
-    command_manager,
     dbus_service,
     debug,
     gsettings_registry,
@@ -57,6 +56,7 @@ from . import (
     preferences_grid_base,
     presentation_manager,
 )
+from .command import Command, KeyboardCommand
 from .extension import Extension
 
 
@@ -183,12 +183,12 @@ class SystemInformationPresenter(Extension):
     def __init__(self) -> None:
         super().__init__()
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         kb_t = keybindings.KeyBinding("t", keybindings.ORCA_MODIFIER_MASK)
         kb_t_2 = keybindings.KeyBinding("t", keybindings.ORCA_MODIFIER_MASK, click_count=2)
 
         return [
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "presentTimeHandler",
                 self.present_time,
                 self.GROUP_LABEL,
@@ -196,7 +196,7 @@ class SystemInformationPresenter(Extension):
                 desktop_keybinding=kb_t,
                 laptop_keybinding=kb_t,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "presentDateHandler",
                 self.present_date,
                 self.GROUP_LABEL,
@@ -204,19 +204,19 @@ class SystemInformationPresenter(Extension):
                 desktop_keybinding=kb_t_2,
                 laptop_keybinding=kb_t_2,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "present_battery_status",
                 self.present_battery_status,
                 self.GROUP_LABEL,
                 cmdnames.PRESENT_BATTERY_STATUS,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "present_cpu_and_memory_usage",
                 self.present_cpu_and_memory_usage,
                 self.GROUP_LABEL,
                 cmdnames.PRESENT_CPU_AND_MEMORY_USAGE,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "present_modifier_keys_state",
                 self.present_modifier_keys_state,
                 self.GROUP_LABEL,

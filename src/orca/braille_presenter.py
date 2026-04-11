@@ -35,7 +35,6 @@ from . import (
     braille_monitor,
     brltablenames,
     cmdnames,
-    command_manager,
     dbus_service,
     debug,
     document_presenter,
@@ -48,6 +47,7 @@ from . import (
     preferences_grid_base,
 )
 from .braille_generator import BrailleGeneratorContext
+from .command import Command, KeyboardCommand
 from .extension import Extension
 from .orca_platform import tablesdir  # pylint: disable=import-error
 
@@ -571,11 +571,11 @@ class BraillePresenter(Extension):
         self._progress_bar_cache: dict = {}
         super().__init__()
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         """Returns commands for registration."""
 
         return [
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "toggle_braille_monitor",
                 self.toggle_monitor,
                 self.GROUP_LABEL,

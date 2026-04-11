@@ -85,6 +85,7 @@ from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_event import TextEventReason
 from orca.ax_utilities_text import TextUnit
+from orca.command import BrailleCommand, KeyboardCommand
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -234,7 +235,7 @@ class Script(script.Script):
             laptop_kb,
         ) in script_commands:
             manager.add_command(
-                command_manager.KeyboardCommand(
+                KeyboardCommand(
                     name,
                     function,
                     group_label,
@@ -315,7 +316,7 @@ class Script(script.Script):
         for name, function, description, executes_in_learn_mode in braille_commands:
             bb = braille_bindings.get(name, ())
             manager.add_command(
-                command_manager.BrailleCommand(
+                BrailleCommand(
                     name,
                     function,
                     group_label,

@@ -59,7 +59,6 @@ from . import (
     script_manager,
 )
 from .ax_object import AXObject
-from .extension import Extension
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -67,218 +66,7 @@ if TYPE_CHECKING:
     from .scripts import default
 
 
-class Command:
-    """Base class for Orca commands.
-
-    Commands have two independent activity states:
-
-    enabled: User preference for whether this command should be active.
-        - Set via user settings or toggle commands (e.g., "toggle caret navigation")
-        - Persists across sessions
-        - Example: User prefers caret navigation on
-
-    suspended: Temporary system override that deactivates the command.
-        - Set by Orca modes (e.g., focus mode suspends browse-mode commands)
-        - Does NOT change the user's enabled preference
-        - When suspension is lifted, command returns to its enabled state
-        - Example: Focus mode suspends structural navigation; leaving focus
-          mode automatically restores it
-    """
-
-    # pylint: disable-next=too-many-arguments, too-many-positional-arguments
-    def __init__(
-        self,
-        name: str,
-        function: Callable[..., bool],
-        group_label: str,
-        description: str = "",
-        enabled: bool = True,
-        suspended: bool = False,
-    ) -> None:
-        """Initializes a command."""
-
-        self._name = name
-        self._function = function
-        self._group_label = group_label
-        self._description = description
-        self._enabled = enabled
-        self._suspended = suspended
-
-    def __str__(self) -> str:
-        """Returns a string representation of the command."""
-
-        parts = [f"Command({self._name})"]
-        if self._suspended:
-            parts.append("SUSPENDED")
-        return " ".join(parts)
-
-    def get_name(self) -> str:
-        """Returns the command name."""
-
-        return self._name
-
-    def get_function(self) -> Callable[..., bool]:
-        """Returns the command function."""
-
-        return self._function
-
-    def get_group_label(self) -> str:
-        """Returns the group label for display grouping."""
-
-        return self._group_label
-
-    def get_description(self) -> str:
-        """Returns the command description."""
-
-        return self._description
-
-    def set_group_label(self, group_label: str) -> None:
-        """Sets the group label."""
-
-        self._group_label = group_label
-
-    def is_enabled(self) -> bool:
-        """Returns True if the user has enabled this command."""
-
-        return self._enabled
-
-    def set_enabled(self, enabled: bool) -> None:
-        """Sets whether the user has enabled this command."""
-
-        self._enabled = enabled
-
-    def is_suspended(self) -> bool:
-        """Returns True if this command is temporarily suspended by the system."""
-
-        return self._suspended
-
-    def set_suspended(self, suspended: bool) -> None:
-        """Sets whether this command is temporarily suspended by the system."""
-
-        self._suspended = suspended
-
-    def execute(self, script: default.Script, event: input_event.InputEvent | None = None) -> bool:
-        """Executes this command's function and returns True if handled."""
-
-        return self._function(script, event)
-
-
-class KeyboardCommand(Command):  # pylint: disable=too-many-instance-attributes
-    """A command that can be bound to keyboard keys."""
-
-    # pylint: disable-next=too-many-arguments, too-many-positional-arguments
-    def __init__(
-        self,
-        name: str,
-        function: Callable[..., bool],
-        group_label: str,
-        description: str = "",
-        desktop_keybinding: keybindings.KeyBinding | None = None,
-        laptop_keybinding: keybindings.KeyBinding | None = None,
-        enabled: bool = True,
-        suspended: bool = False,
-        is_group_toggle: bool = False,
-    ) -> None:
-        """Initializes a keyboard command."""
-
-        super().__init__(name, function, group_label, description, enabled, suspended)
-
-        # The default bindings.
-        self._desktop_keybinding = desktop_keybinding
-        self._laptop_keybinding = laptop_keybinding
-
-        # The actual binding, taking into account user overrides.
-        self._keybinding: keybindings.KeyBinding | None = None
-        self._is_group_toggle = is_group_toggle
-
-    def __str__(self) -> str:
-        """Returns a string representation of the command."""
-
-        parts = [f"KeyboardCommand({self._name})"]
-        if self._keybinding:
-            parts.append(str(self._keybinding))
-        else:
-            parts.append("UNBOUND")
-        if self._suspended:
-            parts.append("SUSPENDED")
-        return " ".join(parts)
-
-    def get_keybinding(self) -> keybindings.KeyBinding | None:
-        """Returns the current key binding, or None if unbound."""
-
-        return self._keybinding
-
-    def get_default_keybinding(
-        self,
-        is_desktop: bool | None = None,
-    ) -> keybindings.KeyBinding | None:
-        """Returns the default key binding for the specified or current layout."""
-
-        if is_desktop is None:
-            is_desktop = get_manager().is_desktop_layout()
-        return self._desktop_keybinding if is_desktop else self._laptop_keybinding
-
-    def has_default_keybinding(self) -> bool:
-        """Returns True if this command has a default keybinding for either layout."""
-
-        return self._desktop_keybinding is not None or self._laptop_keybinding is not None
-
-    def set_keybinding(self, keybinding: keybindings.KeyBinding | None) -> None:
-        """Sets the current key binding."""
-
-        self._keybinding = keybinding
-
-    def is_group_toggle(self) -> bool:
-        """Returns True if this command toggles its group's enabled state."""
-
-        return self._is_group_toggle
-
-    def is_active(self) -> bool:
-        """Returns True if this command should respond to key events."""
-
-        return self._enabled and not self._suspended and self._keybinding is not None
-
-
-class BrailleCommand(Command):
-    """A command that can only be triggered by braille hardware."""
-
-    # pylint: disable=too-many-arguments, too-many-positional-arguments
-    def __init__(
-        self,
-        name: str,
-        function: Callable[..., bool],
-        group_label: str,
-        description: str = "",
-        enabled: bool = True,
-        suspended: bool = False,
-        braille_bindings: tuple[int, ...] = (),
-        executes_in_learn_mode: bool = False,
-    ) -> None:
-        """Initializes a braille command."""
-
-        super().__init__(name, function, group_label, description, enabled, suspended)
-        self._braille_bindings = braille_bindings
-        self._executes_in_learn_mode = executes_in_learn_mode
-
-    def __str__(self) -> str:
-        """Returns a string representation of the command."""
-
-        parts = [f"BrailleCommand({self._name})"]
-        if self._braille_bindings:
-            parts.append(f"braille={self._braille_bindings}")
-        if self._suspended:
-            parts.append("SUSPENDED")
-        return " ".join(parts)
-
-    def get_braille_bindings(self) -> tuple[int, ...]:
-        """Returns the braille bindings (BrlAPI key codes)."""
-
-        return self._braille_bindings
-
-    def executes_in_learn_mode(self) -> bool:
-        """Returns True if this command should execute in learn mode (e.g., pan commands)."""
-
-        return self._executes_in_learn_mode
+from .command import BrailleCommand, Command, KeyboardCommand
 
 
 # pylint: disable-next=too-many-instance-attributes
@@ -1113,7 +901,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 if handler_name in parent_overrides:
                     parent_text = self._format_binding_data_text(parent_overrides[handler_name])
                 else:
-                    parent_text = self._format_keybinding_text(cmd.get_default_keybinding())
+                    parent_text = self._format_keybinding_text(
+                        cmd.get_default_keybinding(self._is_desktop),
+                    )
 
                 if current_text != parent_text:
                     msg = (
@@ -1272,11 +1062,8 @@ class KeyboardLayout(Enum):
     "org.gnome.Orca.Keybindings",
     name="keybindings",
 )
-class CommandManager(Extension):  # pylint: disable=too-many-instance-attributes
+class CommandManager:  # pylint: disable=too-many-instance-attributes
     """Singleton manager for coordinating commands between scripts and UI."""
-
-    MODULE_NAME = "CommandManager"
-    GROUP_LABEL = guilabels.KB_GROUP_DEFAULT
 
     _SCHEMA = "keybindings"
 
@@ -1288,12 +1075,17 @@ class CommandManager(Extension):  # pylint: disable=too-many-instance-attributes
         self._commands_by_keyval: dict[int, list[KeyboardCommand]] = {}
         self._commands_by_keycode: dict[int, list[KeyboardCommand]] = {}
         self._is_desktop: bool = True
+        self._initialized: bool = False
         self._group_enabled: dict[str, bool | None] = {}
         self._exclusive_groups: list[set[str]] = []
         self._numlock_on: bool = False
         self._learn_mode_active: bool = False
         self._prior_suspended: set[str] = set()
-        super().__init__()
+
+        msg = "COMMAND MANAGER: Registering D-Bus commands."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        controller = dbus_service.get_remote_controller()
+        controller.register_decorated_module("CommandManager", self)
 
     def is_desktop_layout(self) -> bool:
         """Returns True if the current keyboard layout is desktop."""
@@ -1549,19 +1341,24 @@ class CommandManager(Extension):  # pylint: disable=too-many-instance-attributes
 
         GLib.idle_add(update_grabs)
 
-    def _get_commands(self) -> list[Command]:
-        """Returns commands for registration."""
+    def set_up_commands(self) -> None:
+        """Sets up commands owned by CommandManager."""
 
-        return [
+        if self._initialized:
+            return
+        self._initialized = True
+
+        self.add_command(
             KeyboardCommand(
                 "toggle_keyboard_layout",
                 self.toggle_keyboard_layout,
-                self.GROUP_LABEL,
+                guilabels.KB_GROUP_DEFAULT,
                 cmdnames.TOGGLE_KEYBOARD_LAYOUT,
-                desktop_keybinding=None,
-                laptop_keybinding=None,
             ),
-        ]
+        )
+
+        msg = "COMMAND MANAGER: Commands set up."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def _apply_layout_to_commands(self) -> None:
         """Updates all keyboard commands' active keybindings based on current layout."""

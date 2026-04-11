@@ -28,7 +28,6 @@ from typing import TYPE_CHECKING
 
 from . import (
     cmdnames,
-    command_manager,
     dbus_service,
     debug,
     focus_manager,
@@ -45,6 +44,7 @@ from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -447,33 +447,33 @@ class ChatPresenter(Extension):
     def __init__(self) -> None:
         super().__init__()
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         return [
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "chat_toggle_room_name_prefix",
                 self.toggle_prefix,
                 self.GROUP_LABEL,
                 cmdnames.CHAT_TOGGLE_ROOM_NAME_PREFIX,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "chat_toggle_buddy_typing",
                 self.toggle_buddy_typing,
                 self.GROUP_LABEL,
                 cmdnames.CHAT_TOGGLE_BUDDY_TYPING,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "chat_toggle_message_histories",
                 self.toggle_message_histories,
                 self.GROUP_LABEL,
                 cmdnames.CHAT_TOGGLE_MESSAGE_HISTORIES,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "chat_previous_message",
                 self.present_previous_message,
                 self.GROUP_LABEL,
                 cmdnames.CHAT_PREVIOUS_MESSAGE,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "chat_next_message",
                 self.present_next_message,
                 self.GROUP_LABEL,

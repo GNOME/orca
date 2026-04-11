@@ -59,6 +59,7 @@ from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -114,7 +115,7 @@ class StructuralNavigator(Extension):
         super().__init__()
 
     # pylint: disable-next=too-many-locals
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         # Navigation bindings - (key, prev_mod, next_mod, list_mod, base_name)
         nav_bindings = [
             (
@@ -361,8 +362,8 @@ class StructuralNavigator(Extension):
         ]
 
         kb_z = keybindings.KeyBinding("z", keybindings.ORCA_MODIFIER_MASK)
-        commands: list[command_manager.Command] = [
-            command_manager.KeyboardCommand(
+        commands: list[Command] = [
+            KeyboardCommand(
                 "structural_navigator_mode_cycle",
                 self.cycle_mode,
                 self.GROUP_LABEL,
@@ -376,7 +377,7 @@ class StructuralNavigator(Extension):
         for name, function, description in commands_data:
             kb = cmd_bindings.get(name)
             commands.append(
-                command_manager.KeyboardCommand(
+                KeyboardCommand(
                     name,
                     function,
                     self.GROUP_LABEL,
@@ -413,7 +414,7 @@ class StructuralNavigator(Extension):
             ]
             for name, function, description, kb in heading_commands:
                 commands.append(
-                    command_manager.KeyboardCommand(
+                    KeyboardCommand(
                         name,
                         function,
                         self.GROUP_LABEL,

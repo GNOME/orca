@@ -253,7 +253,7 @@ class TestFlatReviewPresenter:
 
         mock_controller = test_context.Mock()
         test_context.patch(
-            "orca.flat_review_presenter.dbus_service.get_remote_controller",
+            "orca.extension.dbus_service.get_remote_controller",
             return_value=mock_controller,
         )
         presenter = FlatReviewPresenter()
@@ -265,7 +265,7 @@ class TestFlatReviewPresenter:
 
         # D-Bus registration and bindings setup happens during setup()
         presenter.set_up_commands()
-        mock_controller.register_decorated_module.assert_called_with(
+        mock_controller.register_decorated_module.assert_any_call(
             "FlatReviewPresenter",
             presenter,
         )
@@ -638,13 +638,13 @@ class TestFlatReviewPresenter:
 
         mock_controller = test_context.Mock()
         test_context.patch(
-            "orca.flat_review_presenter.dbus_service.get_remote_controller",
+            "orca.extension.dbus_service.get_remote_controller",
             return_value=mock_controller,
         )
         presenter = FlatReviewPresenter()
         presenter.set_up_commands()
 
-        mock_controller.register_decorated_module.assert_called_with(
+        mock_controller.register_decorated_module.assert_any_call(
             "FlatReviewPresenter",
             presenter,
         )

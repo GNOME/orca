@@ -38,7 +38,6 @@ from . import (
     braille_presenter,
     clipboard,
     cmdnames,
-    command_manager,
     dbus_service,
     debug,
     flat_review,
@@ -55,6 +54,7 @@ from . import (
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_text import AXText
+from .command import BrailleCommand, Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -92,7 +92,7 @@ class FlatReviewPresenter(Extension):
         super().__init__()
 
     # pylint: disable-next=too-many-locals
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         def kb(keysym: str, mod: int, clicks: int = 1) -> keybindings.KeyBinding:
             return keybindings.KeyBinding(keysym, mod, click_count=clicks)
 
@@ -276,11 +276,11 @@ class FlatReviewPresenter(Extension):
             msg = "EXTENSION: FlatReviewPresenter Braille bindings unavailable."
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        commands: list[command_manager.Command] = []
+        commands: list[Command] = []
         for name, function, description in commands_data:
             desktop_kb, laptop_kb = cmd_bindings.get(name, (None, None))
             commands.append(
-                command_manager.KeyboardCommand(
+                KeyboardCommand(
                     name,
                     function,
                     self.GROUP_LABEL,
@@ -291,7 +291,7 @@ class FlatReviewPresenter(Extension):
             )
             if name in braille_bindings:
                 commands.append(
-                    command_manager.BrailleCommand(
+                    BrailleCommand(
                         name,
                         function,
                         self.GROUP_LABEL,

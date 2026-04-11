@@ -33,7 +33,6 @@ from gi.repository import Gdk, GLib, Gtk
 
 from . import (
     cmdnames,
-    command_manager,
     dbus_service,
     debug,
     focus_manager,
@@ -47,6 +46,7 @@ from . import (
 from .ax_action import AXAction
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
+from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -70,10 +70,10 @@ class ActionPresenter(Extension):
         self._window: Atspi.Accessible | None = None
         super().__init__()
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         kb = keybindings.KeyBinding("a", keybindings.ORCA_SHIFT_MODIFIER_MASK)
         return [
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "show_actions_list",
                 self.show_actions_list,
                 self.GROUP_LABEL,

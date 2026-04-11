@@ -65,6 +65,7 @@ from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_utilities_math import AXUtilitiesMath
+from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -480,7 +481,7 @@ class DocumentPresenter(Extension):
             guilabels.KB_GROUP_TABLE_NAVIGATION,
         )
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         """Returns commands for registration."""
 
         kb_a = keybindings.KeyBinding("a", keybindings.ORCA_MODIFIER_MASK)
@@ -509,7 +510,7 @@ class DocumentPresenter(Extension):
         ]
 
         return [
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 name,
                 function,
                 self.GROUP_LABEL,

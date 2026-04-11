@@ -51,6 +51,7 @@ from . import (
     preferences_grid_base,
     presentation_manager,
 )
+from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -572,7 +573,7 @@ class ProfileManager(Extension):
     def __init__(self) -> None:
         super().__init__()
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         """Returns commands for registration."""
 
         commands_data = [
@@ -593,7 +594,7 @@ class ProfileManager(Extension):
         ]
 
         return [
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 name,
                 function,
                 self.GROUP_LABEL,

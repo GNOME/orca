@@ -35,6 +35,7 @@ from . import (
     orca_modifier_manager,
     presentation_manager,
 )
+from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -52,10 +53,10 @@ class BypassModeManager(Extension):
         self._is_active: bool = False
         super().__init__()
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         kb = keybindings.KeyBinding("BackSpace", keybindings.ALT_MODIFIER_MASK)
         return [
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 self.COMMAND_NAME,
                 self.toggle_enabled,
                 self.GROUP_LABEL,

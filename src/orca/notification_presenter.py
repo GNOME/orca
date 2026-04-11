@@ -39,7 +39,6 @@ from gi.repository import GObject, Gtk
 
 from . import (
     cmdnames,
-    command_manager,
     dbus_service,
     debug,
     guilabels,
@@ -47,6 +46,7 @@ from . import (
     messages,
     presentation_manager,
 )
+from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -73,27 +73,27 @@ class NotificationPresenter(Extension):
         self._current_index: int = -1
         super().__init__()
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         return [
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "present_last_notification",
                 self.present_last_notification,
                 self.GROUP_LABEL,
                 cmdnames.NOTIFICATION_MESSAGES_LAST,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "present_next_notification",
                 self.present_next_notification,
                 self.GROUP_LABEL,
                 cmdnames.NOTIFICATION_MESSAGES_NEXT,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "present_previous_notification",
                 self.present_previous_notification,
                 self.GROUP_LABEL,
                 cmdnames.NOTIFICATION_MESSAGES_PREVIOUS,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "show_notification_list",
                 self.show_notification_list,
                 self.GROUP_LABEL,

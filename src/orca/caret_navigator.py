@@ -47,6 +47,7 @@ from . import (
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -91,7 +92,7 @@ class CaretNavigator(Extension):
         self._enabled_for_script: dict[default.Script, bool] = {}
         super().__init__()
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         kb_f12 = keybindings.KeyBinding("F12", keybindings.ORCA_MODIFIER_MASK)
         kb_right = keybindings.KeyBinding("Right", keybindings.NO_MODIFIER_MASK)
         kb_left = keybindings.KeyBinding("Left", keybindings.NO_MODIFIER_MASK)
@@ -106,8 +107,8 @@ class CaretNavigator(Extension):
 
         enabled = self.get_is_enabled() and not self._suspended
 
-        commands: list[command_manager.Command] = [
-            command_manager.KeyboardCommand(
+        commands: list[Command] = [
+            KeyboardCommand(
                 "toggle_enabled",
                 self.toggle_enabled,
                 self.GROUP_LABEL,
@@ -149,7 +150,7 @@ class CaretNavigator(Extension):
 
         for name, function, description, kb in nav_commands:
             commands.append(
-                command_manager.KeyboardCommand(
+                KeyboardCommand(
                     name,
                     function,
                     self.GROUP_LABEL,
@@ -161,7 +162,7 @@ class CaretNavigator(Extension):
             )
 
         commands.append(
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "toggle_layout_mode",
                 self.toggle_layout_mode,
                 self.GROUP_LABEL,

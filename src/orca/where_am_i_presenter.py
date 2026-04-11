@@ -26,7 +26,6 @@ from typing import TYPE_CHECKING
 
 from . import (
     cmdnames,
-    command_manager,
     dbus_service,
     debug,
     flat_review_presenter,
@@ -46,6 +45,7 @@ from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
+from .command import Command, KeyboardCommand
 from .extension import Extension
 from .generator import WhereAmI
 
@@ -65,7 +65,7 @@ class WhereAmIPresenter(Extension):
     GROUP_LABEL = guilabels.KB_GROUP_WHERE_AM_I
 
     # pylint: disable-next=too-many-locals
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         # Common keybindings (same for desktop and laptop)
         kb_f = keybindings.KeyBinding("f", keybindings.ORCA_MODIFIER_MASK)
         kb_e = keybindings.KeyBinding("e", keybindings.ORCA_MODIFIER_MASK)
@@ -97,7 +97,7 @@ class WhereAmIPresenter(Extension):
         )
 
         return [
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "readCharAttributesHandler",
                 self.present_character_attributes,
                 self.GROUP_LABEL,
@@ -105,13 +105,13 @@ class WhereAmIPresenter(Extension):
                 desktop_keybinding=kb_f,
                 laptop_keybinding=kb_f,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "presentSizeAndPositionHandler",
                 self.present_size_and_position,
                 self.GROUP_LABEL,
                 cmdnames.PRESENT_SIZE_AND_POSITION,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "getTitleHandler",
                 self.present_title,
                 self.GROUP_LABEL,
@@ -119,7 +119,7 @@ class WhereAmIPresenter(Extension):
                 desktop_keybinding=kb_kp_enter_orca,
                 laptop_keybinding=kb_slash,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "getStatusBarHandler",
                 self.present_status_bar,
                 self.GROUP_LABEL,
@@ -127,7 +127,7 @@ class WhereAmIPresenter(Extension):
                 desktop_keybinding=kb_kp_enter_orca_2,
                 laptop_keybinding=kb_slash_2,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "present_default_button",
                 self.present_default_button,
                 self.GROUP_LABEL,
@@ -135,14 +135,14 @@ class WhereAmIPresenter(Extension):
                 desktop_keybinding=kb_e,
                 laptop_keybinding=kb_e,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "present_cell_formula",
                 self.present_cell_formula,
                 self.GROUP_LABEL,
                 cmdnames.PRESENT_CELL_FORMULA,
                 desktop_keybinding=kb_equal,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "whereAmIBasicHandler",
                 self.where_am_i_basic,
                 self.GROUP_LABEL,
@@ -150,7 +150,7 @@ class WhereAmIPresenter(Extension):
                 desktop_keybinding=kb_kp_enter,
                 laptop_keybinding=kb_return,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "whereAmIDetailedHandler",
                 self.where_am_i_detailed,
                 self.GROUP_LABEL,
@@ -158,13 +158,13 @@ class WhereAmIPresenter(Extension):
                 desktop_keybinding=kb_kp_enter_2,
                 laptop_keybinding=kb_return_2,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "whereAmILinkHandler",
                 self.present_link,
                 self.GROUP_LABEL,
                 cmdnames.WHERE_AM_I_LINK,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "whereAmISelectionHandler",
                 self.present_selection,
                 self.GROUP_LABEL,

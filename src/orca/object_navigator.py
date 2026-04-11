@@ -26,7 +26,6 @@ from typing import TYPE_CHECKING
 
 from . import (
     cmdnames,
-    command_manager,
     dbus_service,
     debug,
     focus_manager,
@@ -39,6 +38,7 @@ from . import (
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
+from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -63,7 +63,7 @@ class ObjectNavigator(Extension):
         self._simplify: bool = True
         super().__init__()
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         commands_data = [
             ("object_navigator_up", self.move_to_parent, cmdnames.NAVIGATOR_UP, "Up"),
             ("object_navigator_down", self.move_to_first_child, cmdnames.NAVIGATOR_DOWN, "Down"),
@@ -88,11 +88,11 @@ class ObjectNavigator(Extension):
             ),
         ]
 
-        commands: list[command_manager.Command] = []
+        commands: list[Command] = []
         for name, function, description, keysym in commands_data:
             kb = keybindings.KeyBinding(keysym, keybindings.ORCA_CTRL_MODIFIER_MASK)
             commands.append(
-                command_manager.KeyboardCommand(
+                KeyboardCommand(
                     name,
                     function,
                     self.GROUP_LABEL,

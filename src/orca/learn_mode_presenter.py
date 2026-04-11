@@ -43,6 +43,7 @@ from . import (
     presentation_manager,
     script_manager,
 )
+from .command import BrailleCommand, Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -60,10 +61,10 @@ class LearnModePresenter(Extension):
         self._gui: CommandListGUI | None = None
         super().__init__()
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         kb = keybindings.KeyBinding("h", keybindings.ORCA_MODIFIER_MASK)
         return [
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "enterLearnModeHandler",
                 self.start,
                 self.GROUP_LABEL,
@@ -127,7 +128,7 @@ class LearnModePresenter(Extension):
     def handle_event(
         self,
         event: input_event.KeyboardEvent,
-        command: command_manager.KeyboardCommand | None = None,
+        command: KeyboardCommand | None = None,
     ) -> bool:
         """Handles the keyboard event in learn mode."""
 
@@ -167,7 +168,7 @@ class LearnModePresenter(Extension):
         self,
         script: default.Script,
         event: input_event.BrailleEvent,
-        command: command_manager.BrailleCommand | None,
+        command: BrailleCommand | None,
     ) -> bool:
         """Handles braille event in learn mode. Returns True if command should not execute."""
 
@@ -189,7 +190,7 @@ class LearnModePresenter(Extension):
         """Shows a simple gui listing Orca's bound commands."""
 
         items = 0
-        commands_by_group: dict[str, list[command_manager.KeyboardCommand]] = {}
+        commands_by_group: dict[str, list[KeyboardCommand]] = {}
         for cmd in command_manager.get_manager().get_all_keyboard_commands():
             keybinding = cmd.get_keybinding()
             if keybinding is None:
@@ -235,7 +236,7 @@ class CommandListGUI:
         script: default.Script,
         title: str,
         column_headers: list[str],
-        commands_dict: dict[str, list[command_manager.KeyboardCommand]],
+        commands_dict: dict[str, list[KeyboardCommand]],
     ) -> None:
         self._script: default.Script = script
         self._model: Gtk.TreeStore | None = None
@@ -245,7 +246,7 @@ class CommandListGUI:
         self,
         title: str,
         column_headers: list[str],
-        commands_dict: dict[str, list[command_manager.KeyboardCommand]],
+        commands_dict: dict[str, list[KeyboardCommand]],
     ) -> Gtk.Dialog:
         """Creates the commands-list dialog."""
 

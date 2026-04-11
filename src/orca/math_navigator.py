@@ -43,6 +43,7 @@ from . import (
     script_manager,
 )
 from .ax_utilities_math import AXUtilitiesMath
+from .command import KeyboardCommand
 from .extension import Extension
 
 try:
@@ -245,7 +246,7 @@ class MathNavigator(Extension):
             else:
                 handler = partial(self._execute_command, mathcat_cmd)
             manager.add_command(
-                command_manager.KeyboardCommand(
+                KeyboardCommand(
                     name,
                     handler,
                     self.GROUP_LABEL,
@@ -274,7 +275,7 @@ class MathNavigator(Extension):
             for modifier_mask, cmd_prefix, description in marker_types:
                 cmd_name = f"math_{cmd_prefix.lower()}_{digit}"
                 manager.add_command(
-                    command_manager.KeyboardCommand(
+                    KeyboardCommand(
                         cmd_name,
                         partial(self._execute_command, f"{cmd_prefix}{digit}"),
                         self.GROUP_LABEL,
@@ -287,7 +288,7 @@ class MathNavigator(Extension):
         manager.set_group_suspended(self.GROUP_LABEL, True)
 
         manager.add_command(
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "math_enter",
                 self.enter_math_mode_command,
                 self.GROUP_LABEL,

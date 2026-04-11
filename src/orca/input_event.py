@@ -57,6 +57,7 @@ from .ax_utilities import AXUtilities
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+    from .command import BrailleCommand
     from .scripts import default
 
 KEYBOARD_EVENT = "keyboard"
@@ -785,7 +786,7 @@ class BrailleEvent(InputEvent):
     def __str__(self) -> str:
         return f"{self.type.upper()} {self.event}"
 
-    def get_command(self) -> command_manager.BrailleCommand | None:
+    def get_command(self) -> BrailleCommand | None:
         """Returns the BrailleCommand associated with this event."""
 
         braille_key: int = self.event["command"]

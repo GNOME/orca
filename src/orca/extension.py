@@ -24,14 +24,14 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, ClassVar
 
-from . import dbus_service, debug
+from . import command_manager, dbus_service, debug
 
 if TYPE_CHECKING:
-    from . import command_manager
+    from .command import Command
 
 
 class Extension:
-    """Base class for Orca modules and extensions."""
+    """Base class for Orca extensions."""
 
     MODULE_NAME: ClassVar[str]
     GROUP_LABEL: ClassVar[str]
@@ -60,8 +60,6 @@ class Extension:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        from . import command_manager  # pylint: disable=import-outside-toplevel
-
         manager = command_manager.get_manager()
         for cmd in commands:
             manager.add_command(cmd)
@@ -69,7 +67,7 @@ class Extension:
         msg = f"EXTENSION: {self.MODULE_NAME} {len(commands)} command(s) registered."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         """Override to provide commands for registration."""
 
         return []

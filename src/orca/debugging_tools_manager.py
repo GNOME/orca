@@ -35,7 +35,6 @@ from gi.repository import Atspi
 
 from . import (  # pylint: disable=no-name-in-module
     cmdnames,
-    command_manager,
     debug,
     focus_manager,
     guilabels,
@@ -46,6 +45,7 @@ from . import (  # pylint: disable=no-name-in-module
 )
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
+from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -67,15 +67,15 @@ class DebuggingToolsManager(Extension):
             faulthandler.enable(all_threads=False)
         super().__init__()
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         return [
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "cycleDebugLevelHandler",
                 self._cycle_debug_level,
                 self.GROUP_LABEL,
                 cmdnames.DEBUG_CYCLE_LEVEL,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "clear_atspi_app_cache",
                 self._clear_atspi_app_cache,
                 self.GROUP_LABEL,

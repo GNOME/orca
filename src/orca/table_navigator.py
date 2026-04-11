@@ -49,6 +49,7 @@ from . import (
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_utilities import AXUtilities
+from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -109,7 +110,7 @@ class TableNavigator(Extension):
         return result
 
     # pylint: disable-next=too-many-locals
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         kb_t = keybindings.KeyBinding("t", keybindings.ORCA_SHIFT_MODIFIER_MASK)
         kb_left = keybindings.KeyBinding("Left", keybindings.SHIFT_ALT_MODIFIER_MASK)
         kb_right = keybindings.KeyBinding("Right", keybindings.SHIFT_ALT_MODIFIER_MASK)
@@ -126,8 +127,8 @@ class TableNavigator(Extension):
         kb_c = keybindings.KeyBinding("c", keybindings.ORCA_SHIFT_MODIFIER_MASK)
         kb_c_2 = keybindings.KeyBinding("c", keybindings.ORCA_SHIFT_MODIFIER_MASK, click_count=2)
 
-        commands: list[command_manager.Command] = [
-            command_manager.KeyboardCommand(
+        commands: list[Command] = [
+            KeyboardCommand(
                 "table_navigator_toggle_enabled",
                 self.toggle_enabled,
                 self.GROUP_LABEL,
@@ -197,7 +198,7 @@ class TableNavigator(Extension):
 
         for name, function, description, kb in nav_commands:
             commands.append(
-                command_manager.KeyboardCommand(
+                KeyboardCommand(
                     name,
                     function,
                     self.GROUP_LABEL,

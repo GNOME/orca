@@ -43,7 +43,6 @@ gi.require_version("Gtk", "3.0")
 
 from . import (
     cmdnames,
-    command_manager,
     dbus_service,
     debug,
     document_presenter,
@@ -69,6 +68,7 @@ from .ax_document import AXDocument
 from .ax_hypertext import AXHypertext
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
+from .command import Command, KeyboardCommand
 from .extension import Extension
 from .speechserver import VoiceFamily
 from .text_attribute_manager import TextAttributeChangeMode
@@ -855,7 +855,7 @@ class SpeechPresenter(Extension):
         self._text_attribute_change_mode_override: TextAttributeChangeMode | None = None
         super().__init__()
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         """Returns commands for registration."""
 
         kb_v = keybindings.KeyBinding("v", keybindings.ORCA_MODIFIER_MASK)
@@ -908,7 +908,7 @@ class SpeechPresenter(Extension):
         ]
 
         return [
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 name,
                 function,
                 self.GROUP_LABEL,

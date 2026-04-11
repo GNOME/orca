@@ -50,7 +50,6 @@ except Exception:  # noqa: S110 - Wnck is optional; unavailable on Wayland
 from . import (
     ax_device_manager,
     cmdnames,
-    command_manager,
     dbus_service,
     debug,
     focus_manager,
@@ -66,6 +65,7 @@ from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -465,9 +465,9 @@ class MouseReviewer(Extension):
 
         super().__init__()
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         return [
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "toggleMouseReviewHandler",
                 self.toggle,
                 self.GROUP_LABEL,

@@ -42,7 +42,6 @@ from gi.repository import GObject, Gtk
 
 from . import (
     cmdnames,
-    command_manager,
     dbus_service,
     debug,
     gsettings_registry,
@@ -56,6 +55,7 @@ from . import (
     systemd,
 )
 from .acss import ACSS
+from .command import Command, KeyboardCommand
 from .extension import Extension
 from .speechserver import CapitalizationStyle, PunctuationStyle
 
@@ -1911,7 +1911,7 @@ class SpeechManager(Extension):
         self._server: SpeechServer | None = None
         super().__init__()
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         """Returns commands for registration."""
 
         kb_s = keybindings.KeyBinding("s", keybindings.ORCA_MODIFIER_MASK)
@@ -1998,7 +1998,7 @@ class SpeechManager(Extension):
         ]
 
         return [
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 name,
                 function,
                 self.GROUP_LABEL,

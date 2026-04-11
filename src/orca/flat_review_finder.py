@@ -35,7 +35,6 @@ from gi.repository import Atspi, Gtk
 
 from . import (
     cmdnames,
-    command_manager,
     debug,
     flat_review_presenter,
     focus_manager,
@@ -44,6 +43,7 @@ from . import (
     messages,
     presentation_manager,
 )
+from .command import Command, KeyboardCommand
 from .extension import Extension
 from .flat_review import Context
 
@@ -123,9 +123,9 @@ class FlatReviewFinder(Extension):
         self._focus: Atspi.Accessible | None = None
         super().__init__()
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         return [
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "findHandler",
                 self.show_dialog,
                 self.GROUP_LABEL,
@@ -139,7 +139,7 @@ class FlatReviewFinder(Extension):
                     keybindings.ORCA_MODIFIER_MASK,
                 ),
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "findNextHandler",
                 self.find_next,
                 self.GROUP_LABEL,
@@ -153,7 +153,7 @@ class FlatReviewFinder(Extension):
                     keybindings.ORCA_MODIFIER_MASK,
                 ),
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "findPreviousHandler",
                 self.find_previous,
                 self.GROUP_LABEL,

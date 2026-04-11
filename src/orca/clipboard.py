@@ -38,7 +38,6 @@ from gi.repository import Atspi, Gdk, Gtk
 
 from . import (
     cmdnames,
-    command_manager,
     dbus_service,
     debug,
     guilabels,
@@ -49,6 +48,7 @@ from . import (
     script_manager,
 )
 from .ax_utilities import AXUtilities
+from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -333,9 +333,9 @@ class ClipboardPresenter(Extension):
         self._manager: _ClipboardManager | None = None
         super().__init__()
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         return [
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "present_clipboard_contents",
                 self.present_clipboard_contents,
                 self.GROUP_LABEL,

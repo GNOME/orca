@@ -33,7 +33,6 @@ from gi.repository import GLib
 
 from . import (
     cmdnames,
-    command_manager,
     debug,
     focus_manager,
     gsettings_registry,
@@ -46,6 +45,7 @@ from . import (
 )
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
+from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -212,10 +212,10 @@ class LiveRegionPresenter(Extension):
         self._current_index: int = self.QUEUE_SIZE
         super().__init__()
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         kb_backslash = keybindings.KeyBinding("backslash", keybindings.ORCA_MODIFIER_MASK)
         return [
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "toggle_live_region_support",
                 self.toggle_monitoring,
                 self.GROUP_LABEL,
@@ -224,26 +224,26 @@ class LiveRegionPresenter(Extension):
                 laptop_keybinding=kb_backslash,
                 is_group_toggle=True,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "present_previous_live_region_message",
                 self.present_previous_live_region_message,
                 self.GROUP_LABEL,
                 cmdnames.LIVE_REGIONS_PREVIOUS,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "advance_live_politeness",
                 self._advance_politeness_level,
                 self.GROUP_LABEL,
                 cmdnames.LIVE_REGIONS_ADVANCE_POLITENESS,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "toggle_live_region_presentation",
                 self.toggle_live_region_presentation,
                 self.GROUP_LABEL,
                 cmdnames.LIVE_REGIONS_ARE_ANNOUNCED,
                 is_group_toggle=True,
             ),
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "present_next_live_region_message",
                 self.present_next_live_region_message,
                 self.GROUP_LABEL,

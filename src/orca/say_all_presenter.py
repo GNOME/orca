@@ -36,7 +36,6 @@ from typing import TYPE_CHECKING
 from . import (
     ax_event_synthesizer,
     cmdnames,
-    command_manager,
     dbus_service,
     debug,
     focus_manager,
@@ -57,6 +56,7 @@ from .acss import ACSS
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -267,9 +267,9 @@ class SayAllPresenter(Extension):
         self._say_all_is_running: bool = False
         super().__init__()
 
-    def _get_commands(self) -> list[command_manager.Command]:
+    def _get_commands(self) -> list[Command]:
         return [
-            command_manager.KeyboardCommand(
+            KeyboardCommand(
                 "sayAllHandler",
                 self.say_all,
                 self.GROUP_LABEL,
