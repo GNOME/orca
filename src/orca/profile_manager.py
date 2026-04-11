@@ -570,9 +570,6 @@ class ProfileManager(Extension):
 
         return gsettings_registry.get_registry().get_active_profile()
 
-    def __init__(self) -> None:
-        super().__init__()
-
     def _get_commands(self) -> list[Command]:
         """Returns commands for registration."""
 
@@ -623,8 +620,8 @@ class ProfileManager(Extension):
         """Returns available profiles by enumerating stored metadata."""
 
         try:
-            result = subprocess.run(  # noqa: S603 - dconf is a system dependency, not untrusted input
-                ["dconf", "list", gsettings_registry.GSETTINGS_PATH_PREFIX],  # noqa: S607 - full path would break across distros
+            result = subprocess.run(  # noqa: S603
+                ["dconf", "list", gsettings_registry.GSETTINGS_PATH_PREFIX],  # noqa: S607
                 capture_output=True,
                 text=True,
                 check=True,

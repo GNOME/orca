@@ -228,7 +228,7 @@ class ExtensionLoader:
 
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
-        except Exception as error:
+        except Exception as error:  # pylint: disable=broad-exception-caught
             msg = f"EXTENSION LOADER: Failed to load {filepath}: {error}"
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return None
@@ -240,7 +240,7 @@ class ExtensionLoader:
                     instance = obj()
                     instance.mark_as_user_extension()
                     return instance
-                except Exception as error:
+                except Exception as error:  # pylint: disable=broad-exception-caught
                     msg = (
                         f"EXTENSION LOADER: Failed to instantiate "
                         f"{attr_name} from {filepath}: {error}"

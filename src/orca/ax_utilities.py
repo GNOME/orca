@@ -778,7 +778,7 @@ class AXUtilities:
             role = AXObject.get_role(obj)
         if role == Atspi.Role.TABLE_CELL:
             return not AXUtilitiesRole.is_grid_cell(obj)
-        return role in AXUtilitiesRole.get_text_block_roles()
+        return role in AXUtilitiesRole.get_text_block_roles()  # pylint: disable=unsupported-membership-test
 
     @staticmethod
     def is_combo_box_descendant(

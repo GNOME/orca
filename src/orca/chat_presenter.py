@@ -444,9 +444,6 @@ class ChatPresenter(Extension):
     MODULE_NAME = "ChatPresenter"
     GROUP_LABEL = guilabels.KB_GROUP_CHAT
 
-    def __init__(self) -> None:
-        super().__init__()
-
     def _get_commands(self) -> list[Command]:
         return [
             KeyboardCommand(

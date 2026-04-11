@@ -180,9 +180,6 @@ class SystemInformationPresenter(Extension):
     MODULE_NAME = "SystemInformationPresenter"
     GROUP_LABEL = guilabels.KB_GROUP_SYSTEM_INFORMATION
 
-    def __init__(self) -> None:
-        super().__init__()
-
     def _get_commands(self) -> list[Command]:
         kb_t = keybindings.KeyBinding("t", keybindings.ORCA_MODIFIER_MASK)
         kb_t_2 = keybindings.KeyBinding("t", keybindings.ORCA_MODIFIER_MASK, click_count=2)

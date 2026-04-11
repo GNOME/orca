@@ -426,8 +426,8 @@ class GSettingsRegistry:
         """Returns True if dconf has any entries under the Orca path."""
 
         try:
-            result = subprocess.run(  # noqa: S603 - dconf is a system dependency, not untrusted input
-                ["dconf", "list", GSETTINGS_PATH_PREFIX],  # noqa: S607 - full path would break across distros
+            result = subprocess.run(  # noqa: S603
+                ["dconf", "list", GSETTINGS_PATH_PREFIX],  # noqa: S607
                 capture_output=True,
                 text=True,
                 check=True,
@@ -502,8 +502,8 @@ class GSettingsRegistry:
         """Returns directory entries under a dconf path, stripped of trailing slashes."""
 
         try:
-            result = subprocess.run(  # noqa: S603 - dconf is a system dependency, not untrusted input
-                ["dconf", "list", path],  # noqa: S607 - full path would break across distros
+            result = subprocess.run(  # noqa: S603
+                ["dconf", "list", path],  # noqa: S607
                 capture_output=True,
                 text=True,
                 check=True,
@@ -519,8 +519,8 @@ class GSettingsRegistry:
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         try:
-            subprocess.run(  # noqa: S603 - dconf is a system dependency, not untrusted input
-                ["dconf", "reset", "-f", GSETTINGS_PATH_PREFIX],  # noqa: S607 - full path would break across distros
+            subprocess.run(  # noqa: S603
+                ["dconf", "reset", "-f", GSETTINGS_PATH_PREFIX],  # noqa: S607
                 check=True,
             )
         except (subprocess.CalledProcessError, FileNotFoundError) as e:
