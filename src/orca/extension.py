@@ -38,16 +38,25 @@ class Extension:
     def __init__(self) -> None:
         self._commands_initialized: bool = False
         self._is_user_extension: bool = False
+        self._disabled: bool = False
         self.module_name: str = type(self).__name__
         self.controller = dbus_service.get_remote_controller()
         msg = f"EXTENSION: {self.module_name} Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self.controller.register_decorated_module(self.module_name, self)
 
+    def disable(self) -> None:
+        """Disables this extension, preventing command registration."""
+
+        self._disabled = True
+        msg = f"EXTENSION: {self.module_name} has been disabled."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        self.controller.deregister_module_commands(self.module_name)
+
     def set_up_commands(self) -> None:
         """Sets up commands with CommandManager."""
 
-        if self._commands_initialized:
+        if self._disabled or self._commands_initialized:
             return
         self._commands_initialized = True
         self._register_commands()

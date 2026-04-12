@@ -204,8 +204,7 @@ class ExtensionLoader:
         for getter, _group_label in self._builtins:
             ext = getter()
             if ext.module_name in disabled:
-                msg = f"EXTENSION LOADER: {ext.module_name} is disabled. Skipping."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                ext.disable()
                 continue
             msg = f"EXTENSION LOADER: Loading built-in extension {ext.module_name}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -213,8 +212,7 @@ class ExtensionLoader:
 
         for ext in self._user_extensions:
             if ext.module_name in disabled:
-                msg = f"EXTENSION LOADER: {ext.module_name} is disabled. Skipping."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
+                ext.disable()
                 continue
             msg = f"EXTENSION LOADER: Loading user extension {ext.module_name}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
