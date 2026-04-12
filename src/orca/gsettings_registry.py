@@ -550,26 +550,6 @@ class GSettingsRegistry:
             return []
         return [e.strip("/") for e in result.stdout.strip().splitlines() if e.strip("/")]
 
-    def import_from_dir(self, import_dir: str) -> None:
-        """Imports settings from a directory by resetting dconf and re-migrating."""
-
-        msg = f"GSETTINGS REGISTRY: Importing settings from '{import_dir}'."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        try:
-            subprocess.run(  # noqa: S603
-                ["dconf", "reset", "-f", GSETTINGS_PATH_PREFIX],  # noqa: S607
-                check=True,
-            )
-        except (subprocess.CalledProcessError, FileNotFoundError) as e:
-            msg = f"GSETTINGS REGISTRY: Failed to reset dconf: {e}"
-            debug.print_message(debug.LEVEL_SEVERE, msg, True)
-            return
-
-        self._extras_migrated.clear()
-        self._handles.clear()
-        self.migrate_all(import_dir)
-
     @staticmethod
     def _read_profiles_from_json(prefs_dir: str) -> list:
         """Reads profile list from user-settings.conf for migration."""

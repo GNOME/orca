@@ -78,12 +78,6 @@ and once for this instance.
 .BI "\-p, \-\-profile " NAME
 Load the specified user profile.
 .TP
-.BI "\-i, \-\-import\-dir " DIR
-Import settings from
-.I DIR
-into dconf, overwriting current settings.
-This is primarily intended for migration purposes.
-.TP
 .BI "\-\-speech\-system " NAME
 Use the specified speech system.
 .TP
@@ -100,6 +94,13 @@ Enable debug output for
 .B orca
 and send all debug output to the given
 .IR FILE .
+.TP
+.BI "\-\-approve\-extension " FILENAME
+Approve a user extension for loading. The extension file must exist in
+.IR ~/.local/share/orca/extensions/ .
+.TP
+.BI "\-\-revoke\-extension " FILENAME
+Revoke approval for a user extension.
 
 .SH KEYBOARD SETTINGS
 Orca provides two keyboard modes, Desktop and Laptop keyboard layout.
@@ -129,11 +130,11 @@ Open the preferences dialog for the current application.
 .I ~/.local/share/orca/
 User preferences directory.
 .TP
-.I ~/.local/share/orca/orca\-customizations.py
-User customizations configuration file.
+.I ~/.local/share/orca/extensions/
+User extensions directory.
 .TP
-.I ~/.local/share/orca/orca\-scripts/
-User scripts directory.
+.I ~/.local/share/orca/orca\-customizations.py
+User customizations configuration file (deprecated).
 
 
 .SH AUTHOR
