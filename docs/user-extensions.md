@@ -23,9 +23,12 @@ directory that contains an `Extension` subclass is a potential extension.
 
 ## The Controller API
 
-The only supported API for user extensions comes from the remote controller, available
-as `self.controller` on the Extension base class. These are in-process "internal" wrappers
-around Orca's D-Bus remote controller interface so that no actual D-Bus calls are made.
+The supported API for user extensions comes from the remote controller, available as
+`self.controller` on the `Extension` base class. The controller provides access to all
+of Orca's settings and its commands, both bound and unbound.
+
+The following in-process "internal" wrappers should be used in user extensions to avoid
+making actual D-Bus calls:
 
 ### `present_message_internal(message)`
 
@@ -207,52 +210,36 @@ Available modifier masks:
 ## Approving Extensions
 
 For security, extensions must be approved before Orca will load them. When Orca
-discovers an unapproved extension, it logs the file's SHA256 hash and a `dconf`
-command to approve it.
+discovers an unapproved extension, it logs the file's SHA256 hash.
 
-Until the extension management UI is implemented, approval is done manually
-via `dconf`. Note that `dconf write` replaces the entire value, so when
-approving or revoking individual extensions, you must include all other entries.
-To add a new approval without losing existing ones, read the current value first:
+Approval and revocation can be done via the command line:
 
 ```sh
-# See what's currently approved:
-dconf read /org/gnome/orca/default/extensions/approved-user-extensions
-# Then write it back with the new entry added.
+# Approve an extension:
+orca --approve-extension my_extension.py
+
+# Revoke approval:
+orca --revoke-extension my_extension.py
 ```
 
-```sh
-# Check your debug log for the approval command, or compute the hash:
-sha256sum ~/.local/share/orca/extensions/my_extension.py
-
-# Approve a single extension (replace HASH with the actual SHA256 hash):
-dconf write /org/gnome/orca/default/extensions/approved-user-extensions \
-    "{'my_extension.py': 'HASH'}"
-
-# Approve multiple extensions (all entries must be included):
-dconf write /org/gnome/orca/default/extensions/approved-user-extensions \
-    "{'my_extension.py': 'HASH1', 'another.py': 'HASH2'}"
-
-# Revoke one extension while keeping others (rewrite without it):
-dconf write /org/gnome/orca/default/extensions/approved-user-extensions \
-    "{'another.py': 'HASH2'}"
-
-# Revoke all approvals:
-dconf reset /org/gnome/orca/default/extensions/approved-user-extensions
-```
+These commands compute the file's SHA256 hash and persist the approval in dconf.
+The extension will be loaded on the next Orca startup.
 
 If you edit an approved extension, its hash changes and Orca will not load it
-until you re-approve it with the new hash. The old hash remains in dconf until
-you update it.
-
-If you delete an extension file, its approval entry remains in dconf but has no
-effect. There is currently no automatic cleanup of stale approvals.
+until you re-approve it. If you delete an extension file, its approval entry
+remains but has no effect. There is currently no automatic cleanup of stale
+approvals.
 
 ## Disabling Extensions
 
 Any extension (built-in or user) can be disabled by adding its class name to
-the `disabled-extensions` list. As with approvals, `dconf write` replaces the
-entire list:
+the `disabled-extensions` list. A disabled extension's commands are not
+registered, do not appear in the keybindings list, and cannot be triggered.
+For built-in extensions like `StructuralNavigator` or `CaretNavigator`, this
+effectively removes that functionality from Orca entirely until re-enabled.
+
+Until the extension management UI is implemented, disabling is done via `dconf`.
+Note that `dconf write` replaces the entire list:
 
 ```sh
 # Disable one extension:

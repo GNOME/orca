@@ -37,7 +37,7 @@ import subprocess
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, overload
 
-from gi.repository import Gio
+from gi.repository import Gio, GLib
 
 from . import debug, gsettings_migrator
 
@@ -265,6 +265,24 @@ class GSettingsRegistry:
         """Clears all runtime value overrides."""
 
         self._runtime_values.clear()
+
+    def set_dict(self, schema: str, key: str, gtype: str, value: dict) -> bool:
+        """Sets a dict value in dconf for the current profile."""
+
+        gs = self.get_settings(schema, self._profile)
+        if gs is None:
+            return False
+        gs.set_value(key, GLib.Variant(gtype, value))
+        return True
+
+    def set_strv(self, schema: str, key: str, value: list[str]) -> bool:
+        """Sets a string list in dconf for the current profile."""
+
+        gs = self.get_settings(schema, self._profile)
+        if gs is None:
+            return False
+        gs.set_strv(key, value)
+        return True
 
     def get_pronunciations(self, profile: str = "", app_name: str = "") -> dict:
         """Returns the pronunciation dictionary from dconf for a single profile/app layer."""

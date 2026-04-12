@@ -296,6 +296,40 @@ CLI_DEBUG_FILE = _("Send debug output to the specified file")
 # using the '--debug-file' command line option.
 CLI_DEBUG_FILE_NAME = _("FILE")
 
+# Translators: This is the description of command line option '--approve-extension'
+# which allows the user to approve a user extension for loading.
+CLI_APPROVE_EXTENSION = _("Approve a user extension for loading")
+
+# Translators: This is the description of command line option '--revoke-extension'
+# which allows the user to revoke approval for a user extension.
+CLI_REVOKE_EXTENSION = _("Revoke approval for a user extension")
+
+# Translators: This string indicates to the user what should be provided when
+# using the '--approve-extension' or '--revoke-extension' command line options.
+CLI_EXTENSION_FILENAME = _("FILENAME")
+
+# Translators: This message is presented when the user tries to approve an
+# extension file that does not exist. The string substitution is the file path.
+CLI_EXTENSION_NOT_FOUND = _("Extension not found: %s")
+
+# Translators: This message is presented when a user extension has been approved
+# for loading. The string substitution is the extension filename.
+CLI_EXTENSION_APPROVED = _("Approved extension: %s")
+
+# Translators: This message is presented when approval for a user extension has
+# been revoked. The string substitution is the extension filename.
+CLI_EXTENSION_REVOKED = _("Revoked approval for: %s")
+
+# Translators: This message is presented when the user tries to revoke an
+# extension that was not approved. The string substitution is the filename.
+CLI_EXTENSION_NOT_APPROVED = _("Extension not approved: %s")
+
+# Translators: This warning is presented after approving an extension that is
+# currently disabled. The string substitution is the extension's class name.
+CLI_EXTENSION_APPROVED_BUT_DISABLED = _(
+    "Warning: %s is currently disabled and will not load until enabled."
+)
+
 # Translators: This is the description of command line option '-s, --setup'
 # that will place the user in Orca's GUI preferences dialog.
 CLI_GUI_SETUP = _("Set up user preferences (GUI version)")

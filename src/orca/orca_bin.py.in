@@ -149,6 +149,14 @@ class Parser(argparse.ArgumentParser):
             help=messages.CLI_DEBUG_FILE, metavar=messages.CLI_DEBUG_FILE_NAME)
         self.add_argument(
             "--debug", action="store_true", help=messages.CLI_ENABLE_DEBUG)
+        self.add_argument(
+            "--approve-extension", action="store",
+            help=messages.CLI_APPROVE_EXTENSION,
+            metavar=messages.CLI_EXTENSION_FILENAME)
+        self.add_argument(
+            "--revoke-extension", action="store",
+            help=messages.CLI_REVOKE_EXTENSION,
+            metavar=messages.CLI_EXTENSION_FILENAME)
 
         self._optionals.title = messages.CLI_OPTIONAL_ARGUMENTS
 
@@ -265,6 +273,37 @@ def _load_customizations(prefs_dir: str) -> None:
 
     debug.print_tokens(debug.LEVEL_ALL, tokens, True)
 
+def _approve_extension(extensions_dir: str, filename: str) -> int:
+    """Approves a user extension for loading."""
+
+    filepath = os.path.join(extensions_dir, filename)
+    if not os.path.isfile(filepath):
+        print(messages.CLI_EXTENSION_NOT_FOUND % filepath)
+        return 1
+
+    loader = extension_loader.get_loader()
+    loader.approve_extension_file(filepath)
+    print(messages.CLI_EXTENSION_APPROVED % filename)
+
+    class_name = loader.get_class_name(filepath)
+    if class_name and class_name in loader.get_disabled_extensions():
+        print(messages.CLI_EXTENSION_APPROVED_BUT_DISABLED % class_name)
+
+    return 0
+
+def _revoke_extension(filename: str) -> int:
+    """Revokes approval for a user extension."""
+
+    loader = extension_loader.get_loader()
+    approved = loader.get_approved_extensions()
+    if filename not in approved:
+        print(messages.CLI_EXTENSION_NOT_APPROVED % filename)
+        return 1
+
+    loader.revoke_extension(filename)
+    print(messages.CLI_EXTENSION_REVOKED % filename)
+    return 0
+
 def _get_speech_server_factory_names() -> list[str]:
     """Returns the names of valid speech server factory modules."""
 
@@ -304,9 +343,14 @@ def main() -> int:
     debug.print_message(debug.LEVEL_INFO, "INFO: Preparing to launch.", True)
     prefs_dir = os.path.join(GLib.get_user_data_dir(), "orca")  # pylint: disable=no-value-for-parameter
     _create_prefs_dirs(prefs_dir)
-    _load_customizations(prefs_dir)
 
     extensions_dir = os.path.join(prefs_dir, "extensions")
+    if args.approve_extension:
+        return _approve_extension(extensions_dir, args.approve_extension)
+    if args.revoke_extension:
+        return _revoke_extension(args.revoke_extension)
+
+    _load_customizations(prefs_dir)
     extension_loader.get_loader().discover_and_load(extensions_dir)
 
     if os.environ.get("ORCA_PROFILING"):

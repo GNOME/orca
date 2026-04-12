@@ -22,6 +22,7 @@
 
 from __future__ import annotations
 
+import ast
 import hashlib
 import importlib.util
 import os
@@ -64,10 +65,13 @@ class ExtensionLoader:
         )
 
     def set_disabled_extensions(self, value: list[str]) -> bool:
-        """Sets the list of disabled extension MODULE_NAMEs."""
+        """Sets the list of disabled extension class names."""
 
-        gsettings_registry.get_registry().set_runtime_value(_SCHEMA, _KEY_DISABLED, value)
-        return True
+        return gsettings_registry.get_registry().set_strv(
+            _SCHEMA,
+            _KEY_DISABLED,
+            value,
+        )
 
     @gsettings_registry.get_registry().gsetting(
         key="approved-user-extensions",
@@ -89,8 +93,12 @@ class ExtensionLoader:
     def set_approved_extensions(self, value: dict[str, str]) -> bool:
         """Sets the dict of approved extensions."""
 
-        gsettings_registry.get_registry().set_runtime_value(_SCHEMA, _KEY_APPROVED, value)
-        return True
+        return gsettings_registry.get_registry().set_dict(
+            _SCHEMA,
+            _KEY_APPROVED,
+            "a{ss}",
+            value,
+        )
 
     def approve_extension(self, filename: str, sha256_hash: str) -> None:
         """Approves an extension by recording its filename and hash."""
@@ -98,6 +106,14 @@ class ExtensionLoader:
         approved = dict(self.get_approved_extensions())
         approved[filename] = sha256_hash
         self.set_approved_extensions(approved)
+
+    def approve_extension_file(self, filepath: str) -> str:
+        """Computes the hash and approves the extension. Returns the hash."""
+
+        filename = os.path.basename(filepath)
+        file_hash = self._compute_hash(filepath)
+        self.approve_extension(filename, file_hash)
+        return file_hash
 
     def revoke_extension(self, filename: str) -> None:
         """Revokes approval for an extension."""
@@ -203,6 +219,31 @@ class ExtensionLoader:
             msg = f"EXTENSION LOADER: Loading user extension {ext.module_name}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             ext.set_up_commands()
+
+    @staticmethod
+    def get_class_name(filepath: str) -> str | None:
+        """Returns the Extension subclass name from a file without executing it."""
+
+        try:
+            with open(filepath, encoding="utf-8") as f:
+                tree = ast.parse(f.read())
+        except (OSError, SyntaxError):
+            return None
+
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.ClassDef):
+                continue
+            for base in node.bases:
+                if isinstance(base, ast.Attribute):
+                    name = base.attr
+                elif isinstance(base, ast.Name):
+                    name = base.id
+                else:
+                    continue
+                if name == "Extension":
+                    return node.name
+
+        return None
 
     @staticmethod
     def _compute_hash(filepath: str) -> str:
