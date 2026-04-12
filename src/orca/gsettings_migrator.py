@@ -22,7 +22,7 @@
 
 This module has no imports of debug, settings_manager, or anything that pulls
 in Atspi, so it can be used by both the orca runtime and the standalone
-gsettings_import_export tool.
+gsettings_import_json tool.
 """
 
 from __future__ import annotations

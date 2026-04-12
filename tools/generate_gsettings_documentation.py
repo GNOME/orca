@@ -193,26 +193,12 @@ def generate_documentation(
     )
     lines.append("")
     lines.append(
-        "There is also a stand-alone tool mainly for testing and debugging the migration: "
-        "`python tools/gsettings_import_export.py <subcommand> ...`"
+        "There is also a stand-alone tool for importing JSON settings into dconf: "
+        "`python tools/gsettings_import_json.py import DIR`"
     )
     lines.append("")
     lines.append(
-        "- `import DIR`: load JSON settings from `DIR` into dconf. "
-        "Use `import --dry-run` to preview writes without changing anything."
-    )
-    lines.append("- `export DIR`: save current dconf settings to JSON files in `DIR`.")
-    lines.append(
-        "- `diff SRC_DIR OUT_DIR`: export current dconf to JSON in `OUT_DIR` and compare "
-        "against `SRC_DIR`. Nothing is imported; useful for verifying migration results."
-    )
-    lines.append(
-        "- `roundtrip SRC_DIR OUT_DIR`: reset `/org/gnome/orca/`, import from `SRC_DIR`, "
-        "export to `OUT_DIR`, then diff. Tests the full import/export cycle from a clean state."
-    )
-    lines.append("")
-    lines.append(
-        "`diff` and `roundtrip` accept `-v` / `--verbose` for fuller output. "
+        "Use `import --dry-run` to preview writes without changing anything. "
         "Use `--prefix <orca-prefix>` if schemas are installed in a non-default prefix."
     )
     lines.append("")

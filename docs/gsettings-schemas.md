@@ -51,14 +51,9 @@ On launch, Orca automatically migrates JSON settings from `~/.local/share/orca/`
 
 `orca -i DIR` / `orca --import-dir DIR` can also import JSON settings manually. This replaces the current `/org/gnome/orca/` settings in dconf, so back up first if needed (see Transferring, Backing Up, and Restoring Settings).
 
-There is also a stand-alone tool mainly for testing and debugging the migration: `python tools/gsettings_import_export.py <subcommand> ...`
+There is also a stand-alone tool for importing JSON settings into dconf: `python tools/gsettings_import_json.py import DIR`
 
-- `import DIR`: load JSON settings from `DIR` into dconf. Use `import --dry-run` to preview writes without changing anything.
-- `export DIR`: save current dconf settings to JSON files in `DIR`.
-- `diff SRC_DIR OUT_DIR`: export current dconf to JSON in `OUT_DIR` and compare against `SRC_DIR`. Nothing is imported; useful for verifying migration results.
-- `roundtrip SRC_DIR OUT_DIR`: reset `/org/gnome/orca/`, import from `SRC_DIR`, export to `OUT_DIR`, then diff. Tests the full import/export cycle from a clean state.
-
-`diff` and `roundtrip` accept `-v` / `--verbose` for fuller output. Use `--prefix <orca-prefix>` if schemas are installed in a non-default prefix.
+Use `import --dry-run` to preview writes without changing anything. Use `--prefix <orca-prefix>` if schemas are installed in a non-default prefix.
 
 ## Transferring, Backing Up, and Restoring Settings
 
