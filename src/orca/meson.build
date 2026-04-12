@@ -107,7 +107,6 @@ lib_sources = [
   'flat_review_presenter.py',
   'focus_manager.py',
   'generator.py',
-  'gsettings_migrator.py',
   'gsettings_registry.py',
   'guilabels.py',
   'input_event.py',

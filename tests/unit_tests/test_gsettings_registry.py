@@ -596,7 +596,7 @@ class TestGSettingsSchemaHandle:
 
 @pytest.mark.unit
 class TestSettingsMappings:
-    """Tests for settings mappings registration and GSettings-to-JSON reading."""
+    """Tests for settings mappings registration."""
 
     def _setup(self, test_context: OrcaTestContext):
         """Set up dependencies."""
@@ -633,75 +633,6 @@ class TestSettingsMappings:
         assert not registry._get_settings_mappings("nonexistent")
 
         del registry._mappings["test-schema"]
-
-    def test_read_mapped_settings_boolean(self, test_context: OrcaTestContext) -> None:
-        """Test gsettings_to_json reads boolean values."""
-
-        self._setup(test_context)
-        from orca import gsettings_migrator
-        from orca.gsettings_registry import SettingsMapping, get_registry
-
-        registry = get_registry()
-
-        registry.register_settings_mappings(
-            "test-read",
-            [
-                SettingsMapping("enableFoo", "foo-enabled", "b", True),
-                SettingsMapping("enableBar", "bar-enabled", "b", False),
-            ],
-        )
-
-        mock_gs = test_context.Mock()
-
-        mock_variant_foo = test_context.Mock()
-        mock_variant_foo.get_boolean.return_value = False
-
-        def get_user_value_side_effect(key):
-            if key == "foo-enabled":
-                return mock_variant_foo
-            return None  # bar-enabled not set
-
-        mock_gs.get_user_value.side_effect = get_user_value_side_effect
-
-        mappings = registry._get_settings_mappings("test-read")
-        result = gsettings_migrator.gsettings_to_json(mock_gs, mappings)
-        assert result == {"enableFoo": False}
-        assert "enableBar" not in result
-
-        del registry._mappings["test-read"]
-
-    def test_read_mapped_settings_enum(self, test_context: OrcaTestContext) -> None:
-        """Test gsettings_to_json reverses enum mapping (string->int)."""
-
-        self._setup(test_context)
-        from orca import gsettings_migrator
-        from orca.gsettings_registry import SettingsMapping, get_registry
-
-        registry = get_registry()
-
-        registry.register_settings_mappings(
-            "test-read-enum",
-            [
-                SettingsMapping(
-                    "verbLevel",
-                    "verbosity-level",
-                    "s",
-                    1,
-                    enum_map={0: "brief", 1: "verbose"},
-                ),
-            ],
-        )
-
-        mock_gs = test_context.Mock()
-        mock_variant = test_context.Mock()
-        mock_variant.get_string.return_value = "brief"
-        mock_gs.get_user_value.return_value = mock_variant
-
-        mappings = registry._get_settings_mappings("test-read-enum")
-        result = gsettings_migrator.gsettings_to_json(mock_gs, mappings)
-        assert result == {"verbLevel": 0}
-
-        del registry._mappings["test-read-enum"]
 
 
 @pytest.mark.unit
@@ -998,55 +929,6 @@ class TestDescriptorKeyCollision:
         finally:
             registry._descriptors.pop(("braille", "enabled"), None)
             registry._descriptors.pop(("sound", "enabled"), None)
-
-
-@pytest.mark.unit
-class TestStringArraySupport:
-    """Tests for string array (as) type support in GSettings-to-JSON reading."""
-
-    def _setup(self, test_context: OrcaTestContext):
-        """Set up dependencies."""
-
-        additional_modules = [
-            "orca.cmdnames",
-            "orca.messages",
-            "orca.object_properties",
-            "orca.orca_gui_navlist",
-            "orca.orca_i18n",
-            "orca.AXHypertext",
-            "orca.AXObject",
-            "orca.AXTable",
-            "orca.AXText",
-            "orca.AXUtilities",
-            "orca.input_event",
-        ]
-        test_context.setup_shared_dependencies(additional_modules)
-
-    def test_read_mapped_settings_string_array(self, test_context: OrcaTestContext) -> None:
-        """Test gsettings_to_json reads string array values."""
-
-        self._setup(test_context)
-        from orca import gsettings_migrator
-        from orca.gsettings_registry import SettingsMapping, get_registry
-
-        registry = get_registry()
-
-        registry.register_settings_mappings(
-            "test-as-read",
-            [SettingsMapping("textAttributesToSpeak", "attributes-to-speak", "as", [])],
-        )
-
-        mock_gs = test_context.Mock()
-        mock_variant = test_context.Mock()
-        mock_variant.unpack.return_value = ["size", "weight", "style"]
-        mock_gs.get_user_value.return_value = mock_variant
-
-        try:
-            mappings = registry._get_settings_mappings("test-as-read")
-            result = gsettings_migrator.gsettings_to_json(mock_gs, mappings)
-            assert result == {"textAttributesToSpeak": ["size", "weight", "style"]}
-        finally:
-            registry._mappings.pop("test-as-read", None)
 
 
 @pytest.mark.unit

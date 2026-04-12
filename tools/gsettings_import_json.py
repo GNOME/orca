@@ -41,40 +41,305 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-# pylint: disable=wrong-import-position
-
 """Standalone tool for importing Orca JSON settings into GSettings/dconf."""
+
+from __future__ import annotations
 
 import argparse
 import json
 import os
+import re
 import sys
+from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
-from gi.repository import Gio
+from gi.repository import Gio, GLib
 
 from generate_gsettings_schemas import _discover_schemas
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
-from orca.gsettings_migrator import (
-    KEYBINDINGS_METADATA_KEYS,
-    VOICE_FAMILY_FIELDS,
-    VOICE_MIGRATION_MAP,
-    VOICE_TYPES,
-    SettingsMapping,
-    apply_legacy_aliases,
-    fix_bool_enum_values,
-    force_navigation_enabled,
-    hoist_keybindings_metadata,
-    import_keybindings,
-    import_pronunciations,
-    import_synthesizer,
-    import_voice,
-    json_to_gsettings,
-    populate_per_layout_modifier_keys,
-    resolve_enum_nick,
-    sanitize_gsettings_path,
+_KEYBINDINGS_METADATA_KEYS: frozenset[str] = frozenset({"keyboardLayout", "orcaModifierKeys"})
+_DESKTOP_MODIFIER_KEYS_DEFAULT: list[str] = ["Insert", "KP_Insert"]
+_LAPTOP_MODIFIER_KEYS_DEFAULT: list[str] = ["Caps_Lock", "Shift_Lock"]
+
+_LEGACY_KEY_ALIASES: dict[str, str] = {
+    "progressBarVerbosity": "progressBarSpeechVerbosity",
+    "progressBarUpdateInterval": "progressBarSpeechInterval",
+}
+
+_NAVIGATION_ENABLED_KEYS = (
+    "caretNavigationEnabled",
+    "structuralNavigationEnabled",
+    "tableNavigationEnabled",
 )
+
+_VOICE_TYPES: list[str] = ["default", "uppercase", "hyperlink", "system"]
+
+_VOICE_MIGRATION_MAP: dict[str, tuple[str, str, Any]] = {
+    "established": ("established", "b", False),
+    "rate": ("rate", "i", 50),
+    "average-pitch": ("pitch", "d", 5.0),
+    "gain": ("volume", "d", 10.0),
+}
+
+_VOICE_FAMILY_FIELDS: dict[str, str] = {
+    "name": "family-name",
+    "lang": "family-lang",
+    "dialect": "family-dialect",
+    "gender": "family-gender",
+    "variant": "family-variant",
+}
+
+
+@dataclass
+class SettingsMapping:
+    """Describes a mapping between a preferences key and a GSettings key."""
+
+    migration_key: str
+    gs_key: str
+    gtype: str  # "b", "s", "i", "d", "as"
+    default: Any
+    enum_map: dict[int, str] | None = None
+    string_enum: bool = False
+
+
+def sanitize_gsettings_path(name: str) -> str:
+    """Sanitize a name for use in a GSettings path."""
+
+    sanitized = name.lower()
+    sanitized = re.sub(r"[^a-z0-9-]", "-", sanitized)
+    sanitized = re.sub(r"-+", "-", sanitized)
+    return sanitized.strip("-")
+
+
+def resolve_enum_nick(value: Any, enum_map: dict[int, str]) -> str | None:
+    """Resolve a JSON enum value (string nick, int, or bool) to a GSettings enum nick."""
+
+    if isinstance(value, str):
+        return value if value in enum_map.values() else None
+    return enum_map.get(value)
+
+
+def force_navigation_enabled(json_dict: dict) -> None:
+    """Force navigation-enabled keys to True during migration."""
+
+    # In the old system these defaulted to False because per-script logic controlled
+    # activation. In the new system they represent the user's preference and default
+    # to True. Migrating the old False would disable navigation for all scripts.
+    for key in _NAVIGATION_ENABLED_KEYS:
+        if key in json_dict:
+            json_dict[key] = True
+
+
+def fix_bool_enum_values(json_dict: dict) -> None:
+    """Fix enum settings stored as booleans instead of integers in JSON."""
+
+    # Some enum-typed settings are booleans in user JSON files instead of the
+    # expected integers. Python's bool-is-int means False==0 and True==1,
+    # which silently resolve to the wrong enum nick during migration.
+    bool_enum_fixes: dict[str, dict[bool, int]] = {
+        "findResultsVerbosity": {True: 2, False: 2},  # FIND_SPEAK_ALL
+    }
+    for key, mapping in bool_enum_fixes.items():
+        if key in json_dict and isinstance(json_dict[key], bool):
+            json_dict[key] = mapping[json_dict[key]]
+
+
+def apply_legacy_aliases(json_dict: dict) -> None:
+    """Copy legacy key names to their modern equivalents if modern key is absent."""
+
+    for legacy_key, modern_key in _LEGACY_KEY_ALIASES.items():
+        if legacy_key in json_dict and modern_key not in json_dict:
+            json_dict[modern_key] = json_dict[legacy_key]
+
+
+def hoist_keybindings_metadata(profile_prefs: dict) -> None:
+    """Move keyboardLayout and orcaModifierKeys from keybindings to profile level."""
+
+    keybindings = profile_prefs.get("keybindings", {})
+    for key in _KEYBINDINGS_METADATA_KEYS:
+        if key in keybindings and key not in profile_prefs:
+            profile_prefs[key] = keybindings[key]
+
+
+def populate_per_layout_modifier_keys(
+    gs: Gio.Settings,
+    profile_prefs: dict,
+    skip_defaults: bool,
+) -> bool:
+    """Populates keyboard-layout and modifier keys from keybinding metadata during migration."""
+
+    layout = profile_prefs.get("keyboardLayout", 1)
+    is_desktop = layout == 1
+    wrote_any = False
+
+    layout_nick = "desktop" if is_desktop else "laptop"
+    if not skip_defaults or layout_nick != "desktop":
+        gs.set_string("keyboard-layout", layout_nick)
+        wrote_any = True
+
+    modifier_keys = profile_prefs.get("orcaModifierKeys")
+    if modifier_keys is None:
+        return wrote_any
+
+    if is_desktop:
+        key = "desktop-modifier-keys"
+        default = _DESKTOP_MODIFIER_KEYS_DEFAULT
+    else:
+        key = "laptop-modifier-keys"
+        default = _LAPTOP_MODIFIER_KEYS_DEFAULT
+
+    if skip_defaults and modifier_keys == default:
+        return wrote_any
+
+    gs.set_strv(key, modifier_keys)
+    return True
+
+
+def _write_one_mapping(
+    gs: Gio.Settings,
+    m: SettingsMapping,
+    value: Any,
+    skip_defaults: bool,
+) -> bool:
+    """Write a single mapping value to GSettings. Returns True if written."""
+
+    if m.enum_map is not None:
+        nick = resolve_enum_nick(value, m.enum_map)
+        if nick is None:
+            return False
+        if skip_defaults and m.default in (nick, value):
+            return False
+        gs.set_string(m.gs_key, nick)
+        return True
+
+    if skip_defaults and value == m.default:
+        return False
+    if m.gtype == "b":
+        gs.set_boolean(m.gs_key, value)
+    elif m.gtype == "s":
+        gs.set_string(m.gs_key, value)
+    elif m.gtype == "i":
+        gs.set_int(m.gs_key, int(value))
+    elif m.gtype == "d":
+        gs.set_double(m.gs_key, float(value))
+    elif m.gtype == "as":
+        gs.set_strv(m.gs_key, value)
+    else:
+        return False
+    return True
+
+
+def json_to_gsettings(
+    json_dict: dict,
+    gs: Gio.Settings,
+    mappings: list[SettingsMapping],
+    skip_defaults: bool = True,
+) -> bool:
+    """Writes JSON settings to a Gio.Settings object. Returns True if any value was written."""
+
+    wrote_any = False
+    for m in mappings:
+        if m.migration_key not in json_dict:
+            continue
+        if _write_one_mapping(gs, m, json_dict[m.migration_key], skip_defaults):
+            wrote_any = True
+    return wrote_any
+
+
+def import_voice(gs: Gio.Settings, voice_data: dict, skip_defaults: bool = True) -> bool:
+    """Import ACSS voice data to a Gio.Settings object. Returns True if any value was written."""
+
+    migrated = False
+    for acss_key, (gs_key, gs_type, default) in _VOICE_MIGRATION_MAP.items():
+        if acss_key not in voice_data:
+            continue
+        value = voice_data[acss_key]
+        if skip_defaults:
+            if gs_type == "b" and bool(value) == default:
+                continue
+            if gs_type == "i" and int(value) == default:
+                continue
+            if gs_type == "d" and float(value) == default:
+                continue
+        if gs_type == "b":
+            gs.set_boolean(gs_key, bool(value))
+        elif gs_type == "i":
+            gs.set_int(gs_key, int(value))
+        elif gs_type == "d":
+            gs.set_double(gs_key, float(value))
+        migrated = True
+
+    family = voice_data.get("family", {})
+    if isinstance(family, dict):
+        for json_field, gs_key in _VOICE_FAMILY_FIELDS.items():
+            val = family.get(json_field)
+            if val is not None and str(val):
+                gs.set_string(gs_key, str(val))
+                migrated = True
+
+    return migrated
+
+
+def import_synthesizer(gs: Gio.Settings, profile_prefs: dict) -> bool:
+    """Import speechServerInfo to GSettings. Returns True if written."""
+
+    speech_server_info = profile_prefs.get("speechServerInfo")
+    if speech_server_info is None or len(speech_server_info) < 2:
+        return False
+    server_name = speech_server_info[0]
+    synthesizer = speech_server_info[1]
+    if server_name is None and synthesizer is None:
+        return False
+    gs.set_string("speech-server", server_name or "")
+    gs.set_string("synthesizer", synthesizer or "")
+    return True
+
+
+def import_pronunciations(gs: Gio.Settings, pronunciations_dict: dict) -> bool:
+    """Import pronunciation dictionary to GSettings. Returns True if written.
+
+    JSON format: {word: [word, replacement]} or {word: replacement}
+    GSettings format: a{ss} {word: replacement}
+    """
+
+    converted: dict[str, str] = {}
+    for key, value in pronunciations_dict.items():
+        if isinstance(value, list) and len(value) >= 2:
+            converted[key] = value[1]
+        elif isinstance(value, list) and len(value) == 1:
+            converted[key] = value[0]
+        elif isinstance(value, str):
+            converted[key] = value
+    if not converted:
+        return False
+
+    gs.set_value("entries", GLib.Variant("a{ss}", converted))
+    return True
+
+
+def import_keybindings(gs: Gio.Settings, keybindings_dict: dict) -> bool:
+    """Import keybinding overrides to GSettings. Returns True if written.
+
+    JSON format: {command_name: [[keysym, mask, mods, clicks], ...]}
+    GSettings format: a{saas} (same structure, all strings)
+    """
+
+    converted: dict[str, list[list[str]]] = {}
+    for key, value in keybindings_dict.items():
+        if key in _KEYBINDINGS_METADATA_KEYS:
+            continue
+        if isinstance(value, list):
+            bindings: list[list[str]] = [
+                [str(v) for v in binding] for binding in value if isinstance(binding, list)
+            ]
+            converted[key] = bindings
+    if not converted:
+        return False
+
+    gs.set_value("entries", GLib.Variant("a{saas}", converted))
+    return True
+
 
 GSETTINGS_PATH_PREFIX = "/org/gnome/orca/"
 
@@ -128,7 +393,7 @@ class SchemaSource:
             sys.exit(1)
         self._cache: dict[str, Gio.Settings] = {}
 
-    def lookup(self, schema_id: str) -> "Gio.SettingsSchema | None":
+    def lookup(self, schema_id: str) -> Gio.SettingsSchema | None:
         """Returns the schema for schema_id, or None if not installed."""
         return self._source.lookup(schema_id, True)
 
@@ -235,7 +500,7 @@ def _import_voice_for_path(
 ) -> None:
     """Import ACSS voice data to GSettings."""
     if dry_run:
-        for acss_key, (gs_key, gs_type, default) in VOICE_MIGRATION_MAP.items():
+        for acss_key, (gs_key, gs_type, default) in _VOICE_MIGRATION_MAP.items():
             if acss_key not in voice_data:
                 continue
             value = voice_data[acss_key]
@@ -249,7 +514,7 @@ def _import_voice_for_path(
             print(f"  {path}{gs_key} = {value!r}")
         family = voice_data.get("family", {})
         if isinstance(family, dict):
-            for json_field, gs_key in VOICE_FAMILY_FIELDS.items():
+            for json_field, gs_key in _VOICE_FAMILY_FIELDS.items():
                 val = family.get(json_field)
                 if val is not None and str(val):
                     print(f"  {path}{gs_key} = {str(val)!r}")
@@ -297,7 +562,7 @@ def _import_keybindings_for_path(
     if dry_run:
         converted: dict[str, list[list[str]]] = {}
         for key, value in keybindings_dict.items():
-            if key in KEYBINDINGS_METADATA_KEYS:
+            if key in _KEYBINDINGS_METADATA_KEYS:
                 continue
             if isinstance(value, list):
                 bindings = [
@@ -411,7 +676,7 @@ def _import_profile(
     )
 
     voices = profile_prefs.get("voices", {})
-    for voice_type in VOICE_TYPES:
+    for voice_type in _VOICE_TYPES:
         voice_data = voices.get(voice_type, {})
         if not voice_data:
             continue
@@ -483,7 +748,7 @@ def _import_app(
             )
 
         voices = general.get("voices", {})
-        for voice_type in VOICE_TYPES:
+        for voice_type in _VOICE_TYPES:
             voice_data = voices.get(voice_type, {})
             if not voice_data:
                 continue

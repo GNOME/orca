@@ -382,30 +382,6 @@ class TestProfileOperations:
 class TestDictSchemas:
     """Tests pronunciation and keybinding schemas (dict serialization)."""
 
-    def test_pronunciation_round_trip(self, gsettings_registry, gsettings_profile) -> None:
-        """Pronunciations should survive import -> get_pronunciations."""
-
-        from orca import gsettings_migrator
-
-        gs = gsettings_registry.get_settings("pronunciations", "default", "pronunciations")
-        gsettings_migrator.import_pronunciations(
-            gs, {"orca": ["orca", "or-kah"], "GNOME": ["GNOME", "guh-nome"]}
-        )
-
-        result = gsettings_registry.get_pronunciations("default")
-        assert result == {"orca": "or-kah", "GNOME": "guh-nome"}
-
-    def test_keybinding_round_trip(self, gsettings_registry, gsettings_profile) -> None:
-        """Keybindings should survive import -> get_keybindings."""
-
-        from orca import gsettings_migrator
-
-        gs = gsettings_registry.get_settings("keybindings", "default", "keybindings")
-        gsettings_migrator.import_keybindings(gs, {"doAction": [["65", "0", "1", "1"]]})
-
-        result = gsettings_registry.get_keybindings("default")
-        assert result["doAction"] == [["65", "0", "1", "1"]]
-
     def test_pronunciations_empty_for_unset_profile(
         self, gsettings_registry, gsettings_profile
     ) -> None:
