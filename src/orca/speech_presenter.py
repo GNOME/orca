@@ -726,7 +726,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             for voice_type, voice_data in voices.items():
                 if not voice_data:
                     continue
-                sub = gsettings_registry.voice_set_sub_path(voice_type)
+                sub = gsettings_registry.get_registry().voice_set_sub_path(voice_type)
                 voice_gs = registry.get_settings("voice", p, sub, app_name)
                 if voice_gs is None:
                     continue

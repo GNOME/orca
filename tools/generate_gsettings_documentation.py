@@ -179,23 +179,17 @@ def generate_documentation(
     lines.append("- `dconf watch /org/gnome/orca/default/speech/`: one schema path")
     lines.append("- `gsettings monitor org.gnome.Orca.Speech:/org/gnome/orca/default/speech/`")
     lines.append("")
-    lines.append("## Migrating to GSettings")
+    lines.append("## Migrating from JSON Settings")
     lines.append("")
     lines.append(
-        "On launch, Orca automatically migrates JSON settings from `~/.local/share/orca/` "
-        "into dconf if there are no dconf settings found."
+        "Orca v50 automatically migrated JSON settings from `~/.local/share/orca/` "
+        "into dconf on first launch. Users upgrading from Orca v49 or earlier directly "
+        "to v51 or later can use the standalone import tool:"
     )
     lines.append("")
-    lines.append(
-        "`orca -i DIR` / `orca --import-dir DIR` can also import JSON settings manually. "
-        "This replaces the current `/org/gnome/orca/` settings in dconf, so back up first "
-        "if needed (see Transferring, Backing Up, and Restoring Settings)."
-    )
-    lines.append("")
-    lines.append(
-        "There is also a stand-alone tool for importing JSON settings into dconf: "
-        "`python tools/gsettings_import_json.py import DIR`"
-    )
+    lines.append("```sh")
+    lines.append("python tools/gsettings_import_json.py import ~/.local/share/orca")
+    lines.append("```")
     lines.append("")
     lines.append(
         "Use `import --dry-run` to preview writes without changing anything. "

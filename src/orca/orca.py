@@ -47,7 +47,6 @@ from . import (
     debugging_tools_manager,
     event_manager,
     focus_manager,
-    gsettings_registry,
     messages,
     mouse_review,
     orca_modifier_manager,
@@ -243,7 +242,7 @@ def _activate_services():
     systemd.get_manager().notify_ready()
 
 
-def main(prefs_dir: str = ""):
+def main():
     """The main entry point for Orca."""
 
     _setup_signal_handlers()
@@ -253,9 +252,6 @@ def main(prefs_dir: str = ""):
     if error is not None:
         return error
 
-    registry = gsettings_registry.get_registry()
-    registry.migrate_all(prefs_dir)  # TODO - JD: Delete this in v51.
-    registry.migrate_voice_paths()
     load_user_settings(is_reload=False)
 
     is_systemd_managed = systemd.get_manager().is_systemd_managed()

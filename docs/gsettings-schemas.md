@@ -45,13 +45,13 @@ You can read and write individual Orca settings with `dconf`.
 - `dconf watch /org/gnome/orca/default/speech/`: one schema path
 - `gsettings monitor org.gnome.Orca.Speech:/org/gnome/orca/default/speech/`
 
-## Migrating to GSettings
+## Migrating from JSON Settings
 
-On launch, Orca automatically migrates JSON settings from `~/.local/share/orca/` into dconf if there are no dconf settings found.
+Orca v50 automatically migrated JSON settings from `~/.local/share/orca/` into dconf on first launch. Users upgrading from Orca v49 or earlier directly to v51 or later can use the standalone import tool:
 
-`orca -i DIR` / `orca --import-dir DIR` can also import JSON settings manually. This replaces the current `/org/gnome/orca/` settings in dconf, so back up first if needed (see Transferring, Backing Up, and Restoring Settings).
-
-There is also a stand-alone tool for importing JSON settings into dconf: `python tools/gsettings_import_json.py import DIR`
+```sh
+python tools/gsettings_import_json.py import ~/.local/share/orca
+```
 
 Use `import --dry-run` to preview writes without changing anything. Use `--prefix <orca-prefix>` if schemas are installed in a non-default prefix.
 

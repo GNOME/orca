@@ -175,15 +175,15 @@ class TestRegistryLookup:
     ) -> None:
         """voice_type='uppercase' should read from voice-sets/primary/uppercase."""
 
-        from orca.gsettings_registry import voice_set_sub_path
+        from orca.gsettings_registry import GSettingsRegistry
 
         handle = gsettings_handle("voice")
-        handle.get_for_profile("default", sub_path=voice_set_sub_path("default")).set_double(
-            "pitch", 1.0
-        )
-        handle.get_for_profile("default", sub_path=voice_set_sub_path("uppercase")).set_double(
-            "pitch", 9.0
-        )
+        handle.get_for_profile(
+            "default", sub_path=GSettingsRegistry.voice_set_sub_path("default")
+        ).set_double("pitch", 1.0)
+        handle.get_for_profile(
+            "default", sub_path=GSettingsRegistry.voice_set_sub_path("uppercase")
+        ).set_double("pitch", 9.0)
 
         default_pitch = gsettings_registry.layered_lookup(
             "voice", "pitch", "d", voice_type="default"
@@ -419,53 +419,3 @@ class TestDictSchemas:
         """get_keybindings should return {} for a profile with no data."""
 
         assert gsettings_registry.get_keybindings("nonexistent") == {}
-
-
-@pytest.mark.gsettings
-class TestMigrationRoundTrip:
-    """Tests JSON-to-dconf migration via _write_profile_settings."""
-
-    def test_legacy_keys_land_in_correct_schemas(
-        self, gsettings_registry, gsettings_handle, gsettings_profile
-    ) -> None:
-        """Legacy prefs should be mapped to their correct GSettings schema and key."""
-
-        general = {
-            "enableSpeech": False,
-            "enableBraille": False,
-        }
-        gsettings_registry._write_profile_settings("migrated", general, {}, {})
-
-        gsettings_registry.set_active_profile("migrated")
-        speech = gsettings_handle("speech")
-        braille = gsettings_handle("braille")
-
-        assert speech.get_boolean("enable") is False
-        assert braille.get_boolean("enabled") is False
-
-    def test_migration_includes_pronunciations(self, gsettings_registry, gsettings_profile) -> None:
-        """_write_profile_settings should also persist pronunciations."""
-
-        gsettings_registry._write_profile_settings(
-            "with-pron", {"enableSpeech": True}, {"orca": ["orca", "or-kah"]}, {}
-        )
-        assert gsettings_registry.get_pronunciations("with-pron") == {"orca": "or-kah"}
-
-    def test_migration_includes_keybindings(self, gsettings_registry, gsettings_profile) -> None:
-        """_write_profile_settings should also persist keybindings."""
-
-        gsettings_registry._write_profile_settings(
-            "with-kb", {"enableSpeech": True}, {}, {"doAction": [["65", "0", "1", "1"]]}
-        )
-        result = gsettings_registry.get_keybindings("with-kb")
-        assert "doAction" in result
-
-    def test_migration_sets_profile_metadata(self, gsettings_registry, gsettings_profile) -> None:
-        """_write_profile_settings should write display-name and internal-name."""
-
-        general = {"enableSpeech": True, "profile": ["My Profile", "my-profile"]}
-        gsettings_registry._write_profile_settings("my-profile", general, {}, {})
-
-        gs = gsettings_registry.get_settings("metadata", "my-profile")
-        assert gs.get_string("display-name") == "My Profile"
-        assert gs.get_string("internal-name") == "my-profile"

@@ -1670,7 +1670,7 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         for voice_set in self._deleted_sets:
             for vt in speechserver.VoiceType:
-                sub = gsettings_registry.voice_set_sub_path(vt, voice_set)
+                sub = gsettings_registry.get_registry().voice_set_sub_path(vt, voice_set)
                 gs = registry.get_settings("voice", profile, sub)
                 if gs is not None:
                     for key in gs.list_keys():
@@ -1820,7 +1820,7 @@ class SpeechManager(Extension):
         """Returns voice properties for a non-primary voice set."""
 
         registry = gsettings_registry.get_registry()
-        sub = gsettings_registry.voice_set_sub_path(voice_type, voice_set)
+        sub = gsettings_registry.get_registry().voice_set_sub_path(voice_type, voice_set)
         gs = registry.get_settings("voice", registry.get_active_profile(), sub)
         if gs is None:
             return ACSS({})
@@ -1859,7 +1859,7 @@ class SpeechManager(Extension):
         """Stores voice properties for a voice set."""
 
         registry = gsettings_registry.get_registry()
-        sub = gsettings_registry.voice_set_sub_path(voice_type, voice_set)
+        sub = gsettings_registry.get_registry().voice_set_sub_path(voice_type, voice_set)
         gs = registry.get_settings("voice", registry.get_active_profile(), sub)
         if gs is None:
             return

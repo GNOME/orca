@@ -388,7 +388,7 @@ def main() -> int:
 
     from orca import orca  # pylint: disable=import-outside-toplevel
     debug.print_message(debug.LEVEL_INFO, "INFO: About to launch Orca.", True)
-    return orca.main(prefs_dir)
+    return orca.main()
 
 if __name__ == "__main__":
     sys.exit(main())
