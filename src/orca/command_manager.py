@@ -46,7 +46,6 @@ from . import (
     cmdnames,
     dbus_service,
     debug,
-    gsettings_migrator,
     gsettings_registry,
     guilabels,
     input_event,
@@ -932,7 +931,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             kb_gs = registry.get_settings("keybindings", profile, "keybindings", app_name)
             if kb_gs is not None:
                 if bindings:
-                    gsettings_migrator.import_keybindings(kb_gs, bindings)
+                    kb_gs.set_value("entries", GLib.Variant("a{saas}", bindings))
                 elif self._categories and kb_gs.get_user_value("entries") is not None:
                     kb_gs.reset("entries")
 

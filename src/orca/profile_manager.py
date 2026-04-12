@@ -692,9 +692,7 @@ class ProfileManager(Extension):
 
         for schema_name in registry.get_schema_names():
             if schema_name == "voice":
-                from . import gsettings_migrator  # pylint: disable=import-outside-toplevel
-
-                for voice_type in gsettings_migrator.VOICE_TYPES:
+                for voice_type in gsettings_registry.VOICE_TYPES:
                     sub = gsettings_registry.voice_set_sub_path(voice_type)
                     old_gs = registry.get_settings("voice", old_profile, sub)
                     new_gs = registry.get_settings("voice", new_name, sub)

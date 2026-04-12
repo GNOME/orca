@@ -28,10 +28,9 @@ from typing import TYPE_CHECKING
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # pylint: disable=no-name-in-module
+from gi.repository import GLib, Gtk  # pylint: disable=no-name-in-module
 
 from . import (
-    gsettings_migrator,
     gsettings_registry,
     guilabels,
     messages,
@@ -424,7 +423,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
             pron_gs = registry.get_settings("pronunciations", profile, "pronunciations", app_name)
             if pron_gs is not None:
                 if diff:
-                    gsettings_migrator.import_pronunciations(pron_gs, diff)
+                    pron_gs.set_value("entries", GLib.Variant("a{ss}", diff))
                 elif pron_gs.get_user_value("entries") is not None:
                     pron_gs.reset("entries")
 

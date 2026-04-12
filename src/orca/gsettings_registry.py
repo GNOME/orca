@@ -33,6 +33,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import subprocess
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, overload
@@ -46,12 +47,13 @@ if TYPE_CHECKING:
 
 GSETTINGS_PATH_PREFIX = "/org/gnome/orca/"
 PRIMARY_VOICE_SET = "primary"
+VOICE_TYPES: list[str] = ["default", "uppercase", "hyperlink", "system"]
 
 
 def voice_set_sub_path(voice_type: str, voice_set: str = PRIMARY_VOICE_SET) -> str:
     """Returns the dconf sub-path for a voice type within a voice set."""
 
-    return f"voice-sets/{voice_set}/{gsettings_migrator.sanitize_gsettings_path(voice_type)}"
+    return f"voice-sets/{voice_set}/{GSettingsRegistry.sanitize_gsettings_path(voice_type)}"
 
 
 @dataclass
@@ -68,7 +70,16 @@ class SettingDescriptor:
     migration_key: str | None = None
 
 
-SettingsMapping = gsettings_migrator.SettingsMapping
+@dataclass
+class SettingsMapping:
+    """Describes a mapping between a preferences key and a GSettings key."""
+
+    migration_key: str
+    gs_key: str
+    gtype: str  # "b", "s", "i", "d", "as"
+    default: Any
+    enum_map: dict[int, str] | None = None
+    string_enum: bool = False
 
 
 _NOT_SET = object()
@@ -204,7 +215,10 @@ class GSettingsRegistry:
     def sanitize_gsettings_path(name: str) -> str:
         """Sanitize a name for use in a GSettings path."""
 
-        return gsettings_migrator.sanitize_gsettings_path(name)
+        sanitized = name.lower()
+        sanitized = re.sub(r"[^a-z0-9-]", "-", sanitized)
+        sanitized = re.sub(r"-+", "-", sanitized)
+        return sanitized.strip("-")
 
     def get_settings(
         self,
@@ -223,10 +237,10 @@ class GSettingsRegistry:
             return None
         if source.lookup(schema_id, True) is None:
             return None
-        profile = gsettings_migrator.sanitize_gsettings_path(profile)
+        profile = GSettingsRegistry.sanitize_gsettings_path(profile)
         suffix = sub_path or schema_name
         if app_name:
-            app = gsettings_migrator.sanitize_gsettings_path(app_name)
+            app = GSettingsRegistry.sanitize_gsettings_path(app_name)
             path = f"{GSETTINGS_PATH_PREFIX}{profile}/apps/{app}/{suffix}/"
         else:
             path = f"{GSETTINGS_PATH_PREFIX}{profile}/{suffix}/"
@@ -437,7 +451,13 @@ class GSettingsRegistry:
         mappings = self._get_settings_mappings(schema_name)
         if not mappings:
             return False
-        return gsettings_migrator.json_to_gsettings(prefs_dict, gs, mappings, skip_defaults)
+        migrator_mappings: Any = mappings
+        return gsettings_migrator.json_to_gsettings(
+            prefs_dict,
+            gs,
+            migrator_mappings,
+            skip_defaults,
+        )
 
     @staticmethod
     def _has_dconf_keys() -> bool:
@@ -503,7 +523,7 @@ class GSettingsRegistry:
         """Migrates voice paths for a single profile or app. Returns True if anything migrated."""
 
         migrated = False
-        for vt in gsettings_migrator.VOICE_TYPES:
+        for vt in VOICE_TYPES:
             old_gs = self.get_settings("voice", profile, f"voices/{vt}", app_name)
             new_gs = self.get_settings("voice", profile, voice_set_sub_path(vt), app_name)
             if old_gs is None or new_gs is None:
@@ -748,7 +768,7 @@ class GSettingsRegistry:
         gsettings_migrator.force_navigation_enabled(general)
         gsettings_migrator.fix_bool_enum_values(general)
 
-        profile = gsettings_migrator.sanitize_gsettings_path(profile_name)
+        profile = GSettingsRegistry.sanitize_gsettings_path(profile_name)
         skip_defaults = not app_name and profile_name == "default"
 
         for schema_name in self._schemas:
@@ -758,11 +778,11 @@ class GSettingsRegistry:
 
         if "voice" in self._schemas:
             voices = general.get("voices", {})
-            for voice_type in gsettings_migrator.VOICE_TYPES:
+            for voice_type in VOICE_TYPES:
                 voice_data = voices.get(voice_type, {})
                 if not voice_data:
                     continue
-                vt = gsettings_migrator.sanitize_gsettings_path(voice_type)
+                vt = GSettingsRegistry.sanitize_gsettings_path(voice_type)
                 voice_gs = self.get_settings("voice", profile, voice_set_sub_path(vt), app_name)
                 if voice_gs is not None:
                     gsettings_migrator.import_voice(voice_gs, voice_data, skip_defaults)
@@ -815,7 +835,7 @@ class GSettingsRegistry:
             return
 
         for _label, profile_name in profiles:
-            profile = gsettings_migrator.sanitize_gsettings_path(profile_name)
+            profile = GSettingsRegistry.sanitize_gsettings_path(profile_name)
             metadata_gs = self.get_settings("metadata", profile)
             if metadata_gs is None:
                 continue
@@ -914,13 +934,13 @@ class GSettingsRegistry:
     def rename_profile(self, old_name: str, new_label: str, new_internal_name: str) -> None:
         """Renames a profile by copying all keys to the new path and resetting the old."""
 
-        old_profile = gsettings_migrator.sanitize_gsettings_path(old_name)
-        new_profile = gsettings_migrator.sanitize_gsettings_path(new_internal_name)
+        old_profile = GSettingsRegistry.sanitize_gsettings_path(old_name)
+        new_profile = GSettingsRegistry.sanitize_gsettings_path(new_internal_name)
 
         for schema_name in self._schemas:
             if schema_name == "voice":
-                for voice_type in gsettings_migrator.VOICE_TYPES:
-                    vt = gsettings_migrator.sanitize_gsettings_path(voice_type)
+                for voice_type in VOICE_TYPES:
+                    vt = GSettingsRegistry.sanitize_gsettings_path(voice_type)
                     old_gs = self.get_settings("voice", old_profile, voice_set_sub_path(vt))
                     new_gs = self.get_settings("voice", new_profile, voice_set_sub_path(vt))
                     self.copy_user_keys(old_gs, new_gs)
@@ -939,11 +959,11 @@ class GSettingsRegistry:
     def reset_profile(self, profile_name: str) -> None:
         """Resets all dconf keys for a profile."""
 
-        profile = gsettings_migrator.sanitize_gsettings_path(profile_name)
+        profile = GSettingsRegistry.sanitize_gsettings_path(profile_name)
         for schema_name in self._schemas:
             if schema_name == "voice":
-                for voice_type in gsettings_migrator.VOICE_TYPES:
-                    vt = gsettings_migrator.sanitize_gsettings_path(voice_type)
+                for voice_type in VOICE_TYPES:
+                    vt = GSettingsRegistry.sanitize_gsettings_path(voice_type)
                     gs = self.get_settings("voice", profile, voice_set_sub_path(vt))
                     if gs is not None:
                         self._reset_all_keys(gs)
@@ -1058,16 +1078,16 @@ class GSettingsRegistry:
             return False
         self._extras_migrated.add(key)
 
-        profile = gsettings_migrator.sanitize_gsettings_path(profile_name)
+        profile = GSettingsRegistry.sanitize_gsettings_path(profile_name)
         wrote_any = False
 
         if "voice" in self._schemas:
             voices = profile_prefs.get("voices", {})
-            for voice_type in gsettings_migrator.VOICE_TYPES:
+            for voice_type in VOICE_TYPES:
                 voice_data = voices.get(voice_type, {})
                 if not voice_data:
                     continue
-                vt = gsettings_migrator.sanitize_gsettings_path(voice_type)
+                vt = GSettingsRegistry.sanitize_gsettings_path(voice_type)
                 voice_gs = self.get_settings("voice", profile, voice_set_sub_path(vt))
                 if voice_gs is not None:
                     if gsettings_migrator.import_voice(voice_gs, voice_data, skip_defaults):
@@ -1219,7 +1239,7 @@ class GSettingsRegistry:
 
         if "voice" in self._schemas:
             voices = general.get("voices", {})
-            for voice_type in gsettings_migrator.VOICE_TYPES:
+            for voice_type in VOICE_TYPES:
                 voice_data = voices.get(voice_type, {})
                 if not voice_data:
                     continue
