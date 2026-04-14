@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-04-12 13:23+0000\n"
-"PO-Revision-Date: 2026-04-12 18:32+0200\n"
+"PO-Revision-Date: 2026-04-14 21:37+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -8284,7 +8284,6 @@ msgstr "Način krmarjenja:"
 #. the position. The options control which cells get those dots: none, only the
 #. first character, the first and last characters, or all characters.
 #: src/orca/guilabels.py:2046
-#, fuzzy
 msgid "Braille navigation highlight:"
 msgstr "Poudarki krmarjenja v brajici:"
 
