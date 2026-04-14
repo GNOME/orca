@@ -1,3 +1,39 @@
+50.1 - 14 April 2026
+
+Web:
+
+* Fix presentation of multiline-text web combo boxes.
+
+* Fix presentation of link file size.
+
+* Fix double-presentation of "focus mode" when page load completes.
+
+* Fix say all looping in content, and eliminate some chattiness.
+
+Preferences:
+
+* Fix preferences saving to old profile path after rename.
+
+* Fix bug preventing restoration of default voice values.
+
+* Fix left-over JSONism that prevented spiel from being saved as the
+  speech server.
+
+* Handle TypeError resulting from speech synthesizer crashing during
+  prefs save.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  de              German                    Christian Kirbach
+  eu              Basque                    Asier Saratsua Garmendia
+  fr              French                    Guillaume Bernard
+  it              Italian                   Davide Ferracin
+  pl              Polish                    Victoria Niedzielska
+  ru              Russian                   Danil
+  ru              Russian                   Sergej A.
+
+=========
+
 50.0 - 14 March 2026
 
 Bug fixes and other improvements:
