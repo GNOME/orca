@@ -827,6 +827,10 @@ class StructuralNavigator(Extension):
         for match in objects:
             path = AXObject.get_path(match)
             comparison = script.utilities.path_comparison(path, current_path)
+            # A descendant of the focused object is always "after" it in path terms,
+            # but the caret may have already moved past that descendant's location.
+            if comparison > 0 and self._caret_is_past_descendant(obj, match):
+                comparison = -1
             if (comparison > 0 and is_next) or (comparison < 0 and not is_next):
                 return match
 
@@ -837,6 +841,40 @@ class StructuralNavigator(Extension):
         if notify_user:
             presentation_manager.get_manager().present_message(wrap_msg)
         return objects[0] if obj != objects[0] else None
+
+    def _caret_is_past_descendant(
+        self,
+        obj: Atspi.Accessible,
+        match: Atspi.Accessible,
+    ) -> bool:
+        """Returns True if match is a descendant of obj and the caret in obj is past it."""
+
+        if not AXUtilities.is_ancestor(match, obj):
+            return False
+
+        child = match
+        parent = AXObject.get_parent(child)
+        while parent and parent != obj:
+            child = parent
+            parent = AXObject.get_parent(child)
+
+        child_offset = AXHypertext.get_character_offset_in_parent(child)
+        if child_offset < 0:
+            return False
+
+        caret_offset = AXText.get_caret_offset(obj)
+        if caret_offset < 0:
+            return False
+
+        tokens = [
+            "STRUCTURAL NAVIGATOR: Match",
+            match,
+            "is descendant of",
+            obj,
+            f"at offset {child_offset}; caret is at {caret_offset}",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return caret_offset > child_offset
 
     def _get_state_string(self, obj: Atspi.Accessible) -> str:
         if AXUtilities.is_switch(obj):
