@@ -81,7 +81,11 @@ class Utilities(script_utilities.Utilities):
         if first_line != ("", 0, 0):
             start = first_line[1]
 
-        if current_line not in (("", 0, 0), first_line, last_line):
+        if (
+            current_line not in (("", 0, 0), first_line, last_line)
+            and first_line[1] <= current_line[1]
+            and current_line[2] <= last_line[2]
+        ):
             last_line = current_line
 
         if last_line != ("", 0, 0):
