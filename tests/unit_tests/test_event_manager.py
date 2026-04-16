@@ -310,20 +310,20 @@ class TestEventManager:
             {
                 "id": "announcement_normal",
                 "event_type": "object:announcement",
-                "expected_priority": 4,
+                "expected_priority": 5,
             },
             {
                 "id": "invalid_entry",
                 "event_type": "object:state-changed:invalid-entry",
-                "expected_priority": 5,
+                "expected_priority": 6,
             },
             {
                 "id": "children_changed",
                 "event_type": "object:children-changed:add",
-                "expected_priority": 6,
+                "expected_priority": 7,
             },
             {
-                "id": "other_event",
+                "id": "text_changed_event",
                 "event_type": "object:text-changed:insert",
                 "expected_priority": 4,
             },
@@ -353,7 +353,7 @@ class TestEventManager:
         """Test EventManager._get_priority for announcement event levels."""
 
         self._setup_dependencies(test_context)
-        from orca.event_manager import EventManager
+        from orca.event_manager import EventManager, EventPriority
 
         manager = EventManager()
         mock_event = test_context.Mock(spec=Atspi.Event)
@@ -362,15 +362,15 @@ class TestEventManager:
 
         mock_event.detail1 = Atspi.Live.ASSERTIVE
         priority = manager._get_priority(mock_event)
-        assert priority == 2  # PRIORITY_IMPORTANT
+        assert priority == EventPriority.IMPORTANT
 
         mock_event.detail1 = Atspi.Live.POLITE
         priority = manager._get_priority(mock_event)
-        assert priority == 3  # PRIORITY_HIGH
+        assert priority == EventPriority.HIGH
 
         mock_event.detail1 = 999
         priority = manager._get_priority(mock_event)
-        assert priority == 4  # PRIORITY_NORMAL
+        assert priority == EventPriority.NORMAL
 
     @pytest.mark.parametrize(
         "case",
@@ -925,7 +925,7 @@ class TestEventManager:
                 "is_frame": False,
                 "is_dialog_or_alert": False,
                 "detail1": 3,
-                "expected_priority": 4,
+                "expected_priority": 5,
             },
             {
                 "id": "invalid_entry",
@@ -933,7 +933,7 @@ class TestEventManager:
                 "is_frame": False,
                 "is_dialog_or_alert": False,
                 "detail1": 0,
-                "expected_priority": 5,
+                "expected_priority": 6,
             },
             {
                 "id": "children_changed",
@@ -941,10 +941,10 @@ class TestEventManager:
                 "is_frame": False,
                 "is_dialog_or_alert": False,
                 "detail1": 0,
-                "expected_priority": 6,
+                "expected_priority": 7,
             },
             {
-                "id": "default_normal",
+                "id": "text_changed",
                 "event_type": "object:text-changed:insert",
                 "is_frame": False,
                 "is_dialog_or_alert": False,

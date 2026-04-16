@@ -736,9 +736,16 @@ class AXUtilitiesEvent:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        focus = focus_manager.get_manager().get_locus_of_focus()
+        manager = focus_manager.get_manager()
+        focus = manager.get_locus_of_focus()
         if event.source != focus and not AXUtilitiesObject.is_ancestor(focus, event.source):
             msg = "AXUtilitiesEvent: The event is not from the locus of focus or ancestor."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        window = manager.get_active_window()
+        if event.source != window and event.any_data == AXObject.get_name(window):
+            msg = "AXUtilitiesEvent: The new description matches the active window's name."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
@@ -851,6 +858,16 @@ class AXUtilitiesEvent:
             and AXText.get_all_text(focus) in event.any_data
         ):
             msg = "AXUtilitiesEvent: Event is redundant notification for the locus of focus."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
+        if AXUtilitiesRole.is_terminal(focus):
+            text = AXText.get_line_at_offset(focus)[0].strip()
+            if AXUtilitiesEvent._strings_are_redundant(text, event.any_data):
+                msg = (
+                    f"AXUtilitiesEvent: The new name ('{event.any_data}') "
+                    f"is too similar to the text at offset ('{text}')."
+                )
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 

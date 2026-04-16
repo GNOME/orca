@@ -26,6 +26,7 @@
 
 from __future__ import annotations
 
+import enum
 import itertools
 import queue
 import threading
@@ -55,15 +56,20 @@ if TYPE_CHECKING:
     from .scripts import default
 
 
+class EventPriority(enum.IntEnum):
+    """Priority levels for accessible object events."""
+
+    IMMEDIATE = enum.auto()
+    IMPORTANT = enum.auto()
+    HIGH = enum.auto()
+    MEDIUM_HIGH = enum.auto()
+    NORMAL = enum.auto()
+    LOWER = enum.auto()
+    LOW = enum.auto()
+
+
 class EventManager:
     """Manager for accessible object events."""
-
-    PRIORITY_IMMEDIATE = 1
-    PRIORITY_IMPORTANT = 2
-    PRIORITY_HIGH = 3
-    PRIORITY_NORMAL = 4
-    PRIORITY_LOWER = 5
-    PRIORITY_LOW = 6
 
     _SKIPPABLE_SAME_TYPE_PREFIXES = (
         "document:page-changed",
@@ -90,8 +96,8 @@ class EventManager:
         self._active: bool = False
         self._paused: bool = False
         self._counter = itertools.count()
-        self._event_queue: queue.PriorityQueue[tuple[int, int, Atspi.Event]] = queue.PriorityQueue(
-            0,
+        self._event_queue: queue.PriorityQueue[tuple[EventPriority, int, Atspi.Event]] = (
+            queue.PriorityQueue(0)
         )
         self._gidle_id: int = 0
         self._gidle_lock = threading.Lock()
@@ -156,7 +162,7 @@ class EventManager:
             self._latest_event = {}
         input_event_manager.get_manager().pause_key_watcher(pause, reason)
 
-    def _get_priority(self, event: Atspi.Event) -> int:
+    def _get_priority(self, event: Atspi.Event) -> EventPriority:
         """Returns the priority associated with event."""
 
         event_type = event.type
@@ -164,28 +170,32 @@ class EventManager:
             event_type == "object:state-changed:active"
             and (AXUtilities.is_frame(event.source) or AXUtilities.is_dialog_or_alert(event.source))
         ):
-            priority = EventManager.PRIORITY_IMPORTANT
+            priority = EventPriority.IMPORTANT
         elif event_type.startswith(
             ("object:state-changed:focused", "object:active-descendant-changed"),
         ):
-            priority = EventManager.PRIORITY_HIGH
+            priority = EventPriority.HIGH
         elif event_type.startswith("object:announcement"):
             if event.detail1 == Atspi.Live.ASSERTIVE:
-                priority = EventManager.PRIORITY_IMPORTANT
+                priority = EventPriority.IMPORTANT
             elif event.detail1 == Atspi.Live.POLITE:
-                priority = EventManager.PRIORITY_HIGH
+                priority = EventPriority.HIGH
             else:
-                priority = EventManager.PRIORITY_NORMAL
+                priority = EventPriority.NORMAL
         elif event_type.startswith("object:state-changed:invalid-entry"):
             # Setting this to lower ensures we present the state and/or text changes that triggered
             # the invalid state prior to presenting the invalid state.
-            priority = EventManager.PRIORITY_LOWER
+            priority = EventPriority.LOWER
         elif event_type.startswith("object:children-changed"):
-            priority = EventManager.PRIORITY_LOW
+            priority = EventPriority.LOW
+        elif event_type.startswith("object:text-changed"):
+            priority = EventPriority.MEDIUM_HIGH
+        elif event_type.startswith("object:property-change:accessible-description"):
+            priority = EventPriority.LOWER
         else:
-            priority = EventManager.PRIORITY_NORMAL
+            priority = EventPriority.NORMAL
 
-        tokens = ["EVENT MANAGER:", event, f"has priority level: {priority}"]
+        tokens = ["EVENT MANAGER:", event, f"has priority level: {priority.name}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return priority
 
@@ -655,7 +665,7 @@ class EventManager:
             self._event_queue.put((priority, counter, e))
             if e.type.startswith(EventManager._SKIPPABLE_SAME_TYPE_PREFIXES):
                 self._latest_event[(e.type, hash(e.source))] = counter
-            tokens = ["EVENT MANAGER: Queued", e, f"priority: {priority}, counter: {counter}"]
+            tokens = ["EVENT MANAGER: Queued", e, f"priority: {priority.name}, counter: {counter}"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if not self._gidle_id:
                 self._gidle_id = GLib.idle_add(self._dequeue_object_event)
@@ -678,18 +688,20 @@ class EventManager:
         try:
             priority, counter, event = self._event_queue.get_nowait()
             self._queue_println(event, is_enqueue=False)
-            tokens = ["EVENT MANAGER: Dequeued", event, f"priority: {priority}, counter: {counter}"]
+            msg = f"priority: {priority.name}, counter: {counter}"
+            tokens = ["EVENT MANAGER: Dequeued", event, msg]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             start_time = time.time()
             msg = (
-                f"\nvvvvv START PRIORITY-{priority} OBJECT EVENT {event.type.upper()} "
+                f"\nvvvvv START {priority.name}-PRIORITY OBJECT EVENT {event.type.upper()} "
                 f"(queue size: {self._event_queue.qsize()}) vvvvv"
             )
             debug.print_message(debug.LEVEL_INFO, msg, False)
             self._process_object_event(event, counter)
             msg = (
                 f"TOTAL PROCESSING TIME: {time.time() - start_time:.4f}"
-                f"\n^^^^^ FINISHED PRIORITY-{priority} OBJECT EVENT {event.type.upper()} ^^^^^\n"
+                f"\n^^^^^ FINISHED {priority.name}-PRIORITY OBJECT EVENT "
+                f"{event.type.upper()} ^^^^^\n"
             )
             debug.print_message(debug.LEVEL_INFO, msg, False)
             with self._gidle_lock:
