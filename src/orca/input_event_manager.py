@@ -45,6 +45,7 @@ class InputEventManager:
         self._last_input_event: input_event.InputEvent | None = None
         self._last_non_modifier_key_event: input_event.KeyboardEvent | None = None
         self._paused: bool = False
+        self._previous_non_modifier_key_event: input_event.KeyboardEvent | None = None
 
     def start_key_watcher(self) -> None:
         """Starts the watcher for keyboard input events."""
@@ -169,6 +170,7 @@ class InputEventManager:
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 self._last_non_modifier_key_event = None
         else:
+            self._previous_non_modifier_key_event = self._last_non_modifier_key_event
             self._last_non_modifier_key_event = event
         self._last_input_event = event
         return True
@@ -288,6 +290,20 @@ class InputEventManager:
             return True
 
         return self.is_release_for(self._last_non_modifier_key_event, event)
+
+    def previous_event_equals_or_is_release_for_event(self, event):
+        """Returns True if the previous event equals the provided event, or is the release."""
+
+        if self._previous_non_modifier_key_event is None:
+            return False
+
+        if self._previous_non_modifier_key_event is event:
+            return True
+
+        if event == self._previous_non_modifier_key_event:
+            return True
+
+        return self.is_release_for(self._previous_non_modifier_key_event, event)
 
     def _last_key_and_modifiers(self):
         """Returns the last keyval name and modifiers"""

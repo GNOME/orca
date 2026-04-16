@@ -45,6 +45,7 @@ from . import (
     gsettings_registry,
     guilabels,
     input_event,
+    input_event_manager,
     keybindings,
     messages,
     presentation_manager,
@@ -86,6 +87,7 @@ class FlatReviewPresenter(Extension):
     def __init__(self) -> None:
         self._context: flat_review.Context | None = None
         self._current_contents: str = ""
+        self._last_input_event: input_event.InputEvent | None = None
         self._restrict: bool = self.get_is_restricted()
         self._gui: FlatReviewContextGUI | None = None
         super().__init__()
@@ -306,10 +308,39 @@ class FlatReviewPresenter(Extension):
 
         return self._context is not None
 
+    def last_input_event_was_review_command(self) -> bool:
+        """Returns True if the last input event was a flat review command."""
+
+        if self._last_input_event is None:
+            return False
+
+        manager = input_event_manager.get_manager()
+        result = manager.previous_event_equals_or_is_release_for_event(self._last_input_event)
+        string = self._last_input_event.as_single_line_string()
+
+        msg = f"FLAT REVIEW PRESENTER: Last review event ({string}) is last input event: {result}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return result
+
+    def _can_use_existing_context(self) -> bool:
+        """Returns True if the existing context can be used."""
+
+        if not self._context:
+            return False
+
+        if self._last_input_event is None:
+            return True
+
+        # TODO - JD: Add some additional logic for cases where we know that the previous input
+        # event should not invalidate the context. For instance, the system information presenter
+        # and where am I presenter will never trigger scrolling, text changes, etc.
+
+        return self.last_input_event_was_review_command()
+
     def get_or_create_context(self, script: default.Script | None = None) -> flat_review.Context:
         """Returns the flat review context, creating one if necessary."""
 
-        if not self._context:
+        if not self._can_use_existing_context():
             msg = f"FLAT REVIEW PRESENTER: Creating new context. Restrict: {self._restrict}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -326,6 +357,7 @@ class FlatReviewPresenter(Extension):
 
             return self._context
 
+        assert self._context is not None
         msg = f"FLAT REVIEW PRESENTER: Using existing context. Restrict: {self._restrict}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -404,6 +436,7 @@ class FlatReviewPresenter(Extension):
         msg = "FLAT REVIEW PRESENTER: Quitting flat review"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
+        self._last_input_event = None
         self._context = None
         focus = focus_manager.get_manager().get_locus_of_focus()
         focus_manager.get_manager().emit_region_changed(focus, mode=focus_manager.FOCUS_TRACKING)
@@ -438,6 +471,7 @@ class FlatReviewPresenter(Extension):
             return True
 
         self.start(script, event)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -462,6 +496,7 @@ class FlatReviewPresenter(Extension):
         self._context = self.get_or_create_context(script)
         self._context.go_to_start_of(flat_review.Context.WINDOW)
         self.present_line(script, event)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -486,6 +521,7 @@ class FlatReviewPresenter(Extension):
         self._context = self.get_or_create_context(script)
         self._context.go_to_end_of(flat_review.Context.WINDOW)
         self.present_line(script, event)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -511,6 +547,7 @@ class FlatReviewPresenter(Extension):
         self._context.go_to_end_of(flat_review.Context.WINDOW)
         self._context.go_to_start_of(flat_review.Context.LINE)
         self.present_line(script, event)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -535,6 +572,7 @@ class FlatReviewPresenter(Extension):
         self._context = self.get_or_create_context(script)
         if self._context.go_previous_line():
             self.present_line(script, event)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -557,6 +595,7 @@ class FlatReviewPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._line_presentation(script, event, 1)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -581,6 +620,7 @@ class FlatReviewPresenter(Extension):
         self._context = self.get_or_create_context(script)
         if self._context.go_next_line():
             self.present_line(script, event)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -603,6 +643,7 @@ class FlatReviewPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._line_presentation(script, event, 2)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -625,6 +666,7 @@ class FlatReviewPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._line_presentation(script, event, 3)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -649,6 +691,7 @@ class FlatReviewPresenter(Extension):
         self._context = self.get_or_create_context(script)
         self._context.go_to_start_of(flat_review.Context.LINE)
         self.present_character(script, event)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -673,6 +716,7 @@ class FlatReviewPresenter(Extension):
         self._context = self.get_or_create_context(script)
         self._context.go_to_end_of(flat_review.Context.LINE)
         self.present_character(script, event)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -697,6 +741,7 @@ class FlatReviewPresenter(Extension):
         self._context = self.get_or_create_context(script)
         if self._context.go_previous_word():
             self.present_item(script, event)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -719,6 +764,7 @@ class FlatReviewPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._item_presentation(script, event, 1)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -743,6 +789,7 @@ class FlatReviewPresenter(Extension):
         self._context = self.get_or_create_context(script)
         if self._context.go_next_word():
             self.present_item(script, event)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -765,6 +812,7 @@ class FlatReviewPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._item_presentation(script, event, 2)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -787,6 +835,7 @@ class FlatReviewPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._item_presentation(script, event, 3)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -811,6 +860,7 @@ class FlatReviewPresenter(Extension):
         self._context = self.get_or_create_context(script)
         if self._context.go_previous_character():
             self.present_character(script, event)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -833,6 +883,7 @@ class FlatReviewPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._character_presentation(script, event, 1)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -857,6 +908,7 @@ class FlatReviewPresenter(Extension):
         self._context = self.get_or_create_context(script)
         if self._context.go_next_character():
             self.present_character(script, event)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -879,6 +931,7 @@ class FlatReviewPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._character_presentation(script, event, 2)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -901,6 +954,7 @@ class FlatReviewPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._character_presentation(script, event, 3)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -925,6 +979,7 @@ class FlatReviewPresenter(Extension):
         self._context = self.get_or_create_context(script)
         if self._context.go_up():
             self.present_item(script, event)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -949,6 +1004,7 @@ class FlatReviewPresenter(Extension):
         self._context = self.get_or_create_context(script)
         if self._context.go_down():
             self.present_item(script, event)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -971,6 +1027,7 @@ class FlatReviewPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
+        self._last_input_event = event
         return self._context.get_current_object()
 
     @dbus_service.command
@@ -1000,6 +1057,7 @@ class FlatReviewPresenter(Extension):
             self._context.get_current_object(),
             mode=focus_manager.FLAT_REVIEW,
         )
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -1022,6 +1080,7 @@ class FlatReviewPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
+        self._last_input_event = event
         obj = self._context.get_current_object()
         offset = self._context.get_current_text_offset()
         if offset >= 0 and AXEventSynthesizer.click_character(obj, offset, 1):
@@ -1048,6 +1107,7 @@ class FlatReviewPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
+        self._last_input_event = event
         obj = self._context.get_current_object()
         offset = self._context.get_current_text_offset()
         if offset >= 0 and AXEventSynthesizer.click_character(obj, offset, 3):
@@ -1074,6 +1134,7 @@ class FlatReviewPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         self._context = self.get_or_create_context(script)
+        self._last_input_event = event
         obj = self._context.get_current_object()
         offset = self._context.get_current_text_offset()
         if offset >= 0 and AXEventSynthesizer.route_to_character(obj, offset):
@@ -1220,6 +1281,7 @@ class FlatReviewPresenter(Extension):
             if not string.isspace():
                 presentation_manager.get_manager().speak_accessible_text(obj, string)
 
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -1246,6 +1308,7 @@ class FlatReviewPresenter(Extension):
         title = guilabels.FLAT_REVIEW_CONTENTS
         self._gui = FlatReviewContextGUI(script, title, text, location)
         self._gui.show_gui()
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -1275,6 +1338,7 @@ class FlatReviewPresenter(Extension):
         clipboard.get_presenter().set_text(self._current_contents.rstrip("\n"))
         if notify_user:
             presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_COPIED)
+        self._last_input_event = event
         return True
 
     @dbus_service.command
@@ -1304,6 +1368,7 @@ class FlatReviewPresenter(Extension):
         clipboard.get_presenter().append_text(self._current_contents.rstrip("\n"))
         if notify_user:
             presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_APPENDED)
+        self._last_input_event = event
         return True
 
     @gsettings_registry.get_registry().gsetting(
@@ -1363,6 +1428,7 @@ class FlatReviewPresenter(Extension):
             self._context = None
             self.start()
 
+        self._last_input_event = event
         return True
 
     def _line_presentation(

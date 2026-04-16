@@ -63,6 +63,7 @@ class TestFlatReviewPresenter:
             "dasbus.client",
             "dasbus.client.proxy",
             "orca.flat_review",
+            "orca.input_event_manager",
             "orca.speech_presenter",
             "orca.ax_event_synthesizer",
             "orca.ax_text",
@@ -236,8 +237,18 @@ class TestFlatReviewPresenter:
         platform_mock = essential_modules["orca.orca_platform"]
         platform_mock.tablesdir = "/usr/share/liblouis/tables"
 
+        input_event_manager_mock = essential_modules["orca.input_event_manager"]
+        input_event_manager_instance = test_context.Mock()
+        input_event_manager_instance.previous_event_equals_or_is_release_for_event = (
+            test_context.Mock(return_value=False)
+        )
+        input_event_manager_mock.get_manager = test_context.Mock(
+            return_value=input_event_manager_instance,
+        )
+
         essential_modules["flat_review_context"] = flat_review_context_mock
         essential_modules["focus_manager_instance"] = focus_manager_instance
+        essential_modules["input_event_manager_instance"] = input_event_manager_instance
         essential_modules["script_manager_instance"] = script_manager_instance
         essential_modules["script_instance"] = script_instance
         essential_modules["controller"] = controller_mock
@@ -260,6 +271,7 @@ class TestFlatReviewPresenter:
 
         assert presenter._context is None
         assert presenter._current_contents == ""
+        assert presenter._last_input_event is None
         assert isinstance(presenter._restrict, bool)
         assert presenter._gui is None
 
@@ -346,6 +358,12 @@ class TestFlatReviewPresenter:
         existing_context = test_context.Mock()
         presenter._context = existing_context
         presenter._restrict = False
+        presenter._last_input_event = test_context.Mock(
+            as_single_line_string=test_context.Mock(return_value="test_event"),
+        )
+        essential_modules[
+            "input_event_manager_instance"
+        ].previous_event_equals_or_is_release_for_event.return_value = True
         script_mock = test_context.Mock()
         context = presenter.get_or_create_context(script_mock)
 
@@ -435,12 +453,14 @@ class TestFlatReviewPresenter:
 
         presenter = FlatReviewPresenter()
         presenter._context = test_context.Mock() if is_active else None
+        presenter._last_input_event = test_context.Mock() if is_active else None
         if is_active:
             focus_obj = test_context.Mock()
             essential_modules["focus_manager_instance"].get_locus_of_focus.return_value = focus_obj
         presenter.quit()
         if is_active:
             assert presenter._context is None
+            assert presenter._last_input_event is None
             essential_modules["focus_manager_instance"].emit_region_changed.assert_called_with(
                 focus_obj,
                 mode=essential_modules["focus_manager_instance"].FOCUS_TRACKING,
@@ -499,6 +519,12 @@ class TestFlatReviewPresenter:
         event_mock = test_context.Mock()
         context_mock = test_context.Mock()
         presenter._context = context_mock
+        presenter._last_input_event = test_context.Mock(
+            as_single_line_string=test_context.Mock(return_value="test_event"),
+        )
+        essential_modules[
+            "input_event_manager_instance"
+        ].previous_event_equals_or_is_release_for_event.return_value = True
         mock_present_line = test_context.patch_object(presenter, "present_line")
         method = getattr(presenter, method_name)
         result = method(script_mock, event_mock)
@@ -520,6 +546,12 @@ class TestFlatReviewPresenter:
 
         context_mock = test_context.Mock()
         presenter._context = context_mock
+        presenter._last_input_event = test_context.Mock(
+            as_single_line_string=test_context.Mock(return_value="test_event"),
+        )
+        essential_modules[
+            "input_event_manager_instance"
+        ].previous_event_equals_or_is_release_for_event.return_value = True
         mock_present_line = test_context.patch_object(presenter, "present_line")
 
         result = presenter.go_bottom_left(script_mock, event_mock)
@@ -541,7 +573,7 @@ class TestFlatReviewPresenter:
         navigation_succeeds: bool,
     ) -> None:
         """Test FlatReviewPresenter.go_previous_line with success and failure."""
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         from orca.flat_review_presenter import FlatReviewPresenter
 
         presenter = FlatReviewPresenter()
@@ -550,6 +582,12 @@ class TestFlatReviewPresenter:
         context_mock = test_context.Mock()
         context_mock.go_previous_line.return_value = navigation_succeeds
         presenter._context = context_mock
+        presenter._last_input_event = test_context.Mock(
+            as_single_line_string=test_context.Mock(return_value="test_event"),
+        )
+        essential_modules[
+            "input_event_manager_instance"
+        ].previous_event_equals_or_is_release_for_event.return_value = True
         mock_present_line = test_context.patch_object(presenter, "present_line")
         result = presenter.go_previous_line(script_mock, event_mock)
         context_mock.go_previous_line.assert_called_once()
@@ -674,13 +712,19 @@ class TestFlatReviewPresenter:
     def test_error_handling_navigation_failure(self, test_context: OrcaTestContext) -> None:
         """Test error handling when navigation operations fail."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         from orca.flat_review_presenter import FlatReviewPresenter
 
         presenter = FlatReviewPresenter()
         context_mock = test_context.Mock()
         context_mock.go_next_line.return_value = False
         presenter._context = context_mock
+        presenter._last_input_event = test_context.Mock(
+            as_single_line_string=test_context.Mock(return_value="test_event"),
+        )
+        essential_modules[
+            "input_event_manager_instance"
+        ].previous_event_equals_or_is_release_for_event.return_value = True
         script_mock = test_context.Mock()
         event_mock = test_context.Mock()
 
@@ -711,6 +755,14 @@ class TestFlatReviewPresenter:
 
         context1 = presenter.get_or_create_context(script_mock)
         assert context1 is not None
+
+        # Simulate that a flat review command stored the event
+        presenter._last_input_event = test_context.Mock(
+            as_single_line_string=test_context.Mock(return_value="test_event"),
+        )
+        essential_modules[
+            "input_event_manager_instance"
+        ].previous_event_equals_or_is_release_for_event.return_value = True
 
         context2 = presenter.get_or_create_context(script_mock)
         assert context1 is context2
