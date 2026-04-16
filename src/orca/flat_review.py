@@ -323,6 +323,11 @@ class Zone:
 
         return self._start_offset
 
+    def get_end_offset(self) -> int:
+        """Returns the end offset of this Zone with respect to the accessible object."""
+
+        return self._start_offset + len(self._string)
+
     def get_word_at_offset(self, char_offset: int) -> tuple[Word | None, int]:
         """Returns the Word at the specified offset with respect to the accessible object."""
 
@@ -338,18 +343,20 @@ class Zone:
             if offset >= 0:
                 return word, offset
 
-        if len(self._string) == char_offset and words:
+        if self.get_end_offset() == char_offset and words:
             last_word = words[-1]
             return last_word, len(last_word.get_string())
 
         return None, -1
 
-    def has_caret(self) -> bool:
+    def has_caret(
+        self, _caret_offset: int | None = None, _character_count: int | None = None
+    ) -> bool:
         """Returns True if this Zone contains the caret."""
 
         return False
 
-    def word_with_caret(self) -> tuple[Word | None, int]:
+    def word_with_caret(self, _caret_offset: int | None = None) -> tuple[Word | None, int]:
         """Returns the Word and relative offset with the caret."""
 
         return None, -1
@@ -412,7 +419,7 @@ class TextZone(Zone):
         """Returns the list of Words in this Zone."""
 
         words = []
-        self._word_index_map.clear()  # Clear any existing mapping
+        self._word_index_map.clear()
         for i, word in enumerate(re.finditer(self.WORDS_RE, self.get_string())):
             start = word.start() + self._start_offset
             word_obj = Word(self, start, word.group())
@@ -435,22 +442,39 @@ class TextZone(Zone):
         self._word_rect_cache[cache_key] = rect
         return rect
 
-    def has_caret(self) -> bool:
+    def has_caret(
+        self, caret_offset: int | None = None, character_count: int | None = None
+    ) -> bool:
         """Returns True if this Zone contains the caret."""
 
-        end_offset = self._start_offset + len(self._string)
-        if self._start_offset <= AXText.get_caret_offset(self._obj) < end_offset:
+        if caret_offset is None:
+            caret_offset = AXText.get_caret_offset(self._obj)
+
+        end_offset = self.get_end_offset()
+        if self._start_offset <= caret_offset < end_offset:
             return True
 
-        return end_offset == AXText.get_character_count(self._obj)
+        if caret_offset == end_offset:
+            char, start, end = AXText.get_character_at_offset(self._obj, caret_offset)
+            if not char and start == end == caret_offset:
+                msg = "FLAT REVIEW: Caret believed to be at end of wrapped line in this zone."
+                debug.print_message(debug.LEVEL_INFO, msg, True, True)
+                return True
 
-    def word_with_caret(self) -> tuple[Word | None, int]:
+        if character_count is None:
+            character_count = AXText.get_character_count(self._obj)
+
+        return end_offset == character_count
+
+    def word_with_caret(self, caret_offset: int | None = None) -> tuple[Word | None, int]:
         """Returns the Word and relative offset with the caret."""
 
-        if not self.has_caret():
+        if caret_offset is None:
+            caret_offset = AXText.get_caret_offset(self._obj)
+        if not self.has_caret(caret_offset):
             return None, -1
 
-        return self.get_word_at_offset(AXText.get_caret_offset(self._obj))
+        return self.get_word_at_offset(caret_offset)
 
 
 class StateZone(Zone):
@@ -647,11 +671,23 @@ class Context:
             if obj not in self._object_to_zone_map:
                 self._object_to_zone_map[obj] = []
             self._object_to_zone_map[obj].append(zone)
-        self._focus_zone = self._find_zone_with_object(self._focus_obj)
+
+        caret_offset = AXText.get_caret_offset(self._focus_obj)
+        character_count = AXText.get_character_count(self._focus_obj)
+        self._focus_zone = self._find_zone_with_object(
+            self._focus_obj, caret_offset, character_count
+        )
 
         self._lines = self._cluster_zones_by_line(self._zones)
         if not (self._lines and self._focus_zone):
             return
+
+        zone_object = self._focus_zone.get_object()
+        caret_offset = (
+            caret_offset
+            if self._focus_obj == self._focus_zone.get_object()
+            else AXText.get_caret_offset(zone_object)
+        )
 
         for i, line in enumerate(self._lines):
             index = line.get_index_of_zone(self._focus_zone)
@@ -660,7 +696,7 @@ class Context:
 
             self._line_index = i
             self._zone_index = index
-            word, offset = self._focus_zone.word_with_caret()
+            word, offset = self._focus_zone.word_with_caret(caret_offset)
             if word:
                 self._word_index = self._focus_zone.get_index_of_word(word)
                 self._char_index = offset
@@ -799,7 +835,12 @@ class Context:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return True
 
-    def _find_zone_with_object(self, obj: Atspi.Accessible | None) -> Zone | None:
+    def _find_zone_with_object(
+        self,
+        obj: Atspi.Accessible | None,
+        caret_offset: int | None = None,
+        character_count: int | None = None,
+    ) -> Zone | None:
         """Returns the existing zone which contains obj."""
 
         if obj is None:
@@ -807,7 +848,7 @@ class Context:
 
         if matching_zones := self._object_to_zone_map.get(obj, []):
             for zone in matching_zones:
-                if zone.has_caret():
+                if zone.has_caret(caret_offset, character_count):
                     return zone
             return matching_zones[0]
 
