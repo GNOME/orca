@@ -323,7 +323,7 @@ class TestAXEventSynthesizer:
         mock_scroll = test_context.Mock()
         test_context.patch_object(AXEventSynthesizer, "_scroll_to_location", new=mock_scroll)
         AXEventSynthesizer.scroll_into_view(mock_accessible, 5, 15)
-        mock_scroll.assert_called_once_with(mock_accessible, Atspi.ScrollType.ANYWHERE, 5, 15)
+        mock_scroll.assert_called_once_with(mock_accessible, Atspi.ScrollType.ANYWHERE, 5, 15, None)
 
     def test_scroll_to_center_calculates_center_coordinates(
         self,
@@ -344,7 +344,7 @@ class TestAXEventSynthesizer:
         test_context.patch_object(AXEventSynthesizer, "_scroll_to_point", new=mock_scroll)
         AXEventSynthesizer.scroll_to_center(mock_accessible, 5, 15)
 
-        mock_scroll.assert_called_once_with(mock_accessible, 300, 350, 5, 15)
+        mock_scroll.assert_called_once_with(mock_accessible, 300, 350, 5, 15, None)
 
     @pytest.mark.parametrize(
         "method_name,scroll_type",
@@ -373,7 +373,7 @@ class TestAXEventSynthesizer:
         test_context.patch_object(AXEventSynthesizer, "_scroll_to_location", new=mock_scroll)
         method = getattr(AXEventSynthesizer, method_name)
         method(mock_accessible, 10, 20)
-        mock_scroll.assert_called_once_with(mock_accessible, scroll_type_value, 10, 20)
+        mock_scroll.assert_called_once_with(mock_accessible, scroll_type_value, 10, 20, None)
 
     def test_try_all_clickable_actions_success_on_first_action(
         self,

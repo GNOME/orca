@@ -1,7 +1,7 @@
 # Orca
 #
 # Copyright 2005-2008 Sun Microsystems Inc.
-# Copyright 2018-2023 Igalia, S.L.
+# Copyright 2018-2026 Igalia, S.L.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -22,6 +22,9 @@
 
 """Provides support for synthesizing accessible input events."""
 
+import time
+from typing import NamedTuple
+
 import gi
 
 gi.require_version("Atspi", "2.0")
@@ -37,6 +40,31 @@ from .ax_utilities_action import AXUtilitiesAction
 from .ax_utilities_component import AXUtilitiesComponent
 from .ax_utilities_debugging import AXUtilitiesDebugging
 from .ax_utilities_role import AXUtilitiesRole
+
+
+class _Snapshot(NamedTuple):
+    """Identifying info captured before a scroll so obj can be recovered if destroyed."""
+
+    name: str
+    text: str
+    role: Atspi.Role
+    parent_name: str
+    parent_text: str
+    parent_role: Atspi.Role
+
+    @classmethod
+    def from_object(cls, obj: Atspi.Accessible) -> "_Snapshot":
+        """Returns a snapshot describing obj and its parent."""
+
+        parent = AXObject.get_parent(obj)
+        return cls(
+            name=AXObject.get_name(obj),
+            text=AXText.get_all_text(obj),
+            role=AXObject.get_role(obj),
+            parent_name=AXObject.get_name(parent),
+            parent_text=AXText.get_all_text(parent),
+            parent_role=AXObject.get_role(parent),
+        )
 
 
 class AXEventSynthesizer:
@@ -195,8 +223,11 @@ class AXEventSynthesizer:
         location: Atspi.ScrollType,
         start_offset: int | None = None,
         end_offset: int | None = None,
-    ) -> None:
-        """Attempts to scroll to the specified location."""
+        root: Atspi.Accessible | None = None,
+    ) -> Atspi.Accessible:
+        """Attempts to scroll to the specified location; returns the scrolled accessible."""
+
+        snapshot = _Snapshot.from_object(obj) if root is not None else None
 
         before = AXComponent.get_position(obj)
         AXText.scroll_substring_to_location(obj, location, start_offset, end_offset)
@@ -204,24 +235,29 @@ class AXEventSynthesizer:
         after = AXComponent.get_position(obj)
         tokens = ["AXEventSynthesizer: Text scroll, before:", before, "after:", after]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        if before != after:
-            return
+        if before == after:
+            AXComponent.scroll_object_to_location(obj, location)
+            AXObject.clear_cache(obj, False, "To obtain updated location after scroll.")
+            after = AXComponent.get_position(obj)
+            tokens = ["AXEventSynthesizer: Object scroll, before:", before, "after:", after]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        AXComponent.scroll_object_to_location(obj, location)
-        AXObject.clear_cache(obj, False, "To obtain updated location after scroll.")
-        after = AXComponent.get_position(obj)
-        tokens = ["AXEventSynthesizer: Object scroll, before:", before, "after:", after]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        if root is None or snapshot is None:
+            return obj
+        return AXEventSynthesizer._object_after_scroll(obj, root, snapshot)
 
     @staticmethod
-    def _scroll_to_point(
+    def _scroll_to_point(  # pylint: disable=too-many-arguments, too-many-positional-arguments
         obj: Atspi.Accessible,
         x_coord: int,
         y_coord: int,
         start_offset: int | None = None,
         end_offset: int | None = None,
-    ) -> None:
-        """Attempts to scroll obj to the specified point."""
+        root: Atspi.Accessible | None = None,
+    ) -> Atspi.Accessible:
+        """Attempts to scroll obj to the specified point; returns the scrolled accessible."""
+
+        snapshot = _Snapshot.from_object(obj) if root is not None else None
 
         before = AXComponent.get_position(obj)
         AXText.scroll_substring_to_point(obj, x_coord, y_coord, start_offset, end_offset)
@@ -229,28 +265,28 @@ class AXEventSynthesizer:
         after = AXComponent.get_position(obj)
         tokens = ["AXEventSynthesizer: Text scroll, before:", before, "after:", after]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        if before != after:
-            return
+        if before == after:
+            AXComponent.scroll_object_to_point(obj, x_coord, y_coord)
+            AXObject.clear_cache(obj, False, "To obtain updated location after scroll.")
+            after = AXComponent.get_position(obj)
+            tokens = ["AXEventSynthesizer: Object scroll, before:", before, "after:", after]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        AXComponent.scroll_object_to_point(obj, x_coord, y_coord)
-        AXObject.clear_cache(obj, False, "To obtain updated location after scroll.")
-        after = AXComponent.get_position(obj)
-        tokens = ["AXEventSynthesizer: Object scroll, before:", before, "after:", after]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        if root is None or snapshot is None:
+            return obj
+        return AXEventSynthesizer._object_after_scroll(obj, root, snapshot)
 
     @staticmethod
     def scroll_into_view(
         obj: Atspi.Accessible,
         start_offset: int | None = None,
         end_offset: int | None = None,
-    ) -> None:
-        """Attempts to scroll obj into view."""
+        root: Atspi.Accessible | None = None,
+    ) -> Atspi.Accessible:
+        """Attempts to scroll obj into view; returns the scrolled accessible."""
 
-        AXEventSynthesizer._scroll_to_location(
-            obj,
-            Atspi.ScrollType.ANYWHERE,
-            start_offset,
-            end_offset,
+        return AXEventSynthesizer._scroll_to_location(
+            obj, Atspi.ScrollType.ANYWHERE, start_offset, end_offset, root
         )
 
     @staticmethod
@@ -258,18 +294,19 @@ class AXEventSynthesizer:
         obj: Atspi.Accessible,
         start_offset: int | None = None,
         end_offset: int | None = None,
-    ) -> None:
-        """Attempts to scroll obj to the center of its window."""
+        root: Atspi.Accessible | None = None,
+    ) -> Atspi.Accessible:
+        """Attempts to scroll obj to the center of its window; returns the scrolled accessible."""
 
         ancestor = AXUtilities.find_ancestor(obj, AXEventSynthesizer._highest_ancestor)
         if ancestor is None:
             tokens = ["AXEventSynthesizer: Could not get ancestor of", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return
+            return obj
 
         x_coord, y_coord = AXUtilitiesComponent.get_center_point(ancestor)
-        AXEventSynthesizer._scroll_to_point(
-            obj, int(x_coord), int(y_coord), start_offset, end_offset
+        return AXEventSynthesizer._scroll_to_point(
+            obj, int(x_coord), int(y_coord), start_offset, end_offset, root
         )
 
     @staticmethod
@@ -277,14 +314,12 @@ class AXEventSynthesizer:
         obj: Atspi.Accessible,
         start_offset: int | None = None,
         end_offset: int | None = None,
-    ) -> None:
-        """Attempts to scroll obj to the top edge."""
+        root: Atspi.Accessible | None = None,
+    ) -> Atspi.Accessible:
+        """Attempts to scroll obj to the top edge; returns the scrolled accessible."""
 
-        AXEventSynthesizer._scroll_to_location(
-            obj,
-            Atspi.ScrollType.TOP_EDGE,
-            start_offset,
-            end_offset,
+        return AXEventSynthesizer._scroll_to_location(
+            obj, Atspi.ScrollType.TOP_EDGE, start_offset, end_offset, root
         )
 
     @staticmethod
@@ -292,14 +327,12 @@ class AXEventSynthesizer:
         obj: Atspi.Accessible,
         start_offset: int | None = None,
         end_offset: int | None = None,
-    ) -> None:
-        """Attempts to scroll obj to the top left."""
+        root: Atspi.Accessible | None = None,
+    ) -> Atspi.Accessible:
+        """Attempts to scroll obj to the top left; returns the scrolled accessible."""
 
-        AXEventSynthesizer._scroll_to_location(
-            obj,
-            Atspi.ScrollType.TOP_LEFT,
-            start_offset,
-            end_offset,
+        return AXEventSynthesizer._scroll_to_location(
+            obj, Atspi.ScrollType.TOP_LEFT, start_offset, end_offset, root
         )
 
     @staticmethod
@@ -307,14 +340,12 @@ class AXEventSynthesizer:
         obj: Atspi.Accessible,
         start_offset: int | None = None,
         end_offset: int | None = None,
-    ) -> None:
-        """Attempts to scroll obj to the left edge."""
+        root: Atspi.Accessible | None = None,
+    ) -> Atspi.Accessible:
+        """Attempts to scroll obj to the left edge; returns the scrolled accessible."""
 
-        AXEventSynthesizer._scroll_to_location(
-            obj,
-            Atspi.ScrollType.LEFT_EDGE,
-            start_offset,
-            end_offset,
+        return AXEventSynthesizer._scroll_to_location(
+            obj, Atspi.ScrollType.LEFT_EDGE, start_offset, end_offset, root
         )
 
     @staticmethod
@@ -322,14 +353,12 @@ class AXEventSynthesizer:
         obj: Atspi.Accessible,
         start_offset: int | None = None,
         end_offset: int | None = None,
-    ) -> None:
-        """Attempts to scroll obj to the bottom edge."""
+        root: Atspi.Accessible | None = None,
+    ) -> Atspi.Accessible:
+        """Attempts to scroll obj to the bottom edge; returns the scrolled accessible."""
 
-        AXEventSynthesizer._scroll_to_location(
-            obj,
-            Atspi.ScrollType.BOTTOM_EDGE,
-            start_offset,
-            end_offset,
+        return AXEventSynthesizer._scroll_to_location(
+            obj, Atspi.ScrollType.BOTTOM_EDGE, start_offset, end_offset, root
         )
 
     @staticmethod
@@ -337,14 +366,12 @@ class AXEventSynthesizer:
         obj: Atspi.Accessible,
         start_offset: int | None = None,
         end_offset: int | None = None,
-    ) -> None:
-        """Attempts to scroll obj to the bottom right."""
+        root: Atspi.Accessible | None = None,
+    ) -> Atspi.Accessible:
+        """Attempts to scroll obj to the bottom right; returns the scrolled accessible."""
 
-        AXEventSynthesizer._scroll_to_location(
-            obj,
-            Atspi.ScrollType.BOTTOM_RIGHT,
-            start_offset,
-            end_offset,
+        return AXEventSynthesizer._scroll_to_location(
+            obj, Atspi.ScrollType.BOTTOM_RIGHT, start_offset, end_offset, root
         )
 
     @staticmethod
@@ -352,15 +379,42 @@ class AXEventSynthesizer:
         obj: Atspi.Accessible,
         start_offset: int | None = None,
         end_offset: int | None = None,
-    ) -> None:
-        """Attempts to scroll obj to the right edge."""
+        root: Atspi.Accessible | None = None,
+    ) -> Atspi.Accessible:
+        """Attempts to scroll obj to the right edge; returns the scrolled accessible."""
 
-        AXEventSynthesizer._scroll_to_location(
-            obj,
-            Atspi.ScrollType.RIGHT_EDGE,
-            start_offset,
-            end_offset,
+        return AXEventSynthesizer._scroll_to_location(
+            obj, Atspi.ScrollType.RIGHT_EDGE, start_offset, end_offset, root
         )
+
+    @staticmethod
+    def _object_after_scroll(
+        obj: Atspi.Accessible,
+        root: Atspi.Accessible,
+        snapshot: _Snapshot,
+    ) -> Atspi.Accessible:
+        """Returns obj or, if obj was destroyed by the scroll, a matching descendant of root."""
+
+        def is_match(x: Atspi.Accessible) -> bool:
+            return not AXObject.is_dead(x) and _Snapshot.from_object(x) == snapshot
+
+        time.sleep(0.05)
+        if is_match(obj):
+            return obj
+
+        match = AXUtilities.find_descendant(root, is_match)
+
+        tokens = [
+            "AXEventSynthesizer: object was destroyed during scroll; ",
+            "matching descendant for",
+            snapshot,
+            "in",
+            root,
+            ":",
+            match,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return match if match is not None else obj
 
     @staticmethod
     def try_all_clickable_actions(obj: Atspi.Accessible) -> bool:
