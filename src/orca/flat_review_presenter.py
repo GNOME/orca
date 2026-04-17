@@ -344,17 +344,29 @@ class FlatReviewPresenter(Extension):
             msg = f"FLAT REVIEW PRESENTER: Creating new context. Restrict: {self._restrict}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
+            previous_obj, previous_location = None, None
+            if self._context is not None:
+                previous_obj = self._context.get_current_object()
+                previous_location = self._context.get_current_location()
+
+            manager = focus_manager.get_manager()
             if self._restrict:
-                mode, obj = focus_manager.get_manager().get_active_mode_and_object_of_interest()
+                mode, obj = manager.get_active_mode_and_object_of_interest()
                 self._context = flat_review.Context(script, root=obj)
             else:
                 self._context = flat_review.Context(script)
 
-            focus_manager.get_manager().emit_region_changed(
-                self._context.get_current_object(),
-                mode=focus_manager.FLAT_REVIEW,
-            )
+            current_obj = self._context.get_current_object()
+            if previous_obj == current_obj and previous_location is not None:
+                tokens = [
+                    "FLAT REVIEW PRESENTER: Restoring previous location in new context:",
+                    current_obj,
+                    previous_location,
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                self._context.set_current_location(previous_location)
 
+            manager.emit_region_changed(current_obj, mode=focus_manager.FLAT_REVIEW)
             return self._context
 
         assert self._context is not None
