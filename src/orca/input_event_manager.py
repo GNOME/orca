@@ -305,6 +305,11 @@ class InputEventManager:
 
         return self.is_release_for(self._previous_non_modifier_key_event, event)
 
+    def get_last_input_event(self) -> input_event.InputEvent | None:
+        """Returns the most recently processed input event (of any type), or None."""
+
+        return self._last_input_event
+
     def _last_key_and_modifiers(self):
         """Returns the last keyval name and modifiers"""
 

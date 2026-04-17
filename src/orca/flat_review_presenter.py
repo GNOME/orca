@@ -88,6 +88,7 @@ class FlatReviewPresenter(Extension):
         self._context: flat_review.Context | None = None
         self._current_contents: str = ""
         self._last_input_event: input_event.InputEvent | None = None
+        self._context_input_event: input_event.InputEvent | None = None
         self._restrict: bool = self.get_is_restricted()
         self._gui: FlatReviewContextGUI | None = None
         super().__init__()
@@ -328,6 +329,12 @@ class FlatReviewPresenter(Extension):
         if not self._context:
             return False
 
+        last_input_event = input_event_manager.get_manager().get_last_input_event()
+        if last_input_event is not None and last_input_event is self._context_input_event:
+            msg = "FLAT REVIEW PRESENTER: No new input event since context was last validated."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         if self._last_input_event is None:
             return True
 
@@ -367,6 +374,7 @@ class FlatReviewPresenter(Extension):
                 self._context.set_current_location(previous_location)
 
             manager.emit_region_changed(current_obj, mode=focus_manager.FLAT_REVIEW)
+            self._context_input_event = input_event_manager.get_manager().get_last_input_event()
             return self._context
 
         assert self._context is not None
@@ -404,6 +412,7 @@ class FlatReviewPresenter(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             self._context = flat_review.Context(script, obj)
 
+        self._context_input_event = input_event_manager.get_manager().get_last_input_event()
         return self._context
 
     def start(
@@ -450,6 +459,7 @@ class FlatReviewPresenter(Extension):
 
         self._last_input_event = None
         self._context = None
+        self._context_input_event = None
         focus = focus_manager.get_manager().get_locus_of_focus()
         focus_manager.get_manager().emit_region_changed(focus, mode=focus_manager.FOCUS_TRACKING)
         if event is None or script is None:
