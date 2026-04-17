@@ -2271,12 +2271,13 @@ class SpeechGenerator(generator.Generator):
     def _generate_article(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the article role."""
 
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
+
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            result = self._generate_leaving(obj, **args)
-            if not result:
-                result += self._generate_accessible_label_and_name(obj, **args)
-                result += self._generate_accessible_role(obj, **args)
+            result = self._generate_accessible_label_and_name(obj, **args)
+            result += self._generate_accessible_role(obj, **args)
             return result
 
         result = self._generate_default_prefix(obj, **args)
@@ -2303,12 +2304,13 @@ class SpeechGenerator(generator.Generator):
     def _generate_code_block(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the code block role."""
 
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
+
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            result = self._generate_leaving(obj, **args)
-            if not result:
-                result += self._generate_accessible_label_and_name(obj, **args)
-                result += self._generate_accessible_role(obj, **args)
+            result = self._generate_accessible_label_and_name(obj, **args)
+            result += self._generate_accessible_role(obj, **args)
             return result
 
         result = self._generate_default_prefix(obj, **args)
@@ -2530,12 +2532,12 @@ class SpeechGenerator(generator.Generator):
     def _generate_content_deletion(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the content-deletion role."""
 
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
+
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generate_leaving(obj, **args) or self._generate_start_of_deletion(
-                obj,
-                **args,
-            )
+            return self._generate_start_of_deletion(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
         result += self._generate_start_of_deletion(obj, **args)
@@ -2549,12 +2551,12 @@ class SpeechGenerator(generator.Generator):
     def _generate_content_insertion(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the content-insertion role."""
 
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
+
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generate_leaving(obj, **args) or self._generate_start_of_insertion(
-                obj,
-                **args,
-            )
+            return self._generate_start_of_insertion(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
         result += self._generate_start_of_insertion(obj, **args)
@@ -2582,11 +2584,8 @@ class SpeechGenerator(generator.Generator):
     def _generate_description_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the description-list role."""
 
-        format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
-            result = self._generate_leaving(obj, **args)
-            if result:
-                return result
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
         result += self._generate_accessible_label_and_name(obj, **args)
@@ -2755,13 +2754,16 @@ class SpeechGenerator(generator.Generator):
     def _generate_dpub_landmark(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the dpub section role."""
 
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
+
         result = self._generate_default_prefix(obj, **args)
         result += self._generate_accessible_label_and_name(obj, **args)
         result += self._generate_accessible_role(obj, **args)
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generate_leaving(obj, **args) or result
+            return result
 
         result += self._generate_pause(obj, **args)
         result += self._generate_text_line(obj, **args)
@@ -2771,13 +2773,16 @@ class SpeechGenerator(generator.Generator):
     def _generate_dpub_section(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the dpub section role."""
 
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
+
         result = self._generate_default_prefix(obj, **args)
         result += self._generate_accessible_label_and_name(obj, **args)
         result += self._generate_accessible_role(obj, **args)
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generate_leaving(obj, **args) or result
+            return result
 
         result += self._generate_pause(obj, **args)
         result += self._generate_text_line(obj, **args)
@@ -2848,12 +2853,13 @@ class SpeechGenerator(generator.Generator):
     def _generate_feed(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the feed role."""
 
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
+
         result = self._generate_default_prefix(obj, **args)
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
-            result += self._generate_leaving(obj, **args)
-            if result:
-                return result
+        if format_type in ["focused", "ancestor"] and result:
+            return result
 
         result += self._generate_accessible_label_and_name(obj, **args)
         result += self._generate_number_of_children(obj, **args) or self._generate_accessible_role(
@@ -2903,12 +2909,14 @@ class SpeechGenerator(generator.Generator):
     def _generate_form(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the form role."""
 
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
+
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generate_leaving(obj, **args) or (
-                self._generate_accessible_label_and_name(obj, **args)
-                + self._generate_accessible_role(obj, **args)
-            )
+            return self._generate_accessible_label_and_name(
+                obj, **args
+            ) + self._generate_accessible_role(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
         if self._generate_text_substring(obj, **args):
@@ -2941,12 +2949,13 @@ class SpeechGenerator(generator.Generator):
     def _generate_grouping(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the grouping role."""
 
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
+
         result = self._generate_default_prefix(obj, **args)
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
-            result += self._generate_leaving(obj, **args)
-            if result:
-                return result
+        if format_type in ["focused", "ancestor"] and result:
+            return result
 
         if self._generate_text_substring(obj, **args):
             result += self._generate_text_line(obj, **args)
@@ -3065,12 +3074,13 @@ class SpeechGenerator(generator.Generator):
     def _generate_landmark(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the landmark role."""
 
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
+
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            result = self._generate_leaving(obj, **args)
-            if not result:
-                result += self._generate_accessible_role(obj, **args)
-                result += self._generate_accessible_label_and_name(obj, **args)
+            result = self._generate_accessible_role(obj, **args)
+            result += self._generate_accessible_label_and_name(obj, **args)
             return result
 
         result = self._generate_default_prefix(obj, **args)
@@ -3148,12 +3158,13 @@ class SpeechGenerator(generator.Generator):
     def _generate_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the list role."""
 
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
+
         result = self._generate_default_prefix(obj, **args)
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
-            result += self._generate_leaving(obj, **args)
-            if result:
-                return result
+        if format_type in ["focused", "ancestor"] and result:
+            return result
 
         result += self._generate_accessible_label_and_name(obj, **args)
         result += self._generate_number_of_children(obj, **args) or self._generate_accessible_role(
@@ -3223,9 +3234,12 @@ class SpeechGenerator(generator.Generator):
     def _generate_mark(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the mark role."""
 
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
+
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generate_leaving(obj, **args) or self._generate_start_of_mark(obj, **args)
+            return self._generate_start_of_mark(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
         result += self._generate_start_of_mark(obj, **args)
@@ -3376,12 +3390,13 @@ class SpeechGenerator(generator.Generator):
     def _generate_panel(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the panel role."""
 
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
+
         result = self._generate_default_prefix(obj, **args)
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
-            result += self._generate_leaving(obj, **args)
-            if result:
-                return result
+        if format_type in ["focused", "ancestor"] and result:
+            return result
 
         if self._generate_text_substring(obj, **args):
             result += self._generate_text_line(obj, **args)
@@ -3528,6 +3543,9 @@ class SpeechGenerator(generator.Generator):
     def _generate_region(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the region landmark role."""
 
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
+
         result = self._generate_default_prefix(obj, **args)
         prior_obj = args.get("priorObj")
         if prior_obj and obj != prior_obj and not AXUtilities.is_ancestor(prior_obj, obj):
@@ -3536,7 +3554,7 @@ class SpeechGenerator(generator.Generator):
 
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generate_leaving(obj, **args) or result
+            return result
 
         result += self._generate_pause(obj, **args)
         result += self._generate_text_line(obj, **args)
@@ -3750,12 +3768,12 @@ class SpeechGenerator(generator.Generator):
     def _generate_suggestion(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the suggestion role."""
 
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
+
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generate_leaving(obj, **args) or self._generate_accessible_role(
-                obj,
-                **args,
-            )
+            return self._generate_accessible_role(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
         result += self._generate_text_content(obj, **args)
@@ -3791,11 +3809,8 @@ class SpeechGenerator(generator.Generator):
     def _generate_table(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the table role."""
 
-        format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
-            result = self._generate_leaving(obj, **args)
-            if result:
-                return result
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
         result += self._generate_accessible_label_and_name(obj, **args)
@@ -4012,12 +4027,12 @@ class SpeechGenerator(generator.Generator):
     def _generate_tool_tip(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the tool-tip role."""
 
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
+
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generate_leaving(obj, **args) or self._generate_accessible_role(
-                obj,
-                **args,
-            )
+            return self._generate_accessible_role(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
         result += self._generate_accessible_role(obj, **args)
