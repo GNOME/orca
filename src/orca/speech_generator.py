@@ -2534,6 +2534,9 @@ class SpeechGenerator(generator.Generator):
     def _generate_block_quote(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the block-quote role."""
 
+        if args.get("leaving"):
+            return self._generate_leaving(obj, **args)
+
         result = []
         if args.get("priorObj") != obj:
             result += self._generate_default_prefix(obj, **args)
@@ -2544,7 +2547,7 @@ class SpeechGenerator(generator.Generator):
         result += self._generate_text_line(obj, **args)
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
-            return self._generate_leaving(obj, **args) or result
+            return result
 
         result += self._generate_default_suffix(obj, **args)
         return result
