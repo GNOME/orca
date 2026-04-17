@@ -1449,13 +1449,21 @@ class FlatReviewPresenter(Extension):
             elif line_string.isspace():
                 presenter.speak_message(messages.WHITE_SPACE)
             elif line_string.isupper() and (speech_type < 2 or speech_type > 3):
-                presenter.speak_accessible_text(self._context.get_current_object(), line_string)
+                presenter.speak_accessible_text(
+                    self._context.get_current_object(),
+                    line_string,
+                    self._context.get_current_line_start_offset(),
+                )
             elif speech_type == 2:
                 presenter.spell_item(line_string)
             elif speech_type == 3:
                 presenter.spell_phonetically(line_string)
             else:
-                presenter.speak_accessible_text(self._context.get_current_object(), line_string)
+                presenter.speak_accessible_text(
+                    self._context.get_current_object(),
+                    line_string,
+                    self._context.get_current_line_start_offset(),
+                )
 
         focus_manager.get_manager().emit_region_changed(
             self._context.get_current_object(),
@@ -1486,13 +1494,21 @@ class FlatReviewPresenter(Extension):
                 elif word_string.isspace():
                     presenter.speak_message(messages.WHITE_SPACE)
                 elif word_string.isupper() and speech_type == 1:
-                    presenter.speak_accessible_text(self._context.get_current_object(), word_string)
+                    presenter.speak_accessible_text(
+                        self._context.get_current_object(),
+                        word_string,
+                        self._context.get_current_word_start_offset(),
+                    )
                 elif speech_type == 2:
                     presenter.spell_item(word_string)
                 elif speech_type == 3:
                     presenter.spell_phonetically(word_string)
                 elif speech_type == 1:
-                    presenter.speak_accessible_text(self._context.get_current_object(), word_string)
+                    presenter.speak_accessible_text(
+                        self._context.get_current_object(),
+                        word_string,
+                        self._context.get_current_word_start_offset(),
+                    )
 
         focus_manager.get_manager().emit_region_changed(
             self._context.get_current_object(),

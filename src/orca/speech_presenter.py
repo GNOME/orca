@@ -2782,11 +2782,16 @@ class SpeechPresenter(Extension):
         else:
             self.write_key_to_monitor(event.get_key_name())
 
-    def speak_accessible_text(self, obj: Atspi.Accessible | None, text: str) -> None:
-        """Speaks text from an accessible object, determining voice automatically."""
+    def speak_accessible_text(
+        self,
+        obj: Atspi.Accessible | None,
+        text: str,
+        start_offset: int | None = None,
+    ) -> None:
+        """Speaks text from obj, using the specified start_offset for attribute presentation."""
 
         voice = self._get_voice(text, obj)
-        text = self.adjust_for_presentation(obj, text)
+        text = self.adjust_for_presentation(obj, text, start_offset)
         self._speak(text, voice[0] if voice else None)
 
     def speak_message(self, text: str) -> None:

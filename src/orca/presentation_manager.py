@@ -331,12 +331,17 @@ class PresentationManager:
             cap_style=cap_style,
         )
 
-    def speak_accessible_text(self, obj: Atspi.Accessible | None, text: str) -> None:
+    def speak_accessible_text(
+        self,
+        obj: Atspi.Accessible | None,
+        text: str,
+        start_offset: int | None = None,
+    ) -> None:
         """Speaks text from an accessible object."""
 
         if speech_manager.get_manager().get_speech_is_muted():
             return
-        speech_presenter.get_presenter().speak_accessible_text(obj, text)
+        speech_presenter.get_presenter().speak_accessible_text(obj, text, start_offset)
 
     def speak_message(self, text: str) -> None:
         """Speaks a single string."""

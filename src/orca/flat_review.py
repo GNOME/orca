@@ -947,6 +947,28 @@ class Context:
             return zone.get_string()
         return ""
 
+    def get_current_line_start_offset(self) -> int | None:
+        """Returns the current line's start offset, or None if the line spans multiple zones."""
+
+        zone = self._get_current_zone()
+        if zone is None or zone.line is None:
+            return None
+        zones = zone.line.get_zones()
+        if len(zones) != 1:
+            return None
+        return zones[0].get_start_offset()
+
+    def get_current_word_start_offset(self) -> int | None:
+        """Returns the start offset of the current word."""
+
+        zone = self._get_current_zone()
+        if zone is None:
+            return None
+        words = zone.get_words()
+        if not words or not 0 <= self._word_index < len(words):
+            return zone.get_start_offset()
+        return words[self._word_index].get_start_offset()
+
     def get_current_word_string(self) -> str:
         """Returns the string of the current word."""
 

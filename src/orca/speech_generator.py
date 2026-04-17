@@ -1965,7 +1965,9 @@ class SpeechGenerator(generator.Generator):
             ):
                 result[0] = messages.BLANK
 
-        result[0] = speech_presenter.get_presenter().adjust_for_presentation(obj, result[0])
+        result[0] = speech_presenter.get_presenter().adjust_for_presentation(
+            obj, result[0], args.get("startOffset")
+        )
         return result
 
     @log_generator_output
