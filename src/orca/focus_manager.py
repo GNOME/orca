@@ -66,7 +66,8 @@ class FocusManager:
         self._active_mode: str | None = None
         self._last_cursor_position: tuple[Atspi.Accessible | None, int] = (None, -1)
         self._penultimate_cursor_position: tuple[Atspi.Accessible | None, int] = (None, -1)
-        self._in_preferences_window: bool = False
+        self._preferences_window: Atspi.Accessible | None = None
+        self._preferences_window_pending: bool = False
         self._old_focus_was_dead: bool = False
         self._region_changed_listeners: list[Callable[[Atspi.Accessible, str], None]] = []
 
@@ -92,14 +93,24 @@ class FocusManager:
         self._old_focus_was_dead = False
 
     def is_in_preferences_window(self) -> bool:
-        """Returns True if the Orca preferences window is open."""
+        """Returns True if the Orca preferences window is the active window."""
 
-        return self._in_preferences_window
+        if self._preferences_window is None:
+            return False
+        return self._window == self._preferences_window
 
     def set_in_preferences_window(self, in_prefs: bool) -> None:
-        """Sets whether the Orca preferences window is open."""
+        """Tracks the Orca preferences window accessible for active-window comparison."""
 
-        self._in_preferences_window = in_prefs
+        if not in_prefs:
+            self._preferences_window = None
+            self._preferences_window_pending = False
+            return
+
+        # The prefs window may not be the active window yet at this point, so defer
+        # capture until set_active_window sees it become active.
+        self._preferences_window = None
+        self._preferences_window_pending = True
 
     def find_focused_object(self) -> Atspi.Accessible | None:
         """Returns the focused object in the active window."""
@@ -377,6 +388,12 @@ class FocusManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
         else:
             self._window = frame
+
+        if self._preferences_window_pending and frame is not None:
+            self._preferences_window = frame
+            self._preferences_window_pending = False
+            tokens = ["FOCUS MANAGER: Preferences window captured as", frame]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if set_window_as_focus:
             self.set_locus_of_focus(None, self._window, notify_script)
