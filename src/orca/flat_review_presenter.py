@@ -1455,9 +1455,17 @@ class FlatReviewPresenter(Extension):
                     self._context.get_current_line_start_offset(),
                 )
             elif speech_type == 2:
-                presenter.spell_item(line_string)
+                presenter.spell_item(
+                    line_string,
+                    self._context.get_current_object(),
+                    self._context.get_current_line_start_offset(),
+                )
             elif speech_type == 3:
-                presenter.spell_phonetically(line_string)
+                presenter.spell_phonetically(
+                    line_string,
+                    self._context.get_current_object(),
+                    self._context.get_current_line_start_offset(),
+                )
             else:
                 presenter.speak_accessible_text(
                     self._context.get_current_object(),
@@ -1500,9 +1508,17 @@ class FlatReviewPresenter(Extension):
                         self._context.get_current_word_start_offset(),
                     )
                 elif speech_type == 2:
-                    presenter.spell_item(word_string)
+                    presenter.spell_item(
+                        word_string,
+                        self._context.get_current_object(),
+                        self._context.get_current_word_start_offset(),
+                    )
                 elif speech_type == 3:
-                    presenter.spell_phonetically(word_string)
+                    presenter.spell_phonetically(
+                        word_string,
+                        self._context.get_current_object(),
+                        self._context.get_current_word_start_offset(),
+                    )
                 elif speech_type == 1:
                     presenter.speak_accessible_text(
                         self._context.get_current_object(),
@@ -1528,10 +1544,13 @@ class FlatReviewPresenter(Extension):
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         if not self._context and AXObject.supports_text(focus):
-            char_string = AXText.get_character_at_offset(focus)[0]
+            char_string, offset, _end_offset = AXText.get_character_at_offset(focus)
+            obj = focus
         else:
             self._context = self.get_or_create_context(script)
             char_string = self._context.get_current_character_string()
+            obj = self._context.get_current_object()
+            offset = self._context.get_current_text_offset()
         if not isinstance(event, input_event.BrailleEvent):
             presenter = presentation_manager.get_manager()
             if not char_string or (char_string == "\n" and speech_type != 3):
@@ -1539,7 +1558,9 @@ class FlatReviewPresenter(Extension):
             elif speech_type == 3:
                 presenter.speak_message(messages.UNICODE % f"{ord(char_string):04x}")
             elif speech_type == 2:
-                presenter.spell_phonetically(char_string)
+                presenter.spell_phonetically(char_string, obj, offset if offset >= 0 else None)
+            elif obj is not None and offset >= 0:
+                presenter.speak_character_at_offset(obj, offset, char_string)
             else:
                 presenter.speak_character(char_string)
 

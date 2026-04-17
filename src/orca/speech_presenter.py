@@ -2790,6 +2790,14 @@ class SpeechPresenter(Extension):
     ) -> None:
         """Speaks text from obj, using the specified start_offset for attribute presentation."""
 
+        if obj is not None and start_offset is not None and (script := self._get_active_script()):
+            end_offset = start_offset + len(text)
+            generator = script.get_speech_generator()
+            context = self._build_generator_context()
+            if utterances := generator.generate_line(obj, start_offset, end_offset, text, context):
+                self._speak(utterances)
+                return
+
         voice = self._get_voice(text, obj)
         text = self.adjust_for_presentation(obj, text, start_offset)
         self._speak(text, voice[0] if voice else None)
@@ -3094,19 +3102,46 @@ class SpeechPresenter(Extension):
             server.speak_character(character, acss=acss, cap_style=cap_style)
         self.write_to_monitor(character)
 
-    def spell_item(self, text: str) -> None:
+    def spell_item(
+        self,
+        text: str,
+        obj: Atspi.Accessible | None = None,
+        start_offset: int | None = None,
+    ) -> None:
         """Speak the characters in the string one by one."""
 
-        for character in text:
-            self.speak_character(character)
+        for i, character in enumerate(text):
+            language, dialect = self._language_at_offset(obj, start_offset, i)
+            self.speak_character(character, obj=obj, language=language, dialect=dialect)
 
-    def spell_phonetically(self, item_string: str) -> None:
+    def spell_phonetically(
+        self,
+        item_string: str,
+        obj: Atspi.Accessible | None = None,
+        start_offset: int | None = None,
+    ) -> None:
         """Phonetically spell item_string."""
 
-        for character in item_string:
-            voice = self._get_voice(text=character)
+        for i, character in enumerate(item_string):
+            language, dialect = self._language_at_offset(obj, start_offset, i)
+            voice = self._get_voice(text=character, obj=obj, language=language, dialect=dialect)
             phonetic_string = phonnames.get_phonetic_name(character.lower())
             self._speak(phonetic_string, voice[0] if voice else None)
+
+    @staticmethod
+    def _language_at_offset(
+        obj: Atspi.Accessible | None, start_offset: int | None, index: int = 0
+    ) -> tuple[str, str]:
+        """Returns (language, dialect) from text attributes at start_offset + index."""
+
+        if obj is None or start_offset is None:
+            return "", ""
+        attrs = AXText.get_text_attributes_at_offset(obj, start_offset + index)[0]
+        lang = attrs.get("language", "")
+        if "-" in lang:
+            language, dialect = lang.split("-", 1)
+            return language, dialect
+        return lang, ""
 
     def create_speech_preferences_grid(
         self,

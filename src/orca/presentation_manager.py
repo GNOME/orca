@@ -282,15 +282,25 @@ class PresentationManager:
             restore_previous=restore_previous,
         )
 
-    def spell_item(self, text: str) -> None:
+    def spell_item(
+        self,
+        text: str,
+        obj: Atspi.Accessible | None = None,
+        start_offset: int | None = None,
+    ) -> None:
         """Speak the characters in the string one by one."""
 
-        speech_presenter.get_presenter().spell_item(text)
+        speech_presenter.get_presenter().spell_item(text, obj, start_offset)
 
-    def spell_phonetically(self, item_string: str) -> None:
+    def spell_phonetically(
+        self,
+        item_string: str,
+        obj: Atspi.Accessible | None = None,
+        start_offset: int | None = None,
+    ) -> None:
         """Phonetically spell item_string."""
 
-        speech_presenter.get_presenter().spell_phonetically(item_string)
+        speech_presenter.get_presenter().spell_phonetically(item_string, obj, start_offset)
 
     @staticmethod
     def _get_cap_style(character: str) -> speechserver.CapitalizationStyle | None:

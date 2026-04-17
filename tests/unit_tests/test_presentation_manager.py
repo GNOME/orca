@@ -410,7 +410,7 @@ class TestPresentationManager:
         manager.spell_item("abc")
 
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
-        speech_pres.spell_item.assert_called_once_with("abc")
+        speech_pres.spell_item.assert_called_once_with("abc", None, None)
 
     def test_spell_phonetically_delegates(self, test_context: OrcaTestContext) -> None:
         """Test spell_phonetically delegates to speech_presenter."""
@@ -422,7 +422,7 @@ class TestPresentationManager:
         manager.spell_phonetically("ab")
 
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
-        speech_pres.spell_phonetically.assert_called_once_with("ab")
+        speech_pres.spell_phonetically.assert_called_once_with("ab", None, None)
 
     def test_speak_character_delegates(self, test_context: OrcaTestContext) -> None:
         """Test speak_character delegates to speech_presenter."""
