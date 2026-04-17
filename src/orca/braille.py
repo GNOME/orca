@@ -1311,6 +1311,7 @@ class Text(Region):
 
         if attr_indicator:
             enabled = text_attribute_manager.get_manager().get_attributes_to_braille()
+            check_spelling = "invalid" in enabled
             offset = self.line_offset
             while offset < line_end_offset:
                 attributes, start_offset, end_offset = AXText.get_text_attributes_at_offset(
@@ -1321,13 +1322,19 @@ class Text(Region):
                     break
                 mask = INDICATOR_NONE
                 offset = end_offset
-                for attrib in attributes:
-                    if attrib not in enabled:
-                        continue
-                    ax_text_attr = AXTextAttribute.from_string(attrib)
-                    if ax_text_attr and not ax_text_attr.value_is_default(attributes[attrib]):
-                        mask = attr_indicator
-                        break
+                if check_spelling and (
+                    AXUtilities.string_has_spelling_error(self.accessible, start_offset)
+                    or AXUtilities.string_has_grammar_error(self.accessible, start_offset)
+                ):
+                    mask = attr_indicator
+                else:
+                    for attrib in attributes:
+                        if attrib not in enabled:
+                            continue
+                        ax_text_attr = AXTextAttribute.from_string(attrib)
+                        if ax_text_attr and not ax_text_attr.value_is_default(attributes[attrib]):
+                            mask = attr_indicator
+                            break
                 if mask != INDICATOR_NONE:
                     mask_start = max(start_offset - self.line_offset, 0)
                     mask_end = min(end_offset - self.line_offset, string_length)
