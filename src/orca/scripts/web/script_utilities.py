@@ -46,7 +46,6 @@ from orca import (
     caret_navigator,
     debug,
     document_presenter,
-    flat_review_presenter,
     focus_manager,
     input_event_manager,
     script_utilities,
@@ -270,8 +269,6 @@ class Utilities(script_utilities.Utilities):
         offset: int,
         document: Atspi.Accessible | None = None,
     ) -> None:
-        if flat_review_presenter.get_presenter().is_active():
-            flat_review_presenter.get_presenter().quit()
         grab_focus = self.grab_focus_when_setting_caret(obj)
 
         obj, offset = self.first_context(obj, offset)

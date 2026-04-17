@@ -140,9 +140,6 @@ class Script(default.Script):
         if self.run_find_command_on:
             return super().locus_of_focus_changed(event, old_focus, new_focus)
 
-        if flat_review_presenter.get_presenter().is_active():
-            flat_review_presenter.get_presenter().quit()
-
         # TODO - JD: This is a hack that needs to be done better. For now it
         # fixes the broken echo previous word on Return.
         if (

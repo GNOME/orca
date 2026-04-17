@@ -422,9 +422,6 @@ class Script(script.Script):
                 flat_review_finder.get_finder().find(self)
             return True
 
-        if flat_review_presenter.get_presenter().is_active():
-            flat_review_presenter.get_presenter().quit()
-
         if learn_mode_presenter.get_presenter().is_active():
             learn_mode_presenter.get_presenter().quit()
 
@@ -903,9 +900,6 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             presentation_manager.get_manager().interrupt_presentation()
 
-        if flat_review_presenter.get_presenter().is_active():
-            flat_review_presenter.get_presenter().quit()
-
         offset = AXText.get_caret_offset(event.source)
 
         # TODO - JD: These need to be harmonized / unified / simplified.
@@ -1082,16 +1076,6 @@ class Script(script.Script):
 
         if self.utilities.handle_container_selection_change(event.source):
             return True
-
-        if (
-            AXUtilities.is_page_tab_list(event.source)
-            and flat_review_presenter.get_presenter().is_active()
-        ):
-            # If a wizard-like notebook page being reviewed changes, we might not get
-            # any events to update the locusOfFocus. As a result, subsequent flat
-            # review commands will continue to present the stale content.
-            # TODO - JD: We can potentially do some automatic reading here.
-            flat_review_presenter.get_presenter().quit()
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         mouse_review_item = mouse_review.get_reviewer().get_current_item()
@@ -1456,9 +1440,6 @@ class Script(script.Script):
             msg = "DEFAULT: Ignoring event. Combo box popup."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
-
-        if flat_review_presenter.get_presenter().is_active():
-            flat_review_presenter.get_presenter().quit()
 
         if learn_mode_presenter.get_presenter().is_active():
             learn_mode_presenter.get_presenter().quit()

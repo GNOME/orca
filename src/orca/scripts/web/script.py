@@ -466,9 +466,6 @@ class Script(default.Script):
             document_presenter.get_presenter().suspend_navigators(self, True, reason)
             return False
 
-        if flat_review_presenter.get_presenter().is_active():
-            flat_review_presenter.get_presenter().quit()
-
         caret_offset = 0
         if self.utilities.in_find_container(old_focus) or (
             self.utilities.is_document(new_focus)
