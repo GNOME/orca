@@ -1140,7 +1140,115 @@ class Link(Component):
         return chr(_STATE.link_indicator) * len(self.string)
 
 
-class Text(Region):
+class _AccessibleTextRegion(Region):
+    """Region backed by a range of accessible text. Provides shared attribute masking."""
+
+    accessible: Any
+    line_offset: int
+    _label: str = ""
+    _eol: str = ""
+
+    def get_attribute_mask(self, indicate_links: bool = True) -> str:
+        """Return the attrOr mask for links, attributes, and selections."""
+
+        if AXUtilities.is_whitespace_or_empty(self.accessible):
+            return ""
+
+        script = script_manager.get_manager().get_active_script()
+        if script is None:
+            msg = "BRAILLE: Cannot get attribute mask without active script."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return ""
+
+        string_length = len(self._raw_line) - len(self._label)
+        line_end_offset = self.line_offset + string_length
+        region_mask = [INDICATOR_NONE] * string_length
+
+        attr_indicator = _STATE.text_attributes_indicator
+        selection_indicator = _STATE.selector_indicator
+        link_indicator = _STATE.link_indicator
+
+        if indicate_links and link_indicator != INDICATOR_NONE:
+            links = AXHypertext.get_all_links(self.accessible)
+            for link in links:
+                start_offset = AXHypertext.get_link_start_offset(link)
+                end_offset = AXHypertext.get_link_end_offset(link)
+                mask_start = max(start_offset - self.line_offset, 0)
+                mask_end = min(end_offset - self.line_offset, string_length)
+                if mask_start < mask_end:
+                    link_text = self._raw_line[mask_start:mask_end]
+                    msg = (
+                        f"BRAILLE: Link underline in text region: "
+                        f"text offsets [{start_offset}, {end_offset}), "
+                        f"line_offset {self.line_offset}, "
+                        f"mask cells [{mask_start}, {mask_end}), "
+                        f"text '{link_text}'"
+                    )
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                for i in range(mask_start, mask_end):
+                    region_mask[i] |= link_indicator
+
+        if attr_indicator:
+            enabled = text_attribute_manager.get_manager().get_attributes_to_braille()
+            check_spelling = "invalid" in enabled
+            offset = self.line_offset
+            while offset < line_end_offset:
+                attributes, start_offset, end_offset = AXText.get_text_attributes_at_offset(
+                    self.accessible,
+                    offset,
+                )
+                if end_offset <= offset:
+                    break
+                mask = INDICATOR_NONE
+                offset = end_offset
+                if check_spelling and (
+                    AXUtilities.string_has_spelling_error(self.accessible, start_offset)
+                    or AXUtilities.string_has_grammar_error(self.accessible, start_offset)
+                ):
+                    mask = attr_indicator
+                else:
+                    for attrib in attributes:
+                        if attrib not in enabled:
+                            continue
+                        ax_text_attr = AXTextAttribute.from_string(attrib)
+                        if ax_text_attr and not ax_text_attr.value_is_default(attributes[attrib]):
+                            mask = attr_indicator
+                            break
+                if mask != INDICATOR_NONE:
+                    mask_start = max(start_offset - self.line_offset, 0)
+                    mask_end = min(end_offset - self.line_offset, string_length)
+                    for i in range(mask_start, mask_end):
+                        region_mask[i] |= attr_indicator
+
+        if selection_indicator:
+            selections = AXText.get_selected_ranges(self.accessible)
+            for start_offset, end_offset in selections:
+                mask_start = max(start_offset - self.line_offset, 0)
+                mask_end = min(end_offset - self.line_offset, string_length)
+                for i in range(mask_start, mask_end):
+                    region_mask[i] |= selection_indicator
+
+        if self._contracted:
+            contracted_mask = [0] * len(self._raw_line)
+            out_position = self._out_position[len(self._label) :]
+            if self._label:
+                out_position = [offset - len(self._label) - 1 for offset in out_position]
+            out_len = len(out_position)
+            mask_len = len(contracted_mask)
+            for i, m in enumerate(region_mask):
+                if i < out_len and out_position[i] < mask_len:
+                    contracted_mask[out_position[i]] |= m
+            region_mask = contracted_mask[: len(self.string)]
+
+        # Add empty mask characters for the EOL character as well as for the label.
+        region_mask += [0] * len(self._eol)
+        if self._label:
+            region_mask = [0] * len(self._label) + region_mask
+
+        return "".join(map(chr, region_mask))
+
+
+class Text(_AccessibleTextRegion):
     """Region backed by accessible text with caret routing support."""
 
     def __init__(
@@ -1269,105 +1377,6 @@ class Text(Region):
             return
         script.utilities.set_caret_offset(self.accessible, caret_offset)
 
-    def get_attribute_mask(self, indicate_links: bool = True) -> str:
-        """Return the attrOr mask for links, attributes, and selections."""
-
-        if AXUtilities.is_whitespace_or_empty(self.accessible):
-            return ""
-
-        script = script_manager.get_manager().get_active_script()
-        if script is None:
-            msg = "BRAILLE: Cannot get attribute mask without active script."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return ""
-
-        string_length = len(self._raw_line) - len(self._label)
-        line_end_offset = self.line_offset + string_length
-        region_mask = [INDICATOR_NONE] * string_length
-
-        attr_indicator = _STATE.text_attributes_indicator
-        selection_indicator = _STATE.selector_indicator
-        link_indicator = _STATE.link_indicator
-
-        if indicate_links and link_indicator != INDICATOR_NONE:
-            links = AXHypertext.get_all_links(self.accessible)
-            for link in links:
-                start_offset = AXHypertext.get_link_start_offset(link)
-                end_offset = AXHypertext.get_link_end_offset(link)
-                mask_start = max(start_offset - self.line_offset, 0)
-                mask_end = min(end_offset - self.line_offset, string_length)
-                if mask_start < mask_end:
-                    link_text = self._raw_line[mask_start:mask_end]
-                    msg = (
-                        f"BRAILLE: Link underline in text region: "
-                        f"text offsets [{start_offset}, {end_offset}), "
-                        f"line_offset {self.line_offset}, "
-                        f"mask cells [{mask_start}, {mask_end}), "
-                        f"text '{link_text}'"
-                    )
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
-                for i in range(mask_start, mask_end):
-                    region_mask[i] |= link_indicator
-
-        if attr_indicator:
-            enabled = text_attribute_manager.get_manager().get_attributes_to_braille()
-            check_spelling = "invalid" in enabled
-            offset = self.line_offset
-            while offset < line_end_offset:
-                attributes, start_offset, end_offset = AXText.get_text_attributes_at_offset(
-                    self.accessible,
-                    offset,
-                )
-                if end_offset <= offset:
-                    break
-                mask = INDICATOR_NONE
-                offset = end_offset
-                if check_spelling and (
-                    AXUtilities.string_has_spelling_error(self.accessible, start_offset)
-                    or AXUtilities.string_has_grammar_error(self.accessible, start_offset)
-                ):
-                    mask = attr_indicator
-                else:
-                    for attrib in attributes:
-                        if attrib not in enabled:
-                            continue
-                        ax_text_attr = AXTextAttribute.from_string(attrib)
-                        if ax_text_attr and not ax_text_attr.value_is_default(attributes[attrib]):
-                            mask = attr_indicator
-                            break
-                if mask != INDICATOR_NONE:
-                    mask_start = max(start_offset - self.line_offset, 0)
-                    mask_end = min(end_offset - self.line_offset, string_length)
-                    for i in range(mask_start, mask_end):
-                        region_mask[i] |= attr_indicator
-
-        if selection_indicator:
-            selections = AXText.get_selected_ranges(self.accessible)
-            for start_offset, end_offset in selections:
-                mask_start = max(start_offset - self.line_offset, 0)
-                mask_end = min(end_offset - self.line_offset, string_length)
-                for i in range(mask_start, mask_end):
-                    region_mask[i] |= selection_indicator
-
-        if self._contracted:
-            contracted_mask = [0] * len(self._raw_line)
-            out_position = self._out_position[len(self._label) :]
-            if self._label:
-                out_position = [offset - len(self._label) - 1 for offset in out_position]
-            out_len = len(out_position)
-            mask_len = len(contracted_mask)
-            for i, m in enumerate(region_mask):
-                if i < out_len and out_position[i] < mask_len:
-                    contracted_mask[out_position[i]] |= m
-            region_mask = contracted_mask[: len(self.string)]
-
-        # Add empty mask characters for the EOL character as well as for the label.
-        region_mask += [0] * len(self._eol)
-        if self._label:
-            region_mask = [0] * len(self._label) + region_mask
-
-        return "".join(map(chr, region_mask))
-
     def _contract_line(
         self,
         line: str,
@@ -1421,7 +1430,7 @@ class ReviewComponent(Component):
     __hash__ = None  # type: ignore[assignment]
 
 
-class ReviewText(Region):
+class ReviewText(_AccessibleTextRegion):
     """Text region used for flat review mode."""
 
     def __init__(self, accessible: Any, string: str, line_offset: int, zone: Any) -> None:
