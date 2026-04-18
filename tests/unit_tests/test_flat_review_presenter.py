@@ -112,6 +112,12 @@ class TestFlatReviewPresenter:
         flat_review_context_mock.get_current_braille_regions = test_context.Mock(
             return_value=([], None),
         )
+        flat_review_context_mock.get_current_location = test_context.Mock(
+            return_value=(0, 0, 0, 0),
+        )
+        flat_review_context_mock.is_stale = test_context.Mock(return_value=False)
+        flat_review_context_mock.can_set_location = test_context.Mock(return_value=True)
+        flat_review_context_mock.set_current_location = test_context.Mock()
 
         flat_review_context_mock.go_next_line = test_context.Mock(return_value=True)
         flat_review_context_mock.go_previous_line = test_context.Mock(return_value=True)
@@ -356,6 +362,7 @@ class TestFlatReviewPresenter:
 
         presenter = FlatReviewPresenter()
         existing_context = test_context.Mock()
+        existing_context.is_stale = test_context.Mock(return_value=False)
         presenter._context = existing_context
         presenter._restrict = False
         presenter._last_input_event = test_context.Mock(
@@ -518,6 +525,7 @@ class TestFlatReviewPresenter:
         script_mock = test_context.Mock()
         event_mock = test_context.Mock()
         context_mock = test_context.Mock()
+        context_mock.is_stale = test_context.Mock(return_value=False)
         presenter._context = context_mock
         presenter._last_input_event = test_context.Mock(
             as_single_line_string=test_context.Mock(return_value="test_event"),
@@ -545,6 +553,7 @@ class TestFlatReviewPresenter:
         event_mock = test_context.Mock()
 
         context_mock = test_context.Mock()
+        context_mock.is_stale = test_context.Mock(return_value=False)
         presenter._context = context_mock
         presenter._last_input_event = test_context.Mock(
             as_single_line_string=test_context.Mock(return_value="test_event"),
@@ -580,6 +589,7 @@ class TestFlatReviewPresenter:
         script_mock = test_context.Mock()
         event_mock = test_context.Mock()
         context_mock = test_context.Mock()
+        context_mock.is_stale = test_context.Mock(return_value=False)
         context_mock.go_previous_line.return_value = navigation_succeeds
         presenter._context = context_mock
         presenter._last_input_event = test_context.Mock(
@@ -717,6 +727,7 @@ class TestFlatReviewPresenter:
 
         presenter = FlatReviewPresenter()
         context_mock = test_context.Mock()
+        context_mock.is_stale = test_context.Mock(return_value=False)
         context_mock.go_next_line.return_value = False
         presenter._context = context_mock
         presenter._last_input_event = test_context.Mock(

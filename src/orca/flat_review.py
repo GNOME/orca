@@ -1014,6 +1014,25 @@ class Context:
 
         return Atspi.Rect()
 
+    def is_stale(self) -> bool:
+        """Returns True if this context no longer reflects the on-screen state."""
+
+        if self._top_level is None:
+            return True
+
+        current = AXComponent.get_rect(self._top_level)
+        if current.width != self._rect.width or current.height != self._rect.height:
+            tokens = [
+                "FLAT REVIEW: Context is stale due to top level",
+                self._top_level,
+                "being resized from",
+                self._rect,
+                "to",
+                current,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return False
+
     def get_current_location(self) -> tuple[int, int, int, int]:
         """Returns the location as a (lineIndex, zoneIndex, wordIndex, charIndex) tuple."""
 
@@ -1023,6 +1042,20 @@ class Context:
         """Sets the location to the specified (lineIndex, zoneIndex, wordIndex, charIndex)."""
 
         self._line_index, self._zone_index, self._word_index, self._char_index = location
+
+    def can_set_location(self, location: tuple[int, int, int, int]) -> bool:
+        """Returns True if the (lineIndex, zoneIndex, wordIndex, charIndex) is valid."""
+
+        line_idx, zone_idx, word_idx, char_idx = location
+        if not 0 <= line_idx < len(self._lines):
+            return False
+        zones = self._lines[line_idx].get_zones()
+        if not 0 <= zone_idx < len(zones):
+            return False
+        words = zones[zone_idx].get_words()
+        if not 0 <= word_idx < len(words):
+            return False
+        return 0 <= char_idx < len(words[word_idx].get_string())
 
     def set_current_zone(self, zone: Zone, offset_in_zone: int = 0) -> None:
         """Sets zone as the current zone."""

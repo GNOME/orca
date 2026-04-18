@@ -329,6 +329,11 @@ class FlatReviewPresenter(Extension):
         if not self._context:
             return False
 
+        if self._context.is_stale():
+            msg = "FLAT REVIEW PRESENTER: Context is stale."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
         last_input_event = input_event_manager.get_manager().get_last_input_event()
         if last_input_event is not None and last_input_event is self._context_input_event:
             msg = "FLAT REVIEW PRESENTER: No new input event since context was last validated."
@@ -364,7 +369,11 @@ class FlatReviewPresenter(Extension):
                 self._context = flat_review.Context(script)
 
             current_obj = self._context.get_current_object()
-            if previous_obj == current_obj and previous_location is not None:
+            if (
+                previous_obj == current_obj
+                and previous_location is not None
+                and self._context.can_set_location(previous_location)
+            ):
                 tokens = [
                     "FLAT REVIEW PRESENTER: Restoring previous location in new context:",
                     current_obj,
