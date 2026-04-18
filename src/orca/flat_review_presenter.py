@@ -30,8 +30,9 @@ from typing import TYPE_CHECKING
 
 import gi
 
+gi.require_version("Atspi", "2.0")
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Atspi, GLib, Gtk
 
 from . import (
     braille,
@@ -55,13 +56,11 @@ from . import (
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_text import AXText
+from .ax_utilities_application import AXUtilitiesApplication
 from .command import BrailleCommand, Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
-    gi.require_version("Atspi", "2.0")
-    from gi.repository import Atspi
-
     from .scripts import default
 
 
@@ -84,6 +83,8 @@ class FlatReviewPresenter(Extension):
 
     GROUP_LABEL = guilabels.KB_GROUP_FLAT_REVIEW
 
+    _EVENT_TYPES: tuple[str, ...] = ("object:text-changed:insert",)
+
     def __init__(self) -> None:
         self._context: flat_review.Context | None = None
         self._current_contents: str = ""
@@ -91,7 +92,53 @@ class FlatReviewPresenter(Extension):
         self._context_input_event: input_event.InputEvent | None = None
         self._restrict: bool = self.get_is_restricted()
         self._gui: FlatReviewContextGUI | None = None
+        self._event_listener: Atspi.EventListener = Atspi.EventListener.new(self._listener)
+        self._registered_app: Atspi.Accessible | None = None
+        self._context_invalidated: bool = False
         super().__init__()
+
+    def _listener(self, event: Atspi.Event) -> None:
+        """Generic event listener."""
+
+        # Currently the only thing we're paying attention to is a text insertion from this app.
+        # If we receive an insertion and its for the current object being reviewed, invalidate
+        # the context unconditionally. The main (only?) use case is avoiding stale content in
+        # a terminal which is being actively reviewed without any intervening input events.
+
+        # TODO - JD: Implement support to invalidate individual objects.
+        if self._context is None:
+            return
+
+        if event.source != self._context.get_current_object():
+            return
+
+        self._context_invalidated = True
+
+    def _register_event_listeners(self, app: Atspi.Accessible) -> None:
+        """Registers the event listeners for app, replacing any previous registration."""
+
+        if app == self._registered_app:
+            return
+        if self._registered_app is not None:
+            self._deregister_event_listeners()
+        for event_type in self._EVENT_TYPES:
+            self._event_listener.register_with_app(event_type, app=app)
+        self._registered_app = app
+
+    def _deregister_event_listeners(self) -> None:
+        """Deregisters the event listeners if currently registered."""
+
+        if self._registered_app is None:
+            return
+
+        try:
+            for event_type in self._EVENT_TYPES:
+                self._event_listener.deregister(event_type)
+        except GLib.GError as error:
+            msg = f"FLAT REVIEW PRESENTER: Exception deregistering {event_type}: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        self._registered_app = None
 
     # pylint: disable-next=too-many-locals
     def _get_commands(self) -> list[Command]:
@@ -334,6 +381,11 @@ class FlatReviewPresenter(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
+        if self._context_invalidated:
+            msg = "FLAT REVIEW PRESENTER: Context invalidated by an accessible event."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
         last_input_event = input_event_manager.get_manager().get_last_input_event()
         if last_input_event is not None and last_input_event is self._context_input_event:
             msg = "FLAT REVIEW PRESENTER: No new input event since context was last validated."
@@ -384,6 +436,10 @@ class FlatReviewPresenter(Extension):
 
             manager.emit_region_changed(current_obj, mode=focus_manager.FLAT_REVIEW)
             self._context_input_event = input_event_manager.get_manager().get_last_input_event()
+            app = AXUtilitiesApplication.get_application(current_obj)
+            if app is not None:
+                self._register_event_listeners(app)
+            self._context_invalidated = False
             return self._context
 
         assert self._context is not None
@@ -469,6 +525,8 @@ class FlatReviewPresenter(Extension):
         self._last_input_event = None
         self._context = None
         self._context_input_event = None
+        self._deregister_event_listeners()
+        self._context_invalidated = False
         focus = focus_manager.get_manager().get_locus_of_focus()
         focus_manager.get_manager().emit_region_changed(focus, mode=focus_manager.FOCUS_TRACKING)
         if event is None or script is None:
