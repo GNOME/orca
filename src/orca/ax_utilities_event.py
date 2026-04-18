@@ -868,7 +868,7 @@ class AXUtilitiesEvent:
                     f"AXUtilitiesEvent: The new name ('{event.any_data}') "
                     f"is too similar to the text at offset ('{text}')."
                 )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+                debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
         msg = "AXUtilitiesEvent: Event is presentable."
