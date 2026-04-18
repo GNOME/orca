@@ -2032,6 +2032,16 @@ class SpeechGenerator(generator.Generator):
         presenter = speech_presenter.get_presenter()
         system_voice = self.voice(speechserver.VoiceType.SYSTEM)
 
+        # Terminals don't expose language or spelling/grammar text attributes, so when we
+        # aren't announcing formatting changes there's no need for the text attributes.
+        if not announce_formatting and AXUtilities.is_terminal(obj):
+            string = AXText.get_substring(obj, start_offset, end_offset)
+            if not string:
+                return []
+            voice = self.voice(string=string, obj=obj)
+            adjusted = presenter.adjust_for_presentation(obj, string, start_offset)
+            return [adjusted, *voice] if adjusted else []
+
         attr_runs = AXUtilities.get_all_text_attributes(obj, start_offset, end_offset)
         prev_had_spelling = False
         prev_had_grammar = False

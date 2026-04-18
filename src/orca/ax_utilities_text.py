@@ -37,6 +37,7 @@ from .ax_component import AXComponent
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
+from .ax_utilities_application import AXUtilitiesApplication
 from .ax_utilities_role import AXUtilitiesRole
 
 if TYPE_CHECKING:
@@ -825,6 +826,25 @@ class AXUtilitiesText:
         return result
 
     @staticmethod
+    def _build_text_maps(text: str) -> tuple[dict[int, int], list[int]]:
+        """Returns (byte_to_char, char_to_byte) UTF-8 offset maps for text.
+
+        byte_to_char[b] is the index of the character at byte offset b.
+        char_to_byte[i] is the starting byte offset of character i;
+        """
+
+        byte_to_char: dict[int, int] = {}
+        char_to_byte: list[int] = [0]
+        byte = 0
+        for i, ch in enumerate(text):
+            for _ in range(len(ch.encode("utf-8"))):
+                byte_to_char[byte] = i
+                byte += 1
+            char_to_byte.append(byte)
+        byte_to_char[byte] = len(text)
+        return byte_to_char, char_to_byte
+
+    @staticmethod
     def get_all_text_attributes(
         obj: Atspi.Accessible,
         start_offset: int = 0,
@@ -840,6 +860,26 @@ class AXUtilitiesText:
 
         tokens = ["AXText: Getting attributes for", obj, f"chars: {start_offset}-{end_offset}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        # VTE (at least in GTK3 terminals) reports attribute run boundaries in UTF-8 byte offsets
+        # rather than character offsets. If the text has non-ASCII, convert start/end to byte
+        # offsets for the walk and translate the resulting runs back to characters.
+        byte_to_char: dict[int, int] | None = None
+        total_chars = 0
+        is_gtk3_terminal = (
+            AXUtilitiesRole.is_terminal(obj)
+            and AXUtilitiesApplication.get_application_toolkit_name(obj).lower() == "gtk"
+            and AXUtilitiesApplication.get_application_toolkit_version(obj).startswith("3.")
+        )
+        if is_gtk3_terminal:
+            all_text = AXText.get_all_text(obj)
+            if any(ord(ch) > 127 for ch in all_text):
+                total_chars = len(all_text)
+                byte_to_char, char_to_byte = AXUtilitiesText._build_text_maps(all_text)
+                if 0 <= start_offset <= total_chars:
+                    start_offset = char_to_byte[start_offset]
+                if 0 <= end_offset <= total_chars:
+                    end_offset = char_to_byte[end_offset]
 
         rv = []
         offset = start_offset
@@ -859,6 +899,16 @@ class AXUtilitiesText:
                 msg = f"AXText: Start offset {start} > end offset {end}"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
             offset = max(end, offset + 1)
+
+        if byte_to_char is not None:
+            rv = [
+                (
+                    byte_to_char.get(s, total_chars),
+                    byte_to_char.get(e, total_chars),
+                    attrs,
+                )
+                for s, e, attrs in rv
+            ]
 
         msg = f"AXText: {len(rv)} attribute ranges found."
         debug.print_message(debug.LEVEL_INFO, msg, True)

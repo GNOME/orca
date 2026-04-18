@@ -861,10 +861,12 @@ class TestAXText:
         self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
         from orca.ax_text import AXText
+        from orca.ax_utilities_role import AXUtilitiesRole
         from orca.ax_utilities_text import AXUtilitiesText
 
         test_context.patch_object(AXObject, "supports_text", return_value=True)
         test_context.patch_object(AXText, "get_character_count", return_value=20)
+        test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
 
         def mock_get_text_attributes_at_offset(_obj, offset) -> tuple[dict[str, str], int, int]:
             if offset < 10:
