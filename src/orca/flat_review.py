@@ -1031,6 +1031,8 @@ class Context:
                 current,
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return True
+
         return False
 
     def get_current_location(self) -> tuple[int, int, int, int]:
