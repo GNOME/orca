@@ -3065,7 +3065,7 @@ class SpeechPresenter(Extension):
         def _with_monitor(iterator: Any) -> Any:
             for context, acss in iterator:
                 self.write_to_monitor(context.utterance)
-                yield context, acss
+                yield context, self._apply_voice_set_overrides(self._resolve_acss(acss))
 
         server = speech_manager.get_manager().get_server()
         if server:
