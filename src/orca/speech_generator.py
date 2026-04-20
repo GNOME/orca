@@ -477,7 +477,10 @@ class SpeechGenerator(generator.Generator):
         result = super()._generate_accessible_description(obj, **args)
         if result:
             result[0] = speech_presenter.get_presenter().adjust_for_presentation(obj, result[0])
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            if self._script.utilities.in_document_content(obj):
+                result.extend(self.voice(DEFAULT, obj=obj, **args))
+            else:
+                result.extend(self.voice(SYSTEM, obj=obj, **args))
         return result
 
     @log_generator_output
