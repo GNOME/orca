@@ -1537,30 +1537,36 @@ class FlatReviewPresenter(Extension):
                 presenter.speak_message(messages.BLANK)
             elif line_string.isspace():
                 presenter.speak_message(messages.WHITE_SPACE)
-            elif line_string.isupper() and (speech_type < 2 or speech_type > 3):
-                presenter.speak_accessible_text(
-                    self._context.get_current_object(),
-                    line_string,
-                    self._context.get_current_line_start_offset(),
-                )
-            elif speech_type == 2:
-                presenter.spell_item(
-                    line_string,
-                    self._context.get_current_object(),
-                    self._context.get_current_line_start_offset(),
-                )
-            elif speech_type == 3:
-                presenter.spell_phonetically(
-                    line_string,
-                    self._context.get_current_object(),
-                    self._context.get_current_line_start_offset(),
-                )
             else:
-                presenter.speak_accessible_text(
-                    self._context.get_current_object(),
-                    line_string,
-                    self._context.get_current_line_start_offset(),
+                indentation = speech_presenter.get_presenter().get_indentation_description(
+                    line_string
                 )
+                if indentation:
+                    presenter.speak_message(indentation)
+                if line_string.isupper() and (speech_type < 2 or speech_type > 3):
+                    presenter.speak_accessible_text(
+                        self._context.get_current_object(),
+                        line_string,
+                        self._context.get_current_line_start_offset(),
+                    )
+                elif speech_type == 2:
+                    presenter.spell_item(
+                        line_string,
+                        self._context.get_current_object(),
+                        self._context.get_current_line_start_offset(),
+                    )
+                elif speech_type == 3:
+                    presenter.spell_phonetically(
+                        line_string,
+                        self._context.get_current_object(),
+                        self._context.get_current_line_start_offset(),
+                    )
+                else:
+                    presenter.speak_accessible_text(
+                        self._context.get_current_object(),
+                        line_string,
+                        self._context.get_current_line_start_offset(),
+                    )
 
         focus_manager.get_manager().emit_region_changed(
             self._context.get_current_object(),
