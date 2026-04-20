@@ -336,7 +336,7 @@ class SpeechGenerator(generator.Generator):
                 resolved_voice_type = speechserver.VoiceType.UPPERCASE
 
         voice_props[ACSS.VOICE_TYPE] = resolved_voice_type
-        if voice_override:
+        if voice_override and voice_override.get("established"):
             voice_props.update(voice_override)
             if ACSS.FAMILY in voice_override:
                 family.update(voice_override[ACSS.FAMILY])
@@ -438,7 +438,7 @@ class SpeechGenerator(generator.Generator):
             voice_type_name = voice_type.get(key or DEFAULT, voice_type[DEFAULT])
             voice[ACSS.VOICE_TYPE] = voice_type_name
             override = effective_context.voices.get(voice_type_name)
-            if override:
+            if override and override.get("established"):
                 voice.update(override)
                 if ACSS.FAMILY in override:
                     family = override[ACSS.FAMILY]
