@@ -2690,7 +2690,6 @@ class SpeechPresenter(Extension):
         server.speak(text, resolved_voice)
         self.write_to_monitor(text)
 
-    # pylint: disable-next=too-many-branches
     def _speak_list(self, content: list, acss: ACSS | dict[str, Any] | None) -> None:
         """Processes a list of speech content items."""
 
@@ -2708,26 +2707,27 @@ class SpeechPresenter(Extension):
             elif isinstance(element, str):
                 if element:
                     to_speak.append(element)
-            elif to_speak:
-                new_voice = ACSS(acss)
-                new_items_to_speak: list[str] = []
-                if isinstance(element, speech_generator.Pause):
-                    if to_speak[-1] and to_speak[-1][-1].isalnum():
-                        to_speak[-1] += "."
-                elif isinstance(element, ACSS):
-                    new_voice.update(element)
-                    if active_voice is None:
-                        active_voice = new_voice
-                    if new_voice == active_voice:
-                        continue
-                    tokens = ["SPEECH: New voice", new_voice, " != active voice", active_voice]
-                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                    new_items_to_speak.append(to_speak.pop())
-
+            elif isinstance(element, speech_generator.Pause):
+                if to_speak and to_speak[-1] and to_speak[-1][-1].isalnum():
+                    to_speak[-1] += "."
                 if to_speak:
                     self._speak_single(" ".join(to_speak), active_voice)
+                    to_speak = []
+            elif isinstance(element, ACSS):
+                new_voice = ACSS(acss)
+                new_voice.update(element)
+                if to_speak:
+                    if active_voice is not None and new_voice != active_voice:
+                        tokens = [
+                            "SPEECH: New voice",
+                            new_voice,
+                            " != active voice",
+                            active_voice,
+                        ]
+                        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                    self._speak_single(" ".join(to_speak), new_voice)
+                    to_speak = []
                 active_voice = new_voice
-                to_speak = new_items_to_speak
 
         if to_speak:
             self._speak_single(" ".join(to_speak), active_voice)
