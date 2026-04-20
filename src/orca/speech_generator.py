@@ -1028,6 +1028,14 @@ class SpeechGenerator(generator.Generator):
                 continue
 
             presented_roles.append(alt_role)
+            ancestor_language = ""
+            ancestor_dialect = ""
+            if self._script.utilities.in_document_content(ancestor):
+                locale_parts = AXObject.get_locale(ancestor).split(".")[0].split("_")
+                if locale_parts[0]:
+                    ancestor_language = locale_parts[0]
+                    if len(locale_parts) > 1:
+                        ancestor_dialect = locale_parts[1]
             result.append(
                 self.generate(
                     ancestor,
@@ -1037,6 +1045,8 @@ class SpeechGenerator(generator.Generator):
                     count=ancestor_roles.count(alt_role),
                     ancestorOf=obj,
                     priorObj=prior_obj,
+                    language=ancestor_language,
+                    dialect=ancestor_dialect,
                 ),
             )
 
