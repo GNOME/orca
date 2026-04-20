@@ -714,7 +714,7 @@ msgstr "Oznámiť názov okna"
 #. the "OK" button.
 #: src/orca/cmdnames.py:98
 msgid "Open the Find dialog"
-msgstr "Otvoriť dialóg vyhľadávanie čítačky obrazovky"
+msgstr "Otvoriť dialógové okno vyhľadávania čítačky obrazovky"
 
 #. Translators: Orca has a command which presents a list with accessible actions
 #. that can be performed on the current object. This is the name of that command.
@@ -1028,8 +1028,7 @@ msgstr "Zobraziť obsah plošného prezerania"
 
 #: src/orca/cmdnames.py:352
 msgid "Toggle whether to read just the current table cell or the whole row"
-msgstr ""
-"Prepnúť čítanie buniek alebo celých riadkov pri navigácii v tabuľkách"
+msgstr "Prepnúť čítanie buniek alebo celých riadkov pri navigácii v tabuľkách"
 
 #. Translators: the attributes being presented are the text attributes, such as
 #. bold, italic, font name, font size, etc.
@@ -1099,7 +1098,7 @@ msgstr "Označiť koniec výberu textu"
 #. have a handler.
 #: src/orca/cmdnames.py:405
 msgid "Enter learn mode.  Press escape to exit learn mode"
-msgstr "Aktivovať režim učenia. Stlačte kláves escape pre ukončenie"
+msgstr "Aktivovať režim učenia. Stlačte kláves escape na ukončenie."
 
 #. Translators: the speech rate is how fast the speech synthesis engine will
 #. generate speech.
@@ -1203,14 +1202,14 @@ msgstr "Ukončiť čítačku obrazovky"
 #. users to set their preferences for Orca.
 #: src/orca/cmdnames.py:480
 msgid "Display the preferences configuration dialog"
-msgstr "Zobraziť konfiguračný dialóg Nastavenia čítačky obrazovky"
+msgstr "Zobraziť dialógové okno Nastavenia čítačky obrazovky"
 
 #. Translators: the preferences configuration dialog is the dialog that allows
 #. users to set their preferences for a specific application within Orca.
 #: src/orca/cmdnames.py:484
 msgid "Display the application preferences configuration dialog"
 msgstr ""
-"Zobraziť konfiguračný dialóg Nastavenia čítačky obrazovky pre aktívnu "
+"Zobraziť dialógové okno Nastavenia čítačky obrazovky pre aktívnu "
 "aplikáciu"
 
 #: src/orca/cmdnames.py:489
@@ -1724,17 +1723,17 @@ msgstr "Zobraziť zoznam tlačidiel"
 #. Translators: this is for navigating among check boxes in a document.
 #: src/orca/cmdnames.py:853
 msgid "Go to previous check box"
-msgstr "Prejsť na predchádzajúce zaškrtávacie pole"
+msgstr "Prejsť na predchádzajúce začiarkavacie pole"
 
 #. Translators: this is for navigating among check boxes in a document.
 #: src/orca/cmdnames.py:856
 msgid "Go to next check box"
-msgstr "Prejsť na nasledujúce zaškrtávacie pole"
+msgstr "Prejsť na nasledujúce začiarkavacie pole"
 
 #. Translators: this is for navigating among check boxes in a document.
 #: src/orca/cmdnames.py:859
 msgid "Display a list of check boxes"
-msgstr "Zobraziť zoznam zaškrtávacích polí"
+msgstr "Zobraziť zoznam začiarkavacích polí"
 
 #. Translators: this is for navigating among clickable objects in a document.
 #. A "clickable" is a web element with an "onClick" handler.
@@ -2529,7 +2528,7 @@ msgstr "kvetinová biela"
 #: src/orca/colornames.py:206
 msgctxt "color name"
 msgid "forest green"
-msgstr "jedľovo zelená"
+msgstr "jedľovo-zelená"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
@@ -2648,7 +2647,7 @@ msgstr "vínovočervená"
 #: src/orca/colornames.py:274
 msgctxt "color name"
 msgid "lawn green"
-msgstr "trávovo zelená"
+msgstr "trávovo-zelená"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
@@ -3117,7 +3116,7 @@ msgstr "jarná zelená"
 #: src/orca/colornames.py:542
 msgctxt "color name"
 msgid "steel blue"
-msgstr "oceľovo modrá"
+msgstr "oceľovo-modrá"
 
 #. Translators: This refers to a CSS color name. The name, hex value, and color
 #. can be found at https://en.wikipedia.org/wiki/Web_colors#X11_color_names.
@@ -4310,7 +4309,7 @@ msgstr "Titulok"
 #: src/orca/guilabels.py:833
 msgctxt "structural navigation"
 msgid "Check Box"
-msgstr "Zaškrtávacie pole"
+msgstr "Začiarkavacie pole"
 
 #. Translators: Orca has a command that presents a list of structural navigation
 #. objects in a dialog box so that users can navigate more quickly than they
@@ -4511,7 +4510,7 @@ msgstr "Tlačidlá"
 #: src/orca/guilabels.py:967
 msgctxt "structural navigation"
 msgid "Check Boxes"
-msgstr "Zaškrtávacie polia"
+msgstr "Začiarkavacie polia"
 
 # GtkLabel
 #. Translators: Orca has a command that presents a list of structural navigation
@@ -5019,7 +5018,7 @@ msgstr "Zobraziť kontext (predkov)"
 #. braille.
 #: src/orca/guilabels.py:1312
 msgid "Contracted Braille"
-msgstr "Skratkové braillovo písmo"
+msgstr "Skratkové Braillovo písmo"
 
 #. Translators: This is the label for a setting which controls whether computer
 #. braille (uncontracted) is used for the word at the cursor location when
@@ -5039,7 +5038,7 @@ msgstr "Čítačka obrazovky"
 #. Translators: This is the accessible name for the Orca Preferences dialog box.
 #: src/orca/guilabels.py:1324
 msgid "Screen Reader Preferences"
-msgstr "Nastavenia Čítačky obrazovky"
+msgstr "Nastavenia čítačky obrazovky"
 
 #. Translators: This is the label for a widget in the preferences dialog.
 #: src/orca/guilabels.py:1327
@@ -5955,7 +5954,7 @@ msgstr "Prispôsobiť vybraný atribút"
 #. "indicator" can be chosen from among: None, Dot 7, Dot 8, Dots 7 and 8.
 #: src/orca/guilabels.py:1975
 msgid "Braille Indicator"
-msgstr "Indikátor v braillovom písme"
+msgstr "Indikátor v Braillovom písme"
 
 #. Translators: This label is on a button on the Text Attributes pane of the
 #. Orca Preferences dialog. On that pane there is a long list of possible text
@@ -9029,7 +9028,7 @@ msgstr "Nová diskusná karta %s"
 #. the value of the setting is toggled.
 #: src/orca/messages.py:370
 msgid "Do not speak chat room name."
-msgstr "Nehovoriť názov diskusnej miestnosti."
+msgstr "nehovoriť názov diskusnej miestnosti."
 
 #. Translators: In chat applications, Orca automatically presents incoming
 #. messages in speech and braille. If a user is in multiple conversations or
@@ -9420,7 +9419,7 @@ msgstr "otvorí mriežku"
 #. will cause a listbox to appear if activated.
 #: src/orca/messages.py:644
 msgid "opens listbox"
-msgstr "otvorí box zoznamu"
+msgstr "otvorí zoznam"
 
 #. Translators: this message will be presented to indicate the focused object
 #. will cause a menu to appear if activated.
@@ -9481,7 +9480,7 @@ msgstr "Nová klávesová skratka je: %s"
 #. result of their input.
 #: src/orca/messages.py:686
 msgid "Key binding deleted. Press enter to confirm."
-msgstr "Klávesová skratka odstránená. Potvrďte stlačením klávesu enter."
+msgstr "Klávesová skratka odstránená. Potvrďte stlačením klávesu Enter."
 
 #. Translators: This is a spoken and/or brailled message letting the user know
 #. Orca has deleted an existing key combination (e.g. Alt+Ctrl+g) as a result of
@@ -10942,7 +10941,7 @@ msgstr "Žiadne ďalšie tlačidlá."
 #. user if no more check boxes can be found.
 #: src/orca/messages.py:1762
 msgid "No more check boxes."
-msgstr "Žiadne ďalšie zaškrtávacie polia."
+msgstr "Žiadne ďalšie začiarkavacie polia."
 
 #. Translators: This is for navigating document content by moving from 'large
 #. object' to 'large object'. A 'large object' is a logical chunk of text,
@@ -13090,7 +13089,7 @@ msgstr "zvislý"
 #: src/orca/object_properties.py:506
 msgctxt "checkbox"
 msgid "checked"
-msgstr "zaškrtnuté"
+msgstr "začiarknuté"
 
 #. Translators: This is a state which applies to a check box.
 #. Please don't use the same translation as for "not selected",
@@ -13098,7 +13097,7 @@ msgstr "zaškrtnuté"
 #: src/orca/object_properties.py:511
 msgctxt "checkbox"
 msgid "not checked"
-msgstr "nezaškrtnuté"
+msgstr "nezačiarknuté"
 
 #. Translators: This is a state which applies to a switch. For an example of
 #. a switch, see https://docs.gtk.org/gtk4/class.Switch.html
@@ -13118,7 +13117,7 @@ msgstr "vypnutý"
 #: src/orca/object_properties.py:522
 msgctxt "checkbox"
 msgid "partially checked"
-msgstr "čiastočne zaškrtnuté"
+msgstr "čiastočne začiarknuté"
 
 #. Translators: This is a state which applies to a toggle button.
 #: src/orca/object_properties.py:525
