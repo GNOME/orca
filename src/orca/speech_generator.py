@@ -1967,6 +1967,7 @@ class SpeechGenerator(generator.Generator):
                 and args.get("formatType") != "ancestor"
             ):
                 result[0] = messages.BLANK
+            return result
 
         result[0] = speech_presenter.get_presenter().adjust_for_presentation(
             obj, result[0], args.get("startOffset")
