@@ -876,6 +876,11 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
+        if reason == TextEventReason.AUTO_INSERTION_UNPRESENTABLE:
+            msg = "DEFAULT: Ignoring caret-moved event believed to be irrelevant auto insertion"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         manager = focus_manager.get_manager()
         focus = manager.get_locus_of_focus()
         if focus != event.source:
@@ -1179,6 +1184,11 @@ class Script(script.Script):
             return True
 
         reason = AXUtilities.get_text_event_reason(event)
+        if reason == TextEventReason.AUTO_DELETION_UNPRESENTABLE:
+            msg = "DEFAULT: Ignoring event believed to be irrelevant auto deletion"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         presentation_manager.get_manager().present_command_announcement()
         self.update_braille(event.source)
 
@@ -1217,6 +1227,11 @@ class Script(script.Script):
             return True
 
         reason = AXUtilities.get_text_event_reason(event)
+        if reason == TextEventReason.AUTO_INSERTION_UNPRESENTABLE:
+            msg = "DEFAULT: Ignoring event believed to be irrelevant auto insertion"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         presentation_manager.get_manager().present_command_announcement()
         self.update_braille(event.source)
 
