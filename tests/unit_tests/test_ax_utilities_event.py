@@ -2340,7 +2340,7 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesObject, "find_ancestor", return_value=None)
 
         result = AXUtilitiesEvent._get_text_deletion_event_reason(mock_event)
-        assert result == TextEventReason.AUTO_DELETION
+        assert result == TextEventReason.AUTO_DELETION_UNPRESENTABLE
 
     def test_get_text_deletion_event_reason_children_change(self, test_context):
         """Test AXUtilitiesEvent._get_text_deletion_event_reason with children change."""

@@ -1525,8 +1525,8 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if reason == TextEventReason.AUTO_DELETION:
-            msg = "WEB: Ignoring event believed to be auto deletion"
+        if reason == TextEventReason.AUTO_DELETION_UNPRESENTABLE:
+            msg = "WEB: Ignoring event believed to be irrelevant auto deletion"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
