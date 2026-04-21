@@ -103,7 +103,8 @@ class FlatReviewPresenter(Extension):
 
         # Currently the only thing we're paying attention to is a text insertion from this app.
         # If we receive an insertion and its for the current object being reviewed, invalidate
-        # the context unconditionally. The main (only?) use case is avoiding stale content in
+        # the context unconditionally and refresh braille (without speech) so the display stays
+        # in sync with the new content. The main (only?) use case is avoiding stale content in
         # a terminal which is being actively reviewed without any intervening input events.
 
         # TODO - JD: Implement support to invalidate individual objects.
@@ -114,6 +115,9 @@ class FlatReviewPresenter(Extension):
             return
 
         self._context_invalidated = True
+        script = script_manager.get_manager().get_active_script()
+        if script is not None:
+            self._update_braille(script)
 
     def _register_event_listeners(self, app: Atspi.Accessible) -> None:
         """Registers the event listeners for app, replacing any previous registration."""
