@@ -20,6 +20,7 @@
 
 # pylint: disable=too-many-lines
 # pylint: disable=too-many-public-methods
+# pylint: disable=too-many-instance-attributes
 
 """Module for flat-review commands"""
 
@@ -401,6 +402,7 @@ class FlatReviewPresenter(Extension):
 
         return self.last_input_event_was_review_command()
 
+    # pylint: disable-next=too-many-locals
     def get_or_create_context(self, script: default.Script | None = None) -> flat_review.Context:
         """Returns the flat review context, creating one if necessary."""
 
@@ -421,18 +423,26 @@ class FlatReviewPresenter(Extension):
                 self._context = flat_review.Context(script)
 
             current_obj = self._context.get_current_object()
-            if (
-                previous_obj == current_obj
-                and previous_location is not None
-                and self._context.can_set_location(previous_location)
-            ):
-                tokens = [
-                    "FLAT REVIEW PRESENTER: Restoring previous location in new context:",
-                    current_obj,
-                    previous_location,
-                ]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                self._context.set_current_location(previous_location)
+            if previous_obj == current_obj and previous_location is not None:
+                line, zone, word, char = previous_location
+                # Try the exact location first; if the new context's structure has
+                # shifted (e.g. a word got shorter), fall back progressively so we
+                # still land on the right line.
+                for fallback in (
+                    (line, zone, word, char),
+                    (line, zone, word, 0),
+                    (line, zone, 0, 0),
+                    (line, 0, 0, 0),
+                ):
+                    if self._context.can_set_location(fallback):
+                        tokens = [
+                            "FLAT REVIEW PRESENTER: Restoring previous location in new context:",
+                            current_obj,
+                            fallback,
+                        ]
+                        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                        self._context.set_current_location(fallback)
+                        break
 
             manager.emit_region_changed(current_obj, mode=focus_manager.FLAT_REVIEW)
             self._context_input_event = input_event_manager.get_manager().get_last_input_event()

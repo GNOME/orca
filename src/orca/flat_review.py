@@ -632,6 +632,7 @@ class Context:
     LINE = 3
     WINDOW = 4
 
+    # pylint: disable-next=too-many-locals,too-many-statements
     def __init__(self, script, root: Atspi.Accessible | None = None) -> None:
         """Create a new Context for script."""
 
@@ -1055,6 +1056,8 @@ class Context:
         if not 0 <= zone_idx < len(zones):
             return False
         words = zones[zone_idx].get_words()
+        if not words:
+            return word_idx == 0 and char_idx == 0
         if not 0 <= word_idx < len(words):
             return False
         return 0 <= char_idx < len(words[word_idx].get_string())
