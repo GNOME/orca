@@ -1595,12 +1595,12 @@ class Script(script.Script):
 
         speech_pres = speech_presenter.get_presenter()
         if "\n" in word:
-            # Announce when we cross a hard line boundary, based on whether or not indentation and
-            # justification should be spoken. This was done to avoid yet another setting in
-            # response to some users saying this announcement was too chatty. The idea of using
-            # this setting for the decision is that if the user wants indentation and justification
-            # announced, they are interested in explicit whitespace information.
-            if speech_pres.get_speak_indentation_and_justification():
+            # Announce when we cross a hard line boundary, based on whether or not indentation
+            # should be spoken. This was done to avoid yet another setting in response to some
+            # users saying this announcement was too chatty. The idea of using this setting for
+            # the decision is that if the user wants indentation announced, they are interested
+            # in explicit whitespace information.
+            if speech_pres.get_speak_indentation():
                 presentation_manager.get_manager().speak_character("\n")
             if word.startswith("\n"):
                 start_offset += 1

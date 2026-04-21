@@ -566,7 +566,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 - **`ChangeNumberStyle`:** Changes spoken number style between digits and words.
 - **`CycleTextAttributeChangeMode`:** Cycles through text attribute change announcement modes.
-- **`ToggleIndentationAndJustification`:** Toggles the speaking of indentation and justification.
+- **`ToggleIndentation`:** Toggles the speaking of indentation.
 - **`ToggleMonitor`:** Toggles the speech monitor on and off.
 - **`ToggleTableCellReadingMode`:** Toggles between speak cell and speak row.
 - **`ToggleVerbosity`:** Toggles speech verbosity level between verbose and brief.
@@ -602,7 +602,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`RepeatedCharacterLimit`:** Gets/Sets the count at which repeated, non-alphanumeric symbols will be described.
 - **`SpeakBlankLines`:** Gets/Sets whether blank lines will be spoken.
 - **`SpeakDescription`:** Gets/Sets whether object descriptions are spoken.
-- **`SpeakIndentationAndJustification`:** Gets/Sets whether speaking of indentation and justification is enabled.
+- **`SpeakIndentation`:** Gets/Sets whether spoken indentation is enabled.
 - **`SpeakIndentationOnlyIfChanged`:** Gets/Sets whether indentation will be announced only if it has changed.
 - **`SpeakMisspelledIndicator`:** Gets/Sets whether the misspelled indicator is spoken.
 - **`SpeakPositionInSet`:** Gets/Sets whether the position and set size of objects are spoken.

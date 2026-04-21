@@ -186,7 +186,7 @@ class TestSpeechPresenter:
         cmd_manager = command_manager.get_manager()
         assert cmd_manager.get_command("changeNumberStyleHandler") is not None
         assert cmd_manager.get_command("toggleSpeechVerbosityHandler") is not None
-        assert cmd_manager.get_command("toggleSpeakingIndentationJustificationHandler") is not None
+        assert cmd_manager.get_command("toggleSpeakingIndentationHandler") is not None
         assert cmd_manager.get_command("toggleTableCellReadModeHandler") is not None
 
     @pytest.mark.parametrize(
@@ -352,12 +352,12 @@ class TestSpeechPresenter:
         ],
         ids=lambda case: case["id"],
     )
-    def test_get_speak_indentation_and_justification(
+    def test_get_speak_indentation(
         self,
         test_context: OrcaTestContext,
         case: dict,
     ) -> None:
-        """Test get_speak_indentation_and_justification method."""
+        """Test get_speak_indentation method."""
 
         self._setup_dependencies(test_context)
 
@@ -367,11 +367,11 @@ class TestSpeechPresenter:
         presenter = SpeechPresenter()
         gsettings_registry.get_registry().set_runtime_value(
             "speech",
-            "speak-indentation-and-justification",
+            "speak-indentation",
             case["setting_value"],
         )
 
-        result = presenter.get_speak_indentation_and_justification()
+        result = presenter.get_speak_indentation()
         assert result == case["expected"]
 
     @pytest.mark.parametrize(
@@ -382,12 +382,12 @@ class TestSpeechPresenter:
         ],
         ids=lambda case: case["id"],
     )
-    def test_set_speak_indentation_and_justification(
+    def test_set_speak_indentation(
         self,
         test_context: OrcaTestContext,
         case: dict,
     ) -> None:
-        """Test set_speak_indentation_and_justification method."""
+        """Test set_speak_indentation method."""
 
         self._setup_dependencies(test_context)
 
@@ -395,9 +395,9 @@ class TestSpeechPresenter:
 
         presenter = SpeechPresenter()
 
-        result = presenter.set_speak_indentation_and_justification(case["input_value"])
+        result = presenter.set_speak_indentation(case["input_value"])
         assert result == case["expected"]
-        assert presenter.get_speak_indentation_and_justification() == case["input_value"]
+        assert presenter.get_speak_indentation() == case["input_value"]
 
     def test_get_indentation_description_disabled(self, test_context: OrcaTestContext) -> None:
         """Test get_indentation_description method when disabled."""
@@ -409,7 +409,7 @@ class TestSpeechPresenter:
 
         registry = gsettings_registry.get_registry()
         registry.set_runtime_value("speech", "only-speak-displayed-text", True)
-        registry.set_runtime_value("speech", "speak-indentation-and-justification", False)
+        registry.set_runtime_value("speech", "speak-indentation", False)
 
         presenter = SpeechPresenter()
         line = "    Hello world"
@@ -426,7 +426,7 @@ class TestSpeechPresenter:
 
         registry = gsettings_registry.get_registry()
         registry.set_runtime_value("speech", "only-speak-displayed-text", False)
-        registry.set_runtime_value("speech", "speak-indentation-and-justification", True)
+        registry.set_runtime_value("speech", "speak-indentation", True)
         registry.set_runtime_value("speech", "speak-indentation-only-if-changed", False)
 
         presenter = SpeechPresenter()
@@ -447,7 +447,7 @@ class TestSpeechPresenter:
 
         registry = gsettings_registry.get_registry()
         registry.set_runtime_value("speech", "only-speak-displayed-text", False)
-        registry.set_runtime_value("speech", "speak-indentation-and-justification", True)
+        registry.set_runtime_value("speech", "speak-indentation", True)
         registry.set_runtime_value("speech", "speak-indentation-only-if-changed", True)
 
         presenter = SpeechPresenter()
@@ -625,14 +625,14 @@ class TestSpeechPresenter:
         mock_setter1.assert_called_once_with(False)
         mock_setter2.assert_called_once_with(True)
 
-    def test_toggle_indentation_and_justification(self, test_context: OrcaTestContext) -> None:
-        """Test toggle_indentation_and_justification method."""
+    def test_toggle_indentation(self, test_context: OrcaTestContext) -> None:
+        """Test toggle_indentation method."""
 
         self._setup_dependencies(test_context)
         from orca.speech_presenter import SpeechPresenter
 
         presenter = SpeechPresenter()
-        result = presenter.toggle_indentation_and_justification()
+        result = presenter.toggle_indentation()
         assert result is True
 
     def test_change_number_style(self, test_context: OrcaTestContext) -> None:

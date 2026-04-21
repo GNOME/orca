@@ -209,10 +209,10 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
             presenter.set_speak_misspelled_indicator,
         )
         text_speak_indentation = SpeechPreference(
-            SpeechPresenter.KEY_SPEAK_INDENTATION_AND_JUSTIFICATION,
-            guilabels.SPEECH_SPEAK_INDENTATION_AND_JUSTIFICATION,
-            presenter.get_speak_indentation_and_justification,
-            presenter.set_speak_indentation_and_justification,
+            SpeechPresenter.KEY_SPEAK_INDENTATION,
+            guilabels.SPEECH_SPEAK_INDENTATION,
+            presenter.get_speak_indentation,
+            presenter.set_speak_indentation,
         )
         text_indentation_only_if_changed = SpeechPreference(
             SpeechPresenter.KEY_SPEAK_INDENTATION_ONLY_IF_CHANGED,
@@ -826,7 +826,7 @@ class SpeechPresenter(Extension):
     KEY_PROGRESS_BAR_SPEECH_VERBOSITY = "progress-bar-speech-verbosity"
     KEY_MESSAGES_ARE_DETAILED = "messages-are-detailed"
     KEY_VERBOSITY_LEVEL = "verbosity-level"
-    KEY_SPEAK_INDENTATION_AND_JUSTIFICATION = "speak-indentation-and-justification"
+    KEY_SPEAK_INDENTATION = "speak-indentation"
     KEY_SPEAK_INDENTATION_ONLY_IF_CHANGED = "speak-indentation-only-if-changed"
     KEY_SPEAK_TEXT_ATTRIBUTE_CHANGES = "speak-text-attribute-changes"
     KEY_MONITOR_FONT_SIZE = "monitor-font-size"
@@ -877,9 +877,9 @@ class SpeechPresenter(Extension):
                 kb_v,
             ),
             (
-                "toggleSpeakingIndentationJustificationHandler",
-                self.toggle_indentation_and_justification,
-                cmdnames.TOGGLE_SPOKEN_INDENTATION_AND_JUSTIFICATION,
+                "toggleSpeakingIndentationHandler",
+                self.toggle_indentation,
+                cmdnames.TOGGLE_SPOKEN_INDENTATION,
                 None,
                 None,
             ),
@@ -1872,28 +1872,28 @@ class SpeechPresenter(Extension):
         return True
 
     @gsettings_registry.get_registry().gsetting(
-        key=KEY_SPEAK_INDENTATION_AND_JUSTIFICATION,
+        key=KEY_SPEAK_INDENTATION,
         schema="speech",
         gtype="b",
         default=False,
-        summary="Speak indentation and justification",
+        summary="Speak indentation",
         migration_key="enableSpeechIndentation",
     )
     @dbus_service.getter
-    def get_speak_indentation_and_justification(self) -> bool:
-        """Returns whether speaking of indentation and justification is enabled."""
+    def get_speak_indentation(self) -> bool:
+        """Returns whether speaking of indentation is enabled."""
 
-        return self._get_setting(self.KEY_SPEAK_INDENTATION_AND_JUSTIFICATION, "b", False)
+        return self._get_setting(self.KEY_SPEAK_INDENTATION, "b", False)
 
     @dbus_service.setter
-    def set_speak_indentation_and_justification(self, value: bool) -> bool:
-        """Sets whether speaking of indentation and justification is enabled."""
+    def set_speak_indentation(self, value: bool) -> bool:
+        """Sets whether spoken indentation is enabled."""
 
-        msg = f"SPEECH PRESENTER: Setting speak indentation and justification to {value}."
+        msg = f"SPEECH PRESENTER: Setting spoken indentation to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
-            self.KEY_SPEAK_INDENTATION_AND_JUSTIFICATION,
+            self.KEY_SPEAK_INDENTATION,
             value,
         )
         return True
@@ -2038,16 +2038,16 @@ class SpeechPresenter(Extension):
         return True
 
     @dbus_service.command
-    def toggle_indentation_and_justification(
+    def toggle_indentation(
         self,
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
         notify_user: bool = True,
     ) -> bool:
-        """Toggles the speaking of indentation and justification."""
+        """Toggles spoken indentation."""
 
         tokens = [
-            "SPEECH PRESENTER: toggle_indentation_and_justification. ",
+            "SPEECH PRESENTER: toggle_indentation. ",
             "Script:",
             script,
             "Event:",
@@ -2057,14 +2057,14 @@ class SpeechPresenter(Extension):
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        value = self.get_speak_indentation_and_justification()
-        self.set_speak_indentation_and_justification(not value)
-        if self.get_speak_indentation_and_justification():
-            full = messages.INDENTATION_JUSTIFICATION_ON_FULL
-            brief = messages.INDENTATION_JUSTIFICATION_ON_BRIEF
+        value = self.get_speak_indentation()
+        self.set_speak_indentation(not value)
+        if self.get_speak_indentation():
+            full = messages.INDENTATION_ON_FULL
+            brief = messages.INDENTATION_ON_BRIEF
         else:
-            full = messages.INDENTATION_JUSTIFICATION_OFF_FULL
-            brief = messages.INDENTATION_JUSTIFICATION_OFF_BRIEF
+            full = messages.INDENTATION_OFF_FULL
+            brief = messages.INDENTATION_OFF_BRIEF
         if script is not None and notify_user:
             presentation_manager.get_manager().present_message(full, brief)
         return True
@@ -2256,10 +2256,7 @@ class SpeechPresenter(Extension):
     def get_indentation_description(self, line: str, only_if_changed: bool | None = None) -> str:
         """Returns a description of the indentation in the given line."""
 
-        if (
-            self.get_only_speak_displayed_text()
-            or not self.get_speak_indentation_and_justification()
-        ):
+        if self.get_only_speak_displayed_text() or not self.get_speak_indentation():
             return ""
 
         line = line.replace("\u00a0", " ")
@@ -2876,7 +2873,7 @@ class SpeechPresenter(Extension):
             speak_position_in_set=self.get_speak_position_in_set(),
             speak_widget_mnemonic=self.get_speak_widget_mnemonic(),
             speak_blank_lines=self.get_speak_blank_lines(),
-            speak_indentation=self.get_speak_indentation_and_justification(),
+            speak_indentation=self.get_speak_indentation(),
             announce_cell_headers=self.get_announce_cell_headers(),
             announce_cell_coordinates=self.get_announce_cell_coordinates(),
             announce_spreadsheet_cell_coordinates=self.get_announce_spreadsheet_cell_coordinates(),

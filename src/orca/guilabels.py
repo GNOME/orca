@@ -1762,12 +1762,12 @@ PRESENT_OBJECT_MNEMONICS = _("Mnemonics")
 SPEECH_SPEAK_DESCRIPTION = _("Description")
 
 # Translators: This is a label for a widget associated with whether Orca will
-# speak indentation and justification information for text content.
-SPEECH_SPEAK_INDENTATION_AND_JUSTIFICATION = _("Indentation and justification")
+# speak indentation information for text content.
+SPEECH_SPEAK_INDENTATION = _("Indentation")
 
 # Translators: This is the label for a widget on the Speech preferences page.
-# When checked, indentation and justification will only be announced when they
-# have changed from the previous line.
+# When checked, indentation will only be announced when it has changed from
+# the previous line.
 SPEECH_INDENTATION_ONLY_IF_CHANGED = _("Only speak indentation if changed")
 
 # Translators: The misspelled-word indicator is the red squiggly line that

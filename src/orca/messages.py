@@ -905,21 +905,20 @@ KEY_ECHO_WORD_AND_SENTENCE_BRIEF = C_("key echo", "word and sentence")
 # echo and can cycle through the various levels quickly via a command.
 KEY_ECHO_WORD_AND_SENTENCE_FULL = _("Echo set to word and sentence.")
 
-# Translators: This brief message indicates that indentation and
-# justification will be spoken.
-INDENTATION_JUSTIFICATION_OFF_BRIEF = C_("indentation and justification", "Disabled")
+# Translators: This brief message indicates that indentation will not be
+# spoken.
+INDENTATION_OFF_BRIEF = C_("indentation", "Disabled")
 
-# Translators: This detailed message indicates that indentation and
-# justification will not be spoken.
-INDENTATION_JUSTIFICATION_OFF_FULL = _("Speaking of indentation and justification disabled.")
+# Translators: This detailed message indicates that indentation will not be
+# spoken.
+INDENTATION_OFF_FULL = _("Spoken indentation disabled.")
 
-# Translators: This brief message indicates that indentation and
-# justification will be spoken.
-INDENTATION_JUSTIFICATION_ON_BRIEF = C_("indentation and justification", "Enabled")
+# Translators: This brief message indicates that indentation will be spoken.
+INDENTATION_ON_BRIEF = C_("indentation", "Enabled")
 
-# Translators: This detailed message indicates that indentation and
-# justification will be spoken.
-INDENTATION_JUSTIFICATION_ON_FULL = _("Speaking of indentation and justification enabled.")
+# Translators: This detailed message indicates that indentation will be
+# spoken.
+INDENTATION_ON_FULL = _("Spoken indentation enabled.")
 
 # Translators: Orca announces when a widget has an associated error, such as
 # disallowed characters in an input, or a must-check box that is not checked

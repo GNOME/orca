@@ -295,7 +295,7 @@ These operations also work at the profile level:
 | `repeated-character-limit` | `i` | `4` | Threshold for repeated character compression |
 | `speak-blank-lines` | `b` | `true` | Speak blank lines |
 | `speak-description` | `b` | `true` | Speak object descriptions |
-| `speak-indentation-and-justification` | `b` | `false` | Speak indentation and justification |
+| `speak-indentation` | `b` | `false` | Speak indentation |
 | `speak-indentation-only-if-changed` | `b` | `false` | Speak indentation only if changed |
 | `speak-misspelled-indicator` | `b` | `true` | Speak misspelled word indicator |
 | `speak-numbers-as-digits` | `b` | `false` | Speak numbers as individual digits |

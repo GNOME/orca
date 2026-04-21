@@ -348,7 +348,7 @@ SPEECH_MANAGER_HANDLERS = frozenset(
 SPEECH_PRESENTER_HANDLERS = frozenset(
     {
         "changeNumberStyleHandler",
-        "toggleSpeakingIndentationJustificationHandler",
+        "toggleSpeakingIndentationHandler",
         "toggleSpeechVerbosityHandler",
         "toggleTableCellReadModeHandler",
     },

@@ -491,11 +491,8 @@ SHOW_PREFERENCES_GUI = _("Display the preferences configuration dialog")
 # users to set their preferences for a specific application within Orca.
 SHOW_APP_PREFERENCES_GUI = _("Display the application preferences configuration dialog")
 
-# Translators: Orca allows the user to enable/disable speaking of indentation
-# and justification.
-TOGGLE_SPOKEN_INDENTATION_AND_JUSTIFICATION = _(
-    "Toggle the speaking of indentation and justification",
-)
+# Translators: Orca allows the user to enable/disable spoken indentation.
+TOGGLE_SPOKEN_INDENTATION = _("Toggle spoken indentation")
 
 # Translators: Orca has a setting through which users can control how a number is
 # spoken. The options are digits ("1 2 3") and words ("one hundred and twenty
