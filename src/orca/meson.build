@@ -127,6 +127,7 @@ lib_sources = [
   'orca_gui_navlist.py',
   'orca_gui_prefs.py',
   'orca_modifier_manager.py',
+  'output_reader.py',
   'output_recorder.py',
   'phonnames.py',
   'preferences_grid_base.py',
