@@ -139,6 +139,7 @@ def shutdown(_event=None, _signum=None):
     debug.print_message(debug.LEVEL_INFO, "ORCA: Quitting Atspi main event loop", True)
     Atspi.event_quit()  # pylint: disable=no-value-for-parameter
     debug.print_message(debug.LEVEL_INFO, "ORCA: Shutdown complete", True)
+    debug.shutdown()
     return True
 
 

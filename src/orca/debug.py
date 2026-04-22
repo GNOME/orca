@@ -21,6 +21,7 @@
 
 import contextlib
 import inspect
+import os
 import re
 import sys
 import threading
@@ -76,6 +77,16 @@ def print_message(level: int, text: str, timestamp: bool = False, stack: bool = 
         return
 
     _print_text(level, text, timestamp, stack)
+
+
+def shutdown() -> None:
+    """Flushes debugFile and fsyncs it so no buffered writes are lost on exit."""
+
+    if debugFile is None:
+        return
+    with contextlib.suppress(OSError):
+        debugFile.flush()
+        os.fsync(debugFile.fileno())
 
 
 def _stack_as_string(max_frames: int = 4) -> str:

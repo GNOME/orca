@@ -327,8 +327,9 @@ def main() -> int:
 
     if args.debug:
         debug.debugLevel = debug.LEVEL_ALL
+        # Line-buffered to reduce loss of debug output on abnormal exit.
         # pylint: disable=consider-using-with
-        debug.debugFile = open(args.debug_file, "w", encoding="utf-8")
+        debug.debugFile = open(args.debug_file, "w", encoding="utf-8", buffering=1)
 
     if args.replace:
         cleanup(signal.SIGKILL)
