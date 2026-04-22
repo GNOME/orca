@@ -53,6 +53,7 @@ from . import (
     keybindings,
     messages,
     object_properties,
+    output_recorder,
     phonnames,
     preferences_grid_base,
     presentation_manager,
@@ -852,6 +853,7 @@ class SpeechPresenter(Extension):
         self._group_buffer: list[str] | None = None
         self._progress_bar_cache: dict = {}
         self._text_attribute_change_mode_override: TextAttributeChangeMode | None = None
+        self._output_recorder = output_recorder.OutputRecorder("speech")
         super().__init__()
 
     def _get_commands(self) -> list[Command]:
@@ -2430,6 +2432,14 @@ class SpeechPresenter(Extension):
             self.destroy_monitor()
         return True
 
+    @dbus_service.setter
+    def set_log_file(self, value: str) -> bool:
+        """Opens the given path for JSONL recording; an empty string closes any open file."""
+
+        msg = f"SPEECH PRESENTER: Setting log file to {value!r}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return self._output_recorder.set_path(value)
+
     @gsettings_registry.get_registry().gsetting(
         key=KEY_MONITOR_FONT_SIZE,
         schema="speech",
@@ -2554,6 +2564,7 @@ class SpeechPresenter(Extension):
         self._speech_history.append((kind, value))
         if len(self._speech_history) > 500:
             self._speech_history = self._speech_history[-500:]
+        self._output_recorder.record(kind="speech" if kind == "text" else kind, text=value)
 
     def _replay_history(self) -> None:
         """Replays stored speech history into the current monitor."""

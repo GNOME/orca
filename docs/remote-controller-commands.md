@@ -72,6 +72,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`FlashMessagesAreEnabled`:** Gets/Sets whether 'flash' messages (i.e. announcements) are enabled.
 - **`FlashMessagesArePersistent`:** Gets/Sets whether 'flash' messages are persistent (as opposed to temporary).
 - **`LinkIndicator`:** Gets/Sets the braille link indicator style.
+- **`LogFile`:** Opens the given path for JSONL recording; an empty string closes any open file. (setter only)
 - **`MonitorBackground`:** Gets/Sets the braille monitor background color.
 - **`MonitorCellCount`:** Gets/Sets the braille monitor cell count.
 - **`MonitorForeground`:** Gets/Sets the braille monitor foreground color.
@@ -566,7 +567,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 - **`ChangeNumberStyle`:** Changes spoken number style between digits and words.
 - **`CycleTextAttributeChangeMode`:** Cycles through text attribute change announcement modes.
-- **`ToggleIndentation`:** Toggles the speaking of indentation.
+- **`ToggleIndentation`:** Toggles spoken indentation.
 - **`ToggleMonitor`:** Toggles the speech monitor on and off.
 - **`ToggleTableCellReadingMode`:** Toggles between speak cell and speak row.
 - **`ToggleVerbosity`:** Toggles speech verbosity level between verbose and brief.
@@ -591,6 +592,7 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`AnnounceSpreadsheetCellCoordinates`:** Gets/Sets whether spreadsheet cell coordinates are announced.
 - **`AnnounceTable`:** Gets/Sets whether tables are announced when entered.
 - **`AnnounceTrackedChanges`:** Gets/Sets whether tracked changes are announced when entered.
+- **`LogFile`:** Opens the given path for JSONL recording; an empty string closes any open file. (setter only)
 - **`MessagesAreDetailed`:** Gets/Sets whether informative messages will be detailed or brief.
 - **`MonitorBackground`:** Gets/Sets the speech monitor background color.
 - **`MonitorFontSize`:** Gets/Sets the speech monitor font size.

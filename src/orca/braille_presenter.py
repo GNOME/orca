@@ -44,6 +44,7 @@ from . import (
     input_event,
     input_event_manager,
     messages,
+    output_recorder,
     preferences_grid_base,
 )
 from .braille_generator import BrailleGeneratorContext
@@ -568,6 +569,7 @@ class BraillePresenter(Extension):
         self._monitor: braille_monitor.BrailleMonitor | None = None
         self._monitor_enabled_override: bool | None = None
         self._progress_bar_cache: dict = {}
+        self._output_recorder = output_recorder.OutputRecorder("braille")
         super().__init__()
 
     def _get_commands(self) -> list[Command]:
@@ -721,6 +723,14 @@ class BraillePresenter(Extension):
         if not value:
             self.destroy_monitor()
         return True
+
+    @dbus_service.setter
+    def set_log_file(self, value: str) -> bool:
+        """Opens the given path for JSONL recording; an empty string closes any open file."""
+
+        msg = f"BRAILLE PRESENTER: Setting log file to {value!r}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return self._output_recorder.set_path(value)
 
     @gsettings_registry.get_registry().gsetting(
         key=KEY_MONITOR_CELL_COUNT,
@@ -1871,6 +1881,12 @@ class BraillePresenter(Extension):
     ) -> None:
         """Updates the braille monitor display, creating it on demand if enabled."""
 
+        self._output_recorder.record(
+            kind="braille",
+            cursor_cell=cursor_cell,
+            string=substring,
+            mask=mask,
+        )
         if not self.get_monitor_is_enabled():
             return
 
