@@ -48,6 +48,7 @@ class OrcaSession:
         self._env = env
         self._process: subprocess.Popen | None = None
         self._bus = SessionMessageBus()
+        self._orca_modifier_keysym: int | None = None
 
     def launch(self, readiness_timeout: float = 45.0) -> None:
         """Starts Orca as a subprocess and waits for the D-Bus service to come up."""
@@ -82,15 +83,18 @@ class OrcaSession:
     def press_orca_key(self, keysym: int) -> None:
         """Presses keysym with Orca's current modifier key held (Orca+key chord)."""
 
-        is_desktop = self.get("CommandManager", "KeyboardLayoutIsDesktop")
-        modifier_getter = "DesktopModifierKeys" if is_desktop else "LaptopModifierKeys"
-        modifier_keysym = Gdk.keyval_from_name(self.get("CommandManager", modifier_getter)[0])
-        keyboard.press_key(modifier_keysym)
+        if self._orca_modifier_keysym is None:
+            is_desktop = self.get("CommandManager", "KeyboardLayoutIsDesktop")
+            modifier_getter = "DesktopModifierKeys" if is_desktop else "LaptopModifierKeys"
+            self._orca_modifier_keysym = Gdk.keyval_from_name(
+                self.get("CommandManager", modifier_getter)[0]
+            )
+        keyboard.press_key(self._orca_modifier_keysym)
         try:
             keyboard.press_key(keysym)
             keyboard.release_key(keysym)
         finally:
-            keyboard.release_key(modifier_keysym)
+            keyboard.release_key(self._orca_modifier_keysym)
 
     def _resolve_orca_binary(self) -> str:
         """Returns the path to the Orca binary to launch."""
