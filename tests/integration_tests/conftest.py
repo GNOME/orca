@@ -38,6 +38,7 @@ from .gsettings_fixtures import (  # noqa: F401
     _gsettings_registry,
 )
 from .orca_fixtures import (  # noqa: F401
+    _gtk3_text_view,
     _orca,
 )
 
