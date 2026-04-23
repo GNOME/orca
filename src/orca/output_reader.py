@@ -27,6 +27,7 @@ import threading
 import time
 from dataclasses import dataclass
 from enum import Enum
+from typing import cast
 
 
 class Kind(Enum):
@@ -60,6 +61,7 @@ class OutputReader:
         self._speech_path = speech_path
         self._braille_path = braille_path
         self._queue: queue.Queue = queue.Queue()
+        self._pending: list[SpeechRecord | BrailleRecord] = []
         self._stop_event = threading.Event()
         self._threads: list[threading.Thread] = []
 
@@ -99,7 +101,8 @@ class OutputReader:
     ) -> list[SpeechRecord | BrailleRecord]:
         """Returns records that have arrived, waiting for the stream to go quiet."""
 
-        records: list[SpeechRecord | BrailleRecord] = []
+        records: list[SpeechRecord | BrailleRecord] = list(self._pending)
+        self._pending.clear()
         deadline = time.monotonic() + overall_timeout
         while True:
             remaining = deadline - time.monotonic()
@@ -110,6 +113,58 @@ class OutputReader:
             except queue.Empty:
                 return records
             records.append(record)
+
+    def wait_for_speech(self, substring: str, timeout: float = 2.0) -> SpeechRecord:
+        """Drains records until a SpeechRecord containing substring arrives or timeout."""
+
+        record = self._wait_for(
+            lambda r: isinstance(r, SpeechRecord) and substring in r.text,
+            timeout,
+            f"speech containing {substring!r}",
+        )
+        return cast("SpeechRecord", record)
+
+    def wait_for_braille(self, substring: str, timeout: float = 2.0) -> BrailleRecord:
+        """Drains records until a BrailleRecord containing substring arrives or timeout."""
+
+        record = self._wait_for(
+            lambda r: isinstance(r, BrailleRecord) and substring in r.string,
+            timeout,
+            f"braille containing {substring!r}",
+        )
+        return cast("BrailleRecord", record)
+
+    def reset(self) -> None:
+        """Discards buffered records so the next wait_for_* sees only new activity."""
+
+        self._pending.clear()
+        try:
+            while True:
+                self._queue.get_nowait()
+        except queue.Empty:
+            pass
+
+    def _wait_for(
+        self, predicate, timeout: float, description: str
+    ) -> SpeechRecord | BrailleRecord:
+        """Returns the first record matching predicate; non-matching records are buffered."""
+
+        for index, record in enumerate(self._pending):
+            if predicate(record):
+                return self._pending.pop(index)
+
+        deadline = time.monotonic() + timeout
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise TimeoutError(f"No {description} arrived within {timeout}s")
+            try:
+                record = self._queue.get(timeout=remaining)
+            except queue.Empty:
+                raise TimeoutError(f"No {description} arrived within {timeout}s") from None
+            if predicate(record):
+                return record
+            self._pending.append(record)
 
     def _enqueue_records(self, path: str, parser) -> None:
         """Reads lines from path as they arrive and enqueues each parsed record."""
