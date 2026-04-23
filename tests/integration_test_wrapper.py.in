@@ -1,37 +1,319 @@
 #!/usr/bin/env python3
-"""Wrapper to check if Orca is running before running integration tests."""
+"""Wrapper that brings up Xvfb + a private AT-SPI stack, then runs pytest."""
 
+from __future__ import annotations
+
+import contextlib
+import os
+import shutil
+import signal
 import subprocess
 import sys
+import tempfile
+import time
+from typing import NoReturn
 
-def is_orca_running():
-    """Check if Orca D-Bus service is available."""
+_SKIP_EXIT = 77
+_ATSPI_DIRECTORIES = ("/usr/libexec", "/usr/lib/at-spi2-core", "/usr/local/libexec")
+_SANDBOX_READY_FLAG = "--sandbox-ready"
+
+
+def _find_atspi_binary(name: str) -> str | None:
+    """Returns the first existing at-spi2 binary path among common install locations."""
+
+    for directory in _ATSPI_DIRECTORIES:
+        candidate = os.path.join(directory, name)
+        if os.path.exists(candidate):
+            return candidate
+    return None
+
+
+_BUS_LAUNCHER = _find_atspi_binary("at-spi-bus-launcher")
+_REGISTRYD = _find_atspi_binary("at-spi2-registryd")
+
+
+def _skip_and_exit(reason: str) -> NoReturn:
+    """Prints a skip reason and exits with the test-suite skip code."""
+
+    print(f"SKIP: {reason}", file=sys.stderr)
+    sys.exit(_SKIP_EXIT)
+
+
+def _other_orca_is_running() -> bool:
+    """Returns True if another Orca process belonging to this user is active."""
+
     try:
-        result = subprocess.run([
-            "python3", "-c",
-            "from dasbus.connection import SessionMessageBus; "
-            "bus = SessionMessageBus(); "
-            "proxy = bus.get_proxy('org.gnome.Orca.Service', '/org/gnome/Orca/Service'); "
-            "proxy.GetVersion()"
-        ], capture_output=True, timeout=5, check=False)
-        return result.returncode == 0
-    except (subprocess.TimeoutExpired, FileNotFoundError):
+        result = subprocess.run(
+            ["pgrep", "-u", str(os.getuid()), "-x", "orca"],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+    except (FileNotFoundError, subprocess.TimeoutExpired):
         return False
+    return bool(result.stdout.strip())
+
+
+def _wait_for_bus_name(
+    name: str,
+    bus_args: list[str] | None = None,
+    timeout: float = 5.0,
+) -> bool:
+    """Polls a D-Bus connection for `name` using NameHasOwner (no auto-activation).
+
+    bus_args selects the bus, e.g. ["--session"] or ["--address", bus_address].
+    """
+
+    if bus_args is None:
+        bus_args = ["--session"]
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        try:
+            result = subprocess.run(
+                [
+                    "gdbus",
+                    "call",
+                    *bus_args,
+                    "--dest",
+                    "org.freedesktop.DBus",
+                    "--object-path",
+                    "/org/freedesktop/DBus",
+                    "--method",
+                    "org.freedesktop.DBus.NameHasOwner",
+                    name,
+                ],
+                check=False,
+                capture_output=True,
+                text=True,
+                timeout=2,
+            )
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            time.sleep(0.2)
+            continue
+        if result.returncode == 0 and result.stdout.strip() == "(true,)":
+            return True
+        time.sleep(0.05)
+    return False
+
+
+def _resolve_a11y_bus_address(timeout: float = 5.0) -> str | None:
+    """Returns the a11y bus address after our at-spi-bus-launcher has registered."""
+
+    if not _wait_for_bus_name("org.a11y.Bus", timeout=timeout):
+        return None
+    try:
+        result = subprocess.run(
+            [
+                "gdbus",
+                "call",
+                "--session",
+                "--dest",
+                "org.a11y.Bus",
+                "--object-path",
+                "/org/a11y/bus",
+                "--method",
+                "org.a11y.Bus.GetAddress",
+            ],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=2,
+        )
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        return None
+    stripped = result.stdout.strip()
+    if result.returncode == 0 and stripped.startswith("('") and stripped.endswith("',)"):
+        return stripped[2:-3]
+    return None
+
+
+def _start_xvfb(
+    children: list[subprocess.Popen],
+    env: dict[str, str],
+    timeout: float = 10.0,
+) -> str:
+    """Starts Xvfb and returns the display number it picked."""
+
+    read_fd, write_fd = os.pipe()
+    argv = [
+        "Xvfb",
+        "-displayfd",
+        str(write_fd),
+        "-screen",
+        "0",
+        "1024x768x24",
+        "-nolisten",
+        "tcp",
+    ]
+
+    proc = subprocess.Popen(argv, pass_fds=(write_fd,), env=env)
+    os.close(write_fd)
+    children.append(proc)
+
+    with os.fdopen(read_fd, "r") as handle:
+        buffered = ""
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            if proc.poll() is not None:
+                raise RuntimeError(f"Xvfb exited early with code {proc.returncode}")
+            chunk = handle.readline()
+            if chunk:
+                buffered += chunk
+                if "\n" in buffered:
+                    break
+            else:
+                time.sleep(0.05)
+
+    display_num = buffered.strip()
+    if not display_num:
+        raise RuntimeError("Xvfb did not report a display number on its -displayfd")
+    return display_num
+
+
+def _setup(children: list[subprocess.Popen]) -> dict[str, str] | None:
+    """Brings up Xvfb and the private AT-SPI stack. Returns the env pytest should run under."""
+
+    stack_env = os.environ.copy()
+    stack_env.pop("AT_SPI_BUS_ADDRESS", None)
+    stack_env.pop("DISPLAY", None)
+    stack_env.pop("WAYLAND_DISPLAY", None)
+    stack_env["GDK_BACKEND"] = "x11"
+    # Pin scaling so wrap points in the test app are deterministic.
+    stack_env["GDK_SCALE"] = "1"
+    stack_env["GDK_DPI_SCALE"] = "1.0"
+
+    # 1. Nested X server for isolation from the caller's desktop.
+    display_num = _start_xvfb(children, stack_env)
+    stack_env["DISPLAY"] = f":{display_num}"
+
+    # 2. at-spi-bus-launcher on our private session bus.
+    launcher = subprocess.Popen(
+        [_BUS_LAUNCHER, "--launch-immediately", "--a11y=1", "--screen-reader=0"],
+        env=stack_env,
+    )
+    children.append(launcher)
+    address = _resolve_a11y_bus_address(timeout=5.0)
+    if address is None:
+        print("Failed to resolve a11y bus address from at-spi-bus-launcher", file=sys.stderr)
+        return None
+    stack_env["AT_SPI_BUS_ADDRESS"] = address
+    print(f"[wrapper] DISPLAY={stack_env['DISPLAY']}", file=sys.stderr)
+    print(f"[wrapper] AT_SPI_BUS_ADDRESS={address}", file=sys.stderr)
+    print(
+        f"[wrapper] DBUS_SESSION_BUS_ADDRESS={stack_env.get('DBUS_SESSION_BUS_ADDRESS')}",
+        file=sys.stderr,
+    )
+
+    # 3. at-spi2-registryd pointed at the private bus + Xvfb display. Wait
+    # until it has claimed org.a11y.atspi.Registry on the a11y bus so clients
+    # (Orca, our test app) don't race against its startup.
+    registryd = subprocess.Popen([_REGISTRYD], env=stack_env)
+    children.append(registryd)
+    if not _wait_for_bus_name(
+        "org.a11y.atspi.Registry", bus_args=["--address", address], timeout=5.0,
+    ):
+        print("at-spi2-registryd did not claim its bus name in time", file=sys.stderr)
+        return None
+
+    return stack_env
+
+
+def _teardown(children: list[subprocess.Popen]) -> None:
+    """Terminates the child processes started by _setup, escalating to SIGKILL if needed."""
+
+    for proc in reversed(children):
+        if proc.poll() is None:
+            proc.send_signal(signal.SIGTERM)
+    for proc in reversed(children):
+        try:
+            proc.wait(timeout=2)
+        except subprocess.TimeoutExpired:
+            proc.kill()
+
+
+def _run_test(test_file: str) -> int:
+    """Sets up the Xvfb + AT-SPI stack, runs pytest, tears everything down."""
+
+    children: list[subprocess.Popen] = []
+    try:
+        env = _setup(children)
+        if env is None:
+            return 1
+        # @PYTHON@ is substituted with the Python interpreter path by meson's
+        # configure_file(); see tests/meson.build.
+        pytest_proc = subprocess.run(
+            ["@PYTHON@", "-m", "pytest", test_file, "-v"],
+            env=env,
+            check=False,
+        )
+        return pytest_proc.returncode
+    finally:
+        _teardown(children)
+
+
+def main() -> int:
+    """Runs an integration test inside a private Xvfb + a11y stack."""
+
+    args = [arg for arg in sys.argv[1:] if arg != _SANDBOX_READY_FLAG]
+    sandbox_ready = _SANDBOX_READY_FLAG in sys.argv
+
+    if len(args) != 1:
+        print("Usage: integration_test_wrapper.py <test_file>", file=sys.stderr)
+        return 1
+
+    test_file = args[0]
+
+    searched = ", ".join(_ATSPI_DIRECTORIES)
+    if shutil.which("Xvfb") is None:
+        _skip_and_exit("Xvfb is not installed")
+    if shutil.which("dbus-run-session") is None:
+        _skip_and_exit("dbus-run-session is not installed")
+    if _BUS_LAUNCHER is None:
+        _skip_and_exit(f"at-spi-bus-launcher not found in any of: {searched}")
+    if _REGISTRYD is None:
+        _skip_and_exit(f"at-spi2-registryd not found in any of: {searched}")
+    if not os.environ.get("ORCA_TEST_BINARY") and shutil.which("orca") is None:
+        _skip_and_exit("orca is not on PATH and ORCA_TEST_BINARY is not set")
+    if _other_orca_is_running():
+        _skip_and_exit(
+            "another Orca instance is running as this user; stop it before running "
+            "this test (it would collide on the org.gnome.Orca.Service bus name)"
+        )
+
+    # Run ourselves as a child of dbus-run-session so every subsequent process
+    # we spawn (Xvfb, at-spi-bus-launcher, registryd, pytest, Orca) inherits
+    # that private session bus. We also pre-populate XDG_RUNTIME_DIR with a
+    # sandbox path so dbus-daemon (and anything it may auto-activate, e.g.
+    # org.a11y.Bus) writes its sockets into our sandbox rather than into the
+    # caller's real /run/user/$UID. The child invocation signals "sandbox is
+    # ready, skip this block" by passing --sandbox-ready in argv.
+    if not sandbox_ready:
+        sandbox = tempfile.mkdtemp(prefix="orca-integration-test-")
+        runtime_dir = os.path.join(sandbox, "runtime")
+        os.makedirs(runtime_dir, mode=0o700, exist_ok=True)
+        child_env = os.environ.copy()
+        child_env["XDG_RUNTIME_DIR"] = runtime_dir
+        # Put dbus-run-session in its own process group. Auto-activated D-Bus
+        # services (portals, GPaste, speech providers) get orphaned when the
+        # inner wrapper exits but still hold our stderr fd, which keeps meson's
+        # pipe reader blocked. Killing the group breaks that chain.
+        proc = subprocess.Popen(
+            ["dbus-run-session", "--", sys.executable, sys.argv[0],
+             _SANDBOX_READY_FLAG, test_file],
+            env=child_env,
+            start_new_session=True,
+        )
+        try:
+            returncode = proc.wait()
+        finally:
+            with contextlib.suppress(ProcessLookupError, PermissionError):
+                os.killpg(proc.pid, signal.SIGKILL)
+            shutil.rmtree(sandbox, ignore_errors=True)
+        return returncode
+
+    return _run_test(test_file)
+
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: integration_test_wrapper.py <test_file>", file=sys.stderr)
-        sys.exit(1)
-
-    test_file = sys.argv[1]
-
-    # Check if Orca is running before attempting tests
-    if not is_orca_running():
-        sys.exit(77)  # Standard skip exit code
-
-    # Run pytest normally if Orca is available
-    pytest_result = subprocess.run([
-        "@PYTHON@", "-m", "pytest", test_file, "-v"
-    ], check=False)
-
-    sys.exit(pytest_result.returncode)
+    sys.exit(main())

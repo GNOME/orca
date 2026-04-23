@@ -37,6 +37,9 @@ from .gsettings_fixtures import (  # noqa: F401
     _gsettings_profile,
     _gsettings_registry,
 )
+from .orca_fixtures import (  # noqa: F401
+    _orca,
+)
 
 if TYPE_CHECKING:
     import pytest

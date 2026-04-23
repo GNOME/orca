@@ -33,17 +33,13 @@ from dasbus.error import DBusError
 
 
 @pytest.fixture(scope="session", name="dbus_service_proxy")
-def _dbus_service_proxy() -> Any:
-    """Get a dasbus proxy for the main Orca service."""
+def _dbus_service_proxy(orca: Any) -> Any:
+    """Get a dasbus proxy for the main Orca service; the `orca` fixture ensures it is up."""
 
-    try:
-        bus = SessionMessageBus()
-        proxy = bus.get_proxy("org.gnome.Orca.Service", "/org/gnome/Orca/Service")
-        proxy.GetVersion()
-        return proxy
-    except (DBusError, AttributeError, TypeError) as error:
-        pytest.skip(f"Orca D-Bus service not available: {error!s}")
-        return None
+    bus = SessionMessageBus()
+    proxy = bus.get_proxy("org.gnome.Orca.Service", "/org/gnome/Orca/Service")
+    proxy.GetVersion()
+    return proxy
 
 
 @pytest.fixture(scope="session", name="module_proxy_factory")
