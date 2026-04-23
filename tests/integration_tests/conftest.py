@@ -53,3 +53,6 @@ def pytest_configure(config: pytest.Config) -> None:
 
     config.addinivalue_line("markers", "dbus: marks tests as D-Bus specific tests")
     config.addinivalue_line("markers", "gsettings: marks tests as GSettings integration tests")
+    config.addinivalue_line(
+        "markers", "native_app: marks tests that drive a native GUI app via AT-SPI"
+    )

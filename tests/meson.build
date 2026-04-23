@@ -7,6 +7,7 @@ endif
 
 test_env = environment()
 test_env.prepend('PYTHONPATH', meson.project_source_root() / 'src')
+test_env.prepend('PYTHONPATH', meson.project_source_root())
 
 unit_tests = [
   'unit_tests/test_action_presenter.py',
@@ -85,8 +86,10 @@ foreach test_file : unit_tests
   )
 endforeach
 
-dbus_integration_tests = [
+orca_integration_tests = [
   'integration_tests/test_dbus_with_orca.py',
+  'integration_tests/test_learn_mode.py',
+  'integration_tests/test_caret_navigation.py',
 ]
 
 integration_wrapper = configure_file(
@@ -97,7 +100,7 @@ integration_wrapper = configure_file(
   },
 )
 
-foreach test_file : dbus_integration_tests
+foreach test_file : orca_integration_tests
   test_name = test_file.split('/')[-1].split('.')[0]
   test(
     test_name,
@@ -106,6 +109,7 @@ foreach test_file : dbus_integration_tests
     env: test_env,
     suite: 'integration',
     timeout: 120,
+    is_parallel: false,
   )
 endforeach
 

@@ -79,6 +79,7 @@ def _gtk3_text_view(
         tmp_path_factory,
         "tests.integration_tests.apps.gtk3_text_view",
         gtk3_text_view.APP_TITLE,
+        lines=("First line.", "Second line."),
     )
 
 
