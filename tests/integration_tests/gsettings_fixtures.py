@@ -79,7 +79,6 @@ def _gsettings_registry() -> Generator:
         shutil.rmtree(schema_dir, ignore_errors=True)
         pytest.skip(f"Schema generation failed: {error!s}")
 
-    os.environ["GSETTINGS_BACKEND"] = "memory"
     os.environ["GSETTINGS_SCHEMA_DIR"] = schema_dir
 
     _inject_generated_module_stubs()

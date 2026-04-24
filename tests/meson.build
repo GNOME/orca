@@ -8,6 +8,7 @@ endif
 test_env = environment()
 test_env.prepend('PYTHONPATH', meson.project_source_root() / 'src')
 test_env.prepend('PYTHONPATH', meson.project_source_root())
+test_env.set('GSETTINGS_BACKEND', 'memory')
 
 unit_tests = [
   'unit_tests/test_action_presenter.py',
