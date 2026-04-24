@@ -78,6 +78,9 @@ class ACSS(dict):
             return False
         return self.get(ACSS.AVERAGE_PITCH) == other.get(ACSS.AVERAGE_PITCH)
 
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
     # Mutable: dict items are modified after construction.
     __hash__ = dict.__hash__
 

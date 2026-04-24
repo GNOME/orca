@@ -2703,7 +2703,12 @@ class SpeechPresenter(Extension):
 
         valid_types = (str, list, speech_generator.Pause, ACSS)
 
+        # to_speak holds text not yet claimed by a trailing ACSS. pending_text holds text
+        # already claimed by active_voice, deferred so that a subsequent same-voice group
+        # can be merged into one synthesizer call; each _speak_single call produces an
+        # audible pause between utterances.
         to_speak: list[str] = []
+        pending_text: list[str] = []
         active_voice = ACSS(acss) if acss is not None else acss
 
         for element in content:
@@ -2718,27 +2723,31 @@ class SpeechPresenter(Extension):
             elif isinstance(element, speech_generator.Pause):
                 if to_speak and to_speak[-1] and to_speak[-1][-1].isalnum():
                     to_speak[-1] += "."
-                if to_speak:
-                    self._speak_single(" ".join(to_speak), active_voice)
-                    to_speak = []
+                pending_text.extend(to_speak)
+                to_speak = []
+                if pending_text:
+                    self._speak_single(" ".join(pending_text), active_voice)
+                    pending_text = []
             elif isinstance(element, ACSS):
                 new_voice = ACSS(acss)
                 new_voice.update(element)
-                if to_speak:
-                    if active_voice is not None and new_voice != active_voice:
-                        tokens = [
-                            "SPEECH: New voice",
-                            new_voice,
-                            " != active voice",
-                            active_voice,
-                        ]
-                        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                    self._speak_single(" ".join(to_speak), new_voice)
-                    to_speak = []
+                if pending_text and new_voice != active_voice:
+                    tokens = [
+                        "SPEECH: New voice",
+                        new_voice,
+                        " != active voice",
+                        active_voice,
+                    ]
+                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                    self._speak_single(" ".join(pending_text), active_voice)
+                    pending_text = []
+                pending_text.extend(to_speak)
+                to_speak = []
                 active_voice = new_voice
 
-        if to_speak:
-            self._speak_single(" ".join(to_speak), active_voice)
+        pending_text.extend(to_speak)
+        if pending_text:
+            self._speak_single(" ".join(pending_text), active_voice)
 
     def _speak(self, content: Any, acss: ACSS | dict[str, Any] | None = None) -> None:
         """Speaks the given content, which can be a string or a list from the speech generator."""
