@@ -58,16 +58,6 @@ class Script(default.Script):
 
         return Utilities(self)
 
-    def _on_text_deleted(self, event: Atspi.Event) -> bool:
-        """Callback for object:text-changed:delete accessibility events."""
-
-        if self.utilities.treat_event_as_noise(event):
-            msg = "TERMINAL: Deletion is believed to be noise"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        return super()._on_text_deleted(event)
-
     def _on_text_inserted(self, event: Atspi.Event) -> bool:
         """Callback for object:text-changed:insert accessibility events."""
 
