@@ -33,7 +33,7 @@ import gi
 
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gtk", "3.0")
-from gi.repository import Atspi, GLib, Gtk
+from gi.repository import Atspi, GLib, Gtk  # pylint: disable=no-name-in-module
 
 from . import (
     braille,
@@ -57,7 +57,8 @@ from . import (
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_text import AXText
-from .ax_utilities_application import AXUtilitiesApplication
+from .ax_utilities import AXUtilities
+from .ax_utilities_event import TextEventReason
 from .command import BrailleCommand, Command, KeyboardCommand
 from .extension import Extension
 
@@ -96,6 +97,7 @@ class FlatReviewPresenter(Extension):
         self._event_listener: Atspi.EventListener = Atspi.EventListener.new(self._listener)
         self._registered_app: Atspi.Accessible | None = None
         self._context_invalidated: bool = False
+        self._location_invalidated: bool = False
         super().__init__()
 
     def _listener(self, event: Atspi.Event) -> None:
@@ -115,6 +117,13 @@ class FlatReviewPresenter(Extension):
             return
 
         self._context_invalidated = True
+
+        reason = AXUtilities.get_text_event_reason(event)
+        self._location_invalidated = reason in (
+            TextEventReason.TYPING,
+            TextEventReason.AUTO_INSERTION_PRESENTABLE,
+        )
+
         script = script_manager.get_manager().get_active_script()
         if script is not None:
             self._update_braille(script)
@@ -415,7 +424,7 @@ class FlatReviewPresenter(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
             previous_obj, previous_location = None, None
-            if self._context is not None:
+            if self._context is not None and not self._location_invalidated:
                 previous_obj = self._context.get_current_object()
                 previous_location = self._context.get_current_location()
 
@@ -450,10 +459,11 @@ class FlatReviewPresenter(Extension):
 
             manager.emit_region_changed(current_obj, mode=focus_manager.FLAT_REVIEW)
             self._context_input_event = input_event_manager.get_manager().get_last_input_event()
-            app = AXUtilitiesApplication.get_application(current_obj)
+            app = AXUtilities.get_application(current_obj)
             if app is not None:
                 self._register_event_listeners(app)
             self._context_invalidated = False
+            self._location_invalidated = False
             return self._context
 
         assert self._context is not None
@@ -541,6 +551,7 @@ class FlatReviewPresenter(Extension):
         self._context_input_event = None
         self._deregister_event_listeners()
         self._context_invalidated = False
+        self._location_invalidated = False
         focus = focus_manager.get_manager().get_locus_of_focus()
         focus_manager.get_manager().emit_region_changed(focus, mode=focus_manager.FOCUS_TRACKING)
         if event is None or script is None:
