@@ -85,7 +85,7 @@ class FlatReviewPresenter(Extension):
 
     GROUP_LABEL = guilabels.KB_GROUP_FLAT_REVIEW
 
-    _EVENT_TYPES: tuple[str, ...] = ("object:text-changed:insert",)
+    _EVENT_TYPES: tuple[str, ...] = ("object:text-changed:insert", "object:text-caret-moved")
 
     def __init__(self) -> None:
         self._context: flat_review.Context | None = None
@@ -103,12 +103,6 @@ class FlatReviewPresenter(Extension):
     def _listener(self, event: Atspi.Event) -> None:
         """Generic event listener."""
 
-        # Currently the only thing we're paying attention to is a text insertion from this app.
-        # If we receive an insertion and its for the current object being reviewed, invalidate
-        # the context unconditionally and refresh braille (without speech) so the display stays
-        # in sync with the new content. The main (only?) use case is avoiding stale content in
-        # a terminal which is being actively reviewed without any intervening input events.
-
         # TODO - JD: Implement support to invalidate individual objects.
         if self._context is None:
             return
@@ -119,10 +113,16 @@ class FlatReviewPresenter(Extension):
         self._context_invalidated = True
 
         reason = AXUtilities.get_text_event_reason(event)
-        self._location_invalidated = reason in (
-            TextEventReason.TYPING,
-            TextEventReason.AUTO_INSERTION_PRESENTABLE,
-        )
+        if event.type == "object:text-changed:insert":
+            self._location_invalidated = reason in (
+                TextEventReason.TYPING,
+                TextEventReason.AUTO_INSERTION_PRESENTABLE,
+            )
+        elif event.type == "object:text-caret-moved":
+            self._location_invalidated = reason in (
+                TextEventReason.NAVIGATION_BY_LINE,
+                TextEventReason.NAVIGATION_TO_FILE_BOUNDARY,
+            )
 
         script = script_manager.get_manager().get_active_script()
         if script is not None:
