@@ -252,6 +252,16 @@ class AXUtilitiesEvent:
         return AXUtilitiesObject.find_ancestor(obj, AXUtilitiesRole.is_spin_button) is not None
 
     @staticmethod
+    def _did_line_change(obj: Atspi.Accessible) -> bool:
+        """Returns True if the last known line in obj differs from the current line."""
+
+        last_obj, last_offset = focus_manager.get_manager().get_last_cursor_position()
+        if obj != last_obj:
+            return False
+
+        return not AXUtilitiesText.offset_is_on_current_line(obj, last_offset)
+
+    @staticmethod
     def _get_obj_type_reason_or_none(
         event: Atspi.Event,
         mgr: InputEventManager,
@@ -360,7 +370,19 @@ class AXUtilitiesEvent:
         if mgr.last_event_was_caret_selection():
             return AXUtilitiesEvent._get_selection_navigation_reason(mgr)
         if mgr.last_event_was_caret_navigation():
-            return AXUtilitiesEvent._get_caret_navigation_reason(mgr)
+            result = AXUtilitiesEvent._get_caret_navigation_reason(mgr)
+            # For performance purposes, the input event manager does very little sanity checking
+            # when determining whether an input event was line navigation. In the case of a
+            # terminal, when pressing Up at the prompt, auto-inserted text results in a caret-
+            # moved event that should not be treated as line navigation. Presentation of the
+            # inserted text is done in response to the insertion event.
+            if (
+                result == TextEventReason.NAVIGATION_BY_LINE
+                and AXUtilitiesRole.is_terminal(obj)
+                and not AXUtilitiesEvent._did_line_change(obj)
+            ):
+                result = TextEventReason.AUTO_INSERTION_UNPRESENTABLE
+            return result
         if mgr.last_event_was_select_all():
             return TextEventReason.SELECT_ALL
         if mgr.last_event_was_primary_click_or_release():

@@ -506,6 +506,27 @@ class AXUtilitiesText:
             current_start = next_start
 
     @staticmethod
+    def offsets_are_on_same_line(
+        obj: Atspi.Accessible,
+        offset1: int,
+        offset2: int,
+    ) -> bool:
+        """Returns True if offset1 and offset2 are on the same line in obj."""
+
+        line1, start1, end1 = AXText.get_line_at_offset(obj, offset1)
+        if not line1:
+            return False
+
+        line2, start2, end2 = AXText.get_line_at_offset(obj, offset2)
+        return (line2, start2, end2) == (line1, start1, end1)
+
+    @staticmethod
+    def offset_is_on_current_line(obj: Atspi.Accessible, offset: int) -> bool:
+        """Returns True if offset is on the same line as the caret in obj."""
+
+        return AXUtilitiesText.offsets_are_on_same_line(obj, AXText.get_caret_offset(obj), offset)
+
+    @staticmethod
     def has_sentence_ending(text: str) -> bool:
         """Check if text contains a sentence ending."""
 

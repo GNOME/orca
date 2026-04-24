@@ -1526,6 +1526,14 @@ class AXUtilities:
         offset: int | None = None,
     ) -> Generator[tuple[str, int, int]]: ...
     @staticmethod
+    def offsets_are_on_same_line(
+        obj: Atspi.Accessible,
+        offset1: int,
+        offset2: int,
+    ) -> bool: ...
+    @staticmethod
+    def offset_is_on_current_line(obj: Atspi.Accessible, offset: int) -> bool: ...
+    @staticmethod
     def has_sentence_ending(text: str) -> bool: ...
     @staticmethod
     def get_sentence_at_point(
