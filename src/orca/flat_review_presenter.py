@@ -98,6 +98,9 @@ class FlatReviewPresenter(Extension):
         self._registered_app: Atspi.Accessible | None = None
         self._context_invalidated: bool = False
         self._location_invalidated: bool = False
+        self._pending_caret_moved: Atspi.Event | None = None
+        self._pending_text_inserted: Atspi.Event | None = None
+        self._idle_id: int = 0
         super().__init__()
 
     def _listener(self, event: Atspi.Event) -> None:
@@ -110,23 +113,55 @@ class FlatReviewPresenter(Extension):
         if event.source != self._context.get_current_object():
             return
 
+        if event.type == "object:text-changed:insert":
+            self._pending_text_inserted = event
+        elif event.type == "object:text-caret-moved":
+            self._pending_caret_moved = event
+
+        if self._idle_id == 0:
+            self._idle_id = GLib.idle_add(self._process_pending_events)
+
+    def _process_pending_events(self) -> bool:
+        """Processes pending events. Returns False so GLib doesn't reschedule."""
+
+        self._idle_id = 0
+        caret_moved = self._pending_caret_moved
+        text_inserted = self._pending_text_inserted
+        self._pending_caret_moved = None
+        self._pending_text_inserted = None
+
+        if self._context is None:
+            return False
+
+        current_obj = self._context.get_current_object()
+        if caret_moved is not None and caret_moved.source != current_obj:
+            caret_moved = None
+        if text_inserted is not None and text_inserted.source != current_obj:
+            text_inserted = None
+
+        if caret_moved is None and text_inserted is None:
+            return False
+
         self._context_invalidated = True
 
-        reason = AXUtilities.get_text_event_reason(event)
-        if event.type == "object:text-changed:insert":
-            self._location_invalidated = reason in (
-                TextEventReason.TYPING,
-                TextEventReason.AUTO_INSERTION_PRESENTABLE,
-            )
-        elif event.type == "object:text-caret-moved":
-            self._location_invalidated = reason in (
+        if text_inserted is not None:
+            reason = AXUtilities.get_text_event_reason(text_inserted)
+            if reason in (TextEventReason.TYPING, TextEventReason.AUTO_INSERTION_PRESENTABLE):
+                self._location_invalidated = True
+
+        if caret_moved is not None:
+            reason = AXUtilities.get_text_event_reason(caret_moved)
+            if reason in (
                 TextEventReason.NAVIGATION_BY_LINE,
                 TextEventReason.NAVIGATION_TO_FILE_BOUNDARY,
-            )
+            ):
+                self._location_invalidated = True
 
         script = script_manager.get_manager().get_active_script()
         if script is not None:
             self._update_braille(script)
+
+        return False
 
     def _register_event_listeners(self, app: Atspi.Accessible) -> None:
         """Registers the event listeners for app, replacing any previous registration."""
@@ -552,6 +587,11 @@ class FlatReviewPresenter(Extension):
         self._deregister_event_listeners()
         self._context_invalidated = False
         self._location_invalidated = False
+        if self._idle_id:
+            GLib.source_remove(self._idle_id)
+            self._idle_id = 0
+        self._pending_caret_moved = None
+        self._pending_text_inserted = None
         focus = focus_manager.get_manager().get_locus_of_focus()
         focus_manager.get_manager().emit_region_changed(focus, mode=focus_manager.FOCUS_TRACKING)
         if event is None or script is None:
