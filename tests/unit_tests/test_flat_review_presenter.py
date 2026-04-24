@@ -86,10 +86,10 @@ class TestFlatReviewPresenter:
         atspi_mock.EventListener.new = test_context.Mock(return_value=event_listener_mock)
         gi_repository_mock.Atspi = atspi_mock
 
-        from orca.ax_utilities_application import AXUtilitiesApplication
+        from orca.ax_utilities import AXUtilities
 
         test_context.patch_object(
-            AXUtilitiesApplication,
+            AXUtilities,
             "get_application",
             return_value=None,
         )
