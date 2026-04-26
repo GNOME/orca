@@ -82,7 +82,7 @@ class TestDBusService:
         essential_modules = test_context._setup_essential_modules(all_modules)
 
         class MockGLibVariant:
-            """Mock GLib.Variant for dasbus type handling."""
+            """Mock GLib.Variant for D-Bus type handling."""
 
             def __init__(self, type_string: str, value):
                 self._type_string = type_string
@@ -1481,10 +1481,6 @@ class TestDBusService:
         assert controller._is_running is False
         assert controller._bus is None
         assert not controller._pending_registrations
-        assert controller._total_commands == 0
-        assert controller._total_getters == 0
-        assert controller._total_setters == 0
-        assert controller._total_modules == 0
 
     def test_is_running_false(self, test_context: OrcaTestContext) -> None:
         """Test OrcaRemoteController.is_running false."""
@@ -1616,19 +1612,11 @@ class TestDBusService:
         controller._is_running = True
         controller._bus = mock_bus
         controller._dbus_service_interface = mock_service
-        controller._total_commands = 5
-        controller._total_getters = 3
-        controller._total_setters = 2
-        controller._total_modules = 1
         controller._pending_registrations = {"test": "module"}
         controller.shutdown()
         assert controller._is_running is False
         assert controller._bus is None
         assert controller._dbus_service_interface is None
-        assert controller._total_commands == 0
-        assert controller._total_getters == 0
-        assert controller._total_setters == 0
-        assert controller._total_modules == 0
         assert not controller._pending_registrations
         mock_service.shutdown_service.assert_called_once()
         mock_bus.unpublish_object.assert_called_once()
@@ -1848,13 +1836,13 @@ class TestDBusService:
         from orca import dbus_service
 
         controller = dbus_service.OrcaRemoteController()
-        controller._total_commands = 5
-        controller._total_getters = 3
-        controller._total_setters = 2
-        controller._total_modules = 2
+        mock_service = test_context.Mock()
+        mock_service.get_handler_totals.return_value = (2, 5, 3, 2)
+        controller._dbus_service_interface = mock_service
         mock_count = test_context.Mock(return_value=4)
         test_context.patch_object(controller, "_count_system_commands", new=mock_count)
         controller._print_registration_summary()
+        mock_service.get_handler_totals.assert_called_once()
         mock_count.assert_called_once()
 
     def test_get_remote_controller(self, test_context: OrcaTestContext) -> None:
@@ -1922,11 +1910,8 @@ class TestDBusService:
         # This should return early and not process anything
         controller._register_decorated_commands_internal("TestModule", mock_module)
 
-        # Nothing should be changed since service is not ready
-        assert controller._total_commands == 0
-        assert controller._total_getters == 0
-        assert controller._total_setters == 0
-        assert controller._total_modules == 0
+        # The internal method does not queue; queueing is the public method's job.
+        assert not controller._pending_registrations
 
     def test_register_decorated_commands_internal_with_decorators(
         self,
@@ -1991,10 +1976,10 @@ class TestDBusService:
             new=mock_remote_controller_event,
         )
         controller._register_decorated_commands_internal("TestModule", mock_module)
-        assert controller._total_commands == 2  # command + parameterized command
-        assert controller._total_getters == 1
-        assert controller._total_setters == 1
-        assert controller._total_modules == 1
+        controller._dbus_service_interface.add_module_interface.assert_called_once()
+        call_args = controller._dbus_service_interface.add_module_interface.call_args
+        handlers_info = call_args[0][1]
+        assert len(handlers_info) == 4  # command + parameterized + getter + setter
 
     def test_register_decorated_commands_internal_no_handlers(
         self,
@@ -2027,10 +2012,6 @@ class TestDBusService:
             new=mock_add_interface,
         )
         controller._register_decorated_commands_internal("TestModule", mock_module)
-        assert controller._total_commands == 0
-        assert controller._total_getters == 0
-        assert controller._total_setters == 0
-        assert controller._total_modules == 0
         mock_add_interface.assert_not_called()
 
     def test_start_unpublish_object_error_during_cleanup(
@@ -2332,7 +2313,7 @@ def _stub_orca_internals(test_context: OrcaTestContext) -> dict[str, object]:
 
 @pytest.mark.unit
 class TestInterfaceBuilder:
-    """Tests for _InterfaceBuilder: builds dasbus interface classes from a registration."""
+    """Tests for _InterfaceBuilder: builds D-Bus interface classes from a registration."""
 
     def _build(self, ds):
         """Builds the FakeManager interface class used by these tests."""
@@ -2439,7 +2420,7 @@ class TestInterfaceBuilder:
         Real Orca modules type ``script`` as ``default.Script`` (a TYPE_CHECKING import).
         Combined with ``from __future__ import annotations``, that turns every annotation
         into a string. Per-annotation parsing must recover the user-facing parameter and
-        return types that dasbus actually marshals over the wire.
+        return types that D-Bus actually marshals over the wire.
         """
 
         _stub_orca_internals(test_context)

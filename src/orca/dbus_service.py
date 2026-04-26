@@ -355,7 +355,7 @@ class _ModuleRegistration:  # pylint: disable=too-many-instance-attributes
 
 
 class _InterfaceBuilder:
-    """Builds a dasbus-introspectable D-Bus interface class from a _ModuleRegistration."""
+    """Builds an introspectable D-Bus interface class from a _ModuleRegistration."""
 
     _RESERVED_PARAMS = frozenset({"self", "script", "event", "notify_user"})
     _BUILTIN_TYPES: typing.ClassVar[dict[str, object]] = {
@@ -371,7 +371,7 @@ class _InterfaceBuilder:
 
     @classmethod
     def build(cls, registration: _ModuleRegistration) -> type:
-        """Dynamically constructs a dasbus interface class for the registered module."""
+        """Dynamically constructs a D-Bus interface class for the registered module."""
 
         def for_publication(self):
             """Returns the D-Bus interface XML for publication."""
@@ -630,6 +630,15 @@ class OrcaModuleDBusInterface(Publishable):
         )
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
+    def get_handler_counts(self) -> tuple[int, int, int]:
+        """Returns (commands, getters, setters) counts for this module."""
+
+        return (
+            len(self._commands) + len(self._parameterized_commands),
+            len(self._getters),
+            len(self._setters),
+        )
+
     def ExecuteRuntimeGetter(self, getter_name: str) -> GLib.Variant:  # pylint: disable=invalid-name
         """Executes the named getter returning the value as a GLib.Variant for D-Bus marshalling."""
 
@@ -849,6 +858,18 @@ class OrcaDBusServiceInterface(Publishable):
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return False
 
+    def get_handler_totals(self) -> tuple[int, int, int, int]:
+        """Returns (modules, commands, getters, setters) across all registered modules."""
+
+        modules = len(self._registered_modules)
+        commands = getters = setters = 0
+        for module in self._registered_modules.values():
+            module_commands, module_getters, module_setters = module.get_handler_counts()
+            commands += module_commands
+            getters += module_getters
+            setters += module_setters
+        return modules, commands, getters, setters
+
     def ListModules(self) -> list[str]:  # pylint: disable=invalid-name
         """Returns a list of registered module names."""
 
@@ -958,10 +979,6 @@ class OrcaRemoteController:
         self._is_running: bool = False
         self._bus: SessionMessageBus | None = None
         self._pending_registrations: dict[str, object] = {}
-        self._total_commands: int = 0
-        self._total_getters: int = 0
-        self._total_setters: int = 0
-        self._total_modules: int = 0
 
     def start(self) -> bool:
         """Starts the D-Bus service."""
@@ -1060,9 +1077,6 @@ class OrcaRemoteController:
         )
 
         handlers_info = []
-        commands_count = 0
-        getters_count = 0
-        setters_count = 0
 
         for attr_name in dir(module_instance):
             attr = getattr(module_instance, attr_name)
@@ -1091,7 +1105,6 @@ class OrcaRemoteController:
                     handler_type=HandlerType.COMMAND,
                 )
                 handlers_info.append(handler_info)
-                commands_count += 1
             # Parameterized Command
             elif callable(attr) and hasattr(attr, "dbus_parameterized_command_description"):
                 description = attr.dbus_parameterized_command_description
@@ -1118,7 +1131,6 @@ class OrcaRemoteController:
                     parameters=_extract_function_parameters(attr),
                 )
                 handlers_info.append(handler_info)
-                commands_count += 1
             # Getter
             elif callable(attr) and hasattr(attr, "dbus_getter_description"):
                 description = attr.dbus_getter_description
@@ -1136,7 +1148,6 @@ class OrcaRemoteController:
                     handler_type=HandlerType.GETTER,
                 )
                 handlers_info.append(handler_info)
-                getters_count += 1
             # Setter
             elif callable(attr) and hasattr(attr, "dbus_setter_description"):
                 description = attr.dbus_setter_description
@@ -1154,15 +1165,9 @@ class OrcaRemoteController:
                     handler_type=HandlerType.SETTER,
                 )
                 handlers_info.append(handler_info)
-                setters_count += 1
 
         if not handlers_info:
             return
-
-        self._total_commands += commands_count
-        self._total_getters += getters_count
-        self._total_setters += setters_count
-        self._total_modules += 1
 
         self._dbus_service_interface.add_module_interface(
             module_name,
@@ -1231,10 +1236,6 @@ class OrcaRemoteController:
         msg = "REMOTE CONTROLLER: D-Bus service shut down."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._pending_registrations.clear()
-        self._total_commands = 0
-        self._total_getters = 0
-        self._total_setters = 0
-        self._total_modules = 0
 
     def is_running(self) -> bool:
         """Checks if the D-Bus service is currently running."""
@@ -1329,14 +1330,20 @@ class OrcaRemoteController:
     def _print_registration_summary(self) -> None:
         """Prints a summary of all registered D-Bus handlers."""
 
+        if self._dbus_service_interface is None:
+            return
+
+        total_modules, total_commands, total_getters, total_setters = (
+            self._dbus_service_interface.get_handler_totals()
+        )
         system_commands_count = self._count_system_commands()
-        total_handlers = self._total_commands + self._total_getters + self._total_setters
+        total_handlers = total_commands + total_getters + total_setters
         msg = (
             f"REMOTE CONTROLLER: Registration complete. Summary: "
-            f"{self._total_modules} modules, "
-            f"{self._total_commands} module commands, "
-            f"{self._total_getters} module getters, "
-            f"{self._total_setters} module setters, "
+            f"{total_modules} modules, "
+            f"{total_commands} module commands, "
+            f"{total_getters} module getters, "
+            f"{total_setters} module setters, "
             f"{system_commands_count} system commands. "
             f"Total handlers: {total_handlers + system_commands_count}."
         )

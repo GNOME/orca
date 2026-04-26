@@ -34,7 +34,7 @@ from dasbus.error import DBusError
 
 @pytest.fixture(scope="session", name="dbus_service_proxy")
 def _dbus_service_proxy(orca: Any) -> Any:
-    """Get a dasbus proxy for the main Orca service; the `orca` fixture ensures it is up."""
+    """Get a D-Bus proxy for the main Orca service; the `orca` fixture ensures it is up."""
 
     bus = SessionMessageBus()
     proxy = bus.get_proxy("org.gnome.Orca.Service", "/org/gnome/Orca/Service")
