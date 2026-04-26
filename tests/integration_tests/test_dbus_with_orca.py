@@ -882,7 +882,7 @@ MODULE_CONFIG = {
 }
 
 PARAMETERIZED_TEST_PARAMS = {
-    "GetVoicesForLanguage": {"language": "en", "variant": "", "notify_user": False},
+    "GetVoicesForLanguage": {"language": "en", "variant": ""},
     "ExecuteMathcatCommand": {"mathcat_command": "ReadCurrent"},
 }
 
@@ -1184,10 +1184,9 @@ class TestOrcaDBusIntegration:
                 # Order positional args by the introspected parameter order so we call
                 # the native method with the right argument positions.
                 ordered_args = [
-                    params.get(arg_name) for arg_name, _ in command_signature(iface, cmd_name)
+                    params.get(arg_name, False if arg_name == "notify_user" else None)
+                    for arg_name, _ in command_signature(iface, cmd_name)
                 ]
-                if "notify_user" not in params:
-                    ordered_args[-1] = False
                 result = getattr(proxy, cmd_name)(*ordered_args)
                 return {"success": True, "result": result}
             except (DBusError, AttributeError, TypeError, ValueError) as error:
@@ -1343,7 +1342,7 @@ class TestOrcaDBusIntegration:
         signatures = result["result"]
         if "GetVoicesForLanguage" in signatures:
             # Native D-Bus interface lists each input arg with its D-Bus type signature.
-            expected = [("language", "s"), ("variant", "s"), ("notify_user", "b")]
+            expected = [("language", "s"), ("variant", "s")]
             actual = signatures["GetVoicesForLanguage"]
             error_msg = (
                 f"GetVoicesForLanguage signature mismatch: expected {expected}, got {actual}"

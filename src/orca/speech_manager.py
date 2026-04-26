@@ -2245,7 +2245,6 @@ class SpeechManager(Extension):
         variant: str = "",
         script: default.Script | None = None,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = False,
     ) -> list[tuple[str, str, str]]:
         """Returns a list of available voices for the specified language."""
 
@@ -2258,8 +2257,6 @@ class SpeechManager(Extension):
             script,
             "Event:",
             event,
-            "notify_user:",
-            notify_user,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 

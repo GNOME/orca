@@ -440,6 +440,8 @@ class _InterfaceBuilder:
             if name not in cls._RESERVED_PARAMS
         ]
 
+        needs_notify_user = "notify_user" in original_sig.parameters
+
         new_params = [inspect.Parameter("self", inspect.Parameter.POSITIONAL_OR_KEYWORD)]
         annotations: dict[str, object] = {}
         for name, param in user_params:
@@ -454,15 +456,16 @@ class _InterfaceBuilder:
             )
             annotations[name] = annotation
 
-        new_params.append(
-            inspect.Parameter(
-                "notify_user",
-                inspect.Parameter.POSITIONAL_OR_KEYWORD,
-                default=True,
-                annotation=bool,
+        if needs_notify_user:
+            new_params.append(
+                inspect.Parameter(
+                    "notify_user",
+                    inspect.Parameter.POSITIONAL_OR_KEYWORD,
+                    default=True,
+                    annotation=bool,
+                )
             )
-        )
-        annotations["notify_user"] = bool
+            annotations["notify_user"] = bool
 
         return_annotation = original_sig.return_annotation
         if return_annotation is inspect.Signature.empty:
@@ -481,12 +484,13 @@ class _InterfaceBuilder:
             bound = new_sig.bind(_self, *args, **kwargs)
             bound.apply_defaults()
             bound.arguments.pop("self", None)
-            notify_user = bound.arguments.pop("notify_user")
 
             event = input_event.RemoteControllerEvent()
             manager = script_manager.get_manager()
             script = manager.get_active_script() or manager.get_default_script()
-            result = method(script=script, event=event, notify_user=notify_user, **bound.arguments)
+            bound.arguments["script"] = script
+            bound.arguments["event"] = event
+            result = method(**bound.arguments)
             input_event_manager.get_manager().process_remote_controller_event(event)
             return result
 
