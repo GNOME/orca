@@ -26,6 +26,7 @@ import enum
 import inspect
 import types
 import typing
+import xml.etree.ElementTree as ET
 from collections.abc import Callable
 
 from dasbus.connection import SessionMessageBus
@@ -314,7 +315,32 @@ class _InterfaceBuilder:
         module_name = registration.get_module_name()
         new_cls = type(f"{module_name}DBusInterface", (Publishable,), namespace)
         interface_name = f"org.gnome.Orca1.{module_name}"
-        return dbus_interface(interface_name)(new_cls)
+        new_cls = dbus_interface(interface_name)(new_cls)
+        new_cls.__dbus_xml__ = cls._inject_docstrings(
+            new_cls.__dbus_xml__, registration.get_descriptions()
+        )
+        return new_cls
+
+    @staticmethod
+    def _inject_docstrings(xml_text: str, descriptions: dict[str, str]) -> str:
+        """Adds org.gtk.GDBus.DocString annotations to methods and properties in the XML."""
+
+        if not descriptions:
+            return xml_text
+        # XML is generated in-process by dasbus, not untrusted input.
+        root = ET.fromstring(xml_text)  # noqa: S314
+        for iface in root.findall("interface"):
+            for element in list(iface.findall("method")) + list(iface.findall("property")):
+                name = element.get("name")
+                description = descriptions.get(name) if name else None
+                if not description:
+                    continue
+                annotation = ET.Element(
+                    "annotation",
+                    {"name": "org.gtk.GDBus.DocString", "value": description},
+                )
+                element.insert(0, annotation)
+        return ET.tostring(root, encoding="unicode")
 
     @staticmethod
     def _strip_optional(annotation):

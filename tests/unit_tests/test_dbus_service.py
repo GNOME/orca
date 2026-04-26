@@ -1139,6 +1139,52 @@ class TestInterfaceBuilder:
         assert volume.get("type") == "u"
         assert volume.get("access") == "readwrite"
 
+    def test_docstrings_are_emitted_as_introspection_annotations(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Methods and properties carry their docstrings as org.gtk.GDBus.DocString annotations."""
+
+        _stub_orca_internals(test_context)
+        from orca import dbus_service
+
+        class FakeManager:
+            @dbus_service.command
+            def toggle_speech(self, script=None, event=None, notify_user=True) -> bool:
+                """Toggles speech on and off."""
+                return True
+
+            @dbus_service.getter
+            def get_rate(self) -> float:
+                """Returns the speech rate."""
+                return 1.0
+
+            @dbus_service.setter
+            def set_rate(self, value: float) -> bool:
+                """Sets the speech rate."""
+                return True
+
+        registration = dbus_service._ModuleRegistration.from_module_instance(
+            "FakeManager", FakeManager()
+        )
+        cls = dbus_service._InterfaceBuilder.build(registration)
+        root = ET.fromstring(cls.__dbus_xml__)
+        iface = next(
+            i for i in root.findall("interface") if i.get("name") == "org.gnome.Orca1.FakeManager"
+        )
+
+        method = next(m for m in iface.findall("method") if m.get("name") == "ToggleSpeech")
+        method_annotation = method.find("annotation")
+        assert method_annotation is not None
+        assert method_annotation.get("name") == "org.gtk.GDBus.DocString"
+        assert method_annotation.get("value") == "Toggles speech on and off."
+
+        prop = next(p for p in iface.findall("property") if p.get("name") == "Rate")
+        prop_annotation = prop.find("annotation")
+        assert prop_annotation is not None
+        assert prop_annotation.get("name") == "org.gtk.GDBus.DocString"
+        # The setter description wins because it's stored unconditionally; both convey "rate".
+        assert "rate" in prop_annotation.get("value").lower()
+
     def test_user_params_resolved_when_reserved_param_unresolvable(
         self, test_context: OrcaTestContext
     ) -> None:
