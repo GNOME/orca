@@ -26,9 +26,12 @@
 
 """Provides a D-Bus interface for remotely controlling Orca."""
 
+import ast
 import contextlib
 import enum
 import inspect
+import types
+import typing
 from collections.abc import Callable
 
 from dasbus.connection import SessionMessageBus
@@ -349,6 +352,250 @@ class _ModuleRegistration:  # pylint: disable=too-many-instance-attributes
             return _Kind.SETTER, description
 
         return None, ""
+
+
+class _InterfaceBuilder:
+    """Builds a dasbus-introspectable D-Bus interface class from a _ModuleRegistration."""
+
+    _RESERVED_PARAMS = frozenset({"self", "script", "event", "notify_user"})
+    _BUILTIN_TYPES: typing.ClassVar[dict[str, object]] = {
+        "bool": bool,
+        "int": int,
+        "float": float,
+        "str": str,
+        "list": list,
+        "tuple": tuple,
+        "dict": dict,
+        "None": type(None),
+    }
+
+    @classmethod
+    def build(cls, registration: _ModuleRegistration) -> type:
+        """Dynamically constructs a dasbus interface class for the registered module."""
+
+        def for_publication(self):
+            """Returns the D-Bus interface XML for publication."""
+
+            return self.__dbus_xml__  # pylint: disable=no-member
+
+        namespace: dict[str, object] = {"for_publication": for_publication}
+        for cname, method in registration.get_commands().items():
+            namespace[cname] = cls._make_command_method(method)
+        for cname, method in registration.get_parameterized_commands().items():
+            namespace[cname] = cls._make_parameterized_command_method(method)
+        getters = registration.get_getters()
+        setters = registration.get_setters()
+        for cname in set(getters) | set(setters):
+            namespace[cname] = cls._make_property(getters.get(cname), setters.get(cname))
+
+        module_name = registration.get_module_name()
+        new_cls = type(f"{module_name}DBusInterface", (Publishable,), namespace)
+        interface_name = f"org.gnome.Orca.{module_name}"
+        return dbus_interface(interface_name)(new_cls)
+
+    @staticmethod
+    def _strip_optional(annotation):
+        """Returns the non-None branch of Optional[T] / T | None, else the annotation unchanged."""
+
+        origin = typing.get_origin(annotation)
+        if origin in (typing.Union, types.UnionType):
+            non_none = tuple(arg for arg in typing.get_args(annotation) if arg is not type(None))
+            if len(non_none) == 1:
+                return non_none[0]
+        return annotation
+
+    @classmethod
+    def _resolve_annotation(cls, annotation):
+        """Resolves annotation to a real type, or returns the original string."""
+
+        # Resolve each annotation independently. typing.get_type_hints is all-or-nothing:
+        # a single TYPE_CHECKING-only name on a sibling parameter (e.g. `script: default.Script`)
+        # makes it raise NameError and lose every annotation in the function. Walking the AST
+        # per-annotation lets the resolvable ones — like `language: str` — survive.
+        if not isinstance(annotation, str):
+            return annotation
+        try:
+            tree = ast.parse(annotation, mode="eval")
+        except SyntaxError:
+            return annotation
+        try:
+            return cls._type_from_node(tree.body)
+        except (KeyError, AttributeError, TypeError):
+            return annotation
+
+    @classmethod
+    def _type_from_node(cls, node: ast.AST):
+        """Reconstructs a type from an AST node using a fixed builtin whitelist."""
+
+        if isinstance(node, ast.Name):
+            return cls._BUILTIN_TYPES[node.id]
+        if isinstance(node, ast.Constant):
+            if node.value is None:
+                return type(None)
+            raise KeyError(node.value)
+        if isinstance(node, ast.Subscript):
+            base = cls._type_from_node(node.value)
+            slice_node = node.slice
+            if isinstance(slice_node, ast.Tuple):
+                args = tuple(cls._type_from_node(elt) for elt in slice_node.elts)
+                return base[args]
+            return base[cls._type_from_node(slice_node)]
+        if isinstance(node, ast.BinOp) and isinstance(node.op, ast.BitOr):
+            return cls._type_from_node(node.left) | cls._type_from_node(node.right)
+        raise KeyError(ast.dump(node))
+
+    @classmethod
+    def _resolved_signature(cls, method: Callable) -> inspect.Signature:
+        """Returns method's signature with string annotations resolved per-parameter."""
+
+        sig = inspect.signature(method)
+        new_params = [
+            param.replace(annotation=cls._resolve_annotation(param.annotation))
+            for param in sig.parameters.values()
+        ]
+        return sig.replace(
+            parameters=new_params,
+            return_annotation=cls._resolve_annotation(sig.return_annotation),
+        )
+
+    @staticmethod
+    def _make_command_method(method: Callable) -> Callable:
+        """Builds a D-Bus method (notify_user) -> bool wrapping an @command method."""
+
+        def Method(_self, notify_user: bool = True) -> bool:  # pylint: disable=invalid-name
+            # Local imports break a circular import: dbus_service is imported by speech_manager,
+            # and script_manager (transitively) imports speech_manager.
+            from . import (  # pylint: disable=import-outside-toplevel
+                input_event,
+                input_event_manager,
+                script_manager,
+            )
+
+            event = input_event.RemoteControllerEvent()
+            manager = script_manager.get_manager()
+            script = manager.get_active_script() or manager.get_default_script()
+            result = method(script=script, event=event, notify_user=notify_user)
+            input_event_manager.get_manager().process_remote_controller_event(event)
+            return bool(result)
+
+        return Method
+
+    @classmethod
+    def _make_parameterized_command_method(cls, method: Callable) -> Callable:
+        """Builds a D-Bus method mirroring a @parameterized_command's user-facing signature."""
+
+        original_sig = cls._resolved_signature(method)
+        user_params = [
+            (name, param)
+            for name, param in original_sig.parameters.items()
+            if name not in cls._RESERVED_PARAMS
+        ]
+
+        new_params = [inspect.Parameter("self", inspect.Parameter.POSITIONAL_OR_KEYWORD)]
+        annotations: dict[str, object] = {}
+        for name, param in user_params:
+            annotation = cls._strip_optional(param.annotation)
+            new_params.append(
+                inspect.Parameter(
+                    name,
+                    inspect.Parameter.POSITIONAL_OR_KEYWORD,
+                    default=param.default,
+                    annotation=annotation,
+                )
+            )
+            annotations[name] = annotation
+
+        new_params.append(
+            inspect.Parameter(
+                "notify_user",
+                inspect.Parameter.POSITIONAL_OR_KEYWORD,
+                default=True,
+                annotation=bool,
+            )
+        )
+        annotations["notify_user"] = bool
+
+        return_annotation = original_sig.return_annotation
+        if return_annotation is inspect.Signature.empty:
+            return_annotation = bool
+        annotations["return"] = return_annotation
+
+        new_sig = inspect.Signature(new_params, return_annotation=return_annotation)
+
+        def Method(_self, *args, **kwargs):  # pylint: disable=invalid-name
+            from . import (  # pylint: disable=import-outside-toplevel
+                input_event,
+                input_event_manager,
+                script_manager,
+            )
+
+            bound = new_sig.bind(_self, *args, **kwargs)
+            bound.apply_defaults()
+            bound.arguments.pop("self", None)
+            notify_user = bound.arguments.pop("notify_user")
+
+            event = input_event.RemoteControllerEvent()
+            manager = script_manager.get_manager()
+            script = manager.get_active_script() or manager.get_default_script()
+            result = method(script=script, event=event, notify_user=notify_user, **bound.arguments)
+            input_event_manager.get_manager().process_remote_controller_event(event)
+            return result
+
+        Method.__signature__ = new_sig  # type: ignore[attr-defined]
+        Method.__annotations__ = annotations
+        return Method
+
+    @classmethod
+    def _make_property(cls, get_method: Callable | None, set_method: Callable | None) -> property:
+        """Builds a D-Bus property from a getter and/or setter pair."""
+
+        read = cls._make_property_getter(get_method) if get_method is not None else None
+        write = cls._make_property_setter(set_method) if set_method is not None else None
+        return property(read, write)
+
+    @classmethod
+    def _make_property_getter(cls, get_method: Callable) -> Callable:
+        """Builds the read accessor for a D-Bus property, wrapping the original @getter method."""
+
+        return_annotation = cls._resolved_signature(get_method).return_annotation
+        if return_annotation is inspect.Signature.empty:
+            return_annotation = bool
+
+        def read(_self, _original=get_method):
+            return _original()
+
+        read.__signature__ = inspect.Signature(  # type: ignore[attr-defined]
+            [inspect.Parameter("self", inspect.Parameter.POSITIONAL_OR_KEYWORD)],
+            return_annotation=return_annotation,
+        )
+        read.__annotations__ = {"return": return_annotation}
+        return read
+
+    @classmethod
+    def _make_property_setter(cls, set_method: Callable) -> Callable:
+        """Builds the write accessor for a D-Bus property, wrapping the original @setter method."""
+
+        set_sig = cls._resolved_signature(set_method)
+        value_param = next(param for name, param in set_sig.parameters.items() if name != "self")
+        value_type = cls._strip_optional(value_param.annotation)
+        if value_type is inspect.Signature.empty:
+            value_type = bool
+
+        def write(_self, value, _original=set_method):
+            _original(value)
+
+        write.__signature__ = inspect.Signature(  # type: ignore[attr-defined]
+            [
+                inspect.Parameter("self", inspect.Parameter.POSITIONAL_OR_KEYWORD),
+                inspect.Parameter(
+                    "value",
+                    inspect.Parameter.POSITIONAL_OR_KEYWORD,
+                    annotation=value_type,
+                ),
+            ]
+        )
+        write.__annotations__ = {"value": value_type}
+        return write
 
 
 @dbus_interface("org.gnome.Orca.Module")

@@ -31,6 +31,9 @@
 from __future__ import annotations
 
 import re
+import sys
+import types
+import xml.etree.ElementTree as ET
 from typing import TYPE_CHECKING
 
 import pytest
@@ -2266,3 +2269,275 @@ class TestDBusService:
         registration.set_dbus_object(sentinel)
         assert registration.get_object_path() == "/org/gnome/Orca/Service/FakeManager"
         assert registration.get_dbus_object() is sentinel
+
+
+def _stub_orca_internals(test_context: OrcaTestContext) -> dict[str, object]:
+    """Installs orca-internal stubs while leaving dasbus and gi real."""
+
+    # _InterfaceBuilder relies on real dasbus introspection to build interface classes
+    # from type annotations, so dasbus and gi must NOT be mocked here. Only orca.*
+    # modules that the synthesized wrappers lazily import need stubbing.
+    class _RemoteControllerEvent:
+        pass
+
+    class _StubInputEventManager:
+        def __init__(self) -> None:
+            self.last_event: object | None = None
+
+        def process_remote_controller_event(self, event: object) -> None:
+            self.last_event = event
+
+    class _StubScriptManager:
+        def get_active_script(self) -> object:
+            return "active-script"
+
+        def get_default_script(self) -> object:
+            return "default-script"
+
+    iem_instance = _StubInputEventManager()
+    sm_instance = _StubScriptManager()
+
+    platform_mod = types.ModuleType("orca.orca_platform")
+    platform_mod.version = "test-version"
+    platform_mod.revision = ""
+
+    debug_mod = types.ModuleType("orca.debug")
+    debug_mod.LEVEL_INFO = 800
+    debug_mod.LEVEL_WARNING = 900
+    debug_mod.LEVEL_SEVERE = 1000
+    debug_mod.print_message = lambda *_args, **_kwargs: None
+    debug_mod.print_tokens = lambda *_args, **_kwargs: None
+
+    input_event_mod = types.ModuleType("orca.input_event")
+    input_event_mod.RemoteControllerEvent = _RemoteControllerEvent
+
+    iem_mod = types.ModuleType("orca.input_event_manager")
+    iem_mod.get_manager = lambda: iem_instance
+
+    sm_mod = types.ModuleType("orca.script_manager")
+    sm_mod.get_manager = lambda: sm_instance
+
+    stubs = {
+        "orca.orca_platform": platform_mod,
+        "orca.debug": debug_mod,
+        "orca.input_event": input_event_mod,
+        "orca.input_event_manager": iem_mod,
+        "orca.script_manager": sm_mod,
+    }
+    test_context.patch_modules(stubs)
+
+    sys.modules.pop("orca.dbus_service", None)
+    return stubs
+
+
+@pytest.mark.unit
+class TestInterfaceBuilder:
+    """Tests for _InterfaceBuilder: builds dasbus interface classes from a registration."""
+
+    def _build(self, ds):
+        """Builds the FakeManager interface class used by these tests."""
+
+        class FakeManager:
+            """Fake manager exposing one of each decorator kind."""
+
+            @ds.command
+            def toggle_speech(self, script=None, event=None, notify_user=True) -> bool:
+                """Toggles speech."""
+                return True
+
+            @ds.parameterized_command
+            def get_voices_for_language(
+                self,
+                language: str,
+                variant: str = "",
+                script=None,
+                event=None,
+                notify_user: bool = False,
+            ) -> list[tuple[str, str, str]]:
+                """Returns voices."""
+                return [("v", language, variant)]
+
+            @ds.getter
+            def get_rate(self) -> float:
+                """Returns rate."""
+                return 1.0
+
+            @ds.setter
+            def set_rate(self, value: float) -> bool:
+                """Sets rate."""
+                return True
+
+            @ds.setter
+            def set_locking_keys_presented(self, value: bool | None) -> bool:
+                """Sets locking-keys presentation."""
+                return True
+
+        registration = ds._ModuleRegistration.from_module_instance("FakeManager", FakeManager())
+        return ds._InterfaceBuilder.build(registration)
+
+    def _interface_xml(self, cls):
+        """Returns the <interface> element with our DBus name."""
+
+        root = ET.fromstring(cls.__dbus_xml__)
+        for iface in root.findall("interface"):
+            if iface.get("name") == "org.gnome.Orca.FakeManager":
+                return iface
+        return None
+
+    def test_simple_command_method_signature(self, test_context: OrcaTestContext) -> None:
+        """A simple @command becomes a method taking only notify_user, returning bool."""
+
+        _stub_orca_internals(test_context)
+        from orca import dbus_service
+
+        cls = self._build(dbus_service)
+        iface = self._interface_xml(cls)
+        method = next(m for m in iface.findall("method") if m.get("name") == "ToggleSpeech")
+        in_args = [a for a in method.findall("arg") if a.get("direction") == "in"]
+        out_args = [a for a in method.findall("arg") if a.get("direction") == "out"]
+        assert [a.get("name") for a in in_args] == ["notify_user"]
+        assert [a.get("type") for a in in_args] == ["b"]
+        assert [a.get("type") for a in out_args] == ["b"]
+
+    def test_parameterized_command_preserves_signature(self, test_context: OrcaTestContext) -> None:
+        """Parameterized commands carry user parameters plus a trailing notify_user."""
+
+        _stub_orca_internals(test_context)
+        from orca import dbus_service
+
+        cls = self._build(dbus_service)
+        iface = self._interface_xml(cls)
+        method = next(m for m in iface.findall("method") if m.get("name") == "GetVoicesForLanguage")
+        in_args = [
+            (a.get("name"), a.get("type"))
+            for a in method.findall("arg")
+            if a.get("direction") == "in"
+        ]
+        out_args = [a.get("type") for a in method.findall("arg") if a.get("direction") == "out"]
+        assert in_args == [("language", "s"), ("variant", "s"), ("notify_user", "b")]
+        assert out_args == ["a(sss)"]
+
+    def test_property_access_modes(self, test_context: OrcaTestContext) -> None:
+        """A getter+setter pair is read/write; a setter alone is write-only."""
+
+        _stub_orca_internals(test_context)
+        from orca import dbus_service
+
+        cls = self._build(dbus_service)
+        iface = self._interface_xml(cls)
+        properties = {p.get("name"): p for p in iface.findall("property")}
+        assert properties["Rate"].get("type") == "d"
+        assert properties["Rate"].get("access") == "readwrite"
+        assert properties["LockingKeysPresented"].get("type") == "b"
+        assert properties["LockingKeysPresented"].get("access") == "write"
+
+    def test_user_params_resolved_when_reserved_param_unresolvable(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """A TYPE_CHECKING-only annotation on a reserved param must not poison user params.
+
+        Real Orca modules type ``script`` as ``default.Script`` (a TYPE_CHECKING import).
+        Combined with ``from __future__ import annotations``, that turns every annotation
+        into a string. Per-annotation parsing must recover the user-facing parameter and
+        return types that dasbus actually marshals over the wire.
+        """
+
+        _stub_orca_internals(test_context)
+        from orca import dbus_service
+
+        class TypeCheckingOnly:
+            """Mirrors a real Orca presenter that types script as a TYPE_CHECKING-only ref."""
+
+            @dbus_service.parameterized_command
+            def get_voices_for_language(
+                self,
+                language: str,
+                variant: str = "",
+                script: ThisIsNotImportedAtRuntime = None,  # type: ignore[name-defined]  # noqa: F821
+                event: NeitherIsThis = None,  # type: ignore[name-defined]  # noqa: F821
+                notify_user: bool = False,
+            ) -> list[tuple[str, str, str]]:
+                """Returns voices."""
+                return [("v", language, variant)]
+
+        registration = dbus_service._ModuleRegistration.from_module_instance(
+            "FakeManager", TypeCheckingOnly()
+        )
+        cls = dbus_service._InterfaceBuilder.build(registration)
+
+        root = ET.fromstring(cls.__dbus_xml__)
+        iface = next(
+            i for i in root.findall("interface") if i.get("name") == "org.gnome.Orca.FakeManager"
+        )
+        method = next(m for m in iface.findall("method") if m.get("name") == "GetVoicesForLanguage")
+        in_args = [
+            (a.get("name"), a.get("type"))
+            for a in method.findall("arg")
+            if a.get("direction") == "in"
+        ]
+        out_args = [a.get("type") for a in method.findall("arg") if a.get("direction") == "out"]
+        assert in_args == [("language", "s"), ("variant", "s"), ("notify_user", "b")]
+        assert out_args == ["a(sss)"]
+
+    def test_command_wrapper_synthesizes_event_and_script(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Calling the synthesized D-Bus method routes through the @command wrapper."""
+
+        _stub_orca_internals(test_context)
+        from orca import dbus_service
+
+        calls: list[tuple] = []
+
+        class Tracker:
+            """Records calls so the test can verify what the wrapper passed through."""
+
+            @dbus_service.command
+            def toggle_speech(self, script=None, event=None, notify_user=True) -> bool:
+                """Toggles."""
+                calls.append(("cmd", script, type(event).__name__, notify_user))
+                return True
+
+        registration = dbus_service._ModuleRegistration.from_module_instance("Tracker", Tracker())
+        cls = dbus_service._InterfaceBuilder.build(registration)
+        instance = cls()
+
+        result = instance.ToggleSpeech(False)
+        assert result is True
+        kind, script, event_type, notify = calls[-1]
+        assert kind == "cmd"
+        assert script == "active-script"
+        assert event_type == "_RemoteControllerEvent"
+        assert notify is False
+
+    def test_property_descriptors_route_to_underlying_methods(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Reading and writing the synthesized property invokes the underlying methods."""
+
+        _stub_orca_internals(test_context)
+        from orca import dbus_service
+
+        calls: list[tuple] = []
+
+        class Tracker:
+            """Records setter calls so the test can verify routing."""
+
+            @dbus_service.getter
+            def get_rate(self) -> float:
+                """Rate."""
+                return 7.5
+
+            @dbus_service.setter
+            def set_rate(self, value: float) -> bool:
+                """Set rate."""
+                calls.append(("set_rate", value))
+                return True
+
+        registration = dbus_service._ModuleRegistration.from_module_instance("Tracker", Tracker())
+        cls = dbus_service._InterfaceBuilder.build(registration)
+        instance = cls()
+
+        assert instance.Rate == 7.5
+        instance.Rate = 11.0
+        assert calls[-1] == ("set_rate", 11.0)
