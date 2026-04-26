@@ -179,6 +179,178 @@ def _sequence_to_variant(result: list | tuple) -> GLib.Variant:
     return GLib.Variant("av", [GLib.Variant("v", x) for x in result])
 
 
+class _Kind(enum.Enum):
+    """Decorated-method kinds detected during module registration."""
+
+    COMMAND = enum.auto()
+    PARAMETERIZED = enum.auto()
+    GETTER = enum.auto()
+    SETTER = enum.auto()
+
+
+class _ModuleRegistration:  # pylint: disable=too-many-instance-attributes
+    """Tracks a module's decorated methods and its published D-Bus interface."""
+
+    def __init__(self, module_name: str) -> None:
+        self._module_name: str = module_name
+        self._commands: dict[str, Callable] = {}
+        self._parameterized_commands: dict[str, Callable] = {}
+        self._getters: dict[str, Callable] = {}
+        self._setters: dict[str, Callable] = {}
+        self._descriptions: dict[str, str] = {}
+        self._dbus_object: object | None = None
+        self._object_path: str = ""
+
+    def get_module_name(self) -> str:
+        """Returns the module name."""
+
+        return self._module_name
+
+    def get_commands(self) -> dict[str, Callable]:
+        """Returns the simple (non-parameterized) commands."""
+
+        return self._commands
+
+    def get_parameterized_commands(self) -> dict[str, Callable]:
+        """Returns the parameterized commands."""
+
+        return self._parameterized_commands
+
+    def get_getters(self) -> dict[str, Callable]:
+        """Returns the property getters."""
+
+        return self._getters
+
+    def get_setters(self) -> dict[str, Callable]:
+        """Returns the property setters."""
+
+        return self._setters
+
+    def get_descriptions(self) -> dict[str, str]:
+        """Returns the description for each exposed CamelCase member name."""
+
+        return self._descriptions
+
+    def get_object_path(self) -> str:
+        """Returns the D-Bus object path under which the module is published."""
+
+        return self._object_path
+
+    def set_object_path(self, path: str) -> None:
+        """Stores the D-Bus object path under which the module was published."""
+
+        self._object_path = path
+
+    def get_dbus_object(self) -> object | None:
+        """Returns the published D-Bus interface instance, or None if not published."""
+
+        return self._dbus_object
+
+    def set_dbus_object(self, obj: object) -> None:
+        """Stores the published D-Bus interface instance."""
+
+        self._dbus_object = obj
+
+    def is_empty(self) -> bool:
+        """Returns True if the registration has no decorated members."""
+
+        return not (
+            self._commands or self._parameterized_commands or self._getters or self._setters
+        )
+
+    def total_member_count(self) -> int:
+        """Returns the total number of exposed members (commands + properties)."""
+
+        return (
+            len(self._commands)
+            + len(self._parameterized_commands)
+            + len(self._getters)
+            + len(self._setters)
+        )
+
+    def find_command(self, command_name: str) -> Callable | None:
+        """Returns the original command method for the given CamelCase name, or None."""
+
+        return self._commands.get(command_name) or self._parameterized_commands.get(command_name)
+
+    def find_getter(self, property_name: str) -> Callable | None:
+        """Returns the original getter for the given CamelCase property name, or None."""
+
+        return self._getters.get(property_name)
+
+    def find_setter(self, property_name: str) -> Callable | None:
+        """Returns the original setter for the given CamelCase property name, or None."""
+
+        return self._setters.get(property_name)
+
+    def add_decorated_member(
+        self, kind: _Kind, attr_name: str, method: Callable, description: str
+    ) -> None:
+        """Records a decorated method under its DBus member name."""
+
+        dbus_name = self._dbus_name_for(attr_name, kind)
+        if kind is _Kind.COMMAND:
+            self._commands[dbus_name] = method
+            self._descriptions[dbus_name] = description
+        elif kind is _Kind.PARAMETERIZED:
+            self._parameterized_commands[dbus_name] = method
+            self._descriptions[dbus_name] = description
+        elif kind is _Kind.GETTER:
+            self._getters[dbus_name] = method
+            if dbus_name not in self._descriptions:
+                self._descriptions[dbus_name] = description
+        elif kind is _Kind.SETTER:
+            self._setters[dbus_name] = method
+            self._descriptions[dbus_name] = description
+
+    @staticmethod
+    def _dbus_name_for(attr_name: str, kind: _Kind) -> str:
+        """Returns the CamelCase D-Bus name for a Python attribute name and decorator kind."""
+
+        if kind in (_Kind.GETTER, _Kind.SETTER) and attr_name.startswith(("get_", "set_")):
+            attr_name = attr_name[4:]
+        return "".join(word.capitalize() for word in attr_name.split("_"))
+
+    @classmethod
+    def from_module_instance(
+        cls, module_name: str, module_instance: object
+    ) -> "_ModuleRegistration":
+        """Walks module_instance and groups its decorated members by kind."""
+
+        registration = cls(module_name)
+        for attr_name in dir(module_instance):
+            method = getattr(module_instance, attr_name, None)
+            if not callable(method):
+                continue
+            kind, description = cls._classify_method(method)
+            if kind is None:
+                continue
+            registration.add_decorated_member(kind, attr_name, method, description)
+        return registration
+
+    @staticmethod
+    def _classify_method(method: Callable) -> tuple[_Kind | None, str]:
+        """Returns (kind, description) for a decorated method, or (None, '') if undecorated."""
+
+        description = getattr(method, "dbus_command_description", None)
+        if description is not None:
+            return _Kind.COMMAND, description
+
+        description = getattr(method, "dbus_parameterized_command_description", None)
+        if description is not None:
+            return _Kind.PARAMETERIZED, description
+
+        description = getattr(method, "dbus_getter_description", None)
+        if description is not None:
+            return _Kind.GETTER, description
+
+        description = getattr(method, "dbus_setter_description", None)
+        if description is not None:
+            return _Kind.SETTER, description
+
+        return None, ""
+
+
 @dbus_interface("org.gnome.Orca.Module")
 class OrcaModuleDBusInterface(Publishable):
     """A D-Bus interface representing a specific Orca module (e.g., a manager)."""

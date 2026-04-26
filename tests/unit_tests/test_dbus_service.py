@@ -2051,3 +2051,218 @@ class TestDBusService:
         assert result is False
         assert controller._bus is None
         assert controller._dbus_service_interface is None
+
+    def test_module_registration_classify_recognizes_each_kind(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that _classify_method returns each _Kind and description."""
+
+        self._setup_dependencies(test_context)
+        from orca import dbus_service
+
+        @dbus_service.command
+        def cmd():
+            """A command."""
+
+        @dbus_service.parameterized_command
+        def pcmd():
+            """A parameterized command."""
+
+        @dbus_service.getter
+        def get_thing():
+            """A getter."""
+
+        @dbus_service.setter
+        def set_thing(_value):
+            """A setter."""
+
+        classify = dbus_service._ModuleRegistration._classify_method
+        assert classify(cmd) == (dbus_service._Kind.COMMAND, "A command.")
+        assert classify(pcmd) == (dbus_service._Kind.PARAMETERIZED, "A parameterized command.")
+        assert classify(get_thing) == (dbus_service._Kind.GETTER, "A getter.")
+        assert classify(set_thing) == (dbus_service._Kind.SETTER, "A setter.")
+
+    def test_module_registration_classify_undecorated_returns_none(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that _classify_method returns (None, '') for undecorated methods."""
+
+        self._setup_dependencies(test_context)
+        from orca import dbus_service
+
+        def plain():
+            return None
+
+        assert dbus_service._ModuleRegistration._classify_method(plain) == (None, "")
+
+    @pytest.mark.parametrize(
+        ("snake", "kind_attr", "expected"),
+        [
+            ("toggle_speech", "COMMAND", "ToggleSpeech"),
+            ("get_voices_for_language", "PARAMETERIZED", "GetVoicesForLanguage"),
+            ("get_rate", "GETTER", "Rate"),
+            ("set_rate", "SETTER", "Rate"),
+            ("rate", "GETTER", "Rate"),
+        ],
+    )
+    def test_module_registration_dbus_name_for(
+        self, test_context: OrcaTestContext, snake: str, kind_attr: str, expected: str
+    ) -> None:
+        """Test that _dbus_name_for camelizes and strips get_/set_ for property kinds only."""
+
+        self._setup_dependencies(test_context)
+        from orca import dbus_service
+
+        kind = getattr(dbus_service._Kind, kind_attr)
+        assert dbus_service._ModuleRegistration._dbus_name_for(snake, kind) == expected
+
+    def test_module_registration_from_module_instance_groups_members(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that from_module_instance walks an instance and groups members by kind."""
+
+        self._setup_dependencies(test_context)
+        from orca import dbus_service
+
+        class FakeManager:
+            """Fake manager exposing one of each decorator kind."""
+
+            @dbus_service.command
+            def toggle_speech(self) -> bool:
+                """Toggles speech."""
+
+                return True
+
+            @dbus_service.parameterized_command
+            def get_voices_for_language(self, _language) -> list:
+                """Returns voices."""
+
+                return []
+
+            @dbus_service.getter
+            def get_rate(self) -> float:
+                """Returns rate."""
+
+                return 1.0
+
+            @dbus_service.setter
+            def set_rate(self, _value) -> bool:
+                """Sets rate."""
+
+                return True
+
+            def undecorated(self) -> None:
+                """Should be ignored."""
+
+        registration = dbus_service._ModuleRegistration.from_module_instance(
+            "FakeManager", FakeManager()
+        )
+        assert set(registration.get_commands()) == {"ToggleSpeech"}
+        assert set(registration.get_parameterized_commands()) == {"GetVoicesForLanguage"}
+        assert set(registration.get_getters()) == {"Rate"}
+        assert set(registration.get_setters()) == {"Rate"}
+        assert registration.get_module_name() == "FakeManager"
+        assert registration.total_member_count() == 4
+        assert not registration.is_empty()
+
+    def test_module_registration_setter_description_preferred_over_getter(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """When a property has both, the setter description wins (it usually documents inputs)."""
+
+        self._setup_dependencies(test_context)
+        from orca import dbus_service
+
+        class FakeManager:
+            """Fake manager with paired getter/setter."""
+
+            @dbus_service.getter
+            def get_rate(self) -> float:
+                """Returns rate."""
+
+                return 1.0
+
+            @dbus_service.setter
+            def set_rate(self, _value) -> bool:
+                """Sets rate."""
+
+                return True
+
+        registration = dbus_service._ModuleRegistration.from_module_instance(
+            "FakeManager", FakeManager()
+        )
+        assert registration.get_descriptions()["Rate"] == "Sets rate."
+
+    def test_module_registration_find_helpers(self, test_context: OrcaTestContext) -> None:
+        """Test find_command/find_getter/find_setter return registered methods or None."""
+
+        self._setup_dependencies(test_context)
+        from orca import dbus_service
+
+        class FakeManager:
+            """Fake manager."""
+
+            @dbus_service.command
+            def toggle_speech(self) -> bool:
+                """Toggles speech."""
+
+                return True
+
+            @dbus_service.parameterized_command
+            def query(self, _topic) -> bool:
+                """Queries."""
+
+                return True
+
+            @dbus_service.getter
+            def get_rate(self) -> float:
+                """Returns rate."""
+
+                return 1.0
+
+            @dbus_service.setter
+            def set_rate(self, _value) -> bool:
+                """Sets rate."""
+
+                return True
+
+        instance = FakeManager()
+        registration = dbus_service._ModuleRegistration.from_module_instance(
+            "FakeManager", instance
+        )
+        # Bound methods are fresh objects each access, so compare with == not is.
+        assert registration.find_command("ToggleSpeech") == instance.toggle_speech
+        assert registration.find_command("Query") == instance.query
+        assert registration.find_command("Nope") is None
+        assert registration.find_getter("Rate") == instance.get_rate
+        assert registration.find_setter("Rate") == instance.set_rate
+        assert registration.find_getter("Nope") is None
+        assert registration.find_setter("Nope") is None
+
+    def test_module_registration_empty(self, test_context: OrcaTestContext) -> None:
+        """A new registration is empty until members are added."""
+
+        self._setup_dependencies(test_context)
+        from orca import dbus_service
+
+        registration = dbus_service._ModuleRegistration("Empty")
+        assert registration.is_empty()
+        assert registration.total_member_count() == 0
+
+    def test_module_registration_object_path_and_dbus_object(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test set_object_path/set_dbus_object round-trip cleanly."""
+
+        self._setup_dependencies(test_context)
+        from orca import dbus_service
+
+        registration = dbus_service._ModuleRegistration("FakeManager")
+        assert registration.get_object_path() == ""
+        assert registration.get_dbus_object() is None
+
+        registration.set_object_path("/org/gnome/Orca/Service/FakeManager")
+        sentinel = object()
+        registration.set_dbus_object(sentinel)
+        assert registration.get_object_path() == "/org/gnome/Orca/Service/FakeManager"
+        assert registration.get_dbus_object() is sentinel
