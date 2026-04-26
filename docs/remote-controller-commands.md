@@ -237,7 +237,6 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 - **`AppendToClipboard`:** Appends the string just presented to the clipboard.
 - **`CopyToClipboard`:** Copies the string just presented to the clipboard.
-- **`GetCurrentObject`:** Returns the current accessible object.
 - **`GoAbove`:** Moves to the character above.
 - **`GoBelow`:** Moves to the character below.
 - **`GoBottomLeft`:** Moves to the bottom left of the current window.

@@ -132,7 +132,6 @@ MODULE_CONFIG = {
         "commands": [
             "AppendToClipboard",
             "CopyToClipboard",
-            "GetCurrentObject",
             "GoAbove",
             "GoBelow",
             "GoBottomLeft",

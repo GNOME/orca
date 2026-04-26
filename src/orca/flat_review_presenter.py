@@ -1161,7 +1161,6 @@ class FlatReviewPresenter(Extension):
         self._last_input_event = event
         return True
 
-    @dbus_service.command
     def get_current_object(
         self,
         script: default.Script,
