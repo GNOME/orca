@@ -28,10 +28,10 @@ import os
 import sys
 from pathlib import Path
 
-SERVICE_NAME = "org.gnome.Orca.Service"
-SERVICE_PATH = "/org/gnome/Orca/Service"
-SERVICE_INTERFACE = "org.gnome.Orca.Service"
-INTERFACE_PREFIX = "org.gnome.Orca"
+SERVICE_NAME = "org.gnome.Orca1.Service"
+SERVICE_PATH = "/org/gnome/Orca1/Service"
+SERVICE_INTERFACE = "org.gnome.Orca1.Service"
+INTERFACE_PREFIX = "org.gnome.Orca1"
 
 DBUS_SERVICE_FILE = "dbus_service.py"
 META_PROTOCOL_MARKER_CLASS = "OrcaModuleDBusInterface"
@@ -42,6 +42,7 @@ _RESERVED_PARAMS = frozenset({"self", "script", "event"})
 _BUILTIN_DBUS_SIGNATURE = {
     "bool": "b",
     "int": "i",
+    "UInt32": "u",
     "float": "d",
     "str": "s",
 }
@@ -85,7 +86,7 @@ def _annotation_str(node):
 
 
 def _dbus_signature(annotation):
-    """Converts a Python annotation string (e.g. ``list[str]``) to its D-Bus signature."""
+    """Converts a Python annotation string (e.g. list[str]) to its D-Bus signature."""
 
     if not annotation:
         return ""
@@ -191,7 +192,7 @@ def find_modules(orca_src_dir):
 
 
 def _is_service_interface_class(class_node):
-    """Returns True if class_node is decorated with @dbus_interface('org.gnome.Orca.Service')."""
+    """Returns True if class_node is decorated with @dbus_interface('org.gnome.Orca1.Service')."""
 
     for decorator in class_node.decorator_list:
         if not (isinstance(decorator, ast.Call) and isinstance(decorator.func, ast.Name)):

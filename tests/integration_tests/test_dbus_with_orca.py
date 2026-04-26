@@ -35,10 +35,20 @@ import pytest
 from dasbus.error import DBusError
 from gi.repository import GLib
 
-if TYPE_CHECKING:
-    from collections.abc import Callable
+from .dbus_fixtures import (
+    command_signature,
+    get_property,
+    list_module_names,
+    module_interface_xml,
+    parameterized_command_names,
+    property_names,
+    property_signature,
+    set_property,
+    simple_command_names,
+)
 
-    from dasbus.client.proxy import ObjectProxy as DBusProxy
+if TYPE_CHECKING:
+    from dasbus.connection import SessionMessageBus
 
 # Get configurable timeout values from environment variables
 DEFAULT_MODULE_TIMEOUT = 15
@@ -877,21 +887,6 @@ PARAMETERIZED_TEST_PARAMS = {
 }
 
 
-def safe_call(func: Callable[..., Any], *args: Any, **kwargs: Any) -> Any | None:
-    """Safely call a function, returning result or None on error."""
-
-    try:
-        return func(*args, **kwargs)
-    except (DBusError, AttributeError, TypeError, ValueError):
-        return None
-
-
-def extract_names(items: list[Any] | None) -> list[str]:
-    """Extract first element from list of tuples/lists, return empty list if None."""
-
-    return [item[0] for item in items] if items else []
-
-
 def is_context_error(error_str: str) -> bool:
     """Check if error indicates missing context (script/runtime).
 
@@ -927,14 +922,8 @@ def is_timeout_error(error_str: str) -> bool:
     return any(pattern for pattern in timeout_patterns)
 
 
-def unpack_variant(value: Any) -> Any:
-    """Unpack a GLib.Variant if needed."""
-
-    return value.unpack() if hasattr(value, "unpack") else value
-
-
 def get_alternative_value(
-    proxy: DBusProxy,
+    bus: SessionMessageBus,
     prop_name: str,
     current_value: str | float | bool,
 ) -> str | float | bool:
@@ -942,24 +931,21 @@ def get_alternative_value(
 
     try:
         if prop_name == "CurrentServer":
-            servers = proxy.ExecuteRuntimeGetter("AvailableServers")
-            servers = unpack_variant(servers)
+            servers = get_property(bus, "SpeechManager", "AvailableServers")
             assert isinstance(current_value, str)
             non_default = [s for s in servers if s != current_value and "default" not in s.lower()]
             if non_default:
                 return non_default[0]
             return next((s for s in servers if s != current_value), current_value)
         if prop_name == "CurrentSynthesizer":
-            synths = proxy.ExecuteRuntimeGetter("AvailableSynthesizers")
-            synths = unpack_variant(synths)
+            synths = get_property(bus, "SpeechManager", "AvailableSynthesizers")
             assert isinstance(current_value, str)
             non_default = [s for s in synths if s != current_value and "default" not in s.lower()]
             if non_default:
                 return non_default[0]
             return next((s for s in synths if s != current_value), current_value)
         if prop_name == "CurrentVoice":
-            voices = proxy.ExecuteRuntimeGetter("AvailableVoices")
-            voices = unpack_variant(voices)
+            voices = get_property(bus, "SpeechManager", "AvailableVoices")
             if voices and len(voices) > 1:
                 assert isinstance(current_value, str)
                 current_voice_name = current_value.split()[0] if current_value else ""
@@ -978,7 +964,7 @@ def get_alternative_value(
 
 
 def get_test_value(
-    proxy: DBusProxy,
+    bus: SessionMessageBus,
     prop_name: str,
     current_value: str | float | bool,
 ) -> str | float | bool:
@@ -989,15 +975,17 @@ def get_test_value(
     if isinstance(current_value, (int, float)):
         return current_value + 1 if current_value < 100 else current_value - 1
     if isinstance(current_value, str):
-        return get_alternative_value(proxy, prop_name, current_value)
+        return get_alternative_value(bus, prop_name, current_value)
     if isinstance(current_value, list):
         return list(reversed(current_value)) if len(current_value) > 1 else current_value
     return current_value
 
 
-def to_variant(value: str | bool | float | list) -> Any:
-    """Convert a Python value to GLib.Variant."""
+def to_variant(value: str | bool | float | list, signature: str | None = None) -> Any:
+    """Convert a Python value to GLib.Variant. Uses signature if given, else infers from type."""
 
+    if signature is not None:
+        return GLib.Variant(signature, value)
     if isinstance(value, bool):
         return GLib.Variant("b", value)
     if isinstance(value, str):
@@ -1024,10 +1012,10 @@ class TestOrcaDBusIntegration:
         assert len(str(version)) > 0
 
     @pytest.mark.dbus
-    def test_list_modules(self, dbus_service_proxy):
-        """Test listing available modules."""
+    def test_list_modules(self, bus):
+        """Test listing available modules via introspection of the service root."""
 
-        modules = list(dbus_service_proxy.ListModules())
+        modules = list_module_names(bus)
         assert isinstance(modules, list)
 
         expected_modules = set(MODULE_CONFIG.keys()) - OPTIONAL_MODULES
@@ -1061,17 +1049,8 @@ class TestOrcaDBusIntegration:
         ids=list(MODULE_CONFIG.keys()),
     )
     @pytest.mark.dbus
-    def test_module_capabilities(self, module_proxy_factory, run_with_timeout, module_name, config):
-        """Test that each module reports correct capabilities."""
-        # Skip optional modules that aren't available
-        if module_name in OPTIONAL_MODULES:
-            try:
-                proxy = module_proxy_factory(module_name)
-                # Check if module has the required dbus interface
-                if not hasattr(proxy, "ExecuteRuntimeGetter"):
-                    pytest.skip(f"{module_name} is optional and not available")
-            except (DBusError, AttributeError):
-                pytest.skip(f"{module_name} is optional and not available")
+    def test_module_capabilities(self, bus, run_with_timeout, module_name, config):
+        """Test that each module's introspection XML matches the expected capabilities."""
 
         print(f"\n  Testing {module_name} capabilities:")
         for cap_type in ["commands", "parameterized_commands", "getters", "setters"]:
@@ -1084,12 +1063,12 @@ class TestOrcaDBusIntegration:
                     print(f"      - ... and {len(items) - 5} more")
 
         def get_capabilities():
-            proxy = module_proxy_factory(module_name)
+            iface = module_interface_xml(bus, module_name)
             return {
-                "commands": extract_names(safe_call(proxy.ListCommands)),
-                "parameterized_commands": extract_names(safe_call(proxy.ListParameterizedCommands)),
-                "getters": extract_names(safe_call(proxy.ListRuntimeGetters)),
-                "setters": extract_names(safe_call(proxy.ListRuntimeSetters)),
+                "commands": simple_command_names(iface),
+                "parameterized_commands": parameterized_command_names(iface),
+                "getters": property_names(iface, "read", "readwrite"),
+                "setters": property_names(iface, "write", "readwrite"),
             }
 
         timeout = MODULE_TIMEOUTS.get(module_name)
@@ -1113,15 +1092,6 @@ class TestOrcaDBusIntegration:
     @pytest.mark.dbus
     def test_module_commands(self, module_proxy_factory, run_with_timeout, module_name, config):
         """Test that module commands execute without errors."""
-        # Skip optional modules that aren't available
-        if module_name in OPTIONAL_MODULES:
-            try:
-                proxy = module_proxy_factory(module_name)
-                # Check if module has the required dbus interface
-                if not hasattr(proxy, "ExecuteRuntimeGetter"):
-                    pytest.skip(f"{module_name} is optional and not available")
-            except (DBusError, AttributeError):
-                pytest.skip(f"{module_name} is optional and not available")
 
         commands = config["commands"]
         ui_commands = config.get("ui_commands", [])
@@ -1143,10 +1113,10 @@ class TestOrcaDBusIntegration:
             if cmd_name in ui_commands or cmd_name in skip_commands:
                 return {"success": True, "skipped": True}
             try:
-                proxy.ExecuteCommand(cmd_name, False)
+                getattr(proxy, cmd_name)(False)
                 if cmd_name in toggle_commands:
                     print(f"      → Restoring {cmd_name} to original state")
-                    proxy.ExecuteCommand(cmd_name, False)
+                    getattr(proxy, cmd_name)(False)
                 return {"success": True}
             except (DBusError, AttributeError, TypeError, ValueError) as error:
                 error_str = str(error)
@@ -1189,6 +1159,7 @@ class TestOrcaDBusIntegration:
     @pytest.mark.dbus
     def test_module_parameterized_commands(
         self,
+        bus,
         module_proxy_factory,
         run_with_timeout,
         module_name,
@@ -1202,15 +1173,22 @@ class TestOrcaDBusIntegration:
             param_str = ", ".join(f"{k}={v}" for k, v in params.items())
             print(f"    • {cmd}({param_str})")
 
+        iface = module_interface_xml(bus, module_name)
+
         def test_single_param_command(proxy, cmd_name):
             params = PARAMETERIZED_TEST_PARAMS.get(cmd_name, {})
             if not params:
                 return {"success": False, "error": "No test parameters"}
 
             try:
-                variant_params = {k: to_variant(v) for k, v in params.items() if k != "notify_user"}
-                notify_user = params.get("notify_user", False)
-                result = proxy.ExecuteParameterizedCommand(cmd_name, variant_params, notify_user)
+                # Order positional args by the introspected parameter order so we call
+                # the native method with the right argument positions.
+                ordered_args = [
+                    params.get(arg_name) for arg_name, _ in command_signature(iface, cmd_name)
+                ]
+                if "notify_user" not in params:
+                    ordered_args[-1] = False
+                result = getattr(proxy, cmd_name)(*ordered_args)
                 return {"success": True, "result": result}
             except (DBusError, AttributeError, TypeError, ValueError) as error:
                 if is_context_error(str(error)):
@@ -1254,21 +1232,12 @@ class TestOrcaDBusIntegration:
     @pytest.mark.dbus
     def test_module_getters_setters(
         self,
-        module_proxy_factory,
+        bus,
         run_with_timeout,
         module_name,
         config,
     ):
         """Test that module getter/setter pairs work correctly."""
-        # Skip optional modules that aren't available
-        if module_name in OPTIONAL_MODULES:
-            try:
-                proxy = module_proxy_factory(module_name)
-                # Check if module has the required dbus interface
-                if not hasattr(proxy, "ExecuteRuntimeGetter"):
-                    pytest.skip(f"{module_name} is optional and not available")
-            except (DBusError, AttributeError):
-                pytest.skip(f"{module_name} is optional and not available")
 
         all_props = sorted(set(config.get("getters", []) + config.get("setters", [])))
         print(f"\n  Testing {module_name} properties ({len(all_props)} total):")
@@ -1283,14 +1252,17 @@ class TestOrcaDBusIntegration:
             status = f"({'/'.join(status_parts)})" if status_parts else ""
             print(f"    • {prop} {status}")
 
-        def test_single_property(proxy, prop_name, is_setter=False):
+        iface_xml = module_interface_xml(bus, module_name)
+
+        def test_single_property(prop_name, is_setter=False):
             try:
-                current_value = unpack_variant(proxy.ExecuteRuntimeGetter(prop_name))
+                current_value = get_property(bus, module_name, prop_name)
                 if is_setter:
-                    test_value = get_test_value(proxy, prop_name, current_value)
-                    proxy.ExecuteRuntimeSetter(prop_name, to_variant(test_value))
-                    new_value = unpack_variant(proxy.ExecuteRuntimeGetter(prop_name))
-                    proxy.ExecuteRuntimeSetter(prop_name, to_variant(current_value))
+                    test_value = get_test_value(bus, prop_name, current_value)
+                    sig = property_signature(iface_xml, prop_name)
+                    set_property(bus, module_name, prop_name, to_variant(test_value, sig))
+                    new_value = get_property(bus, module_name, prop_name)
+                    set_property(bus, module_name, prop_name, to_variant(current_value, sig))
                     return {
                         "success": True,
                         "original_value": current_value,
@@ -1302,14 +1274,19 @@ class TestOrcaDBusIntegration:
                 return {"success": False, "error": str(error)}
 
         def test_getters_setters():
-            proxy = module_proxy_factory(module_name)
             results = {}
+            getter_props = config.get("getters", [])
+            setter_props = config.get("setters", [])
 
-            for prop in config.get("getters", []):
-                results[f"get_{prop}"] = test_single_property(proxy, prop, is_setter=False)
+            for prop in getter_props:
+                results[f"get_{prop}"] = test_single_property(prop, is_setter=False)
 
-            for prop in config.get("setters", []):
-                results[f"set_{prop}"] = test_single_property(proxy, prop, is_setter=True)
+            # Setter round-trips need a getter for read-back. Write-only properties
+            # (in setters but not getters) can't be round-tripped via D-Bus Properties.
+            for prop in setter_props:
+                if prop not in getter_props:
+                    continue
+                results[f"set_{prop}"] = test_single_property(prop, is_setter=True)
 
             return results
 
@@ -1350,13 +1327,14 @@ class TestOrcaDBusIntegration:
         assert not failed, f"{module_name} getter/setter failures: {failed}"
 
     @pytest.mark.dbus
-    def test_parameterized_command_signatures(self, module_proxy_factory, run_with_timeout):
+    def test_parameterized_command_signatures(self, bus, run_with_timeout):
         """Test that parameterized commands have correct parameter signatures."""
 
         def get_signatures():
-            proxy = module_proxy_factory("SpeechManager")
-            commands = proxy.ListParameterizedCommands()
-            return {cmd[0]: [list(p[:2]) for p in cmd[2]] for cmd in commands}
+            iface = module_interface_xml(bus, "SpeechManager")
+            return {
+                name: command_signature(iface, name) for name in parameterized_command_names(iface)
+            }
 
         result = run_with_timeout(get_signatures)
         error_msg = f"Could not get parameterized command signatures: {result['error']}"
@@ -1364,7 +1342,8 @@ class TestOrcaDBusIntegration:
 
         signatures = result["result"]
         if "GetVoicesForLanguage" in signatures:
-            expected = [["language", "str"], ["variant", "str"], ["notify_user", "bool"]]
+            # Native D-Bus interface lists each input arg with its D-Bus type signature.
+            expected = [("language", "s"), ("variant", "s"), ("notify_user", "b")]
             actual = signatures["GetVoicesForLanguage"]
             error_msg = (
                 f"GetVoicesForLanguage signature mismatch: expected {expected}, got {actual}"
@@ -1372,10 +1351,10 @@ class TestOrcaDBusIntegration:
             assert actual == expected, error_msg
 
     @pytest.mark.dbus
-    def test_no_unexpected_modules(self, dbus_service_proxy):
+    def test_no_unexpected_modules(self, bus):
         """Test that no unexpected modules exist - ensures test coverage for all modules."""
 
-        actual_modules = set(dbus_service_proxy.ListModules())
+        actual_modules = set(list_module_names(bus))
         expected_modules = set(MODULE_CONFIG.keys())
         unexpected_modules = actual_modules - expected_modules - OPTIONAL_MODULES
 

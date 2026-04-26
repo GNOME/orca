@@ -71,6 +71,7 @@ from .extension import Extension
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+    from .dbus_service import UInt32
     from .scripts import default
 
 
@@ -1316,13 +1317,13 @@ class DocumentPresenter(Extension):
         migration_key="findResultsMinimumLength",
     )
     @dbus_service.getter
-    def get_find_results_minimum_length(self) -> int:
+    def get_find_results_minimum_length(self) -> UInt32:
         """Returns the minimum length for find results to be spoken."""
 
         return self._get_setting(self.KEY_FIND_RESULTS_MINIMUM_LENGTH, "i", 4)
 
     @dbus_service.setter
-    def set_find_results_minimum_length(self, value: int) -> bool:
+    def set_find_results_minimum_length(self, value: UInt32) -> bool:
         """Sets the minimum length for find results to be spoken."""
 
         if self.get_find_results_minimum_length() == value:

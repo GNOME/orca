@@ -66,6 +66,7 @@ known-first-party = ["orca", "generate_gsettings_schemas"]
 
 [tool.ruff.lint.per-file-ignores]
 "src/orca/dbus_service.py" = ["FA100", "TC002"]  # dasbus needs runtime type hints; future annotations breaks it
+"tests/integration_tests/dbus_fixtures.py" = ["S314"]  # parses XML produced by Orca's own service on the user's session bus
 "tests/unit_tests/test_dbus_service.py" = ["S314"]  # parses XML produced in-process by dasbus, not external input
 "tests/*" = ["T201", "S108", "S603", "S607"]  # print for output; /tmp paths and subprocess calls are fine in tests
 "tools/*" = ["T201", "PERF203"]  # print used for CLI output; try-except in loops is fine
@@ -151,4 +152,4 @@ disable_error_code = ["method-assign", "attr-defined"]
 
 [tool.codespell]
 skip = "po,help,_build,subprojects,*.svg,*.doap,src/orca/braille_rolenames.py"
-ignore-words-list = "punctuations,implementor,implementors,doubleclick,re-use,te,outloud,bu,ue"
+ignore-words-list = "punctuations,implementor,implementors,doubleclick,re-use,te,outloud,bu,ue,aas"

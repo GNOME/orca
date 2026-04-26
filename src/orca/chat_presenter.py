@@ -52,6 +52,7 @@ if TYPE_CHECKING:
 
     from gi.repository import Atspi
 
+    from .dbus_service import UInt32
     from .scripts import default
 
 
@@ -779,7 +780,7 @@ class ChatPresenter(Extension):
         migration_key="chatMessageVerbosity",
     )
     @dbus_service.getter
-    def get_message_verbosity(self, app: Atspi.Accessible | None = None) -> int:
+    def get_message_verbosity(self, app: Atspi.Accessible | None = None) -> UInt32:
         """Returns the chat message verbosity setting."""
 
         app_name = AXObject.get_name(app) if app else None
@@ -799,7 +800,7 @@ class ChatPresenter(Extension):
         return 0
 
     @dbus_service.setter
-    def set_message_verbosity(self, value: int) -> int:
+    def set_message_verbosity(self, value: UInt32) -> UInt32:
         """Sets the chat message verbosity setting."""
 
         gsettings_registry.get_registry().set_runtime_value(

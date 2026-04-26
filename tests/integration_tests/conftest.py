@@ -27,6 +27,7 @@ import sys
 from typing import TYPE_CHECKING
 
 from .dbus_fixtures import (  # noqa: F401
+    _bus,
     _dbus_service_proxy,
     _module_proxy_factory,
     dbus_timeout_fixture,

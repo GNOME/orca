@@ -30,7 +30,6 @@
 
 from __future__ import annotations
 
-import re
 import sys
 import types
 import xml.etree.ElementTree as ET
@@ -66,6 +65,7 @@ class TestDBusService:
             "dasbus.loop",
             "dasbus.server.interface",
             "dasbus.server.publishable",
+            "dasbus.typing",
         ]
 
         internal_modules = [
@@ -272,1063 +272,6 @@ class TestDBusService:
         assert "param1=test_value" in result
         assert "notify_user=True" in result
 
-    def test_handler_info_creation(self, test_context: OrcaTestContext) -> None:
-        """Test _HandlerInfo creation."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        def test_action() -> bool:
-            return True
-
-        info = dbus_service._HandlerInfo(
-            python_function_name="test_function",
-            description="Test function",
-            action=test_action,
-            handler_type=dbus_service.HandlerType.COMMAND,
-        )
-        assert info.python_function_name == "test_function"
-        assert info.description == "Test function"
-        assert info.action is test_action
-        assert info.handler_type == dbus_service.HandlerType.COMMAND
-
-    def test_handler_info_default_type(self, test_context: OrcaTestContext) -> None:
-        """Test _HandlerInfo default type."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        def test_action() -> bool:
-            return True
-
-        info = dbus_service._HandlerInfo(
-            python_function_name="test_function",
-            description="Test function",
-            action=test_action,
-        )
-        assert info.handler_type == dbus_service.HandlerType.COMMAND
-
-    def test_extract_function_parameters_basic(self, test_context: OrcaTestContext) -> None:
-        """Test _extract_function_parameters basic types."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        def test_func(self, param1: str, param2: int, param3: bool) -> None:  # pylint: disable=unused-argument
-            pass
-
-        params = dbus_service._extract_function_parameters(test_func)
-        expected = [("param1", "str"), ("param2", "int"), ("param3", "bool")]
-        assert params == expected
-
-    def test_extract_function_parameters_skips_standard_params(
-        self,
-        test_context: OrcaTestContext,
-    ) -> None:
-        """Test _extract_function_parameters skips standard params."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        def test_func(self, script=None, event=None, param1: str = "test") -> None:  # pylint: disable=unused-argument
-            pass
-
-        params = dbus_service._extract_function_parameters(test_func)
-        expected = [("param1", "str")]
-        assert params == expected
-
-    def test_extract_function_parameters_no_annotations(
-        self,
-        test_context: OrcaTestContext,
-    ) -> None:
-        """Test _extract_function_parameters no annotations."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        def test_func(self, param1, param2) -> None:  # pylint: disable=unused-argument
-            pass
-
-        params = dbus_service._extract_function_parameters(test_func)
-        expected = [("param1", "Any"), ("param2", "Any")]
-        assert params == expected
-
-    def test_extract_function_parameters_mixed_annotations(
-        self,
-        test_context: OrcaTestContext,
-    ) -> None:
-        """Test _extract_function_parameters mixed annotations."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        def test_func(self, param1: str, param2, param3: bool) -> None:  # pylint: disable=unused-argument
-            pass
-
-        params = dbus_service._extract_function_parameters(test_func)
-        expected = [("param1", "str"), ("param2", "Any"), ("param3", "bool")]
-        assert params == expected
-
-    def test_extract_function_parameters_complex_types(self, test_context: OrcaTestContext) -> None:
-        """Test _extract_function_parameters complex types."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        def test_func(self, param1: list[str], param2: dict[str, int]) -> None:  # pylint: disable=unused-argument
-            pass
-
-        params = dbus_service._extract_function_parameters(test_func)
-        assert len(params) == 2
-        assert params[0][0] == "param1"
-        assert params[1][0] == "param2"
-        assert params[0][1] != "Any"
-        assert params[1][1] != "Any"
-
-    @pytest.mark.parametrize(
-        "case",
-        [
-            {
-                "id": "command",
-                "input_name": "toggle_speech",
-                "handler_type": "COMMAND",
-                "expected_result": "ToggleSpeech",
-            },
-            {
-                "id": "getter_with_prefix",
-                "input_name": "get_speech_rate",
-                "handler_type": "GETTER",
-                "expected_result": "SpeechRate",
-            },
-            {
-                "id": "setter_with_prefix",
-                "input_name": "set_speech_rate",
-                "handler_type": "SETTER",
-                "expected_result": "SpeechRate",
-            },
-            {
-                "id": "getter_without_prefix",
-                "input_name": "speech_rate",
-                "handler_type": "GETTER",
-                "expected_result": "SpeechRate",
-            },
-            {
-                "id": "setter_without_prefix",
-                "input_name": "speech_rate",
-                "handler_type": "SETTER",
-                "expected_result": "SpeechRate",
-            },
-        ],
-        ids=lambda case: case["id"],
-    )
-    def test_normalize_handler_name(self, test_context, case: dict) -> None:
-        """Test OrcaModuleDBusInterface._normalize_handler_name."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        handler_type_obj = getattr(dbus_service.HandlerType, case["handler_type"])
-        result = dbus_service.OrcaModuleDBusInterface._normalize_handler_name(
-            case["input_name"],
-            handler_type_obj,
-        )
-        assert result == case["expected_result"]
-
-    @pytest.mark.parametrize(
-        "case",
-        [
-            {"id": "bool_true", "input_value": True, "expected_type": "b", "expected_output": True},
-            {
-                "id": "bool_false",
-                "input_value": False,
-                "expected_type": "b",
-                "expected_output": False,
-            },
-            {"id": "integer", "input_value": 42, "expected_type": "i", "expected_output": 42},
-            {"id": "float", "input_value": 3.14, "expected_type": "d", "expected_output": 3.14},
-            {
-                "id": "string",
-                "input_value": "test",
-                "expected_type": "s",
-                "expected_output": "test",
-            },
-        ],
-        ids=lambda case: case["id"],
-    )
-    def test_to_variant_basic_types(self, test_context, case: dict) -> None:
-        """Test OrcaModuleDBusInterface._to_variant with basic types."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        variant = dbus_service.OrcaModuleDBusInterface._to_variant(case["input_value"])
-        assert variant.get_type_string() == case["expected_type"]
-        assert variant.unpack() == case["expected_output"]
-
-    @pytest.mark.parametrize(
-        "case",
-        [
-            {"id": "list_strings", "input_list": ["hello", "world"], "expected_type": "as"},
-            {"id": "list_ints", "input_list": [1, 2, 3], "expected_type": "ax"},
-            {"id": "list_bools", "input_list": [True, False, True], "expected_type": "ab"},
-            {"id": "list_ints_not_bools", "input_list": [2, 3, 4], "expected_type": "ax"},
-            {"id": "empty_list", "input_list": [], "expected_type": "as"},
-        ],
-        ids=lambda case: case["id"],
-    )
-    def test_to_variant_lists(self, test_context, case: dict) -> None:
-        """Test OrcaModuleDBusInterface._to_variant with various list types."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        variant = dbus_service.OrcaModuleDBusInterface._to_variant(case["input_list"])
-        assert variant.get_type_string() == case["expected_type"]
-        assert variant.unpack() == case["input_list"]
-
-    def test_to_variant_list_tuples(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaModuleDBusInterface._to_variant list tuples."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        test_list = [("voice1", "en", "US"), ("voice2", "es", "ES")]
-        variant = dbus_service.OrcaModuleDBusInterface._to_variant(test_list)
-        assert variant.get_type_string() == "a(sss)"
-        expected = [("voice1", "en", "US"), ("voice2", "es", "ES")]
-        assert variant.unpack() == expected
-
-    def test_to_variant_dict(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaModuleDBusInterface._to_variant dict."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        test_dict = {"key1": "value1", "key2": "value2"}
-        variant = dbus_service.OrcaModuleDBusInterface._to_variant(test_dict)
-        assert variant.get_type_string() == "a{sv}"
-        unpacked = variant.unpack()
-        assert "key1" in unpacked
-        assert "key2" in unpacked
-
-    def test_to_variant_none(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaModuleDBusInterface._to_variant None."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        variant = dbus_service.OrcaModuleDBusInterface._to_variant(None)
-        assert variant.get_type_string() == "v"
-        inner = variant.unpack()
-        assert inner.unpack() == ""
-
-    def test_to_variant_unknown_type(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaModuleDBusInterface._to_variant unknown type."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        class CustomObject:
-            """Test class for unknown type conversion."""
-
-            def __str__(self):
-                return "custom_object"
-
-        obj = CustomObject()
-        variant = dbus_service.OrcaModuleDBusInterface._to_variant(obj)
-        assert variant.get_type_string() == "s"
-        assert variant.unpack() == "custom_object"
-
-    @pytest.mark.parametrize(
-        "case",
-        [
-            {
-                "id": "success",
-                "handlers_config": {"has_handler": True, "action": lambda: 42},
-                "getter_name": "Integer",
-                "expected_type": "i",
-                "expected_value": 42,
-            },
-            {
-                "id": "unknown",
-                "handlers_config": {"has_handler": False},
-                "getter_name": "UnknownGetter",
-                "expected_type": "v",
-                "expected_value": "",
-            },
-            {
-                "id": "string_type",
-                "handlers_config": {"has_handler": True, "action": lambda: "hello"},
-                "getter_name": "String",
-                "expected_type": "s",
-                "expected_value": "hello",
-            },
-            {
-                "id": "bool_type",
-                "handlers_config": {"has_handler": True, "action": lambda: True},
-                "getter_name": "Bool",
-                "expected_type": "b",
-                "expected_value": True,
-            },
-            {
-                "id": "list_type",
-                "handlers_config": {"has_handler": True, "action": lambda: ["a", "b"]},
-                "getter_name": "List",
-                "expected_type": "as",
-                "expected_value": ["a", "b"],
-            },
-            {
-                "id": "none_type",
-                "handlers_config": {"has_handler": True, "action": lambda: None},
-                "getter_name": "None",
-                "expected_type": "v",
-                "expected_value": "",
-            },
-        ],
-        ids=lambda case: case["id"],
-    )
-    def test_execute_runtime_getter_scenarios(
-        self,
-        test_context: OrcaTestContext,
-        case: dict,
-    ) -> None:
-        """Test OrcaModuleDBusInterface.ExecuteRuntimeGetter with various scenarios."""
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        handlers_config = case["handlers_config"]
-        getter_name = case["getter_name"]
-        expected_type = case["expected_type"]
-        expected_value = case["expected_value"]
-
-        if handlers_config.get("has_handler", False):
-            if "action" in handlers_config:
-                action = handlers_config["action"]
-            elif "return_value" in handlers_config:
-                mock_action = test_context.Mock()
-                mock_action.return_value = handlers_config["return_value"]
-                action = mock_action
-            else:
-                action = test_context.Mock(return_value=True)
-
-            mock_info = dbus_service._HandlerInfo(
-                python_function_name=f"get_{getter_name.lower()}",
-                description=f"Get {getter_name.lower()}",
-                action=action,
-                handler_type=dbus_service.HandlerType.GETTER,
-            )
-            handlers = [mock_info]
-        else:
-            handlers = []
-
-        interface = dbus_service.OrcaModuleDBusInterface("TestModule", handlers)
-        result = interface.ExecuteRuntimeGetter(getter_name)
-        assert result.get_type_string() == expected_type
-
-        if expected_type == "v":
-            inner = result.unpack()
-            assert inner.get_type_string() == "s"
-            assert inner.unpack() == expected_value
-        else:
-            assert result.unpack() == expected_value
-
-    @pytest.mark.parametrize(
-        "case",
-        [
-            {
-                "id": "success",
-                "has_handler": True,
-                "action_returns": True,
-                "variant_type": "i",
-                "variant_value": 99,
-                "setter_name": "TestValue",
-                "expected_result": True,
-                "expects_setter_called": True,
-            },
-            {
-                "id": "unknown",
-                "has_handler": False,
-                "action_returns": None,
-                "variant_type": "i",
-                "variant_value": 99,
-                "setter_name": "UnknownSetter",
-                "expected_result": False,
-                "expects_setter_called": False,
-            },
-            {
-                "id": "failure",
-                "has_handler": True,
-                "action_returns": False,
-                "variant_type": "s",
-                "variant_value": "test",
-                "setter_name": "TestValue",
-                "expected_result": False,
-                "expects_setter_called": True,
-            },
-        ],
-        ids=lambda case: case["id"],
-    )
-    def test_execute_runtime_setter_scenarios(
-        self,
-        test_context: OrcaTestContext,
-        case: dict,
-    ) -> None:
-        """Test OrcaModuleDBusInterface.ExecuteRuntimeSetter with various scenarios."""
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        test_state = {"setter_called": False, "setter_value": None}
-
-        if case["has_handler"]:
-
-            def mock_setter_action(value) -> bool:
-                test_state["setter_called"] = True
-                test_state["setter_value"] = value
-                return case["action_returns"] if case["action_returns"] is not None else False
-
-            mock_info = dbus_service._HandlerInfo(
-                python_function_name="set_test_value",
-                description="Set test value",
-                action=mock_setter_action,
-                handler_type=dbus_service.HandlerType.SETTER,
-            )
-            handlers = [mock_info]
-        else:
-            handlers = []
-
-        interface = dbus_service.OrcaModuleDBusInterface("TestModule", handlers)
-        mock_variant = dbus_service.GLib.Variant(case["variant_type"], case["variant_value"])
-        result = interface.ExecuteRuntimeSetter(case["setter_name"], mock_variant)
-        assert result is case["expected_result"]
-
-        if case["expects_setter_called"]:
-            assert test_state["setter_called"]
-            assert test_state["setter_value"] == case["variant_value"]
-        else:
-            assert not test_state["setter_called"]
-
-    @pytest.mark.parametrize(
-        "case",
-        [
-            {
-                "id": "success",
-                "command_name": "TestCommand",
-                "notify_user": True,
-                "mock_action_return": True,
-                "handler_infos": "create_handler",
-                "expected_result": True,
-                "should_verify_call": True,
-            },
-            {
-                "id": "unknown",
-                "command_name": "UnknownCommand",
-                "notify_user": False,
-                "mock_action_return": None,
-                "handler_infos": [],
-                "expected_result": False,
-                "should_verify_call": False,
-            },
-            {
-                "id": "failure",
-                "command_name": "FailingCommand",
-                "notify_user": False,
-                "mock_action_return": False,
-                "handler_infos": "create_handler",
-                "expected_result": False,
-                "should_verify_call": False,
-            },
-        ],
-        ids=lambda case: case["id"],
-    )
-    def test_execute_command_scenarios(
-        self,
-        test_context: OrcaTestContext,
-        case: dict,
-    ) -> None:
-        """Test OrcaModuleDBusInterface.ExecuteCommand with various scenarios."""
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        command_name = case["command_name"]
-        notify_user = case["notify_user"]
-        mock_action_return = case["mock_action_return"]
-        handler_infos = case["handler_infos"]
-        expected_result = case["expected_result"]
-        should_verify_call = case["should_verify_call"]
-
-        test_state = {"command_called": False, "notify_value": None}
-
-        if handler_infos == "create_handler":
-
-            def mock_command_action(notify_user_param) -> bool:
-                test_state["command_called"] = True
-                test_state["notify_value"] = notify_user_param
-                return mock_action_return
-
-            mock_info = dbus_service._HandlerInfo(
-                python_function_name="_".join(
-                    word.lower() for word in re.findall(r"[A-Z][a-z]*", command_name)
-                ),
-                description="test command",
-                action=mock_command_action,
-                handler_type=dbus_service.HandlerType.COMMAND,
-            )
-            handler_infos = [mock_info]
-
-        interface = dbus_service.OrcaModuleDBusInterface("TestModule", handler_infos)
-        result = interface.ExecuteCommand(command_name, notify_user)
-
-        assert result is expected_result
-        if should_verify_call:
-            assert test_state["command_called"]
-            assert test_state["notify_value"] is notify_user
-
-    @pytest.mark.parametrize(
-        "case",
-        [
-            {
-                "id": "success",
-                "has_handler": True,
-                "command_name": "ParamCommand",
-                "function_name": "param_command",
-                "notify_user": True,
-                "params": {"param1": ("s", "hello"), "param2": ("i", 42)},
-                "expected_type": "as",
-                "expected_value": ["result1", "result2"],
-                "action_config": {
-                    "returns": ["result1", "result2"],
-                    "track_state": True,
-                    "parameters": [("param1", "str"), ("param2", "int")],
-                },
-            },
-            {
-                "id": "unknown",
-                "has_handler": False,
-                "command_name": "UnknownCommand",
-                "function_name": None,
-                "notify_user": False,
-                "params": {"param1": ("s", "test")},
-                "expected_type": "b",
-                "expected_value": False,
-                "action_config": None,
-            },
-            {
-                "id": "complex_result",
-                "has_handler": True,
-                "command_name": "GetVoices",
-                "function_name": "get_voices",
-                "notify_user": False,
-                "params": {"language": ("s", "en")},
-                "expected_type": "a(sss)",
-                "expected_value": [("voice1", "en", "US"), ("voice2", "es", "ES")],
-                "action_config": {
-                    "returns": [("voice1", "en", "US"), ("voice2", "es", "ES")],
-                    "track_state": False,
-                },
-            },
-        ],
-        ids=lambda case: case["id"],
-    )
-    def test_execute_parameterized_command_scenarios(  # pylint: disable=too-many-locals
-        self,
-        test_context: OrcaTestContext,
-        case: dict,
-    ) -> None:
-        """Test OrcaModuleDBusInterface.ExecuteParameterizedCommand with various scenarios."""
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        has_handler = case["has_handler"]
-        command_name = case["command_name"]
-        function_name = case["function_name"]
-        notify_user = case["notify_user"]
-        params = case["params"]
-        expected_type = case["expected_type"]
-        expected_value = case["expected_value"]
-        action_config = case["action_config"]
-
-        test_state: dict[str, str | int | float | bool | dict | None] = {
-            "param_command_called": False,
-            "received_params": None,
-        }
-
-        if has_handler:
-
-            def mock_param_command(**kwargs) -> bool:
-                if action_config and action_config.get("track_state", False):
-                    test_state["param_command_called"] = True
-                    test_state["received_params"] = kwargs
-                return True
-
-            parameters = action_config.get("parameters", []) if action_config else []
-            mock_info = dbus_service._HandlerInfo(
-                python_function_name=function_name or "default_function",
-                description="test command",
-                action=mock_param_command,
-                handler_type=dbus_service.HandlerType.PARAMETERIZED_COMMAND,
-                parameters=parameters,
-            )
-            handlers = [mock_info]
-        else:
-            handlers = []
-
-        interface = dbus_service.OrcaModuleDBusInterface("TestModule", handlers)
-
-        if has_handler and action_config:
-
-            def wrapped_action(**kwargs):
-                if action_config.get("track_state", False):
-                    mock_param_command(**kwargs)
-                return action_config["returns"]
-
-            interface._parameterized_commands[command_name].action = wrapped_action
-
-        # Convert params to GLib.Variant format
-        variant_params = {}
-        for key, (variant_type, value) in params.items():
-            variant_params[key] = dbus_service.GLib.Variant(variant_type, value)
-
-        result = interface.ExecuteParameterizedCommand(command_name, variant_params, notify_user)
-        assert result.get_type_string() == expected_type
-        assert result.unpack() == expected_value
-
-        if action_config and action_config.get("track_state", False):
-            assert test_state["param_command_called"]
-            expected_params = {key: value for key, (_, value) in params.items()}
-            expected_params["notify_user"] = notify_user
-            assert test_state["received_params"] == expected_params
-
-    @pytest.mark.parametrize(
-        "case",
-        [
-            {
-                "id": "commands",
-                "list_type": "commands",
-                "handler_configs": [
-                    {
-                        "name": "command_one",
-                        "desc": "First command",
-                        "type": "COMMAND",
-                        "action": lambda x: True,
-                    },
-                    {
-                        "name": "command_two",
-                        "desc": "Second command",
-                        "type": "COMMAND",
-                        "action": lambda x: True,
-                    },
-                    {
-                        "name": "get_value",
-                        "desc": "A getter",
-                        "type": "GETTER",
-                        "action": lambda: True,
-                    },
-                ],
-                "method_name": "ListCommands",
-                "expected_count": 2,
-                "expected_items": [
-                    ("CommandOne", "First command"),
-                    ("CommandTwo", "Second command"),
-                ],
-            },
-            {
-                "id": "runtime_getters",
-                "list_type": "runtime_getters",
-                "handler_configs": [
-                    {
-                        "name": "get_rate",
-                        "desc": "Get speech rate",
-                        "type": "GETTER",
-                        "action": lambda: True,
-                    },
-                    {
-                        "name": "get_pitch",
-                        "desc": "Get speech pitch",
-                        "type": "GETTER",
-                        "action": lambda: True,
-                    },
-                ],
-                "method_name": "ListRuntimeGetters",
-                "expected_count": 2,
-                "expected_items": [("Rate", "Get speech rate"), ("Pitch", "Get speech pitch")],
-            },
-            {
-                "id": "runtime_setters",
-                "list_type": "runtime_setters",
-                "handler_configs": [
-                    {
-                        "name": "set_rate",
-                        "desc": "Set speech rate",
-                        "type": "SETTER",
-                        "action": lambda x: True,
-                    },
-                    {
-                        "name": "set_pitch",
-                        "desc": "Set speech pitch",
-                        "type": "SETTER",
-                        "action": lambda x: True,
-                    },
-                ],
-                "method_name": "ListRuntimeSetters",
-                "expected_count": 2,
-                "expected_items": [("Rate", "Set speech rate"), ("Pitch", "Set speech pitch")],
-            },
-            {
-                "id": "parameterized_commands",
-                "list_type": "parameterized_commands",
-                "handler_configs": [
-                    {
-                        "name": "get_voices_for_language",
-                        "desc": "Get voices for language",
-                        "type": "PARAMETERIZED_COMMAND",
-                        "action": lambda **kwargs: True,
-                        "parameters": [("language", "str"), ("variant", "str")],
-                    },
-                ],
-                "method_name": "ListParameterizedCommands",
-                "expected_count": 1,
-                "expected_items": [
-                    (
-                        "GetVoicesForLanguage",
-                        "Get voices for language",
-                        [("language", "str"), ("variant", "str")],
-                    ),
-                ],
-            },
-        ],
-        ids=lambda case: case["id"],
-    )
-    def test_list_methods_scenarios(  # pylint: disable=too-many-locals
-        self,
-        test_context: OrcaTestContext,
-        case: dict,
-    ) -> None:
-        """Test OrcaModuleDBusInterface list methods with various handler types."""
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        list_type = case["list_type"]
-        handler_configs = case["handler_configs"]
-        method_name = case["method_name"]
-        expected_count = case["expected_count"]
-        expected_items = case["expected_items"]
-
-        handlers = []
-        for config in handler_configs:
-            handler_type = getattr(dbus_service.HandlerType, config["type"])
-            handler_info = dbus_service._HandlerInfo(
-                python_function_name=config["name"],
-                description=config["desc"],
-                action=config["action"],
-                handler_type=handler_type,
-                parameters=config.get("parameters", []),
-            )
-            handlers.append(handler_info)
-
-        interface = dbus_service.OrcaModuleDBusInterface("TestModule", handlers)
-        list_method = getattr(interface, method_name)
-        result = list_method()
-
-        assert len(result) == expected_count
-
-        if list_type == "parameterized_commands":
-            # Parameterized commands return tuples with 3 elements
-            for expected_item in expected_items:
-                assert result[0][0] == expected_item[0]  # Name
-                assert result[0][1] == expected_item[1]  # Description
-                assert result[0][2] == expected_item[2]  # Parameters
-        else:
-            # Other types return simple tuples
-            for expected_item in expected_items:
-                assert expected_item in result
-
-    def test_constructor_empty_handlers(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaModuleDBusInterface constructor empty handlers."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        interface = dbus_service.OrcaModuleDBusInterface("TestModule", [])
-        assert interface._module_name == "TestModule"
-        assert len(interface._commands) == 0
-        assert len(interface._parameterized_commands) == 0
-        assert len(interface._getters) == 0
-        assert len(interface._setters) == 0
-
-    def test_constructor_mixed_handlers(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaModuleDBusInterface constructor mixed handlers."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        handlers = [
-            dbus_service._HandlerInfo(
-                python_function_name="toggle_something",
-                description="Toggle something",
-                action=lambda x: True,
-                handler_type=dbus_service.HandlerType.COMMAND,
-            ),
-            dbus_service._HandlerInfo(
-                python_function_name="get_value",
-                description="Get value",
-                action=lambda: True,
-                handler_type=dbus_service.HandlerType.GETTER,
-            ),
-            dbus_service._HandlerInfo(
-                python_function_name="set_value",
-                description="Set value",
-                action=lambda x: True,
-                handler_type=dbus_service.HandlerType.SETTER,
-            ),
-            dbus_service._HandlerInfo(
-                python_function_name="do_something_complex",
-                description="Do something complex",
-                action=lambda **kwargs: True,
-                handler_type=dbus_service.HandlerType.PARAMETERIZED_COMMAND,
-                parameters=[("param", "str")],
-            ),
-        ]
-        interface = dbus_service.OrcaModuleDBusInterface("TestModule", handlers)
-        assert interface._module_name == "TestModule"
-        assert "ToggleSomething" in interface._commands
-        assert "Value" in interface._getters
-        assert "Value" in interface._setters
-        assert "DoSomethingComplex" in interface._parameterized_commands
-
-    def test_constructor_handler_without_type(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaModuleDBusInterface constructor handler without type."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        class MockHandlerInfo:
-            """Mock handler info for testing."""
-
-            def __init__(self):
-                self.python_function_name = "test_command"
-                self.description = "Test command"
-                self.action = lambda x: True
-
-        MockHandlerInfo()
-        # Convert to proper _HandlerInfo for type compatibility
-        real_handler = dbus_service._HandlerInfo(
-            python_function_name="test_command",
-            description="Test command",
-            action=lambda x: True,
-            handler_type=dbus_service.HandlerType.COMMAND,
-        )
-        interface = dbus_service.OrcaModuleDBusInterface("TestModule", [real_handler])
-        assert "TestCommand" in interface._commands
-
-    def test_constructor_duplicate_names(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaModuleDBusInterface constructor duplicate names."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        handlers = [
-            dbus_service._HandlerInfo(
-                python_function_name="test_command",
-                description="First command",
-                action=lambda x: True,
-                handler_type=dbus_service.HandlerType.COMMAND,
-            ),
-            dbus_service._HandlerInfo(
-                python_function_name="test_command",
-                description="Second command",
-                action=lambda x: True,
-                handler_type=dbus_service.HandlerType.COMMAND,
-            ),
-        ]
-        interface = dbus_service.OrcaModuleDBusInterface("TestModule", handlers)
-        assert len(interface._commands) == 1
-        assert interface._commands["TestCommand"].action(False) is True
-
-    def test_for_publication(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaModuleDBusInterface.for_publication."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        interface = dbus_service.OrcaModuleDBusInterface("TestModule", [])
-        interface.__dbus_xml__ = "<xml>test</xml>"
-        result = interface.for_publication()
-        assert result == "<xml>test</xml>"
-
-    def test_orca_dbus_service_constructor(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaDBusServiceInterface constructor."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        service = dbus_service.OrcaDBusServiceInterface()
-        assert service._registered_modules == {}
-
-    def test_orca_dbus_service_for_publication(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaDBusServiceInterface.for_publication."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        service = dbus_service.OrcaDBusServiceInterface()
-        service.__dbus_xml__ = "<xml>service</xml>"
-        result = service.for_publication()
-        assert result == "<xml>service</xml>"
-
-    def test_add_module_interface_new(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaDBusServiceInterface.add_module_interface new module."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        mock_bus = test_context.Mock()
-        service = dbus_service.OrcaDBusServiceInterface()
-        handlers: list[dbus_service._HandlerInfo] = []
-        mock_module_iface = test_context.Mock()
-        test_context.patch_object(
-            dbus_service,
-            "OrcaModuleDBusInterface",
-            side_effect=lambda module_name, handlers_info: mock_module_iface,
-        )
-        service.add_module_interface("TestModule", handlers, mock_bus, "/test/path")
-        assert "TestModule" in service._registered_modules
-        mock_bus.publish_object.assert_called_once_with("/test/path/TestModule", mock_module_iface)
-
-    def test_add_module_interface_replace_existing(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaDBusServiceInterface.add_module_interface replace existing."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        mock_bus = test_context.Mock()
-        service = dbus_service.OrcaDBusServiceInterface()
-        service._registered_modules["TestModule"] = test_context.Mock()
-        handlers: list[dbus_service._HandlerInfo] = []
-        mock_module_iface = test_context.Mock()
-        test_context.patch_object(
-            dbus_service,
-            "OrcaModuleDBusInterface",
-            side_effect=lambda module_name, handlers_info: mock_module_iface,
-        )
-        service.add_module_interface("TestModule", handlers, mock_bus, "/test/path")
-        assert "TestModule" in service._registered_modules
-        mock_bus.unpublish_object.assert_called_once_with("/test/path/TestModule")
-        mock_bus.publish_object.assert_called_once_with("/test/path/TestModule", mock_module_iface)
-
-    def test_add_module_interface_unpublish_error(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaDBusServiceInterface.add_module_interface unpublish error."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        mock_dbus_error = self._get_mock_dbus_error()
-        mock_bus = test_context.Mock()
-        mock_bus.unpublish_object.side_effect = mock_dbus_error("Unpublish failed")
-        service = dbus_service.OrcaDBusServiceInterface()
-        service._registered_modules["TestModule"] = test_context.Mock()
-        handlers: list[dbus_service._HandlerInfo] = []
-        mock_module_iface = test_context.Mock()
-        test_context.patch_object(
-            dbus_service,
-            "OrcaModuleDBusInterface",
-            side_effect=lambda module_name, handlers_info: mock_module_iface,
-        )
-
-        # The unpublish_object call should fail but be caught gracefully by the production code
-        # The module should still be successfully registered despite the unpublish error
-        service.add_module_interface("TestModule", handlers, mock_bus, "/test/path")
-        assert "TestModule" in service._registered_modules
-        mock_bus.unpublish_object.assert_called_once_with("/test/path/TestModule")
-        mock_bus.publish_object.assert_called_once_with("/test/path/TestModule", mock_module_iface)
-
-    def test_add_module_interface_publish_error(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaDBusServiceInterface.add_module_interface publish error."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        mock_dbus_error = self._get_mock_dbus_error()
-        mock_bus = test_context.Mock()
-        mock_bus.publish_object.side_effect = mock_dbus_error("Publish failed")
-        service = dbus_service.OrcaDBusServiceInterface()
-        handlers: list[dbus_service._HandlerInfo] = []
-        mock_module_iface = test_context.Mock()
-        test_context.patch_object(
-            dbus_service,
-            "OrcaModuleDBusInterface",
-            side_effect=lambda module_name, handlers_info: mock_module_iface,
-        )
-
-        service.add_module_interface("TestModule", handlers, mock_bus, "/test/path")
-        assert "TestModule" not in service._registered_modules
-
-    def test_remove_module_interface_success(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaDBusServiceInterface.remove_module_interface success."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        mock_bus = test_context.Mock()
-        service = dbus_service.OrcaDBusServiceInterface()
-        service._registered_modules["TestModule"] = test_context.Mock()
-        result = service.remove_module_interface("TestModule", mock_bus, "/test/path")
-        assert result is True
-        assert "TestModule" not in service._registered_modules
-        mock_bus.unpublish_object.assert_called_once_with("/test/path/TestModule")
-
-    def test_remove_module_interface_not_registered(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaDBusServiceInterface.remove_module_interface not registered."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        mock_bus = test_context.Mock()
-        service = dbus_service.OrcaDBusServiceInterface()
-        result = service.remove_module_interface("TestModule", mock_bus, "/test/path")
-        assert result is False
-        mock_bus.unpublish_object.assert_not_called()
-
-    def test_remove_module_interface_unpublish_error(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaDBusServiceInterface.remove_module_interface unpublish error."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        mock_dbus_error = self._get_mock_dbus_error()
-        mock_bus = test_context.Mock()
-        mock_bus.unpublish_object.side_effect = mock_dbus_error("Unpublish failed")
-        service = dbus_service.OrcaDBusServiceInterface()
-        service._registered_modules["TestModule"] = test_context.Mock()
-
-        result = service.remove_module_interface("TestModule", mock_bus, "/test/path")
-        assert result is False
-        assert "TestModule" in service._registered_modules
-
-    def test_list_modules(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaDBusServiceInterface.ListModules."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        service = dbus_service.OrcaDBusServiceInterface()
-        for name in ("Module1", "Module2", "Module3"):
-            service._registered_modules[name] = test_context.Mock()
-        modules = service.ListModules()
-        assert set(modules) == {"Module1", "Module2", "Module3"}
-
-    def test_orca_dbus_service_list_commands(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaDBusServiceInterface.ListCommands."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        service = dbus_service.OrcaDBusServiceInterface()
-        commands = service.ListCommands()
-        command_names = [cmd[0] for cmd in commands]
-        assert "ShowPreferences" in command_names
-        assert "PresentMessage" in command_names
-        assert "GetVersion" in command_names
-
     def test_show_preferences_success(self, test_context: OrcaTestContext) -> None:
         """Test OrcaDBusServiceInterface.ShowPreferences success."""
 
@@ -1439,37 +382,6 @@ class TestDBusService:
         result = service.GetVersion()
         assert result == expected_result
 
-    def test_shutdown_service(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaDBusServiceInterface.shutdown_service."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        mock_bus = test_context.Mock()
-        service = dbus_service.OrcaDBusServiceInterface()
-        for name in ("Module1", "Module2"):
-            service._registered_modules[name] = test_context.Mock()
-        service.shutdown_service(mock_bus, "/test/path")
-        assert len(service._registered_modules) == 0
-        assert mock_bus.unpublish_object.call_count == 2
-        mock_bus.unpublish_object.assert_any_call("/test/path/Module1")
-        mock_bus.unpublish_object.assert_any_call("/test/path/Module2")
-
-    def test_shutdown_service_unpublish_error(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaDBusServiceInterface.shutdown_service unpublish error."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        mock_dbus_error = self._get_mock_dbus_error()
-        mock_bus = test_context.Mock()
-        mock_bus.unpublish_object.side_effect = mock_dbus_error("Unpublish failed")
-        service = dbus_service.OrcaDBusServiceInterface()
-        service._registered_modules["Module1"] = test_context.Mock()
-
-        service.shutdown_service(mock_bus, "/test/path")
-        assert len(service._registered_modules) == 0
-
     def test_orca_remote_controller_constructor(self, test_context: OrcaTestContext) -> None:
         """Test OrcaRemoteController constructor."""
 
@@ -1481,25 +393,6 @@ class TestDBusService:
         assert controller._is_running is False
         assert controller._bus is None
         assert not controller._pending_registrations
-
-    def test_is_running_false(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaRemoteController.is_running false."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        controller = dbus_service.OrcaRemoteController()
-        assert controller.is_running() is False
-
-    def test_is_running_true(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaRemoteController.is_running true."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        controller = dbus_service.OrcaRemoteController()
-        controller._is_running = True
-        assert controller.is_running() is True
 
     def test_start_already_running(self, test_context: OrcaTestContext) -> None:
         """Test OrcaRemoteController.start already running."""
@@ -1618,7 +511,6 @@ class TestDBusService:
         assert controller._bus is None
         assert controller._dbus_service_interface is None
         assert not controller._pending_registrations
-        mock_service.shutdown_service.assert_called_once()
         mock_bus.unpublish_object.assert_called_once()
         mock_bus.unregister_service.assert_called_once()
         mock_bus.disconnect.assert_called_once()
@@ -1684,15 +576,11 @@ class TestDBusService:
         controller._is_running = True
         controller._dbus_service_interface = test_context.Mock()
         controller._bus = test_context.Mock()
-        mock_register = test_context.Mock()
-        test_context.patch_object(
-            controller,
-            "_register_decorated_commands_internal",
-            new=mock_register,
-        )
+        mock_publish = test_context.Mock()
+        test_context.patch_object(controller, "_publish_module", new=mock_publish)
         mock_module = test_context.Mock()
         controller.register_decorated_module("TestModule", mock_module)
-        mock_register.assert_called_once_with("TestModule", mock_module)
+        mock_publish.assert_called_once_with("TestModule", mock_module)
 
     @pytest.mark.parametrize(
         "case",
@@ -1701,25 +589,25 @@ class TestDBusService:
                 "id": "pending",
                 "is_running": False,
                 "has_pending": True,
-                "mock_service_returns": None,
+                "unpublish_returns": None,
                 "expected_result": True,
-                "expects_service_call": False,
+                "expects_unpublish_call": False,
             },
             {
-                "id": "not_running",
+                "id": "not_registered",
                 "is_running": False,
                 "has_pending": False,
-                "mock_service_returns": None,
+                "unpublish_returns": None,
                 "expected_result": False,
-                "expects_service_call": False,
+                "expects_unpublish_call": False,
             },
             {
                 "id": "running",
                 "is_running": True,
                 "has_pending": False,
-                "mock_service_returns": True,
+                "unpublish_returns": True,
                 "expected_result": True,
-                "expects_service_call": True,
+                "expects_unpublish_call": True,
             },
         ],
         ids=lambda case: case["id"],
@@ -1735,21 +623,23 @@ class TestDBusService:
 
         is_running = case["is_running"]
         has_pending = case["has_pending"]
-        mock_service_returns = case["mock_service_returns"]
+        unpublish_returns = case["unpublish_returns"]
         expected_result = case["expected_result"]
-        expects_service_call = case["expects_service_call"]
+        expects_unpublish_call = case["expects_unpublish_call"]
 
         controller = dbus_service.OrcaRemoteController()
 
         if has_pending:
             controller._pending_registrations["TestModule"] = test_context.Mock()
 
+        mock_unpublish = test_context.Mock(return_value=unpublish_returns)
+        test_context.patch_object(controller, "_unpublish_module", new=mock_unpublish)
+
         if is_running:
-            mock_service = test_context.Mock()
-            mock_service.remove_module_interface.return_value = mock_service_returns
             controller._is_running = True
-            controller._dbus_service_interface = mock_service
+            controller._dbus_service_interface = test_context.Mock()
             controller._bus = test_context.Mock()
+            controller._registered["TestModule"] = test_context.Mock()
 
         result = controller.deregister_module_commands("TestModule")
         assert result is expected_result
@@ -1757,8 +647,8 @@ class TestDBusService:
         if has_pending:
             assert "TestModule" not in controller._pending_registrations
 
-        if expects_service_call:
-            mock_service.remove_module_interface.assert_called_once()
+        if expects_unpublish_call:
+            mock_unpublish.assert_called_once_with("TestModule")
 
     def test_process_pending_registrations_empty(self, test_context: OrcaTestContext) -> None:
         """Test OrcaRemoteController._process_pending_registrations empty."""
@@ -1779,55 +669,16 @@ class TestDBusService:
         from orca import dbus_service
 
         controller = dbus_service.OrcaRemoteController()
-        mock_register = test_context.Mock()
-        test_context.patch_object(
-            controller,
-            "_register_decorated_commands_internal",
-            new=mock_register,
-        )
+        mock_publish = test_context.Mock()
+        test_context.patch_object(controller, "_publish_module", new=mock_publish)
         mock_module1 = test_context.Mock()
         mock_module2 = test_context.Mock()
         controller._pending_registrations = {"Module1": mock_module1, "Module2": mock_module2}
         controller._process_pending_registrations()
         assert not controller._pending_registrations
-        assert mock_register.call_count == 2
-        mock_register.assert_any_call("Module1", mock_module1)
-        mock_register.assert_any_call("Module2", mock_module2)
-
-    @pytest.mark.parametrize(
-        "case",
-        [
-            {
-                "id": "no_interface",
-                "has_interface": False,
-                "expected_count_check": lambda count: count == 0,
-            },
-            {
-                "id": "with_interface",
-                "has_interface": True,
-                "expected_count_check": lambda count: count >= 3,
-            },
-        ],
-        ids=lambda case: case["id"],
-    )
-    def test_count_system_commands_scenarios(
-        self,
-        test_context: OrcaTestContext,
-        case: dict,
-    ) -> None:
-        """Test OrcaRemoteController._count_system_commands with and without interface."""
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        has_interface = case["has_interface"]
-        expected_count_check = case["expected_count_check"]
-
-        controller = dbus_service.OrcaRemoteController()
-        if has_interface:
-            controller._dbus_service_interface = dbus_service.OrcaDBusServiceInterface()
-
-        count = controller._count_system_commands()
-        assert expected_count_check(count)
+        assert mock_publish.call_count == 2
+        mock_publish.assert_any_call("Module1", mock_module1)
+        mock_publish.assert_any_call("Module2", mock_module2)
 
     def test_print_registration_summary(self, test_context: OrcaTestContext) -> None:
         """Test OrcaRemoteController._print_registration_summary."""
@@ -1836,14 +687,18 @@ class TestDBusService:
         from orca import dbus_service
 
         controller = dbus_service.OrcaRemoteController()
-        mock_service = test_context.Mock()
-        mock_service.get_handler_totals.return_value = (2, 5, 3, 2)
-        controller._dbus_service_interface = mock_service
-        mock_count = test_context.Mock(return_value=4)
-        test_context.patch_object(controller, "_count_system_commands", new=mock_count)
+        mock_registration = test_context.Mock()
+        mock_registration.get_commands.return_value = {"DoX": object(), "DoY": object()}
+        mock_registration.get_parameterized_commands.return_value = {"DoZ": object()}
+        mock_registration.get_getters.return_value = {"Rate": object()}
+        mock_registration.get_setters.return_value = {"Rate": object()}
+        controller._registered = {"FakeManager": mock_registration}
+        # Should not raise; the assertions confirm the expected lookups happened.
         controller._print_registration_summary()
-        mock_service.get_handler_totals.assert_called_once()
-        mock_count.assert_called_once()
+        mock_registration.get_commands.assert_called()
+        mock_registration.get_parameterized_commands.assert_called()
+        mock_registration.get_getters.assert_called()
+        mock_registration.get_setters.assert_called()
 
     def test_get_remote_controller(self, test_context: OrcaTestContext) -> None:
         """Test get_remote_controller function."""
@@ -1853,166 +708,6 @@ class TestDBusService:
 
         controller = dbus_service.get_remote_controller()
         assert isinstance(controller, dbus_service.OrcaRemoteController)
-
-    def test_extract_function_parameters_complex_annotation(
-        self,
-        test_context: OrcaTestContext,
-    ) -> None:
-        """Test _extract_function_parameters complex annotation without __name__."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        def test_func(self, param1: list[str]) -> None:  # pylint: disable=unused-argument
-            pass
-
-        params = dbus_service._extract_function_parameters(test_func)
-        assert len(params) == 1
-        assert params[0][0] == "param1"
-        # Complex types without __name__ get string representation
-        assert "list" in params[0][1] or "List" in params[0][1]
-
-    def test_to_variant_empty_list_tuples(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaModuleDBusInterface._to_variant empty list tuples."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        empty_tuples: list[tuple[str, str]] = []
-        variant = dbus_service.OrcaModuleDBusInterface._to_variant(empty_tuples)
-        assert variant.get_type_string() == "as"  # Empty list defaults to string array
-        assert variant.unpack() == []
-
-    def test_to_variant_mixed_types_list(self, test_context: OrcaTestContext) -> None:
-        """Test OrcaModuleDBusInterface._to_variant mixed types list."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        mixed_list = ["string", 42, True]
-        variant = dbus_service.OrcaModuleDBusInterface._to_variant(mixed_list)
-        assert variant.get_type_string() == "av"
-        unpacked = variant.unpack()
-        assert len(unpacked) == 3
-
-    def test_register_decorated_commands_internal_not_ready(
-        self,
-        test_context: OrcaTestContext,
-    ) -> None:
-        """Test OrcaRemoteController._register_decorated_commands_internal not ready."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        controller = dbus_service.OrcaRemoteController()
-        mock_module = test_context.Mock()
-
-        # This should return early and not process anything
-        controller._register_decorated_commands_internal("TestModule", mock_module)
-
-        # The internal method does not queue; queueing is the public method's job.
-        assert not controller._pending_registrations
-
-    def test_register_decorated_commands_internal_with_decorators(
-        self,
-        test_context: OrcaTestContext,
-    ) -> None:
-        """Test OrcaRemoteController._register_decorated_commands_internal with decorators."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        class MockModule:
-            """Mock module with decorated methods."""
-
-            def regular_method(self) -> str:
-                """Regular method without decoration."""
-
-                return "regular"
-
-            def command_method(self) -> str:
-                """Test command method."""
-
-                return "command"
-
-            def param_command_method(self) -> str:
-                """Test parameterized command."""
-
-                return "param_command"
-
-            def getter_method(self) -> str:
-                """Test getter method."""
-
-                return "getter"
-
-            def setter_method(self) -> str:
-                """Test setter method."""
-
-                return "setter"
-
-        # Add decorations to methods
-        MockModule.command_method.dbus_command_description = "Test command method."
-        MockModule.param_command_method.dbus_parameterized_command_description = (
-            "Test parameterized command."
-        )
-        MockModule.getter_method.dbus_getter_description = "Test getter method."
-        MockModule.setter_method.dbus_setter_description = "Test setter method."
-        mock_module = MockModule()
-        controller = dbus_service.OrcaRemoteController()
-        controller._is_running = True
-        controller._dbus_service_interface = test_context.Mock()
-        controller._bus = test_context.Mock()
-
-        def mock_get_manager():
-            return test_context.Mock()
-
-        def mock_remote_controller_event():
-            return test_context.Mock()
-
-        # Patch modules directly since they're imported locally in the method
-        test_context.patch("orca.script_manager.get_manager", new=mock_get_manager)
-        test_context.patch(
-            "orca.input_event.RemoteControllerEvent",
-            new=mock_remote_controller_event,
-        )
-        controller._register_decorated_commands_internal("TestModule", mock_module)
-        controller._dbus_service_interface.add_module_interface.assert_called_once()
-        call_args = controller._dbus_service_interface.add_module_interface.call_args
-        handlers_info = call_args[0][1]
-        assert len(handlers_info) == 4  # command + parameterized + getter + setter
-
-    def test_register_decorated_commands_internal_no_handlers(
-        self,
-        test_context: OrcaTestContext,
-    ) -> None:
-        """Test OrcaRemoteController._register_decorated_commands_internal no handlers."""
-
-        self._setup_dependencies(test_context)
-        from orca import dbus_service
-
-        class MockModule:
-            """Mock module without decorated methods."""
-
-            def regular_method(self) -> str:
-                """Regular method without decoration."""
-
-                return "regular"
-
-        mock_module = MockModule()
-        controller = dbus_service.OrcaRemoteController()
-        controller._is_running = True
-        controller._dbus_service_interface = test_context.Mock()
-        controller._bus = test_context.Mock()
-
-        # Properly patch the method we want to assert on
-        mock_add_interface = test_context.Mock()
-        test_context.patch_object(
-            controller._dbus_service_interface,
-            "add_module_interface",
-            new=mock_add_interface,
-        )
-        controller._register_decorated_commands_internal("TestModule", mock_module)
-        mock_add_interface.assert_not_called()
 
     def test_start_unpublish_object_error_during_cleanup(
         self,
@@ -2245,10 +940,10 @@ class TestDBusService:
         assert registration.get_object_path() == ""
         assert registration.get_dbus_object() is None
 
-        registration.set_object_path("/org/gnome/Orca/Service/FakeManager")
+        registration.set_object_path("/org/gnome/Orca1/Service/FakeManager")
         sentinel = object()
         registration.set_dbus_object(sentinel)
-        assert registration.get_object_path() == "/org/gnome/Orca/Service/FakeManager"
+        assert registration.get_object_path() == "/org/gnome/Orca1/Service/FakeManager"
         assert registration.get_dbus_object() is sentinel
 
 
@@ -2361,7 +1056,7 @@ class TestInterfaceBuilder:
 
         root = ET.fromstring(cls.__dbus_xml__)
         for iface in root.findall("interface"):
-            if iface.get("name") == "org.gnome.Orca.FakeManager":
+            if iface.get("name") == "org.gnome.Orca1.FakeManager":
                 return iface
         return None
 
@@ -2412,13 +1107,45 @@ class TestInterfaceBuilder:
         assert properties["LockingKeysPresented"].get("type") == "b"
         assert properties["LockingKeysPresented"].get("access") == "write"
 
+    def test_uint32_annotation_produces_unsigned_signature(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """A UInt32-typed property is exposed with the unsigned-int D-Bus signature 'u'."""
+
+        _stub_orca_internals(test_context)
+        from orca import dbus_service
+        from orca.dbus_service import UInt32
+
+        class FakeManager:
+            @dbus_service.getter
+            def get_volume(self) -> UInt32:
+                """Returns volume."""
+                return UInt32(50)
+
+            @dbus_service.setter
+            def set_volume(self, value: UInt32) -> bool:
+                """Sets volume."""
+                return True
+
+        registration = dbus_service._ModuleRegistration.from_module_instance(
+            "FakeManager", FakeManager()
+        )
+        cls = dbus_service._InterfaceBuilder.build(registration)
+        root = ET.fromstring(cls.__dbus_xml__)
+        iface = next(
+            i for i in root.findall("interface") if i.get("name") == "org.gnome.Orca1.FakeManager"
+        )
+        volume = next(p for p in iface.findall("property") if p.get("name") == "Volume")
+        assert volume.get("type") == "u"
+        assert volume.get("access") == "readwrite"
+
     def test_user_params_resolved_when_reserved_param_unresolvable(
         self, test_context: OrcaTestContext
     ) -> None:
         """A TYPE_CHECKING-only annotation on a reserved param must not poison user params.
 
-        Real Orca modules type ``script`` as ``default.Script`` (a TYPE_CHECKING import).
-        Combined with ``from __future__ import annotations``, that turns every annotation
+        Real Orca modules type script as default.Script (a TYPE_CHECKING import).
+        Combined with from __future__ import annotations, that turns every annotation
         into a string. Per-annotation parsing must recover the user-facing parameter and
         return types that D-Bus actually marshals over the wire.
         """
@@ -2448,7 +1175,7 @@ class TestInterfaceBuilder:
 
         root = ET.fromstring(cls.__dbus_xml__)
         iface = next(
-            i for i in root.findall("interface") if i.get("name") == "org.gnome.Orca.FakeManager"
+            i for i in root.findall("interface") if i.get("name") == "org.gnome.Orca1.FakeManager"
         )
         method = next(m for m in iface.findall("method") if m.get("name") == "GetVoicesForLanguage")
         in_args = [
@@ -2522,3 +1249,119 @@ class TestInterfaceBuilder:
         assert instance.Rate == 7.5
         instance.Rate = 11.0
         assert calls[-1] == ("set_rate", 11.0)
+
+
+@pytest.mark.unit
+class TestRemoteControllerInternalAPIs:
+    """Internal-call APIs that extension code uses to bypass the bus."""
+
+    def _registered_controller(self, dbus_service, calls):
+        """Returns a controller with one FakeManager registered, ready for in-process use."""
+
+        class FakeManager:
+            @dbus_service.command
+            def toggle_speech(self, script=None, event=None, notify_user=True) -> bool:
+                """Toggles."""
+                calls.append(("cmd", notify_user))
+                return True
+
+            @dbus_service.getter
+            def get_rate(self) -> float:
+                """Rate."""
+                return 3.14
+
+            @dbus_service.setter
+            def set_rate(self, value: float) -> bool:
+                """Set rate."""
+                calls.append(("set_rate", value))
+                return True
+
+        registration = dbus_service._ModuleRegistration.from_module_instance(
+            "FakeManager", FakeManager()
+        )
+        controller = dbus_service.OrcaRemoteController()
+        controller._registered["FakeManager"] = registration
+        return controller
+
+    def test_execute_command_internal_routes_to_method(self, test_context: OrcaTestContext) -> None:
+        """execute_command_internal runs the command and returns its bool result."""
+
+        _stub_orca_internals(test_context)
+        from orca import dbus_service
+
+        calls: list[tuple] = []
+        controller = self._registered_controller(dbus_service, calls)
+
+        assert controller.execute_command_internal("FakeManager", "ToggleSpeech", False) is True
+        assert calls[-1] == ("cmd", False)
+
+    def test_execute_command_internal_unknown_returns_false(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """An unknown module or command yields False without raising."""
+
+        _stub_orca_internals(test_context)
+        from orca import dbus_service
+
+        controller = self._registered_controller(dbus_service, [])
+        assert controller.execute_command_internal("NoSuch", "Foo") is False
+        assert controller.execute_command_internal("FakeManager", "NoSuch") is False
+
+    def test_get_and_set_value_internal_round_trip(self, test_context: OrcaTestContext) -> None:
+        """get_value_internal reads via the getter; set_value_internal writes via setter."""
+
+        _stub_orca_internals(test_context)
+        from orca import dbus_service
+
+        calls: list[tuple] = []
+        controller = self._registered_controller(dbus_service, calls)
+
+        assert controller.get_value_internal("FakeManager", "Rate") == 3.14
+        assert controller.set_value_internal("FakeManager", "Rate", 9.0) is True
+        assert calls[-1] == ("set_rate", 9.0)
+
+    def test_unknown_property_returns_safe_default(self, test_context: OrcaTestContext) -> None:
+        """Unknown getters return None; unknown setters return False."""
+
+        _stub_orca_internals(test_context)
+        from orca import dbus_service
+
+        controller = self._registered_controller(dbus_service, [])
+        assert controller.get_value_internal("FakeManager", "Bogus") is None
+        assert controller.set_value_internal("FakeManager", "Bogus", 1) is False
+
+
+@pytest.mark.unit
+class TestRemoteControllerLifecycle:
+    """Controller queues registrations until the bus is up."""
+
+    def test_pending_registrations_replay_on_start(self, test_context: OrcaTestContext) -> None:
+        """A module registered before start() is published when the service comes up."""
+
+        _stub_orca_internals(test_context)
+        from orca import dbus_service
+
+        controller = dbus_service.OrcaRemoteController()
+
+        class FakeManager:
+            @dbus_service.command
+            def toggle_speech(self, script=None, event=None, notify_user=True) -> bool:
+                """Toggles."""
+                return True
+
+        instance = FakeManager()
+        controller.register_decorated_module("FakeManager", instance)
+        assert "FakeManager" in controller._pending_registrations
+
+        published: list[tuple[str, object]] = []
+        controller._is_running = True
+        controller._bus = types.SimpleNamespace(
+            publish_object=lambda path, obj: published.append((path, obj)),
+            unpublish_object=lambda path: None,
+        )
+        controller._process_pending_registrations()
+
+        assert "FakeManager" in controller._registered
+        assert not controller._pending_registrations
+        assert published, "module should have been published once the bus came up"
+        assert published[0][0].endswith("/FakeManager")

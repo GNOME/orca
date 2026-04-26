@@ -6,10 +6,10 @@
 
 Orca exposes a D-Bus service at:
 
-- **Service Name**: `org.gnome.Orca.Service`
-- **Main Object Path**: `/org/gnome/Orca/Service`
-- **Module Object Paths**: `/org/gnome/Orca/Service/ModuleName`
-  (e.g., `/org/gnome/Orca/Service/SpeechAndVerbosityManager`)
+- **Service Name**: `org.gnome.Orca1.Service`
+- **Main Object Path**: `/org/gnome/Orca1/Service`
+- **Module Object Paths**: `/org/gnome/Orca1/Service/ModuleName`
+  (e.g., `/org/gnome/Orca1/Service/SpeechManager`)
 
 See [remote-controller-commands.md](remote-controller-commands.md) for a complete
 list of available commands.
@@ -23,14 +23,14 @@ The D-Bus interface requires:
 
 ## Service-Level Commands
 
-Commands available directly on the main service (`/org/gnome/Orca/Service`):
+Commands available directly on the main service (`/org/gnome/Orca1/Service`):
 
 ### Get Orca's Version
 
 ```bash
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service \
-    --method org.gnome.Orca.Service.GetVersion
+gdbus call --session --dest org.gnome.Orca1.Service \
+    --object-path /org/gnome/Orca1/Service \
+    --method org.gnome.Orca1.Service.GetVersion
 ```
 
 **Returns:** String containing the version (and revision if available)
@@ -38,9 +38,9 @@ gdbus call --session --dest org.gnome.Orca.Service \
 ### Present a Custom Message in Speech and/or Braille
 
 ```bash
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service \
-    --method org.gnome.Orca.Service.PresentMessage "Your message here"
+gdbus call --session --dest org.gnome.Orca1.Service \
+    --object-path /org/gnome/Orca1/Service \
+    --method org.gnome.Orca1.Service.PresentMessage "Your message here"
 ```
 
 **Parameters:**
@@ -52,9 +52,9 @@ gdbus call --session --dest org.gnome.Orca.Service \
 ### Show Orca's Preferences GUI
 
 ```bash
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service \
-    --method org.gnome.Orca.Service.ShowPreferences
+gdbus call --session --dest org.gnome.Orca1.Service \
+    --object-path /org/gnome/Orca1/Service \
+    --method org.gnome.Orca1.Service.ShowPreferences
 ```
 
 **Returns:** Boolean indicating success
@@ -62,204 +62,138 @@ gdbus call --session --dest org.gnome.Orca.Service \
 ### Quit Orca
 
 ```bash
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service \
-    --method org.gnome.Orca.Service.Quit
+gdbus call --session --dest org.gnome.Orca1.Service \
+    --object-path /org/gnome/Orca1/Service \
+    --method org.gnome.Orca1.Service.Quit
 ```
 
 **Returns:** Boolean indicating if the quit request was accepted
 
-### List Available Service Commands
-
-```bash
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service \
-    --method org.gnome.Orca.Service.ListCommands
-```
-
-**Returns:** List of (command_name, description) tuples
+## Discovering Modules and Their Capabilities
 
 ### List Registered Modules
 
+Introspect the service root to enumerate the modules currently registered:
+
 ```bash
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service \
-    --method org.gnome.Orca.Service.ListModules
+gdbus introspect --session --dest org.gnome.Orca1.Service \
+    --object-path /org/gnome/Orca1/Service --recurse
 ```
 
-**Returns:** List of module names
+The child `<node>` entries beneath the root path are the registered modules.
+
+### Inspect a Single Module
+
+```bash
+gdbus introspect --session --dest org.gnome.Orca1.Service \
+    --object-path /org/gnome/Orca1/Service/SpeechManager
+```
+
+The XML lists each method with its parameter types and each property with its
+type and access mode.
 
 ## Interacting with Modules
 
-Each registered module exposes its own set of operations. Based on the underlying Orca code, these
-are categorized as **Commands**, **Runtime Getters**, and **Runtime Setters**:
+Each module exposes **Commands** and **Properties**:
 
-- **Commands**: Actions that perform a task. These typically correspond to Orca commands bound
-  to a keystroke (e.g., `IncreaseRate`).
-- **Runtime Getters**: Operations that retrieve the current value of an item, often a setting
-  (e.g., `GetRate`).
-- **Runtime Setters**: Operations that set the current value of an item, often a setting
-  (e.g., `SetRate`). Note that setting a value does NOT cause it to become permanently saved.
+- **Commands**: Actions that perform a task. These typically correspond to
+  Orca commands bound to a keystroke (e.g., `IncreaseRate`).
+- **Properties**: Runtime-mutable values, often a setting (e.g., `Rate`).
+  Setting a value does **not** cause it to become permanently saved.
 
-You can discover and execute these for each module.
-
-### Discovering Module Capabilities
-
-#### List Commands for a Module
+### Calling a Module Command
 
 ```bash
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service/ModuleName \
-    --method org.gnome.Orca.Module.ListCommands
-```
+# With user notification
+gdbus call --session --dest org.gnome.Orca1.Service \
+    --object-path /org/gnome/Orca1/Service/ModuleName \
+    --method org.gnome.Orca1.ModuleName.CommandName true
 
-Replace `ModuleName` with an actual module name from `ListModules`.
-
-**Returns:** List of (command_name, description) tuples.
-
-#### List Parameterized Commands for a Module
-
-```bash
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service/ModuleName \
-    --method org.gnome.Orca.Module.ListParameterizedCommands
-```
-
-Replace `ModuleName` with an actual module name from `ListModules`.
-
-**Returns:** List of (command_name, description, parameters) tuples, where `parameters` is a
-list of (parameter_name, parameter_type) tuples.
-
-**Example output:**
-
-```bash
-([('GetVoicesForLanguage',
-   'Returns a list of available voices for the specified language.',
-   [('language', 'str'), ('variant', 'str'), ('notify_user', 'bool')])],)
-```
-
-#### List Runtime Getters for a Module
-
-```bash
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service/ModuleName \
-    --method org.gnome.Orca.Module.ListRuntimeGetters
-```
-
-Replace `ModuleName` with an actual module name from `ListModules`.
-
-**Returns:** List of (getter_name, description) tuples.
-
-#### List Runtime Setters for a Module
-
-```bash
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service/ModuleName \
-    --method org.gnome.Orca.Module.ListRuntimeSetters
-```
-
-Replace `ModuleName` with an actual module name from `ListModules`.
-
-**Returns:** List of (setter_name, description) tuples.
-
-### Executing Module Operations
-
-#### Execute a Runtime Getter
-
-```bash
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service/ModuleName \
-    --method org.gnome.Orca.Module.ExecuteRuntimeGetter 'PropertyName'
+# Without user notification (silent)
+gdbus call --session --dest org.gnome.Orca1.Service \
+    --object-path /org/gnome/Orca1/Service/ModuleName \
+    --method org.gnome.Orca1.ModuleName.CommandName false
 ```
 
 **Parameters:**
 
-- `PropertyName` (string): The name of the runtime getter to execute.
+- `notify_user` (boolean): Whether to notify the user of the action (see
+  section below)
 
-**Returns:** The value returned by the getter as a GLib variant (type depends on the getter).
+**Returns:** Boolean indicating success.
+
+#### Example: Toggle speech
+
+```bash
+gdbus call --session --dest org.gnome.Orca1.Service \
+    --object-path /org/gnome/Orca1/Service/SpeechManager \
+    --method org.gnome.Orca1.SpeechManager.ToggleSpeech true
+```
+
+### Calling a Parameterized Command
+
+Parameterized commands take additional arguments before the trailing
+`notify_user` boolean.
+
+#### Example: Get voices for a specific language
+
+```bash
+gdbus call --session --dest org.gnome.Orca1.Service \
+    --object-path /org/gnome/Orca1/Service/SpeechManager \
+    --method org.gnome.Orca1.SpeechManager.GetVoicesForLanguage \
+    "en-us" "" false
+```
+
+This returns a list of available voices for US English.
+
+### Reading and Writing Properties
+
+Use the `org.freedesktop.DBus.Properties` interface.
+
+#### Read a single property
+
+```bash
+gdbus call --session --dest org.gnome.Orca1.Service \
+    --object-path /org/gnome/Orca1/Service/ModuleName \
+    --method org.freedesktop.DBus.Properties.Get \
+    "org.gnome.Orca1.ModuleName" "PropertyName"
+```
 
 ##### Example: Get the current speech rate
 
 ```bash
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service/SpeechAndVerbosityManager \
-    --method org.gnome.Orca.Module.ExecuteRuntimeGetter 'Rate'
-
+gdbus call --session --dest org.gnome.Orca1.Service \
+    --object-path /org/gnome/Orca1/Service/SpeechManager \
+    --method org.freedesktop.DBus.Properties.Get \
+    "org.gnome.Orca1.SpeechManager" "Rate"
 ```
 
-This will return the rate as a GLib Variant.
-
-#### Execute a Runtime Setter
+#### Read all properties at once
 
 ```bash
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service/ModuleName \
-    --method org.gnome.Orca.Module.ExecuteRuntimeSetter 'PropertyName' <value>
+gdbus call --session --dest org.gnome.Orca1.Service \
+    --object-path /org/gnome/Orca1/Service/ModuleName \
+    --method org.freedesktop.DBus.Properties.GetAll \
+    "org.gnome.Orca1.ModuleName"
 ```
 
-**Parameters:**
+#### Write a property
 
-- `PropertyName` (string): The name of the runtime setter to execute.
-- `<value>`: The value to set, as a GLib variant (type depends on the setter).
-
-**Returns:** Boolean indicating success.
+```bash
+gdbus call --session --dest org.gnome.Orca1.Service \
+    --object-path /org/gnome/Orca1/Service/ModuleName \
+    --method org.freedesktop.DBus.Properties.Set \
+    "org.gnome.Orca1.ModuleName" "PropertyName" "<value-as-variant>"
+```
 
 ##### Example: Set the current speech rate
 
 ```bash
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service/SpeechAndVerbosityManager \
-    --method org.gnome.Orca.Module.ExecuteRuntimeSetter 'Rate' '<90>'
+gdbus call --session --dest org.gnome.Orca1.Service \
+    --object-path /org/gnome/Orca1/Service/SpeechManager \
+    --method org.freedesktop.DBus.Properties.Set \
+    "org.gnome.Orca1.SpeechManager" "Rate" "<90.0>"
 ```
-
-#### Execute a Module Command
-
-```bash
-# With user notification
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service/ModuleName \
-    --method org.gnome.Orca.Module.ExecuteCommand 'CommandName' true
-
-# Without user notification (silent)
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service/ModuleName \
-    --method org.gnome.Orca.Module.ExecuteCommand 'CommandName' false
-```
-
-**Parameters (both required):**
-
-- `CommandName` (string): The name of the command to execute
-- `notify_user` (boolean): Whether to notify the user of the action (see section below)
-
-**Returns:** Boolean indicating success
-
-#### Execute a Parameterized Command
-
-```bash
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service/ModuleName \
-    --method org.gnome.Orca.Module.ExecuteParameterizedCommand 'CommandName' \
-    '{"param1": <"value1">, "param2": <"value2">}' false
-```
-
-**Parameters:**
-
-- `CommandName` (string): The name of the parameterized command to execute
-- `parameters` (dict): Dictionary of parameter names and values as GLib variants
-- `notify_user` (boolean): Whether to notify the user of the action
-
-**Returns:** The result returned by the command as a GLib variant (type depends on the command)
-
-##### Example: Get voices for a specific language
-
-```bash
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service/SpeechAndVerbosityManager \
-    --method org.gnome.Orca.Module.ExecuteParameterizedCommand 'GetVoicesForLanguage' \
-    '{"language": <"en-us">, "variant": <"">}' false
-```
-
-This will return a list of available voices for US English.
 
 ### User Notification Applicability
 
@@ -269,9 +203,9 @@ Some commands inherently don't make sense to announce. For example:
 
 ```bash
 # This command should simply stop speech, not announce that it is stopping speech.
-gdbus call --session --dest org.gnome.Orca.Service \
-    --object-path /org/gnome/Orca/Service/SpeechAndVerbosityManager \
-    --method org.gnome.Orca.Module.ExecuteCommand 'InterruptSpeech' true
+gdbus call --session --dest org.gnome.Orca1.Service \
+    --object-path /org/gnome/Orca1/Service/SpeechManager \
+    --method org.gnome.Orca1.SpeechManager.InterruptSpeech true
 ```
 
 In those cases Orca will ignore the value of `notify_user`.

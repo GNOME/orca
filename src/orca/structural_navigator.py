@@ -65,6 +65,7 @@ from .extension import Extension
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+    from .dbus_service import UInt32
     from .input_event import InputEvent
     from .scripts import default
 
@@ -519,13 +520,13 @@ class StructuralNavigator(Extension):
         migration_key="largeObjectTextLength",
     )
     @dbus_service.getter
-    def get_large_object_text_length(self) -> int:
+    def get_large_object_text_length(self) -> UInt32:
         """Returns the minimum number of characters to be considered a 'large object'."""
 
         return self._get_setting(self.KEY_LARGE_OBJECT_TEXT_LENGTH, "i", 75)
 
     @dbus_service.setter
-    def set_large_object_text_length(self, value: int) -> bool:
+    def set_large_object_text_length(self, value: UInt32) -> bool:
         """Sets the minimum number of characters to be considered a 'large object'."""
 
         msg = f"STRUCTURAL NAVIGATOR: Setting large object text length to {value}."

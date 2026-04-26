@@ -36,6 +36,7 @@ from gi.repository import Gtk
 from . import dbus_service, debug, gsettings_registry, guilabels, preferences_grid_base, sound
 
 if TYPE_CHECKING:
+    from .dbus_service import UInt32
     from .sound import Icon, Tone
 
 
@@ -364,13 +365,13 @@ class SoundPresenter:
         migration_key="progressBarBeepInterval",
     )
     @dbus_service.getter
-    def get_progress_bar_beep_interval(self) -> int:
+    def get_progress_bar_beep_interval(self) -> UInt32:
         """Returns the beep progress bar update interval in seconds."""
 
         return self._get_setting(self.KEY_PROGRESS_BAR_BEEP_INTERVAL, "i", 0)
 
     @dbus_service.setter
-    def set_progress_bar_beep_interval(self, value: int) -> bool:
+    def set_progress_bar_beep_interval(self, value: UInt32) -> bool:
         """Sets the beep progress bar update interval in seconds."""
 
         msg = f"SOUND PRESENTER: Setting progress bar beep interval to {value}."
@@ -391,7 +392,7 @@ class SoundPresenter:
         migration_key="progressBarBeepVerbosity",
     )
     @dbus_service.getter
-    def get_progress_bar_beep_verbosity(self) -> int:
+    def get_progress_bar_beep_verbosity(self) -> UInt32:
         """Returns the beep progress bar verbosity level."""
 
         nick = gsettings_registry.get_registry().layered_lookup(
@@ -404,7 +405,7 @@ class SoundPresenter:
         return ProgressBarVerbosity[nick.upper()].value
 
     @dbus_service.setter
-    def set_progress_bar_beep_verbosity(self, value: int) -> bool:
+    def set_progress_bar_beep_verbosity(self, value: UInt32) -> bool:
         """Sets the beep progress bar verbosity level."""
 
         msg = f"SOUND PRESENTER: Setting progress bar beep verbosity to {value}."

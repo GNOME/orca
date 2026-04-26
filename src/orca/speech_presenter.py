@@ -77,6 +77,7 @@ from .text_attribute_manager import TextAttributeChangeMode
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterable
 
+    from .dbus_service import UInt32
     from .generator import WhereAmI
     from .speech_generator import SpeechGeneratorContext
 
@@ -1064,13 +1065,13 @@ class SpeechPresenter(Extension):
         migration_key="repeatCharacterLimit",
     )
     @dbus_service.getter
-    def get_repeated_character_limit(self) -> int:
+    def get_repeated_character_limit(self) -> UInt32:
         """Returns the count at which repeated, non-alphanumeric symbols will be described."""
 
         return self._get_setting(self.KEY_REPEATED_CHARACTER_LIMIT, "i", 4)
 
     @dbus_service.setter
-    def set_repeated_character_limit(self, value: int) -> bool:
+    def set_repeated_character_limit(self, value: UInt32) -> bool:
         """Sets the count at which repeated, non-alphanumeric symbols will be described."""
 
         msg = f"SPEECH PRESENTER: Setting repeated character limit to {value}."
@@ -1659,13 +1660,13 @@ class SpeechPresenter(Extension):
         migration_key="progressBarSpeechInterval",
     )
     @dbus_service.getter
-    def get_progress_bar_speech_interval(self) -> int:
+    def get_progress_bar_speech_interval(self) -> UInt32:
         """Returns the speech progress bar update interval in seconds."""
 
         return self._get_setting(self.KEY_PROGRESS_BAR_SPEECH_INTERVAL, "i", 10)
 
     @dbus_service.setter
-    def set_progress_bar_speech_interval(self, value: int) -> bool:
+    def set_progress_bar_speech_interval(self, value: UInt32) -> bool:
         """Sets the speech progress bar update interval in seconds."""
 
         msg = f"SPEECH PRESENTER: Setting progress bar speech interval to {value}."
@@ -1686,7 +1687,7 @@ class SpeechPresenter(Extension):
         migration_key="progressBarSpeechVerbosity",
     )
     @dbus_service.getter
-    def get_progress_bar_speech_verbosity(self) -> int:
+    def get_progress_bar_speech_verbosity(self) -> UInt32:
         """Returns the speech progress bar verbosity level."""
 
         value = gsettings_registry.get_registry().layered_lookup(
@@ -1699,7 +1700,7 @@ class SpeechPresenter(Extension):
         return ProgressBarVerbosity[value.upper()].value
 
     @dbus_service.setter
-    def set_progress_bar_speech_verbosity(self, value: int) -> bool:
+    def set_progress_bar_speech_verbosity(self, value: UInt32) -> bool:
         """Sets the speech progress bar verbosity level."""
 
         msg = f"SPEECH PRESENTER: Setting progress bar speech verbosity to {value}."
@@ -2449,13 +2450,13 @@ class SpeechPresenter(Extension):
         migration_key="speechMonitorFontSize",
     )
     @dbus_service.getter
-    def get_monitor_font_size(self) -> int:
+    def get_monitor_font_size(self) -> UInt32:
         """Returns the speech monitor font size."""
 
         return self._get_setting(self.KEY_MONITOR_FONT_SIZE, "i", 14)
 
     @dbus_service.setter
-    def set_monitor_font_size(self, value: int) -> bool:
+    def set_monitor_font_size(self, value: UInt32) -> bool:
         """Sets the speech monitor font size."""
 
         msg = f"SPEECH PRESENTER: Setting speech monitor font size to {value}."

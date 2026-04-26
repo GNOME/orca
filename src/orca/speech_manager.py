@@ -62,6 +62,7 @@ from .speechserver import CapitalizationStyle, PunctuationStyle
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+    from .dbus_service import UInt32
     from .scripts import default
     from .speechserver import SpeechServer
 
@@ -2628,7 +2629,7 @@ class SpeechManager(Extension):
         summary="Speech rate (0-100)",
     )
     @dbus_service.getter
-    def get_rate(self) -> int:
+    def get_rate(self) -> UInt32:
         """Returns the current speech rate."""
 
         return gsettings_registry.get_registry().layered_lookup(
@@ -2646,7 +2647,7 @@ class SpeechManager(Extension):
             registry.set_runtime_value(self._VOICE_SCHEMA, key, value, voice_type=vtype)
 
     @dbus_service.setter
-    def set_rate(self, value: int) -> bool:
+    def set_rate(self, value: UInt32) -> bool:
         """Sets the current speech rate (0-100, default: 50)."""
 
         if not isinstance(value, (int, float)):

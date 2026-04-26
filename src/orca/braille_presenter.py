@@ -55,6 +55,7 @@ from .orca_platform import tablesdir  # pylint: disable=import-error
 if TYPE_CHECKING:
     import gi
 
+    from .dbus_service import UInt32
     from .generator import WhereAmI
 
     gi.require_version("Atspi", "2.0")
@@ -741,13 +742,13 @@ class BraillePresenter(Extension):
         migration_key="brailleMonitorCellCount",
     )
     @dbus_service.getter
-    def get_monitor_cell_count(self) -> int:
+    def get_monitor_cell_count(self) -> UInt32:
         """Returns the configured braille monitor cell count."""
 
         return self._get_setting(self.KEY_MONITOR_CELL_COUNT, "i", 32)
 
     @dbus_service.setter
-    def set_monitor_cell_count(self, value: int) -> bool:
+    def set_monitor_cell_count(self, value: UInt32) -> bool:
         """Sets the braille monitor cell count."""
 
         msg = f"BRAILLE PRESENTER: Setting braille monitor cell count to {value}."
@@ -1158,13 +1159,13 @@ class BraillePresenter(Extension):
         migration_key="progressBarBrailleInterval",
     )
     @dbus_service.getter
-    def get_progress_bar_braille_interval(self) -> int:
+    def get_progress_bar_braille_interval(self) -> UInt32:
         """Returns the braille progress bar update interval in seconds."""
 
         return self._get_setting(self.KEY_PROGRESS_BAR_BRAILLE_INTERVAL, "i", 10)
 
     @dbus_service.setter
-    def set_progress_bar_braille_interval(self, value: int) -> bool:
+    def set_progress_bar_braille_interval(self, value: UInt32) -> bool:
         """Sets the braille progress bar update interval in seconds."""
 
         msg = f"BRAILLE PRESENTER: Setting progress bar braille interval to {value}."
@@ -1185,7 +1186,7 @@ class BraillePresenter(Extension):
         migration_key="progressBarBrailleVerbosity",
     )
     @dbus_service.getter
-    def get_progress_bar_braille_verbosity(self) -> int:
+    def get_progress_bar_braille_verbosity(self) -> UInt32:
         """Returns the braille progress bar verbosity level."""
 
         nick = gsettings_registry.get_registry().layered_lookup(
@@ -1198,7 +1199,7 @@ class BraillePresenter(Extension):
         return ProgressBarVerbosity[nick.upper()].value
 
     @dbus_service.setter
-    def set_progress_bar_braille_verbosity(self, value: int) -> bool:
+    def set_progress_bar_braille_verbosity(self, value: UInt32) -> bool:
         """Sets the braille progress bar verbosity level."""
 
         msg = f"BRAILLE PRESENTER: Setting progress bar braille verbosity to {value}."
@@ -1495,13 +1496,13 @@ class BraillePresenter(Extension):
         migration_key="brailleFlashTime",
     )
     @dbus_service.getter
-    def get_flash_message_duration(self) -> int:
+    def get_flash_message_duration(self) -> UInt32:
         """Returns flash message duration in milliseconds."""
 
         return self._get_setting(self.KEY_FLASH_MESSAGE_DURATION, "i", 5000)
 
     @dbus_service.setter
-    def set_flash_message_duration(self, value: int) -> bool:
+    def set_flash_message_duration(self, value: UInt32) -> bool:
         """Sets flash message duration in milliseconds."""
 
         msg = f"BRAILLE PRESENTER: Setting braille flash time to {value}."

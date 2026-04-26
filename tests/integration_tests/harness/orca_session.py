@@ -40,8 +40,9 @@ from . import keyboard
 class OrcaSession:
     """Launches Orca as a subprocess and exposes its D-Bus remote controller."""
 
-    _BUS_NAME = "org.gnome.Orca.Service"
-    _BASE_PATH = "/org/gnome/Orca/Service"
+    _BUS_NAME = "org.gnome.Orca1.Service"
+    _BASE_PATH = "/org/gnome/Orca1/Service"
+    _PROPERTIES_INTERFACE = "org.freedesktop.DBus.Properties"
     _BINARY_ENV_VAR = "ORCA_TEST_BINARY"
 
     def __init__(self, env: dict[str, str]) -> None:
@@ -69,16 +70,26 @@ class OrcaSession:
             self._process.wait()
 
     def set(self, module: str, name: str, value: bool | str) -> None:
-        """Calls an Orca D-Bus runtime setter; lets errors bubble up."""
+        """Sets an Orca D-Bus property; lets errors bubble up."""
 
-        proxy = self._bus.get_proxy(self._BUS_NAME, f"{self._BASE_PATH}/{module}")
-        proxy.ExecuteRuntimeSetter(name, _to_variant(value))
+        proxy = self._properties_proxy(module)
+        proxy.Set(f"org.gnome.Orca1.{module}", name, _to_variant(value))
 
     def get(self, module: str, name: str) -> Any:
-        """Calls an Orca D-Bus runtime getter and returns the unpacked value."""
+        """Gets an Orca D-Bus property and returns the unpacked value."""
 
-        proxy = self._bus.get_proxy(self._BUS_NAME, f"{self._BASE_PATH}/{module}")
-        return proxy.ExecuteRuntimeGetter(name)
+        proxy = self._properties_proxy(module)
+        result = proxy.Get(f"org.gnome.Orca1.{module}", name)
+        return result.unpack() if hasattr(result, "unpack") else result
+
+    def _properties_proxy(self, module: str) -> Any:
+        """Returns a proxy bound to the freedesktop Properties interface for module."""
+
+        return self._bus.get_proxy(
+            self._BUS_NAME,
+            f"{self._BASE_PATH}/{module}",
+            interface_name=self._PROPERTIES_INTERFACE,
+        )
 
     def press_orca_key(self, keysym: int) -> None:
         """Presses keysym with Orca's current modifier key held (Orca+key chord)."""

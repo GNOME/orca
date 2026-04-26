@@ -2,9 +2,10 @@
 
 The service can be accessed at:
 
-- **Service Name:** `org.gnome.Orca.Service`
-- **Main Object Path:** `/org/gnome/Orca/Service`
-- **Module Object Paths:** `/org/gnome/Orca/Service/ModuleName`
+- **Service Name:** `org.gnome.Orca1.Service`
+- **Main Object Path:** `/org/gnome/Orca1/Service`
+- **Module Object Paths:** `/org/gnome/Orca1/Service/ModuleName`
+- **Module Interface Names:** `org.gnome.Orca1.<ModuleName>`
 
 Additional information about using the remote controller can be found in [remote-controller.md](remote-controller.md).
 
@@ -12,30 +13,24 @@ Additional information about using the remote controller can be found in [remote
 
 ## Service-Level Commands
 
-These commands are available directly on the main service object at `/org/gnome/Orca/Service`.
+These commands are available directly on the main service object at `/org/gnome/Orca1/Service`.
 
-- **`GetVersion`:** Returns Orca's version and revision if available.
-- **`ListCommands`:** Returns available commands on the main service interface.
-- **`ListModules`:** Returns a list of registered module names.
-- **`PresentMessage`:** Presents message to the user.
-- **`Quit`:** Quits Orca. Returns True if the quit request was accepted.
-- **`ShowPreferences`:** Shows Orca's preferences GUI.
+- **`GetVersion`**() → `s`: Returns Orca's version and revision if available.
+- **`PresentMessage`**(`message` (s)) → `b`: Presents message to the user.
+- **`Quit`**() → `b`: Quits Orca.
+- **`ShowPreferences`**() → `b`: Shows Orca's preferences GUI.
 
 ---
 
 ## Modules
 
-Each module exposes commands, getters, and setters on its object at `/org/gnome/Orca/Service/ModuleName`.
-
 ### ActionPresenter
 
-**Object Path:** `/org/gnome/Orca/Service/ActionPresenter`
+**Object Path:** `/org/gnome/Orca1/Service/ActionPresenter`
+
+**Interface:** `org.gnome.Orca1.ActionPresenter`
 
 #### Commands
-
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`ShowActionsList`:** Shows a list of all the accessible actions exposed by the focused object.
 
@@ -43,61 +38,53 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 ### BraillePresenter
 
-**Object Path:** `/org/gnome/Orca/Service/BraillePresenter`
+**Object Path:** `/org/gnome/Orca1/Service/BraillePresenter`
+
+**Interface:** `org.gnome.Orca1.BraillePresenter`
 
 #### Commands
 
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
-
 - **`ToggleMonitor`:** Toggles the braille monitor on and off.
 
-#### Settings
+#### Properties
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
-
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`AvailableContractionTables`:** Returns a list of available contraction table names. (getter only)
-- **`BrailleIsEnabled`:** Gets/Sets whether braille is enabled.
-- **`BrailleProgressBarUpdates`:** Gets/Sets whether braille progress bar updates are enabled.
-- **`ComputerBrailleAtCursorIsEnabled`:** Gets/Sets whether computer braille is used at the cursor position.
-- **`ContractedBrailleIsEnabled`:** Gets/Sets whether contracted braille is enabled.
-- **`ContractionTable`:** Gets/Sets the current braille contraction table.
-- **`DisplayAncestors`:** Gets/Sets whether ancestors of the current object will be displayed.
-- **`EndOfLineIndicatorIsEnabled`:** Gets/Sets whether the end-of-line indicator is enabled.
-- **`FlashMessageDuration`:** Gets/Sets flash message duration in milliseconds.
-- **`FlashMessagesAreDetailed`:** Gets/Sets whether 'flash' messages are detailed (as opposed to brief).
-- **`FlashMessagesAreEnabled`:** Gets/Sets whether 'flash' messages (i.e. announcements) are enabled.
-- **`FlashMessagesArePersistent`:** Gets/Sets whether 'flash' messages are persistent (as opposed to temporary).
-- **`LinkIndicator`:** Gets/Sets the braille link indicator style.
-- **`LogFile`:** Opens the given path for JSONL recording; an empty string closes any open file. (setter only)
-- **`MonitorBackground`:** Gets/Sets the braille monitor background color.
-- **`MonitorCellCount`:** Gets/Sets the braille monitor cell count.
-- **`MonitorForeground`:** Gets/Sets the braille monitor foreground color.
-- **`MonitorIsEnabled`:** Gets/Sets whether the braille monitor is enabled.
-- **`MonitorShowDots`:** Gets/Sets whether the braille monitor shows Unicode braille dots.
-- **`PresentMnemonics`:** Gets/Sets whether mnemonics are presented on the braille display.
-- **`ProgressBarBrailleInterval`:** Gets/Sets the braille progress bar update interval in seconds.
-- **`ProgressBarBrailleVerbosity`:** Gets/Sets the braille progress bar verbosity level.
-- **`RolenameStyle`:** Gets/Sets the current rolename style for object presentation.
-- **`SelectorIndicator`:** Gets/Sets the braille selector indicator style.
-- **`TextAttributesIndicator`:** Gets/Sets the braille text attributes indicator style.
-- **`VerbosityLevel`:** Gets/Sets the braille verbosity level for object presentation.
-- **`WordWrapIsEnabled`:** Gets/Sets whether braille word wrap is enabled.
+- **`AvailableContractionTables`** (`as`, read-only): A list of available contraction table names.
+- **`BrailleIsEnabled`** (`b`, read/write): Whether braille is enabled.
+- **`BrailleProgressBarUpdates`** (`b`, read/write): Whether braille progress bar updates are enabled.
+- **`ComputerBrailleAtCursorIsEnabled`** (`b`, read/write): Whether computer braille is used at the cursor position.
+- **`ContractedBrailleIsEnabled`** (`b`, read/write): Whether contracted braille is enabled.
+- **`ContractionTable`** (`s`, read/write): The current braille contraction table.
+- **`DisplayAncestors`** (`b`, read/write): Whether ancestors of the current object will be displayed.
+- **`EndOfLineIndicatorIsEnabled`** (`b`, read/write): Whether the end-of-line indicator is enabled.
+- **`FlashMessageDuration`** (`u`, read/write): Flash message duration in milliseconds.
+- **`FlashMessagesAreDetailed`** (`b`, read/write): Whether 'flash' messages are detailed (as opposed to brief).
+- **`FlashMessagesAreEnabled`** (`b`, read/write): Whether 'flash' messages (i.e. announcements) are enabled.
+- **`FlashMessagesArePersistent`** (`b`, read/write): Whether 'flash' messages are persistent (as opposed to temporary).
+- **`LinkIndicator`** (`s`, read/write): The braille link indicator style.
+- **`LogFile`** (`s`, write-only): Opens the given path for JSONL recording; an empty string closes any open file.
+- **`MonitorBackground`** (`s`, read/write): The braille monitor background color.
+- **`MonitorCellCount`** (`u`, read/write): The braille monitor cell count.
+- **`MonitorForeground`** (`s`, read/write): The braille monitor foreground color.
+- **`MonitorIsEnabled`** (`b`, read/write): Whether the braille monitor is enabled.
+- **`MonitorShowDots`** (`b`, read/write): Whether the braille monitor shows Unicode braille dots.
+- **`PresentMnemonics`** (`b`, read/write): Whether mnemonics are presented on the braille display.
+- **`ProgressBarBrailleInterval`** (`u`, read/write): The braille progress bar update interval in seconds.
+- **`ProgressBarBrailleVerbosity`** (`u`, read/write): The braille progress bar verbosity level.
+- **`RolenameStyle`** (`s`, read/write): The current rolename style for object presentation.
+- **`SelectorIndicator`** (`s`, read/write): The braille selector indicator style.
+- **`TextAttributesIndicator`** (`s`, read/write): The braille text attributes indicator style.
+- **`VerbosityLevel`** (`s`, read/write): The braille verbosity level for object presentation.
+- **`WordWrapIsEnabled`** (`b`, read/write): Whether braille word wrap is enabled.
 
 ---
 
 ### CaretNavigator
 
-**Object Path:** `/org/gnome/Orca/Service/CaretNavigator`
+**Object Path:** `/org/gnome/Orca1/Service/CaretNavigator`
+
+**Interface:** `org.gnome.Orca1.CaretNavigator`
 
 #### Commands
-
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`EndOfFile`:** Moves to the end of the file.
 - **`EndOfLine`:** Moves to the end of the line.
@@ -112,27 +99,21 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`ToggleEnabled`:** Toggles caret navigation.
 - **`ToggleLayoutMode`:** Switches between object mode and layout mode for line presentation.
 
-#### Settings
+#### Properties
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
-
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`IsEnabled`:** Gets/Sets whether caret navigation is enabled.
-- **`LayoutMode`:** Gets/Sets whether layout mode is enabled.
-- **`TriggersFocusMode`:** Gets/Sets whether caret navigation triggers focus mode.
+- **`IsEnabled`** (`b`, read/write): Whether caret navigation is enabled.
+- **`LayoutMode`** (`b`, read/write): Whether layout mode is enabled.
+- **`TriggersFocusMode`** (`b`, read/write): Whether caret navigation triggers focus mode.
 
 ---
 
 ### ChatPresenter
 
-**Object Path:** `/org/gnome/Orca/Service/ChatPresenter`
+**Object Path:** `/org/gnome/Orca1/Service/ChatPresenter`
+
+**Interface:** `org.gnome.Orca1.ChatPresenter`
 
 #### Commands
-
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`PresentNextMessage`:** Navigate to and present the next chat message in the history.
 - **`PresentPreviousMessage`:** Navigate to and present the previous chat message in the history.
@@ -140,29 +121,23 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`ToggleMessageHistories`:** Toggles whether we provide chat room specific message histories.
 - **`TogglePrefix`:** Toggles whether we prefix chat room messages with the name of the chat room.
 
-#### Settings
+#### Properties
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
-
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`AnnounceBuddyTyping`:** Gets/Sets whether to announce when buddies are typing.
-- **`MessageVerbosity`:** Gets/Sets the chat message verbosity setting.
-- **`RoomHistories`:** Gets/Sets whether to provide chat room specific message histories.
-- **`SpeakRoomName`:** Gets/Sets whether to speak the chat room name.
-- **`SpeakRoomNameLast`:** Gets/Sets whether to speak the chat room name after the message.
+- **`AnnounceBuddyTyping`** (`b`, read/write): Whether to announce when buddies are typing.
+- **`MessageVerbosity`** (`u`, read/write): The chat message verbosity setting.
+- **`RoomHistories`** (`b`, read/write): Whether to provide chat room specific message histories.
+- **`SpeakRoomName`** (`b`, read/write): Whether to speak the chat room name.
+- **`SpeakRoomNameLast`** (`b`, read/write): Whether to speak the chat room name after the message.
 
 ---
 
 ### ClipboardPresenter
 
-**Object Path:** `/org/gnome/Orca/Service/ClipboardPresenter`
+**Object Path:** `/org/gnome/Orca1/Service/ClipboardPresenter`
+
+**Interface:** `org.gnome.Orca1.ClipboardPresenter`
 
 #### Commands
-
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`PresentClipboardContents`:** Presents the clipboard contents.
 
@@ -170,70 +145,56 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 ### CommandManager
 
-**Object Path:** `/org/gnome/Orca/Service/CommandManager`
+**Object Path:** `/org/gnome/Orca1/Service/CommandManager`
+
+**Interface:** `org.gnome.Orca1.CommandManager`
 
 #### Commands
 
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
-
 - **`ToggleKeyboardLayout`:** Toggles between desktop and laptop keyboard layout.
 
-#### Settings
+#### Properties
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
-
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`DesktopModifierKeys`:** Gets/Sets the per-layout modifier keys for the desktop layout.
-- **`KeyboardLayoutIsDesktop`:** Gets/Sets whether the keyboard layout is desktop (True) or laptop (False).
-- **`LaptopModifierKeys`:** Gets/Sets the per-layout modifier keys for the laptop layout.
+- **`DesktopModifierKeys`** (`as`, read/write): The per-layout modifier keys for the desktop layout.
+- **`KeyboardLayoutIsDesktop`** (`b`, read/write): Whether the keyboard layout is desktop (True) or laptop (False).
+- **`LaptopModifierKeys`** (`as`, read/write): The per-layout modifier keys for the laptop layout.
 
 ---
 
 ### DocumentPresenter
 
-**Object Path:** `/org/gnome/Orca/Service/DocumentPresenter`
+**Object Path:** `/org/gnome/Orca1/Service/DocumentPresenter`
+
+**Interface:** `org.gnome.Orca1.DocumentPresenter`
 
 #### Commands
-
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`EnableStickyBrowseMode`:** Enables sticky browse mode.
 - **`EnableStickyFocusMode`:** Enables sticky focus mode.
 - **`TogglePresentationMode`:** Switches between browse mode and focus mode (user-initiated).
 
-#### Settings
+#### Properties
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
-
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`AutoStickyFocusModeForWebApps`:** Gets/Sets whether to auto-detect web apps and enable sticky focus mode.
-- **`BrowseModeIsSticky`:** Returns True if browse mode is active and 'sticky' (web content only). (getter only)
-- **`FindResultsMinimumLength`:** Gets/Sets the minimum length for find results to be spoken.
-- **`FocusModeIsSticky`:** Returns True if focus mode is active and 'sticky' (web content only). (getter only)
-- **`InFocusMode`:** Returns True if focus mode is active (web content only). (getter only)
-- **`NativeNavTriggersFocusMode`:** Gets/Sets whether native navigation triggers focus mode.
-- **`OnlySpeakChangedLines`:** Gets/Sets whether to only speak changed lines during find.
-- **`PageSummaryOnLoad`:** Gets/Sets whether to present a page summary when a document loads.
-- **`SayAllOnLoad`:** Gets/Sets whether to perform say all when a document loads.
-- **`SpeakFindResults`:** Gets/Sets whether to speak find results.
+- **`AutoStickyFocusModeForWebApps`** (`b`, read/write): Whether to auto-detect web apps and enable sticky focus mode.
+- **`BrowseModeIsSticky`** (`b`, read-only): True if browse mode is active and 'sticky' (web content only).
+- **`FindResultsMinimumLength`** (`u`, read/write): The minimum length for find results to be spoken.
+- **`FocusModeIsSticky`** (`b`, read-only): True if focus mode is active and 'sticky' (web content only).
+- **`InFocusMode`** (`b`, read-only): True if focus mode is active (web content only).
+- **`NativeNavTriggersFocusMode`** (`b`, read/write): Whether native navigation triggers focus mode.
+- **`OnlySpeakChangedLines`** (`b`, read/write): Whether to only speak changed lines during find.
+- **`PageSummaryOnLoad`** (`b`, read/write): Whether to present a page summary when a document loads.
+- **`SayAllOnLoad`** (`b`, read/write): Whether to perform say all when a document loads.
+- **`SpeakFindResults`** (`b`, read/write): Whether to speak find results.
 
 ---
 
 ### FlatReviewPresenter
 
-**Object Path:** `/org/gnome/Orca/Service/FlatReviewPresenter`
+**Object Path:** `/org/gnome/Orca1/Service/FlatReviewPresenter`
+
+**Interface:** `org.gnome.Orca1.FlatReviewPresenter`
 
 #### Commands
-
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`AppendToClipboard`:** Appends the string just presented to the clipboard.
 - **`CopyToClipboard`:** Copies the string just presented to the clipboard.
@@ -268,25 +229,19 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`ToggleRestrict`:** Toggles the restricting of flat review to the current object.
 - **`UnicodeCurrentCharacter`:** Presents the current character's unicode value.
 
-#### Settings
+#### Properties
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
-
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`IsRestricted`:** Gets/Sets whether flat review is restricted to the current object.
+- **`IsRestricted`** (`b`, read/write): Whether flat review is restricted to the current object.
 
 ---
 
 ### MathNavigator
 
-**Object Path:** `/org/gnome/Orca/Service/MathNavigator`
+**Object Path:** `/org/gnome/Orca1/Service/MathNavigator`
+
+**Interface:** `org.gnome.Orca1.MathNavigator`
 
 #### Commands
-
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`CopyToClipboard`:** Copies the current math navigation node to the clipboard.
 - **`EnterMathModeCommand`:** Enters math navigation mode if the current focus is on math.
@@ -294,74 +249,58 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 #### Parameterized Commands
 
-**Method:** `org.gnome.Orca.Module.ExecuteParameterizedCommand`
+- **`ExecuteMathcatCommand`** → `b`: Executes a MathCAT navigation command. Use get_supported_commands for valid values. Parameters: `mathcat_command` (s).
 
-- **`ExecuteMathcatCommand`:** Executes a MathCAT navigation command. Use get_supported_commands for valid values. Parameters: `mathcat_command` (str), `notify_user` (bool)
+#### Properties
 
-#### Settings
-
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
-
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`IsActive`:** Returns True if currently navigating a math expression. (getter only)
-- **`SupportedCommands`:** Returns the MathCAT navigation commands supported by this navigator. (getter only)
+- **`IsActive`** (`b`, read-only): True if currently navigating a math expression.
+- **`SupportedCommands`** (`as`, read-only): The MathCAT navigation commands supported by this navigator.
 
 ---
 
 ### MathPresenter
 
-**Object Path:** `/org/gnome/Orca/Service/MathPresenter`
+**Object Path:** `/org/gnome/Orca1/Service/MathPresenter`
 
-#### Settings
+**Interface:** `org.gnome.Orca1.MathPresenter`
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+#### Properties
 
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`AutoZoomOut`:** Gets/Sets whether auto zoom out is enabled.
-- **`BrailleCode`:** Gets/Sets the math braille code.
-- **`BrailleNavHighlight`:** Gets/Sets the braille navigation highlight style.
-- **`CopyFormat`:** Gets/Sets the format used when copying math content.
-- **`Language`:** Gets/Sets the math language.
-- **`NavMode`:** Gets/Sets the math navigation mode.
-- **`SpeechStyle`:** Gets/Sets the math speech style.
-- **`Verbosity`:** Gets/Sets the math speech verbosity.
+- **`AutoZoomOut`** (`b`, read/write): Whether auto zoom out is enabled.
+- **`BrailleCode`** (`s`, read/write): The math braille code.
+- **`BrailleNavHighlight`** (`s`, read/write): The braille navigation highlight style.
+- **`CopyFormat`** (`s`, read/write): The format used when copying math content.
+- **`Language`** (`s`, read/write): The math language.
+- **`NavMode`** (`s`, read/write): The math navigation mode.
+- **`SpeechStyle`** (`s`, read/write): The math speech style.
+- **`Verbosity`** (`s`, read/write): The math speech verbosity.
 
 ---
 
 ### MouseReviewer
 
-**Object Path:** `/org/gnome/Orca/Service/MouseReviewer`
+**Object Path:** `/org/gnome/Orca1/Service/MouseReviewer`
+
+**Interface:** `org.gnome.Orca1.MouseReviewer`
 
 #### Commands
 
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
-
 - **`Toggle`:** Toggle mouse reviewing on or off (requires Wnck).
 
-#### Settings
+#### Properties
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
-
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`IsEnabled`:** Gets/Sets whether mouse review is enabled (requires Wnck).
-- **`PresentTooltips`:** Gets/Sets whether tooltips displayed due to mouse hover are spoken (requires X11).
+- **`IsEnabled`** (`b`, read/write): Whether mouse review is enabled (requires Wnck).
+- **`PresentTooltips`** (`b`, read/write): Whether tooltips displayed due to mouse hover are spoken (requires X11).
 
 ---
 
 ### NotificationPresenter
 
-**Object Path:** `/org/gnome/Orca/Service/NotificationPresenter`
+**Object Path:** `/org/gnome/Orca1/Service/NotificationPresenter`
+
+**Interface:** `org.gnome.Orca1.NotificationPresenter`
 
 #### Commands
-
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`PresentLastNotification`:** Presents the last notification.
 - **`PresentNextNotification`:** Presents the next notification.
@@ -372,13 +311,11 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 ### ObjectNavigator
 
-**Object Path:** `/org/gnome/Orca/Service/ObjectNavigator`
+**Object Path:** `/org/gnome/Orca1/Service/ObjectNavigator`
+
+**Interface:** `org.gnome.Orca1.ObjectNavigator`
 
 #### Commands
-
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`MoveToFirstChild`:** Moves the navigator focus to the first child of the current focus.
 - **`MoveToNextSibling`:** Moves the navigator focus to the next sibling of the current focus.
@@ -391,115 +328,93 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 ### ProfileManager
 
-**Object Path:** `/org/gnome/Orca/Service/ProfileManager`
+**Object Path:** `/org/gnome/Orca1/Service/ProfileManager`
+
+**Interface:** `org.gnome.Orca1.ProfileManager`
 
 #### Commands
-
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`CycleSettingsProfile`:** Cycle through the user's existing settings profiles.
 - **`PresentCurrentProfile`:** Present the name of the currently active profile.
 
-#### Settings
+#### Properties
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
-
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`ActiveProfile`:** Gets/Sets the active profile by internal name.
-- **`AvailableProfiles`:** Returns list of available profiles as [display_name, internal_name] pairs. (getter only)
-- **`StartingProfile`:** No-op for backwards compatibility. Starting profile is always Default.
+- **`ActiveProfile`** (`s`, read/write): The active profile by internal name.
+- **`AvailableProfiles`** (`aas`, read-only): List of available profiles as [display_name, internal_name] pairs.
+- **`StartingProfile`** (`as`, read/write): No-op for backwards compatibility. Starting profile is always Default.
 
 ---
 
 ### SayAllPresenter
 
-**Object Path:** `/org/gnome/Orca/Service/SayAllPresenter`
+**Object Path:** `/org/gnome/Orca1/Service/SayAllPresenter`
+
+**Interface:** `org.gnome.Orca1.SayAllPresenter`
 
 #### Commands
-
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`FastForward`:** Jumps forward in the current Say All.
 - **`Rewind`:** Jumps back in the current Say All.
 - **`SayAll`:** Speaks the entire document or text, starting from the current position.
 
-#### Settings
+#### Properties
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
-
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`AnnounceArticle`:** Gets/Sets whether articles are announced when entered.
-- **`AnnounceBlockquote`:** Gets/Sets whether blockquotes are announced when entered.
-- **`AnnounceCodeBlock`:** Gets/Sets whether code blocks are announced when entered.
-- **`AnnounceForm`:** Gets/Sets whether non-landmark forms are announced when entered.
-- **`AnnounceGrouping`:** Gets/Sets whether groupings are announced when entered.
-- **`AnnounceLandmark`:** Gets/Sets whether landmarks are announced when entered.
-- **`AnnounceList`:** Gets/Sets whether lists are announced when entered.
-- **`AnnounceTable`:** Gets/Sets whether tables are announced when entered.
-- **`AnnounceTrackedChanges`:** Gets/Sets whether tracked changes are announced when entered.
-- **`OnlySpeakDisplayedText`:** Gets/Sets whether Say All only speaks displayed text.
-- **`RewindAndFastForwardEnabled`:** Gets/Sets whether Up and Down can be used in Say All.
-- **`StructuralNavigationEnabled`:** Gets/Sets whether structural navigation keys can be used in Say All.
-- **`Style`:** Gets/Sets the current Say All style.
-- **`TextAttributeChangeModeAsString`:** Gets/Sets when text attribute changes are spoken during Say All.
+- **`AnnounceArticle`** (`b`, read/write): Whether articles are announced when entered.
+- **`AnnounceBlockquote`** (`b`, read/write): Whether blockquotes are announced when entered.
+- **`AnnounceCodeBlock`** (`b`, read/write): Whether code blocks are announced when entered.
+- **`AnnounceForm`** (`b`, read/write): Whether non-landmark forms are announced when entered.
+- **`AnnounceGrouping`** (`b`, read/write): Whether groupings are announced when entered.
+- **`AnnounceLandmark`** (`b`, read/write): Whether landmarks are announced when entered.
+- **`AnnounceList`** (`b`, read/write): Whether lists are announced when entered.
+- **`AnnounceTable`** (`b`, read/write): Whether tables are announced when entered.
+- **`AnnounceTrackedChanges`** (`b`, read/write): Whether tracked changes are announced when entered.
+- **`OnlySpeakDisplayedText`** (`b`, read/write): Whether Say All only speaks displayed text.
+- **`RewindAndFastForwardEnabled`** (`b`, read/write): Whether Up and Down can be used in Say All.
+- **`StructuralNavigationEnabled`** (`b`, read/write): Whether structural navigation keys can be used in Say All.
+- **`Style`** (`s`, read/write): The current Say All style.
+- **`TextAttributeChangeModeAsString`** (`s`, read/write): When text attribute changes are spoken during Say All.
 
 ---
 
 ### SleepModeManager
 
-**Object Path:** `/org/gnome/Orca/Service/SleepModeManager`
+**Object Path:** `/org/gnome/Orca1/Service/SleepModeManager`
+
+**Interface:** `org.gnome.Orca1.SleepModeManager`
 
 #### Commands
 
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
-
 - **`ToggleSleepMode`:** Toggles sleep mode for the active application.
 
-#### Settings
+#### Properties
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
-
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`SleepModeApps`:** Gets/Sets the list of apps that should automatically use sleep mode.
+- **`SleepModeApps`** (`as`, read/write): The list of apps that should automatically use sleep mode.
 
 ---
 
 ### SoundPresenter
 
-**Object Path:** `/org/gnome/Orca/Service/SoundPresenter`
+**Object Path:** `/org/gnome/Orca1/Service/SoundPresenter`
 
-#### Settings
+**Interface:** `org.gnome.Orca1.SoundPresenter`
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+#### Properties
 
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`BeepProgressBarUpdates`:** Gets/Sets whether beep progress bar updates are enabled.
-- **`ProgressBarBeepInterval`:** Gets/Sets the beep progress bar update interval in seconds.
-- **`ProgressBarBeepVerbosity`:** Gets/Sets the beep progress bar verbosity level.
-- **`SoundIsEnabled`:** Gets/Sets whether sound is enabled.
-- **`SoundVolume`:** Gets/Sets the sound volume (0.0 to 1.0).
+- **`BeepProgressBarUpdates`** (`b`, read/write): Whether beep progress bar updates are enabled.
+- **`ProgressBarBeepInterval`** (`u`, read/write): The beep progress bar update interval in seconds.
+- **`ProgressBarBeepVerbosity`** (`u`, read/write): The beep progress bar verbosity level.
+- **`SoundIsEnabled`** (`b`, read/write): Whether sound is enabled.
+- **`SoundVolume`** (`d`, read/write): The sound volume (0.0 to 1.0).
 
 ---
 
 ### SpeechManager
 
-**Object Path:** `/org/gnome/Orca/Service/SpeechManager`
+**Object Path:** `/org/gnome/Orca1/Service/SpeechManager`
+
+**Interface:** `org.gnome.Orca1.SpeechManager`
 
 #### Commands
-
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`CycleCapitalizationStyle`:** Cycle through the speech-dispatcher capitalization styles.
 - **`CyclePunctuationLevel`:** Cycles through punctuation levels for speech.
@@ -520,49 +435,41 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 
 #### Parameterized Commands
 
-**Method:** `org.gnome.Orca.Module.ExecuteParameterizedCommand`
+- **`GetVoicesForLanguage`** → `a(sss)`: Returns a list of available voices for the specified language. Parameters: `language` (s), `variant` (s).
 
-- **`GetVoicesForLanguage`:** Returns a list of available voices for the specified language. Parameters: `language` (str), `variant` (str), `notify_user` (bool)
+#### Properties
 
-#### Settings
-
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
-
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`AutoLanguageSwitching`:** Gets/Sets whether automatic language switching for document content is enabled.
-- **`AutoLanguageSwitchingUi`:** Gets/Sets whether automatic language switching for UI elements is enabled.
-- **`AvailableServers`:** Returns a list of available servers. (getter only)
-- **`AvailableSynthesizers`:** Returns a list of available synthesizers of the speech server. (getter only)
-- **`AvailableVoices`:** Returns a list of available voices for the current synthesizer. (getter only)
-- **`CapitalizationStyle`:** Gets/Sets the capitalization style.
-- **`CurrentServer`:** Gets/Sets the current speech server (e.g. Speech Dispatcher or Spiel).
-- **`CurrentSynthesizer`:** Gets/Sets the current synthesizer of the active speech server.
-- **`CurrentVoice`:** Gets/Sets the current voice for the active synthesizer.
-- **`InsertPausesBetweenUtterances`:** Gets/Sets whether pauses are inserted between utterances, e.g. between name and role.
-- **`OnlySwitchConfiguredLanguages`:** Gets/Sets whether language switching is limited to configured voice sets.
-- **`Pitch`:** Gets/Sets the current speech pitch (0.0-10.0, default: 5.0).
-- **`PitchRange`:** Gets/Sets the current speech inflection / pitch range (0.0-10.0, default: 5.0).
-- **`PunctuationLevel`:** Gets/Sets the punctuation level.
-- **`Rate`:** Gets/Sets the current speech rate (0-100, default: 50).
-- **`SpeakNumbersAsDigits`:** Gets/Sets whether numbers are spoken as digits.
-- **`SpeechIsEnabled`:** Gets/Sets whether the speech server is enabled. See also is-muted.
-- **`SpeechIsMuted`:** Gets/Sets whether speech output is temporarily muted.
-- **`UseColorNames`:** Gets/Sets whether colors are announced by name or as RGB values.
-- **`UsePronunciationDictionary`:** Gets/Sets whether the user's pronunciation dictionary should be applied.
-- **`Volume`:** Gets/Sets the current speech volume (0.0-10.0, default: 10.0).
+- **`AutoLanguageSwitching`** (`b`, read/write): Whether automatic language switching for document content is enabled.
+- **`AutoLanguageSwitchingUi`** (`b`, read/write): Whether automatic language switching for UI elements is enabled.
+- **`AvailableServers`** (`as`, read-only): A list of available servers.
+- **`AvailableSynthesizers`** (`as`, read-only): A list of available synthesizers of the speech server.
+- **`AvailableVoices`** (`as`, read-only): A list of available voices for the current synthesizer.
+- **`CapitalizationStyle`** (`s`, read/write): The capitalization style.
+- **`CurrentServer`** (`s`, read/write): The current speech server (e.g. Speech Dispatcher or Spiel).
+- **`CurrentSynthesizer`** (`s`, read/write): The current synthesizer of the active speech server.
+- **`CurrentVoice`** (`s`, read/write): The current voice for the active synthesizer.
+- **`InsertPausesBetweenUtterances`** (`b`, read/write): Whether pauses are inserted between utterances, e.g. between name and role.
+- **`OnlySwitchConfiguredLanguages`** (`b`, read/write): Whether language switching is limited to configured voice sets.
+- **`Pitch`** (`d`, read/write): The current speech pitch (0.0-10.0, default: 5.0).
+- **`PitchRange`** (`d`, read/write): The current speech inflection / pitch range (0.0-10.0, default: 5.0).
+- **`PunctuationLevel`** (`s`, read/write): The punctuation level.
+- **`Rate`** (`u`, read/write): The current speech rate (0-100, default: 50).
+- **`SpeakNumbersAsDigits`** (`b`, read/write): Whether numbers are spoken as digits.
+- **`SpeechIsEnabled`** (`b`, read/write): Whether the speech server is enabled. See also is-muted.
+- **`SpeechIsMuted`** (`b`, read/write): Whether speech output is temporarily muted.
+- **`UseColorNames`** (`b`, read/write): Whether colors are announced by name or as RGB values.
+- **`UsePronunciationDictionary`** (`b`, read/write): Whether the user's pronunciation dictionary should be applied.
+- **`Volume`** (`d`, read/write): The current speech volume (0.0-10.0, default: 10.0).
 
 ---
 
 ### SpeechPresenter
 
-**Object Path:** `/org/gnome/Orca/Service/SpeechPresenter`
+**Object Path:** `/org/gnome/Orca1/Service/SpeechPresenter`
+
+**Interface:** `org.gnome.Orca1.SpeechPresenter`
 
 #### Commands
-
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`ChangeNumberStyle`:** Changes spoken number style between digits and words.
 - **`CycleTextAttributeChangeMode`:** Cycles through text attribute change announcement modes.
@@ -571,78 +478,70 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`ToggleTableCellReadingMode`:** Toggles between speak cell and speak row.
 - **`ToggleVerbosity`:** Toggles speech verbosity level between verbose and brief.
 
-#### Settings
+#### Properties
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
-
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`AlwaysAnnounceSelectedRangeInSpreadsheet`:** Gets/Sets whether the selected range in spreadsheets is always announced.
-- **`AnnounceArticle`:** Gets/Sets whether articles are announced when entered.
-- **`AnnounceBlockquote`:** Gets/Sets whether blockquotes are announced when entered.
-- **`AnnounceCellCoordinates`:** Gets/Sets whether (non-spreadsheet) cell coordinates are announced.
-- **`AnnounceCellHeaders`:** Gets/Sets whether cell headers are announced.
-- **`AnnounceCellSpan`:** Gets/Sets whether cell spans are announced when greater than 1.
-- **`AnnounceCodeBlock`:** Gets/Sets whether code blocks are announced when entered.
-- **`AnnounceForm`:** Gets/Sets whether non-landmark forms are announced when entered.
-- **`AnnounceGrouping`:** Gets/Sets whether groupings are announced when entered.
-- **`AnnounceLandmark`:** Gets/Sets whether landmarks are announced when entered.
-- **`AnnounceList`:** Gets/Sets whether lists are announced when entered.
-- **`AnnounceSpreadsheetCellCoordinates`:** Gets/Sets whether spreadsheet cell coordinates are announced.
-- **`AnnounceTable`:** Gets/Sets whether tables are announced when entered.
-- **`AnnounceTrackedChanges`:** Gets/Sets whether tracked changes are announced when entered.
-- **`LogFile`:** Opens the given path for JSONL recording; an empty string closes any open file. (setter only)
-- **`MessagesAreDetailed`:** Gets/Sets whether informative messages will be detailed or brief.
-- **`MonitorBackground`:** Gets/Sets the speech monitor background color.
-- **`MonitorFontSize`:** Gets/Sets the speech monitor font size.
-- **`MonitorForeground`:** Gets/Sets the speech monitor foreground color.
-- **`MonitorIsEnabled`:** Gets/Sets whether the speech monitor is enabled.
-- **`OnlySpeakDisplayedText`:** Gets/Sets whether only displayed text should be spoken.
-- **`ProgressBarSpeechInterval`:** Gets/Sets the speech progress bar update interval in seconds.
-- **`ProgressBarSpeechVerbosity`:** Gets/Sets the speech progress bar verbosity level.
-- **`RepeatedCharacterLimit`:** Gets/Sets the count at which repeated, non-alphanumeric symbols will be described.
-- **`SpeakBlankLines`:** Gets/Sets whether blank lines will be spoken.
-- **`SpeakDescription`:** Gets/Sets whether object descriptions are spoken.
-- **`SpeakIndentation`:** Gets/Sets whether spoken indentation is enabled.
-- **`SpeakIndentationOnlyIfChanged`:** Gets/Sets whether indentation will be announced only if it has changed.
-- **`SpeakMisspelledIndicator`:** Gets/Sets whether the misspelled indicator is spoken.
-- **`SpeakPositionInSet`:** Gets/Sets whether the position and set size of objects are spoken.
-- **`SpeakProgressBarUpdates`:** Gets/Sets whether speech progress bar updates are enabled.
-- **`SpeakRowInDocumentTable`:** Gets/Sets whether Up/Down in text-document tables speaks the row or just the cell.
-- **`SpeakRowInGuiTable`:** Gets/Sets whether Up/Down in GUI tables speaks the row or just the cell.
-- **`SpeakRowInSpreadsheet`:** Gets/Sets whether Up/Down in spreadsheets speaks the row or just the cell.
-- **`SpeakTextAttributeChanges`:** Gets/Sets when text attribute changes are spoken during navigation.
-- **`SpeakTutorialMessages`:** Gets/Sets whether tutorial messages are spoken.
-- **`SpeakWidgetMnemonic`:** Gets/Sets whether widget mnemonics are spoken.
-- **`VerbosityLevel`:** Gets/Sets the speech verbosity level for object presentation.
+- **`AlwaysAnnounceSelectedRangeInSpreadsheet`** (`b`, read/write): Whether the selected range in spreadsheets is always announced.
+- **`AnnounceArticle`** (`b`, read/write): Whether articles are announced when entered.
+- **`AnnounceBlockquote`** (`b`, read/write): Whether blockquotes are announced when entered.
+- **`AnnounceCellCoordinates`** (`b`, read/write): Whether (non-spreadsheet) cell coordinates are announced.
+- **`AnnounceCellHeaders`** (`b`, read/write): Whether cell headers are announced.
+- **`AnnounceCellSpan`** (`b`, read/write): Whether cell spans are announced when greater than 1.
+- **`AnnounceCodeBlock`** (`b`, read/write): Whether code blocks are announced when entered.
+- **`AnnounceForm`** (`b`, read/write): Whether non-landmark forms are announced when entered.
+- **`AnnounceGrouping`** (`b`, read/write): Whether groupings are announced when entered.
+- **`AnnounceLandmark`** (`b`, read/write): Whether landmarks are announced when entered.
+- **`AnnounceList`** (`b`, read/write): Whether lists are announced when entered.
+- **`AnnounceSpreadsheetCellCoordinates`** (`b`, read/write): Whether spreadsheet cell coordinates are announced.
+- **`AnnounceTable`** (`b`, read/write): Whether tables are announced when entered.
+- **`AnnounceTrackedChanges`** (`b`, read/write): Whether tracked changes are announced when entered.
+- **`LogFile`** (`s`, write-only): Opens the given path for JSONL recording; an empty string closes any open file.
+- **`MessagesAreDetailed`** (`b`, read/write): Whether informative messages will be detailed or brief.
+- **`MonitorBackground`** (`s`, read/write): The speech monitor background color.
+- **`MonitorFontSize`** (`u`, read/write): The speech monitor font size.
+- **`MonitorForeground`** (`s`, read/write): The speech monitor foreground color.
+- **`MonitorIsEnabled`** (`b`, read/write): Whether the speech monitor is enabled.
+- **`OnlySpeakDisplayedText`** (`b`, read/write): Whether only displayed text should be spoken.
+- **`ProgressBarSpeechInterval`** (`u`, read/write): The speech progress bar update interval in seconds.
+- **`ProgressBarSpeechVerbosity`** (`u`, read/write): The speech progress bar verbosity level.
+- **`RepeatedCharacterLimit`** (`u`, read/write): The count at which repeated, non-alphanumeric symbols will be described.
+- **`SpeakBlankLines`** (`b`, read/write): Whether blank lines will be spoken.
+- **`SpeakDescription`** (`b`, read/write): Whether object descriptions are spoken.
+- **`SpeakIndentation`** (`b`, read/write): Whether spoken indentation is enabled.
+- **`SpeakIndentationOnlyIfChanged`** (`b`, read/write): Whether indentation will be announced only if it has changed.
+- **`SpeakMisspelledIndicator`** (`b`, read/write): Whether the misspelled indicator is spoken.
+- **`SpeakPositionInSet`** (`b`, read/write): Whether the position and set size of objects are spoken.
+- **`SpeakProgressBarUpdates`** (`b`, read/write): Whether speech progress bar updates are enabled.
+- **`SpeakRowInDocumentTable`** (`b`, read/write): Whether Up/Down in text-document tables speaks the row or just the cell.
+- **`SpeakRowInGuiTable`** (`b`, read/write): Whether Up/Down in GUI tables speaks the row or just the cell.
+- **`SpeakRowInSpreadsheet`** (`b`, read/write): Whether Up/Down in spreadsheets speaks the row or just the cell.
+- **`SpeakTextAttributeChanges`** (`s`, read/write): When text attribute changes are spoken during navigation.
+- **`SpeakTutorialMessages`** (`b`, read/write): Whether tutorial messages are spoken.
+- **`SpeakWidgetMnemonic`** (`b`, read/write): Whether widget mnemonics are spoken.
+- **`VerbosityLevel`** (`s`, read/write): The speech verbosity level for object presentation.
 
 ---
 
 ### SpellCheckPresenter
 
-**Object Path:** `/org/gnome/Orca/Service/SpellCheckPresenter`
+**Object Path:** `/org/gnome/Orca1/Service/SpellCheckPresenter`
 
-#### Settings
+**Interface:** `org.gnome.Orca1.SpellCheckPresenter`
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+#### Properties
 
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`PresentContext`:** Gets/Sets whether to present the context/surrounding sentence.
-- **`SpellError`:** Gets/Sets whether misspelled word should be spelled.
-- **`SpellSuggestion`:** Gets/Sets whether the suggested correction should be spelled.
+- **`PresentContext`** (`b`, read/write): Whether to present the context/surrounding sentence.
+- **`SpellError`** (`b`, read/write): Whether misspelled word should be spelled.
+- **`SpellSuggestion`** (`b`, read/write): Whether the suggested correction should be spelled.
 
 ---
 
 ### StructuralNavigator
 
-**Object Path:** `/org/gnome/Orca/Service/StructuralNavigator`
+**Object Path:** `/org/gnome/Orca1/Service/StructuralNavigator`
+
+**Interface:** `org.gnome.Orca1.StructuralNavigator`
 
 #### Commands
-
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`ContainerEnd`:** Moves to the end of the current container.
 - **`ContainerStart`:** Moves to the start of the current container.
@@ -733,29 +632,23 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`PreviousUnvisitedLink`:** Goes to the previous unvisited link.
 - **`PreviousVisitedLink`:** Goes to the previous visited link.
 
-#### Settings
+#### Properties
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
-
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`IsEnabled`:** Gets/Sets whether structural navigation is enabled.
-- **`LargeObjectTextLength`:** Gets/Sets the minimum number of characters to be considered a 'large object'.
-- **`NavigationWraps`:** Gets/Sets whether navigation wraps when reaching the top/bottom of the document.
-- **`SkipUnlabeledImages`:** Gets/Sets whether unlabeled images are skipped during navigation.
-- **`TriggersFocusMode`:** Gets/Sets whether structural navigation triggers focus mode.
+- **`IsEnabled`** (`b`, read/write): Whether structural navigation is enabled.
+- **`LargeObjectTextLength`** (`u`, read/write): The minimum number of characters to be considered a 'large object'.
+- **`NavigationWraps`** (`b`, read/write): Whether navigation wraps when reaching the top/bottom of the document.
+- **`SkipUnlabeledImages`** (`b`, read/write): Whether unlabeled images are skipped during navigation.
+- **`TriggersFocusMode`** (`b`, read/write): Whether structural navigation triggers focus mode.
 
 ---
 
 ### SystemInformationPresenter
 
-**Object Path:** `/org/gnome/Orca/Service/SystemInformationPresenter`
+**Object Path:** `/org/gnome/Orca1/Service/SystemInformationPresenter`
+
+**Interface:** `org.gnome.Orca1.SystemInformationPresenter`
 
 #### Commands
-
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`PresentBatteryStatus`:** Presents the battery status.
 - **`PresentCpuAndMemoryUsage`:** Presents the cpu and memory usage.
@@ -763,28 +656,22 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`PresentModifierKeysState`:** Presents the state of locked modifier keys. Requires AT-SPI 2.59.0 or later.
 - **`PresentTime`:** Presents the current time.
 
-#### Settings
+#### Properties
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
-
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`AvailableDateFormats`:** Returns a list of available date format names. (getter only)
-- **`AvailableTimeFormats`:** Returns a list of available time format names. (getter only)
-- **`DateFormat`:** Gets/Sets the date format.
-- **`TimeFormat`:** Gets/Sets the time format.
+- **`AvailableDateFormats`** (`as`, read-only): A list of available date format names.
+- **`AvailableTimeFormats`** (`as`, read-only): A list of available time format names.
+- **`DateFormat`** (`s`, read/write): The date format.
+- **`TimeFormat`** (`s`, read/write): The time format.
 
 ---
 
 ### TableNavigator
 
-**Object Path:** `/org/gnome/Orca/Service/TableNavigator`
+**Object Path:** `/org/gnome/Orca1/Service/TableNavigator`
+
+**Interface:** `org.gnome.Orca1.TableNavigator`
 
 #### Commands
-
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`ClearDynamicColumnHeadersRow`:** Clears the row for the dynamic column headers.
 - **`ClearDynamicRowHeadersColumn`:** Clears the column for the dynamic row headers.
@@ -802,76 +689,62 @@ Each module exposes commands, getters, and setters on its object at `/org/gnome/
 - **`SetDynamicRowHeadersColumn`:** Sets the column for the dynamic row headers to the current column.
 - **`ToggleEnabled`:** Toggles table navigation.
 
-#### Settings
+#### Properties
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
-
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`IsEnabled`:** Gets/Sets whether table navigation is enabled.
-- **`SkipBlankCells`:** Gets/Sets whether blank cells should be skipped during navigation.
+- **`IsEnabled`** (`b`, read/write): Whether table navigation is enabled.
+- **`SkipBlankCells`** (`b`, read/write): Whether blank cells should be skipped during navigation.
 
 ---
 
 ### TextAttributeManager
 
-**Object Path:** `/org/gnome/Orca/Service/TextAttributeManager`
+**Object Path:** `/org/gnome/Orca1/Service/TextAttributeManager`
 
-#### Settings
+**Interface:** `org.gnome.Orca1.TextAttributeManager`
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
+#### Properties
 
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`AttributesToBraille`:** Gets/Sets the list of text attributes to mark in braille.
-- **`AttributesToSpeak`:** Gets/Sets the list of text attributes to speak.
+- **`AttributesToBraille`** (`as`, read/write): The list of text attributes to mark in braille.
+- **`AttributesToSpeak`** (`as`, read/write): The list of text attributes to speak.
 
 ---
 
 ### TypingEchoPresenter
 
-**Object Path:** `/org/gnome/Orca/Service/TypingEchoPresenter`
+**Object Path:** `/org/gnome/Orca1/Service/TypingEchoPresenter`
+
+**Interface:** `org.gnome.Orca1.TypingEchoPresenter`
 
 #### Commands
 
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
-
 - **`CycleKeyEcho`:** Cycle through the key echo levels.
 
-#### Settings
+#### Properties
 
-**Methods:** `org.gnome.Orca.Module.ExecuteRuntimeGetter` / `org.gnome.Orca.Module.ExecuteRuntimeSetter`
-
-**Parameters:** `PropertyName` (string), `Value` (variant, setter only)
-
-- **`ActionKeysEnabled`:** Gets/Sets whether action keys will be echoed when key echo is enabled.
-- **`AlphabeticKeysEnabled`:** Gets/Sets whether alphabetic keys will be echoed when key echo is enabled.
-- **`CharacterEchoEnabled`:** Gets/Sets whether echo of inserted characters is enabled.
-- **`DiacriticalKeysEnabled`:** Gets/Sets whether diacritical keys will be echoed when key echo is enabled.
-- **`FunctionKeysEnabled`:** Gets/Sets whether function keys will be echoed when key echo is enabled.
-- **`KeyEchoEnabled`:** Gets/Sets whether echo of key presses is enabled. See also set_character_echo_enabled.
-- **`LockingKeysPresented`:** Gets/Sets whether locking keys are presented.
-- **`ModifierKeysEnabled`:** Gets/Sets whether modifier keys will be echoed when key echo is enabled.
-- **`NavigationKeysEnabled`:** Gets/Sets whether navigation keys will be echoed when key echo is enabled.
-- **`NumericKeysEnabled`:** Gets/Sets whether numeric keys will be echoed when key echo is enabled.
-- **`PunctuationKeysEnabled`:** Gets/Sets whether punctuation keys will be echoed when key echo is enabled.
-- **`SentenceEchoEnabled`:** Gets/Sets whether sentence echo is enabled.
-- **`SpaceEnabled`:** Gets/Sets whether space key will be echoed when key echo is enabled.
-- **`WordEchoEnabled`:** Gets/Sets whether word echo is enabled.
+- **`ActionKeysEnabled`** (`b`, read/write): Whether action keys will be echoed when key echo is enabled.
+- **`AlphabeticKeysEnabled`** (`b`, read/write): Whether alphabetic keys will be echoed when key echo is enabled.
+- **`CharacterEchoEnabled`** (`b`, read/write): Whether echo of inserted characters is enabled.
+- **`DiacriticalKeysEnabled`** (`b`, read/write): Whether diacritical keys will be echoed when key echo is enabled.
+- **`FunctionKeysEnabled`** (`b`, read/write): Whether function keys will be echoed when key echo is enabled.
+- **`KeyEchoEnabled`** (`b`, read/write): Whether echo of key presses is enabled. See also set_character_echo_enabled.
+- **`LockingKeysPresented`** (`b`, read/write): Whether locking keys are presented.
+- **`ModifierKeysEnabled`** (`b`, read/write): Whether modifier keys will be echoed when key echo is enabled.
+- **`NavigationKeysEnabled`** (`b`, read/write): Whether navigation keys will be echoed when key echo is enabled.
+- **`NumericKeysEnabled`** (`b`, read/write): Whether numeric keys will be echoed when key echo is enabled.
+- **`PunctuationKeysEnabled`** (`b`, read/write): Whether punctuation keys will be echoed when key echo is enabled.
+- **`SentenceEchoEnabled`** (`b`, read/write): Whether sentence echo is enabled.
+- **`SpaceEnabled`** (`b`, read/write): Whether space key will be echoed when key echo is enabled.
+- **`WordEchoEnabled`** (`b`, read/write): Whether word echo is enabled.
 
 ---
 
 ### WhereAmIPresenter
 
-**Object Path:** `/org/gnome/Orca/Service/WhereAmIPresenter`
+**Object Path:** `/org/gnome/Orca1/Service/WhereAmIPresenter`
+
+**Interface:** `org.gnome.Orca1.WhereAmIPresenter`
 
 #### Commands
-
-**Method:** `org.gnome.Orca.Module.ExecuteCommand`
-
-**Parameters:** `CommandName` (string), [`NotifyUser`](remote-controller.md#user-notification-applicability) (boolean)
 
 - **`PresentCellFormula`:** Presents the formula associated with the current spreadsheet cell.
 - **`PresentCharacterAttributes`:** Presents the font and formatting details for the current character.
