@@ -33,7 +33,6 @@ from collections.abc import Callable
 
 from dasbus.connection import SessionMessageBus
 from dasbus.error import DBusError
-from dasbus.loop import EventLoop
 from dasbus.server.interface import dbus_interface
 from dasbus.server.publishable import Publishable
 from gi.repository import GLib
@@ -539,7 +538,6 @@ class OrcaRemoteController:
         self._dbus_service_interface: OrcaDBusServiceInterface | None = None
         self._is_running: bool = False
         self._bus: SessionMessageBus | None = None
-        self._event_loop: EventLoop | None = None
         self._pending_registrations: dict[str, object] = {}
         self._total_commands: int = 0
         self._total_getters: int = 0

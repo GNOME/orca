@@ -1477,7 +1477,6 @@ class TestDBusService:
         assert controller._dbus_service_interface is None
         assert controller._is_running is False
         assert controller._bus is None
-        assert controller._event_loop is None
         assert not controller._pending_registrations
         assert controller._total_commands == 0
         assert controller._total_getters == 0
