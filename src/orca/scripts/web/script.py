@@ -265,6 +265,10 @@ class Script(default.Script):
 
         document = self.utilities.get_document_for_object(obj)
         obj = AXEventSynthesizer.scroll_to_center(obj, start_offset=0, root=document)
+        if obj is None:
+            msg = "WEB: Scroll target was destroyed and could not be relocated. Skipping."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return
 
         # Editors like VSCode use the entry role for the code editor.
         if AXUtilities.is_entry(obj):
