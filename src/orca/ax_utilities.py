@@ -147,13 +147,14 @@ class AXUtilities:
             AXTable.clear_cache_now(reason)
 
     @staticmethod
-    def can_be_active_window(window: Atspi.Accessible) -> bool:
+    def can_be_active_window(window: Atspi.Accessible, clear_cache: bool = True) -> bool:
         """Returns True if window can be the active window based on its state."""
 
         if window is None:
             return False
 
-        AXObject.clear_cache(window, False, "Checking if window can be the active window")
+        if clear_cache:
+            AXObject.clear_cache(window, False, "Checking if window can be the active window")
         app = AXUtilitiesApplication.get_application(window)
         tokens = ["AXUtilities:", window, "from", app]
 

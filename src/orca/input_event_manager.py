@@ -137,7 +137,9 @@ class InputEventManager:
         manager = focus_manager.get_manager()
         if pressed:
             window = manager.get_active_window()
-            if not AXUtilities.can_be_active_window(window):
+            if not AXUtilities.can_be_active_window(
+                window, clear_cache=False
+            ) and not AXUtilities.can_be_active_window(window):
                 new_window = AXUtilities.find_active_window()
                 if new_window is not None:
                     window = new_window
