@@ -1209,8 +1209,7 @@ msgstr "Zobraziť dialógové okno Nastavenia čítačky obrazovky"
 #: src/orca/cmdnames.py:484
 msgid "Display the application preferences configuration dialog"
 msgstr ""
-"Zobraziť dialógové okno Nastavenia čítačky obrazovky pre aktívnu "
-"aplikáciu"
+"Zobraziť dialógové okno Nastavenia čítačky obrazovky pre aktívnu aplikáciu"
 
 #: src/orca/cmdnames.py:489
 msgid "Toggle the speaking of indentation and justification"
@@ -5362,7 +5361,7 @@ msgid ""
 "after each sentence or line based on the \"Say All By\" value."
 msgstr ""
 "Plynulé čítanie číta od aktuálnej pozície do konca dokumentu, pričom robí "
-"pauzy po kažtej vete alebo riadku podľa nastavenia \"Plynulé čítanie po\"."
+"pauzy po kažtej vete alebo riadku podľa nastavenia „Plynulé čítanie po“."
 
 #: src/orca/guilabels.py:1556
 msgid ""
@@ -5377,7 +5376,7 @@ msgid ""
 "The \"Container Announcements\" settings determine what additional details "
 "will be announced as Say All moves through the document."
 msgstr ""
-"Nastavenia \"Oznamovanie kontajnerov\" určujú, aké ďalšie podrobnosti budú "
+"Nastavenia „Oznamovanie kontajnerov“ určujú, aké ďalšie podrobnosti budú "
 "oznámené, keď sa plynulé čítanie pohybuje dokumentom."
 
 # GtkCheckButton
