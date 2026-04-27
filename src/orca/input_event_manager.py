@@ -243,7 +243,7 @@ class InputEventManager:
 
         return isinstance(self._last_input_event, input_event.MouseButtonEvent)
 
-    def is_release_for(self, event1, event2):
+    def is_release_for(self, event1, event2, ignore_modifiers=False):
         """Returns True if event1 is a release for event2."""
 
         if event1 is None or event2 is None:
@@ -264,7 +264,7 @@ class InputEventManager:
             and event1.keyval_name == event2.keyval_name
         )
 
-        if result and not event1.is_modifier_key():
+        if result and not event1.is_modifier_key() and not ignore_modifiers:
             result = event1.modifiers == event2.modifiers
 
         msg = (
@@ -289,7 +289,9 @@ class InputEventManager:
         if event == self._last_non_modifier_key_event:
             return True
 
-        return self.is_release_for(self._last_non_modifier_key_event, event)
+        # The release of a modified key has different modifiers than the press if the user
+        # releases the modifier first; match by key identity in that case.
+        return self.is_release_for(self._last_non_modifier_key_event, event, ignore_modifiers=True)
 
     def previous_event_equals_or_is_release_for_event(self, event):
         """Returns True if the previous event equals the provided event, or is the release."""
@@ -303,7 +305,13 @@ class InputEventManager:
         if event == self._previous_non_modifier_key_event:
             return True
 
-        return self.is_release_for(self._previous_non_modifier_key_event, event)
+        # The release of a modified key has different modifiers than the press if the user
+        # releases the modifier first; match by key identity in that case.
+        return self.is_release_for(
+            self._previous_non_modifier_key_event,
+            event,
+            ignore_modifiers=True,
+        )
 
     def get_last_input_event(self) -> input_event.InputEvent | None:
         """Returns the most recently processed input event (of any type), or None."""

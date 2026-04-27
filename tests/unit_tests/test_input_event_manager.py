@@ -625,7 +625,11 @@ class TestInputEventManager:
         input_event_manager.is_release_for = test_context.Mock(return_value=True)
         result = input_event_manager.last_event_equals_or_is_release_for_event(mock_event)
         assert result is True
-        input_event_manager.is_release_for.assert_called_once_with(mock_last_event, mock_event)
+        input_event_manager.is_release_for.assert_called_once_with(
+            mock_last_event,
+            mock_event,
+            ignore_modifiers=True,
+        )
 
     @pytest.mark.parametrize(
         "case",
