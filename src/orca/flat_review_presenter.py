@@ -157,6 +157,14 @@ class FlatReviewPresenter(Extension):
             ):
                 self._location_invalidated = True
 
+        if not self.last_input_event_was_review_command():
+            msg = (
+                "FLAT REVIEW PRESENTER: Not refreshing braille; "
+                "last input event was not a review command."
+            )
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+
         script = script_manager.get_manager().get_active_script()
         if script is not None:
             self._update_braille(script)
