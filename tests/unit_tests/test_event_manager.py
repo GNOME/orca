@@ -1515,11 +1515,11 @@ class TestEventManager:
         mock_get_focus_mgr.return_value = mock_focus_mgr
         mock_get_script_mgr.return_value = mock_script_mgr
 
-        mock_focus_mgr.focus_and_window_are_unknown.return_value = True
+        mock_focus_mgr.focus_and_window_are_unknown.return_value = False
         result = manager._on_no_focus()
         assert result is False
 
-        mock_focus_mgr.focus_and_window_are_unknown.return_value = False
+        mock_focus_mgr.focus_and_window_are_unknown.return_value = True
         mock_script_mgr.get_active_script.return_value = None
         result = manager._on_no_focus()
         assert result is False
