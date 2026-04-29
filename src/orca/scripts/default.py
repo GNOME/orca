@@ -471,6 +471,7 @@ class Script(script.Script):
                 self._default_caret_navigation_enabled,
             )
 
+        table_navigator.get_navigator().refresh_enabled_state()
         command_manager.get_manager().activate_commands(f"activated {self.name}")
 
     def deactivate(self) -> None:

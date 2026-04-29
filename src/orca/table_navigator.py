@@ -933,6 +933,17 @@ class TableNavigator(Extension):
 
         return True
 
+    def refresh_enabled_state(self) -> None:
+        """Re-applies the enabled state for the currently active app."""
+
+        enabled = self.get_is_enabled()
+        msg = f"TABLE NAVIGATOR: Refreshing enabled state for active app: {enabled}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        command_manager.get_manager().set_group_enabled(
+            guilabels.KB_GROUP_TABLE_NAVIGATION,
+            enabled,
+        )
+
     @gsettings_registry.get_registry().gsetting(
         key=KEY_SKIP_BLANK_CELLS,
         schema="table-navigation",
