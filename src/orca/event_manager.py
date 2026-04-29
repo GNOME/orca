@@ -671,7 +671,7 @@ class EventManager:
                 self._gidle_id = GLib.idle_add(self._dequeue_object_event)
 
     def _on_no_focus(self) -> bool:
-        if focus_manager.get_manager().focus_and_window_are_unknown():
+        if not focus_manager.get_manager().focus_and_window_are_unknown():
             return False
 
         if script_manager.get_manager().get_active_script() is None:
