@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-03-03 10:19+0000\n"
-"PO-Revision-Date: 2026-04-16 12:19+0200\n"
+"PO-Revision-Date: 2026-04-29 23:33+0200\n"
 "Last-Translator: Peter Vágner <pvagner@pvagner.tk>\n"
 "Language-Team: slovenčina <>\n"
 "Language: sk\n"
@@ -5425,7 +5425,7 @@ msgstr "Odst_rániť"
 #. periodically speak the current percentage.
 #: src/orca/guilabels.py:1595
 msgid "_Speak updates"
-msgstr "_Hovoriť aktualizácie"
+msgstr "_Oznamovať aktualizácie"
 
 # GtkLabel
 #. Translators: Here this is a label for a spin button through which a user can
@@ -5517,7 +5517,7 @@ msgstr "Ozna_movať oblasti stránky počas navigácie"
 #. and sighted users with a learning disability.
 #: src/orca/guilabels.py:1665
 msgid "Only speak displayed text"
-msgstr "Hovoriť iba zobrazený text"
+msgstr "Čítať iba zobrazený text"
 
 #. Translators: Orca has a command to present font and formatting information,
 #. including foreground and background color. The setting associated with this
