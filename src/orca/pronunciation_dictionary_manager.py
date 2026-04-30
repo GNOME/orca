@@ -52,6 +52,8 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
 
     # pylint: disable=no-member
 
+    BUILD_BATCH_SIZE: int = 50
+
     def __init__(self, manager: PronunciationDictionaryManager, script: default.Script) -> None:
         super().__init__(guilabels.PRONUNCIATION)
         self._manager: PronunciationDictionaryManager = manager
@@ -64,13 +66,15 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         self._listbox: Gtk.ListBox | None = None
         self._has_unsaved_changes: bool = False
         self._loaded_from_settings: bool = False
-
-        # Size group to ensure all left labels (phrases) have the same width
-        self._left_label_size_group: Gtk.SizeGroup = Gtk.SizeGroup(
-            mode=Gtk.SizeGroupMode.HORIZONTAL,
-        )
+        self._pending_build_id: int = 0
+        self._pending_build_index: int = 0
 
         self._build()
+        # Build rows lazily once the page is mapped in idle-time chunks. With thousands of entries,
+        # mapping the page all at once floods AT-SPI with state-changed:showing events and blocks
+        # main loop for several seconds. Chunking spreads that flood across idle ticks.
+        self.connect("map", self._on_map)
+        self.connect("destroy", self._on_destroy)
         self.refresh()
 
     def _build(self) -> None:
@@ -193,7 +197,6 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
             edit_handler=self._on_edit_clicked,
             delete_handler=self._on_delete_clicked,
             include_top_separator=include_top_separator,
-            left_label_size_group=self._left_label_size_group,
         )
 
         row.pronunciation_row_index = row_index
@@ -435,10 +438,12 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         if self._listbox is None:
             return
 
+        self._cancel_pending_build()
         self._initializing = True
 
         for child in self._listbox.get_children():
             self._listbox.remove(child)
+        self._pending_build_index = 0
 
         if not self._loaded_from_settings:
             self._loaded_from_settings = True
@@ -465,20 +470,65 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
                     self._pronunciations.append((key, pronunciation_dict[key]))
 
         if self._pronunciations:
-            for index, (phrase, substitution) in enumerate(self._pronunciations):
-                row = self._create_row(
-                    phrase,
-                    substitution,
-                    index,
-                    include_top_separator=index > 0,
-                )
-                self._listbox.add(row)
+            if self.get_mapped():
+                self._schedule_build_chunk()
         else:
             empty_row = self._create_info_row(guilabels.DICTIONARY_EMPTY)
             self._listbox.add(empty_row)
+            empty_row.show_all()
 
-        self._listbox.show_all()
         self._initializing = False
+
+    def _on_map(self, _widget: Gtk.Widget) -> None:
+        """Start (or resume) the chunked row build when the page becomes visible."""
+
+        if self._pending_build_id != 0:
+            return
+        if self._pending_build_index < len(self._pronunciations):
+            self._schedule_build_chunk()
+
+    def _on_destroy(self, _widget: Gtk.Widget) -> None:
+        """Cancel any in-flight chunked build before the widget goes away."""
+
+        self._cancel_pending_build()
+        self._listbox = None
+
+    def _cancel_pending_build(self) -> None:
+        """Stop any in-flight chunked row build."""
+
+        if self._pending_build_id != 0:
+            GLib.source_remove(self._pending_build_id)
+            self._pending_build_id = 0
+
+    def _schedule_build_chunk(self) -> None:
+        """Queue an idle callback to add the next batch of rows."""
+
+        self._pending_build_id = GLib.idle_add(self._build_chunk)
+
+    def _build_chunk(self) -> bool:
+        """Add up to BUILD_BATCH_SIZE rows. Returns True to keep idling."""
+
+        if self._listbox is None:
+            self._pending_build_id = 0
+            return False
+
+        end = min(self._pending_build_index + self.BUILD_BATCH_SIZE, len(self._pronunciations))
+        for index in range(self._pending_build_index, end):
+            phrase, substitution = self._pronunciations[index]
+            row = self._create_row(
+                phrase,
+                substitution,
+                index,
+                include_top_separator=index > 0,
+            )
+            self._listbox.add(row)
+            row.show_all()
+        self._pending_build_index = end
+
+        if end >= len(self._pronunciations):
+            self._pending_build_id = 0
+            return False
+        return True
 
 
 @gsettings_registry.get_registry().gsettings_schema(
