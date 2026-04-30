@@ -90,13 +90,6 @@ class EventManager:
         "window:deactivate",
     )
 
-    _FLOODY_EVENT_PREFIXES = (
-        "object:children-changed",
-        "object:property-change:accessible-",
-        "object:state-changed:sensitive",
-        "object:state-changed:showing",
-    )
-
     def __init__(self) -> None:
         debug.print_message(debug.LEVEL_INFO, "EVENT MANAGER: Initializing", True)
         self._script_listener_counts: dict[str, int] = {}
@@ -110,7 +103,6 @@ class EventManager:
         self._gidle_lock = threading.Lock()
         self._listener: Atspi.EventListener = Atspi.EventListener.new(self._enqueue_object_event)
         self._event_history: dict[str, tuple[int | None, float]] = {}
-        self._floody_event_history: dict[str, float] = {}
         self._latest_event: dict[tuple[str, int], int] = {}
         self._cached_app_source: Atspi.Accessible | None = None
         self._cached_app_result: Atspi.Accessible | None = None
@@ -379,24 +371,6 @@ class EventManager:
 
         return None
 
-    def _ignore_by_spam_filter_no_app_check(self, event: Atspi.Event) -> bool | None:
-        """Returns True if the event is spam, or None if inconclusive."""
-
-        event_type = event.type
-        if not event_type.startswith(self._FLOODY_EVENT_PREFIXES):
-            return None
-        now = time.time()
-        last_time = self._floody_event_history.get(event_type, 0.0)
-        self._floody_event_history[event_type] = now
-        if now - last_time < 0.1:
-            msg = (
-                f"EVENT_MANAGER: Ignoring {event_type} due to multiple instances in short time"
-                f" (no app check)"
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-        return None
-
     def _ignore_by_spam_filter(self, event: Atspi.Event) -> bool | None:
         """Returns True if the event is spam, or None if inconclusive."""
 
@@ -627,7 +601,6 @@ class EventManager:
 
         focus = focus_manager.get_manager().get_locus_of_focus()
         for check in (
-            lambda: self._ignore_by_spam_filter_no_app_check(event),
             lambda: self._ignore_by_role(event),
             lambda: self._ignore_by_focus_state(event, focus),
             lambda: self._ignore_by_spam_filter(event),
