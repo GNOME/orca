@@ -784,7 +784,10 @@ class AXUtilitiesRole:
         if not AXUtilitiesRole.is_code(obj):
             return False
         if AXUtilitiesRole._get_tag(obj) == "pre":
-            return True
+            if AXObject.supports_collection(obj):
+                rule = AXCollection.create_match_rule(roles=[Atspi.Role.PARAGRAPH])
+                return AXCollection.get_first_match(obj, rule) is None
+            return AXUtilitiesObject.find_descendant(obj, AXUtilitiesRole.is_paragraph) is None
         return "inline" not in AXUtilitiesRole._get_display_style(obj)
 
     @staticmethod
