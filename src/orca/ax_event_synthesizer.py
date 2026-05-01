@@ -400,7 +400,7 @@ class AXEventSynthesizer:
 
         match = None
         for _attempt in range(3):
-            time.sleep(0.1)
+            time.sleep(0.05)
             if is_match(obj):
                 return obj
             match = AXUtilities.find_descendant(root, is_match)
