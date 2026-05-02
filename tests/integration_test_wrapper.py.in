@@ -219,6 +219,56 @@ def _setup(children: list[subprocess.Popen]) -> dict[str, str] | None:
     return stack_env
 
 
+def _unmount_fuse_under(sandbox: str) -> None:
+    """Unmounts any FUSE mountpoints under sandbox so rmtree can remove the tree."""
+
+    # Auto-activated services like gvfsd-fuse mount FUSE filesystems inside our sandboxed
+    # XDG_RUNTIME_DIR. SIGKILLing the daemon does not unmount the filesystem, and rmtree
+    # silently fails on the mountpoint.
+
+    try:
+        with open("/proc/self/mounts", encoding="utf-8") as handle:
+            mounts = handle.read()
+    except OSError:
+        return
+    prefix = sandbox.rstrip("/") + os.sep
+    for line in mounts.splitlines():
+        parts = line.split()
+        if len(parts) < 3:
+            continue
+        mountpoint, fstype = parts[1], parts[2]
+        if fstype.startswith("fuse") and mountpoint.startswith(prefix):
+            subprocess.run(
+                ["fusermount", "-u", mountpoint], check=False, capture_output=True,
+            )
+
+
+def _kill_lingering_sandbox_processes(sandbox: str) -> None:
+    """SIGKILLs lingering processes whose cmdline references the sandbox path."""
+
+    # Some D-Bus auto-activated helpers (e.g. p11-kit pkcs11 servers) get re-parented to the user's
+    # systemd manager, so the wrapper's process-group SIGKILL doesn't reach them.
+
+    needle = sandbox.encode()
+    try:
+        pids = [name for name in os.listdir("/proc") if name.isdigit()]
+    except OSError:
+        return
+    own_pid = os.getpid()
+    for pid_str in pids:
+        pid = int(pid_str)
+        if pid == own_pid:
+            continue
+        try:
+            with open(f"/proc/{pid}/cmdline", "rb") as handle:
+                if needle not in handle.read():
+                    continue
+        except OSError:
+            continue
+        with contextlib.suppress(ProcessLookupError, PermissionError):
+            os.kill(pid, signal.SIGKILL)
+
+
 def _teardown(children: list[subprocess.Popen]) -> None:
     """Terminates the child processes started by _setup, escalating to SIGKILL if needed."""
 
@@ -309,6 +359,8 @@ def main() -> int:
         finally:
             with contextlib.suppress(ProcessLookupError, PermissionError):
                 os.killpg(proc.pid, signal.SIGKILL)
+            _kill_lingering_sandbox_processes(sandbox)
+            _unmount_fuse_under(sandbox)
             shutil.rmtree(sandbox, ignore_errors=True)
         return returncode
 
