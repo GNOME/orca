@@ -226,9 +226,11 @@ CAPITALIZATION_STYLE_ICON = C_("capitalization style", "Icon")
 # text-to-speech. Speech Dispatcher has a feature to control how capital
 # letters are presented: Do nothing at all, say the word 'capital' prior to
 # presenting a capital letter (which Speech Dispatcher refers to as 'spell'),
-# or play a tone (which Speech Dispatcher refers to as a sound 'icon'.) This
-# string to be translated appears as a combo box item in Orca's Preferences.
-CAPITALIZATION_STYLE_NONE = C_("capitalization style", "None")
+# or play a tone (which Speech Dispatcher refers to as a sound 'icon'.) Regardless
+# of the choice, Orca will always apply the user-configurable 'Uppercase' voice.
+# This string describes the do-nothing-at-all case where only the voice will
+# be applied when presenting capital letters.
+CAPITALIZATION_STYLE_VOICE_ONLY = C_("capitalization style", "Voice only")
 
 # Translators: Orca uses Speech Dispatcher to present content to users via
 # text-to-speech. Speech Dispatcher has a feature to control how capital

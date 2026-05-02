@@ -134,7 +134,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         capitalization_model = Gtk.ListStore(GObject.TYPE_STRING, GObject.TYPE_STRING)
         capitalization_model.append(
-            [guilabels.CAPITALIZATION_STYLE_NONE, CapitalizationStyle.NONE.value],
+            [guilabels.CAPITALIZATION_STYLE_VOICE_ONLY, CapitalizationStyle.NONE.value],
         )
         capitalization_model.append(
             [guilabels.CAPITALIZATION_STYLE_ICON, CapitalizationStyle.ICON.value],
