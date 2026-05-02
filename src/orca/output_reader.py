@@ -50,6 +50,7 @@ class BrailleRecord:
 
     cursor_cell: int
     string: str
+    mask: str | None = None
 
 
 class OutputReader:
@@ -207,6 +208,7 @@ class OutputReader:
         return BrailleRecord(
             cursor_cell=int(data.get("cursor_cell", 0)),
             string=data.get("string", ""),
+            mask=data.get("mask"),
         )
 
 

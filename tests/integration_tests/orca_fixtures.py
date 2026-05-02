@@ -79,7 +79,13 @@ def _gtk3_text_view(
         tmp_path_factory,
         "tests.integration_tests.apps.gtk3_text_view",
         gtk3_text_view.APP_TITLE,
-        lines=("First line.", "Second line."),
+        lines=(
+            "Line one.",
+            "Line two has additional words to make it long enough that the text view wraps it.",
+            "Line three.",
+            "Line four also has extra words to push it past the wrap boundary in the view.",
+            "Last line.",
+        ),
     )
 
 

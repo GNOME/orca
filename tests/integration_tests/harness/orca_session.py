@@ -91,8 +91,8 @@ class OrcaSession:
             interface_name=self._PROPERTIES_INTERFACE,
         )
 
-    def press_orca_key(self, keysym: int) -> None:
-        """Presses keysym with Orca's current modifier key held (Orca+key chord)."""
+    def press_orca_key(self, keysym: int, extra_modifiers: list[int] | None = None) -> None:
+        """Presses keysym with Orca's modifier (and any extra_modifiers) held."""
 
         if self._orca_modifier_keysym is None:
             is_desktop = self.get("CommandManager", "KeyboardLayoutIsDesktop")
@@ -100,12 +100,8 @@ class OrcaSession:
             self._orca_modifier_keysym = Gdk.keyval_from_name(
                 self.get("CommandManager", modifier_getter)[0]
             )
-        keyboard.press_key(self._orca_modifier_keysym)
-        try:
-            keyboard.press_key(keysym)
-            keyboard.release_key(keysym)
-        finally:
-            keyboard.release_key(self._orca_modifier_keysym)
+        modifiers = [self._orca_modifier_keysym, *(extra_modifiers or [])]
+        keyboard.press_chord(modifiers, keysym)
 
     def _resolve_orca_binary(self) -> str:
         """Returns the path to the Orca binary to launch."""

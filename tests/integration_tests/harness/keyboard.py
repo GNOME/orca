@@ -51,8 +51,18 @@ KEYSYM_DOWN = 0xFF54
 KEYSYM_PAGE_UP = 0xFF55
 KEYSYM_PAGE_DOWN = 0xFF56
 KEYSYM_KP_INSERT = 0xFF9E
+KEYSYM_SHIFT_L = 0xFFE1
+KEYSYM_SHIFT_R = 0xFFE2
+KEYSYM_CONTROL_L = 0xFFE3
+KEYSYM_CONTROL_R = 0xFFE4
 KEYSYM_CAPS_LOCK = 0xFFE5
 KEYSYM_SHIFT_LOCK = 0xFFE6
+KEYSYM_META_L = 0xFFE7
+KEYSYM_META_R = 0xFFE8
+KEYSYM_ALT_L = 0xFFE9
+KEYSYM_ALT_R = 0xFFEA
+KEYSYM_SUPER_L = 0xFFEB
+KEYSYM_SUPER_R = 0xFFEC
 KEYSYM_F1 = 0xFFBE
 KEYSYM_F2 = 0xFFBF
 KEYSYM_F3 = 0xFFC0
@@ -77,6 +87,28 @@ def release_key(keysym: int) -> None:
     """Synthesizes a key-up event for keysym."""
 
     Atspi.generate_keyboard_event(_keycode_for_keysym(keysym), None, Atspi.KeySynthType.RELEASE)
+
+
+def tap_key(keysym: int) -> None:
+    """Presses and releases a single keysym."""
+
+    press_key(keysym)
+    release_key(keysym)
+
+
+def press_chord(modifiers: list[int], keysym: int) -> None:
+    """Holds modifiers, taps keysym, releases the modifiers in reverse order."""
+
+    pressed: list[int] = []
+    try:
+        for modifier in modifiers:
+            press_key(modifier)
+            pressed.append(modifier)
+        press_key(keysym)
+        release_key(keysym)
+    finally:
+        for modifier in reversed(pressed):
+            release_key(modifier)
 
 
 def _keycode_for_keysym(keysym: int) -> int:
