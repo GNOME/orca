@@ -23,10 +23,12 @@
 from __future__ import annotations
 
 import contextlib
+import shutil
 import subprocess
 import sys
 import time
 from dataclasses import dataclass
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 import gi
@@ -37,13 +39,15 @@ from gi.repository import Atspi, GLib
 
 from orca.output_reader import OutputReader
 
-from .apps import gtk3_text_view
+from .apps import chromium_browser, gtk3_text_view
 from .harness import sandbox
 from .harness.orca_session import OrcaSession
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterator
-    from pathlib import Path
+    from types import ModuleType
+
+_WEB_PAGES_DIR = Path(__file__).parent / "web_pages"
 
 
 @dataclass
@@ -78,8 +82,8 @@ def _gtk3_text_view(
 
     yield from _run_native_app(
         tmp_path_factory,
-        "tests.integration_tests.apps.gtk3_text_view",
-        gtk3_text_view.APP_TITLE,
+        gtk3_text_view.__name__,
+        ready_predicate=_name_equals(gtk3_text_view.APP_TITLE),
         lines=(
             "Line one.",
             "Line two has additional words to make it long enough that the text view wraps it.",
@@ -93,8 +97,8 @@ def _gtk3_text_view(
 def _run_native_app(
     tmp_path_factory: pytest.TempPathFactory,
     app_module: str,
-    app_title: str,
     *,
+    ready_predicate: Callable[[Atspi.Accessible], bool],
     lines: tuple[str, ...] = (),
 ) -> Iterator[NativeAppSession]:
     """Runs app_module under its own Orca subprocess and yields a NativeAppSession."""
@@ -106,11 +110,7 @@ def _run_native_app(
         content_file.write_text("\n".join(lines), encoding="utf-8")
         extra_args = [str(content_file)]
     argv = [sys.executable, "-m", app_module, *extra_args]
-    yield from _run_app_with_orca(
-        sandbox_dir,
-        argv=argv,
-        ready_predicate=lambda app: Atspi.Accessible.get_name(app) == app_title,
-    )
+    yield from _run_app_with_orca(sandbox_dir, argv=argv, ready_predicate=ready_predicate)
 
 
 def _run_app_with_orca(
@@ -215,3 +215,89 @@ def _wait_until_ready(
             pass
         time.sleep(poll_interval)
     raise TimeoutError(f"App {app_accessible!r} did not become ready within {timeout}s")
+
+
+def _name_equals(target: str) -> Callable[[Atspi.Accessible], bool]:
+    """Predicate: app accessible's name equals target."""
+
+    def predicate(accessible: Atspi.Accessible) -> bool:
+        return Atspi.Accessible.get_name(accessible) == target
+
+    return predicate
+
+
+def _name_suffix(suffix: str) -> Callable[[Atspi.Accessible], bool]:
+    """Predicate: app accessible or any direct child has a name ending with suffix."""
+
+    def predicate(accessible: Atspi.Accessible) -> bool:
+        if (name := Atspi.Accessible.get_name(accessible)) and name.endswith(suffix):
+            return True
+        for index in range(accessible.get_child_count()):
+            child_name = Atspi.Accessible.get_name(accessible.get_child_at_index(index))
+            if child_name and child_name.endswith(suffix):
+                return True
+        return False
+
+    return predicate
+
+
+def _resolve_binary(names: tuple[str, ...]) -> str | None:
+    """Returns the first of names that resolves on PATH, or None."""
+
+    for name in names:
+        if path := shutil.which(name):
+            return path
+    return None
+
+
+def _run_browser_session(
+    tmp_path_factory: pytest.TempPathFactory,
+    *,
+    app: ModuleType,
+    page: str,
+) -> Iterator[NativeAppSession]:
+    """Launches app loading web_pages/<page> under its own Orca subprocess."""
+
+    binary = _resolve_binary(app.BINARY_NAMES)
+    if binary is None:
+        pytest.skip(f"{app.__name__}: no binary found among {app.BINARY_NAMES!r}")
+
+    source_page = _WEB_PAGES_DIR / page
+    if not source_page.is_file():
+        raise FileNotFoundError(f"Test page not found: {source_page}")
+
+    sandbox_dir = tmp_path_factory.mktemp("orca-browser")
+    page_path = sandbox_dir / page
+    page_path.write_bytes(source_page.read_bytes())
+    profile_dir = sandbox_dir / "browser-profile"
+    profile_dir.mkdir()
+    argv = [
+        sys.executable,
+        "-m",
+        app.__name__,
+        f"file://{page_path}",
+        str(profile_dir),
+        binary,
+    ]
+    yield from _run_app_with_orca(
+        sandbox_dir,
+        argv=argv,
+        ready_predicate=_name_suffix(app.READY_SUFFIX),
+    )
+
+
+_BROWSER_APPS: dict[str, ModuleType] = {"chromium": chromium_browser}
+
+
+@pytest.fixture(scope="session", name="web_basic", params=["chromium"])
+def _web_basic(
+    request: pytest.FixtureRequest,
+    tmp_path_factory: pytest.TempPathFactory,
+) -> Iterator[NativeAppSession]:
+    """Launches a browser loading web_basic.html with Orca; yields a NativeAppSession."""
+
+    yield from _run_browser_session(
+        tmp_path_factory,
+        app=_BROWSER_APPS[request.param],
+        page="web_basic.html",
+    )

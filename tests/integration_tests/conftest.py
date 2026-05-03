@@ -41,6 +41,7 @@ from .gsettings_fixtures import (  # noqa: F401
 from .orca_fixtures import (  # noqa: F401
     _gtk3_text_view,
     _orca,
+    _web_basic,
 )
 
 if TYPE_CHECKING:

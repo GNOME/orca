@@ -91,6 +91,7 @@ orca_integration_tests = [
   'integration_tests/test_dbus_with_orca.py',
   'integration_tests/test_learn_mode.py',
   'integration_tests/test_caret_navigation.py',
+  'integration_tests/test_web_navigation.py',
 ]
 
 integration_wrapper = configure_file(
