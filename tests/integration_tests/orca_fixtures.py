@@ -109,7 +109,7 @@ def _run_native_app(
     yield from _run_app_with_orca(
         sandbox_dir,
         argv=argv,
-        match=lambda child: Atspi.Accessible.get_name(child) == app_title,
+        ready_predicate=lambda app: Atspi.Accessible.get_name(app) == app_title,
     )
 
 
@@ -117,7 +117,7 @@ def _run_app_with_orca(
     sandbox_dir: Path,
     *,
     argv: list[str],
-    match: Callable[[Atspi.Accessible], bool],
+    ready_predicate: Callable[[Atspi.Accessible], bool] | None = None,
 ) -> Iterator[NativeAppSession]:
     """Runs argv with Orca attached, yielding a NativeAppSession until teardown."""
 
@@ -126,7 +126,9 @@ def _run_app_with_orca(
     env = sandbox.build_sandbox_env(sandbox_dir)
     sandbox.write_sandbox_speechd_conf(sandbox_dir)
 
-    with _launch_subprocess(argv, match, env):
+    with _launch_subprocess(argv, env) as (_process, app_accessible):
+        if ready_predicate is not None:
+            _wait_until_ready(app_accessible, ready_predicate)
         orca = OrcaSession(env)
         orca.launch()
         try:
@@ -145,13 +147,12 @@ def _run_app_with_orca(
 @contextlib.contextmanager
 def _launch_subprocess(
     argv: list[str],
-    match: Callable[[Atspi.Accessible], bool],
     env: dict[str, str],
     *,
     timeout: float = 30.0,
     poll_interval: float = 0.05,
 ) -> Iterator[tuple[subprocess.Popen, Atspi.Accessible]]:
-    """Spawns argv, waits for an AT-SPI app matching match(), yields (process, app_accessible)."""
+    """Spawns argv, waits for its pid to appear in AT-SPI, yields (process, app_accessible)."""
 
     process = subprocess.Popen(argv, env=env)
     try:
@@ -160,7 +161,7 @@ def _launch_subprocess(
         while time.monotonic() < deadline:
             if (returncode := process.poll()) is not None:
                 raise RuntimeError(f"Test app {argv!r} exited early with code {returncode}")
-            app_accessible = _find_registered_application(process.pid, match)
+            app_accessible = _find_registered_application(process.pid)
             if app_accessible is not None:
                 break
             time.sleep(poll_interval)
@@ -177,11 +178,8 @@ def _launch_subprocess(
                 process.wait()
 
 
-def _find_registered_application(
-    pid: int,
-    match: Callable[[Atspi.Accessible], bool],
-) -> Atspi.Accessible | None:
-    """Returns the accessible application with this pid for which match() returns True."""
+def _find_registered_application(pid: int) -> Atspi.Accessible | None:
+    """Returns an accessible application with this pid, or None."""
 
     try:
         desktop = Atspi.get_desktop(0)
@@ -195,11 +193,25 @@ def _find_registered_application(
             child_pid = Atspi.Accessible.get_process_id(child)
         except GLib.GError:
             continue
-        if child_pid != pid:
-            continue
-        try:
-            if match(child):
-                return child
-        except GLib.GError:
-            continue
+        if child_pid == pid:
+            return child
     return None
+
+
+def _wait_until_ready(
+    app_accessible: Atspi.Accessible,
+    predicate: Callable[[Atspi.Accessible], bool],
+    timeout: float = 10.0,
+    poll_interval: float = 0.1,
+) -> None:
+    """Polls predicate(app_accessible) until True or raises TimeoutError."""
+
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        try:
+            if predicate(app_accessible):
+                return
+        except GLib.GError:
+            pass
+        time.sleep(poll_interval)
+    raise TimeoutError(f"App {app_accessible!r} did not become ready within {timeout}s")
