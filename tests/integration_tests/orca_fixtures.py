@@ -42,7 +42,8 @@ from .harness import sandbox
 from .harness.orca_session import OrcaSession
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Callable, Iterator
+    from pathlib import Path
 
 
 @dataclass
@@ -99,18 +100,33 @@ def _run_native_app(
     """Runs app_module under its own Orca subprocess and yields a NativeAppSession."""
 
     sandbox_dir = tmp_path_factory.mktemp("orca-native-app")
-    speech_log = sandbox_dir / "speech.jsonl"
-    braille_log = sandbox_dir / "braille.jsonl"
-    env = sandbox.build_sandbox_env(sandbox_dir)
-    sandbox.write_sandbox_speechd_conf(sandbox_dir)
-
     extra_args: list[str] = []
     if lines:
         content_file = sandbox_dir / "app-content.txt"
         content_file.write_text("\n".join(lines), encoding="utf-8")
         extra_args = [str(content_file)]
+    argv = [sys.executable, "-m", app_module, *extra_args]
+    yield from _run_app_with_orca(
+        sandbox_dir,
+        argv=argv,
+        match=lambda child: Atspi.Accessible.get_name(child) == app_title,
+    )
 
-    with _launch_app(app_module, app_title, env, extra_args=extra_args):
+
+def _run_app_with_orca(
+    sandbox_dir: Path,
+    *,
+    argv: list[str],
+    match: Callable[[Atspi.Accessible], bool],
+) -> Iterator[NativeAppSession]:
+    """Runs argv with Orca attached, yielding a NativeAppSession until teardown."""
+
+    speech_log = sandbox_dir / "speech.jsonl"
+    braille_log = sandbox_dir / "braille.jsonl"
+    env = sandbox.build_sandbox_env(sandbox_dir)
+    sandbox.write_sandbox_speechd_conf(sandbox_dir)
+
+    with _launch_subprocess(argv, match, env):
         orca = OrcaSession(env)
         orca.launch()
         try:
@@ -127,32 +143,30 @@ def _run_native_app(
 
 
 @contextlib.contextmanager
-def _launch_app(
-    module_path: str,
-    title: str,
+def _launch_subprocess(
+    argv: list[str],
+    match: Callable[[Atspi.Accessible], bool],
     env: dict[str, str],
-    timeout: float = 15.0,
+    *,
+    timeout: float = 30.0,
     poll_interval: float = 0.05,
-    extra_args: list[str] | None = None,
-) -> Iterator[subprocess.Popen]:
-    """Launches a Python module as a subprocess, waits for AT-SPI, and cleans up on exit."""
+) -> Iterator[tuple[subprocess.Popen, Atspi.Accessible]]:
+    """Spawns argv, waits for an AT-SPI app matching match(), yields (process, app_accessible)."""
 
-    argv = [sys.executable, "-m", module_path, *(extra_args or [])]
     process = subprocess.Popen(argv, env=env)
     try:
         deadline = time.monotonic() + timeout
+        app_accessible: Atspi.Accessible | None = None
         while time.monotonic() < deadline:
             if (returncode := process.poll()) is not None:
-                raise RuntimeError(f"Test app {module_path!r} exited early with code {returncode}")
-            if _application_is_registered(process.pid, title):
+                raise RuntimeError(f"Test app {argv!r} exited early with code {returncode}")
+            app_accessible = _find_registered_application(process.pid, match)
+            if app_accessible is not None:
                 break
             time.sleep(poll_interval)
-        else:
-            raise TimeoutError(
-                f"Test app {module_path!r} (title={title!r}) "
-                f"did not appear in AT-SPI within {timeout}s"
-            )
-        yield process
+        if app_accessible is None:
+            raise TimeoutError(f"Test app {argv!r} did not appear in AT-SPI within {timeout}s")
+        yield process, app_accessible
     finally:
         if process.poll() is None:
             process.terminate()
@@ -163,22 +177,29 @@ def _launch_app(
                 process.wait()
 
 
-def _application_is_registered(pid: int, title: str) -> bool:
-    """Returns True when an accessible application with this pid and name exists."""
+def _find_registered_application(
+    pid: int,
+    match: Callable[[Atspi.Accessible], bool],
+) -> Atspi.Accessible | None:
+    """Returns the accessible application with this pid for which match() returns True."""
 
     try:
         desktop = Atspi.get_desktop(0)
         child_count = desktop.get_child_count()
     except GLib.GError:
-        return False
+        return None
 
     for index in range(child_count):
         try:
             child = desktop.get_child_at_index(index)
             child_pid = Atspi.Accessible.get_process_id(child)
-            child_name = Atspi.Accessible.get_name(child)
         except GLib.GError:
             continue
-        if child_pid == pid and child_name == title:
-            return True
-    return False
+        if child_pid != pid:
+            continue
+        try:
+            if match(child):
+                return child
+        except GLib.GError:
+            continue
+    return None
