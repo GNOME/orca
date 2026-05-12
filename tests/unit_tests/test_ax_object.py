@@ -716,9 +716,11 @@ class TestAXObject:
         thread_constructor_mock = test_context.Mock(return_value=mock_thread)
         test_context.patch("threading.Thread", new=thread_constructor_mock)
         AXObject.start_cache_clearing_thread()
-        thread_constructor_mock.assert_called_once_with(target=AXObject._clear_stored_data)
+        assert thread_constructor_mock.call_count == 2
+        thread_constructor_mock.assert_any_call(target=AXObject._clear_stored_data)
+        thread_constructor_mock.assert_any_call(target=AXObject._prune_hung_objects)
         assert mock_thread.daemon is True
-        mock_thread.start.assert_called_once()
+        assert mock_thread.start.call_count == 2
 
     @pytest.mark.parametrize(
         "case",
@@ -916,14 +918,34 @@ class TestAXObject:
     @pytest.mark.parametrize(
         "case",
         [
-            {"id": "none_object", "obj_type": "none", "is_dead": False, "expected_result": False},
+            {
+                "id": "none_object",
+                "obj_type": "none",
+                "is_dead": False,
+                "is_hung": False,
+                "expected_result": False,
+            },
             {
                 "id": "known_dead_object",
                 "obj_type": "mock",
                 "is_dead": True,
+                "is_hung": False,
                 "expected_result": False,
             },
-            {"id": "valid_object", "obj_type": "mock", "is_dead": False, "expected_result": True},
+            {
+                "id": "hung_object",
+                "obj_type": "mock",
+                "is_dead": False,
+                "is_hung": True,
+                "expected_result": False,
+            },
+            {
+                "id": "valid_object",
+                "obj_type": "mock",
+                "is_dead": False,
+                "is_hung": False,
+                "expected_result": True,
+            },
         ],
         ids=lambda case: case["id"],
     )
@@ -933,6 +955,7 @@ class TestAXObject:
         self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
 
+        AXObject.HUNG_OBJECTS.clear()
         if case["obj_type"] == "none":
             test_obj = None
         else:
@@ -942,6 +965,8 @@ class TestAXObject:
                 "object_is_known_dead",
                 side_effect=lambda obj: case["is_dead"],
             )
+            if case["is_hung"]:
+                AXObject.HUNG_OBJECTS[hash(test_obj)] = 0.0
 
         result = AXObject.is_valid(test_obj)
         assert result == case["expected_result"]
@@ -1070,9 +1095,19 @@ class TestAXObject:
                 "expected_msg_part": "object no longer exists",
             },
             {
+                "id": "object_not_exist_at_path",
+                "error_string": 'Object does not exist at path "/a/b/c"',
+                "expected_msg_part": 'Object does not exist at path "/a/b/c"',
+            },
+            {
                 "id": "app_not_exist",
                 "error_string": "The application no longer exists",
                 "expected_msg_part": "app no longer exists",
+            },
+            {
+                "id": "process_appears_to_be_hung",
+                "error_string": "The process appears to be hung.",
+                "expected_msg_part": "The process appears to be hung.",
             },
             {
                 "id": "other_error",
@@ -1095,6 +1130,34 @@ class TestAXObject:
         essential_modules["orca.debug"].print_message.assert_called_once()
         call_args = essential_modules["orca.debug"].print_message.call_args[0]
         assert case["expected_msg_part"] in call_args[1]
+
+    def test_handle_error_hung_process_stamps_hung_objects(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test AXObject.handle_error stamps HUNG_OBJECTS on hung-process errors."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_object import AXObject
+
+        AXObject.HUNG_OBJECTS.clear()
+        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
+        error = Exception("The process appears to be hung.")
+        AXObject.handle_error(mock_accessible, error, "AXObject: Exception: hung")
+        assert hash(mock_accessible) in AXObject.HUNG_OBJECTS
+
+    def test_handle_error_other_error_does_not_stamp_hung_objects(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test AXObject.handle_error does not stamp HUNG_OBJECTS for unrelated errors."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_object import AXObject
+
+        AXObject.HUNG_OBJECTS.clear()
+        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
+        error = Exception("Some unrelated error")
+        AXObject.handle_error(mock_accessible, error, "AXObject: Exception: unrelated")
+        assert hash(mock_accessible) not in AXObject.HUNG_OBJECTS
 
     @pytest.mark.parametrize(
         "case",

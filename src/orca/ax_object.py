@@ -47,6 +47,8 @@ class AXObject:
 
     KNOWN_DEAD: ClassVar[dict[int, bool]] = {}
     OBJECT_ATTRIBUTES: ClassVar[dict[int, dict[str, str]]] = {}
+    HUNG_OBJECTS: ClassVar[dict[int, float]] = {}
+    HUNG_TIMEOUT = 1.0
 
     _lock = threading.Lock()
 
@@ -57,6 +59,17 @@ class AXObject:
         while True:
             time.sleep(60)
             AXObject._clear_all_dictionaries()
+
+    @staticmethod
+    def _prune_hung_objects() -> None:
+        """Removes objects whose hung-status has expired."""
+
+        while True:
+            time.sleep(AXObject.HUNG_TIMEOUT)
+            now = time.monotonic()
+            for key in list(AXObject.HUNG_OBJECTS):
+                if now - AXObject.HUNG_OBJECTS[key] >= AXObject.HUNG_TIMEOUT:
+                    del AXObject.HUNG_OBJECTS[key]
 
     @staticmethod
     def _clear_all_dictionaries(reason: str = "") -> None:
@@ -80,6 +93,10 @@ class AXObject:
         """Starts thread to periodically clear cached details."""
 
         thread = threading.Thread(target=AXObject._clear_stored_data)
+        thread.daemon = True
+        thread.start()
+
+        thread = threading.Thread(target=AXObject._prune_hung_objects)
         thread.daemon = True
         thread.start()
 
@@ -145,7 +162,9 @@ class AXObject:
     def is_valid(obj: Atspi.Accessible) -> bool:
         """Returns False if we know for certain this object is invalid"""
 
-        return not (obj is None or AXObject.object_is_known_dead(obj))
+        return not (
+            obj is None or AXObject.object_is_known_dead(obj) or hash(obj) in AXObject.HUNG_OBJECTS
+        )
 
     @staticmethod
     def object_is_known_dead(obj: Atspi.Accessible) -> bool:
@@ -182,13 +201,17 @@ class AXObject:
             return
 
         error_string = str(error)
-        if re.search(r"accessible/\d+ does not exist", error_string):
-            msg = msg.replace(error_string, "object no longer exists")
+        if "Object does not exist at path" in error_string:
             debug.print_message(debug.LEVEL_INFO, msg, True)
-        elif re.search(r"Object does not exist at path", error_string):
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-        elif re.search(r"The application no longer exists", error_string):
+        elif "The application no longer exists" in error_string:
             msg = msg.replace(error_string, "app no longer exists")
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+        elif "The process appears to be hung" in error_string:
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            AXObject.HUNG_OBJECTS[hash(obj)] = time.monotonic()
+            return
+        elif re.search(r"accessible/\d+ does not exist", error_string):
+            msg = msg.replace(error_string, "object no longer exists")
             debug.print_message(debug.LEVEL_INFO, msg, True)
         else:
             debug.print_message(debug.LEVEL_INFO, msg, True)
