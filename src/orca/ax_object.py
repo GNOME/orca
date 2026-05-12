@@ -178,9 +178,14 @@ class AXObject:
     def handle_error(obj: Atspi.Accessible, error: Exception, msg: str) -> None:
         """Parses the exception and potentially updates our status for obj"""
 
+        if AXObject.object_is_known_dead(obj):
+            return
+
         error_string = str(error)
         if re.search(r"accessible/\d+ does not exist", error_string):
             msg = msg.replace(error_string, "object no longer exists")
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+        elif re.search(r"Object does not exist at path", error_string):
             debug.print_message(debug.LEVEL_INFO, msg, True)
         elif re.search(r"The application no longer exists", error_string):
             msg = msg.replace(error_string, "app no longer exists")
