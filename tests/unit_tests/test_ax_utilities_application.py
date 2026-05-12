@@ -57,7 +57,7 @@ class TestAXUtilitiesApplication:
         debug_mock.LEVEL_INFO = 800
 
         ax_object_class_mock = test_context.Mock()
-        ax_object_class_mock.is_valid = test_context.Mock(return_value=True)
+        ax_object_class_mock.is_valid = test_context.Mock(side_effect=lambda obj: obj is not None)
         ax_object_class_mock.get_name = test_context.Mock(return_value="")
         ax_object_class_mock.get_child_count = test_context.Mock(return_value=0)
         ax_object_class_mock.get_parent = test_context.Mock(return_value=None)
