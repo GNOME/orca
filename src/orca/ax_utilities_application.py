@@ -131,7 +131,7 @@ class AXUtilitiesApplication:
             app = Atspi.Accessible.get_application(obj)
         except GLib.GError as error:
             msg = f"AXUtilitiesApplication: Exception in get_application: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            AXObject.handle_error(obj, error, msg)
             return None
         if app is not None:
             AXUtilitiesApplication.APP_FOR_OBJ[hash(obj)] = app
@@ -151,7 +151,7 @@ class AXUtilitiesApplication:
             name = Atspi.Accessible.get_toolkit_name(app)
         except GLib.GError as error:
             msg = f"AXUtilitiesApplication: Exception in get_application_toolkit_name: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            AXObject.handle_error(app, error, msg)
             return ""
 
         return name
@@ -168,7 +168,7 @@ class AXUtilitiesApplication:
             version = Atspi.Accessible.get_toolkit_version(app)
         except GLib.GError as error:
             msg = f"AXUtilitiesApplication: Exception in get_application_toolkit_version: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            AXObject.handle_error(app, error, msg)
             return ""
 
         return version
@@ -207,7 +207,7 @@ class AXUtilitiesApplication:
             pid = Atspi.Accessible.get_process_id(obj)
         except GLib.GError as error:
             msg = f"AXUtilitiesApplication: Exception in get_process_id: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+            AXObject.handle_error(obj, error, msg)
             return -1
 
         return pid
