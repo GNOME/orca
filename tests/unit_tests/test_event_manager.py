@@ -1464,6 +1464,28 @@ class TestEventManager:
         manager._enqueue_object_event(mock_event)
         assert manager._event_queue.empty()
 
+    def test_enqueue_object_event_dropped_when_hung(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test EventManager._enqueue_object_event drops events from hung sources/apps."""
+
+        self._setup_dependencies(test_context)
+        from orca.event_manager import EventManager
+
+        manager = EventManager()
+        manager._active = True
+        manager._paused = False
+        mock_event = test_context.Mock(spec=Atspi.Event)
+        mock_event.type = "object:text-changed:insert"
+        mock_event.source = test_context.Mock()
+        mock_app = test_context.Mock()
+        test_context.patch_object(manager, "_ignore", new=test_context.Mock(return_value=False))
+        test_context.patch("orca.event_manager.AXUtilities.get_application", return_value=mock_app)
+        test_context.patch("orca.event_manager.AXObject.check_hung", return_value=True)
+        manager._enqueue_object_event(mock_event)
+        assert manager._event_queue.empty()
+
     def test_on_no_focus(self, test_context: OrcaTestContext) -> None:
         """Test EventManager._on_no_focus."""
 

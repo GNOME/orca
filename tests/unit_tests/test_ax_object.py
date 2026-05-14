@@ -940,6 +940,14 @@ class TestAXObject:
                 "expected_result": False,
             },
             {
+                "id": "hung_app",
+                "obj_type": "mock",
+                "is_dead": False,
+                "is_hung": False,
+                "hung_app": True,
+                "expected_result": False,
+            },
+            {
                 "id": "valid_object",
                 "obj_type": "mock",
                 "is_dead": False,
@@ -956,6 +964,7 @@ class TestAXObject:
         from orca.ax_object import AXObject
 
         AXObject.HUNG_OBJECTS.clear()
+        test_app = None
         if case["obj_type"] == "none":
             test_obj = None
         else:
@@ -967,8 +976,11 @@ class TestAXObject:
             )
             if case["is_hung"]:
                 AXObject.HUNG_OBJECTS[hash(test_obj)] = 0.0
+            if case.get("hung_app"):
+                test_app = test_context.Mock(spec=Atspi.Accessible)
+                AXObject.HUNG_OBJECTS[hash(test_app)] = 0.0
 
-        result = AXObject.is_valid(test_obj)
+        result = AXObject.is_valid(test_obj, test_app)
         assert result == case["expected_result"]
 
     @pytest.mark.parametrize(

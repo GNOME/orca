@@ -536,7 +536,7 @@ class EventManager:
             return False
 
         if event_type.startswith("object:selection-changed"):
-            if AXObject.is_dead(event.source):
+            if AXObject.is_dead(event.source, AXUtilities.get_application(event.source)):
                 msg = f"EVENT MANAGER: Ignoring {event_type} from dead source"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
@@ -643,6 +643,11 @@ class EventManager:
         app = AXUtilities.get_application(e.source)
         tokens = ["EVENT MANAGER: App for event source is", app]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        if AXObject.check_hung(e.source, app):
+            tokens = ["EVENT MANAGER: Dropping", e, "from hung source or app"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return
 
         script = script_manager.get_manager().get_script(app, e.source)
         script.event_cache[e.type] = (e, time.time())
@@ -876,7 +881,7 @@ class EventManager:
         return False, "No reason found to activate a different script."
 
     def _event_source_is_dead(self, event: Atspi.Event) -> bool:
-        if AXObject.is_dead(event.source):
+        if AXObject.is_dead(event.source, AXUtilities.get_application(event.source)):
             tokens = ["EVENT MANAGER: source of", event.type, "is dead"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
@@ -925,7 +930,8 @@ class EventManager:
             script_mgr.reclaim_scripts()
             return True
 
-        if AXObject.is_dead(event.source) or AXUtilities.is_defunct(event.source):
+        app = AXUtilities.get_application(event.source)
+        if AXObject.is_dead(event.source, app) or AXUtilities.is_defunct(event.source):
             tokens = ["EVENT MANAGER: Ignoring defunct object:", event.source]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 

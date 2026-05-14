@@ -159,11 +159,11 @@ class AXObject:
         return False
 
     @staticmethod
-    def is_valid(obj: Atspi.Accessible) -> bool:
+    def is_valid(obj: Atspi.Accessible, app: Atspi.Accessible | None = None) -> bool:
         """Returns False if we know for certain this object is invalid"""
 
         return not (
-            obj is None or AXObject.object_is_known_dead(obj) or hash(obj) in AXObject.HUNG_OBJECTS
+            obj is None or AXObject.object_is_known_dead(obj) or AXObject.check_hung(obj, app)
         )
 
     @staticmethod
@@ -171,6 +171,22 @@ class AXObject:
         """Returns True if we know for certain this object no longer exists"""
 
         return bool(obj and AXObject.KNOWN_DEAD.get(hash(obj))) is True
+
+    @staticmethod
+    def check_hung(
+        obj: Atspi.Accessible | None,
+        app: Atspi.Accessible | None = None,
+    ) -> bool:
+        """Returns True if obj or its app is hung, propagating obj-hung to app."""
+
+        obj_hung = obj is not None and hash(obj) in AXObject.HUNG_OBJECTS
+        app_hung = app is not None and hash(app) in AXObject.HUNG_OBJECTS
+        if obj_hung and app is not None and not app_hung:
+            tokens = ["AXObject: Marking", app, "as hung due to hung source"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            AXObject.HUNG_OBJECTS[hash(app)] = AXObject.HUNG_OBJECTS[hash(obj)]
+            app_hung = True
+        return obj_hung or app_hung
 
     @staticmethod
     def _set_known_dead_status(obj: Atspi.Accessible, is_dead: bool) -> None:
@@ -997,13 +1013,13 @@ class AXObject:
         return pid
 
     @staticmethod
-    def is_dead(obj: Atspi.Accessible) -> bool:
+    def is_dead(obj: Atspi.Accessible, app: Atspi.Accessible | None = None) -> bool:
         """Returns true of obj exists but is believed to be dead."""
 
         if obj is None:
             return False
 
-        if not AXObject.is_valid(obj):
+        if not AXObject.is_valid(obj, app):
             return True
 
         try:
