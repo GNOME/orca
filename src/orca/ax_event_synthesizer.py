@@ -37,6 +37,7 @@ from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_utilities_action import AXUtilitiesAction
+from .ax_utilities_collection import AXUtilitiesCollection
 from .ax_utilities_component import AXUtilitiesComponent
 from .ax_utilities_debugging import AXUtilitiesDebugging
 from .ax_utilities_role import AXUtilitiesRole
@@ -398,12 +399,23 @@ class AXEventSynthesizer:
         def is_match(x: Atspi.Accessible) -> bool:
             return not AXObject.is_dead(x) and _Snapshot.from_object(x) == snapshot
 
+        candidates: list[Atspi.Accessible] | None = None
         match = None
         for _attempt in range(3):
             time.sleep(0.05)
             if is_match(obj):
                 return obj
-            match = AXUtilities.find_descendant(root, is_match)
+            if AXObject.supports_collection(root):
+                if candidates is None:
+                    candidates = AXUtilitiesCollection.find_all_with_role(root, [snapshot.role])
+                    msg = (
+                        f"AXEventSynthesizer: {len(candidates)} role-matched candidates "
+                        "for replacement search."
+                    )
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                match = next((c for c in candidates if is_match(c)), None)
+            else:
+                match = AXUtilities.find_descendant(root, is_match)
             if match is not None:
                 break
 
