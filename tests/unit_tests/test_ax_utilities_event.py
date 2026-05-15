@@ -685,6 +685,7 @@ class TestAXUtilitiesEvent:
             "last_event_was_primary_click_or_release": False,
             "last_event_was_tab_navigation": False,
             "last_event_was_command": False,
+            "last_event_was_escape": False,
             "last_event_was_printable_key": False,
         }
         for attr, value in input_defaults.items():
@@ -828,6 +829,7 @@ class TestAXUtilitiesEvent:
             "last_event_was_redo": False,
             "last_event_was_page_switch": False,
             "last_event_was_command": False,
+            "last_event_was_escape": False,
         }
         input_defaults.update(case["input_events"])
         for attr, value in input_defaults.items():
@@ -1740,6 +1742,31 @@ class TestAXUtilitiesEvent:
                 "expected_result": "UNSPECIFIED_COMMAND",
             },
             {
+                "id": "command_focus_change",
+                "test_scenario": "command_focus_change",
+                "input_manager_config": {"last_event_was_command": True},
+                "editable_state": True,
+                "focus_differs_from_source": True,
+                "source_is_focused": True,
+                "expected_result": "FOCUS_CHANGE",
+            },
+            {
+                "id": "escape",
+                "test_scenario": "escape",
+                "input_manager_config": {"last_event_was_escape": True},
+                "editable_state": True,
+                "expected_result": "UNSPECIFIED_COMMAND",
+            },
+            {
+                "id": "escape_focus_change",
+                "test_scenario": "escape_focus_change",
+                "input_manager_config": {"last_event_was_escape": True},
+                "editable_state": True,
+                "focus_differs_from_source": True,
+                "source_is_focused": True,
+                "expected_result": "FOCUS_CHANGE",
+            },
+            {
                 "id": "tab_navigation",
                 "test_scenario": "tab_navigation",
                 "input_manager_config": {"last_event_was_tab_navigation": True},
@@ -1795,10 +1822,14 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
 
+        if case.get("focus_differs_from_source", False):
+            focus_obj = test_context.Mock(spec=Atspi.Accessible)
+        else:
+            focus_obj = mock_obj
         mock_focus_manager = test_context.Mock()
         mock_focus_manager.get_active_mode_and_object_of_interest.return_value = (
             "normal",
-            mock_obj,
+            focus_obj,
         )
         test_context.patch_object(focus_manager, "get_manager", return_value=mock_focus_manager)
 
@@ -1822,6 +1853,7 @@ class TestAXUtilitiesEvent:
             "last_event_was_redo": False,
             "last_event_was_page_switch": False,
             "last_event_was_command": False,
+            "last_event_was_escape": False,
             "last_event_was_printable_key": False,
             "last_event_was_tab_navigation": False,
         }
@@ -1840,6 +1872,11 @@ class TestAXUtilitiesEvent:
             AXUtilitiesState,
             "is_editable",
             side_effect=lambda obj: case["editable_state"],
+        )
+        test_context.patch_object(
+            AXUtilitiesState,
+            "is_focused",
+            return_value=case.get("source_is_focused", False),
         )
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
         if case["test_scenario"] == "ui_update":

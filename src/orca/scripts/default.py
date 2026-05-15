@@ -885,6 +885,12 @@ class Script(script.Script):
         manager = focus_manager.get_manager()
         focus = manager.get_locus_of_focus()
         if focus != event.source:
+            if reason == TextEventReason.FOCUS_CHANGE:
+                msg = "DEFAULT: Caret moved due to focus change (focus event missing)"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                manager.set_locus_of_focus(event, event.source)
+                return True
+
             if not AXUtilities.is_focused(event.source):
                 msg = "DEFAULT: Change is from unfocused source that is not the locus of focus"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
