@@ -659,6 +659,11 @@ class InputEventManager:
 
         return self._last_key_and_modifiers()[0] == "Down"
 
+    def last_event_was_escape(self):
+        """Returns True if the last event is Escape."""
+
+        return self._last_key_and_modifiers()[0] == "Escape"
+
     def last_event_was_f1(self):
         """Returns True if the last event is F1."""
 

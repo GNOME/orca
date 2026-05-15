@@ -393,7 +393,7 @@ class AXUtilitiesEvent:
                 return reason
             if mgr.last_event_was_page_switch():
                 return TextEventReason.PAGE_SWITCH
-            if mgr.last_event_was_command():
+            if mgr.last_event_was_command() or mgr.last_event_was_escape():
                 if focus != obj and AXUtilitiesState.is_focused(obj):
                     return TextEventReason.FOCUS_CHANGE
                 return TextEventReason.UNSPECIFIED_COMMAND
