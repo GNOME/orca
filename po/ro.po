@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gnome-orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
 "POT-Creation-Date: 2026-05-02 07:54+0000\n"
-"PO-Revision-Date: 2026-05-14 18:54+0200\n"
+"PO-Revision-Date: 2026-05-15 18:49+0200\n"
 "Last-Translator: Antonio Marin <gnmer.6qxyg@slmail.me>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -1200,7 +1200,7 @@ msgstr "Persană"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:568
 msgid "Finnish, computer"
-msgstr ""
+msgstr "Finlandeză, computer"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1209,7 +1209,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:574
 msgid "Finnish"
-msgstr ""
+msgstr "Finlandeză"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1218,7 +1218,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:580
 msgid "Filipino, contracted"
-msgstr ""
+msgstr "Filipineză, cu prescurtări"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1227,7 +1227,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:586
 msgid "French, uncontracted"
-msgstr ""
+msgstr "Franceză, fără prescurtări"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1236,7 +1236,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:592
 msgid "French, computer"
-msgstr ""
+msgstr "Franceză, computer"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1245,7 +1245,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:598
 msgid "French, contracted"
-msgstr ""
+msgstr "Franceză, cu prescurtări"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1254,7 +1254,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:604
 msgid "Irish, uncontracted"
-msgstr ""
+msgstr "Irlandeză, fără prescurtări"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1262,10 +1262,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:610
-#, fuzzy
-#| msgid "right control"
 msgid "Irish, contracted"
-msgstr "control dreapta"
+msgstr "Irlandeză, cu prescurtări"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1274,7 +1272,7 @@ msgstr "control dreapta"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:616
 msgid "Scottish Gaelic, computer"
-msgstr ""
+msgstr "Galică scoțiană, computer"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1283,7 +1281,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:622
 msgid "Gondi"
-msgstr ""
+msgstr "Gondi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1292,7 +1290,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:628
 msgid "Greek, international, English, composed"
-msgstr ""
+msgstr "Greacă, internațional, engleză, caractere compuse"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1301,7 +1299,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:634
 msgid "Greek, international, English, decomposed"
-msgstr ""
+msgstr "Greacă, internațional, engleză, caractere descompuse"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1310,7 +1308,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:640
 msgid "Greek, international, Spanish"
-msgstr ""
+msgstr "Greacă, internațional, spaniolă"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1318,11 +1316,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:646
-#, fuzzy
-#| msgctxt "math symbol"
-#| msgid "ratio"
 msgid "Gujarati"
-msgstr "raport"
+msgstr "Gujarati"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1331,7 +1326,7 @@ msgstr "raport"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:652
 msgid "Hawaiian"
-msgstr ""
+msgstr "Hawaiană"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1340,7 +1335,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:658
 msgid "Hebrew, classical, cantillated"
-msgstr ""
+msgstr "Ebraică, clasică, cantilație"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1349,7 +1344,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:664
 msgid "Hebrew, classical, slim"
-msgstr ""
+msgstr "Ebraică, clasică, compactă"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1358,7 +1353,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:670
 msgid "Hebrew, classical, IHBC"
-msgstr ""
+msgstr "Ebraică, clasică, IHBC"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1367,7 +1362,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:676
 msgid "Hebrew, modern, computer"
-msgstr ""
+msgstr "Ebraică, modernă, computer"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1376,7 +1371,7 @@ msgstr ""
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:682
 msgid "Hebrew, modern"
-msgstr ""
+msgstr "Ebraică, modernă"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1384,11 +1379,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:688
-#, fuzzy
-#| msgctxt "color name"
-#| msgid "indigo"
 msgid "Hindi"
-msgstr "indigo"
+msgstr "Hindi"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1396,10 +1388,8 @@ msgstr "indigo"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:694
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Croatian, computer"
-msgstr "Calculator maghiar cu 8 puncte"
+msgstr "Croată, computer"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1408,7 +1398,7 @@ msgstr "Calculator maghiar cu 8 puncte"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:700
 msgid "Croatian"
-msgstr ""
+msgstr "Croată"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1416,10 +1406,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:706
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Hungarian, computer"
-msgstr "Calculator maghiar cu 8 puncte"
+msgstr "Maghiară, computer"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1428,7 +1416,7 @@ msgstr "Calculator maghiar cu 8 puncte"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:712
 msgid "Hungarian, partially contracted"
-msgstr ""
+msgstr "Maghiară, parțial prescurtată"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1436,10 +1424,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:718
-#, fuzzy
-#| msgid "Hungarian Grade 1"
 msgid "Hungarian, contracted"
-msgstr "Maghiară gradul 1"
+msgstr "Maghiară, cu prescurtări"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1447,10 +1433,8 @@ msgstr "Maghiară gradul 1"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:724
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Armenian, computer"
-msgstr "Calculator maghiar cu 8 puncte"
+msgstr "Armeană, computer"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1459,7 +1443,7 @@ msgstr "Calculator maghiar cu 8 puncte"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:730
 msgid "International Phonetic Alphabet"
-msgstr ""
+msgstr "Alfabetul fonetic internațional"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1467,11 +1451,8 @@ msgstr ""
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:736
-#, fuzzy
-#| msgctxt "structural navigation"
-#| msgid "List"
 msgid "is"
-msgstr "Listă"
+msgstr "is"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1479,10 +1460,8 @@ msgstr "Listă"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:742
-#, fuzzy
-#| msgid "Italian Grade 1"
 msgid "Italian"
-msgstr "Italiană gradul 1"
+msgstr "Italiană"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1490,10 +1469,8 @@ msgstr "Italiană gradul 1"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:748
-#, fuzzy
-#| msgid "Hungarian 8 dot computer"
 msgid "Italian, computer"
-msgstr "Calculator maghiar cu 8 puncte"
+msgstr "Italiană, computer"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1502,7 +1479,7 @@ msgstr "Calculator maghiar cu 8 puncte"
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:754
 msgid "Inuktitut"
-msgstr ""
+msgstr "Inuktitut"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -3167,7 +3144,7 @@ msgstr "Activează sau dezactivează modul Braille contractat"
 #. the machine they are interested in a particular character on the display.
 #: src/orca/cmdnames.py:392
 msgid "Process a cursor routing key"
-msgstr "Procesează o tastă de rutare a cursorului"
+msgstr "Apasă o tastă de mutare a cursorului"
 
 #. Translators: this is used to indicate the start point of a text selection.
 #: src/orca/cmdnames.py:395
@@ -3187,7 +3164,7 @@ msgstr "Marchează sfârșitul unei selecții de text"
 #: src/orca/cmdnames.py:405
 msgid "Enter learn mode.  Press escape to exit learn mode"
 msgstr ""
-"Intră în modul de învățare. Apăsați ESC pentru a ieși din modul de învățare"
+"Intră în modul de învățare. Apasă ESC pentru a ieși din modul de învățare"
 
 #. Translators: the speech rate is how fast the speech synthesis engine will
 #. generate speech.
@@ -3571,7 +3548,7 @@ msgstr "Stânga jos"
 #. button, the display scrolls to position containing the cursor.
 #: src/orca/cmdnames.py:679
 msgid "Cursor Position"
-msgstr "Poziție cursor"
+msgstr "Poziția cursorului"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). When pressing the
@@ -3587,7 +3564,7 @@ msgstr "Șase puncte"
 #. display.
 #: src/orca/cmdnames.py:691
 msgid "Cursor Routing"
-msgstr "Rutare cursor"
+msgstr "Mută cursorul"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). This command
@@ -3596,7 +3573,7 @@ msgstr "Rutare cursor"
 #. consoles, the act of copying text is erroneously called a "cut" operation.
 #: src/orca/cmdnames.py:698
 msgid "Cut Begin"
-msgstr "Început tăiere"
+msgstr "Începutul tăierii"
 
 #. Translators: this is a command for a button on a refreshable braille display
 #. (an external hardware device used by people who are blind). This command
@@ -3605,7 +3582,7 @@ msgstr "Început tăiere"
 #. consoles, the act of copying text is erroneously called a "cut" operation.
 #: src/orca/cmdnames.py:705
 msgid "Cut Line"
-msgstr "Sfârșit tăiere"
+msgstr "Sfârșitul tăierii"
 
 #. Translators: this is a command which causes Orca to present the last received
 #. notification message.
