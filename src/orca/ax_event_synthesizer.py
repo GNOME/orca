@@ -397,7 +397,20 @@ class AXEventSynthesizer:
         """Returns obj or, if obj was destroyed by the scroll, a matching descendant of root."""
 
         def is_match(x: Atspi.Accessible) -> bool:
-            return not AXObject.is_dead(x) and _Snapshot.from_object(x) == snapshot
+            if AXObject.is_dead(x):
+                return False
+            if AXObject.get_role(x) != snapshot.role:
+                return False
+            if AXObject.get_name(x) != snapshot.name:
+                return False
+            parent = AXObject.get_parent(x)
+            if AXObject.get_role(parent) != snapshot.parent_role:
+                return False
+            if AXObject.get_name(parent) != snapshot.parent_name:
+                return False
+            if AXText.get_all_text(x) != snapshot.text:
+                return False
+            return AXText.get_all_text(parent) == snapshot.parent_text
 
         candidates: list[Atspi.Accessible] | None = None
         match = None
