@@ -134,6 +134,18 @@ class AXObject:
         return False
 
     @staticmethod
+    def _can_reach_application(obj: Atspi.Accessible) -> bool:
+        """Returns True if we can ascend the ancestry of obj all the way to the application."""
+
+        reached_app = False
+        parent = AXObject.get_parent(obj)
+        while parent and not reached_app:
+            reached_app = AXObject.get_role(parent) == Atspi.Role.APPLICATION
+            parent = AXObject.get_parent(parent)
+
+        return reached_app
+
+    @staticmethod
     def has_broken_ancestry(obj: Atspi.Accessible) -> bool:
         """Returns True if obj's ancestry is broken."""
 
@@ -145,14 +157,31 @@ class AXObject:
         if not toolkit_name.startswith("qt"):
             return False
 
-        reached_app = False
-        parent = AXObject.get_parent(obj)
-        while parent and not reached_app:
-            reached_app = AXObject.get_role(parent) == Atspi.Role.APPLICATION
-            parent = AXObject.get_parent(parent)
-
-        if not reached_app:
+        if not AXObject._can_reach_application(obj):
             tokens = ["AXObject:", obj, "has broken ancestry. See qt bug 130116."]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return True
+
+        return False
+
+    @staticmethod
+    def has_broken_popup_ancestry(obj: Atspi.Accessible) -> bool:
+        """Returns True if obj is a popup item whose ancestry is broken."""
+
+        if obj is None or AXObject.is_dead(obj):
+            return False
+
+        # TODO - JD: File a bug. The scenario is that when the omnibox popup is closed and then
+        # re-opened, we cannot ascend all the way to the frame. In addition, parents along the
+        # way claim to have 0 children.
+        if not AXObject.get_toolkit_name(obj).startswith("chromium"):
+            return False
+
+        if AXObject.get_role(obj) != Atspi.Role.LIST_ITEM:
+            return False
+
+        if not AXObject._can_reach_application(obj):
+            tokens = ["AXObject:", obj, "has broken ancestry."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return True
 

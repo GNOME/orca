@@ -383,6 +383,16 @@ class FocusManager:
             tokens.extend(["in", app])
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+        # Because Chromium-based browsers have Omnibox popup issues.
+        if frame is None and AXObject.has_broken_popup_ancestry(self._focus):
+            tokens = [
+                "FOCUS MANAGER: Not clearing active window; focus",
+                self._focus,
+                "is in popup with broken ancestry",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return
+
         if frame == self._window:
             msg = "FOCUS MANAGER: Setting active window to existing active window"
             debug.print_message(debug.LEVEL_INFO, msg, True)
