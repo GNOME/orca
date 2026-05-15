@@ -152,6 +152,22 @@ def test_parse_speech_handles_missing_text_field() -> None:
     record = OutputReader._parse_speech(json.dumps({"kind": "speech"}))
     assert record is not None
     assert record.text == ""
+    assert record.language == ""
+    assert record.dialect == ""
+
+
+def test_parse_speech_captures_language_and_dialect() -> None:
+    """A speech record carries the synthesizer's language and dialect."""
+
+    from orca.output_reader import OutputReader
+
+    record = OutputReader._parse_speech(
+        json.dumps({"kind": "speech", "text": "Italiano", "language": "it", "dialect": ""})
+    )
+    assert record is not None
+    assert record.text == "Italiano"
+    assert record.language == "it"
+    assert record.dialect == ""
 
 
 def test_parse_braille_handles_missing_fields() -> None:

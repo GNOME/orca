@@ -2560,12 +2560,11 @@ class SpeechPresenter(Extension):
             self._monitor = None
 
     def _append_to_history(self, kind: str, value: str) -> None:
-        """Appends an entry to the speech history buffer."""
+        """Appends an entry to the speech history buffer used for monitor replay."""
 
         self._speech_history.append((kind, value))
         if len(self._speech_history) > 500:
             self._speech_history = self._speech_history[-500:]
-        self._output_recorder.record(kind="speech" if kind == "text" else kind, text=value)
 
     def _replay_history(self) -> None:
         """Replays stored speech history into the current monitor."""
@@ -2594,7 +2593,7 @@ class SpeechPresenter(Extension):
         self._group_buffer = []
 
     def _end_monitor_group(self) -> None:
-        """Flushes the group buffer as a single line to the monitor and history."""
+        """Flushes the group buffer as a single line to the live monitor and replay history."""
 
         buffered = self._group_buffer
         self._group_buffer = None
@@ -2606,6 +2605,17 @@ class SpeechPresenter(Extension):
         if monitor is not None:
             monitor.write_text(combined)
         self._append_to_history("text", combined)
+
+    def _record_speech(self, text: str, voice: ACSS) -> None:
+        """Writes a per-utterance JSONL entry for test consumers."""
+
+        family = voice.get(ACSS.FAMILY) or {}
+        self._output_recorder.record(
+            kind="speech",
+            text=text,
+            language=family.get(VoiceFamily.LANG, "") or "",
+            dialect=family.get(VoiceFamily.DIALECT, "") or "",
+        )
 
     def write_to_monitor(self, text: str) -> None:
         """Writes spoken text to the speech monitor if active and not focused."""
@@ -2697,6 +2707,7 @@ class SpeechPresenter(Extension):
         msg = f"SPEECH OUTPUT: '{text}' {resolved_voice}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         server.speak(text, resolved_voice)
+        self._record_speech(text, resolved_voice)
         self.write_to_monitor(text)
 
     def _speak_list(self, content: list, acss: ACSS | dict[str, Any] | None) -> None:
@@ -3082,8 +3093,10 @@ class SpeechPresenter(Extension):
 
         def _with_monitor(iterator: Any) -> Any:
             for context, acss in iterator:
+                resolved_voice = self._apply_voice_set_overrides(self._resolve_acss(acss))
+                self._record_speech(context.utterance, resolved_voice)
                 self.write_to_monitor(context.utterance)
-                yield context, self._apply_voice_set_overrides(self._resolve_acss(acss))
+                yield context, resolved_voice
 
         server = speech_manager.get_manager().get_server()
         if server:
@@ -3118,6 +3131,7 @@ class SpeechPresenter(Extension):
         server = speech_manager.get_manager().get_server()
         if server:
             server.speak_character(character, acss=acss, cap_style=cap_style)
+        self._record_speech(character, acss)
         self.write_to_monitor(character)
 
     def spell_item(

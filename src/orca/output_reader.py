@@ -39,9 +39,11 @@ class Kind(Enum):
 
 @dataclass
 class SpeechRecord:
-    """A record parsed from the speech log."""
+    """A record parsed from the speech log. One record per synthesizer utterance."""
 
     text: str
+    language: str = ""
+    dialect: str = ""
 
 
 @dataclass
@@ -193,7 +195,11 @@ class OutputReader:
             return None
         if data.get("kind") != Kind.SPEECH.value:
             return None
-        return SpeechRecord(text=data.get("text", ""))
+        return SpeechRecord(
+            text=data.get("text", ""),
+            language=data.get("language", ""),
+            dialect=data.get("dialect", ""),
+        )
 
     @staticmethod
     def _parse_braille(line: str) -> BrailleRecord | None:

@@ -58,61 +58,61 @@ def test_structural_navigation_by_heading(web_basic: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_H)
     assert _capture(session) == (
-        ["h", "Fruit list heading 2"],
+        ["h", "Fruit list", "heading 2"],
         [(1, "Fruit list h2", "\x00" * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_H)
     assert _capture(session) == (
-        ["h", "Steps heading 2"],
+        ["h", "Steps", "heading 2"],
         [(1, "Steps h2", "\x00" * 8)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_H)
     assert _capture(session) == (
-        ["h", "Pick a color heading 2"],
+        ["h", "Pick a color", "heading 2"],
         [(1, "Pick a color h2", "\x00" * 15)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_H)
     assert _capture(session) == (
-        ["h", "Wrapping to top.", "Welcome heading 1"],
+        ["h", "Wrapping to top.", "Welcome", "heading 1"],
         [(0, "Wrapping to top.", "\x00" * 16), (1, "Welcome h1", "\x00" * 10)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_H)
     assert _capture(session) == (
-        ["h", "Fruit list heading 2"],
+        ["h", "Fruit list", "heading 2"],
         [(1, "Fruit list h2", "\x00" * 13)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_H)
     assert _capture(session) == (
-        ["H", "Welcome heading 1"],
+        ["H", "Welcome", "heading 1"],
         [(1, "Welcome h1", "\x00" * 10)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_H)
     assert _capture(session) == (
-        ["H", "Wrapping to bottom.", "Pick a color heading 2"],
+        ["H", "Wrapping to bottom.", "Pick a color", "heading 2"],
         [(0, "Wrapping to bottom.", "\x00" * 19), (1, "Pick a color h2", "\x00" * 15)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_H)
     assert _capture(session) == (
-        ["H", "Steps heading 2"],
+        ["H", "Steps", "heading 2"],
         [(1, "Steps h2", "\x00" * 8)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_H)
     assert _capture(session) == (
-        ["H", "Fruit list heading 2"],
+        ["H", "Fruit list", "heading 2"],
         [(1, "Fruit list h2", "\x00" * 13)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_H)
     assert _capture(session) == (
-        ["H", "Welcome heading 1"],
+        ["H", "Welcome", "heading 1"],
         [(1, "Welcome h1", "\x00" * 10)],
     )
 
@@ -126,37 +126,37 @@ def test_structural_navigation_by_link(web_basic: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_K)
     assert _capture(session) == (
-        ["k", "First link link"],
+        ["k", "First link", "link"],
         [(1, "First link", "\xc0" * 10)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_K)
     assert _capture(session) == (
-        ["k", "second link link"],
+        ["k", "second link", "link"],
         [(1, "second link", "\xc0" * 11)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_K)
     assert _capture(session) == (
-        ["k", "Wrapping to top.", "First link link"],
+        ["k", "Wrapping to top.", "First link", "link"],
         [(0, "Wrapping to top.", "\x00" * 16), (1, "First link", "\xc0" * 10)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_K)
     assert _capture(session) == (
-        ["K", "Wrapping to bottom.", "second link link"],
+        ["K", "Wrapping to bottom.", "second link", "link"],
         [(0, "Wrapping to bottom.", "\x00" * 19), (1, "second link", "\xc0" * 11)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_K)
     assert _capture(session) == (
-        ["K", "First link link"],
+        ["K", "First link", "link"],
         [(1, "First link", "\xc0" * 10)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_K)
     assert _capture(session) == (
-        ["K", "Wrapping to bottom.", "second link link"],
+        ["K", "Wrapping to bottom.", "second link", "link"],
         [(0, "Wrapping to bottom.", "\x00" * 19), (1, "second link", "\xc0" * 11)],
     )
 
@@ -170,37 +170,37 @@ def test_structural_navigation_by_list(web_basic: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_L)
     assert _capture(session) == (
-        ["l", "List with 3 items •  Apple item"],
+        ["l", "List with 3 items", "•  Apple item"],
         [(1, "• Apple item", "\x00" * 12)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_L)
     assert _capture(session) == (
-        ["l", "leaving list. List with 2 items 1.  First step"],
+        ["l", "leaving list.", "List with 2 items", "1.  First step"],
         [(1, "1. First step", "\x00" * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_L)
     assert _capture(session) == (
-        ["l", "Wrapping to top.", "leaving list. List with 3 items •  Apple item"],
+        ["l", "Wrapping to top.", "leaving list.", "List with 3 items", "•  Apple item"],
         [(0, "Wrapping to top.", "\x00" * 16), (1, "• Apple item", "\x00" * 12)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_L)
     assert _capture(session) == (
-        ["L", "Wrapping to bottom.", "leaving list. List with 2 items 1.  First step"],
+        ["L", "Wrapping to bottom.", "leaving list.", "List with 2 items", "1.  First step"],
         [(0, "Wrapping to bottom.", "\x00" * 19), (1, "1. First step", "\x00" * 13)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_L)
     assert _capture(session) == (
-        ["L", "leaving list. List with 3 items •  Apple item"],
+        ["L", "leaving list.", "List with 3 items", "•  Apple item"],
         [(1, "• Apple item", "\x00" * 12)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_L)
     assert _capture(session) == (
-        ["L", "Wrapping to bottom.", "leaving list. List with 2 items 1.  First step"],
+        ["L", "Wrapping to bottom.", "leaving list.", "List with 2 items", "1.  First step"],
         [(0, "Wrapping to bottom.", "\x00" * 19), (1, "1. First step", "\x00" * 13)],
     )
 
@@ -214,25 +214,25 @@ def test_structural_navigation_by_form_field(web_basic: NativeAppSession) -> Non
 
     keyboard.tap_key(keyboard.KEYSYM_F)
     assert _capture(session) == (
-        ["f", "Pick a color panel Red color not selected radio button"],
+        ["f", "Pick a color", "panel", "Red color", "not selected radio button"],
         [(14, " Pick a color& y Red color radio", "\x00" * 32)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_F)
     assert _capture(session) == (
-        ["f", "Green color not selected radio button"],
+        ["f", "Green color", "not selected radio button"],
         [(14, " Pick a color& y Green color rad", "\x00" * 32)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_F)
     assert _capture(session) == (
-        ["f", "Blue color not selected radio button"],
+        ["f", "Blue color", "not selected radio button"],
         [(14, " Pick a color& y Blue color radi", "\x00" * 32)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_F)
     assert _capture(session) == (
-        ["f", "Wrapping to top.", "Red color not selected radio button"],
+        ["f", "Wrapping to top.", "Red color", "not selected radio button"],
         [
             (0, "Wrapping to top.", "\x00" * 16),
             (14, " Pick a color& y Red color radio", "\x00" * 32),
@@ -241,7 +241,7 @@ def test_structural_navigation_by_form_field(web_basic: NativeAppSession) -> Non
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_F)
     assert _capture(session) == (
-        ["F", "Wrapping to bottom.", "Blue color not selected radio button"],
+        ["F", "Wrapping to bottom.", "Blue color", "not selected radio button"],
         [
             (0, "Wrapping to bottom.", "\x00" * 19),
             (14, " Pick a color& y Blue color radi", "\x00" * 32),
@@ -250,19 +250,19 @@ def test_structural_navigation_by_form_field(web_basic: NativeAppSession) -> Non
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_F)
     assert _capture(session) == (
-        ["F", "Green color not selected radio button"],
+        ["F", "Green color", "not selected radio button"],
         [(14, " Pick a color& y Green color rad", "\x00" * 32)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_F)
     assert _capture(session) == (
-        ["F", "Red color not selected radio button"],
+        ["F", "Red color", "not selected radio button"],
         [(14, " Pick a color& y Red color radio", "\x00" * 32)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_F)
     assert _capture(session) == (
-        ["F", "Wrapping to bottom.", "Blue color not selected radio button"],
+        ["F", "Wrapping to bottom.", "Blue color", "not selected radio button"],
         [
             (0, "Wrapping to bottom.", "\x00" * 19),
             (14, " Pick a color& y Blue color radi", "\x00" * 32),
@@ -279,7 +279,7 @@ def test_caret_navigation(web_basic: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert _capture(session) == (
-        ["First link  and  second link ."],
+        ["First link", " and ", "second link", "."],
         [
             (
                 1,
@@ -291,13 +291,13 @@ def test_caret_navigation(web_basic: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert _capture(session) == (
-        ["Fruit list heading 2"],
+        ["Fruit list", "heading 2"],
         [(1, "Fruit list h2", "\x00" * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert _capture(session) == (
-        ["List with 3 items •  Apple item"],
+        ["List with 3 items", "•  Apple item"],
         [(1, "• Apple item", "\x00" * 12)],
     )
 
@@ -315,13 +315,13 @@ def test_caret_navigation(web_basic: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert _capture(session) == (
-        ["leaving list. Steps heading 2"],
+        ["leaving list.", "Steps", "heading 2"],
         [(1, "Steps h2", "\x00" * 8)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert _capture(session) == (
-        ["List with 3 items •  Cherry item"],
+        ["List with 3 items", "•  Cherry item"],
         [(1, "• Cherry item", "\x00" * 13)],
     )
 
@@ -339,13 +339,13 @@ def test_caret_navigation(web_basic: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert _capture(session) == (
-        ["leaving list. Fruit list heading 2"],
+        ["leaving list.", "Fruit list", "heading 2"],
         [(1, "Fruit list h2", "\x00" * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert _capture(session) == (
-        ["First link  and  second link ."],
+        ["First link", " and ", "second link", "."],
         [
             (
                 1,
@@ -357,7 +357,7 @@ def test_caret_navigation(web_basic: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert _capture(session) == (
-        ["Welcome heading 1"],
+        ["Welcome", "heading 1"],
         [(1, "Welcome h1", "\x00" * 10)],
     )
 
@@ -371,7 +371,7 @@ def test_radio_group_in_focus_mode(web_basic: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_F)
     assert _capture(session) == (
-        ["f", "Pick a color panel Red color not selected radio button"],
+        ["f", "Pick a color", "panel", "Red color", "not selected radio button"],
         [(14, " Pick a color& y Red color radio", "\x00" * 32)],
     )
 
@@ -383,7 +383,7 @@ def test_radio_group_in_focus_mode(web_basic: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert _capture(session) == (
-        ["Green color selected radio button"],
+        ["Green color", "selected radio button"],
         [
             (14, " Pick a color& y Red color radio", "\x00" * 32),
             (14, " Pick a color&=y Green color rad", "\x00" * 32),
@@ -392,6 +392,6 @@ def test_radio_group_in_focus_mode(web_basic: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert _capture(session) == (
-        ["Blue color selected radio button"],
+        ["Blue color", "selected radio button"],
         [(14, " Pick a color&=y Blue color radi", "\x00" * 32)],
     )
