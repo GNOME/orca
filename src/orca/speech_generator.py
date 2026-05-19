@@ -1240,9 +1240,10 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_position_in_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
+        detailed = self._context.where_am_i_type == WhereAmI.DETAILED
         if (
             self._only_speak_displayed_text()
-            or not (self._context.speak_position_in_set or args.get("forceList", False))
+            or not (self._context.speak_position_in_set or detailed)
             or args.get("formatType") == "ancestor"
         ):
             return []
@@ -1290,7 +1291,10 @@ class SpeechGenerator(generator.Generator):
         if self._only_speak_displayed_text():
             return []
 
-        if not (self._context.speak_widget_mnemonic or args.get("forceMnemonic", False)):
+        if not (
+            self._context.speak_widget_mnemonic
+            or self._context.where_am_i_type == WhereAmI.DETAILED
+        ):
             return []
 
         if result := super()._generate_keyboard_mnemonic(obj, **args):

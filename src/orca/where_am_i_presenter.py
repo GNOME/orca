@@ -612,10 +612,6 @@ class WhereAmIPresenter(Extension):
         script.present_object(
             real_object(obj),
             where_am_i_type=where_am_i_type,
-            forceMnemonic=True,
-            forceList=True,
-            forceTutorial=True,
-            speechOnly=True,
         )
 
         return True
