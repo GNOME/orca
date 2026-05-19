@@ -1754,13 +1754,21 @@ class SpeechManager(Extension):
     KEY_FAMILY_GENDER = "family-gender"
     KEY_FAMILY_VARIANT = "family-variant"
 
-    def _get_setting(self, key: str, gtype: str, default: Any, app_name: str | None = None) -> Any:
+    def _get_setting(
+        self,
+        key: str,
+        gtype: str,
+        default: Any,
+        app_name: str | None = None,
+        genum: str | None = None,
+    ) -> Any:
         """Returns the dconf value for key, or default if not in dconf."""
 
         return gsettings_registry.get_registry().layered_lookup(
             self.SPEECH_SCHEMA,
             key,
             gtype,
+            genum=genum,
             default=default,
             app_name=app_name,
         )
@@ -2479,11 +2487,7 @@ class SpeechManager(Extension):
             tokens = ["SPEECH MANAGER: Using speech server factory:", factory]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-            synth = gsettings_registry.get_registry().layered_lookup(
-                self.SPEECH_SCHEMA,
-                self.KEY_SYNTHESIZER,
-                "s",
-            )
+            synth = self._get_setting(self.KEY_SYNTHESIZER, "s", "")
             if synth:
                 self._server.set_output_module(synth)
 
@@ -3048,15 +3052,13 @@ class SpeechManager(Extension):
     def get_capitalization_style(self, app_name: str | None = None) -> str:
         """Returns the current capitalization style."""
 
-        value = gsettings_registry.get_registry().layered_lookup(
-            self.SPEECH_SCHEMA,
+        return self._get_setting(
             self.KEY_CAPITALIZATION_STYLE,
             "",
-            genum="org.gnome.Orca.CapitalizationStyle",
             default="none",
             app_name=app_name,
+            genum="org.gnome.Orca.CapitalizationStyle",
         )
-        return value
 
     @dbus_service.setter
     def set_capitalization_style(self, value: str) -> bool:
@@ -3140,15 +3142,13 @@ class SpeechManager(Extension):
     def get_punctuation_level(self, app_name: str | None = None) -> str:
         """Returns the current punctuation level."""
 
-        value = gsettings_registry.get_registry().layered_lookup(
-            self.SPEECH_SCHEMA,
+        return self._get_setting(
             self.KEY_PUNCTUATION_LEVEL,
             "",
-            genum="org.gnome.Orca.PunctuationStyle",
             default="most",
             app_name=app_name,
+            genum="org.gnome.Orca.PunctuationStyle",
         )
-        return value
 
     @dbus_service.setter
     def set_punctuation_level(self, value: str) -> bool:
@@ -3236,11 +3236,7 @@ class SpeechManager(Extension):
 
         active_id = server.get_output_module()
         if not server_id:
-            server_id = gsettings_registry.get_registry().layered_lookup(
-                self.SPEECH_SCHEMA,
-                self.KEY_SYNTHESIZER,
-                "s",
-            )
+            server_id = self._get_setting(self.KEY_SYNTHESIZER, "s", "")
 
         if server_id and server_id != active_id:
             msg = f"SPEECH MANAGER: Updating synthesizer from {active_id} to {server_id}."
