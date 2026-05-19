@@ -2976,13 +2976,20 @@ class SpeechPresenter(Extension):
         self,
         script: default.Script,
         obj: Atspi.Accessible,
-        **args: Any,
+        *,
+        prior_obj: Atspi.Accessible | None = None,
+        where_am_i_type: WhereAmI | None = None,
+        is_progress_bar_update: bool = False,
     ) -> None:
         """Generates speech for obj using the script's speech generator and speaks it."""
 
-        where_am_i_type = args.pop("where_am_i_type", None)
         context = self._build_generator_context(where_am_i_type)
-        utterances = script.get_speech_generator().generate_speech(obj, context, **args)
+        utterances = script.get_speech_generator().generate_speech(
+            obj,
+            context,
+            priorObj=prior_obj,
+            isProgressBarUpdate=is_progress_bar_update,
+        )
         self._speak(utterances)
 
     def speak_line(
