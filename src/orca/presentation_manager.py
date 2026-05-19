@@ -88,6 +88,13 @@ class PresentationManager:
             braille_presenter.get_presenter().kill_flash()
         live_region_presenter.get_presenter().flush_messages()
 
+    def interrupt_if_needed_for_object_presentation(self) -> None:
+        """Interrupts presentation unless the last input was a recent keyboard event."""
+
+        if input_event_manager.get_manager().last_event_was_keyboard(within=1.0):
+            return
+        self.interrupt_presentation()
+
     def interrupt_if_needed_for_focus_change(
         self,
         old_focus: Atspi.Accessible,
@@ -108,18 +115,22 @@ class PresentationManager:
         """Returns True if speech should be interrupted to present the new focus."""
 
         msg = "PRESENTATION MANAGER: Not interrupting for locusOfFocus change: "
-        if (
-            event is None
-            or old_focus == new_focus
-            or event.type.startswith("object:active-descendant-changed")
-        ):
-            if event is None:
-                msg += "event is None"
-            elif old_focus == new_focus:
-                msg += "old locusOfFocus is same as new locusOfFocus"
-            else:
-                msg += "event is active-descendant-changed"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+        if event is None:
+            debug.print_message(debug.LEVEL_INFO, msg + "event is None", True)
+            return False
+
+        if old_focus == new_focus:
+            debug.print_message(debug.LEVEL_INFO, msg + "old locusOfFocus is same as new", True)
+            return False
+
+        if event.type.startswith(
+            "object:active-descendant-changed",
+        ) and input_event_manager.get_manager().last_event_was_keyboard(within=1.0):
+            debug.print_message(
+                debug.LEVEL_INFO,
+                msg + "event is active-descendant-changed during keyboard use",
+                True,
+            )
             return False
 
         if (

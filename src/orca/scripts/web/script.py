@@ -277,8 +277,7 @@ class Script(default.Script):
             super().present_object(obj, **args)
             return
 
-        interrupt = args.get("interrupt", False)
-        tokens = ["WEB: Presenting object", obj, ". Interrupt:", interrupt]
+        tokens = ["WEB: Presenting object", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         # We shouldn't use cache in this method, because if the last thing we presented
@@ -1024,7 +1023,8 @@ class Script(default.Script):
         if AXUtilities.is_alert(event.any_data):
             msg = "WEB: Presenting event.any_data"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.present_object(event.any_data, interrupt=True)
+            presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
+            self.present_object(event.any_data)
 
             focused = AXUtilities.get_focused_object(event.any_data)
             if focused:
@@ -1402,7 +1402,8 @@ class Script(default.Script):
                 # https://bugzilla.mozilla.org/show_bug.cgi?id=1867044
                 AXObject.clear_cache(event.source, False, "Work around Gecko bug.")
                 AXUtilities.clear_all_cache_now(reason=msg)
-                self.present_object(event.source, priorObj=focus, interrupt=True)
+                presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
+                self.present_object(event.source, priorObj=focus)
             return True
 
         if not self.utilities.in_document_content(event.source):
@@ -1482,7 +1483,8 @@ class Script(default.Script):
         if event.detail1 and self.utilities.is_browser_ui_alert(event.source):
             msg = "WEB: Event handled: Presenting event source"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.present_object(event.source, interrupt=True)
+            presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
+            self.present_object(event.source)
             return True
 
         if not self.utilities.in_document_content(event.source):

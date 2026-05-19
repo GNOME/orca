@@ -25,7 +25,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from orca import debug, focus_manager
+from orca import debug, focus_manager, presentation_manager
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.scripts import default
@@ -161,7 +161,8 @@ class Script(default.Script):
         ):
             if AXUtilities.is_application(AXObject.get_parent(event.source)):
                 return True
-            self.present_object(event.source, interrupt=True)
+            presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
+            self.present_object(event.source)
             return True
 
         return super()._on_showing_changed(event)

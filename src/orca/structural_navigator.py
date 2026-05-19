@@ -1043,7 +1043,8 @@ class StructuralNavigator(Extension):
                 script.utilities.set_caret_position(obj, offset)
             return
 
-        script.present_object(obj, offset=offset, interrupt=True)
+        presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
+        script.present_object(obj, offset=offset)
 
     def _present_object_list(
         self,

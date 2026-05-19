@@ -27,6 +27,8 @@
 
 from __future__ import annotations
 
+import time
+
 import gi
 
 gi.require_version("Atspi", "2.0")
@@ -235,10 +237,14 @@ class InputEventManager:
 
         return self._last_input_event.get_click_count() + 1
 
-    def last_event_was_keyboard(self) -> bool:
-        """Returns True if the last event is a keyboard event."""
+    def last_event_was_keyboard(self, within: float | None = None) -> bool:
+        """Returns True if the last event was a keyboard event, optionally within recent seconds."""
 
-        return isinstance(self._last_input_event, input_event.KeyboardEvent)
+        if not isinstance(self._last_input_event, input_event.KeyboardEvent):
+            return False
+        if within is None:
+            return True
+        return time.time() - self._last_input_event.time <= within
 
     def last_event_was_mouse_button(self) -> bool:
         """Returns True if the last event is a mouse button event."""

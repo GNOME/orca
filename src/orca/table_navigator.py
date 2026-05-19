@@ -880,7 +880,8 @@ class TableNavigator(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        script.present_object(cell, offset=0, priorObj=previous_cell, interrupt=True)
+        presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
+        script.present_object(cell, offset=0, priorObj=previous_cell)
 
         manager = speech_presenter.get_presenter()
         # TODO - JD: This should be part of the normal table cell presentation.

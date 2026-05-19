@@ -405,7 +405,8 @@ class WhereAmIPresenter(Extension):
         if frame:
             statusbar = AXUtilities.get_status_bar(frame)
             if statusbar:
-                script.present_object(statusbar, interrupt=True)
+                presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
+                script.present_object(statusbar)
             else:
                 full = messages.STATUS_BAR_NOT_FOUND_FULL
                 brief = messages.STATUS_BAR_NOT_FOUND_BRIEF
@@ -413,7 +414,7 @@ class WhereAmIPresenter(Extension):
 
             infobar = AXUtilities.get_info_bar(frame)
             if infobar and AXUtilities.is_showing(infobar) and AXUtilities.is_visible(infobar):
-                script.present_object(infobar, interrupt=statusbar is None)
+                script.present_object(infobar)
 
         return True
 

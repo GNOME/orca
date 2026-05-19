@@ -349,7 +349,6 @@ class _ItemContext:
                 self._frame,
                 alreadyFocused=True,
                 inMouseReview=True,
-                interrupt=True,
             )
 
         if self._obj and self._obj != prior_obj and not self._is_inline_child(prior):
