@@ -850,7 +850,7 @@ class Script(script.Script):
 
         if AXUtilities.is_presentable_checked_change(event):
             presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
-            self.present_object(event.source, alreadyFocused=True)
+            self.present_object(event.source, priorObj=event.source)
 
         return True
 
@@ -975,7 +975,7 @@ class Script(script.Script):
             return True
 
         presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
-        self.present_object(event.source, alreadyFocused=True)
+        self.present_object(event.source, priorObj=event.source)
         details = AXUtilities.get_details_content(event.source)
         for detail in details:
             presentation_manager.get_manager().speak_message(detail)
@@ -987,7 +987,7 @@ class Script(script.Script):
 
         if AXUtilities.is_presentable_indeterminate_change(event):
             presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
-            self.present_object(event.source, alreadyFocused=True)
+            self.present_object(event.source, priorObj=event.source)
 
         return True
 
@@ -1045,7 +1045,7 @@ class Script(script.Script):
 
         if AXUtilities.is_presentable_pressed_change(event):
             presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
-            self.present_object(event.source, alreadyFocused=True)
+            self.present_object(event.source, priorObj=event.source)
 
         return True
 
@@ -1405,7 +1405,7 @@ class Script(script.Script):
             self,
             event.source,
             generate_sound=True,
-            alreadyFocused=True,
+            priorObj=event.source,
             isProgressBarUpdate=AXUtilities.is_progress_bar(event.source),
         )
         return True

@@ -72,9 +72,8 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             result = super()._generate_real_table_cell(obj, **args)
         else:
             result = []
-            args["formatType"] = "focused"
             for child in AXObject.iter_children(obj):
-                result.extend(self.generate(child, **args))
+                result.extend(self.generate(child, priorObj=child, **args))
 
         if not AXUtilities.is_spreadsheet_cell(obj):
             return result

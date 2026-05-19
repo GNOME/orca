@@ -117,8 +117,6 @@ class BrailleGenerator(generator.Generator):
         if not self._context.enabled:
             return [[], None]
 
-        if obj == self._context.focus and not args.get("formatType"):
-            args["formatType"] = "focused"
         result = self.generate(obj, **args)
 
         # We guess at the focused region.  It's going to be a

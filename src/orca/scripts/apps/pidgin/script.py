@@ -93,7 +93,7 @@ class Script(gtk.Script):
         obj = event.source
         if self.chat.is_in_buddy_list(obj):
             obj = AXObject.get_next_sibling(obj)
-            self.present_object(obj, alreadyFocused=True)
+            self.present_object(obj, priorObj=obj)
             return True
 
         return super()._on_expanded_changed(event)

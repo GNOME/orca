@@ -347,7 +347,7 @@ class _ItemContext:
         if self._frame and self._frame != prior.get_frame():
             self._script.present_object(
                 self._frame,
-                alreadyFocused=True,
+                priorObj=self._frame,
                 inMouseReview=True,
             )
 

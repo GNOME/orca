@@ -790,8 +790,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not word_contents:
             return []
         text_obj = word_contents[0][0]
+        prior_obj = text_obj if AXUtilities.is_text_input(text_obj) else None
         return self.generate_contents(
             word_contents,
             self._context,
-            alreadyFocused=AXUtilities.is_text_input(text_obj),
+            priorObj=prior_obj,
         )

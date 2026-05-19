@@ -357,7 +357,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the check-box role."""
 
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             return self._generate_state_checked(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -373,7 +373,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the check-menu-item role."""
 
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             return self._generate_state_checked(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -399,7 +399,7 @@ class SoundGenerator(generator.Generator):
 
         result = []
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             result += self._generate_state_expanded(obj, **args)
             return result
 
@@ -469,7 +469,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the dial role."""
 
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             return self._generate_value_as_percentage(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -623,7 +623,7 @@ class SoundGenerator(generator.Generator):
 
         result = []
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             result += self._generate_state_expanded(obj, **args)
             return result
 
@@ -691,7 +691,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the level-bar role."""
 
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             return self._generate_value_as_percentage(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -708,7 +708,7 @@ class SoundGenerator(generator.Generator):
 
         result = []
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             result += self._generate_state_expanded(obj, **args)
             return result
 
@@ -737,7 +737,7 @@ class SoundGenerator(generator.Generator):
 
         result = []
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             result += self._generate_state_expanded(obj, **args)
             return result
 
@@ -783,7 +783,7 @@ class SoundGenerator(generator.Generator):
 
         result = []
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             result += self._generate_state_expanded(obj, **args)
             return result
 
@@ -849,7 +849,7 @@ class SoundGenerator(generator.Generator):
 
         result = []
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             result += self._generate_progress_bar_value(obj, **args)
             return result
 
@@ -863,7 +863,7 @@ class SoundGenerator(generator.Generator):
 
         result = []
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             result += self._generate_state_expanded(obj, **args)
             return result
 
@@ -883,7 +883,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the radio-button role."""
 
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             return self._generate_state_selected_for_radio_button(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -898,7 +898,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the radio-menu-item role."""
 
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             return self._generate_state_selected_for_radio_button(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -938,7 +938,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the scroll-bar role."""
 
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             return self._generate_value_as_percentage(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -966,7 +966,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the slider role."""
 
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             return self._generate_value_as_percentage(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -982,7 +982,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the spin-button role."""
 
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             return self._generate_value_as_percentage(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -998,7 +998,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the split-pane role."""
 
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             return self._generate_value_as_percentage(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -1037,7 +1037,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the switch role."""
 
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             return self._generate_state_checked_for_switch(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -1057,7 +1057,7 @@ class SoundGenerator(generator.Generator):
 
         result = []
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             result += self._generate_state_expanded(obj, **args)
             return result
 
@@ -1082,7 +1082,7 @@ class SoundGenerator(generator.Generator):
 
         result = []
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             result += self._generate_state_expanded(obj, **args)
             return result
 
@@ -1127,7 +1127,7 @@ class SoundGenerator(generator.Generator):
 
         result = []
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             return self._generate_state_expanded(obj, **args) or self._generate_state_pressed(
                 obj,
                 **args,
@@ -1163,7 +1163,7 @@ class SoundGenerator(generator.Generator):
 
         result = []
         format_type = args.get("formatType", "unfocused")
-        if format_type in ["focused", "ancestor"]:
+        if format_type == "ancestor" or args.get("priorObj") == obj:
             result += self._generate_state_expanded(obj, **args)
             return result
 
