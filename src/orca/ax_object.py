@@ -208,14 +208,14 @@ class AXObject:
     ) -> bool:
         """Returns True if obj or its app is hung, propagating obj-hung to app."""
 
-        obj_hung = obj is not None and hash(obj) in AXObject.HUNG_OBJECTS
+        obj_hung_ts = AXObject.HUNG_OBJECTS.get(hash(obj)) if obj is not None else None
         app_hung = app is not None and hash(app) in AXObject.HUNG_OBJECTS
-        if obj_hung and app is not None and not app_hung:
+        if obj_hung_ts is not None and app is not None and not app_hung:
             tokens = ["AXObject: Marking", app, "as hung due to hung source"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            AXObject.HUNG_OBJECTS[hash(app)] = AXObject.HUNG_OBJECTS[hash(obj)]
+            AXObject.HUNG_OBJECTS[hash(app)] = obj_hung_ts
             app_hung = True
-        return obj_hung or app_hung
+        return obj_hung_ts is not None or app_hung
 
     @staticmethod
     def _set_known_dead_status(obj: Atspi.Accessible, is_dead: bool) -> None:
