@@ -482,12 +482,20 @@ class Script(script.Script):
         if bypass_mode_manager.get_manager().is_active():
             bypass_mode_manager.get_manager().toggle_enabled(self)
 
-    def update_braille(self, obj: Atspi.Accessible, **args) -> None:
+    def update_braille(
+        self,
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> None:
         """Updates the braille display to show obj."""
 
         if not obj:
             return
-        braille_presenter.get_presenter().present_generated_braille(self, obj, **args)
+        braille_presenter.get_presenter().present_generated_braille(
+            self,
+            obj,
+            offset=offset,
+        )
 
     ########################################################################
     #                                                                      #

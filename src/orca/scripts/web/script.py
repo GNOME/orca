@@ -347,10 +347,14 @@ class Script(default.Script):
 
         super()._update_braille_caret_position(obj)
 
-    def update_braille(self, obj: Atspi.Accessible, **args) -> None:
+    def update_braille(
+        self,
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+    ) -> None:
         """Updates the braille display to show the given object."""
 
-        tokens = ["WEB: updating braille for", obj, args]
+        tokens = ["WEB: updating braille for", obj, "offset:", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
 
         if not braille_presenter.get_presenter().use_braille():
@@ -361,14 +365,14 @@ class Script(default.Script):
         ) and "\ufffc" not in AXText.get_all_text(obj):
             tokens = ["WEB: updating braille in focus mode", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            super().update_braille(obj, **args)
+            super().update_braille(obj, offset=offset)
             return
 
-        document = args.get("documentFrame", self.utilities.get_top_level_document_for_object(obj))
+        document = self.utilities.get_top_level_document_for_object(obj)
         if not document:
             tokens = ["WEB: updating braille for non-document object", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            super().update_braille(obj, **args)
+            super().update_braille(obj, offset=offset)
             return
 
         is_content_editable = self.utilities.is_content_editable_with_embedded_objects(obj)
@@ -383,21 +387,20 @@ class Script(default.Script):
         ):
             tokens = ["WEB: updating braille for unhandled navigation type", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            super().update_braille(obj, **args)
+            super().update_braille(obj, offset=offset)
             return
 
         # TODO - JD: Getting the caret context can, by side effect, update it. This in turn
         # can prevent us from presenting table column headers when braille is enabled because
         # we think they are not "new." Commit bd877203f0 addressed that, but we need to stop
         # such side effects from happening in the first place.
-        offset = args.get("offset")
         if offset is None:
             obj, offset = self.utilities.get_caret_context(document)
         if offset > 0 and is_content_editable and self.utilities.treat_as_text_object(obj):
             offset = min(offset, AXText.get_character_count(obj))
 
         contents = self.utilities.get_line_contents_at_offset(obj, offset)
-        presentation_manager.get_manager().display_contents(contents, documentFrame=document)
+        presentation_manager.get_manager().display_contents(contents)
 
     def _pan_braille_left(self, event: input_event.InputEvent | None = None) -> bool:
         """Pans braille to the left."""
@@ -514,7 +517,7 @@ class Script(default.Script):
                 caret_offset = text_offset
 
         self.utilities.set_caret_context(new_focus, caret_offset, document)
-        self.update_braille(new_focus, documentFrame=document)
+        self.update_braille(new_focus)
 
         contents = None
         args = {}
