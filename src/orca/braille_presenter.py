@@ -846,23 +846,16 @@ class BraillePresenter(Extension):
             self._monitor.reapply_css(background=value)
         return True
 
-    # pylint: disable-next=too-many-arguments
     def present_regions(
         self,
         regions: list[braille.Region],
         focused_region: braille.Region | None,
-        extra_region: braille.Region | None = None,
         *,
         pan_to_cursor: bool = True,
         indicate_links: bool = True,
         stop_flash: bool = True,
     ) -> None:
         """Build a line from regions and present it as a single braille line."""
-
-        if extra_region is not None:
-            regions = list(regions)
-            regions.append(extra_region)
-            focused_region = extra_region
 
         line = braille.Line()
         line.add_regions(regions)
@@ -940,11 +933,7 @@ class BraillePresenter(Extension):
         generator = script.get_braille_generator()
         result, focused_region = generator.generate_braille(obj, context, **args)
         if result:
-            self.present_regions(
-                list(result),
-                focused_region,
-                extra_region=args.get("extraRegion"),
-            )
+            self.present_regions(list(result), focused_region)
 
     @gsettings_registry.get_registry().gsetting(
         key=KEY_ENABLED,
