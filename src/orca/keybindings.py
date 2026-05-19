@@ -32,7 +32,7 @@ from gi.repository import Atspi, Gdk
 
 from . import input_event_manager, keynames
 
-_keycode_cache = {}
+_keycode_cache: dict[str, tuple[int, int]] = {}
 
 MODIFIER_ORCA = 8
 NO_MODIFIER_MASK = 0
