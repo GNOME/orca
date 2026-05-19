@@ -1657,7 +1657,9 @@ class Script(script.Script):
         obj: Atspi.Accessible,
         offset: int | None = None,
         prior_obj: Atspi.Accessible | None = None,
-        **args,
+        generate_speech: bool = True,
+        generate_braille: bool = True,
+        where_am_i_type: object | None = None,
     ) -> None:
         """Presents the current object."""
 
@@ -1667,11 +1669,11 @@ class Script(script.Script):
         if offset is not None:
             AXText.set_caret_offset(obj, offset)
 
-        speech_only = args.pop("speechonly", False)
         presentation_manager.get_manager().present_object(
             self,
             obj,
-            generate_braille=not speech_only,
+            generate_speech=generate_speech,
+            generate_braille=generate_braille,
             priorObj=prior_obj,
-            **args,
+            where_am_i_type=where_am_i_type,
         )

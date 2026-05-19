@@ -357,7 +357,9 @@ class Script:
         obj: Atspi.Accessible,
         offset: int | None = None,
         prior_obj: Atspi.Accessible | None = None,
-        **args,
+        generate_speech: bool = True,
+        generate_braille: bool = True,
+        where_am_i_type: object | None = None,
     ) -> None:
         """Presents the current object."""
 

@@ -1212,7 +1212,7 @@ class FlatReviewPresenter(Extension):
 
         self._context = self.get_or_create_context(script)
         if not isinstance(event, input_event.BrailleEvent):
-            script.present_object(self._context.get_current_object(), speechonly=True)
+            script.present_object(self._context.get_current_object(), generate_braille=False)
 
         focus_manager.get_manager().emit_region_changed(
             self._context.get_current_object(),

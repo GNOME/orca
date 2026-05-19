@@ -345,10 +345,13 @@ class _ItemContext:
             presentation_manager.get_manager().interrupt_presentation()
 
         if self._frame and self._frame != prior.get_frame():
+            focus_manager.get_manager().emit_region_changed(
+                self._frame,
+                mode=focus_manager.MOUSE_REVIEW,
+            )
             self._script.present_object(
                 self._frame,
                 prior_obj=self._frame,
-                inMouseReview=True,
             )
 
         if self._obj and self._obj != prior_obj and not self._is_inline_child(prior):
@@ -357,7 +360,7 @@ class _ItemContext:
                 self._obj,
                 mode=focus_manager.MOUSE_REVIEW,
             )
-            self._script.present_object(self._obj, prior_obj=prior_obj, inMouseReview=True)
+            self._script.present_object(self._obj, prior_obj=prior_obj)
             if self._string.get_string() == AXObject.get_name(self._obj):
                 return True
             if not (AXUtilities.is_editable(self._obj) or AXUtilities.is_terminal(self._obj)):

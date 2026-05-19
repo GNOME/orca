@@ -236,31 +236,53 @@ class Script(default.Script):
         obj: Atspi.Accessible,
         offset: int | None = None,
         prior_obj: Atspi.Accessible | None = None,
-        **args,
+        generate_speech: bool = True,
+        generate_braille: bool = True,
+        where_am_i_type: object | None = None,
     ) -> None:
         if obj is None:
             return
 
         if not self.utilities.in_document_content(obj) or AXUtilities.is_document(obj):
-            super().present_object(obj, offset=offset, prior_obj=prior_obj, **args)
+            super().present_object(
+                obj,
+                offset=offset,
+                prior_obj=prior_obj,
+                generate_speech=generate_speech,
+                generate_braille=generate_braille,
+                where_am_i_type=where_am_i_type,
+            )
             return
 
         mode, _obj = focus_manager.get_manager().get_active_mode_and_object_of_interest()
         if mode in [focus_manager.OBJECT_NAVIGATOR, focus_manager.MOUSE_REVIEW]:
-            super().present_object(obj, offset=offset, prior_obj=prior_obj, **args)
+            super().present_object(
+                obj,
+                offset=offset,
+                prior_obj=prior_obj,
+                generate_speech=generate_speech,
+                generate_braille=generate_braille,
+                where_am_i_type=where_am_i_type,
+            )
             return
 
         if AXUtilities.is_status_bar(obj) or AXUtilities.is_alert(obj):
             if not document_presenter.get_presenter().in_focus_mode(self.app):
                 self.utilities.set_caret_position(obj, 0)
-            super().present_object(obj, offset=offset, prior_obj=prior_obj, **args)
+            super().present_object(
+                obj,
+                offset=offset,
+                prior_obj=prior_obj,
+                generate_speech=generate_speech,
+                generate_braille=generate_braille,
+                where_am_i_type=where_am_i_type,
+            )
             return
 
         if (
             caret_navigator.get_navigator().last_input_event_was_navigation_command()
             or structural_navigator.get_navigator().last_input_event_was_navigation_command()
             or table_navigator.get_navigator().last_input_event_was_navigation_command()
-            or args.get("includeContext")
             or AXUtilities.get_table(obj)
         ):
             prior_context = self.utilities.get_prior_context()
@@ -278,7 +300,14 @@ class Script(default.Script):
         if AXUtilities.is_entry(obj):
             if not document_presenter.get_presenter().in_focus_mode(self.app):
                 self.utilities.set_caret_position(obj, 0)
-            super().present_object(obj, offset=offset, prior_obj=prior_obj, **args)
+            super().present_object(
+                obj,
+                offset=offset,
+                prior_obj=prior_obj,
+                generate_speech=generate_speech,
+                generate_braille=generate_braille,
+                where_am_i_type=where_am_i_type,
+            )
             return
 
         tokens = ["WEB: Presenting object", obj]
@@ -298,8 +327,14 @@ class Script(default.Script):
         ):
             self.utilities.set_caret_position(contents[0][0], contents[0][1])
         presenter = presentation_manager.get_manager()
-        presenter.display_contents(contents)
-        presenter.speak_contents(contents, priorObj=prior_obj, **args)
+        if generate_braille:
+            presenter.display_contents(contents)
+        if generate_speech:
+            presenter.speak_contents(
+                contents,
+                priorObj=prior_obj,
+                where_am_i_type=where_am_i_type,
+            )
 
     def _update_braille_caret_position(self, obj: Atspi.Accessible) -> None:
         """Try to reposition the cursor without having to do a full update."""

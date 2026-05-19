@@ -41,6 +41,7 @@ from gi.repository import Atspi
 from orca import (
     caret_navigator,
     debug,
+    focus_manager,
     input_event_manager,
     messages,
     object_properties,
@@ -203,7 +204,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if obj != self._context.focus:
             if AXUtilities.is_dialog_or_alert(obj, args.get("role")):
                 return super()._generate_accessible_description(obj, **args)
-            if not args.get("inMouseReview"):
+            if self._context.active_mode != focus_manager.MOUSE_REVIEW:
                 return []
 
         if AXUtilities.is_text(obj, args.get("role")) and (
