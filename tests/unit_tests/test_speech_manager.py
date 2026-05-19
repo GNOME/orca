@@ -1370,17 +1370,12 @@ class TestVoicesPreferencesGridUI:
         from orca import gsettings_registry
         from orca.speech_manager import SpeechManager, VoicesPreferencesGrid
 
-        gsettings_registry.get_registry().set_runtime_value(
-            "speech",
-            "speech-server-factory",
-            "spiel",
-        )
+        registry = gsettings_registry.get_registry()
+        registry.set_runtime_value("speech", "speech-server-factory", "spiel")
+        registry.set_runtime_value("speech", "speech-server", "Spiel")
+        registry.set_runtime_value("speech", "synthesizer", "Piper")
 
         manager = SpeechManager()
-        mock_server = test_context.Mock()
-        mock_server.get_factory_name.return_value = "Spiel"
-        mock_server.get_output_module.return_value = "Piper"
-        test_context.patch_object(manager, "_get_server", return_value=mock_server)
 
         grid_mock = test_context.Mock()
         grid_mock._manager = manager
@@ -1391,8 +1386,6 @@ class TestVoicesPreferencesGridUI:
             "system": {},
         }
         grid_mock._has_unsaved_changes = True
-        grid_mock._punctuation_combo.get_model.return_value = None
-        grid_mock._capitalization_combo.get_model.return_value = None
         grid_mock._speak_numbers_switch.get_active.return_value = False
         grid_mock._use_color_names_switch.get_active.return_value = True
         grid_mock._enable_pause_breaks_switch.get_active.return_value = True

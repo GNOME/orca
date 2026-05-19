@@ -465,21 +465,11 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             "voices": {vt: dict(acss) for vt, acss in self._voices.items()},
         }
 
-        result[SpeechManager.KEY_SPEECH_SERVER] = self._manager.get_current_server()
-        result[SpeechManager.KEY_SYNTHESIZER] = self._manager.get_current_synthesizer()
+        result[SpeechManager.KEY_SPEECH_SERVER] = self._manager.get_speech_server()
+        result[SpeechManager.KEY_SYNTHESIZER] = self._manager.get_synthesizer()
         result[SpeechManager.KEY_SPEECH_SERVER_FACTORY] = self._manager.get_speech_server_factory()
-
-        model = self._punctuation_combo.get_model()
-        active = self._punctuation_combo.get_active()
-        if model and active >= 0:
-            result[SpeechManager.KEY_PUNCTUATION_LEVEL] = PunctuationStyle(
-                model[active][1]
-            ).string_name
-
-        model = self._capitalization_combo.get_model()
-        active = self._capitalization_combo.get_active()
-        if model and active >= 0:
-            result[SpeechManager.KEY_CAPITALIZATION_STYLE] = model[active][1]
+        result[SpeechManager.KEY_PUNCTUATION_LEVEL] = self._manager.get_punctuation_level()
+        result[SpeechManager.KEY_CAPITALIZATION_STYLE] = self._manager.get_capitalization_style()
 
         result[SpeechManager.KEY_SPEAK_NUMBERS_AS_DIGITS] = self._speak_numbers_switch.get_active()
         result[SpeechManager.KEY_USE_COLOR_NAMES] = self._use_color_names_switch.get_active()
@@ -1102,6 +1092,11 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         tree_iter = model.get_iter(active)
         server_name = model.get_value(tree_iter, 0)
 
+        gsettings_registry.get_registry().set_runtime_value(
+            SpeechManager.SPEECH_SCHEMA,
+            SpeechManager.KEY_SPEECH_SERVER,
+            server_name,
+        )
         self._manager.set_current_server(server_name)
 
         self._populate_speech_synthesizers()
@@ -2150,6 +2145,11 @@ class SpeechManager(Extension):
 
         return self._switch_server(value)
 
+    def get_speech_server(self, app_name: str | None = None) -> str:
+        """Returns the speech server setting."""
+
+        return self._get_setting(self.KEY_SPEECH_SERVER, "s", "", app_name=app_name)
+
     @gsettings_registry.get_registry().gsetting(
         key=KEY_SPEECH_SERVER_FACTORY,
         schema="speech",
@@ -2205,6 +2205,11 @@ class SpeechManager(Extension):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         server.set_output_module(value)
         return server.get_output_module() == value
+
+    def get_synthesizer(self, app_name: str | None = None) -> str:
+        """Returns the synthesizer setting."""
+
+        return self._get_setting(self.KEY_SYNTHESIZER, "s", "", app_name=app_name)
 
     @dbus_service.getter
     def get_available_synthesizers(self) -> list[str]:
