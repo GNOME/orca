@@ -922,6 +922,7 @@ class TestBraillePreferencesGridUI:
         )
 
         guilabels_mock = essential_modules["orca.guilabels"]
+        guilabels_mock.BRAILLE_ENABLE_BRAILLE_SUPPORT = "Braille support"
         guilabels_mock.OBJECT_PRESENTATION_IS_DETAILED = "Detailed"
         guilabels_mock.BRAILLE_SHOW_CONTEXT = "Show context"
         guilabels_mock.BRAILLE_ABBREVIATED_ROLE_NAMES = "Abbreviated role names"
