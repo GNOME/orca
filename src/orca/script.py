@@ -47,6 +47,7 @@ if TYPE_CHECKING:
     from gi.repository import Atspi
 
     from . import label_inference
+    from .generator import WhereAmI
 
 
 class Script:
@@ -359,7 +360,7 @@ class Script:
         prior_obj: Atspi.Accessible | None = None,
         generate_speech: bool = True,
         generate_braille: bool = True,
-        where_am_i_type: object | None = None,
+        where_am_i_type: WhereAmI | None = None,
     ) -> None:
         """Presents the current object."""
 

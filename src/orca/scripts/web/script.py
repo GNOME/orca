@@ -69,6 +69,8 @@ from .speech_generator import SpeechGenerator
 if TYPE_CHECKING:
     from gi.repository import Atspi
 
+    from orca.generator import WhereAmI
+
 
 class Script(default.Script):
     """Provides support for accessing user-agent-agnostic web-content."""
@@ -238,7 +240,7 @@ class Script(default.Script):
         prior_obj: Atspi.Accessible | None = None,
         generate_speech: bool = True,
         generate_braille: bool = True,
-        where_am_i_type: object | None = None,
+        where_am_i_type: WhereAmI | None = None,
     ) -> None:
         if obj is None:
             return
@@ -614,7 +616,7 @@ class Script(default.Script):
                 self,
                 new_focus,
                 generate_braille=False,
-                **args,  # type: ignore[arg-type]
+                prior_obj=old_focus,
             )
 
         document_presenter.get_presenter().update_mode_if_needed(self, old_focus, new_focus)

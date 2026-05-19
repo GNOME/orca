@@ -96,6 +96,8 @@ if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
+    from orca.generator import WhereAmI
+
 
 class Script(script.Script):
     """The default Script for presenting information to the user."""
@@ -445,7 +447,7 @@ class Script(script.Script):
                 self.update_braille(new_focus)
                 return True
 
-        manager.present_object(self, new_focus, priorObj=old_focus)
+        manager.present_object(self, new_focus, prior_obj=old_focus)
         return True
 
     def activate(self) -> None:
@@ -1405,8 +1407,8 @@ class Script(script.Script):
             self,
             event.source,
             generate_sound=True,
-            priorObj=event.source,
-            isProgressBarUpdate=AXUtilities.is_progress_bar(event.source),
+            prior_obj=event.source,
+            is_progress_bar_update=AXUtilities.is_progress_bar(event.source),
         )
         return True
 
@@ -1659,7 +1661,7 @@ class Script(script.Script):
         prior_obj: Atspi.Accessible | None = None,
         generate_speech: bool = True,
         generate_braille: bool = True,
-        where_am_i_type: object | None = None,
+        where_am_i_type: WhereAmI | None = None,
     ) -> None:
         """Presents the current object."""
 
@@ -1674,6 +1676,6 @@ class Script(script.Script):
             obj,
             generate_speech=generate_speech,
             generate_braille=generate_braille,
-            priorObj=prior_obj,
+            prior_obj=prior_obj,
             where_am_i_type=where_am_i_type,
         )
