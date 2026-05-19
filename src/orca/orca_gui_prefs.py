@@ -601,6 +601,41 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         for grid in self._page_to_grid.values():
             grid.revert_changes()
 
+    def _maybe_prompt_about_profile_switch(self) -> None:
+        """If the active profile was switched this session, ask whether to keep it."""
+
+        current_profile = profile_manager.get_manager().get_active_profile()
+        if current_profile == self._original_profile:
+            return
+
+        current_label = self._get_current_profile_label()
+        original_label = self.profiles_grid.get_profile_label(self._original_profile)
+        dialog = Gtk.MessageDialog(
+            transient_for=self,
+            modal=True,
+            message_type=Gtk.MessageType.QUESTION,
+            buttons=Gtk.ButtonsType.NONE,
+            text=guilabels.PREFERENCES_PROFILE_SWITCHED,
+        )
+        use_button = dialog.add_button(
+            guilabels.PROFILE_USE % current_label,
+            Gtk.ResponseType.YES,
+        )
+        use_button.get_style_context().add_class("suggested-action")
+        dialog.add_button(
+            guilabels.PROFILE_SWITCH_BACK_TO % original_label,
+            Gtk.ResponseType.NO,
+        )
+
+        dialog.show_all()
+        dialog.present()
+        use_button.grab_focus()
+        response = dialog.run()
+        dialog.destroy()
+
+        if response == Gtk.ResponseType.NO:
+            profile_manager.get_manager().load_profile(self._original_profile)
+
     def cancel_button_clicked(self, _widget: Gtk.Button) -> None:
         """Handle Cancel button click to close window without saving."""
 
@@ -608,6 +643,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
         self._revert_unsaved_changes()
+        self._maybe_prompt_about_profile_switch()
         self.destroy()
 
         msg = "PREFERENCES: Handling Cancel button click complete"
@@ -690,35 +726,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
                 self._revert_unsaved_changes()
 
         elif profile_was_switched:
-            # Profile was switched but no other changes - show simple dialog
-            current_label = self._get_current_profile_label()
-            original_label = self.profiles_grid.get_profile_label(self._original_profile)
-            dialog = Gtk.MessageDialog(
-                transient_for=self,
-                modal=True,
-                message_type=Gtk.MessageType.QUESTION,
-                buttons=Gtk.ButtonsType.NONE,
-                text=guilabels.PREFERENCES_PROFILE_SWITCHED,
-            )
-
-            use_button = dialog.add_button(
-                guilabels.PROFILE_USE % current_label,
-                Gtk.ResponseType.YES,
-            )
-            use_button.get_style_context().add_class("suggested-action")
-            dialog.add_button(
-                guilabels.PROFILE_SWITCH_BACK_TO % original_label,
-                Gtk.ResponseType.NO,
-            )
-
-            dialog.show_all()
-            dialog.present()
-            use_button.grab_focus()
-            response = dialog.run()
-            dialog.destroy()
-
-            if response == Gtk.ResponseType.NO:
-                profile_manager.get_manager().load_profile(self._original_profile)
+            self._maybe_prompt_about_profile_switch()
 
         self.suspend_events("Window being closed.")
         GObject.timeout_add(1000, self.resume_events)
