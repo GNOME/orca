@@ -2393,13 +2393,15 @@ class SpeechGenerator(generator.Generator):
         format_type = args.get("formatType", "unfocused")
         if format_type in ["focused", "ancestor"]:
             return self._generate_details_for(obj, **args)
+        if self._context.where_am_i_type == WhereAmI.BASIC:
+            return []
+        if self._context.where_am_i_type == WhereAmI.DETAILED:
+            return self._generate_ancestors(obj, **args)
         if format_type == "unfocused":
             return self._generate_old_ancestors(obj, **args) + self._generate_new_ancestors(
                 obj,
                 **args,
             )
-        if self._context.where_am_i_type == WhereAmI.DETAILED:
-            return self._generate_ancestors(obj, **args)
         return []
 
     def _generate_default_presentation(self, obj: Atspi.Accessible, **args) -> list[Any]:
