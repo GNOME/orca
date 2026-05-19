@@ -352,7 +352,13 @@ class Script:
         """Callback for window:destroy accessibility events."""
         return True
 
-    def present_object(self, obj: Atspi.Accessible, **args) -> None:
+    def present_object(
+        self,
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+        prior_obj: Atspi.Accessible | None = None,
+        **args,
+    ) -> None:
         """Presents the current object."""
 
     def update_braille(self, obj: Atspi.Accessible, **args) -> None:

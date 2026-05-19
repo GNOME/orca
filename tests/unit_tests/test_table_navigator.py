@@ -1038,7 +1038,7 @@ class TestTableNavigator:
         mock_script.present_object.assert_called_once_with(
             mock_cell,
             offset=0,
-            priorObj=mock_previous_cell,
+            prior_obj=mock_previous_cell,
         )
 
     def test_get_navigator(self, test_context: OrcaTestContext) -> None:
@@ -2086,7 +2086,7 @@ class TestTableNavigator:
         mock_script.present_object.assert_called_once_with(
             mock_cell,
             offset=0,
-            priorObj=mock_previous_cell,
+            prior_obj=mock_previous_cell,
         )
         assert pres_manager.present_message.call_count == 2
 

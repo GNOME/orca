@@ -347,7 +347,7 @@ class _ItemContext:
         if self._frame and self._frame != prior.get_frame():
             self._script.present_object(
                 self._frame,
-                priorObj=self._frame,
+                prior_obj=self._frame,
                 inMouseReview=True,
             )
 
@@ -357,7 +357,7 @@ class _ItemContext:
                 self._obj,
                 mode=focus_manager.MOUSE_REVIEW,
             )
-            self._script.present_object(self._obj, priorObj=prior_obj, inMouseReview=True)
+            self._script.present_object(self._obj, prior_obj=prior_obj, inMouseReview=True)
             if self._string.get_string() == AXObject.get_name(self._obj):
                 return True
             if not (AXUtilities.is_editable(self._obj) or AXUtilities.is_terminal(self._obj)):

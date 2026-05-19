@@ -881,7 +881,7 @@ class TableNavigator(Extension):
             return
 
         presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
-        script.present_object(cell, offset=0, priorObj=previous_cell)
+        script.present_object(cell, offset=0, prior_obj=previous_cell)
 
         manager = speech_presenter.get_presenter()
         # TODO - JD: This should be part of the normal table cell presentation.

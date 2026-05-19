@@ -850,7 +850,7 @@ class Script(script.Script):
 
         if AXUtilities.is_presentable_checked_change(event):
             presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
-            self.present_object(event.source, priorObj=event.source)
+            self.present_object(event.source, prior_obj=event.source)
 
         return True
 
@@ -975,7 +975,7 @@ class Script(script.Script):
             return True
 
         presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
-        self.present_object(event.source, priorObj=event.source)
+        self.present_object(event.source, prior_obj=event.source)
         details = AXUtilities.get_details_content(event.source)
         for detail in details:
             presentation_manager.get_manager().speak_message(detail)
@@ -987,7 +987,7 @@ class Script(script.Script):
 
         if AXUtilities.is_presentable_indeterminate_change(event):
             presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
-            self.present_object(event.source, priorObj=event.source)
+            self.present_object(event.source, prior_obj=event.source)
 
         return True
 
@@ -1045,7 +1045,7 @@ class Script(script.Script):
 
         if AXUtilities.is_presentable_pressed_change(event):
             presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
-            self.present_object(event.source, priorObj=event.source)
+            self.present_object(event.source, prior_obj=event.source)
 
         return True
 
@@ -1164,7 +1164,7 @@ class Script(script.Script):
             if focus and was_f1:
                 obj = focus
                 presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
-                self.present_object(obj, priorObj=event.source)
+                self.present_object(obj, prior_obj=event.source)
                 return True
 
         return True
@@ -1652,13 +1652,18 @@ class Script(script.Script):
         self.say_phrase(obj, start_offset, end_offset)
         AXUtilities.set_last_text_unit_spoken(TextUnit.WORD)
 
-    def present_object(self, obj: Atspi.Accessible, **args) -> None:
+    def present_object(
+        self,
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+        prior_obj: Atspi.Accessible | None = None,
+        **args,
+    ) -> None:
         """Presents the current object."""
 
         tokens = ["DEFAULT: Presenting object", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        offset = args.get("offset")
         if offset is not None:
             AXText.set_caret_offset(obj, offset)
 
@@ -1667,5 +1672,6 @@ class Script(script.Script):
             self,
             obj,
             generate_braille=not speech_only,
+            priorObj=prior_obj,
             **args,
         )

@@ -201,7 +201,7 @@ class ObjectNavigator(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        script.present_object(self._navigator_focus, priorObj=self._last_navigator_focus)
+        script.present_object(self._navigator_focus, prior_obj=self._last_navigator_focus)
 
     @dbus_service.command
     def move_to_parent(

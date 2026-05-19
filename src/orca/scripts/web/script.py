@@ -231,26 +231,31 @@ class Script(default.Script):
 
         AXUtilities.set_last_text_unit_spoken(TextUnit.LINE)
 
-    def present_object(self, obj: Atspi.Accessible, **args) -> None:
+    def present_object(
+        self,
+        obj: Atspi.Accessible,
+        offset: int | None = None,
+        prior_obj: Atspi.Accessible | None = None,
+        **args,
+    ) -> None:
         if obj is None:
             return
 
         if not self.utilities.in_document_content(obj) or AXUtilities.is_document(obj):
-            super().present_object(obj, **args)
+            super().present_object(obj, offset=offset, prior_obj=prior_obj, **args)
             return
 
         mode, _obj = focus_manager.get_manager().get_active_mode_and_object_of_interest()
         if mode in [focus_manager.OBJECT_NAVIGATOR, focus_manager.MOUSE_REVIEW]:
-            super().present_object(obj, **args)
+            super().present_object(obj, offset=offset, prior_obj=prior_obj, **args)
             return
 
         if AXUtilities.is_status_bar(obj) or AXUtilities.is_alert(obj):
             if not document_presenter.get_presenter().in_focus_mode(self.app):
                 self.utilities.set_caret_position(obj, 0)
-            super().present_object(obj, **args)
+            super().present_object(obj, offset=offset, prior_obj=prior_obj, **args)
             return
 
-        prior_obj = args.get("priorObj")
         if (
             caret_navigator.get_navigator().last_input_event_was_navigation_command()
             or structural_navigator.get_navigator().last_input_event_was_navigation_command()
@@ -261,7 +266,6 @@ class Script(default.Script):
             prior_context = self.utilities.get_prior_context()
             if prior_context is not None:
                 prior_obj, _prior_offset = prior_context
-                args["priorObj"] = prior_obj
 
         document = self.utilities.get_document_for_object(obj)
         obj = AXEventSynthesizer.scroll_to_center(obj, start_offset=0, root=document)
@@ -274,7 +278,7 @@ class Script(default.Script):
         if AXUtilities.is_entry(obj):
             if not document_presenter.get_presenter().in_focus_mode(self.app):
                 self.utilities.set_caret_position(obj, 0)
-            super().present_object(obj, **args)
+            super().present_object(obj, offset=offset, prior_obj=prior_obj, **args)
             return
 
         tokens = ["WEB: Presenting object", obj]
@@ -283,8 +287,10 @@ class Script(default.Script):
         # We shouldn't use cache in this method, because if the last thing we presented
         # included this object and offset (e.g. a Say All or Mouse Review), we're in
         # danger of presented irrelevant context.
-        offset = args.get("offset", 0)
-        contents = self.utilities.get_object_contents_at_offset(obj, offset, use_cache=False)
+        effective_offset = offset if offset is not None else 0
+        contents = self.utilities.get_object_contents_at_offset(
+            obj, effective_offset, use_cache=False
+        )
         if (
             contents
             and contents[0]
@@ -293,7 +299,7 @@ class Script(default.Script):
             self.utilities.set_caret_position(contents[0][0], contents[0][1])
         presenter = presentation_manager.get_manager()
         presenter.display_contents(contents)
-        presenter.speak_contents(contents, **args)
+        presenter.speak_contents(contents, priorObj=prior_obj, **args)
 
     def _update_braille_caret_position(self, obj: Atspi.Accessible) -> None:
         """Try to reposition the cursor without having to do a full update."""
@@ -1403,7 +1409,7 @@ class Script(default.Script):
                 AXObject.clear_cache(event.source, False, "Work around Gecko bug.")
                 AXUtilities.clear_all_cache_now(reason=msg)
                 presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()
-                self.present_object(event.source, priorObj=focus)
+                self.present_object(event.source, prior_obj=focus)
             return True
 
         if not self.utilities.in_document_content(event.source):
