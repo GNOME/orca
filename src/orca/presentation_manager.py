@@ -439,9 +439,9 @@ class PresentationManager:
             braille_presenter.get_presenter().present_generated_braille(
                 script,
                 obj,
-                priorObj=prior_obj,
+                prior_obj=prior_obj,
                 where_am_i_type=where_am_i_type,
-                isProgressBarUpdate=is_progress_bar_update,
+                is_progress_bar_update=is_progress_bar_update,
             )
 
         if generate_sound:

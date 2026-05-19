@@ -921,17 +921,26 @@ class BraillePresenter(Extension):
         self,
         script: default.Script,
         obj: Atspi.Accessible,
-        **args: Any,
+        *,
+        prior_obj: Atspi.Accessible | None = None,
+        where_am_i_type: WhereAmI | None = None,
+        is_progress_bar_update: bool = False,
+        offset: int | None = None,
     ) -> None:
         """Generates braille for obj using the script's braille generator and displays it."""
 
         if not self.use_braille():
             return
 
-        where_am_i_type = args.pop("where_am_i_type", None)
         context = self._build_generator_context(where_am_i_type)
         generator = script.get_braille_generator()
-        result, focused_region = generator.generate_braille(obj, context, **args)
+        result, focused_region = generator.generate_braille(
+            obj,
+            context,
+            priorObj=prior_obj,
+            isProgressBarUpdate=is_progress_bar_update,
+            offset=offset,
+        )
         if result:
             self.present_regions(list(result), focused_region)
 
