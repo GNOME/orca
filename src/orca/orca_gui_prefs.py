@@ -593,14 +593,21 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         msg = "PREFERENCES: Handling Apply button click complete"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
+    def _revert_unsaved_changes(self) -> None:
+        """Discard in-session overrides and restore live state from dconf."""
+
+        gsettings_registry.get_registry().clear_runtime_values()
+        orca.load_user_settings(self.script, skip_reload_message=True)
+        for grid in self._page_to_grid.values():
+            grid.revert_changes()
+
     def cancel_button_clicked(self, _widget: Gtk.Button) -> None:
         """Handle Cancel button click to close window without saving."""
 
         msg = "PREFERENCES: Cancel button clicked"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
-        for grid in self._page_to_grid.values():
-            grid.revert_changes()
+        self._revert_unsaved_changes()
         self.destroy()
 
         msg = "PREFERENCES: Handling Cancel button click complete"
@@ -680,8 +687,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             elif response in (Gtk.ResponseType.CANCEL, Gtk.ResponseType.DELETE_EVENT):
                 return True
             else:
-                for grid in self._page_to_grid.values():
-                    grid.revert_changes()
+                self._revert_unsaved_changes()
 
         elif profile_was_switched:
             # Profile was switched but no other changes - show simple dialog
