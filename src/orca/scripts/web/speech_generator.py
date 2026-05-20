@@ -677,6 +677,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         language, dialect = self._script.utilities.get_language_and_dialect_for_substring(
             obj, start, end
         )
+        context = replace(context, language=language, dialect=dialect)
 
         if not result:
             result = list(
@@ -687,8 +688,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                         context,
                         role=role,
                         include_context=include_context,
-                        language=language,
-                        dialect=dialect,
                         **args,
                     ),
                 ),

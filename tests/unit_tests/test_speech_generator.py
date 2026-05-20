@@ -77,6 +77,8 @@ class TestSpeechGeneratorVoice:
         }
         context.speech_server = test_context.Mock()
         context.in_preferences_window = False
+        context.language = ""
+        context.dialect = ""
         return context
 
     def test_voice_uses_uppercase_voice_for_uppercase_string(

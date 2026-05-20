@@ -104,6 +104,8 @@ class SpeechGeneratorContext(GeneratorContext):
     announce_tracked_changes: bool
     text_attribute_change_mode: int
     speak_misspelled_indicator: bool
+    language: str
+    dialect: str
 
 
 class Pause:
@@ -143,6 +145,7 @@ class SpeechGenerator(generator.Generator):
 
     def __init__(self, script: script.Script) -> None:
         super().__init__(script, GeneratorMode.SPEECH)
+        self._leaving_count: int = 1
 
     def _should_announce_attribute_changes(self, obj: Atspi.Accessible) -> bool:
         """Returns True if text attribute changes should be announced for obj."""
@@ -405,6 +408,8 @@ class SpeechGenerator(generator.Generator):
 
         voice = ACSS(dict(effective_context.voices[speechserver.VoiceType.DEFAULT]))
 
+        language = language or effective_context.language
+        dialect = dialect or effective_context.dialect
         language_from_content = bool(language)
         family = voice.get(ACSS.FAMILY, {}).copy()
         tokens = [
@@ -928,7 +933,7 @@ class SpeechGenerator(generator.Generator):
                 return msg
         return ""
 
-    def _generate_leaving(self, obj: Atspi.Accessible, *, count: int = 1, **args) -> list[Any]:
+    def _generate_leaving(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not self._is_leaving():
             return []
 
@@ -938,7 +943,7 @@ class SpeechGenerator(generator.Generator):
         if not (role in enabled or is_details):
             return []
 
-        result = self._get_leaving_message(obj, role, count, is_details)
+        result = self._get_leaving_message(obj, role, self._leaving_count, is_details)
         if result:
             result.extend(self.voice(SYSTEM, obj=obj, **args))
 
@@ -1028,6 +1033,7 @@ class SpeechGenerator(generator.Generator):
         result: list[Any] = []
         presented_roles: list[Atspi.Role] = []
         original_context = self._context
+        original_leaving_count = self._leaving_count
         self._context = replace(
             original_context,
             prior_obj=prior_obj,
@@ -1048,16 +1054,15 @@ class SpeechGenerator(generator.Generator):
                     ancestor_language = locale_parts[0]
                     if len(locale_parts) > 1:
                         ancestor_dialect = locale_parts[1]
-            result.append(
-                self.generate(
-                    ancestor,
-                    role=alt_role,
-                    count=ancestor_roles.count(alt_role),
-                    language=ancestor_language,
-                    dialect=ancestor_dialect,
-                ),
+            self._context = replace(
+                self._context,
+                language=ancestor_language,
+                dialect=ancestor_dialect,
             )
+            self._leaving_count = ancestor_roles.count(alt_role)
+            result.append(self.generate(ancestor, role=alt_role))
         self._context = original_context
+        self._leaving_count = original_leaving_count
 
         if not leaving:
             result.reverse()
