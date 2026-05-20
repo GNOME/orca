@@ -70,6 +70,24 @@ class PresentationReason(Enum):
 
 
 @dataclass(frozen=True)
+class ContentItem:
+    """The slice of an object's content being presented (one entry in a contents batch)."""
+
+    start_offset: int
+    end_offset: int
+    string: str
+    caret_offset: int | None = None
+
+
+@dataclass(frozen=True)
+class ContentPosition:
+    """An item's position within a batch of contents presented together."""
+
+    index: int = 0
+    total: int = 1
+
+
+@dataclass(frozen=True)
 class GeneratorContext:
     """Base settings context shared by all generators."""
 
@@ -83,6 +101,8 @@ class GeneratorContext:
     offset: int | None
     leaving: bool
     ancestor_of: Atspi.Accessible | None
+    content_item: ContentItem | None
+    content_position: ContentPosition | None
 
 
 class Generator:
@@ -343,6 +363,44 @@ class Generator:
         """Returns True if an ancestor (not the leaf object) is being presented."""
 
         return self._get_ancestor_of() is not None
+
+    def _get_content_item(self) -> ContentItem | None:
+        """Returns the content slice being presented, or None if not a content slice."""
+
+        if self._context is None:
+            return None
+        return self._context.content_item
+
+    def _get_content_position(self) -> ContentPosition:
+        """Returns this item's position within its contents batch."""
+
+        if self._context is None or self._context.content_position is None:
+            return ContentPosition()
+        return self._context.content_position
+
+    def _get_start_offset(self, default: int | None = None) -> int | None:
+        """Returns the content slice's start offset, or default if no slice."""
+
+        item = self._get_content_item()
+        return item.start_offset if item is not None else default
+
+    def _get_end_offset(self, default: int | None = None) -> int | None:
+        """Returns the content slice's end offset, or default if no slice."""
+
+        item = self._get_content_item()
+        return item.end_offset if item is not None else default
+
+    def _get_content_string(self, default: str | None = None) -> str | None:
+        """Returns the content slice's string, or default if no slice."""
+
+        item = self._get_content_item()
+        return item.string if item is not None else default
+
+    def _get_caret_offset(self, default: int | None = None) -> int | None:
+        """Returns the content slice's caret offset, or default if no slice."""
+
+        item = self._get_content_item()
+        return item.caret_offset if item is not None else default
 
     def generate(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns the presentation of the object."""
@@ -1032,8 +1090,8 @@ class Generator:
 
     @log_generator_output
     def _generate_text_substring(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        start = args.get("startOffset")
-        end = args.get("endOffset")
+        start = self._get_start_offset()
+        end = self._get_end_offset()
         if (hash(obj), start, end) in Generator.CACHED_TEXT_SUBSTRING:
             return Generator.CACHED_TEXT_SUBSTRING.get((hash(obj), start, end), [])
 
@@ -1042,7 +1100,9 @@ class Generator:
                 Generator.CACHED_TEXT_SUBSTRING[(hash(obj), start, end)] = []
             return []
 
-        substring = args.get("string", AXText.get_substring(obj, start, end))
+        substring = self._get_content_string()
+        if substring is None:
+            substring = AXText.get_substring(obj, start, end)
         if "\ufffc" not in substring:
             if not AXUtilities.is_editable(obj):
                 Generator.CACHED_TEXT_SUBSTRING[(hash(obj), start, end)] = [substring]
@@ -1054,8 +1114,8 @@ class Generator:
 
     @log_generator_output
     def _generate_text_line(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        start = args.get("startOffset")
-        end = args.get("endOffset")
+        start = self._get_start_offset()
+        end = self._get_end_offset()
         if (hash(obj), start, end) in Generator.CACHED_TEXT_LINE:
             return Generator.CACHED_TEXT_LINE.get((hash(obj), start, end), [])
 
@@ -1101,15 +1161,16 @@ class Generator:
 
     @log_generator_output
     def _generate_text_expanding_embedded_objects(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        start = args.get("startOffset")
-        end = args.get("endOffset")
+        start = self._get_start_offset()
+        end = self._get_end_offset()
         if (hash(obj), start, end) in Generator.CACHED_TEXT_EXPANDING_EOCS:
             return Generator.CACHED_TEXT_EXPANDING_EOCS.get((hash(obj), start, end), [])
 
+        item = self._get_content_item()
         text = self._script.utilities.expand_eocs(
             obj,
-            args.get("startOffset", 0),
-            args.get("endOffset", -1),
+            item.start_offset if item is not None else 0,
+            item.end_offset if item is not None else -1,
         )
         if (
             text.strip()
@@ -1136,7 +1197,7 @@ class Generator:
 
     @log_generator_output
     def _generate_nesting_level(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if args.get("startOffset") is not None and args.get("endOffset") is not None:
+        if self._get_start_offset() is not None and self._get_end_offset() is not None:
             return []
 
         level = self._get_nesting_level(obj)

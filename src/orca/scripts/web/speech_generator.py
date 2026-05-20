@@ -53,7 +53,7 @@ from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
-from orca.generator import PresentationReason
+from orca.generator import ContentItem, ContentPosition, PresentationReason
 
 if TYPE_CHECKING:
     from orca.speech_generator import SpeechGeneratorContext
@@ -81,14 +81,17 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_old_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if args.get("index", 0) > 0:
+        if self._get_content_position().index > 0:
             return []
 
         return super()._generate_old_ancestors(obj, **args)
 
     @log_generator_output
     def _generate_new_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if args.get("index", 0) > 0 and AXUtilities.find_ancestor(obj, AXUtilities.is_list) is None:
+        if (
+            self._get_content_position().index > 0
+            and AXUtilities.find_ancestor(obj, AXUtilities.is_list) is None
+        ):
             return []
 
         return super()._generate_new_ancestors(obj, **args)
@@ -313,12 +316,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         manager = input_event_manager.get_manager()
-        if manager.last_event_was_forward_caret_navigation() and args.get("startOffset"):
+        if manager.last_event_was_forward_caret_navigation() and self._get_start_offset():
             return []
         if (
             manager.last_event_was_backward_caret_navigation()
             and self._script.utilities.treat_as_text_object(obj)
-            and args.get("endOffset") not in [None, AXText.get_character_count(obj)]
+            and self._get_end_offset() not in [None, AXText.get_character_count(obj)]
         ):
             return []
 
@@ -378,7 +381,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         ):
             return []
 
-        if AXUtilities.is_link(obj) and args.get("string"):
+        if AXUtilities.is_link(obj) and self._get_content_string():
             return []
 
         if AXUtilities.has_visible_caption(obj):
@@ -517,10 +520,10 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return result
 
         role = args.get("role", AXObject.get_role(obj))
-        start = args.get("startOffset")
-        end = args.get("endOffset")
-        index = args.get("index", 0)
-        total = args.get("total", 1)
+        start = self._get_start_offset()
+        end = self._get_end_offset()
+        index = self._get_content_position().index
+        total = self._get_content_position().total
 
         ancestor_with_usable_role = self._get_ancestor_with_usable_role(obj, **args)
         if not self._should_speak_role(obj, **args):
@@ -594,7 +597,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     @log_generator_output
     def _generate_position_in_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if AXUtilities.is_list_item(obj):
-            if args.get("index", 0) + 1 < args.get("total", 1):
+            if self._get_content_position().index + 1 < self._get_content_position().total:
                 return []
 
         if not self._is_where_am_i():
@@ -654,7 +657,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             args["role"] = Atspi.Role.LINK
         elif AXUtilities.is_custom_image(obj):
             args["role"] = Atspi.Role.IMAGE
-        elif self._script.utilities.treat_as_div(obj, offset=args.get("startOffset")):
+        elif self._script.utilities.treat_as_div(obj, offset=self._get_start_offset()):
             args["role"] = Atspi.Role.SECTION
 
         if context.prior_obj is None:
@@ -663,8 +666,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if prior_context:
                 context = replace(context, prior_obj=prior_context[0])
 
-        start = args.get("startOffset", 0)
-        end = args.get("endOffset", -1)
+        item = self._get_content_item()
+        start = item.start_offset if item is not None else 0
+        end = item.end_offset if item is not None else -1
         language, dialect = self._script.utilities.get_language_and_dialect_for_substring(
             obj, start, end
         )
@@ -730,18 +734,12 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             elif announce_attrs:
                 prev_attrs = AXText.get_text_attributes_at_offset(obj, start)[0]
 
-            index = args.pop("index", i)
-            total = args.pop("total", len(contents))
-            utterance = self.generate_speech(
-                obj,
+            self._context = replace(
                 self._context,
-                startOffset=start,
-                endOffset=end,
-                string=string,
-                index=index,
-                total=total,
-                **args,
+                content_item=ContentItem(start_offset=start, end_offset=end, string=string),
+                content_position=ContentPosition(index=i, total=len(contents)),
             )
+            utterance = self.generate_speech(obj, self._context, **args)
             if isinstance(utterance, list):
 
                 def is_not_empty_list(x):

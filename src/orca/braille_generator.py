@@ -46,7 +46,13 @@ from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .braille_rolenames import short_role_names
-from .generator import GeneratorContext, GeneratorMode, PresentationReason
+from .generator import (
+    ContentItem,
+    ContentPosition,
+    GeneratorContext,
+    GeneratorMode,
+    PresentationReason,
+)
 
 if TYPE_CHECKING:
     from . import script
@@ -208,18 +214,17 @@ class BrailleGenerator(generator.Generator):
         last_region = None
         focused_region = None
         obj, offset = self._script.utilities.get_caret_context()
+        original_context = self._context
         for i, content in enumerate(contents):
             acc, start, end, string = content
-            regions, f_region = self.generate_braille(
-                acc,
-                self._context,
-                startOffset=start,
-                endOffset=end,
-                caretOffset=offset,
-                string=string,
-                index=i,
-                total=len(contents),
+            item_context = replace(
+                original_context,
+                content_item=ContentItem(
+                    start_offset=start, end_offset=end, string=string, caret_offset=offset
+                ),
+                content_position=ContentPosition(index=i, total=len(contents)),
             )
+            regions, f_region = self.generate_braille(acc, item_context)
             if not regions:
                 continue
 
@@ -238,6 +243,7 @@ class BrailleGenerator(generator.Generator):
             last_region = regions[-1]
             result.append(regions)
 
+        self._context = original_context
         return result, focused_region
 
     def get_localized_role_name(self, obj: Atspi.Accessible, **args) -> str:
@@ -484,9 +490,9 @@ class BrailleGenerator(generator.Generator):
                 self._as_string(
                     self._generate_eol(obj, **args) + self._generate_keyboard_mnemonic(obj, **args),
                 ),
-                args.get("startOffset"),
-                args.get("endOffset"),
-                args.get("caretOffset"),
+                self._get_start_offset(),
+                self._get_end_offset(),
+                self._get_caret_offset(),
             ),
         ]
 
@@ -861,8 +867,8 @@ class BrailleGenerator(generator.Generator):
                 obj,
                 "",
                 self._as_string(self._generate_eol(obj, **args)),
-                args.get("startOffset"),
-                args.get("endOffset"),
+                self._get_start_offset(),
+                self._get_end_offset(),
             ),
         ]
         return result
@@ -1195,9 +1201,9 @@ class BrailleGenerator(generator.Generator):
                     obj,
                     "",
                     self._as_string(self._generate_eol(obj, **args)),
-                    args.get("startOffset"),
-                    args.get("endOffset"),
-                    args.get("caretOffset"),
+                    self._get_start_offset(),
+                    self._get_end_offset(),
+                    self._get_caret_offset(),
                 ),
             ]
         else:
@@ -1731,9 +1737,9 @@ class BrailleGenerator(generator.Generator):
         result = [
             braille.Text(
                 obj,
-                start_offset=args.get("startOffset"),
-                end_offset=args.get("endOffset"),
-                caret_offset=args.get("caretOffset", self._get_offset()),
+                start_offset=self._get_start_offset(),
+                end_offset=self._get_end_offset(),
+                caret_offset=self._get_caret_offset(self._get_offset()),
             ),
         ]
         return result

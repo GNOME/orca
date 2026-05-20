@@ -25,6 +25,7 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
 from typing import TYPE_CHECKING, Any
 
 import gi
@@ -35,6 +36,7 @@ from gi.repository import Atspi
 from orca import braille, braille_generator, debug, messages, object_properties
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
+from orca.generator import ContentItem, ContentPosition
 
 if TYPE_CHECKING:
     from orca.braille_generator import BrailleGeneratorContext
@@ -103,7 +105,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                 ],
             )
 
-        if args.get("startOffset") is not None and args.get("endOffset") is not None:
+        if self._get_start_offset() is not None and self._get_end_offset() is not None:
             do_not_display.append(Atspi.Role.ALERT)
 
         result = []
@@ -125,7 +127,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             else:
                 result = super()._generate_accessible_role(obj, **args)
 
-        if args.get("index", 0) == args.get("total", 1) - 1 and (
+        if self._get_content_position().index == self._get_content_position().total - 1 and (
             AXUtilities.is_image(obj, args.get("role"))
             or self._script.utilities.treat_as_text_object(obj)
         ):
@@ -235,7 +237,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             args["role"] = Atspi.Role.IMAGE
         elif AXUtilities.is_anchor(obj):
             args["role"] = Atspi.Role.STATIC
-        elif self._script.utilities.treat_as_div(obj, offset=args.get("startOffset")):
+        elif self._script.utilities.treat_as_div(obj, offset=self._get_start_offset()):
             args["role"] = Atspi.Role.SECTION
 
         if AXUtilities.is_menu_item(obj):
@@ -272,18 +274,17 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         last_region = None
         focused_region = None
+        original_context = self._context
         for i, content in enumerate(contents):
             acc, start, end, string = content
-            regions, f_region = self.generate_braille(
-                acc,
-                self._context,
-                startOffset=start,
-                endOffset=end,
-                caretOffset=offset,
-                string=string,
-                index=i,
-                total=len(contents),
+            item_context = replace(
+                original_context,
+                content_item=ContentItem(
+                    start_offset=start, end_offset=end, string=string, caret_offset=offset
+                ),
+                content_position=ContentPosition(index=i, total=len(contents)),
             )
+            regions, f_region = self.generate_braille(acc, item_context)
             if not regions:
                 continue
 
@@ -302,4 +303,5 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             last_region = regions[-1]
             result.append(regions)
 
+        self._context = original_context
         return result, focused_region

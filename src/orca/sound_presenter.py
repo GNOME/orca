@@ -489,6 +489,8 @@ class SoundPresenter:
             offset=None,
             leaving=False,
             ancestor_of=None,
+            content_item=None,
+            content_position=None,
         )
 
     def present_generated_sound(
