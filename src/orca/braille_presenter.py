@@ -50,13 +50,13 @@ from . import (
 from .braille_generator import BrailleGeneratorContext
 from .command import Command, KeyboardCommand
 from .extension import Extension
+from .generator import PresentationReason
 from .orca_platform import tablesdir  # pylint: disable=import-error
 
 if TYPE_CHECKING:
     import gi
 
     from .dbus_service import UInt32
-    from .generator import WhereAmI
 
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
@@ -869,9 +869,8 @@ class BraillePresenter(Extension):
 
     def _build_generator_context(
         self,
-        where_am_i_type: WhereAmI | None = None,
+        reason: PresentationReason | None = None,
         prior_obj: Atspi.Accessible | None = None,
-        is_progress_bar_update: bool = False,
         offset: int | None = None,
     ) -> BrailleGeneratorContext:
         """Builds the settings context for braille generators."""
@@ -883,14 +882,11 @@ class BraillePresenter(Extension):
             enabled=self.use_braille(),
             verbose=self.use_verbose_braille(),
             focus=mgr.get_locus_of_focus(),
-            in_say_all=mgr.in_say_all(),
             in_focus_mode=document_presenter.get_presenter().get_in_focus_mode(),
             active_mode=active_mode,
-            where_am_i_type=where_am_i_type,
+            reason=reason or PresentationReason.FOCUS_CHANGE,
             prior_obj=prior_obj,
-            is_progress_bar_update=is_progress_bar_update,
             offset=offset,
-            format_type="unfocused",
             leaving=False,
             ancestor_of=None,
             full_rolenames=self.use_full_rolenames(),
@@ -932,8 +928,7 @@ class BraillePresenter(Extension):
         obj: Atspi.Accessible,
         *,
         prior_obj: Atspi.Accessible | None = None,
-        where_am_i_type: WhereAmI | None = None,
-        is_progress_bar_update: bool = False,
+        reason: PresentationReason | None = None,
         offset: int | None = None,
     ) -> None:
         """Generates braille for obj using the script's braille generator and displays it."""
@@ -942,9 +937,8 @@ class BraillePresenter(Extension):
             return
 
         context = self._build_generator_context(
-            where_am_i_type,
+            reason,
             prior_obj=prior_obj,
-            is_progress_bar_update=is_progress_bar_update,
             offset=offset,
         )
         generator = script.get_braille_generator()

@@ -43,11 +43,10 @@ from . import (
     preferences_grid_base,
     sound,
 )
-from .generator import GeneratorContext
+from .generator import GeneratorContext, PresentationReason
 
 if TYPE_CHECKING:
     from .dbus_service import UInt32
-    from .generator import WhereAmI
     from .scripts import default
     from .sound import Icon, Tone
 
@@ -471,9 +470,8 @@ class SoundPresenter:
 
     def _build_generator_context(
         self,
-        where_am_i_type: WhereAmI | None = None,
+        reason: PresentationReason | None = None,
         prior_obj: Atspi.Accessible | None = None,
-        is_progress_bar_update: bool = False,
     ) -> GeneratorContext:
         """Builds the settings context for sound generators."""
 
@@ -484,14 +482,11 @@ class SoundPresenter:
             enabled=self.get_sound_is_enabled(),
             verbose=False,
             focus=mgr.get_locus_of_focus(),
-            in_say_all=mgr.in_say_all(),
             in_focus_mode=document_presenter.get_presenter().get_in_focus_mode(),
             active_mode=active_mode,
-            where_am_i_type=where_am_i_type,
+            reason=reason or PresentationReason.FOCUS_CHANGE,
             prior_obj=prior_obj,
-            is_progress_bar_update=is_progress_bar_update,
             offset=None,
-            format_type="unfocused",
             leaving=False,
             ancestor_of=None,
         )
@@ -502,15 +497,13 @@ class SoundPresenter:
         obj: Atspi.Accessible,
         *,
         prior_obj: Atspi.Accessible | None = None,
-        where_am_i_type: WhereAmI | None = None,
-        is_progress_bar_update: bool = False,
+        reason: PresentationReason | None = None,
     ) -> None:
         """Generates sound for obj using the script's sound generator and plays it."""
 
         context = self._build_generator_context(
-            where_am_i_type,
+            reason,
             prior_obj=prior_obj,
-            is_progress_bar_update=is_progress_bar_update,
         )
         sounds = script.get_sound_generator().generate_sound(obj, context)
         self.play(sounds)

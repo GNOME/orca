@@ -27,7 +27,7 @@ from orca import debug, messages, speech_generator, table_navigator
 from orca.ax_object import AXObject
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
-from orca.generator import WhereAmI
+from orca.generator import PresentationReason
 
 if TYPE_CHECKING:
     import gi
@@ -116,7 +116,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
     @log_generator_output
     def _generate_real_table_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if self._context.in_say_all:
+        if self._is_say_all():
             return []
 
         result = super()._generate_real_table_cell(obj, **args)
@@ -131,7 +131,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         if (
             self._context.announce_spreadsheet_cell_coordinates
-            or self._context.where_am_i_type == WhereAmI.BASIC
+            or self._get_reason() == PresentationReason.WHERE_AM_I_BASIC
         ):
             label = AXUtilities.get_label_for_cell_coordinates(
                 obj,

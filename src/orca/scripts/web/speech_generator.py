@@ -53,7 +53,7 @@ from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
-from orca.generator import WhereAmI
+from orca.generator import PresentationReason
 
 if TYPE_CHECKING:
     from orca.speech_generator import SpeechGeneratorContext
@@ -215,7 +215,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 return []
 
         if AXUtilities.is_text(obj, args.get("role")) and (
-            self._context.where_am_i_type != WhereAmI.BASIC
+            self._get_reason() != PresentationReason.WHERE_AM_I_BASIC
         ):
             return []
 
@@ -309,7 +309,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._is_leaving():
             return []
 
-        if self._context.in_say_all:
+        if self._is_say_all():
             return []
 
         manager = input_event_manager.get_manager()
@@ -534,7 +534,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if is_editable and not self._script.utilities.is_content_editable_with_embedded_objects(
             obj,
         ):
-            if self._context.in_say_all and start:
+            if self._is_say_all() and start:
                 return []
             if mgr.last_event_was_forward_caret_navigation() and start:
                 return []
@@ -597,7 +597,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             if args.get("index", 0) + 1 < args.get("total", 1):
                 return []
 
-        if self._context.where_am_i_type is None:
+        if not self._is_where_am_i():
             if self._get_prior_obj() == obj:
                 return []
 
@@ -754,11 +754,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         self._context = original_context
 
         if not result:
-            if (
-                self._context.in_say_all
-                or not self._context.speak_blank_lines
-                or self._get_format_type() == "ancestor"
-            ):
+            if self._is_say_all() or not self._context.speak_blank_lines or self._is_ancestor():
                 string = ""
             else:
                 string = messages.BLANK

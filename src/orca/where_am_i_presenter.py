@@ -47,7 +47,7 @@ from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
 from .command import Command, KeyboardCommand
 from .extension import Extension
-from .generator import WhereAmI
+from .generator import PresentationReason
 
 if TYPE_CHECKING:
     import gi
@@ -590,9 +590,9 @@ class WhereAmIPresenter(Extension):
             return True
 
         if basic_only:
-            where_am_i_type = WhereAmI.BASIC
+            reason = PresentationReason.WHERE_AM_I_BASIC
         else:
-            where_am_i_type = WhereAmI.DETAILED
+            reason = PresentationReason.WHERE_AM_I_DETAILED
 
         def real_object(acc: Atspi.Accessible) -> Atspi.Accessible:
             if AXUtilities.is_focused(acc):
@@ -611,7 +611,7 @@ class WhereAmIPresenter(Extension):
 
         script.present_object(
             real_object(obj),
-            where_am_i_type=where_am_i_type,
+            reason=reason,
         )
 
         return True

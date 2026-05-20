@@ -362,8 +362,7 @@ class SoundGenerator(generator.Generator):
     def _generate_check_box(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates sound for the check-box role."""
 
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             return self._generate_state_checked(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -378,8 +377,7 @@ class SoundGenerator(generator.Generator):
     def _generate_check_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates sound for the check-menu-item role."""
 
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             return self._generate_state_checked(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -404,8 +402,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the combo-box role."""
 
         result = []
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             result += self._generate_state_expanded(obj, **args)
             return result
 
@@ -474,8 +471,7 @@ class SoundGenerator(generator.Generator):
     def _generate_dial(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates sound for the dial role."""
 
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             return self._generate_value_as_percentage(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -628,8 +624,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the heading role."""
 
         result = []
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             result += self._generate_state_expanded(obj, **args)
             return result
 
@@ -696,8 +691,7 @@ class SoundGenerator(generator.Generator):
     def _generate_level_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates sound for the level-bar role."""
 
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             return self._generate_value_as_percentage(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -713,8 +707,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the link role."""
 
         result = []
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             result += self._generate_state_expanded(obj, **args)
             return result
 
@@ -742,8 +735,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the list-item role."""
 
         result = []
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             result += self._generate_state_expanded(obj, **args)
             return result
 
@@ -788,8 +780,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the menu-item role."""
 
         result = []
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             result += self._generate_state_expanded(obj, **args)
             return result
 
@@ -854,8 +845,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the progress-bar role."""
 
         result = []
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             result += self._generate_progress_bar_value(obj, **args)
             return result
 
@@ -868,8 +858,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the push-button role."""
 
         result = []
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             result += self._generate_state_expanded(obj, **args)
             return result
 
@@ -888,8 +877,7 @@ class SoundGenerator(generator.Generator):
     def _generate_radio_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates sound for the radio-button role."""
 
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             return self._generate_state_selected_for_radio_button(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -903,8 +891,7 @@ class SoundGenerator(generator.Generator):
     def _generate_radio_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates sound for the radio-menu-item role."""
 
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             return self._generate_state_selected_for_radio_button(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -943,8 +930,7 @@ class SoundGenerator(generator.Generator):
     def _generate_scroll_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates sound for the scroll-bar role."""
 
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             return self._generate_value_as_percentage(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -971,8 +957,7 @@ class SoundGenerator(generator.Generator):
     def _generate_slider(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates sound for the slider role."""
 
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             return self._generate_value_as_percentage(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -987,8 +972,7 @@ class SoundGenerator(generator.Generator):
     def _generate_spin_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates sound for the spin-button role."""
 
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             return self._generate_value_as_percentage(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -1003,8 +987,7 @@ class SoundGenerator(generator.Generator):
     def _generate_split_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates sound for the split-pane role."""
 
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             return self._generate_value_as_percentage(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -1042,8 +1025,7 @@ class SoundGenerator(generator.Generator):
     def _generate_switch(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates sound for the switch role."""
 
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             return self._generate_state_checked_for_switch(obj, **args)
 
         result = self._generate_default_prefix(obj, **args)
@@ -1062,8 +1044,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the table-cell role."""
 
         result = []
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             result += self._generate_state_expanded(obj, **args)
             return result
 
@@ -1087,8 +1068,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the table-row role."""
 
         result = []
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             result += self._generate_state_expanded(obj, **args)
             return result
 
@@ -1132,8 +1112,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the toggle-button role."""
 
         result = []
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             return self._generate_state_expanded(obj, **args) or self._generate_state_pressed(
                 obj,
                 **args,
@@ -1168,8 +1147,7 @@ class SoundGenerator(generator.Generator):
         """Generates sound for the tree-item role."""
 
         result = []
-        format_type = self._get_format_type()
-        if format_type == "ancestor" or self._get_prior_obj() == obj:
+        if self._is_ancestor() or self._is_minimal():
             result += self._generate_state_expanded(obj, **args)
             return result
 

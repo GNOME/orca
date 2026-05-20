@@ -69,7 +69,7 @@ from .speech_generator import SpeechGenerator
 if TYPE_CHECKING:
     from gi.repository import Atspi
 
-    from orca.generator import WhereAmI
+    from orca.generator import PresentationReason
 
 
 class Script(default.Script):
@@ -240,7 +240,7 @@ class Script(default.Script):
         prior_obj: Atspi.Accessible | None = None,
         generate_speech: bool = True,
         generate_braille: bool = True,
-        where_am_i_type: WhereAmI | None = None,
+        reason: PresentationReason | None = None,
     ) -> None:
         if obj is None:
             return
@@ -252,7 +252,7 @@ class Script(default.Script):
                 prior_obj=prior_obj,
                 generate_speech=generate_speech,
                 generate_braille=generate_braille,
-                where_am_i_type=where_am_i_type,
+                reason=reason,
             )
             return
 
@@ -264,7 +264,7 @@ class Script(default.Script):
                 prior_obj=prior_obj,
                 generate_speech=generate_speech,
                 generate_braille=generate_braille,
-                where_am_i_type=where_am_i_type,
+                reason=reason,
             )
             return
 
@@ -277,7 +277,7 @@ class Script(default.Script):
                 prior_obj=prior_obj,
                 generate_speech=generate_speech,
                 generate_braille=generate_braille,
-                where_am_i_type=where_am_i_type,
+                reason=reason,
             )
             return
 
@@ -308,7 +308,7 @@ class Script(default.Script):
                 prior_obj=prior_obj,
                 generate_speech=generate_speech,
                 generate_braille=generate_braille,
-                where_am_i_type=where_am_i_type,
+                reason=reason,
             )
             return
 
@@ -335,7 +335,7 @@ class Script(default.Script):
             presenter.speak_contents(
                 contents,
                 priorObj=prior_obj,
-                where_am_i_type=where_am_i_type,
+                reason=reason,
             )
 
     def _update_braille_caret_position(self, obj: Atspi.Accessible) -> None:

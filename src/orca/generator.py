@@ -37,7 +37,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import braille, debug, messages, object_properties
+from . import braille, debug, focus_manager, messages, object_properties
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -59,11 +59,14 @@ class GeneratorMode(Enum):
     SOUND = "sound"
 
 
-class WhereAmI(Enum):
-    """Where-am-I detail level."""
+class PresentationReason(Enum):
+    """Why a presentation is being generated, beyond what active_mode captures."""
 
-    BASIC = "basic"
-    DETAILED = "detailed"
+    FOCUS_CHANGE = "focus-change"
+    STATE_CHANGE = "state-change"
+    PROGRESS_BAR_UPDATE = "progress-bar-update"
+    WHERE_AM_I_BASIC = "where-am-i-basic"
+    WHERE_AM_I_DETAILED = "where-am-i-detailed"
 
 
 @dataclass(frozen=True)
@@ -73,14 +76,11 @@ class GeneratorContext:
     enabled: bool
     verbose: bool
     focus: Atspi.Accessible | None
-    in_say_all: bool
     in_focus_mode: bool
     active_mode: str | None
-    where_am_i_type: WhereAmI | None
+    reason: PresentationReason
     prior_obj: Atspi.Accessible | None
-    is_progress_bar_update: bool
     offset: int | None
-    format_type: str
     leaving: bool
     ancestor_of: Atspi.Accessible | None
 
@@ -288,9 +288,35 @@ class Generator:
     def _is_progress_bar_update(self) -> bool:
         """Returns True if this is a progress bar update presentation."""
 
+        return self._get_reason() == PresentationReason.PROGRESS_BAR_UPDATE
+
+    def _get_reason(self) -> PresentationReason:
+        """Returns the reason this presentation is being generated."""
+
         if self._context is None:
-            return False
-        return self._context.is_progress_bar_update
+            return PresentationReason.FOCUS_CHANGE
+        return self._context.reason
+
+    def _is_where_am_i(self) -> bool:
+        """Returns True if this is a where-am-i presentation (basic or detailed)."""
+
+        return self._get_reason() in (
+            PresentationReason.WHERE_AM_I_BASIC,
+            PresentationReason.WHERE_AM_I_DETAILED,
+        )
+
+    def _is_minimal(self) -> bool:
+        """Returns True if only the changed state/value should be presented."""
+
+        return self._get_reason() in (
+            PresentationReason.STATE_CHANGE,
+            PresentationReason.PROGRESS_BAR_UPDATE,
+        )
+
+    def _is_say_all(self) -> bool:
+        """Returns True if this presentation is part of a say-all read."""
+
+        return self._context is not None and self._context.active_mode == focus_manager.SAY_ALL
 
     def _get_offset(self) -> int | None:
         """Returns the caller-supplied caret offset from the context."""
@@ -298,13 +324,6 @@ class Generator:
         if self._context is None:
             return None
         return self._context.offset
-
-    def _get_format_type(self) -> str:
-        """Returns the presentation format type from the context."""
-
-        if self._context is None:
-            return "unfocused"
-        return self._context.format_type
 
     def _is_leaving(self) -> bool:
         """Returns True if this presentation is leaving an ancestor chain."""
@@ -319,6 +338,11 @@ class Generator:
         if self._context is None:
             return None
         return self._context.ancestor_of
+
+    def _is_ancestor(self) -> bool:
+        """Returns True if an ancestor (not the leaf object) is being presented."""
+
+        return self._get_ancestor_of() is not None
 
     def generate(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns the presentation of the object."""
@@ -593,7 +617,7 @@ class Generator:
             Generator.CACHED_STATIC_TEXT[hash(obj)] = result
             return result
 
-        if self._get_format_type() != "ancestor":
+        if not self._is_ancestor():
             result = self._generate_text_expanding_embedded_objects(obj, **args)
             if result:
                 Generator.CACHED_STATIC_TEXT[hash(obj)] = result
@@ -1234,7 +1258,7 @@ class Generator:
     ) -> list[Any]:
         present_all = (
             reading_row
-            or self._context.where_am_i_type == WhereAmI.DETAILED
+            or self._get_reason() == PresentationReason.WHERE_AM_I_DETAILED
             or self._script.utilities.should_read_full_row(obj, self._get_prior_obj())
         )
 
@@ -1346,7 +1370,7 @@ class Generator:
         if not self._get_is_nameless_toggle(obj):
             role_string = self.get_localized_role_name(obj, role=Atspi.Role.COLUMN_HEADER)
             if self._mode is GeneratorMode.SPEECH:
-                if self._context.verbose and self._context.where_am_i_type is None:
+                if self._context.verbose and not self._is_where_am_i():
                     text = f"{text} {role_string}"
             elif self._mode is GeneratorMode.BRAILLE and self._context.verbose:
                 text = f"{text} {role_string}"
@@ -1388,7 +1412,7 @@ class Generator:
         text = ". ".join(tokens)
         role_string = self.get_localized_role_name(obj, role=Atspi.Role.ROW_HEADER)
         if self._mode is GeneratorMode.SPEECH:
-            if self._context.verbose and self._context.where_am_i_type is None:
+            if self._context.verbose and not self._is_where_am_i():
                 text = f"{text} {role_string}"
         elif self._mode is GeneratorMode.BRAILLE and self._context.verbose:
             text = f"{text} {role_string}"

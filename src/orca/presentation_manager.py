@@ -45,6 +45,7 @@ from . import (
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
+from .generator import PresentationReason
 
 if TYPE_CHECKING:
     import gi
@@ -52,7 +53,6 @@ if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
-    from .generator import WhereAmI
     from .input_event import KeyboardEvent
     from .scripts import default
     from .sound import Icon, Tone
@@ -382,15 +382,14 @@ class PresentationManager:
         generate_braille: bool = True,
         generate_sound: bool = False,
         prior_obj: Atspi.Accessible | None = None,
-        where_am_i_type: WhereAmI | None = None,
-        is_progress_bar_update: bool = False,
+        reason: PresentationReason | None = None,
     ) -> None:
         """Generates and presents an object via speech, braille, and sound."""
 
         if obj is None:
             return
 
-        if is_progress_bar_update:
+        if reason == PresentationReason.PROGRESS_BAR_UPDATE:
             percent = AXValue.get_value_as_percent(obj)
             is_same_app = (
                 AXUtilities.get_application(obj)
@@ -431,8 +430,7 @@ class PresentationManager:
                 script,
                 obj,
                 prior_obj=prior_obj,
-                where_am_i_type=where_am_i_type,
-                is_progress_bar_update=is_progress_bar_update,
+                reason=reason,
             )
 
         if generate_braille:
@@ -440,8 +438,7 @@ class PresentationManager:
                 script,
                 obj,
                 prior_obj=prior_obj,
-                where_am_i_type=where_am_i_type,
-                is_progress_bar_update=is_progress_bar_update,
+                reason=reason,
             )
 
         if generate_sound:
@@ -449,8 +446,7 @@ class PresentationManager:
                 script,
                 obj,
                 prior_obj=prior_obj,
-                where_am_i_type=where_am_i_type,
-                is_progress_bar_update=is_progress_bar_update,
+                reason=reason,
             )
 
     def speak_contents(

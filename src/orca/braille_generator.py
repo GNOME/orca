@@ -46,7 +46,7 @@ from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .braille_rolenames import short_role_names
-from .generator import GeneratorContext, GeneratorMode, WhereAmI
+from .generator import GeneratorContext, GeneratorMode, PresentationReason
 
 if TYPE_CHECKING:
     from . import script
@@ -322,7 +322,7 @@ class BrailleGenerator(generator.Generator):
 
         result: list[Any] = []
         original_context = self._context
-        self._context = replace(original_context, format_type="ancestor")
+        self._context = replace(original_context, ancestor_of=obj)
         parent = AXObject.get_parent_checked(obj)
         if parent and (AXObject.get_role(parent) in self.SKIP_CONTEXT_ROLES):
             parent = AXObject.get_parent_checked(parent)
@@ -353,7 +353,8 @@ class BrailleGenerator(generator.Generator):
 
     def _generate_keyboard_mnemonic(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not (
-            self._context.present_mnemonics or self._context.where_am_i_type == WhereAmI.DETAILED
+            self._context.present_mnemonics
+            or self._get_reason() == PresentationReason.WHERE_AM_I_DETAILED
         ):
             return []
 
@@ -424,7 +425,7 @@ class BrailleGenerator(generator.Generator):
     def _generate_default_presentation(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Provides a default/role-agnostic presentation of obj."""
 
-        if self._get_format_type() == "ancestor":
+        if self._is_ancestor():
             result = [
                 braille.Component(
                     obj,
@@ -1215,8 +1216,7 @@ class BrailleGenerator(generator.Generator):
         if level:
             result += [braille.Region(" " + self._as_string(level))]
 
-        format_type = self._get_format_type()
-        if format_type != "ancestor":
+        if not self._is_ancestor():
             result += self._generate_descendants(obj, **args)
         return result
 
