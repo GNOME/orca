@@ -64,6 +64,7 @@ unit_tests = [
   'unit_tests/test_script_manager.py',
   'unit_tests/test_sleep_mode_manager.py',
   'unit_tests/test_sound_presenter.py',
+  'unit_tests/test_speech_generator.py',
   'unit_tests/test_speech_manager.py',
   'unit_tests/test_speech_presenter.py',
   'unit_tests/test_spellcheck_presenter.py',

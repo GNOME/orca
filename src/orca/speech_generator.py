@@ -385,6 +385,7 @@ class SpeechGenerator(generator.Generator):
         context: SpeechGeneratorContext | None = None,
         *,
         obj: Atspi.Accessible | None = None,
+        string: str | None = None,
         language: str = "",
         dialect: str = "",
         **args,
@@ -434,7 +435,7 @@ class SpeechGenerator(generator.Generator):
                 server,
                 language,
                 dialect,
-                self._get_content_string() or "",
+                string if string is not None else self._get_content_string() or "",
                 language_from_content,
             )
         else:
