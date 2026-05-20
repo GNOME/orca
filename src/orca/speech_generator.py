@@ -1804,14 +1804,12 @@ class SpeechGenerator(generator.Generator):
 
     # TODO - JD: This function and fake role really need to die....
     @log_generator_output
-    def _generate_real_table_cell(
-        self, obj: Atspi.Accessible, *, reading_row: bool = False, **args
-    ) -> list[Any]:
-        result = super()._generate_real_table_cell(obj, reading_row=reading_row, **args)
+    def _generate_real_table_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
+        result = super()._generate_real_table_cell(obj, **args)
         if (
             not (result and result[0])
             and self._context.speak_blank_lines
-            and not reading_row
+            and not self._reading_row
             and not self._is_ancestor()
         ):
             result.append(messages.BLANK)
@@ -1824,9 +1822,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     @log_generator_output
-    def _generate_table_cell_column_header(
-        self, obj: Atspi.Accessible, *, reading_row: bool = False, **args
-    ) -> list[Any]:
+    def _generate_table_cell_column_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not self._context.announce_cell_headers:
             return []
 
@@ -1845,7 +1841,6 @@ class SpeechGenerator(generator.Generator):
         result = super()._generate_table_cell_column_header(
             obj,
             new_only=not self._get_is_nameless_toggle(obj),
-            reading_row=reading_row,
             **args,
         )
         if result:
@@ -1853,10 +1848,8 @@ class SpeechGenerator(generator.Generator):
         return result
 
     @log_generator_output
-    def _generate_table_cell_row_header(
-        self, obj: Atspi.Accessible, *, reading_row: bool = False, **args
-    ) -> list[Any]:
-        if reading_row:
+    def _generate_table_cell_row_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
+        if self._reading_row:
             return []
 
         if not self._context.announce_cell_headers:
@@ -1870,9 +1863,7 @@ class SpeechGenerator(generator.Generator):
         ):
             return []
 
-        result = super()._generate_table_cell_row_header(
-            obj, new_only=True, reading_row=reading_row, **args
-        )
+        result = super()._generate_table_cell_row_header(obj, new_only=True, **args)
         if result:
             result.extend(self.voice(DEFAULT, obj=obj, **args))
         return result
@@ -1913,10 +1904,8 @@ class SpeechGenerator(generator.Generator):
         return result
 
     @log_generator_output
-    def _generate_table_cell_column_index(
-        self, obj: Atspi.Accessible, *, reading_row: bool = False, **args
-    ) -> list[Any]:
-        if reading_row:
+    def _generate_table_cell_column_index(self, obj: Atspi.Accessible, **args) -> list[Any]:
+        if self._reading_row:
             return []
 
         if not self._context.announce_cell_coordinates:
@@ -1934,13 +1923,11 @@ class SpeechGenerator(generator.Generator):
         return result
 
     @log_generator_output
-    def _generate_table_cell_row_index(
-        self, obj: Atspi.Accessible, *, reading_row: bool = False, **args
-    ) -> list[Any]:
+    def _generate_table_cell_row_index(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if not AXUtilities.cell_row_changed(obj):
             return []
 
-        if reading_row:
+        if self._reading_row:
             return []
 
         if not self._context.announce_cell_coordinates:
@@ -2217,12 +2204,10 @@ class SpeechGenerator(generator.Generator):
 
     ################################### PER-ROLE ###################################
 
-    def _generate_default_prefix(
-        self, obj: Atspi.Accessible, *, include_context: bool = True, **args
-    ) -> list[Any]:
+    def _generate_default_prefix(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Provides the default/role-agnostic information to present before obj."""
 
-        if not include_context:
+        if not self._include_context():
             return []
 
         if self._is_ancestor() or self._is_minimal():
@@ -2253,12 +2238,10 @@ class SpeechGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_default_suffix(
-        self, obj: Atspi.Accessible, *, include_context: bool = True, **args
-    ) -> list[Any]:
+    def _generate_default_suffix(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Provides the default/role-agnostic information to present after obj."""
 
-        if not include_context:
+        if not self._include_context():
             return []
 
         if obj == self._get_prior_obj():
@@ -3832,15 +3815,13 @@ class SpeechGenerator(generator.Generator):
         result += self._generate_default_suffix(obj, **args)
         return result
 
-    def _generate_table_cell(
-        self, obj: Atspi.Accessible, *, reading_row: bool = False, **args
-    ) -> list[Any]:
+    def _generate_table_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates speech for the table-cell role."""
 
         # TODO - JD: There should be separate generators for each type of cell.
         result = self._generate_default_prefix(obj, **args)
-        result += self._generate_table_cell_row_header(obj, reading_row=reading_row, **args)
-        result += self._generate_table_cell_column_header(obj, reading_row=reading_row, **args)
+        result += self._generate_table_cell_row_header(obj, **args)
+        result += self._generate_table_cell_column_header(obj, **args)
         result += self._generate_state_checked_for_cell(obj, **args)
         result += (
             self._generate_real_active_descendant_displayed_text(obj, **args)

@@ -892,6 +892,7 @@ class BraillePresenter(Extension):
             content_item=None,
             content_position=None,
             resolved_role=None,
+            include_context=True,
             full_rolenames=self.use_full_rolenames(),
             display_ancestors=self.get_display_ancestors(),
             end_of_line_indicator=self.get_end_of_line_indicator_is_enabled(),

@@ -2898,6 +2898,7 @@ class SpeechPresenter(Extension):
             content_item=None,
             content_position=None,
             resolved_role=None,
+            include_context=True,
             in_preferences_window=mgr.is_in_preferences_window(),
             auto_language_switching_content=speech_mgr.get_auto_language_switching(),
             only_switch_configured_languages=speech_mgr.get_only_switch_configured_languages(),

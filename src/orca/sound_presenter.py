@@ -492,6 +492,7 @@ class SoundPresenter:
             content_item=None,
             content_position=None,
             resolved_role=None,
+            include_context=True,
         )
 
     def present_generated_sound(

@@ -104,6 +104,7 @@ class GeneratorContext:
     content_item: ContentItem | None
     content_position: ContentPosition | None
     resolved_role: Atspi.Role | str | None
+    include_context: bool
 
 
 class Generator:
@@ -129,6 +130,8 @@ class Generator:
         self._mode: GeneratorMode = mode
         self._script: Script = script
         self._context: GeneratorContext = None  # type: ignore[assignment]
+        self._reading_row: bool = False
+        self._is_generating_descendants: bool = False
         self._active_progress_bars: dict[Atspi.Accessible, tuple[float, Any]] = {}
         self._generators = {
             Atspi.Role.ALERT: self._generate_alert,
@@ -411,8 +414,18 @@ class Generator:
             return AXObject.get_role(obj)
         return role
 
+    def _include_context(self) -> bool:
+        """Returns whether to present obj framed in its surrounding context (ancestry + suffix)."""
+
+        return self._context is None or self._context.include_context
+
     def generate(
-        self, obj: Atspi.Accessible, *, role: Atspi.Role | str | None = None, **args
+        self,
+        obj: Atspi.Accessible,
+        *,
+        role: Atspi.Role | str | None = None,
+        include_context: bool = True,
+        **args,
     ) -> list[Any]:
         """Returns the presentation of obj; role overrides the dispatch/treat-as role."""
 
@@ -430,7 +443,9 @@ class Generator:
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         original_context = self._context
-        self._context = replace(original_context, resolved_role=resolved_role)
+        self._context = replace(
+            original_context, resolved_role=resolved_role, include_context=include_context
+        )
         result = _generator(obj, **args)  # type: ignore[misc]
         self._context = original_context
 
@@ -524,10 +539,8 @@ class Generator:
         return False
 
     @log_generator_output
-    def _generate_accessible_description(
-        self, obj: Atspi.Accessible, *, omit_description: bool = False, **args
-    ) -> list[Any]:
-        if omit_description or AXUtilities.is_terminal(obj):
+    def _generate_accessible_description(self, obj: Atspi.Accessible, **args) -> list[Any]:
+        if self._is_generating_descendants or AXUtilities.is_terminal(obj):
             return []
 
         obj_hash = hash(obj)
@@ -801,16 +814,19 @@ class Generator:
         used_description_as_static_text = False
         obj_desc = AXObject.get_description(obj) or AXUtilities.get_displayed_description(obj)
 
+        prior_generating_descendants = self._is_generating_descendants
+        self._is_generating_descendants = True
         for child in descendants:
             if AXUtilities.is_label(child):
                 if self._strings_are_redundant(obj_desc, AXObject.get_name(child)):
                     used_description_as_static_text = True
 
-            child_result = self.generate(child, include_context=False, omit_description=True)
+            child_result = self.generate(child, include_context=False)
 
             if child_result:
                 result.extend(child_result)
                 result.extend(self._generate_result_separator(child, **args))
+        self._is_generating_descendants = prior_generating_descendants
 
         Generator.USED_DESCRIPTION_FOR_STATIC_TEXT[hash(obj)] = used_description_as_static_text
         return result
@@ -909,7 +925,6 @@ class Generator:
     def _generate_state_checked_for_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
         result = []
         if self._script.utilities.has_meaningful_toggle_action(obj):
-            args.pop("include_context", None)
             result.extend(
                 self.generate(obj, role=Atspi.Role.CHECK_BOX, include_context=False, **args)
             )
@@ -1303,13 +1318,9 @@ class Generator:
 
     # TODO - JD: This function and fake role really need to die....
     @log_generator_output
-    def _generate_real_table_cell(
-        self, obj: Atspi.Accessible, *, reading_row: bool = False, **args
-    ) -> list[Any]:
+    def _generate_real_table_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
         result = []
-        result.extend(
-            self.generate(obj, role="REAL_ROLE_TABLE_CELL", reading_row=reading_row, **args)
-        )
+        result.extend(self.generate(obj, role="REAL_ROLE_TABLE_CELL", **args))
         return result
 
     def _get_is_nameless_toggle(self, obj):
@@ -1330,11 +1341,9 @@ class Generator:
 
     # TODO - JD: This is part of the complicated "REAL_ROLE_TABLE_CELL" mess.
     @log_generator_output
-    def _generate_table_cell_row(
-        self, obj: Atspi.Accessible, *, reading_row: bool = False, **args
-    ) -> list[Any]:
+    def _generate_table_cell_row(self, obj: Atspi.Accessible, **args) -> list[Any]:
         present_all = (
-            reading_row
+            self._reading_row
             or self._get_reason() == PresentationReason.WHERE_AM_I_DETAILED
             or self._script.utilities.should_read_full_row(obj, self._get_prior_obj())
         )
@@ -1352,26 +1361,22 @@ class Generator:
             clip_to_window=AXUtilities.is_spreadsheet_cell(obj),
         )
 
-        # Drop pre-calculated values that apply only to obj and not to the row cells.
-        do_not_include = ["startOffset", "endOffset", "string"]
-        other_cell_args = args.copy()
-        for arg in do_not_include:
-            other_cell_args.pop(arg, None)
-
         original_context = self._context
         prior = original_context.prior_obj
+        prior_reading_row = self._reading_row
+        self._reading_row = True
         for cell in cells:
-            self._context = replace(original_context, prior_obj=prior)
-            if cell == obj:
-                cell_result = self._generate_real_table_cell(cell, reading_row=True, **args)
-            else:
-                cell_result = self._generate_real_table_cell(
-                    cell, reading_row=True, **other_cell_args
-                )
+            cell_context = replace(original_context, prior_obj=prior)
+            # The content slice applies only to obj, not to the other cells in the row.
+            if cell != obj:
+                cell_context = replace(cell_context, content_item=None)
+            self._context = cell_context
+            cell_result = self._generate_real_table_cell(cell, **args)
             if cell_result and result and self._mode is GeneratorMode.BRAILLE:
                 result.append(braille.Region(object_properties.TABLE_CELL_DELIMITER_BRAILLE))
             result.extend(cell_result)
             prior = cell
+        self._reading_row = prior_reading_row
         self._context = original_context
 
         result.extend(self._generate_position_in_list(obj, **args))
@@ -1418,10 +1423,9 @@ class Generator:
         obj: Atspi.Accessible,
         *,
         new_only: bool = False,
-        reading_row: bool = False,
         **args,
     ) -> list[Any]:
-        if reading_row and not self._get_is_nameless_toggle(obj):
+        if self._reading_row and not self._get_is_nameless_toggle(obj):
             return []
 
         result: list[Any] = []
@@ -1461,10 +1465,9 @@ class Generator:
         obj: Atspi.Accessible,
         *,
         new_only: bool = False,
-        reading_row: bool = False,
         **args,
     ) -> list[Any]:
-        if reading_row:
+        if self._reading_row:
             return []
 
         result: list[Any] = []

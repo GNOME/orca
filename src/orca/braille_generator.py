@@ -399,12 +399,10 @@ class BrailleGenerator(generator.Generator):
 
     ################################### PER-ROLE ####################################
 
-    def _generate_default_prefix(
-        self, obj: Atspi.Accessible, *, include_context: bool = True, **args
-    ) -> list[Any]:
+    def _generate_default_prefix(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Provides the default/role-agnostic information to present before obj."""
 
-        if not include_context:
+        if not self._include_context():
             return []
 
         if self._is_progress_bar_update():
@@ -1680,19 +1678,20 @@ class BrailleGenerator(generator.Generator):
         if self._generate_text_substring(obj, **args):
             return self._generate_text_object(obj, **args)
 
-        # We override include_context for the sub-calls below, so drop any
-        # inherited value to avoid passing it twice.
-        args.pop("include_context", None)
-        result = self._generate_default_prefix(obj, include_context=False, **args)
-        row_header = self._generate_table_cell_row_header(obj, include_context=False, **args)
+        # The cell's prefix/headers/row are presented without their own surrounding context.
+        original_context = self._context
+        self._context = replace(original_context, include_context=False)
+        result = self._generate_default_prefix(obj, **args)
+        row_header = self._generate_table_cell_row_header(obj, **args)
         if row_header:
             result += [braille.Region(" " + self._as_string(row_header))]
-        column_header = self._generate_table_cell_column_header(obj, include_context=False, **args)
+        column_header = self._generate_table_cell_column_header(obj, **args)
         if column_header:
             result += [braille.Region(" " + self._as_string(column_header))]
         if row_header or column_header:
             result += [braille.Region(" ")]
-        result += self._generate_table_cell_row(obj, include_context=False, **args)
+        result += self._generate_table_cell_row(obj, **args)
+        self._context = original_context
         return result
 
     def _generate_table_column_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
