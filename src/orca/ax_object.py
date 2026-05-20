@@ -47,6 +47,7 @@ class AXObject:
 
     KNOWN_DEAD: ClassVar[dict[int, bool]] = {}
     OBJECT_ATTRIBUTES: ClassVar[dict[int, dict[str, str]]] = {}
+    SUPPORTED_INTERFACES: ClassVar[dict[int, dict[str, bool]]] = {}
     HUNG_OBJECTS: ClassVar[dict[int, float]] = {}
     HUNG_TIMEOUT = 1.0
 
@@ -81,6 +82,7 @@ class AXObject:
         with AXObject._lock:
             AXObject.KNOWN_DEAD.clear()
             AXObject.OBJECT_ATTRIBUTES.clear()
+            AXObject.SUPPORTED_INTERFACES.clear()
 
     @staticmethod
     def clear_cache_now(reason: str = "") -> None:
@@ -266,20 +268,35 @@ class AXObject:
             AXObject._set_known_dead_status(obj, True)
 
     @staticmethod
-    def supports_action(obj: Atspi.Accessible) -> bool:
-        """Returns True if the action interface is supported on obj"""
+    def _supports_interface(obj: Atspi.Accessible, getter: Callable[..., object]) -> bool:
+        """Returns True if obj supports the interface returned by getter, caching the result."""
 
         if not AXObject.is_valid(obj):
             return False
 
+        name = getter.__name__
+        interfaces = AXObject.SUPPORTED_INTERFACES.get(hash(obj))
+        if interfaces is None:
+            interfaces = AXObject.SUPPORTED_INTERFACES[hash(obj)] = {}
+        elif (cached := interfaces.get(name)) is not None:
+            return cached
+
         try:
-            iface = Atspi.Accessible.get_action_iface(obj)
+            iface = getter(obj)
         except GLib.GError as error:
-            msg = f"AXObject: Exception calling get_action_iface on {obj}: {error}"
+            msg = f"AXObject: Exception calling {name} on {obj}: {error}"
             AXObject.handle_error(obj, error, msg)
             return False
 
-        return iface is not None
+        result = iface is not None
+        interfaces[name] = result
+        return result
+
+    @staticmethod
+    def supports_action(obj: Atspi.Accessible) -> bool:
+        """Returns True if the action interface is supported on obj"""
+
+        return AXObject._supports_interface(obj, Atspi.Accessible.get_action_iface)
 
     @staticmethod
     def _find_ancestor_with_role(
@@ -349,176 +366,67 @@ class AXObject:
     def supports_component(obj: Atspi.Accessible) -> bool:
         """Returns True if the component interface is supported on obj"""
 
-        if not AXObject.is_valid(obj):
-            return False
-
-        try:
-            iface = Atspi.Accessible.get_component_iface(obj)
-        except GLib.GError as error:
-            msg = f"AXObject: Exception calling get_component_iface on {obj}: {error}"
-            AXObject.handle_error(obj, error, msg)
-            return False
-
-        return iface is not None
+        return AXObject._supports_interface(obj, Atspi.Accessible.get_component_iface)
 
     @staticmethod
     def supports_document(obj: Atspi.Accessible) -> bool:
         """Returns True if the document interface is supported on obj"""
 
-        if not AXObject.is_valid(obj):
-            return False
-
-        try:
-            iface = Atspi.Accessible.get_document_iface(obj)
-        except GLib.GError as error:
-            msg = f"AXObject: Exception calling get_document_iface on {obj}: {error}"
-            AXObject.handle_error(obj, error, msg)
-            return False
-
-        return iface is not None
+        return AXObject._supports_interface(obj, Atspi.Accessible.get_document_iface)
 
     @staticmethod
     def supports_editable_text(obj: Atspi.Accessible) -> bool:
         """Returns True if the editable-text interface is supported on obj"""
 
-        if not AXObject.is_valid(obj):
-            return False
-
-        try:
-            iface = Atspi.Accessible.get_editable_text_iface(obj)
-        except GLib.GError as error:
-            msg = f"AXObject: Exception calling get_editable_text_iface on {obj}: {error}"
-            AXObject.handle_error(obj, error, msg)
-            return False
-
-        return iface is not None
+        return AXObject._supports_interface(obj, Atspi.Accessible.get_editable_text_iface)
 
     @staticmethod
     def supports_hyperlink(obj: Atspi.Accessible) -> bool:
         """Returns True if the hyperlink interface is supported on obj"""
 
-        if not AXObject.is_valid(obj):
-            return False
-
-        try:
-            iface = Atspi.Accessible.get_hyperlink(obj)
-        except GLib.GError as error:
-            msg = f"AXObject: Exception calling get_hyperlink on {obj}: {error}"
-            AXObject.handle_error(obj, error, msg)
-            return False
-
-        return iface is not None
+        return AXObject._supports_interface(obj, Atspi.Accessible.get_hyperlink)
 
     @staticmethod
     def supports_hypertext(obj: Atspi.Accessible) -> bool:
         """Returns True if the hypertext interface is supported on obj"""
 
-        if not AXObject.is_valid(obj):
-            return False
-
-        try:
-            iface = Atspi.Accessible.get_hypertext_iface(obj)
-        except GLib.GError as error:
-            msg = f"AXObject: Exception calling get_hypertext_iface on {obj}: {error}"
-            AXObject.handle_error(obj, error, msg)
-            return False
-
-        return iface is not None
+        return AXObject._supports_interface(obj, Atspi.Accessible.get_hypertext_iface)
 
     @staticmethod
     def supports_image(obj: Atspi.Accessible) -> bool:
         """Returns True if the image interface is supported on obj"""
 
-        if not AXObject.is_valid(obj):
-            return False
-
-        try:
-            iface = Atspi.Accessible.get_image_iface(obj)
-        except GLib.GError as error:
-            msg = f"AXObject: Exception calling get_image_iface on {obj}: {error}"
-            AXObject.handle_error(obj, error, msg)
-            return False
-
-        return iface is not None
+        return AXObject._supports_interface(obj, Atspi.Accessible.get_image_iface)
 
     @staticmethod
     def supports_selection(obj: Atspi.Accessible) -> bool:
         """Returns True if the selection interface is supported on obj"""
 
-        if not AXObject.is_valid(obj):
-            return False
-
-        try:
-            iface = Atspi.Accessible.get_selection_iface(obj)
-        except GLib.GError as error:
-            msg = f"AXObject: Exception calling get_selection_iface on {obj}: {error}"
-            AXObject.handle_error(obj, error, msg)
-            return False
-
-        return iface is not None
+        return AXObject._supports_interface(obj, Atspi.Accessible.get_selection_iface)
 
     @staticmethod
     def supports_table(obj: Atspi.Accessible) -> bool:
         """Returns True if the table interface is supported on obj"""
 
-        if not AXObject.is_valid(obj):
-            return False
-
-        try:
-            iface = Atspi.Accessible.get_table_iface(obj)
-        except GLib.GError as error:
-            msg = f"AXObject: Exception calling get_table_iface on {obj}: {error}"
-            AXObject.handle_error(obj, error, msg)
-            return False
-
-        return iface is not None
+        return AXObject._supports_interface(obj, Atspi.Accessible.get_table_iface)
 
     @staticmethod
     def supports_table_cell(obj: Atspi.Accessible) -> bool:
         """Returns True if the table cell interface is supported on obj"""
 
-        if not AXObject.is_valid(obj):
-            return False
-
-        try:
-            iface = Atspi.Accessible.get_table_cell(obj)
-        except GLib.GError as error:
-            msg = f"AXObject: Exception calling get_table_cell on {obj}: {error}"
-            AXObject.handle_error(obj, error, msg)
-            return False
-
-        return iface is not None
+        return AXObject._supports_interface(obj, Atspi.Accessible.get_table_cell)
 
     @staticmethod
     def supports_text(obj: Atspi.Accessible) -> bool:
         """Returns True if the text interface is supported on obj"""
 
-        if not AXObject.is_valid(obj):
-            return False
-
-        try:
-            iface = Atspi.Accessible.get_text_iface(obj)
-        except GLib.GError as error:
-            msg = f"AXObject: Exception calling get_text_iface on {obj}: {error}"
-            AXObject.handle_error(obj, error, msg)
-            return False
-        return iface is not None
+        return AXObject._supports_interface(obj, Atspi.Accessible.get_text_iface)
 
     @staticmethod
     def supports_value(obj: Atspi.Accessible) -> bool:
         """Returns True if the value interface is supported on obj"""
 
-        if not AXObject.is_valid(obj):
-            return False
-
-        try:
-            iface = Atspi.Accessible.get_value_iface(obj)
-        except GLib.GError as error:
-            msg = f"AXObject: Exception calling get_value_iface on {obj}: {error}"
-            AXObject.handle_error(obj, error, msg)
-            return False
-
-        return iface is not None
+        return AXObject._supports_interface(obj, Atspi.Accessible.get_value_iface)
 
     @staticmethod
     def get_path(obj: Atspi.Accessible) -> list[int]:

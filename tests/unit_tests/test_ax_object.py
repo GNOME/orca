@@ -633,7 +633,10 @@ class TestAXObject:
             def raise_glib_error(_obj) -> None:
                 raise GLib.GError("Test error")
 
-            test_context.patch_object(Atspi.Accessible, getter_name, side_effect=raise_glib_error)
+            getter_mock = test_context.patch_object(
+                Atspi.Accessible, getter_name, side_effect=raise_glib_error
+            )
+            getter_mock.__name__ = getter_name
             handle_error_mock = test_context.Mock()
             test_context.patch_object(AXObject, "handle_error", new=handle_error_mock)
         else:
@@ -642,11 +645,12 @@ class TestAXObject:
                 if case["interface_result"] == "mock_interface"
                 else case["interface_result"]
             )
-            test_context.patch_object(
+            getter_mock = test_context.patch_object(
                 Atspi.Accessible,
                 getter_name,
                 return_value=actual_interface_result,
             )
+            getter_mock.__name__ = getter_name
 
         result = support_method(mock_accessible)
         assert result is case["expected_result"]
@@ -2372,10 +2376,12 @@ class TestAXObject:
 
         if case["has_error"]:
             test_context.patch_object(AXObject, "is_valid", return_value=True)
+            getter_mock = test_context.Mock(side_effect=GLib.GError("Test error"))
+            getter_mock.__name__ = case["getter_method"]
             setattr(
                 sys.modules["gi.repository"].Atspi.Accessible,
                 case["getter_method"],
-                test_context.Mock(side_effect=GLib.GError("Test error")),
+                getter_mock,
             )
         else:
             test_context.patch_object(AXObject, "is_valid", return_value=False)
@@ -2564,10 +2570,12 @@ class TestAXObject:
 
         getter_method, test_method = interface_map[interface_type]
         mock_iface = test_context.Mock() if has_interface else None
+        getter_mock = test_context.Mock(return_value=mock_iface)
+        getter_mock.__name__ = getter_method
         setattr(
             sys.modules["gi.repository"].Atspi.Accessible,
             getter_method,
-            test_context.Mock(return_value=mock_iface),
+            getter_mock,
         )
 
         result = test_method(mock_accessible)
