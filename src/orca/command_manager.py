@@ -395,7 +395,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         )
         get_manager().set_keyboard_layout_is_desktop(layout == "desktop")
         self._original_keyboard_layout_is_desktop = get_manager().get_keyboard_layout_is_desktop()
-        get_manager().apply_user_overrides()
+        # set_keyboard_layout_is_desktop() already applied the overrides and updated the grabs.
         self._populate_keybindings()
         self._modified_keybindings.clear()
         self._has_unsaved_changes = False
@@ -1194,7 +1194,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
                 orca_modifier_manager.get_manager().set_modifier_keys_override(saved_keys)
 
-        get_manager().apply_user_overrides()
+        # load_keyboard_layout() already applied the overrides and updated the grabs.
         self._populate_keybindings()
         self._has_unsaved_changes = True
 
