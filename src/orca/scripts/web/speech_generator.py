@@ -642,23 +642,28 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         self,
         obj: Atspi.Accessible,
         context: SpeechGeneratorContext,
+        *,
+        role: Atspi.Role | str | None = None,
+        include_context: bool = True,
         **args,
     ) -> list[Any]:
         if not self._script.utilities.in_document_content(obj):
             tokens = ["WEB:", obj, "is not in document content. Calling default speech generator."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return super().generate_speech(obj, context, **args)
+            return super().generate_speech(
+                obj, context, role=role, include_context=include_context, **args
+            )
 
         tokens = ["WEB: Generating speech for document object", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         result: list[Any] = []
         if self._script.utilities.is_link(obj):
-            args["role"] = Atspi.Role.LINK
+            role = Atspi.Role.LINK
         elif AXUtilities.is_custom_image(obj):
-            args["role"] = Atspi.Role.IMAGE
+            role = Atspi.Role.IMAGE
         elif self._script.utilities.treat_as_div(obj, offset=self._get_start_offset()):
-            args["role"] = Atspi.Role.SECTION
+            role = Atspi.Role.SECTION
 
         if context.prior_obj is None:
             document = self._script.utilities.get_top_level_document_for_object(obj)
@@ -678,7 +683,13 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 filter(
                     lambda x: x,
                     super().generate_speech(
-                        obj, context, language=language, dialect=dialect, **args
+                        obj,
+                        context,
+                        role=role,
+                        include_context=include_context,
+                        language=language,
+                        dialect=dialect,
+                        **args,
                     ),
                 ),
             )

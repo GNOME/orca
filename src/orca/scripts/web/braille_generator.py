@@ -218,12 +218,17 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         self,
         obj: Atspi.Accessible,
         context: BrailleGeneratorContext,
+        *,
+        role: Atspi.Role | str | None = None,
+        include_context: bool = True,
         **args,
     ) -> list[Any]:
         if not self._script.utilities.in_document_content(obj):
             tokens = ["WEB:", obj, "is not in document content. Calling default braille generator."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return super().generate_braille(obj, context, **args)
+            return super().generate_braille(
+                obj, context, role=role, include_context=include_context, **args
+            )
 
         tokens = ["WEB: Generating braille for document object", obj, args]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
@@ -232,20 +237,22 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         include_context = not self._script.utilities.in_document_content(obj)
         if self._script.utilities.is_clickable_element(obj) or self._script.utilities.is_link(obj):
-            args["role"] = Atspi.Role.LINK
+            role = Atspi.Role.LINK
         elif AXUtilities.is_custom_image(obj):
-            args["role"] = Atspi.Role.IMAGE
+            role = Atspi.Role.IMAGE
         elif AXUtilities.is_anchor(obj):
-            args["role"] = Atspi.Role.STATIC
+            role = Atspi.Role.STATIC
         elif self._script.utilities.treat_as_div(obj, offset=self._get_start_offset()):
-            args["role"] = Atspi.Role.SECTION
+            role = Atspi.Role.SECTION
 
         if AXUtilities.is_menu_item(obj):
             combo_box = AXUtilities.find_ancestor(obj, AXUtilities.is_combo_box)
             if combo_box and not AXUtilities.is_expanded(combo_box):
                 obj = combo_box
         result.extend(
-            super().generate_braille(obj, context, include_context=include_context, **args),
+            super().generate_braille(
+                obj, context, role=role, include_context=include_context, **args
+            ),
         )
         return result
 

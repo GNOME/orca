@@ -112,18 +112,28 @@ class BrailleGenerator(generator.Generator):
         self,
         obj: Atspi.Accessible,
         context: BrailleGeneratorContext,
+        *,
+        role: Atspi.Role | str | None = None,
+        include_context: bool = True,
         **args,
     ) -> list[Any]:
         """Returns a [result, focused_region] list for presenting obj."""
 
         self._context = context
-        return self._generate_braille(obj, **args)
+        return self._generate_braille(obj, role=role, include_context=include_context, **args)
 
-    def _generate_braille(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_braille(
+        self,
+        obj: Atspi.Accessible,
+        *,
+        role: Atspi.Role | str | None = None,
+        include_context: bool = True,
+        **args,
+    ) -> list[Any]:
         if not self._context.enabled:
             return [[], None]
 
-        result = self.generate(obj, **args)
+        result = self.generate(obj, role=role, include_context=include_context, **args)
 
         # We guess at the focused region.  It's going to be a
         # Component or Text region whose accessible is the same

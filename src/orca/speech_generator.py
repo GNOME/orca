@@ -174,12 +174,15 @@ class SpeechGenerator(generator.Generator):
         self,
         obj: Atspi.Accessible,
         context: SpeechGeneratorContext,
+        *,
+        role: Atspi.Role | str | None = None,
+        include_context: bool = True,
         **args,
     ) -> list[Any]:
         """Generates speech presentation for obj."""
 
         self._context = context
-        rv = self.generate(obj, **args)
+        rv = self.generate(obj, role=role, include_context=include_context, **args)
         if rv and not list(filter(lambda x: not isinstance(x, Pause), rv)):
             tokens = ["SPEECH GENERATOR: Results for", obj, "are pauses only"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
