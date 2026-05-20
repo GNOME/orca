@@ -447,7 +447,11 @@ class Script(script.Script):
                 self.update_braille(new_focus)
                 return True
 
-        manager.present_object(self, new_focus, prior_obj=old_focus)
+        # If we got here because the focused object's name changed, treat the new
+        # content as a fresh presentation: don't pass the same obj as prior_obj,
+        # which would cause the generators to suppress the content.
+        prior = None if (is_name_change and old_focus == new_focus) else old_focus
+        manager.present_object(self, new_focus, prior_obj=prior)
         return True
 
     def activate(self) -> None:
