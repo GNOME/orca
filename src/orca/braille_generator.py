@@ -25,7 +25,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import TYPE_CHECKING, Any
 
 import gi
@@ -300,7 +300,7 @@ class BrailleGenerator(generator.Generator):
         level = AXUtilities.get_heading_level(obj)
         if level:
             result.append(object_properties.ROLE_HEADING_LEVEL_BRAILLE % level)
-        elif is_verbose and not args.get("readingRow", False) and role not in do_not_present:
+        elif is_verbose and role not in do_not_present:
             result.append(self.get_localized_role_name(obj, **args))
         return result
 
@@ -321,8 +321,8 @@ class BrailleGenerator(generator.Generator):
             return []
 
         result: list[Any] = []
-        args["includeContext"] = False
-        args["formatType"] = "ancestor"
+        original_context = self._context
+        self._context = replace(original_context, format_type="ancestor")
         parent = AXObject.get_parent_checked(obj)
         if parent and (AXObject.get_role(parent) in self.SKIP_CONTEXT_ROLES):
             parent = AXObject.get_parent_checked(parent)
@@ -330,11 +330,12 @@ class BrailleGenerator(generator.Generator):
             parent_result = []
             if not AXUtilities.is_layout_only(parent):
                 parent_args = {k: v for k, v in args.items() if k != "role"}
-                parent_result = self.generate(parent, **parent_args)
+                parent_result = self.generate(parent, include_context=False, **parent_args)
             if result and parent_result:
                 result.append(braille.Region(" "))
             result.extend(parent_result)
             parent = AXObject.get_parent_checked(parent)
+        self._context = original_context
         result.reverse()
         return result
 
@@ -391,13 +392,15 @@ class BrailleGenerator(generator.Generator):
 
     ################################### PER-ROLE ####################################
 
-    def _generate_default_prefix(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_default_prefix(
+        self, obj: Atspi.Accessible, *, include_context: bool = True, **args
+    ) -> list[Any]:
         """Provides the default/role-agnostic information to present before obj."""
 
-        if args.get("includeContext") is False:
+        if not include_context:
             return []
 
-        if args.get("isProgressBarUpdate"):
+        if self._is_progress_bar_update():
             return []
 
         if table_navigator.get_navigator().last_input_event_was_navigation_command():
@@ -421,7 +424,7 @@ class BrailleGenerator(generator.Generator):
     def _generate_default_presentation(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Provides a default/role-agnostic presentation of obj."""
 
-        if args.get("formatType") == "ancestor":
+        if self._get_format_type() == "ancestor":
             result = [
                 braille.Component(
                     obj,
@@ -1212,7 +1215,7 @@ class BrailleGenerator(generator.Generator):
         if level:
             result += [braille.Region(" " + self._as_string(level))]
 
-        format_type = args.get("formatType", "unfocused")
+        format_type = self._get_format_type()
         if format_type != "ancestor":
             result += self._generate_descendants(obj, **args)
         return result
@@ -1371,7 +1374,7 @@ class BrailleGenerator(generator.Generator):
     def _generate_progress_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Generates braille for the progress-bar role."""
 
-        if not args.get("isProgressBarUpdate"):
+        if not self._is_progress_bar_update():
             return []
 
         value = self._generate_progress_bar_value(obj, **args)
@@ -1671,17 +1674,19 @@ class BrailleGenerator(generator.Generator):
         if self._generate_text_substring(obj, **args):
             return self._generate_text_object(obj, **args)
 
-        args["includeContext"] = False
-        result = self._generate_default_prefix(obj, **args)
-        row_header = self._generate_table_cell_row_header(obj, **args)
+        # We override include_context for the sub-calls below, so drop any
+        # inherited value to avoid passing it twice.
+        args.pop("include_context", None)
+        result = self._generate_default_prefix(obj, include_context=False, **args)
+        row_header = self._generate_table_cell_row_header(obj, include_context=False, **args)
         if row_header:
             result += [braille.Region(" " + self._as_string(row_header))]
-        column_header = self._generate_table_cell_column_header(obj, **args)
+        column_header = self._generate_table_cell_column_header(obj, include_context=False, **args)
         if column_header:
             result += [braille.Region(" " + self._as_string(column_header))]
         if row_header or column_header:
             result += [braille.Region(" ")]
-        result += self._generate_table_cell_row(obj, **args)
+        result += self._generate_table_cell_row(obj, include_context=False, **args)
         return result
 
     def _generate_table_column_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
@@ -1728,7 +1733,7 @@ class BrailleGenerator(generator.Generator):
                 obj,
                 start_offset=args.get("startOffset"),
                 end_offset=args.get("endOffset"),
-                caret_offset=args.get("caretOffset", args.get("offset")),
+                caret_offset=args.get("caretOffset", self._get_offset()),
             ),
         ]
         return result

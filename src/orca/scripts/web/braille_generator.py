@@ -228,7 +228,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
 
         result = []
 
-        args["includeContext"] = not self._script.utilities.in_document_content(obj)
+        include_context = not self._script.utilities.in_document_content(obj)
         if self._script.utilities.is_clickable_element(obj) or self._script.utilities.is_link(obj):
             args["role"] = Atspi.Role.LINK
         elif AXUtilities.is_custom_image(obj):
@@ -242,8 +242,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             combo_box = AXUtilities.find_ancestor(obj, AXUtilities.is_combo_box)
             if combo_box and not AXUtilities.is_expanded(combo_box):
                 obj = combo_box
-        result.extend(super().generate_braille(obj, context, **args))
-        del args["includeContext"]
+        result.extend(
+            super().generate_braille(obj, context, include_context=include_context, **args),
+        )
         return result
 
     def generate_contents(  # type: ignore[override]

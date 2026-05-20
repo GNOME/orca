@@ -27,7 +27,7 @@ from __future__ import annotations
 
 import threading
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from difflib import SequenceMatcher
 from enum import Enum
 from typing import TYPE_CHECKING, Any
@@ -77,6 +77,12 @@ class GeneratorContext:
     in_focus_mode: bool
     active_mode: str | None
     where_am_i_type: WhereAmI | None
+    prior_obj: Atspi.Accessible | None
+    is_progress_bar_update: bool
+    offset: int | None
+    format_type: str
+    leaving: bool
+    ancestor_of: Atspi.Accessible | None
 
 
 class Generator:
@@ -272,6 +278,48 @@ class Generator:
 
         return []
 
+    def _get_prior_obj(self) -> Atspi.Accessible | None:
+        """Returns the prior object from the context."""
+
+        if self._context is None:
+            return None
+        return self._context.prior_obj
+
+    def _is_progress_bar_update(self) -> bool:
+        """Returns True if this is a progress bar update presentation."""
+
+        if self._context is None:
+            return False
+        return self._context.is_progress_bar_update
+
+    def _get_offset(self) -> int | None:
+        """Returns the caller-supplied caret offset from the context."""
+
+        if self._context is None:
+            return None
+        return self._context.offset
+
+    def _get_format_type(self) -> str:
+        """Returns the presentation format type from the context."""
+
+        if self._context is None:
+            return "unfocused"
+        return self._context.format_type
+
+    def _is_leaving(self) -> bool:
+        """Returns True if this presentation is leaving an ancestor chain."""
+
+        if self._context is None:
+            return False
+        return self._context.leaving
+
+    def _get_ancestor_of(self) -> Atspi.Accessible | None:
+        """Returns the object whose ancestors are being presented."""
+
+        if self._context is None:
+            return None
+        return self._context.ancestor_of
+
     def generate(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns the presentation of the object."""
 
@@ -286,9 +334,6 @@ class Generator:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             _generator = self._generate_default_presentation
 
-        if not args.get("formatType"):
-            args["formatType"] = "unfocused"
-
         tokens = [f"{self._mode.name} GENERATOR:", _generator, "for", obj, "args:", args]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -296,7 +341,7 @@ class Generator:
         tokens = [f"{self._mode.name} GENERATOR: Results:", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if args.get("isProgressBarUpdate") and result and result[0]:
+        if self._is_progress_bar_update() and result and result[0]:
             self._set_progress_bar_update_time_and_value(obj)
 
         return result
@@ -383,8 +428,10 @@ class Generator:
         return False
 
     @log_generator_output
-    def _generate_accessible_description(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if args.get("omitDescription") or AXUtilities.is_terminal(obj):
+    def _generate_accessible_description(
+        self, obj: Atspi.Accessible, *, omit_description: bool = False, **args
+    ) -> list[Any]:
+        if omit_description or AXUtilities.is_terminal(obj):
             return []
 
         obj_hash = hash(obj)
@@ -546,7 +593,7 @@ class Generator:
             Generator.CACHED_STATIC_TEXT[hash(obj)] = result
             return result
 
-        if args.get("formatType") != "ancestor":
+        if self._get_format_type() != "ancestor":
             result = self._generate_text_expanding_embedded_objects(obj, **args)
             if result:
                 Generator.CACHED_STATIC_TEXT[hash(obj)] = result
@@ -663,7 +710,8 @@ class Generator:
                 if self._strings_are_redundant(obj_desc, AXObject.get_name(child)):
                     used_description_as_static_text = True
 
-            child_result = self.generate(child, includeContext=False, omitDescription=True)
+            child_result = self.generate(child, include_context=False, omit_description=True)
+
             if child_result:
                 result.extend(child_result)
                 result.extend(self._generate_result_separator(child, **args))
@@ -766,8 +814,8 @@ class Generator:
         result = []
         if self._script.utilities.has_meaningful_toggle_action(obj):
             args["role"] = Atspi.Role.CHECK_BOX
-            args["includeContext"] = False
-            result.extend(self.generate(obj, **args))
+            args.pop("include_context", None)
+            result.extend(self.generate(obj, include_context=False, **args))
 
         return result
 
@@ -1082,7 +1130,9 @@ class Generator:
         return []
 
     @log_generator_output
-    def _generate_tree_item_level(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tree_item_level(
+        self, obj: Atspi.Accessible, *, new_only: bool = False, **args
+    ) -> list[Any]:
         level = Generator.CACHED_TREE_ITEM_LEVEL.get(hash(obj))
         if level is None:
             level = self._script.utilities.node_level(obj)
@@ -1091,8 +1141,8 @@ class Generator:
         if level < 0:
             return []
 
-        prior_object = args.get("priorObj")
-        if args.get("newOnly") and prior_object:
+        prior_object = self._get_prior_obj()
+        if new_only and prior_object:
             old_level = Generator.CACHED_TREE_ITEM_LEVEL.get(hash(prior_object))
             if old_level is None:
                 old_level = self._script.utilities.node_level(prior_object)
@@ -1153,10 +1203,12 @@ class Generator:
 
     # TODO - JD: This function and fake role really need to die....
     @log_generator_output
-    def _generate_real_table_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_real_table_cell(
+        self, obj: Atspi.Accessible, *, reading_row: bool = False, **args
+    ) -> list[Any]:
         result = []
         args["role"] = "REAL_ROLE_TABLE_CELL"
-        result.extend(self.generate(obj, **args))
+        result.extend(self.generate(obj, reading_row=reading_row, **args))
         return result
 
     def _get_is_nameless_toggle(self, obj):
@@ -1177,11 +1229,13 @@ class Generator:
 
     # TODO - JD: This is part of the complicated "REAL_ROLE_TABLE_CELL" mess.
     @log_generator_output
-    def _generate_table_cell_row(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_cell_row(
+        self, obj: Atspi.Accessible, *, reading_row: bool = False, **args
+    ) -> list[Any]:
         present_all = (
-            args.get("readingRow") is True
+            reading_row
             or self._context.where_am_i_type == WhereAmI.DETAILED
-            or self._script.utilities.should_read_full_row(obj, args.get("priorObj"))
+            or self._script.utilities.should_read_full_row(obj, self._get_prior_obj())
         )
 
         if not present_all:
@@ -1191,29 +1245,33 @@ class Generator:
         if row and AXObject.get_name(row) and not AXUtilities.is_layout_only(row):
             return self.generate(row)
 
-        args["readingRow"] = True
         result: list[Any] = []
         cells = AXUtilities.get_showing_cells_in_same_row(
             obj,
             clip_to_window=AXUtilities.is_spreadsheet_cell(obj),
         )
 
-        # Remove any pre-calculated values which only apply to obj and not row cells.
+        # Drop pre-calculated values that apply only to obj and not to the row cells.
         do_not_include = ["startOffset", "endOffset", "string"]
         other_cell_args = args.copy()
         for arg in do_not_include:
             other_cell_args.pop(arg, None)
 
+        original_context = self._context
+        prior = original_context.prior_obj
         for cell in cells:
+            self._context = replace(original_context, prior_obj=prior)
             if cell == obj:
-                cell_result = self._generate_real_table_cell(cell, **args)
+                cell_result = self._generate_real_table_cell(cell, reading_row=True, **args)
             else:
-                cell_result = self._generate_real_table_cell(cell, **other_cell_args)
+                cell_result = self._generate_real_table_cell(
+                    cell, reading_row=True, **other_cell_args
+                )
             if cell_result and result and self._mode is GeneratorMode.BRAILLE:
                 result.append(braille.Region(object_properties.TABLE_CELL_DELIMITER_BRAILLE))
             result.extend(cell_result)
-            args["priorObj"] = cell
-            other_cell_args["priorObj"] = cell
+            prior = cell
+        self._context = original_context
 
         result.extend(self._generate_position_in_list(obj, **args))
         return result
@@ -1254,13 +1312,20 @@ class Generator:
         return [rv]
 
     @log_generator_output
-    def _generate_table_cell_column_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if args.get("readingRow") and not self._get_is_nameless_toggle(obj):
+    def _generate_table_cell_column_header(
+        self,
+        obj: Atspi.Accessible,
+        *,
+        new_only: bool = False,
+        reading_row: bool = False,
+        **args,
+    ) -> list[Any]:
+        if reading_row and not self._get_is_nameless_toggle(obj):
             return []
 
         result: list[Any] = []
-        if args.get("newOnly"):
-            headers = AXUtilities.get_new_column_headers(obj, args.get("priorObj"))
+        if new_only:
+            headers = AXUtilities.get_new_column_headers(obj, self._get_prior_obj())
         else:
             headers = AXUtilities.get_column_headers(obj)
 
@@ -1290,13 +1355,20 @@ class Generator:
         return result
 
     @log_generator_output
-    def _generate_table_cell_row_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if args.get("readingRow"):
+    def _generate_table_cell_row_header(
+        self,
+        obj: Atspi.Accessible,
+        *,
+        new_only: bool = False,
+        reading_row: bool = False,
+        **args,
+    ) -> list[Any]:
+        if reading_row:
             return []
 
         result: list[Any] = []
-        if args.get("newOnly"):
-            headers = AXUtilities.get_new_row_headers(obj, args.get("priorObj"))
+        if new_only:
+            headers = AXUtilities.get_new_row_headers(obj, self._get_prior_obj())
         else:
             headers = AXUtilities.get_row_headers(obj)
 

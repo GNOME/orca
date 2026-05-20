@@ -445,12 +445,13 @@ class PresentationManager:
             )
 
         if generate_sound:
-            sounds = script.get_sound_generator().generate_sound(
+            sound_presenter.get_presenter().present_generated_sound(
+                script,
                 obj,
-                priorObj=prior_obj,
-                isProgressBarUpdate=is_progress_bar_update,
+                prior_obj=prior_obj,
+                where_am_i_type=where_am_i_type,
+                is_progress_bar_update=is_progress_bar_update,
             )
-            sound_presenter.get_presenter().play(sounds)
 
     def speak_contents(
         self,

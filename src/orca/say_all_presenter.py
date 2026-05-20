@@ -539,7 +539,7 @@ class SayAllPresenter(Extension):
             utterances = speech_presenter.get_presenter().generate_speech_contents(
                 self._script,
                 [content],
-                eliminatePauses=True,
+                eliminate_pauses=True,
                 priorObj=self._prior_obj,
                 index=i,
                 total=len(contents),

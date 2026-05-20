@@ -31,6 +31,7 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
 from typing import TYPE_CHECKING, Any
 
 import gi
@@ -97,7 +98,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return super()._generate_ancestors(obj, **args)
 
         result: list[Any] = []
-        prior_obj = args.get("priorObj")
+        prior_obj = self._get_prior_obj()
         if prior_obj and AXObject.get_parent(prior_obj) == AXObject.get_parent(obj):
             return result
 
@@ -118,14 +119,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._script.utilities.is_item_for_editable_combo_box(obj, prior_obj):
             return result
 
-        args["stop_at_roles"] = [
+        stop_at_roles = [
             Atspi.Role.DOCUMENT_WEB,
             Atspi.Role.EMBEDDED,
             Atspi.Role.INTERNAL_FRAME,
             Atspi.Role.MATH,
             Atspi.Role.MENU_BAR,
         ]
-        args["skipRoles"] = [
+        skip_roles = [
             Atspi.Role.PARAGRAPH,
             Atspi.Role.HEADING,
             Atspi.Role.LABEL,
@@ -133,12 +134,18 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             Atspi.Role.LIST_ITEM,
             Atspi.Role.TEXT,
         ]
-        args["stop_after_roles"] = [Atspi.Role.TOOL_BAR]
-
         if AXUtilities.find_ancestor(obj, AXUtilities.is_editable_combo_box):
-            args["skipRoles"].append(Atspi.Role.COMBO_BOX)
+            skip_roles.append(Atspi.Role.COMBO_BOX)
 
-        result.extend(super()._generate_ancestors(obj, **args))
+        result.extend(
+            super()._generate_ancestors(
+                obj,
+                stop_at_roles=stop_at_roles,
+                skip_roles=skip_roles,
+                stop_after_roles=[Atspi.Role.TOOL_BAR],
+                **args,
+            ),
+        )
 
         return result
 
@@ -299,7 +306,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if not objs:
             return []
 
-        if args.get("leaving"):
+        if self._is_leaving():
             return []
 
         if self._context.in_say_all:
@@ -347,7 +354,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         ):
             return []
 
-        if obj == args.get("priorObj") and AXUtilities.is_editable(obj):
+        if obj == self._get_prior_obj() and AXUtilities.is_editable(obj):
             return []
 
         if AXUtilities.is_label(obj, args.get("role")) and AXObject.supports_text(obj):
@@ -356,7 +363,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return super()._generate_accessible_label_and_name(obj, **args)
 
     @log_generator_output
-    def _generate_accessible_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_accessible_name(
+        self, obj: Atspi.Accessible, *, in_flat_review: bool = False, **args
+    ) -> list[Any]:
         if not self._script.utilities.in_document_content(obj):
             return super()._generate_accessible_name(obj, **args)
 
@@ -365,7 +374,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             and AXUtilities.has_presentable_text(obj)
             and not AXUtilities.is_landmark(obj, args.get("role"))
             and not AXUtilities.is_dpub(obj, args.get("role"))
-            and not args.get("inFlatReview")
+            and not in_flat_review
         ):
             return []
 
@@ -375,8 +384,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if AXUtilities.has_visible_caption(obj):
             return []
 
-        if AXUtilities.is_figure(obj, args.get("role")) and args.get("ancestorOf"):
-            caption = args.get("ancestorOf")
+        if AXUtilities.is_figure(obj, args.get("role")) and self._get_ancestor_of():
+            caption = self._get_ancestor_of()
             if not AXUtilities.is_caption(caption):
                 caption = AXUtilities.find_ancestor(caption, AXUtilities.is_caption)
             if caption and obj in AXUtilities.get_is_label_for(caption):
@@ -415,7 +424,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if self._only_speak_displayed_text():
             return []
 
-        if not args.get("leaving"):
+        if not self._is_leaving():
             return []
 
         if self._script.utilities.in_document_content(
@@ -498,7 +507,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return super()._generate_accessible_role(obj, **args)
 
         # Do this check before the roledescription check, e.g. navigation within VSCode's editor.
-        if obj == args.get("priorObj"):
+        if obj == self._get_prior_obj():
             return []
 
         roledescription = AXObject.get_role_description(obj)
@@ -589,7 +598,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 return []
 
         if self._context.where_am_i_type is None:
-            if args.get("priorObj") == obj:
+            if self._get_prior_obj() == obj:
                 return []
 
         return super()._generate_position_in_list(obj, **args)
@@ -648,19 +657,27 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         elif self._script.utilities.treat_as_div(obj, offset=args.get("startOffset")):
             args["role"] = Atspi.Role.SECTION
 
-        if "priorObj" not in args:
+        if context.prior_obj is None:
             document = self._script.utilities.get_top_level_document_for_object(obj)
             prior_context = self._script.utilities.get_prior_context(document)
-            args["priorObj"] = prior_context[0] if prior_context else None
+            if prior_context:
+                context = replace(context, prior_obj=prior_context[0])
 
         start = args.get("startOffset", 0)
         end = args.get("endOffset", -1)
-        args["language"], args["dialect"] = (
-            self._script.utilities.get_language_and_dialect_for_substring(obj, start, end)
+        language, dialect = self._script.utilities.get_language_and_dialect_for_substring(
+            obj, start, end
         )
 
         if not result:
-            result = list(filter(lambda x: x, super().generate_speech(obj, context, **args)))
+            result = list(
+                filter(
+                    lambda x: x,
+                    super().generate_speech(
+                        obj, context, language=language, dialect=dialect, **args
+                    ),
+                ),
+            )
 
         tokens = ["WEB: Speech generation for document object", obj, "complete."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -694,6 +711,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         prev_attrs: dict[str, str] = {}
         system_voice = self.voice(speechserver.VoiceType.SYSTEM) if announce_attrs else []
 
+        original_context = self._context
         for i, content in enumerate(contents):
             obj, start, end, string = content
             tokens = [f"ITEM {i}: ", obj, f"start: {start}, end: {end} '{string}'"]
@@ -732,13 +750,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 utterance = list(filter(is_not_empty_list, utterance))
             if utterance and utterance[0]:
                 result.append(utterance)
-                args["priorObj"] = obj
+                self._context = replace(self._context, prior_obj=obj)
+        self._context = original_context
 
         if not result:
             if (
                 self._context.in_say_all
                 or not self._context.speak_blank_lines
-                or args.get("formatType") == "ancestor"
+                or self._get_format_type() == "ancestor"
             ):
                 string = ""
             else:
@@ -773,7 +792,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             start_offset,
             use_cache=True,
         )
-        return self.generate_contents(contents, self._context, priorObj=prior_obj)
+        return self.generate_contents(contents, replace(self._context, prior_obj=prior_obj))
 
     def generate_word(
         self,
@@ -794,6 +813,5 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         prior_obj = text_obj if AXUtilities.is_text_input(text_obj) else None
         return self.generate_contents(
             word_contents,
-            self._context,
-            priorObj=prior_obj,
+            replace(self._context, prior_obj=prior_obj),
         )

@@ -138,7 +138,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             ) or AXObject.get_name(obj)
             result.append(label)
 
-        if self._script.utilities.should_read_full_row(obj, args.get("priorObj")):
+        if self._script.utilities.should_read_full_row(obj, self._get_prior_obj()):
             if AXUtilities.cell_row_changed(obj):
                 return result
 
@@ -157,14 +157,14 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
     def _generate_new_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
         if AXUtilities.is_spreadsheet_cell(
             obj,
-        ) and AXUtilities.is_document_panel(AXObject.get_parent(args.get("priorObj"))):
+        ) and AXUtilities.is_document_panel(AXObject.get_parent(self._get_prior_obj())):
             return []
 
         return super()._generate_new_ancestors(obj, **args)
 
     @log_generator_output
     def _generate_old_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if AXUtilities.is_spreadsheet_cell(args.get("priorObj")):
+        if AXUtilities.is_spreadsheet_cell(self._get_prior_obj()):
             return []
 
         return super()._generate_old_ancestors(obj, **args)

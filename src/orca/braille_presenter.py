@@ -870,6 +870,9 @@ class BraillePresenter(Extension):
     def _build_generator_context(
         self,
         where_am_i_type: WhereAmI | None = None,
+        prior_obj: Atspi.Accessible | None = None,
+        is_progress_bar_update: bool = False,
+        offset: int | None = None,
     ) -> BrailleGeneratorContext:
         """Builds the settings context for braille generators."""
 
@@ -884,6 +887,12 @@ class BraillePresenter(Extension):
             in_focus_mode=document_presenter.get_presenter().get_in_focus_mode(),
             active_mode=active_mode,
             where_am_i_type=where_am_i_type,
+            prior_obj=prior_obj,
+            is_progress_bar_update=is_progress_bar_update,
+            offset=offset,
+            format_type="unfocused",
+            leaving=False,
+            ancestor_of=None,
             full_rolenames=self.use_full_rolenames(),
             display_ancestors=self.get_display_ancestors(),
             end_of_line_indicator=self.get_end_of_line_indicator_is_enabled(),
@@ -932,15 +941,14 @@ class BraillePresenter(Extension):
         if not self.use_braille():
             return
 
-        context = self._build_generator_context(where_am_i_type)
-        generator = script.get_braille_generator()
-        result, focused_region = generator.generate_braille(
-            obj,
-            context,
-            priorObj=prior_obj,
-            isProgressBarUpdate=is_progress_bar_update,
+        context = self._build_generator_context(
+            where_am_i_type,
+            prior_obj=prior_obj,
+            is_progress_bar_update=is_progress_bar_update,
             offset=offset,
         )
+        generator = script.get_braille_generator()
+        result, focused_region = generator.generate_braille(obj, context)
         if result:
             self.present_regions(list(result), focused_region)
 
