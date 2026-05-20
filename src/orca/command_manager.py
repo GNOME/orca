@@ -1588,6 +1588,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
     def are_groups_exclusive(self, group_a: str, group_b: str) -> bool:
         """Returns True if the two groups are mutually exclusive."""
 
+        if group_a == group_b:
+            return False
         return any(
             group_a in group_set and group_b in group_set for group_set in self._exclusive_groups
         )
