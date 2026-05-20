@@ -103,6 +103,7 @@ class GeneratorContext:
     ancestor_of: Atspi.Accessible | None
     content_item: ContentItem | None
     content_position: ContentPosition | None
+    resolved_role: Atspi.Role | str | None
 
 
 class Generator:
@@ -402,14 +403,23 @@ class Generator:
         item = self._get_content_item()
         return item.caret_offset if item is not None else default
 
-    def generate(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        """Returns the presentation of the object."""
+    def _get_resolved_role(self, obj: Atspi.Accessible | None = None) -> Atspi.Role | str | None:
+        """Returns the resolved role (treat-as override or functional role); falls back to obj's."""
 
-        if not args.get("role"):
-            args["role"] = self._get_functional_role(obj)
+        role = self._context.resolved_role if self._context is not None else None
+        if role is None and obj is not None:
+            return AXObject.get_role(obj)
+        return role
+
+    def generate(
+        self, obj: Atspi.Accessible, *, role: Atspi.Role | str | None = None, **args
+    ) -> list[Any]:
+        """Returns the presentation of obj; role overrides the dispatch/treat-as role."""
+
+        resolved_role = role or self._get_functional_role(obj)
 
         _generator = self._generators.get(  # type: ignore
-            args.get("role") or AXObject.get_role(obj),
+            resolved_role or AXObject.get_role(obj),
         )
         if _generator is None:
             tokens = [f"{self._mode.name} GENERATOR:", obj, "lacks dedicated generator"]
@@ -419,7 +429,11 @@ class Generator:
         tokens = [f"{self._mode.name} GENERATOR:", _generator, "for", obj, "args:", args]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+        original_context = self._context
+        self._context = replace(original_context, resolved_role=resolved_role)
         result = _generator(obj, **args)  # type: ignore[misc]
+        self._context = original_context
+
         tokens = [f"{self._mode.name} GENERATOR: Results:", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -431,13 +445,13 @@ class Generator:
     def get_localized_role_name(self, obj: Atspi.Accessible, **args) -> str:
         """Returns a string representing the localized rolename of obj."""
 
-        result = AXUtilities.get_localized_role_name(obj, args.get("role"))
+        result = AXUtilities.get_localized_role_name(obj, self._get_resolved_role())
         return result
 
     def get_state_indicator(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns an array with the generated state of obj."""
 
-        role = args.get("role", AXObject.get_role(obj))
+        role = self._get_resolved_role(obj)
         checks: list[tuple[Callable[..., bool], Callable[..., list[Any]]]] = [
             (
                 lambda: AXUtilities.is_menu_item(obj, role),
@@ -478,7 +492,7 @@ class Generator:
     def get_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns an array with the generated value."""
 
-        role = args.get("role", AXObject.get_role(obj))
+        role = self._get_resolved_role(obj)
         if AXUtilities.is_progress_bar(obj, role):
             return self._generate_progress_bar_value(obj, **args)
 
@@ -591,7 +605,7 @@ class Generator:
         result = []
         label = self._generate_accessible_label(obj, **args)
         name = self._generate_accessible_name(obj, **args)
-        role = args.get("role", AXObject.get_role(obj))
+        role = self._get_resolved_role(obj)
         if not (label or name) and role == Atspi.Role.TABLE_CELL:
             descendant = AXUtilities.active_descendant(obj)
             if descendant is not None:
@@ -632,7 +646,7 @@ class Generator:
 
         link = None
         parent = AXObject.get_parent(obj)
-        if AXUtilities.is_link(obj, args.get("role")):
+        if AXUtilities.is_link(obj, self._get_resolved_role()):
             link = obj
         elif AXUtilities.is_link(parent):
             link = parent
@@ -689,8 +703,8 @@ class Generator:
         return result
 
     @log_generator_output
-    def _get_functional_role(self, obj, **args):
-        role = args.get("role", AXObject.get_role(obj))
+    def _get_functional_role(self, obj):
+        role = AXObject.get_role(obj)
         role_checks: list[tuple[Callable[[], bool], Atspi.Role | str]] = [
             (
                 lambda: AXUtilities.is_dpub(obj, role) and AXUtilities.is_landmark(obj),
@@ -803,7 +817,7 @@ class Generator:
 
     @log_generator_output
     def _generate_focused_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        role = args.get("role")
+        role = self._get_resolved_role()
         if not (AXUtilities.is_list(obj, role) or AXUtilities.is_list_box(obj, role)):
             return []
 
@@ -895,9 +909,10 @@ class Generator:
     def _generate_state_checked_for_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
         result = []
         if self._script.utilities.has_meaningful_toggle_action(obj):
-            args["role"] = Atspi.Role.CHECK_BOX
             args.pop("include_context", None)
-            result.extend(self.generate(obj, include_context=False, **args))
+            result.extend(
+                self.generate(obj, role=Atspi.Role.CHECK_BOX, include_context=False, **args)
+            )
 
         return result
 
@@ -1292,8 +1307,9 @@ class Generator:
         self, obj: Atspi.Accessible, *, reading_row: bool = False, **args
     ) -> list[Any]:
         result = []
-        args["role"] = "REAL_ROLE_TABLE_CELL"
-        result.extend(self.generate(obj, reading_row=reading_row, **args))
+        result.extend(
+            self.generate(obj, role="REAL_ROLE_TABLE_CELL", reading_row=reading_row, **args)
+        )
         return result
 
     def _get_is_nameless_toggle(self, obj):
@@ -1512,12 +1528,14 @@ class Generator:
 
     @log_generator_output
     def _generate_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if AXUtilities.is_combo_box(obj, args.get("role")):
+        if AXUtilities.is_combo_box(obj, self._get_resolved_role()):
             if value := self._get_combo_box_value(obj):
                 return [value]
             return []
 
-        if AXUtilities.is_separator(obj, args.get("role")) and not AXUtilities.is_focused(obj):
+        if AXUtilities.is_separator(obj, self._get_resolved_role()) and not AXUtilities.is_focused(
+            obj
+        ):
             return []
 
         result = AXValue.get_current_value_text(obj)

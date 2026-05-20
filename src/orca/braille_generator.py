@@ -248,7 +248,7 @@ class BrailleGenerator(generator.Generator):
 
     def get_localized_role_name(self, obj: Atspi.Accessible, **args) -> str:
         if self._context is not None and not self._context.full_rolenames:
-            rv = short_role_names.get(args.get("role", AXObject.get_role(obj)))
+            rv = short_role_names.get(self._get_resolved_role(obj))
             if rv:
                 return rv
 
@@ -286,7 +286,7 @@ class BrailleGenerator(generator.Generator):
     @log_generator_output
     def _generate_accessible_role(self, obj: Atspi.Accessible, **args) -> list[Any]:
         result = []
-        role = args.get("role", AXObject.get_role(obj))
+        role = self._get_resolved_role(obj)
         do_not_present = [
             Atspi.Role.UNKNOWN,
             Atspi.Role.REDUNDANT_OBJECT,

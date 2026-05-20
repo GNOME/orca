@@ -491,6 +491,7 @@ class SoundPresenter:
             ancestor_of=None,
             content_item=None,
             content_position=None,
+            resolved_role=None,
         )
 
     def present_generated_sound(

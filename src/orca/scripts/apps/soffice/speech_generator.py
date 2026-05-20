@@ -87,7 +87,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         """Treat toggle buttons in the toolbar specially. This is so we can
         have more natural sounding speech such as "bold on", "bold off", etc."""
 
-        if not AXUtilities.is_toggle_button(obj, args.get("role")):
+        if not AXUtilities.is_toggle_button(obj, self._get_resolved_role()):
             return []
 
         if not AXUtilities.is_tool_bar(AXObject.get_parent(obj)):

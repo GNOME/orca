@@ -34,7 +34,6 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
 
 from . import debug, generator, object_properties, sound_presenter
-from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
 from .sound import Icon, Tone
@@ -258,7 +257,7 @@ class SoundGenerator(generator.Generator):
     def _generate_accessible_role(self, obj: Atspi.Accessible, **args) -> list[Any]:
         """Returns an array of sounds indicating the role of obj."""
 
-        role = args.get("role", AXObject.get_role(obj))
+        role = self._get_resolved_role(obj)
         filenames = [Atspi.role_get_name(role).replace(" ", "-")]
         if filenames and filenames[0]:
             result = self._convert_filename_to_icon(filenames[0])

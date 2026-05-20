@@ -212,18 +212,18 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         if obj != self._context.focus:
-            if AXUtilities.is_dialog_or_alert(obj, args.get("role")):
+            if AXUtilities.is_dialog_or_alert(obj, self._get_resolved_role()):
                 return super()._generate_accessible_description(obj, **args)
             if self._context.active_mode != focus_manager.MOUSE_REVIEW:
                 return []
 
-        if AXUtilities.is_text(obj, args.get("role")) and (
+        if AXUtilities.is_text(obj, self._get_resolved_role()) and (
             self._get_reason() != PresentationReason.WHERE_AM_I_BASIC
         ):
             return []
 
         if (
-            AXUtilities.is_link(obj, args.get("role"))
+            AXUtilities.is_link(obj, self._get_resolved_role())
             and caret_navigator.get_navigator().last_input_event_was_navigation_command()
         ):
             return []
@@ -350,17 +350,17 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if (
             self._script.utilities.is_text_block_element(obj)
             and AXUtilities.has_presentable_text(obj)
-            and not AXUtilities.is_landmark(obj, args.get("role"))
+            and not AXUtilities.is_landmark(obj, self._get_resolved_role())
             and not self._script.utilities.is_document(obj)
-            and not AXUtilities.is_dpub(obj, args.get("role"))
-            and not AXUtilities.is_suggestion(obj, args.get("role"))
+            and not AXUtilities.is_dpub(obj, self._get_resolved_role())
+            and not AXUtilities.is_suggestion(obj, self._get_resolved_role())
         ):
             return []
 
         if obj == self._get_prior_obj() and AXUtilities.is_editable(obj):
             return []
 
-        if AXUtilities.is_label(obj, args.get("role")) and AXObject.supports_text(obj):
+        if AXUtilities.is_label(obj, self._get_resolved_role()) and AXObject.supports_text(obj):
             return []
 
         return super()._generate_accessible_label_and_name(obj, **args)
@@ -375,8 +375,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if (
             self._script.utilities.is_text_block_element(obj)
             and AXUtilities.has_presentable_text(obj)
-            and not AXUtilities.is_landmark(obj, args.get("role"))
-            and not AXUtilities.is_dpub(obj, args.get("role"))
+            and not AXUtilities.is_landmark(obj, self._get_resolved_role())
+            and not AXUtilities.is_dpub(obj, self._get_resolved_role())
             and not in_flat_review
         ):
             return []
@@ -387,7 +387,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         if AXUtilities.has_visible_caption(obj):
             return []
 
-        if AXUtilities.is_figure(obj, args.get("role")) and self._get_ancestor_of():
+        if AXUtilities.is_figure(obj, self._get_resolved_role()) and self._get_ancestor_of():
             caption = self._get_ancestor_of()
             if not AXUtilities.is_caption(caption):
                 caption = AXUtilities.find_ancestor(caption, AXUtilities.is_caption)
@@ -459,7 +459,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         # other toolkits (e.g. exposing list items to us that are not
         # exposed to sighted users)
         roles = [Atspi.Role.DESCRIPTION_LIST, Atspi.Role.LIST, Atspi.Role.LIST_BOX, "ROLE_FEED"]
-        role = args.get("role", AXObject.get_role(obj))
+        role = self._get_resolved_role(obj)
         if role not in roles:
             return super()._generate_number_of_children(obj, **args)
 
@@ -519,7 +519,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             result.extend(self.voice(speech_generator.SYSTEM, obj=obj, **args))
             return result
 
-        role = args.get("role", AXObject.get_role(obj))
+        role = self._get_resolved_role(obj)
         start = self._get_start_offset()
         end = self._get_end_offset()
         index = self._get_content_position().index

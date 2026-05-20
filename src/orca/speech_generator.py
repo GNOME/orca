@@ -206,7 +206,7 @@ class SpeechGenerator(generator.Generator):
         if AXUtilities.is_editable_combo_box_descendant(obj, inclusive=True):
             return object_properties.ROLE_EDITABLE_COMBO_BOX
 
-        if AXUtilities.is_link(obj, args.get("role")) and AXUtilities.is_visited(obj):
+        if AXUtilities.is_link(obj, self._get_resolved_role()) and AXUtilities.is_visited(obj):
             return object_properties.ROLE_VISITED_LINK
 
         return super().get_localized_role_name(obj, **args)
@@ -505,7 +505,7 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_accessible_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        is_layered_pane = AXUtilities.is_layered_pane(obj, args.get("role"))
+        is_layered_pane = AXUtilities.is_layered_pane(obj, self._get_resolved_role())
         if is_layered_pane and self._only_speak_displayed_text():
             return []
 
@@ -536,7 +536,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _get_ancestor_with_usable_role(self, obj, **args):
-        role = args.get("role", AXObject.get_role(obj))
+        role = self._get_resolved_role(obj)
         index = self._get_content_position().index
         total = self._get_content_position().total
 
@@ -559,7 +559,7 @@ class SpeechGenerator(generator.Generator):
         ):
             return True
 
-        role = args.get("role", AXObject.get_role(obj))
+        role = self._get_resolved_role(obj)
         enabled, disabled = self._get_enabled_and_disabled_context_roles()
 
         do_not_speak = list(disabled)
@@ -626,7 +626,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         parent = AXObject.get_parent(obj)
-        if AXUtilities.is_menu(obj, args.get("role")) and AXUtilities.is_combo_box(parent):
+        if AXUtilities.is_menu(obj, self._get_resolved_role()) and AXUtilities.is_combo_box(parent):
             return self._generate_accessible_role(parent)
 
         if AXUtilities.is_single_line_autocomplete_entry(obj):
@@ -721,7 +721,7 @@ class SpeechGenerator(generator.Generator):
                 result.extend(self.voice(SYSTEM, obj=obj, **args))
             return result
 
-        role = args.get("role")
+        role = self._get_resolved_role()
         if AXUtilities.is_list(obj, role) or AXUtilities.is_list_box(obj, role):
             set_size = AXUtilities.get_set_size(obj)
             if set_size:
@@ -928,7 +928,7 @@ class SpeechGenerator(generator.Generator):
         if not self._is_leaving():
             return []
 
-        role = args.get("role", AXObject.get_role(obj))
+        role = self._get_resolved_role(obj)
         enabled, _disabled = self._get_enabled_and_disabled_context_roles()
         is_details = bool(AXUtilities.get_is_details_for(obj))
         if not (role in enabled or is_details):
@@ -1210,7 +1210,7 @@ class SpeechGenerator(generator.Generator):
         if prior_obj == obj:
             return []
 
-        role = args.get("role", AXObject.get_role(obj))
+        role = self._get_resolved_role(obj)
         if (
             AXUtilities.is_frame(obj, role)
             or AXUtilities.is_window(obj, role)
@@ -1240,7 +1240,7 @@ class SpeechGenerator(generator.Generator):
         return result
 
     def _generate_parent_role_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if args.get("role", AXObject.get_role(obj)) == Atspi.Role.ICON and (self._is_where_am_i()):
+        if self._get_resolved_role(obj) == Atspi.Role.ICON and (self._is_where_am_i()):
             return [object_properties.ROLE_ICON_PANEL]
 
         parent = AXObject.get_parent(obj)
@@ -1719,7 +1719,7 @@ class SpeechGenerator(generator.Generator):
 
     @log_generator_output
     def _generate_state_unselected(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        role = args.get("role")
+        role = self._get_resolved_role()
         if (
             self._only_speak_displayed_text()
             or self._context.active_mode == focus_manager.MOUSE_REVIEW
@@ -1891,7 +1891,7 @@ class SpeechGenerator(generator.Generator):
             return self._generate_accessible_role(obj, **args)
 
         if AXUtilities.is_text_document_table(obj):
-            role = args.get("role", AXObject.get_role(obj))
+            role = self._get_resolved_role(obj)
             _enabled, disabled = self._get_enabled_and_disabled_context_roles()
             if role in disabled:
                 return []

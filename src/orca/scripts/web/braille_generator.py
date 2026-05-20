@@ -109,7 +109,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             do_not_display.append(Atspi.Role.ALERT)
 
         result = []
-        role = args.get("role", AXObject.get_role(obj))
+        role = self._get_resolved_role(obj)
 
         level = AXUtilities.get_heading_level(obj)
         if level:
@@ -128,7 +128,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                 result = super()._generate_accessible_role(obj, **args)
 
         if self._get_content_position().index == self._get_content_position().total - 1 and (
-            AXUtilities.is_image(obj, args.get("role"))
+            AXUtilities.is_image(obj, self._get_resolved_role())
             or self._script.utilities.treat_as_text_object(obj)
         ):
             heading = AXUtilities.find_ancestor(obj, AXUtilities.is_heading)
@@ -159,7 +159,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if AXUtilities.is_editable(obj) and AXUtilities.find_ancestor(obj, AXUtilities.is_code):
             return []
 
-        role = args.get("role", AXObject.get_role(obj))
+        role = self._get_resolved_role(obj)
         if role == Atspi.Role.LABEL and AXObject.supports_text(obj):
             return []
 
