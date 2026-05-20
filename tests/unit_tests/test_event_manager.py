@@ -1080,26 +1080,26 @@ class TestEventManager:
         test_context.patch("time.time", return_value=100.0)
         test_context.patch(
             "orca.event_manager.AXUtilities.is_window",
-            side_effect=lambda obj: (
+            side_effect=lambda obj, *args: (
                 case["source_role"] == "window" if obj == mock_event.source else False
             ),
         )
         test_context.patch("orca.event_manager.AXUtilities.is_frame", return_value=False)
         test_context.patch(
             "orca.event_manager.AXUtilities.is_text",
-            side_effect=lambda obj: (
+            side_effect=lambda obj, *args: (
                 case["source_role"] == "text" if obj == mock_event.source else False
             ),
         )
         test_context.patch(
             "orca.event_manager.AXUtilities.is_notification",
-            side_effect=lambda obj: case["source_role"] == "notification"
+            side_effect=lambda obj, *args: case["source_role"] == "notification"
             if obj == mock_event.source
             else False,
         )
         test_context.patch(
             "orca.event_manager.AXUtilities.is_alert",
-            side_effect=lambda obj: (
+            side_effect=lambda obj, *args: (
                 case["source_role"] == "alert" if obj == mock_event.source else False
             ),
         )

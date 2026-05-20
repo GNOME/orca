@@ -276,19 +276,19 @@ class EventManager:
 
         return None
 
-    def _ignore_by_role(self, event: Atspi.Event) -> bool | None:
+    def _ignore_by_role(self, event: Atspi.Event, role: Atspi.Role) -> bool | None:
         """Returns True/False if the source role determines ignore, or None if inconclusive."""
 
         event_type = event.type
 
         # gnome-shell fires "focused" events spuriously after the Alt+Tab switcher
         # is used and something else has claimed focus.
-        if AXUtilities.is_window(event.source) and "focused" in event_type:
+        if AXUtilities.is_window(event.source, role) and "focused" in event_type:
             msg = f"EVENT MANAGER: Ignoring {event_type} based on type and role"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if AXUtilities.is_frame(event.source):
+        if AXUtilities.is_frame(event.source, role):
             app = AXUtilities.get_application(event.source)
             ignore = AXUtilities.is_mutter_x11_frames(app)
             prefix = "Ignoring" if ignore else "Not ignoring"
@@ -299,7 +299,7 @@ class EventManager:
 
         # Events from the text role are typically something we want to handle.
         # One exception is a huge text insertion.
-        if AXUtilities.is_text(event.source):
+        if AXUtilities.is_text(event.source, role):
             if event_type.startswith("object:text-changed:insert") and event.detail2 > 5000:
                 msg = f"EVENT_MANAGER: Ignoring {event_type} due to size of inserted text"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -309,7 +309,9 @@ class EventManager:
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
-        if AXUtilities.is_notification(event.source) or AXUtilities.is_alert(event.source):
+        if AXUtilities.is_notification(event.source, role) or AXUtilities.is_alert(
+            event.source, role
+        ):
             msg = f"EVENT_MANAGER: Not ignoring {event_type} due to role"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
@@ -416,14 +418,13 @@ class EventManager:
         return None
 
     @staticmethod
-    def _ignore_property_change(event: Atspi.Event) -> bool | None:
+    def _ignore_property_change(event: Atspi.Event, role: Atspi.Role) -> bool | None:
         """Returns True/False for property-change events, or None if not applicable."""
 
         event_type = event.type
         if not event_type.startswith("object:property-change"):
             return None
 
-        role = AXObject.get_role(event.source)
         if "name" in event_type:
             ignore_name_roles = [
                 Atspi.Role.CANVAS,
@@ -456,14 +457,13 @@ class EventManager:
         return None
 
     @staticmethod
-    def _ignore_state_changed(event: Atspi.Event) -> bool | None:
+    def _ignore_state_changed(event: Atspi.Event, role: Atspi.Role) -> bool | None:
         """Returns True/False for state-changed events, or None if not applicable."""
 
         event_type = event.type
         if not event_type.startswith("object:state-changed"):
             return None
 
-        role = AXObject.get_role(event.source)
         if event_type.endswith("system"):
             system_ignore_roles = [
                 Atspi.Role.TABLE,
@@ -548,12 +548,13 @@ class EventManager:
     def _ignore_text_events(
         event: Atspi.Event,
         focus: Atspi.Accessible | None,
+        role: Atspi.Role,
     ) -> bool | None:
         """Returns True/False for text caret-moved and text-changed events."""
 
         event_type = event.type
         if event_type.startswith("object:text-caret-moved"):
-            if AXObject.get_role(event.source) == Atspi.Role.LABEL:
+            if role == Atspi.Role.LABEL:
                 msg = f"EVENT MANAGER: Ignoring {event_type} due to role of unfocused source"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
@@ -588,15 +589,16 @@ class EventManager:
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
+        role = AXObject.get_role(event.source)
         for check in (
-            lambda: self._ignore_by_role(event),
+            lambda: self._ignore_by_role(event, role),
             lambda: self._ignore_by_focus_state(event, focus),
+            lambda: self._ignore_property_change(event, role),
             lambda: self._ignore_by_spam_filter(event),
             lambda: self._ignore_active_descendant_or_selection(event),
             lambda: self._ignore_children_changed(event, focus),
-            lambda: self._ignore_property_change(event),
-            lambda: self._ignore_state_changed(event),
-            lambda: self._ignore_text_events(event, focus),
+            lambda: self._ignore_state_changed(event, role),
+            lambda: self._ignore_text_events(event, focus, role),
         ):
             result = check()
             if result is not None:
