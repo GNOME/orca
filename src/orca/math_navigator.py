@@ -22,7 +22,7 @@
 
 from __future__ import annotations
 
-from functools import partial
+from functools import partial, wraps
 from typing import TYPE_CHECKING
 
 from . import (
@@ -73,6 +73,27 @@ class MathNavigator(Extension):
         self._last_nav_id: tuple[str, int] = ("", 0)
         self._suspended: bool = True
         super().__init__()
+
+    @staticmethod
+    def navigation_command(func):
+        """Decorator that logs the command, then dispatches to it."""
+
+        @wraps(func)
+        def wrapper(self, script, event=None, notify_user=True) -> bool:
+            tokens = [
+                "MATH NAVIGATOR:",
+                func,
+                "\nScript:",
+                script,
+                "\nEvent:",
+                event,
+                "\nnotify_user:",
+                notify_user,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return func(self, script, notify_user)
+
+        return wrapper
 
     @dbus_service.getter
     def is_active(self) -> bool:
@@ -350,23 +371,9 @@ class MathNavigator(Extension):
         return True
 
     @dbus_service.command
-    def enter_math_mode_command(
-        self,
-        script: default.Script,
-        event: input_event.InputEvent | None = None,
-        notify_user: bool = True,
-    ) -> bool:
+    @navigation_command
+    def enter_math_mode_command(self, script: default.Script, notify_user: bool = True) -> bool:
         """Enters math navigation mode if the current focus is on math."""
-
-        tokens = [
-            "MATH NAVIGATOR: enter_math_mode_command. Script:",
-            script,
-            "Event:",
-            event,
-            "notify_user:",
-            notify_user,
-        ]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         obj = focus_manager.get_manager().get_locus_of_focus()
         if not (math_root := AXUtilitiesMath.find_math_root(obj)):
@@ -380,23 +387,9 @@ class MathNavigator(Extension):
         return True
 
     @dbus_service.command
-    def exit_math_mode(
-        self,
-        script: default.Script,
-        event: input_event.InputEvent | None = None,
-        notify_user: bool = True,
-    ) -> bool:
+    @navigation_command
+    def exit_math_mode(self, script: default.Script, notify_user: bool = True) -> bool:
         """Exits math navigation mode."""
-
-        tokens = [
-            "MATH NAVIGATOR: exit_math_mode. Script:",
-            script,
-            "Event:",
-            event,
-            "notify_user:",
-            notify_user,
-        ]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if not self._active:
             return False
