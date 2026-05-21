@@ -2866,10 +2866,17 @@ class SpeechPresenter(Extension):
         self,
         reason: PresentationReason | None = None,
         prior_obj: Atspi.Accessible | None = None,
+        *,
+        eliminate_pauses: bool = False,
+        index: int | None = None,
+        total: int | None = None,
     ) -> SpeechGeneratorContext:
         """Builds the settings context for speech generators."""
 
-        from .generator import PresentationReason  # pylint: disable=import-outside-toplevel
+        from .generator import (  # pylint: disable=import-outside-toplevel
+            ContentPosition,
+            PresentationReason,
+        )
         from .speech_generator import (  # pylint: disable=import-outside-toplevel
             SpeechGeneratorContext,
         )
@@ -2896,7 +2903,11 @@ class SpeechPresenter(Extension):
             leaving=False,
             ancestor_of=None,
             content_item=None,
-            content_position=None,
+            content_position=(
+                ContentPosition(index=index, total=total)
+                if index is not None and total is not None
+                else None
+            ),
             resolved_role=None,
             include_context=True,
             in_preferences_window=mgr.is_in_preferences_window(),
@@ -2933,19 +2944,25 @@ class SpeechPresenter(Extension):
             speak_misspelled_indicator=self.get_speak_misspelled_indicator(),
             language="",
             dialect="",
+            eliminate_pauses=eliminate_pauses,
         )
 
     def generate_speech_contents(
         self,
         script: default.Script,
         contents: list[tuple[Atspi.Accessible, int, int, str]],
-        **args: Any,
+        *,
+        prior_obj: Atspi.Accessible | None = None,
+        eliminate_pauses: bool = False,
+        index: int | None = None,
+        total: int | None = None,
     ) -> list:
         """Generates speech utterances for contents without speaking them."""
 
-        prior_obj = args.pop("priorObj", None)
-        context = self._build_generator_context(prior_obj=prior_obj)
-        return script.get_speech_generator().generate_contents(contents, context, **args)
+        context = self._build_generator_context(
+            prior_obj=prior_obj, eliminate_pauses=eliminate_pauses, index=index, total=total
+        )
+        return script.get_speech_generator().generate_contents(contents, context)
 
     def generate_speech_string(self, script: default.Script, obj: Atspi.Accessible) -> str:
         """Generates speech for obj and returns it as a string."""
@@ -2968,21 +2985,21 @@ class SpeechPresenter(Extension):
     def speak_contents(
         self,
         contents: list[tuple[Atspi.Accessible, int, int, str]],
-        **args: Any,
+        *,
+        reason: PresentationReason | None = None,
+        prior_obj: Atspi.Accessible | None = None,
     ) -> None:
         """Speaks the specified contents."""
 
-        tokens = ["SPEECH PRESENTER: Speaking", contents, args]
+        tokens = ["SPEECH PRESENTER: Speaking", contents]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
 
         if not (active_script := self._get_active_script()):
             return
 
-        reason = args.pop("reason", None)
-        prior_obj = args.pop("priorObj", None)
         context = self._build_generator_context(reason, prior_obj=prior_obj)
         generator = active_script.get_speech_generator()
-        utterances = generator.generate_contents(contents, context, **args)
+        utterances = generator.generate_contents(contents, context)
         self._speak(utterances)
 
     def present_generated_speech(

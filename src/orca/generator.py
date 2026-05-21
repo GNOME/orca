@@ -292,12 +292,12 @@ class Generator:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return similarity >= threshold
 
-    def generate_contents(self, contents: Any, context: GeneratorContext, **args) -> list[Any]:
+    def generate_contents(self, contents: Any, context: GeneratorContext) -> list[Any]:
         """Returns presentation for a list of [obj, start, end, string]."""
 
         return []
 
-    def generate_context(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def generate_context(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns the presentation of the context of the object. Subclasses must override this."""
 
         return []
@@ -425,7 +425,6 @@ class Generator:
         *,
         role: Atspi.Role | str | None = None,
         include_context: bool = True,
-        **args,
     ) -> list[Any]:
         """Returns the presentation of obj; role overrides the dispatch/treat-as role."""
 
@@ -439,14 +438,14 @@ class Generator:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             _generator = self._generate_default_presentation
 
-        tokens = [f"{self._mode.name} GENERATOR:", _generator, "for", obj, "args:", args]
+        tokens = [f"{self._mode.name} GENERATOR:", _generator, "for", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         original_context = self._context
         self._context = replace(
             original_context, resolved_role=resolved_role, include_context=include_context
         )
-        result = _generator(obj, **args)  # type: ignore[misc]
+        result = _generator(obj)  # type: ignore[misc]
         self._context = original_context
 
         tokens = [f"{self._mode.name} GENERATOR: Results:", result]
@@ -457,46 +456,48 @@ class Generator:
 
         return result
 
-    def get_localized_role_name(self, obj: Atspi.Accessible, **args) -> str:
+    def get_localized_role_name(
+        self, obj: Atspi.Accessible, *, role: Atspi.Role | str | None = None
+    ) -> str:
         """Returns a string representing the localized rolename of obj."""
 
-        result = AXUtilities.get_localized_role_name(obj, self._get_resolved_role())
+        resolved = role if role is not None else self._get_resolved_role()
+        result = AXUtilities.get_localized_role_name(obj, resolved)
         return result
 
-    def get_state_indicator(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def get_state_indicator(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array with the generated state of obj."""
 
         role = self._get_resolved_role(obj)
         checks: list[tuple[Callable[..., bool], Callable[..., list[Any]]]] = [
             (
                 lambda: AXUtilities.is_menu_item(obj, role),
-                lambda: self._generate_state_checked_if_checkable(obj, **args),
+                lambda: self._generate_state_checked_if_checkable(obj),
             ),
             (
                 lambda: (
                     AXUtilities.is_radio_button(obj, role)
                     or AXUtilities.is_radio_menu_item(obj, role)
                 ),
-                lambda: self._generate_state_selected_for_radio_button(obj, **args),
+                lambda: self._generate_state_selected_for_radio_button(obj),
             ),
             (
                 lambda: (
-                    AXUtilities.is_check_box(obj, role)
-                    or AXUtilities.is_check_menu_item(obj, **args)
+                    AXUtilities.is_check_box(obj, role) or AXUtilities.is_check_menu_item(obj)
                 ),
-                lambda: self._generate_state_checked(obj, **args),
+                lambda: self._generate_state_checked(obj),
             ),
             (
                 lambda: AXUtilities.is_switch(obj, role),
-                lambda: self._generate_state_checked_for_switch(obj, **args),
+                lambda: self._generate_state_checked_for_switch(obj),
             ),
             (
                 lambda: AXUtilities.is_toggle_button(obj, role),
-                lambda: self._generate_state_pressed(obj, **args),
+                lambda: self._generate_state_pressed(obj),
             ),
             (
                 lambda: AXUtilities.is_table_cell(obj, role),
-                lambda: self._generate_state_checked_for_cell(obj, **args),
+                lambda: self._generate_state_checked_for_cell(obj),
             ),
         ]
         for predicate, generator in checks:
@@ -504,19 +505,19 @@ class Generator:
                 return generator()
         return []
 
-    def get_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def get_value(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array with the generated value."""
 
         role = self._get_resolved_role(obj)
         if AXUtilities.is_progress_bar(obj, role):
-            return self._generate_progress_bar_value(obj, **args)
+            return self._generate_progress_bar_value(obj)
 
         if AXUtilities.is_scroll_bar(obj, role) or AXUtilities.is_slider(obj, role):
-            return self._generate_value_as_percentage(obj, **args)
+            return self._generate_value_as_percentage(obj)
 
         return []
 
-    def _generate_result_separator(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_result_separator(self, obj: Atspi.Accessible) -> list[Any]:
         return []
 
     ################################# BASIC DETAILS #################################
@@ -539,7 +540,7 @@ class Generator:
         return False
 
     @log_generator_output
-    def _generate_accessible_description(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_accessible_description(self, obj: Atspi.Accessible) -> list[Any]:
         if self._is_generating_descendants or AXUtilities.is_terminal(obj):
             return []
 
@@ -576,7 +577,7 @@ class Generator:
         return [description]
 
     @log_generator_output
-    def _generate_accessible_image_description(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_accessible_image_description(self, obj: Atspi.Accessible) -> list[Any]:
         if hash(obj) in Generator.CACHED_IMAGE_DESCRIPTION:
             return Generator.CACHED_IMAGE_DESCRIPTION.get(hash(obj), [])
 
@@ -589,7 +590,7 @@ class Generator:
         return [description]
 
     @log_generator_output
-    def _generate_accessible_label(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_accessible_label(self, obj: Atspi.Accessible) -> list[Any]:
         result = []
         label = AXUtilities.get_displayed_label(obj)
         if label:
@@ -597,7 +598,7 @@ class Generator:
         return result
 
     @log_generator_output
-    def _generate_accessible_label_and_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_accessible_label_and_name(self, obj: Atspi.Accessible) -> list[Any]:
         focus: Atspi.Accessible | None = self._context.focus
 
         # TODO - JD: The role check is a quick workaround for issue #535 in which we stopped
@@ -616,8 +617,8 @@ class Generator:
                 return []
 
         result = []
-        label = self._generate_accessible_label(obj, **args)
-        name = self._generate_accessible_name(obj, **args)
+        label = self._generate_accessible_label(obj)
+        name = self._generate_accessible_name(obj)
         role = self._get_resolved_role(obj)
         if not (label or name) and role == Atspi.Role.TABLE_CELL:
             descendant = AXUtilities.active_descendant(obj)
@@ -641,12 +642,12 @@ class Generator:
 
         parent = AXObject.get_parent(obj)
         if AXUtilities.is_autocomplete(parent):
-            result = self._generate_accessible_label_and_name(parent, **args)
+            result = self._generate_accessible_label_and_name(parent)
 
         return result
 
     @log_generator_output
-    def _generate_accessible_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_accessible_name(self, obj: Atspi.Accessible) -> list[Any]:
         Generator.USED_DESCRIPTION_FOR_NAME[hash(obj)] = False
         name = AXObject.get_name(obj)
         if name:
@@ -675,7 +676,7 @@ class Generator:
         return []
 
     @log_generator_output
-    def _generate_accessible_placeholder_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_accessible_placeholder_text(self, obj: Atspi.Accessible) -> list[Any]:
         attrs = AXObject.get_attributes_dict(obj)
         placeholder = attrs.get("placeholder-text")
         if placeholder and placeholder != AXObject.get_name(obj):
@@ -688,29 +689,29 @@ class Generator:
         return []
 
     @log_generator_output
-    def _generate_accessible_role(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_accessible_role(self, obj: Atspi.Accessible) -> list[Any]:
         return []
 
     @log_generator_output
-    def _generate_accessible_static_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_accessible_static_text(self, obj: Atspi.Accessible) -> list[Any]:
         if hash(obj) in Generator.CACHED_STATIC_TEXT:
             return Generator.CACHED_STATIC_TEXT.get(hash(obj), [])
 
-        result = self._generate_accessible_description(obj, **args)
+        result = self._generate_accessible_description(obj)
         Generator.USED_DESCRIPTION_FOR_STATIC_TEXT[hash(obj)] = bool(result)
         if result:
             Generator.CACHED_STATIC_TEXT[hash(obj)] = result
             return result
 
         if not self._is_ancestor():
-            result = self._generate_text_expanding_embedded_objects(obj, **args)
+            result = self._generate_text_expanding_embedded_objects(obj)
             if result:
                 Generator.CACHED_STATIC_TEXT[hash(obj)] = result
                 return result
 
         labels = self._script.utilities.unrelated_labels(obj)
         for label in labels:
-            result.extend(self._generate_accessible_name(label, **args))
+            result.extend(self._generate_accessible_name(label))
 
         Generator.CACHED_STATIC_TEXT[hash(obj)] = result
         return result
@@ -753,7 +754,7 @@ class Generator:
         return role
 
     @log_generator_output
-    def _generate_keyboard_mnemonic(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_keyboard_mnemonic(self, obj: Atspi.Accessible) -> list[Any]:
         if mnemonic := AXUtilities.get_mnemonic(obj):
             return [mnemonic]
         return []
@@ -805,7 +806,7 @@ class Generator:
         return presentable_descendants
 
     @log_generator_output
-    def _generate_descendants(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_descendants(self, obj: Atspi.Accessible) -> list[Any]:
         descendants = self._get_presentable_descendants(obj)
         if not descendants:
             return []
@@ -825,14 +826,14 @@ class Generator:
 
             if child_result:
                 result.extend(child_result)
-                result.extend(self._generate_result_separator(child, **args))
+                result.extend(self._generate_result_separator(child))
         self._is_generating_descendants = prior_generating_descendants
 
         Generator.USED_DESCRIPTION_FOR_STATIC_TEXT[hash(obj)] = used_description_as_static_text
         return result
 
     @log_generator_output
-    def _generate_focused_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_focused_item(self, obj: Atspi.Accessible) -> list[Any]:
         role = self._get_resolved_role()
         if not (AXUtilities.is_list(obj, role) or AXUtilities.is_list_box(obj, role)):
             return []
@@ -851,7 +852,7 @@ class Generator:
         return result
 
     @log_generator_output
-    def _generate_radio_button_group(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_radio_button_group(self, obj: Atspi.Accessible) -> list[Any]:
         if not AXUtilities.is_radio_button(obj):
             return []
 
@@ -888,7 +889,7 @@ class Generator:
         return values
 
     @log_generator_output
-    def _generate_term_value_count(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_term_value_count(self, obj: Atspi.Accessible) -> list[Any]:
         count = len(self._get_values_for_term(obj))
         if count in (-1, 1):
             return []
@@ -898,14 +899,14 @@ class Generator:
     ##################################### STATE #####################################
 
     @log_generator_output
-    def _generate_state_current(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_current(self, obj: Atspi.Accessible) -> list[Any]:
         result = AXUtilities.get_current_item_status_string(obj)
         if not result:
             return []
         return [f"({result})"]
 
     @log_generator_output
-    def _generate_state_checked(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_checked(self, obj: Atspi.Accessible) -> list[Any]:
         if self._mode is GeneratorMode.BRAILLE:
             indicators = object_properties.CHECK_BOX_INDICATORS_BRAILLE
         elif self._mode is GeneratorMode.SPEECH:
@@ -922,17 +923,15 @@ class Generator:
         return [indicators[0]]
 
     @log_generator_output
-    def _generate_state_checked_for_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_checked_for_cell(self, obj: Atspi.Accessible) -> list[Any]:
         result = []
         if self._script.utilities.has_meaningful_toggle_action(obj):
-            result.extend(
-                self.generate(obj, role=Atspi.Role.CHECK_BOX, include_context=False, **args)
-            )
+            result.extend(self.generate(obj, role=Atspi.Role.CHECK_BOX, include_context=False))
 
         return result
 
     @log_generator_output
-    def _generate_state_checked_for_switch(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_checked_for_switch(self, obj: Atspi.Accessible) -> list[Any]:
         if self._mode is GeneratorMode.BRAILLE:
             indicators = object_properties.SWITCH_INDICATORS_BRAILLE
         elif self._mode is GeneratorMode.SPEECH:
@@ -947,17 +946,17 @@ class Generator:
         return [indicators[0]]
 
     @log_generator_output
-    def _generate_state_checked_if_checkable(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_checked_if_checkable(self, obj: Atspi.Accessible) -> list[Any]:
         if AXUtilities.is_checkable(obj) or AXUtilities.is_check_menu_item(obj):
-            return self._generate_state_checked(obj, **args)
+            return self._generate_state_checked(obj)
 
         if AXUtilities.is_checked(obj):
-            return self._generate_state_checked(obj, **args)
+            return self._generate_state_checked(obj)
 
         return []
 
     @log_generator_output
-    def _generate_state_expanded(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_expanded(self, obj: Atspi.Accessible) -> list[Any]:
         if self._mode is GeneratorMode.BRAILLE:
             indicators = object_properties.EXPANSION_INDICATORS_BRAILLE
         elif self._mode is GeneratorMode.SPEECH:
@@ -976,11 +975,11 @@ class Generator:
         return []
 
     @log_generator_output
-    def _generate_state_has_popup(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_has_popup(self, obj: Atspi.Accessible) -> list[Any]:
         return []
 
     @log_generator_output
-    def _generate_state_invalid(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_invalid(self, obj: Atspi.Accessible) -> list[Any]:
         if not AXUtilities.is_invalid_entry(obj):
             return []
 
@@ -1016,7 +1015,7 @@ class Generator:
         return result
 
     @log_generator_output
-    def _generate_state_multiselectable(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_multiselectable(self, obj: Atspi.Accessible) -> list[Any]:
         if not (AXUtilities.is_multiselectable(obj) and AXObject.get_child_count(obj)):
             return []
 
@@ -1030,7 +1029,7 @@ class Generator:
         return []
 
     @log_generator_output
-    def _generate_state_pressed(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_pressed(self, obj: Atspi.Accessible) -> list[Any]:
         if self._mode is GeneratorMode.BRAILLE:
             indicators = object_properties.TOGGLE_BUTTON_INDICATORS_BRAILLE
         elif self._mode is GeneratorMode.SPEECH:
@@ -1045,7 +1044,7 @@ class Generator:
         return [indicators[0]]
 
     @log_generator_output
-    def _generate_state_read_only(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_read_only(self, obj: Atspi.Accessible) -> list[Any]:
         if not AXUtilities.is_read_only(obj):
             return []
 
@@ -1059,7 +1058,7 @@ class Generator:
         return []
 
     @log_generator_output
-    def _generate_state_required(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_required(self, obj: Atspi.Accessible) -> list[Any]:
         is_required = AXUtilities.is_required(obj)
         if not is_required and AXUtilities.is_radio_button(obj):
             is_required = AXUtilities.is_required(AXObject.get_parent(obj))
@@ -1076,7 +1075,7 @@ class Generator:
         return []
 
     @log_generator_output
-    def _generate_state_selected_for_radio_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_selected_for_radio_button(self, obj: Atspi.Accessible) -> list[Any]:
         if self._mode is GeneratorMode.BRAILLE:
             indicators = object_properties.RADIO_BUTTON_INDICATORS_BRAILLE
         elif self._mode is GeneratorMode.SPEECH:
@@ -1091,7 +1090,7 @@ class Generator:
         return [indicators[0]]
 
     @log_generator_output
-    def _generate_state_sensitive(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_sensitive(self, obj: Atspi.Accessible) -> list[Any]:
         if AXUtilities.is_sensitive(obj):
             return []
 
@@ -1108,18 +1107,18 @@ class Generator:
         return []
 
     @log_generator_output
-    def _generate_state_unselected(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_unselected(self, obj: Atspi.Accessible) -> list[Any]:
         return []
 
     @log_generator_output
-    def _generate_state_visited(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_visited(self, obj: Atspi.Accessible) -> list[Any]:
         # Note that in the case of speech, this state is added to the role name.
         return []
 
     ##################################### TEXT ######################################
 
     @log_generator_output
-    def _generate_text_substring(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_text_substring(self, obj: Atspi.Accessible) -> list[Any]:
         start = self._get_start_offset()
         end = self._get_end_offset()
         if (hash(obj), start, end) in Generator.CACHED_TEXT_SUBSTRING:
@@ -1143,13 +1142,13 @@ class Generator:
         return []
 
     @log_generator_output
-    def _generate_text_line(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_text_line(self, obj: Atspi.Accessible) -> list[Any]:
         start = self._get_start_offset()
         end = self._get_end_offset()
         if (hash(obj), start, end) in Generator.CACHED_TEXT_LINE:
             return Generator.CACHED_TEXT_LINE.get((hash(obj), start, end), [])
 
-        result = Generator._generate_text_substring(self, obj, **args)
+        result = Generator._generate_text_substring(self, obj)
         if result:
             if not AXUtilities.is_editable(obj):
                 Generator.CACHED_TEXT_LINE[(hash(obj), start, end)] = result
@@ -1166,11 +1165,11 @@ class Generator:
         return []
 
     @log_generator_output
-    def _generate_text_content(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_text_content(self, obj: Atspi.Accessible) -> list[Any]:
         if hash(obj) in Generator.CACHED_TEXT:
             return Generator.CACHED_TEXT.get(hash(obj), [])
 
-        result = Generator._generate_text_substring(self, obj, **args)
+        result = Generator._generate_text_substring(self, obj)
         if result:
             if not AXUtilities.is_editable(obj):
                 Generator.CACHED_TEXT[hash(obj)] = result
@@ -1190,7 +1189,7 @@ class Generator:
         return []
 
     @log_generator_output
-    def _generate_text_expanding_embedded_objects(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_text_expanding_embedded_objects(self, obj: Atspi.Accessible) -> list[Any]:
         start = self._get_start_offset()
         end = self._get_end_offset()
         if (hash(obj), start, end) in Generator.CACHED_TEXT_EXPANDING_EOCS:
@@ -1226,7 +1225,7 @@ class Generator:
         return level
 
     @log_generator_output
-    def _generate_nesting_level(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_nesting_level(self, obj: Atspi.Accessible) -> list[Any]:
         if self._get_start_offset() is not None and self._get_end_offset() is not None:
             return []
 
@@ -1241,12 +1240,12 @@ class Generator:
         return []
 
     @log_generator_output
-    def _generate_position_in_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_position_in_list(self, obj: Atspi.Accessible) -> list[Any]:
         return []
 
     @log_generator_output
     def _generate_tree_item_level(
-        self, obj: Atspi.Accessible, *, new_only: bool = False, **args
+        self, obj: Atspi.Accessible, *, new_only: bool = False
     ) -> list[Any]:
         level = Generator.CACHED_TREE_ITEM_LEVEL.get(hash(obj))
         if level is None:
@@ -1274,11 +1273,11 @@ class Generator:
     ################################ PROGRESS BARS ##################################
 
     @log_generator_output
-    def _generate_progress_bar_index(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_progress_bar_index(self, obj: Atspi.Accessible) -> list[Any]:
         return []
 
     @log_generator_output
-    def _generate_progress_bar_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_progress_bar_value(self, obj: Atspi.Accessible) -> list[Any]:
         return []
 
     def _clean_up_cached_progress_bars(self):
@@ -1303,7 +1302,7 @@ class Generator:
         index = list(self._active_progress_bars.values()).index(this_value)
         return index + 1, len(self._active_progress_bars)
 
-    def _get_progress_bar_update_time_and_value(self, obj, **args):
+    def _get_progress_bar_update_time_and_value(self, obj):
         if obj not in self._active_progress_bars:
             self._active_progress_bars[obj] = 0.0, None
 
@@ -1318,9 +1317,9 @@ class Generator:
 
     # TODO - JD: This function and fake role really need to die....
     @log_generator_output
-    def _generate_real_table_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_real_table_cell(self, obj: Atspi.Accessible) -> list[Any]:
         result = []
-        result.extend(self.generate(obj, role="REAL_ROLE_TABLE_CELL", **args))
+        result.extend(self.generate(obj, role="REAL_ROLE_TABLE_CELL"))
         return result
 
     def _get_is_nameless_toggle(self, obj):
@@ -1341,7 +1340,7 @@ class Generator:
 
     # TODO - JD: This is part of the complicated "REAL_ROLE_TABLE_CELL" mess.
     @log_generator_output
-    def _generate_table_cell_row(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_cell_row(self, obj: Atspi.Accessible) -> list[Any]:
         present_all = (
             self._reading_row
             or self._get_reason() == PresentationReason.WHERE_AM_I_DETAILED
@@ -1349,7 +1348,7 @@ class Generator:
         )
 
         if not present_all:
-            return self._generate_real_table_cell(obj, **args)
+            return self._generate_real_table_cell(obj)
 
         row = AXUtilities.find_ancestor(obj, AXUtilities.is_table_row)
         if row and AXObject.get_name(row) and not AXUtilities.is_layout_only(row):
@@ -1371,7 +1370,7 @@ class Generator:
             if cell != obj:
                 cell_context = replace(cell_context, content_item=None)
             self._context = cell_context
-            cell_result = self._generate_real_table_cell(cell, **args)
+            cell_result = self._generate_real_table_cell(cell)
             if cell_result and result and self._mode is GeneratorMode.BRAILLE:
                 result.append(braille.Region(object_properties.TABLE_CELL_DELIMITER_BRAILLE))
             result.extend(cell_result)
@@ -1379,7 +1378,7 @@ class Generator:
         self._reading_row = prior_reading_row
         self._context = original_context
 
-        result.extend(self._generate_position_in_list(obj, **args))
+        result.extend(self._generate_position_in_list(obj))
         return result
 
     # TODO - JD: If we had dedicated generators for cell types, we wouldn't need this.
@@ -1387,7 +1386,6 @@ class Generator:
     def _generate_column_header_if_toggle_and_no_text(
         self,
         obj: Atspi.Accessible,
-        **args,
     ) -> list[Any]:
         if not self._get_is_nameless_toggle(obj):
             return []
@@ -1404,17 +1402,16 @@ class Generator:
     def _generate_real_active_descendant_displayed_text(
         self,
         obj: Atspi.Accessible,
-        **args,
     ) -> list[Any]:
         rad = AXUtilities.active_descendant(obj)
 
         if not (AXUtilities.is_table_cell(rad) and AXObject.get_child_count(rad)):
-            return self._generate_text_content(rad, **args)
+            return self._generate_text_content(rad)
 
         content = {AXObject.get_name(x) for x in AXObject.iter_children(rad)}
         rv = " ".join(filter(lambda x: x, content))
         if not rv:
-            return self._generate_text_content(rad, **args)
+            return self._generate_text_content(rad)
         return [rv]
 
     @log_generator_output
@@ -1423,7 +1420,6 @@ class Generator:
         obj: Atspi.Accessible,
         *,
         new_only: bool = False,
-        **args,
     ) -> list[Any]:
         if self._reading_row and not self._get_is_nameless_toggle(obj):
             return []
@@ -1465,7 +1461,6 @@ class Generator:
         obj: Atspi.Accessible,
         *,
         new_only: bool = False,
-        **args,
     ) -> list[Any]:
         if self._reading_row:
             return []
@@ -1501,7 +1496,7 @@ class Generator:
         return result
 
     @log_generator_output
-    def _generate_table_sort_order(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_sort_order(self, obj: Atspi.Accessible) -> list[Any]:
         description = AXUtilities.get_presentable_sort_order_from_header(obj)
         if not description:
             return []
@@ -1530,7 +1525,7 @@ class Generator:
         return AXObject.get_name(obj) or AXText.get_all_text(obj)
 
     @log_generator_output
-    def _generate_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_value(self, obj: Atspi.Accessible) -> list[Any]:
         if AXUtilities.is_combo_box(obj, self._get_resolved_role()):
             if value := self._get_combo_box_value(obj):
                 return [value]
@@ -1547,7 +1542,7 @@ class Generator:
         return []
 
     @log_generator_output
-    def _generate_value_as_percentage(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_value_as_percentage(self, obj: Atspi.Accessible) -> list[Any]:
         percent = AXValue.get_value_as_percent(obj)
         if percent is not None:
             return [f"{percent}%"]
@@ -1556,672 +1551,672 @@ class Generator:
 
     ################################### PER-ROLE ###################################
 
-    def _generate_default_presentation(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_default_presentation(self, obj: Atspi.Accessible) -> list[Any]:
         """Provides a default/role-agnostic presentation of obj."""
 
         return []
 
-    def _generate_accelerator_label(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_accelerator_label(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the accelerator-label role."""
 
         return []
 
-    def _generate_alert(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_alert(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the alert role."""
 
         return []
 
-    def _generate_animation(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_animation(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the animation role."""
 
         return []
 
-    def _generate_application(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_application(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the application role."""
 
         return []
 
-    def _generate_arrow(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_arrow(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the arrow role."""
 
         return []
 
-    def _generate_article(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_article(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the article role."""
 
         return []
 
-    def _generate_article_in_feed(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_article_in_feed(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the article role when the article is in a feed."""
 
         return []
 
-    def _generate_audio(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_audio(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the audio role."""
 
         return []
 
-    def _generate_autocomplete(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_autocomplete(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the autocomplete role."""
 
         return []
 
-    def _generate_block_quote(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_block_quote(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the block-quote role."""
 
         return []
 
-    def _generate_calendar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_calendar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the calendar role."""
 
         return []
 
-    def _generate_canvas(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_canvas(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the canvas role."""
 
         return []
 
-    def _generate_caption(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_caption(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the caption role."""
 
         return []
 
-    def _generate_chart(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_chart(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the chart role."""
 
         return []
 
-    def _generate_check_box(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_check_box(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the check-box role."""
 
         return []
 
-    def _generate_check_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_check_menu_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the check-menu-item role."""
 
         return []
 
-    def _generate_color_chooser(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_color_chooser(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the color-chooser role."""
 
         return []
 
-    def _generate_column_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_column_header(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the column-header role."""
 
         return []
 
-    def _generate_combo_box(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_combo_box(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the combo-box role."""
 
         return []
 
-    def _generate_code_block(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_code_block(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the code block role."""
 
         return []
 
-    def _generate_comment(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_comment(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the comment role."""
 
         return []
 
-    def _generate_content_deletion(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_content_deletion(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the content-deletion role."""
 
         return []
 
-    def _generate_content_insertion(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_content_insertion(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the content-insertion role."""
 
         return []
 
-    def _generate_date_editor(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_date_editor(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the date-editor role."""
 
         return []
 
-    def _generate_definition(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_definition(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the definition role."""
 
         return []
 
-    def _generate_description_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_description_list(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the description-list role."""
 
         return []
 
-    def _generate_description_term(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_description_term(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the description-term role."""
 
         return []
 
-    def _generate_description_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_description_value(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the description-value role."""
 
         return []
 
-    def _generate_desktop_frame(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_desktop_frame(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the desktop-frame role."""
 
         return []
 
-    def _generate_desktop_icon(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_desktop_icon(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the desktop-icon role."""
 
         return []
 
-    def _generate_dial(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_dial(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the dial role."""
 
         return []
 
-    def _generate_dialog(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_dialog(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the dialog role."""
 
         return []
 
-    def _generate_directory_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_directory_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the directory_pane role."""
 
         return []
 
-    def _generate_document(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for document-related roles."""
 
         return []
 
-    def _generate_document_email(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document_email(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the document-email role."""
 
         return []
 
-    def _generate_document_frame(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document_frame(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the document-frame role."""
 
         return []
 
-    def _generate_document_presentation(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document_presentation(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the document-presentation role."""
 
         return []
 
-    def _generate_document_spreadsheet(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document_spreadsheet(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the document-spreadsheet role."""
 
         return []
 
-    def _generate_document_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document_text(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the document-text role."""
 
         return []
 
-    def _generate_document_web(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document_web(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the document-web role."""
 
         return []
 
-    def _generate_dpub_landmark(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_dpub_landmark(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the dpub section role."""
 
         return []
 
-    def _generate_dpub_section(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_dpub_section(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the dpub section role."""
 
         return []
 
-    def _generate_drawing_area(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_drawing_area(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the drawing-area role."""
 
         return []
 
-    def _generate_editbar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_editbar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the editbar role."""
 
         return []
 
-    def _generate_embedded(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_embedded(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the embedded role."""
 
         return []
 
-    def _generate_entry(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_entry(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the entry role."""
 
         return []
 
-    def _generate_feed(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_feed(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the feed role."""
 
         return []
 
-    def _generate_file_chooser(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_file_chooser(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the file-chooser role."""
 
         return []
 
-    def _generate_filler(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_filler(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the filler role."""
 
         return []
 
-    def _generate_font_chooser(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_font_chooser(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the font-chooser role."""
 
         return []
 
-    def _generate_footer(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_footer(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the footer role."""
 
         return []
 
-    def _generate_footnote(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_footnote(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the footnote role."""
 
         return []
 
-    def _generate_form(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_form(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the form role."""
 
         return []
 
-    def _generate_frame(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_frame(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the frame role."""
 
         return []
 
-    def _generate_glass_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_glass_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the glass-pane role."""
 
         return []
 
-    def _generate_grouping(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_grouping(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the grouping role."""
 
         return []
 
-    def _generate_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_header(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the header role."""
 
         return []
 
-    def _generate_heading(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_heading(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the heading role."""
 
         return []
 
-    def _generate_html_container(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_html_container(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the html-container role."""
 
         return []
 
-    def _generate_icon(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_icon(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the icon role."""
 
         return []
 
-    def _generate_image(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_image(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the image role."""
 
         return []
 
-    def _generate_image_map(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_image_map(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the image-map role."""
 
         return []
 
-    def _generate_info_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_info_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the info-bar role."""
 
         return []
 
-    def _generate_input_method_window(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_input_method_window(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the input-method-window role."""
 
         return []
 
-    def _generate_internal_frame(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_internal_frame(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the internal-frame role."""
 
         return []
 
-    def _generate_label(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_label(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the label role."""
 
         return []
 
-    def _generate_landmark(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_landmark(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the landmark role."""
 
         return []
 
-    def _generate_layered_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_layered_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the layered-pane role."""
 
         return []
 
-    def _generate_level_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_level_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the level-bar role."""
 
         return []
 
-    def _generate_link(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_link(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the link role."""
 
         return []
 
-    def _generate_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_list(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the list role."""
 
         return []
 
-    def _generate_list_box(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_list_box(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the list-box role."""
 
         return []
 
-    def _generate_list_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_list_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the list-item role."""
 
         return []
 
-    def _generate_log(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_log(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the log role."""
 
         return []
 
-    def _generate_mark(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_mark(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the mark role."""
 
         return []
 
-    def _generate_marquee(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_marquee(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the marquee role."""
 
         return []
 
-    def _generate_math(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_math(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the math role."""
 
         return []
 
-    def _generate_menu(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_menu(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the menu role."""
 
         return []
 
-    def _generate_menu_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_menu_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the menu-bar role."""
 
         return []
 
-    def _generate_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_menu_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the menu-item role."""
 
         return []
 
-    def _generate_notification(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_notification(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the notification role."""
 
         return []
 
-    def _generate_option_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_option_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the option-pane role."""
 
         return []
 
-    def _generate_page(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_page(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the page role."""
 
         return []
 
-    def _generate_page_tab(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_page_tab(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the page-tab role."""
 
         return []
 
-    def _generate_page_tab_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_page_tab_list(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the page-tab-list role."""
 
         return []
 
-    def _generate_panel(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_panel(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the panel role."""
 
         return []
 
-    def _generate_paragraph(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_paragraph(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the paragraph role."""
 
         return []
 
-    def _generate_password_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_password_text(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the password-text role."""
 
         return []
 
-    def _generate_popup_menu(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_popup_menu(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the popup-menu role."""
 
         return []
 
-    def _generate_progress_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_progress_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the progress-bar role."""
 
         return []
 
-    def _generate_push_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_push_button(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the push-button role."""
 
         return []
 
-    def _generate_push_button_menu(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_push_button_menu(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the push-button-menu role."""
 
         return []
 
-    def _generate_radio_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_radio_button(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the radio-button role."""
 
         return []
 
-    def _generate_radio_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_radio_menu_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the radio-menu-item role."""
 
         return []
 
-    def _generate_rating(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_rating(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the rating role."""
 
         return []
 
-    def _generate_region(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_region(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the region landmark role."""
 
         return []
 
-    def _generate_root_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_root_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the root-pane role."""
 
         return []
 
-    def _generate_row_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_row_header(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the row-header role."""
 
         return []
 
-    def _generate_ruler(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_ruler(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the ruler role."""
 
         return []
 
-    def _generate_scroll_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_scroll_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the scroll-bar role."""
 
         return []
 
-    def _generate_scroll_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_scroll_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the scroll-pane role."""
 
         return []
 
-    def _generate_section(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_section(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the section role."""
 
         return []
 
-    def _generate_separator(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_separator(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the separator role."""
 
         return []
 
-    def _generate_slider(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_slider(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the slider role."""
 
         return []
 
-    def _generate_spin_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_spin_button(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the spin-button role."""
 
         return []
 
-    def _generate_split_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_split_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the split-pane role."""
 
         return []
 
-    def _generate_static(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_static(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the static role."""
 
         return []
 
-    def _generate_status_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_status_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the status-bar role."""
 
         return []
 
-    def _generate_subscript(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_subscript(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the subscript role."""
 
         return []
 
-    def _generate_suggestion(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_suggestion(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the suggestion role."""
 
         return []
 
-    def _generate_superscript(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_superscript(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the superscript role."""
 
         return []
 
-    def _generate_switch(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_switch(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the switch role."""
 
         return []
 
-    def _generate_table(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the table role."""
 
         return []
 
-    def _generate_table_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_cell(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the table-cell role."""
 
         return []
 
-    def _generate_table_cell_in_row(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_cell_in_row(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the table-cell role in the context of its row."""
 
         return []
 
-    def _generate_table_column_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_column_header(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the table-column-header role."""
 
         return []
 
-    def _generate_table_row(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_row(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the table-row role."""
 
         return []
 
-    def _generate_table_row_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_row_header(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the table-row-header role."""
 
         return []
 
-    def _generate_tearoff_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tearoff_menu_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the tearoff-menu-item role."""
 
         return []
 
-    def _generate_terminal(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_terminal(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the terminal role."""
 
         return []
 
-    def _generate_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_text(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the text role."""
 
         return []
 
-    def _generate_timer(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_timer(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the timer role."""
 
         return []
 
-    def _generate_title_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_title_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the title-bar role."""
 
         return []
 
-    def _generate_toggle_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_toggle_button(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the toggle-button role."""
 
         return []
 
-    def _generate_tool_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tool_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the tool-bar role."""
 
         return []
 
-    def _generate_tool_tip(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tool_tip(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the tool-tip role."""
 
         return []
 
-    def _generate_tree(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tree(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the tree role."""
 
         return []
 
-    def _generate_tree_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tree_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the tree-item role."""
 
         return []
 
-    def _generate_tree_table(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tree_table(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the tree-table role."""
 
         return []
 
-    def _generate_unknown(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_unknown(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the unknown role."""
 
         return []
 
-    def _generate_video(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_video(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the video role."""
 
         return []
 
-    def _generate_viewport(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_viewport(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the viewport role."""
 
         return []
 
-    def _generate_window(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_window(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates presentation for the window role."""
 
         return []

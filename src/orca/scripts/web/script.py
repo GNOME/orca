@@ -334,7 +334,7 @@ class Script(default.Script):
         if generate_speech:
             presenter.speak_contents(
                 contents,
-                priorObj=prior_obj,
+                prior_obj=prior_obj,
                 reason=reason,
             )
 
@@ -520,7 +520,6 @@ class Script(default.Script):
         self.update_braille(new_focus)
 
         contents = None
-        args = {}
         last_command_was_caret_nav = (
             caret_navigator.get_navigator().last_input_event_was_navigation_command()
         )
@@ -533,7 +532,6 @@ class Script(default.Script):
             manager.last_event_was_line_navigation() and not last_command_was_caret_nav
         )
 
-        args["priorObj"] = old_focus
         if (
             manager.last_event_was_mouse_button()
             and event
@@ -613,7 +611,7 @@ class Script(default.Script):
         )
 
         if contents:
-            presentation_manager.get_manager().speak_contents(contents, **args)
+            presentation_manager.get_manager().speak_contents(contents, prior_obj=old_focus)
         else:
             presentation_manager.get_manager().present_object(
                 self,

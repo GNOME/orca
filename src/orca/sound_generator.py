@@ -61,7 +61,6 @@ class SoundGenerator(generator.Generator):
         self,
         obj: Atspi.Accessible,
         context: generator.GeneratorContext,
-        **args,
     ) -> list[Any]:
         """Returns an array of sounds for the complete presentation of obj."""
 
@@ -70,9 +69,9 @@ class SoundGenerator(generator.Generator):
             debug.print_message(debug.LEVEL_INFO, "SOUND GENERATOR: Generation disabled", True)
             return []
 
-        return self.generate(obj, **args)
+        return self.generate(obj)
 
-    def _generate_state_sensitive(self, obj: Atspi.Accessible, **_args) -> list[Any]:
+    def _generate_state_sensitive(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array of sounds indicating obj is grayed out."""
 
         if AXUtilities.is_sensitive(obj):
@@ -84,17 +83,17 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generate_state_checked(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_checked(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array of sounds indicating the checked state of obj."""
 
-        filenames = super()._generate_state_checked(obj, **args)
+        filenames = super()._generate_state_checked(obj)
         if filenames and filenames[0]:
             if result := self._convert_filename_to_icon(filenames[0]):
                 return [result]
 
         return []
 
-    def _generate_has_click_action(self, obj: Atspi.Accessible, **_args) -> list[Any]:
+    def _generate_has_click_action(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array of sounds indicating obj is clickable."""
 
         if not self._script.utilities.is_clickable_element(obj):
@@ -106,27 +105,27 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generate_state_expanded(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_expanded(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array of sounds indicating the expanded state of obj."""
 
-        filenames = super()._generate_state_expanded(obj, **args)
+        filenames = super()._generate_state_expanded(obj)
         if filenames and filenames[0]:
             if result := self._convert_filename_to_icon(filenames[0]):
                 return [result]
 
         return []
 
-    def _generate_state_invalid(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_invalid(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array of sounds indicating the invalid state of obj."""
 
-        filenames = super()._generate_state_invalid(obj, **args)
+        filenames = super()._generate_state_invalid(obj)
         if filenames and filenames[0]:
             if result := self._convert_filename_to_icon(filenames[0]):
                 return [result]
 
         return []
 
-    def _generate_has_long_description(self, obj: Atspi.Accessible, **_args) -> list[Any]:
+    def _generate_has_long_description(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array of sounds indicating obj has a longdesc."""
 
         if not self._script.utilities.has_long_desc(obj):
@@ -138,67 +137,67 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generate_state_multiselectable(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_multiselectable(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array of sounds indicating obj is multiselectable."""
 
-        filenames = super()._generate_state_multiselectable(obj, **args)
+        filenames = super()._generate_state_multiselectable(obj)
         if filenames and filenames[0]:
             if result := self._convert_filename_to_icon(filenames[0]):
                 return [result]
 
         return []
 
-    def _generate_state_selected_for_radio_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_selected_for_radio_button(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array of sounds indicating the selected state of obj."""
 
-        filenames = super()._generate_state_selected_for_radio_button(obj, **args)
+        filenames = super()._generate_state_selected_for_radio_button(obj)
         if filenames and filenames[0]:
             if result := self._convert_filename_to_icon(filenames[0]):
                 return [result]
 
         return []
 
-    def _generate_state_read_only(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_read_only(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array of sounds indicating obj is read only."""
 
-        filenames = super()._generate_state_read_only(obj, **args)
+        filenames = super()._generate_state_read_only(obj)
         if filenames and filenames[0]:
             if result := self._convert_filename_to_icon(filenames[0]):
                 return [result]
 
         return []
 
-    def _generate_state_required(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_required(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array of sounds indicating obj is required."""
 
-        filenames = super()._generate_state_required(obj, **args)
+        filenames = super()._generate_state_required(obj)
         if filenames and filenames[0]:
             if result := self._convert_filename_to_icon(filenames[0]):
                 return [result]
 
         return []
 
-    def _generate_state_checked_for_switch(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_checked_for_switch(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array of sounds indicating the on/off state of obj."""
 
-        filenames = super()._generate_state_checked_for_switch(obj, **args)
+        filenames = super()._generate_state_checked_for_switch(obj)
         if filenames and filenames[0]:
             if result := self._convert_filename_to_icon(filenames[0]):
                 return [result]
 
         return []
 
-    def _generate_state_pressed(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_pressed(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array of sounds indicating the toggled state of obj."""
 
-        filenames = super()._generate_state_pressed(obj, **args)
+        filenames = super()._generate_state_pressed(obj)
         if filenames and filenames[0]:
             if result := self._convert_filename_to_icon(filenames[0]):
                 return [result]
 
         return []
 
-    def _generate_visited_state(self, obj: Atspi.Accessible, **_args) -> list[Any]:
+    def _generate_visited_state(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array of sounds indicating the visited state of obj."""
 
         if not AXUtilities.is_visited(obj):
@@ -210,7 +209,7 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generate_value_as_percentage(self, obj: Atspi.Accessible, **_args) -> list[Any]:
+    def _generate_value_as_percentage(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array of sounds reflecting the percentage of obj."""
 
         percent = AXValue.get_value_as_percent(obj)
@@ -219,7 +218,7 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generate_progress_bar_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_progress_bar_value(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array of sounds representing the progress bar value."""
 
         percent = AXValue.get_value_as_percent(obj)
@@ -244,7 +243,7 @@ class SoundGenerator(generator.Generator):
         volume = sound_presenter.get_presenter().get_sound_volume() * volume_multiplier
         return [Tone(duration, frequency, volume, Tone.SINE_WAVE)]
 
-    def _generate_position_in_set(self, _obj: Atspi.Accessible, **_args) -> list[Any]:
+    def _generate_position_in_set(self, _obj: Atspi.Accessible) -> list[Any]:
         """Returns an array of sounds reflecting the set position of obj."""
 
         # TODO: Implement the result.
@@ -254,7 +253,7 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generate_accessible_role(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_accessible_role(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array of sounds indicating the role of obj."""
 
         role = self._get_resolved_role(obj)
@@ -266,918 +265,916 @@ class SoundGenerator(generator.Generator):
 
         return []
 
-    def _generate_default_prefix(self, _obj: Atspi.Accessible, **_args) -> list[Any]:
+    def _generate_default_prefix(self, _obj: Atspi.Accessible) -> list[Any]:
         """Provides the default/role-agnostic information to present before obj."""
 
         return []
 
-    def _generate_default_presentation(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_default_presentation(self, obj: Atspi.Accessible) -> list[Any]:
         """Provides a default/role-agnostic presentation of obj."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_default_suffix(self, _obj: Atspi.Accessible, **_args) -> list[Any]:
+    def _generate_default_suffix(self, _obj: Atspi.Accessible) -> list[Any]:
         """Provides the default/role-agnostic information to present after obj."""
 
         return []
 
-    def _generate_accelerator_label(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_accelerator_label(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the accelerator-label role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_alert(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_alert(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the alert role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_animation(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_animation(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the animation role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_application(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_application(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the application role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_arrow(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_arrow(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the arrow role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_article(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_article(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the article role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_article_in_feed(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_article_in_feed(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the article role when the article is in a feed."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_audio(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_audio(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the audio role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_autocomplete(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_autocomplete(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the autocomplete role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_block_quote(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_block_quote(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the block-quote role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_calendar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_calendar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the calendar role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_canvas(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_canvas(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the canvas role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_position_in_set(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_position_in_set(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_caption(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_caption(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the caption role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_chart(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_chart(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the chart role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_check_box(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_check_box(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the check-box role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_state_checked(obj, **args)
+            return self._generate_state_checked(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_checked(obj, **args)
-        result += self._generate_state_required(obj, **args)
-        result += self._generate_state_invalid(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_checked(obj)
+        result += self._generate_state_required(obj)
+        result += self._generate_state_invalid(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_check_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_check_menu_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the check-menu-item role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_state_checked(obj, **args)
+            return self._generate_state_checked(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_checked(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_position_in_set(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_checked(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_position_in_set(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_color_chooser(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_color_chooser(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the color-chooser role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_column_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_column_header(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the column-header role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_combo_box(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_combo_box(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the combo-box role."""
 
         result = []
         if self._is_ancestor() or self._is_minimal():
-            result += self._generate_state_expanded(obj, **args)
+            result += self._generate_state_expanded(obj)
             return result
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
-        result += self._generate_position_in_set(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_expanded(obj)
+        result += self._generate_position_in_set(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_code_block(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_code_block(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the code block role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_comment(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_comment(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the comment role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_content_deletion(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_content_deletion(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the content-deletion role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_content_insertion(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_content_insertion(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the content-insertion role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_date_editor(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_date_editor(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the date-editor role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_definition(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_definition(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the definition role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_description_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_description_list(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the description-list role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_description_term(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_description_term(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the description-term role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_description_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_description_value(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the description-value role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_desktop_frame(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_desktop_frame(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the desktop-frame role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_desktop_icon(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_desktop_icon(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the desktop-icon role."""
 
-        return self._generate_icon(obj, **args)
+        return self._generate_icon(obj)
 
-    def _generate_dial(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_dial(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the dial role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_value_as_percentage(obj, **args)
+            return self._generate_value_as_percentage(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_value_as_percentage(obj, **args)
-        result += self._generate_state_required(obj, **args)
-        result += self._generate_state_invalid(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_value_as_percentage(obj)
+        result += self._generate_state_required(obj)
+        result += self._generate_state_invalid(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_dialog(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_dialog(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the dialog role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_directory_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_directory_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the directory_pane role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_document(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for document-related roles."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_document_email(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document_email(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the document-email role."""
 
-        return self._generate_document(obj, **args)
+        return self._generate_document(obj)
 
-    def _generate_document_frame(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document_frame(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the document-frame role."""
 
-        return self._generate_document(obj, **args)
+        return self._generate_document(obj)
 
-    def _generate_document_presentation(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document_presentation(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the document-presentation role."""
 
-        return self._generate_document(obj, **args)
+        return self._generate_document(obj)
 
-    def _generate_document_spreadsheet(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document_spreadsheet(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the document-spreadsheet role."""
 
-        return self._generate_document(obj, **args)
+        return self._generate_document(obj)
 
-    def _generate_document_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document_text(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the document-text role."""
 
-        return self._generate_document(obj, **args)
+        return self._generate_document(obj)
 
-    def _generate_document_web(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document_web(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the document-web role."""
 
-        return self._generate_document(obj, **args)
+        return self._generate_document(obj)
 
-    def _generate_dpub_landmark(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_dpub_landmark(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the dpub section role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_dpub_section(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_dpub_section(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the dpub section role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_drawing_area(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_drawing_area(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the drawing-area role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_editbar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_editbar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the editbar role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_embedded(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_embedded(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the embedded role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_entry(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_entry(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the entry role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_read_only(obj, **args)
-        result += self._generate_state_required(obj, **args)
-        result += self._generate_state_invalid(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_read_only(obj)
+        result += self._generate_state_required(obj)
+        result += self._generate_state_invalid(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_feed(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_feed(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the feed role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_file_chooser(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_file_chooser(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the file-chooser role."""
 
-        return self._generate_dialog(obj, **args)
+        return self._generate_dialog(obj)
 
-    def _generate_filler(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_filler(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the filler role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_font_chooser(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_font_chooser(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the font-chooser role."""
 
-        return self._generate_dialog(obj, **args)
+        return self._generate_dialog(obj)
 
-    def _generate_footer(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_footer(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the footer role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_footnote(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_footnote(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the footnote role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_form(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_form(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the form role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_frame(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_frame(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the frame role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_glass_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_glass_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the glass-pane role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_grouping(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_grouping(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the grouping role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_header(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the header role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_heading(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_heading(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the heading role."""
 
         result = []
         if self._is_ancestor() or self._is_minimal():
-            result += self._generate_state_expanded(obj, **args)
+            result += self._generate_state_expanded(obj)
             return result
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_expanded(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_html_container(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_html_container(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the html-container role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_icon(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_icon(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the icon role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_position_in_set(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_position_in_set(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_image(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_image(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the image role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_image_map(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_image_map(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the image-map role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_info_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_info_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the info-bar role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_input_method_window(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_input_method_window(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the input-method-window role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_internal_frame(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_internal_frame(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the internal-frame role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_label(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_label(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the label role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_landmark(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_landmark(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the landmark role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_layered_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_layered_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the layered-pane role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_level_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_level_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the level-bar role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_value_as_percentage(obj, **args)
+            return self._generate_value_as_percentage(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_value_as_percentage(obj, **args)
-        result += self._generate_state_required(obj, **args)
-        result += self._generate_state_invalid(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_value_as_percentage(obj)
+        result += self._generate_state_required(obj)
+        result += self._generate_state_invalid(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_link(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_link(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the link role."""
 
         result = []
         if self._is_ancestor() or self._is_minimal():
-            result += self._generate_state_expanded(obj, **args)
+            result += self._generate_state_expanded(obj)
             return result
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
-        result += self._generate_visited_state(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_state_expanded(obj)
+        result += self._generate_visited_state(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_list(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the list role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_list_box(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_list_box(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the list-box role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_multiselectable(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_multiselectable(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_list_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_list_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the list-item role."""
 
         result = []
         if self._is_ancestor() or self._is_minimal():
-            result += self._generate_state_expanded(obj, **args)
+            result += self._generate_state_expanded(obj)
             return result
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
-        result += self._generate_position_in_set(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_expanded(obj)
+        result += self._generate_position_in_set(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_log(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_log(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the log role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_mark(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_mark(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the mark role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_marquee(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_marquee(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the marquee role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_math(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_math(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the math role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_menu(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_menu(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the menu role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_menu_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_menu_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the menu-bar role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_menu_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the menu-item role."""
 
         result = []
         if self._is_ancestor() or self._is_minimal():
-            result += self._generate_state_expanded(obj, **args)
+            result += self._generate_state_expanded(obj)
             return result
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_position_in_set(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_expanded(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_position_in_set(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_notification(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_notification(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the notification role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_option_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_option_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the option-pane role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_page(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_page(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the page role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_page_tab(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_page_tab(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the page-tab role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_position_in_set(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_position_in_set(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_page_tab_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_page_tab_list(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the page-tab-list role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_panel(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_panel(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the panel role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_paragraph(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_paragraph(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the paragraph role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_password_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_password_text(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the password-text role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_popup_menu(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_popup_menu(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the popup-menu role."""
 
-        return self._generate_menu(obj, **args)
+        return self._generate_menu(obj)
 
-    def _generate_progress_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_progress_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the progress-bar role."""
 
         result = []
         if self._is_ancestor() or self._is_minimal():
-            result += self._generate_progress_bar_value(obj, **args)
+            result += self._generate_progress_bar_value(obj)
             return result
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_progress_bar_value(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_progress_bar_value(obj)
         return result
 
-    def _generate_push_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_push_button(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the push-button role."""
 
         result = []
         if self._is_ancestor() or self._is_minimal():
-            result += self._generate_state_expanded(obj, **args)
+            result += self._generate_state_expanded(obj)
             return result
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_expanded(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_push_button_menu(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_push_button_menu(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the push-button-menu role."""
 
-        return self._generate_push_button(obj, **args)
+        return self._generate_push_button(obj)
 
-    def _generate_radio_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_radio_button(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the radio-button role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_state_selected_for_radio_button(obj, **args)
+            return self._generate_state_selected_for_radio_button(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_selected_for_radio_button(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_position_in_set(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_selected_for_radio_button(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_position_in_set(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_radio_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_radio_menu_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the radio-menu-item role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_state_selected_for_radio_button(obj, **args)
+            return self._generate_state_selected_for_radio_button(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_selected_for_radio_button(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_position_in_set(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_selected_for_radio_button(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_position_in_set(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_rating(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_rating(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the rating role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_region(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_region(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the region landmark role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_root_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_root_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the root-pane role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_row_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_row_header(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the row-header role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_ruler(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_ruler(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the ruler role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_scroll_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_scroll_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the scroll-bar role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_value_as_percentage(obj, **args)
+            return self._generate_value_as_percentage(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_value_as_percentage(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_value_as_percentage(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_scroll_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_scroll_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the scroll-pane role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_section(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_section(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the section role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_separator(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_separator(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the separator role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_slider(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_slider(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the slider role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_value_as_percentage(obj, **args)
+            return self._generate_value_as_percentage(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_value_as_percentage(obj, **args)
-        result += self._generate_state_required(obj, **args)
-        result += self._generate_state_invalid(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_value_as_percentage(obj)
+        result += self._generate_state_required(obj)
+        result += self._generate_state_invalid(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_spin_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_spin_button(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the spin-button role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_value_as_percentage(obj, **args)
+            return self._generate_value_as_percentage(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_value_as_percentage(obj, **args)
-        result += self._generate_state_required(obj, **args)
-        result += self._generate_state_invalid(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_value_as_percentage(obj)
+        result += self._generate_state_required(obj)
+        result += self._generate_state_invalid(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_split_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_split_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the split-pane role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_value_as_percentage(obj, **args)
+            return self._generate_value_as_percentage(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_value_as_percentage(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_value_as_percentage(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_static(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_static(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the static role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_status_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_status_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the status-bar role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_subscript(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_subscript(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the subscript role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_suggestion(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_suggestion(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the suggestion role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_superscript(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_superscript(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the superscript role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_switch(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_switch(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the switch role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_state_checked_for_switch(obj, **args)
+            return self._generate_state_checked_for_switch(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_checked_for_switch(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_checked_for_switch(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_table(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the table role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_table_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_cell(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the table-cell role."""
 
         result = []
         if self._is_ancestor() or self._is_minimal():
-            result += self._generate_state_expanded(obj, **args)
+            result += self._generate_state_expanded(obj)
             return result
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_expanded(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_table_cell_in_row(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_cell_in_row(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the table-cell role in the context of its row."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_table_column_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_column_header(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the table-column-header role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_table_row(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_row(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the table-row role."""
 
         result = []
         if self._is_ancestor() or self._is_minimal():
-            result += self._generate_state_expanded(obj, **args)
+            result += self._generate_state_expanded(obj)
             return result
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_expanded(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_table_row_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_row_header(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the table-row-header role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_tearoff_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tearoff_menu_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the tearoff-menu-item role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_terminal(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_terminal(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the terminal role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_text(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the text role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_timer(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_timer(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the timer role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_title_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_title_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the title-bar role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_toggle_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_toggle_button(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the toggle-button role."""
 
         result = []
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_state_expanded(obj, **args) or self._generate_state_pressed(
+            return self._generate_state_expanded(obj) or self._generate_state_pressed(
                 obj,
-                **args,
             )
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_expanded(obj, **args) or self._generate_state_pressed(
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_expanded(obj) or self._generate_state_pressed(
             obj,
-            **args,
         )
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_tool_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tool_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the tool-bar role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_tool_tip(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tool_tip(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the tool-tip role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_tree(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tree(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the tree role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_tree_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tree_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the tree-item role."""
 
         result = []
         if self._is_ancestor() or self._is_minimal():
-            result += self._generate_state_expanded(obj, **args)
+            result += self._generate_state_expanded(obj)
             return result
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
-        result += self._generate_position_in_set(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_expanded(obj)
+        result += self._generate_position_in_set(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_tree_table(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tree_table(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the tree-table role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_unknown(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_unknown(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the unknown role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_video(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_video(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the video role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_viewport(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_viewport(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the viewport role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_window(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_window(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates sound for the window role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)

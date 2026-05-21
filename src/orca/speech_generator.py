@@ -106,6 +106,7 @@ class SpeechGeneratorContext(GeneratorContext):
     speak_misspelled_indicator: bool
     language: str
     dialect: str
+    eliminate_pauses: bool
 
 
 class Pause:
@@ -146,6 +147,7 @@ class SpeechGenerator(generator.Generator):
     def __init__(self, script: script.Script) -> None:
         super().__init__(script, GeneratorMode.SPEECH)
         self._leaving_count: int = 1
+        self._in_flat_review: bool = False
 
     def _should_announce_attribute_changes(self, obj: Atspi.Accessible) -> bool:
         """Returns True if text attribute changes should be announced for obj."""
@@ -180,47 +182,51 @@ class SpeechGenerator(generator.Generator):
         *,
         role: Atspi.Role | str | None = None,
         include_context: bool = True,
-        **args,
     ) -> list[Any]:
         """Generates speech presentation for obj."""
 
         self._context = context
-        rv = self.generate(obj, role=role, include_context=include_context, **args)
+        rv = self.generate(obj, role=role, include_context=include_context)
         if rv and not list(filter(lambda x: not isinstance(x, Pause), rv)):
             tokens = ["SPEECH GENERATOR: Results for", obj, "are pauses only"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = []
         return rv
 
-    def get_name(self, obj: Atspi.Accessible, **args) -> str:
+    def get_name(self, obj: Atspi.Accessible, *, in_flat_review: bool = False) -> str:
         """Returns the generated name of obj as a string."""
 
-        generated = self._generate_accessible_name(obj, **args)
+        prior = self._in_flat_review
+        self._in_flat_review = in_flat_review
+        generated = self._generate_accessible_name(obj)
+        self._in_flat_review = prior
         if generated:
             return generated[0]
         return ""
 
-    def get_error_message(self, obj: Atspi.Accessible, **args) -> str:
+    def get_error_message(self, obj: Atspi.Accessible) -> str:
         """Returns the generated error message for obj as a string."""
 
-        generated = self._generate_state_invalid(obj, **args)
+        generated = self._generate_state_invalid(obj)
         if generated:
             return generated[0]
         return ""
 
-    def get_localized_role_name(self, obj: Atspi.Accessible, **args) -> str:
+    def get_localized_role_name(
+        self, obj: Atspi.Accessible, *, role: Atspi.Role | str | None = None
+    ) -> str:
         if AXUtilities.is_editable_combo_box_descendant(obj, inclusive=True):
             return object_properties.ROLE_EDITABLE_COMBO_BOX
 
         if AXUtilities.is_link(obj, self._get_resolved_role()) and AXUtilities.is_visited(obj):
             return object_properties.ROLE_VISITED_LINK
 
-        return super().get_localized_role_name(obj, **args)
+        return super().get_localized_role_name(obj, role=role)
 
-    def get_role_name(self, obj, **args):
+    def get_role_name(self, obj):
         """Returns the generated rolename of obj as a string."""
 
-        generated = self._generate_accessible_role(obj, **args)
+        generated = self._generate_accessible_role(obj)
         if generated:
             return generated[0]
 
@@ -230,14 +236,13 @@ class SpeechGenerator(generator.Generator):
         self,
         obj: Atspi.Accessible,
         context: SpeechGeneratorContext,
-        **args,
     ) -> list[Any]:
         """Returns an array of strings the represents details about the window title for obj."""
 
         self._context = context
-        return self._generate_window_title_contents(obj, **args)
+        return self._generate_window_title_contents(obj)
 
-    def _generate_window_title_contents(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_window_title_contents(self, obj: Atspi.Accessible) -> list[Any]:
         result = []
         frame, dialog = self._script.utilities.frame_and_dialog(obj)
         if frame:
@@ -260,7 +265,7 @@ class SpeechGenerator(generator.Generator):
         alert_and_dialog_count = len(AXUtilities.get_unfocused_alerts_and_dialogs(obj))
         if alert_and_dialog_count > 0:
             dialogs = [messages.dialog_count_speech(alert_and_dialog_count)]
-            dialogs.extend(self.voice(DEFAULT, obj=obj, **args))
+            dialogs.extend(self.voice(DEFAULT, obj=obj))
             result.append(dialogs)
         return result
 
@@ -269,17 +274,15 @@ class SpeechGenerator(generator.Generator):
             return False
         return self._context.only_displayed_text
 
-    def _generate_result_separator(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_result_separator(self, obj: Atspi.Accessible) -> list[Any]:
         return PAUSE
 
-    def _generate_pause(
-        self, obj: Atspi.Accessible, *, eliminate_pauses: bool = False, **args
-    ) -> list[Any]:
+    def _generate_pause(self, obj: Atspi.Accessible) -> list[Any]:
         context = self._context
         if context is None:
             return PAUSE
 
-        if not context.insert_pauses_between_utterances or eliminate_pauses:
+        if not context.insert_pauses_between_utterances or context.eliminate_pauses:
             return []
 
         if context.punctuation_level == "all":
@@ -394,7 +397,6 @@ class SpeechGenerator(generator.Generator):
         string: str | None = None,
         language: str = "",
         dialect: str = "",
-        **args,
     ) -> list[ACSS]:
         """Returns an array containing a voice."""
 
@@ -475,7 +477,7 @@ class SpeechGenerator(generator.Generator):
     ################################# BASIC DETAILS #################################
 
     @log_generator_output
-    def _generate_accessible_description(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_accessible_description(self, obj: Atspi.Accessible) -> list[Any]:
         if not self._context.speak_description or self._only_speak_displayed_text():
             return []
 
@@ -486,65 +488,65 @@ class SpeechGenerator(generator.Generator):
         if AXUtilities.is_tool_tip(prior_obj):
             return []
 
-        result = super()._generate_accessible_description(obj, **args)
+        result = super()._generate_accessible_description(obj)
         if result:
             result[0] = speech_presenter.get_presenter().adjust_for_presentation(obj, result[0])
             if self._script.utilities.in_document_content(obj):
-                result.extend(self.voice(DEFAULT, obj=obj, **args))
+                result.extend(self.voice(DEFAULT, obj=obj))
             else:
-                result.extend(self.voice(SYSTEM, obj=obj, **args))
+                result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_accessible_image_description(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_accessible_image_description(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
-        result = super()._generate_accessible_image_description(obj, **args)
+        result = super()._generate_accessible_image_description(obj)
         if result:
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_accessible_label(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        result = super()._generate_accessible_label(obj, **args)
+    def _generate_accessible_label(self, obj: Atspi.Accessible) -> list[Any]:
+        result = super()._generate_accessible_label(obj)
         if result:
-            result.extend(self.voice(DEFAULT, obj=obj, **args))
+            result.extend(self.voice(DEFAULT, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_accessible_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_accessible_name(self, obj: Atspi.Accessible) -> list[Any]:
         is_layered_pane = AXUtilities.is_layered_pane(obj, self._get_resolved_role())
         if is_layered_pane and self._only_speak_displayed_text():
             return []
 
-        result = super()._generate_accessible_name(obj, **args)
+        result = super()._generate_accessible_name(obj)
         if result:
             if is_layered_pane:
-                result.extend(self.voice(SYSTEM, obj=obj, **args))
+                result.extend(self.voice(SYSTEM, obj=obj))
             else:
-                result.extend(self.voice(DEFAULT, obj=obj, **args))
+                result.extend(self.voice(DEFAULT, obj=obj))
 
         return result
 
     @log_generator_output
-    def _generate_accessible_label_and_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        result = super()._generate_accessible_label_and_name(obj, **args)
+    def _generate_accessible_label_and_name(self, obj: Atspi.Accessible) -> list[Any]:
+        result = super()._generate_accessible_label_and_name(obj)
         if result:
             result[0] = speech_presenter.get_presenter().adjust_for_presentation(obj, result[0])
             if len(result) == 1:
-                result.extend(self.voice(DEFAULT, obj=obj, **args))
+                result.extend(self.voice(DEFAULT, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_accessible_placeholder_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        result = super()._generate_accessible_placeholder_text(obj, **args)
+    def _generate_accessible_placeholder_text(self, obj: Atspi.Accessible) -> list[Any]:
+        result = super()._generate_accessible_placeholder_text(obj)
         if result:
             result[0] = speech_presenter.get_presenter().adjust_for_presentation(obj, result[0])
-            result.extend(self.voice(DEFAULT, obj=obj, **args))
+            result.extend(self.voice(DEFAULT, obj=obj))
         return result
 
-    def _get_ancestor_with_usable_role(self, obj, **args):
+    def _get_ancestor_with_usable_role(self, obj):
         role = self._get_resolved_role(obj)
         index = self._get_content_position().index
         total = self._get_content_position().total
@@ -558,7 +560,7 @@ class SpeechGenerator(generator.Generator):
 
         return AXUtilities.find_ancestor(obj, use_ancestor_role)
 
-    def _should_speak_role(self, obj, **args):
+    def _should_speak_role(self, obj):
         if self._only_speak_displayed_text():
             return False
 
@@ -630,8 +632,8 @@ class SpeechGenerator(generator.Generator):
         return obj != self._get_prior_obj()
 
     @log_generator_output
-    def _generate_accessible_role(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        if not self._should_speak_role(obj, **args):
+    def _generate_accessible_role(self, obj: Atspi.Accessible) -> list[Any]:
+        if not self._should_speak_role(obj):
             return []
 
         parent = AXObject.get_parent(obj)
@@ -640,24 +642,24 @@ class SpeechGenerator(generator.Generator):
 
         if AXUtilities.is_single_line_autocomplete_entry(obj):
             result: list[Any] = [self.get_localized_role_name(obj, role=Atspi.Role.AUTOCOMPLETE)]
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
             return result
 
         level = AXUtilities.get_heading_level(obj)
         if level:
             result = [
                 object_properties.ROLE_HEADING_LEVEL_SPEECH
-                % {"role": self.get_localized_role_name(obj, **args), "level": level},
+                % {"role": self.get_localized_role_name(obj), "level": level},
             ]
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
             return result
 
-        result = [self.get_localized_role_name(obj, **args)]
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result = [self.get_localized_role_name(obj)]
+        result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_tutorial(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tutorial(self, obj: Atspi.Accessible) -> list[Any]:
         """Provides the tutorial message for obj."""
 
         if not self._context.speak_tutorial_messages and not self._is_where_am_i():
@@ -667,38 +669,38 @@ class SpeechGenerator(generator.Generator):
         if not text:
             return []
 
-        return [text, *self.voice(SYSTEM, obj=obj, **args)]
+        return [text, *self.voice(SYSTEM, obj=obj)]
 
     @log_generator_output
-    def _generate_has_click_action(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_has_click_action(self, obj: Atspi.Accessible) -> list[Any]:
         return []
 
     @log_generator_output
-    def _generate_has_long_description(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_has_long_description(self, obj: Atspi.Accessible) -> list[Any]:
         return []
 
     @log_generator_output
-    def _generate_has_details(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_has_details(self, obj: Atspi.Accessible) -> list[Any]:
         return []
 
     @log_generator_output
-    def _generate_details_for(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_details_for(self, obj: Atspi.Accessible) -> list[Any]:
         return []
 
     @log_generator_output
-    def _generate_all_details(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_all_details(self, obj: Atspi.Accessible) -> list[Any]:
         return []
 
     @log_generator_output
-    def _generate_new_radio_button_group(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_new_radio_button_group(self, obj: Atspi.Accessible) -> list[Any]:
         if not AXUtilities.is_radio_button(obj):
             return []
 
-        result = super()._generate_radio_button_group(obj, **args)
+        result = super()._generate_radio_button_group(obj)
         if not result:
             return []
 
-        result.extend(self.voice(DEFAULT, obj=obj, **args))
+        result.extend(self.voice(DEFAULT, obj=obj))
         prior_obj = self._get_prior_obj()
         if not AXUtilities.is_radio_button(prior_obj):
             return result
@@ -712,14 +714,14 @@ class SpeechGenerator(generator.Generator):
         return []
 
     @log_generator_output
-    def _generate_term_value_count(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        result = super()._generate_term_value_count(obj, **args)
+    def _generate_term_value_count(self, obj: Atspi.Accessible) -> list[Any]:
+        result = super()._generate_term_value_count(obj)
         if result:
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_number_of_children(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_number_of_children(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text() or not self._context.verbose:
             return []
 
@@ -727,7 +729,7 @@ class SpeechGenerator(generator.Generator):
             child_nodes = self._script.utilities.child_nodes(obj)
             result: list[Any] = [messages.item_count(len(child_nodes))] if child_nodes else []
             if result:
-                result.extend(self.voice(SYSTEM, obj=obj, **args))
+                result.extend(self.voice(SYSTEM, obj=obj))
             return result
 
         role = self._get_resolved_role()
@@ -735,7 +737,7 @@ class SpeechGenerator(generator.Generator):
             set_size = AXUtilities.get_set_size(obj)
             if set_size:
                 result = [messages.list_item_count(set_size)]
-                result.extend(self.voice(SYSTEM, obj=obj, **args))
+                result.extend(self.voice(SYSTEM, obj=obj))
                 return result
             return []
 
@@ -747,13 +749,13 @@ class SpeechGenerator(generator.Generator):
             children = list(AXObject.iter_children(obj, AXUtilities.is_icon_or_canvas))
             if not children:
                 result = [messages.ZERO_ITEMS]
-                result.extend(self.voice(SYSTEM, obj=obj, **args))
+                result.extend(self.voice(SYSTEM, obj=obj))
                 return result
 
         return []
 
     @log_generator_output
-    def _generate_selected_item_count(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_selected_item_count(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
@@ -767,16 +769,16 @@ class SpeechGenerator(generator.Generator):
         child_count = AXObject.get_child_count(container)
         selected_count = len(AXUtilities.selected_children(container))
         result.append(messages.selected_items_count(selected_count, child_count))
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
         result.append(
             object_properties.ICON_INDEX_SPEECH
             % {"index": AXObject.get_index_in_parent(obj) + 1, "total": child_count},
         )
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_selected_items(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_selected_items(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
@@ -790,7 +792,7 @@ class SpeechGenerator(generator.Generator):
         return list(map(self._generate_accessible_label_and_name, selected_items))
 
     @log_generator_output
-    def _generate_unfocused_dialog_count(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_unfocused_dialog_count(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
@@ -798,7 +800,7 @@ class SpeechGenerator(generator.Generator):
         alert_and_dialog_count = len(AXUtilities.get_unfocused_alerts_and_dialogs(obj))
         if alert_and_dialog_count > 0:
             result.append(messages.dialog_count_speech(alert_and_dialog_count))
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     def _get_enabled_and_disabled_context_roles(self):
@@ -933,7 +935,7 @@ class SpeechGenerator(generator.Generator):
                 return msg
         return ""
 
-    def _generate_leaving(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_leaving(self, obj: Atspi.Accessible) -> list[Any]:
         if not self._is_leaving():
             return []
 
@@ -945,7 +947,7 @@ class SpeechGenerator(generator.Generator):
 
         result = self._get_leaving_message(obj, role, self._leaving_count, is_details)
         if result:
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
 
         return result
 
@@ -1076,7 +1078,6 @@ class SpeechGenerator(generator.Generator):
         skip_roles: list | None = None,
         stop_at_roles: list | None = None,
         stop_after_roles: list | None = None,
-        **args,
     ) -> list[Any]:
         leaving = self._is_leaving()
         if leaving and self._get_prior_obj():
@@ -1150,7 +1151,7 @@ class SpeechGenerator(generator.Generator):
         return self._present_ancestor_results(ancestors, ancestor_roles, obj, prior_obj, leaving)
 
     @log_generator_output
-    def _generate_old_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_old_ancestors(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text() or self._script.utilities.in_find_container(
             self._context.focus,
         ):
@@ -1203,13 +1204,13 @@ class SpeechGenerator(generator.Generator):
             )
             self._context = replace(original_context, leaving=True)
 
-        result.extend(self._generate_ancestors(obj, include_only=include_only, **args))
+        result.extend(self._generate_ancestors(obj, include_only=include_only))
         self._context = original_context
 
         return result
 
     @log_generator_output
-    def _generate_new_ancestors(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_new_ancestors(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text() or self._script.utilities.in_find_container(
             self._context.focus,
         ):
@@ -1231,24 +1232,24 @@ class SpeechGenerator(generator.Generator):
             return []
 
         if prior_obj is not None:
-            return self._generate_ancestors(obj, **args)
+            return self._generate_ancestors(obj)
 
         frame, dialog = self._script.utilities.frame_and_dialog(obj)
         top_level = dialog or frame
         if AXUtilities.is_dialog_or_alert(top_level):
-            return self._generate_ancestors(obj, **args)
+            return self._generate_ancestors(obj)
 
         return []
 
-    def generate_context(self, obj, **args):
+    def generate_context(self, obj):
         if self._get_prior_obj() == obj:
             return []
 
-        result = self._generate_old_ancestors(obj, **args)
-        result.append(self._generate_new_ancestors(obj, **args))
+        result = self._generate_old_ancestors(obj)
+        result.append(self._generate_new_ancestors(obj))
         return result
 
-    def _generate_parent_role_name(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_parent_role_name(self, obj: Atspi.Accessible) -> list[Any]:
         if self._get_resolved_role(obj) == Atspi.Role.ICON and (self._is_where_am_i()):
             return [object_properties.ROLE_ICON_PANEL]
 
@@ -1258,7 +1259,7 @@ class SpeechGenerator(generator.Generator):
         return self._generate_accessible_role(AXObject.get_parent(obj))
 
     @log_generator_output
-    def _generate_position_in_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_position_in_list(self, obj: Atspi.Accessible) -> list[Any]:
         detailed = self._get_reason() == PresentationReason.WHERE_AM_I_DETAILED
         if (
             self._only_speak_displayed_text()
@@ -1290,13 +1291,13 @@ class SpeechGenerator(generator.Generator):
 
         position += 1
         result.append(string % {"index": position, "total": total})
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     ################################### KEYBOARD ###################################
 
     @log_generator_output
-    def _generate_keyboard_accelerator(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_keyboard_accelerator(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
@@ -1304,12 +1305,12 @@ class SpeechGenerator(generator.Generator):
         accelerator = AXUtilities.get_accelerator(obj)
         if accelerator:
             result.append(accelerator)
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
 
         return result
 
     @log_generator_output
-    def _generate_keyboard_mnemonic(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_keyboard_mnemonic(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
@@ -1319,29 +1320,29 @@ class SpeechGenerator(generator.Generator):
         ):
             return []
 
-        if result := super()._generate_keyboard_mnemonic(obj, **args):
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+        if result := super()._generate_keyboard_mnemonic(obj):
+            result.extend(self.voice(SYSTEM, obj=obj))
 
         return result
 
     ##################################### LINK #####################################
 
     @log_generator_output
-    def _generate_link_info(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_link_info(self, obj: Atspi.Accessible) -> list[Any]:
         result = []
         link_uri = AXHypertext.get_link_uri(obj)
         if not link_uri:
             result.extend(self._generate_accessible_label(obj))
             result.extend(self._generate_accessible_role(obj))
             result.append(AXText.get_all_text(obj))
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
             return result
 
         link_uri_info = urllib.parse.urlparse(link_uri)
         if link_uri_info[0] in ["ftp", "ftps", "file"]:
             file_name = link_uri_info[2].split("/")
             result.append(messages.LINK_TO_FILE % {"uri": link_uri_info[0], "file": file_name[-1]})
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
             return result
 
         link_output = messages.LINK_WITH_PROTOCOL % link_uri_info[0]
@@ -1359,11 +1360,11 @@ class SpeechGenerator(generator.Generator):
         if AXUtilities.is_image(child):
             result.extend(self._generate_accessible_role(child))
 
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_link_site_description(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_link_site_description(self, obj: Atspi.Accessible) -> list[Any]:
         link_uri = AXHypertext.get_link_uri(obj)
         if not link_uri:
             return []
@@ -1394,12 +1395,12 @@ class SpeechGenerator(generator.Generator):
                 result.append(messages.LINK_DIFFERENT_SITE)
 
         if result:
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
 
         return result
 
     @log_generator_output
-    def _generate_link_file_size(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_link_file_size(self, obj: Atspi.Accessible) -> list[Any]:
         result: list[Any] = []
         size_string = ""
         uri = AXHypertext.get_link_uri(obj)
@@ -1420,13 +1421,13 @@ class SpeechGenerator(generator.Generator):
             elif size >= 1000000:
                 result.append(messages.FILE_SIZE_MB % (float(size) * 0.000001))
         if result:
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     ############################### START-OF/END-OF ################################
 
     @log_generator_output
-    def _generate_start_of_deletion(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_start_of_deletion(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
@@ -1438,15 +1439,15 @@ class SpeechGenerator(generator.Generator):
         suggestion = AXUtilities.find_ancestor(obj, AXUtilities.is_inline_suggestion)
         if suggestion and obj == AXObject.get_child(suggestion, 0):
             result.extend([object_properties.ROLE_CONTENT_SUGGESTION])
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
-            result.extend(self._generate_pause(obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
+            result.extend(self._generate_pause(obj))
 
         result.extend([messages.CONTENT_DELETION_START])
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_end_of_deletion(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_end_of_deletion(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
@@ -1457,26 +1458,26 @@ class SpeechGenerator(generator.Generator):
                 return []
 
         result = [messages.CONTENT_DELETION_END]
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
 
         suggestion = AXUtilities.find_ancestor(obj, AXUtilities.is_inline_suggestion)
         if suggestion and obj == AXObject.get_child(
             suggestion,
             AXObject.get_child_count(suggestion) - 1,
         ):
-            result.extend(self._generate_pause(obj, **args))
+            result.extend(self._generate_pause(obj))
             result.extend([messages.CONTENT_SUGGESTION_END])
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
 
             container = AXUtilities.find_ancestor(obj, lambda x: bool(AXUtilities.get_details(x)))
             if AXUtilities.is_suggestion(container):
-                result.extend(self._generate_pause(obj, **args))
+                result.extend(self._generate_pause(obj))
                 result.extend(self._generate_has_details(container))
 
         return result
 
     @log_generator_output
-    def _generate_start_of_insertion(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_start_of_insertion(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
@@ -1488,15 +1489,15 @@ class SpeechGenerator(generator.Generator):
         suggestion = AXUtilities.find_ancestor(obj, AXUtilities.is_inline_suggestion)
         if suggestion and obj == AXObject.get_child(suggestion, 0):
             result.extend([object_properties.ROLE_CONTENT_SUGGESTION])
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
-            result.extend(self._generate_pause(obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
+            result.extend(self._generate_pause(obj))
 
         result.extend([messages.CONTENT_INSERTION_START])
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_end_of_insertion(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_end_of_insertion(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
@@ -1507,26 +1508,26 @@ class SpeechGenerator(generator.Generator):
                 return []
 
         result = [messages.CONTENT_INSERTION_END]
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
 
         suggestion = AXUtilities.find_ancestor(obj, AXUtilities.is_inline_suggestion)
         if suggestion and obj == AXObject.get_child(
             suggestion,
             AXObject.get_child_count(suggestion) - 1,
         ):
-            result.extend(self._generate_pause(obj, **args))
+            result.extend(self._generate_pause(obj))
             result.extend([messages.CONTENT_SUGGESTION_END])
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
 
             container = AXUtilities.find_ancestor(obj, lambda x: bool(AXUtilities.get_details(x)))
             if AXUtilities.is_suggestion(container):
-                result.extend(self._generate_pause(obj, **args))
+                result.extend(self._generate_pause(obj))
                 result.extend(self._generate_has_details(container))
 
         return result
 
     @log_generator_output
-    def _generate_start_of_code(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_start_of_code(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
@@ -1538,11 +1539,11 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result: list[Any] = [messages.CONTENT_CODE_START]
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_end_of_code(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_end_of_code(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
@@ -1556,11 +1557,11 @@ class SpeechGenerator(generator.Generator):
                 return []
 
         result: list[Any] = [messages.CONTENT_CODE_END]
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_start_of_mark(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_start_of_mark(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
@@ -1572,15 +1573,15 @@ class SpeechGenerator(generator.Generator):
         role_description = AXObject.get_role_description(obj)
         if role_description:
             result.append(role_description)
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
-            result.extend(self._generate_pause(obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
+            result.extend(self._generate_pause(obj))
 
         result.append(messages.CONTENT_MARK_START)
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_end_of_mark(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_end_of_mark(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
@@ -1591,143 +1592,143 @@ class SpeechGenerator(generator.Generator):
                 return []
 
         result = [messages.CONTENT_MARK_END]
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     ##################################### STATE #####################################
 
     @log_generator_output
-    def _generate_state_current(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_current(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
-        result = super()._generate_state_current(obj, **args)
+        result = super()._generate_state_current(obj)
         if result:
-            result.extend(self.voice(STATE, obj=obj, **args))
+            result.extend(self.voice(STATE, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_state_checked(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_checked(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
-        result = super()._generate_state_checked(obj, **args)
+        result = super()._generate_state_checked(obj)
         if result:
-            result.extend(self.voice(STATE, obj=obj, **args))
+            result.extend(self.voice(STATE, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_state_checked_for_switch(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_checked_for_switch(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
-        result = super()._generate_state_checked_for_switch(obj, **args)
+        result = super()._generate_state_checked_for_switch(obj)
         if result:
-            result.extend(self.voice(STATE, obj=obj, **args))
+            result.extend(self.voice(STATE, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_state_checked_if_checkable(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_checked_if_checkable(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
-        result = super()._generate_state_checked_if_checkable(obj, **args)
+        result = super()._generate_state_checked_if_checkable(obj)
         if result:
-            result.extend(self.voice(STATE, obj=obj, **args))
+            result.extend(self.voice(STATE, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_state_expanded(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_expanded(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
-        result = super()._generate_state_expanded(obj, **args)
+        result = super()._generate_state_expanded(obj)
         if result:
-            result.extend(self.voice(STATE, obj=obj, **args))
+            result.extend(self.voice(STATE, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_state_has_popup(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_has_popup(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text() or not self._context.verbose:
             return []
 
         if AXUtilities.is_menu(obj) or not AXUtilities.has_popup(obj):
             return []
 
-        return [messages.HAS_POPUP, *self.voice(SYSTEM, obj=obj, **args)]
+        return [messages.HAS_POPUP, *self.voice(SYSTEM, obj=obj)]
 
     @log_generator_output
-    def _generate_state_invalid(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_invalid(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
-        result = super()._generate_state_invalid(obj, **args)
+        result = super()._generate_state_invalid(obj)
         if result:
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_state_multiselectable(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_multiselectable(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
-        result = super()._generate_state_multiselectable(obj, **args)
+        result = super()._generate_state_multiselectable(obj)
         if result:
-            result.extend(self.voice(STATE, obj=obj, **args))
+            result.extend(self.voice(STATE, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_state_pressed(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_pressed(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
-        result = super()._generate_state_pressed(obj, **args)
+        result = super()._generate_state_pressed(obj)
         if result:
-            result.extend(self.voice(STATE, obj=obj, **args))
+            result.extend(self.voice(STATE, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_state_read_only(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        result = super()._generate_state_read_only(obj, **args)
+    def _generate_state_read_only(self, obj: Atspi.Accessible) -> list[Any]:
+        result = super()._generate_state_read_only(obj)
         if result:
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_state_required(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_required(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
         if self._is_minimal():
             return []
 
-        result = super()._generate_state_required(obj, **args)
+        result = super()._generate_state_required(obj)
         if result:
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_state_selected_for_radio_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_selected_for_radio_button(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
-        result = super()._generate_state_selected_for_radio_button(obj, **args)
+        result = super()._generate_state_selected_for_radio_button(obj)
         if result:
-            result.extend(self.voice(STATE, obj=obj, **args))
+            result.extend(self.voice(STATE, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_state_sensitive(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_sensitive(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
-        result = super()._generate_state_sensitive(obj, **args)
+        result = super()._generate_state_sensitive(obj)
         if result:
-            result.extend(self.voice(STATE, obj=obj, **args))
+            result.extend(self.voice(STATE, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_state_unselected(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_unselected(self, obj: Atspi.Accessible) -> list[Any]:
         role = self._get_resolved_role()
         if (
             self._only_speak_displayed_text()
@@ -1741,7 +1742,7 @@ class SpeechGenerator(generator.Generator):
 
         if AXUtilities.is_list_item(obj, role):
             result = [object_properties.STATE_UNSELECTED_LIST_ITEM]
-            result.extend(self.voice(STATE, obj=obj, **args))
+            result.extend(self.voice(STATE, obj=obj))
             return result
 
         parent = AXObject.get_parent(obj)
@@ -1760,33 +1761,33 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = [object_properties.STATE_UNSELECTED_TABLE_CELL]
-        result.extend(self.voice(STATE, obj=obj, **args))
+        result.extend(self.voice(STATE, obj=obj))
         return result
 
     ################################## POSITION #####################################
 
     @log_generator_output
-    def _generate_nesting_level(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        result = super()._generate_nesting_level(obj, **args)
+    def _generate_nesting_level(self, obj: Atspi.Accessible) -> list[Any]:
+        result = super()._generate_nesting_level(obj)
         if result:
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
 
         return result
 
     @log_generator_output
-    def _generate_tree_item_level(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tree_item_level(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
-        result = super()._generate_tree_item_level(obj, new_only=True, **args)
+        result = super()._generate_tree_item_level(obj, new_only=True)
         if result:
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     ################################ PROGRESS BARS ##################################
 
     @log_generator_output
-    def _generate_progress_bar_index(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_progress_bar_index(self, obj: Atspi.Accessible) -> list[Any]:
         if not self._is_progress_bar_update():
             return []
 
@@ -1795,17 +1796,17 @@ class SpeechGenerator(generator.Generator):
         if acc != obj:
             number = self._get_progress_bar_number_and_count(obj)[0]
             result = [messages.PROGRESS_BAR_NUMBER % (number)]
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
 
         return result
 
     @log_generator_output
-    def _generate_progress_bar_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_progress_bar_value(self, obj: Atspi.Accessible) -> list[Any]:
         result = []
         percent = AXValue.get_value_as_percent(obj)
         if percent is not None:
             result.append(messages.percentage(percent))
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
 
         return result
 
@@ -1813,8 +1814,8 @@ class SpeechGenerator(generator.Generator):
 
     # TODO - JD: This function and fake role really need to die....
     @log_generator_output
-    def _generate_real_table_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        result = super()._generate_real_table_cell(obj, **args)
+    def _generate_real_table_cell(self, obj: Atspi.Accessible) -> list[Any]:
+        result = super()._generate_real_table_cell(obj)
         if (
             not (result and result[0])
             and self._context.speak_blank_lines
@@ -1823,15 +1824,15 @@ class SpeechGenerator(generator.Generator):
         ):
             result.append(messages.BLANK)
             if result:
-                result.extend(self.voice(DEFAULT, obj=obj, **args))
-        elif has_formula := self._generate_has_formula(obj, **args):
-            result.extend(self._generate_pause(obj, **args))
+                result.extend(self.voice(DEFAULT, obj=obj))
+        elif has_formula := self._generate_has_formula(obj):
+            result.extend(self._generate_pause(obj))
             result.extend(has_formula)
 
         return result
 
     @log_generator_output
-    def _generate_table_cell_column_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_cell_column_header(self, obj: Atspi.Accessible) -> list[Any]:
         if not self._context.announce_cell_headers:
             return []
 
@@ -1850,14 +1851,13 @@ class SpeechGenerator(generator.Generator):
         result = super()._generate_table_cell_column_header(
             obj,
             new_only=not self._get_is_nameless_toggle(obj),
-            **args,
         )
         if result:
-            result.extend(self.voice(DEFAULT, obj=obj, **args))
+            result.extend(self.voice(DEFAULT, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_table_cell_row_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_cell_row_header(self, obj: Atspi.Accessible) -> list[Any]:
         if self._reading_row:
             return []
 
@@ -1872,13 +1872,13 @@ class SpeechGenerator(generator.Generator):
         ):
             return []
 
-        result = super()._generate_table_cell_row_header(obj, new_only=True, **args)
+        result = super()._generate_table_cell_row_header(obj, new_only=True)
         if result:
-            result.extend(self.voice(DEFAULT, obj=obj, **args))
+            result.extend(self.voice(DEFAULT, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_table_size(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_size(self, obj: Atspi.Accessible) -> list[Any]:
         if (
             self._only_speak_displayed_text()
             or self._is_leaving()
@@ -1888,7 +1888,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         if not self._context.verbose:
-            return self._generate_accessible_role(obj, **args)
+            return self._generate_accessible_role(obj)
 
         if AXUtilities.is_text_document_table(obj):
             role = self._get_resolved_role(obj)
@@ -1902,18 +1902,18 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = [messages.table_size(rows, cols)]
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_table_sort_order(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        result = super()._generate_table_sort_order(obj, **args)
+    def _generate_table_sort_order(self, obj: Atspi.Accessible) -> list[Any]:
+        result = super()._generate_table_sort_order(obj)
         if result:
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_table_cell_column_index(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_cell_column_index(self, obj: Atspi.Accessible) -> list[Any]:
         if self._reading_row:
             return []
 
@@ -1928,11 +1928,11 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = [messages.TABLE_COLUMN % (col + 1)]
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_table_cell_row_index(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_cell_row_index(self, obj: Atspi.Accessible) -> list[Any]:
         if not AXUtilities.cell_row_changed(obj):
             return []
 
@@ -1947,11 +1947,11 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = [messages.TABLE_ROW % (row + 1)]
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_table_cell_position(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_cell_position(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
@@ -1969,10 +1969,10 @@ class SpeechGenerator(generator.Generator):
 
         result.append(messages.TABLE_COLUMN_DETAILED % {"index": (col + 1), "total": columns})
         result.append(messages.TABLE_ROW_DETAILED % {"index": (row + 1), "total": rows})
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
-    def _generate_has_formula(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_has_formula(self, obj: Atspi.Accessible) -> list[Any]:
         formula = AXUtilities.get_cell_formula(obj)
         if not formula:
             return []
@@ -1982,18 +1982,18 @@ class SpeechGenerator(generator.Generator):
         else:
             result = [messages.HAS_FORMULA]
 
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     ##################################### TEXT ######################################
 
     @log_generator_output
-    def _generate_text_substring(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        result = super()._generate_text_substring(obj, **args)
+    def _generate_text_substring(self, obj: Atspi.Accessible) -> list[Any]:
+        result = super()._generate_text_substring(obj)
         if not result:
             return []
 
-        result.extend(self.voice(DEFAULT, obj=obj, **args))
+        result.extend(self.voice(DEFAULT, obj=obj))
         if result[0] in ["\n", ""]:
             if self._get_content_position().total > 1:
                 return [""]
@@ -2012,14 +2012,14 @@ class SpeechGenerator(generator.Generator):
         return result
 
     @log_generator_output
-    def _generate_text_line(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_text_line(self, obj: Atspi.Accessible) -> list[Any]:
         if self._context.active_mode == focus_manager.MOUSE_REVIEW and AXUtilities.is_editable(obj):
             return []
 
         announce_formatting = self._should_announce_attribute_changes(obj)
         if not announce_formatting and not AXUtilities.is_editable(obj):
             if self._context is None or not self._context.speak_misspelled_indicator:
-                result = self._generate_text_substring(obj, **args)
+                result = self._generate_text_substring(obj)
                 if result:
                     return result
 
@@ -2038,7 +2038,7 @@ class SpeechGenerator(generator.Generator):
                 and not self._is_ancestor()
             ):
                 result = [messages.BLANK]
-                result.extend(self.voice(string=text, obj=obj, **args))
+                result.extend(self.voice(string=text, obj=obj))
                 return result
 
         if content_start is not None and content_end is not None:
@@ -2051,7 +2051,6 @@ class SpeechGenerator(generator.Generator):
             obj,
             start_offset,
             end_offset,
-            args,
             announce_formatting,
         )
 
@@ -2060,7 +2059,6 @@ class SpeechGenerator(generator.Generator):
         obj: Atspi.Accessible,
         start_offset: int,
         end_offset: int,
-        args: dict[str, Any],
         announce_formatting: bool = True,
     ) -> list[Any]:
         """Generates speech for a text range with inline attribute change annotations."""
@@ -2116,14 +2114,7 @@ class SpeechGenerator(generator.Generator):
             if "-" in language:
                 language, dialect = language.split("-", 1)
 
-            # Drop keys we pass explicitly so they don't collide with the per-run
-            # language/dialect computed above.
-            voice_args = {
-                k: v for k, v in args.items() if k not in ("string", "language", "dialect")
-            }
-            voice = self.voice(
-                string=string, obj=obj, language=language, dialect=dialect, **voice_args
-            )
+            voice = self.voice(string=string, obj=obj, language=language, dialect=dialect)
             adjusted = presenter.adjust_for_presentation(obj, string, run_start)
             if adjusted:
                 # TODO - JD: speech.speak() has a bug which causes a list of utterances
@@ -2134,26 +2125,26 @@ class SpeechGenerator(generator.Generator):
         return result
 
     @log_generator_output
-    def _generate_text_content(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_text_content(self, obj: Atspi.Accessible) -> list[Any]:
         if AXObject.supports_text(obj) and (
             AXUtilities.is_editable(obj) or self._should_announce_attribute_changes(obj)
         ):
-            return self._generate_text_line(obj, **args)
+            return self._generate_text_line(obj)
 
-        result = self._generate_text_substring(obj, **args)
+        result = self._generate_text_substring(obj)
         if result and result[0]:
             return result
 
-        result = super()._generate_text_content(obj, **args)
+        result = super()._generate_text_content(obj)
         if not (result and result[0]):
             return []
 
         result[0] = speech_presenter.get_presenter().adjust_for_presentation(obj, result[0])
-        result.extend(self.voice(DEFAULT, obj=obj, **args))
+        result.extend(self.voice(DEFAULT, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_text_selection(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_text_selection(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
@@ -2161,11 +2152,11 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result = [messages.TEXT_SELECTED]
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     @log_generator_output
-    def _generate_text_indentation(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_text_indentation(self, obj: Atspi.Accessible) -> list[Any]:
         if not self._context.speak_indentation:
             return []
 
@@ -2185,69 +2176,68 @@ class SpeechGenerator(generator.Generator):
             return []
 
         result: list[Any] = [description]
-        result.extend(self.voice(SYSTEM, obj=obj, **args))
+        result.extend(self.voice(SYSTEM, obj=obj))
         return result
 
     ##################################### VALUE #####################################
 
     @log_generator_output
-    def _generate_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
-        result = super()._generate_value(obj, **args)
+    def _generate_value(self, obj: Atspi.Accessible) -> list[Any]:
+        result = super()._generate_value(obj)
         if result:
-            result.extend(self.voice(DEFAULT, obj=obj, **args))
+            result.extend(self.voice(DEFAULT, obj=obj))
 
         return result
 
     @log_generator_output
-    def _generate_value_as_percentage(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_value_as_percentage(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
 
         percent_value = AXValue.get_value_as_percent(obj)
         if percent_value is not None:
             result = [messages.percentage(percent_value)]
-            result.extend(self.voice(SYSTEM, obj=obj, **args))
+            result.extend(self.voice(SYSTEM, obj=obj))
             return result
 
         return []
 
     ################################### PER-ROLE ###################################
 
-    def _generate_default_prefix(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_default_prefix(self, obj: Atspi.Accessible) -> list[Any]:
         """Provides the default/role-agnostic information to present before obj."""
 
         if not self._include_context():
             return []
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_details_for(obj, **args)
+            return self._generate_details_for(obj)
         if self._get_reason() == PresentationReason.WHERE_AM_I_BASIC:
             return []
         if self._get_reason() == PresentationReason.WHERE_AM_I_DETAILED:
-            return self._generate_ancestors(obj, **args)
+            return self._generate_ancestors(obj)
         if not self._is_ancestor():
-            return self._generate_old_ancestors(obj, **args) + self._generate_new_ancestors(
+            return self._generate_old_ancestors(obj) + self._generate_new_ancestors(
                 obj,
-                **args,
             )
         return []
 
-    def _generate_default_presentation(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_default_presentation(self, obj: Atspi.Accessible) -> list[Any]:
         """Provides a default/role-agnostic presentation of obj."""
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if self._is_ancestor() or self._is_minimal():
             return result
 
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_default_suffix(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_default_suffix(self, obj: Atspi.Accessible) -> list[Any]:
         """Provides the default/role-agnostic information to present after obj."""
 
         if not self._include_context():
@@ -2265,480 +2255,476 @@ class SpeechGenerator(generator.Generator):
 
         result = []
         if self._is_where_am_i():
-            result += self._generate_tutorial(obj, **args)
+            result += self._generate_tutorial(obj)
             if result and not isinstance(result[-1], Pause):
-                result += self._generate_pause(obj, **args)
+                result += self._generate_pause(obj)
 
-        result += self._generate_state_current(obj, **args)
+        result += self._generate_state_current(obj)
         if result and not isinstance(result[-1], Pause):
-            result += self._generate_pause(obj, **args)
-        result += self._generate_has_click_action(obj, **args)
+            result += self._generate_pause(obj)
+        result += self._generate_has_click_action(obj)
         if result and not isinstance(result[-1], Pause):
-            result += self._generate_pause(obj, **args)
-        result += self._generate_has_details(obj, **args)
-        result += self._generate_details_for(obj, **args)
-        result += self._generate_accessible_description(obj, **args)
+            result += self._generate_pause(obj)
+        result += self._generate_has_details(obj)
+        result += self._generate_details_for(obj)
+        result += self._generate_accessible_description(obj)
         if result and not isinstance(result[-1], Pause):
-            result += self._generate_pause(obj, **args)
-        result += self._generate_state_has_popup(obj, **args)
+            result += self._generate_pause(obj)
+        result += self._generate_state_has_popup(obj)
         if cell := AXUtilities.find_ancestor(obj, AXUtilities.is_table_cell):
-            result += self._generate_has_formula(cell, **args)
+            result += self._generate_has_formula(cell)
             if result and not isinstance(result[-1], Pause):
-                result += self._generate_pause(obj, **args)
+                result += self._generate_pause(obj)
         if not self._is_ancestor():
-            result += self._generate_tutorial(obj, **args)
+            result += self._generate_tutorial(obj)
 
         return result
 
-    def _generate_accelerator_label(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_accelerator_label(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the accelerator-label role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_alert(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_alert(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the alert role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_accessible_static_text(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_accessible_static_text(obj)
         return result
 
-    def _generate_animation(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_animation(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the animation role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_application(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_application(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the application role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_arrow(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_arrow(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the arrow role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_article(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_article(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the article role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
         if self._is_ancestor() or self._is_minimal():
-            result = self._generate_accessible_label_and_name(obj, **args)
-            result += self._generate_accessible_role(obj, **args)
+            result = self._generate_accessible_label_and_name(obj)
+            result += self._generate_accessible_role(obj)
             return result
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_article_in_feed(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_article_in_feed(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the article role when the article is in a feed."""
 
         result = []
-        result += self._generate_accessible_label_and_name(obj, **args)
+        result += self._generate_accessible_label_and_name(obj)
         if not result:
-            result += self._generate_text_line(obj, **args)
+            result += self._generate_text_line(obj)
         if not result:
-            result += self._generate_accessible_role(obj, **args)
-        result += self._generate_position_in_list(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
-        return self._generate_default_prefix(obj, **args) + result
+            result += self._generate_accessible_role(obj)
+        result += self._generate_position_in_list(obj)
+        result += self._generate_default_suffix(obj)
+        return self._generate_default_prefix(obj) + result
 
-    def _generate_code_block(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_code_block(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the code block role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
         if self._is_ancestor() or self._is_minimal():
-            result = self._generate_accessible_label_and_name(obj, **args)
-            result += self._generate_accessible_role(obj, **args)
+            result = self._generate_accessible_label_and_name(obj)
+            result += self._generate_accessible_role(obj)
             return result
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_start_of_code(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_text_indentation(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_end_of_code(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_start_of_code(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_text_indentation(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_end_of_code(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_audio(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_audio(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the audio role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_autocomplete(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_autocomplete(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the autocomplete role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_block_quote(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_block_quote(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the block-quote role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
         result = []
         if self._get_prior_obj() != obj:
-            result += self._generate_default_prefix(obj, **args)
-            result += self._generate_accessible_role(obj, **args)
-            result += self._generate_pause(obj, **args)
-            result += self._generate_nesting_level(obj, **args)
+            result += self._generate_default_prefix(obj)
+            result += self._generate_accessible_role(obj)
+            result += self._generate_pause(obj)
+            result += self._generate_nesting_level(obj)
 
-        result += self._generate_text_line(obj, **args)
+        result += self._generate_text_line(obj)
         if self._is_ancestor() or self._is_minimal():
             return result
 
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_calendar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_calendar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the calendar role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_canvas(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_canvas(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the canvas role."""
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if self._is_where_am_i():
-            result += self._generate_parent_role_name(obj, **args)
-            result += self._generate_pause(obj, **args)
+            result += self._generate_parent_role_name(obj)
+            result += self._generate_pause(obj)
 
-        result += self._generate_accessible_label_and_name(obj, **args)
+        result += self._generate_accessible_label_and_name(obj)
         result += self._generate_accessible_image_description(
             obj,
-            **args,
-        ) or self._generate_accessible_role(obj, **args)
-        result += self._generate_pause(obj, **args)
+        ) or self._generate_accessible_role(obj)
+        result += self._generate_pause(obj)
 
         if self._is_where_am_i():
-            result += self._generate_selected_item_count(obj, **args)
-            result += self._generate_pause(obj, **args)
-            result += self._generate_selected_items(obj, **args)
+            result += self._generate_selected_item_count(obj)
+            result += self._generate_pause(obj)
+            result += self._generate_selected_items(obj)
         else:
-            result += self._generate_position_in_list(obj, **args)
+            result += self._generate_position_in_list(obj)
 
-        result += self._generate_state_unselected(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_state_unselected(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_caption(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_caption(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the caption role."""
 
         result = []
-        if self._generate_text_substring(obj, **args):
-            result += self._generate_text_line(obj, **args)
+        if self._generate_text_substring(obj):
+            result += self._generate_text_line(obj)
         if not result:
-            result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
-        return self._generate_default_prefix(obj, **args) + result
+            result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_default_suffix(obj)
+        return self._generate_default_prefix(obj) + result
 
-    def _generate_chart(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_chart(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the chart role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_check_box(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_check_box(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the check-box role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_state_checked(obj, **args)
+            return self._generate_state_checked(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_state_read_only(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_checked(obj, **args)
-        result += self._generate_state_required(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_state_invalid(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_state_read_only(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_checked(obj)
+        result += self._generate_state_required(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_state_invalid(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_check_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_check_menu_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the check-menu-item role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_state_checked(obj, **args)
+            return self._generate_state_checked(obj)
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if self._is_where_am_i():
-            result += self._generate_ancestors(obj, **args)
-            result += self._generate_pause(obj, **args)
+            result += self._generate_ancestors(obj)
+            result += self._generate_pause(obj)
 
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_checked(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_accelerator(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_position_in_list(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_checked(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_accelerator(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_position_in_list(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_color_chooser(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_color_chooser(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the color-chooser role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_value(obj, **args)
+            return self._generate_value(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_value(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_value(obj)
 
         if self._is_where_am_i():
-            result += self._generate_value_as_percentage(obj, **args)
+            result += self._generate_value_as_percentage(obj)
 
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_column_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_column_header(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the column-header role."""
 
         result = []
-        if self._get_prior_obj() != obj and self._generate_text_substring(obj, **args):
-            result += self._generate_text_line(obj, **args)
+        if self._get_prior_obj() != obj and self._generate_text_substring(obj):
+            result += self._generate_text_line(obj)
         if not result:
-            result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_table_sort_order(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_table_cell_row_index(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_table_cell_column_index(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
-        return self._generate_default_prefix(obj, **args) + result
+            result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_table_sort_order(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_table_cell_row_index(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_table_cell_column_index(obj)
+        result += self._generate_default_suffix(obj)
+        return self._generate_default_prefix(obj) + result
 
-    def _generate_combo_box(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_combo_box(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the combo-box role."""
 
         result = []
-        label_and_name = self._generate_accessible_label_and_name(obj, **args)
+        label_and_name = self._generate_accessible_label_and_name(obj)
         result += label_and_name
-        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_accessible_role(obj)
         if self._is_ancestor() or self._is_minimal():
             if AXUtilities.is_editable(obj):
-                text_substring = self._generate_text_substring(obj, **args)
+                text_substring = self._generate_text_substring(obj)
                 if text_substring:
                     result += text_substring
                     return result
-            result += self._generate_state_expanded(obj, **args)
+            result += self._generate_state_expanded(obj)
             return result
 
-        value = self._generate_value(obj, **args)
+        value = self._generate_value(obj)
         if value and value[0] and value[0] not in label_and_name:
             result += value
-        result += self._generate_pause(obj, **args)
-        result += self._generate_position_in_list(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_state_required(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_state_invalid(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
-        return self._generate_default_prefix(obj, **args) + result
+        result += self._generate_pause(obj)
+        result += self._generate_position_in_list(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_state_required(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_state_invalid(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_default_suffix(obj)
+        return self._generate_default_prefix(obj) + result
 
-    def _generate_comment(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_comment(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the comment role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
         if self._is_ancestor() or self._is_minimal():
             return result
 
-        result += self._generate_pause(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_pause(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_content_deletion(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_content_deletion(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the content-deletion role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_start_of_deletion(obj, **args)
+            return self._generate_start_of_deletion(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_start_of_deletion(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_text_content(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_end_of_deletion(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_start_of_deletion(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_text_content(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_end_of_deletion(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_content_insertion(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_content_insertion(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the content-insertion role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_start_of_insertion(obj, **args)
+            return self._generate_start_of_insertion(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_start_of_insertion(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_text_content(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_end_of_insertion(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_start_of_insertion(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_text_content(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_end_of_insertion(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_date_editor(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_date_editor(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the date-editor role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_definition(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_definition(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the definition role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_text_content(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_text_content(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_description_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_description_list(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the description-list role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_number_of_children(obj, **args) or self._generate_accessible_role(
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_number_of_children(obj) or self._generate_accessible_role(
             obj,
-            **args,
         )
-        result += self._generate_nesting_level(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_nesting_level(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_description_term(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_description_term(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the description-term role."""
 
         if self._is_ancestor() or self._is_minimal():
             return []
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
 
-        if self._generate_text_substring(obj, **args):
-            result += self._generate_text_line(obj, **args)
+        if self._generate_text_substring(obj):
+            result += self._generate_text_line(obj)
         else:
             result += self._generate_accessible_label_and_name(
                 obj,
-                **args,
-            ) or self._generate_text_line(obj, **args)
+            ) or self._generate_text_line(obj)
 
         if self._context.announce_list:
             if self._get_content_position().index + 1 < self._get_content_position().total:
                 return result
 
-            result += self._generate_accessible_role(obj, **args)
-            result += self._generate_pause(obj, **args)
-            result += self._generate_term_value_count(obj, **args)
-            result += self._generate_pause(obj, **args)
-            result += self._generate_position_in_list(obj, **args)
+            result += self._generate_accessible_role(obj)
+            result += self._generate_pause(obj)
+            result += self._generate_term_value_count(obj)
+            result += self._generate_pause(obj)
+            result += self._generate_position_in_list(obj)
 
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_description_value(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_description_value(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the description-value role."""
 
         if self._is_ancestor() or self._is_minimal():
             return []
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args) or self._generate_text_line(
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj) or self._generate_text_line(
             obj,
-            **args,
         )
 
         if self._context.announce_list:
             if self._get_content_position().index + 1 < self._get_content_position().total:
                 return result
 
-            result += self._generate_accessible_role(obj, **args)
-            result += self._generate_pause(obj, **args)
-            result += self._generate_position_in_list(obj, **args)
+            result += self._generate_accessible_role(obj)
+            result += self._generate_pause(obj)
+            result += self._generate_position_in_list(obj)
 
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_desktop_frame(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_desktop_frame(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the desktop-frame role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_desktop_icon(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_desktop_icon(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the desktop-icon role."""
 
-        return self._generate_icon(obj, **args)
+        return self._generate_icon(obj)
 
-    def _generate_dial(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_dial(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the dial role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_value(obj, **args)
+            return self._generate_value(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_value(obj, **args)
-        result += self._generate_state_required(obj, **args)
-        result += self._generate_value_as_percentage(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_value(obj)
+        result += self._generate_state_required(obj)
+        result += self._generate_value_as_percentage(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_dialog(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_dialog(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the dialog role."""
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if self._get_prior_obj() != obj:
-            result = self._generate_text_expanding_embedded_objects(obj, **args)
+            result = self._generate_text_expanding_embedded_objects(obj)
             if result:
                 return result
 
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_accessible_static_text(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_accessible_static_text(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_directory_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_directory_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the directory_pane role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_document(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for document-related roles."""
 
         result = []
@@ -2747,1362 +2733,1342 @@ class SpeechGenerator(generator.Generator):
             prior_doc = AXUtilities.find_ancestor_inclusive(prior_obj, AXUtilities.is_document)
 
         if prior_doc != obj:
-            result += self._generate_default_prefix(obj, **args)
-            result += self._generate_accessible_label_and_name(obj, **args)
-            result += self._generate_state_read_only(obj, **args)
-            result += self._generate_accessible_role(obj, **args)
+            result += self._generate_default_prefix(obj)
+            result += self._generate_accessible_label_and_name(obj)
+            result += self._generate_state_read_only(obj)
+            result += self._generate_accessible_role(obj)
 
-        result += self._generate_text_line(obj, **args)
+        result += self._generate_text_line(obj)
 
         if prior_doc != obj:
-            result += self._generate_default_suffix(obj, **args)
+            result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_document_email(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document_email(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the document-email role."""
 
-        return self._generate_document(obj, **args)
+        return self._generate_document(obj)
 
-    def _generate_document_frame(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document_frame(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the document-frame role."""
 
-        return self._generate_document(obj, **args)
+        return self._generate_document(obj)
 
-    def _generate_document_presentation(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document_presentation(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the document-presentation role."""
 
-        return self._generate_document(obj, **args)
+        return self._generate_document(obj)
 
-    def _generate_document_spreadsheet(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document_spreadsheet(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the document-spreadsheet role."""
 
-        return self._generate_document(obj, **args)
+        return self._generate_document(obj)
 
-    def _generate_document_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document_text(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the document-text role."""
 
-        return self._generate_document(obj, **args)
+        return self._generate_document(obj)
 
-    def _generate_document_web(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_document_web(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the document-web role."""
 
-        return self._generate_document(obj, **args)
+        return self._generate_document(obj)
 
-    def _generate_dpub_landmark(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_dpub_landmark(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the dpub section role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
 
         if self._is_ancestor() or self._is_minimal():
             return result
 
-        result += self._generate_pause(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_pause(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_dpub_section(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_dpub_section(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the dpub section role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
 
         if self._is_ancestor() or self._is_minimal():
             return result
 
-        result += self._generate_pause(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_pause(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_drawing_area(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_drawing_area(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the drawing-area role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_editbar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_editbar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the editbar role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_state_read_only(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_text_indentation(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_text_selection(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_state_read_only(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_text_indentation(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_text_selection(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_embedded(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_embedded(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the embedded role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
 
         if self._get_prior_obj() != obj:
             result += self._generate_text_expanding_embedded_objects(
                 obj,
-                **args,
-            ) or self._generate_accessible_static_text(obj, **args)
+            ) or self._generate_accessible_static_text(obj)
 
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_entry(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_entry(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the entry role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_state_read_only(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_text_indentation(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_state_read_only(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_text_indentation(obj)
         result += self._generate_text_line(
             obj,
-            **args,
-        ) or self._generate_accessible_placeholder_text(obj, **args)
-        result += self._generate_text_selection(obj, **args)
-        result += self._generate_state_required(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_state_invalid(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        ) or self._generate_accessible_placeholder_text(obj)
+        result += self._generate_text_selection(obj)
+        result += self._generate_state_required(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_state_invalid(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_feed(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_feed(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the feed role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if (self._is_ancestor() or self._is_minimal()) and result:
             return result
 
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_number_of_children(obj, **args) or self._generate_accessible_role(
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_number_of_children(obj) or self._generate_accessible_role(
             obj,
-            **args,
         )
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_file_chooser(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_file_chooser(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the file-chooser role."""
 
-        return self._generate_dialog(obj, **args)
+        return self._generate_dialog(obj)
 
-    def _generate_filler(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_filler(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the filler role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_font_chooser(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_font_chooser(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the font-chooser role."""
 
-        return self._generate_dialog(obj, **args)
+        return self._generate_dialog(obj)
 
-    def _generate_footer(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_footer(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the footer role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_footnote(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_footnote(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the footnote role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_form(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_form(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the form role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_accessible_label_and_name(
-                obj, **args
-            ) + self._generate_accessible_role(obj, **args)
+            return self._generate_accessible_label_and_name(obj) + self._generate_accessible_role(
+                obj
+            )
 
-        result = self._generate_default_prefix(obj, **args)
-        if self._generate_text_substring(obj, **args):
-            result += self._generate_text_line(obj, **args)
+        result = self._generate_default_prefix(obj)
+        if self._generate_text_substring(obj):
+            result += self._generate_text_line(obj)
         else:
-            result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+            result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_frame(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_frame(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the frame role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_accessible_label_and_name(obj, **args)
+            return self._generate_accessible_label_and_name(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_unfocused_dialog_count(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_unfocused_dialog_count(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_glass_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_glass_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the glass-pane role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_grouping(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_grouping(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the grouping role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if (self._is_ancestor() or self._is_minimal()) and result:
             return result
 
-        if self._generate_text_substring(obj, **args):
-            result += self._generate_text_line(obj, **args)
+        if self._generate_text_substring(obj):
+            result += self._generate_text_line(obj)
         if not result:
-            result += self._generate_accessible_label_and_name(obj, **args)
+            result += self._generate_accessible_label_and_name(obj)
 
-        result += self._generate_accessible_static_text(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_accessible_static_text(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_header(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the header role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_heading(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_heading(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the heading role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_text_content(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_text_content(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_expanded(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_html_container(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_html_container(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the html-container role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_icon(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_icon(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the icon role."""
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if self._is_where_am_i():
-            result += self._generate_parent_role_name(obj, **args)
-            result += self._generate_pause(obj, **args)
+            result += self._generate_parent_role_name(obj)
+            result += self._generate_pause(obj)
 
-        result += self._generate_accessible_label_and_name(obj, **args)
+        result += self._generate_accessible_label_and_name(obj)
         result += self._generate_accessible_image_description(
             obj,
-            **args,
-        ) or self._generate_accessible_role(obj, **args)
-        result += self._generate_pause(obj, **args)
+        ) or self._generate_accessible_role(obj)
+        result += self._generate_pause(obj)
 
         if self._is_where_am_i():
-            result += self._generate_selected_item_count(obj, **args)
-            result += self._generate_pause(obj, **args)
-            result += self._generate_selected_items(obj, **args)
+            result += self._generate_selected_item_count(obj)
+            result += self._generate_pause(obj)
+            result += self._generate_selected_items(obj)
         else:
-            result += self._generate_position_in_list(obj, **args)
+            result += self._generate_position_in_list(obj)
 
-        result += self._generate_state_unselected(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_state_unselected(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_image(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_image(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the image role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_has_long_description(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_has_long_description(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_image_map(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_image_map(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the image-map role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_info_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_info_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the info-bar role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_accessible_static_text(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_accessible_static_text(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_input_method_window(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_input_method_window(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the input-method-window role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_internal_frame(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_internal_frame(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the internal-frame role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_label(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_label(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the label role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label(obj)
         result += self._generate_text_content(obj) or self._generate_accessible_name(obj)
         result += self._generate_text_selection(obj)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_landmark(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_landmark(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the landmark role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
         if self._is_ancestor() or self._is_minimal():
-            result = self._generate_accessible_role(obj, **args)
-            result += self._generate_accessible_label_and_name(obj, **args)
+            result = self._generate_accessible_role(obj)
+            result += self._generate_accessible_label_and_name(obj)
             return result
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         prior_obj = self._get_prior_obj()
         if prior_obj and obj != prior_obj and not AXUtilities.is_ancestor(prior_obj, obj):
-            result += self._generate_accessible_role(obj, **args)
-            result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+            result += self._generate_accessible_role(obj)
+            result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_layered_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_layered_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the layered-pane role."""
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         result += self._generate_accessible_label_and_name(
             obj,
-            **args,
-        ) or self._generate_accessible_role(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_number_of_children(obj, **args)
+        ) or self._generate_accessible_role(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_number_of_children(obj)
 
         if not self._is_where_am_i():
             return result
 
-        result += self._generate_selected_item_count(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_selected_items(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_selected_item_count(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_selected_items(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_level_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_level_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the level-bar role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_value(obj, **args)
+            return self._generate_value(obj)
 
         result = []
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_value(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_value(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_link(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_link(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the link role."""
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if self._is_where_am_i():
-            result += self._generate_link_info(obj, **args)
-            result += self._generate_pause(obj, **args)
-            result += self._generate_link_site_description(obj, **args)
-            result += self._generate_pause(obj, **args)
-            result += self._generate_link_file_size(obj, **args)
+            result += self._generate_link_info(obj)
+            result += self._generate_pause(obj)
+            result += self._generate_link_site_description(obj)
+            result += self._generate_pause(obj)
+            result += self._generate_link_file_size(obj)
             return result
 
         result += self._generate_accessible_label_and_name(
             obj,
-            **args,
-        ) or self._generate_text_content(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_accelerator(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        ) or self._generate_text_content(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_expanded(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_accelerator(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_list(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the list role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if (self._is_ancestor() or self._is_minimal()) and result:
             return result
 
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_number_of_children(obj, **args) or self._generate_accessible_role(
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_number_of_children(obj) or self._generate_accessible_role(
             obj,
-            **args,
         )
         if AXUtilities.is_gui_list(obj):
-            result += self._generate_accessible_static_text(obj, **args)
+            result += self._generate_accessible_static_text(obj)
         else:
-            result += self._generate_nesting_level(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+            result += self._generate_nesting_level(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_list_box(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_list_box(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the list-box role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
 
         if not self._is_ancestor() and self._get_prior_obj() != obj:
-            result += self._generate_focused_item(obj, **args)
-            result += self._generate_pause(obj, **args)
+            result += self._generate_focused_item(obj)
+            result += self._generate_pause(obj)
 
-        result += self._generate_state_multiselectable(obj, **args)
-        result += self._generate_number_of_children(obj, **args) or self._generate_accessible_role(
+        result += self._generate_state_multiselectable(obj)
+        result += self._generate_number_of_children(obj) or self._generate_accessible_role(
             obj,
-            **args,
         )
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_list_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_list_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the list-item role."""
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if self._is_ancestor() or self._is_minimal():
-            result += self._generate_state_checked_if_checkable(obj, **args)
-            result += self._generate_pause(obj, **args)
-            result += self._generate_state_expanded(obj, **args)
+            result += self._generate_state_checked_if_checkable(obj)
+            result += self._generate_pause(obj)
+            result += self._generate_state_expanded(obj)
             return result
 
-        result += self._generate_text_line(obj, **args) or self._generate_accessible_label_and_name(
+        result += self._generate_text_line(obj) or self._generate_accessible_label_and_name(
             obj,
-            **args,
         )
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_checked_if_checkable(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_state_unselected(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_checked_if_checkable(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_state_unselected(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_state_expanded(obj)
         if AXUtilities.is_focusable(obj):
-            result += self._generate_descendants(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_position_in_list(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+            result += self._generate_descendants(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_position_in_list(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_log(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_log(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the log role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_mark(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_mark(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the mark role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_start_of_mark(obj, **args)
+            return self._generate_start_of_mark(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_start_of_mark(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_text_content(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_end_of_mark(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_start_of_mark(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_text_content(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_end_of_mark(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_marquee(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_marquee(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the marquee role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_math(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_math(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the math role."""
 
         if speech := math_presenter.get_presenter().get_speech_for_math(obj):
             result: list[Any] = [speech]
-            result.extend(self.voice(DEFAULT, obj=obj, **args))
+            result.extend(self.voice(DEFAULT, obj=obj))
             return result
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_menu(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_menu(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the menu role."""
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if self._is_ancestor() or self._is_minimal():
-            result += self._generate_accessible_label_and_name(obj, **args)
-            result += self._generate_accessible_role(obj, **args)
+            result += self._generate_accessible_label_and_name(obj)
+            result += self._generate_accessible_role(obj)
             return result
 
         if self._is_where_am_i():
-            result += self._generate_ancestors(obj, **args) or self._generate_parent_role_name(
+            result += self._generate_ancestors(obj) or self._generate_parent_role_name(
                 obj,
-                **args,
             )
-            result += self._generate_pause(obj, **args)
+            result += self._generate_pause(obj)
 
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_accelerator(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_position_in_list(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_expanded(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_accelerator(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_position_in_list(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_menu_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_menu_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the menu-bar role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_menu_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the menu-item role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_state_expanded(obj, **args)
+            return self._generate_state_expanded(obj)
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if self._is_where_am_i():
-            result += self._generate_ancestors(obj, **args)
-            result += self._generate_pause(obj, **args)
+            result += self._generate_ancestors(obj)
+            result += self._generate_pause(obj)
 
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_checked_if_checkable(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_accelerator(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_position_in_list(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_checked_if_checkable(obj)
+        result += self._generate_state_expanded(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_accelerator(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_position_in_list(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_notification(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_notification(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the notification role."""
 
         # TODO - JD: Should this instead or also be using the logic in get_notification_content()?
         result = []
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_pause(obj, **args)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_pause(obj)
         result += self._generate_text_expanding_embedded_objects(
             obj,
-            **args,
-        ) or self._generate_accessible_static_text(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        ) or self._generate_accessible_static_text(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_option_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_option_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the option-pane role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_page(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_page(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the page role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_state_read_only(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_state_read_only(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_page_tab(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_page_tab(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the page-tab role."""
 
         if self._is_ancestor():
-            result = self._generate_accessible_label_and_name(obj, **args)
-            result += self._generate_accessible_role(obj, **args)
+            result = self._generate_accessible_label_and_name(obj)
+            result += self._generate_accessible_role(obj)
             return result
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_position_in_list(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_state_expanded(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_position_in_list(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_page_tab_list(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_page_tab_list(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the page-tab-list role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_panel(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_panel(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the panel role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if (self._is_ancestor() or self._is_minimal()) and result:
             return result
 
-        if self._generate_text_substring(obj, **args):
-            result += self._generate_text_line(obj, **args)
+        if self._generate_text_substring(obj):
+            result += self._generate_text_line(obj)
         if not result:
-            result += self._generate_accessible_label_and_name(obj, **args)
+            result += self._generate_accessible_label_and_name(obj)
 
-        result += self._generate_accessible_static_text(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_accessible_static_text(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_paragraph(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_paragraph(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the paragraph role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_state_read_only(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_text_indentation(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_state_read_only(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_text_indentation(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_password_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_password_text(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the password-text role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_text_selection(obj, **args)
-        result += self._generate_state_required(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_state_invalid(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_text_selection(obj)
+        result += self._generate_state_required(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_state_invalid(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_popup_menu(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_popup_menu(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the popup-menu role."""
 
-        return self._generate_menu(obj, **args)
+        return self._generate_menu(obj)
 
-    def _generate_progress_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_progress_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the progress-bar role."""
 
         result = []
-        result += self._generate_progress_bar_index(obj, **args)
+        result += self._generate_progress_bar_index(obj)
         if self._get_prior_obj() != obj:
-            result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_progress_bar_value(obj, **args) or self._generate_accessible_role(
+            result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_progress_bar_value(obj) or self._generate_accessible_role(
             obj,
-            **args,
         )
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_push_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_push_button(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the push-button role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_state_expanded(obj, **args)
+            return self._generate_state_expanded(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_accelerator(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_state_expanded(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_accelerator(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_push_button_menu(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_push_button_menu(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the push-button-menu role."""
 
-        return self._generate_push_button(obj, **args)
+        return self._generate_push_button(obj)
 
-    def _generate_radio_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_radio_button(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the radio-button role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_state_selected_for_radio_button(obj, **args)
+            return self._generate_state_selected_for_radio_button(obj)
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if self._is_where_am_i():
-            result += self._generate_radio_button_group(obj, **args)
+            result += self._generate_radio_button_group(obj)
         else:
-            result += self._generate_new_radio_button_group(obj, **args)
+            result += self._generate_new_radio_button_group(obj)
 
-        result += self._generate_pause(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_state_selected_for_radio_button(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
+        result += self._generate_pause(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_state_selected_for_radio_button(obj)
+        result += self._generate_accessible_role(obj)
         if not AXUtilities.is_focused(obj):
             return result
 
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_position_in_list(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_position_in_list(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_radio_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_radio_menu_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the radio-menu-item role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_state_selected_for_radio_button(obj, **args)
+            return self._generate_state_selected_for_radio_button(obj)
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if self._is_where_am_i():
-            result += self._generate_ancestors(obj, **args)
-            result += self._generate_pause(obj, **args)
+            result += self._generate_ancestors(obj)
+            result += self._generate_pause(obj)
 
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_selected_for_radio_button(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_accelerator(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_position_in_list(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_selected_for_radio_button(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_accelerator(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_position_in_list(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_rating(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_rating(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the rating role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_region(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_region(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the region landmark role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         prior_obj = self._get_prior_obj()
         if prior_obj and obj != prior_obj and not AXUtilities.is_ancestor(prior_obj, obj):
-            result += self._generate_accessible_label_and_name(obj, **args)
-            result += self._generate_accessible_role(obj, **args)
+            result += self._generate_accessible_label_and_name(obj)
+            result += self._generate_accessible_role(obj)
 
         if self._is_ancestor() or self._is_minimal():
             return result
 
-        result += self._generate_pause(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_pause(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_root_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_root_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the root-pane role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_row_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_row_header(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the row-header role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        if self._get_prior_obj() != obj and self._generate_text_substring(obj, **args):
-            result += self._generate_text_line(obj, **args)
+        result = self._generate_default_prefix(obj)
+        if self._get_prior_obj() != obj and self._generate_text_substring(obj):
+            result += self._generate_text_line(obj)
         if not result:
-            result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_table_sort_order(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_table_cell_row_index(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_table_cell_column_index(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+            result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_table_sort_order(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_table_cell_row_index(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_table_cell_column_index(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_ruler(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_ruler(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the ruler role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_scroll_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_scroll_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the scroll-bar role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_value(obj, **args)
+            return self._generate_value(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_value(obj, **args)
-        result += self._generate_value_as_percentage(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_value(obj)
+        result += self._generate_value_as_percentage(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_scroll_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_scroll_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the scroll-pane role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_section(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_section(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the section role."""
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if AXUtilities.is_focusable(obj) and (
             AXUtilities.has_explicit_name(obj) or self._context.in_focus_mode
         ):
-            result += self._generate_accessible_label_and_name(obj, **args)
-            result += self._generate_pause(obj, **args)
+            result += self._generate_accessible_label_and_name(obj)
+            result += self._generate_pause(obj)
         if self._is_ancestor():
             return result
 
-        result += self._generate_text_indentation(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_text_indentation(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_separator(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_separator(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the separator role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_sensitive(obj)
 
         if self._is_ancestor() or self._is_minimal():
             return result
 
         result += (
-            self._generate_accessible_label_and_name(obj, **args)
-            or self._generate_text_content(obj, **args)
-            or self._generate_value(obj, **args)
+            self._generate_accessible_label_and_name(obj)
+            or self._generate_text_content(obj)
+            or self._generate_value(obj)
         )
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_slider(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_slider(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the slider role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_value(obj, **args)
+            return self._generate_value(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_value(obj, **args)
-        result += self._generate_value_as_percentage(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_value(obj)
+        result += self._generate_value_as_percentage(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_spin_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_spin_button(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the spin-button role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_text_content(obj, **args) or self._generate_value(obj, **args)
+            return self._generate_text_content(obj) or self._generate_value(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args) + result
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_text_content(obj, **args) or self._generate_value(obj, **args)
-        result += self._generate_state_required(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_state_invalid(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj) + result
+        result += self._generate_accessible_role(obj)
+        result += self._generate_text_content(obj) or self._generate_value(obj)
+        result += self._generate_state_required(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_state_invalid(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_split_pane(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_split_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the split-pane role."""
 
         if self._is_minimal():
-            return self._generate_value(obj, **args)
+            return self._generate_value(obj)
         if self._is_ancestor():
             return []
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_value(obj, **args)
-        result += self._generate_value_as_percentage(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_value(obj)
+        result += self._generate_value_as_percentage(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_static(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_static(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the static role."""
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if AXUtilities.is_code(obj):
-            result += self._generate_text_indentation(obj, **args)
-            result += self._generate_text_line(obj, **args)
+            result += self._generate_text_indentation(obj)
+            result += self._generate_text_line(obj)
         else:
-            result += self._generate_text_content(obj, **args) or self._generate_accessible_name(
+            result += self._generate_text_content(obj) or self._generate_accessible_name(
                 obj,
-                **args,
             )
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_status_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_status_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the status-bar role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
 
         if self._is_ancestor() or self._is_minimal():
             return result
 
-        content = self._generate_descendants(obj, **args) or self._generate_text_content(
+        content = self._generate_descendants(obj) or self._generate_text_content(
             obj,
-            **args,
         )
         if not content and AXObject.get_child_count(obj) == 1:
-            content = self._generate_text_content(AXObject.get_child(obj, 0), **args)
+            content = self._generate_text_content(AXObject.get_child(obj, 0))
         if content:
-            result += self._generate_pause(obj, **args) + content
+            result += self._generate_pause(obj) + content
 
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_subscript(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_subscript(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the subscript role."""
 
         result = []
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_suggestion(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_suggestion(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the suggestion role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_accessible_role(obj, **args)
+            return self._generate_accessible_role(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_text_content(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_text_content(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_superscript(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_superscript(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the superscript role."""
 
         result = []
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_switch(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_switch(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the switch role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_state_checked_for_switch(obj, **args)
+            return self._generate_state_checked_for_switch(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_state_checked_for_switch(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_state_checked_for_switch(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_table(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the table role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_table_size(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_table_size(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_table_cell(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_cell(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the table-cell role."""
 
         # TODO - JD: There should be separate generators for each type of cell.
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_table_cell_row_header(obj, **args)
-        result += self._generate_table_cell_column_header(obj, **args)
-        result += self._generate_state_checked_for_cell(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_table_cell_row_header(obj)
+        result += self._generate_table_cell_column_header(obj)
+        result += self._generate_state_checked_for_cell(obj)
         result += (
-            self._generate_real_active_descendant_displayed_text(obj, **args)
-            or self._generate_accessible_label_and_name(obj, **args)
-            or self._generate_accessible_image_description(obj, **args)
+            self._generate_real_active_descendant_displayed_text(obj)
+            or self._generate_accessible_label_and_name(obj)
+            or self._generate_accessible_image_description(obj)
         )
-        result += self._generate_state_expanded(obj, **args)
-        result += self._generate_number_of_children(obj, **args)
-        result += self._generate_state_required(obj, **args)
+        result += self._generate_state_expanded(obj)
+        result += self._generate_number_of_children(obj)
+        result += self._generate_state_required(obj)
         if result and not isinstance(result[-1], Pause):
-            result += self._generate_pause(obj, **args)
-        result += self._generate_state_invalid(obj, **args)
+            result += self._generate_pause(obj)
+        result += self._generate_state_invalid(obj)
         if result and not isinstance(result[-1], Pause):
-            result += self._generate_pause(obj, **args)
-        result += self._generate_state_sensitive(obj, **args)
+            result += self._generate_pause(obj)
+        result += self._generate_state_sensitive(obj)
         if result and not isinstance(result[-1], Pause):
-            result += self._generate_pause(obj, **args)
-        result += self._generate_tree_item_level(obj, **args)
-        result += self._generate_state_unselected(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+            result += self._generate_pause(obj)
+        result += self._generate_tree_item_level(obj)
+        result += self._generate_state_unselected(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_table_cell_in_row(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_cell_in_row(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the table-cell role in the context of its row."""
 
         if self._is_minimal():
-            result = self._generate_state_checked_for_cell(obj, **args)
+            result = self._generate_state_checked_for_cell(obj)
             if result and not isinstance(result[-1], Pause):
-                result += self._generate_pause(obj, **args)
-            result += self._generate_state_expanded(obj, **args)
+                result += self._generate_pause(obj)
+            result += self._generate_state_expanded(obj)
             if result and not isinstance(result[-1], Pause):
-                result += self._generate_pause(obj, **args)
-            result += self._generate_number_of_children(obj, **args)
+                result += self._generate_pause(obj)
+            result += self._generate_number_of_children(obj)
             return result
 
         if self._is_ancestor():
-            result = self._generate_table_cell_row_header(obj, **args)
-            result += self._generate_table_cell_column_header(obj, **args)
+            result = self._generate_table_cell_row_header(obj)
+            result += self._generate_table_cell_column_header(obj)
             if result and not isinstance(result[-1], Pause):
-                result += self._generate_pause(obj, **args)
-            result += self._generate_table_cell_row_index(obj, **args)
+                result += self._generate_pause(obj)
+            result += self._generate_table_cell_row_index(obj)
             if result and not isinstance(result[-1], Pause):
-                result += self._generate_pause(obj, **args)
-            result += self._generate_table_cell_column_index(obj, **args)
+                result += self._generate_pause(obj)
+            result += self._generate_table_cell_column_index(obj)
             return result
 
         if self._is_where_am_i():
-            result = self._generate_row_header(obj, **args)
+            result = self._generate_row_header(obj)
             if result and not isinstance(result[-1], Pause):
-                result += self._generate_pause(obj, **args)
-            result = self._generate_column_header(obj, **args)
+                result += self._generate_pause(obj)
+            result = self._generate_column_header(obj)
             if result and not isinstance(result[-1], Pause):
-                result += self._generate_pause(obj, **args)
-            result += self._generate_accessible_role(obj, **args)
-            result += self._generate_table_cell_row(obj, **args)
+                result += self._generate_pause(obj)
+            result += self._generate_accessible_role(obj)
+            result += self._generate_table_cell_row(obj)
             if result and not isinstance(result[-1], Pause):
-                result += self._generate_pause(obj, **args)
-            result += self._generate_table_cell_position(obj, **args)
+                result += self._generate_pause(obj)
+            result += self._generate_table_cell_position(obj)
             return result
 
-        result = self._generate_table_cell_row(obj, **args)
+        result = self._generate_table_cell_row(obj)
         return result
 
-    def _generate_table_column_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_column_header(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the table-column-header role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        if self._get_prior_obj() != obj and self._generate_text_substring(obj, **args):
-            result += self._generate_text_line(obj, **args)
+        result = self._generate_default_prefix(obj)
+        if self._get_prior_obj() != obj and self._generate_text_substring(obj):
+            result += self._generate_text_line(obj)
         if not result:
-            result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_table_sort_order(obj, **args)
+            result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_table_sort_order(obj)
         if result and not isinstance(result[-1], Pause):
-            result += self._generate_pause(obj, **args)
-        result += self._generate_table_cell_row_index(obj, **args)
+            result += self._generate_pause(obj)
+        result += self._generate_table_cell_row_index(obj)
         if result and not isinstance(result[-1], Pause):
-            result += self._generate_pause(obj, **args)
-        result += self._generate_table_cell_column_index(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+            result += self._generate_pause(obj)
+        result += self._generate_table_cell_column_index(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_table_row(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_row(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the table-row role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_state_expanded(obj, **args)
+            return self._generate_state_expanded(obj)
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         result += self._generate_accessible_label_and_name(
             obj,
-            **args,
-        ) or self._generate_text_content(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_position_in_list(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        ) or self._generate_text_content(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_state_expanded(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_position_in_list(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_table_row_header(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_table_row_header(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the table-row-header role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        if self._get_prior_obj() != obj and self._generate_text_substring(obj, **args):
-            result += self._generate_text_line(obj, **args)
+        result = self._generate_default_prefix(obj)
+        if self._get_prior_obj() != obj and self._generate_text_substring(obj):
+            result += self._generate_text_line(obj)
         if not result:
-            result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_table_sort_order(obj, **args)
+            result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_table_sort_order(obj)
         if result and not isinstance(result[-1], Pause):
-            result += self._generate_pause(obj, **args)
-        result += self._generate_table_cell_row_index(obj, **args)
+            result += self._generate_pause(obj)
+        result += self._generate_table_cell_row_index(obj)
         if result and not isinstance(result[-1], Pause):
-            result += self._generate_pause(obj, **args)
-        result += self._generate_table_cell_column_index(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+            result += self._generate_pause(obj)
+        result += self._generate_table_cell_column_index(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_tearoff_menu_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tearoff_menu_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the tearoff-menu-item role."""
 
-        return self._generate_menu_item(obj, **args)
+        return self._generate_menu_item(obj)
 
-    def _generate_terminal(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_terminal(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the terminal role."""
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if not self._is_where_am_i():
-            return result + self._generate_text_line(obj, **args)
+            return result + self._generate_text_line(obj)
 
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_text_line(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_text_line(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_text(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_text(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the text role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_state_read_only(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_text_indentation(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_state_read_only(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_text_indentation(obj)
         result += self._generate_text_line(
             obj,
-            **args,
-        ) or self._generate_accessible_placeholder_text(obj, **args)
-        result += self._generate_text_selection(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        ) or self._generate_accessible_placeholder_text(obj)
+        result += self._generate_text_selection(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_timer(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_timer(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the timer role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_title_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_title_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the title-bar role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_toggle_button(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_toggle_button(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the toggle-button role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_state_expanded(obj, **args) or self._generate_state_pressed(
+            return self._generate_state_expanded(obj) or self._generate_state_pressed(
                 obj,
-                **args,
             )
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_state_expanded(obj, **args) or self._generate_state_pressed(
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_state_expanded(obj) or self._generate_state_pressed(
             obj,
-            **args,
         )
-        result += self._generate_state_sensitive(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_keyboard_mnemonic(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result += self._generate_state_sensitive(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_keyboard_mnemonic(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_tool_bar(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tool_bar(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the tool-bar role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_tool_tip(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tool_tip(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the tool-tip role."""
 
         if self._is_leaving():
-            return self._generate_leaving(obj, **args)
+            return self._generate_leaving(obj)
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_accessible_role(obj, **args)
+            return self._generate_accessible_role(obj)
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_role(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_role(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_tree(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tree(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the tree role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_tree_item(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tree_item(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the tree-item role."""
 
         if self._is_ancestor() or self._is_minimal():
-            return self._generate_state_expanded(obj, **args)
+            return self._generate_state_expanded(obj)
 
-        result = self._generate_default_prefix(obj, **args)
+        result = self._generate_default_prefix(obj)
         if self._is_where_am_i():
-            result += self._generate_ancestors(obj, **args)
-            result += self._generate_pause(obj, **args)
+            result += self._generate_ancestors(obj)
+            result += self._generate_pause(obj)
 
         result += self._generate_accessible_label_and_name(
             obj,
-            **args,
-        ) or self._generate_text_content(obj, **args)
-        result += self._generate_pause(obj, **args)
-        result += self._generate_state_expanded(obj, **args)
+        ) or self._generate_text_content(obj)
+        result += self._generate_pause(obj)
+        result += self._generate_state_expanded(obj)
         if result and not isinstance(result[-1], Pause):
-            result += self._generate_pause(obj, **args)
-        result += self._generate_position_in_list(obj, **args)
+            result += self._generate_pause(obj)
+        result += self._generate_position_in_list(obj)
         if result and not isinstance(result[-1], Pause):
-            result += self._generate_pause(obj, **args)
-        result += self._generate_tree_item_level(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+            result += self._generate_pause(obj)
+        result += self._generate_tree_item_level(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_tree_table(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_tree_table(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the tree-table role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_unknown(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_unknown(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the unknown role."""
 
-        result = self._generate_default_prefix(obj, **args)
-        result += self._generate_accessible_label_and_name(obj, **args)
-        result += self._generate_default_suffix(obj, **args)
+        result = self._generate_default_prefix(obj)
+        result += self._generate_accessible_label_and_name(obj)
+        result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_video(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_video(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the video role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_viewport(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_viewport(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the viewport role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
-    def _generate_window(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_window(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the window role."""
 
-        return self._generate_default_presentation(obj, **args)
+        return self._generate_default_presentation(obj)
 
     def generate_contents(  # type: ignore[override]
         self,
         contents: list[tuple[Atspi.Accessible, int, int, str]],
         context: SpeechGeneratorContext,
-        **args,
     ) -> list[Any]:
         """Generates speech for a list of [obj, start, end, string] contents."""
 
@@ -4119,7 +4085,6 @@ class SpeechGenerator(generator.Generator):
                     obj,
                     start,
                     end,
-                    dict(args),
                     announce_formatting,
                 )
                 if utterances:
@@ -4139,7 +4104,7 @@ class SpeechGenerator(generator.Generator):
                 string = ""
             else:
                 string = messages.BLANK
-            result = [[string, *self.voice(DEFAULT, **args)]]
+            result = [[string, *self.voice(DEFAULT)]]
 
         return result
 
@@ -4191,12 +4156,10 @@ class SpeechGenerator(generator.Generator):
                 return []
             return [messages.BLANK, *self.voice(DEFAULT)]
 
-        args: dict[str, Any] = {}
         return self._generate_text_with_attribute_changes(
             obj,
             start_offset,
             end_offset,
-            args,
             self._should_announce_attribute_changes(obj),
         )
 

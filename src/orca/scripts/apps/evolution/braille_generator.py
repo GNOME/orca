@@ -61,20 +61,23 @@ class BrailleGenerator(web.BrailleGenerator, braille_generator.BrailleGenerator)
     def _generate_real_active_descendant_displayed_text(
         self,
         obj: Atspi.Accessible,
-        **args,
     ) -> list[Any]:
         if self._script.utilities.is_message_list_status_cell(obj):
             return []
 
-        return super()._generate_real_active_descendant_displayed_text(obj, **args)
+        return super()._generate_real_active_descendant_displayed_text(obj)
 
     def generate_braille(
         self,
         obj: Atspi.Accessible,
         context: BrailleGeneratorContext,
-        **args,
+        *,
+        role: Atspi.Role | str | None = None,
+        include_context: bool = True,
     ) -> list[Any]:
-        result, focused_region = super().generate_braille(obj, context, **args)
+        result, focused_region = super().generate_braille(
+            obj, context, role=role, include_context=include_context
+        )
         if not result or focused_region != result[0]:
             return [result, focused_region]
 

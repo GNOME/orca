@@ -540,7 +540,7 @@ class SayAllPresenter(Extension):
                 self._script,
                 [content],
                 eliminate_pauses=True,
-                priorObj=self._prior_obj,
+                prior_obj=self._prior_obj,
                 index=i,
                 total=len(contents),
             )

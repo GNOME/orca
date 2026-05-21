@@ -466,7 +466,9 @@ class TestPresentationManager:
         manager.speak_contents(mock_contents)
 
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
-        speech_pres.speak_contents.assert_called_once_with(mock_contents)
+        speech_pres.speak_contents.assert_called_once_with(
+            mock_contents, reason=None, prior_obj=None
+        )
 
     def test_speak_contents_with_kwargs_delegates(self, test_context: OrcaTestContext) -> None:
         """Test speak_contents passes keyword arguments to speech_presenter."""
@@ -477,10 +479,12 @@ class TestPresentationManager:
         manager = get_manager()
         mock_contents = [(test_context.Mock(), 0, 10, "test text")]
         mock_prior = test_context.Mock()
-        manager.speak_contents(mock_contents, priorObj=mock_prior)
+        manager.speak_contents(mock_contents, prior_obj=mock_prior)
 
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
-        speech_pres.speak_contents.assert_called_once_with(mock_contents, priorObj=mock_prior)
+        speech_pres.speak_contents.assert_called_once_with(
+            mock_contents, reason=None, prior_obj=mock_prior
+        )
 
     def test_display_contents(self, test_context: OrcaTestContext) -> None:
         """Test display_contents delegates to braille presenter."""

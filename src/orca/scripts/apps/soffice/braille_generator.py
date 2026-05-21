@@ -58,27 +58,27 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return wrapper
 
     @log_generator_output
-    def _generate_accessible_role(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_accessible_role(self, obj: Atspi.Accessible) -> list[Any]:
         if self._script.utilities.is_document(obj):
             return []
 
-        return super()._generate_accessible_role(obj, **args)
+        return super()._generate_accessible_role(obj)
 
     @log_generator_output
     def _generate_real_table_cell(
-        self, obj: Atspi.Accessible, *, reading_row: bool = False, **args
+        self, obj: Atspi.Accessible, *, reading_row: bool = False
     ) -> list[Any]:
         if not self._script.utilities.in_document_content(obj):
-            return super()._generate_real_table_cell(obj, reading_row=reading_row, **args)
+            return super()._generate_real_table_cell(obj, reading_row=reading_row)
 
         if not AXObject.get_child_count(obj):
-            result = super()._generate_real_table_cell(obj, reading_row=reading_row, **args)
+            result = super()._generate_real_table_cell(obj, reading_row=reading_row)
         else:
             result = []
             original_context = self._context
             for child in AXObject.iter_children(obj):
                 self._context = replace(original_context, prior_obj=child)
-                result.extend(self.generate(child, **args))
+                result.extend(self.generate(child))
             self._context = original_context
 
         if not AXUtilities.is_spreadsheet_cell(obj):

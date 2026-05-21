@@ -903,7 +903,6 @@ class BraillePresenter(Extension):
         self,
         script: default.Script,
         contents: list[tuple[Atspi.Accessible, int, int, str]],
-        **args: Any,
     ) -> None:
         """Generates braille for contents and displays the flattened regions."""
 
@@ -914,7 +913,6 @@ class BraillePresenter(Extension):
         regions_list, focused_region = script.get_braille_generator().generate_contents(
             contents,
             context,
-            **args,
         )
         if not regions_list:
             return

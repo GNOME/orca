@@ -53,11 +53,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return wrapper
 
     @log_generator_output
-    def _generate_state_expanded(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_state_expanded(self, obj: Atspi.Accessible) -> list[Any]:
         cell = self._script.utilities.get_expander_cell_for(obj) or obj
-        return super()._generate_state_expanded(cell, **args)
+        return super()._generate_state_expanded(cell)
 
     @log_generator_output
-    def _generate_number_of_children(self, obj: Atspi.Accessible, **args) -> list[Any]:
+    def _generate_number_of_children(self, obj: Atspi.Accessible) -> list[Any]:
         cell = self._script.utilities.get_expander_cell_for(obj) or obj
-        return super()._generate_number_of_children(cell, **args)
+        return super()._generate_number_of_children(cell)

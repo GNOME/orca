@@ -26,7 +26,7 @@
 from __future__ import annotations
 
 import enum
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from . import (
     braille_presenter,
@@ -452,20 +452,23 @@ class PresentationManager:
     def speak_contents(
         self,
         contents: list[tuple[Atspi.Accessible, int, int, str]],
-        **args: Any,
+        *,
+        reason: PresentationReason | None = None,
+        prior_obj: Atspi.Accessible | None = None,
     ) -> None:
         """Speaks the specified contents."""
 
-        speech_presenter.get_presenter().speak_contents(contents, **args)
+        speech_presenter.get_presenter().speak_contents(
+            contents, reason=reason, prior_obj=prior_obj
+        )
 
     def display_contents(
         self,
         contents: list[tuple[Atspi.Accessible, int, int, str]],
-        **args: Any,
     ) -> None:
         """Displays contents in braille."""
 
-        tokens = ["PRESENTATION MANAGER: Displaying", contents, args]
+        tokens = ["PRESENTATION MANAGER: Displaying", contents]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
 
         if not (active_script := self._get_active_script()):
@@ -474,7 +477,6 @@ class PresentationManager:
         braille_presenter.get_presenter().display_generated_contents(
             active_script,
             contents,
-            **args,
         )
 
     def present_window_title(self, script: default.Script, obj: Atspi.Accessible) -> None:

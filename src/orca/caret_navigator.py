@@ -743,7 +743,7 @@ class CaretNavigator(Extension):
             # Setting the last object on the current line as priorObj
             # prevents re-announcing context.
             presenter = presentation_manager.get_manager()
-            presenter.speak_contents(contents, priorObj=line[-1][0])
+            presenter.speak_contents(contents, prior_obj=line[-1][0])
             presenter.display_contents(contents)
         return True
 
@@ -811,7 +811,7 @@ class CaretNavigator(Extension):
             # Setting the first object on the current line as priorObj
             # prevents re-announcing context.
             presenter = presentation_manager.get_manager()
-            presenter.speak_contents(contents, priorObj=line[0][0])
+            presenter.speak_contents(contents, prior_obj=line[0][0])
             presenter.display_contents(contents)
         return True
 
