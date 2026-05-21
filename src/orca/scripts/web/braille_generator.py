@@ -107,7 +107,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                 ],
             )
 
-        if self._get_start_offset() is not None and self._get_end_offset() is not None:
+        if self._get_start_offset(obj) is not None and self._get_end_offset(obj) is not None:
             do_not_display.append(Atspi.Role.ALERT)
 
         result = []
@@ -129,7 +129,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             else:
                 result = super()._generate_accessible_role(obj)
 
-        if self._get_content_position().index == self._get_content_position().total - 1 and (
+        if self._get_content_position(obj).index == self._get_content_position(obj).total - 1 and (
             AXUtilities.is_image(obj, self._get_resolved_role())
             or self._script.utilities.treat_as_text_object(obj)
         ):
@@ -242,7 +242,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
             role = Atspi.Role.IMAGE
         elif AXUtilities.is_anchor(obj):
             role = Atspi.Role.STATIC
-        elif self._script.utilities.treat_as_div(obj, offset=self._get_start_offset()):
+        elif self._script.utilities.treat_as_div(obj, offset=self._get_start_offset(obj)):
             role = Atspi.Role.SECTION
 
         if AXUtilities.is_menu_item(obj):
@@ -286,6 +286,7 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
                     start_offset=start, end_offset=end, string=string, caret_offset=offset
                 ),
                 content_position=ContentPosition(index=i, total=len(contents)),
+                content_subject=acc,
             )
             regions, f_region = self.generate_braille(acc, item_context)
             if not regions:

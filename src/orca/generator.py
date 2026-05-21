@@ -103,7 +103,9 @@ class GeneratorContext:
     ancestor_of: Atspi.Accessible | None
     content_item: ContentItem | None
     content_position: ContentPosition | None
+    content_subject: Atspi.Accessible | None
     resolved_role: Atspi.Role | str | None
+    role_subject: Atspi.Accessible | None
     include_context: bool
 
 
@@ -368,48 +370,57 @@ class Generator:
 
         return self._get_ancestor_of() is not None
 
-    def _get_content_item(self) -> ContentItem | None:
-        """Returns the content slice being presented, or None if not a content slice."""
+    def _get_content_item(self, obj: Atspi.Accessible) -> ContentItem | None:
+        """Returns obj's content slice, or None if obj is not the slice's subject."""
 
-        if self._context is None:
+        if self._context is None or self._context.content_subject != obj:
             return None
         return self._context.content_item
 
-    def _get_content_position(self) -> ContentPosition:
-        """Returns this item's position within its contents batch."""
+    def _get_content_position(self, obj: Atspi.Accessible) -> ContentPosition:
+        """Returns obj's position within its contents batch, or the default if not its subject."""
 
-        if self._context is None or self._context.content_position is None:
+        if (
+            self._context is None
+            or self._context.content_subject != obj
+            or self._context.content_position is None
+        ):
             return ContentPosition()
         return self._context.content_position
 
-    def _get_start_offset(self, default: int | None = None) -> int | None:
-        """Returns the content slice's start offset, or default if no slice."""
+    def _get_start_offset(self, obj: Atspi.Accessible, default: int | None = None) -> int | None:
+        """Returns obj's content-slice start offset, or default if obj is not the subject."""
 
-        item = self._get_content_item()
+        item = self._get_content_item(obj)
         return item.start_offset if item is not None else default
 
-    def _get_end_offset(self, default: int | None = None) -> int | None:
-        """Returns the content slice's end offset, or default if no slice."""
+    def _get_end_offset(self, obj: Atspi.Accessible, default: int | None = None) -> int | None:
+        """Returns obj's content-slice end offset, or default if obj is not the subject."""
 
-        item = self._get_content_item()
+        item = self._get_content_item(obj)
         return item.end_offset if item is not None else default
 
-    def _get_content_string(self, default: str | None = None) -> str | None:
-        """Returns the content slice's string, or default if no slice."""
+    def _get_content_string(self, obj: Atspi.Accessible, default: str | None = None) -> str | None:
+        """Returns obj's content-slice string, or default if obj is not the subject."""
 
-        item = self._get_content_item()
+        item = self._get_content_item(obj)
         return item.string if item is not None else default
 
-    def _get_caret_offset(self, default: int | None = None) -> int | None:
-        """Returns the content slice's caret offset, or default if no slice."""
+    def _get_caret_offset(self, obj: Atspi.Accessible, default: int | None = None) -> int | None:
+        """Returns obj's content-slice caret offset, or default if obj is not the subject."""
 
-        item = self._get_content_item()
+        item = self._get_content_item(obj)
         return item.caret_offset if item is not None else default
 
     def _get_resolved_role(self, obj: Atspi.Accessible | None = None) -> Atspi.Role | str | None:
-        """Returns the resolved role (treat-as override or functional role); falls back to obj's."""
+        """Returns obj's resolved role, or its own role if obj is not the role subject."""
 
-        role = self._context.resolved_role if self._context is not None else None
+        if self._context is None:
+            return AXObject.get_role(obj) if obj is not None else None
+        subject = self._context.role_subject
+        if obj is not None and subject is not None and subject != obj:
+            return AXObject.get_role(obj)
+        role = self._context.resolved_role
         if role is None and obj is not None:
             return AXObject.get_role(obj)
         return role
@@ -443,7 +454,10 @@ class Generator:
 
         original_context = self._context
         self._context = replace(
-            original_context, resolved_role=resolved_role, include_context=include_context
+            original_context,
+            resolved_role=resolved_role,
+            role_subject=obj,
+            include_context=include_context,
         )
         result = _generator(obj)  # type: ignore[misc]
         self._context = original_context
@@ -461,7 +475,7 @@ class Generator:
     ) -> str:
         """Returns a string representing the localized rolename of obj."""
 
-        resolved = role if role is not None else self._get_resolved_role()
+        resolved = role if role is not None else self._get_resolved_role(obj)
         result = AXUtilities.get_localized_role_name(obj, resolved)
         return result
 
@@ -1119,8 +1133,8 @@ class Generator:
 
     @log_generator_output
     def _generate_text_substring(self, obj: Atspi.Accessible) -> list[Any]:
-        start = self._get_start_offset()
-        end = self._get_end_offset()
+        start = self._get_start_offset(obj)
+        end = self._get_end_offset(obj)
         if (hash(obj), start, end) in Generator.CACHED_TEXT_SUBSTRING:
             return Generator.CACHED_TEXT_SUBSTRING.get((hash(obj), start, end), [])
 
@@ -1129,7 +1143,7 @@ class Generator:
                 Generator.CACHED_TEXT_SUBSTRING[(hash(obj), start, end)] = []
             return []
 
-        substring = self._get_content_string()
+        substring = self._get_content_string(obj)
         if substring is None:
             substring = AXText.get_substring(obj, start, end)
         if "\ufffc" not in substring:
@@ -1143,8 +1157,8 @@ class Generator:
 
     @log_generator_output
     def _generate_text_line(self, obj: Atspi.Accessible) -> list[Any]:
-        start = self._get_start_offset()
-        end = self._get_end_offset()
+        start = self._get_start_offset(obj)
+        end = self._get_end_offset(obj)
         if (hash(obj), start, end) in Generator.CACHED_TEXT_LINE:
             return Generator.CACHED_TEXT_LINE.get((hash(obj), start, end), [])
 
@@ -1190,12 +1204,12 @@ class Generator:
 
     @log_generator_output
     def _generate_text_expanding_embedded_objects(self, obj: Atspi.Accessible) -> list[Any]:
-        start = self._get_start_offset()
-        end = self._get_end_offset()
+        start = self._get_start_offset(obj)
+        end = self._get_end_offset(obj)
         if (hash(obj), start, end) in Generator.CACHED_TEXT_EXPANDING_EOCS:
             return Generator.CACHED_TEXT_EXPANDING_EOCS.get((hash(obj), start, end), [])
 
-        item = self._get_content_item()
+        item = self._get_content_item(obj)
         text = self._script.utilities.expand_eocs(
             obj,
             item.start_offset if item is not None else 0,
@@ -1226,7 +1240,7 @@ class Generator:
 
     @log_generator_output
     def _generate_nesting_level(self, obj: Atspi.Accessible) -> list[Any]:
-        if self._get_start_offset() is not None and self._get_end_offset() is not None:
+        if self._get_start_offset(obj) is not None and self._get_end_offset(obj) is not None:
             return []
 
         level = self._get_nesting_level(obj)
@@ -1365,11 +1379,7 @@ class Generator:
         prior_reading_row = self._reading_row
         self._reading_row = True
         for cell in cells:
-            cell_context = replace(original_context, prior_obj=prior)
-            # The content slice applies only to obj, not to the other cells in the row.
-            if cell != obj:
-                cell_context = replace(cell_context, content_item=None)
-            self._context = cell_context
+            self._context = replace(original_context, prior_obj=prior)
             cell_result = self._generate_real_table_cell(cell)
             if cell_result and result and self._mode is GeneratorMode.BRAILLE:
                 result.append(braille.Region(object_properties.TABLE_CELL_DELIMITER_BRAILLE))

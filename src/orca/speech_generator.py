@@ -218,7 +218,7 @@ class SpeechGenerator(generator.Generator):
         if AXUtilities.is_editable_combo_box_descendant(obj, inclusive=True):
             return object_properties.ROLE_EDITABLE_COMBO_BOX
 
-        if AXUtilities.is_link(obj, self._get_resolved_role()) and AXUtilities.is_visited(obj):
+        if AXUtilities.is_link(obj, self._get_resolved_role(obj)) and AXUtilities.is_visited(obj):
             return object_properties.ROLE_VISITED_LINK
 
         return super().get_localized_role_name(obj, role=role)
@@ -445,7 +445,7 @@ class SpeechGenerator(generator.Generator):
                 server,
                 language,
                 dialect,
-                string if string is not None else self._get_content_string() or "",
+                string if string is not None else self._get_content_string(obj) or "",
                 language_from_content,
             )
         else:
@@ -548,8 +548,8 @@ class SpeechGenerator(generator.Generator):
 
     def _get_ancestor_with_usable_role(self, obj):
         role = self._get_resolved_role(obj)
-        index = self._get_content_position().index
-        total = self._get_content_position().total
+        index = self._get_content_position(obj).index
+        total = self._get_content_position(obj).total
 
         def use_ancestor_role(x):
             if not (AXUtilities.is_heading(x) or AXUtilities.is_link(x)):
@@ -593,11 +593,11 @@ class SpeechGenerator(generator.Generator):
         )
         if self._context is not None and not self._context.verbose:
             do_not_speak.extend([Atspi.Role.CANVAS, Atspi.Role.ICON])
-        if self._get_content_string():
+        if self._get_content_string(obj):
             do_not_speak.append("ROLE_CONTENT_SUGGESTION")
         if self._context is not None and self._get_reason() != PresentationReason.WHERE_AM_I_BASIC:
             do_not_speak.extend([Atspi.Role.LIST, Atspi.Role.LIST_ITEM])
-        if self._get_start_offset() is not None or self._get_end_offset() is not None:
+        if self._get_start_offset(obj) is not None or self._get_end_offset(obj) is not None:
             do_not_speak.extend(
                 [
                     Atspi.Role.ALERT,
@@ -608,7 +608,7 @@ class SpeechGenerator(generator.Generator):
                     Atspi.Role.DOCUMENT_WEB,
                 ]
             )
-        if self._get_content_position().total > 1:
+        if self._get_content_position(obj).total > 1:
             do_not_speak.append(Atspi.Role.ROW_HEADER)
 
         is_enabled_ancestor = self._is_ancestor() and role in enabled
@@ -637,7 +637,9 @@ class SpeechGenerator(generator.Generator):
             return []
 
         parent = AXObject.get_parent(obj)
-        if AXUtilities.is_menu(obj, self._get_resolved_role()) and AXUtilities.is_combo_box(parent):
+        if AXUtilities.is_menu(obj, self._get_resolved_role(obj)) and AXUtilities.is_combo_box(
+            parent
+        ):
             return self._generate_accessible_role(parent)
 
         if AXUtilities.is_single_line_autocomplete_entry(obj):
@@ -1269,7 +1271,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         if (
-            self._get_content_position().index + 1 < self._get_content_position().total
+            self._get_content_position(obj).index + 1 < self._get_content_position(obj).total
             or obj != self._context.focus
         ):
             return []
@@ -1431,7 +1433,7 @@ class SpeechGenerator(generator.Generator):
         if self._only_speak_displayed_text():
             return []
 
-        start_offset = self._get_start_offset(0)
+        start_offset = self._get_start_offset(obj, 0)
         if start_offset != 0:
             return []
 
@@ -1451,7 +1453,7 @@ class SpeechGenerator(generator.Generator):
         if self._only_speak_displayed_text():
             return []
 
-        end_offset = self._get_end_offset()
+        end_offset = self._get_end_offset(obj)
         if end_offset is not None:
             length = AXText.get_character_count(obj)
             if length and length != end_offset:
@@ -1481,7 +1483,7 @@ class SpeechGenerator(generator.Generator):
         if self._only_speak_displayed_text():
             return []
 
-        start_offset = self._get_start_offset(0)
+        start_offset = self._get_start_offset(obj, 0)
         if start_offset != 0:
             return []
 
@@ -1501,7 +1503,7 @@ class SpeechGenerator(generator.Generator):
         if self._only_speak_displayed_text():
             return []
 
-        end_offset = self._get_end_offset()
+        end_offset = self._get_end_offset(obj)
         if end_offset is not None:
             length = AXText.get_character_count(obj)
             if length and length != end_offset:
@@ -1534,7 +1536,7 @@ class SpeechGenerator(generator.Generator):
         if self._context is not None and not self._context.announce_code_block:
             return []
 
-        start_offset = self._get_start_offset(0)
+        start_offset = self._get_start_offset(obj, 0)
         if start_offset != 0:
             return []
 
@@ -1550,7 +1552,7 @@ class SpeechGenerator(generator.Generator):
         if self._context is not None and not self._context.announce_code_block:
             return []
 
-        end_offset = self._get_end_offset()
+        end_offset = self._get_end_offset(obj)
         if end_offset is not None:
             length = AXText.get_character_count(obj)
             if length and length != end_offset:
@@ -1565,7 +1567,7 @@ class SpeechGenerator(generator.Generator):
         if self._only_speak_displayed_text():
             return []
 
-        start_offset = self._get_start_offset(0)
+        start_offset = self._get_start_offset(obj, 0)
         if start_offset != 0:
             return []
 
@@ -1585,7 +1587,7 @@ class SpeechGenerator(generator.Generator):
         if self._only_speak_displayed_text():
             return []
 
-        end_offset = self._get_end_offset()
+        end_offset = self._get_end_offset(obj)
         if end_offset is not None:
             length = AXText.get_character_count(obj)
             if length and length != end_offset:
@@ -1992,7 +1994,7 @@ class SpeechGenerator(generator.Generator):
 
         result.extend(self.voice(DEFAULT, obj=obj))
         if result[0] in ["\n", ""]:
-            if self._get_content_position().total > 1:
+            if self._get_content_position(obj).total > 1:
                 return [""]
             if (
                 self._context.speak_blank_lines
@@ -2004,7 +2006,7 @@ class SpeechGenerator(generator.Generator):
             return result
 
         result[0] = speech_presenter.get_presenter().adjust_for_presentation(
-            obj, result[0], self._get_start_offset()
+            obj, result[0], self._get_start_offset(obj)
         )
         return result
 
@@ -2020,12 +2022,12 @@ class SpeechGenerator(generator.Generator):
                 if result:
                     return result
 
-        content_start = self._get_start_offset()
-        content_end = self._get_end_offset()
+        content_start = self._get_start_offset(obj)
+        content_end = self._get_end_offset(obj)
 
         text, start_offset = AXText.get_line_at_offset(obj)[0:2]
         if text == "\n":
-            if self._get_content_position().total > 1:
+            if self._get_content_position(obj).total > 1:
                 return [""]
 
             if (
@@ -2166,7 +2168,7 @@ class SpeechGenerator(generator.Generator):
         if self._is_where_am_i():
             only_if_changed = False
 
-        line = AXText.get_line_at_offset(obj, self._get_start_offset())[0]
+        line = AXText.get_line_at_offset(obj, self._get_start_offset(obj))[0]
         description = speech_presenter.get_presenter().get_indentation_description(
             line,
             only_if_changed,
@@ -2641,7 +2643,7 @@ class SpeechGenerator(generator.Generator):
             ) or self._generate_text_line(obj)
 
         if self._context.announce_list:
-            if self._get_content_position().index + 1 < self._get_content_position().total:
+            if self._get_content_position(obj).index + 1 < self._get_content_position(obj).total:
                 return result
 
             result += self._generate_accessible_role(obj)
@@ -2665,7 +2667,7 @@ class SpeechGenerator(generator.Generator):
         )
 
         if self._context.announce_list:
-            if self._get_content_position().index + 1 < self._get_content_position().total:
+            if self._get_content_position(obj).index + 1 < self._get_content_position(obj).total:
                 return result
 
             result += self._generate_accessible_role(obj)

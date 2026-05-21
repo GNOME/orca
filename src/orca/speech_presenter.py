@@ -2908,7 +2908,9 @@ class SpeechPresenter(Extension):
                 if index is not None and total is not None
                 else None
             ),
+            content_subject=None,
             resolved_role=None,
+            role_subject=None,
             include_context=True,
             in_preferences_window=mgr.is_in_preferences_window(),
             auto_language_switching_content=speech_mgr.get_auto_language_switching(),

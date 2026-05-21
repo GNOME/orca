@@ -26,6 +26,7 @@
 
 from __future__ import annotations
 
+from dataclasses import fields
 from typing import TYPE_CHECKING
 
 import pytest
@@ -189,3 +190,74 @@ class TestSpeechGeneratorMisspelledIndicator:
         result = self._generate(test_context, essential_modules, context)
 
         assert essential_modules["orca.messages"].MISSPELLED in result
+
+
+_GENERATOR_TEST_MODULES = [
+    "orca.input_event_manager",
+    "orca.math_presenter",
+    "orca.object_properties",
+    "orca.speech_presenter",
+    "orca.text_attribute_manager",
+    "orca.ax_object",
+    "orca.ax_text",
+    "orca.ax_utilities",
+]
+
+
+@pytest.mark.unit
+class TestGeneratorContentSubjectBinding:
+    """Tests per-object content accessors return the slice only for its subject object."""
+
+    def test_content_accessors_bound_to_subject(self, test_context: OrcaTestContext) -> None:
+        """The slice's string/offset/position are returned for its subject and no other object."""
+
+        test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
+        from orca.generator import ContentItem, ContentPosition
+        from orca.speech_generator import SpeechGenerator, SpeechGeneratorContext
+
+        subject = test_context.Mock()
+        other = test_context.Mock()
+        field_values = {field.name: None for field in fields(SpeechGeneratorContext)}
+        field_values["content_subject"] = subject
+        field_values["content_item"] = ContentItem(start_offset=0, end_offset=3, string="fix")
+        field_values["content_position"] = ContentPosition(index=2, total=5)
+        context = SpeechGeneratorContext(**field_values)
+
+        generator = SpeechGenerator(test_context.Mock())
+        generator._context = context
+
+        assert generator._get_content_string(subject) == "fix"
+        assert generator._get_start_offset(subject) == 0
+        assert generator._get_content_position(subject) == ContentPosition(index=2, total=5)
+
+        assert generator._get_content_string(other) is None
+        assert generator._get_start_offset(other) is None
+        assert generator._get_content_position(other) == ContentPosition()
+
+
+@pytest.mark.unit
+class TestGeneratorRoleSubjectBinding:
+    """Tests the resolved role applies only to its subject object."""
+
+    def test_resolved_role_bound_to_subject(self, test_context: OrcaTestContext) -> None:
+        """resolved_role is returned for its subject; other objects get their own role."""
+
+        essential_modules = test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
+        from orca.speech_generator import SpeechGenerator, SpeechGeneratorContext
+
+        essential_modules["orca.ax_object"].AXObject.get_role = test_context.Mock(
+            return_value="heading"
+        )
+
+        subject = test_context.Mock()
+        other = test_context.Mock()
+        field_values = {field.name: None for field in fields(SpeechGeneratorContext)}
+        field_values["resolved_role"] = "link"
+        field_values["role_subject"] = subject
+        context = SpeechGeneratorContext(**field_values)
+
+        generator = SpeechGenerator(test_context.Mock())
+        generator._context = context
+
+        assert generator._get_resolved_role(subject) == "link"
+        assert generator._get_resolved_role(other) == "heading"

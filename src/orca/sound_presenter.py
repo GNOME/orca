@@ -491,7 +491,9 @@ class SoundPresenter:
             ancestor_of=None,
             content_item=None,
             content_position=None,
+            content_subject=None,
             resolved_role=None,
+            role_subject=None,
             include_context=True,
         )
 

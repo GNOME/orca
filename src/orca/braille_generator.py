@@ -229,6 +229,7 @@ class BrailleGenerator(generator.Generator):
                     start_offset=start, end_offset=end, string=string, caret_offset=offset
                 ),
                 content_position=ContentPosition(index=i, total=len(contents)),
+                content_subject=acc,
             )
             regions, f_region = self.generate_braille(acc, item_context)
             if not regions:
@@ -495,9 +496,9 @@ class BrailleGenerator(generator.Generator):
                 self._as_string(
                     self._generate_eol(obj) + self._generate_keyboard_mnemonic(obj),
                 ),
-                self._get_start_offset(),
-                self._get_end_offset(),
-                self._get_caret_offset(),
+                self._get_start_offset(obj),
+                self._get_end_offset(obj),
+                self._get_caret_offset(obj),
             ),
         ]
 
@@ -871,8 +872,8 @@ class BrailleGenerator(generator.Generator):
                 obj,
                 "",
                 self._as_string(self._generate_eol(obj)),
-                self._get_start_offset(),
-                self._get_end_offset(),
+                self._get_start_offset(obj),
+                self._get_end_offset(obj),
             ),
         ]
         return result
@@ -1203,9 +1204,9 @@ class BrailleGenerator(generator.Generator):
                     obj,
                     "",
                     self._as_string(self._generate_eol(obj)),
-                    self._get_start_offset(),
-                    self._get_end_offset(),
-                    self._get_caret_offset(),
+                    self._get_start_offset(obj),
+                    self._get_end_offset(obj),
+                    self._get_caret_offset(obj),
                 ),
             ]
         else:
@@ -1740,9 +1741,9 @@ class BrailleGenerator(generator.Generator):
         result = [
             braille.Text(
                 obj,
-                start_offset=self._get_start_offset(),
-                end_offset=self._get_end_offset(),
-                caret_offset=self._get_caret_offset(self._get_offset()),
+                start_offset=self._get_start_offset(obj),
+                end_offset=self._get_end_offset(obj),
+                caret_offset=self._get_caret_offset(obj, self._get_offset()),
             ),
         ]
         return result
