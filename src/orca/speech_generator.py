@@ -2080,6 +2080,7 @@ class SpeechGenerator(generator.Generator):
             adjusted = presenter.adjust_for_presentation(obj, string, start_offset)
             return [adjusted, *voice] if adjusted else []
 
+        announce_spelling = self._context is not None and self._context.speak_misspelled_indicator
         attr_runs = AXUtilities.get_all_text_attributes(obj, start_offset, end_offset)
         prev_had_spelling = False
         prev_had_grammar = False
@@ -2090,19 +2091,20 @@ class SpeechGenerator(generator.Generator):
                 for desc in self._get_attribute_change_descriptions(prev_attrs, attrs, exclude):
                     result.extend([desc, *system_voice])
 
-            has_spelling = AXUtilities.string_has_spelling_error(obj, run_start)
-            has_grammar = AXUtilities.string_has_grammar_error(obj, run_start)
-            if has_spelling and not prev_had_spelling:
-                result.extend([messages.MISSPELLED, *system_voice])
-            elif has_grammar and not prev_had_grammar:
-                result.extend(
-                    [
-                        object_properties.STATE_INVALID_GRAMMAR_SPEECH,
-                        *system_voice,
-                    ]
-                )
-            prev_had_spelling = has_spelling
-            prev_had_grammar = has_grammar
+            if announce_spelling:
+                has_spelling = AXUtilities.string_has_spelling_error(obj, run_start)
+                has_grammar = AXUtilities.string_has_grammar_error(obj, run_start)
+                if has_spelling and not prev_had_spelling:
+                    result.extend([messages.MISSPELLED, *system_voice])
+                elif has_grammar and not prev_had_grammar:
+                    result.extend(
+                        [
+                            object_properties.STATE_INVALID_GRAMMAR_SPEECH,
+                            *system_voice,
+                        ]
+                    )
+                prev_had_spelling = has_spelling
+                prev_had_grammar = has_grammar
             prev_attrs = attrs
 
             string = AXText.get_substring(obj, run_start, run_end).replace("\ufffc", "")

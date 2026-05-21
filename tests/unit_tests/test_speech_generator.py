@@ -116,3 +116,76 @@ class TestSpeechGeneratorVoice:
         result = generator.voice(string="hello", obj=test_context.Mock(), context=context)
 
         assert result[0][ACSS.VOICE_TYPE] == VoiceType.DEFAULT
+
+
+@pytest.mark.unit
+class TestSpeechGeneratorMisspelledIndicator:
+    """Tests _generate_text_with_attribute_changes honors speak_misspelled_indicator."""
+
+    def _setup(self, test_context: OrcaTestContext, *, speak_misspelled: bool):
+        """Returns (essential_modules, context) with a single misspelled attribute run."""
+
+        additional_modules = [
+            "orca.input_event_manager",
+            "orca.math_presenter",
+            "orca.object_properties",
+            "orca.speech_presenter",
+            "orca.text_attribute_manager",
+            "orca.ax_document",
+            "orca.ax_hypertext",
+            "orca.ax_table",
+            "orca.ax_text",
+            "orca.ax_utilities",
+            "orca.ax_value",
+        ]
+        essential_modules = test_context.setup_shared_dependencies(additional_modules)
+
+        ax_utilities = test_context.Mock()
+        ax_utilities.is_terminal = test_context.Mock(return_value=False)
+        ax_utilities.get_all_text_attributes = test_context.Mock(
+            return_value=[(0, 3, {"language": "en-us"})]
+        )
+        ax_utilities.string_has_spelling_error = test_context.Mock(return_value=True)
+        ax_utilities.string_has_grammar_error = test_context.Mock(return_value=False)
+        essential_modules["orca.ax_utilities"].AXUtilities = ax_utilities
+
+        essential_modules["orca.ax_text"].AXText.get_substring = test_context.Mock(
+            return_value="Das"
+        )
+
+        presenter = essential_modules["orca.speech_presenter"].get_presenter.return_value
+        presenter.adjust_for_presentation = test_context.Mock(return_value="Das")
+
+        context = test_context.Mock()
+        context.speak_misspelled_indicator = speak_misspelled
+        return essential_modules, context
+
+    def _generate(self, test_context: OrcaTestContext, essential_modules, context) -> list:
+        """Runs _generate_text_with_attribute_changes for the misspelled run."""
+
+        from orca.speech_generator import SpeechGenerator
+
+        generator = SpeechGenerator(test_context.Mock())
+        generator.voice = test_context.Mock(return_value=[])
+        generator._context = context
+        return generator._generate_text_with_attribute_changes(
+            test_context.Mock(), 0, 3, announce_formatting=False
+        )
+
+    def test_misspelled_omitted_when_indicator_disabled(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """The misspelled indicator must not be spoken when the setting is off."""
+
+        essential_modules, context = self._setup(test_context, speak_misspelled=False)
+        result = self._generate(test_context, essential_modules, context)
+
+        assert essential_modules["orca.messages"].MISSPELLED not in result
+
+    def test_misspelled_spoken_when_indicator_enabled(self, test_context: OrcaTestContext) -> None:
+        """The misspelled indicator must be spoken when the setting is on."""
+
+        essential_modules, context = self._setup(test_context, speak_misspelled=True)
+        result = self._generate(test_context, essential_modules, context)
+
+        assert essential_modules["orca.messages"].MISSPELLED in result
