@@ -855,6 +855,29 @@ class TestAXText:
         result = AXText.get_text_attributes_at_offset(test_context.Mock(spec=Atspi.Accessible))
         assert result == ({}, 0, 20)
 
+    def test_get_text_attributes_at_offset_with_null_attributes(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test AXText.get_text_attributes_at_offset when the attribute dict is None."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
+
+        test_context.patch_object(AXObject, "supports_text", return_value=True)
+        test_context.patch_object(AXText, "get_caret_offset", return_value=5)
+        test_context.patch_object(AXText, "get_character_count", return_value=20)
+
+        # An app that is crashing can return a null hash table for the attributes while still
+        # providing the start and end offsets, which PyGObject packs as (None, start, end).
+        def mock_get_attribute_run(_obj, _offset, include_defaults=True):
+            return None, 0, 10
+
+        test_context.patch("gi.repository.Atspi.Text.get_attribute_run", new=mock_get_attribute_run)
+        result = AXText.get_text_attributes_at_offset(test_context.Mock(spec=Atspi.Accessible))
+        assert result == ({}, 0, 20)
+
     def test_get_all_text_attributes_successful(self, test_context: OrcaTestContext) -> None:
         """Test AXText.get_all_text_attributes."""
 

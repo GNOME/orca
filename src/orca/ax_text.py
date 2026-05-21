@@ -735,7 +735,7 @@ class AXText:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return {}, 0, AXText.get_character_count(obj)
 
-        if result is None:
+        if result is None or result[0] is None:
             tokens = ["AXText: get_attribute_run failed for", obj, f"at offset {offset}."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return {}, 0, AXText.get_character_count(obj)
