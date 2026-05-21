@@ -1244,9 +1244,7 @@ class Generator:
         return []
 
     @log_generator_output
-    def _generate_tree_item_level(
-        self, obj: Atspi.Accessible, *, new_only: bool = False
-    ) -> list[Any]:
+    def _generate_tree_item_level(self, obj: Atspi.Accessible) -> list[Any]:
         level = Generator.CACHED_TREE_ITEM_LEVEL.get(hash(obj))
         if level is None:
             level = self._script.utilities.node_level(obj)
@@ -1255,7 +1253,9 @@ class Generator:
         if level < 0:
             return []
 
+        # Speech announces the level only when it changes; braille always includes it.
         prior_object = self._get_prior_obj()
+        new_only = self._mode is GeneratorMode.SPEECH
         if new_only and prior_object:
             old_level = Generator.CACHED_TREE_ITEM_LEVEL.get(hash(prior_object))
             if old_level is None:
@@ -1415,16 +1415,13 @@ class Generator:
         return [rv]
 
     @log_generator_output
-    def _generate_table_cell_column_header(
-        self,
-        obj: Atspi.Accessible,
-        *,
-        new_only: bool = False,
-    ) -> list[Any]:
+    def _generate_table_cell_column_header(self, obj: Atspi.Accessible) -> list[Any]:
         if self._reading_row and not self._get_is_nameless_toggle(obj):
             return []
 
         result: list[Any] = []
+        # Speech announces only changed headers (except nameless toggles); braille shows all.
+        new_only = self._mode is GeneratorMode.SPEECH and not self._get_is_nameless_toggle(obj)
         if new_only:
             headers = AXUtilities.get_new_column_headers(obj, self._get_prior_obj())
         else:
@@ -1456,16 +1453,13 @@ class Generator:
         return result
 
     @log_generator_output
-    def _generate_table_cell_row_header(
-        self,
-        obj: Atspi.Accessible,
-        *,
-        new_only: bool = False,
-    ) -> list[Any]:
+    def _generate_table_cell_row_header(self, obj: Atspi.Accessible) -> list[Any]:
         if self._reading_row:
             return []
 
         result: list[Any] = []
+        # Speech announces the row header only when it changes; braille always includes it.
+        new_only = self._mode is GeneratorMode.SPEECH
         if new_only:
             headers = AXUtilities.get_new_row_headers(obj, self._get_prior_obj())
         else:
