@@ -315,3 +315,17 @@ def _web_languages(
         app=_BROWSER_APPS[request.param],
         page="web_languages.html",
     )
+
+
+@pytest.fixture(scope="session", name="web_tables", params=["chromium"])
+def _web_tables(
+    request: pytest.FixtureRequest,
+    tmp_path_factory: pytest.TempPathFactory,
+) -> Iterator[NativeAppSession]:
+    """Launches a browser loading web_tables.html with Orca; yields a NativeAppSession."""
+
+    yield from _run_browser_session(
+        tmp_path_factory,
+        app=_BROWSER_APPS[request.param],
+        page="web_tables.html",
+    )

@@ -1163,6 +1163,10 @@ class SpeechGenerator(generator.Generator):
         if not prior_obj or obj == prior_obj or not AXObject.is_valid(prior_obj):
             return []
 
+        table = AXUtilities.get_table(obj)
+        if table is not None and table == AXUtilities.get_table(prior_obj):
+            return []
+
         if AXUtilities.is_page_tab(obj):
             return []
 
