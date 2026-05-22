@@ -118,6 +118,20 @@ def test_structural_navigation_by_heading(web_basic: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+def test_heading_where_am_i(web_basic: NativeAppSession) -> None:
+    """Tests basic Where Am I on a heading."""
+
+    session = web_basic
+    _move_to_top(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
+    assert _capture(session) == (
+        ["Welcome", "heading 1"],
+        [(1, "Welcome h1", "\x00" * 10)],
+    )
+
+
+@pytest.mark.native_app
 def test_structural_navigation_by_link(web_basic: NativeAppSession) -> None:
     """Tests structural navigation by link."""
 

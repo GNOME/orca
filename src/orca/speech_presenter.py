@@ -2441,6 +2441,11 @@ class SpeechPresenter(Extension):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return self._output_recorder.set_path(value)
 
+    def record_interrupt(self) -> None:
+        """Records a marker so output observers can drop speech that was interrupted."""
+
+        self._output_recorder.record(kind="interrupt")
+
     @gsettings_registry.get_registry().gsetting(
         key=KEY_MONITOR_FONT_SIZE,
         schema="speech",

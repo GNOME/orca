@@ -300,6 +300,94 @@ def test_table_cell_where_am_i(web_tables: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
     assert _capture(session) == (
-        ["Admiral", "column 2 of 3 row 3 of 3"],
+        ["Grace Role Admiral", "column 2 of 3 row 3 of 3"],
         [(1, "Admiral", "\x00" * 7), (1, "Admiral", "\x00" * 7)],
+    )
+
+
+@pytest.mark.native_app
+def test_table_cell_detailed_where_am_i(web_tables: NativeAppSession) -> None:
+    """Tests detailed Where Am I in a table cell."""
+
+    session = web_tables
+    _move_to_top(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_T)
+    _capture(session)
+    _table_nav(keyboard.KEYSYM_DOWN)
+    _capture(session)
+    _table_nav(keyboard.KEYSYM_RIGHT)
+    _capture(session)
+    _table_nav(keyboard.KEYSYM_DOWN)
+    _capture(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER, click_count=2)
+    assert _capture(session) == (
+        [
+            "Grace",
+            "Admiral",
+            "Boston",
+            "1 of 2",
+            "column 2 of 3 row 3 of 3",
+        ],
+        [
+            (1, "Admiral", "\x00" * 7),
+            (1, "Admiral", "\x00" * 7),
+            (1, "Admiral", "\x00" * 7),
+        ],
+    )
+
+
+@pytest.mark.native_app
+def test_row_header_where_am_i(web_tables: NativeAppSession) -> None:
+    """Tests basic Where Am I on a row header."""
+
+    session = web_tables
+    _move_to_top(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_T)
+    _capture(session)
+    _table_nav(keyboard.KEYSYM_DOWN)
+    _capture(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
+    assert _capture(session) == (
+        ["Ada", "row header"],
+        [(1, "Ada", "\x00" * 3), (1, "Ada", "\x00" * 3)],
+    )
+
+
+@pytest.mark.native_app
+def test_column_header_where_am_i(web_tables: NativeAppSession) -> None:
+    """Tests basic Where Am I on a column header."""
+
+    session = web_tables
+    _move_to_top(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_T)
+    _capture(session)
+    _table_nav(keyboard.KEYSYM_RIGHT)
+    _capture(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
+    assert _capture(session) == (
+        ["Role", "column header"],
+        [(1, "Role", "\x00" * 4), (1, "Role", "\x00" * 4)],
+    )
+
+
+@pytest.mark.native_app
+def test_heading_where_am_i(web_tables: NativeAppSession) -> None:
+    """Tests basic Where Am I on a heading."""
+
+    session = web_tables
+    _move_to_top(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_H)
+    _capture(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
+    assert _capture(session) == (
+        ["Tables", "heading 1"],
+        [(1, "Tables h1", "\x00" * 9)],
     )

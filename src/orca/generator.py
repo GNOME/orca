@@ -1431,7 +1431,11 @@ class Generator:
 
         result: list[Any] = []
         # Speech announces only changed headers (except nameless toggles); braille shows all.
-        new_only = self._mode is GeneratorMode.SPEECH and not self._get_is_nameless_toggle(obj)
+        new_only = (
+            self._mode is GeneratorMode.SPEECH
+            and not self._get_is_nameless_toggle(obj)
+            and not self._is_where_am_i()
+        )
         if new_only:
             headers = AXUtilities.get_new_column_headers(obj, self._get_prior_obj())
         else:
@@ -1469,7 +1473,7 @@ class Generator:
 
         result: list[Any] = []
         # Speech announces the row header only when it changes; braille always includes it.
-        new_only = self._mode is GeneratorMode.SPEECH
+        new_only = self._mode is GeneratorMode.SPEECH and not self._is_where_am_i()
         if new_only:
             headers = AXUtilities.get_new_row_headers(obj, self._get_prior_obj())
         else:

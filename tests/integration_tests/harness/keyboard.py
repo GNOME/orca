@@ -90,11 +90,12 @@ def release_key(keysym: int) -> None:
     Atspi.generate_keyboard_event(_keycode_for_keysym(keysym), None, Atspi.KeySynthType.RELEASE)
 
 
-def tap_key(keysym: int) -> None:
-    """Presses and releases a single keysym."""
+def tap_key(keysym: int, click_count: int = 1) -> None:
+    """Presses and releases keysym, repeated click_count times for multi-click commands."""
 
-    press_key(keysym)
-    release_key(keysym)
+    for _ in range(click_count):
+        press_key(keysym)
+        release_key(keysym)
 
 
 def press_chord(modifiers: list[int], keysym: int) -> None:

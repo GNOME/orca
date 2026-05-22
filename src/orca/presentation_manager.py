@@ -85,6 +85,7 @@ class PresentationManager:
         msg = "PRESENTATION MANAGER: Interrupting presentation"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         speech_manager.get_manager().interrupt_speech()
+        speech_presenter.get_presenter().record_interrupt()
         if kill_flash:
             braille_presenter.get_presenter().kill_flash()
         live_region_presenter.get_presenter().flush_messages()

@@ -35,6 +35,7 @@ class Kind(Enum):
 
     SPEECH = "speech"
     BRAILLE = "braille"
+    INTERRUPT = "interrupt"
 
 
 @dataclass
@@ -55,6 +56,11 @@ class BrailleRecord:
     mask: str | None = None
 
 
+@dataclass
+class InterruptRecord:
+    """Marks a deliberate speech interruption so observers drop the superseded speech."""
+
+
 class OutputReader:
     """Reads the JSONL files written by the speech and braille presenters."""
 
@@ -64,7 +70,7 @@ class OutputReader:
         self._speech_path = speech_path
         self._braille_path = braille_path
         self._queue: queue.Queue = queue.Queue()
-        self._pending: list[SpeechRecord | BrailleRecord] = []
+        self._pending: list[SpeechRecord | BrailleRecord | InterruptRecord] = []
         self._stop_event = threading.Event()
         self._threads: list[threading.Thread] = []
 
@@ -104,18 +110,38 @@ class OutputReader:
     ) -> list[SpeechRecord | BrailleRecord]:
         """Returns records that have arrived, waiting for the stream to go quiet."""
 
-        records: list[SpeechRecord | BrailleRecord] = list(self._pending)
+        records: list[SpeechRecord | BrailleRecord | InterruptRecord] = list(self._pending)
         self._pending.clear()
         deadline = time.monotonic() + overall_timeout
         while True:
             remaining = deadline - time.monotonic()
             if remaining <= 0:
-                return records
+                return self._honor_interrupts(records)
             try:
                 record = self._queue.get(timeout=min(quiescence_timeout, remaining))
             except queue.Empty:
-                return records
+                return self._honor_interrupts(records)
             records.append(record)
+
+    @staticmethod
+    def _honor_interrupts(
+        records: list[SpeechRecord | BrailleRecord | InterruptRecord],
+    ) -> list[SpeechRecord | BrailleRecord]:
+        """Drops speech preceding the last interrupt marker and strips the markers."""
+
+        last_interrupt = -1
+        for index, record in enumerate(records):
+            if isinstance(record, InterruptRecord):
+                last_interrupt = index
+
+        result: list[SpeechRecord | BrailleRecord] = []
+        for index, record in enumerate(records):
+            if isinstance(record, InterruptRecord):
+                continue
+            if isinstance(record, SpeechRecord) and index < last_interrupt:
+                continue
+            result.append(record)
+        return result
 
     def wait_for_speech(self, substring: str, timeout: float = 2.0) -> SpeechRecord:
         """Drains records until a SpeechRecord containing substring arrives or timeout."""
@@ -149,7 +175,7 @@ class OutputReader:
 
     def _wait_for(
         self, predicate, timeout: float, description: str
-    ) -> SpeechRecord | BrailleRecord:
+    ) -> SpeechRecord | BrailleRecord | InterruptRecord:
         """Returns the first record matching predicate; non-matching records are buffered."""
 
         for index, record in enumerate(self._pending):
@@ -186,14 +212,17 @@ class OutputReader:
                     return
 
     @staticmethod
-    def _parse_speech(line: str) -> SpeechRecord | None:
+    def _parse_speech(line: str) -> SpeechRecord | InterruptRecord | None:
         """Parses a line from the speech log."""
 
         try:
             data = json.loads(line)
         except json.JSONDecodeError:
             return None
-        if data.get("kind") != Kind.SPEECH.value:
+        kind = data.get("kind")
+        if kind == Kind.INTERRUPT.value:
+            return InterruptRecord()
+        if kind != Kind.SPEECH.value:
             return None
         return SpeechRecord(
             text=data.get("text", ""),

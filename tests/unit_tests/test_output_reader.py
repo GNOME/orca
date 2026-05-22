@@ -314,3 +314,51 @@ def test_drain_returns_buffered_records_first(tmp_path: Path) -> None:
 
     strings = [r.string for r in records if hasattr(r, "string")]
     assert "buffered" in strings
+
+
+def test_drain_drops_records_before_an_interrupt(tmp_path: Path) -> None:
+    """drain() drops speech that preceded an interrupt marker, keeping only what follows."""
+
+    from orca.output_reader import OutputReader, speech
+
+    speech_path = tmp_path / "s.jsonl"
+    braille_path = tmp_path / "b.jsonl"
+
+    reader = OutputReader(str(speech_path), str(braille_path))
+    reader.start()
+    try:
+        time.sleep(0.1)
+        _write_line(speech_path, {"kind": "speech", "text": "superseded"})
+        _write_line(speech_path, {"kind": "interrupt"})
+        _write_line(speech_path, {"kind": "speech", "text": "detailed"})
+        records = reader.drain(quiescence_timeout=0.3)
+    finally:
+        reader.stop()
+
+    assert speech(records) == ["detailed"]
+
+
+def test_honor_interrupts_drops_speech_not_braille() -> None:
+    """An interrupt drops earlier speech only; braille in the same window survives."""
+
+    from orca.output_reader import (
+        BrailleRecord,
+        InterruptRecord,
+        OutputReader,
+        SpeechRecord,
+        braille,
+        speech,
+    )
+
+    kept = OutputReader._honor_interrupts(
+        [
+            BrailleRecord(cursor_cell=0, string="braille kept"),
+            SpeechRecord(text="speech dropped"),
+            InterruptRecord(),
+            SpeechRecord(text="speech kept"),
+        ]
+    )
+
+    assert speech(kept) == ["speech kept"]
+    assert braille(kept) == ["braille kept"]
+    assert not any(isinstance(record, InterruptRecord) for record in kept)

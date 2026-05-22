@@ -608,7 +608,7 @@ class SpeechGenerator(generator.Generator):
                     Atspi.Role.DOCUMENT_WEB,
                 ]
             )
-        if self._get_content_position(obj).total > 1:
+        if self._get_content_position(obj).total > 1 and not self._is_where_am_i():
             do_not_speak.append(Atspi.Role.ROW_HEADER)
 
         is_enabled_ancestor = self._is_ancestor() and role in enabled
@@ -629,7 +629,7 @@ class SpeechGenerator(generator.Generator):
         ):
             return False
 
-        return obj != self._get_prior_obj()
+        return obj != self._get_prior_obj() or self._is_where_am_i()
 
     @log_generator_output
     def _generate_accessible_role(self, obj: Atspi.Accessible) -> list[Any]:
@@ -2510,7 +2510,9 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the column-header role."""
 
         result = []
-        if self._get_prior_obj() != obj and self._generate_text_substring(obj):
+        if (
+            self._get_prior_obj() != obj or self._is_where_am_i()
+        ) and self._generate_text_substring(obj):
             result += self._generate_text_line(obj)
         if not result:
             result += self._generate_accessible_label_and_name(obj)
@@ -3564,7 +3566,9 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the row-header role."""
 
         result = self._generate_default_prefix(obj)
-        if self._get_prior_obj() != obj and self._generate_text_substring(obj):
+        if (
+            self._get_prior_obj() != obj or self._is_where_am_i()
+        ) and self._generate_text_substring(obj):
             result += self._generate_text_line(obj)
         if not result:
             result += self._generate_accessible_label_and_name(obj)
@@ -3855,13 +3859,7 @@ class SpeechGenerator(generator.Generator):
             return result
 
         if self._is_where_am_i():
-            result = self._generate_row_header(obj)
-            if result and not isinstance(result[-1], Pause):
-                result += self._generate_pause(obj)
-            result = self._generate_column_header(obj)
-            if result and not isinstance(result[-1], Pause):
-                result += self._generate_pause(obj)
-            result += self._generate_accessible_role(obj)
+            result = self._generate_accessible_role(obj)
             result += self._generate_table_cell_row(obj)
             if result and not isinstance(result[-1], Pause):
                 result += self._generate_pause(obj)
@@ -3875,7 +3873,9 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the table-column-header role."""
 
         result = self._generate_default_prefix(obj)
-        if self._get_prior_obj() != obj and self._generate_text_substring(obj):
+        if (
+            self._get_prior_obj() != obj or self._is_where_am_i()
+        ) and self._generate_text_substring(obj):
             result += self._generate_text_line(obj)
         if not result:
             result += self._generate_accessible_label_and_name(obj)
@@ -3911,7 +3911,9 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the table-row-header role."""
 
         result = self._generate_default_prefix(obj)
-        if self._get_prior_obj() != obj and self._generate_text_substring(obj):
+        if (
+            self._get_prior_obj() != obj or self._is_where_am_i()
+        ) and self._generate_text_substring(obj):
             result += self._generate_text_line(obj)
         if not result:
             result += self._generate_accessible_label_and_name(obj)
