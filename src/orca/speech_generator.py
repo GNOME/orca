@@ -1819,25 +1819,6 @@ class SpeechGenerator(generator.Generator):
 
     ##################################### TABLE #####################################
 
-    # TODO - JD: This function and fake role really need to die....
-    @log_generator_output
-    def _generate_real_table_cell(self, obj: Atspi.Accessible) -> list[Any]:
-        result = super()._generate_real_table_cell(obj)
-        if (
-            not (result and result[0])
-            and self._context.speak_blank_lines
-            and not self._reading_row
-            and not self._is_ancestor()
-        ):
-            result.append(messages.BLANK)
-            if result:
-                result.extend(self.voice(DEFAULT, obj=obj))
-        elif has_formula := self._generate_has_formula(obj):
-            result.extend(self._generate_pause(obj))
-            result.extend(has_formula)
-
-        return result
-
     @log_generator_output
     def _generate_table_cell_column_header(self, obj: Atspi.Accessible) -> list[Any]:
         if not self._context.announce_cell_headers:
@@ -3806,8 +3787,9 @@ class SpeechGenerator(generator.Generator):
         result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_table_cell(self, obj: Atspi.Accessible) -> list[Any]:
-        """Generates speech for the table-cell role."""
+    @log_generator_output
+    def _generate_table_cell_contents(self, obj: Atspi.Accessible) -> list[Any]:
+        """Generates the core speech for the table-cell role."""
 
         # TODO - JD: There should be separate generators for each type of cell.
         result = self._generate_default_prefix(obj)
@@ -3833,10 +3815,24 @@ class SpeechGenerator(generator.Generator):
         result += self._generate_tree_item_level(obj)
         result += self._generate_state_unselected(obj)
         result += self._generate_default_suffix(obj)
+
+        if (
+            not (result and result[0])
+            and self._context.speak_blank_lines
+            and not self._reading_row
+            and not self._is_ancestor()
+        ):
+            result.append(messages.BLANK)
+            if result:
+                result.extend(self.voice(DEFAULT, obj=obj))
+        elif has_formula := self._generate_has_formula(obj):
+            result.extend(self._generate_pause(obj))
+            result.extend(has_formula)
+
         return result
 
-    def _generate_table_cell_in_row(self, obj: Atspi.Accessible) -> list[Any]:
-        """Generates speech for the table-cell role in the context of its row."""
+    def _generate_table_cell(self, obj: Atspi.Accessible) -> list[Any]:
+        """Generates speech for the table-cell role."""
 
         if self._is_minimal():
             result = self._generate_state_checked_for_cell(obj)
@@ -3861,13 +3857,13 @@ class SpeechGenerator(generator.Generator):
 
         if self._is_where_am_i():
             result = self._generate_accessible_role(obj)
-            result += self._generate_table_cell_row(obj)
+            result += self._combine_cell_results(obj)
             if result and not isinstance(result[-1], Pause):
                 result += self._generate_pause(obj)
             result += self._generate_table_cell_position(obj)
             return result
 
-        result = self._generate_table_cell_row(obj)
+        result = self._combine_cell_results(obj)
         return result
 
     def _generate_table_column_header(self, obj: Atspi.Accessible) -> list[Any]:

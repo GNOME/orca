@@ -65,14 +65,12 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return super()._generate_accessible_role(obj)
 
     @log_generator_output
-    def _generate_real_table_cell(
-        self, obj: Atspi.Accessible, *, reading_row: bool = False
-    ) -> list[Any]:
+    def _generate_table_cell_contents(self, obj: Atspi.Accessible) -> list[Any]:
         if not self._script.utilities.in_document_content(obj):
-            return super()._generate_real_table_cell(obj, reading_row=reading_row)
+            return super()._generate_table_cell_contents(obj)
 
         if not AXObject.get_child_count(obj):
-            result = super()._generate_real_table_cell(obj, reading_row=reading_row)
+            result = super()._generate_table_cell_contents(obj)
         else:
             result = []
             original_context = self._context

@@ -1038,8 +1038,8 @@ class SoundGenerator(generator.Generator):
 
         return self._generate_default_presentation(obj)
 
-    def _generate_table_cell(self, obj: Atspi.Accessible) -> list[Any]:
-        """Generates sound for the table-cell role."""
+    def _generate_table_cell_contents(self, obj: Atspi.Accessible) -> list[Any]:
+        """Generates the core sound for the table-cell role."""
 
         result = []
         if self._is_ancestor() or self._is_minimal():
@@ -1052,8 +1052,8 @@ class SoundGenerator(generator.Generator):
         result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_table_cell_in_row(self, obj: Atspi.Accessible) -> list[Any]:
-        """Generates sound for the table-cell role in the context of its row."""
+    def _generate_table_cell(self, obj: Atspi.Accessible) -> list[Any]:
+        """Generates sound for the table-cell role."""
 
         return self._generate_default_presentation(obj)
 

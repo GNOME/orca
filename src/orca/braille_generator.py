@@ -1645,8 +1645,9 @@ class BrailleGenerator(generator.Generator):
 
         return self._generate_default_presentation(obj)
 
-    def _generate_table_cell(self, obj: Atspi.Accessible) -> list[Any]:
-        """Generates braille for the table-cell role."""
+    @log_generator_output
+    def _generate_table_cell_contents(self, obj: Atspi.Accessible) -> list[Any]:
+        """Generates the core braille for the table-cell role."""
 
         suffix = []
         node_level = self._generate_tree_item_level(obj)
@@ -1677,8 +1678,8 @@ class BrailleGenerator(generator.Generator):
         result += self._generate_default_suffix(obj)
         return result
 
-    def _generate_table_cell_in_row(self, obj: Atspi.Accessible) -> list[Any]:
-        """Generates braille for the table-cell role in the context of its row."""
+    def _generate_table_cell(self, obj: Atspi.Accessible) -> list[Any]:
+        """Generates braille for the table-cell role."""
 
         if self._generate_text_substring(obj):
             return self._generate_text_object(obj)
@@ -1695,7 +1696,7 @@ class BrailleGenerator(generator.Generator):
             result += [braille.Region(" " + self._as_string(column_header))]
         if row_header or column_header:
             result += [braille.Region(" ")]
-        result += self._generate_table_cell_row(obj)
+        result += self._combine_cell_results(obj)
         self._context = original_context
         return result
 

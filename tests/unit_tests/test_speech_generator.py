@@ -27,7 +27,7 @@
 from __future__ import annotations
 
 from dataclasses import fields
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import pytest
 
@@ -261,3 +261,144 @@ class TestGeneratorRoleSubjectBinding:
 
         assert generator._get_resolved_role(subject) == "link"
         assert generator._get_resolved_role(other) == "heading"
+
+
+@pytest.mark.unit
+class TestGeneratorCellsToPresent:
+    """Tests _cells_to_present: a lone cell vs. the whole row."""
+
+    def _setup(
+        self, test_context: OrcaTestContext, *, full_row: bool
+    ) -> tuple[Any, dict[str, MagicMock]]:
+        essential_modules = test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
+        from orca.generator import PresentationReason
+        from orca.speech_generator import SpeechGenerator, SpeechGeneratorContext
+
+        script = test_context.Mock()
+        script.utilities.should_read_full_row = test_context.Mock(return_value=full_row)
+        generator = SpeechGenerator(script)
+        generator._reading_row = False
+        field_values = {field.name: None for field in fields(SpeechGeneratorContext)}
+        field_values["reason"] = PresentationReason.FOCUS_CHANGE
+        generator._context = SpeechGeneratorContext(**field_values)
+        return generator, essential_modules
+
+    def test_lone_cell_when_not_reading_a_row(self, test_context: OrcaTestContext) -> None:
+        """A cell that does not trigger full-row reading is presented by itself."""
+
+        generator, _modules = self._setup(test_context, full_row=False)
+        cell = test_context.Mock()
+        assert generator._cells_to_present(cell) == (False, [cell])
+
+    def test_whole_row_when_full_row_reading_is_triggered(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """A cell that triggers full-row reading yields every showing cell in its row."""
+
+        generator, essential_modules = self._setup(test_context, full_row=True)
+        row_cells = [test_context.Mock(), test_context.Mock(), test_context.Mock()]
+        ax_utilities = essential_modules["orca.ax_utilities"].AXUtilities
+        ax_utilities.get_showing_cells_in_same_row = test_context.Mock(return_value=row_cells)
+        ax_utilities.is_spreadsheet_cell = test_context.Mock(return_value=False)
+
+        assert generator._cells_to_present(test_context.Mock()) == (True, row_cells)
+
+
+@pytest.mark.unit
+class TestGeneratorCombineCellResults:
+    """Tests _combine_cell_results: which cells carry their surrounding context."""
+
+    def _setup(
+        self,
+        test_context: OrcaTestContext,
+        *,
+        cells: list,
+        reading_row: bool,
+        detailed: bool,
+    ) -> tuple[Any, list[bool], dict[str, MagicMock]]:
+        essential_modules = test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
+        from orca.generator import PresentationReason
+        from orca.speech_generator import SpeechGenerator, SpeechGeneratorContext
+
+        essential_modules["orca.ax_utilities"].AXUtilities.find_ancestor = test_context.Mock(
+            return_value=None
+        )
+
+        generator = SpeechGenerator(test_context.Mock())
+        generator._reading_row = False
+        reason = (
+            PresentationReason.WHERE_AM_I_DETAILED if detailed else PresentationReason.FOCUS_CHANGE
+        )
+        field_values = {field.name: None for field in fields(SpeechGeneratorContext)}
+        field_values["reason"] = reason
+        generator._context = SpeechGeneratorContext(**field_values)
+
+        generator._cells_to_present = test_context.Mock(return_value=(reading_row, cells))
+        generator._generate_position_in_list = test_context.Mock(return_value=[])
+
+        included: list[bool] = []
+
+        def _record(_cell: Any) -> list[Any]:
+            included.append(generator._context.include_context)
+            return []
+
+        generator._generate_table_cell_contents = test_context.Mock(side_effect=_record)
+        return generator, included, essential_modules
+
+    def test_lone_cell_carries_its_context(self, test_context: OrcaTestContext) -> None:
+        """A lone focused cell is generated with its surrounding context included."""
+
+        cell = test_context.Mock()
+        generator, included, _modules = self._setup(
+            test_context, cells=[cell], reading_row=False, detailed=False
+        )
+        generator._combine_cell_results(cell)
+        assert included == [True]
+
+    def test_full_row_includes_context_only_for_the_first_cell(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Reading a row includes context only for the first cell."""
+
+        cells = [test_context.Mock(), test_context.Mock(), test_context.Mock()]
+        generator, included, _modules = self._setup(
+            test_context, cells=cells, reading_row=True, detailed=False
+        )
+        generator._combine_cell_results(cells[0])
+        assert included == [True, False, False]
+
+    def test_detailed_where_am_i_includes_context_for_every_cell(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Detailed where-am-i keeps full per-cell context across the row."""
+
+        cells = [test_context.Mock(), test_context.Mock(), test_context.Mock()]
+        generator, included, _modules = self._setup(
+            test_context, cells=cells, reading_row=True, detailed=True
+        )
+        generator._combine_cell_results(cells[0])
+        assert included == [True, True, True]
+
+    def test_named_row_is_presented_as_the_row_itself(self, test_context: OrcaTestContext) -> None:
+        """A named, non-layout row is presented as the row, not as its cells."""
+
+        cells = [test_context.Mock(), test_context.Mock()]
+        generator, included, essential_modules = self._setup(
+            test_context, cells=cells, reading_row=True, detailed=False
+        )
+        row = test_context.Mock()
+        essential_modules["orca.ax_utilities"].AXUtilities.find_ancestor = test_context.Mock(
+            return_value=row
+        )
+        essential_modules["orca.ax_utilities"].AXUtilities.is_layout_only = test_context.Mock(
+            return_value=False
+        )
+        essential_modules["orca.ax_object"].AXObject.get_name = test_context.Mock(
+            return_value="Totals"
+        )
+        generator.generate = test_context.Mock(return_value=["row presentation"])
+
+        assert generator._combine_cell_results(cells[0]) == ["row presentation"]
+        generator.generate.assert_called_once_with(row)
+        generator._generate_table_cell_contents.assert_not_called()
+        assert included == []

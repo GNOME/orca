@@ -115,11 +115,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return result
 
     @log_generator_output
-    def _generate_real_table_cell(self, obj: Atspi.Accessible) -> list[Any]:
+    def _generate_table_cell_contents(self, obj: Atspi.Accessible) -> list[Any]:
         if self._is_say_all():
             return []
 
-        result = super()._generate_real_table_cell(obj)
+        result = super()._generate_table_cell_contents(obj)
 
         if not AXUtilities.is_spreadsheet_cell(obj):
             if table_navigator.get_navigator().last_input_event_was_navigation_command():

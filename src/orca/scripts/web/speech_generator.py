@@ -646,11 +646,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
 
         return super()._generate_state_unselected(obj)
 
-    # TODO - JD: This function and its associated fake role really need to die....
-    # TODO - JD: Why isn"t this logic part of normal table cell generation?
     @log_generator_output
-    def _generate_real_table_cell(self, obj: Atspi.Accessible) -> list[Any]:
-        result = super()._generate_real_table_cell(obj)
+    def _generate_table_cell_contents(self, obj: Atspi.Accessible) -> list[Any]:
+        """Generates the speech presentation for a single table cell."""
+
+        result = super()._generate_table_cell_contents(obj)
         if not self._context.in_focus_mode:
             return result
 

@@ -220,8 +220,7 @@ class Generator:
             Atspi.Role.SUPERSCRIPT: self._generate_superscript,
             Atspi.Role.SWITCH: self._generate_switch,
             Atspi.Role.TABLE: self._generate_table,
-            Atspi.Role.TABLE_CELL: self._generate_table_cell_in_row,
-            "REAL_ROLE_TABLE_CELL": self._generate_table_cell,
+            Atspi.Role.TABLE_CELL: self._generate_table_cell,
             Atspi.Role.TABLE_ROW: self._generate_table_row,
             Atspi.Role.TEAROFF_MENU_ITEM: self._generate_tearoff_menu_item,
             Atspi.Role.TERMINAL: self._generate_terminal,
@@ -633,11 +632,6 @@ class Generator:
         result = []
         label = self._generate_accessible_label(obj)
         name = self._generate_accessible_name(obj)
-        role = self._get_resolved_role(obj)
-        if not (label or name) and role == Atspi.Role.TABLE_CELL:
-            descendant = AXUtilities.active_descendant(obj)
-            if descendant is not None:
-                name = self._generate_accessible_name(descendant)
 
         # If we don't have a label, always use the name.
         if not label:
@@ -1329,13 +1323,6 @@ class Generator:
 
     ##################################### TABLE #####################################
 
-    # TODO - JD: This function and fake role really need to die....
-    @log_generator_output
-    def _generate_real_table_cell(self, obj: Atspi.Accessible) -> list[Any]:
-        result = []
-        result.extend(self.generate(obj, role="REAL_ROLE_TABLE_CELL"))
-        return result
-
     def _get_is_nameless_toggle(self, obj):
         if hash(obj) in Generator.CACHED_IS_NAMELESS_TOGGLE:
             return Generator.CACHED_IS_NAMELESS_TOGGLE[hash(obj)]
@@ -1352,35 +1339,48 @@ class Generator:
         Generator.CACHED_IS_NAMELESS_TOGGLE[hash(obj)] = True
         return True
 
-    # TODO - JD: This is part of the complicated "REAL_ROLE_TABLE_CELL" mess.
-    @log_generator_output
-    def _generate_table_cell_row(self, obj: Atspi.Accessible) -> list[Any]:
-        present_all = (
+    def _cells_to_present(self, obj: Atspi.Accessible) -> tuple[bool, list[Atspi.Accessible]]:
+        """Returns whether obj's whole row is read, plus the cells to present for obj."""
+
+        reading_row = (
             self._reading_row
             or self._get_reason() == PresentationReason.WHERE_AM_I_DETAILED
             or self._script.utilities.should_read_full_row(obj, self._get_prior_obj())
         )
+        if not reading_row:
+            return False, [obj]
 
-        if not present_all:
-            return self._generate_real_table_cell(obj)
-
-        row = AXUtilities.find_ancestor(obj, AXUtilities.is_table_row)
-        if row and AXObject.get_name(row) and not AXUtilities.is_layout_only(row):
-            return self.generate(row)
-
-        result: list[Any] = []
         cells = AXUtilities.get_showing_cells_in_same_row(
             obj,
             clip_to_window=AXUtilities.is_spreadsheet_cell(obj),
         )
+        return True, cells
 
+    @log_generator_output
+    def _combine_cell_results(self, obj: Atspi.Accessible) -> list[Any]:
+        """Stitches the per-cell results for obj into one presentation."""
+
+        reading_row, cells = self._cells_to_present(obj)
+
+        # A named, non-layout row is presented as the row itself, not as its cells.
+        if reading_row:
+            row = AXUtilities.find_ancestor(obj, AXUtilities.is_table_row)
+            if row and AXObject.get_name(row) and not AXUtilities.is_layout_only(row):
+                return self.generate(row)
+
+        # The first cell carries its context (notably the table's ancestry, e.g. its
+        # size); the rest of a row do not, unless this is a detailed where-am-i.
+        detailed = self._get_reason() == PresentationReason.WHERE_AM_I_DETAILED
+
+        result: list[Any] = []
         original_context = self._context
         prior = original_context.prior_obj
         prior_reading_row = self._reading_row
-        self._reading_row = True
-        for cell in cells:
-            self._context = replace(original_context, prior_obj=prior)
-            cell_result = self._generate_real_table_cell(cell)
+        self._reading_row = reading_row
+        for index, cell in enumerate(cells):
+            with_context = index == 0 or detailed
+            self._context = replace(original_context, prior_obj=prior, include_context=with_context)
+            cell_result = self._generate_table_cell_contents(cell)
             if cell_result and result and self._mode is GeneratorMode.BRAILLE:
                 result.append(braille.Region(object_properties.TABLE_CELL_DELIMITER_BRAILLE))
             result.extend(cell_result)
@@ -1388,7 +1388,8 @@ class Generator:
         self._reading_row = prior_reading_row
         self._context = original_context
 
-        result.extend(self._generate_position_in_list(obj))
+        if reading_row:
+            result.extend(self._generate_position_in_list(obj))
         return result
 
     # TODO - JD: If we had dedicated generators for cell types, we wouldn't need this.
@@ -2129,13 +2130,13 @@ class Generator:
 
         return []
 
-    def _generate_table_cell(self, obj: Atspi.Accessible) -> list[Any]:
-        """Generates presentation for the table-cell role."""
+    def _generate_table_cell_contents(self, obj: Atspi.Accessible) -> list[Any]:
+        """Generates the core presentation for the table-cell role."""
 
         return []
 
-    def _generate_table_cell_in_row(self, obj: Atspi.Accessible) -> list[Any]:
-        """Generates presentation for the table-cell role in the context of its row."""
+    def _generate_table_cell(self, obj: Atspi.Accessible) -> list[Any]:
+        """Generates presentation for the table-cell role."""
 
         return []
 
