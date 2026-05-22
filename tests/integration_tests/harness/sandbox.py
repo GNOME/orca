@@ -50,6 +50,10 @@ def build_sandbox_env(sandbox: Path) -> dict[str, str]:
     env["LANG"] = "en_US.UTF-8"
     env["LC_ALL"] = "en_US.UTF-8"
     env["GDK_BACKEND"] = "x11"
+    # Point BrlAPI at a dead address so Orca never attaches to a brltty running on
+    # the host. A real display pads every braille line to its cell count, which
+    # makes the exact-braille assertions depend on the developer's hardware.
+    env["BRLAPI_HOST"] = "127.0.0.1:9999"
     return env
 
 

@@ -39,7 +39,7 @@ from gi.repository import Atspi, GLib
 
 from orca.output_reader import OutputReader
 
-from .apps import chromium_browser, gtk3_text_view
+from .apps import chromium_browser, gtk3_text_view, gtk3_tree_view
 from .harness import sandbox
 from .harness.orca_session import OrcaSession
 
@@ -91,6 +91,19 @@ def _gtk3_text_view(
             "Line four also has extra words to push it past the wrap boundary in the view.",
             "Last line.",
         ),
+    )
+
+
+@pytest.fixture(scope="session", name="gtk3_tree_view")
+def _gtk3_tree_view(
+    tmp_path_factory: pytest.TempPathFactory,
+) -> Iterator[NativeAppSession]:
+    """Launches the gtk3_tree_view test app (a column-headed table) with Orca."""
+
+    yield from _run_native_app(
+        tmp_path_factory,
+        gtk3_tree_view.__name__,
+        ready_predicate=_name_equals(gtk3_tree_view.APP_TITLE),
     )
 
 

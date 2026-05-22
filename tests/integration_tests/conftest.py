@@ -40,6 +40,7 @@ from .gsettings_fixtures import (  # noqa: F401
 )
 from .orca_fixtures import (  # noqa: F401
     _gtk3_text_view,
+    _gtk3_tree_view,
     _orca,
     _web_basic,
     _web_form_fields,

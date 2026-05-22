@@ -97,6 +97,7 @@ orca_integration_tests = [
   'integration_tests/test_web_language_switching.py',
   'integration_tests/test_web_table_navigation.py',
   'integration_tests/test_web_form_fields.py',
+  'integration_tests/test_gui_table_navigation.py',
 ]
 
 integration_wrapper = configure_file(
