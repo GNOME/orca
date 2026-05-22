@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Form Fields ready</title>
+</head>
+<body>
+<h1>Form fields</h1>
+
+<p><label for="name">Name</label> <input type="text" id="name" spellcheck="false" value="Jane Doe"></p>
+
+<p><label for="bio">Bio</label>
+<textarea id="bio" spellcheck="false">First line of bio. Second sentence here.</textarea></p>
+
+<p><textarea role="combobox" aria-label="Search" aria-autocomplete="both" aria-haspopup="listbox" aria-expanded="false" spellcheck="false">foo bar baz</textarea></p>
+
+<p><label for="fruit">Fruit</label>
+<select id="fruit">
+  <option>Apple</option>
+  <option>Banana</option>
+  <option>Cherry</option>
+</select></p>
+
+<p><label><input type="checkbox" id="subscribe"> Subscribe</label></p>
+
+<fieldset>
+  <legend>Pick a color</legend>
+  <div><label><input type="radio" name="color" value="red"> Red color</label></div>
+  <div><label><input type="radio" name="color" value="green"> Green color</label></div>
+  <div><label><input type="radio" name="color" value="blue"> Blue color</label></div>
+</fieldset>
+
+<p><label for="qty">Quantity</label> <input type="number" id="qty" value="3"></p>
+
+<p><button type="button">Submit</button></p>
+
+<p><button type="button" aria-pressed="false">Mute</button></p>
+
+<p><button type="button" role="switch" aria-checked="false">Wi-Fi</button></p>
+
+</body>
+</html>

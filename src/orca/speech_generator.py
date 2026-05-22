@@ -623,10 +623,11 @@ class SpeechGenerator(generator.Generator):
         ):
             return False
 
-        if AXUtilities.is_panel(obj, role) and (
-            AXUtilities.is_selected(obj)
-            or not (self._get_ancestor_of() and AXUtilities.is_widget(self._get_ancestor_of()))
-        ):
+        ancestor_of = self._get_ancestor_of()
+        entered_group = ancestor_of is not None and (
+            AXUtilities.is_widget(ancestor_of) or obj in AXUtilities.get_is_label_for(ancestor_of)
+        )
+        if AXUtilities.is_panel(obj, role) and (AXUtilities.is_selected(obj) or not entered_group):
             return False
 
         return obj != self._get_prior_obj() or self._is_where_am_i()

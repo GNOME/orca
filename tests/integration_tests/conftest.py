@@ -42,6 +42,7 @@ from .orca_fixtures import (  # noqa: F401
     _gtk3_text_view,
     _orca,
     _web_basic,
+    _web_form_fields,
     _web_languages,
     _web_tables,
 )

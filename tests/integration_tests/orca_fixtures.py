@@ -329,3 +329,17 @@ def _web_tables(
         app=_BROWSER_APPS[request.param],
         page="web_tables.html",
     )
+
+
+@pytest.fixture(scope="session", name="web_form_fields", params=["chromium"])
+def _web_form_fields(
+    request: pytest.FixtureRequest,
+    tmp_path_factory: pytest.TempPathFactory,
+) -> Iterator[NativeAppSession]:
+    """Launches a browser loading web_form_fields.html with Orca; yields a NativeAppSession."""
+
+    yield from _run_browser_session(
+        tmp_path_factory,
+        app=_BROWSER_APPS[request.param],
+        page="web_form_fields.html",
+    )

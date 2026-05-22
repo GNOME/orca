@@ -434,6 +434,25 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         return []
 
     @log_generator_output
+    def _generate_text_content(self, obj: Atspi.Accessible) -> list[Any]:
+        targets = AXUtilities.get_is_label_for(obj)
+        labelled_ancestor = (
+            AXUtilities.find_ancestor(obj, lambda x: x in targets)
+            if targets and AXUtilities.is_label(obj, self._get_resolved_role())
+            else None
+        )
+        if labelled_ancestor is not None:
+            prior_obj = self._get_prior_obj()
+            entering = (
+                prior_obj is None
+                or AXUtilities.find_ancestor(prior_obj, lambda x: x == labelled_ancestor) is None
+            )
+            # Entering the group already announces it; only then is the legend's text redundant.
+            if entering:
+                return []
+        return super()._generate_text_content(obj)
+
+    @log_generator_output
     def _generate_leaving(self, obj: Atspi.Accessible) -> list[Any]:
         if self._only_speak_displayed_text():
             return []
@@ -827,7 +846,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         )
         if not word_contents:
             return []
-        text_obj = word_contents[0][0]
+
+        text_obj, start_offset, end_offset, word = word_contents[0]
+        if AXUtilities.is_editable(text_obj) and "\ufffc" not in word:
+            return self.generate_phrase(text_obj, start_offset, end_offset, word, context)
+
         prior_obj = text_obj if AXUtilities.is_text_input(text_obj) else None
         return self.generate_contents(
             word_contents,
