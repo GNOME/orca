@@ -377,6 +377,54 @@ def test_caret_navigation(web_basic: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+def test_word_navigation_across_blank_line(web_basic: NativeAppSession) -> None:
+    """Tests that forward word navigation does not skip the word before a blank line."""
+
+    session = web_basic
+    _move_to_top(session)
+
+    # Jump to the preformatted block ("Hey there\n\nThis is fixed.") at the end of the page,
+    # then step back onto the radio button just before it to walk forward into the block.
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+    assert _capture(session) == (
+        ["Hey "],
+        [(4, "Hey there", "\x00" * 9)],
+    )
+
+    # The word before the blank line must be announced, with the caret left on it rather than
+    # skipped ahead onto the blank line.
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+    assert _capture(session) == (
+        ["there\n\n"],
+        [(10, "Hey there", "\x00" * 9)],
+    )
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+    assert _capture(session) == (
+        ["This "],
+        [(5, "This is fixed.", "\x00" * 14)],
+    )
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+    assert _capture(session) == (
+        ["is "],
+        [(8, "This is fixed.", "\x00" * 14)],
+    )
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+    assert _capture(session) == (
+        ["fixed"],
+        [(14, "This is fixed.", "\x00" * 14)],
+    )
+
+
+@pytest.mark.native_app
 def test_radio_group_in_focus_mode(web_basic: NativeAppSession) -> None:
     """Tests presentation in a radio button group in focus mode."""
 

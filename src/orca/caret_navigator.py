@@ -602,8 +602,8 @@ class CaretNavigator(Extension):
         if not self._is_navigable_object(script, obj):
             return False
 
-        if string and string[-1].isspace():
-            end -= 1
+        # Strip trailing whitespace so a paragraph break does not cause the word to be skipped.
+        end = start + len(string.rstrip())
 
         self._last_input_event = event
         presentation_manager.get_manager().interrupt_presentation()
