@@ -449,10 +449,13 @@ class TestAXDocument:
         ax_utilities_role_mock.is_heading.side_effect = lambda obj: obj in [heading1, heading2]
         ax_utilities_role_mock.is_form.side_effect = lambda obj: obj == form_obj
         ax_utilities_role_mock.is_table.side_effect = lambda obj: obj in [table_obj, layout_table]
-        ax_utilities_role_mock.is_link.side_effect = lambda obj: obj in [
-            visited_link,
-            unvisited_link,
-        ]
+        ax_utilities_role_mock.is_link.side_effect = lambda obj: (
+            obj
+            in [
+                visited_link,
+                unvisited_link,
+            ]
+        )
         ax_utilities_role_mock.is_landmark.side_effect = lambda obj: obj == landmark_obj
 
         ax_utilities_state_mock = essential_modules["orca.ax_utilities_state"].AXUtilitiesState

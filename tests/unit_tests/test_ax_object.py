@@ -77,9 +77,9 @@ class TestAXObject:
             test_context.patch_object(
                 AXObject,
                 "_find_ancestor_with_role",
-                side_effect=lambda obj, role: mock_ancestor
-                if role == Atspi.Role.DOCUMENT_TEXT
-                else None,
+                side_effect=lambda obj, role: (
+                    mock_ancestor if role == Atspi.Role.DOCUMENT_TEXT else None
+                ),
             )
         else:
             test_context.patch_object(AXObject, "_find_ancestor_with_role", return_value=None)
@@ -162,9 +162,9 @@ class TestAXObject:
 
         if case["test_type"] == "gecko_section_hack":
             mock_get_role = test_context.Mock(
-                side_effect=lambda obj: case["obj_role"]
-                if obj == mock_accessible
-                else case["parent_role"],
+                side_effect=lambda obj: (
+                    case["obj_role"] if obj == mock_accessible else case["parent_role"]
+                ),
             )
         else:
             mock_get_role = test_context.Mock(return_value=case["obj_role"])
@@ -2107,8 +2107,8 @@ class TestAXObject:
         mock_child = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", return_value=True)
         test_context.patch_object(AXObject, "get_child_count", return_value=3)
-        sys.modules["gi.repository"].Atspi.Accessible.get_child_at_index = (
-            lambda obj, idx: mock_child if idx == 1 else None
+        sys.modules["gi.repository"].Atspi.Accessible.get_child_at_index = lambda obj, idx: (
+            mock_child if idx == 1 else None
         )
         result = AXObject.get_child(mock_accessible, 1)
         assert result == mock_child

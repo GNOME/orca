@@ -45,9 +45,7 @@ def _capture(
 ) -> tuple[list[str], list[tuple[int, str, str | None]]]:
     records = session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     spoken = [r.text for r in records if isinstance(r, SpeechRecord)]
-    brailled = [
-        (r.cursor_cell, r.string, r.mask) for r in records if isinstance(r, BrailleRecord)
-    ]
+    brailled = [(r.cursor_cell, r.string, r.mask) for r in records if isinstance(r, BrailleRecord)]
     return spoken, brailled
 
 
@@ -151,7 +149,8 @@ def test_caret_selection_presentation(gtk3_text_view: NativeAppSession) -> None:
     )
 
     keyboard.press_chord(
-        [keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_RIGHT,
+        [keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L],
+        keyboard.KEYSYM_RIGHT,
     )
     assert _capture(session) == (
         ["ine", "selected"],
@@ -181,7 +180,8 @@ def test_caret_selection_presentation(gtk3_text_view: NativeAppSession) -> None:
     )
 
     keyboard.press_chord(
-        [keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_END,
+        [keyboard.KEYSYM_CONTROL_L, keyboard.KEYSYM_SHIFT_L],
+        keyboard.KEYSYM_END,
     )
     assert _capture(session) == (
         [

@@ -361,8 +361,9 @@ class TestAXUtilitiesState:
                 test_context.patch_object(
                     AXObject,
                     "has_state",
-                    side_effect=lambda obj, state: state
-                    in (Atspi.StateType.CHECKED, Atspi.StateType.CHECKABLE),
+                    side_effect=lambda obj, state: (
+                        state in (Atspi.StateType.CHECKED, Atspi.StateType.CHECKABLE)
+                    ),
                 )
             elif case["state_scenario"] == "checked_only":
                 test_context.patch_object(
@@ -388,8 +389,9 @@ class TestAXUtilitiesState:
                 test_context.patch_object(
                     AXObject,
                     "has_state",
-                    side_effect=lambda obj, state: state
-                    in (Atspi.StateType.EXPANDED, Atspi.StateType.EXPANDABLE),
+                    side_effect=lambda obj, state: (
+                        state in (Atspi.StateType.EXPANDED, Atspi.StateType.EXPANDABLE)
+                    ),
                 )
             elif case["state_scenario"] == "expanded_only":
                 test_context.patch_object(
@@ -415,8 +417,9 @@ class TestAXUtilitiesState:
                 test_context.patch_object(
                     AXObject,
                     "has_state",
-                    side_effect=lambda obj, state: state
-                    in (Atspi.StateType.FOCUSED, Atspi.StateType.FOCUSABLE),
+                    side_effect=lambda obj, state: (
+                        state in (Atspi.StateType.FOCUSED, Atspi.StateType.FOCUSABLE)
+                    ),
                 )
             elif case["state_scenario"] == "focused_only":
                 test_context.patch_object(
@@ -456,9 +459,9 @@ class TestAXUtilitiesState:
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_ax_object_class.get_attribute = test_context.Mock(
-            side_effect=lambda obj, attr, default=None: case["hidden_value"]
-            if attr == "hidden"
-            else default,
+            side_effect=lambda obj, attr, default=None: (
+                case["hidden_value"] if attr == "hidden" else default
+            ),
         )
         assert AXUtilitiesState.is_hidden(mock_obj) == case["expected_result"]
 

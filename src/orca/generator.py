@@ -495,9 +495,7 @@ class Generator:
                 lambda: self._generate_state_selected_for_radio_button(obj),
             ),
             (
-                lambda: (
-                    AXUtilities.is_check_box(obj, role) or AXUtilities.is_check_menu_item(obj)
-                ),
+                lambda: AXUtilities.is_check_box(obj, role) or AXUtilities.is_check_menu_item(obj),
                 lambda: self._generate_state_checked(obj),
             ),
             (

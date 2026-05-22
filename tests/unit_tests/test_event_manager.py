@@ -1093,9 +1093,9 @@ class TestEventManager:
         )
         test_context.patch(
             "orca.event_manager.AXUtilities.is_notification",
-            side_effect=lambda obj, *args: case["source_role"] == "notification"
-            if obj == mock_event.source
-            else False,
+            side_effect=lambda obj, *args: (
+                case["source_role"] == "notification" if obj == mock_event.source else False
+            ),
         )
         test_context.patch(
             "orca.event_manager.AXUtilities.is_alert",
@@ -1326,9 +1326,9 @@ class TestEventManager:
 
         test_context.patch(
             "orca.event_manager.AXObject.get_parent",
-            side_effect=lambda obj: parent_mock
-            if obj in [mock_source, sibling_source]
-            else test_context.Mock(),
+            side_effect=lambda obj: (
+                parent_mock if obj in [mock_source, sibling_source] else test_context.Mock()
+            ),
         )
 
         queue_data = [(4, 1, sibling_event)]

@@ -189,8 +189,8 @@ class TestCaretNavigator:
         ax_object_mock = essential_modules["orca.ax_object"]
         ax_object_mock.AXObject.supports_text.side_effect = lambda obj: obj is not None
         ax_object_mock.AXObject.is_valid.side_effect = lambda obj: obj is not None
-        ax_object_mock.AXObject.is_ancestor.side_effect = (
-            lambda obj, root, same: obj is not None and root is not None
+        ax_object_mock.AXObject.is_ancestor.side_effect = lambda obj, root, same: (
+            obj is not None and root is not None
         )
 
         navigator = CaretNavigator()
@@ -822,8 +822,8 @@ class TestCaretNavigator:
         ax_object_mock = essential_modules["orca.ax_object"]
         ax_object_mock.AXObject.supports_text.side_effect = lambda obj: obj is not None
         ax_object_mock.AXObject.is_valid.side_effect = lambda obj: obj is not None
-        ax_object_mock.AXObject.is_ancestor.side_effect = (
-            lambda obj, root, same: obj is not None and root is not None
+        ax_object_mock.AXObject.is_ancestor.side_effect = lambda obj, root, same: (
+            obj is not None and root is not None
         )
 
         focus_manager_mock = essential_modules["orca.focus_manager"]
