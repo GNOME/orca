@@ -40,6 +40,7 @@ from gi.repository import Atspi
 
 from . import debug
 from .ax_component import AXComponent
+from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
@@ -1503,11 +1504,8 @@ class AXUtilities:
 
         objects = []
         root_name = AXObject.get_name(root)
-        if (
-            root_name
-            or AXObject.get_description(root)
-            or AXUtilitiesText.has_presentable_text(root)
-        ):
+        root_has_text = AXUtilitiesText.has_presentable_text(root)
+        if root_name or AXObject.get_description(root) or root_has_text:
             objects.append(root)
 
         if bounding_box is None:
@@ -1520,6 +1518,15 @@ class AXUtilities:
                 msg = "AXUtilities: Cancellation event set. Stopping search."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 break
+
+            if (
+                root_has_text
+                and AXUtilitiesRole.is_static(child)
+                and AXHypertext.get_character_offset_in_parent(child) == -1
+            ):
+                tokens = ["AXUtilities:", child, "text is inline in parent. Skipping as duplicate."]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                continue
 
             children = AXUtilities._get_on_screen_objects(child, cancellation_event, bounding_box)
             objects.extend(children)
