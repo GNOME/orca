@@ -11,3 +11,5 @@ subprojects/*/
 !subprojects/*.wrap
 !subprojects/packagefiles/
 !subprojects/packagefiles/mathcat-py/
+.coverage-integration/
+htmlcov-integration/

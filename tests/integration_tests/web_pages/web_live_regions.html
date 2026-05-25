@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Live Regions ready</title>
+<script>
+function announce(id, text) {
+  document.getElementById(id).textContent = text;
+}
+</script>
+</head>
+<body>
+<h1>Live regions</h1>
+
+<p><button type="button" onclick="announce('polite', 'Changes saved')">Save</button></p>
+<div id="polite" aria-live="polite"></div>
+
+<p><button type="button" onclick="announce('assertive', 'Connection lost')">Break</button></p>
+<div id="assertive" aria-live="assertive"></div>
+
+<p><button type="button" onclick="announce('off', 'Nothing to hear')">Quiet</button></p>
+<div id="off" aria-live="off"></div>
+</body>
+</html>

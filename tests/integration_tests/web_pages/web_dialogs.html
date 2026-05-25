@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Dialogs ready</title>
+<script>
+function openDialog() {
+  document.getElementById("dlg").showModal();
+}
+function raiseAlert() {
+  document.getElementById("alertbox").textContent = "Item deleted";
+}
+</script>
+</head>
+<body>
+<h1>Dialogs</h1>
+
+<p><button type="button" onclick="openDialog()">Open dialog</button></p>
+
+<dialog id="dlg" aria-label="Confirm deletion">
+  <p>Delete this item?</p>
+  <button type="button" autofocus>OK</button>
+  <button type="button" onclick="document.getElementById('dlg').close()">Cancel</button>
+</dialog>
+
+<p><button type="button" onclick="raiseAlert()">Trigger alert</button></p>
+<div id="alertbox" role="alert"></div>
+</body>
+</html>

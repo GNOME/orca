@@ -151,5 +151,20 @@ module = "tests.*"
 disable_error_code = ["method-assign", "attr-defined"]
 
 [tool.codespell]
-skip = "po,help,_build,subprojects,*.svg,*.doap,src/orca/braille_rolenames.py"
+skip = "po,help,_build,subprojects,*.svg,*.doap,src/orca/braille_rolenames.py,tests/integration_tests/test_*.py"
 ignore-words-list = "punctuations,implementor,implementors,doubleclick,re-use,te,outloud,bu,ue,aas,ine"
+
+[tool.coverage.run]
+parallel = true
+branch = true
+source_pkgs = ["orca"]
+data_file = ".coverage-integration/.coverage"
+
+[tool.coverage.paths]
+source = ["src/orca", "*/orca"]
+
+[tool.coverage.html]
+directory = "htmlcov-integration"
+
+[tool.coverage.report]
+skip_empty = true

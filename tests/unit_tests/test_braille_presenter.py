@@ -785,7 +785,7 @@ class TestBraillePresenter:
         mock_monitor = test_context.Mock()
         braille_monitor_mock.BrailleMonitor.return_value = mock_monitor
 
-        presenter.update_monitor(1, "hello", None, 40)
+        presenter.update_monitor(1, "hello", None, 40, "hello", None)
 
         braille_monitor_mock.BrailleMonitor.assert_called_once_with(
             40,
@@ -809,7 +809,7 @@ class TestBraillePresenter:
         mock_monitor = test_context.Mock()
         braille_monitor_mock.BrailleMonitor.return_value = mock_monitor
 
-        presenter.update_monitor(1, "hello", None, 40)
+        presenter.update_monitor(1, "hello", None, 40, "hello", None)
 
         braille_monitor_mock.BrailleMonitor.assert_called_once_with(
             20,
@@ -829,7 +829,7 @@ class TestBraillePresenter:
         mock_monitor = test_context.Mock()
         presenter._monitor = mock_monitor
 
-        presenter.update_monitor(1, "hello", None, 40)
+        presenter.update_monitor(1, "hello", None, 40, "hello", None)
 
         mock_monitor.write_text.assert_not_called()
         assert presenter._monitor is mock_monitor

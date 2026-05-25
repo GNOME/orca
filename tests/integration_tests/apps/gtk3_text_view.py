@@ -18,6 +18,8 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
+# pylint: disable=no-member
+
 """A GTK3 window with a fixed-size wrapping text view."""
 
 import sys

@@ -3,6 +3,11 @@
 <head>
 <meta charset="utf-8">
 <title>Orca Web Form Fields ready</title>
+<script>
+function flip(el, attr) {
+  el.setAttribute(attr, el.getAttribute(attr) === "true" ? "false" : "true");
+}
+</script>
 </head>
 <body>
 <h1>Form fields</h1>
@@ -34,9 +39,9 @@
 
 <p><button type="button">Submit</button></p>
 
-<p><button type="button" aria-pressed="false">Mute</button></p>
+<p><button type="button" aria-pressed="false" onclick="flip(this, 'aria-pressed')">Mute</button></p>
 
-<p><button type="button" role="switch" aria-checked="false">Wi-Fi</button></p>
+<p><button type="button" role="switch" aria-checked="false" onclick="flip(this, 'aria-checked')">Wi-Fi</button></p>
 
 </body>
 </html>

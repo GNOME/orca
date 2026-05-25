@@ -1880,17 +1880,20 @@ class BraillePresenter(Extension):
     def update_monitor(
         self,
         cursor_cell: int,
-        substring: str,
-        mask: str | None,
+        visible: str,
+        visible_mask: str | None,
         display_size: int,
+        full: str,
+        full_mask: str | None,
     ) -> None:
         """Updates the braille monitor display, creating it on demand if enabled."""
 
         self._output_recorder.record(
             kind="braille",
             cursor_cell=cursor_cell,
-            string=substring,
-            mask=mask,
+            full=full,
+            visible=visible,
+            mask=full_mask,
         )
         if not self.get_monitor_is_enabled():
             return
@@ -1906,9 +1909,9 @@ class BraillePresenter(Extension):
             self._monitor.show_all()  # pylint: disable=no-member
 
         if self.get_monitor_show_dots():
-            substring = self._to_unicode_braille(substring)
+            visible = self._to_unicode_braille(visible)
 
-        self._monitor.write_text(cursor_cell, substring, mask)
+        self._monitor.write_text(cursor_cell, visible, visible_mask)
 
     def _to_unicode_braille(self, text: str) -> str:
         """Convert text to Unicode braille dot pattern characters.

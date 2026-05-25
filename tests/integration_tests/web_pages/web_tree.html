@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Tree ready</title>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const tree = document.querySelector('[role="tree"]');
+  const all = () => Array.from(tree.querySelectorAll('[role="treeitem"]'));
+
+  function visible() {
+    return all().filter(function (li) {
+      let p = li.parentElement.closest('[role="treeitem"]');
+      while (p) {
+        if (p.getAttribute("aria-expanded") === "false") return false;
+        p = p.parentElement.closest('[role="treeitem"]');
+      }
+      return true;
+    });
+  }
+
+  function focusItem(li) {
+    all().forEach(function (x) { x.tabIndex = -1; });
+    li.tabIndex = 0;
+    li.focus();
+  }
+
+  tree.addEventListener("keydown", function (e) {
+    const vis = visible();
+    const cur = document.activeElement.closest('[role="treeitem"]');
+    const i = vis.indexOf(cur);
+    if (e.key === "ArrowDown" && i < vis.length - 1) { focusItem(vis[i + 1]); e.preventDefault(); }
+    else if (e.key === "ArrowUp" && i > 0) { focusItem(vis[i - 1]); e.preventDefault(); }
+    else if (e.key === "ArrowRight" && cur.getAttribute("aria-expanded") === "false") {
+      cur.setAttribute("aria-expanded", "true"); e.preventDefault();
+    } else if (e.key === "ArrowLeft" && cur.getAttribute("aria-expanded") === "true") {
+      cur.setAttribute("aria-expanded", "false"); e.preventDefault();
+    }
+  });
+
+  all()[0].tabIndex = 0;
+});
+</script>
+</head>
+<body>
+<h1>Tree</h1>
+
+<ul role="tree" aria-label="Food">
+  <li role="treeitem" aria-expanded="true" aria-level="1" aria-setsize="2" aria-posinset="1">
+    <span>Fruits</span>
+    <ul role="group">
+      <li role="treeitem" aria-level="2" aria-setsize="2" aria-posinset="1"><span>Apple</span></li>
+      <li role="treeitem" aria-level="2" aria-setsize="2" aria-posinset="2"><span>Banana</span></li>
+    </ul>
+  </li>
+  <li role="treeitem" aria-expanded="false" aria-level="1" aria-setsize="2" aria-posinset="2">
+    <span>Vegetables</span>
+    <ul role="group">
+      <li role="treeitem" aria-level="2" aria-setsize="1" aria-posinset="1"><span>Carrot</span></li>
+    </ul>
+  </li>
+</ul>
+</body>
+</html>

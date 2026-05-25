@@ -40,12 +40,29 @@ from .gsettings_fixtures import (  # noqa: F401
 )
 from .orca_fixtures import (  # noqa: F401
     _gtk3_text_view,
+    _gtk3_toolbar,
     _gtk3_tree_view,
+    _gtk3_widget_notebook,
     _orca,
     _web_basic,
+    _web_dialogs,
+    _web_field_states,
     _web_form_fields,
+    _web_headings,
+    _web_inline_landmarks,
+    _web_inline_list,
+    _web_label_inference,
+    _web_landmarks,
     _web_languages,
+    _web_lists,
+    _web_live_regions,
+    _web_nested_headings,
+    _web_sliders,
+    _web_structural_navigation,
     _web_tables,
+    _web_text_attributes,
+    _web_tree,
+    _web_wrapping_text,
 )
 
 if TYPE_CHECKING:

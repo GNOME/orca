@@ -39,15 +39,24 @@ from gi.repository import Atspi, GLib
 
 from orca.output_reader import OutputReader
 
-from .apps import chromium_browser, gtk3_text_view, gtk3_tree_view
+from .apps import (
+    chromium_browser,
+    gtk3_text_view,
+    gtk3_toolbar,
+    gtk3_tree_view,
+    gtk3_widget_notebook,
+)
 from .harness import sandbox
 from .harness.orca_session import OrcaSession
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterator
     from types import ModuleType
+    from typing import Literal
 
 _WEB_PAGES_DIR = Path(__file__).parent / "web_pages"
+
+_DUMMY_SPEECH_SERVER_MODULE = f"{__name__.rsplit('.', 1)[0]}.harness.dummy_speech_server"
 
 
 @dataclass
@@ -74,37 +83,36 @@ def _orca(tmp_path_factory: pytest.TempPathFactory) -> Iterator[OrcaSession]:
         session.quit()
 
 
-@pytest.fixture(scope="session", name="gtk3_text_view")
-def _gtk3_text_view(
-    tmp_path_factory: pytest.TempPathFactory,
-) -> Iterator[NativeAppSession]:
-    """Launches the gtk3_text_view test app with Orca and yields a NativeAppSession."""
+def _make_native_app_fixture(
+    app: ModuleType,
+    lines: tuple[str, ...] = (),
+    scope: Literal["session", "function"] = "session",
+) -> Callable[..., Iterator[NativeAppSession]]:
+    @pytest.fixture(scope=scope, name=app.__name__.rsplit(".", 1)[-1])
+    def fixture(tmp_path_factory: pytest.TempPathFactory) -> Iterator[NativeAppSession]:
+        yield from _run_native_app(
+            tmp_path_factory,
+            app.__name__,
+            ready_predicate=_name_equals(app.APP_TITLE),
+            lines=lines,
+        )
 
-    yield from _run_native_app(
-        tmp_path_factory,
-        gtk3_text_view.__name__,
-        ready_predicate=_name_equals(gtk3_text_view.APP_TITLE),
-        lines=(
-            "Line one.",
-            "Line two has additional words to make it long enough that the text view wraps it.",
-            "Line three.",
-            "Line four also has extra words to push it past the wrap boundary in the view.",
-            "Last line.",
-        ),
-    )
+    return fixture
 
 
-@pytest.fixture(scope="session", name="gtk3_tree_view")
-def _gtk3_tree_view(
-    tmp_path_factory: pytest.TempPathFactory,
-) -> Iterator[NativeAppSession]:
-    """Launches the gtk3_tree_view test app (a column-headed table) with Orca."""
-
-    yield from _run_native_app(
-        tmp_path_factory,
-        gtk3_tree_view.__name__,
-        ready_predicate=_name_equals(gtk3_tree_view.APP_TITLE),
-    )
+_gtk3_text_view = _make_native_app_fixture(
+    gtk3_text_view,
+    lines=(
+        "Line one.",
+        "Line two has additional words to make it long enough that the text view wraps it.",
+        "Line three.",
+        "Line four also has extra words to push it past the wrap boundary in the view.",
+        "Last line.",
+    ),
+)
+_gtk3_tree_view = _make_native_app_fixture(gtk3_tree_view, scope="function")
+_gtk3_widget_notebook = _make_native_app_fixture(gtk3_widget_notebook)
+_gtk3_toolbar = _make_native_app_fixture(gtk3_toolbar, scope="function")
 
 
 def _run_native_app(
@@ -137,6 +145,7 @@ def _run_app_with_orca(
     speech_log = sandbox_dir / "speech.jsonl"
     braille_log = sandbox_dir / "braille.jsonl"
     env = sandbox.build_sandbox_env(sandbox_dir)
+    env["ORCA_TEST_SPEECH_SERVER_FACTORY"] = _DUMMY_SPEECH_SERVER_MODULE
     sandbox.write_sandbox_speechd_conf(sandbox_dir)
 
     with _launch_subprocess(argv, env) as (_process, app_accessible):
@@ -302,57 +311,35 @@ def _run_browser_session(
 _BROWSER_APPS: dict[str, ModuleType] = {"chromium": chromium_browser}
 
 
-@pytest.fixture(scope="session", name="web_basic", params=["chromium"])
-def _web_basic(
-    request: pytest.FixtureRequest,
-    tmp_path_factory: pytest.TempPathFactory,
-) -> Iterator[NativeAppSession]:
-    """Launches a browser loading web_basic.html with Orca; yields a NativeAppSession."""
+def _make_web_fixture(page: str) -> Callable[..., Iterator[NativeAppSession]]:
+    @pytest.fixture(scope="session", name=Path(page).stem, params=["chromium"])
+    def fixture(
+        request: pytest.FixtureRequest,
+        tmp_path_factory: pytest.TempPathFactory,
+    ) -> Iterator[NativeAppSession]:
+        yield from _run_browser_session(
+            tmp_path_factory, app=_BROWSER_APPS[request.param], page=page
+        )
 
-    yield from _run_browser_session(
-        tmp_path_factory,
-        app=_BROWSER_APPS[request.param],
-        page="web_basic.html",
-    )
-
-
-@pytest.fixture(scope="session", name="web_languages", params=["chromium"])
-def _web_languages(
-    request: pytest.FixtureRequest,
-    tmp_path_factory: pytest.TempPathFactory,
-) -> Iterator[NativeAppSession]:
-    """Launches a browser loading web_languages.html with Orca; yields a NativeAppSession."""
-
-    yield from _run_browser_session(
-        tmp_path_factory,
-        app=_BROWSER_APPS[request.param],
-        page="web_languages.html",
-    )
+    return fixture
 
 
-@pytest.fixture(scope="session", name="web_tables", params=["chromium"])
-def _web_tables(
-    request: pytest.FixtureRequest,
-    tmp_path_factory: pytest.TempPathFactory,
-) -> Iterator[NativeAppSession]:
-    """Launches a browser loading web_tables.html with Orca; yields a NativeAppSession."""
-
-    yield from _run_browser_session(
-        tmp_path_factory,
-        app=_BROWSER_APPS[request.param],
-        page="web_tables.html",
-    )
-
-
-@pytest.fixture(scope="session", name="web_form_fields", params=["chromium"])
-def _web_form_fields(
-    request: pytest.FixtureRequest,
-    tmp_path_factory: pytest.TempPathFactory,
-) -> Iterator[NativeAppSession]:
-    """Launches a browser loading web_form_fields.html with Orca; yields a NativeAppSession."""
-
-    yield from _run_browser_session(
-        tmp_path_factory,
-        app=_BROWSER_APPS[request.param],
-        page="web_form_fields.html",
-    )
+_web_basic = _make_web_fixture("web_basic.html")
+_web_languages = _make_web_fixture("web_languages.html")
+_web_tables = _make_web_fixture("web_tables.html")
+_web_form_fields = _make_web_fixture("web_form_fields.html")
+_web_landmarks = _make_web_fixture("web_landmarks.html")
+_web_inline_landmarks = _make_web_fixture("web_inline_landmarks.html")
+_web_inline_list = _make_web_fixture("web_inline_list.html")
+_web_nested_headings = _make_web_fixture("web_nested_headings.html")
+_web_label_inference = _make_web_fixture("web_label_inference.html")
+_web_structural_navigation = _make_web_fixture("web_structural_navigation.html")
+_web_headings = _make_web_fixture("web_headings.html")
+_web_field_states = _make_web_fixture("web_field_states.html")
+_web_wrapping_text = _make_web_fixture("web_wrapping_text.html")
+_web_lists = _make_web_fixture("web_lists.html")
+_web_sliders = _make_web_fixture("web_sliders.html")
+_web_text_attributes = _make_web_fixture("web_text_attributes.html")
+_web_tree = _make_web_fixture("web_tree.html")
+_web_live_regions = _make_web_fixture("web_live_regions.html")
+_web_dialogs = _make_web_fixture("web_dialogs.html")

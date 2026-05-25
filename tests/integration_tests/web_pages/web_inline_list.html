@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Inline List ready</title>
+<style>
+  html { font-family: "DejaVu Sans Mono", monospace; font-size: 16px; line-height: 1.5; }
+  ul.inline { list-style: none; padding: 0; margin: 0; }
+  ul.inline > li { display: inline; margin-right: 1ch; }
+</style>
+</head>
+<body>
+<h1>Inline list</h1>
+
+<!-- Inline list items share a single visual row; layout mode groups them onto
+     one line via the list container's extents. -->
+<ul class="inline"><li>one</li><li>two</li><li>three</li></ul>
+
+<!-- A block list is the contrast: each item is its own line. -->
+<ul><li>alpha</li><li>beta</li></ul>
+
+<p>Tail paragraph.</p>
+</body>
+</html>

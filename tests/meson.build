@@ -1,5 +1,5 @@
 python_module = import('python')
-python = python_module.find_installation('python3', required: false, modules: ['pytest'])
+python = python_module.find_installation('python3', required: false, modules: ['pytest', 'pytest_mock'])
 
 if not python.found()
   subdir_done()
@@ -97,7 +97,36 @@ orca_integration_tests = [
   'integration_tests/test_web_language_switching.py',
   'integration_tests/test_web_table_navigation.py',
   'integration_tests/test_web_form_fields.py',
+  'integration_tests/test_web_landmarks.py',
+  'integration_tests/test_web_inline_landmarks.py',
+  'integration_tests/test_web_inline_list.py',
+  'integration_tests/test_web_nested_headings.py',
+  'integration_tests/test_web_headings.py',
+  'integration_tests/test_web_structural_navigation.py',
+  'integration_tests/test_web_field_states.py',
+  'integration_tests/test_web_label_inference.py',
+  'integration_tests/test_web_mode_switching.py',
+  'integration_tests/test_web_caret_text_navigation.py',
+  'integration_tests/test_web_wrapping_text.py',
+  'integration_tests/test_web_lists.py',
+  'integration_tests/test_web_say_all.py',
+  'integration_tests/test_web_sliders.py',
+  'integration_tests/test_web_where_am_i.py',
+  'integration_tests/test_web_text_attributes.py',
+  'integration_tests/test_web_form_state_changes.py',
+  'integration_tests/test_web_tree.py',
+  'integration_tests/test_web_live_regions.py',
+  'integration_tests/test_web_dialogs.py',
+  'integration_tests/test_flat_review_textview.py',
+  'integration_tests/test_flat_review_treeview.py',
+  'integration_tests/test_flat_review_commands.py',
   'integration_tests/test_gui_table_navigation.py',
+  'integration_tests/test_gui_widget_notebook.py',
+  'integration_tests/test_gui_toolbar.py',
+  'integration_tests/test_sleep_mode.py',
+  'integration_tests/test_speech_presenter_commands.py',
+  'integration_tests/test_braille_presenter_commands.py',
+  'integration_tests/test_typing_echo.py',
 ]
 
 integration_wrapper = configure_file(

@@ -19,6 +19,7 @@
 # Boston MA  02110-1301 USA.
 
 # pylint: disable=no-member
+# pylint: disable=no-value-for-parameter
 
 """A GTK3 window with a column-headed tree view, used as an accessible table."""
 
@@ -33,9 +34,9 @@ APP_TITLE = "OrcaTreeView"
 
 COLUMNS = ("Name", "Role", "Office")
 ROWS = (
-    ("Ada", "Engineer", "London"),
-    ("Grace", "Admiral", "Boston"),
-    ("Alan", "Analyst", "Manchester"),
+    ("Ada", "Engineer", "London", False),
+    ("Grace", "Admiral", "Boston", True),
+    ("Alan", "Analyst", "Manchester", False),
 )
 
 
@@ -50,7 +51,7 @@ def main() -> int:
     window.set_decorated(False)
     window.connect("destroy", Gtk.main_quit)
 
-    store = Gtk.ListStore(str, str, str)
+    store = Gtk.ListStore(str, str, str, bool)
     for row in ROWS:
         store.append(list(row))
 
@@ -58,6 +59,14 @@ def main() -> int:
     tree_view.set_headers_visible(True)
     for index, title in enumerate(COLUMNS):
         tree_view.append_column(Gtk.TreeViewColumn(title, Gtk.CellRendererText(), text=index))
+
+    done_renderer = Gtk.CellRendererToggle()
+
+    def on_done_toggled(_renderer: Gtk.CellRendererToggle, path: str) -> None:
+        store[path][3] = not store[path][3]
+
+    done_renderer.connect("toggled", on_done_toggled)
+    tree_view.append_column(Gtk.TreeViewColumn("Done", done_renderer, active=3))
 
     window.add(tree_view)
 

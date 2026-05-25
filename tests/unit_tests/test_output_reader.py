@@ -47,8 +47,8 @@ def test_braille_filters_out_speech() -> None:
 
     records: list[SpeechRecord | BrailleRecord] = [
         SpeechRecord(text="ignored"),
-        BrailleRecord(cursor_cell=3, string="Hello."),
-        BrailleRecord(cursor_cell=0, string="World."),
+        BrailleRecord(cursor_cell=3, full="Hello.", visible="Hello."),
+        BrailleRecord(cursor_cell=0, full="World.", visible="World."),
     ]
     assert braille(records) == ["Hello.", "World."]
 
@@ -66,7 +66,10 @@ def test_reader_parses_records_from_both_logs(tmp_path: Path) -> None:
     try:
         time.sleep(0.1)
         _write_line(speech_path, {"kind": "speech", "text": "hello"})
-        _write_line(braille_path, {"kind": "braille", "cursor_cell": 3, "string": "Hello."})
+        _write_line(
+            braille_path,
+            {"kind": "braille", "cursor_cell": 3, "full": "Hello.", "visible": "Hello."},
+        )
 
         records = reader.drain(quiescence_timeout=0.3)
     finally:
@@ -178,7 +181,8 @@ def test_parse_braille_handles_missing_fields() -> None:
     record = OutputReader._parse_braille(json.dumps({"kind": "braille"}))
     assert record is not None
     assert record.cursor_cell == 0
-    assert record.string == ""
+    assert record.full == ""
+    assert record.visible == ""
 
 
 def test_wait_for_speech_returns_matching_record(tmp_path: Path) -> None:
@@ -203,7 +207,7 @@ def test_wait_for_speech_returns_matching_record(tmp_path: Path) -> None:
 
 
 def test_wait_for_braille_returns_matching_record(tmp_path: Path) -> None:
-    """wait_for_braille() returns the first BrailleRecord whose string contains substring."""
+    """wait_for_braille() returns the first BrailleRecord whose full line contains substring."""
 
     from orca.output_reader import OutputReader
 
@@ -214,13 +218,19 @@ def test_wait_for_braille_returns_matching_record(tmp_path: Path) -> None:
     reader.start()
     try:
         time.sleep(0.1)
-        _write_line(braille_path, {"kind": "braille", "cursor_cell": 1, "string": "First."})
-        _write_line(braille_path, {"kind": "braille", "cursor_cell": 5, "string": "Second."})
+        _write_line(
+            braille_path,
+            {"kind": "braille", "cursor_cell": 1, "full": "First.", "visible": "First."},
+        )
+        _write_line(
+            braille_path,
+            {"kind": "braille", "cursor_cell": 5, "full": "Second.", "visible": "Second."},
+        )
         record = reader.wait_for_braille("Second", timeout=2.0)
     finally:
         reader.stop()
 
-    assert record.string == "Second."
+    assert record.full == "Second."
     assert record.cursor_cell == 5
 
 
@@ -257,7 +267,10 @@ def test_wait_for_speech_does_not_consume_braille(tmp_path: Path) -> None:
     reader.start()
     try:
         time.sleep(0.1)
-        _write_line(braille_path, {"kind": "braille", "cursor_cell": 0, "string": "buffered"})
+        _write_line(
+            braille_path,
+            {"kind": "braille", "cursor_cell": 0, "full": "buffered", "visible": "buffered"},
+        )
         _write_line(speech_path, {"kind": "speech", "text": "hello"})
 
         speech_record = reader.wait_for_speech("hello", timeout=2.0)
@@ -266,7 +279,7 @@ def test_wait_for_speech_does_not_consume_braille(tmp_path: Path) -> None:
         reader.stop()
 
     assert speech_record.text == "hello"
-    assert braille_record.string == "buffered"
+    assert braille_record.full == "buffered"
 
 
 def test_reset_discards_pending_and_queued_records(tmp_path: Path) -> None:
@@ -295,7 +308,7 @@ def test_reset_discards_pending_and_queued_records(tmp_path: Path) -> None:
 def test_drain_returns_buffered_records_first(tmp_path: Path) -> None:
     """drain() includes records that wait_for_* previously buffered but did not consume."""
 
-    from orca.output_reader import OutputReader
+    from orca.output_reader import BrailleRecord, OutputReader
 
     speech_path = tmp_path / "s.jsonl"
     braille_path = tmp_path / "b.jsonl"
@@ -304,7 +317,10 @@ def test_drain_returns_buffered_records_first(tmp_path: Path) -> None:
     reader.start()
     try:
         time.sleep(0.1)
-        _write_line(braille_path, {"kind": "braille", "cursor_cell": 0, "string": "buffered"})
+        _write_line(
+            braille_path,
+            {"kind": "braille", "cursor_cell": 0, "full": "buffered", "visible": "buffered"},
+        )
         _write_line(speech_path, {"kind": "speech", "text": "hello"})
 
         reader.wait_for_speech("hello", timeout=2.0)
@@ -312,7 +328,7 @@ def test_drain_returns_buffered_records_first(tmp_path: Path) -> None:
     finally:
         reader.stop()
 
-    strings = [r.string for r in records if hasattr(r, "string")]
+    strings = [r.full for r in records if isinstance(r, BrailleRecord)]
     assert "buffered" in strings
 
 
@@ -352,7 +368,7 @@ def test_honor_interrupts_drops_speech_not_braille() -> None:
 
     kept = OutputReader._honor_interrupts(
         [
-            BrailleRecord(cursor_cell=0, string="braille kept"),
+            BrailleRecord(cursor_cell=0, full="braille kept", visible="braille kept"),
             SpeechRecord(text="speech dropped"),
             InterruptRecord(),
             SpeechRecord(text="speech kept"),

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Label Inference ready</title>
+<style>
+  /* A small gap so a control's left edge sits clear of the preceding text's
+     right edge; otherwise a flush/1px-overlap makes text-left inference's
+     distance check (0 <= distance) just miss. */
+  .field { margin-left: 8px; }
+</style>
+</head>
+<body>
+<h1>Label inference</h1>
+<p>Full name: <input type="text" class="field" spellcheck="false"></p>
+<p><input type="checkbox"> Remember me</p>
+<p><input type="radio" name="color"> Blue</p>
+<table>
+<tr><td>Quantity</td><td><input type="text" spellcheck="false"></td></tr>
+</table>
+<p>Password: <input type="password" class="field"></p>
+</body>
+</html>

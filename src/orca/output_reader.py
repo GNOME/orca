@@ -52,7 +52,8 @@ class BrailleRecord:
     """A record parsed from the braille log."""
 
     cursor_cell: int
-    string: str
+    full: str
+    visible: str
     mask: str | None = None
 
 
@@ -110,6 +111,9 @@ class OutputReader:
     ) -> list[SpeechRecord | BrailleRecord]:
         """Returns records that have arrived, waiting for the stream to go quiet."""
 
+        scale = float(os.environ.get("ORCA_TEST_TIMEOUT_SCALE") or 1.0)
+        quiescence_timeout *= scale
+        overall_timeout *= scale
         records: list[SpeechRecord | BrailleRecord | InterruptRecord] = list(self._pending)
         self._pending.clear()
         deadline = time.monotonic() + overall_timeout
@@ -157,7 +161,7 @@ class OutputReader:
         """Drains records until a BrailleRecord containing substring arrives or timeout."""
 
         record = self._wait_for(
-            lambda r: isinstance(r, BrailleRecord) and substring in r.string,
+            lambda r: isinstance(r, BrailleRecord) and substring in r.full,
             timeout,
             f"braille containing {substring!r}",
         )
@@ -242,7 +246,8 @@ class OutputReader:
             return None
         return BrailleRecord(
             cursor_cell=int(data.get("cursor_cell", 0)),
-            string=data.get("string", ""),
+            full=data.get("full", ""),
+            visible=data.get("visible", ""),
             mask=data.get("mask"),
         )
 
@@ -254,6 +259,6 @@ def speech(records: list[SpeechRecord | BrailleRecord]) -> list[str]:
 
 
 def braille(records: list[SpeechRecord | BrailleRecord]) -> list[str]:
-    """Returns the braille display strings from records."""
+    """Returns the full braille line strings from records."""
 
-    return [r.string for r in records if isinstance(r, BrailleRecord)]
+    return [r.full for r in records if isinstance(r, BrailleRecord)]

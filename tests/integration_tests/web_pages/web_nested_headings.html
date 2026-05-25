@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Nested Headings ready</title>
+</head>
+<body>
+<h1>First heading</h1>
+
+<!-- An ARIA heading nested as the first thing inside a native heading. Navigating
+     backward from the inner heading must treat the outer heading as current, or
+     the caret lands back on the inner heading and structural nav gets stuck. -->
+<h2><span role="heading" aria-level="3">Inner heading</span> outer tail</h2>
+
+<h2>Third heading</h2>
+<p>Tail paragraph.</p>
+</body>
+</html>

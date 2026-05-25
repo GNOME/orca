@@ -31,6 +31,7 @@ from __future__ import annotations
 
 import importlib
 import locale
+import os
 import queue
 import threading
 from typing import TYPE_CHECKING, Any
@@ -2161,6 +2162,9 @@ class SpeechManager(Extension):
     def get_speech_server_factory(self) -> str:
         """Returns the speech server factory module name."""
 
+        # Test override: the integration test harness points this at a no-audio server.
+        if override := os.environ.get("ORCA_TEST_SPEECH_SERVER_FACTORY"):
+            return override
         return self._get_setting(self.KEY_SPEECH_SERVER_FACTORY, "s", "speechdispatcherfactory")
 
     @gsettings_registry.get_registry().gsetting(

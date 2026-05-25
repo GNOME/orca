@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Inline Landmarks ready</title>
+<style>
+  html { font-family: "DejaVu Sans Mono", monospace; font-size: 16px; line-height: 1.5; }
+  .row { white-space: nowrap; }
+  .row > * { display: inline-block; vertical-align: top; margin: 0 8px 0 0; }
+  .stack { position: relative; height: 1.5em; }
+  .stack > a { position: absolute; left: 0; top: 0; }
+</style>
+</head>
+<body>
+
+<!-- S8: a banner link and a non-banner link rendered on the same visual row.
+     Their banner ancestors differ, so layout-mode line assembly must keep them
+     on separate lines even though they sit side by side. -->
+<div class="row">
+<header><a href="https://example.com/home">Home</a></header><a href="https://example.com/catalog">Catalog</a>
+</div>
+
+<!-- Control: two ordinary links (no banner) on one row should group together. -->
+<div class="row">
+<a href="https://example.com/alpha">Alpha</a><a href="https://example.com/beta">Beta</a>
+</div>
+
+<!-- S7: two navigation landmarks side by side on one visual row. -->
+<div class="row">
+<nav aria-label="Primary">Primary nav</nav><nav aria-label="Secondary">Secondary nav</nav>
+</div>
+
+<!-- S9: two links at the same position (dynamic skip-link pattern). -->
+<div class="stack">
+<a href="#main">Skip to content</a><a href="#nav">Skip to navigation</a>
+</div>
+
+<p>Tail paragraph.</p>
+</body>
+</html>

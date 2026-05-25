@@ -26,21 +26,11 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from orca.output_reader import BrailleRecord, SpeechRecord
-
 from .harness import keyboard
+from .helpers import BrailleLine, capture
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
-
-
-def _capture(
-    session: NativeAppSession,
-) -> tuple[list[str], list[tuple[int, str, str | None]]]:
-    records = session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
-    spoken = [r.text for r in records if isinstance(r, SpeechRecord)]
-    brailled = [(r.cursor_cell, r.string, r.mask) for r in records if isinstance(r, BrailleRecord)]
-    return spoken, brailled
 
 
 def _reset_to_first_cell(session: NativeAppSession) -> None:
@@ -58,30 +48,44 @@ def test_table_navigation(gtk3_tree_view: NativeAppSession) -> None:
     _reset_to_first_cell(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert _capture(session) == (
-        ["Grace", "Admiral", "Boston"],
-        [(1, "Grace Admiral Boston", "\x00" * 20)],
+    assert capture(session) == (
+        ["Grace", "Admiral", "Boston", "Done check box checked"],
+        [
+            BrailleLine(
+                1,
+                " Name column header Grace Admiral Boston <x> check boxDone",
+                "Grace Admiral Boston <x> check b",
+                "\x00" * 58,
+            )
+        ],
     )
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert _capture(session) == (
-        ["Alan", "Analyst", "Manchester"],
-        [(1, "Alan Analyst Manchester", "\x00" * 23)],
+    assert capture(session) == (
+        ["Alan", "Analyst", "Manchester", "Done check box not checked"],
+        [
+            BrailleLine(
+                1,
+                " Name column header Alan Analyst Manchester < > check boxDone",
+                "Alan Analyst Manchester < > chec",
+                "\x00" * 61,
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert _capture(session) == (
+    assert capture(session) == (
         ["Role column header Analyst"],
-        [(1, "Analyst", "\x00" * 7)],
+        [BrailleLine(1, " Role column header Analyst", "Analyst", "\x00" * 27)],
     )
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert _capture(session) == (
+    assert capture(session) == (
         ["Office column header Manchester"],
-        [(1, "Manchester", "\x00" * 10)],
+        [BrailleLine(1, " Office column header Manchester", "Manchester", "\x00" * 32)],
     )
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert _capture(session) == (
+    assert capture(session) == (
         ["Role column header Analyst"],
-        [(1, "Analyst", "\x00" * 7)],
+        [BrailleLine(1, " Role column header Analyst", "Analyst", "\x00" * 27)],
     )
 
 
@@ -93,57 +97,178 @@ def test_table_selection_where_am_i_and_endpoints(gtk3_tree_view: NativeAppSessi
     _reset_to_first_cell(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert _capture(session) == (
-        ["Grace", "Admiral", "Boston", "selected"],
-        [(1, "Grace Admiral Boston", "\x00" * 20)],
+    assert capture(session) == (
+        ["Grace", "Admiral", "Boston", "Done check box checked"],
+        [
+            BrailleLine(
+                1,
+                " Name column header Grace Admiral Boston <x> check boxDone",
+                "Grace Admiral Boston <x> check b",
+                "\x00" * 58,
+            )
+        ],
     )
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert _capture(session) == (
-        ["Ada", "Engineer", "London", "selected"],
-        [(1, "Ada Engineer London", "\x00" * 19)],
+    assert capture(session) == (
+        ["Ada", "Engineer", "London", "Done check box not checked"],
+        [
+            BrailleLine(
+                1,
+                " Name column header Ada Engineer London < > check boxDone",
+                "Ada Engineer London < > check bo",
+                "\x00" * 57,
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    assert _capture(session) == (
-        ["Name Ada", "column 1 of 3 row 1 of 3"],
-        [(1, "Ada", "\x00" * 3)],
+    assert capture(session) == (
+        ["Name Ada", "column 1 of 4 row 1 of 3"],
+        [BrailleLine(1, " Name column header Ada", "Ada", "\x00" * 23)],
     )
-    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER, click_count=2)
-    assert _capture(session) == (
+    session.orca.call("WhereAmIPresenter", "WhereAmIDetailed", True)
+    assert capture(session) == (
         [
-            "table with 3 rows 3 columns",
+            "table with 3 rows 4 columns",
             "Ada",
             "Engineer",
             "London",
+            "Done check box not checked",
             "1 of 3",
-            "column 1 of 3 row 1 of 3",
+            "column 1 of 4 row 1 of 3",
         ],
-        [(1, "Ada Engineer London", "\x00" * 19)],
+        [
+            BrailleLine(
+                1,
+                " Name column header Ada Engineer London < > check boxDone",
+                "Ada Engineer London < > check bo",
+                "\x00" * 57,
+            )
+        ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_DOWN)
-    assert _capture(session) == (
-        ["Grace", "not selected Admiral", "not selected Boston", "not selected"],
-        [(1, "Grace Admiral Boston", "\x00" * 20)],
+    assert capture(session) == (
+        [
+            "Grace",
+            "not selected Admiral",
+            "not selected Boston",
+            "not selected Done check box checked",
+            "not selected",
+        ],
+        [
+            BrailleLine(
+                1,
+                " Name column header Grace Admiral Boston <x> check boxDone",
+                "Grace Admiral Boston <x> check b",
+                "\x00" * 58,
+            )
+        ],
     )
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_DOWN)
-    assert _capture(session) == (
-        ["Alan", "not selected Analyst", "not selected Manchester", "not selected"],
-        [(1, "Alan Analyst Manchester", "\x00" * 23)],
+    assert capture(session) == (
+        [
+            "Alan",
+            "not selected Analyst",
+            "not selected Manchester",
+            "not selected Done check box not checked",
+            "not selected",
+        ],
+        [
+            BrailleLine(
+                1,
+                " Name column header Alan Analyst Manchester < > check boxDone",
+                "Alan Analyst Manchester < > chec",
+                "\x00" * 61,
+            )
+        ],
     )
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_UP)
-    assert _capture(session) == (
-        ["Grace", "not selected Admiral", "not selected Boston", "not selected"],
-        [(1, "Grace Admiral Boston", "\x00" * 20)],
+    assert capture(session) == (
+        [
+            "Grace",
+            "not selected Admiral",
+            "not selected Boston",
+            "not selected Done check box checked",
+            "not selected",
+        ],
+        [
+            BrailleLine(
+                1,
+                " Name column header Grace Admiral Boston <x> check boxDone",
+                "Grace Admiral Boston <x> check b",
+                "\x00" * 58,
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_HOME)
-    assert _capture(session) == (
-        ["Ada", "Engineer", "London"],
-        [(1, "Ada Engineer London", "\x00" * 19)],
+    assert capture(session) == (
+        ["Ada", "Engineer", "London", "Done check box not checked"],
+        [
+            BrailleLine(
+                1,
+                " Name column header Ada Engineer London < > check boxDone",
+                "Ada Engineer London < > check bo",
+                "\x00" * 57,
+            )
+        ],
     )
     keyboard.tap_key(keyboard.KEYSYM_END)
-    assert _capture(session) == (
-        ["Alan", "Analyst", "Manchester"],
-        [(1, "Alan Analyst Manchester", "\x00" * 23)],
+    assert capture(session) == (
+        ["Alan", "Analyst", "Manchester", "Done check box not checked"],
+        [
+            BrailleLine(
+                1,
+                " Name column header Alan Analyst Manchester < > check boxDone",
+                "Alan Analyst Manchester < > chec",
+                "\x00" * 61,
+            )
+        ],
+    )
+
+
+@pytest.mark.native_app
+def test_toggle_cell(gtk3_tree_view: NativeAppSession) -> None:
+    """Tests presenting a toggleable cell and toggling it with Space."""
+
+    session = gtk3_tree_view
+    _reset_to_first_cell(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["Grace", "Admiral", "Boston", "Done check box checked"],
+        [
+            BrailleLine(
+                1,
+                " Name column header Grace Admiral Boston <x> check boxDone",
+                "Grace Admiral Boston <x> check b",
+                "\x00" * 58,
+            )
+        ],
+    )
+    keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+    assert capture(session) == (
+        ["Role column header Admiral"],
+        [BrailleLine(1, " Role column header Admiral", "Admiral", "\x00" * 27)],
+    )
+    keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+    assert capture(session) == (
+        ["Office column header Boston"],
+        [BrailleLine(1, " Office column header Boston", "Boston", "\x00" * 28)],
+    )
+    keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+    assert capture(session) == (
+        ["Done check box checked"],
+        [BrailleLine(1, " Done <x> check boxDone", "<x> check boxDone", "\x00" * 23)],
+    )
+    keyboard.tap_key(keyboard.KEYSYM_SPACE)
+    assert capture(session) == (
+        ["not checked"],
+        [BrailleLine(1, " Done < > check boxDone", "< > check boxDone", "\x00" * 23)],
+    )
+    keyboard.tap_key(keyboard.KEYSYM_SPACE)
+    assert capture(session) == (
+        ["checked"],
+        [BrailleLine(1, " Done <x> check boxDone", "<x> check boxDone", "\x00" * 23)],
     )

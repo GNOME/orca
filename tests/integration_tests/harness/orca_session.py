@@ -23,6 +23,7 @@
 import os
 import shutil
 import subprocess
+import sys
 import time
 from typing import Any
 
@@ -54,7 +55,16 @@ class OrcaSession:
     def launch(self, readiness_timeout: float = 45.0) -> None:
         """Starts Orca as a subprocess and waits for the D-Bus service to come up."""
 
-        self._process = subprocess.Popen([self._resolve_orca_binary()], env=self._env)
+        argv = [self._resolve_orca_binary()]
+        # Set ORCA_TEST_DEBUG_FILE to capture Orca's own debug log for a run (single test
+        # at a time; multiple Orca processes would share the path).
+        if debug_file := os.environ.get("ORCA_TEST_DEBUG_FILE"):
+            argv = [*argv, f"--debug-file={debug_file}"]
+        if os.environ.get("ORCA_TEST_COVERAGE"):
+            argv = [sys.executable, "-m", "coverage", "run", "--parallel-mode", *argv]
+        # Not a `with`: the Orca process must outlive launch() and is terminated in quit().
+        # pylint: disable-next=consider-using-with
+        self._process = subprocess.Popen(argv, env=self._env)
         self._wait_for_service(readiness_timeout)
 
     def quit(self, grace_period: float = 3.0) -> None:
@@ -81,6 +91,14 @@ class OrcaSession:
         proxy = self._properties_proxy(module)
         result = proxy.Get(f"org.gnome.Orca1.{module}", name)
         return result.unpack() if hasattr(result, "unpack") else result
+
+    def call(self, module: str, command: str, *args: Any) -> Any:
+        """Invokes a D-Bus command on an Orca module and returns its result."""
+
+        proxy = self._bus.get_proxy(self._BUS_NAME, f"{self._BASE_PATH}/{module}")
+        # dasbus exposes each D-Bus method as a dynamic attribute, so a command named
+        # at runtime can only be reached via getattr.
+        return getattr(proxy, command)(*args)
 
     def _properties_proxy(self, module: str) -> Any:
         """Returns a proxy bound to the freedesktop Properties interface for module."""

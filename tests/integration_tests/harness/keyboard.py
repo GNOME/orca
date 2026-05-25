@@ -20,11 +20,16 @@
 
 """Key-synthesis helpers for native-app integration tests."""
 
+import time
+
 import gi
 
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Atspi, Gdk
+
+# Hold each key briefly so its ~1ms-deferred command handler runs before the release event.
+_PRESS_RELEASE_GAP_SECONDS = 0.15
 
 KEYSYM_A, KEYSYM_B, KEYSYM_C, KEYSYM_D, KEYSYM_E, KEYSYM_F, KEYSYM_G = (ord(c) for c in "abcdefg")
 KEYSYM_H, KEYSYM_I, KEYSYM_J, KEYSYM_K, KEYSYM_L, KEYSYM_M, KEYSYM_N = (ord(c) for c in "hijklmn")
@@ -52,6 +57,17 @@ KEYSYM_PAGE_UP = 0xFF55
 KEYSYM_PAGE_DOWN = 0xFF56
 KEYSYM_KP_INSERT = 0xFF9E
 KEYSYM_KP_ENTER = 0xFF8D
+KEYSYM_KP_ADD = 0xFFAB
+KEYSYM_KP_SUBTRACT = 0xFFAD
+KEYSYM_KP_HOME = 0xFF95
+KEYSYM_KP_LEFT = 0xFF96
+KEYSYM_KP_UP = 0xFF97
+KEYSYM_KP_RIGHT = 0xFF98
+KEYSYM_KP_DOWN = 0xFF99
+KEYSYM_KP_PAGE_UP = 0xFF9A
+KEYSYM_KP_PAGE_DOWN = 0xFF9B
+KEYSYM_KP_END = 0xFF9C
+KEYSYM_KP_BEGIN = 0xFF9D
 KEYSYM_SHIFT_L = 0xFFE1
 KEYSYM_SHIFT_R = 0xFFE2
 KEYSYM_CONTROL_L = 0xFFE3
@@ -95,6 +111,7 @@ def tap_key(keysym: int, click_count: int = 1) -> None:
 
     for _ in range(click_count):
         press_key(keysym)
+        time.sleep(_PRESS_RELEASE_GAP_SECONDS)
         release_key(keysym)
 
 
