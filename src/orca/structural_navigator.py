@@ -1940,7 +1940,7 @@ class StructuralNavigator(Extension):
         notify_user: bool,
     ) -> None:
         if obj is None:
-            self._present_object(script, obj, messages.NO_LANDMARK_FOUND, notify_user=notify_user)
+            self._present_object(script, obj, messages.NO_MORE_LANDMARKS, notify_user=notify_user)
             return
 
         if notify_user:

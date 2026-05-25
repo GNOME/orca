@@ -1601,11 +1601,12 @@ NO_MORE_IFRAMES = _("No more internal frames.")
 # if no more images can be found.
 NO_MORE_IMAGES = _("No more images.")
 
-# Translators: this is for navigating to the previous ARIA role landmark.
-# ARIA role landmarks are the W3C defined HTML tag attribute 'role' used to
-# identify important part of webpage like banners, main context, search etc.
-# This is an indication that one was not found.
-NO_LANDMARK_FOUND = _("No landmark found.")
+# Translators: This is for navigating document content by moving from landmark
+# to landmark. ARIA role landmarks are the W3C defined HTML tag attribute 'role'
+# used to identify important parts of a webpage like banners, main content,
+# search, etc. This is a detailed message which will be presented to the user if
+# no more landmarks can be found.
+NO_MORE_LANDMARKS = _("No more landmarks.")
 
 # Translators: This is for navigating document content by moving from link to
 # link (regardless of visited state). This is a detailed message which will be
