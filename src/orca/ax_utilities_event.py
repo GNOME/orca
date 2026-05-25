@@ -29,6 +29,7 @@
 from __future__ import annotations
 
 import enum
+import re
 import threading
 import time
 from difflib import SequenceMatcher
@@ -244,6 +245,12 @@ class AXUtilitiesEvent:
         return mode == focus_manager.FLAT_REVIEW and obj == acc
 
     @staticmethod
+    def _is_terminal_escape_sequence(string: str) -> bool:
+        """Returns True if string is an escape sequence the terminal displayed as literal text."""
+
+        return bool(re.fullmatch(r"\s*ESC\[[\d;]*[A-Za-z~]?\s*", string))
+
+    @staticmethod
     def _is_spin_button_descendant(obj: Atspi.Accessible) -> bool:
         """Returns True if obj is a spin button or descends from one."""
 
@@ -367,19 +374,27 @@ class AXUtilitiesEvent:
             if mgr.last_event_was_backspace() or mgr.last_event_was_delete():
                 return TextEventReason.SEARCH_UNPRESENTABLE
             return TextEventReason.SEARCH_PRESENTABLE
+        is_terminal = AXUtilitiesRole.is_terminal(obj)
+        if is_terminal:
+            line, _start, _end = AXText.get_line_at_offset(obj)
+            if AXUtilitiesEvent._is_terminal_escape_sequence(line):
+                return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
         if mgr.last_event_was_caret_selection():
             return AXUtilitiesEvent._get_selection_navigation_reason(mgr)
         if mgr.last_event_was_caret_navigation():
             result = AXUtilitiesEvent._get_caret_navigation_reason(mgr)
             # For performance purposes, the input event manager does very little sanity checking
-            # when determining whether an input event was line navigation. In the case of a
-            # terminal, when pressing Up at the prompt, auto-inserted text results in a caret-
-            # moved event that should not be treated as line navigation. Presentation of the
-            # inserted text is done in response to the insertion event.
-            if (
-                result == TextEventReason.NAVIGATION_BY_LINE
-                and AXUtilitiesRole.is_terminal(obj)
-                and not AXUtilitiesEvent._did_line_change(obj)
+            # when determining whether an input event was line navigation. A terminal presents new
+            # content via the insertion event, so a caret move that is a side effect of its redraw
+            # should not be treated as navigation: paging (Less and Vim park the cursor on the
+            # status line, whose transient content would otherwise be read), or auto-inserted text
+            # at the prompt that looks like line navigation (e.g. pressing Up at the prompt).
+            if is_terminal and (
+                result == TextEventReason.NAVIGATION_BY_PAGE
+                or (
+                    result == TextEventReason.NAVIGATION_BY_LINE
+                    and not AXUtilitiesEvent._did_line_change(obj)
+                )
             ):
                 result = TextEventReason.AUTO_INSERTION_UNPRESENTABLE
             return result
@@ -387,7 +402,7 @@ class AXUtilitiesEvent:
             return TextEventReason.SELECT_ALL
         if mgr.last_event_was_primary_click_or_release():
             return TextEventReason.MOUSE_PRIMARY_BUTTON
-        if AXUtilitiesState.is_editable(obj) or AXUtilitiesRole.is_terminal(obj):
+        if AXUtilitiesState.is_editable(obj) or is_terminal:
             reason = AXUtilitiesEvent._get_editing_reason(mgr)
             if reason != TextEventReason.UNKNOWN:
                 return reason
@@ -457,8 +472,12 @@ class AXUtilitiesEvent:
             return reason
 
         obj = event.source
-        if not (AXUtilitiesState.is_editable(obj) or AXUtilitiesRole.is_terminal(obj)):
+        is_terminal = AXUtilitiesRole.is_terminal(obj)
+        if not (AXUtilitiesState.is_editable(obj) or is_terminal):
             return AXUtilitiesEvent._get_non_editable_reason(event, mgr)
+
+        if is_terminal and AXUtilitiesEvent._is_terminal_escape_sequence(event.any_data):
+            return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
 
         selected_text, _start, _end = AXUtilitiesText.get_selected_text(obj)
         has_selected = bool(selected_text and event.any_data == selected_text)

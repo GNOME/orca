@@ -929,8 +929,10 @@ class TypingEchoPresenter(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
+        # A full-screen app such as Vim redraws from the cursor on each keystroke, so the
+        # inserted text starts with the typed character rather than being only that character.
         character = self._delayed_terminal_press.get_key_name().lower()
-        if event.any_data.lower() == character:
+        if event.any_data.lower().startswith(character):
             msg = "TYPING ECHO PRESENTER: Echoing delayed terminal press."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             presentation_manager.get_manager().present_key_event(self._delayed_terminal_press)

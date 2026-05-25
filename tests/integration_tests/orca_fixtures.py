@@ -41,6 +41,7 @@ from orca.output_reader import OutputReader
 
 from .apps import (
     chromium_browser,
+    gtk3_terminal,
     gtk3_text_view,
     gtk3_toolbar,
     gtk3_tree_view,
@@ -114,6 +115,38 @@ _gtk3_tree_view = _make_native_app_fixture(gtk3_tree_view, scope="function")
 _gtk3_widget_notebook = _make_native_app_fixture(gtk3_widget_notebook)
 _gtk3_toolbar = _make_native_app_fixture(gtk3_toolbar, scope="function")
 
+_PAGER_DOC = "\n".join(f"line {n:02d}" for n in range(1, 21)) + "\n"
+
+
+def _make_terminal_fixture(
+    name: str,
+    *,
+    binary_names: tuple[str, ...],
+    args: tuple[str, ...] = (),
+    files: dict[str, str] | None = None,
+) -> Callable[..., Iterator[NativeAppSession]]:
+    @pytest.fixture(scope="function", name=name)
+    def fixture(tmp_path_factory: pytest.TempPathFactory) -> Iterator[NativeAppSession]:
+        yield from _run_terminal_app(
+            tmp_path_factory, binary_names=binary_names, args=args, files=files
+        )
+
+    return fixture
+
+
+_gtk3_terminal_shell = _make_terminal_fixture(
+    "gtk3_terminal_shell", binary_names=("bash",), args=("--norc", "--noprofile")
+)
+_gtk3_terminal_pager = _make_terminal_fixture(
+    "gtk3_terminal_pager", binary_names=("less",), args=("doc.txt",), files={"doc.txt": _PAGER_DOC}
+)
+_gtk3_terminal_vim = _make_terminal_fixture(
+    "gtk3_terminal_vim",
+    binary_names=("vim",),
+    args=("-u", "NONE", "-i", "NONE", "-n", "-c", "set ruler", "doc.txt"),
+    files={"doc.txt": "hello\n"},
+)
+
 
 def _run_native_app(
     tmp_path_factory: pytest.TempPathFactory,
@@ -132,6 +165,39 @@ def _run_native_app(
         extra_args = [str(content_file)]
     argv = [sys.executable, "-m", app_module, *extra_args]
     yield from _run_app_with_orca(sandbox_dir, argv=argv, ready_predicate=ready_predicate)
+
+
+def _vte_available() -> bool:
+    """Returns True if the VTE 2.91 (GTK3) typelib is installed."""
+
+    return "2.91" in gi.Repository.get_default().enumerate_versions("Vte")
+
+
+def _run_terminal_app(
+    tmp_path_factory: pytest.TempPathFactory,
+    *,
+    binary_names: tuple[str, ...],
+    args: tuple[str, ...] = (),
+    files: dict[str, str] | None = None,
+) -> Iterator[NativeAppSession]:
+    """Runs a program inside a VTE terminal under its own Orca subprocess."""
+
+    if not _vte_available():
+        pytest.skip("VTE 2.91 (GTK3) typelib is not available")
+    binary = _resolve_binary(binary_names)
+    if binary is None:
+        pytest.skip(f"no terminal program found among {binary_names!r}")
+
+    sandbox_dir = tmp_path_factory.mktemp("orca-terminal")
+    work_dir = sandbox_dir / "work"
+    work_dir.mkdir()
+    for filename, content in (files or {}).items():
+        (work_dir / filename).write_text(content, encoding="utf-8")
+
+    argv = [sys.executable, "-m", gtk3_terminal.__name__, str(work_dir), binary, *args]
+    yield from _run_app_with_orca(
+        sandbox_dir, argv=argv, ready_predicate=_name_equals(gtk3_terminal.APP_TITLE)
+    )
 
 
 def _run_app_with_orca(

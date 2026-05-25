@@ -330,6 +330,28 @@ class TestAXUtilitiesEvent:
             AXUtilitiesEvent.get_text_event_reason(mock_event)
 
     @pytest.mark.parametrize(
+        "string, expected",
+        [
+            (" ESC[6", True),
+            (" ESC[5", True),
+            (" ESC[6\n", True),
+            ("ESC[1;2A", True),
+            ("ESC[200~", True),
+            ("ESCAPE", False),
+            ("line 20", False),
+            ("$ ", False),
+            ("", False),
+        ],
+    )
+    def test_is_terminal_escape_sequence(self, test_context, string, expected):
+        """Test AXUtilitiesEvent._is_terminal_escape_sequence."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities_event import AXUtilitiesEvent
+
+        assert AXUtilitiesEvent._is_terminal_escape_sequence(string) is expected
+
+    @pytest.mark.parametrize(
         "case",
         [
             {
