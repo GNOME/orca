@@ -570,6 +570,7 @@ class TestAXUtilitiesObject:
         from orca.ax_utilities import AXUtilities
         from orca.ax_utilities_object import AXUtilitiesObject
         from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_text import AXUtilitiesText
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         mock_child = test_context.Mock(spec=Atspi.Accessible)
@@ -580,9 +581,30 @@ class TestAXUtilitiesObject:
             "get_name",
             side_effect=lambda obj: "child_name" if obj == mock_child else "",
         )
+        test_context.patch_object(AXUtilitiesText, "has_presentable_text", return_value=False)
         test_context.patch_object(AXUtilitiesObject, "find_descendant", return_value=mock_child)
         result = AXUtilities.active_descendant(mock_accessible)
         assert result == mock_child
+
+    def test_active_descendant_table_cell_with_own_text(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test AXUtilities.active_descendant with a nameless cell that has its own text."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_object import AXObject
+        from orca.ax_utilities import AXUtilities
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_text import AXUtilitiesText
+
+        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXObject, "is_dead", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_table_cell", return_value=True)
+        test_context.patch_object(AXObject, "get_name", return_value="")
+        test_context.patch_object(AXUtilitiesText, "has_presentable_text", return_value=True)
+        result = AXUtilities.active_descendant(mock_accessible)
+        assert result == mock_accessible
 
     def test_find_previous_object_no_restriction(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilities.find_previous_object without restriction."""

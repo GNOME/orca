@@ -1593,6 +1593,10 @@ class AXUtilities:
         if AXObject.get_name(obj):
             return obj
 
+        # Its own text makes it the subject, not a managed descendant to defer to.
+        if AXUtilitiesText.has_presentable_text(obj):
+            return obj
+
         def pred(x: Atspi.Accessible) -> bool:
             return bool(AXObject.get_name(x) or AXText.get_all_text(x))
 
