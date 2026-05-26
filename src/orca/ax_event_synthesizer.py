@@ -22,6 +22,8 @@
 
 """Provides support for synthesizing accessible input events."""
 
+from __future__ import annotations
+
 import time
 from typing import NamedTuple
 
@@ -54,7 +56,7 @@ class _Snapshot(NamedTuple):
     parent_role: Atspi.Role
 
     @classmethod
-    def from_object(cls, obj: Atspi.Accessible) -> "_Snapshot":
+    def from_object(cls, obj: Atspi.Accessible) -> _Snapshot:
         """Returns a snapshot describing obj and its parent."""
 
         parent = AXObject.get_parent(obj)

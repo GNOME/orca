@@ -25,11 +25,13 @@
 
 """Utilities for providing app/toolkit-specific information about objects and events."""
 
-from collections.abc import Callable
+from __future__ import annotations
 
 import gi
 
 gi.require_version("Atspi", "2.0")
+from typing import TYPE_CHECKING
+
 from gi.repository import Atspi
 
 from . import (
@@ -50,6 +52,9 @@ from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_utilities_text import TextUnit
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 
 class Utilities:

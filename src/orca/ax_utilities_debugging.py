@@ -23,6 +23,8 @@
 
 """Utilities for accessibility debugging."""
 
+from __future__ import annotations
+
 import inspect
 import pprint
 import types

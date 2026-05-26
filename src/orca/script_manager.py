@@ -22,18 +22,24 @@
 
 """Manages Orca's scripts."""
 
+from __future__ import annotations
+
 import contextlib
 import importlib
 
 import gi
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi
+
+from typing import TYPE_CHECKING
 
 from . import command_manager, debug, gsettings_registry, sleep_mode_manager, speech_manager
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .scripts import apps, default, sleepmode, toolkits
+
+if TYPE_CHECKING:
+    from gi.repository import Atspi
 
 
 class ScriptManager:

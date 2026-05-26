@@ -40,10 +40,6 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
 
 
-class Fake:
-    """Stub used as a stand-in for objects that need an identity."""
-
-
 @pytest.mark.unit
 class TestFlatReviewPresenter:
     """Test FlatReviewPresenter class methods."""
@@ -77,10 +73,6 @@ class TestFlatReviewPresenter:
 
         gi_repository_mock = essential_modules["gi.repository"]
         atspi_mock = essential_modules["gi.repository.Atspi"]
-        atspi_mock.Role = Fake
-        atspi_mock.Accessible = Fake
-        atspi_mock.MatchRule = Fake
-        atspi_mock.Relation = Fake
         event_listener_mock = test_context.Mock()
         atspi_mock.EventListener = test_context.Mock()
         atspi_mock.EventListener.new = test_context.Mock(return_value=event_listener_mock)

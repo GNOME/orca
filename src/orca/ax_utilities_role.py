@@ -23,6 +23,8 @@
 
 """Utilities for accessible roles."""
 
+from __future__ import annotations
+
 import gi
 
 gi.require_version("Atspi", "2.0")

@@ -20,6 +20,8 @@
 
 """Wrapper for the Atspi.Action interface."""
 
+from __future__ import annotations
+
 import re
 
 import gi

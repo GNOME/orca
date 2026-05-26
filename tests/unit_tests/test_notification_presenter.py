@@ -42,10 +42,6 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
 
 
-class Fake:
-    """Stub used as a stand-in for objects that need an identity."""
-
-
 @pytest.mark.unit
 class TestNotificationPresenter:
     """Test NotificationPresenter class methods."""
@@ -66,14 +62,6 @@ class TestNotificationPresenter:
 
         gi_mock = essential_modules["gi"]
         gi_mock.require_version = test_context.Mock()
-
-        gi_repository_mock = essential_modules["gi.repository"]
-        atspi_mock = essential_modules["gi.repository.Atspi"]
-        atspi_mock.Role = Fake
-        atspi_mock.Accessible = Fake
-        atspi_mock.MatchRule = Fake
-        atspi_mock.Relation = Fake
-        gi_repository_mock.Atspi = atspi_mock
 
         gobject_mock = essential_modules["gi.repository.GObject"]
         gobject_mock.TYPE_STRING = str
@@ -653,14 +641,6 @@ class TestNotificationListGUI:
         gi_mock = essential_modules["gi"]
         gi_mock.require_version = test_context.Mock()
 
-        gi_repository_mock = essential_modules["gi.repository"]
-        atspi_mock = essential_modules["gi.repository.Atspi"]
-        atspi_mock.Role = Fake
-        atspi_mock.Accessible = Fake
-        atspi_mock.MatchRule = Fake
-        atspi_mock.Relation = Fake
-        gi_repository_mock.Atspi = atspi_mock
-
         gobject_mock = essential_modules["gi.repository.GObject"]
         gobject_mock.TYPE_STRING = str
 
@@ -779,14 +759,6 @@ class TestNotificationPresenterModule:
 
         gi_mock = essential_modules["gi"]
         gi_mock.require_version = test_context.Mock()
-
-        gi_repository_mock = essential_modules["gi.repository"]
-        atspi_mock = essential_modules["gi.repository.Atspi"]
-        atspi_mock.Role = Fake
-        atspi_mock.Accessible = Fake
-        atspi_mock.MatchRule = Fake
-        atspi_mock.Relation = Fake
-        gi_repository_mock.Atspi = atspi_mock
 
         gobject_mock = essential_modules["gi.repository.GObject"]
         gobject_mock.TYPE_STRING = str

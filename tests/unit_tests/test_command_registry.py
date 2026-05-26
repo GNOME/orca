@@ -411,10 +411,6 @@ EXPECTED_TOTAL_COMMANDS = (
 )
 
 
-class Fake:
-    """A simple class to use as a mock for Atspi constants and classes."""
-
-
 @pytest.mark.unit
 class TestCommandRegistry:
     """Tests for verifying all Orca commands are properly registered."""
@@ -456,10 +452,6 @@ class TestCommandRegistry:
 
         gi_repository_mock = essential_modules["gi.repository"]
         atspi_mock = essential_modules["gi.repository.Atspi"]
-        atspi_mock.Role = Fake
-        atspi_mock.Accessible = Fake
-        atspi_mock.MatchRule = Fake
-        atspi_mock.Relation = Fake
         atspi_mock.get_version = test_context.Mock(return_value=(2, 52, 0))
         gi_repository_mock.Atspi = atspi_mock
 
@@ -504,9 +496,6 @@ class TestCommandRegistry:
 
         debug_mock = essential_modules["orca.debug"]
         debug_mock.debugFile = None
-
-        flat_review_mock = essential_modules["orca.flat_review"]
-        flat_review_mock.Context = Fake
 
         return essential_modules
 

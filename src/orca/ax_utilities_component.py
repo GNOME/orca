@@ -21,6 +21,8 @@
 
 """Utilities for accessible component positions."""
 
+from __future__ import annotations
+
 import functools
 
 import gi

@@ -22,6 +22,8 @@
 
 """Wrapper for the Atspi.Collection interface."""
 
+from __future__ import annotations
+
 import time
 
 import gi

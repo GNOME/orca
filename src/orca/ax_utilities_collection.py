@@ -22,13 +22,16 @@
 
 """Utilities for finding accessible objects via the collection interface."""
 
+from __future__ import annotations
+
 import inspect
 import time
-from collections.abc import Callable
 
 import gi
 
 gi.require_version("Atspi", "2.0")
+from typing import TYPE_CHECKING
+
 from gi.repository import Atspi
 
 from . import debug
@@ -37,6 +40,9 @@ from .ax_utilities_action import AXUtilitiesAction
 from .ax_utilities_debugging import AXUtilitiesDebugging
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 
 class AXUtilitiesCollection:

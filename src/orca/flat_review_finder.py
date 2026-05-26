@@ -22,15 +22,18 @@
 
 """Provides support for a flat review find."""
 
+from __future__ import annotations
+
 import copy
 import re
 import time
-from collections.abc import Callable
 
 import gi
 
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gtk", "3.0")
+from typing import TYPE_CHECKING
+
 from gi.repository import Atspi, Gtk
 
 from . import (
@@ -46,6 +49,9 @@ from . import (
 from .command import Command, KeyboardCommand
 from .extension import Extension
 from .flat_review import Context
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 
 class _SearchQueryMatch:

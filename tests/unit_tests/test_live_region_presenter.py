@@ -42,10 +42,6 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
 
 
-class Fake:
-    """Stub used as a stand-in for objects that need an identity."""
-
-
 @pytest.mark.unit
 class TestLivePoliteness:
     """Test LivePoliteness enum."""
@@ -65,14 +61,6 @@ class TestLivePoliteness:
 
         gi_mock = essential_modules["gi"]
         gi_mock.require_version = test_context.Mock()
-
-        gi_repository_mock = essential_modules["gi.repository"]
-        atspi_mock = essential_modules["gi.repository.Atspi"]
-        atspi_mock.Role = Fake
-        atspi_mock.Accessible = Fake
-        atspi_mock.MatchRule = Fake
-        atspi_mock.Relation = Fake
-        gi_repository_mock.Atspi = atspi_mock
 
         glib_mock = essential_modules["gi.repository.GLib"]
         glib_mock.timeout_add = test_context.Mock(return_value=1)
@@ -148,14 +136,6 @@ class TestLiveRegionMessage:
 
         gi_mock = essential_modules["gi"]
         gi_mock.require_version = test_context.Mock()
-
-        gi_repository_mock = essential_modules["gi.repository"]
-        atspi_mock = essential_modules["gi.repository.Atspi"]
-        atspi_mock.Role = Fake
-        atspi_mock.Accessible = Fake
-        atspi_mock.MatchRule = Fake
-        atspi_mock.Relation = Fake
-        gi_repository_mock.Atspi = atspi_mock
 
         glib_mock = essential_modules["gi.repository.GLib"]
         glib_mock.timeout_add = test_context.Mock(return_value=1)
@@ -308,14 +288,6 @@ class TestLiveRegionMessageQueue:
 
         gi_mock = essential_modules["gi"]
         gi_mock.require_version = test_context.Mock()
-
-        gi_repository_mock = essential_modules["gi.repository"]
-        atspi_mock = essential_modules["gi.repository.Atspi"]
-        atspi_mock.Role = Fake
-        atspi_mock.Accessible = Fake
-        atspi_mock.MatchRule = Fake
-        atspi_mock.Relation = Fake
-        gi_repository_mock.Atspi = atspi_mock
 
         glib_mock = essential_modules["gi.repository.GLib"]
         glib_mock.timeout_add = test_context.Mock(return_value=1)
@@ -546,14 +518,6 @@ class TestLiveRegionPresenter:
 
         gi_mock = essential_modules["gi"]
         gi_mock.require_version = test_context.Mock()
-
-        gi_repository_mock = essential_modules["gi.repository"]
-        atspi_mock = essential_modules["gi.repository.Atspi"]
-        atspi_mock.Role = Fake
-        atspi_mock.Accessible = Fake
-        atspi_mock.MatchRule = Fake
-        atspi_mock.Relation = Fake
-        gi_repository_mock.Atspi = atspi_mock
 
         glib_mock = essential_modules["gi.repository.GLib"]
         glib_mock.timeout_add = test_context.Mock(return_value=1)
@@ -922,14 +886,6 @@ class TestLiveRegionPresenterModule:
 
         gi_mock = essential_modules["gi"]
         gi_mock.require_version = test_context.Mock()
-
-        gi_repository_mock = essential_modules["gi.repository"]
-        atspi_mock = essential_modules["gi.repository.Atspi"]
-        atspi_mock.Role = Fake
-        atspi_mock.Accessible = Fake
-        atspi_mock.MatchRule = Fake
-        atspi_mock.Relation = Fake
-        gi_repository_mock.Atspi = atspi_mock
 
         glib_mock = essential_modules["gi.repository.GLib"]
         glib_mock.timeout_add = test_context.Mock(return_value=1)
