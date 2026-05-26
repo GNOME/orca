@@ -2,19 +2,29 @@
 
 This is the beginning of Orca's new unit test and integration test support.
 
+These tests, especially the new integration tests, are currently intended
+for use by the maintainer. Documenting the expected dependencies and versions,
+and ensuring compatibility with Orca's GitLab CI and multiple distros, are
+still pending.
+
+The integration tests cannot run while Orca is already active on the user's
+session because each test launches and drives its own Orca. It was decided
+that the test harness should not first kill any running instance of Orca
+because doing so might be unexpected. If you rely on Orca in your active
+session, you can still run the tests by signing in as a second local user
+(via `su` or `ssh`) and running them from there.
+
 ## Status
 
 * Basic test coverage for the D-Bus Remote Controller: DONE
 * Advanced test coverage for the D-Bus Remote Controller: TODO
-  * Needed: A means to load document content, apps with UI for the navigators and presenters
 * Unit test coverage of the AX* utilities: DONE
 * Unit test coverage of the "Managers": DONE
 * Unit test coverage of the "Presenters": DONE
 * Unit test coverage of the "Navigators": DONE
 * Unit test coverage of generators: TODO
 * Unit test coverage of scripts: TODO
-* Integration/advanced test coverage of all of the above: TODO
-  * Needed: Real AT-SPI2 objects
+* Integration test coverage: IN PROGRESS
 * Meson support: DONE
 * Integration into Orca's Gitlab CI: TODO
 
