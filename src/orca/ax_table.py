@@ -95,6 +95,7 @@ class AXTable:
             AXTable.PHYSICAL_COLUMN_COUNT.clear()
             AXTable.PHYSICAL_ROW_COUNT.clear()
             AXTable.PRESENTABLE_COORDINATES.clear()
+            AXTable.PRESENTABLE_SPANS.clear()
             AXTable.PRESENTABLE_COLUMN_COUNT.clear()
             AXTable.PRESENTABLE_ROW_COUNT.clear()
 

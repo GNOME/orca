@@ -2171,6 +2171,7 @@ class TestAXTable:
         AXTable.CAPTIONS[123] = test_context.Mock()
         AXTable.PHYSICAL_COORDINATES_FROM_CELL[456] = (1, 2)
         AXTable.PHYSICAL_SPANS_FROM_CELL[789] = (1, 1)
+        AXTable.PRESENTABLE_SPANS[321] = ("1", "2")
         test_context.patch_object(
             debug,
             "print_message",
@@ -2180,6 +2181,7 @@ class TestAXTable:
         assert len(AXTable.CAPTIONS) == 0
         assert len(AXTable.PHYSICAL_COORDINATES_FROM_CELL) == 0
         assert len(AXTable.PHYSICAL_SPANS_FROM_CELL) == 0
+        assert len(AXTable.PRESENTABLE_SPANS) == 0
         essential_modules["orca.debug"].print_message.assert_called()
 
     @pytest.mark.parametrize(
