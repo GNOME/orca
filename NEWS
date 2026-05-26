@@ -1,3 +1,33 @@
+50.2 - 26 May 2026
+
+Web:
+
+* Fix repetition of previous line when leaving blockquotes.
+
+* Handle traceback triggered by Chromium crash.
+
+* Fix double-presentation when flat-reviewing Chromium content.
+
+Preferences:
+
+* Fix table-navigation-enabled state for app settings.
+
+* Fix orphaned key grab.
+
+General:
+
+* Don't present ancestors in basic where am I.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  fa              Persian                   Danial Behzadi
+  nb              Norwegian Bokmål          Kjartan Maraas
+  ro              Romanian                  Antonio Marin
+  sk              Slovak                    Jose Riha
+  th              Thai                      Aefgh Threenine
+
+=========
+
 50.1 - 14 April 2026
 
 Web:
