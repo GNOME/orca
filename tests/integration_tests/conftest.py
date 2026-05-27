@@ -26,6 +26,8 @@ import os
 import sys
 from typing import TYPE_CHECKING
 
+os.environ["GSETTINGS_BACKEND"] = "memory"
+
 from .dbus_fixtures import (  # noqa: F401
     _bus,
     _dbus_service_proxy,

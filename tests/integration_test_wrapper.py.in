@@ -182,6 +182,7 @@ def _setup(children: list[subprocess.Popen]) -> dict[str, str] | None:
     # Pin scaling so wrap points in the test app are deterministic.
     stack_env["GDK_SCALE"] = "1"
     stack_env["GDK_DPI_SCALE"] = "1.0"
+    stack_env["GSETTINGS_BACKEND"] = "memory"
 
     # 1. Nested X server for isolation from the caller's desktop.
     display_num = _start_xvfb(children, stack_env)

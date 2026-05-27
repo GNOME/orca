@@ -70,6 +70,14 @@ def _build_schemas(source_root: str, output_dir: str) -> None:
 def _gsettings_registry() -> Generator:
     """Session-scoped fixture providing a GSettingsRegistry backed by in-memory storage."""
 
+    if os.environ.get("GSETTINGS_BACKEND") != "memory":
+        pytest.fail(
+            "GSETTINGS_BACKEND is not 'memory'; aborting before save_schema/set_* writes "
+            "land in the user's real dconf. The integration-test conftest sets this; "
+            "check that conftest.py is being loaded.",
+            pytrace=False,
+        )
+
     source_root = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", ".."))
     schema_dir = tempfile.mkdtemp(prefix="orca-test-schemas-")
 
