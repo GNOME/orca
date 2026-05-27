@@ -1262,9 +1262,9 @@ class TestAXUtilities:
         essential_modules["orca.ax_object"].AXObject.is_valid = test_context.Mock(
             return_value=False,
         )
-        essential_modules["orca.ax_table"].AXTable.iter_visible_cells = test_context.Mock(
-            return_value=[],
-        )
+        essential_modules[
+            "orca.ax_utilities_state"
+        ].AXUtilitiesState.is_showing = test_context.Mock(return_value=False)
         from orca.ax_utilities import AXUtilities
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
