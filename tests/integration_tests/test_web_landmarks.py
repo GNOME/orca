@@ -203,111 +203,73 @@ def test_structural_navigation_by_landmark_forward(web_landmarks: NativeAppSessi
     move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "m",
-        "Primary",
-        "leaving banner.",
-        "navigation",
-        "Primary",
-        "Home",
-        "link",
-    ]
+    assert capture(session) == (
+        ["m", "leaving banner.", "navigation", "Primary", "Home", "link"],
+        [BrailleLine(0, "Home", "Home", "\xc0" * 4)],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "m",
-        "Secondary",
-        "leaving navigation.",
-        "navigation",
-        "Secondary",
-        "Help",
-        "link",
-    ]
+    assert capture(session) == (
+        ["m", "leaving navigation.", "navigation", "Secondary", "Help", "link"],
+        [BrailleLine(0, "Help", "Help", "\xc0" * 4)],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "m",
-        "leaving navigation.",
-        "search",
-        "Search ",
-    ]
+    assert capture(session) == (
+        ["m", "leaving navigation.", "search", "Search "],
+        [BrailleLine(0, "Search", "Search", "\x00" * 7)],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "m",
-        "leaving search.",
-        "main content",
-        "Main content",
-        "heading 1",
-    ]
+    assert capture(session) == (
+        ["m", "leaving search.", "main content", "Main content", "heading 1"],
+        [BrailleLine(0, "Main content h1", "Main content h1", "\x00" * 15)],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "m",
-        "Sidebar",
-        "leaving main content.",
-        "complementary content",
-        "Sidebar",
-        "Aside text.",
-    ]
+    assert capture(session) == (
+        ["m", "leaving main content.", "complementary content", "Sidebar", "Aside text."],
+        [BrailleLine(0, "Aside text.", "Aside text.", "\x00" * 11)],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "m",
-        "Newsletter signup",
-        "leaving complementary content.",
-        "form",
-        "Newsletter signup",
-        "Email ",
-    ]
+    assert capture(session) == (
+        ["m", "leaving complementary content.", "form", "Newsletter signup", "Email "],
+        [BrailleLine(0, "Email", "Email", "\x00" * 6)],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "m",
-        "Related links",
-        "leaving form.",
-        "Related links",
-        "landmark",
-        "Region text.",
-    ]
+    assert capture(session) == (
+        ["m", "leaving form.", "Related links", "landmark", "Region text."],
+        [BrailleLine(0, "Region text.", "Region text.", "\x00" * 12)],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "m",
-        "Status updates",
-        "leaving region.",
-        "Status updates",
-        "landmark",
-        "Status text.",
-    ]
+    assert capture(session) == (
+        ["m", "leaving region.", "Status updates", "landmark", "Status text."],
+        [BrailleLine(0, "Status text.", "Status text.", "\x00" * 12)],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "m",
-        "leaving region.",
-        "information",
-        "Footer text.",
-    ]
+    assert capture(session) == (
+        ["m", "leaving region.", "information", "Footer text."],
+        [BrailleLine(0, "Footer text.", "Footer text.", "\x00" * 12)],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "m",
-        "Wrapping to top.",
-        "leaving information.",
-        "banner",
-        "Site banner text.",
-    ]
+    assert capture(session) == (
+        ["m", "Wrapping to top.", "leaving information.", "banner", "Site banner text."],
+        [
+            BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
+            BrailleLine(0, "Site banner text.", "Site banner text.", "\x00" * 17),
+        ],
+    )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "m",
-        "Primary",
-        "leaving banner.",
-        "navigation",
-        "Primary",
-        "Home",
-        "link",
-    ]
+    assert capture(session) == (
+        ["m", "leaving banner.", "navigation", "Primary", "Home", "link"],
+        [BrailleLine(0, "Home", "Home", "\xc0" * 4)],
+    )
 
 
 @pytest.mark.native_app
@@ -318,109 +280,76 @@ def test_structural_navigation_by_landmark_backward(web_landmarks: NativeAppSess
     move_to_top(session)
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "M",
-        "Wrapping to bottom.",
-        "leaving banner.",
-        "information",
-        "Footer text.",
-    ]
+    assert capture(session) == (
+        ["M", "Wrapping to bottom.", "leaving banner.", "information", "Footer text."],
+        [
+            BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
+            BrailleLine(0, "Footer text.", "Footer text.", "\x00" * 12),
+        ],
+    )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "M",
-        "Status updates",
-        "leaving information.",
-        "Status updates",
-        "landmark",
-        "Status text.",
-    ]
+    assert capture(session) == (
+        ["M", "leaving information.", "Status updates", "landmark", "Status text."],
+        [BrailleLine(0, "Status text.", "Status text.", "\x00" * 12)],
+    )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "M",
-        "Related links",
-        "leaving region.",
-        "Related links",
-        "landmark",
-        "Region text.",
-    ]
+    assert capture(session) == (
+        ["M", "leaving region.", "Related links", "landmark", "Region text."],
+        [BrailleLine(0, "Region text.", "Region text.", "\x00" * 12)],
+    )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "M",
-        "Newsletter signup",
-        "leaving region.",
-        "form",
-        "Newsletter signup",
-        "Email ",
-    ]
+    assert capture(session) == (
+        ["M", "leaving region.", "form", "Newsletter signup", "Email "],
+        [BrailleLine(0, "Email", "Email", "\x00" * 6)],
+    )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "M",
-        "Sidebar",
-        "leaving form.",
-        "complementary content",
-        "Sidebar",
-        "Aside text.",
-    ]
+    assert capture(session) == (
+        ["M", "leaving form.", "complementary content", "Sidebar", "Aside text."],
+        [BrailleLine(0, "Aside text.", "Aside text.", "\x00" * 11)],
+    )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "M",
-        "leaving complementary content.",
-        "main content",
-        "Main content",
-        "heading 1",
-    ]
+    assert capture(session) == (
+        ["M", "leaving complementary content.", "main content", "Main content", "heading 1"],
+        [BrailleLine(0, "Main content h1", "Main content h1", "\x00" * 15)],
+    )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "M",
-        "leaving main content.",
-        "search",
-        "Search ",
-    ]
+    assert capture(session) == (
+        ["M", "leaving main content.", "search", "Search "],
+        [BrailleLine(0, "Search", "Search", "\x00" * 7)],
+    )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "M",
-        "Secondary",
-        "leaving search.",
-        "navigation",
-        "Secondary",
-        "Help",
-        "link",
-    ]
+    assert capture(session) == (
+        ["M", "leaving search.", "navigation", "Secondary", "Help", "link"],
+        [BrailleLine(0, "Help", "Help", "\xc0" * 4)],
+    )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "M",
-        "Primary",
-        "leaving navigation.",
-        "navigation",
-        "Primary",
-        "Home",
-        "link",
-    ]
+    assert capture(session) == (
+        ["M", "leaving navigation.", "navigation", "Primary", "Home", "link"],
+        [BrailleLine(0, "Home", "Home", "\xc0" * 4)],
+    )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "M",
-        "leaving navigation.",
-        "banner",
-        "Site banner text.",
-    ]
+    assert capture(session) == (
+        ["M", "leaving navigation.", "banner", "Site banner text."],
+        [BrailleLine(0, "Site banner text.", "Site banner text.", "\x00" * 17)],
+    )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
-    assert speech(session) == [
-        "M",
-        "Wrapping to bottom.",
-        "leaving banner.",
-        "information",
-        "Footer text.",
-    ]
+    assert capture(session) == (
+        ["M", "Wrapping to bottom.", "leaving banner.", "information", "Footer text."],
+        [
+            BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
+            BrailleLine(0, "Footer text.", "Footer text.", "\x00" * 12),
+        ],
+    )
 
 
 @pytest.mark.native_app
