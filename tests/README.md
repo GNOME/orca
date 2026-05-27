@@ -32,6 +32,7 @@ session, you can still run the tests by signing in as a second local user
 
 * [pytest](https://pytest.org)
 * [pytest-mock](https://pytest-mock.readthedocs.io/) - Mock plugin for pytest
+* xvfb (integration tests only)
 
 ## Running Tests
 

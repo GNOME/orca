@@ -19,6 +19,8 @@
 
 """Utilities for playing sounds."""
 
+from __future__ import annotations
+
 import os
 
 import gi
