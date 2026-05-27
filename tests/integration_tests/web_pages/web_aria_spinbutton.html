@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web ARIA Spinbuttons ready</title>
+<style>
+  .spinbutton {
+    display: inline-block;
+    padding: 4px 10px;
+    border: 1px solid #888;
+    min-width: 2em;
+    text-align: right;
+  }
+  .spinbutton:focus { outline: 2px solid #06f; }
+</style>
+</head>
+<body>
+<h1>ARIA spinbuttons</h1>
+
+<p>Before the spinbuttons.</p>
+
+<p>
+  <span id="qty-label">Quantity</span>:
+  <span id="qty"
+        class="spinbutton"
+        role="spinbutton"
+        tabindex="0"
+        aria-labelledby="qty-label"
+        aria-valuemin="0"
+        aria-valuemax="10"
+        aria-valuenow="3">3</span>
+</p>
+
+<p>
+  <button type="button" id="bump-qty">Bump Quantity in 2500 ms</button>
+</p>
+
+<p>
+  <span id="rating-label">Rating</span>:
+  <span id="rating"
+        class="spinbutton"
+        role="spinbutton"
+        tabindex="0"
+        contenteditable="true"
+        aria-labelledby="rating-label"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="75">75</span>
+</p>
+
+<p>
+  <button type="button" id="bump-rating">Bump Rating in 2500 ms</button>
+</p>
+
+<p>
+  <label for="volume">Volume</label>:
+  <input id="volume"
+         type="text"
+         readonly
+         role="spinbutton"
+         aria-valuemin="0"
+         aria-valuemax="100"
+         aria-valuenow="50"
+         value="50">
+</p>
+
+<p>After the spinbuttons.</p>
+
+<script>
+(function () {
+  function wireSpinbutton(sb) {
+    sb.addEventListener("keydown", function (e) {
+      const now = parseInt(sb.getAttribute("aria-valuenow"), 10);
+      const min = parseInt(sb.getAttribute("aria-valuemin"), 10);
+      const max = parseInt(sb.getAttribute("aria-valuemax"), 10);
+      let next = now;
+      switch (e.key) {
+        case "ArrowUp":   next = Math.min(now + 1, max); break;
+        case "ArrowDown": next = Math.max(now - 1, min); break;
+        case "PageUp":    next = Math.min(now + 10, max); break;
+        case "PageDown":  next = Math.max(now - 10, min); break;
+        case "Home":      next = min; break;
+        case "End":       next = max; break;
+        default: return;
+      }
+      e.preventDefault();
+      if (next !== now) {
+        sb.setAttribute("aria-valuenow", next);
+        sb.textContent = next;
+      }
+    });
+    if (sb.isContentEditable) {
+      sb.addEventListener("input", function () {
+        const text = sb.textContent.trim();
+        if (/^-?\d+$/.test(text)) {
+          sb.setAttribute("aria-valuenow", text);
+        }
+      });
+    }
+  }
+  function wireDeferredBump(buttonId, spinbuttonId) {
+    document.getElementById(buttonId).addEventListener("click", function () {
+      setTimeout(function () {
+        const sb = document.getElementById(spinbuttonId);
+        const now = parseInt(sb.getAttribute("aria-valuenow"), 10);
+        const max = parseInt(sb.getAttribute("aria-valuemax"), 10);
+        const next = Math.min(now + 1, max);
+        if (next !== now) {
+          sb.setAttribute("aria-valuenow", next);
+          sb.textContent = next;
+        }
+      }, 2500);
+    });
+  }
+  wireSpinbutton(document.getElementById("qty"));
+  wireSpinbutton(document.getElementById("rating"));
+  wireDeferredBump("bump-qty", "qty");
+  wireDeferredBump("bump-rating", "rating");
+})();
+</script>
+</body>
+</html>

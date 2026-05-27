@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from . import helpers
 from .harness import keyboard
-from .helpers import BrailleLine, capture, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -81,9 +81,9 @@ def test_cycle_key_echo(gtk3_text_view: NativeAppSession) -> None:
         "Echo set to key.",
     ]:
         session.orca.call("TypingEchoPresenter", "CycleKeyEcho", True)
-        assert capture(session) == (
+        assert helpers.capture(session) == (
             [message],
-            [BrailleLine(0, message, message, "\x00" * len(message))],
+            [helpers.BrailleLine(0, message, message, "\x00" * len(message))],
         )
 
 
@@ -96,9 +96,9 @@ def test_key_echo(gtk3_text_view: NativeAppSession) -> None:
     _quiet(session)
 
     _type("a")
-    assert speech(session) == ["a"]
+    assert helpers.speech(session) == ["a"]
     _type("b")
-    assert speech(session) == ["b"]
+    assert helpers.speech(session) == ["b"]
 
 
 @pytest.mark.native_app
@@ -110,7 +110,7 @@ def test_word_echo(gtk3_text_view: NativeAppSession) -> None:
     _fresh_line(session)
 
     _type("cat ")
-    assert speech(session) == ["cat "]
+    assert helpers.speech(session) == ["cat "]
 
 
 @pytest.mark.native_app
@@ -122,7 +122,7 @@ def test_word_echo_completed_by_newline(gtk3_text_view: NativeAppSession) -> Non
     _fresh_line(session)
 
     _type("dog\n")
-    assert speech(session) == ["dog\n"]
+    assert helpers.speech(session) == ["dog\n"]
 
 
 @pytest.mark.native_app
@@ -134,9 +134,9 @@ def test_sentence_echo(gtk3_text_view: NativeAppSession) -> None:
     _fresh_line(session)
 
     _type("Hello world. ")
-    assert speech(session) == ["Hello world. "]
+    assert helpers.speech(session) == ["Hello world. "]
     _type("The end. ")
-    assert speech(session) == ["The end. "]
+    assert helpers.speech(session) == ["The end. "]
 
 
 @pytest.mark.native_app
@@ -148,7 +148,7 @@ def test_sentence_echo_completed_by_newline(gtk3_text_view: NativeAppSession) ->
     _fresh_line(session)
 
     _type("Done.\n")
-    assert speech(session) == ["Done.\n"]
+    assert helpers.speech(session) == ["Done.\n"]
 
 
 @pytest.mark.native_app
@@ -160,7 +160,7 @@ def test_character_echo_with_key_echo_off(gtk3_text_view: NativeAppSession) -> N
     _quiet(session)
 
     _type("z")
-    assert speech(session) == ["z"]
+    assert helpers.speech(session) == ["z"]
 
 
 @pytest.mark.native_app
@@ -172,4 +172,38 @@ def test_character_echo_with_key_echo_on(gtk3_text_view: NativeAppSession) -> No
     _quiet(session)
 
     _type("q")
-    assert speech(session) == ["q"]
+    assert helpers.speech(session) == ["q"]
+
+
+@pytest.mark.native_app
+def test_backspace_and_delete_in_text_view(gtk3_text_view: NativeAppSession) -> None:
+    """Tests Backspace and Delete in a text view with key echo on."""
+
+    session = gtk3_text_view
+    _set_echo(session, key=True, word=False, sentence=False, character=False)
+    _fresh_line(session)
+
+    _type("abc")
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+
+    keyboard.tap_key(keyboard.KEYSYM_BACKSPACE)
+    assert helpers.capture(session) == (
+        ["c"],
+        [helpers.BrailleLine(3, "ab $l", "ab $l", "\x00" * 5)],
+    )
+    keyboard.tap_key(keyboard.KEYSYM_BACKSPACE)
+    assert helpers.capture(session) == (["b"], [helpers.BrailleLine(2, "a $l", "a $l", "\x00" * 4)])
+
+    # Re-type and Left so Delete has something forward to act on.
+    _type("d")
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+    keyboard.tap_key(keyboard.KEYSYM_LEFT)
+    assert helpers.capture(session) == (
+        ["d"],
+        [helpers.BrailleLine(2, "ad $l", "ad $l", "\x00" * 5)],
+    )
+
+    keyboard.tap_key(keyboard.KEYSYM_DELETE)
+    assert helpers.capture(session) == ([""], [helpers.BrailleLine(2, "a $l", "a $l", "\x00" * 4)])

@@ -3659,7 +3659,7 @@ class SpeechGenerator(generator.Generator):
             return self._generate_text_content(obj) or self._generate_value(obj)
 
         result = self._generate_default_prefix(obj)
-        result += self._generate_accessible_label_and_name(obj) + result
+        result += self._generate_accessible_label_and_name(obj)
         result += self._generate_accessible_role(obj)
         result += self._generate_text_content(obj) or self._generate_value(obj)
         result += self._generate_state_required(obj)

@@ -54,7 +54,7 @@ class _Widgets:
         self.save_button = Gtk.Button(label="Save")
         self.bold_toggle = Gtk.ToggleButton(label="Bold")
         self.enabled_check = Gtk.CheckButton(label="Enabled")
-        self.quantity_spin = Gtk.SpinButton.new_with_range(0, 10, 1)
+        self.quantity_spin = Gtk.SpinButton.new_with_range(0, 100, 1)
         self.quantity_spin.get_accessible().set_name("Quantity")
         self.color_combo = Gtk.ComboBoxText()
         for color in ("Red", "Green", "Blue"):
@@ -69,6 +69,11 @@ class _Widgets:
         self.level_scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, 0, 10, 1)
         self.level_scale.set_draw_value(False)
         self.level_scale.get_accessible().set_name("Level")
+        self.bump_button = Gtk.Button(label="Bump Quantity in 2500 ms")
+        self.bump_button.connect("clicked", self._on_bump_clicked)
+        self.readonly_spin = Gtk.SpinButton.new_with_range(0, 100, 1)
+        self.readonly_spin.set_editable(False)
+        self.readonly_spin.get_accessible().set_name("Readonly")
 
         for widget in (
             self.save_button,
@@ -82,16 +87,28 @@ class _Widgets:
             self.medium_radio,
             self.large_radio,
             self.level_scale,
+            self.bump_button,
+            self.readonly_spin,
         ):
             box.pack_start(widget, False, False, 0)
         self.reset()
+
+    def _on_bump_clicked(self, _button: Gtk.Button) -> None:
+        GLib.timeout_add(2500, self._bump_quantity)
+
+    def _bump_quantity(self) -> bool:
+        value = self.quantity_spin.get_value()
+        if value < self.quantity_spin.get_adjustment().get_upper():
+            self.quantity_spin.set_value(value + 1)
+        return False
 
     def reset(self) -> None:
         """Restores every widget to its initial state so a session can be reused."""
 
         self.bold_toggle.set_active(False)
         self.enabled_check.set_active(False)
-        self.quantity_spin.set_value(5)
+        self.quantity_spin.set_value(75)
+        self.readonly_spin.set_value(25)
         self.color_combo.set_active(0)
         self.city_entry.set_text("Madrid")
         self.small_radio.set_active(True)

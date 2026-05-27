@@ -1569,7 +1569,24 @@ class BrailleGenerator(generator.Generator):
     def _generate_spin_button(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates braille for the spin-button role."""
 
-        return self._generate_text_object(obj)
+        if AXUtilities.is_editable(obj) or AXText.get_character_count(obj) > 0:
+            return self._generate_text_object(obj)
+
+        # No accessible text: render the value via the Value interface like a slider.
+        result = self._generate_default_prefix(obj)
+        result += [
+            braille.Component(
+                obj,
+                self._as_string(
+                    self._generate_accessible_label_and_name(obj)
+                    + self._generate_value(obj)
+                    + self._generate_accessible_role(obj)
+                    + self._generate_keyboard_mnemonic(obj),
+                ),
+            ),
+        ]
+        result += self._generate_default_suffix(obj)
+        return result
 
     def _generate_split_pane(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates braille for the split-pane role."""

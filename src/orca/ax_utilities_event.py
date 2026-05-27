@@ -379,6 +379,10 @@ class AXUtilitiesEvent:
             line, _start, _end = AXText.get_line_at_offset(obj)
             if AXUtilitiesEvent._is_terminal_escape_sequence(line):
                 return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
+        if (
+            mgr.last_event_was_up_or_down() or mgr.last_event_was_page_up_or_page_down()
+        ) and AXUtilitiesEvent._is_spin_button_descendant(obj):
+            return TextEventReason.SPIN_BUTTON_VALUE_CHANGE
         if mgr.last_event_was_caret_selection():
             return AXUtilitiesEvent._get_selection_navigation_reason(mgr)
         if mgr.last_event_was_caret_navigation():

@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from . import helpers
 from .harness import keyboard
-from .helpers import BrailleLine, capture, reset_web_state, tab
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -35,7 +35,7 @@ if TYPE_CHECKING:
 
 def _where_am_i(session: NativeAppSession) -> tuple[list[str], list[tuple[int, str, str | None]]]:
     keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
-    return capture(session)
+    return helpers.capture(session)
 
 
 @pytest.mark.native_app
@@ -43,42 +43,46 @@ def test_where_am_i_on_form_controls(web_form_fields: NativeAppSession) -> None:
     """Tests Where Am I on entry, combo box, checkbox, radio button, and button."""
 
     session = web_form_fields
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
-    tab(session)
+    helpers.tab_and_swallow_presentation(session)
     assert _where_am_i(session) == (
         ["entry", "Jane Doe", "selected"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 14, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 5 + "\xc0" * 8 + "\x00" * 3
             ),
-            BrailleLine(
+            helpers.BrailleLine(
                 14, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 5 + "\xc0" * 8 + "\x00" * 3
             ),
         ],
     )
 
     for _ in range(3):
-        tab(session)
+        helpers.tab_and_swallow_presentation(session)
     assert _where_am_i(session) == (
         ["Fruit", "combo box", "Apple"],
-        [BrailleLine(7, "Fruit Apple combo box", "Fruit Apple combo box", "\x00" * 21)],
+        [helpers.BrailleLine(7, "Fruit Apple combo box", "Fruit Apple combo box", "\x00" * 21)],
     )
 
-    tab(session)
+    helpers.tab_and_swallow_presentation(session)
     assert _where_am_i(session) == (
         ["Subscribe", "check box not checked"],
         [
-            BrailleLine(1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23),
-            BrailleLine(1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23),
+            helpers.BrailleLine(
+                1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23
+            ),
+            helpers.BrailleLine(
+                1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23
+            ),
         ],
     )
 
-    tab(session)
+    helpers.tab_and_swallow_presentation(session)
     assert _where_am_i(session) == (
         ["Pick a color", "Red color", "not selected radio button"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 14,
                 " Pick a color& y Red color radio button",
                 " Pick a color& y Red color radio",
@@ -88,12 +92,12 @@ def test_where_am_i_on_form_controls(web_form_fields: NativeAppSession) -> None:
     )
 
     for _ in range(2):
-        tab(session)
+        helpers.tab_and_swallow_presentation(session)
     assert _where_am_i(session) == (
         ["Submit", "button"],
         [
-            BrailleLine(1, "Submit button", "Submit button", "\x00" * 13),
-            BrailleLine(1, "Submit button", "Submit button", "\x00" * 13),
+            helpers.BrailleLine(1, "Submit button", "Submit button", "\x00" * 13),
+            helpers.BrailleLine(1, "Submit button", "Submit button", "\x00" * 13),
         ],
     )
 
@@ -103,14 +107,18 @@ def test_where_am_i_on_slider(web_sliders: NativeAppSession) -> None:
     """Tests Where Am I on a horizontal slider."""
 
     session = web_sliders
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
-    tab(session)
+    helpers.tab_and_swallow_presentation(session)
     assert _where_am_i(session) == (
         ["Volume", "horizontal slider", "2", "50 percent."],
         [
-            BrailleLine(1, "Volume 2 horizontal slider", "Volume 2 horizontal slider", "\x00" * 26),
-            BrailleLine(1, "Volume 2 horizontal slider", "Volume 2 horizontal slider", "\x00" * 26),
+            helpers.BrailleLine(
+                1, "Volume 2 horizontal slider", "Volume 2 horizontal slider", "\x00" * 26
+            ),
+            helpers.BrailleLine(
+                1, "Volume 2 horizontal slider", "Volume 2 horizontal slider", "\x00" * 26
+            ),
         ],
     )
 
@@ -120,10 +128,10 @@ def test_where_am_i_on_link(web_landmarks: NativeAppSession) -> None:
     """Tests Where Am I on a link."""
 
     session = web_landmarks
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
-    tab(session)
+    helpers.tab_and_swallow_presentation(session)
     assert _where_am_i(session) == (
         ["https link Home", "different site"],
-        [BrailleLine(1, "Home", "Home", "\xc0" * 4)],
+        [helpers.BrailleLine(1, "Home", "Home", "\xc0" * 4)],
     )

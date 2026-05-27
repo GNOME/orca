@@ -852,6 +852,8 @@ class TestAXUtilitiesEvent:
             "last_event_was_page_switch": False,
             "last_event_was_command": False,
             "last_event_was_escape": False,
+            "last_event_was_up_or_down": False,
+            "last_event_was_page_up_or_page_down": False,
         }
         input_defaults.update(case["input_events"])
         for attr, value in input_defaults.items():
@@ -1878,6 +1880,8 @@ class TestAXUtilitiesEvent:
             "last_event_was_escape": False,
             "last_event_was_printable_key": False,
             "last_event_was_tab_navigation": False,
+            "last_event_was_up_or_down": False,
+            "last_event_was_page_up_or_page_down": False,
         }
         default_config.update(case["input_manager_config"])
 

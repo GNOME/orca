@@ -26,8 +26,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from . import helpers
 from .harness import keyboard
-from .helpers import BrailleLine, capture, move_to_top
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -46,43 +46,47 @@ def test_structural_navigation_by_form_field(web_form_fields: NativeAppSession) 
     """Tests structural navigation by form field across every field type."""
 
     session = web_form_fields
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_F)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["f", "Name", "entry", "Jane Doe"],
-        [BrailleLine(6, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
+        [helpers.BrailleLine(6, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_F)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["f", "Bio", "entry", "First line of bio. "],
-        [BrailleLine(5, "Bio First line of bio.  $l", "Bio First line of bio.  $l", "\x00" * 26)],
+        [
+            helpers.BrailleLine(
+                5, "Bio First line of bio.  $l", "Bio First line of bio.  $l", "\x00" * 26
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_F)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["f", "Search", "editable combo box", "opens listbox"],
-        [BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
+        [helpers.BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_F)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["f", "Fruit", "combo box", "Apple", "opens menu"],
-        [BrailleLine(7, "Fruit Apple combo box", "Fruit Apple combo box", "\x00" * 21)],
+        [helpers.BrailleLine(7, "Fruit Apple combo box", "Fruit Apple combo box", "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_F)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["f", "Subscribe", "check box not checked"],
-        [BrailleLine(1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23)],
+        [helpers.BrailleLine(1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_F)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["f", "Pick a color", "panel", "Red color", "not selected radio button"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 14,
                 " Pick a color& y Red color radio button",
                 " Pick a color& y Red color radio",
@@ -92,10 +96,10 @@ def test_structural_navigation_by_form_field(web_form_fields: NativeAppSession) 
     )
 
     keyboard.tap_key(keyboard.KEYSYM_F)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["f", "Green color", "not selected radio button"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 14,
                 " Pick a color& y Green color radio button",
                 " Pick a color& y Green color rad",
@@ -105,10 +109,10 @@ def test_structural_navigation_by_form_field(web_form_fields: NativeAppSession) 
     )
 
     keyboard.tap_key(keyboard.KEYSYM_F)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["f", "Blue color", "not selected radio button"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 14,
                 " Pick a color& y Blue color radio button",
                 " Pick a color& y Blue color radi",
@@ -118,51 +122,51 @@ def test_structural_navigation_by_form_field(web_form_fields: NativeAppSession) 
     )
 
     keyboard.tap_key(keyboard.KEYSYM_F)
-    assert capture(session) == (
-        ["f", "leaving panel.", "leaving panel.", "Quantity", "spin button", "3"],
-        [BrailleLine(10, "Quantity 3 $l", "Quantity 3 $l", "\x00" * 13)],
+    assert helpers.capture(session) == (
+        ["f", "leaving panel.", "Quantity", "spin button", "3"],
+        [helpers.BrailleLine(10, "Quantity 3 $l", "Quantity 3 $l", "\x00" * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_F)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["f", "Submit", "button"],
-        [BrailleLine(1, "Submit button", "Submit button", "\x00" * 13)],
+        [helpers.BrailleLine(1, "Submit button", "Submit button", "\x00" * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_F)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["f", "Mute", "toggle button not pressed"],
-        [BrailleLine(1, "& y Mute toggle button", "& y Mute toggle button", "\x00" * 22)],
+        [helpers.BrailleLine(1, "& y Mute toggle button", "& y Mute toggle button", "\x00" * 22)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_F)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["f", "Wi-Fi", "switch not pressed"],
-        [BrailleLine(1, "& y Wi-Fi switch", "& y Wi-Fi switch", "\x00" * 16)],
+        [helpers.BrailleLine(1, "& y Wi-Fi switch", "& y Wi-Fi switch", "\x00" * 16)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_F)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["f", "Wrapping to top.", "Name", "entry", "Jane Doe"],
         [
-            BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
-            BrailleLine(6, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16),
+            helpers.BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
+            helpers.BrailleLine(6, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16),
         ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_F)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["F", "Wrapping to bottom.", "Wi-Fi", "switch not pressed"],
         [
-            BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
-            BrailleLine(1, "& y Wi-Fi switch", "& y Wi-Fi switch", "\x00" * 16),
+            helpers.BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
+            helpers.BrailleLine(1, "& y Wi-Fi switch", "& y Wi-Fi switch", "\x00" * 16),
         ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_F)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["F", "Mute", "toggle button not pressed"],
-        [BrailleLine(1, "& y Mute toggle button", "& y Mute toggle button", "\x00" * 22)],
+        [helpers.BrailleLine(1, "& y Mute toggle button", "& y Mute toggle button", "\x00" * 22)],
     )
 
 
@@ -171,54 +175,58 @@ def test_structural_navigation_by_entry(web_form_fields: NativeAppSession) -> No
     """Tests structural navigation by entry, which includes the spin button."""
 
     session = web_form_fields
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_E)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["e", "Name", "entry", "Jane Doe"],
-        [BrailleLine(6, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
+        [helpers.BrailleLine(6, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_E)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["e", "Bio", "entry", "First line of bio. "],
-        [BrailleLine(5, "Bio First line of bio.  $l", "Bio First line of bio.  $l", "\x00" * 26)],
+        [
+            helpers.BrailleLine(
+                5, "Bio First line of bio.  $l", "Bio First line of bio.  $l", "\x00" * 26
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_E)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["e", "Search", "editable combo box", "opens listbox"],
-        [BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
+        [helpers.BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_E)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["e", "Quantity", "spin button", "3"],
-        [BrailleLine(10, "Quantity 3 $l", "Quantity 3 $l", "\x00" * 13)],
+        [helpers.BrailleLine(10, "Quantity 3 $l", "Quantity 3 $l", "\x00" * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_E)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["e", "Wrapping to top.", "Name", "entry", "Jane Doe"],
         [
-            BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
-            BrailleLine(6, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16),
+            helpers.BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
+            helpers.BrailleLine(6, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16),
         ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_E)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["E", "Wrapping to bottom.", "Quantity", "spin button", "3"],
         [
-            BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
-            BrailleLine(10, "Quantity 3 $l", "Quantity 3 $l", "\x00" * 13),
+            helpers.BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
+            helpers.BrailleLine(10, "Quantity 3 $l", "Quantity 3 $l", "\x00" * 13),
         ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_E)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["E", "Search", "editable combo box", "opens listbox"],
-        [BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
+        [helpers.BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
 
@@ -227,29 +235,33 @@ def test_structural_navigation_by_checkbox(web_form_fields: NativeAppSession) ->
     """Tests structural navigation by checkbox, including the wrap announcement."""
 
     session = web_form_fields
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_X)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["x", "Subscribe", "check box not checked"],
-        [BrailleLine(1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23)],
+        [helpers.BrailleLine(1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_X)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["x", "Wrapping to top.", "Subscribe", "not checked"],
         [
-            BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
-            BrailleLine(1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23),
+            helpers.BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
+            helpers.BrailleLine(
+                1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23
+            ),
         ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_X)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["X", "Wrapping to bottom.", "Subscribe", "not checked"],
         [
-            BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
-            BrailleLine(1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23),
+            helpers.BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
+            helpers.BrailleLine(
+                1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23
+            ),
         ],
     )
 
@@ -259,13 +271,13 @@ def test_structural_navigation_by_radio_button(web_form_fields: NativeAppSession
     """Tests structural navigation by radio button, including the wrap announcement."""
 
     session = web_form_fields
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_R)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["r", "Pick a color", "panel", "Red color", "not selected radio button"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 14,
                 " Pick a color& y Red color radio button",
                 " Pick a color& y Red color radio",
@@ -275,10 +287,10 @@ def test_structural_navigation_by_radio_button(web_form_fields: NativeAppSession
     )
 
     keyboard.tap_key(keyboard.KEYSYM_R)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["r", "Green color", "not selected radio button"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 14,
                 " Pick a color& y Green color radio button",
                 " Pick a color& y Green color rad",
@@ -288,10 +300,10 @@ def test_structural_navigation_by_radio_button(web_form_fields: NativeAppSession
     )
 
     keyboard.tap_key(keyboard.KEYSYM_R)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["r", "Blue color", "not selected radio button"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 14,
                 " Pick a color& y Blue color radio button",
                 " Pick a color& y Blue color radi",
@@ -301,11 +313,11 @@ def test_structural_navigation_by_radio_button(web_form_fields: NativeAppSession
     )
 
     keyboard.tap_key(keyboard.KEYSYM_R)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["r", "Wrapping to top.", "Red color", "not selected radio button"],
         [
-            BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
-            BrailleLine(
+            helpers.BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
+            helpers.BrailleLine(
                 14,
                 " Pick a color& y Red color radio button",
                 " Pick a color& y Red color radio",
@@ -315,11 +327,11 @@ def test_structural_navigation_by_radio_button(web_form_fields: NativeAppSession
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_R)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["R", "Wrapping to bottom.", "Blue color", "not selected radio button"],
         [
-            BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
-            BrailleLine(
+            helpers.BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
+            helpers.BrailleLine(
                 14,
                 " Pick a color& y Blue color radio button",
                 " Pick a color& y Blue color radi",
@@ -329,10 +341,10 @@ def test_structural_navigation_by_radio_button(web_form_fields: NativeAppSession
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_R)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["R", "Green color", "not selected radio button"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 14,
                 " Pick a color& y Green color radio button",
                 " Pick a color& y Green color rad",
@@ -347,48 +359,48 @@ def test_structural_navigation_by_button(web_form_fields: NativeAppSession) -> N
     """Tests structural navigation by button, including toggle button and switch."""
 
     session = web_form_fields
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_B)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["b", "Submit", "button"],
-        [BrailleLine(1, "Submit button", "Submit button", "\x00" * 13)],
+        [helpers.BrailleLine(1, "Submit button", "Submit button", "\x00" * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_B)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["b", "Mute", "toggle button not pressed"],
-        [BrailleLine(1, "& y Mute toggle button", "& y Mute toggle button", "\x00" * 22)],
+        [helpers.BrailleLine(1, "& y Mute toggle button", "& y Mute toggle button", "\x00" * 22)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_B)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["b", "Wi-Fi", "switch not pressed"],
-        [BrailleLine(1, "& y Wi-Fi switch", "& y Wi-Fi switch", "\x00" * 16)],
+        [helpers.BrailleLine(1, "& y Wi-Fi switch", "& y Wi-Fi switch", "\x00" * 16)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_B)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["b", "Wrapping to top.", "Submit", "button"],
         [
-            BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
-            BrailleLine(1, "Submit button", "Submit button", "\x00" * 13),
+            helpers.BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
+            helpers.BrailleLine(1, "Submit button", "Submit button", "\x00" * 13),
         ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_B)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["B", "Wrapping to bottom.", "Wi-Fi", "switch not pressed"],
         [
-            BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
-            BrailleLine(1, "& y Wi-Fi switch", "& y Wi-Fi switch", "\x00" * 16),
+            helpers.BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
+            helpers.BrailleLine(1, "& y Wi-Fi switch", "& y Wi-Fi switch", "\x00" * 16),
         ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_B)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["B", "Mute", "toggle button not pressed"],
-        [BrailleLine(1, "& y Mute toggle button", "& y Mute toggle button", "\x00" * 22)],
+        [helpers.BrailleLine(1, "& y Mute toggle button", "& y Mute toggle button", "\x00" * 22)],
     )
 
 
@@ -397,42 +409,42 @@ def test_structural_navigation_by_combo_box(web_form_fields: NativeAppSession) -
     """Tests structural navigation by combo box across the editable and select variants."""
 
     session = web_form_fields
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_C)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["c", "Search", "editable combo box", "opens listbox"],
-        [BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
+        [helpers.BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_C)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["c", "Fruit", "combo box", "Apple", "opens menu"],
-        [BrailleLine(7, "Fruit Apple combo box", "Fruit Apple combo box", "\x00" * 21)],
+        [helpers.BrailleLine(7, "Fruit Apple combo box", "Fruit Apple combo box", "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_C)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["c", "Wrapping to top.", "Search", "editable combo box", "opens listbox"],
         [
-            BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
-            BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21),
+            helpers.BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
+            helpers.BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21),
         ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_C)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["C", "Wrapping to bottom.", "Fruit", "combo box", "Apple", "opens menu"],
         [
-            BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
-            BrailleLine(7, "Fruit Apple combo box", "Fruit Apple combo box", "\x00" * 21),
+            helpers.BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
+            helpers.BrailleLine(7, "Fruit Apple combo box", "Fruit Apple combo box", "\x00" * 21),
         ],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_C)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["C", "Search", "editable combo box", "opens listbox"],
-        [BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
+        [helpers.BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
 
@@ -441,49 +453,49 @@ def test_word_navigation_in_editable_combo_box(web_form_fields: NativeAppSession
     """Tests native word navigation in an editable combo box speaks the word, not the combo name."""
 
     session = web_form_fields
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    capture(session)
+    helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    capture(session)
+    helpers.capture(session)
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Search", "editable combo box", "opens listbox"],
-        [BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
+        [helpers.BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
-    capture(session)
+    helpers.capture(session)
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["foo "],
-        [BrailleLine(11, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
+        [helpers.BrailleLine(11, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["bar "],
-        [BrailleLine(15, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
+        [helpers.BrailleLine(15, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["baz"],
-        [BrailleLine(19, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
+        [helpers.BrailleLine(19, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["baz"],
-        [BrailleLine(16, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
+        [helpers.BrailleLine(16, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["bar "],
-        [BrailleLine(12, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
+        [helpers.BrailleLine(12, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
     _exit_focus_mode(session)
@@ -494,37 +506,37 @@ def test_character_navigation_in_editable_combo_box(web_form_fields: NativeAppSe
     """Tests that native character navigation in an editable combo box speaks the character."""
 
     session = web_form_fields
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
-    capture(session)
+    helpers.capture(session)
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["o"],
-        [BrailleLine(9, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
+        [helpers.BrailleLine(9, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["o"],
-        [BrailleLine(10, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
+        [helpers.BrailleLine(10, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         [" "],
-        [BrailleLine(11, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
+        [helpers.BrailleLine(11, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["o"],
-        [BrailleLine(10, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
+        [helpers.BrailleLine(10, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
     _exit_focus_mode(session)
@@ -535,38 +547,38 @@ def test_caret_navigation_in_text_entry(web_form_fields: NativeAppSession) -> No
     """Tests native word and character navigation in a single-line text entry."""
 
     session = web_form_fields
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    capture(session)
+    helpers.capture(session)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
-    capture(session)
+    helpers.capture(session)
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Jane "],
-        [BrailleLine(10, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
+        [helpers.BrailleLine(10, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Doe"],
-        [BrailleLine(14, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
+        [helpers.BrailleLine(14, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
-    capture(session)
+    helpers.capture(session)
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["a"],
-        [BrailleLine(7, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
+        [helpers.BrailleLine(7, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["n"],
-        [BrailleLine(8, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
+        [helpers.BrailleLine(8, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
     )
 
     _exit_focus_mode(session)
@@ -577,65 +589,69 @@ def test_browse_mode_line_navigation(web_form_fields: NativeAppSession) -> None:
     """Tests Down-arrow line navigation in browse mode across every field type."""
 
     session = web_form_fields
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Name", "entry", "Jane Doe"],
-        [BrailleLine(0, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
+        [helpers.BrailleLine(0, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Bio"],
-        [BrailleLine(1, "Bio", "Bio", "\x00" * 3)],
+        [helpers.BrailleLine(1, "Bio", "Bio", "\x00" * 3)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Bio", "entry", "First line of bio. "],
-        [BrailleLine(5, "Bio First line of bio.  $l", "Bio First line of bio.  $l", "\x00" * 26)],
+        [
+            helpers.BrailleLine(
+                5, "Bio First line of bio.  $l", "Bio First line of bio.  $l", "\x00" * 26
+            )
+        ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Second sentence here."],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 5, "Bio Second sentence here. $l", "Bio Second sentence here. $l", "\x00" * 28
             )
         ],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Search", "editable combo box", "opens listbox"],
-        [BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
+        [helpers.BrailleLine(8, "Search foo bar baz $l", "Search foo bar baz $l", "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Fruit", "combo box", "Apple", "opens menu"],
-        [BrailleLine(0, "Fruit Apple combo box", "Fruit Apple combo box", "\x00" * 21)],
+        [helpers.BrailleLine(0, "Fruit Apple combo box", "Fruit Apple combo box", "\x00" * 21)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Subscribe", "check box not checked"],
-        [BrailleLine(1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23)],
+        [helpers.BrailleLine(1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Pick a color", "panel"],
-        [BrailleLine(1, "Pick a color", "Pick a color", "\x00" * 12)],
+        [helpers.BrailleLine(1, "Pick a color", "Pick a color", "\x00" * 12)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Red color", "not selected radio button"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 14,
                 " Pick a color& y Red color radio button",
                 " Pick a color& y Red color radio",
@@ -645,10 +661,10 @@ def test_browse_mode_line_navigation(web_form_fields: NativeAppSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Green color", "not selected radio button"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 14,
                 " Pick a color& y Green color radio button",
                 " Pick a color& y Green color rad",
@@ -658,10 +674,10 @@ def test_browse_mode_line_navigation(web_form_fields: NativeAppSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Blue color", "not selected radio button"],
         [
-            BrailleLine(
+            helpers.BrailleLine(
                 14,
                 " Pick a color& y Blue color radio button",
                 " Pick a color& y Blue color radi",
@@ -671,27 +687,27 @@ def test_browse_mode_line_navigation(web_form_fields: NativeAppSession) -> None:
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
-        ["leaving panel.", "leaving panel.", "Quantity", "spin button", "3"],
-        [BrailleLine(0, "Quantity 3 $l", "Quantity 3 $l", "\x00" * 13)],
+    assert helpers.capture(session) == (
+        ["leaving panel.", "Quantity", "spin button", "3"],
+        [helpers.BrailleLine(0, "Quantity 3 $l", "Quantity 3 $l", "\x00" * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Submit", "button"],
-        [BrailleLine(1, "Submit button", "Submit button", "\x00" * 13)],
+        [helpers.BrailleLine(1, "Submit button", "Submit button", "\x00" * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Mute", "toggle button not pressed"],
-        [BrailleLine(1, "& y Mute toggle button", "& y Mute toggle button", "\x00" * 22)],
+        [helpers.BrailleLine(1, "& y Mute toggle button", "& y Mute toggle button", "\x00" * 22)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Wi-Fi", "switch not pressed"],
-        [BrailleLine(1, "& y Wi-Fi switch", "& y Wi-Fi switch", "\x00" * 16)],
+        [helpers.BrailleLine(1, "& y Wi-Fi switch", "& y Wi-Fi switch", "\x00" * 16)],
     )
 
 
@@ -700,14 +716,14 @@ def test_fieldset_legend_role_only_on_entry(web_form_fields: NativeAppSession) -
     """The group's role is announced when entering via the legend, but not when revisited."""
 
     session = web_form_fields
-    move_to_top(session)
+    helpers.move_to_top(session)
 
     for _ in range(9):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        capture(session)
+        helpers.capture(session)
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Pick a color"],
-        [BrailleLine(1, "Pick a color", "Pick a color", "\x00" * 12)],
+        [helpers.BrailleLine(1, "Pick a color", "Pick a color", "\x00" * 12)],
     )

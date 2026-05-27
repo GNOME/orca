@@ -932,10 +932,16 @@ class Script(script.Script):
         manager.set_last_cursor_position(event.source, offset)
         self.utilities.set_caret_context(event.source, offset)
 
+        # The text-changed and text-selection-changed handlers already refreshed braille
+        # and presented speech for these reasons. Letting caret-moved also run would
+        # re-emit the same braille line a second time for the same logical operation.
         ignore = [
+            TextEventReason.BACKSPACE,
             TextEventReason.CUT,
+            TextEventReason.DELETE,
             TextEventReason.PASTE,
             TextEventReason.REDO,
+            TextEventReason.SPIN_BUTTON_VALUE_CHANGE,
             TextEventReason.UNDO,
         ]
         if reason in ignore:
@@ -1215,6 +1221,11 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
+        if reason == TextEventReason.SPIN_BUTTON_VALUE_CHANGE:
+            msg = "DEFAULT: Ignoring deletion; spin button value is presented via value-changed"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         presentation_manager.get_manager().present_command_announcement()
         self.update_braille(event.source)
 
@@ -1255,6 +1266,11 @@ class Script(script.Script):
         reason = AXUtilities.get_text_event_reason(event)
         if reason == TextEventReason.AUTO_INSERTION_UNPRESENTABLE:
             msg = "DEFAULT: Ignoring event believed to be irrelevant auto insertion"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
+        if reason == TextEventReason.SPIN_BUTTON_VALUE_CHANGE:
+            msg = "DEFAULT: Ignoring insertion; spin button value is presented via value-changed"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
@@ -1333,6 +1349,11 @@ class Script(script.Script):
         reason = AXUtilities.get_text_event_reason(event)
         if reason == TextEventReason.UNKNOWN:
             msg = "DEFAULT: Ignoring event because reason for change is unknown"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            AXUtilities.update_cached_selected_text(event.source)
+            return True
+        if reason == TextEventReason.SPIN_BUTTON_VALUE_CHANGE:
+            msg = "DEFAULT: Ignoring selection; spin button value is presented via value-changed"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             AXUtilities.update_cached_selected_text(event.source)
             return True

@@ -31,8 +31,8 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from . import helpers
 from .harness import keyboard
-from .helpers import BrailleLine, capture, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -47,14 +47,12 @@ def _prepare(session: NativeAppSession) -> None:
 
 def _tab_to(session: NativeAppSession, count: int) -> None:
     for _ in range(count):
-        keyboard.tap_key(keyboard.KEYSYM_TAB)
-    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
-    session.reader.reset()
+        helpers.tab_and_swallow_presentation(session)
 
 
-def _press(session: NativeAppSession, keysym: int) -> tuple[list[str], list[BrailleLine]]:
+def _press(session: NativeAppSession, keysym: int) -> tuple[list[str], list[helpers.BrailleLine]]:
     keyboard.tap_key(keysym)
-    return capture(session)
+    return helpers.capture(session)
 
 
 @pytest.mark.native_app
@@ -68,43 +66,70 @@ def test_tab_navigation_announces_each_widget_role(
 
     assert _press(session, keyboard.KEYSYM_TAB) == (
         ["Bold toggle button not pressed"],
-        [BrailleLine(1, "& y Bold toggle button", "& y Bold toggle button", "\x00" * 22)],
+        [helpers.BrailleLine(1, "& y Bold toggle button", "& y Bold toggle button", "\x00" * 22)],
     )
     assert _press(session, keyboard.KEYSYM_TAB) == (
         ["Enabled check box not checked"],
-        [BrailleLine(1, "< > Enabled check box", "< > Enabled check box", "\x00" * 21)],
+        [helpers.BrailleLine(1, "< > Enabled check box", "< > Enabled check box", "\x00" * 21)],
     )
     assert _press(session, keyboard.KEYSYM_TAB) == (
-        ["Quantity spin button", "5"],
-        [BrailleLine(11, "Quantity 5 $l", "Quantity 5 $l", "\x00" * 9 + "\xc0" + "\x00" * 3)],
+        ["Quantity spin button", "75"],
+        [
+            helpers.BrailleLine(
+                12, "Quantity 75 $l", "Quantity 75 $l", "\x00" * 9 + "\xc0\xc0" + "\x00" * 3
+            )
+        ],
     )
     assert _press(session, keyboard.KEYSYM_TAB) == (
         ["Color combo box Red"],
-        [BrailleLine(7, "Color Red combo box", "Color Red combo box", "\x00" * 19)],
+        [helpers.BrailleLine(7, "Color Red combo box", "Color Red combo box", "\x00" * 19)],
     )
     assert _press(session, keyboard.KEYSYM_TAB) == (
         ["City text", "Madrid", "selected"],
-        [BrailleLine(12, "City Madrid $l", "City Madrid $l", "\x00" * 5 + "\xc0" * 6 + "\x00" * 3)],
+        [
+            helpers.BrailleLine(
+                12, "City Madrid $l", "City Madrid $l", "\x00" * 5 + "\xc0" * 6 + "\x00" * 3
+            )
+        ],
     )
     assert _press(session, keyboard.KEYSYM_TAB) == (
         ["Website button"],
-        [BrailleLine(1, "Website button", "Website button", "\x00" * 14)],
+        [helpers.BrailleLine(1, "Website button", "Website button", "\x00" * 14)],
     )
     assert _press(session, keyboard.KEYSYM_TAB) == (
         ["Small selected radio button"],
-        [BrailleLine(1, "&=y Small radio button", "&=y Small radio button", "\x00" * 22)],
+        [helpers.BrailleLine(1, "&=y Small radio button", "&=y Small radio button", "\x00" * 22)],
     )
     assert _press(session, keyboard.KEYSYM_TAB) == (
         ["Level horizontal slider 3 30 percent."],
-        [BrailleLine(1, "Level 3 horizontal slider", "Level 3 horizontal slider", "\x00" * 25)],
+        [
+            helpers.BrailleLine(
+                1, "Level 3 horizontal slider", "Level 3 horizontal slider", "\x00" * 25
+            )
+        ],
+    )
+    assert _press(session, keyboard.KEYSYM_TAB) == (
+        ["Bump Quantity in 2500 ms button"],
+        [
+            helpers.BrailleLine(
+                1,
+                "Bump Quantity in 2500 ms button",
+                "Bump Quantity in 2500 ms button",
+                "\x00" * 31,
+            )
+        ],
+    )
+    assert _press(session, keyboard.KEYSYM_TAB) == (
+        ["Readonly spin button 25"],
+        [helpers.BrailleLine(10, "Readonly 25", "Readonly 25", "\x00" * 11)],
     )
     assert _press(session, keyboard.KEYSYM_TAB) == (
         ["Widgets page tab"],
-        [BrailleLine(1, "Widgets page tab", "Widgets page tab", "\x00" * 16)],
+        [helpers.BrailleLine(1, "Widgets page tab", "Widgets page tab", "\x00" * 16)],
     )
     assert _press(session, keyboard.KEYSYM_TAB) == (
         ["Save button"],
-        [BrailleLine(1, "Save button", "Save button", "\x00" * 11)],
+        [helpers.BrailleLine(1, "Save button", "Save button", "\x00" * 11)],
     )
 
 
@@ -117,15 +142,15 @@ def test_menu_bar_navigation(gtk3_widget_notebook: NativeAppSession) -> None:
 
     assert _press(session, keyboard.KEYSYM_F10) == (
         ["File menu", "Alt+F"],
-        [BrailleLine(1, "File menu Alt+F", "File menu Alt+F", "\x00" * 15)],
+        [helpers.BrailleLine(1, "File menu Alt+F", "File menu Alt+F", "\x00" * 15)],
     )
     assert _press(session, keyboard.KEYSYM_DOWN) == (
         ["New", "N"],
-        [BrailleLine(1, "New N", "New N", "\x00" * 5)],
+        [helpers.BrailleLine(1, "New N", "New N", "\x00" * 5)],
     )
     assert _press(session, keyboard.KEYSYM_ESCAPE) == (
         ["Widgets page tab", "Save button"],
-        [BrailleLine(1, "Save button", "Save button", "\x00" * 11)],
+        [helpers.BrailleLine(1, "Save button", "Save button", "\x00" * 11)],
     )
 
 
@@ -139,11 +164,11 @@ def test_toggle_button_state_changes(gtk3_widget_notebook: NativeAppSession) -> 
 
     assert _press(session, keyboard.KEYSYM_SPACE) == (
         ["pressed"],
-        [BrailleLine(1, "&=y Bold toggle button", "&=y Bold toggle button", "\x00" * 22)],
+        [helpers.BrailleLine(1, "&=y Bold toggle button", "&=y Bold toggle button", "\x00" * 22)],
     )
     assert _press(session, keyboard.KEYSYM_SPACE) == (
         ["not pressed"],
-        [BrailleLine(1, "& y Bold toggle button", "& y Bold toggle button", "\x00" * 22)],
+        [helpers.BrailleLine(1, "& y Bold toggle button", "& y Bold toggle button", "\x00" * 22)],
     )
 
 
@@ -157,28 +182,12 @@ def test_check_button_state_changes(gtk3_widget_notebook: NativeAppSession) -> N
 
     assert _press(session, keyboard.KEYSYM_SPACE) == (
         ["checked"],
-        [BrailleLine(1, "<x> Enabled check box", "<x> Enabled check box", "\x00" * 21)],
+        [helpers.BrailleLine(1, "<x> Enabled check box", "<x> Enabled check box", "\x00" * 21)],
     )
     assert _press(session, keyboard.KEYSYM_SPACE) == (
         ["not checked"],
-        [BrailleLine(1, "< > Enabled check box", "< > Enabled check box", "\x00" * 21)],
+        [helpers.BrailleLine(1, "< > Enabled check box", "< > Enabled check box", "\x00" * 21)],
     )
-
-
-@pytest.mark.native_app
-def test_spin_button_value_changes(gtk3_widget_notebook: NativeAppSession) -> None:
-    """Tests that arrowing a spin button announces and brailles the new value."""
-
-    session = gtk3_widget_notebook
-    _prepare(session)
-    _tab_to(session, 3)
-
-    # A spin value change re-emits its braille line several times: 5 on the first
-    # change after focus, 3 thereafter.
-    six = BrailleLine(10, "Quantity 6 $l", "Quantity 6 $l", "\x00" * 13)
-    five = BrailleLine(10, "Quantity 5 $l", "Quantity 5 $l", "\x00" * 13)
-    assert _press(session, keyboard.KEYSYM_UP) == (["6"], [six] * 5)
-    assert _press(session, keyboard.KEYSYM_DOWN) == (["5"], [five] * 3)
 
 
 @pytest.mark.native_app
@@ -190,11 +199,11 @@ def test_combo_box_open_navigate_select(gtk3_widget_notebook: NativeAppSession) 
     _tab_to(session, 4)
 
     keyboard.press_chord([keyboard.KEYSYM_ALT_L], keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Red"]
+    assert helpers.speech(session) == ["Red"]
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Green"]
+    assert helpers.speech(session) == ["Green"]
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    assert speech(session) == ["Color combo box Green"]
+    assert helpers.speech(session) == ["Color combo box Green"]
 
 
 @pytest.mark.native_app
@@ -207,11 +216,11 @@ def test_radio_button_selection_change(gtk3_widget_notebook: NativeAppSession) -
 
     assert _press(session, keyboard.KEYSYM_DOWN) == (
         ["Medium selected radio button"],
-        [BrailleLine(1, "&=y Medium radio button", "&=y Medium radio button", "\x00" * 23)],
+        [helpers.BrailleLine(1, "&=y Medium radio button", "&=y Medium radio button", "\x00" * 23)],
     )
     assert _press(session, keyboard.KEYSYM_UP) == (
         ["Small selected radio button"],
-        [BrailleLine(1, "&=y Small radio button", "&=y Small radio button", "\x00" * 22)],
+        [helpers.BrailleLine(1, "&=y Small radio button", "&=y Small radio button", "\x00" * 22)],
     )
 
 
@@ -225,11 +234,19 @@ def test_scale_value_changes(gtk3_widget_notebook: NativeAppSession) -> None:
 
     assert _press(session, keyboard.KEYSYM_RIGHT) == (
         ["4"],
-        [BrailleLine(1, "Level 4 horizontal slider", "Level 4 horizontal slider", "\x00" * 25)],
+        [
+            helpers.BrailleLine(
+                1, "Level 4 horizontal slider", "Level 4 horizontal slider", "\x00" * 25
+            )
+        ],
     )
     assert _press(session, keyboard.KEYSYM_LEFT) == (
         ["3"],
-        [BrailleLine(1, "Level 3 horizontal slider", "Level 3 horizontal slider", "\x00" * 25)],
+        [
+            helpers.BrailleLine(
+                1, "Level 3 horizontal slider", "Level 3 horizontal slider", "\x00" * 25
+            )
+        ],
     )
 
 
@@ -241,21 +258,21 @@ def test_tab_bar_arrow_navigation(gtk3_widget_notebook: NativeAppSession) -> Non
     _prepare(session)
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
-    assert capture(session) == (
+    assert helpers.capture(session) == (
         ["Widgets page tab"],
-        [BrailleLine(1, "Widgets page tab", "Widgets page tab", "\x00" * 16)],
+        [helpers.BrailleLine(1, "Widgets page tab", "Widgets page tab", "\x00" * 16)],
     )
     assert _press(session, keyboard.KEYSYM_RIGHT) == (
         ["Messages page tab"],
-        [BrailleLine(1, "Messages page tab", "Messages page tab", "\x00" * 17)],
+        [helpers.BrailleLine(1, "Messages page tab", "Messages page tab", "\x00" * 17)],
     )
     assert _press(session, keyboard.KEYSYM_RIGHT) == (
         ["Labels page tab"],
-        [BrailleLine(1, "Labels page tab", "Labels page tab", "\x00" * 15)],
+        [helpers.BrailleLine(1, "Labels page tab", "Labels page tab", "\x00" * 15)],
     )
     assert _press(session, keyboard.KEYSYM_LEFT) == (
         ["Messages page tab"],
-        [BrailleLine(1, "Messages page tab", "Messages page tab", "\x00" * 17)],
+        [helpers.BrailleLine(1, "Messages page tab", "Messages page tab", "\x00" * 17)],
     )
 
 
@@ -269,10 +286,10 @@ def test_description_technique_presents_static_text(
     _prepare(session)
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_PAGE_DOWN)
-    assert speech(session) == ["Messages page tab", "Filter text", "3 matches found"]
+    assert helpers.speech(session) == ["Messages page tab", "Filter text", "3 matches found"]
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == [
+    assert helpers.speech(session) == [
         "Options Review before saving panel",
         "Agree check box not checked",
     ]
@@ -287,7 +304,7 @@ def test_label_for_names_the_widget(gtk3_widget_notebook: NativeAppSession) -> N
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_PAGE_DOWN)
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_PAGE_DOWN)
-    assert speech(session) == ["Labels page tab", "Volume horizontal slider 0 0 percent."]
+    assert helpers.speech(session) == ["Labels page tab", "Volume horizontal slider 0 0 percent."]
 
 
 @pytest.mark.native_app
@@ -307,14 +324,14 @@ def test_focusable_list_item_presents_descendants(
     session.reader.reset()
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["List with 3 items", "report.pdf", "shared"]
+    assert helpers.speech(session) == ["List with 3 items", "report.pdf", "shared"]
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["notes.txt", "private"]
+    assert helpers.speech(session) == ["notes.txt", "private"]
 
     # The "Budget" row is named "Budget" and also holds a "Budget" label; the redundant
     # label is filtered, so "Budget" is heard once.
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Budget", "2 MB"]
+    assert helpers.speech(session) == ["Budget", "2 MB"]
 
 
 @pytest.mark.native_app
@@ -326,4 +343,4 @@ def test_status_bar_presents_its_contents(gtk3_widget_notebook: NativeAppSession
     session.reader.reset()
 
     session.orca.call("WhereAmIPresenter", "PresentStatusBar", True)
-    assert speech(session) == ["Ready. 3 items. status bar"]
+    assert helpers.speech(session) == ["Ready. 3 items. status bar"]

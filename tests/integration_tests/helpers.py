@@ -65,8 +65,8 @@ def capture(
     return spoken, brailled
 
 
-def tab(session: NativeAppSession) -> None:
-    """Tabs to the next control and discards its focus announcement."""
+def tab_and_swallow_presentation(session: NativeAppSession) -> None:
+    """Tabs to the next control and throws away everything Orca presented about it."""
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)

@@ -47,6 +47,7 @@ from .orca_fixtures import (  # noqa: F401
     _gtk3_tree_view,
     _gtk3_widget_notebook,
     _orca,
+    _web_aria_spinbutton,
     _web_basic,
     _web_dialogs,
     _web_field_states,
