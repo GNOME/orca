@@ -14,7 +14,14 @@ import time
 from typing import NoReturn
 
 _SKIP_EXIT = 77
-_ATSPI_DIRECTORIES = ("/usr/libexec", "/usr/lib/at-spi2-core", "/usr/local/libexec")
+# Prefer this prefix's AT-SPI.
+_ATSPI_DIRECTORIES = (
+    os.path.join("@prefix@", "libexec"),
+    os.path.join("@prefix@", "lib", "at-spi2-core"),
+    "/usr/libexec",
+    "/usr/lib/at-spi2-core",
+    "/usr/local/libexec",
+)
 _SANDBOX_READY_FLAG = "--sandbox-ready"
 
 # Mirror orca_bin.py.in so the pytest imports can find Orca's GSettings schemas when Orca is
@@ -24,6 +31,11 @@ if os.path.isdir(_share_dir):
     _xdg = os.environ.get("XDG_DATA_DIRS", "/usr/local/share:/usr/share")
     if _share_dir not in _xdg.split(":"):
         os.environ["XDG_DATA_DIRS"] = f"{_share_dir}:{_xdg}"
+
+# Prefer this prefix's Orca.
+_orca_binary = os.path.join("@prefix@", "bin", "orca")
+if "ORCA_TEST_BINARY" not in os.environ and os.path.isfile(_orca_binary):
+    os.environ["ORCA_TEST_BINARY"] = _orca_binary
 
 
 def _find_atspi_binary(name: str) -> str | None:
