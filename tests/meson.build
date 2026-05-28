@@ -137,6 +137,7 @@ integration_wrapper = configure_file(
   output: 'integration_test_wrapper.py',
   configuration: {
     'PYTHON': python.full_path(),
+    'prefix': get_option('prefix'),
   },
 )
 
