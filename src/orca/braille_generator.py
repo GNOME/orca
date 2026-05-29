@@ -498,7 +498,7 @@ class BrailleGenerator(generator.Generator):
                 ),
                 self._get_start_offset(obj),
                 self._get_end_offset(obj),
-                self._get_caret_offset(obj),
+                self._get_caret_offset(obj, self._get_offset()),
             ),
         ]
 

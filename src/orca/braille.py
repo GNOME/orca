@@ -1148,6 +1148,7 @@ class _AccessibleTextRegion(Region):
 
     accessible: Any
     line_offset: int
+    _start_offset: int = 0
     _label: str = ""
     _eol: str = ""
 
@@ -1176,8 +1177,8 @@ class _AccessibleTextRegion(Region):
             for link in links:
                 start_offset = AXHypertext.get_link_start_offset(link)
                 end_offset = AXHypertext.get_link_end_offset(link)
-                mask_start = max(start_offset - self.line_offset, 0)
-                mask_end = min(end_offset - self.line_offset, string_length)
+                mask_start = max(start_offset - self.line_offset - self._start_offset, 0)
+                mask_end = min(end_offset - self.line_offset - self._start_offset, string_length)
                 if mask_start < mask_end:
                     link_text = self._raw_line[mask_start:mask_end]
                     msg = (
@@ -1218,30 +1219,42 @@ class _AccessibleTextRegion(Region):
                             mask = attr_indicator
                             break
                 if mask != INDICATOR_NONE:
-                    mask_start = max(start_offset - self.line_offset, 0)
-                    mask_end = min(end_offset - self.line_offset, string_length)
+                    mask_start = max(start_offset - self.line_offset - self._start_offset, 0)
+                    mask_end = min(
+                        end_offset - self.line_offset - self._start_offset, string_length
+                    )
                     for i in range(mask_start, mask_end):
                         region_mask[i] |= attr_indicator
 
         if selection_indicator:
             selections = AXText.get_selected_ranges(self.accessible)
             for start_offset, end_offset in selections:
-                mask_start = max(start_offset - self.line_offset, 0)
-                mask_end = min(end_offset - self.line_offset, string_length)
+                mask_start = max(start_offset - self.line_offset - self._start_offset, 0)
+                mask_end = min(end_offset - self.line_offset - self._start_offset, string_length)
                 for i in range(mask_start, mask_end):
                     region_mask[i] |= selection_indicator
 
         if self._contracted:
-            contracted_mask = [0] * len(self._raw_line)
+            # A contracted self.string already includes the EOL marker, which the code below
+            # pads for unconditionally; size the buffer to just the translated text so the EOL
+            # is counted once.
+            contracted_mask = [0] * (len(self.string) - len(self._eol))
             out_position = self._out_position[len(self._label) :]
             if self._label:
                 out_position = [offset - len(self._label) - 1 for offset in out_position]
             out_len = len(out_position)
             mask_len = len(contracted_mask)
+            # out_position[i] is the first output cell for source index i. One source index can
+            # map to several cells, so spread its mask across the span up to the next index --
+            # masking only out_position[i] would leave the later cells unset.
             for i, m in enumerate(region_mask):
-                if i < out_len and out_position[i] < mask_len:
-                    contracted_mask[out_position[i]] |= m
-            region_mask = contracted_mask[: len(self.string)]
+                if not m or i >= out_len:
+                    continue
+                start = max(out_position[i], 0)
+                end = out_position[i + 1] if i + 1 < out_len else mask_len
+                for cell in range(start, min(end, mask_len)):
+                    contracted_mask[cell] |= m
+            region_mask = contracted_mask
 
         # Add empty mask characters for the EOL character as well as for the label.
         region_mask += [0] * len(self._eol)
@@ -2362,6 +2375,10 @@ def pan_left(pan_amount: int = 0) -> bool:
         old_start, _old_end = _get_range_for_offset(old_x)
         new_start, _new_end = _get_range_for_offset(old_start - _STATE.display_size[0])
         pan_amount = max(0, min(old_start - new_start, _STATE.display_size[0]))
+        if pan_amount == 0 and old_x > old_start:
+            # The viewport sits inside its range (e.g. positioned to follow the caret), so a
+            # range-based step is zero; pan to the range start to reveal the content to the left.
+            pan_amount = old_x - old_start
 
     _STATE.viewport[0] = max(0, _STATE.viewport[0] - pan_amount)
     msg = f"BRAILLE: Panning left. Amount: {pan_amount} (from {old_x} to {_STATE.viewport[0]})"

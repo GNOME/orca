@@ -1078,6 +1078,8 @@ class TestOrcaDBusIntegration:
         for cap_type in ["commands", "parameterized_commands", "getters", "setters"]:
             expected = set(config.get(cap_type, []))
             actual = set(result["result"].get(cap_type, []))
+            # Test-only commands (gated by ORCA_TEST_RPC_SECRET) are not part of the API surface.
+            actual = {name for name in actual if not name.endswith("ForTesting")}
             missing = expected - actual
             unexpected = actual - expected
 

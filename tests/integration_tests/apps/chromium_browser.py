@@ -36,6 +36,7 @@ def build_argv(
     binary: str,
     *,
     window_size: tuple[int, int] = (1024, 768),
+    extra_flags: tuple[str, ...] = (),
 ) -> list[str]:
     """Returns argv for launching Chromium deterministically against url."""
 
@@ -58,6 +59,7 @@ def build_argv(
         "--test-type",  # suppress the "unsupported command-line flag" infobar
         "--password-store=basic",
         "--disable-gpu",  # Xvfb has no GPU; skip the failed init dance
+        *extra_flags,
     ]
 
 
@@ -67,7 +69,7 @@ def main() -> int:
     if len(sys.argv) < 2:
         print(
             "Usage: python -m tests.integration_tests.apps.chromium_browser "
-            "<url> [profile_dir] [binary]",
+            "<url> [profile_dir] [binary] [extra chromium flags...]",
             file=sys.stderr,
         )
         return 2
@@ -84,7 +86,7 @@ def main() -> int:
     if binary is None:
         print(f"No chromium binary found; tried {BINARY_NAMES!r}.", file=sys.stderr)
         return 2
-    argv = build_argv(url, profile_dir, binary)
+    argv = build_argv(url, profile_dir, binary, extra_flags=tuple(sys.argv[4:]))
     os.execvp(argv[0], argv)  # noqa: S606
     return 0  # unreachable: execvp replaces the process
 

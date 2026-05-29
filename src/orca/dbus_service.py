@@ -23,7 +23,9 @@
 import ast
 import contextlib
 import enum
+import hmac
 import inspect
+import os
 import types
 import typing
 import xml.etree.ElementTree as ET
@@ -105,11 +107,32 @@ def setter(func):
     return func
 
 
+_TESTING_RPC_ENV_VAR = "ORCA_TEST_RPC_SECRET"
+
+
+def get_testing_secret() -> str | None:
+    """Returns the per-launch secret that gates testing commands, or None if unset."""
+
+    return os.environ.get(_TESTING_RPC_ENV_VAR) or None
+
+
+def testing_command(func):
+    """Decorator to mark a method as a test-only D-Bus command."""
+
+    # Such methods register only when Orca is launched with ORCA_TEST_RPC_SECRET, and every
+    # call must pass that secret as its first argument (token), verified in
+    # _make_parameterized_command_method. In a normal session the method is never published.
+    description = func.__doc__ or f"D-Bus testing command: {func.__name__}"
+    func.dbus_testing_command_description = description
+    return func
+
+
 class _Kind(enum.Enum):
     """Decorated-method kinds detected during module registration."""
 
     COMMAND = enum.auto()
     PARAMETERIZED = enum.auto()
+    TESTING = enum.auto()
     GETTER = enum.auto()
     SETTER = enum.auto()
 
@@ -121,6 +144,7 @@ class _ModuleRegistration:  # pylint: disable=too-many-instance-attributes
         self._module_name: str = module_name
         self._commands: dict[str, Callable] = {}
         self._parameterized_commands: dict[str, Callable] = {}
+        self._testing_commands: dict[str, Callable] = {}
         self._getters: dict[str, Callable] = {}
         self._setters: dict[str, Callable] = {}
         self._descriptions: dict[str, str] = {}
@@ -141,6 +165,11 @@ class _ModuleRegistration:  # pylint: disable=too-many-instance-attributes
         """Returns the parameterized commands."""
 
         return self._parameterized_commands
+
+    def get_testing_commands(self) -> dict[str, Callable]:
+        """Returns the test-only (token-gated) commands."""
+
+        return self._testing_commands
 
     def get_getters(self) -> dict[str, Callable]:
         """Returns the property getters."""
@@ -181,7 +210,11 @@ class _ModuleRegistration:  # pylint: disable=too-many-instance-attributes
         """Returns True if the registration has no decorated members."""
 
         return not (
-            self._commands or self._parameterized_commands or self._getters or self._setters
+            self._commands
+            or self._parameterized_commands
+            or self._testing_commands
+            or self._getters
+            or self._setters
         )
 
     def total_member_count(self) -> int:
@@ -190,6 +223,7 @@ class _ModuleRegistration:  # pylint: disable=too-many-instance-attributes
         return (
             len(self._commands)
             + len(self._parameterized_commands)
+            + len(self._testing_commands)
             + len(self._getters)
             + len(self._setters)
         )
@@ -220,6 +254,9 @@ class _ModuleRegistration:  # pylint: disable=too-many-instance-attributes
             self._descriptions[dbus_name] = description
         elif kind is _Kind.PARAMETERIZED:
             self._parameterized_commands[dbus_name] = method
+            self._descriptions[dbus_name] = description
+        elif kind is _Kind.TESTING:
+            self._testing_commands[dbus_name] = method
             self._descriptions[dbus_name] = description
         elif kind is _Kind.GETTER:
             self._getters[dbus_name] = method
@@ -266,6 +303,13 @@ class _ModuleRegistration:  # pylint: disable=too-many-instance-attributes
         if description is not None:
             return _Kind.PARAMETERIZED, description
 
+        description = getattr(method, "dbus_testing_command_description", None)
+        if description is not None:
+            # Register only when launched with the secret; otherwise the method is invisible.
+            if get_testing_secret() is None:
+                return None, ""
+            return _Kind.TESTING, description
+
         description = getattr(method, "dbus_getter_description", None)
         if description is not None:
             return _Kind.GETTER, description
@@ -307,6 +351,8 @@ class _InterfaceBuilder:
             namespace[cname] = cls._make_command_method(method)
         for cname, method in registration.get_parameterized_commands().items():
             namespace[cname] = cls._make_parameterized_command_method(method)
+        for cname, method in registration.get_testing_commands().items():
+            namespace[cname] = cls._make_parameterized_command_method(method, require_token=True)
         getters = registration.get_getters()
         setters = registration.get_setters()
         for cname in set(getters) | set(setters):
@@ -430,9 +476,13 @@ class _InterfaceBuilder:
         return Method
 
     @classmethod
-    def _make_parameterized_command_method(cls, method: Callable) -> Callable:
+    def _make_parameterized_command_method(
+        cls, method: Callable, require_token: bool = False
+    ) -> Callable:
         """Builds a D-Bus method mirroring a @parameterized_command's user-facing signature."""
 
+        # require_token gates @testing_command methods: the first argument (token) is verified
+        # against the launch secret before the body runs.
         original_sig = cls._resolved_signature(method)
         user_params = [
             (name, param)
@@ -475,15 +525,23 @@ class _InterfaceBuilder:
         new_sig = inspect.Signature(new_params, return_annotation=return_annotation)
 
         def Method(_self, *args, **kwargs):  # pylint: disable=invalid-name
+            bound = new_sig.bind(_self, *args, **kwargs)
+            bound.apply_defaults()
+            bound.arguments.pop("self", None)
+
+            if require_token:
+                secret = get_testing_secret()
+                token = str(bound.arguments.get("token", ""))
+                if secret is None or not hmac.compare_digest(token, secret):
+                    msg = f"DBUS SERVICE: Rejected testing command {method.__name__}: bad token."
+                    debug.print_message(debug.LEVEL_WARNING, msg, True)
+                    raise PermissionError("invalid testing token")
+
             from . import (  # pylint: disable=import-outside-toplevel
                 input_event,
                 input_event_manager,
                 script_manager,
             )
-
-            bound = new_sig.bind(_self, *args, **kwargs)
-            bound.apply_defaults()
-            bound.arguments.pop("self", None)
 
             event = input_event.RemoteControllerEvent()
             manager = script_manager.get_manager()

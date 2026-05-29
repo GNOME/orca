@@ -292,25 +292,27 @@ class TestFlatReviewPresenter:
         )
 
     @pytest.mark.parametrize(
-        "has_context,expected",
+        "active_mode,expected",
         [
-            (False, False),
-            (True, True),
+            ("focus_tracking", False),
+            ("flat_review", True),
         ],
     )
     def test_is_active(
         self,
         test_context: OrcaTestContext,
-        has_context: bool,
+        active_mode: str,
         expected: bool,
     ) -> None:
-        """Test FlatReviewPresenter.is_active with various context states."""
+        """Test FlatReviewPresenter.is_active reflects the focus manager's active mode."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         from orca.flat_review_presenter import FlatReviewPresenter
 
         presenter = FlatReviewPresenter()
-        presenter._context = test_context.Mock() if has_context else None
+        essential_modules[
+            "focus_manager_instance"
+        ].get_active_mode_and_object_of_interest.return_value = (active_mode, test_context.Mock())
         result = presenter.is_active()
         assert result is expected
 
@@ -426,7 +428,7 @@ class TestFlatReviewPresenter:
             assert cmd_manager.get_keyboard_command(cmd_name) is not None
 
     @pytest.mark.parametrize(
-        "has_context,provides_script,provides_event",
+        "already_active,provides_script,provides_event",
         [
             (True, False, False),
             (False, True, False),
@@ -436,7 +438,7 @@ class TestFlatReviewPresenter:
     def test_start_scenarios(
         self,
         test_context: OrcaTestContext,
-        has_context: bool,
+        already_active: bool,
         provides_script: bool,
         provides_event: bool,
     ) -> None:
@@ -445,11 +447,18 @@ class TestFlatReviewPresenter:
         from orca.flat_review_presenter import FlatReviewPresenter
 
         presenter = FlatReviewPresenter()
-        presenter._context = test_context.Mock() if has_context else None
+        presenter._context = None
+        if already_active:
+            essential_modules[
+                "focus_manager_instance"
+            ].get_active_mode_and_object_of_interest.return_value = (
+                "flat_review",
+                test_context.Mock(),
+            )
         script_mock = test_context.Mock() if provides_script else None
         event_mock = test_context.Mock() if provides_event else None
         presenter.start(script=script_mock, event=event_mock)
-        if has_context:
+        if already_active:
             essential_modules["orca.flat_review"].Context.assert_not_called()
         else:
             assert presenter._context is not None
@@ -495,10 +504,13 @@ class TestFlatReviewPresenter:
     def test_toggle_flat_review_mode_exit(self, test_context: OrcaTestContext) -> None:
         """Test FlatReviewPresenter.toggle_flat_review_mode exits flat review."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         from orca.flat_review_presenter import FlatReviewPresenter
 
         presenter = FlatReviewPresenter()
+        essential_modules[
+            "focus_manager_instance"
+        ].get_active_mode_and_object_of_interest.return_value = ("flat_review", test_context.Mock())
         presenter._context = test_context.Mock()
         script_mock = test_context.Mock()
         event_mock = test_context.Mock()
@@ -624,8 +636,18 @@ class TestFlatReviewPresenter:
     def test_full_navigation_workflow(self, test_context: OrcaTestContext) -> None:
         """Test complete flat review navigation workflow."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         from orca.flat_review_presenter import FlatReviewPresenter
+
+        focus_manager_instance = essential_modules["focus_manager_instance"]
+
+        def track_mode(obj: object = None, *_args: object, mode: str | None = None) -> None:
+            focus_manager_instance.get_active_mode_and_object_of_interest.return_value = (
+                mode or "focus_tracking",
+                obj,
+            )
+
+        focus_manager_instance.emit_region_changed.side_effect = track_mode
 
         presenter = FlatReviewPresenter()
         script_mock = test_context.Mock()

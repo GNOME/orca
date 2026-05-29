@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Dynamic Content ready</title>
+<style>.hidden { display: none; }</style>
+<script>
+let counter = 0;
+function addItem() {
+  const li = document.createElement("li");
+  counter += 1;
+  li.textContent = "Item " + counter;
+  document.getElementById("list").appendChild(li);
+}
+function removeItem() {
+  const list = document.getElementById("list");
+  if (list.lastElementChild) list.removeChild(list.lastElementChild);
+}
+function togglePanel() {
+  document.getElementById("panel").classList.toggle("hidden");
+}
+function reloadPage() {
+  location.reload();
+}
+</script>
+</head>
+<body>
+<h1>Dynamic content</h1>
+
+<p>
+  <button type="button" onclick="addItem()">Add</button>
+  <button type="button" onclick="removeItem()">Remove</button>
+  <button type="button" onclick="togglePanel()">Toggle</button>
+  <button type="button" onclick="reloadPage()">Reload</button>
+</p>
+
+<ul id="list"></ul>
+
+<div id="panel" class="hidden">
+  <p>Panel paragraph that appears and disappears.</p>
+</div>
+</body>
+</html>

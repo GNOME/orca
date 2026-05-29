@@ -22,6 +22,7 @@
 
 from __future__ import annotations
 
+import contextlib
 from typing import TYPE_CHECKING, NamedTuple
 
 from orca.output_reader import BrailleRecord, SpeechRecord
@@ -29,7 +30,12 @@ from orca.output_reader import BrailleRecord, SpeechRecord
 from .harness import keyboard
 
 if TYPE_CHECKING:
+    from collections.abc import Iterator
+
     from .orca_fixtures import NativeAppSession
+
+PAN_LEFT_COMMAND = "panBrailleLeftHandler"
+PAN_RIGHT_COMMAND = "panBrailleRightHandler"
 
 
 class BrailleLine(NamedTuple):
@@ -99,6 +105,22 @@ def toggle_flat_review(session: NativeAppSession) -> None:
     keyboard.tap_key(keyboard.KEYSYM_KP_SUBTRACT)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
+
+
+@contextlib.contextmanager
+def bound_pan_keys(session: NativeAppSession) -> Iterator[tuple[str, str]]:
+    """Binds pan-left/right to two free Orca keys for the block, yielding (left, right) keysyms."""
+
+    (left_key, left_mods), (right_key, right_mods) = session.orca.available_keybindings(2)
+    session.orca.bind_command(PAN_LEFT_COMMAND, left_key, left_mods)
+    session.orca.bind_command(PAN_RIGHT_COMMAND, right_key, right_mods)
+    session.orca.refresh_keybindings()
+    try:
+        yield left_key, right_key
+    finally:
+        session.orca.unbind_command(PAN_LEFT_COMMAND)
+        session.orca.unbind_command(PAN_RIGHT_COMMAND)
+        session.orca.refresh_keybindings()
 
 
 def reset_web_state(session: NativeAppSession, *, web_app: bool = False) -> None:

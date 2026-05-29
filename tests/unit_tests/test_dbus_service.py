@@ -774,6 +774,64 @@ class TestDBusService:
 
         assert dbus_service._ModuleRegistration._classify_method(plain) == (None, "")
 
+    def test_testing_command_registers_only_with_secret(
+        self, test_context: OrcaTestContext, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        """Test that @testing_command is classified only when the launch secret is set."""
+
+        self._setup_dependencies(test_context)
+        from orca import dbus_service
+
+        @dbus_service.testing_command
+        def tcmd(token=""):  # pylint: disable=unused-argument
+            """A testing command."""
+
+        classify = dbus_service._ModuleRegistration._classify_method
+
+        monkeypatch.delenv("ORCA_TEST_RPC_SECRET", raising=False)
+        assert classify(tcmd) == (None, "")
+
+        monkeypatch.setenv("ORCA_TEST_RPC_SECRET", "s3cret")
+        assert classify(tcmd) == (dbus_service._Kind.TESTING, "A testing command.")
+
+    @pytest.mark.parametrize(
+        ("secret", "token"),
+        [
+            ("right", "wrong"),  # mismatched token
+            ("right", ""),  # missing token
+            (None, "anything"),  # no secret set at all
+        ],
+    )
+    def test_testing_command_rejects_bad_token(
+        self,
+        test_context: OrcaTestContext,
+        monkeypatch: pytest.MonkeyPatch,
+        secret: str | None,
+        token: str,
+    ) -> None:
+        """Test that a require_token method raises before running its body on a bad token."""
+
+        self._setup_dependencies(test_context)
+        from orca import dbus_service
+
+        if secret is None:
+            monkeypatch.delenv("ORCA_TEST_RPC_SECRET", raising=False)
+        else:
+            monkeypatch.setenv("ORCA_TEST_RPC_SECRET", secret)
+
+        called = []
+
+        def guarded(_self, token: str = "", script=None, event=None) -> bool:  # pylint: disable=unused-argument
+            called.append(True)
+            return True
+
+        method = dbus_service._InterfaceBuilder._make_parameterized_command_method(
+            guarded, require_token=True
+        )
+        with pytest.raises(PermissionError):
+            method(None, token)
+        assert called == []
+
     @pytest.mark.parametrize(
         ("snake", "kind_attr", "expected"),
         [

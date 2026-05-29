@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Autocomplete ready</title>
+<script>
+const FRUITS = ["Apricot", "Apple", "Avocado"];
+function showPopup() {
+  const list = document.getElementById("listbox");
+  list.innerHTML = "";
+  FRUITS.forEach((name, i) => {
+    const opt = document.createElement("div");
+    opt.id = "opt" + i;
+    opt.setAttribute("role", "option");
+    opt.setAttribute("aria-selected", i === 0 ? "true" : "false");
+    opt.textContent = name;
+    list.appendChild(opt);
+  });
+  list.hidden = false;
+  document.getElementById("combo").setAttribute("aria-expanded", "true");
+  document.getElementById("combo").setAttribute("aria-activedescendant", "opt0");
+}
+let active = 0;
+function moveSelection(delta) {
+  const opts = document.querySelectorAll("#listbox [role=option]");
+  if (!opts.length) return;
+  opts[active].setAttribute("aria-selected", "false");
+  active = (active + delta + opts.length) % opts.length;
+  opts[active].setAttribute("aria-selected", "true");
+  document.getElementById("combo").setAttribute("aria-activedescendant", opts[active].id);
+}
+function hidePopup() {
+  const list = document.getElementById("listbox");
+  list.hidden = true;
+  list.innerHTML = "";
+  active = 0;
+  const combo = document.getElementById("combo");
+  combo.setAttribute("aria-expanded", "false");
+  combo.removeAttribute("aria-activedescendant");
+}
+function onKey(e) {
+  if (e.key === "ArrowDown") { if (document.getElementById("listbox").hidden) showPopup(); else moveSelection(1); e.preventDefault(); }
+  else if (e.key === "ArrowUp") { moveSelection(-1); e.preventDefault(); }
+  else if (e.key === "Escape") { if (!document.getElementById("listbox").hidden) { hidePopup(); e.preventDefault(); } }
+}
+function showAlert() {
+  document.getElementById("alert").textContent = "Form could not be submitted";
+}
+</script>
+</head>
+<body>
+<h1>Autocomplete</h1>
+<label for="combo">Fruit</label>
+<input id="combo" type="text" role="combobox" aria-expanded="false"
+       aria-controls="listbox" aria-autocomplete="list" autocomplete="off"
+       spellcheck="false" onkeydown="onKey(event)">
+<div id="listbox" role="listbox" hidden></div>
+
+<p><button type="button" onclick="showAlert()">Submit</button></p>
+<div id="alert" role="alert"></div>
+</body>
+</html>

@@ -1902,6 +1902,100 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             default={},
         )
 
+    def _keybinding_in_use(self, keysym: str, modifiers: int, click_count: int = 1) -> bool:
+        """Returns True if an active command is already bound to keysym+modifiers."""
+
+        for cmd in self._keyboard_commands.values():
+            binding = cmd.get_keybinding()
+            if (
+                binding is not None
+                and binding.keysymstring == keysym
+                and binding.modifiers == modifiers
+                and binding.click_count == click_count
+            ):
+                return True
+        return False
+
+    @dbus_service.testing_command
+    def get_available_keybindings_for_testing(
+        self,
+        token: str = "",  # pylint: disable=unused-argument
+        count: int = 1,
+        script: default.Script | None = None,  # pylint: disable=unused-argument
+        event: input_event.InputEvent | None = None,  # pylint: disable=unused-argument
+    ) -> list[tuple[str, int]]:
+        """Returns up to count currently-unbound Orca-modified keybindings (test-only)."""
+
+        # Gated by a launch secret; never call from production code. Each result is
+        # (keysym, modifiers) for a combo no active command uses, so a test can bind to it
+        # without colliding with a real shortcut even as default bindings change.
+        modifiers = keybindings.ORCA_MODIFIER_MASK
+        candidates = [chr(c) for c in range(ord("a"), ord("z") + 1)]
+        candidates += [str(digit) for digit in range(10)]
+        available: list[tuple[str, int]] = []
+        for keysym in candidates:
+            if len(available) >= count:
+                break
+            if not self._keybinding_in_use(keysym, modifiers):
+                available.append((keysym, modifiers))
+        return available
+
+    @dbus_service.testing_command
+    def bind_command_for_testing(
+        self,
+        token: str = "",  # pylint: disable=unused-argument
+        command_name: str = "",
+        keysym: str = "",
+        modifiers: int = 0,
+        script: default.Script | None = None,  # pylint: disable=unused-argument
+        event: input_event.InputEvent | None = None,  # pylint: disable=unused-argument
+    ) -> bool:
+        """Writes a keybinding override for command_name (test-only)."""
+
+        # Gated by a launch secret; never call from production code. Does not refresh grabs;
+        # call refresh_keybindings_for_testing afterwards so the change takes effect.
+        kb = keybindings.KeyBinding(keysym, modifiers)
+        binding_data = [
+            kb.keysymstring,
+            str(kb.modifier_mask),
+            str(kb.modifiers),
+            str(kb.click_count),
+        ]
+        overrides = self.get_keybinding_overrides()
+        overrides[command_name] = [binding_data]
+        gsettings_registry.get_registry().set_runtime_value("keybindings", "entries", overrides)
+        return True
+
+    @dbus_service.testing_command
+    def unbind_command_for_testing(
+        self,
+        token: str = "",  # pylint: disable=unused-argument
+        command_name: str = "",
+        script: default.Script | None = None,  # pylint: disable=unused-argument
+        event: input_event.InputEvent | None = None,  # pylint: disable=unused-argument
+    ) -> bool:
+        """Removes the keybinding override for command_name (test-only)."""
+
+        # Gated by a launch secret; never call from production code. Does not refresh grabs;
+        # call refresh_keybindings_for_testing afterwards.
+        overrides = self.get_keybinding_overrides()
+        overrides.pop(command_name, None)
+        gsettings_registry.get_registry().set_runtime_value("keybindings", "entries", overrides)
+        return True
+
+    @dbus_service.testing_command
+    def refresh_keybindings_for_testing(
+        self,
+        token: str = "",  # pylint: disable=unused-argument
+        script: default.Script | None = None,  # pylint: disable=unused-argument
+        event: input_event.InputEvent | None = None,  # pylint: disable=unused-argument
+    ) -> bool:
+        """Re-applies keybinding overrides and refreshes grabs (test-only)."""
+
+        # Gated by a launch secret; never call from production code.
+        get_manager().activate_commands("test rebind")
+        return True
+
     # pylint: disable-next=too-many-arguments, too-many-positional-arguments
     def register_command(
         self,

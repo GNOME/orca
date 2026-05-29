@@ -422,7 +422,7 @@ class Script(default.Script):
 
         obj, start, _end, _string = contents[0]
         self.utilities.set_caret_position(obj, start)
-        self.update_braille(obj)
+        self.update_braille(obj, offset=start)
         presenter.pan_to_end()
         return True
 
@@ -446,7 +446,7 @@ class Script(default.Script):
 
         obj, start, _end, _string = contents[0]
         self.utilities.set_caret_position(obj, start)
-        self.update_braille(obj)
+        self.update_braille(obj, offset=start)
         presenter.pan_to_beginning()
         return True
 

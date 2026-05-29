@@ -411,7 +411,8 @@ class FlatReviewPresenter(Extension):
     def is_active(self) -> bool:
         """Returns True if the flat review presenter is active."""
 
-        return self._context is not None
+        mode, _obj = focus_manager.get_manager().get_active_mode_and_object_of_interest()
+        return mode == focus_manager.FLAT_REVIEW
 
     def last_input_event_was_review_command(self) -> bool:
         """Returns True if the last input event was a flat review command."""
@@ -554,7 +555,7 @@ class FlatReviewPresenter(Extension):
     ) -> None:
         """Starts flat review."""
 
-        if self._context:
+        if self.is_active():
             msg = "FLAT REVIEW PRESENTER: Already in flat review"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
@@ -566,7 +567,12 @@ class FlatReviewPresenter(Extension):
             script = script_manager.get_manager().get_active_script()
             assert script is not None
 
-        self.get_or_create_context(script)
+        context = self.get_or_create_context(script)
+        manager = focus_manager.get_manager()
+        if manager.get_active_mode_and_object_of_interest()[0] != focus_manager.FLAT_REVIEW:
+            manager.emit_region_changed(
+                context.get_current_object(), mode=focus_manager.FLAT_REVIEW
+            )
         if event is None:
             return
 

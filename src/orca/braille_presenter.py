@@ -1376,14 +1376,7 @@ class BraillePresenter(Extension):
             return False
 
         full_path = os.path.join(tablesdir, filename)
-        msg = f"BRAILLE PRESENTER: Setting contraction table to {value}."
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        gsettings_registry.get_registry().set_runtime_value(
-            self._SCHEMA,
-            self.KEY_CONTRACTION_TABLE,
-            full_path,
-        )
-        return True
+        return self.set_contraction_table_from_path(full_path)
 
     @staticmethod
     def _get_table_files() -> list[str]:

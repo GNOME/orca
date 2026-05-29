@@ -343,6 +343,7 @@ def _run_browser_session(
     *,
     app: ModuleType,
     page: str,
+    caret_browsing: bool = False,
 ) -> Iterator[NativeAppSession]:
     """Launches app loading web_pages/<page> under its own Orca subprocess."""
 
@@ -367,6 +368,8 @@ def _run_browser_session(
         str(profile_dir),
         binary,
     ]
+    if caret_browsing:
+        argv.append("--enable-caret-browsing")
     yield from _run_app_with_orca(
         sandbox_dir,
         argv=argv,
@@ -377,14 +380,19 @@ def _run_browser_session(
 _BROWSER_APPS: dict[str, ModuleType] = {"chromium": chromium_browser}
 
 
-def _make_web_fixture(page: str) -> Callable[..., Iterator[NativeAppSession]]:
+def _make_web_fixture(
+    page: str, *, caret_browsing: bool = False
+) -> Callable[..., Iterator[NativeAppSession]]:
     @pytest.fixture(scope="session", name=Path(page).stem, params=["chromium"])
     def fixture(
         request: pytest.FixtureRequest,
         tmp_path_factory: pytest.TempPathFactory,
     ) -> Iterator[NativeAppSession]:
         yield from _run_browser_session(
-            tmp_path_factory, app=_BROWSER_APPS[request.param], page=page
+            tmp_path_factory,
+            app=_BROWSER_APPS[request.param],
+            page=page,
+            caret_browsing=caret_browsing,
         )
 
     return fixture
@@ -410,3 +418,9 @@ _web_tree = _make_web_fixture("web_tree.html")
 _web_live_regions = _make_web_fixture("web_live_regions.html")
 _web_dialogs = _make_web_fixture("web_dialogs.html")
 _web_aria_spinbutton = _make_web_fixture("web_aria_spinbutton.html")
+_web_autocomplete = _make_web_fixture("web_autocomplete.html")
+_web_dynamic_content = _make_web_fixture("web_dynamic_content.html")
+_web_editing = _make_web_fixture("web_editing.html")
+_web_long_line = _make_web_fixture("web_long_line.html")
+_web_contracted_braille = _make_web_fixture("web_contracted_braille.html", caret_browsing=True)
+_web_attribute_mask = _make_web_fixture("web_attribute_mask.html", caret_browsing=True)

@@ -20,11 +20,14 @@
 
 """Orca subprocess session wrapper for integration tests."""
 
+import contextlib
 import os
+import secrets
 import shutil
 import subprocess
 import sys
 import time
+from collections.abc import Iterator
 from typing import Any
 
 import gi
@@ -45,9 +48,12 @@ class OrcaSession:
     _BASE_PATH = "/org/gnome/Orca1/Service"
     _PROPERTIES_INTERFACE = "org.freedesktop.DBus.Properties"
     _BINARY_ENV_VAR = "ORCA_TEST_BINARY"
+    _RPC_ENV_VAR = "ORCA_TEST_RPC_SECRET"
 
     def __init__(self, env: dict[str, str]) -> None:
         self._env = env
+        self._rpc_secret = secrets.token_hex(32)
+        self._env[self._RPC_ENV_VAR] = self._rpc_secret
         self._process: subprocess.Popen | None = None
         self._bus = SessionMessageBus()
         self._orca_modifier_keysym: int | None = None
@@ -121,6 +127,52 @@ class OrcaSession:
         modifiers = [self._orca_modifier_keysym, *(extra_modifiers or [])]
         keyboard.press_chord(modifiers, keysym)
 
+    def available_keybindings(self, count: int = 1) -> list[tuple[str, int]]:
+        """Returns up to count currently-unbound Orca-modified keybindings (test-only RPC)."""
+
+        return self.call(
+            "CommandManager", "GetAvailableKeybindingsForTesting", self._rpc_secret, count
+        )
+
+    def bind_command(self, command_name: str, keysym: str, modifiers: int) -> None:
+        """Binds command_name to keysym+modifiers; call refresh_keybindings to apply it."""
+
+        self.call(
+            "CommandManager",
+            "BindCommandForTesting",
+            self._rpc_secret,
+            command_name,
+            keysym,
+            modifiers,
+        )
+
+    def unbind_command(self, command_name: str) -> None:
+        """Removes the test binding for command_name; call refresh_keybindings to apply it."""
+
+        self.call("CommandManager", "UnbindCommandForTesting", self._rpc_secret, command_name)
+
+    def refresh_keybindings(self) -> None:
+        """Re-applies keybinding overrides and refreshes the AT-SPI grabs (test-only RPC)."""
+
+        self.call("CommandManager", "RefreshKeybindingsForTesting", self._rpc_secret)
+
+    @contextlib.contextmanager
+    def bound_command(self, command_name: str, keysym: str, modifiers: int) -> Iterator[None]:
+        """Binds command_name for the duration of the block, refreshing grabs on entry and exit."""
+
+        self.bind_command(command_name, keysym, modifiers)
+        self.refresh_keybindings()
+        try:
+            yield
+        finally:
+            self.unbind_command(command_name)
+            self.refresh_keybindings()
+
+    def press_bound_key(self, keysym: str, extra_modifiers: list[int] | None = None) -> None:
+        """Presses an Orca-modified key by keysym name (as returned by available_keybindings)."""
+
+        self.press_orca_key(Gdk.keyval_from_name(keysym), extra_modifiers)
+
     def _resolve_orca_binary(self) -> str:
         """Returns the path to the Orca binary to launch."""
 
@@ -146,7 +198,11 @@ class OrcaSession:
         raise TimeoutError(f"Orca D-Bus service did not become ready within {timeout}s")
 
 
-def _to_variant(value: bool | str) -> GLib.Variant:
+def _to_variant(value: bool | str | list[str]) -> GLib.Variant:
     """Wraps value in a GLib.Variant for the D-Bus setter call."""
 
-    return GLib.Variant("b" if isinstance(value, bool) else "s", value)
+    if isinstance(value, bool):
+        return GLib.Variant("b", value)
+    if isinstance(value, list):
+        return GLib.Variant("as", value)
+    return GLib.Variant("s", value)
