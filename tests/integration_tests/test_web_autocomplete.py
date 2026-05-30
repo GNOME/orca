@@ -73,4 +73,4 @@ def test_alert_region_announced(web_autocomplete: NativeAppSession) -> None:
     assert speech(session) == ["Submit", "button", "Browse mode"]
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session) == ["Form could not be submitted"]
+    assert speech(session, wait_async=True) == ["Form could not be submitted"]

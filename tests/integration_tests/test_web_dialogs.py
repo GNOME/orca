@@ -126,4 +126,4 @@ def test_dialog_appearance_and_alert(web_dialogs: NativeAppSession) -> None:
     assert speech(session) == ["Trigger alert", "button"]
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session) == ["Item deleted"]
+    assert speech(session, wait_async=True) == ["Item deleted"]

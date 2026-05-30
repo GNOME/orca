@@ -50,9 +50,10 @@ def build_sandbox_env(sandbox: Path) -> dict[str, str]:
     env["LANG"] = "en_US.UTF-8"
     env["LC_ALL"] = "en_US.UTF-8"
     env["GDK_BACKEND"] = "x11"
-    # Multi-click window: above the ~0.15s intentional double-press, below the ~0.3s
-    # drain spacing, so distinct same-key commands don't accidentally coalesce.
-    env.setdefault("ORCA_TEST_DOUBLE_CLICK_TIMEOUT", "0.2")
+    # Multi-click window: above an intentional click_count=2 (its presses are back-to-back),
+    # below the idle-gated drain spacing between captures, so two separate same-key commands
+    # don't accidentally coalesce into a double-click.
+    env.setdefault("ORCA_TEST_DOUBLE_CLICK_TIMEOUT", "0.05")
     # Point BrlAPI at a dead address so Orca never attaches to a brltty running on
     # the host. A real display pads every braille line to its cell count, which
     # makes the exact-braille assertions depend on the developer's hardware.

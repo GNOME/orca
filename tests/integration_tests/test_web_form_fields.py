@@ -727,3 +727,72 @@ def test_fieldset_legend_role_only_on_entry(web_form_fields: NativeAppSession) -
         ["Pick a color"],
         [helpers.BrailleLine(1, "Pick a color", "Pick a color", "\x00" * 12)],
     )
+
+
+def _where_am_i(session: NativeAppSession) -> tuple[list[str], list[tuple[int, str, str | None]]]:
+    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
+    return helpers.capture(session)
+
+
+@pytest.mark.native_app
+def test_where_am_i_on_form_controls(web_form_fields: NativeAppSession) -> None:
+    """Tests Where Am I on entry, combo box, checkbox, radio button, and button."""
+
+    session = web_form_fields
+    helpers.reset_web_state(session)
+
+    helpers.tab_and_swallow_presentation(session)
+    assert _where_am_i(session) == (
+        ["entry", "Jane Doe", "selected"],
+        [
+            helpers.BrailleLine(
+                14, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 5 + "\xc0" * 8 + "\x00" * 3
+            ),
+            helpers.BrailleLine(
+                14, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 5 + "\xc0" * 8 + "\x00" * 3
+            ),
+        ],
+    )
+
+    for _ in range(3):
+        helpers.tab_and_swallow_presentation(session)
+    assert _where_am_i(session) == (
+        ["Fruit", "combo box", "Apple"],
+        [helpers.BrailleLine(7, "Fruit Apple combo box", "Fruit Apple combo box", "\x00" * 21)],
+    )
+
+    helpers.tab_and_swallow_presentation(session)
+    assert _where_am_i(session) == (
+        ["Subscribe", "check box not checked"],
+        [
+            helpers.BrailleLine(
+                1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23
+            ),
+            helpers.BrailleLine(
+                1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23
+            ),
+        ],
+    )
+
+    helpers.tab_and_swallow_presentation(session)
+    assert _where_am_i(session) == (
+        ["Pick a color", "Red color", "not selected radio button"],
+        [
+            helpers.BrailleLine(
+                14,
+                " Pick a color& y Red color radio button",
+                " Pick a color& y Red color radio",
+                "\x00" * 39,
+            )
+        ],
+    )
+
+    for _ in range(2):
+        helpers.tab_and_swallow_presentation(session)
+    assert _where_am_i(session) == (
+        ["Submit", "button"],
+        [
+            helpers.BrailleLine(1, "Submit button", "Submit button", "\x00" * 13),
+            helpers.BrailleLine(1, "Submit button", "Submit button", "\x00" * 13),
+        ],
+    )

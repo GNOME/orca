@@ -223,6 +223,7 @@ def _run_app_with_orca(
             orca.set("SpeechPresenter", "LogFile", str(speech_log))
             orca.set("BraillePresenter", "LogFile", str(braille_log))
             reader = OutputReader(str(speech_log), str(braille_log))
+            reader.set_idle_check(orca.is_idle)
             reader.start()
             try:
                 yield NativeAppSession(orca=orca, reader=reader)

@@ -104,8 +104,8 @@ def test_rating_focus_and_arrow(web_aria_spinbutton: NativeAppSession) -> None:
         [
             helpers.BrailleLine(
                 1,
-                "Bump Quantity in 2500 ms button",
-                "Bump Quantity in 2500 ms button",
+                "Bump Quantity in 1000 ms button",
+                "Bump Quantity in 1000 ms button",
                 "\x00" * 31,
             ),
             helpers.BrailleLine(8, "Rating 75 $l", "Rating 75 $l", "\x00" * 12),
@@ -334,7 +334,7 @@ def test_volume_readonly_input_spinbutton(web_aria_spinbutton: NativeAppSession)
 
     value_selected = "\x00" * 7 + "\xc0\xc0" + "\x00" * 7
     volume_50 = helpers.BrailleLine(10, "Volume 50 rdonly", "Volume 50 rdonly", value_selected)
-    bump_rating = "Bump Rating in 2500 ms button"
+    bump_rating = "Bump Rating in 1000 ms button"
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert helpers.capture(session) == (
         ["Volume", "spin button", "50", "grayed", "Focus mode"],
@@ -375,8 +375,8 @@ def test_quantity_programmatic_change_focus_on_bump_button(
     _tab_to_bump_button(session, target_quantity=True)
 
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    bump_label = "Bump Quantity in 2500 ms button"
-    assert helpers.capture(session, quiescence=4.0, overall=8.0) == (
+    bump_label = "Bump Quantity in 1000 ms button"
+    assert helpers.capture(session, quiescence=1.5, overall=3.5, wait_async=True) == (
         [],
         [helpers.BrailleLine(1, bump_label, bump_label, "\x00" * len(bump_label))],
     )
@@ -395,8 +395,8 @@ def test_quantity_programmatic_change_focus_on_spinbutton(
 
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
-    bump_label = "Bump Quantity in 2500 ms button"
-    assert helpers.capture(session, quiescence=4.0, overall=8.0) == (
+    bump_label = "Bump Quantity in 1000 ms button"
+    assert helpers.capture(session, quiescence=1.5, overall=3.5, wait_async=True) == (
         ["4"],
         [
             helpers.BrailleLine(1, bump_label, bump_label, "\x00" * len(bump_label)),
@@ -420,8 +420,8 @@ def test_rating_programmatic_change_focus_on_bump_button(
     _tab_to_bump_button(session, target_quantity=False)
 
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    bump_label = "Bump Rating in 2500 ms button"
-    assert helpers.capture(session, quiescence=4.0, overall=8.0) == (
+    bump_label = "Bump Rating in 1000 ms button"
+    assert helpers.capture(session, quiescence=1.5, overall=3.5, wait_async=True) == (
         ["76"],
         [
             helpers.BrailleLine(1, bump_label, bump_label, "\x00" * len(bump_label)),
@@ -443,9 +443,9 @@ def test_rating_programmatic_change_focus_on_spinbutton(
 
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
-    bump_label = "Bump Rating in 2500 ms button"
+    bump_label = "Bump Rating in 1000 ms button"
     rating_76 = helpers.BrailleLine(8, "Rating 76 $l", "Rating 76 $l", "\x00" * 12)
-    assert helpers.capture(session, quiescence=4.0, overall=8.0) == (
+    assert helpers.capture(session, quiescence=1.5, overall=3.5, wait_async=True) == (
         ["76"],
         [
             helpers.BrailleLine(1, bump_label, bump_label, "\x00" * len(bump_label)),

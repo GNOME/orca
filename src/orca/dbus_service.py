@@ -543,7 +543,10 @@ class _InterfaceBuilder:
                 script_manager,
             )
 
-            event = input_event.RemoteControllerEvent()
+            if require_token:
+                event = input_event.RemoteControllerTestingEvent()
+            else:
+                event = input_event.RemoteControllerEvent()
             manager = script_manager.get_manager()
             script = manager.get_active_script() or manager.get_default_script()
             bound.arguments["script"] = script

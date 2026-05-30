@@ -40,6 +40,7 @@ from gi.repository import Atspi, GLib
 
 from . import (
     braille_presenter,
+    dbus_service,
     debug,
     focus_manager,
     input_event,
@@ -104,7 +105,25 @@ class EventManager:
         self._listener: Atspi.EventListener = Atspi.EventListener.new(self._enqueue_object_event)
         self._event_history: dict[str, tuple[int | None, float]] = {}
         self._latest_event: dict[tuple[str, int], int] = {}
+        dbus_service.get_remote_controller().register_decorated_module("EventManager", self)
         debug.print_message(debug.LEVEL_INFO, "Event manager initialized", True)
+
+    def is_idle(self) -> bool:
+        """Returns True if the object-event queue is empty and nothing is queued to process."""
+
+        with self._gidle_lock:
+            return self._event_queue.empty() and self._gidle_id == 0
+
+    @dbus_service.testing_command
+    def is_idle_for_testing(
+        self,
+        token: str = "",  # pylint: disable=unused-argument
+        script: default.Script | None = None,  # pylint: disable=unused-argument
+        event: input_event.InputEvent | None = None,  # pylint: disable=unused-argument
+    ) -> bool:
+        """Returns True if Orca has finished processing queued events (test-only)."""
+
+        return self.is_idle()
 
     def activate(self) -> None:
         """Called when this event manager is activated."""

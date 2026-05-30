@@ -25,13 +25,14 @@ import os
 import queue
 import threading
 import time
+from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum
 from typing import cast
 
 
 class Kind(Enum):
-    """Record kinds matching the JSON records written by the presenters."""
+    """Record kinds matching the JSON records written by the presenters and event manager."""
 
     SPEECH = "speech"
     BRAILLE = "braille"
@@ -74,6 +75,12 @@ class OutputReader:
         self._pending: list[SpeechRecord | BrailleRecord | InterruptRecord] = []
         self._stop_event = threading.Event()
         self._threads: list[threading.Thread] = []
+        self._idle_check: Callable[[], bool] | None = None
+
+    def set_idle_check(self, idle_check: Callable[[], bool] | None) -> None:
+        """Sets a callable reporting whether Orca has finished processing the current input."""
+
+        self._idle_check = idle_check
 
     def start(self) -> None:
         """Starts the reader threads."""
@@ -108,12 +115,20 @@ class OutputReader:
         self,
         quiescence_timeout: float = 0.1,
         overall_timeout: float = 5.0,
+        first_record_timeout: float = 0.3,
+        idle_aware: bool = True,
     ) -> list[SpeechRecord | BrailleRecord]:
         """Returns records that have arrived, waiting for the stream to go quiet."""
 
         scale = float(os.environ.get("ORCA_TEST_TIMEOUT_SCALE") or 1.0)
+        if scale > 1.0:
+            # Slowed-down (coverage) runs space deferred presentations further apart than the
+            # fast-run quiescence allows, and is_idle() only sees the object-event queue, not
+            # pending presents, so it can read idle mid-response. Restore a conservative floor.
+            quiescence_timeout = max(quiescence_timeout, 0.3)
         quiescence_timeout *= scale
         overall_timeout *= scale
+        first_record_timeout *= scale
         records: list[SpeechRecord | BrailleRecord | InterruptRecord] = list(self._pending)
         self._pending.clear()
         deadline = time.monotonic() + overall_timeout
@@ -121,9 +136,12 @@ class OutputReader:
             remaining = deadline - time.monotonic()
             if remaining <= 0:
                 return self._honor_interrupts(records)
+            wait = quiescence_timeout if records else first_record_timeout
             try:
-                record = self._queue.get(timeout=min(quiescence_timeout, remaining))
+                record = self._queue.get(timeout=min(wait, remaining))
             except queue.Empty:
+                if idle_aware and self._idle_check is not None and not self._idle_check():
+                    continue
                 return self._honor_interrupts(records)
             records.append(record)
 

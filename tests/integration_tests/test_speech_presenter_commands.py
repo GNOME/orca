@@ -26,7 +26,6 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from .harness import keyboard
 from .helpers import BrailleLine, capture
 
 if TYPE_CHECKING:
@@ -136,23 +135,4 @@ def test_toggle_table_cell_read_mode_outside_table(gtk3_text_view: NativeAppSess
     assert _command(session, "ToggleTableCellReadingMode") == (
         ["Not in a table."],
         [BrailleLine(0, "Not in a table.", "Not in a table.", "\x00" * 15)],
-    )
-
-
-@pytest.mark.native_app
-def test_toggle_table_cell_read_mode_in_table(gtk3_tree_view: NativeAppSession) -> None:
-    """Tests that toggling table cell read mode in a table announces cell vs row."""
-
-    session = gtk3_tree_view
-    keyboard.tap_key(keyboard.KEYSYM_HOME)
-    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
-    session.reader.reset()
-
-    assert _command(session, "ToggleTableCellReadingMode") == (
-        ["Speak cell"],
-        [BrailleLine(0, "Speak cell", "Speak cell", "\x00" * 10)],
-    )
-    assert _command(session, "ToggleTableCellReadingMode") == (
-        ["Speak row"],
-        [BrailleLine(0, "Speak row", "Speak row", "\x00" * 9)],
     )

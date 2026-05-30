@@ -26,8 +26,9 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from . import helpers
 from .harness import keyboard
-from .helpers import move_to_bottom, reset_web_state, speech
+from .helpers import BrailleLine
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -38,7 +39,7 @@ def test_caret_navigation_top_to_bottom(web_sliders: NativeAppSession) -> None:
     """Tests Down-arrow caret navigation through the whole page (layout mode on)."""
 
     session = web_sliders
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     # In layout mode the "Volume" label shares the slider's line.
     for expected in (
@@ -47,7 +48,7 @@ def test_caret_navigation_top_to_bottom(web_sliders: NativeAppSession) -> None:
         ["30 percent."],
     ):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        assert speech(session) == expected
+        assert helpers.speech(session) == expected
 
 
 @pytest.mark.native_app
@@ -55,7 +56,7 @@ def test_caret_navigation_top_to_bottom_layout_off(web_sliders: NativeAppSession
     """Tests the same navigation with layout mode disabled: the label is its own line."""
 
     session = web_sliders
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("CaretNavigator", "LayoutMode", False)
     for expected in (
         ["Volume"],
@@ -64,7 +65,7 @@ def test_caret_navigation_top_to_bottom_layout_off(web_sliders: NativeAppSession
         ["30 percent."],
     ):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        assert speech(session) == expected
+        assert helpers.speech(session) == expected
 
 
 @pytest.mark.native_app
@@ -72,8 +73,8 @@ def test_caret_navigation_bottom_to_top(web_sliders: NativeAppSession) -> None:
     """Tests Up-arrow caret navigation from the bottom of the page (layout mode on)."""
 
     session = web_sliders
-    reset_web_state(session)
-    move_to_bottom(session)
+    helpers.reset_web_state(session)
+    helpers.move_to_bottom(session)
 
     for expected in (
         ["Download"],
@@ -81,7 +82,7 @@ def test_caret_navigation_bottom_to_top(web_sliders: NativeAppSession) -> None:
         ["Sliders", "heading 1"],
     ):
         keyboard.tap_key(keyboard.KEYSYM_UP)
-        assert speech(session) == expected
+        assert helpers.speech(session) == expected
 
 
 @pytest.mark.native_app
@@ -89,9 +90,9 @@ def test_caret_navigation_bottom_to_top_layout_off(web_sliders: NativeAppSession
     """Tests the same navigation with layout mode disabled: the label is its own line."""
 
     session = web_sliders
-    reset_web_state(session)
+    helpers.reset_web_state(session)
     session.orca.set("CaretNavigator", "LayoutMode", False)
-    move_to_bottom(session)
+    helpers.move_to_bottom(session)
     for expected in (
         ["Download"],
         ["Volume", "horizontal slider", "2", "50 percent."],
@@ -99,7 +100,7 @@ def test_caret_navigation_bottom_to_top_layout_off(web_sliders: NativeAppSession
         ["Sliders", "heading 1"],
     ):
         keyboard.tap_key(keyboard.KEYSYM_UP)
-        assert speech(session) == expected
+        assert helpers.speech(session) == expected
 
 
 @pytest.mark.native_app
@@ -107,44 +108,72 @@ def test_slider_value_changes_and_progress_bar(web_sliders: NativeAppSession) ->
     """Tests slider value changes within min/max bounds and a progress bar's value."""
 
     session = web_sliders
-    reset_web_state(session)
+    helpers.reset_web_state(session)
 
     # Tab gives the slider DOM focus, which switches Orca to focus mode so the
     # arrow keys change its value rather than moving the caret.
     keyboard.tap_key(keyboard.KEYSYM_TAB)
-    assert speech(session) == ["Volume", "horizontal slider", "2", "50 percent.", "Focus mode"]
+    assert helpers.speech(session) == [
+        "Volume",
+        "horizontal slider",
+        "2",
+        "50 percent.",
+        "Focus mode",
+    ]
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert speech(session) == ["3"]
+    assert helpers.speech(session) == ["3"]
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert speech(session) == ["4"]
+    assert helpers.speech(session) == ["4"]
 
     # Already at the maximum; pressing Up again changes nothing and says nothing.
     keyboard.tap_key(keyboard.KEYSYM_UP)
-    assert speech(session) == []
+    assert helpers.speech(session) == []
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["3"]
+    assert helpers.speech(session) == ["3"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["2"]
+    assert helpers.speech(session) == ["2"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["1"]
+    assert helpers.speech(session) == ["1"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["0"]
+    assert helpers.speech(session) == ["0"]
 
     # Already at the minimum; pressing Down again changes nothing and says nothing.
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == []
+    assert helpers.speech(session) == []
 
     session.orca.press_orca_key(keyboard.KEYSYM_A)
-    assert speech(session) == ["Browse mode"]
+    assert helpers.speech(session) == ["Browse mode"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Download"]
+    assert helpers.speech(session) == ["Download"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["30 percent."]
+    assert helpers.speech(session) == ["30 percent."]
+
+
+def _where_am_i(session: NativeAppSession) -> tuple[list[str], list[tuple[int, str, str | None]]]:
+    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
+    return helpers.capture(session)
+
+
+@pytest.mark.native_app
+def test_where_am_i_on_slider(web_sliders: NativeAppSession) -> None:
+    """Tests Where Am I on a horizontal slider (at its current value of 0)."""
+
+    session = web_sliders
+    helpers.reset_web_state(session)
+
+    helpers.tab_and_swallow_presentation(session)
+    assert _where_am_i(session) == (
+        ["Volume", "horizontal slider", "0", "0 percent."],
+        [
+            BrailleLine(1, "Volume 0 horizontal slider", "Volume 0 horizontal slider", "\x00" * 26),
+            BrailleLine(1, "Volume 0 horizontal slider", "Volume 0 horizontal slider", "\x00" * 26),
+        ],
+    )

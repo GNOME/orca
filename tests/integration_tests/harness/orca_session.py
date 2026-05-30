@@ -127,6 +127,11 @@ class OrcaSession:
         modifiers = [self._orca_modifier_keysym, *(extra_modifiers or [])]
         keyboard.press_chord(modifiers, keysym)
 
+    def is_idle(self) -> bool:
+        """Returns True if Orca has finished processing the current input (test-only RPC)."""
+
+        return self.call("EventManager", "IsIdleForTesting", self._rpc_secret)
+
     def available_keybindings(self, count: int = 1) -> list[tuple[str, int]]:
         """Returns up to count currently-unbound Orca-modified keybindings (test-only RPC)."""
 

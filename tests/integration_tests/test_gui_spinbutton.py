@@ -269,7 +269,9 @@ def test_programmatic_change_focus_on_bump_button(
         helpers.tab_and_swallow_presentation(session)
 
     keyboard.tap_key(keyboard.KEYSYM_RETURN)
-    assert helpers.capture(session, quiescence=0.5, overall=4.0) == ([], [])
+    # wait_async so the drain waits through the deferred bump to confirm it stays silent,
+    # rather than returning the instant Orca goes idle (before the bump fires).
+    assert helpers.capture(session, wait_async=True, overall=2.0) == ([], [])
 
 
 @pytest.mark.native_app
@@ -312,7 +314,7 @@ def test_programmatic_change_focus_on_spinbutton(
 
     all_selected = "\x00" * 9 + "\xc0\xc0" + "\x00" * 3
     quantity_76 = helpers.BrailleLine(10, "Quantity 76 $l", "Quantity 76 $l", "\x00" * 14)
-    assert helpers.capture(session, quiescence=4.0, overall=8.0) == (
+    assert helpers.capture(session, quiescence=1.5, overall=3.5) == (
         ["76"],
         [
             helpers.BrailleLine(12, "Quantity 75 $l", "Quantity 75 $l", all_selected),

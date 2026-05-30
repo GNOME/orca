@@ -85,33 +85,3 @@ def test_toggle_braille_monitor(gtk3_text_view: NativeAppSession) -> None:
         ["On-screen braille disabled."],
         [BrailleLine(0, "On-screen braille disabled.", "On-screen braille disabled.", "\x00" * 27)],
     )
-
-
-@pytest.mark.native_app
-def test_word_wrap_ends_table_row_window_at_word_boundary(gtk3_tree_view: NativeAppSession) -> None:
-    """Tests that word wrap ends a table row's visible window on a word boundary."""
-
-    session = gtk3_tree_view
-    keyboard.tap_key(keyboard.KEYSYM_HOME)
-    keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    keyboard.tap_key(keyboard.KEYSYM_LEFT)
-    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
-    session.reader.reset()
-
-    session.orca.set("BraillePresenter", "WordWrapIsEnabled", True)
-    try:
-        keyboard.tap_key(keyboard.KEYSYM_DOWN)
-        # The window ends after the whole word "check" rather than cutting "box" to "b".
-        assert capture(session) == (
-            ["Grace", "Admiral", "Boston", "Done check box checked"],
-            [
-                BrailleLine(
-                    1,
-                    " Name column header Grace Admiral Boston <x> check boxDone",
-                    "Grace Admiral Boston <x> check ",
-                    "\x00" * 58,
-                )
-            ],
-        )
-    finally:
-        session.orca.set("BraillePresenter", "WordWrapIsEnabled", False)

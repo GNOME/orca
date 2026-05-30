@@ -109,12 +109,12 @@ def test_tab_navigation_announces_each_widget_role(
         ],
     )
     assert _press(session, keyboard.KEYSYM_TAB) == (
-        ["Bump Quantity in 2500 ms button"],
+        ["Bump Quantity in 1000 ms button"],
         [
             helpers.BrailleLine(
                 1,
-                "Bump Quantity in 2500 ms button",
-                "Bump Quantity in 2500 ms button",
+                "Bump Quantity in 1000 ms button",
+                "Bump Quantity in 1000 ms button",
                 "\x00" * 31,
             )
         ],

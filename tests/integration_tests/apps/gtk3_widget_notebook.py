@@ -69,7 +69,7 @@ class _Widgets:
         self.level_scale = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, 0, 10, 1)
         self.level_scale.set_draw_value(False)
         self.level_scale.get_accessible().set_name("Level")
-        self.bump_button = Gtk.Button(label="Bump Quantity in 2500 ms")
+        self.bump_button = Gtk.Button(label="Bump Quantity in 1000 ms")
         self.bump_button.connect("clicked", self._on_bump_clicked)
         self.readonly_spin = Gtk.SpinButton.new_with_range(0, 100, 1)
         self.readonly_spin.set_editable(False)
@@ -94,7 +94,7 @@ class _Widgets:
         self.reset()
 
     def _on_bump_clicked(self, _button: Gtk.Button) -> None:
-        GLib.timeout_add(2500, self._bump_quantity)
+        GLib.timeout_add(1000, self._bump_quantity)
 
     def _bump_quantity(self) -> bool:
         value = self.quantity_spin.get_value()

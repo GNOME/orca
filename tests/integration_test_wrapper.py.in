@@ -363,8 +363,14 @@ def main() -> int:
         sandbox = tempfile.mkdtemp(prefix="orca-integration-test-")
         runtime_dir = os.path.join(sandbox, "runtime")
         os.makedirs(runtime_dir, mode=0o700, exist_ok=True)
+        tmp_dir = os.path.join(sandbox, "tmp")
+        os.makedirs(tmp_dir, mode=0o700, exist_ok=True)
         child_env = os.environ.copy()
         child_env["XDG_RUNTIME_DIR"] = runtime_dir
+        # Redirect temp files into the sandbox so they are removed with it. Chromium leaves
+        # org.chromium.Chromium.* dirs in TMPDIR, which teardown SIGKILLs it before it can
+        # clean up; in /tmp those orphan, in the sandbox they go with the rmtree.
+        child_env["TMPDIR"] = tmp_dir
         # Put dbus-run-session in its own process group. Auto-activated D-Bus
         # services (portals, GPaste, speech providers) get orphaned when the
         # inner wrapper exits but still hold our stderr fd, which keeps meson's

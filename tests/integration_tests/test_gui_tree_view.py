@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Integration tests for navigating a GTK tree view presented as a table."""
+"""GtkTreeView coverage."""
 
 from __future__ import annotations
 
@@ -272,3 +272,54 @@ def test_toggle_cell(gtk3_tree_view: NativeAppSession) -> None:
         ["checked"],
         [BrailleLine(1, " Done <x> check boxDone", "<x> check boxDone", "\x00" * 23)],
     )
+
+
+@pytest.mark.native_app
+def test_toggle_table_cell_read_mode(gtk3_tree_view: NativeAppSession) -> None:
+    """Tests that toggling table cell read mode in a table announces cell vs row."""
+
+    session = gtk3_tree_view
+    keyboard.tap_key(keyboard.KEYSYM_HOME)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+
+    session.orca.call("SpeechPresenter", "ToggleTableCellReadingMode", True)
+    assert capture(session) == (
+        ["Speak cell"],
+        [BrailleLine(0, "Speak cell", "Speak cell", "\x00" * 10)],
+    )
+    session.orca.call("SpeechPresenter", "ToggleTableCellReadingMode", True)
+    assert capture(session) == (
+        ["Speak row"],
+        [BrailleLine(0, "Speak row", "Speak row", "\x00" * 9)],
+    )
+
+
+@pytest.mark.native_app
+def test_word_wrap_ends_table_row_window_at_word_boundary(gtk3_tree_view: NativeAppSession) -> None:
+    """Tests that braille word wrap ends a table row's visible window on a word boundary."""
+
+    session = gtk3_tree_view
+    keyboard.tap_key(keyboard.KEYSYM_HOME)
+    keyboard.tap_key(keyboard.KEYSYM_LEFT)
+    keyboard.tap_key(keyboard.KEYSYM_LEFT)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+
+    session.orca.set("BraillePresenter", "WordWrapIsEnabled", True)
+    try:
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        # The window ends after the whole word "check" rather than cutting "box" to "b".
+        assert capture(session) == (
+            ["Grace", "Admiral", "Boston", "Done check box checked"],
+            [
+                BrailleLine(
+                    1,
+                    " Name column header Grace Admiral Boston <x> check boxDone",
+                    "Grace Admiral Boston <x> check ",
+                    "\x00" * 58,
+                )
+            ],
+        )
+    finally:
+        session.orca.set("BraillePresenter", "WordWrapIsEnabled", False)

@@ -999,6 +999,20 @@ def to_variant(value: str | bool | float | list, signature: str | None = None) -
     return GLib.Variant("s", str(value))
 
 
+def _module_is_testing_only(bus, module_name: str) -> bool:
+    """Returns True if module_name exposes only gated *ForTesting members."""
+
+    iface = module_interface_xml(bus, module_name)
+    if iface is None:
+        return False
+    methods = [name for m in iface.findall("method") if (name := m.get("name"))]
+    return (
+        bool(methods)
+        and not iface.findall("property")
+        and all(name.endswith("ForTesting") for name in methods)
+    )
+
+
 @pytest.mark.dbus
 class TestOrcaDBusIntegration:
     """Integration tests for Orca D-Bus service using pytest features."""
@@ -1357,7 +1371,8 @@ class TestOrcaDBusIntegration:
 
         actual_modules = set(list_module_names(bus))
         expected_modules = set(MODULE_CONFIG.keys())
-        unexpected_modules = actual_modules - expected_modules - OPTIONAL_MODULES
+        candidates = actual_modules - expected_modules - OPTIONAL_MODULES
+        unexpected_modules = {m for m in candidates if not _module_is_testing_only(bus, m)}
 
         if unexpected_modules:
             module_list = sorted(unexpected_modules)

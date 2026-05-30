@@ -90,6 +90,9 @@ class InputEventManager:
     def process_remote_controller_event(self, event: input_event.RemoteControllerEvent) -> None:
         """Processes this RemoteController event."""
 
+        if isinstance(event, input_event.RemoteControllerTestingEvent):
+            return
+
         # TODO - JD: It probably makes sense to process remote controller events here rather
         # than just updating state.
         self._last_input_event = event

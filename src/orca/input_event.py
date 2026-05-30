@@ -64,6 +64,7 @@ KEYBOARD_EVENT = "keyboard"
 BRAILLE_EVENT = "braille"
 MOUSE_BUTTON_EVENT = "mouse:button"
 REMOTE_CONTROLLER_EVENT = "remote controller"
+REMOTE_CONTROLLER_TESTING_EVENT = "remote controller testing"
 
 
 class InputEvent:
@@ -892,5 +893,12 @@ class MouseButtonEvent(InputEvent):
 class RemoteControllerEvent(InputEvent):
     """A simple input event whose main purpose is identification of the origin."""
 
+    def __init__(self, event_type: str = REMOTE_CONTROLLER_EVENT):
+        super().__init__(event_type)
+
+
+class RemoteControllerTestingEvent(RemoteControllerEvent):
+    """A remote controller event from a test-only command, not a real user action."""
+
     def __init__(self):
-        super().__init__(REMOTE_CONTROLLER_EVENT)
+        super().__init__(REMOTE_CONTROLLER_TESTING_EVENT)

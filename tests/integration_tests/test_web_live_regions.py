@@ -109,12 +109,12 @@ def test_live_region_politeness(web_live_regions: NativeAppSession) -> None:
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert speech(session) == ["Save", "button"]
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session) == ["Changes saved"]
+    assert speech(session, wait_async=True) == ["Changes saved"]
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert speech(session) == ["Break", "button"]
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
-    assert speech(session) == ["Connection lost"]
+    assert speech(session, wait_async=True) == ["Connection lost"]
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert speech(session) == ["Quiet", "button"]
