@@ -3006,7 +3006,7 @@ class Utilities(script_utilities.Utilities):
         # TODO - JD: Can we remove this? If it's needed, should it be recursive?
         AXObject.clear_cache(container, False, "Handling event for removed selectable child.")
         item = AXUtilities.get_focused_object(container)
-        if not (AXUtilities.is_list_item(item) or AXUtilities.is_tree_item):
+        if not (AXUtilities.is_list_item(item) or AXUtilities.is_tree_item(item)):
             msg = "WEB: Could not find focused item to recover from removed child."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
