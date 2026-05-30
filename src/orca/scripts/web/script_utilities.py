@@ -2169,9 +2169,6 @@ class Utilities(script_utilities.Utilities):
     def _is_empty_anchor(self, obj: Atspi.Accessible) -> bool:
         return AXUtilities.is_anchor(obj) and not self.treat_as_text_object(obj)
 
-    def _is_empty_tool_tip(self, obj: Atspi.Accessible) -> bool:
-        return AXUtilities.is_tool_tip(obj) and not self.treat_as_text_object(obj)
-
     def is_browser_ui_alert(self, obj: Atspi.Accessible) -> bool:
         """Returns true if obj is an alert outside of document content."""
 
@@ -2853,10 +2850,6 @@ class Utilities(script_utilities.Utilities):
             rv = False
         elif self._is_empty_anchor(obj):
             tokens = ["WEB: Empty anchor cannot have caret context", obj]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            rv = False
-        elif self._is_empty_tool_tip(obj):
-            tokens = ["WEB: Empty tool tip cannot have caret context", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = False
         elif self._is_fake_placeholder_for_entry(obj):
