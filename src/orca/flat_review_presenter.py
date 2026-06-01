@@ -434,11 +434,6 @@ class FlatReviewPresenter(Extension):
         if not self._context:
             return False
 
-        if self._context.is_stale():
-            msg = "FLAT REVIEW PRESENTER: Context is stale."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
         if self._context_invalidated:
             msg = "FLAT REVIEW PRESENTER: Context invalidated by an accessible event."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -449,6 +444,11 @@ class FlatReviewPresenter(Extension):
             msg = "FLAT REVIEW PRESENTER: No new input event since context was last validated."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
+
+        if self._context.is_stale():
+            msg = "FLAT REVIEW PRESENTER: Context is stale."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
 
         if self._last_input_event is None:
             return True
