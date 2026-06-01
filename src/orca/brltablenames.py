@@ -529,19 +529,19 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
+    "es-no.utb": _("Spanish, Norway"),
+    # Translators: This is the name of a braille translation table
+    # provided by liblouis (https://liblouis.io). Many of the terms
+    # used in these names (e.g. contracted, uncontracted, grade,
+    # computer braille) are explained at
+    # https://en.wikipedia.org/wiki/Braille.
     "et-6dot.utb": _("Estonian"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "et-g0.utb": _("et-g0"),
-    # Translators: This is the name of a braille translation table
-    # provided by liblouis (https://liblouis.io). Many of the terms
-    # used in these names (e.g. contracted, uncontracted, grade,
-    # computer braille) are explained at
-    # https://en.wikipedia.org/wiki/Braille.
-    "et.ctb": _("Estonian, computer"),
+    "et-g0.utb": _("Estonian, computer"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -709,7 +709,7 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "hu-hu-g1.ctb": _("Hungarian, partially contracted"),
+    "hu-hu-g1.ctb": _("Hungarian, uncontracted"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
@@ -1051,6 +1051,18 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
+    "ovd-6g0.utb": _("Elfdalian, 6-dot"),
+    # Translators: This is the name of a braille translation table
+    # provided by liblouis (https://liblouis.io). Many of the terms
+    # used in these names (e.g. contracted, uncontracted, grade,
+    # computer braille) are explained at
+    # https://en.wikipedia.org/wiki/Braille.
+    "ovd-8g0.utb": _("Elfdalian, 8-dot"),
+    # Translators: This is the name of a braille translation table
+    # provided by liblouis (https://liblouis.io). Many of the terms
+    # used in these names (e.g. contracted, uncontracted, grade,
+    # computer braille) are explained at
+    # https://en.wikipedia.org/wiki/Braille.
     "pi.ctb": _("Pali"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
@@ -1207,6 +1219,18 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
+    "smi-6g0.utb": _("Sami, 6-dot"),
+    # Translators: This is the name of a braille translation table
+    # provided by liblouis (https://liblouis.io). Many of the terms
+    # used in these names (e.g. contracted, uncontracted, grade,
+    # computer braille) are explained at
+    # https://en.wikipedia.org/wiki/Braille.
+    "smi-8g0.utb": _("Sami, 8-dot"),
+    # Translators: This is the name of a braille translation table
+    # provided by liblouis (https://liblouis.io). Many of the terms
+    # used in these names (e.g. contracted, uncontracted, grade,
+    # computer braille) are explained at
+    # https://en.wikipedia.org/wiki/Braille.
     "sot-za-g1.ctb": _("Sesotho, uncontracted"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
@@ -1243,19 +1267,79 @@ TABLE_NAMES: dict[str, str] = {
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "sv-g0.utb": _("Swedish, uncontracted"),
+    "sv-6g0d.utb": _("Swedish, uncontracted, 6-dot, detailed"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "sv-g1.ctb": _("Swedish, partially contracted"),
+    "sv-6g0p.utb": _("Swedish, uncontracted, 6-dot, phonetics"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
     # computer braille) are explained at
     # https://en.wikipedia.org/wiki/Braille.
-    "sv-g2.ctb": _("Swedish, contracted"),
+    "sv-6g1d.ctb": _("Swedish, partially contracted, 6-dot, detailed"),
+    # Translators: This is the name of a braille translation table
+    # provided by liblouis (https://liblouis.io). Many of the terms
+    # used in these names (e.g. contracted, uncontracted, grade,
+    # computer braille) are explained at
+    # https://en.wikipedia.org/wiki/Braille.
+    "sv-6g2d.ctb": _("Swedish, contracted, 6-dot, detailed"),
+    # Translators: This is the name of a braille translation table
+    # provided by liblouis (https://liblouis.io). Many of the terms
+    # used in these names (e.g. contracted, uncontracted, grade,
+    # computer braille) are explained at
+    # https://en.wikipedia.org/wiki/Braille.
+    "sv-8g0d.utb": _("Swedish, uncontracted, 8-dot, detailed"),
+    # Translators: This is the name of a braille translation table
+    # provided by liblouis (https://liblouis.io). Many of the terms
+    # used in these names (e.g. contracted, uncontracted, grade,
+    # computer braille) are explained at
+    # https://en.wikipedia.org/wiki/Braille.
+    "sv-8g0n.utb": _("Swedish, uncontracted, 8-dot"),
+    # Translators: This is the name of a braille translation table
+    # provided by liblouis (https://liblouis.io). Many of the terms
+    # used in these names (e.g. contracted, uncontracted, grade,
+    # computer braille) are explained at
+    # https://en.wikipedia.org/wiki/Braille.
+    "sv-8g1d.ctb": _("Swedish, partially contracted, 8-dot, detailed"),
+    # Translators: This is the name of a braille translation table
+    # provided by liblouis (https://liblouis.io). Many of the terms
+    # used in these names (e.g. contracted, uncontracted, grade,
+    # computer braille) are explained at
+    # https://en.wikipedia.org/wiki/Braille.
+    "sv-8g1n.ctb": _("Swedish, partially contracted, 8-dot"),
+    # Translators: This is the name of a braille translation table
+    # provided by liblouis (https://liblouis.io). Many of the terms
+    # used in these names (e.g. contracted, uncontracted, grade,
+    # computer braille) are explained at
+    # https://en.wikipedia.org/wiki/Braille.
+    "sv-8g2d.ctb": _("Swedish, contracted, 8-dot, detailed"),
+    # Translators: This is the name of a braille translation table
+    # provided by liblouis (https://liblouis.io). Many of the terms
+    # used in these names (e.g. contracted, uncontracted, grade,
+    # computer braille) are explained at
+    # https://en.wikipedia.org/wiki/Braille.
+    "sv-8g2n.ctb": _("Swedish, contracted, 8-dot"),
+    # Translators: This is the name of a braille translation table
+    # provided by liblouis (https://liblouis.io). Many of the terms
+    # used in these names (e.g. contracted, uncontracted, grade,
+    # computer braille) are explained at
+    # https://en.wikipedia.org/wiki/Braille.
+    "sv-g0.utb": _("Swedish, uncontracted, 6-dot"),
+    # Translators: This is the name of a braille translation table
+    # provided by liblouis (https://liblouis.io). Many of the terms
+    # used in these names (e.g. contracted, uncontracted, grade,
+    # computer braille) are explained at
+    # https://en.wikipedia.org/wiki/Braille.
+    "sv-g1.ctb": _("Swedish, partially contracted, 6-dot"),
+    # Translators: This is the name of a braille translation table
+    # provided by liblouis (https://liblouis.io). Many of the terms
+    # used in these names (e.g. contracted, uncontracted, grade,
+    # computer braille) are explained at
+    # https://en.wikipedia.org/wiki/Braille.
+    "sv-g2.ctb": _("Swedish, contracted, 6-dot"),
     # Translators: This is the name of a braille translation table
     # provided by liblouis (https://liblouis.io). Many of the terms
     # used in these names (e.g. contracted, uncontracted, grade,
