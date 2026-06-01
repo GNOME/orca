@@ -164,8 +164,76 @@ def test_pan_braille_right_then_left(web_long_line: NativeAppSession) -> None:
         session.orca.press_bound_key(left_key)
         assert helpers.capture(session) == (
             [],
-            [helpers.BrailleLine(0, _FULL_LONG, "ver the lazy dog and then keeps ", _LONG_MASK)],
+            [helpers.BrailleLine(0, _FULL_LONG, "the lazy dog and then keeps runn", _LONG_MASK)],
         )
+
+
+@pytest.mark.native_app
+def test_pan_left_with_word_wrap_returns_to_intermediate_range(
+    web_long_line: NativeAppSession,
+) -> None:
+    """Tests that with word wrap on, pan-left reveals the previously panned-over range."""
+
+    session = web_long_line
+    _reset(session)
+    session.orca.set("BraillePresenter", "WordWrapIsEnabled", True)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+    try:
+        with helpers.bound_pan_keys(session) as (left_key, right_key):
+            keyboard.tap_key(keyboard.KEYSYM_DOWN)
+            helpers.capture(session)
+
+            session.orca.press_bound_key(right_key)
+            assert helpers.capture(session) == (
+                [],
+                [helpers.BrailleLine(0, _FULL_LONG, "the lazy dog and then keeps ", _LONG_MASK)],
+            )
+            session.orca.press_bound_key(right_key)
+            assert helpers.capture(session) == (
+                [],
+                [helpers.BrailleLine(0, _FULL_LONG, "running across the wide open ", _LONG_MASK)],
+            )
+            session.orca.press_bound_key(left_key)
+            assert helpers.capture(session) == (
+                [],
+                [helpers.BrailleLine(0, _FULL_LONG, "the lazy dog and then keeps ", _LONG_MASK)],
+            )
+    finally:
+        session.orca.set("BraillePresenter", "WordWrapIsEnabled", False)
+
+
+@pytest.mark.native_app
+def test_pan_left_after_crossing_forward(
+    web_long_line: NativeAppSession,
+) -> None:
+    """Documents a known bug: pan-left after a forward line cross jumps past the previous line."""
+
+    session = web_long_line
+    _reset(session)
+    session.orca.set("BraillePresenter", "WordWrapIsEnabled", True)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+    try:
+        with helpers.bound_pan_keys(session) as (left_key, right_key):
+            keyboard.tap_key(keyboard.KEYSYM_DOWN)
+            helpers.capture(session)
+
+            for _ in range(3):
+                session.orca.press_bound_key(right_key)
+                helpers.capture(session)
+            session.orca.press_bound_key(right_key)
+            next_line = helpers.BrailleLine(1, "long time.", "long time.", "\x00" * 10)
+            assert helpers.capture(session) == ([], [next_line, next_line])
+
+            # KNOWN BUG (Chromium and Gecko): pan-left should land on the previous line's tail,
+            # but set_caret_position produces a spurious text-caret-moved that Orca trusts,
+            # lacking a TextEventReason to mark it a side effect of panning. To be fixed later.
+            heading = helpers.BrailleLine(1, "Long line h1", "Long line h1", "\x00" * 12)
+            session.orca.press_bound_key(left_key)
+            assert helpers.capture(session) == ([], [heading, heading])
+    finally:
+        session.orca.set("BraillePresenter", "WordWrapIsEnabled", False)
 
 
 @pytest.mark.native_app
@@ -239,7 +307,7 @@ def test_pan_braille_over_assembled_link_line(web_long_line: NativeAppSession) -
         session.orca.press_bound_key(left_key)
         assert helpers.capture(session) == (
             [],
-            [helpers.BrailleLine(0, _FULL_RICH, "r before a middle link followed ", _RICH_MASK)],
+            [helpers.BrailleLine(0, _FULL_RICH, "before a middle link followed by", _RICH_MASK)],
         )
 
 

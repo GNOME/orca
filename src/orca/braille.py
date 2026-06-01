@@ -2373,12 +2373,15 @@ def pan_left(pan_amount: int = 0) -> bool:
     old_x = _STATE.viewport[0]
     if pan_amount == 0:
         old_start, _old_end = _get_range_for_offset(old_x)
-        new_start, _new_end = _get_range_for_offset(old_start - _STATE.display_size[0])
-        pan_amount = max(0, min(old_start - new_start, _STATE.display_size[0]))
-        if pan_amount == 0 and old_x > old_start:
-            # The viewport sits inside its range (e.g. positioned to follow the caret), so a
-            # range-based step is zero; pan to the range start to reveal the content to the left.
+        if old_x > old_start:
+            # The viewport sits inside its range (e.g. positioned to follow the caret); pan to the
+            # range start to reveal the content to the left.
             pan_amount = old_x - old_start
+        else:
+            # Step to the start of the previous range, mirroring pan_right. Landing inside a range
+            # would let word wrapping snap the viewport back to that range's start.
+            prev_start, _prev_end = _get_range_for_offset(old_start - 1)
+            pan_amount = min(old_start - prev_start, _STATE.display_size[0])
 
     _STATE.viewport[0] = max(0, _STATE.viewport[0] - pan_amount)
     msg = f"BRAILLE: Panning left. Amount: {pan_amount} (from {old_x} to {_STATE.viewport[0]})"
