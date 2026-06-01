@@ -33,7 +33,7 @@ from __future__ import annotations
 import re
 import subprocess
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, overload
+from typing import TYPE_CHECKING, Any, NamedTuple, overload
 
 from gi.repository import Gio, GLib
 
@@ -73,6 +73,17 @@ class SettingsMapping:
     string_enum: bool = False
 
 
+class LookupCacheKey(NamedTuple):
+    """Hashable key representing a GSettings lookup context."""
+
+    schema: str
+    key: str
+    voice_type: str
+    app_name: str
+    profile: str
+    ignore_runtime: bool
+
+
 _NOT_SET = object()
 
 
@@ -89,6 +100,11 @@ class GSettingsRegistry:
         self._handles: dict[str, GSettingsSchemaHandle] = {}
         self._runtime_values: dict[tuple[str, str, str | None], Any] = {}
         self._ignore_runtime: bool = False
+        self._value_cache: dict[LookupCacheKey, Any] = {}
+
+    def clear_value_cache(self) -> None:
+        """Clears the cached GSettings lookup values."""
+        self._value_cache.clear()
 
     def set_ignore_runtime(self, ignore: bool) -> None:
         """Sets whether layered_lookup should skip runtime overrides."""
@@ -143,6 +159,19 @@ class GSettingsRegistry:
     ) -> Any | None:
         """Returns a setting value via layered GSettings lookup, default, or None."""
 
+        profile = self.get_active_profile()
+        effective_app = app_name if app_name is not None else (self._app_name or "")
+        cache_key = LookupCacheKey(
+            schema,
+            key,
+            voice_type or "",
+            effective_app,
+            profile,
+            self._ignore_runtime,
+        )
+        if cache_key in self._value_cache:
+            return self._value_cache[cache_key]
+
         handle = self._get_handle(schema)
 
         sub_path = ""
@@ -162,17 +191,22 @@ class GSettingsRegistry:
                 }
                 extractor = extractors.get("s" if genum else gtype)
                 if extractor is not None:
-                    return extractor(key)
+                    val = extractor(key)
+                    self._value_cache[cache_key] = val
+                    return val
 
         if not self._ignore_runtime:
             runtime = self._runtime_values.get((schema, key, voice_type))
             if runtime is not None:
                 msg = f"GSETTINGS REGISTRY: {schema}/{key} runtime override = {runtime!r}"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
+                self._value_cache[cache_key] = runtime
                 return runtime
 
         if handle is None:
-            return self._use_default(schema, key, default)
+            val = self._use_default(schema, key, default)
+            self._value_cache[cache_key] = val
+            return val
 
         accessors: dict[str, Callable[..., Any | None]] = {
             "b": handle.get_boolean,
@@ -185,11 +219,14 @@ class GSettingsRegistry:
         }
         accessor = accessors.get("s" if genum else gtype)
         # For explicit app lookups, skip the app layer (already checked above).
-        effective_app = "" if app_name else None
-        result = accessor(key, sub_path, effective_app) if accessor is not None else None
+        effective_app_arg = "" if app_name else None
+        result = accessor(key, sub_path, effective_app_arg) if accessor is not None else None
         if result is not None:
+            self._value_cache[cache_key] = result
             return result
-        return self._use_default(schema, key, default)
+        val = self._use_default(schema, key, default)
+        self._value_cache[cache_key] = val
+        return val
 
     @staticmethod
     def _use_default(schema: str, key: str, default: Any) -> Any | None:
@@ -241,7 +278,9 @@ class GSettingsRegistry:
             path = f"{GSETTINGS_PATH_PREFIX}{profile}/apps/{app}/{suffix}/"
         else:
             path = f"{GSETTINGS_PATH_PREFIX}{profile}/{suffix}/"
-        return Gio.Settings.new_with_path(schema_id, path)
+        gs = Gio.Settings.new_with_path(schema_id, path)
+        gs.connect("changed", lambda *args: self.clear_value_cache())
+        return gs
 
     def set_runtime_value(
         self,
@@ -253,6 +292,7 @@ class GSettingsRegistry:
         """Stores a runtime value override."""
 
         self._runtime_values[(schema, key, voice_type)] = value
+        self.clear_value_cache()
 
     def get_runtime_value(
         self,
@@ -271,11 +311,13 @@ class GSettingsRegistry:
         """Removes a single runtime value override."""
 
         self._runtime_values.pop((schema, key, voice_type), None)
+        self.clear_value_cache()
 
     def clear_runtime_values(self) -> None:
         """Clears all runtime value overrides."""
 
         self._runtime_values.clear()
+        self.clear_value_cache()
 
     def set_dict(self, schema: str, key: str, gtype: str, value: dict) -> bool:
         """Sets a dict value in dconf for the current profile."""
@@ -325,11 +367,13 @@ class GSettingsRegistry:
         """Sets the active app name for GSettings lookups."""
 
         self._app_name = app_name or None
+        self.clear_value_cache()
 
     def set_active_profile(self, profile: str) -> None:
         """Sets the active profile for GSettings lookups."""
 
         self._profile = profile
+        self.clear_value_cache()
 
     def get_active_app(self) -> str | None:
         """Returns the active app name for GSettings lookups."""
@@ -469,6 +513,7 @@ class GSettingsRegistry:
         gs = self.get_settings(schema_name, profile, app_name=app_name)
         if gs is None:
             return
+        self.clear_value_cache()
 
         global_gs = None
         if app_name:
@@ -678,6 +723,7 @@ class GSettingsSchemaHandle:
             return None
 
         gs = Gio.Settings.new_with_path(self._schema_id, path)
+        gs.connect("changed", lambda *args: get_registry().clear_value_cache())
         self._cache[path] = gs
         return gs
 
@@ -864,6 +910,7 @@ class GSettingsSchemaHandle:
             return False
 
         writer(gs, key)
+        get_registry().clear_value_cache()
         return True
 
     def set_boolean(self, key: str, value: bool, sub_path: str = "") -> bool:
