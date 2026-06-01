@@ -585,10 +585,12 @@ class TestAXText:
 
         self._setup_dependencies(test_context)
         from orca.ax_text import AXText
-        from orca.ax_utilities_text import AXUtilitiesText
+        from orca.ax_utilities_text import AXUtilitiesText, CaretSetReason
 
         test_context.patch_object(AXText, "set_caret_offset", return_value=True)
-        result = AXUtilitiesText.set_caret_offset_to_start(test_context.Mock(spec=Atspi.Accessible))
+        result = AXUtilitiesText.set_caret_offset_to_start(
+            test_context.Mock(spec=Atspi.Accessible), CaretSetReason.CARET_NAVIGATION
+        )
         assert result is True
 
     def test_set_caret_offset_to_end(self, test_context: OrcaTestContext) -> None:
@@ -596,11 +598,13 @@ class TestAXText:
 
         self._setup_dependencies(test_context)
         from orca.ax_text import AXText
-        from orca.ax_utilities_text import AXUtilitiesText
+        from orca.ax_utilities_text import AXUtilitiesText, CaretSetReason
 
         test_context.patch_object(AXText, "get_character_count", return_value=100)
         test_context.patch_object(AXText, "set_caret_offset", return_value=True)
-        result = AXUtilitiesText.set_caret_offset_to_end(test_context.Mock(spec=Atspi.Accessible))
+        result = AXUtilitiesText.set_caret_offset_to_end(
+            test_context.Mock(spec=Atspi.Accessible), CaretSetReason.CARET_NAVIGATION
+        )
         assert result is True
 
     def test_has_selected_text_without_selection(self, test_context: OrcaTestContext) -> None:

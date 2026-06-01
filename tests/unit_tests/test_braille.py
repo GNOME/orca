@@ -78,6 +78,7 @@ class TestBrailleLineRanges:
                 "orca.ax_object": ax_object_mock,
                 "orca.ax_text": ax_text_mock,
                 "orca.ax_utilities": ax_utilities_mock,
+                "orca.ax_utilities_text": test_context.Mock(),
                 "orca.orca_platform": platform_mock,
             },
         )

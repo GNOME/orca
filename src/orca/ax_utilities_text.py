@@ -30,6 +30,8 @@ from __future__ import annotations
 
 import enum
 import re
+import time
+from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from . import debug
@@ -59,11 +61,40 @@ class TextUnit(enum.Enum):
     PHRASE = enum.auto()
 
 
+class CaretSetReason(enum.Enum):
+    """Enum representing the reason Orca set the caret offset."""
+
+    BRAILLE_CUT = enum.auto()
+    BRAILLE_PANNING = enum.auto()
+    BRAILLE_ROUTING = enum.auto()
+    CARET_NAVIGATION = enum.auto()
+    LINE_PRESENTATION = enum.auto()
+    LIVE_REGION_NAVIGATION = enum.auto()
+    MATH_NAVIGATION = enum.auto()
+    OBJECT_PRESENTATION = enum.auto()
+    RESULT_NAVIGATION = enum.auto()
+    SAY_ALL_COMMAND = enum.auto()
+    SCROLL_INTO_VIEW = enum.auto()
+    STRUCTURAL_NAVIGATION = enum.auto()
+    TABLE_NAVIGATION = enum.auto()
+
+
+@dataclass(frozen=True)
+class LastCaretSet:
+    """Records the most recent caret offset Orca set, and why."""
+
+    obj: Atspi.Accessible
+    offset: int
+    time: float
+    reason: CaretSetReason
+
+
 class AXUtilitiesText:
     """Utilities for accessible text."""
 
     CACHED_TEXT_ATTRIBUTES: ClassVar[dict[str, str]] = {}
     CACHED_TEXT_SELECTION: ClassVar[dict[int, tuple[str, int, int]]] = {}
+    LAST_CARET_SET: ClassVar[LastCaretSet | None] = None
     LAST_TEXT_UNIT_SPOKEN: ClassVar[TextUnit | None] = None
     LINK_STYLING_ATTRIBUTES: ClassVar[frozenset[AXTextAttribute]] = frozenset(
         {
@@ -719,16 +750,35 @@ class AXUtilitiesText:
         return bool(result)
 
     @staticmethod
-    def set_caret_offset_to_start(obj: Atspi.Accessible) -> bool:
-        """Returns False if we definitely failed to set the offset. True cannot be trusted."""
+    def get_last_caret_set() -> LastCaretSet | None:
+        """Returns info about the most recent caret offset Orca set, or None."""
 
-        return AXText.set_caret_offset(obj, 0)
+        return AXUtilitiesText.LAST_CARET_SET
 
     @staticmethod
-    def set_caret_offset_to_end(obj: Atspi.Accessible) -> bool:
+    def set_caret_offset_with_reason(
+        obj: Atspi.Accessible, offset: int, reason: CaretSetReason
+    ) -> bool:
+        """Sets the caret offset, recording the time and reason for later use."""
+
+        result = AXText.set_caret_offset(obj, offset)
+        AXUtilitiesText.LAST_CARET_SET = LastCaretSet(obj, offset, time.time(), reason)
+        tokens = ["AXUtilitiesText: Set caret offset to", offset, "in", obj, "reason:", reason]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return result
+
+    @staticmethod
+    def set_caret_offset_to_start(obj: Atspi.Accessible, reason: CaretSetReason) -> bool:
         """Returns False if we definitely failed to set the offset. True cannot be trusted."""
 
-        return AXText.set_caret_offset(obj, AXText.get_character_count(obj))
+        return AXUtilitiesText.set_caret_offset_with_reason(obj, 0, reason)
+
+    @staticmethod
+    def set_caret_offset_to_end(obj: Atspi.Accessible, reason: CaretSetReason) -> bool:
+        """Returns False if we definitely failed to set the offset. True cannot be trusted."""
+
+        count = AXText.get_character_count(obj)
+        return AXUtilitiesText.set_caret_offset_with_reason(obj, count, reason)
 
     @staticmethod
     def has_selected_text(obj: Atspi.Accessible) -> bool:

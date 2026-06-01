@@ -58,7 +58,7 @@ from orca.ax_object import AXObject
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_event import TextEventReason
-from orca.ax_utilities_text import TextUnit
+from orca.ax_utilities_text import CaretSetReason, TextUnit
 from orca.scripts import default
 from orca.structural_navigator import NavigationMode
 
@@ -220,7 +220,9 @@ class Script(default.Script):
             and contents[0]
             and not document_presenter.get_presenter().in_focus_mode(self.app)
         ):
-            self.utilities.set_caret_position(contents[0][0], contents[0][1])
+            self.utilities.set_caret_position(
+                contents[0][0], contents[0][1], reason=CaretSetReason.LINE_PRESENTATION
+            )
 
         line, start_offset = AXText.get_line_at_offset(obj, offset)[0:2]
         speech_presenter.get_presenter().speak_line(
@@ -270,7 +272,7 @@ class Script(default.Script):
 
         if AXUtilities.is_status_bar(obj) or AXUtilities.is_alert(obj):
             if not document_presenter.get_presenter().in_focus_mode(self.app):
-                self.utilities.set_caret_position(obj, 0)
+                self.utilities.set_caret_position(obj, 0, reason=CaretSetReason.OBJECT_PRESENTATION)
             super().present_object(
                 obj,
                 offset=offset,
@@ -301,7 +303,7 @@ class Script(default.Script):
         # Editors like VSCode use the entry role for the code editor.
         if AXUtilities.is_entry(obj):
             if not document_presenter.get_presenter().in_focus_mode(self.app):
-                self.utilities.set_caret_position(obj, 0)
+                self.utilities.set_caret_position(obj, 0, reason=CaretSetReason.OBJECT_PRESENTATION)
             super().present_object(
                 obj,
                 offset=offset,
@@ -327,7 +329,9 @@ class Script(default.Script):
             and contents[0]
             and not document_presenter.get_presenter().in_focus_mode(self.app)
         ):
-            self.utilities.set_caret_position(contents[0][0], contents[0][1])
+            self.utilities.set_caret_position(
+                contents[0][0], contents[0][1], reason=CaretSetReason.OBJECT_PRESENTATION
+            )
         presenter = presentation_manager.get_manager()
         if generate_braille:
             presenter.display_contents(contents)
@@ -421,7 +425,7 @@ class Script(default.Script):
             return False
 
         obj, start, _end, _string = contents[0]
-        self.utilities.set_caret_position(obj, start)
+        self.utilities.set_caret_position(obj, start, reason=CaretSetReason.BRAILLE_PANNING)
         self.update_braille(obj, offset=start)
         presenter.pan_to_end()
         return True
@@ -445,7 +449,7 @@ class Script(default.Script):
             return False
 
         obj, start, _end, _string = contents[0]
-        self.utilities.set_caret_position(obj, start)
+        self.utilities.set_caret_position(obj, start, reason=CaretSetReason.BRAILLE_PANNING)
         self.update_braille(obj, offset=start)
         presenter.pan_to_beginning()
         return True

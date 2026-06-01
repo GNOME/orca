@@ -60,6 +60,7 @@ from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .ax_utilities_text import CaretSetReason
 from .command import Command, KeyboardCommand
 from .extension import Extension
 
@@ -1021,7 +1022,9 @@ class StructuralNavigator(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             manager.set_locus_of_focus(None, obj, False)
             if AXObject.supports_text(obj):
-                script.utilities.set_caret_position(obj, offset or 0)
+                script.utilities.set_caret_position(
+                    obj, offset or 0, reason=CaretSetReason.STRUCTURAL_NAVIGATION
+                )
             return
 
         script.update_braille(obj, offset)
@@ -1066,7 +1069,9 @@ class StructuralNavigator(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             manager.set_locus_of_focus(None, obj, False)
             if AXObject.supports_text(obj):
-                script.utilities.set_caret_position(obj, offset)
+                script.utilities.set_caret_position(
+                    obj, offset, reason=CaretSetReason.STRUCTURAL_NAVIGATION
+                )
             return
 
         presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()

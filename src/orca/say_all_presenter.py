@@ -54,8 +54,8 @@ from . import (
 )
 from .acss import ACSS
 from .ax_object import AXObject
-from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .ax_utilities_text import CaretSetReason
 from .command import Command, KeyboardCommand
 from .extension import Extension
 
@@ -505,7 +505,9 @@ class SayAllPresenter(Extension):
             f"'{combined}' ({first_start}-{last_end})",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        self._script.utilities.set_caret_offset(first_obj, first_start)
+        self._script.utilities.set_caret_offset(
+            first_obj, first_start, reason=CaretSetReason.SAY_ALL_COMMAND
+        )
         ax_event_synthesizer.get_synthesizer().scroll_into_view(
             context.obj,
             context.start_offset,
@@ -567,7 +569,9 @@ class SayAllPresenter(Extension):
                     f"'{element}' ({start}-{end})",
                 ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                self._script.utilities.set_caret_offset(content_obj, start)
+                self._script.utilities.set_caret_offset(
+                    content_obj, start, reason=CaretSetReason.SAY_ALL_COMMAND
+                )
                 ax_event_synthesizer.get_synthesizer().scroll_into_view(
                     context.obj,
                     context.start_offset,
@@ -724,7 +728,9 @@ class SayAllPresenter(Extension):
                 ):
                     return
                 presentation_manager.get_manager().interrupt_presentation()
-                AXText.set_caret_offset(context.obj, context.current_offset)
+                AXUtilities.set_caret_offset_with_reason(
+                    context.obj, context.current_offset, CaretSetReason.SAY_ALL_COMMAND
+                )
                 self._say_all_is_running = False
         else:
             tokens = ["SAY ALL PROGRESS CALLBACK: Completed", context]

@@ -43,6 +43,7 @@ from .ax_utilities_collection import AXUtilitiesCollection
 from .ax_utilities_component import AXUtilitiesComponent
 from .ax_utilities_debugging import AXUtilitiesDebugging
 from .ax_utilities_role import AXUtilitiesRole
+from .ax_utilities_text import CaretSetReason
 
 
 class _Snapshot(NamedTuple):
@@ -157,7 +158,9 @@ class AXEventSynthesizer:
             if AXEventSynthesizer._is_scrolled_off_screen(obj, offset):
                 tokens = ["AXEventSynthesizer:", obj, "is still offscreen. Setting caret."]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                AXText.set_caret_offset(obj, offset)
+                AXUtilities.set_caret_offset_with_reason(
+                    obj, offset, CaretSetReason.SCROLL_INTO_VIEW
+                )
 
         extents = AXText.get_character_rect(obj, offset)
         if AXUtilitiesComponent.is_empty_rect(extents):

@@ -37,7 +37,7 @@ from gi.repository import Atspi
 
 from .ax_text import AXTextAttribute
 from .ax_utilities_event import TextEventReason
-from .ax_utilities_text import TextUnit
+from .ax_utilities_text import CaretSetReason, LastCaretSet, TextUnit
 
 class AXUtilities:
     # From ax_utilities.py
@@ -1580,9 +1580,15 @@ class AXUtilities:
     @staticmethod
     def supports_paragraph_iteration(obj: Atspi.Accessible) -> bool: ...
     @staticmethod
-    def set_caret_offset_to_start(obj: Atspi.Accessible) -> bool: ...
+    def get_last_caret_set() -> LastCaretSet | None: ...
     @staticmethod
-    def set_caret_offset_to_end(obj: Atspi.Accessible) -> bool: ...
+    def set_caret_offset_with_reason(
+        obj: Atspi.Accessible, offset: int, reason: CaretSetReason
+    ) -> bool: ...
+    @staticmethod
+    def set_caret_offset_to_start(obj: Atspi.Accessible, reason: CaretSetReason) -> bool: ...
+    @staticmethod
+    def set_caret_offset_to_end(obj: Atspi.Accessible, reason: CaretSetReason) -> bool: ...
     @staticmethod
     def has_selected_text(obj: Atspi.Accessible) -> bool: ...
     @staticmethod

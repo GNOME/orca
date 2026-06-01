@@ -47,6 +47,7 @@ from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
+from .ax_utilities_text import CaretSetReason
 from .orca_platform import tablesdir  # pylint: disable=import-error
 
 try:
@@ -1391,7 +1392,9 @@ class Text(_AccessibleTextRegion):
             msg = "BRAILLE: Cannot set caret offset without active script."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
-        script.utilities.set_caret_offset(self.accessible, caret_offset)
+        script.utilities.set_caret_offset(
+            self.accessible, caret_offset, reason=CaretSetReason.BRAILLE_ROUTING
+        )
 
     def _contract_line(
         self,
@@ -1492,7 +1495,9 @@ class ReviewText(_AccessibleTextRegion):
             msg = "BRAILLE: Cannot set caret offset without active script."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
-        script.utilities.set_caret_offset(self.accessible, caret_offset)
+        script.utilities.set_caret_offset(
+            self.accessible, caret_offset, reason=CaretSetReason.BRAILLE_ROUTING
+        )
 
 
 class Line:

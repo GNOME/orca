@@ -85,7 +85,7 @@ from orca.ax_selection import AXSelection
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_event import TextEventReason
-from orca.ax_utilities_text import TextUnit
+from orca.ax_utilities_text import CaretSetReason, TextUnit
 from orca.command import BrailleCommand, KeyboardCommand
 from orca.generator import PresentationReason
 
@@ -583,7 +583,9 @@ class Script(script.Script):
         start_offset = AXText.get_line_at_offset(focus)[1]
         moved_caret = False
         if start_offset > 0:
-            moved_caret = AXText.set_caret_offset(focus, start_offset - 1)
+            moved_caret = AXUtilities.set_caret_offset_with_reason(
+                focus, start_offset - 1, CaretSetReason.BRAILLE_PANNING
+            )
 
         # If we didn't move the caret and we're in a terminal, we
         # jump into flat review to review the text.  See
@@ -635,7 +637,9 @@ class Script(script.Script):
 
         end_offset = AXText.get_line_at_offset(focus)[2]
         if end_offset < AXText.get_character_count(focus):
-            AXText.set_caret_offset(focus, end_offset)
+            AXUtilities.set_caret_offset_with_reason(
+                focus, end_offset, CaretSetReason.BRAILLE_PANNING
+            )
 
         return True
 
@@ -696,7 +700,9 @@ class Script(script.Script):
 
         presentation_manager.get_manager().interrupt_presentation()
         AXUtilities.clear_all_selected_text(caret_context.accessible)
-        self.utilities.set_caret_offset(caret_context.accessible, caret_context.offset)
+        self.utilities.set_caret_offset(
+            caret_context.accessible, caret_context.offset, reason=CaretSetReason.BRAILLE_CUT
+        )
         return True
 
     def process_braille_cut_line(
@@ -1605,7 +1611,7 @@ class Script(script.Script):
         if offset is None:
             offset = AXText.get_caret_offset(obj)
         else:
-            AXText.set_caret_offset(obj, offset)
+            AXUtilities.set_caret_offset_with_reason(obj, offset, CaretSetReason.LINE_PRESENTATION)
 
         line, start_offset = AXText.get_line_at_offset(obj, offset)[0:2]
         if line and line != "\n":
@@ -1705,7 +1711,9 @@ class Script(script.Script):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if offset is not None:
-            AXText.set_caret_offset(obj, offset)
+            AXUtilities.set_caret_offset_with_reason(
+                obj, offset, CaretSetReason.OBJECT_PRESENTATION
+            )
 
         presentation_manager.get_manager().present_object(
             self,

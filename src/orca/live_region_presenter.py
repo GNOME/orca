@@ -45,6 +45,7 @@ from . import (
 )
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
+from .ax_utilities_text import CaretSetReason
 from .command import Command, KeyboardCommand
 from .extension import Extension
 
@@ -416,7 +417,7 @@ class LiveRegionPresenter(Extension):
             return False
 
         obj = self._last_presented_message.obj
-        script.utilities.set_caret_position(obj, 0)
+        script.utilities.set_caret_position(obj, 0, reason=CaretSetReason.LIVE_REGION_NAVIGATION)
         presentation_manager.get_manager().speak_contents(
             script.utilities.get_object_contents_at_offset(obj, 0),
         )

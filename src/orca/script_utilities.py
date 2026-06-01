@@ -56,6 +56,8 @@ from .ax_utilities_text import TextUnit
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+    from .ax_utilities_text import CaretSetReason
+
 
 class Utilities:
     """Utilities for providing app/toolkit-specific information about objects and events."""
@@ -640,6 +642,8 @@ class Utilities:
         obj: Atspi.Accessible,
         offset: int,
         document: Atspi.Accessible | None = None,  # pylint: disable=unused-argument
+        *,
+        reason: CaretSetReason,
     ) -> None:
         """Sets the locus of focus to obj and sets the caret position to offset."""
 
@@ -652,7 +656,7 @@ class Utilities:
         # offset. Also, we should clear the selected text first.
         # https://bugs.documentfoundation.org/show_bug.cgi?id=167930
         AXUtilities.clear_all_selected_text(obj)
-        self.set_caret_offset(obj, offset)
+        self.set_caret_offset(obj, offset, reason=reason)
 
         # TODO - JD: The web script's set_caret_position() also sets the caret context.
         # Ensuring global structural navigation, caret navigation, browse mode, etc.
@@ -665,11 +669,13 @@ class Utilities:
         scroll_to = max(0, min(offset, AXText.get_character_count(obj) - 1))
         ax_event_synthesizer.get_synthesizer().scroll_into_view(obj, scroll_to)
 
-    def set_caret_offset(self, obj: Atspi.Accessible, offset: int) -> None:
+    def set_caret_offset(
+        self, obj: Atspi.Accessible, offset: int, *, reason: CaretSetReason
+    ) -> None:
         """Sets the caret offset via AtspiText."""
 
         # TODO - JD. Remove this function if the web override can be adjusted
-        AXText.set_caret_offset(obj, offset)
+        AXUtilities.set_caret_offset_with_reason(obj, offset, reason)
 
     def split_substring_by_language(
         self,

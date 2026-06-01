@@ -42,6 +42,7 @@ from orca.ax_object import AXObject
 from orca.ax_table import AXTable
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
+from orca.ax_utilities_text import CaretSetReason
 from orca.scripts import default
 
 from .braille_generator import BrailleGenerator
@@ -90,13 +91,15 @@ class Script(default.Script):
         # At edge of a paragraph. Try to move caret to previous line.
         start_offset = AXText.get_line_at_offset(focus)[1]
         if start_offset > 0:
-            AXText.set_caret_offset(focus, start_offset - 1)
+            AXUtilities.set_caret_offset_with_reason(
+                focus, start_offset - 1, CaretSetReason.BRAILLE_PANNING
+            )
             return True
 
         obj = self.utilities.find_previous_object(focus)
         if obj is not None:
             focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
-            AXUtilities.set_caret_offset_to_end(obj)
+            AXUtilities.set_caret_offset_to_end(obj, CaretSetReason.BRAILLE_PANNING)
             return True
 
         return super()._pan_braille_left(event)
@@ -118,13 +121,15 @@ class Script(default.Script):
         # At edge of a paragraph. Try to move caret to next line.
         end_offset = AXText.get_line_at_offset(focus)[2]
         if end_offset < AXText.get_character_count(focus):
-            AXText.set_caret_offset(focus, end_offset)
+            AXUtilities.set_caret_offset_with_reason(
+                focus, end_offset, CaretSetReason.BRAILLE_PANNING
+            )
             return True
 
         obj = self.utilities.find_next_object(focus)
         if obj is not None:
             focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
-            AXUtilities.set_caret_offset_to_start(obj)
+            AXUtilities.set_caret_offset_to_start(obj, CaretSetReason.BRAILLE_PANNING)
             return True
 
         return super()._pan_braille_right(event)

@@ -60,6 +60,8 @@ from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_debugging import AXUtilitiesDebugging
 
 if TYPE_CHECKING:
+    from orca.ax_utilities_text import CaretSetReason
+
     from .script import Script
 
 
@@ -268,6 +270,8 @@ class Utilities(script_utilities.Utilities):
         obj: Atspi.Accessible,
         offset: int,
         document: Atspi.Accessible | None = None,
+        *,
+        reason: CaretSetReason,
     ) -> None:
         grab_focus = self.grab_focus_when_setting_caret(obj)
 
@@ -280,7 +284,7 @@ class Utilities(script_utilities.Utilities):
         if grab_focus:
             AXObject.grab_focus(obj)
 
-        AXText.set_caret_offset(obj, offset)
+        AXUtilities.set_caret_offset_with_reason(obj, offset, reason)
 
         # If we return earlier than here, braille cursor routing fails in sticky focus mode.
         presenter = document_presenter.get_presenter()
@@ -346,12 +350,14 @@ class Utilities(script_utilities.Utilities):
         AXObject.clear_cache(match, False, "Ensuring we have correct name for find results.")
         return AXObject.get_name(match)
 
-    def set_caret_offset(self, obj: Atspi.Accessible, offset: int) -> None:
+    def set_caret_offset(
+        self, obj: Atspi.Accessible, offset: int, *, reason: CaretSetReason
+    ) -> None:
         """Sets the caret offset via AtspiText."""
 
         # TODO - JD: Audit callers and see if this can be merged into the default logic.
 
-        self.set_caret_position(obj, offset)
+        self.set_caret_position(obj, offset, reason=reason)
         self._script.update_braille(obj)
 
     def next_context(

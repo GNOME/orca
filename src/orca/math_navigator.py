@@ -43,6 +43,7 @@ from . import (
     script_manager,
 )
 from .ax_utilities_math import AXUtilitiesMath
+from .ax_utilities_text import CaretSetReason
 from .command import KeyboardCommand
 from .extension import Extension
 
@@ -528,7 +529,7 @@ class MathNavigator(Extension):
         self._last_nav_id = ("", 0)
 
         if math_obj is not None:
-            script.utilities.set_caret_position(math_obj, 0)
+            script.utilities.set_caret_position(math_obj, 0, reason=CaretSetReason.MATH_NAVIGATION)
 
         msg = "MATH NAVIGATOR: Exited math navigation."
         debug.print_message(debug.LEVEL_INFO, msg, True)

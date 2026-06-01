@@ -50,6 +50,7 @@ from . import (
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_utilities import AXUtilities
+from .ax_utilities_text import CaretSetReason
 from .command import Command, KeyboardCommand
 from .extension import Extension
 
@@ -682,7 +683,7 @@ class TableNavigator(Extension):
         focus_mgr.emit_region_changed(obj, mode=focus_manager.TABLE_NAVIGATOR)
 
         if AXObject.supports_text(obj) and not AXUtilities.is_gui_cell(cell):
-            script.utilities.set_caret_position(obj, 0)
+            script.utilities.set_caret_position(obj, 0, reason=CaretSetReason.TABLE_NAVIGATION)
 
         if not notify_user:
             msg = "TABLE NAVIGATOR: _present_cell called with notify_user=False"

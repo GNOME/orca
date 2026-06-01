@@ -48,6 +48,7 @@ from . import (
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
+from .ax_utilities_text import CaretSetReason
 from .command import Command, KeyboardCommand
 from .extension import Extension
 
@@ -529,7 +530,7 @@ class CaretNavigator(Extension):
 
         self._last_input_event = event
         presentation_manager.get_manager().interrupt_presentation()
-        script.utilities.set_caret_position(obj, offset)
+        script.utilities.set_caret_position(obj, offset, reason=CaretSetReason.CARET_NAVIGATION)
         focus_manager.get_manager().emit_region_changed(
             obj,
             start_offset=offset,
@@ -558,7 +559,7 @@ class CaretNavigator(Extension):
 
         self._last_input_event = event
         presentation_manager.get_manager().interrupt_presentation()
-        script.utilities.set_caret_position(obj, offset)
+        script.utilities.set_caret_position(obj, offset, reason=CaretSetReason.CARET_NAVIGATION)
         focus_manager.get_manager().emit_region_changed(
             obj,
             start_offset=offset,
@@ -607,7 +608,7 @@ class CaretNavigator(Extension):
 
         self._last_input_event = event
         presentation_manager.get_manager().interrupt_presentation()
-        script.utilities.set_caret_position(obj, end)
+        script.utilities.set_caret_position(obj, end, reason=CaretSetReason.CARET_NAVIGATION)
         focus_manager.get_manager().emit_region_changed(
             obj,
             start,
@@ -645,7 +646,7 @@ class CaretNavigator(Extension):
 
         self._last_input_event = event
         presentation_manager.get_manager().interrupt_presentation()
-        script.utilities.set_caret_position(obj, start)
+        script.utilities.set_caret_position(obj, start, reason=CaretSetReason.CARET_NAVIGATION)
         focus_manager.get_manager().emit_region_changed(
             obj,
             start,
@@ -708,7 +709,7 @@ class CaretNavigator(Extension):
         else:
             obj, offset, end, _string = contents[-1]
 
-        script.utilities.set_caret_position(obj, offset)
+        script.utilities.set_caret_position(obj, offset, reason=CaretSetReason.CARET_NAVIGATION)
         focus_manager.get_manager().emit_region_changed(
             obj,
             offset,
@@ -767,7 +768,7 @@ class CaretNavigator(Extension):
 
         self._last_input_event = event
         presentation_manager.get_manager().interrupt_presentation()
-        script.utilities.set_caret_position(obj, start)
+        script.utilities.set_caret_position(obj, start, reason=CaretSetReason.CARET_NAVIGATION)
         focus_manager.get_manager().emit_region_changed(
             obj,
             start,
@@ -801,7 +802,7 @@ class CaretNavigator(Extension):
         self._last_input_event = event
         obj, start, end, _string = line[0]
         presentation_manager.get_manager().interrupt_presentation()
-        script.utilities.set_caret_position(obj, start)
+        script.utilities.set_caret_position(obj, start, reason=CaretSetReason.CARET_NAVIGATION)
         focus_manager.get_manager().emit_region_changed(
             obj,
             start,
@@ -837,7 +838,7 @@ class CaretNavigator(Extension):
 
         self._last_input_event = event
         presentation_manager.get_manager().interrupt_presentation()
-        script.utilities.set_caret_position(obj, end)
+        script.utilities.set_caret_position(obj, end, reason=CaretSetReason.CARET_NAVIGATION)
         focus_manager.get_manager().emit_region_changed(
             obj,
             start,
@@ -873,7 +874,7 @@ class CaretNavigator(Extension):
         self._last_input_event = event
         obj, start, end, _string = contents[0]
         presentation_manager.get_manager().interrupt_presentation()
-        script.utilities.set_caret_position(obj, start)
+        script.utilities.set_caret_position(obj, start, reason=CaretSetReason.CARET_NAVIGATION)
         focus_manager.get_manager().emit_region_changed(
             obj,
             start,
@@ -910,7 +911,7 @@ class CaretNavigator(Extension):
         self._last_input_event = event
         obj, start, end, _string = contents[-1]
         presentation_manager.get_manager().interrupt_presentation()
-        script.utilities.set_caret_position(obj, end)
+        script.utilities.set_caret_position(obj, end, reason=CaretSetReason.CARET_NAVIGATION)
         focus_manager.get_manager().emit_region_changed(
             obj,
             start,
