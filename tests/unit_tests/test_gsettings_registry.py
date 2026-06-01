@@ -1653,3 +1653,52 @@ class TestGetKeybindings:
 
         result = registry.get_keybindings("default")
         assert not result
+
+    def test_layered_lookup_caching_does_not_mix_defaults(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test layered_lookup does not cache default fallback values."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        registry = GSettingsRegistry()
+        registry._schemas["missing"] = "org.gnome.Orca.Missing"
+
+        # 1. Query with default=True
+        val1 = registry.layered_lookup("missing", "key", "b", default=True)
+        assert val1 is True
+
+        # 2. Query without default (should be None)
+        val2 = registry.layered_lookup("missing", "key", "b")
+        assert val2 is None
+
+        # 3. Query with default=False
+        val3 = registry.layered_lookup("missing", "key", "b", default=False)
+        assert val3 is False
+
+    def test_layered_lookup_does_not_cache_mutable_types(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test layered_lookup does not cache mutable dict or list types."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry, GSettingsSchemaHandle
+
+        registry = GSettingsRegistry()
+        registry._schemas["speech"] = "org.gnome.Orca.Speech"
+
+        mock_handle = test_context.Mock(spec=GSettingsSchemaHandle)
+        mock_handle.get_dict.side_effect = lambda *args: {"a": "1"}
+        mock_handle.get_strv.side_effect = lambda *args: ["a", "b"]
+        registry._handles["speech"] = mock_handle
+
+        # First lookup returns the dict
+        dict1 = registry.layered_lookup("speech", "entries", "a{ss}")
+        assert dict1 == {"a": "1"}
+        # Mutate the returned dict
+        dict1["a"] = "mutated"
+
+        # Second lookup should not see the mutation (it must return a new {"a": "1"})
+        dict2 = registry.layered_lookup("speech", "entries", "a{ss}")
+        assert dict2 == {"a": "1"}

@@ -170,7 +170,10 @@ class GSettingsRegistry:
             self._ignore_runtime,
         )
         if cache_key in self._value_cache:
-            return self._value_cache[cache_key]
+            val = self._value_cache[cache_key]
+            if val is _NOT_SET:
+                return self._use_default(schema, key, default)
+            return val
 
         handle = self._get_handle(schema)
 
@@ -192,7 +195,8 @@ class GSettingsRegistry:
                 extractor = extractors.get("s" if genum else gtype)
                 if extractor is not None:
                     val = extractor(key)
-                    self._value_cache[cache_key] = val
+                    if not isinstance(val, (list, dict)):
+                        self._value_cache[cache_key] = val
                     return val
 
         if not self._ignore_runtime:
@@ -200,13 +204,13 @@ class GSettingsRegistry:
             if runtime is not None:
                 msg = f"GSETTINGS REGISTRY: {schema}/{key} runtime override = {runtime!r}"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
-                self._value_cache[cache_key] = runtime
+                if not isinstance(runtime, (list, dict)):
+                    self._value_cache[cache_key] = runtime
                 return runtime
 
         if handle is None:
-            val = self._use_default(schema, key, default)
-            self._value_cache[cache_key] = val
-            return val
+            self._value_cache[cache_key] = _NOT_SET
+            return self._use_default(schema, key, default)
 
         accessors: dict[str, Callable[..., Any | None]] = {
             "b": handle.get_boolean,
@@ -222,11 +226,11 @@ class GSettingsRegistry:
         effective_app_arg = "" if app_name else None
         result = accessor(key, sub_path, effective_app_arg) if accessor is not None else None
         if result is not None:
-            self._value_cache[cache_key] = result
+            if not isinstance(result, (list, dict)):
+                self._value_cache[cache_key] = result
             return result
-        val = self._use_default(schema, key, default)
-        self._value_cache[cache_key] = val
-        return val
+        self._value_cache[cache_key] = _NOT_SET
+        return self._use_default(schema, key, default)
 
     @staticmethod
     def _use_default(schema: str, key: str, default: Any) -> Any | None:
@@ -326,6 +330,7 @@ class GSettingsRegistry:
         if gs is None:
             return False
         gs.set_value(key, GLib.Variant(gtype, value))
+        self.clear_value_cache()
         return True
 
     def set_strv(self, schema: str, key: str, value: list[str]) -> bool:
@@ -335,6 +340,7 @@ class GSettingsRegistry:
         if gs is None:
             return False
         gs.set_strv(key, value)
+        self.clear_value_cache()
         return True
 
     def get_pronunciations(self, profile: str = "", app_name: str = "") -> dict:
