@@ -31,6 +31,7 @@ Orca has the following dependencies:
 * Python 3: Python platform
 * pygobject-3.0: Python bindings for the GObject library
 * gtk+-3.0: GTK+ toolkit
+* at-spi2-core 2.58.6 or newer, built with Python support
 * python3-babel: Babel support for localized language display names (optional)
 * python3-brlapi: BrlAPI (<https://mielke.cc/brltty/>) support for braille (optional)
 * python3-dasbus: Dasbus (<https://dasbus.readthedocs.io/>) support for remote control of Orca

@@ -14,9 +14,22 @@ if not python3.language_version().version_compare(f'>= @python_minimum_version@'
 endif
 
 # Hard dependencies (checked via pkg-config)
-dependency('atspi-2', version: '>= 2.56.0')
-dependency('atk-bridge-2.0', version: '>= 2.56.0')
+dependency('atspi-2', version: '>= 2.58.6')
+dependency('atk-bridge-2.0', version: '>= 2.58.6')
 dependency('pygobject-3.0', version: '>= 3.18')
+
+# Verify the AT-SPI Python overrides are installed. See at-spi2-core#172.
+atspi_override_command = ' '.join([
+  'import sys, gi;',
+  'gi.require_version("Atspi", "2.0");',
+  'from gi.repository import Atspi;',
+  'sys.exit(0 if Atspi.Accessible.__hash__.__module__ == "gi.overrides.Atspi" else 1)',
+])
+atspi_override_test = run_command(python3, '-c', atspi_override_command, check: false)
+if atspi_override_test.returncode() != 0
+  error('AT-SPI Python overrides (gi/overrides/Atspi.py) are not installed. '
+        + 'Rebuild at-spi2-core with Python available at configure time.')
+endif
 
 # Hard Python module dependencies
 dasbus_result = python.find_installation('python3', modules:['dasbus'], required: false)
