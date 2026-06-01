@@ -1902,6 +1902,9 @@ class AXUtilitiesRole:
         if role in [Atspi.Role.MATH, Atspi.Role.MATH_FRACTION, Atspi.Role.MATH_ROOT]:
             return True
 
+        if AXUtilitiesRole.is_terminal(obj, role):
+            return False
+
         if tag := AXUtilitiesRole._get_tag(obj):
             return tag in AXUtilitiesRole._MATH_TAGS
 
