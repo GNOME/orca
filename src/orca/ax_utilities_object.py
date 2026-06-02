@@ -189,7 +189,8 @@ class AXUtilitiesObject:
         if not AXObject.is_valid(obj):
             return None
 
-        last_child = AXObject.get_child(obj, AXObject.get_child_count(obj) - 1)
+        child_count = AXObject.get_child_count(obj)
+        last_child = AXObject.get_child(obj, child_count - 1, child_count)
         if last_child is None:
             return obj
 
@@ -209,7 +210,7 @@ class AXUtilitiesObject:
 
         child_count = AXObject.get_child_count(obj)
         for i in range(child_count):
-            child = AXObject.get_child(obj, i)
+            child = AXObject.get_child(obj, i, child_count)
             if exclude_if and exclude_if(child):
                 continue
             if include_if and include_if(child):

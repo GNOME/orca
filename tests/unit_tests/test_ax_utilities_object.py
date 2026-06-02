@@ -296,7 +296,7 @@ class TestAXUtilitiesObject:
                 return 1
             return 0
 
-        def mock_get_child(obj, index) -> object:
+        def mock_get_child(obj, index, n_children=None) -> object:
             if obj == mock_accessible and index == 1:
                 return mock_child
             if obj == mock_child and index == 0:
@@ -341,7 +341,7 @@ class TestAXUtilitiesObject:
                 return 2
             return 0
 
-        def mock_get_child(obj, idx) -> object:
+        def mock_get_child(obj, idx, n_children=None) -> object:
             if obj == mock_accessible:
                 if idx == 0:
                     return mock_child1
@@ -379,7 +379,7 @@ class TestAXUtilitiesObject:
                 return 2
             return 0
 
-        def mock_get_child(obj, idx) -> object:
+        def mock_get_child(obj, idx, n_children=None) -> object:
             if obj == mock_accessible:
                 if idx == 0:
                     return mock_child1
