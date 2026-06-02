@@ -955,7 +955,6 @@ class Script(default.Script):
             return True
 
         notify = force = handled = False
-        AXObject.clear_cache(event.source, False, "Updating state for caret moved event.")
 
         in_focus_mode = document_presenter.get_presenter().in_focus_mode(self.app)
         if in_focus_mode:

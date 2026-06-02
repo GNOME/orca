@@ -294,10 +294,6 @@ class Utilities(script_utilities.Utilities):
         if presenter.use_focus_mode(obj, old_focus) != presenter.in_focus_mode(self._script.app):
             presenter.toggle_presentation_mode(self._script)
 
-        # TODO - JD: Can we remove this?
-        if obj:
-            AXObject.clear_cache(obj, False, "Set caret in object.")
-
     def in_find_container(self, obj: Atspi.Accessible | None = None) -> bool:
         """Returns True if obj is in a find-in-page container."""
 
@@ -2021,9 +2017,6 @@ class Utilities(script_utilities.Utilities):
             self._cached_element_lines_are_single_words[obj_hash] = False
             self._cached_element_lines_are_single_chars[obj_hash] = False
             return
-
-        # TODO - JD: Can we remove this?
-        AXObject.clear_cache(obj, False, "Checking if element lines are single words/chars.")
 
         # Check for single-char lines.
         is_single_chars = True
