@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2026-05-25 07:12+0000\n"
-"PO-Revision-Date: 2026-05-26 19:31+0200\n"
+"POT-Creation-Date: 2026-06-01 16:36+0000\n"
+"PO-Revision-Date: 2026-06-02 16:06+0200\n"
 "Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -1146,8 +1146,9 @@ msgstr "Spanyol, irodalmi Braille"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:532
-msgid "Estonian"
-msgstr "Észt"
+#| msgid "Spanish, contracted"
+msgid "Spanish, Norway"
+msgstr "panyol (norvégiai"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
@@ -1155,8 +1156,8 @@ msgstr "Észt"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:538
-msgid "et-g0"
-msgstr "et-g0"
+msgid "Estonian"
+msgstr "Észt"
 
 # Megjegyzés: ez a sztring a magyar számítógépes braille táblát jelöli, a fordítás meg fog jelenni az Orka grafikus beállító párbeszédablak braille lapján a fordítási tábla kombinált listamezőben
 #. Translators: This is the name of a braille translation table
@@ -1413,13 +1414,15 @@ msgstr "Horvát"
 msgid "Hungarian, computer"
 msgstr "Magyar, számítógépes Braille"
 
+# Megjegyzés: ez a sztring a magyar irodalmi braille teljes írású tábláját jelöli, a fordítás meg fog jelenni az Orka grafikus beállító párbeszédablak braille lapján a fordítási tábla kombinált listamezőben
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:712
-msgid "Hungarian, partially contracted"
+#| msgid "Hungarian, contracted"
+msgid "Hungarian, uncontracted"
 msgstr "Magyar, irodalmi Braille (teljes írás)"
 
 # Megjegyzés: ez a sztring a magyar irodalmi braille rövid írású tábláját jelöli, a fordítás meg fog jelenni az Orka grafikus beállító párbeszédablak braille lapján a fordítási tábla kombinált listamezőben
@@ -1926,6 +1929,26 @@ msgstr "Orija"
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
 #: src/orca/brltablenames.py:1054
+#| msgid "Lithuanian, 6-dot"
+msgid "Elfdalian, 6-dot"
+msgstr "Elfdalian, 6-pontos Braille"
+
+#. Translators: This is the name of a braille translation table
+#. provided by liblouis (https://liblouis.io). Many of the terms
+#. used in these names (e.g. contracted, uncontracted, grade,
+#. computer braille) are explained at
+#. https://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:1060
+#| msgid "Lithuanian, 8-dot"
+msgid "Elfdalian, 8-dot"
+msgstr "Elfdalian, 8-pontos Braille"
+
+#. Translators: This is the name of a braille translation table
+#. provided by liblouis (https://liblouis.io). Many of the terms
+#. used in these names (e.g. contracted, uncontracted, grade,
+#. computer braille) are explained at
+#. https://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:1066
 msgid "Pali"
 msgstr "Pali"
 
@@ -1934,7 +1957,7 @@ msgstr "Pali"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1060
+#: src/orca/brltablenames.py:1072
 msgid "Polish, computer"
 msgstr "Lengyel, számítógépes Braille"
 
@@ -1943,7 +1966,7 @@ msgstr "Lengyel, számítógépes Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1066
+#: src/orca/brltablenames.py:1078
 msgid "Polish"
 msgstr "Lengyel"
 
@@ -1952,7 +1975,7 @@ msgstr "Lengyel"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1072
+#: src/orca/brltablenames.py:1084
 msgid "Portuguese, computer, 6-dot"
 msgstr "Portugál, 6 pontos számítógépes Braille"
 
@@ -1961,7 +1984,7 @@ msgstr "Portugál, 6 pontos számítógépes Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1078
+#: src/orca/brltablenames.py:1090
 msgid "Portuguese, computer, 8-dot"
 msgstr "Portugál, 8 pontos számítógépes Braille"
 
@@ -1970,7 +1993,7 @@ msgstr "Portugál, 8 pontos számítógépes Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1084
+#: src/orca/brltablenames.py:1096
 msgid "Portuguese, uncontracted"
 msgstr "Portugál, nem irodalmi Braille"
 
@@ -1979,7 +2002,7 @@ msgstr "Portugál, nem irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1090
+#: src/orca/brltablenames.py:1102
 msgid "Portuguese, contracted"
 msgstr "Portugál, irodalmi Braille"
 
@@ -1988,7 +2011,7 @@ msgstr "Portugál, irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1096
+#: src/orca/brltablenames.py:1108
 msgid "Punjabi"
 msgstr "Pandzsábi"
 
@@ -1997,7 +2020,7 @@ msgstr "Pandzsábi"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1102
+#: src/orca/brltablenames.py:1114
 msgid "Romanian, uncontracted"
 msgstr "Román, nem irodalmi Braille)"
 
@@ -2007,7 +2030,7 @@ msgstr "Román, nem irodalmi Braille)"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1108
+#: src/orca/brltablenames.py:1120
 msgid "Romanian, computer"
 msgstr "Román, számítógépes Braille"
 
@@ -2016,7 +2039,7 @@ msgstr "Román, számítógépes Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1114
+#: src/orca/brltablenames.py:1126
 msgid "Russian, computer, 6-dot"
 msgstr "Orosz, 6 pontos számítógépes Braille"
 
@@ -2025,7 +2048,7 @@ msgstr "Orosz, 6 pontos számítógépes Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1120
+#: src/orca/brltablenames.py:1132
 msgid "Russian, computer, 8-dot"
 msgstr "Orosz, 8 pontos számítógépes Braille"
 
@@ -2034,7 +2057,7 @@ msgstr "Orosz, 8 pontos számítógépes Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1126
+#: src/orca/brltablenames.py:1138
 msgid "Russian, with capitals"
 msgstr "Orosz, nagy betűs Braille"
 
@@ -2043,7 +2066,7 @@ msgstr "Orosz, nagy betűs Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1132
+#: src/orca/brltablenames.py:1144
 msgid "Russian"
 msgstr "Orosz"
 
@@ -2052,7 +2075,7 @@ msgstr "Orosz"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1138
+#: src/orca/brltablenames.py:1150
 msgid "Russian, contracted"
 msgstr "Orosz, irodalmi Braille"
 
@@ -2061,7 +2084,7 @@ msgstr "Orosz, irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1144
+#: src/orca/brltablenames.py:1156
 msgid "Kinyarwanda"
 msgstr "Kinyarvanda"
 
@@ -2070,7 +2093,7 @@ msgstr "Kinyarvanda"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1150
+#: src/orca/brltablenames.py:1162
 msgid "Sanskrit"
 msgstr "Szanszkrit"
 
@@ -2079,7 +2102,7 @@ msgstr "Szanszkrit"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1156
+#: src/orca/brltablenames.py:1168
 msgid "Yakut"
 msgstr "Jakut"
 
@@ -2088,7 +2111,7 @@ msgstr "Jakut"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1162
+#: src/orca/brltablenames.py:1174
 msgid "se-se"
 msgstr "se-se"
 
@@ -2097,7 +2120,7 @@ msgstr "se-se"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1168
+#: src/orca/brltablenames.py:1180
 msgid "Sindhi"
 msgstr "Szindhi"
 
@@ -2106,7 +2129,7 @@ msgstr "Szindhi"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1174
+#: src/orca/brltablenames.py:1186
 msgid "sin"
 msgstr "sin"
 
@@ -2115,7 +2138,7 @@ msgstr "sin"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1180
+#: src/orca/brltablenames.py:1192
 msgid "Slovak"
 msgstr "Szlovák"
 
@@ -2124,7 +2147,7 @@ msgstr "Szlovák"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1186
+#: src/orca/brltablenames.py:1198
 msgid "sk-sk-g1"
 msgstr "Szlovák, 1. Braille fokozat"
 
@@ -2133,7 +2156,7 @@ msgstr "Szlovák, 1. Braille fokozat"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1192
+#: src/orca/brltablenames.py:1204
 msgid "sk-sk"
 msgstr "Szlovákia (sk_SK)"
 
@@ -2143,7 +2166,7 @@ msgstr "Szlovákia (sk_SK)"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1198
+#: src/orca/brltablenames.py:1210
 msgid "Slovenian, computer"
 msgstr "Szlovén, számítógépes Braille"
 
@@ -2152,7 +2175,7 @@ msgstr "Szlovén, számítógépes Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1204
+#: src/orca/brltablenames.py:1216
 msgid "Slovenian"
 msgstr "Szlovén"
 
@@ -2161,7 +2184,27 @@ msgstr "Szlovén"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1210
+#: src/orca/brltablenames.py:1222
+#| msgid "Lithuanian, 6-dot"
+msgid "Sami, 6-dot"
+msgstr "Számi, 6-pontos Braille"
+
+#. Translators: This is the name of a braille translation table
+#. provided by liblouis (https://liblouis.io). Many of the terms
+#. used in these names (e.g. contracted, uncontracted, grade,
+#. computer braille) are explained at
+#. https://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:1228
+#| msgid "Lithuanian, 8-dot"
+msgid "Sami, 8-dot"
+msgstr "Számi, 8-pontos Braille"
+
+#. Translators: This is the name of a braille translation table
+#. provided by liblouis (https://liblouis.io). Many of the terms
+#. used in these names (e.g. contracted, uncontracted, grade,
+#. computer braille) are explained at
+#. https://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:1234
 msgid "Sesotho, uncontracted"
 msgstr "Szesotó, nem irodalmi Braille"
 
@@ -2170,7 +2213,7 @@ msgstr "Szesotó, nem irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1216
+#: src/orca/brltablenames.py:1240
 msgid "Sesotho, contracted"
 msgstr "Szesotó, irodalmi Braille"
 
@@ -2179,7 +2222,7 @@ msgstr "Szesotó, irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1222
+#: src/orca/brltablenames.py:1246
 msgid "Serbian, Cyrillic"
 msgstr "Szerb, ciril Braille"
 
@@ -2188,7 +2231,7 @@ msgstr "Szerb, ciril Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1228
+#: src/orca/brltablenames.py:1252
 msgid "Serbian"
 msgstr "Szerb"
 
@@ -2197,7 +2240,7 @@ msgstr "Szerb"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1234
+#: src/orca/brltablenames.py:1258
 msgid "Swedish, computer, 1989"
 msgstr "Svéd számítógépes Braille, 1989"
 
@@ -2206,7 +2249,7 @@ msgstr "Svéd számítógépes Braille, 1989"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1240
+#: src/orca/brltablenames.py:1264
 msgid "Swedish, computer, 1996"
 msgstr "Svéd számítógépes Braille, 1996"
 
@@ -2215,34 +2258,137 @@ msgstr "Svéd számítógépes Braille, 1996"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1246
-msgid "Swedish, uncontracted"
-msgstr "Svéd, nem irodalmi Braille"
+#: src/orca/brltablenames.py:1270
+#| msgid "Danish, uncontracted, 6-dot, 1993"
+msgid "Swedish, uncontracted, 6-dot, detailed"
+msgstr "Svéd, nem irodalmi, 6 pontos, részletes Braille"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1252
-msgid "Swedish, partially contracted"
-msgstr "Svéd, részben irodalmi Braille"
+#: src/orca/brltablenames.py:1276
+#| msgid "Danish, uncontracted, 6-dot, 1993"
+msgid "Swedish, uncontracted, 6-dot, phonetics"
+msgstr "Svéd, nem irodalmi, 6 pontos, fonetikai Braille"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1258
-msgid "Swedish, contracted"
-msgstr "Svéd, irodalmi Braille"
+#: src/orca/brltablenames.py:1282
+#| msgid "Danish, partially contracted, 6-dot, 1993"
+msgid "Swedish, partially contracted, 6-dot, detailed"
+msgstr "Svéd, részben irodalmi, 6 pontos, részletes Braille"
 
 #. Translators: This is the name of a braille translation table
 #. provided by liblouis (https://liblouis.io). Many of the terms
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1264
+#: src/orca/brltablenames.py:1288
+#| msgid "Danish, contracted, 6-dot, 1993"
+msgid "Swedish, contracted, 6-dot, detailed"
+msgstr "Svéd, irodalmi, 6 pontos, részletes Braille"
+
+#. Translators: This is the name of a braille translation table
+#. provided by liblouis (https://liblouis.io). Many of the terms
+#. used in these names (e.g. contracted, uncontracted, grade,
+#. computer braille) are explained at
+#. https://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:1294
+#| msgid "Danish, uncontracted, 8-dot, 2022"
+msgid "Swedish, uncontracted, 8-dot, detailed"
+msgstr "Svéd, nem irodalmi, 8 pontos, részletes Braille"
+
+#. Translators: This is the name of a braille translation table
+#. provided by liblouis (https://liblouis.io). Many of the terms
+#. used in these names (e.g. contracted, uncontracted, grade,
+#. computer braille) are explained at
+#. https://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:1300
+#| msgid "Swedish, uncontracted"
+msgid "Swedish, uncontracted, 8-dot"
+msgstr "Svéd, nem irodalmi, 8 pontos Braille"
+
+#. Translators: This is the name of a braille translation table
+#. provided by liblouis (https://liblouis.io). Many of the terms
+#. used in these names (e.g. contracted, uncontracted, grade,
+#. computer braille) are explained at
+#. https://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:1306
+#| msgid "Danish, partially contracted, 8-dot, 1993"
+msgid "Swedish, partially contracted, 8-dot, detailed"
+msgstr "Svéd, részben irodalmi, 8 pontos, részletes Braille"
+
+#. Translators: This is the name of a braille translation table
+#. provided by liblouis (https://liblouis.io). Many of the terms
+#. used in these names (e.g. contracted, uncontracted, grade,
+#. computer braille) are explained at
+#. https://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:1312
+#| msgid "Swedish, partially contracted"
+msgid "Swedish, partially contracted, 8-dot"
+msgstr "Svéd, 8 pontos, részben irodalmi Braille"
+
+#. Translators: This is the name of a braille translation table
+#. provided by liblouis (https://liblouis.io). Many of the terms
+#. used in these names (e.g. contracted, uncontracted, grade,
+#. computer braille) are explained at
+#. https://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:1318
+#| msgid "Danish, contracted, 8-dot, 2022"
+msgid "Swedish, contracted, 8-dot, detailed"
+msgstr "Svéd, 8 pontos, irodalmi részletes Braille"
+
+#. Translators: This is the name of a braille translation table
+#. provided by liblouis (https://liblouis.io). Many of the terms
+#. used in these names (e.g. contracted, uncontracted, grade,
+#. computer braille) are explained at
+#. https://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:1324
+#| msgid "Swedish, contracted"
+msgid "Swedish, contracted, 8-dot"
+msgstr "Svéd, 8 pontos irodalmi Braille"
+
+#. Translators: This is the name of a braille translation table
+#. provided by liblouis (https://liblouis.io). Many of the terms
+#. used in these names (e.g. contracted, uncontracted, grade,
+#. computer braille) are explained at
+#. https://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:1330
+#| msgid "Swedish, uncontracted"
+msgid "Swedish, uncontracted, 6-dot"
+msgstr "Svéd, nem irodalmi, 6 pontos Braille"
+
+#. Translators: This is the name of a braille translation table
+#. provided by liblouis (https://liblouis.io). Many of the terms
+#. used in these names (e.g. contracted, uncontracted, grade,
+#. computer braille) are explained at
+#. https://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:1336
+#| msgid "Swedish, partially contracted"
+msgid "Swedish, partially contracted, 6-dot"
+msgstr "Svéd, 6 pontos részben irodalmi Braille"
+
+#. Translators: This is the name of a braille translation table
+#. provided by liblouis (https://liblouis.io). Many of the terms
+#. used in these names (e.g. contracted, uncontracted, grade,
+#. computer braille) are explained at
+#. https://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:1342
+#| msgid "Swedish, contracted"
+msgid "Swedish, contracted, 6-dot"
+msgstr "Svéd, 6 pontos irodalmi Braille"
+
+#. Translators: This is the name of a braille translation table
+#. provided by liblouis (https://liblouis.io). Many of the terms
+#. used in these names (e.g. contracted, uncontracted, grade,
+#. computer braille) are explained at
+#. https://en.wikipedia.org/wiki/Braille.
+#: src/orca/brltablenames.py:1348
 msgid "Swahili, contracted, grade 1.2"
 msgstr "Szuahéli, irodalmi Braille, 1.2 fokozat"
 
@@ -2251,7 +2397,7 @@ msgstr "Szuahéli, irodalmi Braille, 1.2 fokozat"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1270
+#: src/orca/brltablenames.py:1354
 msgid "Swahili, contracted, grade 1.3"
 msgstr "Szuahéli, irodalmi Braille, 1.3 fokozat"
 
@@ -2260,7 +2406,7 @@ msgstr "Szuahéli, irodalmi Braille, 1.3 fokozat"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1276
+#: src/orca/brltablenames.py:1360
 msgid "Swahili, contracted, grade 1.4"
 msgstr "Szuahéli, irodalmi Braille, 1.4 fokozat"
 
@@ -2269,7 +2415,7 @@ msgstr "Szuahéli, irodalmi Braille, 1.4 fokozat"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1282
+#: src/orca/brltablenames.py:1366
 msgid "Swahili, contracted, grade 1.5"
 msgstr "Szuahéli, irodalmi Braille, 1.5 fokozat"
 
@@ -2278,7 +2424,7 @@ msgstr "Szuahéli, irodalmi Braille, 1.5 fokozat"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1288
+#: src/orca/brltablenames.py:1372
 msgid "Swahili, uncontracted"
 msgstr "Szuahéli, nem irodalmi Braille"
 
@@ -2287,7 +2433,7 @@ msgstr "Szuahéli, nem irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1294
+#: src/orca/brltablenames.py:1378
 msgid "Swahili, contracted, grade 2"
 msgstr "Szuahéli, irodalmi Braille, 2. fokozat"
 
@@ -2296,7 +2442,7 @@ msgstr "Szuahéli, irodalmi Braille, 2. fokozat"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1300
+#: src/orca/brltablenames.py:1384
 msgid "Syriac"
 msgstr "Szír"
 
@@ -2305,7 +2451,7 @@ msgstr "Szír"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1306
+#: src/orca/brltablenames.py:1390
 msgid "Tamil"
 msgstr "Tamil"
 
@@ -2314,7 +2460,7 @@ msgstr "Tamil"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1312
+#: src/orca/brltablenames.py:1396
 msgid "Tamil, computer"
 msgstr "tamil, számítógépes Braille"
 
@@ -2323,7 +2469,7 @@ msgstr "tamil, számítógépes Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1318
+#: src/orca/brltablenames.py:1402
 msgid "Telugu"
 msgstr "Telugu"
 
@@ -2332,7 +2478,7 @@ msgstr "Telugu"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1324
+#: src/orca/brltablenames.py:1408
 msgid "Thai, computer"
 msgstr "Thai, számítógépes Braille"
 
@@ -2341,7 +2487,7 @@ msgstr "Thai, számítógépes Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1330
+#: src/orca/brltablenames.py:1414
 msgid "Thai, uncontracted"
 msgstr "Thai, nem irodalmi Braille"
 
@@ -2350,7 +2496,7 @@ msgstr "Thai, nem irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1336
+#: src/orca/brltablenames.py:1420
 msgid "Thai, partially contracted"
 msgstr "Thai, részben irodalmi Braille"
 
@@ -2359,7 +2505,7 @@ msgstr "Thai, részben irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1342
+#: src/orca/brltablenames.py:1426
 msgid "Thai, contracted"
 msgstr "Thai, irodalmi Braille"
 
@@ -2368,7 +2514,7 @@ msgstr "Thai, irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1348
+#: src/orca/brltablenames.py:1432
 msgid "Turkish, uncontracted"
 msgstr "Török, nem irodalmi Braille"
 
@@ -2377,7 +2523,7 @@ msgstr "Török, nem irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1354
+#: src/orca/brltablenames.py:1438
 msgid "Turkish, contracted"
 msgstr "Török, irodalmi Braille"
 
@@ -2386,7 +2532,7 @@ msgstr "Török, irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1360
+#: src/orca/brltablenames.py:1444
 msgid "Turkish, computer"
 msgstr "Török, számítógépes Braille"
 
@@ -2395,7 +2541,7 @@ msgstr "Török, számítógépes Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1366
+#: src/orca/brltablenames.py:1450
 msgid "Setswana, uncontracted"
 msgstr "Setswana, nem irodalmi Braille"
 
@@ -2404,7 +2550,7 @@ msgstr "Setswana, nem irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1372
+#: src/orca/brltablenames.py:1456
 msgid "Setswana, contracted"
 msgstr "Setswana, irodalmi Braille"
 
@@ -2413,7 +2559,7 @@ msgstr "Setswana, irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1378
+#: src/orca/brltablenames.py:1462
 msgid "Tatar"
 msgstr "Tatár"
 
@@ -2422,7 +2568,7 @@ msgstr "Tatár"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1384
+#: src/orca/brltablenames.py:1468
 msgid "Ugaritic"
 msgstr "Ugariti"
 
@@ -2432,7 +2578,7 @@ msgstr "Ugariti"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1390
+#: src/orca/brltablenames.py:1474
 msgid "Ukrainian, computer"
 msgstr "Ukrán, számítógépes Braille"
 
@@ -2441,7 +2587,7 @@ msgstr "Ukrán, számítógépes Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1396
+#: src/orca/brltablenames.py:1480
 msgid "Ukrainian, with capitals"
 msgstr "Ukrán, nagy betűs Braille"
 
@@ -2450,7 +2596,7 @@ msgstr "Ukrán, nagy betűs Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1402
+#: src/orca/brltablenames.py:1486
 msgid "Ukrainian"
 msgstr "Ukrán"
 
@@ -2459,7 +2605,7 @@ msgstr "Ukrán"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1408
+#: src/orca/brltablenames.py:1492
 msgid "unicode-braille"
 msgstr "Unicode Braille"
 
@@ -2468,7 +2614,7 @@ msgstr "Unicode Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1414
+#: src/orca/brltablenames.py:1498
 msgid "Urdu, uncontracted"
 msgstr "Urdu, nem irodalmi Braille"
 
@@ -2477,7 +2623,7 @@ msgstr "Urdu, nem irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1420
+#: src/orca/brltablenames.py:1504
 msgid "Urdu, contracted"
 msgstr "Urdu, irodalmi Braille"
 
@@ -2486,7 +2632,7 @@ msgstr "Urdu, irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1426
+#: src/orca/brltablenames.py:1510
 msgid "Uzbek"
 msgstr "Üzbég"
 
@@ -2495,7 +2641,7 @@ msgstr "Üzbég"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1432
+#: src/orca/brltablenames.py:1516
 msgid "Tshivenda, uncontracted"
 msgstr "Tshivenda, nem irodalmi Braille"
 
@@ -2504,7 +2650,7 @@ msgstr "Tshivenda, nem irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1438
+#: src/orca/brltablenames.py:1522
 msgid "Tshivenda, contracted"
 msgstr "Tshivenda, irodalmi Braille"
 
@@ -2513,7 +2659,7 @@ msgstr "Tshivenda, irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1444
+#: src/orca/brltablenames.py:1528
 msgid "Vietnamese, computer"
 msgstr "vietnami, számítógépes Braille"
 
@@ -2522,7 +2668,7 @@ msgstr "vietnami, számítógépes Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1450
+#: src/orca/brltablenames.py:1534
 msgid "Vietnamese, Saigon, contracted"
 msgstr "Vietnami, Saigon, irodalmi Braille"
 
@@ -2531,7 +2677,7 @@ msgstr "Vietnami, Saigon, irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1456
+#: src/orca/brltablenames.py:1540
 msgid "Vietnamese, uncontracted"
 msgstr "Vietnami, nem irodalmi Braille"
 
@@ -2540,7 +2686,7 @@ msgstr "Vietnami, nem irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1462
+#: src/orca/brltablenames.py:1546
 msgid "Vietnamese, partially contracted"
 msgstr "vietnami, részben irodalmi Braille"
 
@@ -2549,7 +2695,7 @@ msgstr "vietnami, részben irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1468
+#: src/orca/brltablenames.py:1552
 msgid "Vietnamese, contracted"
 msgstr "Vietnami, irodalmi Braille"
 
@@ -2558,7 +2704,7 @@ msgstr "Vietnami, irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1474
+#: src/orca/brltablenames.py:1558
 msgid "isiXhosa, uncontracted"
 msgstr "isiXhosa, nem irodalmi Braille"
 
@@ -2567,7 +2713,7 @@ msgstr "isiXhosa, nem irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1480
+#: src/orca/brltablenames.py:1564
 msgid "isiXhosa, contracted"
 msgstr "isiXhosa, irodalmi Braille"
 
@@ -2576,7 +2722,7 @@ msgstr "isiXhosa, irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1486
+#: src/orca/brltablenames.py:1570
 msgid "Yiddish"
 msgstr "Jiddis"
 
@@ -2585,7 +2731,7 @@ msgstr "Jiddis"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1492
+#: src/orca/brltablenames.py:1576
 msgid "Mandarin, mainland China, without tones"
 msgstr "Mandarin, szárazföldi Kína, tónusokkal"
 
@@ -2594,7 +2740,7 @@ msgstr "Mandarin, szárazföldi Kína, tónusokkal"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1498
+#: src/orca/brltablenames.py:1582
 msgid "Cantonese"
 msgstr "Kantoni"
 
@@ -2603,7 +2749,7 @@ msgstr "Kantoni"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1504
+#: src/orca/brltablenames.py:1588
 msgid "Mandarin, Taiwan, bopomofo"
 msgstr "Mandarin, Taiwan, bopomofo"
 
@@ -2612,7 +2758,7 @@ msgstr "Mandarin, Taiwan, bopomofo"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1510
+#: src/orca/brltablenames.py:1594
 msgid "Mandarin, mainland China, common braille scheme"
 msgstr "Mandarin, szárazföldi Kína, közös Braille-rendszer"
 
@@ -2621,7 +2767,7 @@ msgstr "Mandarin, szárazföldi Kína, közös Braille-rendszer"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1516
+#: src/orca/brltablenames.py:1600
 msgid "Mandarin, mainland China, with tones"
 msgstr "Mandarin, szárazföldi Kína, tónusokkal"
 
@@ -2630,7 +2776,7 @@ msgstr "Mandarin, szárazföldi Kína, tónusokkal"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1522
+#: src/orca/brltablenames.py:1606
 msgid "Mandarin, mainland China, double-phonic"
 msgstr "Mandarin, szárazföldi Kína, kettős hangzású"
 
@@ -2639,7 +2785,7 @@ msgstr "Mandarin, szárazföldi Kína, kettős hangzású"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1528
+#: src/orca/brltablenames.py:1612
 msgid "isiZulu, uncontracted"
 msgstr "isiZulu, nem irodalmi Braille"
 
@@ -2648,7 +2794,7 @@ msgstr "isiZulu, nem irodalmi Braille"
 #. used in these names (e.g. contracted, uncontracted, grade,
 #. computer braille) are explained at
 #. https://en.wikipedia.org/wiki/Braille.
-#: src/orca/brltablenames.py:1534
+#: src/orca/brltablenames.py:1618
 msgid "isiZulu, contracted"
 msgstr "isiZulu, irodalmi Braille"
 
@@ -11305,7 +11451,6 @@ msgstr "Nincs több kép."
 #. search, etc. This is a detailed message which will be presented to the user if
 #. no more landmarks can be found.
 #: src/orca/messages.py:1609
-#| msgid "No more links."
 msgid "No more landmarks."
 msgstr "Nincs több jelölő."
 
@@ -14340,6 +14485,12 @@ msgstr "vastag"
 msgctxt "textattr"
 msgid "spelling"
 msgstr "betűtévesztés"
+
+#~ msgid "et-g0"
+#~ msgstr "et-g0"
+
+#~ msgid "Hungarian, partially contracted"
+#~ msgstr "Magyar, irodalmi Braille (teljes írás)"
 
 # Fixme: Mi erről a véleményed? Ha akarod javítsd.
 #~ msgid "No landmark found."
