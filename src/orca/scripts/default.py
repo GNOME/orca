@@ -1503,7 +1503,9 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if AXUtilities.is_combo_box_popup(AXUtilities.find_active_window()):
+        if AXUtilities.is_combo_box(focus) and AXUtilities.is_combo_box_popup(
+            AXUtilities.find_active_window()
+        ):
             msg = "DEFAULT: Ignoring event. Combo box popup is the new active window."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
