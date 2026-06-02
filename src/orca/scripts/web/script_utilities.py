@@ -74,6 +74,7 @@ class Utilities(script_utilities.Utilities):
         self._cached_prior_contexts: dict[int, tuple[Atspi.Accessible, int]] = {}
         self._cached_can_have_caret_context_decision: dict[int, bool] = {}
         self._cached_in_document_content: dict[int, bool] = {}
+        self._cached_is_document: dict[int, bool] = {}
         self._cached_document_for_object: dict[int, Atspi.Accessible | None] = {}
         self._cached_top_level_document_for_object: dict[int, Atspi.Accessible | None] = {}
         self._cached_is_content_editable_with_embedded_objects: dict[int, bool] = {}
@@ -156,6 +157,7 @@ class Utilities(script_utilities.Utilities):
 
         debug.print_message(debug.LEVEL_INFO, "WEB: cleaning up cached objects", True)
         self._cached_in_document_content = {}
+        self._cached_is_document = {}
         self._cached_document_for_object = {}
         self._cached_top_level_document_for_object = {}
         self._cached_is_content_editable_with_embedded_objects = {}
@@ -189,28 +191,27 @@ class Utilities(script_utilities.Utilities):
         self._cached_word_contents = None
         self._cached_character_contents = None
 
-    def is_document(self, obj: Atspi.Accessible, exclude_document_frame: bool = True) -> bool:
+    def is_document(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is a document."""
 
+        if (rv := self._cached_is_document.get(hash(obj))) is not None:
+            return rv
+
         role = AXObject.get_role(obj)
-        if AXUtilities.is_document_web(obj, role) or AXUtilities.is_embedded(obj, role):
-            return True
-
-        if not exclude_document_frame:
-            return AXUtilities.is_document_frame(obj, role)
-
-        return False
+        rv = AXUtilities.is_document_web(obj, role) or AXUtilities.is_embedded(obj, role)
+        self._cached_is_document[hash(obj)] = rv
+        return rv
 
     def in_document_content(self, obj: Atspi.Accessible | None = None) -> bool:
         if not obj:
             obj = focus_manager.get_manager().get_locus_of_focus()
 
-        if self.is_document(obj):
-            return True
-
         rv = self._cached_in_document_content.get(hash(obj))
         if rv is not None:
             return rv
+
+        if self.is_document(obj):
+            return True
 
         document = self.get_document_for_object(obj)
         rv = document is not None

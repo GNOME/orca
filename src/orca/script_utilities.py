@@ -195,7 +195,7 @@ class Utilities:
 
         return ""
 
-    def is_document(self, obj: Atspi.Accessible, _exclude_document_frame=False) -> bool:
+    def is_document(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj is a document."""
 
         # TODO - JD: See if the web script logic can be included here and then it all moved
