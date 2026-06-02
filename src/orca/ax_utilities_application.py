@@ -233,10 +233,9 @@ class AXUtilitiesApplication:
     def is_application_in_desktop(app: Atspi.Accessible) -> bool:
         """Returns true if app is known to Atspi"""
 
-        applications = AXUtilitiesApplication.get_all_applications()
-        for child in applications:
-            if child == app:
-                return True
+        desktop = AXUtilitiesApplication.get_desktop()
+        if desktop is not None and AXObject.get_parent(app) == desktop:
+            return True
 
         tokens = ["WARNING:", app, "is not in the accessible desktop"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
