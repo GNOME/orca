@@ -222,17 +222,6 @@ class Script(default.Script):
         if event.detail1 == -1:
             return True
 
-        if AXUtilities.is_paragraph(event.source) and not AXUtilities.is_focused(event.source):
-            # TODO - JD: Can we remove this?
-            AXObject.clear_cache(
-                event.source,
-                False,
-                "Caret-moved event from object which lacks focused state.",
-            )
-            if AXUtilities.is_focused(event.source):
-                msg = "SOFFICE: Clearing cache was needed due to missing state-changed event."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-
         if table_navigator.get_navigator().last_input_event_was_navigation_command():
             msg = "SOFFICE: Event ignored: Last input event was table navigation."
             debug.print_message(debug.LEVEL_INFO, msg, True)
