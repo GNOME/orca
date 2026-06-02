@@ -1373,18 +1373,9 @@ class Script(default.Script):
             self.utilities.set_caret_context(obj, offset)
             return True
 
-        # TODO - JD: Can this logic be removed?
-        was_focused = AXUtilities.is_focused(obj)
-        AXObject.clear_cache(obj, False, "Sanity-checking focused state.")
-        is_focused = AXUtilities.is_focused(obj)
-        if was_focused != is_focused:
-            tokens = ["WEB: Focused state of", obj, "changed to", is_focused]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
         if AXUtilities.is_anchor(obj):
             cause = "Context is anchor"
-        elif not (self.utilities.is_link(obj) and not is_focused):
+        elif not (self.utilities.is_link(obj) and not AXUtilities.is_focused(obj)):
             cause = "Context is not a non-focused link"
         elif self.utilities.is_child_of_current_fragment(obj):
             cause = "Context is child of current fragment"
