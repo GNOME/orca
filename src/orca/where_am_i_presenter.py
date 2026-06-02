@@ -413,7 +413,7 @@ class WhereAmIPresenter(Extension):
                 presentation_manager.get_manager().present_message(full, brief)
 
             infobar = AXUtilities.get_info_bar(frame)
-            if infobar and AXUtilities.is_showing(infobar) and AXUtilities.is_visible(infobar):
+            if infobar and AXUtilities.is_showing_and_visible(infobar):
                 script.present_object(infobar)
 
         return True

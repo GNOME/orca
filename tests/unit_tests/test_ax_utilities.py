@@ -1727,6 +1727,11 @@ class TestAXUtilities:
         essential_modules[
             "orca.ax_utilities_state"
         ].AXUtilitiesState.is_visible = test_context.Mock(return_value=is_visible)
+        essential_modules[
+            "orca.ax_utilities_state"
+        ].AXUtilitiesState.is_showing_and_visible = test_context.Mock(
+            return_value=is_showing and is_visible
+        )
         essential_modules["orca.ax_utilities_state"].AXUtilitiesState.is_hidden = test_context.Mock(
             return_value=is_hidden,
         )

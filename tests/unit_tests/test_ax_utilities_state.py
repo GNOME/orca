@@ -103,11 +103,11 @@ class TestAXUtilitiesState:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         method = getattr(AXUtilitiesState, case["method_name"])
         mock_ax_object_class.has_state = test_context.Mock(
-            side_effect=lambda obj, state: state == case["state_type"],
+            side_effect=lambda obj, state, state_set=None: state == case["state_type"],
         )
         assert method(mock_obj)
         mock_ax_object_class.has_state = test_context.Mock(
-            side_effect=lambda obj, state: state != case["state_type"],
+            side_effect=lambda obj, state, state_set=None: state != case["state_type"],
         )
         assert not method(mock_obj)
 
@@ -224,11 +224,11 @@ class TestAXUtilitiesState:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         if case["state_scenario"] == "checkable":
             mock_ax_object_class.has_state = test_context.Mock(
-                side_effect=lambda obj, state: state == Atspi.StateType.CHECKABLE,
+                side_effect=lambda obj, state, state_set=None: state == Atspi.StateType.CHECKABLE,
             )
         elif case["state_scenario"] == "checked":
             mock_ax_object_class.has_state = test_context.Mock(
-                side_effect=lambda obj, state: state == Atspi.StateType.CHECKED,
+                side_effect=lambda obj, state, state_set=None: state == Atspi.StateType.CHECKED,
             )
         else:
             mock_ax_object_class.has_state = test_context.Mock(return_value=False)
@@ -361,7 +361,7 @@ class TestAXUtilitiesState:
                 test_context.patch_object(
                     AXObject,
                     "has_state",
-                    side_effect=lambda obj, state: (
+                    side_effect=lambda obj, state, state_set=None: (
                         state in (Atspi.StateType.CHECKED, Atspi.StateType.CHECKABLE)
                     ),
                 )
@@ -369,27 +369,31 @@ class TestAXUtilitiesState:
                 test_context.patch_object(
                     AXObject,
                     "has_state",
-                    side_effect=lambda obj, state: state == Atspi.StateType.CHECKED,
+                    side_effect=lambda obj, state, state_set=None: state == Atspi.StateType.CHECKED,
                 )
         elif case["method_name"] == "is_expandable":
             if case["state_scenario"] == "expandable":
                 test_context.patch_object(
                     AXObject,
                     "has_state",
-                    side_effect=lambda obj, state: state == Atspi.StateType.EXPANDABLE,
+                    side_effect=lambda obj, state, state_set=None: (
+                        state == Atspi.StateType.EXPANDABLE
+                    ),
                 )
             elif case["state_scenario"] == "expanded":
                 test_context.patch_object(
                     AXObject,
                     "has_state",
-                    side_effect=lambda obj, state: state == Atspi.StateType.EXPANDED,
+                    side_effect=lambda obj, state, state_set=None: (
+                        state == Atspi.StateType.EXPANDED
+                    ),
                 )
         elif case["method_name"] == "is_expanded":
             if case["state_scenario"] == "both_states":
                 test_context.patch_object(
                     AXObject,
                     "has_state",
-                    side_effect=lambda obj, state: (
+                    side_effect=lambda obj, state, state_set=None: (
                         state in (Atspi.StateType.EXPANDED, Atspi.StateType.EXPANDABLE)
                     ),
                 )
@@ -397,27 +401,31 @@ class TestAXUtilitiesState:
                 test_context.patch_object(
                     AXObject,
                     "has_state",
-                    side_effect=lambda obj, state: state == Atspi.StateType.EXPANDED,
+                    side_effect=lambda obj, state, state_set=None: (
+                        state == Atspi.StateType.EXPANDED
+                    ),
                 )
         elif case["method_name"] == "is_focusable":
             if case["state_scenario"] == "focusable":
                 test_context.patch_object(
                     AXObject,
                     "has_state",
-                    side_effect=lambda obj, state: state == Atspi.StateType.FOCUSABLE,
+                    side_effect=lambda obj, state, state_set=None: (
+                        state == Atspi.StateType.FOCUSABLE
+                    ),
                 )
             elif case["state_scenario"] == "focused":
                 test_context.patch_object(
                     AXObject,
                     "has_state",
-                    side_effect=lambda obj, state: state == Atspi.StateType.FOCUSED,
+                    side_effect=lambda obj, state, state_set=None: state == Atspi.StateType.FOCUSED,
                 )
         elif case["method_name"] == "is_focused":
             if case["state_scenario"] == "both_states":
                 test_context.patch_object(
                     AXObject,
                     "has_state",
-                    side_effect=lambda obj, state: (
+                    side_effect=lambda obj, state, state_set=None: (
                         state in (Atspi.StateType.FOCUSED, Atspi.StateType.FOCUSABLE)
                     ),
                 )
@@ -425,7 +433,7 @@ class TestAXUtilitiesState:
                 test_context.patch_object(
                     AXObject,
                     "has_state",
-                    side_effect=lambda obj, state: state == Atspi.StateType.FOCUSED,
+                    side_effect=lambda obj, state, state_set=None: state == Atspi.StateType.FOCUSED,
                 )
 
         if case["state_scenario"] == "none":
@@ -500,7 +508,7 @@ class TestAXUtilitiesState:
             test_context.patch_object(
                 AXObject,
                 "has_state",
-                side_effect=lambda obj, state: state == Atspi.StateType.READ_ONLY,
+                side_effect=lambda obj, state, state_set=None: state == Atspi.StateType.READ_ONLY,
             )
         elif case["read_only_scenario"] == "editable":
             test_context.patch_object(AXObject, "has_state", return_value=False)

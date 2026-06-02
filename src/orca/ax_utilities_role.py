@@ -2436,7 +2436,10 @@ class AXUtilitiesRole:
         if role in roles:
             return True
         if role == Atspi.Role.TEXT:
-            return AXUtilitiesState.is_editable(obj) and AXUtilitiesState.is_single_line(obj)
+            states = AXObject.get_state_set(obj)
+            return AXUtilitiesState.is_editable(obj, states) and AXUtilitiesState.is_single_line(
+                obj, states
+            )
         return bool(AXUtilitiesRole.is_editable_combo_box(obj))
 
     @staticmethod
@@ -2718,7 +2721,8 @@ class AXUtilitiesRole:
     ) -> bool:
         """Returns True if obj is a widget controlled by line navigation"""
 
-        if AXUtilitiesState.is_multi_line(obj):
+        state_set = AXObject.get_state_set(obj)
+        if AXUtilitiesState.is_multi_line(obj, state_set):
             return False
 
         if role is None:
@@ -2735,13 +2739,15 @@ class AXUtilitiesRole:
         if role in roles:
             return True
 
-        if AXUtilitiesState.is_editable(obj) or AXUtilitiesState.is_selectable(obj):
+        if AXUtilitiesState.is_editable(obj, state_set) or AXUtilitiesState.is_selectable(
+            obj, state_set
+        ):
             return (
                 AXUtilitiesObject.find_ancestor(obj, lambda x: AXObject.get_role(x) in roles)
                 is not None
             )
 
-        if not AXUtilitiesState.is_vertical(obj):
+        if not AXUtilitiesState.is_vertical(obj, state_set):
             return False
 
         return role in [

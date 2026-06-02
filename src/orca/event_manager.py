@@ -351,7 +351,8 @@ class EventManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if AXUtilities.is_selected(event.source):
+        source_states = AXObject.get_state_set(event.source)
+        if AXUtilities.is_selected(event.source, source_states):
             msg = f"EVENT_MANAGER: Not ignoring {event_type} due to source being selected"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
@@ -361,8 +362,8 @@ class EventManager:
         # spam filtering below to catch this bad behavior coming from a focused object, so
         # only return early here if the focused object doesn't manage descendants, or the
         # event is not a focus claim.
-        if AXUtilities.is_focused(event.source):
-            if not AXUtilities.manages_descendants(event.source) or (
+        if AXUtilities.is_focused(event.source, source_states):
+            if not AXUtilities.manages_descendants(event.source, source_states) or (
                 event_type.startswith("object:state-changed:focused") and event.detail1
             ):
                 msg = f"EVENT_MANAGER: Not ignoring {event_type} due to source being focused"

@@ -1106,14 +1106,14 @@ class TestEventManager:
         test_context.patch("orca.event_manager.AXUtilities.is_selected", return_value=False)
         test_context.patch(
             "orca.event_manager.AXUtilities.is_focused",
-            side_effect=lambda obj: (
+            side_effect=lambda obj, *args: (
                 case["source_is_focused"] if obj == mock_event.source else False
             ),
         )
         test_context.patch("orca.event_manager.AXUtilities.is_section", return_value=False)
         test_context.patch(
             "orca.event_manager.AXUtilities.manages_descendants",
-            side_effect=lambda obj: (
+            side_effect=lambda obj, *args: (
                 case["manages_descendants"] if obj == mock_event.source else False
             ),
         )

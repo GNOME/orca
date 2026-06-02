@@ -899,8 +899,15 @@ class AXObject:
         return state_set
 
     @staticmethod
-    def has_state(obj: Atspi.Accessible, state: Atspi.StateType) -> bool:
+    def has_state(
+        obj: Atspi.Accessible,
+        state: Atspi.StateType,
+        state_set: Atspi.StateSet | None = None,
+    ) -> bool:
         """Returns true if obj has the specified state"""
+
+        if state_set is not None:
+            return state_set.contains(state)
 
         if not AXObject.is_valid(obj):
             return False
