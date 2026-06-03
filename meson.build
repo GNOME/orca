@@ -19,8 +19,11 @@ dependency('atk-bridge-2.0', version: '>= 2.58.6')
 dependency('pygobject-3.0', version: '>= 3.18')
 
 # Verify the AT-SPI Python overrides are installed. See at-spi2-core#172.
+libdir = python3.get_path('purelib').replace(python3.get_path('data'), get_option('prefix'))
 atspi_override_command = ' '.join([
-  'import sys, gi;',
+  'import sys;',
+  'sys.path.insert(1, "' + libdir + '");',
+  'import gi;',
   'gi.require_version("Atspi", "2.0");',
   'from gi.repository import Atspi;',
   'sys.exit(0 if Atspi.Accessible.__hash__.__module__ == "gi.overrides.Atspi" else 1)',
