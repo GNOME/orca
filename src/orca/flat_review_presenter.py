@@ -428,7 +428,7 @@ class FlatReviewPresenter(Extension):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
-    def _can_use_existing_context(self) -> bool:
+    def _can_use_existing_context(self, is_panning: bool = False) -> bool:
         """Returns True if the existing context can be used."""
 
         if not self._context:
@@ -453,6 +453,9 @@ class FlatReviewPresenter(Extension):
         if self._last_input_event is None:
             return True
 
+        if is_panning:
+            return True
+
         # TODO - JD: Add some additional logic for cases where we know that the previous input
         # event should not invalidate the context. For instance, the system information presenter
         # and where am I presenter will never trigger scrolling, text changes, etc.
@@ -460,10 +463,12 @@ class FlatReviewPresenter(Extension):
         return self.last_input_event_was_review_command()
 
     # pylint: disable-next=too-many-locals
-    def get_or_create_context(self, script: default.Script | None = None) -> flat_review.Context:
+    def get_or_create_context(
+        self, script: default.Script | None = None, is_panning: bool = False
+    ) -> flat_review.Context:
         """Returns the flat review context, creating one if necessary."""
 
-        if not self._can_use_existing_context():
+        if not self._can_use_existing_context(is_panning):
             msg = f"FLAT REVIEW PRESENTER: Creating new context. Restrict: {self._restrict}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -1328,11 +1333,12 @@ class FlatReviewPresenter(Extension):
     def pan_braille_left(
         self,
         script: default.Script,
-        _event: input_event.InputEvent | None = None,
+        event: input_event.InputEvent | None = None,
     ) -> bool:
         """Pans the braille display left."""
 
-        self._context = self.get_or_create_context(script)
+        self._context = self.get_or_create_context(script, is_panning=True)
+        self._last_input_event = event
 
         # Try to pan left. If we couldn't (at edge), move to previous line.
         if not braille_presenter.get_presenter().pan_left():
@@ -1369,11 +1375,12 @@ class FlatReviewPresenter(Extension):
     def pan_braille_right(
         self,
         script: default.Script,
-        _event: input_event.InputEvent | None = None,
+        event: input_event.InputEvent | None = None,
     ) -> bool:
         """Pans the braille display right."""
 
-        self._context = self.get_or_create_context(script)
+        self._context = self.get_or_create_context(script, is_panning=True)
+        self._last_input_event = event
 
         # Try to pan right. If we couldn't (at edge), move to next line.
         if not braille_presenter.get_presenter().pan_right():

@@ -49,6 +49,7 @@ class InputEventManager:
         self._last_non_modifier_key_event: input_event.KeyboardEvent | None = None
         self._paused: bool = False
         self._previous_non_modifier_key_event: input_event.KeyboardEvent | None = None
+        self._previous_braille_event: input_event.BrailleEvent | None = None
 
     def start_key_watcher(self) -> None:
         """Starts the watcher for keyboard input events."""
@@ -76,6 +77,10 @@ class InputEventManager:
 
         braille_event = input_event.BrailleEvent(event)
         result = braille_event.process()
+        if isinstance(self._last_input_event, input_event.BrailleEvent):
+            self._previous_braille_event = self._last_input_event
+        else:
+            self._previous_braille_event = None
         self._last_input_event = braille_event
         self._last_non_modifier_key_event = None
         return result
@@ -307,6 +312,9 @@ class InputEventManager:
 
     def previous_event_equals_or_is_release_for_event(self, event):
         """Returns True if the previous event equals the provided event, or is the release."""
+
+        if isinstance(event, input_event.BrailleEvent):
+            return self._previous_braille_event is event
 
         if self._previous_non_modifier_key_event is None:
             return False

@@ -44,6 +44,7 @@ from .orca_fixtures import (  # noqa: F401
     _gtk3_terminal_pager,
     _gtk3_terminal_shell,
     _gtk3_terminal_vim,
+    _gtk3_terminal_wide_pager,
     _gtk3_text_view,
     _gtk3_toolbar,
     _gtk3_tree_view,

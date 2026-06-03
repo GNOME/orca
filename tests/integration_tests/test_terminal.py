@@ -261,3 +261,43 @@ def test_pan_braille_across_terminal_line(gtk3_terminal_shell: NativeAppSession)
             [],
             [helpers.BrailleLine(9, _WIDE_PROMPT_LINE, "01234567", mask)],
         )
+
+
+@pytest.mark.native_app
+def test_pan_braille_left_crosses_wide_line_in_pager(
+    gtk3_terminal_wide_pager: NativeAppSession,
+) -> None:
+    """Tests that panning left over a pager line wider than the display reaches the line above."""
+
+    session = gtk3_terminal_wide_pager
+    _settle(session)
+    helpers.toggle_flat_review(session)
+
+    wide = "this line is wider than the display now $l"
+    wide_mask = "\x00" * len(wide)
+    with helpers.bound_pan_keys(session) as (left_key, _right_key):
+        session.orca.press_bound_key(left_key)
+        assert helpers.capture(session) == (
+            [],
+            [helpers.BrailleLine(7, "bottom $l", "bottom $l", "\x00" * 9)],
+        )
+        session.orca.press_bound_key(left_key)
+        assert helpers.capture(session) == (
+            [],
+            [helpers.BrailleLine(12, wide, "display now $l", wide_mask)],
+        )
+        # The start view is painted twice: by the pan, then by the flat-review zone-sync refresh.
+        session.orca.press_bound_key(left_key)
+        start_view = "this line is wider than the disp"
+        assert helpers.capture(session) == (
+            [],
+            [
+                helpers.BrailleLine(0, wide, start_view, wide_mask),
+                helpers.BrailleLine(0, wide, start_view, wide_mask),
+            ],
+        )
+        session.orca.press_bound_key(left_key)
+        assert helpers.capture(session) == (
+            [],
+            [helpers.BrailleLine(4, "top $l", "top $l", "\x00" * 6)],
+        )

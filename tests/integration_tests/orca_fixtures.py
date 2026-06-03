@@ -140,6 +140,14 @@ _gtk3_terminal_shell = _make_terminal_fixture(
 _gtk3_terminal_pager = _make_terminal_fixture(
     "gtk3_terminal_pager", binary_names=("less",), args=("doc.txt",), files={"doc.txt": _PAGER_DOC}
 )
+
+_WIDE_PAGER_DOC = "top\nthis line is wider than the display now\nbottom\n"
+_gtk3_terminal_wide_pager = _make_terminal_fixture(
+    "gtk3_terminal_wide_pager",
+    binary_names=("less",),
+    args=("doc.txt",),
+    files={"doc.txt": _WIDE_PAGER_DOC},
+)
 _gtk3_terminal_vim = _make_terminal_fixture(
     "gtk3_terminal_vim",
     binary_names=("vim",),
