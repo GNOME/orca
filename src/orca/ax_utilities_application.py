@@ -154,7 +154,7 @@ class AXUtilitiesApplication:
             AXObject.handle_error(app, error, msg)
             return ""
 
-        return name
+        return name or ""
 
     @staticmethod
     def get_application_toolkit_version(obj: Atspi.Accessible) -> str:
@@ -171,7 +171,7 @@ class AXUtilitiesApplication:
             AXObject.handle_error(app, error, msg)
             return ""
 
-        return version
+        return version or ""
 
     @staticmethod
     def get_application_with_pid(pid: int) -> Atspi.Accessible | None:
