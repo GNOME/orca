@@ -234,11 +234,20 @@ class AXUtilitiesApplication:
         """Returns true if app is known to Atspi"""
 
         desktop = AXUtilitiesApplication.get_desktop()
-        if desktop is not None and AXObject.get_parent(app) == desktop:
+        parent = AXObject.get_parent(app)
+        if desktop is not None and parent == desktop:
             return True
 
-        tokens = ["WARNING:", app, "is not in the accessible desktop"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        if debug.debugLevel <= debug.LEVEL_INFO:
+            tokens = [
+                "WARNING:",
+                app,
+                "with parent",
+                parent,
+                "is not in the accessible desktop.",
+                AXUtilitiesApplication.application_as_string(app),
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return False
 
     @staticmethod

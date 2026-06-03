@@ -55,6 +55,8 @@ class TestAXUtilitiesApplication:
         debug_mock.print_message = test_context.Mock()
         debug_mock.print_tokens = test_context.Mock()
         debug_mock.LEVEL_INFO = 800
+        debug_mock.LEVEL_SEVERE = 1000
+        debug_mock.debugLevel = debug_mock.LEVEL_SEVERE
 
         ax_object_class_mock = test_context.Mock()
         ax_object_class_mock.is_valid = test_context.Mock(side_effect=lambda obj: obj is not None)
