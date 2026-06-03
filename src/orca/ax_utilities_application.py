@@ -238,16 +238,23 @@ class AXUtilitiesApplication:
         if desktop is not None and parent == desktop:
             return True
 
+        tokens = ["WARNING:", app, "with parent", parent, "is not in the accessible desktop."]
         if debug.debugLevel <= debug.LEVEL_INFO:
-            tokens = [
-                "WARNING:",
-                app,
-                "with parent",
-                parent,
-                "is not in the accessible desktop.",
-                AXUtilitiesApplication.application_as_string(app),
-            ]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            tokens.append(AXUtilitiesApplication.application_as_string(app))
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        # Qt 5 apps can fail to report their parent even though the desktop lists them among its
+        # children, so for them fall back to the original, slower scan of the desktop's children.
+        if parent is None:
+            toolkit = AXUtilitiesApplication.get_application_toolkit_name(app)
+            version = AXUtilitiesApplication.get_application_toolkit_version(app)
+            if (
+                toolkit.lower() == "qt"
+                and version.split(".")[0] == "5"
+                and app in AXUtilitiesApplication.get_all_applications()
+            ):
+                return True
+
         return False
 
     @staticmethod
