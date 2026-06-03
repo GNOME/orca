@@ -41,6 +41,7 @@ from .gsettings_fixtures import (  # noqa: F401
     _gsettings_registry,
 )
 from .orca_fixtures import (  # noqa: F401
+    _gtk3_terminal_flatrev,
     _gtk3_terminal_pager,
     _gtk3_terminal_shell,
     _gtk3_terminal_vim,

@@ -154,7 +154,9 @@ These operations also work at the profile level:
 
 | Key | Type | Default | Summary |
 | --- | --- | --- | --- |
+| `display-updates` | `b` | `true` | Refresh braille for content changes at the flat review location |
 | `restricted` | `b` | `false` | Restrict flat review to current object |
+| `speak-updates` | `b` | `false` | Speak content changes at the flat review location |
 
 ---
 

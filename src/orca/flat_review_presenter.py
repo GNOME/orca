@@ -71,7 +71,9 @@ class FlatReviewPresenter(Extension):
     """Provides access to on-screen objects via flat-review."""
 
     _SCHEMA = "flat-review"
+    KEY_DISPLAY_UPDATES = "display-updates"
     KEY_RESTRICTED = "restricted"
+    KEY_SPEAK_UPDATES = "speak-updates"
 
     def _get_setting(self, key: str, default: bool) -> bool:
         """Returns the dconf value for key, or default if not in dconf."""
@@ -90,6 +92,7 @@ class FlatReviewPresenter(Extension):
     def __init__(self) -> None:
         self._context: flat_review.Context | None = None
         self._current_contents: str = ""
+        self._last_presented_unit: int = flat_review.Context.LINE
         self._last_input_event: input_event.InputEvent | None = None
         self._context_input_event: input_event.InputEvent | None = None
         self._restrict: bool = self.get_is_restricted()
@@ -167,7 +170,7 @@ class FlatReviewPresenter(Extension):
 
         script = script_manager.get_manager().get_active_script()
         if script is not None:
-            self._update_braille(script)
+            self._present_review_update(script)
 
         return False
 
@@ -1330,6 +1333,41 @@ class FlatReviewPresenter(Extension):
             focused_region,
         )
 
+    def _speak_review_unit(self, string: str) -> None:
+        """Speaks string as the current review unit (used for live updates)."""
+
+        presenter = presentation_manager.get_manager()
+        if not string or string == "\n":
+            presenter.speak_message(messages.BLANK)
+        elif string.isspace():
+            presenter.speak_message(messages.WHITE_SPACE)
+        else:
+            obj = self._context.get_current_object() if self._context else None
+            presenter.speak_accessible_text(obj, string)
+
+    def _present_review_update(self, script: default.Script) -> None:
+        """Presents the current review unit when it changes via a live update."""
+
+        self._context = self.get_or_create_context(script)
+        if self.get_displays_updates():
+            self._update_braille(script)
+
+        if not self.get_speaks_updates():
+            return
+
+        if self._last_presented_unit == flat_review.Context.WORD:
+            current = self._context.get_current_word_string()
+        elif self._last_presented_unit == flat_review.Context.CHAR:
+            current = self._context.get_current_character_string()
+        else:
+            current = self._context.get_current_line_string()
+
+        if current == self._current_contents:
+            return
+
+        self._speak_review_unit(current)
+        self._current_contents = current
+
     def pan_braille_left(
         self,
         script: default.Script,
@@ -1570,6 +1608,54 @@ class FlatReviewPresenter(Extension):
         )
         return True
 
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_SPEAK_UPDATES,
+        schema="flat-review",
+        gtype="b",
+        default=False,
+        summary="Speak content changes at the flat review location",
+    )
+    @dbus_service.getter
+    def get_speaks_updates(self) -> bool:
+        """Returns whether changes at the review location are spoken automatically."""
+
+        return self._get_setting(self.KEY_SPEAK_UPDATES, False)
+
+    @dbus_service.setter
+    def set_speaks_updates(self, value: bool) -> bool:
+        """Sets whether changes at the review location are spoken automatically."""
+
+        msg = f"FLAT REVIEW PRESENTER: Setting speak-updates to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, self.KEY_SPEAK_UPDATES, value
+        )
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_DISPLAY_UPDATES,
+        schema="flat-review",
+        gtype="b",
+        default=True,
+        summary="Refresh braille for content changes at the flat review location",
+    )
+    @dbus_service.getter
+    def get_displays_updates(self) -> bool:
+        """Returns whether changes at the review location refresh braille automatically."""
+
+        return self._get_setting(self.KEY_DISPLAY_UPDATES, True)
+
+    @dbus_service.setter
+    def set_displays_updates(self, value: bool) -> bool:
+        """Sets whether changes at the review location refresh braille automatically."""
+
+        msg = f"FLAT REVIEW PRESENTER: Setting display-updates to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, self.KEY_DISPLAY_UPDATES, value
+        )
+        return True
+
     @dbus_service.command
     def toggle_restrict(
         self,
@@ -1658,6 +1744,7 @@ class FlatReviewPresenter(Extension):
             mode=focus_manager.FLAT_REVIEW,
         )
         self._update_braille(script)
+        self._last_presented_unit = flat_review.Context.LINE
         self._current_contents = line_string
         return True
 
@@ -1711,6 +1798,7 @@ class FlatReviewPresenter(Extension):
             mode=focus_manager.FLAT_REVIEW,
         )
         self._update_braille(script)
+        self._last_presented_unit = flat_review.Context.WORD
         self._current_contents = word_string
         return True
 
@@ -1752,6 +1840,7 @@ class FlatReviewPresenter(Extension):
             mode=focus_manager.FLAT_REVIEW,
         )
         self._update_braille(script)
+        self._last_presented_unit = flat_review.Context.CHAR
         self._current_contents = char_string
         return True
 

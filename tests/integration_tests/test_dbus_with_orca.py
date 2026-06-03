@@ -174,8 +174,8 @@ MODULE_CONFIG = {
             "UnicodeCurrentCharacter",
         ],
         "parameterized_commands": [],
-        "getters": ["IsRestricted"],
-        "setters": ["IsRestricted"],
+        "getters": ["DisplaysUpdates", "IsRestricted", "SpeaksUpdates"],
+        "setters": ["DisplaysUpdates", "IsRestricted", "SpeaksUpdates"],
         "ui_commands": [
             "ShowContents",
             "LeftClickOnObject",

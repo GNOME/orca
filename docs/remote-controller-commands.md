@@ -231,7 +231,9 @@ These commands are available directly on the main service object at `/org/gnome/
 
 #### Properties
 
+- **`DisplaysUpdates`** (`b`, read/write): Whether changes at the review location refresh braille automatically.
 - **`IsRestricted`** (`b`, read/write): Whether flat review is restricted to the current object.
+- **`SpeaksUpdates`** (`b`, read/write): Whether changes at the review location are spoken automatically.
 
 ---
 

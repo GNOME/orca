@@ -137,6 +137,12 @@ def _make_terminal_fixture(
 _gtk3_terminal_shell = _make_terminal_fixture(
     "gtk3_terminal_shell", binary_names=("bash",), args=("--norc", "--noprofile")
 )
+_gtk3_terminal_flatrev = _make_terminal_fixture(
+    "gtk3_terminal_flatrev",
+    binary_names=("bash",),
+    args=("--norc", "--noprofile"),
+    files={"t.sh": "printf c1; sleep 3; printf '\\rc2'; echo\n"},
+)
 _gtk3_terminal_pager = _make_terminal_fixture(
     "gtk3_terminal_pager", binary_names=("less",), args=("doc.txt",), files={"doc.txt": _PAGER_DOC}
 )

@@ -23,6 +23,7 @@
 from __future__ import annotations
 
 import shutil
+import time
 from typing import TYPE_CHECKING
 
 import pytest
@@ -301,3 +302,80 @@ def test_pan_braille_left_crosses_wide_line_in_pager(
             [],
             [helpers.BrailleLine(4, "top $l", "top $l", "\x00" * 6)],
         )
+
+
+def _navigate_to_c1_line(session: NativeAppSession) -> None:
+    """Moves flat review to the c1/c2 output line and discards the output."""
+
+    session.orca.call("FlatReviewPresenter", "GoHome", True)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+    session.orca.call("FlatReviewPresenter", "GoNextLine", True)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+
+
+@pytest.mark.native_app
+def test_flat_review_speaks_live_update(gtk3_terminal_flatrev: NativeAppSession) -> None:
+    """Tests that a terminal line changing in place is spoken when SpeaksUpdates is on."""
+
+    session = gtk3_terminal_flatrev
+    _settle(session)
+
+    _type("bash t.sh")
+    keyboard.tap_key(keyboard.KEYSYM_RETURN)
+    time.sleep(0.5)
+
+    session.orca.set("FlatReviewPresenter", "SpeaksUpdates", True)
+    helpers.toggle_flat_review(session)
+    _navigate_to_c1_line(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_KP_UP)
+    assert helpers.capture(session) == (
+        ["c1\n"],
+        [helpers.BrailleLine(1, "c1 $l", "c1 $l", "\x00" * 5)],
+    )
+
+    assert helpers.capture(session, wait_async=True, overall=5.0) == (
+        ["c2\n"],
+        [
+            helpers.BrailleLine(1, "c2 $l", "c2 $l", "\x00" * 5),
+            helpers.BrailleLine(1, "c2 $l", "c2 $l", "\x00" * 5),
+        ],
+    )
+
+    session.orca.set("FlatReviewPresenter", "SpeaksUpdates", False)
+    helpers.toggle_flat_review(session)
+
+
+@pytest.mark.native_app
+def test_flat_review_silent_live_update_when_disabled(
+    gtk3_terminal_flatrev: NativeAppSession,
+) -> None:
+    """Tests that a terminal line changing in place is not spoken when SpeaksUpdates is off."""
+
+    session = gtk3_terminal_flatrev
+    _settle(session)
+
+    _type("bash t.sh")
+    keyboard.tap_key(keyboard.KEYSYM_RETURN)
+    time.sleep(0.5)
+
+    helpers.toggle_flat_review(session)
+    _navigate_to_c1_line(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_KP_UP)
+    assert helpers.capture(session) == (
+        ["c1\n"],
+        [helpers.BrailleLine(1, "c1 $l", "c1 $l", "\x00" * 5)],
+    )
+
+    assert helpers.capture(session, wait_async=True, overall=5.0) == (
+        [],
+        [
+            helpers.BrailleLine(1, "c2 $l", "c2 $l", "\x00" * 5),
+            helpers.BrailleLine(1, "c2 $l", "c2 $l", "\x00" * 5),
+        ],
+    )
+
+    helpers.toggle_flat_review(session)
