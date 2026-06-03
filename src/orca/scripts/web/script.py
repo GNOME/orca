@@ -817,6 +817,11 @@ class Script(default.Script):
         """Callback for object:text-caret-moved accessibility events."""
 
         reason = AXUtilities.get_text_event_reason(event)
+        if reason == TextEventReason.BRAILLE_PANNING:
+            msg = "WEB: Ignoring caret-moved event that is a side effect of braille panning"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
+
         document = self.utilities.get_top_level_document_for_object(event.source)
         if not document:
             if self.utilities.event_is_browser_ui_noise_deprecated(event):

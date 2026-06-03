@@ -50,7 +50,7 @@ from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_relation import AXUtilitiesRelation
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
-from .ax_utilities_text import AXUtilitiesText
+from .ax_utilities_text import AXUtilitiesText, CaretSetReason
 from .ax_value import AXValue
 
 if TYPE_CHECKING:
@@ -70,6 +70,7 @@ class TextEventReason(enum.Enum):
     AUTO_SELECTION = enum.auto()
     AUTO_UNSELECTION = enum.auto()
     BACKSPACE = enum.auto()
+    BRAILLE_PANNING = enum.auto()
     CHILDREN_CHANGE = enum.auto()
     CUT = enum.auto()
     DELETE = enum.auto()
@@ -114,6 +115,9 @@ class TextEventReason(enum.Enum):
 
 class AXUtilitiesEvent:
     """Utilities for accessible events."""
+
+    # How recent a caret set must be for its resulting event to be attributed to it.
+    CARET_SET_EVENT_WINDOW_SECONDS = 1.0
 
     LAST_KNOWN_DESCRIPTION: ClassVar[dict[int, str]] = {}
     LAST_KNOWN_NAME: ClassVar[dict[int, str]] = {}
@@ -372,6 +376,17 @@ class AXUtilitiesEvent:
 
         mgr = input_event_manager.get_manager()
         obj = event.source
+        last_caret_set = AXUtilitiesText.get_last_caret_set()
+        # Some toolkits report the resulting event's offset as -1 rather than what we set.
+        if (
+            last_caret_set is not None
+            and last_caret_set.reason == CaretSetReason.BRAILLE_PANNING
+            and obj == last_caret_set.obj
+            and event.detail1 in (last_caret_set.offset, -1)
+            and time.time() - last_caret_set.time < AXUtilitiesEvent.CARET_SET_EVENT_WINDOW_SECONDS
+        ):
+            return TextEventReason.BRAILLE_PANNING
+
         mode, focus = focus_manager.get_manager().get_active_mode_and_object_of_interest()
         if mode == focus_manager.SAY_ALL:
             return TextEventReason.SAY_ALL

@@ -204,10 +204,10 @@ def test_pan_left_with_word_wrap_returns_to_intermediate_range(
 
 
 @pytest.mark.native_app
-def test_pan_left_after_crossing_forward(
+def test_pan_left_after_crossing_forward_returns_to_previous_line(
     web_long_line: NativeAppSession,
 ) -> None:
-    """Documents a known bug: pan-left after a forward line cross jumps past the previous line."""
+    """Tests that pan-left after a forward line cross returns to the previous line's tail."""
 
     session = web_long_line
     _reset(session)
@@ -226,12 +226,12 @@ def test_pan_left_after_crossing_forward(
             next_line = helpers.BrailleLine(1, "long time.", "long time.", "\x00" * 10)
             assert helpers.capture(session) == ([], [next_line, next_line])
 
-            # KNOWN BUG (Chromium and Gecko): pan-left should land on the previous line's tail,
-            # but set_caret_position produces a spurious text-caret-moved that Orca trusts,
-            # lacking a TextEventReason to mark it a side effect of panning. To be fixed later.
-            heading = helpers.BrailleLine(1, "Long line h1", "Long line h1", "\x00" * 12)
+            # Pan-left paints the line start, then pans to its tail.
+            full = _FULL_LONG + " "
+            start = helpers.BrailleLine(1, full, "The quick brown fox jumps over ", _LONG_MASK)
+            tail = helpers.BrailleLine(0, full, "field for a very ", _LONG_MASK)
             session.orca.press_bound_key(left_key)
-            assert helpers.capture(session) == ([], [heading, heading])
+            assert helpers.capture(session) == ([], [start, tail])
     finally:
         session.orca.set("BraillePresenter", "WordWrapIsEnabled", False)
 
