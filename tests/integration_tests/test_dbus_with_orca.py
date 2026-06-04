@@ -156,6 +156,8 @@ MODULE_CONFIG = {
             "GoPreviousLine",
             "GoStartOfLine",
             "LeftClickOnObject",
+            "MoveFocusToReview",
+            "MoveReviewToFocus",
             "PhoneticItem",
             "PhoneticLine",
             "PresentCharacter",

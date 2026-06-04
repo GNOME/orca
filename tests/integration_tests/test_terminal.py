@@ -22,6 +22,7 @@
 
 from __future__ import annotations
 
+import contextlib
 import shutil
 import time
 from typing import TYPE_CHECKING
@@ -32,7 +33,23 @@ from . import helpers
 from .harness import keyboard
 
 if TYPE_CHECKING:
+    from collections.abc import Iterator
+
     from .orca_fixtures import NativeAppSession
+
+
+@contextlib.contextmanager
+def _bound(session: NativeAppSession, handler: str) -> Iterator[str]:
+    """Binds handler to a free key for the block, yielding the key to press."""
+
+    ((key, mods),) = session.orca.available_keybindings(1)
+    session.orca.bind_command(handler, key, mods)
+    session.orca.refresh_keybindings()
+    try:
+        yield key
+    finally:
+        session.orca.unbind_command(handler)
+        session.orca.refresh_keybindings()
 
 
 def _type(text: str) -> None:
@@ -379,3 +396,29 @@ def test_flat_review_silent_live_update_when_disabled(
     )
 
     helpers.toggle_flat_review(session)
+
+
+@pytest.mark.native_app
+def test_move_focus_to_review_location_unchanged(gtk3_terminal_shell: NativeAppSession) -> None:
+    """Tests that move-focus-to-review fails when the terminal won't let us set the caret."""
+
+    session = gtk3_terminal_shell
+    _settle(session)
+
+    _type("echo aaa bbb ccc\n")
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+
+    with _bound(session, "move_focus_to_review") as key:
+        helpers.toggle_flat_review(session)
+        session.orca.call("FlatReviewPresenter", "GoHome", True)
+        session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+        session.reader.reset()
+        # VTE's GTK3 AtkText.set_caret_offset always returns FALSE, so we cannot set the caret.
+        # https://gitlab.gnome.org/GNOME/vte/-/work_items/2953
+        session.orca.press_bound_key(key)
+        assert helpers.capture(session) == (
+            ["Location unchanged"],
+            [helpers.BrailleLine(0, "Location unchanged", "Location unchanged", "\x00" * 18)],
+        )
+        helpers.toggle_flat_review(session)

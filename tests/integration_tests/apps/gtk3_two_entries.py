@@ -52,9 +52,11 @@ def main() -> int:
     first_entry.set_text(FIRST_ENTRY_TEXT)
     second_entry = Gtk.Entry()
     second_entry.set_text(SECOND_ENTRY_TEXT)
+    button = Gtk.Button(label="Apply")
 
     box.pack_start(first_entry, False, False, 0)
     box.pack_start(second_entry, False, False, 0)
+    box.pack_start(button, False, False, 0)
     window.add(box)
 
     window.connect("map", lambda _widget: first_entry.grab_focus())

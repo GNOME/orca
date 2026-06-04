@@ -212,6 +212,8 @@ These commands are available directly on the main service object at `/org/gnome/
 - **`GoPreviousLine`:** Moves to the previous line.
 - **`GoStartOfLine`:** Moves to the beginning of the current line.
 - **`LeftClickOnObject`:** Attempts to synthesize a left click on the current accessible.
+- **`MoveFocusToReview`:** Attempts to move focus to the object at the flat review location.
+- **`MoveReviewToFocus`:** Moves the flat review location to the object with focus.
 - **`PhoneticItem`:** Presents the current word letter by letter phonetically.
 - **`PhoneticLine`:** Presents the current line letter by letter phonetically.
 - **`PresentCharacter`:** Presents the current character.

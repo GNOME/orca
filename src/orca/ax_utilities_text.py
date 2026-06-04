@@ -68,6 +68,7 @@ class CaretSetReason(enum.Enum):
     BRAILLE_PANNING = enum.auto()
     BRAILLE_ROUTING = enum.auto()
     CARET_NAVIGATION = enum.auto()
+    FLAT_REVIEW = enum.auto()
     LINE_PRESENTATION = enum.auto()
     LIVE_REGION_NAVIGATION = enum.auto()
     MATH_NAVIGATION = enum.auto()

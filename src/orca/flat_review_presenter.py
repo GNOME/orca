@@ -60,6 +60,7 @@ from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_utilities_event import TextEventReason
+from .ax_utilities_text import CaretSetReason
 from .command import BrailleCommand, Command, KeyboardCommand
 from .extension import Extension
 
@@ -399,6 +400,8 @@ class FlatReviewPresenter(Extension):
                 self.toggle_restrict,
                 cmdnames.TOGGLE_RESTRICT_FLAT_REVIEW,
             ),
+            ("move_review_to_focus", self.move_review_to_focus, cmdnames.MOVE_REVIEW_TO_FOCUS),
+            ("move_focus_to_review", self.move_focus_to_review, cmdnames.MOVE_FOCUS_TO_REVIEW),
         ]
 
         braille_bindings: dict[str, tuple[int, ...]] = {}
@@ -1273,6 +1276,80 @@ class FlatReviewPresenter(Extension):
         self._context = self.get_or_create_context(script)
         self._last_input_event = event
         return self._context.get_current_object()
+
+    @dbus_service.command
+    def move_review_to_focus(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Moves the flat review location to the object with focus."""
+
+        tokens = ["FLAT REVIEW PRESENTER: move_review_to_focus. Script:", script, "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        self._last_input_event = event
+        context = self.get_or_create_context(script)
+        obj = focus_manager.get_manager().get_locus_of_focus()
+        if not context.set_current_to_zone_with_object(obj):
+            self._context = None
+            self.get_or_create_context(script)
+        return self._item_presentation(script, event)
+
+    @dbus_service.command
+    def move_focus_to_review(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Attempts to move focus to the object at the flat review location."""
+
+        tokens = ["FLAT REVIEW PRESENTER: move_focus_to_review. Script:", script, "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        self._context = self.get_or_create_context(script)
+        self._last_input_event = event
+        obj = self._context.get_current_object()
+
+        # If focus is already on the reviewed object, no focus event will present the change,
+        # so capture how far the review location is from the caret to announce the move.
+        focus_stays = obj == focus_manager.get_manager().get_locus_of_focus()
+        old_location = target_location = self._context.get_current_location()
+        if focus_stays:
+            self._context.set_current_to_zone_with_object(obj)
+            old_location = self._context.get_current_location()
+            self._context.set_current_location(target_location)
+
+        AXObject.grab_focus(obj)
+        offset = self._context.get_current_text_offset()
+        caret_moved = False
+        if offset >= 0:
+            AXUtilities.set_caret_offset_with_reason(obj, offset, CaretSetReason.FLAT_REVIEW)
+            caret_moved = AXText.get_caret_offset(obj) == offset
+
+        if AXUtilities.is_focusable(obj):
+            if focus_stays and not caret_moved:
+                if notify_user:
+                    presentation_manager.get_manager().present_message(
+                        messages.FLAT_REVIEW_LOCATION_UNCHANGED
+                    )
+            elif focus_stays:
+                if old_location[0] != target_location[0]:
+                    self._line_presentation(script, event)
+                elif old_location[1:3] != target_location[1:3]:
+                    self._item_presentation(script, event)
+                else:
+                    self._character_presentation(script, event)
+            return True
+        if script.utilities.in_document_content(obj):
+            focus_manager.get_manager().set_locus_of_focus(None, obj)
+        elif notify_user:
+            presentation_manager.get_manager().present_message(
+                messages.FLAT_REVIEW_LOCATION_UNCHANGED
+            )
+        return True
 
     @dbus_service.command
     def present_object(
