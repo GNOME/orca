@@ -49,6 +49,8 @@ from .orca_fixtures import (  # noqa: F401
     _gtk3_text_view,
     _gtk3_toolbar,
     _gtk3_tree_view,
+    _gtk3_two_entries,
+    _gtk3_two_windows,
     _gtk3_widget_notebook,
     _orca,
     _web_aria_spinbutton,

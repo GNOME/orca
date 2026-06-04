@@ -85,7 +85,7 @@ class OrcaSession:
             self._process.kill()
             self._process.wait()
 
-    def set(self, module: str, name: str, value: bool | str) -> None:
+    def set(self, module: str, name: str, value: bool | int | str) -> None:
         """Sets an Orca D-Bus property; lets errors bubble up."""
 
         proxy = self._properties_proxy(module)
@@ -203,11 +203,13 @@ class OrcaSession:
         raise TimeoutError(f"Orca D-Bus service did not become ready within {timeout}s")
 
 
-def _to_variant(value: bool | str | list[str]) -> GLib.Variant:
+def _to_variant(value: bool | int | str | list[str]) -> GLib.Variant:
     """Wraps value in a GLib.Variant for the D-Bus setter call."""
 
     if isinstance(value, bool):
         return GLib.Variant("b", value)
+    if isinstance(value, int):
+        return GLib.Variant("u", value)
     if isinstance(value, list):
         return GLib.Variant("as", value)
     return GLib.Variant("s", value)

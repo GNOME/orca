@@ -45,6 +45,8 @@ from .apps import (
     gtk3_text_view,
     gtk3_toolbar,
     gtk3_tree_view,
+    gtk3_two_entries,
+    gtk3_two_windows,
     gtk3_widget_notebook,
 )
 from .harness import sandbox
@@ -112,6 +114,8 @@ _gtk3_text_view = _make_native_app_fixture(
     ),
 )
 _gtk3_tree_view = _make_native_app_fixture(gtk3_tree_view, scope="function")
+_gtk3_two_entries = _make_native_app_fixture(gtk3_two_entries, scope="function")
+_gtk3_two_windows = _make_native_app_fixture(gtk3_two_windows, scope="function")
 _gtk3_widget_notebook = _make_native_app_fixture(gtk3_widget_notebook)
 _gtk3_toolbar = _make_native_app_fixture(gtk3_toolbar, scope="function")
 

@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture
+from .helpers import BrailleLine, capture, move_to_top, toggle_flat_review
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -107,3 +107,68 @@ def test_flat_review_by_line_word_and_character(gtk3_text_view: NativeAppSession
         ["L"],
         [BrailleLine(1, "Line one. $l", "Line one. $l", "\x00" * 12)],
     )
+
+
+@pytest.mark.native_app
+def test_focus_tracking_off_keeps_review_location(gtk3_text_view: NativeAppSession) -> None:
+    """Tests that FocusTracking=off keeps the review location when the caret moves."""
+
+    session = gtk3_text_view
+    # The previous test leaves flat review on; exit then re-enter from a known position.
+    toggle_flat_review(session)
+    move_to_top(session)
+    toggle_flat_review(session)
+
+    session.orca.set("FlatReviewPresenter", "FocusTracking", 0)
+    try:
+        keyboard.tap_key(keyboard.KEYSYM_KP_UP)
+        session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+        session.reader.reset()
+
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+        session.reader.reset()
+
+        keyboard.tap_key(keyboard.KEYSYM_KP_UP)
+        assert capture(session) == (
+            ["Line one.\n"],
+            [BrailleLine(1, "Line one. $l", "Line one. $l", "\x00" * 12)],
+        )
+    finally:
+        session.orca.set("FlatReviewPresenter", "FocusTracking", 1)
+        toggle_flat_review(session)
+
+
+@pytest.mark.native_app
+def test_focus_tracking_auto_follows_caret(gtk3_text_view: NativeAppSession) -> None:
+    """Tests that FocusTracking=auto moves the review location when the caret moves."""
+
+    session = gtk3_text_view
+    move_to_top(session)
+    toggle_flat_review(session)
+
+    session.orca.set("FlatReviewPresenter", "FocusTracking", 1)
+    try:
+        keyboard.tap_key(keyboard.KEYSYM_KP_UP)
+        session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+        session.reader.reset()
+
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+        session.reader.reset()
+
+        keyboard.tap_key(keyboard.KEYSYM_KP_UP)
+        assert capture(session) == (
+            ["Line two has additional words to make it long enough that "],
+            [
+                BrailleLine(
+                    1,
+                    "Line two has additional words to make it long enough that  $l",
+                    "Line two has additional words to",
+                    "\x00" * 61,
+                )
+            ],
+        )
+    finally:
+        session.orca.set("FlatReviewPresenter", "FocusTracking", 1)
+        toggle_flat_review(session)

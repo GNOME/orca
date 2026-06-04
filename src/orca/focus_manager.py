@@ -79,6 +79,15 @@ class FocusManager:
 
         self._region_changed_listeners.append(callback)
 
+    def remove_region_changed_listener(
+        self,
+        callback: Callable[[Atspi.Accessible, str], None],
+    ) -> None:
+        """Unregisters a previously-registered region-changed callback."""
+
+        if callback in self._region_changed_listeners:
+            self._region_changed_listeners.remove(callback)
+
     def clear_state(self, reason: str = "") -> None:
         """Clears everything we're tracking."""
 

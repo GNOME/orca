@@ -155,6 +155,7 @@ These operations also work at the profile level:
 | Key | Type | Default | Summary |
 | --- | --- | --- | --- |
 | `display-updates` | `b` | `true` | Refresh braille for content changes at the flat review location |
+| `focus-tracking` | `enum`<br>`FocusTracking` | `'auto'` | When flat review should follow the focus/caret location |
 | `restricted` | `b` | `false` | Restrict flat review to current object |
 | `speak-updates` | `b` | `false` | Speak content changes at the flat review location |
 
