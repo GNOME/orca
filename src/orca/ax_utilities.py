@@ -1413,15 +1413,7 @@ class AXUtilities:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
-        tokens = ["AXUtilities:", obj, "is showing and visible. Checking hidden..."]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if AXUtilitiesState.is_hidden(obj):
-            tokens = ["AXUtilities:", obj, "is reports being hidden. Treating as off screen."]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return False
-
-        tokens = ["AXUtilities:", obj, "is not hidden. Checking size and rect..."]
+        tokens = ["AXUtilities:", obj, "is showing and visible. Checking size and rect..."]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         if AXUtilitiesComponent.has_no_size_or_invalid_rect(obj):

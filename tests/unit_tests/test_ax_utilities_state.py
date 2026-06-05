@@ -452,30 +452,6 @@ class TestAXUtilitiesState:
     @pytest.mark.parametrize(
         "case",
         [
-            {"id": "hidden_true", "hidden_value": "true", "expected_result": True},
-            {"id": "hidden_false", "hidden_value": "false", "expected_result": False},
-            {"id": "hidden_none", "hidden_value": None, "expected_result": False},
-        ],
-        ids=lambda case: case["id"],
-    )
-    def test_is_hidden(self, test_context: OrcaTestContext, case: dict) -> None:
-        """Test AXUtilitiesState.is_hidden."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        mock_ax_object_class = essential_modules["orca.ax_object"].AXObject
-        from orca.ax_utilities_state import AXUtilitiesState
-
-        mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        mock_ax_object_class.get_attribute = test_context.Mock(
-            side_effect=lambda obj, attr, default=None: (
-                case["hidden_value"] if attr == "hidden" else default
-            ),
-        )
-        assert AXUtilitiesState.is_hidden(mock_obj) == case["expected_result"]
-
-    @pytest.mark.parametrize(
-        "case",
-        [
             {
                 "id": "has_read_only_state",
                 "read_only_scenario": "has_read_only_state",

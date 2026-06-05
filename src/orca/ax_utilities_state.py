@@ -228,12 +228,6 @@ class AXUtilitiesState:
         return True
 
     @staticmethod
-    def is_hidden(obj: Atspi.Accessible) -> bool:
-        """Returns true if obj reports being hidden"""
-
-        return AXObject.get_attribute(obj, "hidden", False) == "true"
-
-    @staticmethod
     def is_horizontal(obj: Atspi.Accessible, state_set: Atspi.StateSet | None = None) -> bool:
         """Returns true if obj has the horizontal state"""
 

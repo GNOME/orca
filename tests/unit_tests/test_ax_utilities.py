@@ -137,7 +137,6 @@ class TestAXUtilities:
         state_class_mock.is_expandable = test_context.Mock(return_value=False)
         state_class_mock.is_showing = test_context.Mock(return_value=True)
         state_class_mock.is_visible = test_context.Mock(return_value=True)
-        state_class_mock.is_hidden = test_context.Mock(return_value=False)
         state_class_mock.is_expanded = test_context.Mock(return_value=False)
         state_class_mock.is_focused = test_context.Mock(return_value=False)
         state_class_mock.is_editable = test_context.Mock(return_value=False)
@@ -1616,7 +1615,6 @@ class TestAXUtilities:
                 "id": "showing_visible_on_screen",
                 "is_showing": True,
                 "is_visible": True,
-                "is_hidden": False,
                 "has_no_size_invalid_rect": False,
                 "object_is_off_screen": False,
                 "object_intersects_rect": True,
@@ -1624,10 +1622,9 @@ class TestAXUtilities:
                 "expected_result": True,
             },
             {
-                "id": "hidden_object",
+                "id": "not_showing_not_visible",
                 "is_showing": False,
                 "is_visible": False,
-                "is_hidden": True,
                 "has_no_size_invalid_rect": False,
                 "object_is_off_screen": False,
                 "object_intersects_rect": True,
@@ -1638,18 +1635,6 @@ class TestAXUtilities:
                 "id": "not_showing_but_visible",
                 "is_showing": False,
                 "is_visible": True,
-                "is_hidden": False,
-                "has_no_size_invalid_rect": False,
-                "object_is_off_screen": False,
-                "object_intersects_rect": True,
-                "bbox_provided": False,
-                "expected_result": False,
-            },
-            {
-                "id": "showing_visible_but_hidden",
-                "is_showing": True,
-                "is_visible": True,
-                "is_hidden": True,
                 "has_no_size_invalid_rect": False,
                 "object_is_off_screen": False,
                 "object_intersects_rect": True,
@@ -1660,7 +1645,6 @@ class TestAXUtilities:
                 "id": "no_size_or_invalid_rect",
                 "is_showing": True,
                 "is_visible": True,
-                "is_hidden": False,
                 "has_no_size_invalid_rect": True,
                 "object_is_off_screen": False,
                 "object_intersects_rect": True,
@@ -1671,7 +1655,6 @@ class TestAXUtilities:
                 "id": "object_off_screen",
                 "is_showing": True,
                 "is_visible": True,
-                "is_hidden": False,
                 "has_no_size_invalid_rect": False,
                 "object_is_off_screen": True,
                 "object_intersects_rect": True,
@@ -1682,7 +1665,6 @@ class TestAXUtilities:
                 "id": "bbox_no_intersection",
                 "is_showing": True,
                 "is_visible": True,
-                "is_hidden": False,
                 "has_no_size_invalid_rect": False,
                 "object_is_off_screen": False,
                 "object_intersects_rect": False,
@@ -1693,7 +1675,6 @@ class TestAXUtilities:
                 "id": "fully_on_screen",
                 "is_showing": True,
                 "is_visible": True,
-                "is_hidden": False,
                 "has_no_size_invalid_rect": False,
                 "object_is_off_screen": False,
                 "object_intersects_rect": True,
@@ -1711,7 +1692,6 @@ class TestAXUtilities:
         """Test AXUtilities.is_on_screen with various state combinations."""
         is_showing = case["is_showing"]
         is_visible = case["is_visible"]
-        is_hidden = case["is_hidden"]
         has_no_size_invalid_rect = case["has_no_size_invalid_rect"]
         object_is_off_screen = case["object_is_off_screen"]
         object_intersects_rect = case["object_intersects_rect"]
@@ -1731,9 +1711,6 @@ class TestAXUtilities:
             "orca.ax_utilities_state"
         ].AXUtilitiesState.is_showing_and_visible = test_context.Mock(
             return_value=is_showing and is_visible
-        )
-        essential_modules["orca.ax_utilities_state"].AXUtilitiesState.is_hidden = test_context.Mock(
-            return_value=is_hidden,
         )
 
         essential_modules[

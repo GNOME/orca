@@ -620,8 +620,8 @@ class Utilities(script_utilities.Utilities):
                 tokens = ["WEB: Treating", obj, "as non-text due to role."]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 rv = False
-            if rv and (AXUtilities.is_hidden(obj) or self._is_off_screen_label(obj)):
-                tokens = ["WEB: Treating", obj, "as non-text: is hidden or off-screen label."]
+            if rv and self._is_off_screen_label(obj):
+                tokens = ["WEB: Treating", obj, "as non-text: is off-screen label."]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 rv = False
             if rv and self._is_non_navigable_embedded_document(obj):
@@ -1906,7 +1906,6 @@ class Utilities(script_utilities.Utilities):
                 or (self.is_content_editable_with_embedded_objects(obj) and not string.strip())
                 or self._is_empty_anchor(obj)
                 or (AXUtilities.has_no_size(obj) and not text)
-                or AXUtilities.is_hidden(obj)
                 or self._is_off_screen_label(obj)
                 or self._is_useless_image(obj)
                 or self.is_link_ancestor_of_image_in_contents(obj, contents)
@@ -2873,13 +2872,6 @@ class Utilities(script_utilities.Utilities):
             tokens = ["WEB: Presentational child cannot have caret context", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = False
-        elif AXUtilities.is_hidden(obj):
-            # We try to do this check only if needed because getting object attributes is
-            # not as performant, and we cannot use the cached attribute because aria-hidden
-            # can change frequently depending on the app.
-            tokens = ["WEB: Hidden object cannot have caret context", obj]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            rv = False
         elif AXUtilities.has_no_size(obj):
             tokens = ["WEB: Allowing sizeless object to have caret context", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -2916,7 +2908,7 @@ class Utilities(script_utilities.Utilities):
                 else:
                     break
 
-        if context_obj and not AXUtilities.is_hidden(context_obj):
+        if context_obj:
             return self.find_next_caret_in_order(context_obj, max(-1, context_offset - 1))
 
         if self.is_document(container):
