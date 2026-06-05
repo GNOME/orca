@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import move_to_top, speech
+from .helpers import BrailleLine, capture, move_to_top, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -77,3 +77,30 @@ def test_banner_link_is_its_own_line(web_inline_landmarks: NativeAppSession) -> 
     assert speech(session) == ["leaving banner.", "Catalog", "link"]
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert speech(session) == ["banner", "Home", "link"]
+
+
+@pytest.mark.native_app
+def test_where_am_i_stops_at_landmark_boundary(web_inline_landmarks: NativeAppSession) -> None:
+    """Tests that Where Am I on a nav landmark omits the adjacent landmark's contents."""
+
+    session = web_inline_landmarks
+    move_to_top(session)
+
+    # Land on the Primary nav landmark, whose look-right neighbor is the
+    # Secondary nav landmark on the same visual row.
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert speech(session) == ["navigation", "Primary Primary nav"]
+
+    # Basic Where Am I reports only the Primary landmark's text; the landmark
+    # boundary guard keeps "Secondary nav" out of the assembled contents.
+    keyboard.tap_key(keyboard.KEYSYM_KP_ENTER)
+    assert capture(session) == (
+        ["Primary nav"],
+        [
+            BrailleLine(
+                1, "Primary Primary nav navigation", "Primary Primary nav navigation", "\x00" * 30
+            )
+        ],
+    )

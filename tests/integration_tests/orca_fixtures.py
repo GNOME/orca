@@ -23,6 +23,7 @@
 from __future__ import annotations
 
 import contextlib
+import os
 import shutil
 import subprocess
 import sys
@@ -141,11 +142,12 @@ def _make_terminal_fixture(
 _gtk3_terminal_shell = _make_terminal_fixture(
     "gtk3_terminal_shell", binary_names=("bash",), args=("--norc", "--noprofile")
 )
+_LIVE_UPDATE_HOLD = 3.0 * float(os.environ.get("ORCA_TEST_TIMEOUT_SCALE") or 1.0)
 _gtk3_terminal_flatrev = _make_terminal_fixture(
     "gtk3_terminal_flatrev",
     binary_names=("bash",),
     args=("--norc", "--noprofile"),
-    files={"t.sh": "printf c1; sleep 3; printf '\\rc2'; echo\n"},
+    files={"t.sh": f"printf c1; sleep {_LIVE_UPDATE_HOLD:g}; printf '\\rc2'; echo\n"},
 )
 _gtk3_terminal_pager = _make_terminal_fixture(
     "gtk3_terminal_pager", binary_names=("less",), args=("doc.txt",), files={"doc.txt": _PAGER_DOC}
@@ -439,7 +441,13 @@ _web_dialogs = _make_web_fixture("web_dialogs.html")
 _web_aria_spinbutton = _make_web_fixture("web_aria_spinbutton.html")
 _web_autocomplete = _make_web_fixture("web_autocomplete.html")
 _web_dynamic_content = _make_web_fixture("web_dynamic_content.html")
+_web_caret_context = _make_web_fixture("web_caret_context.html")
 _web_editing = _make_web_fixture("web_editing.html")
 _web_long_line = _make_web_fixture("web_long_line.html")
+_web_sortable_table = _make_web_fixture("web_sortable_table.html")
+_web_page_up_down = _make_web_fixture("web_page_up_down.html", caret_browsing=True)
+_web_image_link = _make_web_fixture("web_image_link.html")
+_web_option_removal = _make_web_fixture("web_option_removal.html")
+_web_alert = _make_web_fixture("web_alert.html")
 _web_contracted_braille = _make_web_fixture("web_contracted_braille.html", caret_browsing=True)
 _web_attribute_mask = _make_web_fixture("web_attribute_mask.html", caret_browsing=True)

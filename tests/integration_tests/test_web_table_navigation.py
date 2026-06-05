@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, move_to_top
+from .helpers import BrailleLine, capture, move_to_top, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -395,3 +395,78 @@ def test_heading_where_am_i(web_tables: NativeAppSession) -> None:
         ["Tables", "heading 1"],
         [BrailleLine(1, "Tables h1", "Tables h1", "\x00" * 9)],
     )
+
+
+@pytest.mark.native_app
+def test_word_navigation_stays_within_table_cell(web_tables: NativeAppSession) -> None:
+    """Tests that Ctrl+Right word navigation does not cross into an adjacent table cell."""
+
+    session = web_tables
+    move_to_top(session)
+
+    # Eleven Down arrows reach the row with "Four" and "Five" in adjacent cells.
+    for _ in range(11):
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+        session.reader.reset()
+
+    # Both cells share a braille line, but the word stops at the cell boundary.
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+    assert capture(session) == (
+        ["Four"],
+        [BrailleLine(5, "Four Five", "Four Five", "\x00" * 9)],
+    )
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+    assert capture(session) == (
+        ["Five"],
+        [BrailleLine(5, "Four Five", "Five", "\x00" * 9)],
+    )
+
+
+@pytest.mark.native_app
+def test_say_all_over_tables(web_tables: NativeAppSession) -> None:
+    """Tests the utterances Say All speaks for a page of tables, from the top."""
+
+    session = web_tables
+    move_to_top(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
+    assert speech(session) == [
+        "Tables",
+        "Before the tables.",
+        "table with 3 rows 3 columns",
+        "Role",
+        "column header",
+        "Office",
+        "column header",
+        "Ada",
+        "row header",
+        "Engineer",
+        "London",
+        "Grace",
+        "row 3",
+        "column 1",
+        "Admiral",
+        "Boston",
+        "P",
+        "column header",
+        "row 1",
+        "column 1",
+        "Q",
+        "column header",
+        "R",
+        "column header",
+        "Block",
+        "One",
+        "Two",
+        "Three",
+        "Wide",
+        "Tall",
+        "Four",
+        "Five",
+        "Six",
+        "Seven",
+        "leaving table.",
+        "After the tables.",
+    ]

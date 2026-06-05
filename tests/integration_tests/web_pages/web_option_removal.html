@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Option Removal ready</title>
+<script>
+function removeActive() {
+  const lb = document.getElementById("lb");
+  const activeId = lb.getAttribute("aria-activedescendant");
+  const active = document.getElementById(activeId);
+  const next = active.nextElementSibling || active.previousElementSibling;
+  if (next) {
+    next.setAttribute("aria-selected", "true");
+    lb.setAttribute("aria-activedescendant", next.id);
+  }
+  active.remove();
+}
+function onKey(e) {
+  if (e.key === "Delete") { removeActive(); e.preventDefault(); }
+}
+</script>
+</head>
+<body>
+<h1>Option Removal</h1>
+<ul role="listbox" id="lb" aria-label="Items" tabindex="0" aria-activedescendant="opt1" onkeydown="onKey(event)">
+  <li role="option" id="opt1" aria-selected="true">Option A</li>
+  <li role="option" id="opt2" aria-selected="false">Option B</li>
+  <li role="option" id="opt3" aria-selected="false">Option C</li>
+</ul>
+<p><button type="button" onclick="removeActive()">Remove</button></p>
+</body>
+</html>

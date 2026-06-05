@@ -183,3 +183,58 @@ def test_key_echo_insertion_in_contenteditable(web_editing: NativeAppSession) ->
     assert helpers.speech(session) == ["y"]
     keyboard.tap_key(keyboard.KEYSYM_BACKSPACE)
     assert helpers.speech(session) == ["y"]
+
+
+def _park_before_blank_middle_line(session: NativeAppSession) -> None:
+    """Types two non-empty lines around a blank one and parks the caret before the blank line."""
+
+    _type("first")
+    keyboard.tap_key(keyboard.KEYSYM_RETURN)
+    keyboard.tap_key(keyboard.KEYSYM_RETURN)
+    _type("second")
+    _quiet(session)
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
+    _quiet(session)
+
+    for _ in range(5):
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+        _quiet(session)
+
+
+@pytest.mark.native_app
+def test_say_character_blank_line_speaks_blank_when_enabled(web_editing: NativeAppSession) -> None:
+    """Tests that moving onto a blank line speaks 'blank' when SpeakBlankLines is enabled."""
+
+    session = web_editing
+    _focus_field(session, tab_count=1)
+    _set_echo(session, key=False, word=False, sentence=False, character=False)
+
+    original = session.orca.get("SpeechPresenter", "SpeakBlankLines")
+    try:
+        session.orca.set("SpeechPresenter", "SpeakBlankLines", True)
+        _park_before_blank_middle_line(session)
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)  # onto the blank middle line
+        assert helpers.speech(session) == ["blank"]
+    finally:
+        session.orca.set("SpeechPresenter", "SpeakBlankLines", original)
+
+
+@pytest.mark.native_app
+def test_say_character_blank_line_speaks_newline_when_disabled(
+    web_editing: NativeAppSession,
+) -> None:
+    """Tests that moving onto a blank line speaks the newline when SpeakBlankLines is disabled."""
+
+    session = web_editing
+    _focus_field(session, tab_count=1)
+    _set_echo(session, key=False, word=False, sentence=False, character=False)
+
+    original = session.orca.get("SpeechPresenter", "SpeakBlankLines")
+    try:
+        session.orca.set("SpeechPresenter", "SpeakBlankLines", False)
+        _park_before_blank_middle_line(session)
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)  # onto the blank middle line
+        assert helpers.speech(session) == ["\n"]
+    finally:
+        session.orca.set("SpeechPresenter", "SpeakBlankLines", original)

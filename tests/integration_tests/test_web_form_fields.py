@@ -41,6 +41,58 @@ def _exit_focus_mode(session: NativeAppSession) -> None:
     session.reader.reset()
 
 
+# Keep first: after the later form-field tests, Say All starts mid-document instead of
+# at the top (root cause not yet pinned down).
+@pytest.mark.native_app
+def test_say_all_over_form_fields(web_form_fields: NativeAppSession) -> None:
+    """Tests the utterances Say All speaks for a page of form controls, from the top."""
+
+    session = web_form_fields
+    helpers.reset_web_state(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
+    assert helpers.speech(session) == [
+        "Form fields",
+        "Name",
+        "entry",
+        "Jane Doe",
+        "Bio",
+        "entry",
+        "First line of bio. ",
+        "Second sentence here.",
+        "Search",
+        "editable combo box",
+        "opens listbox",
+        "Fruit",
+        "combo box",
+        "Apple",
+        "opens menu",
+        "Subscribe",
+        "check box",
+        "not checked",
+        "Red color",
+        "not selected",
+        "radio button",
+        "Green color",
+        "not selected",
+        "radio button",
+        "Blue color",
+        "not selected",
+        "radio button",
+        "Quantity",
+        "spin button",
+        "3",
+        "Submit",
+        "button",
+        "Mute",
+        "toggle button",
+        "not pressed",
+        "Wi-Fi",
+        "switch",
+        "not pressed",
+    ]
+
+
 @pytest.mark.native_app
 def test_structural_navigation_by_form_field(web_form_fields: NativeAppSession) -> None:
     """Tests structural navigation by form field across every field type."""
@@ -795,4 +847,24 @@ def test_where_am_i_on_form_controls(web_form_fields: NativeAppSession) -> None:
             helpers.BrailleLine(1, "Submit button", "Submit button", "\x00" * 13),
             helpers.BrailleLine(1, "Submit button", "Submit button", "\x00" * 13),
         ],
+    )
+
+
+@pytest.mark.native_app
+def test_word_navigation_stays_within_text_input(web_form_fields: NativeAppSession) -> None:
+    """Tests that Ctrl+Right word navigation stays within a text input at its boundary."""
+
+    session = web_form_fields
+    helpers.reset_web_state(session)
+
+    # Three word-jumps land on "Doe", the last word inside the Name input.
+    for _ in range(3):
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+        session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+        session.reader.reset()
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+    assert helpers.capture(session) == (
+        ["Doe"],
+        [helpers.BrailleLine(14, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16)],
     )

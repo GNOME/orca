@@ -140,3 +140,29 @@ def test_word_navigation_backward(web_structural_navigation: NativeAppSession) -
         ["Intro "],
         ["navigation"],
     ]
+
+
+@pytest.mark.native_app
+def test_character_navigation_onto_embedded_button(
+    web_structural_navigation: NativeAppSession,
+) -> None:
+    """Tests that Right-arrow onto an embedded button speaks the button."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+    for _ in range(6):
+        _word_right(session)
+    assert _right(session) == ["Save"]
+
+
+@pytest.mark.native_app
+def test_character_navigation_onto_embedded_image(
+    web_structural_navigation: NativeAppSession,
+) -> None:
+    """Tests that Right-arrow onto an embedded image speaks the image."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+    for _ in range(24):
+        _word_right(session)
+    assert _right(session) == ["Red square"]

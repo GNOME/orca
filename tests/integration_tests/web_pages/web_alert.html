@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Alert ready</title>
+<script>
+function showAlert() {
+  var a = document.createElement('div');
+  a.setAttribute('role', 'alertdialog');
+  a.setAttribute('aria-label', 'Notice');
+  a.textContent = 'Form submitted';
+  document.getElementById('box').appendChild(a);
+}
+</script>
+</head>
+<body>
+<h1>Dynamic alert</h1>
+<p><button type="button" onclick="showAlert()">Submit</button></p>
+<div id="box"></div>
+</body>
+</html>

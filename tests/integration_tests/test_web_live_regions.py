@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import move_to_bottom, reset_web_state, speech
+from .helpers import capture, move_to_bottom, reset_web_state, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -40,11 +40,7 @@ def test_caret_navigation_top_to_bottom(web_live_regions: NativeAppSession) -> N
     session = web_live_regions
     reset_web_state(session)
 
-    for expected in (
-        ["Save", "button"],
-        ["Break", "button"],
-        ["Quiet", "button"],
-    ):
+    for expected in _TOP_TO_BOTTOM:
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         assert speech(session) == expected
 
@@ -56,16 +52,22 @@ def test_caret_navigation_top_to_bottom_layout_off(web_live_regions: NativeAppSe
     session = web_live_regions
     reset_web_state(session)
     session.orca.set("CaretNavigator", "LayoutMode", False)
-    for expected in (
-        ["Save", "button"],
-        ["Break", "button"],
-        ["Quiet", "button"],
-    ):
+    for expected in _TOP_TO_BOTTOM:
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         assert speech(session) == expected
 
 
+_TOP_TO_BOTTOM = (
+    ["Save", "button"],
+    ["Break", "button"],
+    ["Quiet", "button"],
+    ["Remove", "button"],
+    ["Removable"],
+)
+
+
 _BOTTOM_TO_TOP = (
+    ["Remove", "button"],
     ["Quiet", "button"],
     ["Break", "button"],
     ["Save", "button"],
@@ -120,3 +122,18 @@ def test_live_region_politeness(web_live_regions: NativeAppSession) -> None:
     assert speech(session) == ["Quiet", "button"]
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
     assert speech(session) == []
+
+
+@pytest.mark.native_app
+def test_live_region_child_removal_is_silent(web_live_regions: NativeAppSession) -> None:
+    """Tests that removing a child of a polite live region away from focus is not announced."""
+
+    session = web_live_regions
+    reset_web_state(session)
+
+    for _ in range(4):
+        keyboard.tap_key(keyboard.KEYSYM_TAB)
+    assert speech(session) == ["Remove", "button"]
+
+    keyboard.tap_key(keyboard.KEYSYM_SPACE)
+    assert capture(session, wait_async=True) == ([], [])

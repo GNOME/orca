@@ -1,0 +1,38 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Orca Web Sortable Table ready</title></head>
+<body><main>
+<h1>Sortable</h1>
+<table>
+<thead><tr>
+  <th scope="col" aria-sort="none"><button id="namehdr" onclick="sortByName()">Name</button></th>
+  <th scope="col">Value</th>
+</tr></thead>
+<tbody id="tb">
+  <tr><td>Zebra</td><td>26</td></tr>
+  <tr><td>Apple</td><td>1</td></tr>
+  <tr><td>Mango</td><td>13</td></tr>
+</tbody>
+</table>
+<table>
+<tbody>
+  <tr><th scope="row" id="rowhdr" aria-sort="none"><button id="rowbtn" onclick="sortCols()">Region</button></th><td>North</td><td>South</td></tr>
+  <tr><th scope="row">Sales</th><td>10</td><td>20</td></tr>
+</tbody>
+</table>
+</main>
+<script>
+let asc=false;
+function sortByName(){
+  asc=!asc;
+  document.getElementById('namehdr').closest('th').setAttribute('aria-sort', asc?'ascending':'descending');
+  const tb=document.getElementById('tb');
+  const rows=Array.from(tb.querySelectorAll('tr'));
+  rows.sort((a,b)=>{const t=r=>r.cells[0].textContent; return asc?t(a).localeCompare(t(b)):t(b).localeCompare(t(a));});
+  rows.forEach(r=>tb.appendChild(r));
+}
+let casc=false;
+function sortCols(){
+  casc=!casc;
+  document.getElementById('rowhdr').setAttribute('aria-sort', casc?'ascending':'descending');
+}
+</script>
+</body></html>

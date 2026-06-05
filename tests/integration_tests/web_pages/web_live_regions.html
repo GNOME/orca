@@ -7,6 +7,11 @@
 function announce(id, text) {
   document.getElementById(id).textContent = text;
 }
+function removeChildNode(parentId, childId) {
+  var parent = document.getElementById(parentId);
+  var child = document.getElementById(childId);
+  parent.removeChild(child);
+}
 </script>
 </head>
 <body>
@@ -20,5 +25,8 @@ function announce(id, text) {
 
 <p><button type="button" onclick="announce('off', 'Nothing to hear')">Quiet</button></p>
 <div id="off" aria-live="off"></div>
+
+<p><button type="button" onclick="removeChildNode('removal', 'removal-child')">Remove</button></p>
+<div id="removal" aria-live="polite"><span id="removal-child">Removable</span></div>
 </body>
 </html>
