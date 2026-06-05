@@ -2984,37 +2984,6 @@ class Utilities(script_utilities.Utilities):
         self._cached_caret_contexts.pop(hash(parent), None)
         self._cached_prior_contexts.pop(hash(parent), None)
 
-    def _handle_event_for_removed_selectable_child(self, event):
-        container = None
-        if AXUtilities.is_list_box(event.source) or AXUtilities.is_tree(event.source):
-            container = event.source
-        else:
-            container = AXUtilities.find_ancestor(
-                event.source,
-                AXUtilities.is_list_box,
-            ) or AXUtilities.find_ancestor(event.source, AXUtilities.is_tree)
-        if container is None:
-            msg = "WEB: Could not find listbox or tree to recover from removed child."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        tokens = ["WEB: Checking", container, "for focused child."]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        # TODO - JD: Can we remove this? If it's needed, should it be recursive?
-        AXObject.clear_cache(container, False, "Handling event for removed selectable child.")
-        item = AXUtilities.get_focused_object(container)
-        if not (AXUtilities.is_list_item(item) or AXUtilities.is_tree_item(item)):
-            msg = "WEB: Could not find focused item to recover from removed child."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return False
-
-        tokens = ["WEB: Recovered from removed child. New focus is: ", item, "0"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        focus_manager.get_manager().set_locus_of_focus(event, item)
-        self.set_caret_context(item, 0)
-        return True
-
     def handle_event_for_removed_child(self, event):
         """Attempts to recover when the current object has been removed from the document."""
 
@@ -3034,9 +3003,6 @@ class Utilities(script_utilities.Utilities):
             msg = "WEB: Event detail1 is useless."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
-
-        if self._handle_event_for_removed_selectable_child(event):
-            return True
 
         obj, offset = None, -1
         notify = True
