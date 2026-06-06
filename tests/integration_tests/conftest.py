@@ -76,14 +76,18 @@ from .orca_fixtures import (  # noqa: F401
     _web_live_regions,
     _web_long_line,
     _web_nested_headings,
+    _web_offscreen_labels,
     _web_option_removal,
     _web_page_up_down,
+    _web_plain_text,
+    _web_redundant_content,
     _web_sliders,
     _web_sortable_table,
     _web_structural_navigation,
     _web_tables,
     _web_text_attributes,
     _web_tree,
+    _web_useless_images,
     _web_wrapping_text,
 )
 

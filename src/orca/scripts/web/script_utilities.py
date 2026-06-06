@@ -1440,16 +1440,27 @@ class Utilities(script_utilities.Utilities):
                     if abs(rect.x - x_rect.x) <= 1 and abs(rect.y - x_rect.y) <= 1:
                         # This happens with dynamic skip links such as found on Wikipedia.
                         return False
-                elif (
-                    AXUtilities.is_block_list_descendant(obj)
-                    != AXUtilities.is_block_list_descendant(x_obj)
-                    or AXUtilities.is_code_block_descendant(obj, inclusive=True)
-                    != AXUtilities.is_code_block_descendant(x_obj, inclusive=True)
-                    or (AXUtilities.is_tree_related(obj) and AXUtilities.is_tree_related(x_obj))
-                    or (AXUtilities.is_heading(obj) and AXUtilities.has_no_size(obj))
-                    or (AXUtilities.is_heading(x_obj) and AXUtilities.has_no_size(x_obj))
-                ):
-                    return False
+                else:
+                    reason = None
+                    if AXUtilities.is_block_list_descendant(
+                        obj
+                    ) != AXUtilities.is_block_list_descendant(x_obj):
+                        reason = "block list descendant mismatch"
+                    elif AXUtilities.is_code_block_descendant(
+                        obj, inclusive=True
+                    ) != AXUtilities.is_code_block_descendant(x_obj, inclusive=True):
+                        reason = "code block descendant mismatch"
+                    elif AXUtilities.is_tree_related(obj) and AXUtilities.is_tree_related(x_obj):
+                        reason = "both tree related"
+                    elif AXUtilities.is_heading(obj) and AXUtilities.has_no_size(obj):
+                        reason = "obj is sizeless heading"
+                    elif AXUtilities.is_heading(x_obj) and AXUtilities.has_no_size(x_obj):
+                        reason = "x_obj is sizeless heading"
+
+                    if reason:
+                        tokens = ["WEB: Excluding", x_obj, "from line contents:", reason]
+                        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                        return False
 
             if AXUtilities.is_math(x_obj):
                 on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect, rect.height)
@@ -1901,18 +1912,25 @@ class Utilities(script_utilities.Utilities):
             text = string or AXObject.get_name(obj)
             rv = True
             # TODO - JD: Audit this to see if they are now redundant.
-            if (
-                ((self.is_text_block_element(obj) or self.is_link(obj)) and not text)
-                or (self.is_content_editable_with_embedded_objects(obj) and not string.strip())
-                or self._is_empty_anchor(obj)
-                or (AXUtilities.has_no_size(obj) and not text)
-                or self._is_off_screen_label(obj)
-                or self._is_useless_image(obj)
-                or self.is_link_ancestor_of_image_in_contents(obj, contents)
-                or self.is_error_for_contents(obj, contents)
-                or self._is_labelling_contents(obj, contents)
-            ):
-                rv = False
+            reason = None
+            if (self.is_text_block_element(obj) or self.is_link(obj)) and not text:
+                reason = "empty text block or link"
+            elif self.is_content_editable_with_embedded_objects(obj) and not string.strip():
+                reason = "empty editable host"
+            elif self._is_empty_anchor(obj):
+                reason = "empty anchor"
+            elif AXUtilities.has_no_size(obj) and not text:
+                reason = "sizeless and nameless"
+            elif self._is_off_screen_label(obj):
+                reason = "off-screen label"
+            elif self._is_useless_image(obj):
+                reason = "useless image"
+            elif self.is_link_ancestor_of_image_in_contents(obj, contents):
+                reason = "link ancestor of image in contents"
+            elif self.is_error_for_contents(obj, contents):
+                reason = "error for contents"
+            elif self._is_labelling_contents(obj, contents):
+                reason = "labels other contents"
             elif AXUtilities.is_table_row(obj):
                 rv = AXUtilities.has_explicit_name(obj)
             else:
@@ -1920,6 +1938,11 @@ class Utilities(script_utilities.Utilities):
                 always_filter = [Atspi.Role.RADIO_BUTTON, Atspi.Role.CHECK_BOX]
                 if widget and (infer_labels or AXObject.get_role(widget) in always_filter):
                     rv = False
+
+            if reason:
+                tokens = ["WEB: Excluding", obj, "from presentation:", reason]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                rv = False
 
             self._cached_should_filter[hash(obj)] = rv
             return rv
@@ -2411,20 +2434,25 @@ class Utilities(script_utilities.Utilities):
 
         roles = [Atspi.Role.PARAGRAPH, Atspi.Role.SECTION, Atspi.Role.STATIC, Atspi.Role.TABLE_ROW]
         role = AXObject.get_role(obj)
-        if (
-            (role not in roles and not AXUtilities.is_aria_alert(obj))
-            or AXUtilities.is_focusable(obj)
-            or AXUtilities.is_editable(obj)
-            or (
-                self.has_valid_name(obj)
-                or AXObject.get_description(obj)
-                or AXObject.get_child_count(obj)
-            )
-            or (
-                AXText.get_character_count(obj)
-                and AXText.get_all_text(obj) != AXObject.get_name(obj)
-            )
-        ):
+        reason = None
+        if role not in roles and not AXUtilities.is_aria_alert(obj):
+            reason = "ineligible role"
+        elif AXUtilities.is_focusable(obj):
+            reason = "focusable"
+        elif AXUtilities.is_editable(obj):
+            reason = "editable"
+        elif self.has_valid_name(obj):
+            reason = "has valid name"
+        elif AXObject.get_description(obj):
+            reason = "has description"
+        elif AXObject.get_child_count(obj):
+            reason = "has children"
+        elif AXText.get_character_count(obj) and AXText.get_all_text(obj) != AXObject.get_name(obj):
+            reason = "has text content"
+
+        if reason:
+            tokens = ["WEB:", obj, "is not a useless empty element:", reason]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = False
         elif AXObject.supports_action(obj):
             names = AXUtilities.get_action_names(obj)

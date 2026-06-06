@@ -283,12 +283,19 @@ class Script(default.Script):
             )
             return
 
-        if (
-            caret_navigator.get_navigator().last_input_event_was_navigation_command()
-            or structural_navigator.get_navigator().last_input_event_was_navigation_command()
-            or table_navigator.get_navigator().last_input_event_was_navigation_command()
-            or AXUtilities.get_table(obj)
-        ):
+        prior_reason = None
+        if caret_navigator.get_navigator().last_input_event_was_navigation_command():
+            prior_reason = "caret navigation command"
+        elif structural_navigator.get_navigator().last_input_event_was_navigation_command():
+            prior_reason = "structural navigation command"
+        elif table_navigator.get_navigator().last_input_event_was_navigation_command():
+            prior_reason = "table navigation command"
+        elif AXUtilities.get_table(obj):
+            prior_reason = "object in table"
+
+        if prior_reason:
+            tokens = ["WEB: Using prior context for presentation:", prior_reason]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             prior_context = self.utilities.get_prior_context()
             if prior_context is not None:
                 prior_obj, _prior_offset = prior_context
@@ -381,18 +388,28 @@ class Script(default.Script):
 
         is_content_editable = self.utilities.is_content_editable_with_embedded_objects(obj)
 
-        if (
-            not caret_navigator.get_navigator().last_input_event_was_navigation_command()
-            and not structural_navigator.get_navigator().last_input_event_was_navigation_command()
-            and not table_navigator.get_navigator().last_input_event_was_navigation_command()
-            and not is_content_editable
-            and not AXDocument.is_plain_text(document)
-            and not input_event_manager.get_manager().last_event_was_caret_selection()
-        ):
+        handled_reason = None
+        if caret_navigator.get_navigator().last_input_event_was_navigation_command():
+            handled_reason = "caret navigation command"
+        elif structural_navigator.get_navigator().last_input_event_was_navigation_command():
+            handled_reason = "structural navigation command"
+        elif table_navigator.get_navigator().last_input_event_was_navigation_command():
+            handled_reason = "table navigation command"
+        elif is_content_editable:
+            handled_reason = "content editable"
+        elif AXDocument.is_plain_text(document):
+            handled_reason = "plain text document"
+        elif input_event_manager.get_manager().last_event_was_caret_selection():
+            handled_reason = "caret selection"
+
+        if not handled_reason:
             tokens = ["WEB: updating braille for unhandled navigation type", obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             super().update_braille(obj, offset=offset)
             return
+
+        tokens = ["WEB: updating braille via line contents:", handled_reason, obj]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         # TODO - JD: Getting the caret context can, by side effect, update it. This in turn
         # can prevent us from presenting table column headers when braille is enabled because

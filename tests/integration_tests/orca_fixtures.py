@@ -359,12 +359,31 @@ def _resolve_binary(names: tuple[str, ...]) -> str | None:
     return None
 
 
+def _document_loaded(accessible: Atspi.Accessible) -> bool:
+    """Predicate: the app has a document-role descendant with content (no title to match)."""
+
+    stack = [accessible]
+    while stack:
+        node = stack.pop()
+        try:
+            count = node.get_child_count()
+            if "document" in node.get_role_name() and count:
+                return True
+        except GLib.GError:
+            continue
+        for index in range(count):
+            with contextlib.suppress(GLib.GError):
+                stack.append(node.get_child_at_index(index))
+    return False
+
+
 def _run_browser_session(
     tmp_path_factory: pytest.TempPathFactory,
     *,
     app: ModuleType,
     page: str,
     caret_browsing: bool = False,
+    ready_predicate: Callable[[Atspi.Accessible], bool] | None = None,
 ) -> Iterator[NativeAppSession]:
     """Launches app loading web_pages/<page> under its own Orca subprocess."""
 
@@ -394,7 +413,7 @@ def _run_browser_session(
     yield from _run_app_with_orca(
         sandbox_dir,
         argv=argv,
-        ready_predicate=_name_suffix(app.READY_SUFFIX),
+        ready_predicate=ready_predicate or _name_suffix(app.READY_SUFFIX),
     )
 
 
@@ -419,7 +438,24 @@ def _make_web_fixture(
     return fixture
 
 
+def _make_plain_text_fixture(page: str) -> Callable[..., Iterator[NativeAppSession]]:
+    @pytest.fixture(scope="session", name=Path(page).stem, params=["chromium"])
+    def fixture(
+        request: pytest.FixtureRequest,
+        tmp_path_factory: pytest.TempPathFactory,
+    ) -> Iterator[NativeAppSession]:
+        yield from _run_browser_session(
+            tmp_path_factory,
+            app=_BROWSER_APPS[request.param],
+            page=page,
+            ready_predicate=_document_loaded,
+        )
+
+    return fixture
+
+
 _web_basic = _make_web_fixture("web_basic.html")
+_web_plain_text = _make_plain_text_fixture("web_plain_text.txt")
 _web_languages = _make_web_fixture("web_languages.html")
 _web_tables = _make_web_fixture("web_tables.html")
 _web_form_fields = _make_web_fixture("web_form_fields.html")
@@ -442,11 +478,14 @@ _web_aria_spinbutton = _make_web_fixture("web_aria_spinbutton.html")
 _web_autocomplete = _make_web_fixture("web_autocomplete.html")
 _web_dynamic_content = _make_web_fixture("web_dynamic_content.html")
 _web_caret_context = _make_web_fixture("web_caret_context.html")
+_web_redundant_content = _make_web_fixture("web_redundant_content.html")
 _web_editing = _make_web_fixture("web_editing.html")
 _web_long_line = _make_web_fixture("web_long_line.html")
 _web_sortable_table = _make_web_fixture("web_sortable_table.html")
 _web_page_up_down = _make_web_fixture("web_page_up_down.html", caret_browsing=True)
 _web_image_link = _make_web_fixture("web_image_link.html")
+_web_useless_images = _make_web_fixture("web_useless_images.html")
+_web_offscreen_labels = _make_web_fixture("web_offscreen_labels.html")
 _web_option_removal = _make_web_fixture("web_option_removal.html")
 _web_alert = _make_web_fixture("web_alert.html")
 _web_contracted_braille = _make_web_fixture("web_contracted_braille.html", caret_browsing=True)

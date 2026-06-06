@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Orca Web Offscreen Labels ready</title>
+<style>
+  .negx { position: absolute; left: -9999px; }
+  .negy { position: absolute; left: 0; top: -5000px; width: 1px; height: 1px; overflow: hidden; }
+  .clip { position: absolute; width: 1px; height: 1px; clip: rect(0 0 0 0); overflow: hidden; }
+</style>
+</head>
+<body>
+<main>
+<p>Start.</p>
+<div><label for="f1" class="negx">Label one neg X</label><input id="f1" type="text" spellcheck="false"></div>
+<div><label for="f2" class="negy">Label two neg Y</label><input id="f2" type="text" spellcheck="false"></div>
+<div><span id="d3" class="negx">Label three div</span><input id="f3" type="text" aria-labelledby="d3" spellcheck="false"></div>
+<div><span id="d4" class="negx">Label four span</span><input id="f4" type="text" aria-labelledby="d4" spellcheck="false"></div>
+<div><label for="f5" class="clip">Label five clip</label><input id="f5" type="text" spellcheck="false"></div>
+<p>End.</p>
+</main>
+</body>
+</html>
