@@ -1126,7 +1126,10 @@ class Script(script.Script):
             lambda c: c == mouse_review_item or AXUtilities.is_layout_only(c),
         )
         if child is not None:
-            focus_manager.get_manager().set_locus_of_focus(event, child)
+            if AXUtilities.is_page_tab(child) and not AXUtilities.is_focused(child):
+                self.present_object(child, generate_braille=False)
+            else:
+                focus_manager.get_manager().set_locus_of_focus(event, child)
 
         return True
 
