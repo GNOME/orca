@@ -291,6 +291,7 @@ class _BrailleState:
     brlapi_inflight_timer_id: int = 0
     brlapi_ready: bool = False
     display_size: list[int] = field(default_factory=lambda: [DEFAULT_DISPLAY_SIZE, 1])
+    monitor_cell_count: int = 0
     lines: list[Line] = field(default_factory=list)
     region_with_focus: Region | None = None
     last_text_info: _TextInfo = field(default_factory=lambda: _TextInfo(None, 0, 0, 0))
@@ -648,6 +649,25 @@ def _update_brlapi_display_size(size: tuple[int, int]) -> bool:
     _cancel_brlapi_display_size_poll()
     refresh(True)
     return False
+
+
+def set_monitor_cell_count(count: int) -> None:
+    """Sets the monitor cell count, used as the display size when no device is connected."""
+
+    _STATE.monitor_cell_count = max(0, count)
+    if _STATE.brlapi_ready:
+        return
+
+    width = _STATE.monitor_cell_count or DEFAULT_DISPLAY_SIZE
+    _STATE.display_size = [width, 1]
+    msg = f"BRAILLE: Display size now {width} from on-screen monitor."
+    debug.print_message(debug.LEVEL_INFO, msg, True)
+
+
+def has_braille_device() -> bool:
+    """Returns True if a hardware braille device is connected and reporting a size."""
+
+    return _STATE.brlapi_ready
 
 
 def _schedule_brlapi_connect_timeout() -> None:
@@ -2064,6 +2084,9 @@ def _update_viewport_for_cursor(
 
     if not (pan_to_cursor and cursor_offset >= 0):
         return
+
+    msg = f"BRAILLE: display_size={_STATE.display_size[0]} monitor={_STATE.monitor_cell_count}"
+    debug.print_message(debug.LEVEL_INFO, msg, True)
 
     if len(line_string) <= _STATE.display_size[0] and cursor_offset < _STATE.display_size[0]:
         msg = f"BRAILLE: Not adjusting offset {_STATE.viewport[0]}. Cursor offset fits on display."

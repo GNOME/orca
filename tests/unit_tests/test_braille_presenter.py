@@ -779,6 +779,7 @@ class TestBraillePresenter:
         braille_monitor_mock = essential_modules["orca.braille_monitor"]
         from orca.braille_presenter import get_presenter
 
+        essential_modules["orca.braille"].has_braille_device.return_value = False
         presenter = get_presenter()
         presenter.set_monitor_is_enabled(True)
         presenter.set_monitor_cell_count(40)
@@ -803,6 +804,7 @@ class TestBraillePresenter:
         braille_monitor_mock = essential_modules["orca.braille_monitor"]
         from orca.braille_presenter import get_presenter
 
+        essential_modules["orca.braille"].has_braille_device.return_value = False
         presenter = get_presenter()
         presenter.set_monitor_is_enabled(True)
         presenter.set_monitor_cell_count(20)
@@ -813,6 +815,29 @@ class TestBraillePresenter:
 
         braille_monitor_mock.BrailleMonitor.assert_called_once_with(
             20,
+            on_close=unittest.mock.ANY,
+            foreground=unittest.mock.ANY,
+            background=unittest.mock.ANY,
+        )
+
+    def test_update_monitor_mirrors_device_when_connected(self, test_context: OrcaTestContext):
+        """Test update_monitor mirrors the device size, not the cell-count setting."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        braille_monitor_mock = essential_modules["orca.braille_monitor"]
+        essential_modules["orca.braille"].has_braille_device.return_value = True
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+        presenter.set_monitor_is_enabled(True)
+        presenter.set_monitor_cell_count(20)
+        mock_monitor = test_context.Mock()
+        braille_monitor_mock.BrailleMonitor.return_value = mock_monitor
+
+        presenter.update_monitor(1, "hello", None, 40, "hello", None)
+
+        braille_monitor_mock.BrailleMonitor.assert_called_once_with(
+            40,
             on_close=unittest.mock.ANY,
             foreground=unittest.mock.ANY,
             background=unittest.mock.ANY,

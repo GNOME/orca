@@ -721,7 +721,10 @@ class BraillePresenter(Extension):
         msg = f"BRAILLE PRESENTER: Setting enable braille monitor to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._monitor_enabled_override = value
-        if not value:
+        if value:
+            braille.set_monitor_cell_count(self.get_monitor_cell_count())
+        else:
+            braille.set_monitor_cell_count(0)
             self.destroy_monitor()
         return True
 
@@ -758,6 +761,8 @@ class BraillePresenter(Extension):
             self.KEY_MONITOR_CELL_COUNT,
             value,
         )
+        if self.get_monitor_is_enabled():
+            braille.set_monitor_cell_count(value)
         self.destroy_monitor()
         return True
 
@@ -1891,7 +1896,12 @@ class BraillePresenter(Extension):
         if not self.get_monitor_is_enabled():
             return
 
-        cell_count = self.get_monitor_cell_count() or display_size
+        if braille.has_braille_device():
+            cell_count = display_size
+        else:
+            cell_count = self.get_monitor_cell_count() or display_size
+        if self._monitor is not None and len(self._monitor.cells) != cell_count:
+            self.destroy_monitor()
         if self._monitor is None:
             self._monitor = braille_monitor.BrailleMonitor(
                 cell_count,
