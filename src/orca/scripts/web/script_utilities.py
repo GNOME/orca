@@ -2129,7 +2129,9 @@ class Utilities(script_utilities.Utilities):
         if AXUtilities.get_is_label_for(obj):
             end = max(1, AXText.get_character_count(obj))
             rect = AXText.get_range_rect(obj, 0, end)
-            if rect.x < 0 or rect.y < 0:
+            box = AXComponent.get_rect(obj)
+            box_is_collapsed = box.width <= 1 and box.height <= 1
+            if rect.x < 0 or rect.y < 0 or box_is_collapsed:
                 rv = True
 
         self._cached_is_off_screen_label[hash(obj)] = rv

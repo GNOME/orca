@@ -53,28 +53,18 @@ def test_line_navigation_over_offscreen_labels(web_offscreen_labels: NativeAppSe
     session = web_offscreen_labels
     move_to_top(session)
 
-    # A negative-offset <label for> (left:-9999px), a negative-Y <label for>, and an
-    # aria-labelledby div and span are all treated as off-screen labels: folded into the
-    # field name, not presented separately.
-    for name in ("Label one neg X", "Label two neg Y", "Label three div", "Label four span"):
+    for name in (
+        "Label one neg X",
+        "Label two neg Y",
+        "Label three div",
+        "Label four span",
+        "Label five clip",
+    ):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         assert capture(session) == (
             [name, "entry"],
             [BrailleLine(17, f"{name}  $l", f"{name}  $l", None)],
         )
-
-    # KNOWN ISSUE: a clip-hidden label should be folded into the field, not presented separately.
-    keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
-        ["Label five clip"],
-        [BrailleLine(1, "Label", "Label", "\x00" * 6)],
-    )
-
-    keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert capture(session) == (
-        ["Label five clip", "entry"],
-        [BrailleLine(0, "Label five clip  $l", "Label five clip  $l", None)],
-    )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (["End."], [BrailleLine(1, "End.", "End.", "\x00" * 4)])
