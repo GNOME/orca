@@ -1400,7 +1400,10 @@ class Utilities(script_utilities.Utilities):
             )
 
         objects: list[tuple[Atspi.Accessible, int, int, str]] = []
-        if offset > 0 and self.treat_as_end_of_line(obj, offset):
+        if offset > 0 and (
+            self.treat_as_end_of_line(obj, offset)
+            or AXUtilities.is_whitespace_at_end_of_line(obj, offset)
+        ):
             rect = self._get_extents(obj, offset - 1, offset)
         else:
             rect = self._get_extents(obj, offset, offset + 1)
@@ -1466,8 +1469,11 @@ class Utilities(script_utilities.Utilities):
                 on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect, rect.height)
             elif AXUtilities.is_subscript_or_superscript_text_descendant(x_obj, inclusive=True):
                 on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect, x_rect.height)
+            elif AXUtilities.is_subscript_or_superscript_text_descendant(obj, inclusive=True):
+                on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect, rect.height)
             else:
                 on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect)
+
             return on_same_line
 
         granularity = Atspi.TextGranularity.LINE

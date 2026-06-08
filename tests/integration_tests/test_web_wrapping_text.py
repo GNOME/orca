@@ -33,7 +33,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import reset_web_state, speech
+from .helpers import move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -118,3 +118,34 @@ def test_line_assembly_layout_mode_off(web_wrapping_text: NativeAppSession) -> N
         ]
     finally:
         session.orca.set("CaretNavigator", "LayoutMode", True)
+
+
+@pytest.mark.native_app
+def test_line_assembly_walking_up(web_wrapping_text: NativeAppSession) -> None:
+    """Tests that Up-arrow presents each wrapped visual line once, not in backward fragments."""
+
+    session = web_wrapping_text
+    reset_web_state(session)
+    assert session.orca.get("CaretNavigator", "LayoutMode") is True
+
+    move_to_top(session)
+    _walk(session, 13)
+
+    up_lines = []
+    for _ in range(11):
+        keyboard.tap_key(keyboard.KEYSYM_UP)
+        up_lines.append(speech(session))
+
+    assert up_lines == [
+        ["trailing words that wrap "],
+        ["H", "subscript", "two", "O and x", "superscript", "squared", " plus more "],
+        ["of ", "inline code", " and water is "],
+        [" then  slanted there  then a bit "],
+        ["Plain words then  bold here"],
+        ["quebec."],
+        ["mike november oscar papa "],
+        ["before india juliet kilo lima "],
+        ["small link", " sits mid paragraph "],
+        ["foxtrot golf hotel, then a "],
+        ["Alpha bravo charlie delta echo "],
+    ]

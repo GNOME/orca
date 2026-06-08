@@ -559,6 +559,16 @@ class AXUtilitiesText:
         return AXUtilitiesText.offsets_are_on_same_line(obj, AXText.get_caret_offset(obj), offset)
 
     @staticmethod
+    def is_whitespace_at_end_of_line(obj: Atspi.Accessible, offset: int) -> bool:
+        """Returns True if the character at offset is whitespace at the end of its line."""
+
+        if not AXText.get_character_at_offset(obj, offset)[0].isspace():
+            return False
+
+        _line, _start, end = AXText.get_line_at_offset(obj, offset)
+        return offset == end - 1
+
+    @staticmethod
     def has_sentence_ending(text: str) -> bool:
         """Check if text contains a sentence ending."""
 
