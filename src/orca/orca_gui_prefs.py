@@ -50,6 +50,7 @@ from . import (
     debug,
     document_presenter,
     event_manager,
+    flat_review_presenter,
     focus_manager,
     gsettings_registry,
     guilabels,
@@ -305,6 +306,11 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self.stack.add_named(self.typing_echo_grid, "typing_echo")
         self._add_navigation_row("typing_echo", self.typing_echo_grid.get_label().get_text())
 
+        flat_review_pres = flat_review_presenter.get_presenter()
+        self.flat_review_grid = flat_review_pres.create_preferences_grid()
+        self.stack.add_named(self.flat_review_grid, "flat_review")
+        self._add_navigation_row("flat_review", self.flat_review_grid.get_label().get_text())
+
         mouse_reviewer = mouse_review.get_reviewer()
         self.mouse_grid = mouse_reviewer.create_preferences_grid()
         self.stack.add_named(self.mouse_grid, "mouse")
@@ -355,6 +361,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             "braille": self.braille_grid,
             "keybindings": self.keybindings_grid,
             "typing_echo": self.typing_echo_grid,
+            "flat_review": self.flat_review_grid,
             "say_all": self.say_all_grid,
             "spellcheck": self.spellcheck_grid,
             "chat": self.chat_grid,

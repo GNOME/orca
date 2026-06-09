@@ -51,6 +51,7 @@ from . import (
     input_event_manager,
     keybindings,
     messages,
+    preferences_grid_base,
     presentation_manager,
     script_manager,
     speech_presenter,
@@ -79,6 +80,47 @@ class FocusTracking(Enum):
     OFF = 0
     AUTO = 1
     ON = 2
+
+
+class FlatReviewPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
+    """GtkGrid containing the Flat Review preferences page."""
+
+    _gsettings_schema = "flat-review"
+
+    def __init__(self, presenter: FlatReviewPresenter) -> None:
+        controls: list[preferences_grid_base.ControlType] = [
+            preferences_grid_base.EnumPreferenceControl(
+                label=guilabels.FLAT_REVIEW_FOLLOW_FOCUS,
+                options=[
+                    guilabels.FLAT_REVIEW_FOLLOW_ALWAYS,
+                    guilabels.FLAT_REVIEW_FOLLOW_AUTOMATICALLY,
+                    guilabels.FLAT_REVIEW_FOLLOW_NEVER,
+                ],
+                values=[FocusTracking.ON.value, FocusTracking.AUTO.value, FocusTracking.OFF.value],
+                getter=presenter.get_focus_tracking,
+                setter=presenter.set_focus_tracking,
+                prefs_key=FlatReviewPresenter.KEY_FOCUS_TRACKING,
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.FLAT_REVIEW_SPEAK_UPDATES,
+                getter=presenter.get_speaks_updates,
+                setter=presenter.set_speaks_updates,
+                prefs_key=FlatReviewPresenter.KEY_SPEAK_UPDATES,
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.FLAT_REVIEW_DISPLAY_UPDATES,
+                getter=presenter.get_displays_updates,
+                setter=presenter.set_displays_updates,
+                prefs_key=FlatReviewPresenter.KEY_DISPLAY_UPDATES,
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.FLAT_REVIEW_RESTRICT,
+                getter=presenter.get_is_restricted,
+                setter=presenter.set_is_restricted,
+                prefs_key=FlatReviewPresenter.KEY_RESTRICTED,
+            ),
+        ]
+        super().__init__(guilabels.FLAT_REVIEW, controls)
 
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.FlatReview", name="flat-review")
@@ -1728,6 +1770,11 @@ class FlatReviewPresenter(Extension):
             presentation_manager.get_manager().present_message(messages.FLAT_REVIEW_APPENDED)
         self._last_input_event = event
         return True
+
+    def create_preferences_grid(self) -> FlatReviewPreferencesGrid:
+        """Returns the GtkGrid containing the Flat Review preferences UI."""
+
+        return FlatReviewPreferencesGrid(self)
 
     @gsettings_registry.get_registry().gsetting(
         key=KEY_RESTRICTED,

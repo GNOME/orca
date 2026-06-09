@@ -646,6 +646,44 @@ KB_GROUP_SPEECH_VERBOSITY = _("Speech and verbosity")
 # and copy the text. This string is the title of the window with the text view.
 FLAT_REVIEW_CONTENTS = _("Flat review contents")
 
+# Translators: This is the title of the preferences page for Orca's "flat
+# review" feature, which lets the user explore the contents of a window in a
+# spatial fashion, line by line and word by word.
+FLAT_REVIEW = _("Flat Review")
+
+# Translators: This is a label for the setting which determines when flat
+# review should move to follow the location of the keyboard focus and text
+# caret as the user navigates the application normally.
+FLAT_REVIEW_FOLLOW_FOCUS = _("Follow the focus and caret location")
+
+# Translators: This is one of the choices for when flat review should follow
+# the focus and caret location. "Always" means flat review moves whenever the
+# focus or caret moves.
+FLAT_REVIEW_FOLLOW_ALWAYS = C_("flat review focus tracking", "Always")
+
+# Translators: This is one of the choices for when flat review should follow
+# the focus and caret location. "Automatically" means flat review decides on
+# its own when following the focus or caret makes sense.
+FLAT_REVIEW_FOLLOW_AUTOMATICALLY = C_("flat review focus tracking", "Automatically")
+
+# Translators: This is one of the choices for when flat review should follow
+# the focus and caret location. "Never" means flat review stays where the user
+# left it until the user explicitly moves it.
+FLAT_REVIEW_FOLLOW_NEVER = C_("flat review focus tracking", "Never")
+
+# Translators: This is a label for the setting which determines if Orca will
+# speak the content at the flat review location when that content changes.
+FLAT_REVIEW_SPEAK_UPDATES = _("Speak changes at review location")
+
+# Translators: This is a label for the setting which determines if Orca will
+# refresh the braille display with the content at the flat review location
+# when that content changes.
+FLAT_REVIEW_DISPLAY_UPDATES = _("Display changes at review location")
+
+# Translators: This is a label for the setting which determines if Orca will
+# restrict flat review to the current object rather than the whole window.
+FLAT_REVIEW_RESTRICT = _("Restrict flat review to the current object")
+
 # Translators: This is a label for the setting which determines if Orca will
 # use the "desktop" or "laptop" keyboard layout. The desktop layout is
 # intended for use with a full-size keyboard, while the laptop layout is
