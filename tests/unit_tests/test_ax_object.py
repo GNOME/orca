@@ -967,17 +967,15 @@ class TestAXObject:
         self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
 
+        AXObject.KNOWN_DEAD.clear()
         AXObject.HUNG_OBJECTS.clear()
         test_app = None
         if case["obj_type"] == "none":
             test_obj = None
         else:
             test_obj = test_context.Mock(spec=Atspi.Accessible)
-            test_context.patch_object(
-                AXObject,
-                "object_is_known_dead",
-                side_effect=lambda obj: case["is_dead"],
-            )
+            if case["is_dead"]:
+                AXObject.KNOWN_DEAD[hash(test_obj)] = True
             if case["is_hung"]:
                 AXObject.HUNG_OBJECTS[hash(test_obj)] = 0.0
             if case.get("hung_app"):

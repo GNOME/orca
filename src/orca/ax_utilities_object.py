@@ -103,15 +103,15 @@ class AXUtilitiesObject:
             return None
 
         # Keep track of objects we've encountered in order to handle broken trees.
-        objects = [obj]
+        seen = {obj}
         parent = AXObject.get_parent_checked(obj)
         while parent:
-            if parent in objects:
+            if parent in seen:
                 tokens = [
-                    "AXUtilitiesObject: Circular tree suspected in find_ancestor. ",
+                    "AXUtilitiesObject: Circular tree suspected in find_ancestor.",
                     parent,
-                    "already in: ",
-                    objects,
+                    "already seen in:",
+                    list(seen),
                 ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 return None
@@ -119,7 +119,7 @@ class AXUtilitiesObject:
             if pred(parent):
                 return parent
 
-            objects.append(parent)
+            seen.add(parent)
             parent = AXObject.get_parent_checked(parent)
 
         return None

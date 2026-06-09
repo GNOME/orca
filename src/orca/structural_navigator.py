@@ -825,20 +825,21 @@ class StructuralNavigator(Extension):
         if should_wrap is None:
             should_wrap = self.get_navigation_wraps()
 
+        index_by_object = {match: i for i, match in enumerate(objects)}
+
         # If we're in a matching object, return the next/previous one in the list.
         obj = focus_manager.get_manager().get_locus_of_focus()
         candidate = obj
         while candidate:
-            if candidate not in objects:
+            if (index := index_by_object.get(candidate)) is None:
                 candidate = AXObject.get_parent(candidate)
                 continue
 
             if not is_next:
                 alternative = self._get_container_for_nested_item(candidate)
-                if alternative in objects:
-                    candidate = alternative
+                if (alternative_index := index_by_object.get(alternative)) is not None:
+                    index = alternative_index
 
-            index = objects.index(candidate)
             return self._get_adjacent_or_wrap(
                 objects,
                 index,

@@ -1819,10 +1819,11 @@ class Utilities(script_utilities.Utilities):
         if not descendants:
             return False
 
+        descendants_set = set(descendants)
         for descendant in descendants:
             if descendant not in (old_start, old_end, start, end) and AXUtilities.find_ancestor(
                 descendant,
-                lambda x: x in descendants,
+                lambda x: x in descendants_set,
             ):
                 AXUtilities.update_cached_selected_text(descendant)
             else:

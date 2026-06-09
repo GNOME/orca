@@ -58,10 +58,11 @@ class AXUtilitiesTable:
     def _is_table_with_interface(obj: Atspi.Accessible) -> bool:
         """Returns True if obj has a table-like role and supports the table interface."""
 
+        role = AXObject.get_role(obj)
         if (
-            AXUtilitiesRole.is_table(obj)
-            or AXUtilitiesRole.is_tree_table(obj)
-            or AXUtilitiesRole.is_tree(obj)
+            AXUtilitiesRole.is_table(obj, role)
+            or AXUtilitiesRole.is_tree_table(obj, role)
+            or AXUtilitiesRole.is_tree(obj, role)
         ):
             return AXObject.supports_table(obj)
         return False

@@ -193,9 +193,17 @@ class AXObject:
     def is_valid(obj: Atspi.Accessible, app: Atspi.Accessible | None = None) -> bool:
         """Returns False if we know for certain this object is invalid"""
 
-        return not (
-            obj is None or AXObject.object_is_known_dead(obj) or AXObject.check_hung(obj, app)
-        )
+        if obj is None:
+            return False
+
+        obj_hash = hash(obj)
+        if AXObject.KNOWN_DEAD.get(obj_hash):
+            return False
+
+        if app is None:
+            return obj_hash not in AXObject.HUNG_OBJECTS
+
+        return not AXObject.check_hung(obj, app)
 
     @staticmethod
     def object_is_known_dead(obj: Atspi.Accessible) -> bool:
