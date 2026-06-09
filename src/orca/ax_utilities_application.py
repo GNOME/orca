@@ -120,7 +120,9 @@ class AXUtilitiesApplication:
         if cached is not None:
             return cached
 
-        parent = AXObject.get_parent(obj)
+        parent = None
+        if AXObject.get_role(obj) != Atspi.Role.APPLICATION:
+            parent = AXObject.get_parent(obj)
         if parent is not None:
             cached = AXUtilitiesApplication.APP_FOR_OBJ.get(hash(parent))
             if cached is not None:
