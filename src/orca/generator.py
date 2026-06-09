@@ -740,7 +740,15 @@ class Generator:
             (lambda: AXUtilities.is_description_list(obj, role), Atspi.Role.DESCRIPTION_LIST),
             (lambda: AXUtilities.is_description_term(obj, role), Atspi.Role.DESCRIPTION_TERM),
             (lambda: AXUtilities.is_description_value(obj, role), Atspi.Role.DESCRIPTION_VALUE),
-            (lambda: AXUtilities.is_code_block(obj), "ROLE_CODE_BLOCK"),
+            (
+                lambda: (
+                    AXUtilities.is_code_block(obj)
+                    and not AXUtilities.is_plain_text(
+                        AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_document)
+                    )
+                ),
+                "ROLE_CODE_BLOCK",
+            ),
             (lambda: AXUtilities.is_feed_article(obj, role), "ROLE_ARTICLE_IN_FEED"),
             (lambda: AXUtilities.is_feed(obj, role), "ROLE_FEED"),
         ]

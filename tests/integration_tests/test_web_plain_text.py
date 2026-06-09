@@ -37,18 +37,16 @@ if TYPE_CHECKING:
 def test_line_navigation_in_plain_text_document(web_plain_text: NativeAppSession) -> None:
     """Tests that browsing a plain-text document presents each line."""
 
-    # Chromium renders text/plain inside a pre/code block, so the last line reports "code end"
-    # and each line's speech carries the trailing newline of the file.
     move_to_top(web_plain_text)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(web_plain_text) == (
-        ["Second line of the file . \n"],
+        ["Second line of the file.\n"],
         [BrailleLine(1, "Second line of the file. $l", "Second line of the file. $l", "\x00" * 27)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(web_plain_text) == (
-        ["Third line of the file . \n", "code end"],
+        ["Third line of the file.\n"],
         [BrailleLine(1, "Third line of the file. $l", "Third line of the file. $l", "\x00" * 26)],
     )

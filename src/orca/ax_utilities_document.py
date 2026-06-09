@@ -63,7 +63,12 @@ class AXUtilitiesDocument:
     def is_plain_text(document: Atspi.Accessible) -> bool:
         """Returns True if document is a plain-text document."""
 
-        return AXUtilitiesDocument.get_mime_type(document) == "text/plain"
+        mime_type = AXUtilitiesDocument.get_mime_type(document)
+        if mime_type == "text/plain":
+            return True
+        if mime_type == "text/html":
+            return AXUtilitiesDocument.get_uri(document).endswith(".txt")
+        return False
 
     @staticmethod
     def is_pdf(document: Atspi.Accessible) -> bool:

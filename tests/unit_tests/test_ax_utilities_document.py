@@ -89,27 +89,30 @@ class TestAXUtilitiesDocument:
         return essential_modules
 
     @pytest.mark.parametrize(
-        "mime_type,expected",
+        "mime_type,uri,expected",
         [
-            ("text/plain", True),
-            ("text/html", False),
-            ("application/pdf", False),
-            ("", False),
+            ("text/plain", "http://example.com/document", True),
+            ("text/html", "http://example.com/document.txt", True),
+            ("text/html", "http://example.com/document.html", False),
+            ("application/pdf", "http://example.com/document.txt", False),
+            ("", "http://example.com/document.txt", False),
         ],
     )
     def test_is_plain_text(
         self,
         test_context: OrcaTestContext,
         mime_type: str,
+        uri: str,
         expected: bool,
     ) -> None:
-        """Test AXUtilitiesDocument.is_plain_text with various mime types."""
+        """Test AXUtilitiesDocument.is_plain_text with various mime types and URIs."""
 
         essential_modules = self._setup_dependencies(test_context)
         from orca.ax_utilities_document import AXUtilitiesDocument
 
         essential_modules["orca.ax_document"].AXDocument.get_attributes_dict.return_value = {
             "MimeType": mime_type,
+            "DocURL": uri,
         }
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         assert AXUtilitiesDocument.is_plain_text(mock_accessible) is expected
