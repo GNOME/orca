@@ -95,16 +95,6 @@ class OrcaNavListGUI:
         cols.extend(len(column_headers) * [GObject.TYPE_STRING])
         model = Gtk.ListStore(*cols)
 
-        cell = Gtk.CellRendererText()
-        column = Gtk.TreeViewColumn("Accessible", cell, text=0)
-        column.set_visible(False)
-        self._tree.append_column(column)
-
-        cell = Gtk.CellRendererText()
-        column = Gtk.TreeViewColumn("offset", cell, text=1)
-        column.set_visible(False)
-        self._tree.append_column(column)
-
         for i, header in enumerate(column_headers):
             cell = Gtk.CellRendererText()
             column = Gtk.TreeViewColumn(header, cell, text=i + 2)
