@@ -298,6 +298,8 @@ class TestLearnModePresenter:
         pres_manager.present_braille_message.assert_called_with(messages.LEARN_MODE_START_BRAILLE)
         device_manager = essential_modules["orca.ax_device_manager"].get_manager.return_value
         device_manager.grab_keyboard.assert_called_with("Entering learn mode")
+        cmd_manager = essential_modules["orca.command_manager"].get_manager.return_value
+        cmd_manager.set_modal_handler.assert_called_with(presenter.handle_event)
 
     @pytest.mark.parametrize(
         "is_active,script_provided,script_manager_returns_none,expected_debug_called",
@@ -357,6 +359,8 @@ class TestLearnModePresenter:
         pres_manager.present_message.assert_called_with(messages.LEARN_MODE_STOP)
         device_manager = essential_modules["orca.ax_device_manager"].get_manager.return_value
         device_manager.ungrab_keyboard.assert_called_with("Exiting learn mode")
+        cmd_manager = essential_modules["orca.command_manager"].get_manager.return_value
+        cmd_manager.set_modal_handler.assert_called_with(None)
 
     @pytest.mark.parametrize(
         "is_active,script_provided,script_manager_returns_none,expected_debug_called",

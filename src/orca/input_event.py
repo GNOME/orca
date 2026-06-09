@@ -669,11 +669,11 @@ class KeyboardEvent(InputEvent):
         if self.is_pressed_key():
             presentation_manager.get_manager().interrupt_presentation()
 
-        # pylint: disable=import-outside-toplevel
-        from . import learn_mode_presenter, sleep_mode_manager
-
-        if learn_mode_presenter.get_presenter().is_active():
+        if command_manager.get_manager().get_modal_handler() is not None:
             return
+
+        # pylint: disable-next=import-outside-toplevel
+        from . import sleep_mode_manager
 
         if sleep_mode_manager.get_manager().is_active_for_app(self._script.app):
             return
@@ -711,19 +711,16 @@ class KeyboardEvent(InputEvent):
                 tokens = ["COMMAND:", command.get_name()]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-            # pylint: disable-next=import-outside-toplevel
-            from . import learn_mode_presenter
-
-            learn_mode = learn_mode_presenter.get_presenter().is_active()
-            if learn_mode:
-                tokens = ["KEYBOARD EVENT: Learn mode is active"]
+            modal_handler = command_manager.get_manager().get_modal_handler()
+            if modal_handler is not None:
+                tokens = ["KEYBOARD EVENT: A modal handler is active"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-                def _handle_learn_mode(cmd=command) -> bool:
-                    learn_mode_presenter.get_presenter().handle_event(self, cmd)
+                def _handle_modal(cmd=command) -> bool:
+                    modal_handler(self, cmd)
                     return True
 
-                self._handler = _handle_learn_mode
+                self._handler = _handle_modal
             elif command is not None and command.is_enabled():
 
                 def _execute_command(cmd=command, scr=script) -> bool:

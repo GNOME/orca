@@ -1078,7 +1078,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         self._group_enabled: dict[str, bool | None] = {}
         self._exclusive_groups: list[set[str]] = []
         self._numlock_on: bool = False
-        self._learn_mode_active: bool = False
+        self._modal_handler: Callable[..., bool] | None = None
         self._prior_suspended: set[str] = set()
 
         msg = "COMMAND MANAGER: Registering D-Bus commands."
@@ -1288,15 +1288,20 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
 
         return True
 
-    def set_learn_mode_active(self, active: bool) -> None:
-        """Called by learn_mode_presenter to notify of learn mode state changes."""
+    def set_modal_handler(self, handler: Callable[..., bool] | None) -> None:
+        """Sets the one handler that receives keys while a modal feature is active."""
 
-        self._learn_mode_active = active
-        msg = f"COMMAND MANAGER: Learn mode is now {'active' if active else 'inactive'}."
+        self._modal_handler = handler
+        msg = f"COMMAND MANAGER: Modal handler is now {'set' if handler else 'cleared'}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        if not active and self._is_desktop:
+        if handler is None and self._is_desktop:
             self._update_numlock_grabs()
+
+    def get_modal_handler(self) -> Callable[..., bool] | None:
+        """Returns the active modal key handler, if any."""
+
+        return self._modal_handler
 
     def handle_numlock_toggled(self, numlock_on: bool) -> None:
         """Handles NumLock state changes by updating grabs for keypad commands."""
@@ -1309,8 +1314,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         msg = f"COMMAND MANAGER: NumLock toggled to {'on' if numlock_on else 'off'}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-        if self._learn_mode_active:
-            msg = "COMMAND MANAGER: Skipping grab updates while in learn mode."
+        if self._modal_handler is not None:
+            msg = "COMMAND MANAGER: Skipping grab updates while a modal handler is active."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
