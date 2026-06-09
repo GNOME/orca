@@ -33,7 +33,7 @@ import gi
 import pytest
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi, GLib
+from gi.repository import Atspi
 
 if TYPE_CHECKING:
     from unittest.mock import MagicMock
@@ -89,7 +89,6 @@ class TestAXDocument:
     @pytest.mark.parametrize(
         "method_name,expected_result",
         [
-            ("did_page_change", False),
             ("get_page_count", 0),
             ("get_locale", ""),
         ],
@@ -112,108 +111,6 @@ class TestAXDocument:
         result = method(mock_accessible)
         assert result == expected_result
         ax_object_mock.supports_document.assert_called_once_with(mock_accessible)
-
-    def test_did_page_change_false_when_page_unchanged(self, test_context: OrcaTestContext) -> None:
-        """Test AXDocument.did_page_change returns False when page hasn't changed."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.ax_document import AXDocument
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        ax_object_mock = essential_modules["orca.ax_object"].AXObject
-        ax_object_mock.supports_document.return_value = True
-        document_hash = hash(mock_accessible)
-        AXDocument.LAST_KNOWN_PAGE[document_hash] = 3
-        mock_get_page = test_context.Mock(return_value=3)
-        test_context.patch_object(AXDocument, "_get_current_page", new=mock_get_page)
-        result = AXDocument.did_page_change(mock_accessible)
-        assert result is False
-        mock_get_page.assert_called_once_with(mock_accessible)
-
-    def test_did_page_change_true_when_page_changed(self, test_context: OrcaTestContext) -> None:
-        """Test AXDocument.did_page_change returns True when page has changed."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.ax_document import AXDocument
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        ax_object_mock = essential_modules["orca.ax_object"].AXObject
-        ax_object_mock.supports_document.return_value = True
-        document_hash = hash(mock_accessible)
-        AXDocument.LAST_KNOWN_PAGE[document_hash] = 3
-        mock_get_page = test_context.Mock(return_value=5)
-        test_context.patch_object(AXDocument, "_get_current_page", new=mock_get_page)
-        result = AXDocument.did_page_change(mock_accessible)
-        assert result is True
-        mock_get_page.assert_called_once_with(mock_accessible)
-
-    def test_get_current_page_zero_when_not_document(self, test_context: OrcaTestContext) -> None:
-        """Test AXDocument._get_current_page returns 0 when object doesn't support document."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.ax_document import AXDocument
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        ax_object_mock = essential_modules["orca.ax_object"].AXObject
-        ax_object_mock.supports_document.return_value = False
-        result = AXDocument._get_current_page(mock_accessible)
-        assert result == 0
-        ax_object_mock.supports_document.assert_called_once_with(mock_accessible)
-
-    def test_get_current_page_success(self, test_context: OrcaTestContext) -> None:
-        """Test AXDocument._get_current_page returns page number on success."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.ax_document import AXDocument
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        ax_object_mock = essential_modules["orca.ax_object"].AXObject
-        ax_object_mock.supports_document.return_value = True
-        mock_get_page = test_context.Mock(return_value=7)
-        test_context.patch(
-            "gi.repository.Atspi.Document.get_current_page_number",
-            new=mock_get_page,
-        )
-        result = AXDocument._get_current_page(mock_accessible)
-        assert result == 7
-        mock_get_page.assert_called_once_with(mock_accessible)
-
-    def test_get_current_page_exception_returns_zero(self, test_context: OrcaTestContext) -> None:
-        """Test AXDocument._get_current_page returns 0 on GLib.GError exception."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.ax_document import AXDocument
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        ax_object_mock = essential_modules["orca.ax_object"].AXObject
-        ax_object_mock.supports_document.return_value = True
-        mock_get_page = test_context.Mock(side_effect=GLib.GError("Test error"))
-        test_context.patch(
-            "gi.repository.Atspi.Document.get_current_page_number",
-            new=mock_get_page,
-        )
-        result = AXDocument._get_current_page(mock_accessible)
-        assert result == 0
-        mock_get_page.assert_called_once_with(mock_accessible)
-
-    def test_get_current_page_public_method_caches_result(
-        self,
-        test_context: OrcaTestContext,
-    ) -> None:
-        """Test AXDocument.get_current_page caches the result in LAST_KNOWN_PAGE."""
-
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca.ax_document import AXDocument
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        ax_object_mock = essential_modules["orca.ax_object"].AXObject
-        ax_object_mock.supports_document.return_value = True
-        mock_get_page = test_context.Mock(return_value=9)
-        test_context.patch_object(AXDocument, "_get_current_page", new=mock_get_page)
-        result = AXDocument.get_current_page(mock_accessible)
-        assert result == 9
-        document_hash = hash(mock_accessible)
-        assert AXDocument.LAST_KNOWN_PAGE[document_hash] == 9
 
     def test_get_page_count_success(self, test_context: OrcaTestContext) -> None:
         """Test AXDocument.get_page_count returns page count on success."""

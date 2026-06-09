@@ -79,7 +79,6 @@ from orca import (
     typing_echo_presenter,
     where_am_i_presenter,
 )
-from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_selection import AXSelection
 from orca.ax_text import AXText
@@ -984,9 +983,6 @@ class Script(script.Script):
         """Callback for document:page-changed accessibility events."""
 
         if event.detail1 < 0:
-            return True
-
-        if not AXDocument.did_page_change(event.source):
             return True
 
         presentation_manager.get_manager().present_message(messages.PAGE_NUMBER % event.detail1)

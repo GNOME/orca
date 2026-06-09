@@ -23,10 +23,7 @@
 
 from __future__ import annotations
 
-import threading
-import time
 import urllib.parse
-from typing import TYPE_CHECKING
 
 import gi
 
@@ -40,77 +37,9 @@ from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
 from .ax_utilities_table import AXUtilitiesTable
 
-if TYPE_CHECKING:
-    from typing import ClassVar
-
 
 class AXDocument:
     """Wrapper for the Atspi.Document interface."""
-
-    LAST_KNOWN_PAGE: ClassVar[dict[int, int]] = {}
-    _lock = threading.Lock()
-
-    @staticmethod
-    def _clear_stored_data() -> None:
-        """Clears any data we have cached for objects"""
-
-        while True:
-            time.sleep(60)
-            msg = "AXDocument: Clearing local cache."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            AXDocument.LAST_KNOWN_PAGE.clear()
-
-    @staticmethod
-    def start_cache_clearing_thread() -> None:
-        """Starts thread to periodically clear cached details."""
-
-        thread = threading.Thread(target=AXDocument._clear_stored_data)
-        thread.daemon = True
-        thread.start()
-
-    @staticmethod
-    def did_page_change(document: Atspi.Accessible) -> bool:
-        """Returns True if the current page changed."""
-
-        if not AXObject.supports_document(document):
-            return False
-
-        old_page = AXDocument.LAST_KNOWN_PAGE.get(hash(document))
-        result = old_page != AXDocument._get_current_page(document)
-        if result:
-            tokens = ["AXDocument: Previous page of", document, f"was {old_page}"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        return result
-
-    @staticmethod
-    def _get_current_page(document: Atspi.Accessible) -> int:
-        """Returns the current page of document."""
-
-        if not AXObject.supports_document(document):
-            return 0
-
-        try:
-            page = Atspi.Document.get_current_page_number(document)
-        except GLib.GError as error:
-            msg = f"AXDocument: Exception in _get_current_page: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return 0
-
-        tokens = ["AXDocument: Current page of", document, f"is {page}"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return page
-
-    @staticmethod
-    def get_current_page(document: Atspi.Accessible) -> int:
-        """Returns the current page of document."""
-
-        if not AXObject.supports_document(document):
-            return 0
-
-        page = AXDocument._get_current_page(document)
-        AXDocument.LAST_KNOWN_PAGE[hash(document)] = page
-        return page
 
     @staticmethod
     def get_page_count(document: Atspi.Accessible) -> int:
