@@ -118,10 +118,7 @@ class TestSpeechPresenter:
             return_value=False,
         )
         ax_utilities_mock.AXUtilities.is_code = test_context.Mock(return_value=False)
-
-        ax_document_mock = essential_modules["orca.ax_document"]
-        ax_document_mock.AXDocument = test_context.Mock()
-        ax_document_mock.AXDocument.is_plain_text = test_context.Mock(return_value=False)
+        ax_utilities_mock.AXUtilities.is_plain_text = test_context.Mock(return_value=False)
 
         mathsymbols_mock = essential_modules["orca.mathsymbols"]
         mathsymbols_mock.adjust_for_speech = test_context.Mock(side_effect=lambda x: x)
@@ -132,9 +129,7 @@ class TestSpeechPresenter:
         pronunciation_dict_mock = essential_modules["orca.pronunciation_dictionary_manager"]
         pron_manager_instance = test_context.Mock()
         pron_manager_instance.get_pronunciation = test_context.Mock(side_effect=lambda x: x)
-        pron_manager_instance.apply_to_words = test_context.Mock(
-            side_effect=lambda words: "".join(words)
-        )
+        pron_manager_instance.apply_to_words = test_context.Mock(side_effect="".join)
         pronunciation_dict_mock.get_manager = test_context.Mock(return_value=pron_manager_instance)
 
         from orca import gsettings_registry
@@ -668,7 +663,7 @@ class TestSpeechPresenter:
         (
             essential_modules["orca.ax_utilities"].AXUtilities.find_ancestor_inclusive.return_value
         ) = mock_code_obj
-        essential_modules["orca.ax_document"].AXDocument.is_plain_text.return_value = False
+        essential_modules["orca.ax_utilities"].AXUtilities.is_plain_text.return_value = False
         mock_obj = test_context.Mock()
         result = SpeechPresenter._should_verbalize_punctuation(mock_obj)
         assert result is True
@@ -683,7 +678,7 @@ class TestSpeechPresenter:
         (
             essential_modules["orca.ax_utilities"].AXUtilities.find_ancestor_inclusive.return_value
         ) = mock_code_obj
-        essential_modules["orca.ax_document"].AXDocument.is_plain_text.return_value = False
+        essential_modules["orca.ax_utilities"].AXUtilities.is_plain_text.return_value = False
         mock_obj = test_context.Mock()
         text = "Hello, world! How are you?"
         result = SpeechPresenter._adjust_for_verbalized_punctuation(mock_obj, text)

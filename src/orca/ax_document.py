@@ -23,19 +23,13 @@
 
 from __future__ import annotations
 
-import urllib.parse
-
 import gi
 
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
 
-from . import debug, messages
-from .ax_collection import AXCollection
+from . import debug
 from .ax_object import AXObject
-from .ax_utilities_role import AXUtilitiesRole
-from .ax_utilities_state import AXUtilitiesState
-from .ax_utilities_table import AXUtilitiesTable
 
 
 class AXDocument:
@@ -83,7 +77,7 @@ class AXDocument:
         return result
 
     @staticmethod
-    def _get_attributes_dict(document: Atspi.Accessible) -> dict[str, str]:
+    def get_attributes_dict(document: Atspi.Accessible) -> dict[str, str]:
         """Returns a dict with the document-attributes of document."""
 
         if not AXObject.supports_document(document):
@@ -92,118 +86,10 @@ class AXDocument:
         try:
             result = Atspi.Document.get_document_attributes(document)
         except GLib.GError as error:
-            msg = f"AXDocument: Exception in _get_attributes_dict: {error}"
+            msg = f"AXDocument: Exception in get_attributes_dict: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return {}
 
         tokens = ["AXDocument: Attributes of", document, "are:", result]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result or {}
-
-    @staticmethod
-    def get_uri(document: Atspi.Accessible) -> str:
-        """Returns the uri of document."""
-
-        if not AXObject.supports_document(document):
-            return ""
-
-        attributes = AXDocument._get_attributes_dict(document)
-        return attributes.get("DocURL", attributes.get("URI", ""))
-
-    @staticmethod
-    def get_mime_type(document: Atspi.Accessible) -> str:
-        """Returns the uri of document."""
-
-        if not AXObject.supports_document(document):
-            return ""
-
-        attributes = AXDocument._get_attributes_dict(document)
-        return attributes.get("MimeType", "")
-
-    @staticmethod
-    def is_plain_text(document: Atspi.Accessible) -> bool:
-        """Returns True if document is a plain-text document."""
-
-        return AXDocument.get_mime_type(document) == "text/plain"
-
-    @staticmethod
-    def is_pdf(document: Atspi.Accessible) -> bool:
-        """Returns True if document is a PDF document."""
-
-        mime_type = AXDocument.get_mime_type(document)
-        if mime_type == "application/pdf":
-            return True
-        if mime_type == "text/html":
-            return AXDocument.get_uri(document).endswith(".pdf")
-        return False
-
-    @staticmethod
-    def get_document_uri_fragment(document: Atspi.Accessible) -> str:
-        """Returns the fragment portion of document's uri."""
-
-        result = urllib.parse.urlparse(AXDocument.get_uri(document))
-        return result.fragment
-
-    @staticmethod
-    def _get_object_counts(document: Atspi.Accessible) -> dict[str, int]:
-        """Returns a dictionary of object counts used in a document summary."""
-
-        result = {
-            "forms": 0,
-            "landmarks": 0,
-            "headings": 0,
-            "tables": 0,
-            "unvisited_links": 0,
-            "visited_links": 0,
-        }
-
-        roles = [
-            Atspi.Role.HEADING,
-            Atspi.Role.LINK,
-            Atspi.Role.TABLE,
-            Atspi.Role.FORM,
-            Atspi.Role.LANDMARK,
-        ]
-
-        rule = AXCollection.create_match_rule(
-            roles=roles,
-            role_match_type=Atspi.CollectionMatchType.ANY,
-        )
-        matches = AXCollection.get_all_matches(document, rule)
-
-        for obj in matches:
-            if AXUtilitiesRole.is_heading(obj):
-                result["headings"] += 1
-            elif AXUtilitiesRole.is_form(obj):
-                result["forms"] += 1
-            elif AXUtilitiesRole.is_table(obj) and not AXUtilitiesTable.is_layout_table(obj):
-                result["tables"] += 1
-            elif AXUtilitiesRole.is_link(obj):
-                if AXUtilitiesState.is_visited(obj):
-                    result["visited_links"] += 1
-                else:
-                    result["unvisited_links"] += 1
-            elif AXUtilitiesRole.is_landmark(obj):
-                result["landmarks"] += 1
-
-        return result
-
-    @staticmethod
-    def get_document_summary(document: Atspi.Accessible, only_if_found: bool = True) -> str:
-        """Returns a string summarizing the document's structure and objects of interest."""
-
-        result = []
-        counts = AXDocument._get_object_counts(document)
-        result.append(messages.landmark_count(counts.get("landmarks", 0), only_if_found))
-        result.append(messages.heading_count(counts.get("headings", 0), only_if_found))
-        result.append(messages.form_count(counts.get("forms", 0), only_if_found))
-        result.append(messages.table_count(counts.get("tables", 0), only_if_found))
-        result.append(messages.visited_link_count(counts.get("visited_links", 0), only_if_found))
-        result.append(
-            messages.unvisited_link_count(counts.get("unvisited_links", 0), only_if_found),
-        )
-        result = list(filter(lambda x: x, result))
-        if not result:
-            return ""
-
-        return messages.PAGE_SUMMARY_PREFIX % ", ".join(result)

@@ -1628,8 +1628,7 @@ class TestDocumentPresenter:
         ax_utilities = mocks["orca.ax_utilities"]
         ax_utilities.AXUtilities.is_embedded.return_value = True
 
-        ax_document = mocks["orca.ax_document"]
-        ax_document.AXDocument.get_uri.return_value = "https://docs.google.com/document"
+        ax_utilities.AXUtilities.get_uri.return_value = "https://docs.google.com/document"
 
         presenter = module.get_presenter()
 
@@ -1651,8 +1650,7 @@ class TestDocumentPresenter:
         ax_utilities = mocks["orca.ax_utilities"]
         ax_utilities.AXUtilities.is_embedded.return_value = True
 
-        ax_document = mocks["orca.ax_document"]
-        ax_document.AXDocument.get_uri.return_value = "file:///home/user/doc.html"
+        ax_utilities.AXUtilities.get_uri.return_value = "file:///home/user/doc.html"
 
         presenter = module.get_presenter()
 
@@ -1969,8 +1967,7 @@ class TestDocumentPresenter:
         ax_utilities.AXUtilities.get_table.return_value = MagicMock()
         ax_utilities.AXUtilities.is_layout_table.return_value = False
 
-        ax_document = mocks["orca.ax_document"]
-        ax_document.AXDocument.is_pdf.return_value = False
+        ax_utilities.AXUtilities.is_pdf.return_value = False
 
         mock_script = MagicMock()
         mock_script.utilities.is_text_block_element.return_value = False
@@ -2183,8 +2180,7 @@ class TestDocumentPresenter:
         ax_utilities.AXUtilities.get_table.return_value = MagicMock()
         ax_utilities.AXUtilities.is_layout_table.return_value = False
 
-        ax_document = mocks["orca.ax_document"]
-        ax_document.AXDocument.is_pdf.return_value = True
+        ax_utilities.AXUtilities.is_pdf.return_value = True
 
         mock_script = MagicMock()
         mock_script.utilities.is_text_block_element.return_value = False

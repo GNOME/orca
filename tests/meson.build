@@ -27,6 +27,7 @@ unit_tests = [
   'unit_tests/test_ax_utilities_component.py',
   'unit_tests/test_ax_utilities_application.py',
   'unit_tests/test_ax_utilities_debugging.py',
+  'unit_tests/test_ax_utilities_document.py',
   'unit_tests/test_ax_utilities_event.py',
   'unit_tests/test_ax_utilities_object.py',
   'unit_tests/test_ax_utilities_relation.py',

@@ -52,7 +52,6 @@ from orca import (
     structural_navigator,
     table_navigator,
 )
-from orca.ax_document import AXDocument
 from orca.ax_event_synthesizer import AXEventSynthesizer
 from orca.ax_object import AXObject
 from orca.ax_text import AXText
@@ -397,7 +396,7 @@ class Script(default.Script):
             handled_reason = "table navigation command"
         elif is_content_editable:
             handled_reason = "content editable"
-        elif AXDocument.is_plain_text(document):
+        elif AXUtilities.is_plain_text(document):
             handled_reason = "plain text document"
         elif input_event_manager.get_manager().last_event_was_caret_selection():
             handled_reason = "caret selection"
@@ -673,7 +672,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        if not AXDocument.get_uri(event.source):
+        if not AXUtilities.get_uri(event.source):
             msg = "WEB: Ignoring event from page with no URI."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -725,7 +724,7 @@ class Script(default.Script):
             should_present = False
             msg = "WEB: Not presenting because source is not showing or visible"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-        elif not AXDocument.get_uri(event.source):
+        elif not AXUtilities.get_uri(event.source):
             should_present = False
             msg = "WEB: Not presenting because source lacks URI"
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -742,7 +741,7 @@ class Script(default.Script):
             tokens = ["WEB: Brief verbosity set. Should present", obj, f": {should_present}"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if should_present and AXDocument.get_uri(event.source).startswith("http"):
+        if should_present and AXUtilities.get_uri(event.source).startswith("http"):
             if event.detail1:
                 presentation_manager.get_manager().present_message(messages.PAGE_LOADING_START)
             elif AXObject.get_name(event.source):
@@ -774,7 +773,7 @@ class Script(default.Script):
         if document_presenter.get_presenter().get_page_summary_on_load() and should_present:
             tokens = ["WEB: Getting page summary for", event.source]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            summary = AXDocument.get_document_summary(event.source)
+            summary = AXUtilities.get_document_summary(event.source)
             if summary:
                 presentation_manager.get_manager().present_message(summary)
 
@@ -811,7 +810,7 @@ class Script(default.Script):
             focus_manager.get_manager().set_locus_of_focus(event, obj, False)
 
         self.update_braille(obj)
-        if AXDocument.get_document_uri_fragment(event.source):
+        if AXUtilities.get_document_uri_fragment(event.source):
             msg = "WEB: Not doing SayAll due to page fragment"
             debug.print_message(debug.LEVEL_INFO, msg, True)
         elif not document_presenter.get_presenter().get_say_all_on_load():
@@ -1186,7 +1185,7 @@ class Script(default.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
-        uri = AXDocument.get_uri(event.source)
+        uri = AXUtilities.get_uri(event.source)
         if not uri:
             msg = "WEB: Ignoring event from page with no URI."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1212,7 +1211,7 @@ class Script(default.Script):
     def _on_document_load_stopped(self, event: Atspi.Event) -> bool:
         """Callback for document:load-stopped accessibility events."""
 
-        if not AXDocument.get_uri(event.source):
+        if not AXUtilities.get_uri(event.source):
             msg = "WEB: Ignoring event from page with no URI."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -1230,7 +1229,7 @@ class Script(default.Script):
     def _on_document_reload(self, event: Atspi.Event) -> bool:
         """Callback for document:reload accessibility events."""
 
-        if not AXDocument.get_uri(event.source):
+        if not AXUtilities.get_uri(event.source):
             msg = "WEB: Ignoring event from page with no URI."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
@@ -1400,7 +1399,7 @@ class Script(default.Script):
             cause = "Context is not a non-focused link"
         elif self.utilities.is_child_of_current_fragment(obj):
             cause = "Context is child of current fragment"
-        elif document == event.source and AXDocument.get_document_uri_fragment(event.source):
+        elif document == event.source and AXUtilities.get_document_uri_fragment(event.source):
             cause = "Document URI is fragment"
         else:
             return False

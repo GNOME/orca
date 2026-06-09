@@ -26,7 +26,6 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from orca import debug, focus_manager
-from orca.ax_document import AXDocument
 from orca.ax_object import AXObject
 from orca.ax_utilities import AXUtilities
 from orca.scripts import web
@@ -80,7 +79,7 @@ class Script(web.ToolkitBridge):
     def _on_focused_changed(self, event: Atspi.Event) -> bool:
         """Callback for object:state-changed:focused accessibility events."""
 
-        if self.utilities.is_document(event.source) and not AXDocument.get_uri(event.source):
+        if self.utilities.is_document(event.source) and not AXUtilities.get_uri(event.source):
             msg = "CHROMIUM: Ignoring event from document with no URI."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True

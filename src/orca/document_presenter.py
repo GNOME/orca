@@ -60,7 +60,6 @@ from . import (
     structural_navigator,
     table_navigator,
 )
-from .ax_document import AXDocument
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
@@ -570,7 +569,7 @@ class DocumentPresenter(Extension):
         if not AXUtilities.is_embedded(document):
             return False
 
-        uri = AXDocument.get_uri(document)
+        uri = AXUtilities.get_uri(document)
         result = bool(uri and uri.startswith("http"))
         tokens = ["DOCUMENT PRESENTER:", document, f"is top-level web app: {result}. URI: {uri}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -788,7 +787,7 @@ class DocumentPresenter(Extension):
         if role in (Atspi.Role.TABLE_CELL, Atspi.Role.TABLE):
             if AXUtilities.is_layout_table(AXUtilities.get_table(obj)):
                 return False, "it's layout only"
-            if AXDocument.is_pdf(script.utilities.get_document_for_object(obj)):
+            if AXUtilities.is_pdf(script.utilities.get_document_for_object(obj)):
                 return False, "it's in a PDF"
 
         if AXUtilities.is_list_box_item(obj, role):

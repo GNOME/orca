@@ -52,7 +52,6 @@ from orca import (
     speech_presenter,
 )
 from orca.ax_component import AXComponent
-from orca.ax_document import AXDocument
 from orca.ax_hypertext import AXHypertext
 from orca.ax_object import AXObject
 from orca.ax_text import AXText
@@ -2769,7 +2768,7 @@ class Utilities(script_utilities.Utilities):
             return False
 
         document = self.active_document()
-        fragment = AXDocument.get_document_uri_fragment(document)
+        fragment = AXUtilities.get_document_uri_fragment(document)
         if not fragment:
             return False
 
@@ -2783,12 +2782,12 @@ class Utilities(script_utilities.Utilities):
         else:
             link = AXUtilities.find_ancestor(old_focus, self.is_link)
 
-        return link and AXHypertext.get_link_uri(link) == AXDocument.get_uri(document)
+        return link and AXHypertext.get_link_uri(link) == AXUtilities.get_uri(document)
 
     def is_child_of_current_fragment(self, obj: Atspi.Accessible) -> bool:
         """Returns true if obj is a child of the current document fragment."""
 
-        fragment = AXDocument.get_document_uri_fragment(self.active_document())
+        fragment = AXUtilities.get_document_uri_fragment(self.active_document())
         if not fragment:
             return False
 

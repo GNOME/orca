@@ -71,6 +71,7 @@ lib_sources = [
   'ax_utilities_collection.py',
   'ax_utilities_component.py',
   'ax_utilities_debugging.py',
+  'ax_utilities_document.py',
   'ax_utilities_event.py',
   'ax_utilities_math.py',
   'ax_utilities_object.py',

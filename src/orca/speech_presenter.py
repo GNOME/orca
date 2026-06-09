@@ -65,7 +65,6 @@ from . import (
     speechserver,
 )
 from .acss import ACSS
-from .ax_document import AXDocument
 from .ax_hypertext import AXHypertext
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
@@ -2222,7 +2221,7 @@ class SpeechPresenter(Extension):
             return False
 
         document = AXUtilities.find_ancestor_inclusive(ancestor, AXUtilities.is_document)
-        if AXDocument.is_plain_text(document):
+        if AXUtilities.is_plain_text(document):
             return False
 
         # If the user has set their punctuation level to All, then the synthesizer will

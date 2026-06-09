@@ -54,7 +54,6 @@ from . import (
     text_attribute_manager,
 )
 from .acss import ACSS
-from .ax_document import AXDocument
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
@@ -1377,7 +1376,7 @@ class SpeechGenerator(generator.Generator):
             return []
 
         link_uri_info = urllib.parse.urlparse(link_uri)
-        doc_uri = AXDocument.get_uri(self._script.utilities.active_document())
+        doc_uri = AXUtilities.get_uri(self._script.utilities.active_document())
         if not doc_uri:
             return []
 
