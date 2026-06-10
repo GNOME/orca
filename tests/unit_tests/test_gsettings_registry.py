@@ -1262,6 +1262,51 @@ class TestLayeredLookup:
         assert result is False
         mock_handle.get_boolean.assert_called_once_with("speak-room-name", "", None)
 
+    def test_scalar_values_cached_until_explicit_clear(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test layered_lookup reuses scalar values until the cache is explicitly cleared."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry, GSettingsSchemaHandle
+
+        registry = GSettingsRegistry()
+        registry._schemas["speech"] = "org.gnome.Orca.Speech"
+
+        mock_handle = test_context.Mock(spec=GSettingsSchemaHandle)
+        mock_handle.get_boolean.side_effect = [True, False]
+        registry._handles["speech"] = mock_handle
+
+        assert registry.layered_lookup("speech", "enabled", "b") is True
+        assert registry.layered_lookup("speech", "enabled", "b") is True
+        mock_handle.get_boolean.assert_called_once_with("enabled", "", None)
+
+        registry.clear_value_cache()
+        assert registry.layered_lookup("speech", "enabled", "b") is False
+
+    def test_routine_manager_clear_preserves_lookup_cache(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test routine manager cache clearing does not clear GSettings lookup values."""
+
+        self._setup(test_context)
+        from orca import ax_cache_manager
+        from orca.gsettings_registry import GSettingsRegistry, GSettingsSchemaHandle
+
+        registry = GSettingsRegistry()
+        registry._schemas["speech"] = "org.gnome.Orca.Speech"
+
+        mock_handle = test_context.Mock(spec=GSettingsSchemaHandle)
+        mock_handle.get_boolean.side_effect = [True, False]
+        registry._handles["speech"] = mock_handle
+
+        assert registry.layered_lookup("speech", "enabled", "b") is True
+        ax_cache_manager.get_manager().clear_cache_now("Unit test.")
+        assert registry.layered_lookup("speech", "enabled", "b") is True
+        mock_handle.get_boolean.assert_called_once_with("enabled", "", None)
+
 
 @pytest.mark.unit
 class TestLayeredGetDict:

@@ -37,7 +37,7 @@ from typing import TYPE_CHECKING, Any, NamedTuple, overload
 
 from gi.repository import Gio, GLib
 
-from . import debug
+from . import ax_cache_manager, debug
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -87,6 +87,50 @@ class LookupCacheKey(NamedTuple):
 _NOT_SET = object()
 
 
+class _GSettingsRegistryCache:
+    """Provides GSettings-registry access to manager-backed cached values."""
+
+    LOOKUP_VALUES = "GSettingsRegistry.lookup-values"
+
+    def __init__(self) -> None:
+        self._manager = ax_cache_manager.get_manager()
+        self._manager.register_cache(
+            self,
+            self.LOOKUP_VALUES,
+            lifetime=ax_cache_manager.Lifetime.OWNER,
+            clear_on_demand=ax_cache_manager.ClearPolicy.PRESERVE,
+            clear_interval_seconds=None,
+        )
+        self._lookup_values = self._manager.get_cache(self, self.LOOKUP_VALUES)
+
+    def clear(self) -> None:
+        """Clears cached lookup values."""
+
+        if self._lookup_values is not None:
+            self._lookup_values.invalidate(log=False)
+
+    def get(self, key: LookupCacheKey) -> Any:
+        """Returns a cached lookup result or ax_cache_manager.MISSING."""
+
+        if self._lookup_values is None:
+            return ax_cache_manager.MISSING
+        return self._lookup_values.get(key)
+
+    def set_lookup_miss(self, key: LookupCacheKey) -> None:
+        """Records that no setting value was found for key."""
+
+        if self._lookup_values is not None:
+            self._lookup_values.put(key, _NOT_SET)
+
+    def set_value(self, key: LookupCacheKey, value: Any) -> None:
+        """Stores value unless it is mutable."""
+
+        if isinstance(value, (list, dict)):
+            return
+        if self._lookup_values is not None:
+            self._lookup_values.put(key, value)
+
+
 class GSettingsRegistry:
     """Central registry for GSettings metadata, mappings, and active context."""
 
@@ -100,11 +144,12 @@ class GSettingsRegistry:
         self._handles: dict[str, GSettingsSchemaHandle] = {}
         self._runtime_values: dict[tuple[str, str, str | None], Any] = {}
         self._ignore_runtime: bool = False
-        self._value_cache: dict[LookupCacheKey, Any] = {}
+        self._cache = _GSettingsRegistryCache()
 
     def clear_value_cache(self) -> None:
         """Clears the cached GSettings lookup values."""
-        self._value_cache.clear()
+
+        self._cache.clear()
 
     def set_ignore_runtime(self, ignore: bool) -> None:
         """Sets whether layered_lookup should skip runtime overrides."""
@@ -169,8 +214,8 @@ class GSettingsRegistry:
             profile,
             self._ignore_runtime,
         )
-        if cache_key in self._value_cache:
-            val = self._value_cache[cache_key]
+        val = self._cache.get(cache_key)
+        if val is not ax_cache_manager.MISSING:
             if val is _NOT_SET:
                 return self._use_default(schema, key, default)
             return val
@@ -195,8 +240,7 @@ class GSettingsRegistry:
                 extractor = extractors.get("s" if genum else gtype)
                 if extractor is not None:
                     val = extractor(key)
-                    if not isinstance(val, (list, dict)):
-                        self._value_cache[cache_key] = val
+                    self._cache.set_value(cache_key, val)
                     return val
 
         if not self._ignore_runtime:
@@ -204,12 +248,11 @@ class GSettingsRegistry:
             if runtime is not None:
                 msg = f"GSETTINGS REGISTRY: {schema}/{key} runtime override = {runtime!r}"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
-                if not isinstance(runtime, (list, dict)):
-                    self._value_cache[cache_key] = runtime
+                self._cache.set_value(cache_key, runtime)
                 return runtime
 
         if handle is None:
-            self._value_cache[cache_key] = _NOT_SET
+            self._cache.set_lookup_miss(cache_key)
             return self._use_default(schema, key, default)
 
         accessors: dict[str, Callable[..., Any | None]] = {
@@ -226,10 +269,9 @@ class GSettingsRegistry:
         effective_app_arg = "" if app_name else None
         result = accessor(key, sub_path, effective_app_arg) if accessor is not None else None
         if result is not None:
-            if not isinstance(result, (list, dict)):
-                self._value_cache[cache_key] = result
+            self._cache.set_value(cache_key, result)
             return result
-        self._value_cache[cache_key] = _NOT_SET
+        self._cache.set_lookup_miss(cache_key)
         return self._use_default(schema, key, default)
 
     @staticmethod
