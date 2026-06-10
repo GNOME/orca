@@ -38,7 +38,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import debug
+from . import ax_cache_manager, debug
 from .ax_component import AXComponent
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
@@ -141,7 +141,7 @@ class AXUtilities:
         """Clears all cached information immediately."""
 
         AXUtilities._clear_all_dictionaries(reason)
-        AXObject.clear_cache_now(reason)
+        ax_cache_manager.get_manager().clear_cache_now(reason)
         AXUtilitiesRelation.clear_cache_now(reason)
         AXUtilitiesEvent.clear_cache_now(reason)
         AXUtilitiesSelection.clear_cache_now(reason)

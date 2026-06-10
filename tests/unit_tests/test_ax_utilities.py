@@ -1168,18 +1168,26 @@ class TestAXUtilities:
         """Test AXUtilities.clear_all_cache_now with specific object."""
 
         self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
         from orca.ax_utilities import AXUtilities
 
+        manager = test_context.Mock()
+        test_context.patch_object(ax_cache_manager, "get_manager", return_value=manager)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         AXUtilities.clear_all_cache_now(mock_obj, "test reason")
+        manager.clear_cache_now.assert_called_once_with("test reason")
 
     def test_clear_all_cache_now_without_object(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilities.clear_all_cache_now without specific object."""
 
         self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
         from orca.ax_utilities import AXUtilities
 
+        manager = test_context.Mock()
+        test_context.patch_object(ax_cache_manager, "get_manager", return_value=manager)
         AXUtilities.clear_all_cache_now(None, "test reason")
+        manager.clear_cache_now.assert_called_once_with("test reason")
 
     def test_get_set_members_with_basic_set(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilities.get_set_members with basic set."""

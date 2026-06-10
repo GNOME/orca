@@ -32,6 +32,7 @@
 from __future__ import annotations
 
 import sys
+import time
 from typing import TYPE_CHECKING
 
 import gi
@@ -658,73 +659,91 @@ class TestAXObject:
         if case["raises_error"]:
             handle_error_mock.assert_called_once()
 
-    @pytest.mark.parametrize(
-        "case",
-        [
-            {
-                "id": "with_reason",
-                "reason": "test reason",
-                "expected_message": "AXObject: Clearing local cache. Reason: test reason",
-            },
-            {
-                "id": "without_reason",
-                "reason": None,
-                "expected_message": "AXObject: Clearing local cache.",
-            },
-        ],
-        ids=lambda case: case["id"],
-    )
-    def test_clear_all_dictionaries(self, test_context: OrcaTestContext, case: dict) -> None:
-        """Test AXObject._clear_all_dictionaries with and without reason."""
+    def test_supports_interface_uses_cached_result(self, test_context: OrcaTestContext) -> None:
+        """Test repeated interface checks reuse the manager-backed result."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
 
-        AXObject.KNOWN_DEAD[123] = True
-        AXObject.OBJECT_ATTRIBUTES[456] = {"role": "button"}
+        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
+        test_context.patch_object(AXObject, "is_valid", return_value=True)
+        getter_mock = test_context.patch_object(
+            Atspi.Accessible,
+            "get_text_iface",
+            return_value=test_context.Mock(),
+        )
+        getter_mock.__name__ = "get_text_iface"
 
-        if case["reason"]:
-            AXObject._clear_all_dictionaries(case["reason"])
-        else:
-            AXObject._clear_all_dictionaries()
+        assert AXObject.supports_text(mock_accessible) is True
+        assert AXObject.supports_text(mock_accessible) is True
+        getter_mock.assert_called_once_with(mock_accessible)
+        assert AXObject._CACHE.get_interface_support(mock_accessible, "get_text_iface") is True
 
-        assert len(AXObject.KNOWN_DEAD) == 0
-        assert len(AXObject.OBJECT_ATTRIBUTES) == 0
-        essential_modules["orca.debug"].print_message.assert_called_with(
-            essential_modules["orca.debug"].LEVEL_INFO,
-            case["expected_message"],
-            True,
+    def test_import_registers_axobject_cache_namespaces(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test importing AXObject creates its cache owner and namespaces."""
+
+        self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
+
+        manager = ax_cache_manager.get_manager()
+        register = test_context.patch_object(
+            manager,
+            "register_cache",
+            wraps=manager.register_cache,
         )
 
-    def test_clear_cache_now_calls_clear_all_dictionaries(
-        self,
-        test_context: OrcaTestContext,
+        from orca.ax_object import AXObject
+
+        assert register.call_count == 4
+        assert {call.args[0] for call in register.call_args_list} == {AXObject._CACHE}
+        namespaces = {call.args[1] for call in register.call_args_list}
+        assert namespaces == {
+            AXObject._CACHE.KNOWN_DEAD,
+            AXObject._CACHE.OBJECT_ATTRIBUTES,
+            AXObject._CACHE.SUPPORTED_INTERFACES,
+            AXObject._CACHE.HUNG_OBJECTS,
+        }
+        for call in register.call_args_list[:3]:
+            assert call.kwargs["lifetime"] is ax_cache_manager.Lifetime.PROCESS
+            assert call.kwargs["clear_on_demand"] is ax_cache_manager.ClearPolicy.CLEAR
+            assert "clear_interval_seconds" not in call.kwargs
+        hung_registration = register.call_args_list[3]
+        assert hung_registration.kwargs["lifetime"] is ax_cache_manager.Lifetime.PROCESS
+        assert hung_registration.kwargs["clear_on_demand"] is ax_cache_manager.ClearPolicy.PRESERVE
+        assert hung_registration.kwargs["clear_interval_seconds"] is None
+
+    def test_manager_clear_cache_now_preserves_hung_marker(
+        self, test_context: OrcaTestContext
     ) -> None:
-        """Test AXObject.clear_cache_now calls _clear_all_dictionaries."""
+        """Test ordinary clearing removes memo values but leaves hung markers."""
 
         self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
         from orca.ax_object import AXObject
 
-        clear_mock = test_context.Mock()
-        test_context.patch_object(AXObject, "_clear_all_dictionaries", new=clear_mock)
-        AXObject.clear_cache_now("test reason")
-        clear_mock.assert_called_once_with("test reason")
+        manager = ax_cache_manager.get_manager()
+        known_dead = manager.get_cache(AXObject._CACHE, AXObject._CACHE.KNOWN_DEAD)
+        object_attributes = manager.get_cache(AXObject._CACHE, AXObject._CACHE.OBJECT_ATTRIBUTES)
+        supported_interfaces = manager.get_cache(
+            AXObject._CACHE, AXObject._CACHE.SUPPORTED_INTERFACES
+        )
+        assert known_dead is not None
+        assert object_attributes is not None
+        assert supported_interfaces is not None
+        known_dead.put(123, True)
+        object_attributes.put(456, {"role": "button"})
+        supported_interfaces.put((789, "get_text_iface"), True)
+        hung_obj = test_context.Mock(spec=Atspi.Accessible)
+        AXObject._CACHE.mark_hung(hung_obj)
 
-    def test_start_cache_clearing_thread(self, test_context: OrcaTestContext) -> None:
-        """Test AXObject.start_cache_clearing_thread creates and starts thread."""
+        manager.clear_cache_now("test reason")
 
-        self._setup_dependencies(test_context)
-        from orca.ax_object import AXObject
-
-        mock_thread = test_context.Mock()
-        thread_constructor_mock = test_context.Mock(return_value=mock_thread)
-        test_context.patch("threading.Thread", new=thread_constructor_mock)
-        AXObject.start_cache_clearing_thread()
-        assert thread_constructor_mock.call_count == 2
-        thread_constructor_mock.assert_any_call(target=AXObject._clear_stored_data)
-        thread_constructor_mock.assert_any_call(target=AXObject._prune_hung_objects)
-        assert mock_thread.daemon is True
-        assert mock_thread.start.call_count == 2
+        assert known_dead.get(123) is ax_cache_manager.MISSING
+        assert object_attributes.get(456) is ax_cache_manager.MISSING
+        assert supported_interfaces.get((789, "get_text_iface")) is ax_cache_manager.MISSING
+        assert AXObject._CACHE.get_hung_timestamp(hung_obj) is not None
 
     @pytest.mark.parametrize(
         "case",
@@ -967,23 +986,35 @@ class TestAXObject:
         self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
 
-        AXObject.KNOWN_DEAD.clear()
-        AXObject.HUNG_OBJECTS.clear()
         test_app = None
         if case["obj_type"] == "none":
             test_obj = None
         else:
             test_obj = test_context.Mock(spec=Atspi.Accessible)
             if case["is_dead"]:
-                AXObject.KNOWN_DEAD[hash(test_obj)] = True
+                AXObject._CACHE.set_dead_status(test_obj, True)
             if case["is_hung"]:
-                AXObject.HUNG_OBJECTS[hash(test_obj)] = 0.0
+                AXObject._CACHE.mark_hung(test_obj)
             if case.get("hung_app"):
                 test_app = test_context.Mock(spec=Atspi.Accessible)
-                AXObject.HUNG_OBJECTS[hash(test_app)] = 0.0
+                AXObject._CACHE.mark_hung(test_app)
 
         result = AXObject.is_valid(test_obj, test_app)
         assert result == case["expected_result"]
+
+    def test_check_hung_propagates_original_timestamp(self, test_context: OrcaTestContext) -> None:
+        """Test propagated app hung markers retain the source timestamp."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_object import AXObject
+
+        test_obj = test_context.Mock(spec=Atspi.Accessible)
+        test_app = test_context.Mock(spec=Atspi.Accessible)
+        timestamp = time.monotonic()
+        AXObject._CACHE.mark_hung(test_obj, timestamp)
+
+        assert AXObject.check_hung(test_obj, test_app) is True
+        assert AXObject._CACHE.get_hung_timestamp(test_app) == timestamp
 
     @pytest.mark.parametrize(
         "case",
@@ -1018,16 +1049,18 @@ class TestAXObject:
         """Test AXObject.object_is_known_dead with various scenarios."""
 
         self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
         from orca.ax_object import AXObject
 
+        manager = ax_cache_manager.get_manager()
         if case["use_none_object"]:
             test_obj = None
         else:
             test_obj = test_context.Mock(spec=Atspi.Accessible)
             if case["cache_status"] == "clear":
-                AXObject.KNOWN_DEAD.clear()
+                manager.invalidate_cache(AXObject._CACHE, AXObject._CACHE.KNOWN_DEAD)
             elif isinstance(case["cache_status"], bool):
-                AXObject.KNOWN_DEAD[hash(test_obj)] = case["cache_status"]
+                AXObject._CACHE.set_dead_status(test_obj, case["cache_status"])
 
         result = AXObject.object_is_known_dead(test_obj)
         assert result is case["expected"]
@@ -1078,22 +1111,24 @@ class TestAXObject:
         """Test AXObject._set_known_dead_status with various scenarios."""
 
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
         from orca.ax_object import AXObject
 
+        manager = ax_cache_manager.get_manager()
         if case["use_none_object"]:
             test_obj = None
             AXObject._set_known_dead_status(test_obj, case["new_status"])
         else:
             test_obj = test_context.Mock(spec=Atspi.Accessible)
             if case["initial_status"] == "clear":
-                AXObject.KNOWN_DEAD.clear()
+                manager.invalidate_cache(AXObject._CACHE, AXObject._CACHE.KNOWN_DEAD)
             elif isinstance(case["initial_status"], bool):
-                AXObject.KNOWN_DEAD[hash(test_obj)] = case["initial_status"]
+                AXObject._CACHE.set_dead_status(test_obj, case["initial_status"])
 
             AXObject._set_known_dead_status(test_obj, case["new_status"])
 
             if case["expected_status"] is not None:
-                assert AXObject.KNOWN_DEAD[hash(test_obj)] is case["expected_status"]
+                assert AXObject._CACHE.get_dead_status(test_obj) is case["expected_status"]
 
         if case["expects_debug_call"] == "print_message":
             essential_modules["orca.debug"].print_message.assert_called()
@@ -1148,30 +1183,28 @@ class TestAXObject:
     def test_handle_error_hung_process_stamps_hung_objects(
         self, test_context: OrcaTestContext
     ) -> None:
-        """Test AXObject.handle_error stamps HUNG_OBJECTS on hung-process errors."""
+        """Test AXObject.handle_error stores a hung-process marker."""
 
         self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
 
-        AXObject.HUNG_OBJECTS.clear()
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         error = Exception("The process appears to be hung.")
         AXObject.handle_error(mock_accessible, error, "AXObject: Exception: hung")
-        assert hash(mock_accessible) in AXObject.HUNG_OBJECTS
+        assert AXObject._CACHE.get_hung_timestamp(mock_accessible) is not None
 
     def test_handle_error_other_error_does_not_stamp_hung_objects(
         self, test_context: OrcaTestContext
     ) -> None:
-        """Test AXObject.handle_error does not stamp HUNG_OBJECTS for unrelated errors."""
+        """Test AXObject.handle_error does not store a hung marker for unrelated errors."""
 
         self._setup_dependencies(test_context)
         from orca.ax_object import AXObject
 
-        AXObject.HUNG_OBJECTS.clear()
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         error = Exception("Some unrelated error")
         AXObject.handle_error(mock_accessible, error, "AXObject: Exception: unrelated")
-        assert hash(mock_accessible) not in AXObject.HUNG_OBJECTS
+        assert AXObject._CACHE.get_hung_timestamp(mock_accessible) is None
 
     @pytest.mark.parametrize(
         "case",
@@ -1897,6 +1930,17 @@ class TestAXObject:
                 "expects_handle_error": False,
             },
             {
+                "id": "uncached_read_replaces_cached_attributes",
+                "is_valid": True,
+                "use_cache": False,
+                "cached_attrs": {"id": "stale"},
+                "get_attributes_result": {"id": "fresh"},
+                "raises_error": False,
+                "expected_result": {"id": "fresh"},
+                "expects_cache_update": True,
+                "expects_handle_error": False,
+            },
+            {
                 "id": "glib_error",
                 "is_valid": True,
                 "use_cache": False,
@@ -1929,15 +1973,20 @@ class TestAXObject:
         """Test AXObject.get_attributes_dict with various scenarios."""
 
         self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
         from orca.ax_object import AXObject
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         test_context.patch_object(AXObject, "is_valid", side_effect=lambda obj: case["is_valid"])
 
+        manager = ax_cache_manager.get_manager()
         if case["cached_attrs"]:
-            AXObject.OBJECT_ATTRIBUTES[hash(mock_accessible)] = case["cached_attrs"]
+            AXObject._CACHE.set_attributes(mock_accessible, case["cached_attrs"])
         else:
-            AXObject.OBJECT_ATTRIBUTES.clear()
+            manager.invalidate_cache(
+                AXObject._CACHE,
+                AXObject._CACHE.OBJECT_ATTRIBUTES,
+            )
 
         if case["raises_error"]:
 
@@ -1964,9 +2013,7 @@ class TestAXObject:
         assert result == case["expected_result"]
 
         if case["expects_cache_update"] and case["get_attributes_result"]:
-            assert (
-                AXObject.OBJECT_ATTRIBUTES[hash(mock_accessible)] == case["get_attributes_result"]
-            )
+            assert AXObject._CACHE.get_attributes(mock_accessible) == case["get_attributes_result"]
 
         if case["expects_handle_error"]:
             handle_error_mock.assert_called_once()

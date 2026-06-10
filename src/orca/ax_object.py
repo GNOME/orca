@@ -26,7 +26,6 @@
 from __future__ import annotations
 
 import re
-import threading
 import time
 from typing import TYPE_CHECKING
 
@@ -35,72 +34,122 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
 
-from . import debug
+from . import ax_cache_manager, debug
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Generator
-    from typing import ClassVar
+    from collections.abc import Callable, Generator, Hashable
+
+
+class _AXObjectCache:
+    """Provides AXObject-specific access to manager-backed cached values."""
+
+    KNOWN_DEAD = "AXObject.known-dead"
+    OBJECT_ATTRIBUTES = "AXObject.object-attributes"
+    SUPPORTED_INTERFACES = "AXObject.supported-interfaces"
+    HUNG_OBJECTS = "AXObject.hung-objects"
+    _HUNG_TIMEOUT_SECONDS = 1.0
+
+    def __init__(self) -> None:
+        self._manager = ax_cache_manager.get_manager()
+        for namespace in (
+            self.KNOWN_DEAD,
+            self.OBJECT_ATTRIBUTES,
+            self.SUPPORTED_INTERFACES,
+        ):
+            self._manager.register_cache(
+                self,
+                namespace,
+                lifetime=ax_cache_manager.Lifetime.PROCESS,
+                clear_on_demand=ax_cache_manager.ClearPolicy.CLEAR,
+            )
+        self._known_dead = self._manager.get_cache(self, self.KNOWN_DEAD)
+        self._object_attributes = self._manager.get_cache(self, self.OBJECT_ATTRIBUTES)
+        self._supported_interfaces = self._manager.get_cache(self, self.SUPPORTED_INTERFACES)
+        self._manager.register_cache(
+            self,
+            self.HUNG_OBJECTS,
+            lifetime=ax_cache_manager.Lifetime.PROCESS,
+            clear_on_demand=ax_cache_manager.ClearPolicy.PRESERVE,
+            clear_interval_seconds=None,
+        )
+        self._hung_objects = self._manager.get_cache(self, self.HUNG_OBJECTS)
+
+    def get_dead_status(self, obj: Atspi.Accessible) -> bool | None:
+        """Returns the recorded result of a prior deadness probe."""
+
+        return self.get_dead_status_for_key(ax_cache_manager.get_object_key(obj))
+
+    def get_dead_status_for_key(self, key: Hashable) -> bool | None:
+        """Returns the recorded result of a prior deadness probe."""
+
+        if self._known_dead is None:
+            return None
+        return self._known_dead.get(key, None)
+
+    def set_dead_status(self, obj: Atspi.Accessible, is_dead: bool) -> None:
+        """Stores the result of a deadness probe."""
+
+        if self._known_dead is not None:
+            self._known_dead.put(ax_cache_manager.get_object_key(obj), is_dead)
+
+    def get_attributes(self, obj: Atspi.Accessible) -> dict[str, str] | None:
+        """Returns cached object attributes, or None when absent."""
+
+        if self._object_attributes is None:
+            return None
+        return self._object_attributes.get(ax_cache_manager.get_object_key(obj), None)
+
+    def set_attributes(self, obj: Atspi.Accessible, attributes: dict[str, str]) -> None:
+        """Stores object attributes."""
+
+        if self._object_attributes is not None:
+            self._object_attributes.put(ax_cache_manager.get_object_key(obj), attributes)
+
+    def get_interface_support(self, obj: Atspi.Accessible, name: str) -> bool | None:
+        """Returns cached interface support, or None when absent."""
+
+        if self._supported_interfaces is None:
+            return None
+        return self._supported_interfaces.get((ax_cache_manager.get_object_key(obj), name), None)
+
+    def set_interface_support(self, obj: Atspi.Accessible, name: str, supported: bool) -> None:
+        """Stores interface support."""
+
+        if self._supported_interfaces is not None:
+            self._supported_interfaces.put((ax_cache_manager.get_object_key(obj), name), supported)
+
+    def get_hung_timestamp(self, obj: Atspi.Accessible | None) -> float | None:
+        """Returns an unexpired hung marker timestamp, or None."""
+
+        if obj is None:
+            return None
+
+        return self.get_hung_timestamp_for_key(ax_cache_manager.get_object_key(obj))
+
+    def get_hung_timestamp_for_key(self, key: Hashable) -> float | None:
+        """Returns an unexpired hung marker timestamp, or None."""
+
+        if self._hung_objects is None:
+            return None
+        return self._hung_objects.get(key, None)
+
+    def mark_hung(self, obj: Atspi.Accessible, timestamp: float | None = None) -> None:
+        """Marks an object hung until one second after the supplied timestamp."""
+
+        if timestamp is None:
+            timestamp = time.monotonic()
+        if self._hung_objects is not None:
+            self._hung_objects.put(
+                ax_cache_manager.get_object_key(obj),
+                timestamp,
+                expires_at=timestamp + self._HUNG_TIMEOUT_SECONDS,
+            )
 
 
 class AXObject:
     """Wrapper for the Atspi.Accessible interface."""
 
-    KNOWN_DEAD: ClassVar[dict[int, bool]] = {}
-    OBJECT_ATTRIBUTES: ClassVar[dict[int, dict[str, str]]] = {}
-    SUPPORTED_INTERFACES: ClassVar[dict[int, dict[str, bool]]] = {}
-    HUNG_OBJECTS: ClassVar[dict[int, float]] = {}
-    HUNG_TIMEOUT = 1.0
-
-    _lock = threading.Lock()
-
-    @staticmethod
-    def _clear_stored_data() -> None:
-        """Clears any data we have cached for objects"""
-
-        while True:
-            time.sleep(60)
-            AXObject._clear_all_dictionaries()
-
-    @staticmethod
-    def _prune_hung_objects() -> None:
-        """Removes objects whose hung-status has expired."""
-
-        while True:
-            time.sleep(AXObject.HUNG_TIMEOUT)
-            now = time.monotonic()
-            for key in list(AXObject.HUNG_OBJECTS):
-                if now - AXObject.HUNG_OBJECTS[key] >= AXObject.HUNG_TIMEOUT:
-                    del AXObject.HUNG_OBJECTS[key]
-
-    @staticmethod
-    def _clear_all_dictionaries(reason: str = "") -> None:
-        msg = "AXObject: Clearing local cache."
-        if reason:
-            msg += f" Reason: {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        with AXObject._lock:
-            AXObject.KNOWN_DEAD.clear()
-            AXObject.OBJECT_ATTRIBUTES.clear()
-            AXObject.SUPPORTED_INTERFACES.clear()
-
-    @staticmethod
-    def clear_cache_now(reason: str = "") -> None:
-        """Clears all cached information immediately."""
-
-        AXObject._clear_all_dictionaries(reason)
-
-    @staticmethod
-    def start_cache_clearing_thread() -> None:
-        """Starts thread to periodically clear cached details."""
-
-        thread = threading.Thread(target=AXObject._clear_stored_data)
-        thread.daemon = True
-        thread.start()
-
-        thread = threading.Thread(target=AXObject._prune_hung_objects)
-        thread.daemon = True
-        thread.start()
+    _CACHE = _AXObjectCache()
 
     @staticmethod
     def get_toolkit_name(obj: Atspi.Accessible) -> str:
@@ -196,12 +245,12 @@ class AXObject:
         if obj is None:
             return False
 
-        obj_hash = hash(obj)
-        if AXObject.KNOWN_DEAD.get(obj_hash):
+        obj_key = ax_cache_manager.get_object_key(obj)
+        if AXObject._CACHE.get_dead_status_for_key(obj_key):
             return False
 
         if app is None:
-            return obj_hash not in AXObject.HUNG_OBJECTS
+            return AXObject._CACHE.get_hung_timestamp_for_key(obj_key) is None
 
         return not AXObject.check_hung(obj, app)
 
@@ -209,7 +258,10 @@ class AXObject:
     def object_is_known_dead(obj: Atspi.Accessible) -> bool:
         """Returns True if we know for certain this object no longer exists"""
 
-        return bool(obj and AXObject.KNOWN_DEAD.get(hash(obj))) is True
+        if not obj:
+            return False
+
+        return AXObject._CACHE.get_dead_status(obj) is True
 
     @staticmethod
     def check_hung(
@@ -218,14 +270,14 @@ class AXObject:
     ) -> bool:
         """Returns True if obj or its app is hung, propagating obj-hung to app."""
 
-        obj_hung_ts = AXObject.HUNG_OBJECTS.get(hash(obj)) if obj is not None else None
-        app_hung = app is not None and hash(app) in AXObject.HUNG_OBJECTS
-        if obj_hung_ts is not None and app is not None and not app_hung:
+        obj_hung_ts = AXObject._CACHE.get_hung_timestamp(obj)
+        app_hung_ts = AXObject._CACHE.get_hung_timestamp(app)
+        if obj_hung_ts is not None and app is not None and app_hung_ts is None:
             tokens = ["AXObject: Marking", app, "as hung due to hung source"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            AXObject.HUNG_OBJECTS[hash(app)] = obj_hung_ts
-            app_hung = True
-        return obj_hung_ts is not None or app_hung
+            AXObject._CACHE.mark_hung(app, obj_hung_ts)
+            app_hung_ts = AXObject._CACHE.get_hung_timestamp(app)
+        return obj_hung_ts is not None or app_hung_ts is not None
 
     @staticmethod
     def _set_known_dead_status(obj: Atspi.Accessible, is_dead: bool) -> None:
@@ -234,11 +286,11 @@ class AXObject:
         if obj is None:
             return
 
-        current_status = AXObject.KNOWN_DEAD.get(hash(obj))
+        current_status = AXObject._CACHE.get_dead_status(obj)
         if current_status == is_dead:
             return
 
-        AXObject.KNOWN_DEAD[hash(obj)] = is_dead
+        AXObject._CACHE.set_dead_status(obj, is_dead)
         if is_dead:
             msg = "AXObject: Adding to known dead objects"
             debug.print_message(debug.LEVEL_INFO, msg, True, True)
@@ -263,7 +315,7 @@ class AXObject:
             debug.print_message(debug.LEVEL_INFO, msg, True)
         elif "The process appears to be hung" in error_string:
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            AXObject.HUNG_OBJECTS[hash(obj)] = time.monotonic()
+            AXObject._CACHE.mark_hung(obj)
             return
         elif re.search(r"accessible/\d+ does not exist", error_string):
             msg = msg.replace(error_string, "object no longer exists")
@@ -272,7 +324,7 @@ class AXObject:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        if AXObject.KNOWN_DEAD.get(hash(obj)) is False:
+        if AXObject._CACHE.get_dead_status(obj) is False:
             AXObject._set_known_dead_status(obj, True)
 
     @staticmethod
@@ -283,10 +335,8 @@ class AXObject:
             return False
 
         name = getter.__name__
-        interfaces = AXObject.SUPPORTED_INTERFACES.get(hash(obj))
-        if interfaces is None:
-            interfaces = AXObject.SUPPORTED_INTERFACES[hash(obj)] = {}
-        elif (cached := interfaces.get(name)) is not None:
+        cached = AXObject._CACHE.get_interface_support(obj, name)
+        if cached is not None:
             return cached
 
         try:
@@ -297,7 +347,7 @@ class AXObject:
             return False
 
         result = iface is not None
-        interfaces[name] = result
+        AXObject._CACHE.set_interface_support(obj, name, result)
         return result
 
     @staticmethod
@@ -994,7 +1044,7 @@ class AXObject:
             return {}
 
         if use_cache:
-            attributes = AXObject.OBJECT_ATTRIBUTES.get(hash(obj))
+            attributes = AXObject._CACHE.get_attributes(obj)
             if attributes:
                 return attributes
 
@@ -1008,7 +1058,7 @@ class AXObject:
         if attributes is None:
             return {}
 
-        AXObject.OBJECT_ATTRIBUTES[hash(obj)] = attributes
+        AXObject._CACHE.set_attributes(obj, attributes)
         return attributes
 
     @staticmethod
@@ -1043,6 +1093,3 @@ class AXObject:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return result
-
-
-AXObject.start_cache_clearing_thread()
