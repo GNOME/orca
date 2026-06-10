@@ -30,7 +30,6 @@ from __future__ import annotations
 
 import enum
 import re
-import threading
 import time
 from difflib import SequenceMatcher
 from typing import TYPE_CHECKING
@@ -40,7 +39,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import debug, focus_manager
+from . import ax_cache_manager, debug, focus_manager
 from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_text import AXText
@@ -54,8 +53,6 @@ from .ax_utilities_text import AXUtilitiesText, CaretSetReason
 from .ax_value import AXValue
 
 if TYPE_CHECKING:
-    from typing import ClassVar
-
     from .input_event_manager import InputEventManager
 
 
@@ -113,28 +110,151 @@ class TextEventReason(enum.Enum):
     UNSPECIFIED_SELECTION = enum.auto()
 
 
+class _AXUtilitiesEventCache:
+    """Provides event-specific access to manager-backed cached values."""
+
+    LAST_KNOWN_DESCRIPTION = "AXUtilitiesEvent.last-known-description"
+    LAST_KNOWN_NAME = "AXUtilitiesEvent.last-known-name"
+    LAST_KNOWN_CHECKED = "AXUtilitiesEvent.last-known-checked"
+    LAST_KNOWN_EXPANDED = "AXUtilitiesEvent.last-known-expanded"
+    LAST_KNOWN_INDETERMINATE = "AXUtilitiesEvent.last-known-indeterminate"
+    LAST_KNOWN_INVALID_ENTRY = "AXUtilitiesEvent.last-known-invalid-entry"
+    LAST_KNOWN_PRESSED = "AXUtilitiesEvent.last-known-pressed"
+    LAST_KNOWN_SELECTED = "AXUtilitiesEvent.last-known-selected"
+    LAST_KNOWN_VALUE = "AXUtilitiesEvent.last-known-value"
+    IGNORE_NAME_CHANGES_FOR = "AXUtilitiesEvent.ignore-name-changes-for"
+    TEXT_EVENT_REASON = "AXUtilitiesEvent.text-event-reason"
+
+    _NAMESPACES = (
+        LAST_KNOWN_DESCRIPTION,
+        LAST_KNOWN_NAME,
+        LAST_KNOWN_CHECKED,
+        LAST_KNOWN_EXPANDED,
+        LAST_KNOWN_INDETERMINATE,
+        LAST_KNOWN_INVALID_ENTRY,
+        LAST_KNOWN_PRESSED,
+        LAST_KNOWN_SELECTED,
+        LAST_KNOWN_VALUE,
+        IGNORE_NAME_CHANGES_FOR,
+        TEXT_EVENT_REASON,
+    )
+
+    def __init__(self) -> None:
+        self._manager = ax_cache_manager.get_manager()
+        for namespace in self._NAMESPACES:
+            self._manager.register_cache(
+                self,
+                namespace,
+                lifetime=ax_cache_manager.Lifetime.PROCESS,
+            )
+        self._caches = {
+            namespace: self._manager.get_cache(self, namespace) for namespace in self._NAMESPACES
+        }
+
+    def get_description(self, obj: Atspi.Accessible) -> str | None:
+        """Returns the cached description for obj."""
+
+        cache = self._caches.get(self.LAST_KNOWN_DESCRIPTION)
+        if cache is None:
+            return None
+
+        return cache.get(ax_cache_manager.get_object_key(obj), None)
+
+    def set_description(self, obj: Atspi.Accessible, description: str) -> None:
+        """Stores the description for obj."""
+
+        cache = self._caches.get(self.LAST_KNOWN_DESCRIPTION)
+        if cache is not None:
+            cache.put(ax_cache_manager.get_object_key(obj), description)
+
+    def get_name(self, obj: Atspi.Accessible) -> str | None:
+        """Returns the cached name for obj."""
+
+        cache = self._caches.get(self.LAST_KNOWN_NAME)
+        if cache is None:
+            return None
+
+        return cache.get(ax_cache_manager.get_object_key(obj), None)
+
+    def set_name(self, obj: Atspi.Accessible, name: str) -> None:
+        """Stores the name for obj."""
+
+        cache = self._caches.get(self.LAST_KNOWN_NAME)
+        if cache is not None:
+            cache.put(ax_cache_manager.get_object_key(obj), name)
+
+    def get_state(self, namespace: str, obj: Atspi.Accessible) -> bool | None:
+        """Returns the cached state for obj."""
+
+        cache = self._caches.get(namespace)
+        if cache is None:
+            return None
+
+        return cache.get(ax_cache_manager.get_object_key(obj), None)
+
+    def set_state(self, namespace: str, obj: Atspi.Accessible, state: bool) -> None:
+        """Stores the state for obj."""
+
+        cache = self._caches.get(namespace)
+        if cache is not None:
+            cache.put(ax_cache_manager.get_object_key(obj), state)
+
+    def get_value(self, obj: Atspi.Accessible) -> float | None:
+        """Returns the cached value for obj."""
+
+        cache = self._caches.get(self.LAST_KNOWN_VALUE)
+        if cache is None:
+            return None
+
+        return cache.get(ax_cache_manager.get_object_key(obj), None)
+
+    def set_value(self, obj: Atspi.Accessible, value: float) -> None:
+        """Stores the value for obj."""
+
+        cache = self._caches.get(self.LAST_KNOWN_VALUE)
+        if cache is not None:
+            cache.put(ax_cache_manager.get_object_key(obj), value)
+
+    def get_text_event_reason(self, event: Atspi.Event) -> TextEventReason | None:
+        """Returns the cached reason for event."""
+
+        cache = self._caches.get(self.TEXT_EVENT_REASON)
+        if cache is None:
+            return None
+
+        return cache.get(event, None)
+
+    def set_text_event_reason(self, event: Atspi.Event, reason: TextEventReason) -> None:
+        """Stores the reason for event."""
+
+        cache = self._caches.get(self.TEXT_EVENT_REASON)
+        if cache is not None:
+            cache.put(event, reason)
+
+    def is_ignoring_name_changes_for(self, obj: Atspi.Accessible) -> bool:
+        """Returns True if name changes should be ignored for obj."""
+
+        cache = self._caches.get(self.IGNORE_NAME_CHANGES_FOR)
+        if cache is None:
+            return False
+
+        return cache.get(ax_cache_manager.get_object_key(obj), False)
+
+    def ignore_name_changes_for(self, obj: Atspi.Accessible) -> None:
+        """Stores that name changes should be ignored for obj."""
+
+        cache = self._caches.get(self.IGNORE_NAME_CHANGES_FOR)
+        if cache is not None:
+            cache.put(ax_cache_manager.get_object_key(obj), True)
+
+
 class AXUtilitiesEvent:
     """Utilities for accessible events."""
 
     # How recent a caret set must be for its resulting event to be attributed to it.
     CARET_SET_EVENT_WINDOW_SECONDS = 1.0
 
-    LAST_KNOWN_DESCRIPTION: ClassVar[dict[int, str]] = {}
-    LAST_KNOWN_NAME: ClassVar[dict[int, str]] = {}
-
-    LAST_KNOWN_CHECKED: ClassVar[dict[int, bool]] = {}
-    LAST_KNOWN_EXPANDED: ClassVar[dict[int, bool]] = {}
-    LAST_KNOWN_INDETERMINATE: ClassVar[dict[int, bool]] = {}
-    LAST_KNOWN_INVALID_ENTRY: ClassVar[dict[int, bool]] = {}
-    LAST_KNOWN_PRESSED: ClassVar[dict[int, bool]] = {}
-    LAST_KNOWN_SELECTED: ClassVar[dict[int, bool]] = {}
-    LAST_KNOWN_VALUE: ClassVar[dict[int, float]] = {}
-
-    IGNORE_NAME_CHANGES_FOR: ClassVar[list[int]] = []
-
-    TEXT_EVENT_REASON: ClassVar[dict[Atspi.Event, TextEventReason]] = {}
-
-    _lock = threading.Lock()
+    _CACHE = _AXUtilitiesEventCache()
 
     @staticmethod
     def _strings_are_redundant(str1: str | None, str2: str | None, threshold: float = 0.85) -> bool:
@@ -152,38 +272,6 @@ class AXUtilitiesEvent:
         return similarity >= threshold
 
     @staticmethod
-    def _clear_stored_data() -> None:
-        """Clears any data we have cached for objects"""
-
-        while True:
-            time.sleep(60)
-            AXUtilitiesEvent._clear_all_dictionaries()
-
-    @staticmethod
-    def _clear_all_dictionaries(reason: str = "") -> None:
-        msg = "AXUtilitiesEvent: Clearing local cache."
-        if reason:
-            msg += f" Reason: {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION.clear()
-        AXUtilitiesEvent.LAST_KNOWN_NAME.clear()
-        AXUtilitiesEvent.LAST_KNOWN_CHECKED.clear()
-        AXUtilitiesEvent.LAST_KNOWN_EXPANDED.clear()
-        AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE.clear()
-        AXUtilitiesEvent.LAST_KNOWN_INVALID_ENTRY.clear()
-        AXUtilitiesEvent.LAST_KNOWN_PRESSED.clear()
-        AXUtilitiesEvent.LAST_KNOWN_SELECTED.clear()
-        AXUtilitiesEvent.LAST_KNOWN_VALUE.clear()
-        AXUtilitiesEvent.TEXT_EVENT_REASON.clear()
-        AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.clear()
-
-    @staticmethod
-    def clear_cache_now(reason: str = "") -> None:
-        """Clears all cached information immediately."""
-
-        AXUtilitiesEvent._clear_all_dictionaries(reason)
-
-    @staticmethod
     def save_object_info_for_events(obj: Atspi.Accessible) -> None:
         """Saves properties, states, etc. of obj for later use in event processing."""
 
@@ -191,37 +279,43 @@ class AXUtilitiesEvent:
             return
 
         state_set = AXObject.get_state_set(obj)
-        AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION[hash(obj)] = AXObject.get_description(obj)
-        AXUtilitiesEvent.LAST_KNOWN_NAME[hash(obj)] = AXObject.get_name(obj)
-        AXUtilitiesEvent.LAST_KNOWN_CHECKED[hash(obj)] = AXUtilitiesState.is_checked(obj, state_set)
-        AXUtilitiesEvent.LAST_KNOWN_EXPANDED[hash(obj)] = AXUtilitiesState.is_expanded(
-            obj, state_set
+        AXUtilitiesEvent._CACHE.set_description(obj, AXObject.get_description(obj))
+        AXUtilitiesEvent._CACHE.set_name(obj, AXObject.get_name(obj))
+        AXUtilitiesEvent._CACHE.set_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_CHECKED,
+            obj,
+            AXUtilitiesState.is_checked(obj, state_set),
         )
-        AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE[hash(obj)] = AXUtilitiesState.is_indeterminate(
-            obj, state_set
+        AXUtilitiesEvent._CACHE.set_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_EXPANDED,
+            obj,
+            AXUtilitiesState.is_expanded(obj, state_set),
         )
-        AXUtilitiesEvent.LAST_KNOWN_PRESSED[hash(obj)] = AXUtilitiesState.is_pressed(obj, state_set)
-        AXUtilitiesEvent.LAST_KNOWN_SELECTED[hash(obj)] = AXUtilitiesState.is_selected(
-            obj, state_set
+        AXUtilitiesEvent._CACHE.set_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_INDETERMINATE,
+            obj,
+            AXUtilitiesState.is_indeterminate(obj, state_set),
+        )
+        AXUtilitiesEvent._CACHE.set_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_PRESSED,
+            obj,
+            AXUtilitiesState.is_pressed(obj, state_set),
+        )
+        AXUtilitiesEvent._CACHE.set_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_SELECTED,
+            obj,
+            AXUtilitiesState.is_selected(obj, state_set),
         )
 
         window = focus_manager.get_manager().get_active_window()
-        AXUtilitiesEvent.LAST_KNOWN_NAME[hash(window)] = AXObject.get_name(window)
-        AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION[hash(window)] = AXObject.get_description(window)
-
-    @staticmethod
-    def start_cache_clearing_thread() -> None:
-        """Starts thread to periodically clear cached details."""
-
-        thread = threading.Thread(target=AXUtilitiesEvent._clear_stored_data)
-        thread.daemon = True
-        thread.start()
+        AXUtilitiesEvent._CACHE.set_name(window, AXObject.get_name(window))
+        AXUtilitiesEvent._CACHE.set_description(window, AXObject.get_description(window))
 
     @staticmethod
     def get_text_event_reason(event: Atspi.Event) -> TextEventReason:
         """Returns the TextEventReason for the given event."""
 
-        reason = AXUtilitiesEvent.TEXT_EVENT_REASON.get(event)
+        reason = AXUtilitiesEvent._CACHE.get_text_event_reason(event)
         if reason is not None:
             tokens = ["AXUtilitiesEvent: Cached reason for", event, f": {reason}"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -239,7 +333,7 @@ class AXUtilitiesEvent:
         else:
             raise ValueError(f"Unexpected event type: {event.type}")
 
-        AXUtilitiesEvent.TEXT_EVENT_REASON[event] = reason
+        AXUtilitiesEvent._CACHE.set_text_event_reason(event, reason)
         tokens = ["AXUtilitiesEvent: Reason for", event, f": {reason}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return reason
@@ -637,14 +731,21 @@ class AXUtilitiesEvent:
     def is_presentable_checked_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as a checked-state change."""
 
-        old_state = AXUtilitiesEvent.LAST_KNOWN_CHECKED.get(hash(event.source))
+        old_state = AXUtilitiesEvent._CACHE.get_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_CHECKED,
+            event.source,
+        )
         new_state = AXUtilitiesState.is_checked(event.source)
         if old_state == new_state:
             msg = "AXUtilitiesEvent: The new state matches the old state."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        AXUtilitiesEvent.LAST_KNOWN_CHECKED[hash(event.source)] = new_state
+        AXUtilitiesEvent._CACHE.set_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_CHECKED,
+            event.source,
+            new_state,
+        )
         focus = focus_manager.get_manager().get_locus_of_focus()
         if event.source != focus:
             if not AXUtilitiesObject.is_ancestor(event.source, focus):
@@ -680,7 +781,7 @@ class AXUtilitiesEvent:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        old_description = AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION.get(hash(event.source))
+        old_description = AXUtilitiesEvent._CACHE.get_description(event.source)
         new_description = event.any_data
         if old_description == new_description:
             msg = "AXUtilitiesEvent: The new description matches the old description."
@@ -695,7 +796,7 @@ class AXUtilitiesEvent:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION[hash(event.source)] = new_description
+        AXUtilitiesEvent._CACHE.set_description(event.source, new_description)
         if not new_description:
             msg = "AXUtilitiesEvent: The description is empty."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -736,14 +837,21 @@ class AXUtilitiesEvent:
     def is_presentable_expanded_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as an expanded-state change."""
 
-        old_state = AXUtilitiesEvent.LAST_KNOWN_EXPANDED.get(hash(event.source))
+        old_state = AXUtilitiesEvent._CACHE.get_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_EXPANDED,
+            event.source,
+        )
         new_state = AXUtilitiesState.is_expanded(event.source)
         if old_state == new_state:
             msg = "AXUtilitiesEvent: The new state matches the old state."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        AXUtilitiesEvent.LAST_KNOWN_EXPANDED[hash(event.source)] = new_state
+        AXUtilitiesEvent._CACHE.set_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_EXPANDED,
+            event.source,
+            new_state,
+        )
         focus = focus_manager.get_manager().get_locus_of_focus()
         if event.source == focus:
             msg = "AXUtilitiesEvent: Event is presentable, from the locus of focus."
@@ -774,14 +882,21 @@ class AXUtilitiesEvent:
     def is_presentable_indeterminate_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as an indeterminate-state change."""
 
-        old_state = AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE.get(hash(event.source))
+        old_state = AXUtilitiesEvent._CACHE.get_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_INDETERMINATE,
+            event.source,
+        )
         new_state = AXUtilitiesState.is_indeterminate(event.source)
         if old_state == new_state:
             msg = "AXUtilitiesEvent: The new state matches the old state."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE[hash(event.source)] = new_state
+        AXUtilitiesEvent._CACHE.set_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_INDETERMINATE,
+            event.source,
+            new_state,
+        )
 
         # If this state is cleared, the new state will become checked or unchecked
         # and we should get object:state-changed:checked events for those cases.
@@ -803,14 +918,21 @@ class AXUtilitiesEvent:
     def is_presentable_invalid_entry_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as an invalid-entry-state change."""
 
-        old_state = AXUtilitiesEvent.LAST_KNOWN_INVALID_ENTRY.get(hash(event.source))
+        old_state = AXUtilitiesEvent._CACHE.get_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_INVALID_ENTRY,
+            event.source,
+        )
         new_state = AXUtilitiesState.is_invalid_entry(event.source)
         if old_state == new_state:
             msg = "AXUtilitiesEvent: The new state matches the old state."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        AXUtilitiesEvent.LAST_KNOWN_INVALID_ENTRY[hash(event.source)] = new_state
+        AXUtilitiesEvent._CACHE.set_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_INVALID_ENTRY,
+            event.source,
+            new_state,
+        )
         if event.source != focus_manager.get_manager().get_locus_of_focus():
             msg = "AXUtilitiesEvent: The event is not from the locus of focus."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -858,7 +980,7 @@ class AXUtilitiesEvent:
     def _is_changed_name_to_present(event: Atspi.Event) -> bool:
         """Returns True if the name data warrants further presentability checks."""
 
-        if hash(event.source) in AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR:
+        if AXUtilitiesEvent._CACHE.is_ignoring_name_changes_for(event.source):
             msg = "AXUtilitiesEvent: Ignoring name change for this source."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
@@ -868,7 +990,7 @@ class AXUtilitiesEvent:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        old_name = AXUtilitiesEvent.LAST_KNOWN_NAME.get(hash(event.source))
+        old_name = AXUtilitiesEvent._CACHE.get_name(event.source)
         new_name = event.any_data
         if old_name == new_name:
             msg = "AXUtilitiesEvent: The new name matches the old name."
@@ -883,7 +1005,7 @@ class AXUtilitiesEvent:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        AXUtilitiesEvent.LAST_KNOWN_NAME[hash(event.source)] = new_name
+        AXUtilitiesEvent._CACHE.set_name(event.source, new_name)
         if not new_name:
             msg = "AXUtilitiesEvent: The name is empty."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -930,7 +1052,7 @@ class AXUtilitiesEvent:
             if has_progress_bar:
                 msg = "AXUtilitiesEvent: The list item contains a progress bar."
                 debug.print_message(debug.LEVEL_INFO, msg, True)
-                AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.append(hash(event.source))
+                AXUtilitiesEvent._CACHE.ignore_name_changes_for(event.source)
                 return False
 
         msg = "AXUtilitiesEvent: Event is presentable."
@@ -941,14 +1063,21 @@ class AXUtilitiesEvent:
     def is_presentable_pressed_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as a pressed-state change."""
 
-        old_state = AXUtilitiesEvent.LAST_KNOWN_PRESSED.get(hash(event.source))
+        old_state = AXUtilitiesEvent._CACHE.get_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_PRESSED,
+            event.source,
+        )
         new_state = AXUtilitiesState.is_pressed(event.source)
         if old_state == new_state:
             msg = "AXUtilitiesEvent: The new state matches the old state."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        AXUtilitiesEvent.LAST_KNOWN_PRESSED[hash(event.source)] = new_state
+        AXUtilitiesEvent._CACHE.set_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_PRESSED,
+            event.source,
+            new_state,
+        )
         if event.source != focus_manager.get_manager().get_locus_of_focus():
             msg = "AXUtilitiesEvent: The event is not from the locus of focus."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -962,14 +1091,21 @@ class AXUtilitiesEvent:
     def is_presentable_selected_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as a selected-state change."""
 
-        old_state = AXUtilitiesEvent.LAST_KNOWN_SELECTED.get(hash(event.source))
+        old_state = AXUtilitiesEvent._CACHE.get_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_SELECTED,
+            event.source,
+        )
         new_state = AXUtilitiesState.is_selected(event.source)
         if old_state == new_state:
             msg = "AXUtilitiesEvent: The new state matches the old state."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        AXUtilitiesEvent.LAST_KNOWN_SELECTED[hash(event.source)] = new_state
+        AXUtilitiesEvent._CACHE.set_state(
+            AXUtilitiesEvent._CACHE.LAST_KNOWN_SELECTED,
+            event.source,
+            new_state,
+        )
         if event.source != focus_manager.get_manager().get_locus_of_focus():
             msg = "AXUtilitiesEvent: The event is not from the locus of focus."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1064,9 +1200,9 @@ class AXUtilitiesEvent:
     def is_presentable_value_change(event: Atspi.Event) -> bool:
         """Returns True if this event should be presented as a value change."""
 
-        old_value = AXUtilitiesEvent.LAST_KNOWN_VALUE.get(hash(event.source))
+        old_value = AXUtilitiesEvent._CACHE.get_value(event.source)
         new_value = AXValue.get_current_value(event.source)
-        AXUtilitiesEvent.LAST_KNOWN_VALUE[hash(event.source)] = new_value
+        AXUtilitiesEvent._CACHE.set_value(event.source, new_value)
         if old_value == new_value:
             msg = "AXUtilitiesEvent: The new value matches the old value."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1134,6 +1270,3 @@ class AXUtilitiesEvent:
         """Returns True if this text-insertion event should be presented."""
 
         return AXUtilitiesEvent._is_presentable_text_event(event)
-
-
-AXUtilitiesEvent.start_cache_clearing_thread()

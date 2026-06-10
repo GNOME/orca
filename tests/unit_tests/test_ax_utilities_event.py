@@ -45,6 +45,34 @@ if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
 
 
+_STATE_NAMESPACE_ATTRIBUTES = {
+    "checked": "LAST_KNOWN_CHECKED",
+    "expanded": "LAST_KNOWN_EXPANDED",
+    "indeterminate": "LAST_KNOWN_INDETERMINATE",
+    "invalid_entry": "LAST_KNOWN_INVALID_ENTRY",
+    "pressed": "LAST_KNOWN_PRESSED",
+    "selected": "LAST_KNOWN_SELECTED",
+}
+
+
+def _get_state_cache(event_utilities, change_type: str) -> str:
+    """Returns the cache namespace for a presentable state change."""
+
+    return getattr(event_utilities._CACHE, _STATE_NAMESPACE_ATTRIBUTES[change_type])
+
+
+def _set_last_known_state(event_utilities, change_type: str, obj, state: bool) -> None:
+    """Stores a last-known state in AXUtilitiesEvent's cache."""
+
+    event_utilities._CACHE.set_state(_get_state_cache(event_utilities, change_type), obj, state)
+
+
+def _get_last_known_state(event_utilities, change_type: str, obj) -> bool | None:
+    """Returns a last-known state from AXUtilitiesEvent's cache."""
+
+    return event_utilities._CACHE.get_state(_get_state_cache(event_utilities, change_type), obj)
+
+
 @pytest.mark.unit
 class TestAXUtilitiesEvent:
     """Test event-related methods."""
@@ -163,17 +191,7 @@ class TestAXUtilitiesEvent:
         essential_modules["orca.debug"].print_message = test_context.Mock()
         essential_modules["orca.debug"].LEVEL_INFO = 800
 
-        from orca.ax_utilities_event import AXUtilitiesEvent
-
-        AXUtilitiesEvent.LAST_KNOWN_NAME.clear()
-        AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION.clear()
-        AXUtilitiesEvent.LAST_KNOWN_EXPANDED.clear()
-        AXUtilitiesEvent.LAST_KNOWN_CHECKED.clear()
-        AXUtilitiesEvent.LAST_KNOWN_PRESSED.clear()
-        AXUtilitiesEvent.LAST_KNOWN_SELECTED.clear()
-        AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE.clear()
-        AXUtilitiesEvent.LAST_KNOWN_INVALID_ENTRY.clear()
-        AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.clear()
+        self._clear_event_cache()
 
         from orca.ax_object import AXObject
         from orca.ax_text import AXText
@@ -200,6 +218,36 @@ class TestAXUtilitiesEvent:
         test_context.patch_object(AXUtilitiesState, "is_showing", return_value=True)
 
         return essential_modules
+
+    @staticmethod
+    def _clear_event_cache() -> None:
+        """Clears event caches through the manager."""
+
+        from orca import ax_cache_manager
+
+        ax_cache_manager.get_manager().clear_cache_now("Unit test.")
+
+    def test_import_registers_event_cache_namespaces(self, test_context) -> None:
+        """Test importing event utilities registers its cache namespaces."""
+
+        test_context.setup_shared_dependencies(["orca.ax_utilities_object"])
+        from orca import ax_cache_manager
+
+        manager = ax_cache_manager.get_manager()
+        register = test_context.patch_object(
+            manager,
+            "register_cache",
+            wraps=manager.register_cache,
+        )
+
+        from orca.ax_utilities_event import AXUtilitiesEvent
+
+        event_calls = [
+            call for call in register.call_args_list if call.args[0] is AXUtilitiesEvent._CACHE
+        ]
+        assert len(event_calls) == 11
+        for call in event_calls:
+            assert call.kwargs["lifetime"] is ax_cache_manager.Lifetime.PROCESS
 
     @pytest.mark.parametrize(
         "case",
@@ -230,7 +278,7 @@ class TestAXUtilitiesEvent:
         mock_event = test_context.Mock(spec=Atspi.Event)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
-        AXUtilitiesEvent.LAST_KNOWN_EXPANDED[hash(mock_obj)] = case["initial_state"]
+        _set_last_known_state(AXUtilitiesEvent, "expanded", mock_obj, case["initial_state"])
         test_context.patch_object(
             AXUtilitiesState,
             "is_expanded",
@@ -275,16 +323,16 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.any_data = case["new_description"]
-        AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION[hash(mock_obj)] = case["old_description"]
+        AXUtilitiesEvent._CACHE.set_description(mock_obj, case["old_description"])
 
         def mock_is_presentable_description_change(event):
             if not isinstance(event.any_data, str):
                 return False
-            old_description = AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION.get(hash(event.source))
+            old_description = AXUtilitiesEvent._CACHE.get_description(event.source)
             new_description = event.any_data
             if old_description == new_description:
                 return False
-            AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION[hash(event.source)] = new_description
+            AXUtilitiesEvent._CACHE.set_description(event.source, new_description)
             return bool(new_description)
 
         test_context.patch_object(
@@ -302,9 +350,11 @@ class TestAXUtilitiesEvent:
         self._setup_dependencies(test_context)
         from orca.ax_utilities_event import AXUtilitiesEvent
 
+        set_name = test_context.patch_object(AXUtilitiesEvent._CACHE, "set_name")
+        set_description = test_context.patch_object(AXUtilitiesEvent._CACHE, "set_description")
         AXUtilitiesEvent.save_object_info_for_events(None)
-        assert not AXUtilitiesEvent.LAST_KNOWN_NAME
-        assert not AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION
+        set_name.assert_not_called()
+        set_description.assert_not_called()
 
     def test_get_text_event_reason_with_cached_reason(self, test_context):
         """Test AXUtilitiesEvent.get_text_event_reason with cached reason."""
@@ -313,7 +363,7 @@ class TestAXUtilitiesEvent:
         from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
 
         mock_event = test_context.Mock(spec=Atspi.Event)
-        AXUtilitiesEvent.TEXT_EVENT_REASON[mock_event] = TextEventReason.TYPING
+        AXUtilitiesEvent._CACHE.set_text_event_reason(mock_event, TextEventReason.TYPING)
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
         assert result == TextEventReason.TYPING
 
@@ -402,7 +452,9 @@ class TestAXUtilitiesEvent:
             mock_event.any_data = case["setup_data"]["any_data"]
 
         if case["method_name"] == "checked_change":
-            AXUtilitiesEvent.LAST_KNOWN_CHECKED[hash(mock_obj)] = case["setup_data"]["last_state"]
+            _set_last_known_state(
+                AXUtilitiesEvent, "checked", mock_obj, case["setup_data"]["last_state"]
+            )
             test_context.patch_object(
                 AXUtilitiesState,
                 "is_checked",
@@ -410,12 +462,15 @@ class TestAXUtilitiesEvent:
             )
             method = AXUtilitiesEvent.is_presentable_checked_change
         elif case["method_name"] == "name_change":
-            AXUtilitiesEvent.LAST_KNOWN_NAME[hash(mock_obj)] = case["setup_data"]["last_name"]
+            AXUtilitiesEvent._CACHE.set_name(mock_obj, case["setup_data"]["last_name"])
             method = AXUtilitiesEvent.is_presentable_name_change
         elif case["method_name"] == "indeterminate_change":
-            AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE[hash(mock_obj)] = case["setup_data"][
-                "last_state"
-            ]
+            _set_last_known_state(
+                AXUtilitiesEvent,
+                "indeterminate",
+                mock_obj,
+                case["setup_data"]["last_state"],
+            )
             test_context.patch_object(
                 AXUtilitiesState,
                 "is_indeterminate",
@@ -482,7 +537,7 @@ class TestAXUtilitiesEvent:
         mock_event.source = mock_obj
 
         if case["method_name"] == "pressed_change":
-            AXUtilitiesEvent.LAST_KNOWN_PRESSED[hash(mock_obj)] = case["last_state"]
+            _set_last_known_state(AXUtilitiesEvent, "pressed", mock_obj, case["last_state"])
             test_context.patch_object(
                 AXUtilitiesState,
                 "is_pressed",
@@ -490,11 +545,11 @@ class TestAXUtilitiesEvent:
             )
 
             def mock_is_presentable_pressed_change(event):
-                old_state = AXUtilitiesEvent.LAST_KNOWN_PRESSED.get(hash(event.source))
+                old_state = _get_last_known_state(AXUtilitiesEvent, "pressed", event.source)
                 new_state = AXUtilitiesState.is_pressed(event.source)
                 if old_state == new_state:
                     return False
-                AXUtilitiesEvent.LAST_KNOWN_PRESSED[hash(event.source)] = new_state
+                _set_last_known_state(AXUtilitiesEvent, "pressed", event.source, new_state)
                 return True
 
             test_context.patch_object(
@@ -507,7 +562,7 @@ class TestAXUtilitiesEvent:
         elif case["method_name"] == "selected_change":
             from orca.ax_object import AXObject
 
-            AXUtilitiesEvent.LAST_KNOWN_SELECTED[hash(mock_obj)] = case["last_state"]
+            _set_last_known_state(AXUtilitiesEvent, "selected", mock_obj, case["last_state"])
             test_context.patch_object(
                 AXUtilitiesState,
                 "is_selected",
@@ -521,7 +576,7 @@ class TestAXUtilitiesEvent:
             method = AXUtilitiesEvent.is_presentable_selected_change
 
         elif case["method_name"] == "invalid_entry_change":
-            AXUtilitiesEvent.LAST_KNOWN_INVALID_ENTRY[hash(mock_obj)] = case["last_state"]
+            _set_last_known_state(AXUtilitiesEvent, "invalid_entry", mock_obj, case["last_state"])
             test_context.patch_object(
                 AXUtilitiesState,
                 "is_invalid_entry",
@@ -531,11 +586,15 @@ class TestAXUtilitiesEvent:
             if case["current_state"] != case["last_state"]:
 
                 def mock_is_presentable_invalid_entry_change(event):
-                    old_state = AXUtilitiesEvent.LAST_KNOWN_INVALID_ENTRY.get(hash(event.source))
+                    old_state = _get_last_known_state(
+                        AXUtilitiesEvent, "invalid_entry", event.source
+                    )
                     new_state = AXUtilitiesState.is_invalid_entry(event.source)
                     if old_state == new_state:
                         return False
-                    AXUtilitiesEvent.LAST_KNOWN_INVALID_ENTRY[hash(event.source)] = new_state
+                    _set_last_known_state(
+                        AXUtilitiesEvent, "invalid_entry", event.source, new_state
+                    )
                     return True
 
                 test_context.patch_object(
@@ -586,15 +645,15 @@ class TestAXUtilitiesEvent:
 
         AXUtilitiesEvent.save_object_info_for_events(mock_obj)
 
-        assert AXUtilitiesEvent.LAST_KNOWN_NAME[hash(mock_obj)] == "test name"
-        assert AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION[hash(mock_obj)] == "test desc"
-        assert AXUtilitiesEvent.LAST_KNOWN_CHECKED[hash(mock_obj)] is True
-        assert AXUtilitiesEvent.LAST_KNOWN_EXPANDED[hash(mock_obj)] is False
-        assert AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE[hash(mock_obj)] is True
-        assert AXUtilitiesEvent.LAST_KNOWN_PRESSED[hash(mock_obj)] is False
-        assert AXUtilitiesEvent.LAST_KNOWN_SELECTED[hash(mock_obj)] is True
-        assert AXUtilitiesEvent.LAST_KNOWN_NAME[hash(mock_window)] == "window name"
-        assert AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION[hash(mock_window)] == "window desc"
+        assert AXUtilitiesEvent._CACHE.get_name(mock_obj) == "test name"
+        assert AXUtilitiesEvent._CACHE.get_description(mock_obj) == "test desc"
+        assert _get_last_known_state(AXUtilitiesEvent, "checked", mock_obj) is True
+        assert _get_last_known_state(AXUtilitiesEvent, "expanded", mock_obj) is False
+        assert _get_last_known_state(AXUtilitiesEvent, "indeterminate", mock_obj) is True
+        assert _get_last_known_state(AXUtilitiesEvent, "pressed", mock_obj) is False
+        assert _get_last_known_state(AXUtilitiesEvent, "selected", mock_obj) is True
+        assert AXUtilitiesEvent._CACHE.get_name(mock_window) == "window name"
+        assert AXUtilitiesEvent._CACHE.get_description(mock_window) == "window desc"
 
     @pytest.mark.parametrize(
         "case",
@@ -640,7 +699,7 @@ class TestAXUtilitiesEvent:
 
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
         assert result == expected_reason
-        assert AXUtilitiesEvent.TEXT_EVENT_REASON[mock_event] == expected_reason
+        assert AXUtilitiesEvent._CACHE.get_text_event_reason(mock_event) == expected_reason
 
     @pytest.mark.parametrize(
         "case",
@@ -1461,7 +1520,7 @@ class TestAXUtilitiesEvent:
         mock_focus = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
 
-        AXUtilitiesEvent.LAST_KNOWN_CHECKED[hash(mock_obj)] = False
+        _set_last_known_state(AXUtilitiesEvent, "checked", mock_obj, False)
 
         mock_focus_manager = test_context.Mock()
         mock_focus_manager.get_locus_of_focus.return_value = mock_focus
@@ -1504,7 +1563,7 @@ class TestAXUtilitiesEvent:
         mock_event.source = mock_obj
         mock_event.any_data = "new description"
 
-        AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION[hash(mock_obj)] = "old description"
+        AXUtilitiesEvent._CACHE.set_description(mock_obj, "old description")
 
         mock_focus_manager = test_context.Mock()
         mock_focus_manager.get_locus_of_focus.return_value = mock_focus
@@ -1535,7 +1594,7 @@ class TestAXUtilitiesEvent:
         mock_focus = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
         mock_event.detail1 = 1
-        AXUtilitiesEvent.LAST_KNOWN_EXPANDED[hash(mock_obj)] = False
+        _set_last_known_state(AXUtilitiesEvent, "expanded", mock_obj, False)
 
         mock_focus_manager = test_context.Mock()
         mock_focus_manager.get_locus_of_focus.return_value = mock_focus
@@ -1564,7 +1623,7 @@ class TestAXUtilitiesEvent:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_obj
 
-        AXUtilitiesEvent.LAST_KNOWN_INDETERMINATE[hash(mock_obj)] = False
+        _set_last_known_state(AXUtilitiesEvent, "indeterminate", mock_obj, False)
 
         mock_focus_manager = test_context.Mock()
         mock_focus_manager.get_locus_of_focus.return_value = mock_obj
@@ -1591,7 +1650,7 @@ class TestAXUtilitiesEvent:
         mock_event.source = mock_frame
         mock_event.any_data = "New Window Title: user input text"
 
-        AXUtilitiesEvent.LAST_KNOWN_NAME[hash(mock_frame)] = "Old Window Title"
+        AXUtilitiesEvent._CACHE.set_name(mock_frame, "Old Window Title")
 
         mock_focus_manager = test_context.Mock()
         mock_focus_manager.get_active_window.return_value = mock_frame
@@ -2247,23 +2306,6 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent.get_text_event_reason(mock_event)
         assert result == TextEventReason.UNSPECIFIED_COMMAND
 
-    def test_clear_all_dictionaries_direct_call(self, test_context):
-        """Test _clear_all_dictionaries method directly."""
-
-        self._setup_dependencies(test_context)
-        from orca import debug
-        from orca.ax_utilities_event import AXUtilitiesEvent
-
-        mock_print_message = test_context.Mock()
-        test_context.patch_object(debug, "print_message", new=mock_print_message)
-
-        AXUtilitiesEvent._clear_all_dictionaries("direct test")
-
-        mock_print_message.assert_called_once()
-        args = mock_print_message.call_args[0]
-        assert "AXUtilitiesEvent: Clearing local cache." in args[1]
-        assert "Reason: direct test" in args[1]
-
     @pytest.mark.parametrize(
         "case",
         [
@@ -2666,16 +2708,23 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == TextEventReason.MOUSE_MIDDLE_BUTTON
 
-    def test_clear_cache_now_with_reason(self, test_context):
-        """Test AXUtilitiesEvent.clear_cache_now with reason parameter."""
+    def test_manager_clear_cache_now_clears_event_cache(self, test_context):
+        """Test routine manager clearing removes cached event values."""
 
         self._setup_dependencies(test_context)
-        from orca.ax_utilities_event import AXUtilitiesEvent
+        from orca import ax_cache_manager
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
 
-        AXUtilitiesEvent.clear_cache_now("test reason")
-        assert len(AXUtilitiesEvent.LAST_KNOWN_NAME) == 0
-        assert len(AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION) == 0
-        assert len(AXUtilitiesEvent.TEXT_EVENT_REASON) == 0
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_event = test_context.Mock(spec=Atspi.Event)
+        AXUtilitiesEvent._CACHE.set_name(mock_obj, "name")
+        AXUtilitiesEvent._CACHE.set_description(mock_obj, "description")
+        AXUtilitiesEvent._CACHE.set_text_event_reason(mock_event, TextEventReason.TYPING)
+
+        ax_cache_manager.get_manager().clear_cache_now("test reason")
+        assert AXUtilitiesEvent._CACHE.get_name(mock_obj) is None
+        assert AXUtilitiesEvent._CACHE.get_description(mock_obj) is None
+        assert AXUtilitiesEvent._CACHE.get_text_event_reason(mock_event) is None
 
     def test_get_text_deletion_event_reason_page_switch(self, test_context):
         """Test _get_text_deletion_event_reason with page switch scenario."""
@@ -3292,7 +3341,7 @@ class TestAXUtilitiesEvent:
         mock_focus_manager.get_locus_of_focus.return_value = mock_focus
         test_context.patch_object(focus_manager, "get_manager", return_value=mock_focus_manager)
         test_context.patch_object(AXUtilitiesState, "is_checked", return_value=True)
-        AXUtilitiesEvent.LAST_KNOWN_CHECKED.clear()
+        self._clear_event_cache()
 
         if case["test_scenario"] == "ancestor_not_list_tree_item":
             test_context.patch_object(AXUtilitiesObject, "is_ancestor", return_value=True)
@@ -3339,7 +3388,7 @@ class TestAXUtilitiesEvent:
         mock_source = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_source
         mock_event.any_data = case["description_data"]
-        AXUtilitiesEvent.LAST_KNOWN_DESCRIPTION.clear()
+        self._clear_event_cache()
 
         test_context.patch_object(
             AXUtilitiesState,
@@ -3426,7 +3475,7 @@ class TestAXUtilitiesEvent:
         mock_source = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_source
         mock_event.detail1 = case["detail1"]
-        AXUtilitiesEvent.LAST_KNOWN_EXPANDED.clear()
+        self._clear_event_cache()
 
         test_context.patch_object(AXUtilitiesState, "is_expanded", return_value=True)
         mock_focus = test_context.Mock(spec=Atspi.Accessible)
@@ -3486,8 +3535,7 @@ class TestAXUtilitiesEvent:
         mock_source = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_source
 
-        cache_name = f"LAST_KNOWN_{case['change_type'].upper()}"
-        getattr(AXUtilitiesEvent, cache_name).clear()
+        self._clear_event_cache()
 
         test_context.patch_object(AXUtilitiesState, case["state_method"], return_value=True)
 
@@ -3514,7 +3562,7 @@ class TestAXUtilitiesEvent:
         mock_source = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_source
         mock_event.any_data = "new name"
-        AXUtilitiesEvent.LAST_KNOWN_NAME.clear()
+        self._clear_event_cache()
 
         mock_event.any_data = ""
         result = AXUtilitiesEvent.is_presentable_name_change(mock_event)
@@ -3579,8 +3627,7 @@ class TestAXUtilitiesEvent:
         mock_source = test_context.Mock(spec=Atspi.Accessible)
         mock_event.source = mock_source
 
-        cache_name = f"LAST_KNOWN_{case['change_type'].upper()}"
-        getattr(AXUtilitiesEvent, cache_name).clear()
+        self._clear_event_cache()
 
         test_context.patch_object(AXUtilitiesState, case["state_method"], return_value=True)
 
@@ -3699,22 +3746,20 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == TextEventReason.TYPING
 
-    def test_ignore_name_changes_for_cleared_by_clear_all(self, test_context):
-        """Test that IGNORE_NAME_CHANGES_FOR is cleared by _clear_all_dictionaries."""
+    def test_ignore_name_changes_for_cleared_by_manager_clear_cache_now(self, test_context):
+        """Test routine manager clearing removes ignored name-change sources."""
 
         self._setup_dependencies(test_context)
-        from orca import debug
+        from orca import ax_cache_manager
         from orca.ax_utilities_event import AXUtilitiesEvent
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
-        AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.append(hash(mock_obj))
-        assert len(AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR) == 1
+        AXUtilitiesEvent._CACHE.ignore_name_changes_for(mock_obj)
+        assert AXUtilitiesEvent._CACHE.is_ignoring_name_changes_for(mock_obj) is True
 
-        test_context.patch_object(debug, "print_message", new=test_context.Mock())
+        ax_cache_manager.get_manager().clear_cache_now("test clear")
 
-        AXUtilitiesEvent._clear_all_dictionaries("test clear")
-
-        assert len(AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR) == 0
+        assert AXUtilitiesEvent._CACHE.is_ignoring_name_changes_for(mock_obj) is False
 
     def test_is_presentable_name_change_returns_false_when_source_in_ignore_list(
         self,
@@ -3730,8 +3775,8 @@ class TestAXUtilitiesEvent:
         mock_event.source = mock_source
         mock_event.any_data = "new name"
 
-        AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.clear()
-        AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.append(hash(mock_source))
+        self._clear_event_cache()
+        AXUtilitiesEvent._CACHE.ignore_name_changes_for(mock_source)
 
         result = AXUtilitiesEvent.is_presentable_name_change(mock_event)
         assert result is False
@@ -3753,8 +3798,7 @@ class TestAXUtilitiesEvent:
         mock_event.source = mock_source
         mock_event.any_data = "Downloading... 50%"
 
-        AXUtilitiesEvent.LAST_KNOWN_NAME.clear()
-        AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.clear()
+        self._clear_event_cache()
 
         mock_focus_manager = test_context.Mock()
         mock_focus_manager.get_locus_of_focus.return_value = mock_source
@@ -3770,7 +3814,7 @@ class TestAXUtilitiesEvent:
 
         result = AXUtilitiesEvent.is_presentable_name_change(mock_event)
         assert result is False
-        assert hash(mock_source) in AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR
+        assert AXUtilitiesEvent._CACHE.is_ignoring_name_changes_for(mock_source) is True
 
     def test_is_presentable_name_change_list_item_without_progress_bar(self, test_context):
         """Test is_presentable_name_change returns True for list item without progress bar."""
@@ -3788,8 +3832,7 @@ class TestAXUtilitiesEvent:
         mock_event.source = mock_source
         mock_event.any_data = "List item name"
 
-        AXUtilitiesEvent.LAST_KNOWN_NAME.clear()
-        AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.clear()
+        self._clear_event_cache()
 
         mock_focus_manager = test_context.Mock()
         mock_focus_manager.get_locus_of_focus.return_value = mock_source
@@ -3803,7 +3846,7 @@ class TestAXUtilitiesEvent:
 
         result = AXUtilitiesEvent.is_presentable_name_change(mock_event)
         assert result is True
-        assert hash(mock_source) not in AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR
+        assert AXUtilitiesEvent._CACHE.is_ignoring_name_changes_for(mock_source) is False
 
     def test_is_presentable_name_change_subsequent_calls_ignored(self, test_context):
         """Test that subsequent name changes are ignored after source added to ignore list."""
@@ -3822,8 +3865,7 @@ class TestAXUtilitiesEvent:
         mock_event.source = mock_source
         mock_event.any_data = "Downloading... 50%"
 
-        AXUtilitiesEvent.LAST_KNOWN_NAME.clear()
-        AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR.clear()
+        self._clear_event_cache()
 
         mock_focus_manager = test_context.Mock()
         mock_focus_manager.get_locus_of_focus.return_value = mock_source
@@ -3839,7 +3881,7 @@ class TestAXUtilitiesEvent:
 
         result1 = AXUtilitiesEvent.is_presentable_name_change(mock_event)
         assert result1 is False
-        assert hash(mock_source) in AXUtilitiesEvent.IGNORE_NAME_CHANGES_FOR
+        assert AXUtilitiesEvent._CACHE.is_ignoring_name_changes_for(mock_source) is True
 
         mock_event.any_data = "Downloading... 75%"
         result2 = AXUtilitiesEvent.is_presentable_name_change(mock_event)
