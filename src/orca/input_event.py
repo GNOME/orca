@@ -716,8 +716,8 @@ class KeyboardEvent(InputEvent):
                 tokens = ["KEYBOARD EVENT: A modal handler is active"]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-                def _handle_modal(cmd=command) -> bool:
-                    modal_handler(self, cmd)
+                def _handle_modal(cmd=command, scr=script) -> bool:
+                    modal_handler(scr, self, cmd)
                     return True
 
                 self._handler = _handle_modal

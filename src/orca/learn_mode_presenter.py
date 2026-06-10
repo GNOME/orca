@@ -41,7 +41,6 @@ from . import (
     keybindings,
     messages,
     presentation_manager,
-    script_manager,
 )
 from .command import BrailleCommand, Command, KeyboardCommand
 from .extension import Extension
@@ -126,14 +125,11 @@ class LearnModePresenter(Extension):
 
     def handle_event(
         self,
+        script: default.Script,
         event: input_event.KeyboardEvent,
         command: KeyboardCommand | None = None,
     ) -> bool:
         """Handles the keyboard event in learn mode."""
-
-        script = script_manager.get_manager().get_active_script()
-        if script is None:
-            return False
 
         presentation_manager.get_manager().present_key_event(event)
 
