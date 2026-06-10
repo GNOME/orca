@@ -57,6 +57,55 @@ class TestAXUtilitiesRelation:
 
         return essential_modules
 
+    def test_import_registers_relation_cache_namespaces(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test importing relation utilities registers its cache namespaces."""
+
+        self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
+
+        manager = ax_cache_manager.get_manager()
+        register = test_context.patch_object(
+            manager,
+            "register_cache",
+            wraps=manager.register_cache,
+        )
+
+        from orca.ax_utilities_relation import AXUtilitiesRelation
+
+        assert register.call_count == 2
+        assert {call.args[0] for call in register.call_args_list} == {AXUtilitiesRelation._CACHE}
+        assert {call.args[1] for call in register.call_args_list} == {
+            AXUtilitiesRelation._CACHE.RELATIONS,
+            AXUtilitiesRelation._CACHE.TARGETS,
+        }
+        for call in register.call_args_list:
+            assert call.kwargs["lifetime"] is ax_cache_manager.Lifetime.PROCESS
+            assert call.kwargs["clear_on_demand"] is ax_cache_manager.ClearPolicy.CLEAR
+            assert "clear_interval_seconds" not in call.kwargs
+
+    def test_manager_clear_cache_now_clears_relation_cache(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test ordinary manager clearing removes cached relation results."""
+
+        self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
+        from orca.ax_utilities_relation import AXUtilitiesRelation
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        relation_type = Atspi.RelationType.LABELLED_BY
+        relations = [test_context.Mock(spec=Atspi.Relation)]
+        targets = [test_context.Mock(spec=Atspi.Accessible)]
+        AXUtilitiesRelation._CACHE.set_relations(mock_obj, relations)
+        AXUtilitiesRelation._CACHE.set_targets(mock_obj, relation_type, targets)
+
+        ax_cache_manager.get_manager().clear_cache_now("test reason")
+
+        assert AXUtilitiesRelation._CACHE.get_relations(mock_obj) is None
+        assert AXUtilitiesRelation._CACHE.get_targets(mock_obj, relation_type) is None
+
     @pytest.mark.parametrize(
         "case",
         [
@@ -242,9 +291,8 @@ class TestAXUtilitiesRelation:
             return_value=case["is_valid"],
         )
 
-        AXUtilitiesRelation.RELATIONS.clear()
         if case["has_cache"]:
-            AXUtilitiesRelation.RELATIONS[hash(mock_obj)] = mock_relations
+            AXUtilitiesRelation._CACHE.set_relations(mock_obj, mock_relations)
 
         if case["should_raise_error"]:
 
@@ -271,7 +319,7 @@ class TestAXUtilitiesRelation:
             assert result == case["expected_result"]
 
         if case["should_cache"]:
-            assert AXUtilitiesRelation.RELATIONS[hash(mock_obj)] == mock_relations
+            assert AXUtilitiesRelation._CACHE.get_relations(mock_obj) == mock_relations
 
     @pytest.mark.parametrize(
         "case",
@@ -364,11 +412,9 @@ class TestAXUtilitiesRelation:
         mock_target1 = test_context.Mock(spec=Atspi.Accessible)
         mock_target2 = test_context.Mock(spec=Atspi.Accessible)
 
-        AXUtilitiesRelation.TARGETS.clear()
-
         if case["scenario"] == "cached":
             mock_targets = [mock_target1]
-            AXUtilitiesRelation.TARGETS[hash(mock_obj)] = {case["relation_type"]: mock_targets}
+            AXUtilitiesRelation._CACHE.set_targets(mock_obj, case["relation_type"], mock_targets)
             result = AXUtilitiesRelation._get_relation_targets(mock_obj, case["relation_type"])
             assert result == mock_targets
             return
@@ -401,7 +447,7 @@ class TestAXUtilitiesRelation:
             assert result == case["expected_result"]
 
         if case["scenario"] == "no_relation":
-            assert AXUtilitiesRelation.TARGETS[hash(mock_obj)][case["relation_type"]] == []
+            assert AXUtilitiesRelation._CACHE.get_targets(mock_obj, case["relation_type"]) == []
 
     @pytest.mark.parametrize(
         "case",

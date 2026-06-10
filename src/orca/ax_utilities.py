@@ -142,7 +142,6 @@ class AXUtilities:
 
         AXUtilities._clear_all_dictionaries(reason)
         ax_cache_manager.get_manager().clear_cache_now(reason)
-        AXUtilitiesRelation.clear_cache_now(reason)
         AXUtilitiesEvent.clear_cache_now(reason)
         AXUtilitiesSelection.clear_cache_now(reason)
         if AXUtilitiesRole.is_table_related(obj):

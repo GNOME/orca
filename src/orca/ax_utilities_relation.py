@@ -25,63 +25,74 @@
 
 from __future__ import annotations
 
-import threading
-import time
-from typing import TYPE_CHECKING
-
 import gi
 
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
 
-from . import debug
+from . import ax_cache_manager, debug
 from .ax_object import AXObject
 from .ax_utilities_object import AXUtilitiesObject
 
-if TYPE_CHECKING:
-    from typing import ClassVar
+
+class _AXUtilitiesRelationCache:
+    """Provides relation-specific access to manager-backed cached values."""
+
+    RELATIONS = "AXUtilitiesRelation.relations"
+    TARGETS = "AXUtilitiesRelation.targets"
+
+    def __init__(self) -> None:
+        self._manager = ax_cache_manager.get_manager()
+        for namespace in (self.RELATIONS, self.TARGETS):
+            self._manager.register_cache(
+                self,
+                namespace,
+                lifetime=ax_cache_manager.Lifetime.PROCESS,
+                clear_on_demand=ax_cache_manager.ClearPolicy.CLEAR,
+            )
+        self._relations_cache = self._manager.get_cache(self, self.RELATIONS)
+        self._targets_cache = self._manager.get_cache(self, self.TARGETS)
+
+    def get_relations(self, obj: Atspi.Accessible) -> list[Atspi.Relation] | None:
+        """Returns cached relations for obj."""
+
+        if self._relations_cache is None:
+            return None
+
+        return self._relations_cache.get(ax_cache_manager.get_object_key(obj), None)
+
+    def set_relations(self, obj: Atspi.Accessible, relations: list[Atspi.Relation]) -> None:
+        """Stores relations for obj."""
+
+        if self._relations_cache is not None:
+            self._relations_cache.put(ax_cache_manager.get_object_key(obj), relations)
+
+    def get_targets(
+        self, obj: Atspi.Accessible, relation_type: Atspi.RelationType
+    ) -> list[Atspi.Accessible] | None:
+        """Returns cached targets for a relation of obj."""
+
+        if self._targets_cache is None:
+            return None
+
+        return self._targets_cache.get((ax_cache_manager.get_object_key(obj), relation_type), None)
+
+    def set_targets(
+        self,
+        obj: Atspi.Accessible,
+        relation_type: Atspi.RelationType,
+        targets: list[Atspi.Accessible],
+    ) -> None:
+        """Stores targets for a relation of obj."""
+
+        if self._targets_cache is not None:
+            self._targets_cache.put((ax_cache_manager.get_object_key(obj), relation_type), targets)
 
 
 class AXUtilitiesRelation:
     """Utilities for accessible relations."""
 
-    RELATIONS: ClassVar[dict[int, list[Atspi.Relation]]] = {}
-    TARGETS: ClassVar[dict[int, dict[Atspi.RelationType, list[Atspi.Accessible]]]] = {}
-
-    _lock = threading.Lock()
-
-    @staticmethod
-    def _clear_stored_data() -> None:
-        """Clears any data we have cached for objects"""
-
-        while True:
-            time.sleep(60)
-            AXUtilitiesRelation._clear_all_dictionaries()
-
-    @staticmethod
-    def _clear_all_dictionaries(reason: str = "") -> None:
-        msg = "AXUtilitiesRelation: Clearing local cache."
-        if reason:
-            msg += f" Reason: {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        with AXUtilitiesRelation._lock:
-            AXUtilitiesRelation.RELATIONS.clear()
-            AXUtilitiesRelation.TARGETS.clear()
-
-    @staticmethod
-    def clear_cache_now(reason: str = "") -> None:
-        """Clears all cached information immediately."""
-
-        AXUtilitiesRelation._clear_all_dictionaries(reason)
-
-    @staticmethod
-    def start_cache_clearing_thread() -> None:
-        """Starts thread to periodically clear cached details."""
-
-        thread = threading.Thread(target=AXUtilitiesRelation._clear_stored_data)
-        thread.daemon = True
-        thread.start()
+    _CACHE = _AXUtilitiesRelationCache()
 
     @staticmethod
     def get_relations(obj: Atspi.Accessible) -> list[Atspi.Relation]:
@@ -90,7 +101,7 @@ class AXUtilitiesRelation:
         if not AXObject.is_valid(obj):
             return []
 
-        relations = AXUtilitiesRelation.RELATIONS.get(hash(obj))
+        relations = AXUtilitiesRelation._CACHE.get_relations(obj)
         if relations is not None:
             return relations
 
@@ -106,7 +117,7 @@ class AXUtilitiesRelation:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
-        AXUtilitiesRelation.RELATIONS[hash(obj)] = relations
+        AXUtilitiesRelation._CACHE.set_relations(obj, relations)
         return relations
 
     @staticmethod
@@ -138,15 +149,13 @@ class AXUtilitiesRelation:
     ) -> list[Atspi.Accessible]:
         """Returns the list of targets with the specified relation type to obj."""
 
-        cached_targets = AXUtilitiesRelation.TARGETS.get(hash(obj), {})
-        cached_relation = cached_targets.get(relation_type)
-        if isinstance(cached_relation, list):
-            return cached_relation
+        cached_targets = AXUtilitiesRelation._CACHE.get_targets(obj, relation_type)
+        if cached_targets is not None:
+            return cached_targets
 
         relation = AXUtilitiesRelation._get_relation(obj, relation_type)
         if relation is None:
-            cached_targets[relation_type] = []
-            AXUtilitiesRelation.TARGETS[hash(obj)] = cached_targets
+            AXUtilitiesRelation._CACHE.set_targets(obj, relation_type, [])
             return []
 
         targets = set()
@@ -162,8 +171,7 @@ class AXUtilitiesRelation:
             targets.remove(obj)
 
         result = list(targets)
-        cached_targets[relation_type] = result
-        AXUtilitiesRelation.TARGETS[hash(obj)] = cached_targets
+        AXUtilitiesRelation._CACHE.set_targets(obj, relation_type, result)
         return result
 
     @staticmethod
@@ -379,6 +387,3 @@ class AXUtilitiesRelation:
         """Returns True if obj does not have any relations."""
 
         return not AXUtilitiesRelation.get_relations(obj)
-
-
-AXUtilitiesRelation.start_cache_clearing_thread()
