@@ -181,6 +181,57 @@ class TestAXUtilities:
 
         return essential_modules
 
+    def test_import_registers_utility_cache_namespaces(self, test_context: OrcaTestContext) -> None:
+        """Test importing AXUtilities registers its cache namespaces."""
+
+        self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
+
+        manager = ax_cache_manager.get_manager()
+        register = test_context.patch_object(
+            manager,
+            "register_cache",
+            wraps=manager.register_cache,
+        )
+
+        from orca.ax_utilities import AXUtilities
+
+        assert register.call_count == 19
+        assert {call.args[0] for call in register.call_args_list} == {AXUtilities._CACHE}
+        for call in register.call_args_list:
+            assert call.kwargs["lifetime"] is ax_cache_manager.Lifetime.PROCESS
+            assert call.kwargs["clear_on_demand"] is ax_cache_manager.ClearPolicy.CLEAR
+            assert "clear_interval_seconds" not in call.kwargs
+
+    def test_manager_clear_cache_now_clears_utility_cache(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test ordinary manager clearing removes cached utility results."""
+
+        self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
+        from orca.ax_utilities import AXUtilities
+
+        mock_container = test_context.Mock(spec=Atspi.Accessible)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        members = [test_context.Mock(spec=Atspi.Accessible)]
+        AXUtilities._CACHE.set_members(mock_container, members)
+        AXUtilities._CACHE.set_layout_only(mock_obj, (True, "test"))
+        AXUtilities._CACHE.set_classification(
+            AXUtilities._CACHE.IS_DOCUMENT_DESCENDANT, mock_obj, True
+        )
+
+        ax_cache_manager.get_manager().clear_cache_now("test reason")
+
+        assert AXUtilities._CACHE.get_members(mock_container) is None
+        assert AXUtilities._CACHE.get_layout_only(mock_obj) is None
+        assert (
+            AXUtilities._CACHE.get_classification(
+                AXUtilities._CACHE.IS_DOCUMENT_DESCENDANT, mock_obj
+            )
+            is None
+        )
+
     def test_has_explicit_name_true(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilities.has_explicit_name with explicit name attribute."""
 
@@ -1260,17 +1311,6 @@ class TestAXUtilities:
         result = AXUtilities.find_active_window()
         assert result is None
 
-    def test_start_cache_clearing_thread(self, test_context: OrcaTestContext) -> None:
-        """Test AXUtilities.start_cache_clearing_thread."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_utilities import AXUtilities
-
-        mock_start_thread = test_context.Mock()
-        test_context.patch_object(AXUtilities, "start_cache_clearing_thread", new=mock_start_thread)
-        mock_start_thread()
-        mock_start_thread.assert_called_once()
-
     def test_get_on_screen_objects_with_invalid_root(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilities.get_on_screen_objects with invalid root."""
 
@@ -1286,36 +1326,6 @@ class TestAXUtilities:
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         result = AXUtilities.get_on_screen_objects(mock_obj)
         assert result == []
-
-    def test_clear_all_dictionaries_with_reason(self, test_context: OrcaTestContext) -> None:
-        """Test cache clearing functionality with reason."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_utilities import AXUtilities
-
-        test_context.patch_object(AXUtilities, "SET_MEMBERS", new={"test": "data"})
-        test_context.patch_object(AXUtilities, "IS_LAYOUT_ONLY", new={"test": "data"})
-        mock_clear = test_context.Mock()
-        test_context.patch_object(AXUtilities, "_clear_all_dictionaries", new=mock_clear)
-
-        AXUtilities.clear_all_cache_now(reason="test reason")
-
-        mock_clear.assert_called()
-
-    def test_clear_all_dictionaries_without_reason(self, test_context: OrcaTestContext) -> None:
-        """Test cache clearing functionality without reason."""
-
-        self._setup_dependencies(test_context)
-        from orca.ax_utilities import AXUtilities
-
-        test_context.patch_object(AXUtilities, "SET_MEMBERS", new={"test": "data"})
-        test_context.patch_object(AXUtilities, "IS_LAYOUT_ONLY", new={"test": "data"})
-        mock_clear = test_context.Mock()
-        test_context.patch_object(AXUtilities, "_clear_all_dictionaries", new=mock_clear)
-
-        AXUtilities.clear_all_cache_now()
-
-        mock_clear.assert_called()
 
     def test_get_nesting_level_list_item(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilities.get_nesting_level with list item."""

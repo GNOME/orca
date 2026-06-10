@@ -30,7 +30,6 @@ import inspect
 import queue
 import re
 import threading
-import time
 from typing import TYPE_CHECKING
 
 import gi
@@ -61,7 +60,132 @@ from .ax_utilities_text import AXUtilitiesText
 
 if TYPE_CHECKING:
     from collections.abc import Callable
-    from typing import ClassVar
+
+
+class _AXUtilitiesCache:
+    """Provides utility-specific access to manager-backed cached values."""
+
+    SET_MEMBERS = "AXUtilities.set-members"
+    IS_LAYOUT_ONLY = "AXUtilities.is-layout-only"
+    IS_BLOCK_LIST_DESCENDANT = "AXUtilities.is-block-list-descendant"
+    IS_CODE_BLOCK_DESCENDANT = "AXUtilities.is-code-block-descendant"
+    IS_COMBO_BOX_DESCENDANT = "AXUtilities.is-combo-box-descendant"
+    IS_DOCUMENT_DESCENDANT = "AXUtilities.is-document-descendant"
+    IS_EDITABLE_COMBO_BOX_DESCENDANT = "AXUtilities.is-editable-combo-box-descendant"
+    IS_EMBEDDED_DESCENDANT = "AXUtilities.is-embedded-descendant"
+    IS_ENTRY_DESCENDANT = "AXUtilities.is-entry-descendant"
+    IS_GRID_DESCENDANT = "AXUtilities.is-grid-descendant"
+    IS_INLINE_LIST_ITEM_DESCENDANT = "AXUtilities.is-inline-list-item-descendant"
+    IS_LABEL_OR_CAPTION_DESCENDANT = "AXUtilities.is-label-or-caption-descendant"
+    IS_LIST_DESCENDANT = "AXUtilities.is-list-descendant"
+    IS_MENU_DESCENDANT = "AXUtilities.is-menu-descendant"
+    IS_SUBSCRIPT_OR_SUPERSCRIPT_TEXT_DESCENDANT = (
+        "AXUtilities.is-subscript-or-superscript-descendant"
+    )
+    IS_TOOL_BAR_DESCENDANT = "AXUtilities.is-tool-bar-descendant"
+    IS_TOOL_TIP_DESCENDANT = "AXUtilities.is-tool-tip-descendant"
+    IS_PRESENTATIONAL_CHILD = "AXUtilities.is-presentational-child"
+    IS_TREE_OR_TREE_TABLE_DESCENDANT = "AXUtilities.is-tree-or-tree-table-descendant"
+
+    def __init__(self) -> None:
+        self._manager = ax_cache_manager.get_manager()
+        for namespace in (
+            self.SET_MEMBERS,
+            self.IS_LAYOUT_ONLY,
+            self.IS_BLOCK_LIST_DESCENDANT,
+            self.IS_CODE_BLOCK_DESCENDANT,
+            self.IS_COMBO_BOX_DESCENDANT,
+            self.IS_DOCUMENT_DESCENDANT,
+            self.IS_EDITABLE_COMBO_BOX_DESCENDANT,
+            self.IS_EMBEDDED_DESCENDANT,
+            self.IS_ENTRY_DESCENDANT,
+            self.IS_GRID_DESCENDANT,
+            self.IS_INLINE_LIST_ITEM_DESCENDANT,
+            self.IS_LABEL_OR_CAPTION_DESCENDANT,
+            self.IS_LIST_DESCENDANT,
+            self.IS_MENU_DESCENDANT,
+            self.IS_SUBSCRIPT_OR_SUPERSCRIPT_TEXT_DESCENDANT,
+            self.IS_TOOL_BAR_DESCENDANT,
+            self.IS_TOOL_TIP_DESCENDANT,
+            self.IS_PRESENTATIONAL_CHILD,
+            self.IS_TREE_OR_TREE_TABLE_DESCENDANT,
+        ):
+            self._manager.register_cache(
+                self,
+                namespace,
+                lifetime=ax_cache_manager.Lifetime.PROCESS,
+                clear_on_demand=ax_cache_manager.ClearPolicy.CLEAR,
+            )
+        self._members_cache = self._manager.get_cache(self, self.SET_MEMBERS)
+        self._layout_only_cache = self._manager.get_cache(self, self.IS_LAYOUT_ONLY)
+        self._classification_caches = {
+            namespace: self._manager.get_cache(self, namespace)
+            for namespace in (
+                self.IS_BLOCK_LIST_DESCENDANT,
+                self.IS_CODE_BLOCK_DESCENDANT,
+                self.IS_COMBO_BOX_DESCENDANT,
+                self.IS_DOCUMENT_DESCENDANT,
+                self.IS_EDITABLE_COMBO_BOX_DESCENDANT,
+                self.IS_EMBEDDED_DESCENDANT,
+                self.IS_ENTRY_DESCENDANT,
+                self.IS_GRID_DESCENDANT,
+                self.IS_INLINE_LIST_ITEM_DESCENDANT,
+                self.IS_LABEL_OR_CAPTION_DESCENDANT,
+                self.IS_LIST_DESCENDANT,
+                self.IS_MENU_DESCENDANT,
+                self.IS_SUBSCRIPT_OR_SUPERSCRIPT_TEXT_DESCENDANT,
+                self.IS_TOOL_BAR_DESCENDANT,
+                self.IS_TOOL_TIP_DESCENDANT,
+                self.IS_PRESENTATIONAL_CHILD,
+                self.IS_TREE_OR_TREE_TABLE_DESCENDANT,
+            )
+        }
+
+    def get_members(self, container: Atspi.Accessible | None) -> list[Atspi.Accessible] | None:
+        """Returns cached set members for container."""
+
+        if self._members_cache is None:
+            return None
+
+        return self._members_cache.get(ax_cache_manager.get_object_key(container), None)
+
+    def set_members(
+        self, container: Atspi.Accessible | None, members: list[Atspi.Accessible]
+    ) -> None:
+        """Stores set members for container."""
+
+        if self._members_cache is not None:
+            self._members_cache.put(ax_cache_manager.get_object_key(container), members)
+
+    def get_layout_only(self, obj: Atspi.Accessible) -> tuple[bool, str] | None:
+        """Returns the cached layout-only decision for obj."""
+
+        if self._layout_only_cache is None:
+            return None
+
+        return self._layout_only_cache.get(ax_cache_manager.get_object_key(obj), None)
+
+    def set_layout_only(self, obj: Atspi.Accessible, result: tuple[bool, str]) -> None:
+        """Stores a layout-only decision for obj."""
+
+        if self._layout_only_cache is not None:
+            self._layout_only_cache.put(ax_cache_manager.get_object_key(obj), result)
+
+    def get_classification(self, namespace: str, obj: Atspi.Accessible) -> bool | None:
+        """Returns a cached object classification."""
+
+        cache = self._classification_caches.get(namespace)
+        if cache is None:
+            return None
+
+        return cache.get(ax_cache_manager.get_object_key(obj), None)
+
+    def set_classification(self, namespace: str, obj: Atspi.Accessible, result: bool) -> None:
+        """Stores an object classification."""
+
+        cache = self._classification_caches.get(namespace)
+        if cache is not None:
+            cache.put(ax_cache_manager.get_object_key(obj), result)
 
 
 class AXUtilities:
@@ -69,78 +193,12 @@ class AXUtilities:
 
     COMPARE_COLLECTION_PERFORMANCE = False
 
-    # Things we cache.
-    SET_MEMBERS: ClassVar[dict[int, list[Atspi.Accessible]]] = {}
-    IS_LAYOUT_ONLY: ClassVar[dict[int, tuple[bool, str]]] = {}
-    IS_BLOCK_LIST_DESCENDANT: ClassVar[dict[int, bool]] = {}
-    IS_CODE_BLOCK_DESCENDANT: ClassVar[dict[int, bool]] = {}
-    IS_COMBO_BOX_DESCENDANT: ClassVar[dict[int, bool]] = {}
-    IS_DOCUMENT_DESCENDANT: ClassVar[dict[int, bool]] = {}
-    IS_EDITABLE_COMBO_BOX_DESCENDANT: ClassVar[dict[int, bool]] = {}
-    IS_EMBEDDED_DESCENDANT: ClassVar[dict[int, bool]] = {}
-    IS_ENTRY_DESCENDANT: ClassVar[dict[int, bool]] = {}
-    IS_GRID_DESCENDANT: ClassVar[dict[int, bool]] = {}
-    IS_INLINE_LIST_ITEM_DESCENDANT: ClassVar[dict[int, bool]] = {}
-    IS_LABEL_OR_CAPTION_DESCENDANT: ClassVar[dict[int, bool]] = {}
-    IS_LIST_DESCENDANT: ClassVar[dict[int, bool]] = {}
-    IS_MENU_DESCENDANT: ClassVar[dict[int, bool]] = {}
-    IS_SUBSCRIPT_OR_SUPERSCRIPT_TEXT_DESCENDANT: ClassVar[dict[int, bool]] = {}
-    IS_TOOL_BAR_DESCENDANT: ClassVar[dict[int, bool]] = {}
-    IS_TOOL_TIP_DESCENDANT: ClassVar[dict[int, bool]] = {}
-    IS_PRESENTATIONAL_CHILD: ClassVar[dict[int, bool]] = {}
-    IS_TREE_OR_TREE_TABLE_DESCENDANT: ClassVar[dict[int, bool]] = {}
-
-    _lock = threading.Lock()
-
-    @staticmethod
-    def start_cache_clearing_thread() -> None:
-        """Starts thread to periodically clear cached details."""
-
-        thread = threading.Thread(target=AXUtilities._clear_stored_data)
-        thread.daemon = True
-        thread.start()
-
-    @staticmethod
-    def _clear_stored_data() -> None:
-        """Clears any data we have cached for objects"""
-
-        while True:
-            time.sleep(60)
-            AXUtilities._clear_all_dictionaries()
-
-    @staticmethod
-    def _clear_all_dictionaries(reason: str = "") -> None:
-        msg = "AXUtilities: Clearing cache."
-        if reason:
-            msg += f" Reason: {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        with AXUtilities._lock:
-            AXUtilities.SET_MEMBERS.clear()
-            AXUtilities.IS_LAYOUT_ONLY.clear()
-            AXUtilities.IS_BLOCK_LIST_DESCENDANT.clear()
-            AXUtilities.IS_CODE_BLOCK_DESCENDANT.clear()
-            AXUtilities.IS_COMBO_BOX_DESCENDANT.clear()
-            AXUtilities.IS_DOCUMENT_DESCENDANT.clear()
-            AXUtilities.IS_EDITABLE_COMBO_BOX_DESCENDANT.clear()
-            AXUtilities.IS_EMBEDDED_DESCENDANT.clear()
-            AXUtilities.IS_ENTRY_DESCENDANT.clear()
-            AXUtilities.IS_GRID_DESCENDANT.clear()
-            AXUtilities.IS_INLINE_LIST_ITEM_DESCENDANT.clear()
-            AXUtilities.IS_LABEL_OR_CAPTION_DESCENDANT.clear()
-            AXUtilities.IS_LIST_DESCENDANT.clear()
-            AXUtilities.IS_MENU_DESCENDANT.clear()
-            AXUtilities.IS_PRESENTATIONAL_CHILD.clear()
-            AXUtilities.IS_SUBSCRIPT_OR_SUPERSCRIPT_TEXT_DESCENDANT.clear()
-            AXUtilities.IS_TOOL_BAR_DESCENDANT.clear()
-            AXUtilities.IS_TOOL_TIP_DESCENDANT.clear()
-            AXUtilities.IS_TREE_OR_TREE_TABLE_DESCENDANT.clear()
+    _CACHE = _AXUtilitiesCache()
 
     @staticmethod
     def clear_all_cache_now(obj: Atspi.Accessible | None = None, reason: str = "") -> None:
         """Clears all cached information immediately."""
 
-        AXUtilities._clear_all_dictionaries(reason)
         ax_cache_manager.get_manager().clear_cache_now(reason)
         AXUtilitiesEvent.clear_cache_now(reason)
         AXUtilitiesSelection.clear_cache_now(reason)
@@ -663,11 +721,12 @@ class AXUtilities:
     def is_layout_only(obj: Atspi.Accessible) -> bool:
         """Returns True if obj is believed to serve only for layout."""
 
-        if hash(obj) in AXUtilities.IS_LAYOUT_ONLY:
-            result, reason = AXUtilities.IS_LAYOUT_ONLY.get(hash(obj), (False, ""))
-        else:
+        cached = AXUtilities._CACHE.get_layout_only(obj)
+        if cached is None:
             result, reason = AXUtilities._is_layout_only(obj)
-            AXUtilities.IS_LAYOUT_ONLY[hash(obj)] = result, reason
+            AXUtilities._CACHE.set_layout_only(obj, (result, reason))
+        else:
+            result, reason = cached
 
         if reason:
             tokens = ["AXUtilities:", obj, f"believed to be layout only: {result}, {reason}"]
@@ -677,7 +736,7 @@ class AXUtilities:
 
     @staticmethod
     def _is_descendant(
-        cache: dict[int, bool],
+        namespace: str,
         obj: Atspi.Accessible,
         pred: Callable[[Atspi.Accessible], bool],
         inclusive: bool = False,
@@ -687,37 +746,34 @@ class AXUtilities:
         if inclusive and pred(obj):
             return True
 
-        obj_hash = hash(obj)
-        rv = cache.get(obj_hash)
+        rv = AXUtilities._CACHE.get_classification(namespace, obj)
         if rv is not None:
             return rv
 
         parent = AXObject.get_parent(obj)
         if parent is not None:
-            parent_hash = hash(parent)
-            parent_rv = cache.get(parent_hash)
+            parent_rv = AXUtilities._CACHE.get_classification(namespace, parent)
             if parent_rv is False:
-                cache[obj_hash] = False
+                AXUtilities._CACHE.set_classification(namespace, obj, False)
                 return False
             if parent_rv is None:
                 parent_rv = (
                     pred(parent) or AXUtilitiesObject.find_ancestor(parent, pred) is not None
                 )
-                cache[parent_hash] = parent_rv
+                AXUtilities._CACHE.set_classification(namespace, parent, parent_rv)
                 if not parent_rv:
-                    cache[obj_hash] = False
+                    AXUtilities._CACHE.set_classification(namespace, obj, False)
                     return False
 
         rv = AXUtilitiesObject.find_ancestor(obj, pred) is not None
-        cache[obj_hash] = rv
+        AXUtilities._CACHE.set_classification(namespace, obj, rv)
         return rv
 
     @staticmethod
     def is_block_list_descendant(obj: Atspi.Accessible) -> bool:
         """Returns True if obj is in a list but not in an inline list item."""
 
-        obj_hash = hash(obj)
-        rv = AXUtilities.IS_BLOCK_LIST_DESCENDANT.get(obj_hash)
+        rv = AXUtilities._CACHE.get_classification(AXUtilities._CACHE.IS_BLOCK_LIST_DESCENDANT, obj)
         if rv is not None:
             return rv
 
@@ -726,7 +782,7 @@ class AXUtilities:
         else:
             rv = not AXUtilities.is_inline_list_item_descendant(obj, inclusive=True)
 
-        AXUtilities.IS_BLOCK_LIST_DESCENDANT[obj_hash] = rv
+        AXUtilities._CACHE.set_classification(AXUtilities._CACHE.IS_BLOCK_LIST_DESCENDANT, obj, rv)
         return rv
 
     @staticmethod
@@ -737,7 +793,7 @@ class AXUtilities:
         """Returns True if obj has a code block ancestor."""
 
         return AXUtilities._is_descendant(
-            AXUtilities.IS_CODE_BLOCK_DESCENDANT,
+            AXUtilities._CACHE.IS_CODE_BLOCK_DESCENDANT,
             obj,
             AXUtilitiesRole.is_code_block,
             inclusive,
@@ -794,7 +850,7 @@ class AXUtilities:
         """Returns True if obj has a combo box ancestor."""
 
         return AXUtilities._is_descendant(
-            AXUtilities.IS_COMBO_BOX_DESCENDANT,
+            AXUtilities._CACHE.IS_COMBO_BOX_DESCENDANT,
             obj,
             AXUtilitiesRole.is_combo_box,
             inclusive,
@@ -808,7 +864,7 @@ class AXUtilities:
         """Returns True if obj has a document ancestor."""
 
         return AXUtilities._is_descendant(
-            AXUtilities.IS_DOCUMENT_DESCENDANT,
+            AXUtilities._CACHE.IS_DOCUMENT_DESCENDANT,
             obj,
             AXUtilitiesRole.is_document,
             inclusive,
@@ -822,7 +878,7 @@ class AXUtilities:
         """Returns True if obj has an editable combo box ancestor."""
 
         return AXUtilities._is_descendant(
-            AXUtilities.IS_EDITABLE_COMBO_BOX_DESCENDANT,
+            AXUtilities._CACHE.IS_EDITABLE_COMBO_BOX_DESCENDANT,
             obj,
             AXUtilitiesRole.is_editable_combo_box,
             inclusive,
@@ -836,7 +892,7 @@ class AXUtilities:
         """Returns True if obj has an embedded ancestor."""
 
         return AXUtilities._is_descendant(
-            AXUtilities.IS_EMBEDDED_DESCENDANT,
+            AXUtilities._CACHE.IS_EMBEDDED_DESCENDANT,
             obj,
             AXUtilitiesRole.is_embedded,
             inclusive,
@@ -850,7 +906,7 @@ class AXUtilities:
         """Returns True if obj has an entry ancestor."""
 
         return AXUtilities._is_descendant(
-            AXUtilities.IS_ENTRY_DESCENDANT,
+            AXUtilities._CACHE.IS_ENTRY_DESCENDANT,
             obj,
             AXUtilitiesRole.is_entry,
             inclusive,
@@ -864,7 +920,7 @@ class AXUtilities:
         """Returns True if obj has an inline list item ancestor."""
 
         return AXUtilities._is_descendant(
-            AXUtilities.IS_INLINE_LIST_ITEM_DESCENDANT,
+            AXUtilities._CACHE.IS_INLINE_LIST_ITEM_DESCENDANT,
             obj,
             AXUtilitiesRole.is_inline_list_item,
             inclusive,
@@ -878,7 +934,7 @@ class AXUtilities:
         """Returns True if obj has a grid ancestor."""
 
         return AXUtilities._is_descendant(
-            AXUtilities.IS_GRID_DESCENDANT,
+            AXUtilities._CACHE.IS_GRID_DESCENDANT,
             obj,
             AXUtilitiesRole.is_grid,
             inclusive,
@@ -892,7 +948,7 @@ class AXUtilities:
         """Returns True if obj has a label or caption ancestor."""
 
         return AXUtilities._is_descendant(
-            AXUtilities.IS_LABEL_OR_CAPTION_DESCENDANT,
+            AXUtilities._CACHE.IS_LABEL_OR_CAPTION_DESCENDANT,
             obj,
             AXUtilitiesRole.is_label_or_caption,
             inclusive,
@@ -906,7 +962,7 @@ class AXUtilities:
         """Returns True if obj has a list ancestor."""
 
         return AXUtilities._is_descendant(
-            AXUtilities.IS_LIST_DESCENDANT,
+            AXUtilities._CACHE.IS_LIST_DESCENDANT,
             obj,
             AXUtilitiesRole.is_list,
             inclusive,
@@ -920,7 +976,7 @@ class AXUtilities:
         """Returns True if obj has a menu ancestor."""
 
         return AXUtilities._is_descendant(
-            AXUtilities.IS_MENU_DESCENDANT,
+            AXUtilities._CACHE.IS_MENU_DESCENDANT,
             obj,
             AXUtilitiesRole.is_menu,
             inclusive,
@@ -934,7 +990,7 @@ class AXUtilities:
         """Returns True if obj has a subscript or superscript ancestor."""
 
         return AXUtilities._is_descendant(
-            AXUtilities.IS_SUBSCRIPT_OR_SUPERSCRIPT_TEXT_DESCENDANT,
+            AXUtilities._CACHE.IS_SUBSCRIPT_OR_SUPERSCRIPT_TEXT_DESCENDANT,
             obj,
             AXUtilitiesRole.is_subscript_or_superscript_text,
             inclusive,
@@ -945,7 +1001,7 @@ class AXUtilities:
         """Returns True if obj has an ancestor with presentational children."""
 
         return AXUtilities._is_descendant(
-            AXUtilities.IS_PRESENTATIONAL_CHILD,
+            AXUtilities._CACHE.IS_PRESENTATIONAL_CHILD,
             obj,
             AXUtilitiesRole.children_are_presentational,
         )
@@ -958,7 +1014,7 @@ class AXUtilities:
         """Returns True if obj has a toolbar ancestor."""
 
         return AXUtilities._is_descendant(
-            AXUtilities.IS_TOOL_BAR_DESCENDANT,
+            AXUtilities._CACHE.IS_TOOL_BAR_DESCENDANT,
             obj,
             AXUtilitiesRole.is_tool_bar,
             inclusive,
@@ -972,7 +1028,7 @@ class AXUtilities:
         """Returns True if obj has a tooltip ancestor."""
 
         return AXUtilities._is_descendant(
-            AXUtilities.IS_TOOL_TIP_DESCENDANT,
+            AXUtilities._CACHE.IS_TOOL_TIP_DESCENDANT,
             obj,
             AXUtilitiesRole.is_tool_tip,
             inclusive,
@@ -986,7 +1042,7 @@ class AXUtilities:
         """Returns True if obj has a tree or tree table ancestor."""
 
         return AXUtilities._is_descendant(
-            AXUtilities.IS_TREE_OR_TREE_TABLE_DESCENDANT,
+            AXUtilities._CACHE.IS_TREE_OR_TREE_TABLE_DESCENDANT,
             obj,
             AXUtilitiesRole.is_tree_or_tree_table,
             inclusive,
@@ -1126,10 +1182,8 @@ class AXUtilities:
     def get_set_members(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns the members of the container of obj."""
 
-        result: list[Atspi.Accessible] = []
         container = AXObject.get_parent_checked(obj)
-        if hash(container) in AXUtilities.SET_MEMBERS:
-            result = AXUtilities.SET_MEMBERS.get(hash(container), [])
+        result = AXUtilities._CACHE.get_members(container) or []
 
         if obj not in result:
             if result:
@@ -1137,7 +1191,7 @@ class AXUtilities:
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             result = AXUtilities._get_set_members(obj, container)
-            AXUtilities.SET_MEMBERS[hash(container)] = result
+            AXUtilities._CACHE.set_members(container, result)
 
         # In a collapsed combobox, one can arrow to change the selection without showing
         # the items. In a listbox, items scrolled out of view lose the showing state but
@@ -1675,5 +1729,3 @@ for method_name, method in inspect.getmembers(AXUtilitiesTable, predicate=inspec
 
 for method_name, method in inspect.getmembers(AXUtilitiesText, predicate=inspect.isfunction):
     setattr(AXUtilities, method_name, method)
-
-AXUtilities.start_cache_clearing_thread()
