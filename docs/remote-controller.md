@@ -192,8 +192,38 @@ gdbus call --session --dest org.gnome.Orca1.Service \
 gdbus call --session --dest org.gnome.Orca1.Service \
     --object-path /org/gnome/Orca1/Service/SpeechManager \
     --method org.freedesktop.DBus.Properties.Set \
-    "org.gnome.Orca1.SpeechManager" "Rate" "<90.0>"
+    "org.gnome.Orca1.SpeechManager" "Rate" "<uint32 90>"
 ```
+
+Note that the value is a typed variant. `Rate` is a `uint32`, so it is passed as
+`<uint32 90>`. Passing a value of the wrong type (e.g. `<90.0>`, a double) will
+fail with an `org.freedesktop.DBus.Error.InvalidArgs` error. The type of each
+property is listed in [remote-controller-commands.md](remote-controller-commands.md).
+
+#### Using Python (dasbus)
+
+Because these are standard D-Bus properties, any D-Bus binding can read and
+write them. With [dasbus](https://dasbus.readthedocs.io/en/latest/index.html),
+the same library Orca uses, a property is exposed as an ordinary attribute on the
+module proxy. The binding reads and writes it through the
+`org.freedesktop.DBus.Properties` interface and infers the variant type for you,
+so there is no need to spell it out as with `gdbus`.
+
+```python
+#!/usr/bin/env python3
+from dasbus.connection import SessionMessageBus
+
+speech_manager = SessionMessageBus().get_proxy(
+    "org.gnome.Orca1.Service",
+    "/org/gnome/Orca1/Service/SpeechManager",
+)
+
+speech_manager.Rate = 90          # write
+print("rate", speech_manager.Rate)  # read
+```
+
+As with the `gdbus` examples, writing a property is a runtime override and is not
+permanently saved.
 
 ### User Notification Applicability
 
