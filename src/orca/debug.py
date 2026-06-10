@@ -29,8 +29,6 @@ import traceback
 from datetime import datetime, timezone
 from typing import Any, TextIO
 
-from .ax_utilities_debugging import AXUtilitiesDebugging
-
 LEVEL_OFF = 10000
 LEVEL_SEVERE = 1000
 LEVEL_WARNING = 900
@@ -65,6 +63,10 @@ def print_tokens(
     if level < debugLevel:
         return
 
+    # Avoid importing AXObject through AXUtilitiesDebugging before AXCacheManager initializes.
+    # pylint: disable=import-outside-toplevel
+    from .ax_utilities_debugging import AXUtilitiesDebugging
+
     text = " ".join(map(AXUtilitiesDebugging.as_string, tokens))
     text = re.sub(r" (?=[,.:)])(?![\n])", "", text)
     _print_text(level, text, timestamp, stack)
@@ -90,6 +92,10 @@ def shutdown() -> None:
 
 
 def _stack_as_string(max_frames: int = 4) -> str:
+    # Avoid importing AXObject through AXUtilitiesDebugging before AXCacheManager initializes.
+    # pylint: disable=import-outside-toplevel
+    from .ax_utilities_debugging import AXUtilitiesDebugging
+
     callers = []
     current_module = inspect.getmodule(inspect.currentframe())
     stack = inspect.stack()

@@ -55,6 +55,7 @@ lib_sources = [
   'acss.py',
   'action_presenter.py',
   'ax_action.py',
+  'ax_cache_manager.py',
   'ax_collection.py',
   'ax_component.py',
   'ax_device_manager.py',

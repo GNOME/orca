@@ -13,6 +13,7 @@ test_env.set('GSETTINGS_BACKEND', 'memory')
 unit_tests = [
   'unit_tests/test_action_presenter.py',
   'unit_tests/test_ax_action.py',
+  'unit_tests/test_ax_cache_manager.py',
   'unit_tests/test_ax_collection.py',
   'unit_tests/test_ax_component.py',
   'unit_tests/test_ax_document.py',
