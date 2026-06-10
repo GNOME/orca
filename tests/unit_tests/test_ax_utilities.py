@@ -1167,27 +1167,36 @@ class TestAXUtilities:
     def test_clear_all_cache_now_with_object(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilities.clear_all_cache_now with specific object."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         from orca import ax_cache_manager
         from orca.ax_utilities import AXUtilities
 
+        essential_modules[
+            "orca.ax_utilities_role"
+        ].AXUtilitiesRole.is_table_related = test_context.Mock(return_value=True)
+        essential_modules["orca.ax_table"].AXTable.CACHE_INVALIDATION_GROUP = "table"
         manager = test_context.Mock()
         test_context.patch_object(ax_cache_manager, "get_manager", return_value=manager)
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         AXUtilities.clear_all_cache_now(mock_obj, "test reason")
         manager.clear_cache_now.assert_called_once_with("test reason")
+        manager.invalidate_group.assert_called_once_with("table", "test reason")
 
     def test_clear_all_cache_now_without_object(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilities.clear_all_cache_now without specific object."""
 
-        self._setup_dependencies(test_context)
+        essential_modules = self._setup_dependencies(test_context)
         from orca import ax_cache_manager
         from orca.ax_utilities import AXUtilities
 
+        essential_modules[
+            "orca.ax_utilities_role"
+        ].AXUtilitiesRole.is_table_related = test_context.Mock(return_value=False)
         manager = test_context.Mock()
         test_context.patch_object(ax_cache_manager, "get_manager", return_value=manager)
         AXUtilities.clear_all_cache_now(None, "test reason")
         manager.clear_cache_now.assert_called_once_with("test reason")
+        manager.invalidate_group.assert_not_called()
 
     def test_get_set_members_with_basic_set(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilities.get_set_members with basic set."""

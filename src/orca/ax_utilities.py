@@ -145,7 +145,9 @@ class AXUtilities:
         AXUtilitiesEvent.clear_cache_now(reason)
         AXUtilitiesSelection.clear_cache_now(reason)
         if AXUtilitiesRole.is_table_related(obj):
-            AXTable.clear_cache_now(reason)
+            ax_cache_manager.get_manager().invalidate_group(
+                AXTable.CACHE_INVALIDATION_GROUP, reason
+            )
 
     @staticmethod
     def can_be_active_window(window: Atspi.Accessible, clear_cache: bool = True) -> bool:

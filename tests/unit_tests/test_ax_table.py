@@ -224,6 +224,29 @@ class TestAXTable:
             side_effect=result_func or (lambda table, index: default_result),
         )
 
+    def test_import_registers_table_cache_namespaces(self, test_context: OrcaTestContext) -> None:
+        """Test importing AXTable registers its cache namespaces."""
+
+        self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
+
+        manager = ax_cache_manager.get_manager()
+        register = test_context.patch_object(
+            manager,
+            "register_cache",
+            wraps=manager.register_cache,
+        )
+
+        from orca.ax_table import AXTable
+
+        assert register.call_count == 11
+        assert {call.args[0] for call in register.call_args_list} == {AXTable._CACHE}
+        for call in register.call_args_list:
+            assert call.kwargs["lifetime"] is ax_cache_manager.Lifetime.PROCESS
+            assert call.kwargs["clear_on_demand"] is ax_cache_manager.ClearPolicy.PRESERVE
+            assert call.kwargs["invalidation_groups"] == {AXTable.CACHE_INVALIDATION_GROUP}
+            assert "clear_interval_seconds" not in call.kwargs
+
     def _setup_row_headers_mocks(
         self,
         test_context: OrcaTestContext,
@@ -2146,43 +2169,48 @@ class TestAXTable:
         result = AXUtilitiesTable.get_table_description_for_presentation(mock_table)
         assert result == ""
 
-    def test_clear_cache_now(self, test_context: OrcaTestContext) -> None:
-        """Test AXTable.clear_cache_now."""
+    def test_manager_clear_cache_now_preserves_table_cache(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test routine manager clearing does not clear cached table results."""
 
         self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
         from orca.ax_table import AXTable
 
-        clear_called = []
+        mock_cell = test_context.Mock(spec=Atspi.Accessible)
+        AXTable._CACHE.set_physical_spans_from_cell(mock_cell, (1, 1))
 
-        def mock_clear(reason):
-            clear_called.append(reason)
+        ax_cache_manager.get_manager().clear_cache_now("test reason")
 
-        test_context.patch("orca.ax_table.AXTable._clear_all_dictionaries", new=mock_clear)
-        AXTable.clear_cache_now("test reason")
-        assert clear_called == ["test reason"]
+        assert AXTable._CACHE.get_physical_spans_from_cell(mock_cell) == (1, 1)
 
-    def test_clear_all_dictionaries(self, test_context: OrcaTestContext) -> None:
-        """Test AXTable._clear_all_dictionaries."""
+    def test_manager_invalidate_group_clears_table_cache(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test table-group invalidation clears all representative table results."""
 
-        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
-        from orca import debug
+        self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
         from orca.ax_table import AXTable
 
-        AXTable.CAPTIONS[123] = test_context.Mock()
-        AXTable.PHYSICAL_COORDINATES_FROM_CELL[456] = (1, 2)
-        AXTable.PHYSICAL_SPANS_FROM_CELL[789] = (1, 1)
-        AXTable.PRESENTABLE_SPANS[321] = ("1", "2")
-        test_context.patch_object(
-            debug,
-            "print_message",
-            new=essential_modules["orca.debug"].print_message,
+        mock_table = test_context.Mock(spec=Atspi.Accessible)
+        mock_cell = test_context.Mock(spec=Atspi.Accessible)
+        AXTable._CACHE.set_caption(mock_table, test_context.Mock(spec=Atspi.Accessible))
+        AXTable._CACHE.set_physical_coordinates_from_cell(mock_cell, (1, 2))
+        AXTable._CACHE.set_physical_spans_from_cell(mock_cell, (1, 1))
+        AXTable._CACHE.set_presentable_spans(mock_cell, ("1", "2"))
+
+        ax_cache_manager.get_manager().invalidate_group(
+            AXTable.CACHE_INVALIDATION_GROUP, "test clear"
         )
-        AXTable._clear_all_dictionaries("test clear")
-        assert len(AXTable.CAPTIONS) == 0
-        assert len(AXTable.PHYSICAL_COORDINATES_FROM_CELL) == 0
-        assert len(AXTable.PHYSICAL_SPANS_FROM_CELL) == 0
-        assert len(AXTable.PRESENTABLE_SPANS) == 0
-        essential_modules["orca.debug"].print_message.assert_called()
+
+        assert AXTable._CACHE.get_caption(mock_table) is ax_cache_manager.MISSING
+        assert (
+            AXTable._CACHE.get_physical_coordinates_from_cell(mock_cell) is ax_cache_manager.MISSING
+        )
+        assert AXTable._CACHE.get_physical_spans_from_cell(mock_cell) is ax_cache_manager.MISSING
+        assert AXTable._CACHE.get_presentable_spans(mock_cell) is ax_cache_manager.MISSING
 
     @pytest.mark.parametrize(
         "case",
