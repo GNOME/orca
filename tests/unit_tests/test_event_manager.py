@@ -124,7 +124,7 @@ class TestEventManager:
         script_mgr_instance = test_context.Mock()
         script_instance = test_context.Mock()
         script_instance.app = test_context.Mock()
-        script_instance.event_cache = {}
+        script_instance.record_queued_event = test_context.Mock()
         script_instance.listeners = {}
         script_instance.is_activatable_event = test_context.Mock(return_value=True)
         script_instance.force_script_activation = test_context.Mock(return_value=False)
@@ -1963,7 +1963,7 @@ class TestEventManager:
         mock_event.source = test_context.Mock()
         mock_app = test_context.Mock()
         mock_script = test_context.Mock()
-        mock_script.event_cache = {}
+        mock_script.record_queued_event = test_context.Mock()
 
         mock_ignore = test_context.Mock(return_value=False)
         test_context.patch_object(manager, "_ignore", new=mock_ignore)
@@ -1979,7 +1979,7 @@ class TestEventManager:
         manager._enqueue_object_event(mock_event)
 
         assert not manager._event_queue.empty()
-        assert mock_event.type in mock_script.event_cache
+        mock_script.record_queued_event.assert_called_once_with(mock_event)
         mock_idle_add.assert_called_once_with(manager._dequeue_object_event)
         assert manager._gidle_id == 456
 

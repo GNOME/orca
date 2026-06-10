@@ -672,7 +672,7 @@ class EventManager:
             return
 
         script = script_manager.get_manager().get_script(app, e.source)
-        script.event_cache[e.type] = (e, time.time())
+        script.record_queued_event(e)
 
         with self._gidle_lock:
             priority = self._get_priority(e)

@@ -71,7 +71,6 @@ class TestInputEventManager:
         script_mgr_instance = test_context.Mock()
         script_instance = test_context.Mock()
         script_instance.app = test_context.Mock()
-        script_instance.event_cache = {}
         script_instance.listeners = {}
         script_instance.is_activatable_event = test_context.Mock(return_value=True)
         script_instance.force_script_activation = test_context.Mock(return_value=False)

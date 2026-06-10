@@ -359,7 +359,7 @@ class Script(script.Script):
         detail2: int | None = None,
         any_data=None,
     ) -> Atspi.Event | None:
-        cached_event = self.event_cache.get(event_type, [None, 0])[0]
+        cached_event = self.get_queued_event(event_type)
         if not cached_event:
             tokens = ["SCRIPT: No queued event of type", event_type]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
