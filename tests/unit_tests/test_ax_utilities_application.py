@@ -24,6 +24,7 @@
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=import-outside-toplevel
+# pylint: disable=protected-access
 
 """Unit tests for ax_utilities_application.py methods."""
 
@@ -67,6 +68,49 @@ class TestAXUtilitiesApplication:
         essential_modules["orca.ax_object"].AXObject = ax_object_class_mock
 
         return essential_modules
+
+    def test_import_registers_application_cache_namespace(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test importing application utilities registers its cache namespace."""
+
+        self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
+
+        manager = ax_cache_manager.get_manager()
+        register = test_context.patch_object(
+            manager,
+            "register_cache",
+            wraps=manager.register_cache,
+        )
+
+        from orca.ax_utilities_application import AXUtilitiesApplication
+
+        register.assert_called_once_with(
+            AXUtilitiesApplication._CACHE,
+            AXUtilitiesApplication._CACHE.APP_FOR_OBJECT,
+            lifetime=ax_cache_manager.Lifetime.PROCESS,
+            clear_on_demand=ax_cache_manager.ClearPolicy.PRESERVE,
+            clear_interval_seconds=AXUtilitiesApplication._CACHE._CACHE_CLEAR_INTERVAL_SECONDS,
+        )
+        assert AXUtilitiesApplication._CACHE._CACHE_CLEAR_INTERVAL_SECONDS == 120
+
+    def test_manager_clear_cache_now_preserves_application_cache(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test routine manager clearing preserves cached application lookups."""
+
+        self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
+        from orca.ax_utilities_application import AXUtilitiesApplication
+
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_app = test_context.Mock(spec=Atspi.Accessible)
+        AXUtilitiesApplication._CACHE.set_application(mock_obj, mock_app)
+
+        ax_cache_manager.get_manager().clear_cache_now("test reason")
+
+        assert AXUtilitiesApplication._CACHE.get_application(mock_obj) == mock_app
 
     @pytest.mark.parametrize(
         "method_name, atspi_method_name, success_value",
@@ -385,9 +429,13 @@ class TestAXUtilitiesApplication:
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
         mock_app = test_context.Mock(spec=Atspi.Accessible)
-        test_context.patch_object(Atspi.Accessible, "get_application", return_value=mock_app)
+        getter = test_context.patch_object(
+            Atspi.Accessible, "get_application", return_value=mock_app
+        )
         result = AXUtilitiesApplication.get_application(mock_obj)
         assert result == mock_app
+        assert AXUtilitiesApplication.get_application(mock_obj) == mock_app
+        getter.assert_called_once_with(mock_obj)
 
     def test_get_application_with_glib_error(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilitiesApplication.get_application handles GLib.GError."""

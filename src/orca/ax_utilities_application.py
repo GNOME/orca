@@ -23,47 +23,53 @@
 
 from __future__ import annotations
 
-import threading
-import time
-from typing import TYPE_CHECKING
-
 import gi
 
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
 
-from . import debug
+from . import ax_cache_manager, debug
 from .ax_object import AXObject
 
-if TYPE_CHECKING:
-    from typing import ClassVar
+
+class _AXUtilitiesApplicationCache:
+    """Provides application-specific access to manager-backed cached values."""
+
+    APP_FOR_OBJECT = "AXUtilitiesApplication.app-for-object"
+    _CACHE_CLEAR_INTERVAL_SECONDS = 120
+
+    def __init__(self) -> None:
+        self._manager = ax_cache_manager.get_manager()
+        self._manager.register_cache(
+            self,
+            self.APP_FOR_OBJECT,
+            lifetime=ax_cache_manager.Lifetime.PROCESS,
+            clear_on_demand=ax_cache_manager.ClearPolicy.PRESERVE,
+            clear_interval_seconds=self._CACHE_CLEAR_INTERVAL_SECONDS,
+        )
+        self._apps_for_objects = self._manager.get_cache(self, self.APP_FOR_OBJECT)
+
+    def get_application(self, obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns the cached application for obj."""
+
+        if self._apps_for_objects is None:
+            return None
+        return self._apps_for_objects.get(ax_cache_manager.get_object_key(obj), None)
+
+    def set_application(self, obj: Atspi.Accessible, app: Atspi.Accessible) -> None:
+        """Stores the application for obj."""
+
+        if self._apps_for_objects is not None:
+            self._apps_for_objects.put(ax_cache_manager.get_object_key(obj), app)
 
 
 class AXUtilitiesApplication:
     """Utilities for accessible applications."""
 
-    APP_FOR_OBJ: ClassVar[dict[int, Atspi.Accessible]] = {}
+    _CACHE = _AXUtilitiesApplicationCache()
 
     _mutter_x11_frames: Atspi.Accessible | None = None
     _mutter_x11_frames_checked: bool = False
-
-    @staticmethod
-    def start_cache_clearing_thread() -> None:
-        """Starts thread to periodically clear cached details."""
-
-        thread = threading.Thread(target=AXUtilitiesApplication._clear_stored_data)
-        thread.daemon = True
-        thread.start()
-
-    @staticmethod
-    def _clear_stored_data() -> None:
-        """Clears any data we have cached for applications."""
-
-        while True:
-            time.sleep(120)
-            msg = "AXUtilitiesApplication: Clearing local cache."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            AXUtilitiesApplication.APP_FOR_OBJ.clear()
 
     @staticmethod
     def application_as_string(obj: Atspi.Accessible) -> str:
@@ -116,7 +122,7 @@ class AXUtilitiesApplication:
         if not AXObject.is_valid(obj):
             return None
 
-        cached = AXUtilitiesApplication.APP_FOR_OBJ.get(hash(obj))
+        cached = AXUtilitiesApplication._CACHE.get_application(obj)
         if cached is not None:
             return cached
 
@@ -124,9 +130,9 @@ class AXUtilitiesApplication:
         if AXObject.get_role(obj) != Atspi.Role.APPLICATION:
             parent = AXObject.get_parent(obj)
         if parent is not None:
-            cached = AXUtilitiesApplication.APP_FOR_OBJ.get(hash(parent))
+            cached = AXUtilitiesApplication._CACHE.get_application(parent)
             if cached is not None:
-                AXUtilitiesApplication.APP_FOR_OBJ[hash(obj)] = cached
+                AXUtilitiesApplication._CACHE.set_application(obj, cached)
                 return cached
 
         try:
@@ -136,9 +142,9 @@ class AXUtilitiesApplication:
             AXObject.handle_error(obj, error, msg)
             return None
         if app is not None:
-            AXUtilitiesApplication.APP_FOR_OBJ[hash(obj)] = app
+            AXUtilitiesApplication._CACHE.set_application(obj, app)
             if parent is not None:
-                AXUtilitiesApplication.APP_FOR_OBJ[hash(parent)] = app
+                AXUtilitiesApplication._CACHE.set_application(parent, app)
         return app
 
     @staticmethod
@@ -286,6 +292,3 @@ class AXUtilitiesApplication:
             return True
 
         return False
-
-
-AXUtilitiesApplication.start_cache_clearing_thread()
