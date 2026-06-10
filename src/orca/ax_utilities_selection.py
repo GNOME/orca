@@ -29,7 +29,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import debug
+from . import ax_cache_manager, debug
 from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_table import AXTable
@@ -41,35 +41,54 @@ from .ax_utilities_table import AXUtilitiesTable
 
 if TYPE_CHECKING:
     from collections.abc import Callable
-    from typing import ClassVar
+
+
+class _AXUtilitiesSelectionCache:
+    """Provides selection-specific access to manager-backed cached values."""
+
+    IS_ALL_ITEMS_SELECTED = "AXUtilitiesSelection.is-all-items-selected"
+
+    def __init__(self) -> None:
+        self._manager = ax_cache_manager.get_manager()
+        self._manager.register_cache(
+            self,
+            self.IS_ALL_ITEMS_SELECTED,
+            lifetime=ax_cache_manager.Lifetime.PROCESS,
+            clear_interval_seconds=None,
+        )
+        self._all_items_selected_cache = self._manager.get_cache(self, self.IS_ALL_ITEMS_SELECTED)
+
+    def is_all_items_selected(self, obj: Atspi.Accessible) -> bool:
+        """Returns the cached all-items-selected state for obj."""
+
+        if self._all_items_selected_cache is None:
+            return False
+
+        return self._all_items_selected_cache.get(ax_cache_manager.get_object_key(obj), False)
+
+    def set_all_items_selected(self, obj: Atspi.Accessible, selected: bool) -> None:
+        """Stores the all-items-selected state for obj."""
+
+        if self._all_items_selected_cache is not None:
+            self._all_items_selected_cache.put(ax_cache_manager.get_object_key(obj), selected)
 
 
 class AXUtilitiesSelection:
     """Utilities for obtaining selection-related information about accessible objects."""
 
-    _all_items_selected: ClassVar[dict[int, bool]] = {}
-
-    @staticmethod
-    def clear_cache_now(reason: str = "") -> None:
-        """Clears all cached selection state."""
-
-        msg = "AXUtilitiesSelection: Clearing cache."
-        if reason:
-            msg += f" Reason: {reason}"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-        AXUtilitiesSelection._all_items_selected.clear()
+    _CACHE = _AXUtilitiesSelectionCache()
 
     @staticmethod
     def get_all_items_selected_state(obj: Atspi.Accessible) -> bool:
         """Returns the cached all-items-selected state for obj."""
 
-        return AXUtilitiesSelection._all_items_selected.get(hash(obj), False)
+        return AXUtilitiesSelection._CACHE.is_all_items_selected(obj)
 
     @staticmethod
     def set_all_items_selected_state(obj: Atspi.Accessible, selected: bool) -> None:
         """Sets the cached all-items-selected state for obj."""
 
-        AXUtilitiesSelection._all_items_selected[hash(obj)] = selected
+        AXUtilitiesSelection._CACHE.set_all_items_selected(obj, selected)
 
     @staticmethod
     def get_selected_children(obj: Atspi.Accessible) -> list[Atspi.Accessible]:
