@@ -196,9 +196,11 @@ class TestAXUtilities:
 
         from orca.ax_utilities import AXUtilities
 
-        assert register.call_count == 19
-        assert {call.args[0] for call in register.call_args_list} == {AXUtilities._CACHE}
-        for call in register.call_args_list:
+        cache_calls = [
+            call for call in register.call_args_list if call.args[0] is AXUtilities._CACHE
+        ]
+        assert len(cache_calls) == 19
+        for call in cache_calls:
             assert call.kwargs["lifetime"] is ax_cache_manager.Lifetime.PROCESS
             assert call.kwargs["clear_on_demand"] is ax_cache_manager.ClearPolicy.CLEAR
             assert "clear_interval_seconds" not in call.kwargs

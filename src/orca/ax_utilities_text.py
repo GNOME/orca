@@ -34,7 +34,7 @@ import time
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from . import debug
+from . import ax_cache_manager, debug
 from .ax_component import AXComponent
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
@@ -90,13 +90,84 @@ class LastCaretSet:
     reason: CaretSetReason
 
 
+class _AXUtilitiesTextCache:
+    """Provides text-specific access to manager-backed cached values."""
+
+    TEXT_ATTRIBUTES = "AXUtilitiesText.text-attributes"
+    SELECTED_TEXT = "AXUtilitiesText.selected-text"
+    LAST_TEXT_UNIT_SPOKEN = "AXUtilitiesText.last-text-unit-spoken"
+
+    _TEXT_ATTRIBUTES_KEY = "text-attributes"
+    _LAST_TEXT_UNIT_SPOKEN_KEY = "last-text-unit-spoken"
+
+    def __init__(self) -> None:
+        self._manager = ax_cache_manager.get_manager()
+        for namespace in (
+            self.TEXT_ATTRIBUTES,
+            self.SELECTED_TEXT,
+            self.LAST_TEXT_UNIT_SPOKEN,
+        ):
+            self._manager.register_cache(
+                self,
+                namespace,
+                lifetime=ax_cache_manager.Lifetime.PROCESS,
+                clear_on_demand=ax_cache_manager.ClearPolicy.PRESERVE,
+                clear_interval_seconds=None,
+            )
+        self._text_attributes_cache = self._manager.get_cache(self, self.TEXT_ATTRIBUTES)
+        self._selected_text_cache = self._manager.get_cache(self, self.SELECTED_TEXT)
+        self._last_text_unit_spoken_cache = self._manager.get_cache(
+            self, self.LAST_TEXT_UNIT_SPOKEN
+        )
+
+    def get_last_text_unit_spoken(self) -> TextUnit | None:
+        """Returns the cached last text unit spoken."""
+
+        if self._last_text_unit_spoken_cache is None:
+            return None
+
+        return self._last_text_unit_spoken_cache.get(self._LAST_TEXT_UNIT_SPOKEN_KEY, None)
+
+    def set_last_text_unit_spoken(self, unit: TextUnit) -> None:
+        """Stores the last text unit spoken."""
+
+        if self._last_text_unit_spoken_cache is not None:
+            self._last_text_unit_spoken_cache.put(self._LAST_TEXT_UNIT_SPOKEN_KEY, unit)
+
+    def get_text_attributes(self) -> dict[str, str]:
+        """Returns the cached text attributes."""
+
+        if self._text_attributes_cache is None:
+            return {}
+
+        return self._text_attributes_cache.get(self._TEXT_ATTRIBUTES_KEY, {})
+
+    def set_text_attributes(self, attributes: dict[str, str]) -> None:
+        """Stores the current text attributes."""
+
+        if self._text_attributes_cache is not None:
+            self._text_attributes_cache.put(self._TEXT_ATTRIBUTES_KEY, attributes)
+
+    def get_selected_text(self, obj: Atspi.Accessible) -> tuple[str, int, int]:
+        """Returns the cached selected string, start, and end for obj."""
+
+        if self._selected_text_cache is None:
+            return "", 0, 0
+
+        return self._selected_text_cache.get(ax_cache_manager.get_object_key(obj), ("", 0, 0))
+
+    def set_selected_text(self, obj: Atspi.Accessible, selection: tuple[str, int, int]) -> None:
+        """Stores the selected string, start, and end for obj."""
+
+        if self._selected_text_cache is not None:
+            self._selected_text_cache.put(ax_cache_manager.get_object_key(obj), selection)
+
+
 class AXUtilitiesText:
     """Utilities for accessible text."""
 
-    CACHED_TEXT_ATTRIBUTES: ClassVar[dict[str, str]] = {}
-    CACHED_TEXT_SELECTION: ClassVar[dict[int, tuple[str, int, int]]] = {}
     LAST_CARET_SET: ClassVar[LastCaretSet | None] = None
-    LAST_TEXT_UNIT_SPOKEN: ClassVar[TextUnit | None] = None
+    _CACHE = _AXUtilitiesTextCache()
     LINK_STYLING_ATTRIBUTES: ClassVar[frozenset[AXTextAttribute]] = frozenset(
         {
             AXTextAttribute.FG_COLOR,
@@ -108,27 +179,27 @@ class AXUtilitiesText:
     def get_last_text_unit_spoken() -> TextUnit | None:
         """Returns the last text unit spoken."""
 
-        return AXUtilitiesText.LAST_TEXT_UNIT_SPOKEN
+        return AXUtilitiesText._CACHE.get_last_text_unit_spoken()
 
     @staticmethod
     def set_last_text_unit_spoken(unit: TextUnit) -> None:
         """Sets the last text unit spoken."""
 
-        AXUtilitiesText.LAST_TEXT_UNIT_SPOKEN = unit
+        AXUtilitiesText._CACHE.set_last_text_unit_spoken(unit)
 
     @staticmethod
     def get_cached_text_attributes() -> dict[str, str]:
         """Returns the cached text attributes dict."""
 
-        return AXUtilitiesText.CACHED_TEXT_ATTRIBUTES
+        return AXUtilitiesText._CACHE.get_text_attributes()
 
     @staticmethod
     def update_cached_text_attributes(obj: Atspi.Accessible, offset: int | None = None) -> None:
         """Updates the cached text attributes for the current position."""
 
-        AXUtilitiesText.CACHED_TEXT_ATTRIBUTES = AXText.get_text_attributes_at_offset(obj, offset)[
-            0
-        ]
+        AXUtilitiesText._CACHE.set_text_attributes(
+            AXText.get_text_attributes_at_offset(obj, offset)[0]
+        )
 
     @staticmethod
     def is_at_link_boundary(
@@ -191,7 +262,7 @@ class AXUtilitiesText:
         """Returns a list of (attribute, old_value, new_value) for attributes that changed."""
 
         current_attrs, run_start, run_end = AXText.get_text_attributes_at_offset(obj, offset)
-        cached_attrs = AXUtilitiesText.CACHED_TEXT_ATTRIBUTES
+        cached_attrs = AXUtilitiesText._CACHE.get_text_attributes()
 
         # An empty cache means focus moved to a non-text object (e.g. the frame),
         # so there is no baseline to diff against. Use the caret position's attributes
@@ -272,7 +343,7 @@ class AXUtilitiesText:
                     if attr not in AXUtilitiesText.LINK_STYLING_ATTRIBUTES
                 ]
 
-        AXUtilitiesText.CACHED_TEXT_ATTRIBUTES = current_attrs
+        AXUtilitiesText._CACHE.set_text_attributes(current_attrs)
         return changes
 
     @staticmethod
@@ -842,7 +913,7 @@ class AXUtilitiesText:
     def get_cached_selected_text(obj: Atspi.Accessible) -> tuple[str, int, int]:
         """Returns the last known selected string, start, and end for obj."""
 
-        string, start, end = AXUtilitiesText.CACHED_TEXT_SELECTION.get(hash(obj), ("", 0, 0))
+        string, start, end = AXUtilitiesText._CACHE.get_selected_text(obj)
         debug_string = string.replace("\n", "\\n")
         tokens = ["AXText: Cached selection for", obj, f"is '{debug_string}' ({start}, {end})"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -852,7 +923,7 @@ class AXUtilitiesText:
     def update_cached_selected_text(obj: Atspi.Accessible) -> None:
         """Updates the last known selected string, start, and end for obj."""
 
-        AXUtilitiesText.CACHED_TEXT_SELECTION[hash(obj)] = AXUtilitiesText.get_selected_text(obj)
+        AXUtilitiesText._CACHE.set_selected_text(obj, AXUtilitiesText.get_selected_text(obj))
 
     @staticmethod
     def get_selected_text(obj: Atspi.Accessible) -> tuple[str, int, int]:

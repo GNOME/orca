@@ -428,6 +428,59 @@ class TestAXText:
         result = AXUtilitiesText.is_eoc("\ufffc")
         assert result is True
 
+    def test_import_registers_text_cache_namespaces(self, test_context: OrcaTestContext) -> None:
+        """Test importing text utilities registers its cache namespaces."""
+
+        self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
+
+        manager = ax_cache_manager.get_manager()
+        register = test_context.patch_object(
+            manager,
+            "register_cache",
+            wraps=manager.register_cache,
+        )
+
+        from orca.ax_utilities_text import AXUtilitiesText
+
+        expected_namespaces = {
+            AXUtilitiesText._CACHE.TEXT_ATTRIBUTES,
+            AXUtilitiesText._CACHE.SELECTED_TEXT,
+            AXUtilitiesText._CACHE.LAST_TEXT_UNIT_SPOKEN,
+        }
+        registered_namespaces = {
+            call.args[1]
+            for call in register.call_args_list
+            if call.args[0] is AXUtilitiesText._CACHE
+        }
+
+        assert registered_namespaces == expected_namespaces
+        for call in register.call_args_list:
+            if call.args[0] is AXUtilitiesText._CACHE:
+                assert call.kwargs["lifetime"] is ax_cache_manager.Lifetime.PROCESS
+                assert call.kwargs["clear_on_demand"] is ax_cache_manager.ClearPolicy.PRESERVE
+                assert call.kwargs["clear_interval_seconds"] is None
+
+    def test_manager_clear_cache_now_preserves_text_cache(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test routine manager clearing preserves text utility cached values."""
+
+        self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
+        from orca.ax_utilities_text import AXUtilitiesText, TextUnit
+
+        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
+        AXUtilitiesText._CACHE.set_text_attributes({"weight": "bold"})
+        AXUtilitiesText._CACHE.set_selected_text(mock_accessible, ("selected", 1, 9))
+        AXUtilitiesText.set_last_text_unit_spoken(TextUnit.WORD)
+
+        ax_cache_manager.get_manager().clear_cache_now("test reason")
+
+        assert AXUtilitiesText.get_cached_text_attributes() == {"weight": "bold"}
+        assert AXUtilitiesText.get_cached_selected_text(mock_accessible) == ("selected", 1, 9)
+        assert AXUtilitiesText.get_last_text_unit_spoken() is TextUnit.WORD
+
     def test_is_eoc_with_regular_character(self, test_context: OrcaTestContext) -> None:
         """Test AXText.is_eoc with regular character."""
 
@@ -651,8 +704,6 @@ class TestAXText:
         self._setup_dependencies(test_context)
         from orca.ax_utilities_text import AXUtilitiesText
 
-        test_context.Mock(spec=Atspi.Accessible).hash = test_context.Mock(return_value=54321)
-        AXUtilitiesText.CACHED_TEXT_SELECTION.clear()
         result = AXUtilitiesText.get_cached_selected_text(test_context.Mock(spec=Atspi.Accessible))
         assert result == ("", 0, 0)
 
@@ -1774,12 +1825,9 @@ class TestAXText:
         test_context.patch_object(
             AXUtilitiesText, "get_selected_text", return_value=("cached text", 5, 15)
         )
-        AXUtilitiesText.CACHED_TEXT_SELECTION.clear()
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         AXUtilitiesText.update_cached_selected_text(mock_accessible)
-        mock_hash = hash(mock_accessible)
-        assert mock_hash in AXUtilitiesText.CACHED_TEXT_SELECTION
-        assert AXUtilitiesText.CACHED_TEXT_SELECTION[mock_hash] == ("cached text", 5, 15)
+        assert AXUtilitiesText.get_cached_selected_text(mock_accessible) == ("cached text", 5, 15)
 
     def test_get_character_rect_successful(self, test_context: OrcaTestContext) -> None:
         """Test AXText.get_character_rect successful case."""
