@@ -192,12 +192,7 @@ class FlatReviewPresenter(Extension):
         if tracking == FocusTracking.OFF.value:
             return False
         if tracking == FocusTracking.ON.value:
-            # Wipe on any change except the irrelevant auto-insertions that drive live updates.
-            irrelevant = TextEventReason.AUTO_INSERTION_UNPRESENTABLE
-            for event in (text_inserted, caret_moved):
-                if event is not None and AXUtilities.get_text_event_reason(event) != irrelevant:
-                    return True
-            return False
+            return text_inserted is not None or caret_moved is not None
 
         if text_inserted is not None and AXUtilities.get_text_event_reason(text_inserted) in (
             TextEventReason.TYPING,
