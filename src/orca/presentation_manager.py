@@ -45,7 +45,7 @@ from . import (
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
-from .generator import PresentationReason
+from .generator import Generator, PresentationReason
 
 if TYPE_CHECKING:
     import gi
@@ -426,29 +426,33 @@ class PresentationManager:
                     is_same_window,
                 )
 
-        if generate_speech:
-            speech_presenter.get_presenter().present_generated_speech(
-                script,
-                obj,
-                prior_obj=prior_obj,
-                reason=reason,
-            )
+        if not (generate_speech or generate_braille or generate_sound):
+            return
 
-        if generate_braille:
-            braille_presenter.get_presenter().present_generated_braille(
-                script,
-                obj,
-                prior_obj=prior_obj,
-                reason=reason,
-            )
+        with Generator.presentation_scope():
+            if generate_speech:
+                speech_presenter.get_presenter().present_generated_speech(
+                    script,
+                    obj,
+                    prior_obj=prior_obj,
+                    reason=reason,
+                )
 
-        if generate_sound:
-            sound_presenter.get_presenter().present_generated_sound(
-                script,
-                obj,
-                prior_obj=prior_obj,
-                reason=reason,
-            )
+            if generate_braille:
+                braille_presenter.get_presenter().present_generated_braille(
+                    script,
+                    obj,
+                    prior_obj=prior_obj,
+                    reason=reason,
+                )
+
+            if generate_sound:
+                sound_presenter.get_presenter().present_generated_sound(
+                    script,
+                    obj,
+                    prior_obj=prior_obj,
+                    reason=reason,
+                )
 
     def speak_contents(
         self,

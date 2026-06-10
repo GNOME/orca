@@ -25,8 +25,9 @@
 
 from __future__ import annotations
 
-import threading
+import contextvars
 import time
+from contextlib import contextmanager
 from dataclasses import dataclass, replace
 from difflib import SequenceMatcher
 from enum import Enum
@@ -37,7 +38,7 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from . import braille, debug, focus_manager, messages, object_properties
+from . import ax_cache_manager, braille, debug, focus_manager, messages, object_properties
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_text import AXText
@@ -45,8 +46,7 @@ from .ax_utilities import AXUtilities
 from .ax_value import AXValue
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
-    from typing import ClassVar
+    from collections.abc import Callable, Hashable, Iterator
 
     from .script import Script
 
@@ -109,24 +109,135 @@ class GeneratorContext:
     include_context: bool
 
 
+class _GeneratorCache:
+    """Provides generator-specific access to manager-backed cached values."""
+
+    DESCRIPTION = "Generator.description"
+    IMAGE_DESCRIPTION = "Generator.image-description"
+    STATIC_TEXT = "Generator.static-text"
+    TEXT_SUBSTRING = "Generator.text-substring"
+    TEXT_LINE = "Generator.text-line"
+    TEXT = "Generator.text"
+    TEXT_EXPANDING_EOCS = "Generator.text-expanding-eocs"
+    DESCENDANTS = "Generator.descendants"
+    NESTING_LEVEL = "Generator.nesting-level"
+    TREE_ITEM_LEVEL = "Generator.tree-item-level"
+    IS_NAMELESS_TOGGLE = "Generator.is-nameless-toggle"
+    IS_DESCRIPTION_USED_FOR_NAME = "Generator.is-description-used-for-name"
+    IS_DESCRIPTION_USED_FOR_STATIC_TEXT = "Generator.is-description-used-for-static-text"
+    _CACHE_CLEAR_INTERVAL_SECONDS = 2
+
+    def __init__(self) -> None:
+        self._manager = ax_cache_manager.get_manager()
+        self._scope: contextvars.ContextVar[ax_cache_manager.CacheScope | None] = (
+            contextvars.ContextVar("generator-cache-scope", default=None)
+        )
+        for namespace in (
+            self.DESCRIPTION,
+            self.IMAGE_DESCRIPTION,
+            self.STATIC_TEXT,
+            self.TEXT_SUBSTRING,
+            self.TEXT_LINE,
+            self.TEXT,
+            self.TEXT_EXPANDING_EOCS,
+            self.DESCENDANTS,
+            self.NESTING_LEVEL,
+            self.TREE_ITEM_LEVEL,
+            self.IS_NAMELESS_TOGGLE,
+            self.IS_DESCRIPTION_USED_FOR_NAME,
+            self.IS_DESCRIPTION_USED_FOR_STATIC_TEXT,
+        ):
+            self._manager.register_cache(
+                self,
+                namespace,
+                lifetime=ax_cache_manager.Lifetime.PROCESS,
+                clear_on_demand=ax_cache_manager.ClearPolicy.PRESERVE,
+                clear_interval_seconds=self._CACHE_CLEAR_INTERVAL_SECONDS,
+            )
+        self._caches = {
+            namespace: self._manager.get_cache(self, namespace)
+            for namespace in (
+                self.DESCRIPTION,
+                self.IMAGE_DESCRIPTION,
+                self.STATIC_TEXT,
+                self.TEXT_SUBSTRING,
+                self.TEXT_LINE,
+                self.TEXT,
+                self.TEXT_EXPANDING_EOCS,
+                self.DESCENDANTS,
+                self.NESTING_LEVEL,
+                self.TREE_ITEM_LEVEL,
+                self.IS_NAMELESS_TOGGLE,
+                self.IS_DESCRIPTION_USED_FOR_NAME,
+                self.IS_DESCRIPTION_USED_FOR_STATIC_TEXT,
+            )
+        }
+
+    def has_value(self, namespace: str, key: Hashable) -> bool:
+        """Returns True if namespace has a cached value for key."""
+
+        cache = self._caches.get(namespace)
+        if cache is None:
+            return False
+
+        scope = self._scope.get()
+        if scope is not None:
+            return cache.contains_scoped(scope, key)
+        return cache.contains(key)
+
+    def get_value(self, namespace: str, key: Hashable, default: Any = None) -> Any:
+        """Returns a cached value for key."""
+
+        cache = self._caches.get(namespace)
+        if cache is None:
+            return default
+
+        scope = self._scope.get()
+        if scope is not None:
+            return cache.get_scoped(scope, key, default)
+        return cache.get(key, default)
+
+    def set_value(self, namespace: str, key: Hashable, value: Any) -> None:
+        """Stores a cached value for key."""
+
+        cache = self._caches.get(namespace)
+        if cache is None:
+            return
+
+        scope = self._scope.get()
+        if scope is not None:
+            cache.put_scoped(scope, key, value)
+            return
+        cache.put(key, value)
+
+    @contextmanager
+    def presentation_scope(self) -> Iterator[None]:
+        """Uses bounded cached values while one presentation is active."""
+
+        if self._scope.get() is not None:
+            yield
+            return
+
+        with self._manager.begin_scope() as scope:
+            token = self._scope.set(scope)
+            try:
+                yield
+            finally:
+                self._scope.reset(token)
+
+
 class Generator:
     """Superclass of classes used to generate presentations for objects."""
 
-    CACHED_DESCRIPTION: ClassVar[dict] = {}
-    CACHED_IMAGE_DESCRIPTION: ClassVar[dict] = {}
-    CACHED_IS_NAMELESS_TOGGLE: ClassVar[dict] = {}
-    CACHED_NESTING_LEVEL: ClassVar[dict] = {}
-    CACHED_STATIC_TEXT: ClassVar[dict] = {}
-    CACHED_TEXT_SUBSTRING: ClassVar[dict] = {}
-    CACHED_TEXT_LINE: ClassVar[dict] = {}
-    CACHED_TEXT: ClassVar[dict] = {}
-    CACHED_TEXT_EXPANDING_EOCS: ClassVar[dict] = {}
-    CACHED_TREE_ITEM_LEVEL: ClassVar[dict] = {}
-    CACHED_DESCENDANTS: ClassVar[dict] = {}
-    USED_DESCRIPTION_FOR_NAME: ClassVar[dict] = {}
-    USED_DESCRIPTION_FOR_STATIC_TEXT: ClassVar[dict] = {}
+    _CACHE = _GeneratorCache()
 
-    _lock = threading.Lock()
+    @staticmethod
+    @contextmanager
+    def presentation_scope() -> Iterator[None]:
+        """Uses bounded cached values while one presentation is active."""
+
+        with Generator._CACHE.presentation_scope():
+            yield
 
     def __init__(self, script: Script, mode: GeneratorMode) -> None:
         self._mode: GeneratorMode = mode
@@ -244,37 +355,6 @@ class Generator:
             return result
 
         return wrapper
-
-    @staticmethod
-    def _clear_stored_data():
-        """Clears any data we have cached for objects"""
-
-        while True:
-            time.sleep(2)
-            msg = "GENERATOR: Clearing cache."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            with Generator._lock:
-                Generator.CACHED_DESCRIPTION = {}
-                Generator.CACHED_IMAGE_DESCRIPTION = {}
-                Generator.CACHED_IS_NAMELESS_TOGGLE = {}
-                Generator.CACHED_NESTING_LEVEL = {}
-                Generator.CACHED_STATIC_TEXT = {}
-                Generator.CACHED_TEXT_SUBSTRING = {}
-                Generator.CACHED_TEXT_LINE = {}
-                Generator.CACHED_TEXT = {}
-                Generator.CACHED_TEXT_EXPANDING_EOCS = {}
-                Generator.CACHED_TREE_ITEM_LEVEL = {}
-                Generator.CACHED_DESCENDANTS = {}
-                Generator.USED_DESCRIPTION_FOR_NAME = {}
-                Generator.USED_DESCRIPTION_FOR_STATIC_TEXT = {}
-
-    @staticmethod
-    def start_cache_clearing_thread():
-        """Starts thread to periodically clear cached details."""
-
-        thread = threading.Thread(target=Generator._clear_stored_data)
-        thread.daemon = True
-        thread.start()
 
     def _strings_are_redundant(self, str1, str2, threshold=0.7):
         if not (str1 and str2):
@@ -555,19 +635,21 @@ class Generator:
         if self._is_generating_descendants or AXUtilities.is_terminal(obj):
             return []
 
-        obj_hash = hash(obj)
-        if obj_hash in Generator.CACHED_DESCRIPTION:
-            return Generator.CACHED_DESCRIPTION.get(obj_hash, [])
+        obj_hash = ax_cache_manager.get_object_key(obj)
+        if Generator._CACHE.has_value(Generator._CACHE.DESCRIPTION, obj_hash):
+            return Generator._CACHE.get_value(Generator._CACHE.DESCRIPTION, obj_hash, [])
 
-        if Generator.USED_DESCRIPTION_FOR_STATIC_TEXT.get(
-            obj_hash
-        ) or Generator.USED_DESCRIPTION_FOR_NAME.get(obj_hash):
-            Generator.CACHED_DESCRIPTION[obj_hash] = []
+        if Generator._CACHE.get_value(
+            Generator._CACHE.IS_DESCRIPTION_USED_FOR_STATIC_TEXT, obj_hash, False
+        ) or Generator._CACHE.get_value(
+            Generator._CACHE.IS_DESCRIPTION_USED_FOR_NAME, obj_hash, False
+        ):
+            Generator._CACHE.set_value(Generator._CACHE.DESCRIPTION, obj_hash, [])
             return []
 
         description = AXObject.get_description(obj) or AXUtilities.get_displayed_description(obj)
         if not description or self._strings_are_redundant(AXObject.get_name(obj), description):
-            Generator.CACHED_DESCRIPTION[obj_hash] = []
+            Generator._CACHE.set_value(Generator._CACHE.DESCRIPTION, obj_hash, [])
             return []
 
         # TODO - JD: The table-cell check is a workaround for
@@ -581,23 +663,24 @@ class Generator:
             and not (AXUtilities.is_table_cell(obj) and AXUtilities.is_table_cell(focus))
             and description in [AXObject.get_name(focus), AXObject.get_description(focus)]
         ):
-            Generator.CACHED_DESCRIPTION[obj_hash] = []
+            Generator._CACHE.set_value(Generator._CACHE.DESCRIPTION, obj_hash, [])
             return []
 
-        Generator.CACHED_DESCRIPTION[obj_hash] = [description]
+        Generator._CACHE.set_value(Generator._CACHE.DESCRIPTION, obj_hash, [description])
         return [description]
 
     @log_generator_output
     def _generate_accessible_image_description(self, obj: Atspi.Accessible) -> list[Any]:
-        if hash(obj) in Generator.CACHED_IMAGE_DESCRIPTION:
-            return Generator.CACHED_IMAGE_DESCRIPTION.get(hash(obj), [])
+        obj_hash = ax_cache_manager.get_object_key(obj)
+        if Generator._CACHE.has_value(Generator._CACHE.IMAGE_DESCRIPTION, obj_hash):
+            return Generator._CACHE.get_value(Generator._CACHE.IMAGE_DESCRIPTION, obj_hash, [])
 
         description = AXObject.get_image_description(obj)
         if not description:
-            Generator.CACHED_IMAGE_DESCRIPTION[hash(obj)] = []
+            Generator._CACHE.set_value(Generator._CACHE.IMAGE_DESCRIPTION, obj_hash, [])
             return []
 
-        Generator.CACHED_IMAGE_DESCRIPTION[hash(obj)] = [description]
+        Generator._CACHE.set_value(Generator._CACHE.IMAGE_DESCRIPTION, obj_hash, [description])
         return [description]
 
     @log_generator_output
@@ -654,14 +737,23 @@ class Generator:
 
     @log_generator_output
     def _generate_accessible_name(self, obj: Atspi.Accessible) -> list[Any]:
-        Generator.USED_DESCRIPTION_FOR_NAME[hash(obj)] = False
+        obj_hash = ax_cache_manager.get_object_key(obj)
+        Generator._CACHE.set_value(
+            Generator._CACHE.IS_DESCRIPTION_USED_FOR_NAME,
+            obj_hash,
+            False,
+        )
         name = AXObject.get_name(obj)
         if name:
             return [name]
 
         description = AXObject.get_description(obj)
         if description:
-            Generator.USED_DESCRIPTION_FOR_NAME[hash(obj)] = True
+            Generator._CACHE.set_value(
+                Generator._CACHE.IS_DESCRIPTION_USED_FOR_NAME,
+                obj_hash,
+                True,
+            )
             return [description]
 
         link = None
@@ -700,26 +792,32 @@ class Generator:
 
     @log_generator_output
     def _generate_accessible_static_text(self, obj: Atspi.Accessible) -> list[Any]:
-        if hash(obj) in Generator.CACHED_STATIC_TEXT:
-            return Generator.CACHED_STATIC_TEXT.get(hash(obj), [])
+        obj_hash = ax_cache_manager.get_object_key(obj)
+        if Generator._CACHE.has_value(Generator._CACHE.STATIC_TEXT, obj_hash):
+            return list(Generator._CACHE.get_value(Generator._CACHE.STATIC_TEXT, obj_hash, []))
 
         result = self._generate_accessible_description(obj)
-        Generator.USED_DESCRIPTION_FOR_STATIC_TEXT[hash(obj)] = bool(result)
+        Generator._CACHE.set_value(
+            Generator._CACHE.IS_DESCRIPTION_USED_FOR_STATIC_TEXT,
+            obj_hash,
+            bool(result),
+        )
         if result:
-            Generator.CACHED_STATIC_TEXT[hash(obj)] = result
+            Generator._CACHE.set_value(Generator._CACHE.STATIC_TEXT, obj_hash, result)
             return result
 
         if not self._is_ancestor():
             result = self._generate_text_expanding_embedded_objects(obj)
             if result:
-                Generator.CACHED_STATIC_TEXT[hash(obj)] = result
+                Generator._CACHE.set_value(Generator._CACHE.STATIC_TEXT, obj_hash, result)
                 return result
 
+        result = []
         labels = self._script.utilities.unrelated_labels(obj)
         for label in labels:
             result.extend(self._generate_accessible_name(label))
 
-        Generator.CACHED_STATIC_TEXT[hash(obj)] = result
+        Generator._CACHE.set_value(Generator._CACHE.STATIC_TEXT, obj_hash, result)
         return result
 
     @log_generator_output
@@ -777,12 +875,13 @@ class Generator:
     def _get_presentable_descendants(self, obj: Atspi.Accessible) -> list[Atspi.Accessible]:
         """Returns a list of presentable descendants of obj."""
 
-        if hash(obj) in Generator.CACHED_DESCENDANTS:
-            return Generator.CACHED_DESCENDANTS.get(hash(obj), [])
+        obj_hash = ax_cache_manager.get_object_key(obj)
+        if Generator._CACHE.has_value(Generator._CACHE.DESCENDANTS, obj_hash):
+            return Generator._CACHE.get_value(Generator._CACHE.DESCENDANTS, obj_hash, [])
 
         descendants = AXUtilities.get_on_screen_objects(obj)
         if not descendants:
-            Generator.CACHED_DESCENDANTS[hash(obj)] = []
+            Generator._CACHE.set_value(Generator._CACHE.DESCENDANTS, obj_hash, [])
             return []
 
         labelled_by = AXUtilities.get_is_labelled_by(obj)
@@ -816,7 +915,7 @@ class Generator:
 
             presentable_descendants.append(child)
 
-        Generator.CACHED_DESCENDANTS[hash(obj)] = presentable_descendants
+        Generator._CACHE.set_value(Generator._CACHE.DESCENDANTS, obj_hash, presentable_descendants)
         return presentable_descendants
 
     @log_generator_output
@@ -843,7 +942,11 @@ class Generator:
                 result.extend(self._generate_result_separator(child))
         self._is_generating_descendants = prior_generating_descendants
 
-        Generator.USED_DESCRIPTION_FOR_STATIC_TEXT[hash(obj)] = used_description_as_static_text
+        Generator._CACHE.set_value(
+            Generator._CACHE.IS_DESCRIPTION_USED_FOR_STATIC_TEXT,
+            ax_cache_manager.get_object_key(obj),
+            used_description_as_static_text,
+        )
         return result
 
     @log_generator_output
@@ -1135,12 +1238,13 @@ class Generator:
     def _generate_text_substring(self, obj: Atspi.Accessible) -> list[Any]:
         start = self._get_start_offset(obj)
         end = self._get_end_offset(obj)
-        if (hash(obj), start, end) in Generator.CACHED_TEXT_SUBSTRING:
-            return Generator.CACHED_TEXT_SUBSTRING.get((hash(obj), start, end), [])
+        key = (ax_cache_manager.get_object_key(obj), start, end)
+        if Generator._CACHE.has_value(Generator._CACHE.TEXT_SUBSTRING, key):
+            return Generator._CACHE.get_value(Generator._CACHE.TEXT_SUBSTRING, key, [])
 
         if start is None or end is None:
             if not AXUtilities.is_editable(obj):
-                Generator.CACHED_TEXT_SUBSTRING[(hash(obj), start, end)] = []
+                Generator._CACHE.set_value(Generator._CACHE.TEXT_SUBSTRING, key, [])
             return []
 
         substring = self._get_content_string(obj)
@@ -1148,45 +1252,50 @@ class Generator:
             substring = AXText.get_substring(obj, start, end)
         if "\ufffc" not in substring:
             if not AXUtilities.is_editable(obj):
-                Generator.CACHED_TEXT_SUBSTRING[(hash(obj), start, end)] = [substring]
+                Generator._CACHE.set_value(Generator._CACHE.TEXT_SUBSTRING, key, [substring])
             return [substring]
 
         if not AXUtilities.is_editable(obj):
-            Generator.CACHED_TEXT_SUBSTRING[(hash(obj), start, end)] = []
+            Generator._CACHE.set_value(Generator._CACHE.TEXT_SUBSTRING, key, [])
         return []
 
     @log_generator_output
     def _generate_text_line(self, obj: Atspi.Accessible) -> list[Any]:
         start = self._get_start_offset(obj)
         end = self._get_end_offset(obj)
-        if (hash(obj), start, end) in Generator.CACHED_TEXT_LINE:
-            return Generator.CACHED_TEXT_LINE.get((hash(obj), start, end), [])
+        key = (ax_cache_manager.get_object_key(obj), start, end)
+        if Generator._CACHE.has_value(Generator._CACHE.TEXT_LINE, key):
+            return Generator._CACHE.get_value(Generator._CACHE.TEXT_LINE, key, [])
 
         result = Generator._generate_text_substring(self, obj)
         if result:
             if not AXUtilities.is_editable(obj):
-                Generator.CACHED_TEXT_LINE[(hash(obj), start, end)] = result
+                Generator._CACHE.set_value(Generator._CACHE.TEXT_LINE, key, result)
             return result
 
         text = AXText.get_line_at_offset(obj)[0]
         if text and "\ufffc" not in text:
             if not AXUtilities.is_editable(obj):
-                Generator.CACHED_TEXT_LINE[(hash(obj), start, end)] = [text]
+                Generator._CACHE.set_value(Generator._CACHE.TEXT_LINE, key, [text])
             return [text]
 
         if not AXUtilities.is_editable(obj):
-            Generator.CACHED_TEXT_LINE[(hash(obj), start, end)] = []
+            Generator._CACHE.set_value(Generator._CACHE.TEXT_LINE, key, [])
         return []
 
     @log_generator_output
     def _generate_text_content(self, obj: Atspi.Accessible) -> list[Any]:
-        if hash(obj) in Generator.CACHED_TEXT:
-            return Generator.CACHED_TEXT.get(hash(obj), [])
+        if Generator._CACHE.has_value(Generator._CACHE.TEXT, ax_cache_manager.get_object_key(obj)):
+            return Generator._CACHE.get_value(
+                Generator._CACHE.TEXT, ax_cache_manager.get_object_key(obj), []
+            )
 
         result = Generator._generate_text_substring(self, obj)
         if result:
             if not AXUtilities.is_editable(obj):
-                Generator.CACHED_TEXT[hash(obj)] = result
+                Generator._CACHE.set_value(
+                    Generator._CACHE.TEXT, ax_cache_manager.get_object_key(obj), result
+                )
             return result
 
         text = AXText.get_all_text(obj)
@@ -1195,19 +1304,24 @@ class Generator:
 
         if text and "\ufffc" not in text:
             if not AXUtilities.is_editable(obj):
-                Generator.CACHED_TEXT[hash(obj)] = [text]
+                Generator._CACHE.set_value(
+                    Generator._CACHE.TEXT, ax_cache_manager.get_object_key(obj), [text]
+                )
             return [text]
 
         if not AXUtilities.is_editable(obj):
-            Generator.CACHED_TEXT[hash(obj)] = []
+            Generator._CACHE.set_value(
+                Generator._CACHE.TEXT, ax_cache_manager.get_object_key(obj), []
+            )
         return []
 
     @log_generator_output
     def _generate_text_expanding_embedded_objects(self, obj: Atspi.Accessible) -> list[Any]:
         start = self._get_start_offset(obj)
         end = self._get_end_offset(obj)
-        if (hash(obj), start, end) in Generator.CACHED_TEXT_EXPANDING_EOCS:
-            return Generator.CACHED_TEXT_EXPANDING_EOCS.get((hash(obj), start, end), [])
+        key = (ax_cache_manager.get_object_key(obj), start, end)
+        if Generator._CACHE.has_value(Generator._CACHE.TEXT_EXPANDING_EOCS, key):
+            return Generator._CACHE.get_value(Generator._CACHE.TEXT_EXPANDING_EOCS, key, [])
 
         item = self._get_content_item(obj)
         text = self._script.utilities.expand_eocs(
@@ -1221,21 +1335,25 @@ class Generator:
             and not self._strings_are_redundant(AXObject.get_name(obj), text)
         ):
             if not AXUtilities.is_editable(obj):
-                Generator.CACHED_TEXT_EXPANDING_EOCS[hash(obj), start, end] = [text]
+                Generator._CACHE.set_value(Generator._CACHE.TEXT_EXPANDING_EOCS, key, [text])
             return [text]
 
         if not AXUtilities.is_editable(obj):
-            Generator.CACHED_TEXT_EXPANDING_EOCS[(hash(obj), start, end)] = []
+            Generator._CACHE.set_value(Generator._CACHE.TEXT_EXPANDING_EOCS, key, [])
         return []
 
     ################################## POSITION #####################################
 
     @log_generator_output
     def _get_nesting_level(self, obj):
-        level = Generator.CACHED_NESTING_LEVEL.get(hash(obj))
+        level = Generator._CACHE.get_value(
+            Generator._CACHE.NESTING_LEVEL, ax_cache_manager.get_object_key(obj)
+        )
         if level is None:
             level = AXUtilities.get_nesting_level(obj)
-            Generator.CACHED_NESTING_LEVEL[hash(obj)] = level
+            Generator._CACHE.set_value(
+                Generator._CACHE.NESTING_LEVEL, ax_cache_manager.get_object_key(obj), level
+            )
         return level
 
     @log_generator_output
@@ -1259,10 +1377,14 @@ class Generator:
 
     @log_generator_output
     def _generate_tree_item_level(self, obj: Atspi.Accessible) -> list[Any]:
-        level = Generator.CACHED_TREE_ITEM_LEVEL.get(hash(obj))
+        level = Generator._CACHE.get_value(
+            Generator._CACHE.TREE_ITEM_LEVEL, ax_cache_manager.get_object_key(obj)
+        )
         if level is None:
             level = self._script.utilities.node_level(obj)
-            Generator.CACHED_TREE_ITEM_LEVEL[hash(obj)] = level
+            Generator._CACHE.set_value(
+                Generator._CACHE.TREE_ITEM_LEVEL, ax_cache_manager.get_object_key(obj), level
+            )
 
         if level < 0:
             return []
@@ -1271,10 +1393,16 @@ class Generator:
         prior_object = self._get_prior_obj()
         new_only = self._mode is GeneratorMode.SPEECH
         if new_only and prior_object:
-            old_level = Generator.CACHED_TREE_ITEM_LEVEL.get(hash(prior_object))
+            old_level = Generator._CACHE.get_value(
+                Generator._CACHE.TREE_ITEM_LEVEL, ax_cache_manager.get_object_key(prior_object)
+            )
             if old_level is None:
                 old_level = self._script.utilities.node_level(prior_object)
-                Generator.CACHED_TREE_ITEM_LEVEL[hash(prior_object)] = old_level
+                Generator._CACHE.set_value(
+                    Generator._CACHE.TREE_ITEM_LEVEL,
+                    ax_cache_manager.get_object_key(prior_object),
+                    old_level,
+                )
             if old_level == level:
                 return []
 
@@ -1330,19 +1458,29 @@ class Generator:
     ##################################### TABLE #####################################
 
     def _get_is_nameless_toggle(self, obj):
-        if hash(obj) in Generator.CACHED_IS_NAMELESS_TOGGLE:
-            return Generator.CACHED_IS_NAMELESS_TOGGLE[hash(obj)]
+        if Generator._CACHE.has_value(
+            Generator._CACHE.IS_NAMELESS_TOGGLE, ax_cache_manager.get_object_key(obj)
+        ):
+            return Generator._CACHE.get_value(
+                Generator._CACHE.IS_NAMELESS_TOGGLE, ax_cache_manager.get_object_key(obj)
+            )
 
         if not self._script.utilities.has_meaningful_toggle_action(obj):
-            Generator.CACHED_IS_NAMELESS_TOGGLE[hash(obj)] = False
+            Generator._CACHE.set_value(
+                Generator._CACHE.IS_NAMELESS_TOGGLE, ax_cache_manager.get_object_key(obj), False
+            )
             return False
 
         descendant = AXUtilities.active_descendant(obj)
         if AXObject.get_name(descendant) or AXText.get_all_text(descendant):
-            Generator.CACHED_IS_NAMELESS_TOGGLE[hash(obj)] = False
+            Generator._CACHE.set_value(
+                Generator._CACHE.IS_NAMELESS_TOGGLE, ax_cache_manager.get_object_key(obj), False
+            )
             return False
 
-        Generator.CACHED_IS_NAMELESS_TOGGLE[hash(obj)] = True
+        Generator._CACHE.set_value(
+            Generator._CACHE.IS_NAMELESS_TOGGLE, ax_cache_manager.get_object_key(obj), True
+        )
         return True
 
     def _cells_to_present(self, obj: Atspi.Accessible) -> tuple[bool, list[Atspi.Accessible]]:
@@ -2235,6 +2373,3 @@ class Generator:
         """Generates presentation for the window role."""
 
         return []
-
-
-Generator.start_cache_clearing_thread()

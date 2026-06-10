@@ -29,6 +29,7 @@
 
 from __future__ import annotations
 
+from contextlib import contextmanager
 from typing import TYPE_CHECKING
 
 import pytest
@@ -170,6 +171,65 @@ class TestPresentationManager:
 
         assert manager1 is manager2
         assert manager1.__class__.__name__ == "PresentationManager"
+
+    def test_present_object_uses_one_generator_scope(self, test_context: OrcaTestContext) -> None:
+        """Test generated speech, braille, and sound share one Generator cache scope."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.generator import Generator, PresentationReason
+        from orca.presentation_manager import get_manager
+
+        events = []
+
+        @contextmanager
+        def scope():
+            events.append("enter")
+            try:
+                yield
+            finally:
+                events.append("exit")
+
+        test_context.patch_object(Generator, "presentation_scope", side_effect=scope)
+        script = test_context.Mock()
+        obj = test_context.Mock()
+        speech = essential_modules["orca.speech_presenter"].get_presenter()
+        braille = essential_modules["orca.braille_presenter"].get_presenter()
+        sound = essential_modules["orca.sound_presenter"].get_presenter()
+        speech.present_generated_speech.side_effect = lambda *args, **kwargs: events.append(
+            "speech"
+        )
+        braille.present_generated_braille.side_effect = lambda *args, **kwargs: events.append(
+            "braille"
+        )
+        sound.present_generated_sound.side_effect = lambda *args, **kwargs: events.append("sound")
+
+        get_manager().present_object(
+            script,
+            obj,
+            generate_sound=True,
+            reason=PresentationReason.FOCUS_CHANGE,
+        )
+
+        assert events == ["enter", "speech", "braille", "sound", "exit"]
+        Generator.presentation_scope.assert_called_once_with()
+        speech.present_generated_speech.assert_called_once_with(
+            script,
+            obj,
+            prior_obj=None,
+            reason=PresentationReason.FOCUS_CHANGE,
+        )
+        braille.present_generated_braille.assert_called_once_with(
+            script,
+            obj,
+            prior_obj=None,
+            reason=PresentationReason.FOCUS_CHANGE,
+        )
+        sound.present_generated_sound.assert_called_once_with(
+            script,
+            obj,
+            prior_obj=None,
+            reason=PresentationReason.FOCUS_CHANGE,
+        )
 
     def test_interrupt_presentation(self, test_context: OrcaTestContext) -> None:
         """Test interrupt_presentation interrupts speech and braille."""

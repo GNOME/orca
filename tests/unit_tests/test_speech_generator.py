@@ -205,6 +205,116 @@ _GENERATOR_TEST_MODULES = [
 
 
 @pytest.mark.unit
+class TestGeneratorCache:
+    """Tests the manager-backed cache used by all generator modes."""
+
+    def test_import_registers_generator_cache_namespaces(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Importing Generator registers presentation caches with their two-second policy."""
+
+        test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
+        from orca import ax_cache_manager
+
+        manager = ax_cache_manager.get_manager()
+        register = test_context.patch_object(
+            manager,
+            "register_cache",
+            wraps=manager.register_cache,
+        )
+
+        from orca.generator import Generator
+
+        assert register.call_count == 13
+        assert {call.args[0] for call in register.call_args_list} == {Generator._CACHE}
+        for call in register.call_args_list:
+            assert call.kwargs["lifetime"] is ax_cache_manager.Lifetime.PROCESS
+            assert call.kwargs["clear_on_demand"] is ax_cache_manager.ClearPolicy.PRESERVE
+            assert (
+                call.kwargs["clear_interval_seconds"]
+                == Generator._CACHE._CACHE_CLEAR_INTERVAL_SECONDS
+            )
+        assert Generator._CACHE._CACHE_CLEAR_INTERVAL_SECONDS == 2
+
+    def test_manager_clear_cache_now_preserves_generator_cache(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Routine cache clearing does not interrupt one presentation's generator reuse."""
+
+        test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
+        from orca import ax_cache_manager
+        from orca.generator import Generator
+
+        Generator._CACHE.set_value(Generator._CACHE.DESCRIPTION, 123, ["description"])
+
+        ax_cache_manager.get_manager().clear_cache_now("test reason")
+
+        assert Generator._CACHE.has_value(Generator._CACHE.DESCRIPTION, 123)
+        assert Generator._CACHE.get_value(Generator._CACHE.DESCRIPTION, 123) == ["description"]
+
+    def test_presentation_scope_keeps_values_bounded(self, test_context: OrcaTestContext) -> None:
+        """Presentation-scoped values do not leak into the two-second fallback cache."""
+
+        test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
+        from orca import ax_cache_manager
+        from orca.generator import Generator
+
+        key = object()
+        Generator._CACHE.set_value(Generator._CACHE.DESCRIPTION, key, ["fallback"])
+
+        with Generator.presentation_scope():
+            assert Generator._CACHE.has_value(Generator._CACHE.DESCRIPTION, key) is False
+            Generator._CACHE.set_value(Generator._CACHE.DESCRIPTION, key, ["scoped"])
+            assert Generator._CACHE.get_value(Generator._CACHE.DESCRIPTION, key) == ["scoped"]
+            with Generator.presentation_scope():
+                assert Generator._CACHE.get_value(Generator._CACHE.DESCRIPTION, key) == ["scoped"]
+
+        assert Generator._CACHE.get_value(Generator._CACHE.DESCRIPTION, key) == ["fallback"]
+        assert not ax_cache_manager.get_manager()._scoped_values
+
+    def test_static_text_cache_returns_copy(self, test_context: OrcaTestContext) -> None:
+        """Cached static text must not be mutable by callers."""
+
+        test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
+        from orca import ax_cache_manager
+        from orca.generator import Generator, GeneratorMode
+
+        generator = Generator(test_context.Mock(), GeneratorMode.SPEECH)
+        obj = test_context.Mock()
+        key = ax_cache_manager.get_object_key(obj)
+        Generator._CACHE.set_value(Generator._CACHE.STATIC_TEXT, key, ["cached"])
+
+        result = generator._generate_accessible_static_text(obj)
+
+        result.append("caller mutation")
+        assert Generator._CACHE.get_value(Generator._CACHE.STATIC_TEXT, key) == ["cached"]
+
+    def test_static_text_generation_does_not_mutate_description_cache(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Unrelated-label fallback must not pollute cached descriptions."""
+
+        test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
+        from orca import ax_cache_manager
+        from orca.generator import Generator, GeneratorMode
+
+        script = test_context.Mock()
+        label = test_context.Mock()
+        obj = test_context.Mock()
+        script.utilities.unrelated_labels.return_value = [label]
+        generator = Generator(script, GeneratorMode.SPEECH)
+        generator._generate_text_expanding_embedded_objects = test_context.Mock(return_value=[])
+        generator._generate_accessible_name = test_context.Mock(return_value=["label name"])
+        key = ax_cache_manager.get_object_key(obj)
+        Generator._CACHE.set_value(Generator._CACHE.DESCRIPTION, key, [])
+
+        result = generator._generate_accessible_static_text(obj)
+
+        assert result == ["label name"]
+        assert Generator._CACHE.get_value(Generator._CACHE.DESCRIPTION, key) == []
+
+
+@pytest.mark.unit
 class TestGeneratorContentSubjectBinding:
     """Tests per-object content accessors return the slice only for its subject object."""
 
