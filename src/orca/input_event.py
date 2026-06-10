@@ -669,11 +669,11 @@ class KeyboardEvent(InputEvent):
         if self.is_pressed_key():
             presentation_manager.get_manager().interrupt_presentation()
 
-        if command_manager.get_manager().get_modal_handler() is not None:
-            return
-
         # pylint: disable-next=import-outside-toplevel
-        from . import sleep_mode_manager
+        from . import learn_mode_presenter, sleep_mode_manager
+
+        if learn_mode_presenter.get_presenter().is_active():
+            return
 
         if sleep_mode_manager.get_manager().is_active_for_app(self._script.app):
             return
