@@ -764,7 +764,7 @@ def _brlapi_connect_worker(token: int, task_queue: queue.Queue[_BrlapiTask | Non
     except BRLAPI_ERRORS as err:
         error = err
 
-    GLib.idle_add(_finish_brlapi_connection, token, connection, display_size, error)
+    GLib.idle_add(_finish_brlapi_connection, token, connection, display_size, error, task_queue)
     if error is not None or connection is None or display_size is None:
         return
 
@@ -776,10 +776,26 @@ def _finish_brlapi_connection(
     connection: Any | None,
     display_size: tuple[int, int] | None,
     error: BaseException | None,
+    task_queue: queue.Queue[_BrlapiTask | None],
 ) -> bool:
     """Finalize a connection attempt on the main thread and init state."""
 
     if token != _STATE.brlapi_token:
+        # A superseded attempt (connect timeout, shutdown, disable) that connected anyway: its
+        # worker is now waiting on task_queue, so hand it the teardown.
+        if error is None and connection is not None and display_size is not None:
+            msg = (
+                f"BRAILLE: Tearing down superseded BrlAPI connection "
+                f"(token {token}, active token {_STATE.brlapi_token})."
+            )
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            task_queue.put(
+                _BrlapiTask("leave TTY mode", lambda api: api.leaveTtyMode(), connection)
+            )
+            task_queue.put(
+                _BrlapiTask("close connection", lambda api: api.closeConnection(), connection)
+            )
+            task_queue.put(None)
         return False
 
     _STATE.brlapi_connecting = False
