@@ -40,6 +40,7 @@ _EXPECTED_SAY_ALL_SENTENCE = [
     "End of paragraph image. ",
     "Last paragraph of text.",
     "Read more ",
+    "link",
     "Submit",
     "button",
 ]

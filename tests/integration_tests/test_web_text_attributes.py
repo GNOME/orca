@@ -61,7 +61,7 @@ def test_caret_navigation_top_to_bottom(web_text_attributes: NativeAppSession) -
         ["A ", "marked", " word."],
         ["A ", "subscript", "lower", " word."],
         ["A ", "superscript", "higher", " word."],
-        ["A ", "linked", " word."],
+        ["A ", "linked", "link", " word."],
         ["Normal  heavy  then  slanted  then  lined  then normal."],
     ):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
@@ -111,7 +111,7 @@ def test_caret_navigation_bottom_to_top(web_text_attributes: NativeAppSession) -
     move_to_bottom(session)
 
     for expected in (
-        ["A ", "linked", " word."],
+        ["A ", "linked", "link", " word."],
         ["A ", "superscript", "higher", " word."],
         ["A ", "subscript", "lower", " word."],
         ["A ", "marked", " word."],
@@ -205,7 +205,7 @@ def test_inline_markup_presentation(web_text_attributes: NativeAppSession) -> No
     )
 
     assert _line_down(session) == (
-        ["A ", "linked", " word."],
+        ["A ", "linked", "link", " word."],
         [BrailleLine(1, "A linked word.", "A linked word.", "\x00" * 2 + "\xc0" * 6 + "\x00" * 6)],
     )
 

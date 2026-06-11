@@ -361,7 +361,7 @@ def test_caret_navigation(web_basic: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        ["First link", " and ", "second link", "."],
+        ["First link", "link", " and ", "second link", "link", "."],
         [
             BrailleLine(
                 1,
@@ -428,7 +428,7 @@ def test_caret_navigation(web_basic: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session) == (
-        ["First link", " and ", "second link", "."],
+        ["First link", "link", " and ", "second link", "link", "."],
         [
             BrailleLine(
                 1,

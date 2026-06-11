@@ -59,7 +59,7 @@ def test_line_assembly_layout_mode_on(web_wrapping_text: NativeAppSession) -> No
         ["leaving banner.", "main content", "Wrapping text", "heading 1"],
         ["Alpha bravo charlie delta echo "],
         ["foxtrot golf hotel, then a "],
-        ["small link", " sits mid paragraph "],
+        ["small link", "link", " sits mid paragraph "],
         ["before india juliet kilo lima "],
         ["mike november oscar papa "],
         ["quebec."],
@@ -145,7 +145,7 @@ def test_line_assembly_walking_up(web_wrapping_text: NativeAppSession) -> None:
         ["quebec."],
         ["mike november oscar papa "],
         ["before india juliet kilo lima "],
-        ["small link", " sits mid paragraph "],
+        ["small link", "link", " sits mid paragraph "],
         ["foxtrot golf hotel, then a "],
         ["Alpha bravo charlie delta echo "],
     ]

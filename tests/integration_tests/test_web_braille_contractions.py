@@ -33,7 +33,7 @@ if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
 
 _PLAIN_SPEECH = ["knowledge good people child about character educated everywhere indeed."]
-_LINK_SPEECH = ["A little ", "knowledge", " about good people and a character."]
+_LINK_SPEECH = ["A little ", "knowledge", "link", " about good people and a character."]
 
 _PLAIN_COMPUTER = "knowledge good people child about character educated everywhere indeed."
 _LINK_COMPUTER = "A little knowledge about good people and a character."

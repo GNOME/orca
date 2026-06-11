@@ -48,7 +48,7 @@ def test_line_assembly_inline_landmarks_and_links(web_inline_landmarks: NativeAp
     # Two ordinary links on one row do group onto a single line, proving the
     # splits here are the landmark/link rules and not blanket per-object lines.
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Alpha", "Beta", "link"]
+    assert speech(session) == ["Alpha", "link", "Beta", "link"]
 
     # Two navigation landmarks side by side are never merged onto one line.
     keyboard.tap_key(keyboard.KEYSYM_DOWN)

@@ -37,7 +37,7 @@ if TYPE_CHECKING:
 _LINK = "\x40"
 _ATTR = "\x80"
 
-_LINKS_SPEECH = ["knowledge", " and ", "people", " for ", "character", "link"]
+_LINKS_SPEECH = ["knowledge", "link", " and ", "people", "link", " for ", "character", "link"]
 _LINKS = "knowledge and people for character"
 _LINKS_VISIBLE = "knowledge and people for charact"
 _LINKS_MASK = _LINK * 9 + "\x00" * 5 + _LINK * 6 + "\x00" * 5 + _LINK * 9

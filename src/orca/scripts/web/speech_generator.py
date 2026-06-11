@@ -614,9 +614,8 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 if self._script.utilities.has_useless_canvas_descendant(obj):
                     result.append(self.get_localized_role_name(obj, role=Atspi.Role.IMAGE))
                     result.extend(self.voice(speech_generator.SYSTEM, obj=obj))
-                if index == total - 1:
-                    result.append(self.get_localized_role_name(obj))
-                    result.extend(self.voice(speech_generator.SYSTEM, obj=obj))
+                result.append(self.get_localized_role_name(obj))
+                result.extend(self.voice(speech_generator.SYSTEM, obj=obj))
 
         else:
             result.append(self.get_localized_role_name(obj))

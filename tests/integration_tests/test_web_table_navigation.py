@@ -251,7 +251,7 @@ def test_caret_navigation_in_a_table(web_tables: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        ["Ada", "Engineer", "London", "link"],
+        ["Ada", "Engineer", "link", "London", "link"],
         [
             BrailleLine(
                 1,
@@ -443,12 +443,15 @@ def test_say_all_over_tables(web_tables: NativeAppSession) -> None:
         "Ada",
         "row header",
         "Engineer",
+        "link",
         "London",
+        "link",
         "Grace",
         "row 3",
         "column 1",
         "Admiral",
         "Boston",
+        "link",
         "P",
         "column header",
         "row 1",
