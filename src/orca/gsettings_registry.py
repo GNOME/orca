@@ -55,7 +55,6 @@ class SettingDescriptor:
     schema: str
     gtype: str  # "b", "s", "i", "d", or "" when genum is set
     default: Any
-    getter: Callable[[], Any] | None = None
     voice_type: str | None = None
     genum: str | None = None
     migration_key: str | None = None
@@ -452,7 +451,6 @@ class GSettingsRegistry:
                 schema=schema,
                 gtype=gtype,
                 default=default,
-                getter=None,
                 voice_type=voice_type,
                 genum=genum,
                 migration_key=migration_key,
