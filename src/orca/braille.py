@@ -277,8 +277,8 @@ class _BrailleState:
     brlapi_available: bool = False
     brlapi_running: bool = False
     brlapi_connecting: bool = False
-    brlapi_connect_token: int = 0
-    brlapi_session_token: int = 0
+    # Generation counter the worker captures at launch; bumping it invalidates that worker.
+    brlapi_token: int = 0
     brlapi_connect_timeout_source_id: int = 0
     brlapi_source_id: int = 0
     brlapi_retry_source_id: int = 0
@@ -449,7 +449,7 @@ def _mark_brlapi_dead(reason: str = "") -> None:
     _STATE.brlapi = None
     _STATE.idle = False
     _STATE.brlapi_ready = False
-    _STATE.brlapi_session_token += 1
+    _STATE.brlapi_token += 1
     if _STATE.brlapi_inflight_timer_id:
         GLib.source_remove(_STATE.brlapi_inflight_timer_id)
         _STATE.brlapi_inflight_timer_id = 0
@@ -471,7 +471,7 @@ def _mark_brlapi_dead(reason: str = "") -> None:
 def _handle_brlapi_failure(token: int, action: str, error: BaseException) -> bool:
     """Log a BrlAPI failure and reset state for this session."""
 
-    if token != _STATE.brlapi_session_token:
+    if token != _STATE.brlapi_token:
         return False
     msg = f"BRAILLE: {action} failed ({type(error).__name__}): {error}"
     debug.print_message(debug.LEVEL_WARNING, msg, True)
@@ -482,7 +482,7 @@ def _handle_brlapi_failure(token: int, action: str, error: BaseException) -> boo
 def _run_brlapi_callback(token: int, callback: Callable[..., None], *args: Any) -> bool:
     """Invoke a callback if the session token still matches."""
 
-    if token != _STATE.brlapi_session_token:
+    if token != _STATE.brlapi_token:
         return False
     callback(*args)
     return False
@@ -491,7 +491,7 @@ def _run_brlapi_callback(token: int, callback: Callable[..., None], *args: Any) 
 def _note_brlapi_task_started(token: int, action: str) -> bool:
     """Record an inflight task and arm its timeout timer."""
 
-    if token != _STATE.brlapi_session_token:
+    if token != _STATE.brlapi_token:
         return False
     _STATE.brlapi_inflight_action = action
     _STATE.brlapi_inflight_since = time.monotonic()
@@ -507,7 +507,7 @@ def _note_brlapi_task_started(token: int, action: str) -> bool:
 def _note_brlapi_task_finished(token: int) -> bool:
     """Clear inflight task tracking and cancel the timeout."""
 
-    if token != _STATE.brlapi_session_token:
+    if token != _STATE.brlapi_token:
         return False
     _STATE.brlapi_inflight_action = None
     _STATE.brlapi_inflight_since = 0.0
@@ -689,7 +689,7 @@ def _brlapi_connect_timeout() -> bool:
     msg = f"BRAILLE: BrlAPI connection timed out after {_BRLAPI_CONNECT_TIMEOUT_MS} ms."
     debug.print_message(debug.LEVEL_INFO, msg, True)
     _STATE.brlapi_connecting = False
-    _STATE.brlapi_connect_token += 1
+    _STATE.brlapi_token += 1
     _schedule_brlapi_retry()
     return False
 
@@ -724,8 +724,8 @@ def _start_brlapi_connection() -> None:
     _cancel_brlapi_retry()
     _schedule_brlapi_connect_timeout()
     _STATE.brlapi_connecting = True
-    _STATE.brlapi_connect_token += 1
-    token = _STATE.brlapi_connect_token
+    _STATE.brlapi_token += 1
+    token = _STATE.brlapi_token
     msg = "BRAILLE: Attempting connection with BrlAPI."
     debug.print_message(debug.LEVEL_INFO, msg, True)
     _STATE.brlapi_queue = queue.Queue()
@@ -779,7 +779,7 @@ def _finish_brlapi_connection(
 ) -> bool:
     """Finalize a connection attempt on the main thread and init state."""
 
-    if token != _STATE.brlapi_connect_token:
+    if token != _STATE.brlapi_token:
         return False
 
     _STATE.brlapi_connecting = False
@@ -806,7 +806,6 @@ def _finish_brlapi_connection(
     _STATE.brlapi = connection
     _STATE.brlapi_running = True
     _STATE.idle = False
-    _STATE.brlapi_session_token += 1
     _STATE.brlapi_retry_delay_ms = _BRLAPI_RETRY_DELAY_MS
 
     tokens = ["BRAILLE: Connection established with BrlAPI:", _STATE.brlapi]
@@ -1903,7 +1902,7 @@ def disable_braille() -> None:
     if not _STATE.enable_braille:
         _cancel_brlapi_retry()
         if _STATE.brlapi_connecting:
-            _STATE.brlapi_connect_token += 1
+            _STATE.brlapi_token += 1
             _STATE.brlapi_connecting = False
         _cancel_brlapi_connect_timeout()
         _cancel_brlapi_display_size_poll()
@@ -2689,7 +2688,7 @@ def shutdown() -> bool:
 
     _cancel_brlapi_retry()
     if _STATE.brlapi_connecting:
-        _STATE.brlapi_connect_token += 1
+        _STATE.brlapi_token += 1
         _STATE.brlapi_connecting = False
     _cancel_brlapi_connect_timeout()
     _cancel_brlapi_display_size_poll()
@@ -2718,7 +2717,7 @@ def shutdown() -> bool:
 
         _STATE.brlapi_running = False
         _STATE.brlapi = None
-        _STATE.brlapi_session_token += 1
+        _STATE.brlapi_token += 1
         _STATE.brlapi_queue = None
         _STATE.brlapi_worker = None
         _STATE.idle = False
