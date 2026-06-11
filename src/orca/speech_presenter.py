@@ -2176,10 +2176,7 @@ class SpeechPresenter(Extension):
     def _adjust_for_links(obj: Atspi.Accessible, line: str, start_offset: int) -> str:
         """Adjust line to include the word "link" after any hypertext links."""
 
-        # This adjustment should only be made in cases where there is only presentable text.
-        # In content where embedded objects are present, "link" is presented as the role of any
-        # embedded link children.
-        if "\ufffc" in line:
+        if AXUtilities.is_web_element(obj):
             return line
 
         end_offset = start_offset + len(line)
