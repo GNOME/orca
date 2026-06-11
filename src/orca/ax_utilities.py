@@ -27,9 +27,7 @@ from __future__ import annotations
 
 import functools
 import inspect
-import queue
 import re
-import threading
 from typing import TYPE_CHECKING
 
 import gi
@@ -1526,16 +1524,10 @@ class AXUtilities:
     @staticmethod
     def _get_on_screen_objects(
         root: Atspi.Accessible,
-        cancellation_event: threading.Event,
         bounding_box: Atspi.Rect | None = None,
     ) -> list:
         tokens = ["AXUtilities: Getting on-screen objects in", root, f"({hex(id(root))})"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if cancellation_event.is_set():
-            msg = "AXUtilities: Cancellation event set. Stopping search."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return []
 
         if not AXUtilities.is_on_screen(root, bounding_box):
             return []
@@ -1558,10 +1550,6 @@ class AXUtilities:
         for i, child in enumerate(AXObject.iter_children(root)):
             tokens = [f"AXUtilities: Child {i} is", child, f"({hex(id(child))})"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            if cancellation_event.is_set():
-                msg = "AXUtilities: Cancellation event set. Stopping search."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                break
 
             if (
                 root_has_text
@@ -1572,7 +1560,7 @@ class AXUtilities:
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 continue
 
-            children = AXUtilities._get_on_screen_objects(child, cancellation_event, bounding_box)
+            children = AXUtilities._get_on_screen_objects(child, bounding_box)
             objects.extend(children)
             if root_name and children and root in objects and root_name == AXObject.get_name(child):
                 objects.remove(root)
@@ -1589,35 +1577,10 @@ class AXUtilities:
     def get_on_screen_objects(
         root: Atspi.Accessible,
         bounding_box: Atspi.Rect | None = None,
-        timeout: float = 5.0,
     ) -> list:
         """Returns a list of onscreen objects in the given root."""
 
-        result_queue: queue.Queue[list] = queue.Queue()
-        cancellation_event = threading.Event()
-
-        def _worker():
-            result = AXUtilities._get_on_screen_objects(root, cancellation_event, bounding_box)
-            if not cancellation_event.is_set():
-                result_queue.put(result)
-
-        worker_thread = threading.Thread(target=_worker)
-        worker_thread.start()
-
-        try:
-            result = result_queue.get(timeout=timeout)
-        except queue.Empty:
-            tokens = ["AXUtilities: get_on_screen_objects timed out.", root]
-            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
-            cancellation_event.set()
-            result = []
-
-            msg = "AXUtilities: Checking AT-SPI responsiveness...."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            desktop = AXUtilitiesApplication.get_desktop()
-            tokens = ["AXUtilities: Desktop is", desktop]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
+        result = AXUtilities._get_on_screen_objects(root, bounding_box)
         tokens = [f"AXUtilities: {len(result)} onscreen objects found in", root]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result

@@ -1322,7 +1322,7 @@ class TestAXUtilities:
         )
         essential_modules[
             "orca.ax_utilities_state"
-        ].AXUtilitiesState.is_showing = test_context.Mock(return_value=False)
+        ].AXUtilitiesState.is_showing_and_visible = test_context.Mock(return_value=False)
         from orca.ax_utilities import AXUtilities
 
         mock_obj = test_context.Mock(spec=Atspi.Accessible)
