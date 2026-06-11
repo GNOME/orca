@@ -32,7 +32,7 @@ from __future__ import annotations
 import contextlib
 import time
 from enum import Enum
-from typing import TYPE_CHECKING, Any, ClassVar
+from typing import TYPE_CHECKING, Any, ClassVar, Protocol
 
 import gi
 
@@ -66,6 +66,26 @@ if TYPE_CHECKING:
 
 
 from .command import BrailleCommand, Command, KeyboardCommand
+
+
+class ModalInputHandler(Protocol):
+    """Something that can claim keyboard events while active, e.g. learn mode."""
+
+    def will_handle_event(
+        self,
+        script: default.Script,
+        event: input_event.KeyboardEvent,
+        command: KeyboardCommand | None,
+    ) -> bool:
+        """Returns True to claim the event; False lets it pass through."""
+
+    def handle_event(
+        self,
+        script: default.Script,
+        event: input_event.KeyboardEvent,
+        command: KeyboardCommand | None,
+    ) -> bool:
+        """Handles a claimed event (runs deferred)."""
 
 
 # pylint: disable-next=too-many-instance-attributes
@@ -1078,7 +1098,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         self._group_enabled: dict[str, bool | None] = {}
         self._exclusive_groups: list[set[str]] = []
         self._numlock_on: bool = False
-        self._modal_handler: Callable[..., bool] | None = None
+        self._modal_handler: ModalInputHandler | None = None
         self._prior_suspended: set[str] = set()
 
         msg = "COMMAND MANAGER: Registering D-Bus commands."
@@ -1288,8 +1308,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
 
         return True
 
-    def set_modal_handler(self, handler: Callable[..., bool] | None) -> None:
-        """Sets the one handler that receives keys while a modal feature is active."""
+    def set_modal_handler(self, handler: ModalInputHandler | None) -> None:
+        """Sets the handler that gets first refusal on keys while a modal feature is active."""
 
         self._modal_handler = handler
         msg = f"COMMAND MANAGER: Modal handler is now {'set' if handler else 'cleared'}."
@@ -1298,7 +1318,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         if handler is None and self._is_desktop:
             self._update_numlock_grabs()
 
-    def get_modal_handler(self) -> Callable[..., bool] | None:
+    def get_modal_handler(self) -> ModalInputHandler | None:
         """Returns the active modal key handler, if any."""
 
         return self._modal_handler

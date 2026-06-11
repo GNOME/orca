@@ -712,22 +712,12 @@ class KeyboardEvent(InputEvent):
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
             modal_handler = command_manager.get_manager().get_modal_handler()
-            if modal_handler is not None:
-                tokens = ["KEYBOARD EVENT: A modal handler is active"]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-                def _handle_modal(cmd=command, scr=script) -> bool:
-                    modal_handler(scr, self, cmd)
-                    return True
-
-                self._handler = _handle_modal
+            if modal_handler is not None and modal_handler.will_handle_event(script, self, command):
+                msg = "KEYBOARD EVENT: Modal handler claimed the event"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                self._handler = lambda: modal_handler.handle_event(script, self, command)
             elif command is not None and command.is_enabled():
-
-                def _execute_command(cmd=command, scr=script) -> bool:
-                    cmd.execute(scr, self)
-                    return True
-
-                self._handler = _execute_command
+                self._handler = lambda: command.execute(script, self)
 
         if self.is_orca_modifier():
             if self._click_count == 2:

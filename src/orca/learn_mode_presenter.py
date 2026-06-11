@@ -98,7 +98,7 @@ class LearnModePresenter(Extension):
         msg = "LEARN MODE PRESENTER: Is now active"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._is_active = True
-        command_manager.get_manager().set_modal_handler(self.handle_event)
+        command_manager.get_manager().set_modal_handler(self)
         return True
 
     def quit(
@@ -121,6 +121,16 @@ class LearnModePresenter(Extension):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._is_active = False
         command_manager.get_manager().set_modal_handler(None)
+        return True
+
+    def will_handle_event(
+        self,
+        script: default.Script,
+        event: input_event.KeyboardEvent,
+        command: KeyboardCommand | None = None,
+    ) -> bool:
+        """Returns True; learn mode claims every key while active."""
+
         return True
 
     def handle_event(
