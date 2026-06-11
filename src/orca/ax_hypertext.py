@@ -38,6 +38,10 @@ from .ax_object import AXObject
 class AXHypertext:
     """Wrapper for the Atspi.Hypertext and Hyperlink interfaces."""
 
+    # Chromium and Firefox have off-by-n bugs; we check this many offsets on each side
+    # before giving up. See find_child_at_offset.
+    _MAX_OFFSET_SKEW = 3
+
     @staticmethod
     def _get_link_count(obj: Atspi.Accessible) -> int:
         """Returns the number of hyperlinks in obj."""
@@ -204,60 +208,41 @@ class AXHypertext:
         return basename
 
     @staticmethod
+    def _child_and_reported_offset(
+        obj: Atspi.Accessible, offset: int
+    ) -> tuple[Atspi.Accessible | None, int]:
+        """Returns the child at offset and the offset it reports occupying, or (None, -1)."""
+
+        child = AXHypertext.get_child_at_offset(obj, offset)
+        if child is None:
+            return None, -1
+        return child, AXHypertext.get_character_offset_in_parent(child)
+
+    @staticmethod
     def find_child_at_offset(obj: Atspi.Accessible, offset: int) -> Atspi.Accessible | None:
         """Returns the child at offset, correcting for broken hypertext offset mappings."""
 
-        if child := AXHypertext.get_child_at_offset(obj, offset):
-            if AXHypertext.get_character_offset_in_parent(child) == offset:
+        child, reported_offset = AXHypertext._child_and_reported_offset(obj, offset)
+        if child is not None:
+            if reported_offset == offset:
                 return child
             tokens = [
-                f"AXHypertext: Child at offset {offset} in",
+                "AXHypertext: Broken offset mapping.",
                 obj,
-                "is",
-                child,
-                f"but reports offset {AXHypertext.get_character_offset_in_parent(child)}",
+                f"Child at offset {offset} reports offset {reported_offset}.",
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        if child_before := AXHypertext.get_child_at_offset(obj, offset - 1):
-            if AXHypertext.get_character_offset_in_parent(child_before) == offset:
-                tokens = [
-                    f"AXHypertext: Corrected child at offset {offset} in",
-                    obj,
-                    "is",
-                    child_before,
-                    f"at offset {offset - 1}",
-                ]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return child_before
-
-        if child_after := AXHypertext.get_child_at_offset(obj, offset + 1):
-            if AXHypertext.get_character_offset_in_parent(child_after) == offset:
-                tokens = [
-                    f"AXHypertext: Corrected child at offset {offset} in",
-                    obj,
-                    "is",
-                    child_after,
-                    f"at offset {offset + 1}",
-                ]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                return child_after
-
-        for i in range(AXHypertext._get_link_count(obj)):
-            link = AXHypertext._get_link_at_index(obj, i)
-            if link is not None and AXHypertext.get_link_start_offset(link) == offset:
-                try:
-                    child = Atspi.Hyperlink.get_object(link, 0)
-                except GLib.GError as error:
-                    msg = f"AXHypertext: Exception in find_child_at_offset: {error}"
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
-                    continue
-                if child is not None:
+        # Work around off-by-n bugs: check increasingly distant offsets and accept the
+        # child that reports being at the requested offset.
+        for skew in range(1, AXHypertext._MAX_OFFSET_SKEW + 1):
+            for lookup_offset in (offset - skew, offset + skew):
+                child, reported_offset = AXHypertext._child_and_reported_offset(obj, lookup_offset)
+                if child is not None and reported_offset == offset:
                     tokens = [
-                        f"AXHypertext: Child at offset {offset} in",
+                        "AXHypertext: Broken offset mapping.",
                         obj,
-                        "found via link enumeration:",
-                        child,
+                        f"Child for offset {offset} retrieved at offset {lookup_offset}.",
                     ]
                     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                     return child
