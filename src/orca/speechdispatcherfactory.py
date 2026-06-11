@@ -25,7 +25,10 @@
 
 from __future__ import annotations
 
+import contextlib
 import gc
+import queue
+import threading
 import time
 from typing import TYPE_CHECKING, Any
 
@@ -83,6 +86,7 @@ class SpeechServer(speechserver.SpeechServer):
     def __init__(self, server_id: str) -> None:
         super().__init__(server_id)
         self._client: Any = None
+        self._probe_pending: bool = False
         self._output_module: str | None = None
         self._current_synthesis_voice: str | None = None
         self._current_capitalization_style: str = CapitalizationStyle.NONE.value
@@ -569,6 +573,47 @@ class SpeechServer(speechserver.SpeechServer):
         if result is not None:
             return result
         return ""
+
+    def is_responsive(self, timeout: float = 2.0) -> bool:
+        """Returns True if a probe round-trip to Speech Dispatcher returns within timeout."""
+
+        # The probe runs on its own throwaway connection, not self._client: speechd's client puts
+        # no lock around its send-command-then-read-reply exchange, so two threads sharing one
+        # connection can read each other's replies. self._client stays main-thread-only.
+        if self._client is None:
+            return False
+
+        # Called only on the main thread, and the probe thread only ever clears _probe_pending, so
+        # the check-and-set needs no lock. If a previous probe is still stuck on a wedged daemon,
+        # report unresponsive rather than pile on another thread and connection; the stuck probe
+        # clears the flag when it unblocks.
+        if self._probe_pending:
+            return False
+
+        self._probe_pending = True
+        result: queue.Queue[bool] = queue.Queue()
+
+        def probe() -> None:
+            connection = None
+            try:
+                connection = speechd.SSIPClient("Orca-probe", component=self._id)
+                connection.get_output_module()
+                result.put(True)
+            except Exception:  # pylint: disable=broad-except
+                result.put(False)
+            finally:
+                if connection is not None:
+                    with contextlib.suppress(Exception):
+                        connection.close()
+                self._probe_pending = False
+
+        threading.Thread(target=probe, daemon=True).start()
+        try:
+            return result.get(timeout=timeout)
+        except queue.Empty:
+            msg = f"{self._LOG_PREFIX}: Speech server health check timed out"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
 
     def set_output_module(self, module_id: str) -> None:
         """Set the speech output module to the specified provider."""

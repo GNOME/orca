@@ -427,6 +427,11 @@ class SpeechServer:
     def reset(self) -> None:
         """Resets the speech engine."""
 
+    def is_responsive(self, timeout: float = 2.0) -> bool:
+        """Returns True if the server answers a probe within timeout seconds."""
+
+        return True
+
     def clear_cached_voice_properties(self) -> None:
         """Clear cached voice properties to force reapplication on next speech."""
 

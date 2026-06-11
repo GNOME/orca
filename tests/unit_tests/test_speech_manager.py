@@ -32,7 +32,6 @@
 
 from __future__ import annotations
 
-import queue
 from enum import Enum
 from typing import TYPE_CHECKING
 
@@ -176,7 +175,7 @@ class TestSpeechManager:
         "case",
         [
             {"id": "server_none", "scenario": "none_server", "expected_result": None},
-            {"id": "server_timeout", "scenario": "timeout", "expected_result": None},
+            {"id": "server_unresponsive", "scenario": "unresponsive", "expected_result": None},
         ],
         ids=lambda case: case["id"],
     )
@@ -189,16 +188,10 @@ class TestSpeechManager:
 
         if case["scenario"] == "none_server":
             manager._server = None
-        else:  # timeout scenario
+        else:  # unresponsive server
             mock_speech_server = test_context.Mock()
+            mock_speech_server.is_responsive.return_value = False
             manager._server = mock_speech_server
-
-            def mock_queue_constructor():
-                mock_queue = test_context.Mock()
-                mock_queue.get.side_effect = queue.Empty()
-                return mock_queue
-
-            test_context.patch("queue.Queue", new=mock_queue_constructor)
 
         result = manager._get_server()
         assert result is case["expected_result"]

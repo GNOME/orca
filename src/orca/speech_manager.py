@@ -32,8 +32,6 @@ from __future__ import annotations
 import importlib
 import locale
 import os
-import queue
-import threading
 from typing import TYPE_CHECKING, Any
 
 import gi
@@ -1917,7 +1915,6 @@ class SpeechManager(Extension):
 
     def __init__(self) -> None:
         self._families_sorted: bool = False
-        self._health_check_pending: bool = False
         self._mute_speech: bool = False
         self._server: SpeechServer | None = None
         super().__init__()
@@ -2026,7 +2023,7 @@ class SpeechManager(Extension):
         return self._server
 
     def _get_server(self) -> SpeechServer | None:
-        """Returns the speech server if it is responsive.."""
+        """Returns the speech server if it is responsive."""
 
         result = self._server
         if result is None:
@@ -2034,28 +2031,8 @@ class SpeechManager(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return None
 
-        if self._health_check_pending:
-            msg = "SPEECH MANAGER: Health check already in progress."
-            debug.print_message(debug.LEVEL_WARNING, msg, True)
-            return None
-
-        self._health_check_pending = True
-        result_queue: queue.Queue[bool] = queue.Queue()
-
-        def health_check_thread():
-            try:
-                result.get_output_module()
-                result_queue.put(True)
-            finally:
-                self._health_check_pending = False
-
-        thread = threading.Thread(target=health_check_thread, daemon=True)
-        thread.start()
-
-        try:
-            result_queue.get(timeout=2.0)
-        except queue.Empty:
-            msg = "SPEECH MANAGER: Speech server health check timed out"
+        if not result.is_responsive():
+            msg = "SPEECH MANAGER: Speech server is not responsive."
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return None
 
