@@ -66,6 +66,7 @@ class BrailleGeneratorContext(GeneratorContext):
     display_ancestors: bool
     end_of_line_indicator: bool
     present_mnemonics: bool
+    indicate_links: bool
 
 
 class Space:
@@ -499,6 +500,7 @@ class BrailleGenerator(generator.Generator):
                 self._get_start_offset(obj),
                 self._get_end_offset(obj),
                 self._get_caret_offset(obj, self._get_offset()),
+                indicate_links=self._context.indicate_links,
             ),
         ]
 
@@ -874,6 +876,7 @@ class BrailleGenerator(generator.Generator):
                 self._as_string(self._generate_eol(obj)),
                 self._get_start_offset(obj),
                 self._get_end_offset(obj),
+                indicate_links=self._context.indicate_links,
             ),
         ]
         return result
@@ -1207,6 +1210,7 @@ class BrailleGenerator(generator.Generator):
                     self._get_start_offset(obj),
                     self._get_end_offset(obj),
                     self._get_caret_offset(obj),
+                    indicate_links=self._context.indicate_links,
                 ),
             ]
         else:
@@ -1762,6 +1766,7 @@ class BrailleGenerator(generator.Generator):
                 start_offset=self._get_start_offset(obj),
                 end_offset=self._get_end_offset(obj),
                 caret_offset=self._get_caret_offset(obj, self._get_offset()),
+                indicate_links=self._context.indicate_links,
             ),
         ]
         return result

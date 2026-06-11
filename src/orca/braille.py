@@ -985,7 +985,7 @@ class Region:
         msg = f"BRAILLE REGION: Process routing key. Offset: {offset}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def get_attribute_mask(self, _indicate_links: bool = True) -> str:
+    def get_attribute_mask(self) -> str:
         """Return the attrOr mask for this region."""
 
         return "\x00" * len(self.string)
@@ -1152,7 +1152,7 @@ class Link(Component):
     def __str__(self) -> str:
         return f"LINK: '{self.string}', cursor offset:{self.cursor_offset}"
 
-    def get_attribute_mask(self, _indicate_links: bool = True) -> str:
+    def get_attribute_mask(self) -> str:
         """Return an attrOr mask that marks link cells."""
 
         if _STATE.link_indicator != INDICATOR_NONE and self.string:
@@ -1172,8 +1172,9 @@ class _AccessibleTextRegion(Region):
     _start_offset: int = 0
     _label: str = ""
     _eol: str = ""
+    _indicate_links: bool = True
 
-    def get_attribute_mask(self, indicate_links: bool = True) -> str:
+    def get_attribute_mask(self) -> str:
         """Return the attrOr mask for links, attributes, and selections."""
 
         if AXUtilities.is_whitespace_or_empty(self.accessible):
@@ -1193,7 +1194,7 @@ class _AccessibleTextRegion(Region):
         selection_indicator = _STATE.selector_indicator
         link_indicator = _STATE.link_indicator
 
-        if indicate_links and link_indicator != INDICATOR_NONE:
+        if self._indicate_links and link_indicator != INDICATOR_NONE:
             links = AXHypertext.get_all_links(self.accessible)
             for link in links:
                 start_offset = AXHypertext.get_link_start_offset(link)
@@ -1296,6 +1297,7 @@ class Text(_AccessibleTextRegion):
         start_offset: int | None = None,
         end_offset: int | None = None,
         caret_offset: int | None = None,
+        indicate_links: bool = True,
     ) -> None:
         tokens = [
             "BRAILLE: Creating text region for",
@@ -1304,6 +1306,7 @@ class Text(_AccessibleTextRegion):
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+        self._indicate_links = indicate_links
         self.accessible = accessible
         self._eol = eol
         string = ""
@@ -1525,7 +1528,7 @@ class Line:
 
     def __init__(self, region: Region | None = None) -> None:
         self._regions: list[Region] = []
-        self._info_cache: dict[bool, _LineInfo] = {}
+        self._info_cache: _LineInfo | None = None
         if region:
             self._regions.append(region)
             self.invalidate_cache_internal()
@@ -1537,7 +1540,7 @@ class Line:
 
     def invalidate_cache_internal(self) -> None:
         """Clear cached line info for this line."""
-        self._info_cache.clear()
+        self._info_cache = None
 
     def add_regions(self, regions: Iterable[Region]) -> None:
         """Append multiple regions to this line."""
@@ -1545,12 +1548,11 @@ class Line:
         self._regions.extend(regions)
         self.invalidate_cache_internal()
 
-    def get_info(self, indicate_links: bool = True) -> _LineInfo:
+    def get_info(self) -> _LineInfo:
         """Compute rendered line info used for display and panning."""
 
-        cached = self._info_cache.get(indicate_links)
-        if cached is not None:
-            return cached
+        if self._info_cache is not None:
+            return self._info_cache
 
         string = ""
         focus_offset = -1
@@ -1560,12 +1562,12 @@ class Line:
                 focus_offset = len(string)
             if region.string:
                 string += region.string
-            mask = region.get_attribute_mask(indicate_links)
+            mask = region.get_attribute_mask()
             attribute_mask += mask
 
         ranges = _compute_ranges(string, focus_offset, _STATE.display_size[0])
         info = _LineInfo(string, focus_offset, attribute_mask, ranges)
-        self._info_cache[indicate_links] = info
+        self._info_cache = info
         return info
 
     def get_region_at_offset(self, offset: int) -> _RegionAtCell:
@@ -1698,15 +1700,14 @@ def display_line(
     line: Line,
     focused_region: Region | None,
     pan_to_cursor: bool = True,
-    indicate_links: bool = True,
     stop_flash: bool = True,
 ) -> None:
     """Display a single braille line and optional focus region."""
 
     _clear()
     _set_lines([line])
-    _set_focus(focused_region, pan_to_focus=pan_to_cursor, indicate_links=indicate_links)
-    refresh(pan_to_cursor=pan_to_cursor, indicate_links=indicate_links, stop_flash=stop_flash)
+    _set_focus(focused_region, pan_to_focus=pan_to_cursor)
+    refresh(pan_to_cursor=pan_to_cursor, stop_flash=stop_flash)
 
 
 def try_reposition_cursor(accessible: Any) -> bool:
@@ -1739,7 +1740,6 @@ def is_end_showing() -> bool:
 def _set_focus(
     region: Region | None,
     pan_to_focus: bool = True,
-    indicate_links: bool = True,
 ) -> None:
     """Specifies the region with focus.  This region will be positioned
     at the home position if pan_to_focus is True.
@@ -1749,10 +1749,6 @@ def _set_focus(
       added to the logical display, or None to clear focus
     - pan_to_focus: whether or not to position the region at the home
       position
-    - indicate_links: Whether or not we should take the time to get the
-      attributeMask for links. Reasons we might not want to include
-      knowing that we will fail and/or it taking an unreasonable
-      amount of time (AKA Gecko).
     """
 
     _STATE.region_with_focus = region
@@ -1780,7 +1776,7 @@ def _set_focus(
             break
 
     line = _STATE.lines[_STATE.viewport[1]]
-    line_info = line.get_info(indicate_links)
+    line_info = line.get_info()
     offset = line_info.focus_offset
 
     # If the cursor is too far right, we scroll the _STATE.viewport
@@ -2198,7 +2194,6 @@ def _paint_display(line_info: _LineInfo, start_position: int, end_position: int)
 def refresh(
     pan_to_cursor: bool = True,
     target_cursor_cell: int = 0,
-    indicate_links: bool = True,
     stop_flash: bool = True,
 ) -> None:
     """Render current lines to braille with panning and link indicators."""
@@ -2243,7 +2238,7 @@ def refresh(
     )
 
     line = _STATE.lines[_STATE.viewport[1]]
-    line_info = line.get_info(indicate_links)
+    line_info = line.get_info()
     msg = (
         f"BRAILLE: Line {_STATE.viewport[1]}: '{line_info.string}' focusOffset: "
         f"{line_info.focus_offset} {line_info.ranges}"

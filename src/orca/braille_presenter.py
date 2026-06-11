@@ -857,7 +857,6 @@ class BraillePresenter(Extension):
         focused_region: braille.Region | None,
         *,
         pan_to_cursor: bool = True,
-        indicate_links: bool = True,
         stop_flash: bool = True,
     ) -> None:
         """Build a line from regions and present it as a single braille line."""
@@ -868,7 +867,6 @@ class BraillePresenter(Extension):
             line,
             focused_region,
             pan_to_cursor=pan_to_cursor,
-            indicate_links=indicate_links,
             stop_flash=stop_flash,
         )
 
@@ -904,6 +902,7 @@ class BraillePresenter(Extension):
             display_ancestors=self.get_display_ancestors(),
             end_of_line_indicator=self.get_end_of_line_indicator_is_enabled(),
             present_mnemonics=self.get_present_mnemonics(),
+            indicate_links=True,
         )
 
     def display_generated_contents(
@@ -929,7 +928,7 @@ class BraillePresenter(Extension):
             flattened_regions.extend(regions)
         if flattened_regions:
             flattened_regions[-1].string = flattened_regions[-1].string.rstrip(" ")
-        self.present_regions(flattened_regions, focused_region, indicate_links=False)
+        self.present_regions(flattened_regions, focused_region)
 
     def present_generated_braille(
         self,

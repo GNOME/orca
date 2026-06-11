@@ -233,6 +233,10 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         tokens = ["WEB: Generating braille for document object", obj]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True, True)
 
+        # Links in document content are presented as their own braille regions, which carry
+        # their underline. Don't have the text regions scan all the document's links inline.
+        context = replace(context, indicate_links=False)
+
         result = []
 
         include_context = not self._script.utilities.in_document_content(obj)
