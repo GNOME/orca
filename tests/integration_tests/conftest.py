@@ -75,6 +75,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_lists,
     _web_live_regions,
     _web_long_line,
+    _web_missing_cells,
     _web_nested_headings,
     _web_offscreen_labels,
     _web_option_removal,

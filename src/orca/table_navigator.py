@@ -348,6 +348,53 @@ class TableNavigator(Extension):
 
         return row, col
 
+    def _vertical_cell_skipping_holes(
+        self, current: Atspi.Accessible, descending: bool
+    ) -> Atspi.Accessible | None:
+        """Returns the nearest real cell above or below current, skipping holes in the column."""
+
+        table = AXUtilities.get_table(current)
+        if table is None:
+            return None
+
+        row, col = AXTable.get_cell_coordinates(current, prefer_attribute=False)
+        if descending:
+            row += AXTable.get_cell_spans(current, prefer_attribute=False)[0]
+            stop, step = AXTable.get_row_count(table, prefer_attribute=False), 1
+        else:
+            row -= 1
+            stop, step = -1, -1
+
+        while row != stop:
+            if (cell := AXTable.get_cell_at(table, row, col)) is not None:
+                return cell
+            row += step
+
+        return None
+
+    def _horizontal_cell_skipping_holes(
+        self, current: Atspi.Accessible, rightward: bool
+    ) -> Atspi.Accessible | None:
+        """Returns the nearest real cell beside current, skipping holes in its own row."""
+
+        table = AXUtilities.get_table(current)
+        if table is None:
+            return None
+
+        row, col = AXTable.get_cell_coordinates(current, prefer_attribute=False)
+        row_span, col_span = AXTable.get_cell_spans(current, prefer_attribute=False)
+        col = col + col_span if rightward else col - 1
+        last_row = row + row_span
+
+        # A cell that spans rows but sits alone in its own row has only holes beside it; its real
+        # neighbors live in the lower rows its rowspan covers.
+        while row < last_row:
+            if (cell := AXTable.get_cell_at(table, row, col)) is not None:
+                return cell
+            row += 1
+
+        return None
+
     @dbus_service.command
     @navigation_command
     def move_left(self, script: default.Script, notify_user: bool = True) -> None:
@@ -371,7 +418,12 @@ class TableNavigator(Extension):
             while cell and self._is_blank(cell) and not AXTable.is_start_of_row(cell):
                 cell = AXTable.get_cell_on_left(cell)
 
-        self._present_cell(script, cell, row, col - 1, current, notify_user)
+        if cell is None:
+            cell = self._horizontal_cell_skipping_holes(current, rightward=False)
+
+        if cell is not None:
+            row, col = AXTable.get_cell_coordinates(cell, prefer_attribute=False)
+        self._present_cell(script, cell, row, col, current, notify_user)
 
     @dbus_service.command
     @navigation_command
@@ -396,7 +448,12 @@ class TableNavigator(Extension):
             while cell and self._is_blank(cell) and not AXTable.is_end_of_row(cell):
                 cell = AXTable.get_cell_on_right(cell)
 
-        self._present_cell(script, cell, row, col + 1, current, notify_user)
+        if cell is None:
+            cell = self._horizontal_cell_skipping_holes(current, rightward=True)
+
+        if cell is not None:
+            row, col = AXTable.get_cell_coordinates(cell, prefer_attribute=False)
+        self._present_cell(script, cell, row, col, current, notify_user)
 
     @dbus_service.command
     @navigation_command
@@ -421,7 +478,12 @@ class TableNavigator(Extension):
             while cell and self._is_blank(cell) and not AXTable.is_top_of_column(cell):
                 cell = AXTable.get_cell_above(cell)
 
-        self._present_cell(script, cell, row - 1, col, current, notify_user)
+        if cell is None:
+            cell = self._vertical_cell_skipping_holes(current, descending=False)
+
+        if cell is not None:
+            row, col = AXTable.get_cell_coordinates(cell, prefer_attribute=False)
+        self._present_cell(script, cell, row, col, current, notify_user)
 
     @dbus_service.command
     @navigation_command
@@ -446,7 +508,12 @@ class TableNavigator(Extension):
             while cell and self._is_blank(cell) and not AXTable.is_bottom_of_column(cell):
                 cell = AXTable.get_cell_below(cell)
 
-        self._present_cell(script, cell, row + 1, col, current, notify_user)
+        if cell is None:
+            cell = self._vertical_cell_skipping_holes(current, descending=True)
+
+        if cell is not None:
+            row, col = AXTable.get_cell_coordinates(cell, prefer_attribute=False)
+        self._present_cell(script, cell, row, col, current, notify_user)
 
     @dbus_service.command
     @navigation_command

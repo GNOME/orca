@@ -697,6 +697,10 @@ class TestTableNavigator:
             "orca.table_navigator.AXTable.get_cell_on_left",
             return_value=mock_left_cell,
         )
+        test_context.patch(
+            "orca.table_navigator.AXTable.get_cell_coordinates",
+            return_value=(1, 1),
+        )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
@@ -736,6 +740,10 @@ class TestTableNavigator:
         test_context.patch(
             "orca.table_navigator.AXTable.get_cell_on_right",
             return_value=mock_right_cell,
+        )
+        test_context.patch(
+            "orca.table_navigator.AXTable.get_cell_coordinates",
+            return_value=(1, 3),
         )
         from orca.table_navigator import TableNavigator
 
@@ -834,6 +842,10 @@ class TestTableNavigator:
             "orca.table_navigator.AXTable.get_cell_above",
             return_value=mock_up_cell,
         )
+        test_context.patch(
+            "orca.table_navigator.AXTable.get_cell_coordinates",
+            return_value=(1, 1),
+        )
         from orca.table_navigator import TableNavigator
 
         navigator = TableNavigator()
@@ -876,6 +888,10 @@ class TestTableNavigator:
         test_context.patch(
             "orca.table_navigator.AXTable.get_cell_below",
             return_value=mock_down_cell,
+        )
+        test_context.patch(
+            "orca.table_navigator.AXTable.get_cell_coordinates",
+            return_value=(2, 1),
         )
         from orca.table_navigator import TableNavigator
 
