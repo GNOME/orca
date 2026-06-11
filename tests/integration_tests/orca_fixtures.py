@@ -240,8 +240,8 @@ def _run_app_with_orca(
         orca = OrcaSession(env)
         orca.launch()
         try:
-            orca.set("SpeechPresenter", "LogFile", str(speech_log))
-            orca.set("BraillePresenter", "LogFile", str(braille_log))
+            orca.set_log_file("SpeechPresenter", str(speech_log))
+            orca.set_log_file("BraillePresenter", str(braille_log))
             reader = OutputReader(str(speech_log), str(braille_log))
             reader.set_idle_check(orca.is_idle)
             reader.start()

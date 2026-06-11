@@ -161,6 +161,11 @@ class OrcaSession:
 
         self.call("CommandManager", "RefreshKeybindingsForTesting", self._rpc_secret)
 
+    def set_log_file(self, module: str, path: str) -> None:
+        """Points module's JSONL output recorder at path (test-only RPC)."""
+
+        self.call(module, "SetLogFileForTesting", self._rpc_secret, path)
+
     @contextlib.contextmanager
     def bound_command(self, command_name: str, keysym: str, modifiers: int) -> Iterator[None]:
         """Binds command_name for the duration of the block, refreshing grabs on entry and exit."""

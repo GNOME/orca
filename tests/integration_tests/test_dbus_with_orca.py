@@ -447,7 +447,6 @@ MODULE_CONFIG = {
             "MonitorForeground",
             "MonitorBackground",
             "VerbosityLevel",
-            "LogFile",
         ],
         "ui_commands": [],
         "toggle_commands": [
@@ -875,7 +874,6 @@ MODULE_CONFIG = {
             "TextAttributesIndicator",
             "VerbosityLevel",
             "WordWrapIsEnabled",
-            "LogFile",
         ],
         "ui_commands": [],
         "toggle_commands": [],

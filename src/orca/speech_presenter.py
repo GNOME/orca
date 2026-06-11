@@ -2429,9 +2429,15 @@ class SpeechPresenter(Extension):
             self.destroy_monitor()
         return True
 
-    @dbus_service.setter
-    def set_log_file(self, value: str) -> bool:
-        """Opens the given path for JSONL recording; an empty string closes any open file."""
+    @dbus_service.testing_command
+    def set_log_file_for_testing(
+        self,
+        token: str = "",  # pylint: disable=unused-argument
+        value: str = "",
+        script: default.Script | None = None,  # pylint: disable=unused-argument
+        event: input_event.InputEvent | None = None,  # pylint: disable=unused-argument
+    ) -> bool:
+        """Opens value for JSONL recording; an empty string closes any open file (test-only)."""
 
         msg = f"SPEECH PRESENTER: Setting log file to {value!r}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
