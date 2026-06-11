@@ -126,35 +126,40 @@ def _print_text(level: int, text: str = "", timestamp: bool = False, stack: bool
 
     _printing.active = True
 
-    if timestamp:
-        text = text.replace("\n", f"\n{' ' * 18}")
-        local_time = datetime.now(tz=timezone.utc).astimezone()
-        text = f"{local_time.strftime('%H:%M:%S.%f')} - {text}"
-    if stack:
-        text += f" {_stack_as_string()}"
+    try:
+        if timestamp:
+            text = text.replace("\n", f"\n{' ' * 18}")
+            local_time = datetime.now(tz=timezone.utc).astimezone()
+            text = f"{local_time.strftime('%H:%M:%S.%f')} - {text}"
+        if stack:
+            text += f" {_stack_as_string()}"
 
-    if debugFile:
-        try:
-            debugFile.writelines([text, "\n"])
-        except (AttributeError, OSError):
-            _printing.active = False
-            return
-        except (TypeError, ValueError, UnicodeEncodeError) as error:
-            text = f"Exception trying to write text to file: {error}"
-            debugFile.writelines([text, "\n"])
-        if level >= LEVEL_SEVERE:
-            with contextlib.suppress(
-                AttributeError, OSError, TypeError, ValueError, UnicodeEncodeError
-            ):
-                sys.stderr.writelines([text, "\n"])
-    else:
-        try:
-            sys.stderr.writelines([text, "\n"])
-        except (AttributeError, OSError):
-            _printing.active = False
-            return
-        except (TypeError, ValueError, UnicodeEncodeError) as error:
-            text = f"Exception trying to write text to stderr: {error}"
-            sys.stderr.writelines([text, "\n"])
-
-    _printing.active = False
+        if debugFile:
+            try:
+                debugFile.write(f"{text}\n")
+            except (AttributeError, OSError):
+                return
+            except (TypeError, ValueError, UnicodeEncodeError) as error:
+                text = f"Exception trying to write text to file: {error}"
+                with contextlib.suppress(
+                    AttributeError, OSError, TypeError, ValueError, UnicodeEncodeError
+                ):
+                    debugFile.write(f"{text}\n")
+            if level >= LEVEL_SEVERE:
+                with contextlib.suppress(
+                    AttributeError, OSError, TypeError, ValueError, UnicodeEncodeError
+                ):
+                    sys.stderr.write(f"{text}\n")
+        else:
+            try:
+                sys.stderr.write(f"{text}\n")
+            except (AttributeError, OSError):
+                return
+            except (TypeError, ValueError, UnicodeEncodeError) as error:
+                text = f"Exception trying to write text to stderr: {error}"
+                with contextlib.suppress(
+                    AttributeError, OSError, TypeError, ValueError, UnicodeEncodeError
+                ):
+                    sys.stderr.write(f"{text}\n")
+    finally:
+        _printing.active = False
