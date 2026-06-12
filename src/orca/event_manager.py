@@ -148,8 +148,9 @@ class EventManager:
 
         input_event_manager.get_manager().stop_key_watcher()
         self._active = False
-        self._event_queue = queue.PriorityQueue(0)
-        self._latest_event = {}
+        with self._gidle_lock:
+            self._event_queue = queue.PriorityQueue(0)
+            self._latest_event = {}
         self._script_listener_counts = {}
         debug.print_message(debug.LEVEL_INFO, "EVENT MANAGER: Deactivated", True)
 
@@ -165,8 +166,9 @@ class EventManager:
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._paused = pause
         if clear_queue:
-            self._event_queue = queue.PriorityQueue(0)
-            self._latest_event = {}
+            with self._gidle_lock:
+                self._event_queue = queue.PriorityQueue(0)
+                self._latest_event = {}
         input_event_manager.get_manager().pause_key_watcher(pause, reason)
 
     def _get_priority(self, event: Atspi.Event) -> EventPriority:
@@ -674,16 +676,16 @@ class EventManager:
         script = script_manager.get_manager().get_script(app, e.source)
         script.record_queued_event(e)
 
+        priority = self._get_priority(e)
         with self._gidle_lock:
-            priority = self._get_priority(e)
             counter = next(self._counter)
             self._event_queue.put((priority, counter, e))
             if e.type.startswith(EventManager._SKIPPABLE_SAME_TYPE_PREFIXES):
                 self._latest_event[(e.type, hash(e.source))] = counter
-            tokens = ["EVENT MANAGER: Queued", e, f"priority: {priority.name}, counter: {counter}"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             if not self._gidle_id:
                 self._gidle_id = GLib.idle_add(self._dequeue_object_event)
+        tokens = ["EVENT MANAGER: Queued", e, f"priority: {priority.name}, counter: {counter}"]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     def _on_no_focus(self) -> bool:
         if not focus_manager.get_manager().focus_and_window_are_unknown():
@@ -727,10 +729,13 @@ class EventManager:
         except queue.Empty:
             msg = "EVENT MANAGER: Attempted dequeue, but the event queue is empty"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._gidle_id = 0
-            rerun = False  # destroy and don't call again
+            with self._gidle_lock:
+                if self._event_queue.empty():
+                    self._gidle_id = 0
+                    rerun = False  # destroy and don't call again
         except Exception:  # pylint: disable=broad-except
-            self._gidle_id = GLib.idle_add(self._dequeue_object_event)
+            with self._gidle_lock:
+                self._gidle_id = GLib.idle_add(self._dequeue_object_event)
             raise
 
         return rerun
