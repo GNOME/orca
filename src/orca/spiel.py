@@ -78,7 +78,7 @@ class SpeechServer(speechserver.SpeechServer):
         return servers
 
     @classmethod
-    def _update_providers(cls, providers: Any) -> None:
+    def _update_providers(cls, providers: Any, *_args: Any) -> None:
         """Shutdown unavailable providers."""
 
         cls._SERVER_NAMES = {SpeechServer.DEFAULT_SERVER_ID: guilabels.DEFAULT_SYNTHESIZER}
@@ -86,7 +86,7 @@ class SpeechServer(speechserver.SpeechServer):
             cls._SERVER_NAMES[provider.props.well_known_name] = provider.props.name
 
         # Shutdown unavailable providers
-        for well_known_name, server in cls._active_servers.items():
+        for well_known_name, server in list(cls._active_servers.items()):
             if well_known_name not in cls._SERVER_NAMES:
                 server.shutdown()
 
@@ -98,7 +98,7 @@ class SpeechServer(speechserver.SpeechServer):
             assert isinstance(server, SpeechServer)
             server.update_voices(providers[0].props.voices)
 
-    def update_voices(self, voices: Any) -> None:
+    def update_voices(self, voices: Any, *_args: Any) -> None:
         """Update the list of known voices for the server.
 
         get_voice_families() prepends the list with the locale default and
