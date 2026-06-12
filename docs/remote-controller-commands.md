@@ -61,7 +61,6 @@ These commands are available directly on the main service object at `/org/gnome/
 - **`FlashMessagesAreEnabled`** (`b`, read/write): Whether 'flash' messages (i.e. announcements) are enabled.
 - **`FlashMessagesArePersistent`** (`b`, read/write): Whether 'flash' messages are persistent (as opposed to temporary).
 - **`LinkIndicator`** (`s`, read/write): The braille link indicator style.
-- **`LogFile`** (`s`, write-only): Opens the given path for JSONL recording; an empty string closes any open file.
 - **`MonitorBackground`** (`s`, read/write): The braille monitor background color.
 - **`MonitorCellCount`** (`u`, read/write): The braille monitor cell count.
 - **`MonitorForeground`** (`s`, read/write): The braille monitor foreground color.
@@ -499,7 +498,6 @@ These commands are available directly on the main service object at `/org/gnome/
 - **`AnnounceSpreadsheetCellCoordinates`** (`b`, read/write): Whether spreadsheet cell coordinates are announced.
 - **`AnnounceTable`** (`b`, read/write): Whether tables are announced when entered.
 - **`AnnounceTrackedChanges`** (`b`, read/write): Whether tracked changes are announced when entered.
-- **`LogFile`** (`s`, write-only): Opens the given path for JSONL recording; an empty string closes any open file.
 - **`MessagesAreDetailed`** (`b`, read/write): Whether informative messages will be detailed or brief.
 - **`MonitorBackground`** (`s`, read/write): The speech monitor background color.
 - **`MonitorFontSize`** (`u`, read/write): The speech monitor font size.
