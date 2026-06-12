@@ -1394,7 +1394,7 @@ class TestTableNavigator:
         mock_present_cell.assert_called_once_with(
             mock_script,
             mock_top_cell,
-            3,
+            0,
             1,
             mock_current_cell,
             True,
@@ -1510,7 +1510,7 @@ class TestTableNavigator:
         mock_present_cell.assert_called_once_with(
             mock_script,
             mock_bottom_cell,
-            1,
+            4,
             2,
             mock_current_cell,
             True,

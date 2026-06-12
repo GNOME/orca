@@ -608,9 +608,8 @@ class TableNavigator(Extension):
                 presentation_manager.get_manager().present_message(messages.TABLE_COLUMN_TOP)
             return
 
-        row = self._get_cell_coordinates(current)[0]
         cell = AXTable.get_top_of_column(current)
-        col = self._get_cell_coordinates(cell)[1]
+        row, col = self._get_cell_coordinates(cell)
         self._present_cell(script, cell, row, col, current, notify_user)
 
     @dbus_service.command
@@ -629,9 +628,8 @@ class TableNavigator(Extension):
                 presentation_manager.get_manager().present_message(messages.TABLE_COLUMN_BOTTOM)
             return
 
-        row = self._get_cell_coordinates(current)[0]
         cell = AXTable.get_bottom_of_column(current)
-        col = self._get_cell_coordinates(cell)[1]
+        row, col = self._get_cell_coordinates(cell)
         self._present_cell(script, cell, row, col, current, notify_user)
 
     @dbus_service.command

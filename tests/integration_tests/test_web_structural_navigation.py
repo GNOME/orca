@@ -33,7 +33,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import move_to_top, speech
+from .helpers import BrailleLine, capture, move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -53,6 +53,16 @@ def _next(session: NativeAppSession, keysym: int) -> list[str]:
 def _previous(session: NativeAppSession, keysym: int) -> list[str]:
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keysym)
     return speech(session)
+
+
+def _container_start(session: NativeAppSession) -> tuple[list[str], list[BrailleLine]]:
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_COMMA)
+    return capture(session)
+
+
+def _container_end(session: NativeAppSession) -> tuple[list[str], list[BrailleLine]]:
+    keyboard.tap_key(keyboard.KEYSYM_COMMA)
+    return capture(session)
 
 
 @pytest.mark.native_app
@@ -114,6 +124,23 @@ def test_wrapping(web_structural_navigation: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+def test_cycle_navigation_mode(web_structural_navigation: NativeAppSession) -> None:
+    """Tests Orca+z cycling from document mode through GUI and off and back to document."""
+
+    session = web_structural_navigation
+    move_to_top(session)
+
+    try:
+        session.orca.press_orca_key(keyboard.KEYSYM_Z)
+        assert speech(session) == ["GUI mode"]
+        session.orca.press_orca_key(keyboard.KEYSYM_Z)
+        assert speech(session) == ["Structural navigation disabled"]
+    finally:
+        session.orca.press_orca_key(keyboard.KEYSYM_Z)
+        assert speech(session) == ["Document mode"]
+
+
+@pytest.mark.native_app
 def test_no_wrapping_when_disabled(web_structural_navigation: NativeAppSession) -> None:
     """Tests boundary messages replace wrapping when navigation wrapping is off."""
 
@@ -128,3 +155,79 @@ def test_no_wrapping_when_disabled(web_structural_navigation: NativeAppSession) 
         assert _previous(session, keyboard.KEYSYM_P) == ["P", "No more paragraphs."]
     finally:
         session.orca.set("StructuralNavigator", "NavigationWraps", True)
+
+
+@pytest.mark.native_app
+def test_table_container_start_and_end(web_structural_navigation: NativeAppSession) -> None:
+    """Tests container start/end from inside the table."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+    move_to_top(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_T)
+    assert capture(session) == (
+        ["t", "table with 2 rows 2 columns", "Name", "column header"],
+        [BrailleLine(1, "Name", "Name", "\x00" * 4)],
+    )
+
+    keyboard.press_chord([keyboard.KEYSYM_ALT_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["Ada", "Row 2, column 1."],
+        [
+            BrailleLine(1, "Ada", "Ada", "\x00" * 3),
+            BrailleLine(0, "Row 2, column 1.", "Row 2, column 1.", "\x00" * 16),
+        ],
+    )
+
+    assert _container_start(session) == (
+        ["<", "Name", "column header", "Age", "column header", "column 2"],
+        [
+            BrailleLine(1, "Ada", "Ada", "\x00" * 3),
+            BrailleLine(0, "Name Age", "Name Age", "\x00" * 8),
+        ],
+    )
+
+    assert _container_end(session) == (
+        [",", "leaving table.", "First link", "link"],
+        [BrailleLine(0, "First link", "First link", "\xc0" * 10)],
+    )
+
+
+@pytest.mark.native_app
+def test_blockquote_container_start_and_end(web_structural_navigation: NativeAppSession) -> None:
+    """Tests container start/end from inside the blockquote."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+    move_to_top(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_Q)
+    assert capture(session) == (
+        ["q", "block quote", "Quoted text."],
+        [BrailleLine(1, "Quoted text. block quote", "Quoted text. block quote", "\x00" * 24)],
+    )
+
+    assert _container_start(session) == (
+        ["<", "Quoted text."],
+        [BrailleLine(1, "Quoted text. block quote", "Quoted text. block quote", "\x00" * 24)],
+    )
+
+    assert _container_end(session) == (
+        [",", "leaving blockquote.", "Save", "button"],
+        [BrailleLine(0, "Save button", "Save button", "\x00" * 11)],
+    )
+
+
+@pytest.mark.native_app
+def test_container_start_not_in_a_container(web_structural_navigation: NativeAppSession) -> None:
+    """Tests the absence message when the caret is on the heading, not in a large container."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+    move_to_top(session)
+
+    assert _container_start(session) == (
+        ["<", "Not in a container."],
+        [BrailleLine(0, "Not in a container.", "Not in a container.", "\x00" * 19)],
+    )

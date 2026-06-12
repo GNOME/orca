@@ -39,6 +39,8 @@ KEYSYM_V, KEYSYM_W, KEYSYM_X, KEYSYM_Y, KEYSYM_Z = (ord(c) for c in "vwxyz")
 KEYSYM_0, KEYSYM_1, KEYSYM_2, KEYSYM_3, KEYSYM_4 = (ord(c) for c in "01234")
 KEYSYM_5, KEYSYM_6, KEYSYM_7, KEYSYM_8, KEYSYM_9 = (ord(c) for c in "56789")
 
+KEYSYM_COMMA = ord(",")
+
 # Non-printable keysyms from <X11/keysymdef.h>.
 KEYSYM_SPACE = 0x0020
 KEYSYM_RETURN = 0xFF0D

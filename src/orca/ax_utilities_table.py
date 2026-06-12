@@ -98,8 +98,8 @@ class AXUtilitiesTable:
         if old_cell is None:
             return headers
 
-        old_headers = AXUtilitiesTable.get_row_headers(old_cell)
-        return list(set(headers).difference(set(old_headers)))
+        old_headers = set(AXUtilitiesTable.get_row_headers(old_cell))
+        return [header for header in headers if header not in old_headers]
 
     @staticmethod
     def get_new_column_headers(
@@ -117,8 +117,8 @@ class AXUtilitiesTable:
         if old_cell is None:
             return headers
 
-        old_headers = AXUtilitiesTable.get_column_headers(old_cell)
-        return list(set(headers).difference(set(old_headers)))
+        old_headers = set(AXUtilitiesTable.get_column_headers(old_cell))
+        return [header for header in headers if header not in old_headers]
 
     @staticmethod
     def get_row_headers(cell: Atspi.Accessible) -> list[Atspi.Accessible]:

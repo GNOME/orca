@@ -37,6 +37,26 @@ def _table_nav(key: int) -> None:
     keyboard.press_chord([keyboard.KEYSYM_ALT_L, keyboard.KEYSYM_SHIFT_L], key)
 
 
+def _orca_table_nav(session: NativeAppSession, key: int) -> None:
+    session.orca.press_orca_key(
+        key, extra_modifiers=[keyboard.KEYSYM_ALT_L, keyboard.KEYSYM_SHIFT_L]
+    )
+
+
+def _enter_third_table(session: NativeAppSession) -> None:
+    for _ in range(2):
+        keyboard.tap_key(keyboard.KEYSYM_T)
+        capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_T)
+
+
+def _enter_fourth_table(session: NativeAppSession) -> None:
+    for _ in range(3):
+        keyboard.tap_key(keyboard.KEYSYM_T)
+        capture(session)
+    keyboard.tap_key(keyboard.KEYSYM_T)
+
+
 @pytest.mark.native_app
 def test_structural_navigation_by_table(web_tables: NativeAppSession) -> None:
     """Tests structural navigation by table."""
@@ -471,5 +491,645 @@ def test_say_all_over_tables(web_tables: NativeAppSession) -> None:
         "Six",
         "Seven",
         "leaving table.",
+        "table with 5 rows 5 columns",
+        "Standard",
+        "column header",
+        "Premium",
+        "column header",
+        "Input",
+        "column header",
+        "Output",
+        "column header",
+        "Input",
+        "column header",
+        "Output",
+        "column header",
+        "Gemini Pro",
+        "row header",
+        "1.00",
+        "2.00",
+        "3.00",
+        "4.00",
+        "Gemini Flash",
+        "row header",
+        "0.10",
+        "0.20",
+        "0.30",
+        "0.40",
+        "Gemini Nano",
+        "row header",
+        "0.01",
+        "0.02",
+        "0.03",
+        "0.04",
+        "leaving table.",
+        "table with 4 rows 3 columns",
+        "Pupil",
+        "Score",
+        "Grade",
+        "Liu",
+        "90",
+        "A",
+        "Park",
+        "B",
+        "Vega",
+        "70",
+        "C",
+        "leaving table.",
         "After the tables.",
     ]
+
+
+@pytest.mark.native_app
+def test_first_and_last_cell(web_tables: NativeAppSession) -> None:
+    """Tests jumping to the first and last cell of a table."""
+
+    session = web_tables
+    move_to_top(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_T)
+    capture(session)
+    _table_nav(keyboard.KEYSYM_DOWN)
+    capture(session)
+    _table_nav(keyboard.KEYSYM_RIGHT)
+    capture(session)
+
+    keyboard.press_chord([keyboard.KEYSYM_ALT_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_HOME)
+    assert capture(session) == (
+        ["blank", "Row 1, column 1."],
+        [
+            BrailleLine(1, "Engineer", "Engineer", "\xc0" * 8),
+            BrailleLine(1, "", "", None),
+            BrailleLine(0, "Row 1, column 1.", "Row 1, column 1.", "\x00" * 16),
+        ],
+    )
+
+    keyboard.press_chord([keyboard.KEYSYM_ALT_L, keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_END)
+    assert capture(session) == (
+        ["Grace row header Office column header", "Boston", "link", "Row 4, column 4."],
+        [
+            BrailleLine(1, "", "", None),
+            BrailleLine(1, "Boston", "Boston", "\xc0" * 6),
+            BrailleLine(0, "Row 4, column 4.", "Row 4, column 4.", "\x00" * 16),
+        ],
+    )
+
+
+@pytest.mark.native_app
+def test_row_and_column_extremes(web_tables: NativeAppSession) -> None:
+    """Tests jumping to the beginning/end of a row and top/bottom of a column."""
+
+    session = web_tables
+    move_to_top(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_T)
+    capture(session)
+    _table_nav(keyboard.KEYSYM_DOWN)
+    capture(session)
+    _table_nav(keyboard.KEYSYM_RIGHT)
+    capture(session)
+
+    _orca_table_nav(session, keyboard.KEYSYM_LEFT)
+    assert capture(session) == (
+        ["Ada", "row header", "Row 2, column 1."],
+        [
+            BrailleLine(1, "Engineer", "Engineer", "\xc0" * 8),
+            BrailleLine(1, "Ada", "Ada", "\x00" * 3),
+            BrailleLine(0, "Row 2, column 1.", "Row 2, column 1.", "\x00" * 16),
+        ],
+    )
+
+    _orca_table_nav(session, keyboard.KEYSYM_LEFT)
+    assert capture(session) == (
+        ["Beginning of row."],
+        [
+            BrailleLine(1, "Ada", "Ada", "\x00" * 3),
+            BrailleLine(0, "Beginning of row.", "Beginning of row.", "\x00" * 17),
+        ],
+    )
+
+    _orca_table_nav(session, keyboard.KEYSYM_RIGHT)
+    assert capture(session) == (
+        ["Office column header", "London", "link", "Row 2, column 3."],
+        [
+            BrailleLine(1, "Ada", "Ada", "\x00" * 3),
+            BrailleLine(1, "London", "London", "\xc0" * 6),
+            BrailleLine(0, "Row 2, column 3.", "Row 2, column 3.", "\x00" * 16),
+        ],
+    )
+
+    _orca_table_nav(session, keyboard.KEYSYM_RIGHT)
+    assert capture(session) == (
+        ["End of row."],
+        [
+            BrailleLine(1, "London", "London", "\xc0" * 6),
+            BrailleLine(0, "End of row.", "End of row.", "\x00" * 11),
+        ],
+    )
+
+    _orca_table_nav(session, keyboard.KEYSYM_UP)
+    assert capture(session) == (
+        ["Office", "column header", "Row 1, column 3."],
+        [
+            BrailleLine(1, "London", "London", "\xc0" * 6),
+            BrailleLine(1, "Office", "Office", "\x00" * 6),
+            BrailleLine(0, "Row 1, column 3.", "Row 1, column 3.", "\x00" * 16),
+        ],
+    )
+
+    _orca_table_nav(session, keyboard.KEYSYM_UP)
+    assert capture(session) == (
+        ["Top of column."],
+        [
+            BrailleLine(1, "Office", "Office", "\x00" * 6),
+            BrailleLine(0, "Top of column.", "Top of column.", "\x00" * 14),
+        ],
+    )
+
+    _orca_table_nav(session, keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["Grace row header", "Boston", "link", "Row 3, column 3."],
+        [
+            BrailleLine(1, "Office", "Office", "\x00" * 6),
+            BrailleLine(1, "Boston", "Boston", "\xc0" * 6),
+            BrailleLine(0, "Row 3, column 3.", "Row 3, column 3.", "\x00" * 16),
+        ],
+    )
+
+    _orca_table_nav(session, keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["Bottom of column."],
+        [
+            BrailleLine(1, "Boston", "Boston", "\xc0" * 6),
+            BrailleLine(0, "Bottom of column.", "Bottom of column.", "\x00" * 17),
+        ],
+    )
+
+
+@pytest.mark.native_app
+def test_navigation_boundary_messages(web_tables: NativeAppSession) -> None:
+    """Tests the boundary messages reached by plain cell-by-cell navigation."""
+
+    session = web_tables
+    move_to_top(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_T)
+    capture(session)
+    _table_nav(keyboard.KEYSYM_DOWN)
+    capture(session)
+
+    _table_nav(keyboard.KEYSYM_LEFT)
+    assert capture(session) == (
+        ["Beginning of row."],
+        [
+            BrailleLine(1, "Ada", "Ada", "\x00" * 3),
+            BrailleLine(0, "Beginning of row.", "Beginning of row.", "\x00" * 17),
+        ],
+    )
+
+    _table_nav(keyboard.KEYSYM_RIGHT)
+    capture(session)
+    _table_nav(keyboard.KEYSYM_RIGHT)
+    capture(session)
+    _table_nav(keyboard.KEYSYM_RIGHT)
+    assert capture(session) == (
+        ["End of row."],
+        [
+            BrailleLine(1, "London", "London", "\xc0" * 6),
+            BrailleLine(0, "End of row.", "End of row.", "\x00" * 11),
+        ],
+    )
+
+    _table_nav(keyboard.KEYSYM_UP)
+    capture(session)
+    _table_nav(keyboard.KEYSYM_UP)
+    assert capture(session) == (
+        ["Top of column."],
+        [
+            BrailleLine(1, "Office", "Office", "\x00" * 6),
+            BrailleLine(0, "Top of column.", "Top of column.", "\x00" * 14),
+        ],
+    )
+
+    _table_nav(keyboard.KEYSYM_DOWN)
+    capture(session)
+    _table_nav(keyboard.KEYSYM_DOWN)
+    capture(session)
+    _table_nav(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["Bottom of column."],
+        [
+            BrailleLine(1, "Boston", "Boston", "\xc0" * 6),
+            BrailleLine(0, "Bottom of column.", "Bottom of column.", "\x00" * 17),
+        ],
+    )
+
+
+@pytest.mark.native_app
+def test_toggle_table_navigation(web_tables: NativeAppSession) -> None:
+    """Tests disabling and re-enabling table navigation from inside a table."""
+
+    session = web_tables
+    move_to_top(session)
+
+    try:
+        keyboard.tap_key(keyboard.KEYSYM_T)
+        capture(session)
+        _table_nav(keyboard.KEYSYM_DOWN)
+        capture(session)
+
+        session.orca.press_orca_key(keyboard.KEYSYM_T, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
+        assert capture(session) == (
+            ["Table navigation disabled."],
+            [
+                BrailleLine(1, "Ada", "Ada", "\x00" * 3),
+                BrailleLine(
+                    0,
+                    "Table navigation disabled.",
+                    "Table navigation disabled.",
+                    "\x00" * 26,
+                ),
+            ],
+        )
+
+        _table_nav(keyboard.KEYSYM_RIGHT)
+        assert capture(session) == ([], [BrailleLine(1, "Ada", "Ada", "\x00" * 3)])
+
+        session.orca.press_orca_key(keyboard.KEYSYM_T, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
+        assert capture(session) == (
+            ["Table navigation enabled."],
+            [
+                BrailleLine(
+                    0,
+                    "Table navigation enabled.",
+                    "Table navigation enabled.",
+                    "\x00" * 25,
+                )
+            ],
+        )
+    finally:
+        session.orca.set("TableNavigator", "IsEnabled", True)
+
+
+@pytest.mark.native_app
+def test_nested_header_corner_boundaries(web_tables: NativeAppSession) -> None:
+    """Tests the boundary messages at the empty corner of the nested-header table."""
+
+    session = web_tables
+    move_to_top(session)
+
+    _enter_third_table(session)
+    assert capture(session) == (
+        ["t", "leaving table.", "table with 5 rows 5 columns"],
+        [BrailleLine(1, "", "", None)],
+    )
+
+    _table_nav(keyboard.KEYSYM_LEFT)
+    assert capture(session) == (
+        ["Beginning of row."],
+        [BrailleLine(0, "Beginning of row.", "Beginning of row.", "\x00" * 17)],
+    )
+
+    _table_nav(keyboard.KEYSYM_UP)
+    assert capture(session) == (
+        ["Top of column."],
+        [
+            BrailleLine(1, "", "", None),
+            BrailleLine(0, "Top of column.", "Top of column.", "\x00" * 14),
+        ],
+    )
+
+    _table_nav(keyboard.KEYSYM_LEFT)
+    assert capture(session) == (
+        ["Beginning of row."],
+        [
+            BrailleLine(1, "", "", None),
+            BrailleLine(0, "Beginning of row.", "Beginning of row.", "\x00" * 17),
+        ],
+    )
+
+    _table_nav(keyboard.KEYSYM_UP)
+    assert capture(session) == (
+        ["Top of column."],
+        [
+            BrailleLine(1, "", "", None),
+            BrailleLine(0, "Top of column.", "Top of column.", "\x00" * 14),
+        ],
+    )
+
+
+@pytest.mark.native_app
+def test_nested_column_headers_into_body(web_tables: NativeAppSession) -> None:
+    """Tests that Down from a multi-level column header enters the table body."""
+
+    session = web_tables
+    move_to_top(session)
+
+    _enter_third_table(session)
+    capture(session)
+    _table_nav(keyboard.KEYSYM_LEFT)
+    capture(session)
+    _table_nav(keyboard.KEYSYM_UP)
+    capture(session)
+
+    _table_nav(keyboard.KEYSYM_RIGHT)
+    assert capture(session) == (
+        ["Standard", "column header", "Row 1, column 2.", "Cell spans 2 columns"],
+        [
+            BrailleLine(1, "", "", None),
+            BrailleLine(1, "Standard", "Standard", "\x00" * 8),
+            BrailleLine(0, "Row 1, column 2.", "Row 1, column 2.", "\x00" * 16),
+            BrailleLine(0, "Cell spans 2 columns", "Cell spans 2 columns", "\x00" * 20),
+        ],
+    )
+
+    _table_nav(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["Input", "column header", "Row 2, column 2."],
+        [
+            BrailleLine(1, "Standard", "Standard", "\x00" * 8),
+            BrailleLine(1, "Input", "Input", "\x00" * 5),
+            BrailleLine(0, "Row 2, column 2.", "Row 2, column 2.", "\x00" * 16),
+        ],
+    )
+
+    _table_nav(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["Gemini Pro row header 1.00", "Row 3, column 2."],
+        [
+            BrailleLine(1, "Input", "Input", "\x00" * 5),
+            BrailleLine(1, "1.00", "1.00", "\x00" * 4),
+            BrailleLine(0, "Row 3, column 2.", "Row 3, column 2.", "\x00" * 16),
+        ],
+    )
+
+    _table_nav(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["Gemini Flash row header 0.10", "Row 4, column 2."],
+        [
+            BrailleLine(1, "1.00", "1.00", "\x00" * 4),
+            BrailleLine(1, "0.10", "0.10", "\x00" * 4),
+            BrailleLine(0, "Row 4, column 2.", "Row 4, column 2.", "\x00" * 16),
+        ],
+    )
+
+
+@pytest.mark.native_app
+def test_nested_header_corner_through_row_headers(web_tables: NativeAppSession) -> None:
+    """Tests that Down from the corner moves down the row-header column into the body."""
+
+    session = web_tables
+    move_to_top(session)
+
+    _enter_third_table(session)
+    capture(session)
+    _table_nav(keyboard.KEYSYM_LEFT)
+    capture(session)
+    _table_nav(keyboard.KEYSYM_UP)
+    capture(session)
+
+    _table_nav(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["blank", "Row 2, column 1."],
+        [
+            BrailleLine(1, "", "", None),
+            BrailleLine(1, "", "", None),
+            BrailleLine(0, "Row 2, column 1.", "Row 2, column 1.", "\x00" * 16),
+        ],
+    )
+
+    _table_nav(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["Gemini Pro", "row header", "Row 3, column 1."],
+        [
+            BrailleLine(1, "", "", None),
+            BrailleLine(1, "Gemini Pro", "Gemini Pro", "\x00" * 10),
+            BrailleLine(0, "Row 3, column 1.", "Row 3, column 1.", "\x00" * 16),
+        ],
+    )
+
+    _table_nav(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["Gemini Flash", "row header", "Row 4, column 1."],
+        [
+            BrailleLine(1, "Gemini Pro", "Gemini Pro", "\x00" * 10),
+            BrailleLine(1, "Gemini Flash", "Gemini Flash", "\x00" * 12),
+            BrailleLine(0, "Row 4, column 1.", "Row 4, column 1.", "\x00" * 16),
+        ],
+    )
+
+
+@pytest.mark.native_app
+def test_multi_level_header_order(web_tables: NativeAppSession) -> None:
+    """Tests that a body cell's two column headers are announced group-then-subheader."""
+
+    session = web_tables
+    move_to_top(session)
+
+    _enter_third_table(session)
+    capture(session)
+    _table_nav(keyboard.KEYSYM_LEFT)
+    capture(session)
+    _table_nav(keyboard.KEYSYM_UP)
+    capture(session)
+    for _ in range(3):
+        _table_nav(keyboard.KEYSYM_DOWN)
+        capture(session)
+
+    _table_nav(keyboard.KEYSYM_RIGHT)
+    assert capture(session) == (
+        ["Standard. Input column header 0.10", "Row 4, column 2."],
+        [
+            BrailleLine(1, "Gemini Flash", "Gemini Flash", "\x00" * 12),
+            BrailleLine(1, "0.10", "0.10", "\x00" * 4),
+            BrailleLine(0, "Row 4, column 2.", "Row 4, column 2.", "\x00" * 16),
+        ],
+    )
+
+
+@pytest.mark.native_app
+def test_dynamic_column_headers(web_tables: NativeAppSession) -> None:
+    """Tests setting and clearing the row used as dynamic column headers."""
+
+    session = web_tables
+    move_to_top(session)
+
+    try:
+        _enter_fourth_table(session)
+        capture(session)
+        _table_nav(keyboard.KEYSYM_DOWN)
+        capture(session)
+
+        _table_nav(keyboard.KEYSYM_RIGHT)
+        assert capture(session) == (
+            ["90", "Row 2, column 2."],
+            [
+                BrailleLine(1, "Liu", "Liu", "\x00" * 3),
+                BrailleLine(1, "90", "90", "\x00" * 2),
+                BrailleLine(0, "Row 2, column 2.", "Row 2, column 2.", "\x00" * 16),
+            ],
+        )
+
+        _table_nav(keyboard.KEYSYM_UP)
+        capture(session)
+        _table_nav(keyboard.KEYSYM_LEFT)
+        capture(session)
+
+        session.orca.press_orca_key(keyboard.KEYSYM_R, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
+        assert capture(session) == (
+            ["Dynamic column header set for row 1"],
+            [
+                BrailleLine(1, "Pupil", "Pupil", "\x00" * 5),
+                BrailleLine(
+                    0,
+                    "Dynamic column header set for row 1",
+                    "Dynamic column header set for ro",
+                    "\x00" * 35,
+                ),
+            ],
+        )
+
+        _table_nav(keyboard.KEYSYM_DOWN)
+        capture(session)
+
+        _table_nav(keyboard.KEYSYM_RIGHT)
+        assert capture(session) == (
+            ["Score column header 90", "Row 2, column 2."],
+            [
+                BrailleLine(1, "Liu", "Liu", "\x00" * 3),
+                BrailleLine(1, "90", "90", "\x00" * 2),
+                BrailleLine(0, "Row 2, column 2.", "Row 2, column 2.", "\x00" * 16),
+            ],
+        )
+
+        session.orca.call("TableNavigator", "ClearDynamicColumnHeadersRow", True)
+        assert capture(session) == (
+            ["Dynamic column header cleared."],
+            [
+                BrailleLine(1, "90", "90", "\x00" * 2),
+                BrailleLine(
+                    0,
+                    "Dynamic column header cleared.",
+                    "Dynamic column header cleared.",
+                    "\x00" * 30,
+                ),
+            ],
+        )
+
+        _table_nav(keyboard.KEYSYM_DOWN)
+        assert capture(session) == (
+            ["blank", "Row 3, column 2."],
+            [
+                BrailleLine(1, "90", "90", "\x00" * 2),
+                BrailleLine(1, "", "", None),
+                BrailleLine(0, "Row 3, column 2.", "Row 3, column 2.", "\x00" * 16),
+            ],
+        )
+    finally:
+        session.orca.call("TableNavigator", "ClearDynamicColumnHeadersRow", False)
+
+
+@pytest.mark.native_app
+def test_dynamic_row_headers(web_tables: NativeAppSession) -> None:
+    """Tests setting and clearing the column used as dynamic row headers."""
+
+    session = web_tables
+    move_to_top(session)
+
+    try:
+        _enter_fourth_table(session)
+        capture(session)
+
+        session.orca.press_orca_key(keyboard.KEYSYM_C, extra_modifiers=[keyboard.KEYSYM_SHIFT_L])
+        assert capture(session) == (
+            ["Dynamic row header set for column 1"],
+            [
+                BrailleLine(
+                    0,
+                    "Dynamic row header set for column 1",
+                    "Dynamic row header set for colum",
+                    "\x00" * 35,
+                )
+            ],
+        )
+
+        _table_nav(keyboard.KEYSYM_RIGHT)
+        capture(session)
+
+        _table_nav(keyboard.KEYSYM_DOWN)
+        assert capture(session) == (
+            ["Liu row header 90", "Row 2, column 2."],
+            [
+                BrailleLine(1, "Score", "Score", "\x00" * 5),
+                BrailleLine(1, "90", "90", "\x00" * 2),
+                BrailleLine(0, "Row 2, column 2.", "Row 2, column 2.", "\x00" * 16),
+            ],
+        )
+
+        session.orca.call("TableNavigator", "ClearDynamicRowHeadersColumn", True)
+        assert capture(session) == (
+            ["Dynamic row header cleared."],
+            [
+                BrailleLine(1, "90", "90", "\x00" * 2),
+                BrailleLine(
+                    0,
+                    "Dynamic row header cleared.",
+                    "Dynamic row header cleared.",
+                    "\x00" * 27,
+                ),
+            ],
+        )
+
+        _table_nav(keyboard.KEYSYM_DOWN)
+        assert capture(session) == (
+            ["blank", "Row 3, column 2."],
+            [
+                BrailleLine(1, "90", "90", "\x00" * 2),
+                BrailleLine(1, "", "", None),
+                BrailleLine(0, "Row 3, column 2.", "Row 3, column 2.", "\x00" * 16),
+            ],
+        )
+    finally:
+        session.orca.call("TableNavigator", "ClearDynamicRowHeadersColumn", False)
+
+
+@pytest.mark.native_app
+def test_skip_blank_cells(web_tables: NativeAppSession) -> None:
+    """Tests that skip-blank-cells skips an empty mid-column cell when enabled."""
+
+    session = web_tables
+    move_to_top(session)
+
+    _enter_fourth_table(session)
+    capture(session)
+    _table_nav(keyboard.KEYSYM_RIGHT)
+    capture(session)
+    _table_nav(keyboard.KEYSYM_DOWN)
+    capture(session)
+
+    _table_nav(keyboard.KEYSYM_DOWN)
+    assert capture(session) == (
+        ["blank", "Row 3, column 2."],
+        [
+            BrailleLine(1, "90", "90", "\x00" * 2),
+            BrailleLine(1, "", "", None),
+            BrailleLine(0, "Row 3, column 2.", "Row 3, column 2.", "\x00" * 16),
+        ],
+    )
+
+    _table_nav(keyboard.KEYSYM_UP)
+    capture(session)
+
+    session.orca.set("TableNavigator", "SkipBlankCells", True)
+    try:
+        _table_nav(keyboard.KEYSYM_DOWN)
+        assert capture(session) == (
+            ["70", "Row 4, column 2."],
+            [
+                BrailleLine(1, "90", "90", "\x00" * 2),
+                BrailleLine(1, "70", "70", "\x00" * 2),
+                BrailleLine(0, "Row 4, column 2.", "Row 4, column 2.", "\x00" * 16),
+            ],
+        )
+    finally:
+        session.orca.set("TableNavigator", "SkipBlankCells", False)

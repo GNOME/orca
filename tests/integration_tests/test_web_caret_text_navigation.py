@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import reset_web_state, speech
+from .helpers import move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -166,3 +166,36 @@ def test_character_navigation_onto_embedded_image(
     for _ in range(24):
         _word_right(session)
     assert _right(session) == ["Red square"]
+
+
+@pytest.mark.native_app
+def test_line_start_and_end(web_structural_navigation: NativeAppSession) -> None:
+    """Tests Home and End moving the caret to the start and end of the current line."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+    move_to_top(session)
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+    keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+
+    keyboard.tap_key(keyboard.KEYSYM_HOME)
+    assert speech(session) == ["I"]
+    keyboard.tap_key(keyboard.KEYSYM_END)
+    assert speech(session) == ["Intro paragraph."]
+
+
+@pytest.mark.native_app
+def test_file_start_and_end(web_structural_navigation: NativeAppSession) -> None:
+    """Tests Ctrl+End and Ctrl+Home moving the caret to the end and start of the document."""
+
+    session = web_structural_navigation
+    reset_web_state(session)
+    move_to_top(session)
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
+    assert speech(session) == ["prose rather than short fragments or individual controls."]
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
+    assert speech(session) == ["Structural navigation", "heading 1"]
