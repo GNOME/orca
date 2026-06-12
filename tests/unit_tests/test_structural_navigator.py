@@ -421,17 +421,17 @@ class TestStructuralNavigator:
 
         self._setup_dependencies(test_context)
         mock_script = test_context.Mock()
-        from orca.structural_navigator import get_navigator
+        from orca.structural_navigator import NavigationType, get_navigator
 
         nav = get_navigator()
-        result = nav._get_object_in_direction(mock_script, [], True)
+        result = nav._get_object_in_direction(mock_script, [], True, NavigationType.LINK)
         assert result is None
 
     def test_get_object_in_direction_next_object(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator._get_object_in_direction returns next object."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.structural_navigator import get_navigator
+        from orca.structural_navigator import NavigationType, get_navigator
 
         nav = get_navigator()
         mock_obj1 = test_context.Mock()
@@ -468,18 +468,16 @@ class TestStructuralNavigator:
 
         mock_script.utilities.path_comparison.side_effect = mock_path_comparison
 
-        result = nav._get_object_in_direction(mock_script, objects, True)
+        result = nav._get_object_in_direction(mock_script, objects, True, NavigationType.LINK)
         assert result == mock_obj3
 
     def test_get_object_in_direction_previous_object(self, test_context: OrcaTestContext) -> None:
         """Test StructuralNavigator._get_object_in_direction returns previous object."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca import ax_utilities
-        from orca.structural_navigator import get_navigator
+        from orca.structural_navigator import NavigationType, get_navigator
 
         nav = get_navigator()
-        test_context.patch_object(ax_utilities.AXUtilities, "is_live_region", return_value=False)
         mock_obj1 = test_context.Mock()
         mock_obj2 = test_context.Mock()
         mock_obj3 = test_context.Mock()
@@ -514,7 +512,7 @@ class TestStructuralNavigator:
 
         mock_script.utilities.path_comparison.side_effect = mock_path_comparison
 
-        result = nav._get_object_in_direction(mock_script, objects, False)
+        result = nav._get_object_in_direction(mock_script, objects, False, NavigationType.LINK)
         assert result == mock_obj1
 
     def test_get_object_in_direction_wrap_to_beginning(self, test_context: OrcaTestContext) -> None:

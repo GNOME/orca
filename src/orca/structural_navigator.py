@@ -80,6 +80,34 @@ class NavigationMode(Enum):
     GUI = "GUI"
 
 
+class NavigationType(Enum):
+    """The type of object a structural-navigation command moves amongst."""
+
+    ANNOTATION = "annotation"
+    BLOCKQUOTE = "blockquote"
+    BUTTON = "button"
+    CHECK_BOX = "checkbox"
+    COMBO_BOX = "combobox"
+    ENTRY = "entry"
+    FORM_FIELD = "form_field"
+    HEADING = "heading"
+    IFRAME = "iframe"
+    IMAGE = "image"
+    LANDMARK = "landmark"
+    LIST = "list"
+    LIST_ITEM = "list_item"
+    LIVE_REGION = "live_region"
+    PARAGRAPH = "paragraph"
+    RADIO_BUTTON = "radio_button"
+    SEPARATOR = "separator"
+    TABLE = "table"
+    LINK = "link"
+    UNVISITED_LINK = "unvisited_link"
+    VISITED_LINK = "visited_link"
+    LARGE_OBJECT = "large_object"
+    CLICKABLE = "clickable"
+
+
 @gsettings_registry.get_registry().gsettings_schema(
     "org.gnome.Orca.StructuralNavigation",
     name="structural-navigation",
@@ -141,155 +169,47 @@ class StructuralNavigator(Extension):
 
     # pylint: disable-next=too-many-locals
     def _get_commands(self) -> list[Command]:
-        # Navigation bindings - (key, prev_mod, next_mod, list_mod, base_name)
         nav_bindings = [
-            (
-                "q",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "blockquote",
-            ),
-            (
-                "b",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "button",
-            ),
-            (
-                "x",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "checkbox",
-            ),
-            (
-                "c",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "combobox",
-            ),
-            (
-                "e",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "entry",
-            ),
-            (
-                "f",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "form_field",
-            ),
-            (
-                "h",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "heading",
-            ),
-            (
-                "g",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "image",
-            ),
-            (
-                "m",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "landmark",
-            ),
-            (
-                "l",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "list",
-            ),
-            (
-                "i",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "list_item",
-            ),
-            (
-                "p",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "paragraph",
-            ),
-            (
-                "r",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "radio_button",
-            ),
-            (
-                "t",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "table",
-            ),
-            (
-                "k",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "link",
-            ),
-            (
-                "u",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "unvisited_link",
-            ),
-            (
-                "v",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "visited_link",
-            ),
-            (
-                "o",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "large_object",
-            ),
-            (
-                "a",
-                keybindings.SHIFT_MODIFIER_MASK,
-                keybindings.NO_MODIFIER_MASK,
-                keybindings.SHIFT_ALT_MODIFIER_MASK,
-                "clickable",
-            ),
+            ("q", NavigationType.BLOCKQUOTE),
+            ("b", NavigationType.BUTTON),
+            ("x", NavigationType.CHECK_BOX),
+            ("c", NavigationType.COMBO_BOX),
+            ("e", NavigationType.ENTRY),
+            ("f", NavigationType.FORM_FIELD),
+            ("h", NavigationType.HEADING),
+            ("g", NavigationType.IMAGE),
+            ("m", NavigationType.LANDMARK),
+            ("l", NavigationType.LIST),
+            ("i", NavigationType.LIST_ITEM),
+            ("p", NavigationType.PARAGRAPH),
+            ("r", NavigationType.RADIO_BUTTON),
+            ("t", NavigationType.TABLE),
+            ("k", NavigationType.LINK),
+            ("u", NavigationType.UNVISITED_LINK),
+            ("v", NavigationType.VISITED_LINK),
+            ("o", NavigationType.LARGE_OBJECT),
+            ("a", NavigationType.CLICKABLE),
         ]
 
         # Build command name -> keybinding mapping
         cmd_bindings: dict[str, keybindings.KeyBinding | None] = {}
-        for key, prev_mod, next_mod, list_mod, base_name in nav_bindings:
-            cmd_bindings[f"previous_{base_name}"] = keybindings.KeyBinding(key, prev_mod)
-            cmd_bindings[f"next_{base_name}"] = keybindings.KeyBinding(key, next_mod)
-            if base_name == "entry":
+        for key, nav_type in nav_bindings:
+            singular = nav_type.value
+            cmd_bindings[f"previous_{singular}"] = keybindings.KeyBinding(
+                key, keybindings.SHIFT_MODIFIER_MASK
+            )
+            cmd_bindings[f"next_{singular}"] = keybindings.KeyBinding(
+                key, keybindings.NO_MODIFIER_MASK
+            )
+            if singular == "entry":
                 plural = "entries"
-            elif base_name in ("checkbox", "combobox"):
-                plural = f"{base_name}es"
+            elif singular in ("checkbox", "combobox"):
+                plural = f"{singular}es"
             else:
-                plural = f"{base_name}s"
-            cmd_bindings[f"list_{plural}"] = keybindings.KeyBinding(key, list_mod)
+                plural = f"{singular}s"
+            cmd_bindings[f"list_{plural}"] = keybindings.KeyBinding(
+                key, keybindings.SHIFT_ALT_MODIFIER_MASK
+            )
 
         cmd_bindings["previous_separator"] = keybindings.KeyBinding(
             "s", keybindings.SHIFT_MODIFIER_MASK
@@ -747,12 +667,14 @@ class StructuralNavigator(Extension):
             suspended,
         )
 
-    def _get_container_for_nested_item(self, obj: Atspi.Accessible) -> Atspi.Accessible:
+    def _get_container_for_nested_item(
+        self, obj: Atspi.Accessible, nav_type: NavigationType
+    ) -> Atspi.Accessible:
         # If an author put an ARIA heading inside a native heading (or vice versa), obj
         # could be the inner heading. If we treat the outer heading as as the previous heading
         # and then set the caret context to the first position inside the outer heading, i.e.
         # the inner heading, we'll get stuck. Thanks authors.
-        if AXUtilities.is_heading(obj):
+        if nav_type is NavigationType.HEADING:
             if ancestor := AXUtilities.find_ancestor(obj, AXUtilities.is_heading):
                 tokens = [
                     "STRUCTURAL NAVIGATOR: Current heading",
@@ -765,22 +687,22 @@ class StructuralNavigator(Extension):
                 return ancestor
             return obj
 
-        candidate = obj
-        if AXUtilities.is_live_region(obj):
+        if nav_type is NavigationType.LIVE_REGION:
+            candidate = obj
             while ancestor := AXUtilities.find_ancestor(candidate, AXUtilities.is_live_region):
                 candidate = ancestor
             if candidate != obj:
                 tokens = [
                     "STRUCTURAL NAVIGATOR: Current live region",
                     obj,
-                    "is inside another ",
-                    "live region",
+                    "is inside another live region",
                     candidate,
                     "Treating the outer region as current.",
                 ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return candidate
 
-        return candidate
+        return obj
 
     @staticmethod
     def _get_adjacent_or_wrap(
@@ -814,6 +736,7 @@ class StructuralNavigator(Extension):
         script: default.Script,
         objects: list[Atspi.Accessible],
         is_next: bool,
+        nav_type: NavigationType,
         should_wrap: bool | None = None,
         notify_user: bool = True,
     ) -> Atspi.Accessible | None:
@@ -835,8 +758,8 @@ class StructuralNavigator(Extension):
                 candidate = AXObject.get_parent(candidate)
                 continue
 
-            if not is_next:
-                alternative = self._get_container_for_nested_item(candidate)
+            if not is_next and nav_type in (NavigationType.HEADING, NavigationType.LIVE_REGION):
+                alternative = self._get_container_for_nested_item(candidate, nav_type)
                 if (alternative_index := index_by_object.get(alternative)) is not None:
                     index = alternative_index
 
@@ -1143,7 +1066,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous annotation."""
 
         matches = self._get_all_annotations(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.ANNOTATION)
         self._present_object(
             script,
             result,
@@ -1157,7 +1080,7 @@ class StructuralNavigator(Extension):
         """Goes to the next annotation."""
 
         matches = self._get_all_annotations(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.ANNOTATION)
         self._present_object(
             script,
             result,
@@ -1202,7 +1125,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous blockquote."""
 
         matches = self._get_all_blockquotes(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.BLOCKQUOTE)
         self._present_object(script, result, messages.NO_MORE_BLOCKQUOTES, notify_user=notify_user)
 
     @dbus_service.command
@@ -1211,7 +1134,7 @@ class StructuralNavigator(Extension):
         """Goes to the next blockquote."""
 
         matches = self._get_all_blockquotes(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.BLOCKQUOTE)
         self._present_object(script, result, messages.NO_MORE_BLOCKQUOTES, notify_user=notify_user)
 
     @dbus_service.command
@@ -1248,7 +1171,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous button."""
 
         matches = self._get_all_buttons(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.BUTTON)
         self._present_object(script, result, messages.NO_MORE_BUTTONS, notify_user=notify_user)
 
     @dbus_service.command
@@ -1257,7 +1180,7 @@ class StructuralNavigator(Extension):
         """Goes to the next button."""
 
         matches = self._get_all_buttons(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.BUTTON)
         self._present_object(script, result, messages.NO_MORE_BUTTONS, notify_user=notify_user)
 
     @dbus_service.command
@@ -1294,7 +1217,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous checkbox."""
 
         matches = self._get_all_checkboxes(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.CHECK_BOX)
         self._present_object(script, result, messages.NO_MORE_CHECK_BOXES, notify_user=notify_user)
 
     @dbus_service.command
@@ -1303,7 +1226,7 @@ class StructuralNavigator(Extension):
         """Goes to the next checkbox."""
 
         matches = self._get_all_checkboxes(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.CHECK_BOX)
         self._present_object(script, result, messages.NO_MORE_CHECK_BOXES, notify_user=notify_user)
 
     @dbus_service.command
@@ -1354,7 +1277,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous large object."""
 
         matches = self._get_all_large_objects(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.LARGE_OBJECT)
         self._present_object(
             script,
             result,
@@ -1368,7 +1291,7 @@ class StructuralNavigator(Extension):
         """Goes to the next large object."""
 
         matches = self._get_all_large_objects(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.LARGE_OBJECT)
         self._present_object(
             script,
             result,
@@ -1413,7 +1336,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous combo box."""
 
         matches = self._get_all_comboboxes(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.COMBO_BOX)
         self._present_object(script, result, messages.NO_MORE_COMBO_BOXES, notify_user=notify_user)
 
     @dbus_service.command
@@ -1422,7 +1345,7 @@ class StructuralNavigator(Extension):
         """Goes to the next combo box."""
 
         matches = self._get_all_comboboxes(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.COMBO_BOX)
         self._present_object(script, result, messages.NO_MORE_COMBO_BOXES, notify_user=notify_user)
 
     @dbus_service.command
@@ -1466,7 +1389,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous entry."""
 
         matches = self._get_all_entries(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.ENTRY)
         self._present_object(script, result, messages.NO_MORE_ENTRIES, notify_user=notify_user)
 
     @dbus_service.command
@@ -1475,7 +1398,7 @@ class StructuralNavigator(Extension):
         """Goes to the next entry."""
 
         matches = self._get_all_entries(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.ENTRY)
         self._present_object(script, result, messages.NO_MORE_ENTRIES, notify_user=notify_user)
 
     @dbus_service.command
@@ -1518,7 +1441,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous form field."""
 
         matches = self._get_all_form_fields(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.FORM_FIELD)
         self._present_object(script, result, messages.NO_MORE_FORM_FIELDS, notify_user=notify_user)
 
     @dbus_service.command
@@ -1527,7 +1450,7 @@ class StructuralNavigator(Extension):
         """Goes to the next form field."""
 
         matches = self._get_all_form_fields(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.FORM_FIELD)
         self._present_object(script, result, messages.NO_MORE_FORM_FIELDS, notify_user=notify_user)
 
     @dbus_service.command
@@ -1574,7 +1497,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous heading."""
 
         matches = self._get_all_headings(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.HEADING)
         self._present_object(script, result, messages.NO_MORE_HEADINGS, notify_user=notify_user)
 
     @dbus_service.command
@@ -1583,7 +1506,7 @@ class StructuralNavigator(Extension):
         """Goes to the next heading."""
 
         matches = self._get_all_headings(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.HEADING)
         self._present_object(script, result, messages.NO_MORE_HEADINGS, notify_user=notify_user)
 
     @dbus_service.command
@@ -1609,7 +1532,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous level 1 heading."""
 
         matches = self._get_all_headings(script, 1)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.HEADING)
         self._present_object(
             script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 1, notify_user=notify_user
         )
@@ -1620,7 +1543,7 @@ class StructuralNavigator(Extension):
         """Goes to the next level 1 heading."""
 
         matches = self._get_all_headings(script, 1)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.HEADING)
         self._present_object(
             script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 1, notify_user=notify_user
         )
@@ -1645,7 +1568,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous level 2 heading."""
 
         matches = self._get_all_headings(script, 2)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.HEADING)
         self._present_object(
             script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 2, notify_user=notify_user
         )
@@ -1656,7 +1579,7 @@ class StructuralNavigator(Extension):
         """Goes to the next level 2 heading."""
 
         matches = self._get_all_headings(script, 2)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.HEADING)
         self._present_object(
             script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 2, notify_user=notify_user
         )
@@ -1681,7 +1604,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous level 3 heading."""
 
         matches = self._get_all_headings(script, 3)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.HEADING)
         self._present_object(
             script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 3, notify_user=notify_user
         )
@@ -1692,7 +1615,7 @@ class StructuralNavigator(Extension):
         """Goes to the next level 3 heading."""
 
         matches = self._get_all_headings(script, 3)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.HEADING)
         self._present_object(
             script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 3, notify_user=notify_user
         )
@@ -1717,7 +1640,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous level 4 heading."""
 
         matches = self._get_all_headings(script, 4)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.HEADING)
         self._present_object(
             script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 4, notify_user=notify_user
         )
@@ -1728,7 +1651,7 @@ class StructuralNavigator(Extension):
         """Goes to the next level 4 heading."""
 
         matches = self._get_all_headings(script, 4)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.HEADING)
         self._present_object(
             script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 4, notify_user=notify_user
         )
@@ -1753,7 +1676,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous level 5 heading."""
 
         matches = self._get_all_headings(script, 5)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.HEADING)
         self._present_object(
             script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 5, notify_user=notify_user
         )
@@ -1764,7 +1687,7 @@ class StructuralNavigator(Extension):
         """Goes to the next level 5 heading."""
 
         matches = self._get_all_headings(script, 5)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.HEADING)
         self._present_object(
             script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 5, notify_user=notify_user
         )
@@ -1789,7 +1712,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous level 6 heading."""
 
         matches = self._get_all_headings(script, 6)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.HEADING)
         self._present_object(
             script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 6, notify_user=notify_user
         )
@@ -1800,7 +1723,7 @@ class StructuralNavigator(Extension):
         """Goes to the next level 6 heading."""
 
         matches = self._get_all_headings(script, 6)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.HEADING)
         self._present_object(
             script, result, messages.NO_MORE_HEADINGS_AT_LEVEL % 6, notify_user=notify_user
         )
@@ -1839,7 +1762,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous iframe."""
 
         matches = self._get_all_iframes(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.IFRAME)
         self._present_object(script, result, messages.NO_MORE_IFRAMES, notify_user=notify_user)
 
     @dbus_service.command
@@ -1848,7 +1771,7 @@ class StructuralNavigator(Extension):
         """Goes to the next iframe."""
 
         matches = self._get_all_iframes(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.IFRAME)
         self._present_object(script, result, messages.NO_MORE_IFRAMES, notify_user=notify_user)
 
     @dbus_service.command
@@ -1899,7 +1822,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous image."""
 
         matches = self._get_all_images(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.IMAGE)
         self._present_object(script, result, messages.NO_MORE_IMAGES, notify_user=notify_user)
 
     @dbus_service.command
@@ -1908,7 +1831,7 @@ class StructuralNavigator(Extension):
         """Goes to the next image."""
 
         matches = self._get_all_images(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.IMAGE)
         self._present_object(script, result, messages.NO_MORE_IMAGES, notify_user=notify_user)
 
     @dbus_service.command
@@ -1957,7 +1880,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous landmark."""
 
         matches = self._get_all_landmarks(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.LANDMARK)
         self._present_landmark(script, result, notify_user)
 
     @dbus_service.command
@@ -1966,7 +1889,7 @@ class StructuralNavigator(Extension):
         """Goes to the next landmark."""
 
         matches = self._get_all_landmarks(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.LANDMARK)
         self._present_landmark(script, result, notify_user)
 
     @dbus_service.command
@@ -2020,7 +1943,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous list."""
 
         matches = self._get_all_lists(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.LIST)
         result = self._get_first_item(result) or result
         self._present_object(script, result, messages.NO_MORE_LISTS, notify_user=notify_user)
 
@@ -2030,7 +1953,7 @@ class StructuralNavigator(Extension):
         """Goes to the next list."""
 
         matches = self._get_all_lists(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.LIST)
         result = self._get_first_item(result) or result
         self._present_object(script, result, messages.NO_MORE_LISTS, notify_user=notify_user)
 
@@ -2073,7 +1996,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous list item."""
 
         matches = self._get_all_list_items(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.LIST_ITEM)
         self._present_object(script, result, messages.NO_MORE_LIST_ITEMS, notify_user=notify_user)
 
     @dbus_service.command
@@ -2082,7 +2005,7 @@ class StructuralNavigator(Extension):
         """Goes to the next list item."""
 
         matches = self._get_all_list_items(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.LIST_ITEM)
         self._present_object(script, result, messages.NO_MORE_LIST_ITEMS, notify_user=notify_user)
 
     @dbus_service.command
@@ -2119,7 +2042,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous live region."""
 
         matches = self._get_all_live_regions(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.LIVE_REGION)
         self._present_object(script, result, messages.NO_MORE_LIVE_REGIONS, notify_user=notify_user)
 
     @dbus_service.command
@@ -2128,7 +2051,7 @@ class StructuralNavigator(Extension):
         """Goes to the next live region."""
 
         matches = self._get_all_live_regions(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.LIVE_REGION)
         self._present_object(script, result, messages.NO_MORE_LIVE_REGIONS, notify_user=notify_user)
 
     def _last_live_region(
@@ -2182,7 +2105,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous paragraph."""
 
         matches = self._get_all_paragraphs(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.PARAGRAPH)
         self._present_object(script, result, messages.NO_MORE_PARAGRAPHS, notify_user=notify_user)
 
     @dbus_service.command
@@ -2191,7 +2114,7 @@ class StructuralNavigator(Extension):
         """Goes to the next paragraph."""
 
         matches = self._get_all_paragraphs(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.PARAGRAPH)
         self._present_object(script, result, messages.NO_MORE_PARAGRAPHS, notify_user=notify_user)
 
     @dbus_service.command
@@ -2228,7 +2151,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous radio button."""
 
         matches = self._get_all_radio_buttons(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.RADIO_BUTTON)
         self._present_object(
             script,
             result,
@@ -2242,7 +2165,7 @@ class StructuralNavigator(Extension):
         """Goes to the next radio button."""
 
         matches = self._get_all_radio_buttons(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.RADIO_BUTTON)
         self._present_object(
             script,
             result,
@@ -2284,7 +2207,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous separator."""
 
         matches = self._get_all_separators(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.SEPARATOR)
         self._present_object(script, result, messages.NO_MORE_SEPARATORS, notify_user=notify_user)
 
     @dbus_service.command
@@ -2293,7 +2216,7 @@ class StructuralNavigator(Extension):
         """Goes to the next separator."""
 
         matches = self._get_all_separators(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.SEPARATOR)
         self._present_object(script, result, messages.NO_MORE_SEPARATORS, notify_user=notify_user)
 
     ########################
@@ -2338,7 +2261,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous table."""
 
         matches = self._get_all_tables(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.TABLE)
         obj = self._get_first_table_cell(result) or result
         self._present_object(script, obj, messages.NO_MORE_TABLES, notify_user=notify_user)
 
@@ -2348,7 +2271,7 @@ class StructuralNavigator(Extension):
         """Goes to the next table."""
 
         matches = self._get_all_tables(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.TABLE)
         obj = self._get_first_table_cell(result) or result
         self._present_object(script, obj, messages.NO_MORE_TABLES, notify_user=notify_user)
 
@@ -2389,7 +2312,9 @@ class StructuralNavigator(Extension):
         """Goes to the previous unvisited link."""
 
         matches = self._get_all_unvisited_links(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(
+            script, matches, False, NavigationType.UNVISITED_LINK
+        )
         self._present_object(
             script,
             result,
@@ -2403,7 +2328,7 @@ class StructuralNavigator(Extension):
         """Goes to the next unvisited link."""
 
         matches = self._get_all_unvisited_links(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.UNVISITED_LINK)
         self._present_object(
             script,
             result,
@@ -2445,7 +2370,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous visited link."""
 
         matches = self._get_all_visited_links(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.VISITED_LINK)
         self._present_object(
             script,
             result,
@@ -2459,7 +2384,7 @@ class StructuralNavigator(Extension):
         """Goes to the next visited link."""
 
         matches = self._get_all_visited_links(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.VISITED_LINK)
         self._present_object(
             script,
             result,
@@ -2501,7 +2426,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous link."""
 
         matches = self._get_all_links(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.LINK)
         self._present_object(script, result, messages.NO_MORE_LINKS, notify_user=notify_user)
 
     @dbus_service.command
@@ -2510,7 +2435,7 @@ class StructuralNavigator(Extension):
         """Goes to the next link."""
 
         matches = self._get_all_links(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.LINK)
         self._present_object(script, result, messages.NO_MORE_LINKS, notify_user=notify_user)
 
     @dbus_service.command
@@ -2553,7 +2478,7 @@ class StructuralNavigator(Extension):
         """Goes to the previous clickable."""
 
         matches = self._get_all_clickables(script)
-        result = self._get_object_in_direction(script, matches, False)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.CLICKABLE)
         self._present_object(script, result, messages.NO_MORE_CLICKABLES, notify_user=notify_user)
 
     @dbus_service.command
@@ -2562,7 +2487,7 @@ class StructuralNavigator(Extension):
         """Goes to the next clickable."""
 
         matches = self._get_all_clickables(script)
-        result = self._get_object_in_direction(script, matches, True)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.CLICKABLE)
         self._present_object(script, result, messages.NO_MORE_CLICKABLES, notify_user=notify_user)
 
     @dbus_service.command
