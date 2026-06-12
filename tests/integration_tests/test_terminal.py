@@ -422,3 +422,52 @@ def test_move_focus_to_review_location_unchanged(gtk3_terminal_shell: NativeAppS
             [helpers.BrailleLine(0, "Location unchanged", "Location unchanged", "\x00" * 18)],
         )
         helpers.toggle_flat_review(session)
+
+
+@pytest.mark.native_app
+def test_review_line_that_shrinks(gtk3_terminal_shell: NativeAppSession) -> None:
+    """Tests reviewing a line word by word, then after it is overwritten with shorter text."""
+
+    session = gtk3_terminal_shell
+    _settle(session)
+    _type("clear; printf 'alpha bravo charlie delta echo\\n'; read; clear; printf 'alpha bravo\\n'")
+    keyboard.tap_key(keyboard.KEYSYM_RETURN)
+    session.reader.drain(quiescence_timeout=0.5, overall_timeout=4.0)
+    session.reader.reset()
+
+    full = "alpha bravo charlie delta echo $l"
+    visible = "alpha bravo charlie delta echo $"
+    helpers.toggle_flat_review(session)
+    try:
+        session.orca.call("FlatReviewPresenter", "GoHome", True)
+        assert helpers.capture(session) == (
+            ["alpha bravo charlie delta echo\n"],
+            [helpers.BrailleLine(1, full, visible, "\x00" * 33)],
+        )
+        session.orca.call("FlatReviewPresenter", "PresentItem", True)
+        assert helpers.capture(session) == (
+            ["alpha "],
+            [helpers.BrailleLine(1, full, visible, "\x00" * 33)],
+        )
+        session.orca.call("FlatReviewPresenter", "GoNextItem", True)
+        assert helpers.capture(session) == (
+            ["bravo "],
+            [helpers.BrailleLine(7, full, visible, "\x00" * 33)],
+        )
+        session.orca.call("FlatReviewPresenter", "GoNextItem", True)
+        assert helpers.capture(session) == (
+            ["charlie "],
+            [helpers.BrailleLine(13, full, visible, "\x00" * 33)],
+        )
+
+        keyboard.tap_key(keyboard.KEYSYM_RETURN)
+        session.reader.drain(quiescence_timeout=0.5, overall_timeout=4.0)
+        session.reader.reset()
+
+        session.orca.call("FlatReviewPresenter", "GoHome", True)
+        assert helpers.capture(session) == (
+            ["alpha bravo\n"],
+            [helpers.BrailleLine(1, "alpha bravo $l", "alpha bravo $l", "\x00" * 14)],
+        )
+    finally:
+        helpers.toggle_flat_review(session)

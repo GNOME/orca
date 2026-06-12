@@ -108,6 +108,8 @@ orca_integration_tests = [
   'integration_tests/test_web_headings.py',
   'integration_tests/test_web_structural_navigation.py',
   'integration_tests/test_web_field_states.py',
+  'integration_tests/test_web_flat_review.py',
+  'integration_tests/test_web_flat_review_shrink.py',
   'integration_tests/test_web_label_inference.py',
   'integration_tests/test_web_mode_switching.py',
   'integration_tests/test_web_caret_text_navigation.py',

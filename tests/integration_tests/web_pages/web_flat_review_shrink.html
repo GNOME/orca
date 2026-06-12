@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Flat Review Shrink ready</title>
+<style>body { font-family: "DejaVu Sans Mono", monospace; }</style>
+</head>
+<body>
+<p id="target">alpha bravo charlie delta echo foxtrot golf</p>
+<p id="live" aria-live="assertive"></p>
+<button id="arm" onclick="setTimeout(function () {
+  document.getElementById('target').firstChild.nodeValue = 'alpha bravo';
+  document.getElementById('live').textContent = 'shrunk';
+}, 6000)">arm</button>
+</body>
+</html>

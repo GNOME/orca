@@ -64,6 +64,8 @@ from .orca_fixtures import (  # noqa: F401
     _web_dynamic_content,
     _web_editing,
     _web_field_states,
+    _web_flat_review,
+    _web_flat_review_shrink,
     _web_form_fields,
     _web_headings,
     _web_image_link,

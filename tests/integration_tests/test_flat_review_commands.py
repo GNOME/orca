@@ -86,6 +86,30 @@ def test_present_spell_phonetic(gtk3_text_view: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+def test_review_word_by_word(gtk3_text_view: NativeAppSession) -> None:
+    """Tests reviewing a line one word at a time."""
+
+    session = gtk3_text_view
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+    toggle_flat_review(session)
+
+    try:
+        keyboard.tap_key(keyboard.KEYSYM_KP_HOME)
+        keyboard.tap_key(keyboard.KEYSYM_KP_BEGIN)
+        session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+        session.reader.reset()
+
+        assert _command(session, "PresentItem") == (["Line "], [_LINE])
+        assert _command(session, "GoNextItem") == (
+            ["one.\n"],
+            [BrailleLine(6, "Line one. $l", "Line one. $l", "\x00" * 12)],
+        )
+    finally:
+        toggle_flat_review(session)
+
+
+@pytest.mark.native_app
 def test_toggle_restrict(gtk3_text_view: NativeAppSession) -> None:
     """Tests toggling flat review restriction to the current object and back."""
 

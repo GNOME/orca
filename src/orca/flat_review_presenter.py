@@ -1998,12 +1998,6 @@ class FlatReviewPresenter(Extension):
                     presenter.speak_message(messages.BLANK)
                 elif word_string.isspace():
                     presenter.speak_message(messages.WHITE_SPACE)
-                elif word_string.isupper() and speech_type == 1:
-                    presenter.speak_accessible_text(
-                        self._context.get_current_object(),
-                        word_string,
-                        self._context.get_current_word_start_offset(),
-                    )
                 elif speech_type == 2:
                     presenter.spell_item(
                         word_string,
@@ -2016,11 +2010,16 @@ class FlatReviewPresenter(Extension):
                         self._context.get_current_object(),
                         self._context.get_current_word_start_offset(),
                     )
-                elif speech_type == 1:
-                    presenter.speak_accessible_text(
+                elif (
+                    speech_type == 1
+                    and (offset := self._context.get_current_word_start_offset()) is not None
+                ):
+                    speech_presenter.get_presenter().speak_phrase(
+                        script,
                         self._context.get_current_object(),
+                        offset,
+                        offset + len(word_string),
                         word_string,
-                        self._context.get_current_word_start_offset(),
                     )
 
         focus_manager.get_manager().emit_region_changed(
