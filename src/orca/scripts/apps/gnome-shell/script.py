@@ -48,14 +48,6 @@ class Script(default.Script):
 
         return Utilities(self)
 
-    def is_activatable_event(self, event: Atspi.Event) -> bool:
-        """Returns True if event should cause this script to become active."""
-
-        if event.type.startswith("object:state-changed:selected") and event.detail1:
-            return True
-
-        return super().is_activatable_event(event)
-
     def locus_of_focus_changed(
         self,
         event: Atspi.Event | None,
