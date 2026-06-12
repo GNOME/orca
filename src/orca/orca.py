@@ -105,7 +105,6 @@ def shutdown(_event=None, _signum=None):
     def _timeout(_signum=None, _frame=None):
         msg = "TIMEOUT: something has hung. Aborting."
         debug.print_message(debug.LEVEL_SEVERE, msg, True)
-        debugging_tools_manager.get_manager().print_running_applications(force=True)
         os.kill(os.getpid(), signal.SIGKILL)
 
     debug.print_message(debug.LEVEL_INFO, "ORCA: Shutting down", True)
