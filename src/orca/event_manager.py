@@ -914,7 +914,7 @@ class EventManager:
         self,
         event: Atspi.Event,
         event_script: default.Script,
-        active_script: default.Script,
+        active_script: default.Script | None,
     ) -> bool:
         """Returns True if this event should be processed."""
 
@@ -1014,15 +1014,8 @@ class EventManager:
                 script_mgr.set_active_script(script, reason)
                 active_script = script
 
-        try:
-            assert active_script is not None
-        except AssertionError:
-            # TODO - JD: Under what conditions could this actually happen?
-            msg = "ERROR: Active script is None"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-        else:
-            if not self._should_process_event(event, script, active_script):
-                return
+        if not self._should_process_event(event, script, active_script):
+            return
 
         listener = self._find_listener(script, event.type)
         if listener is None:
