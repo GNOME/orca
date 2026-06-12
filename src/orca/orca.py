@@ -145,35 +145,6 @@ def shutdown(_event=None, _signum=None):
 def _setup_signal_handlers():
     """Sets up signal handlers for reload, shutdown, and preferences."""
 
-    def _reload_on_signal(signum, frame):
-        signal_string = f"({signal.strsignal(signum)})"
-        tokens = [f"ORCA: Reloading due to signal={signum} {signal_string}", frame]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        systemd.get_manager().notify_reloading()
-        load_user_settings()
-        systemd.get_manager().notify_ready()
-
-    def _shutdown_on_signal(signum, frame):
-        signal_string = f"({signal.strsignal(signum)})"
-        tokens = [f"ORCA: Shutting down and exiting due to signal={signum} {signal_string}", frame]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        shutdown()
-
-    def _show_preferences_on_signal(signum, frame):
-        signal_string = f"({signal.strsignal(signum)})"
-        tokens = [f"ORCA: Showing preferences due to signal={signum} {signal_string}", frame]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        manager = script_manager.get_manager()
-        script = manager.get_active_script() or manager.get_default_script()
-        if script:
-            script.show_preferences_gui()
-
-    signal.signal(signal.SIGHUP, _reload_on_signal)
-    signal.signal(signal.SIGINT, _shutdown_on_signal)
-    signal.signal(signal.SIGTERM, _shutdown_on_signal)
-    signal.signal(signal.SIGQUIT, _shutdown_on_signal)
-    signal.signal(signal.SIGUSR1, _show_preferences_on_signal)
-
     def _glib_shutdown_handler():
         msg = "ORCA: GLib handler received shutdown signal"
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -186,11 +157,32 @@ def _setup_signal_handlers():
         systemd.get_manager().notify_reloading()
         load_user_settings()
         systemd.get_manager().notify_ready()
-        return GLib.SOURCE_REMOVE
+        return GLib.SOURCE_CONTINUE
 
-    GLib.unix_signal_add(GLib.PRIORITY_HIGH, signal.SIGTERM, _glib_shutdown_handler)
-    GLib.unix_signal_add(GLib.PRIORITY_HIGH, signal.SIGINT, _glib_shutdown_handler)
-    GLib.unix_signal_add(GLib.PRIORITY_HIGH, signal.SIGHUP, _glib_reload_handler)
+    def _glib_show_preferences_handler():
+        msg = "ORCA: GLib handler received show-preferences signal"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        manager = script_manager.get_manager()
+        script = manager.get_active_script() or manager.get_default_script()
+        if script:
+            script.show_preferences_gui()
+        return GLib.SOURCE_CONTINUE
+
+    for signum, handler in (
+        (signal.SIGINT, _glib_shutdown_handler),
+        (signal.SIGTERM, _glib_shutdown_handler),
+        (signal.SIGHUP, _glib_reload_handler),
+        (signal.SIGUSR1, _glib_show_preferences_handler),
+    ):
+        GLib.unix_signal_add(GLib.PRIORITY_HIGH, signum, handler)
+
+    # We have historically shut down gracefully on SIGQUIT and want to continue doing so.
+    # But GLib.unix_signal_add only supports SIGHUP/SIGINT/SIGTERM/SIGUSR1/SIGUSR2/SIGWINCH,
+    # so SIGQUIT uses a raw handler that defers the shutdown to the main loop.
+    def _quit_on_signal(_signum, _frame):
+        GLib.idle_add(_glib_shutdown_handler, priority=GLib.PRIORITY_HIGH)
+
+    signal.signal(signal.SIGQUIT, _quit_on_signal)
 
 
 def _ensure_accessibility_enabled() -> int | None:
