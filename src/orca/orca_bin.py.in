@@ -329,7 +329,13 @@ def main() -> int:
         debug.debugLevel = debug.LEVEL_ALL
         # Line-buffered to reduce loss of debug output on abnormal exit.
         # pylint: disable=consider-using-with
-        debug.debugFile = open(args.debug_file, "w", encoding="utf-8", buffering=1)
+        debug.debugFile = open(
+            args.debug_file,
+            "w",
+            encoding="utf-8",
+            buffering=1,
+            opener=lambda path, flags: os.open(path, flags, 0o600),
+        )
 
     if args.replace:
         cleanup(signal.SIGKILL)
