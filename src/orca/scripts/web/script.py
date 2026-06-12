@@ -188,6 +188,9 @@ class Script(default.Script):
         tokens = ["WEB: Adjusted object and offset for say word to", obj, offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+        if not obj:
+            return
+
         word_contents = self.utilities.get_word_contents_at_offset(obj, offset, use_cache=True)
         text_obj, start_offset, _end_offset, _word = word_contents[0]
 
