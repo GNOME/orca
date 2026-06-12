@@ -959,6 +959,22 @@ class Context:
             return None
         return zones[0].get_start_offset()
 
+    def _get_current_word(self) -> Word | None:
+        """Returns the current word, or None (with a warning) if its index is out of range."""
+
+        zone = self._get_current_zone()
+        if zone is None:
+            return None
+        words = zone.get_words()
+        if not words:
+            return None
+        try:
+            return words[self._word_index]
+        except IndexError:
+            msg = f"FLAT REVIEW: Word index {self._word_index} out of range for {len(words)} words"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return None
+
     def get_current_word_start_offset(self) -> int | None:
         """Returns the start offset of the current word."""
 
@@ -973,27 +989,17 @@ class Context:
     def get_current_word_string(self) -> str:
         """Returns the string of the current word."""
 
+        if (word := self._get_current_word()) is not None:
+            return word.get_string()
         zone = self._get_current_zone()
-        if not zone:
-            return ""
-
-        if words := zone.get_words():
-            return words[self._word_index].get_string()
-
-        return zone.get_string()
+        return zone.get_string() if zone is not None else ""
 
     def get_current_character_string(self) -> str:
         """Returns the string of the current character."""
 
-        zone = self._get_current_zone()
-        if not zone:
+        word = self._get_current_word()
+        if word is None:
             return ""
-
-        words = zone.get_words()
-        if not words:
-            return ""
-
-        word = words[self._word_index]
         if char := word.get_character_at_index(self._char_index):
             return char.get_string()
         return ""
@@ -1001,18 +1007,11 @@ class Context:
     def _get_current_character_rect(self) -> Atspi.Rect:
         """Returns the extents of the current character."""
 
-        zone = self._get_current_zone()
-        if not zone:
+        word = self._get_current_word()
+        if word is None:
             return Atspi.Rect()
-
-        words = zone.get_words()
-        if not words:
-            return Atspi.Rect()
-
-        word = words[self._word_index]
         if char := word.get_character_at_index(self._char_index):
             return char.get_rect()
-
         return Atspi.Rect()
 
     def is_stale(self) -> bool:
@@ -1095,13 +1094,9 @@ class Context:
     def get_current_text_offset(self) -> int:
         """Returns the current text offset in the current object."""
 
-        zone = self._get_current_zone()
-        if zone is None:
+        word = self._get_current_word()
+        if word is None:
             return -1
-        words = zone.get_words()
-        if not words:
-            return -1
-        word = words[self._word_index]
         if char := word.get_character_at_index(self._char_index):
             return char.get_start_offset()
         return -1
@@ -1136,8 +1131,15 @@ class Context:
         focused_region.cursor_offset = 0
         if words := zone.get_words():
             focused_region.cursor_offset += words[0].get_start_offset() - zone.get_start_offset()
-            for word_index in range(self._word_index):
-                focused_region.cursor_offset += len(words[word_index].get_string())
+            try:
+                for word_index in range(self._word_index):
+                    focused_region.cursor_offset += len(words[word_index].get_string())
+            except IndexError:
+                msg = (
+                    f"FLAT REVIEW: Word index {self._word_index} "
+                    f"out of range for {len(words)} words"
+                )
+                debug.print_message(debug.LEVEL_WARNING, msg, True)
         focused_region.cursor_offset += self._char_index
         # This is related to contracted braille.
         focused_region.reposition_cursor()
@@ -1292,8 +1294,8 @@ class Context:
         zone = self._get_current_zone()
         if zone is None:
             return False
-        if words := zone.get_words():
-            chars = words[self._word_index].get_characters()
+        if word := self._get_current_word():
+            chars = word.get_characters()
             self._char_index = max(len(chars) - 1, 0)
         else:
             self._char_index = 0
@@ -1305,8 +1307,8 @@ class Context:
         zone = self._get_current_zone()
         if zone is None:
             return False
-        if words := zone.get_words():
-            chars = words[self._word_index].get_characters()
+        if word := self._get_current_word():
+            chars = word.get_characters()
             if self._char_index < (len(chars) - 1):
                 self._char_index += 1
                 return True
