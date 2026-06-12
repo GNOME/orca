@@ -360,6 +360,19 @@ class AXTable:
         return count
 
     @staticmethod
+    def _attribute_as_int(value: str | None) -> int | None:
+        """Returns value as an int, or None if it is absent or not a valid integer."""
+
+        if value is None:
+            return None
+        try:
+            return int(value)
+        except ValueError:
+            msg = f"AXTable: Ignoring non-integer attribute value {value!r}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return None
+
+    @staticmethod
     def _get_column_count_from_attribute(table: Atspi.Accessible) -> int | None:
         """Returns the value of the 'colcount' object attribute or None if not found."""
 
@@ -368,10 +381,7 @@ class AXTable:
             return cached
 
         attrs = AXObject.get_attributes_dict(table)
-        attr = attrs.get("colcount")
-        count = None
-        if attr is not None:
-            count = int(attr)
+        count = AXTable._attribute_as_int(attrs.get("colcount"))
 
         tokens = ["AXTable: Column count attribute for", table, "is", count]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -415,10 +425,7 @@ class AXTable:
             return cached
 
         attrs = AXObject.get_attributes_dict(table)
-        attr = attrs.get("rowcount")
-        count = None
-        if attr is not None:
-            count = int(attr)
+        count = AXTable._attribute_as_int(attrs.get("rowcount"))
 
         tokens = ["AXTable: Row count attribute for", table, "is", count]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -575,10 +582,10 @@ class AXTable:
             return row_span, col_span
 
         rowspan_attr, colspan_attr = AXTable._get_cell_spans_from_attribute(cell)
-        if rowspan_attr is not None:
-            row_span = int(rowspan_attr)
-        if colspan_attr is not None:
-            col_span = int(colspan_attr)
+        if (rowspan := AXTable._attribute_as_int(rowspan_attr)) is not None:
+            row_span = rowspan
+        if (colspan := AXTable._attribute_as_int(colspan_attr)) is not None:
+            col_span = colspan
 
         return row_span, col_span
 
@@ -832,10 +839,10 @@ class AXTable:
             return row, col
 
         row_index, col_index = AXTable._get_cell_coordinates_from_attribute(cell)
-        if row_index is not None:
-            row = int(row_index) - 1
-        if col_index is not None:
-            col = int(col_index) - 1
+        if (row_int := AXTable._attribute_as_int(row_index)) is not None:
+            row = row_int - 1
+        if (col_int := AXTable._attribute_as_int(col_index)) is not None:
+            col = col_int - 1
 
         return row, col
 
