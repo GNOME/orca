@@ -87,6 +87,8 @@ class AXHypertext:
         links = []
         for i in range(AXHypertext._get_link_count(obj)):
             link = AXHypertext._get_link_at_index(obj, i)
+            if link is None:
+                continue
             if (
                 start_offset <= AXHypertext.get_link_start_offset(link) < end_offset
                 or start_offset < AXHypertext.get_link_end_offset(link) <= end_offset
