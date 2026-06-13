@@ -210,7 +210,7 @@ def test_structural_navigation_by_landmark_forward(web_landmarks: NativeAppSessi
     keyboard.tap_key(keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["m", "leaving navigation.", "search", "Search "],
-        [BrailleLine(0, "Search", "Search", "\x00" * 7)],
+        [BrailleLine(0, "Search ", "Search ", "\x00" * 7)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
@@ -228,7 +228,7 @@ def test_structural_navigation_by_landmark_forward(web_landmarks: NativeAppSessi
     keyboard.tap_key(keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["m", "leaving complementary content.", "form", "Newsletter signup", "Email "],
-        [BrailleLine(0, "Email", "Email", "\x00" * 6)],
+        [BrailleLine(0, "Email ", "Email ", "\x00" * 6)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
@@ -296,7 +296,7 @@ def test_structural_navigation_by_landmark_backward(web_landmarks: NativeAppSess
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["M", "leaving region.", "form", "Newsletter signup", "Email "],
-        [BrailleLine(0, "Email", "Email", "\x00" * 6)],
+        [BrailleLine(0, "Email ", "Email ", "\x00" * 6)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
@@ -314,7 +314,7 @@ def test_structural_navigation_by_landmark_backward(web_landmarks: NativeAppSess
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
         ["M", "leaving main content.", "search", "Search "],
-        [BrailleLine(0, "Search", "Search", "\x00" * 7)],
+        [BrailleLine(0, "Search ", "Search ", "\x00" * 7)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)

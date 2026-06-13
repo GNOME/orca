@@ -100,7 +100,7 @@ def test_line_navigation_omits_useless_images(web_useless_images: NativeAppSessi
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(web_useless_images) == (
         ["End of paragraph image. "],
-        [BrailleLine(1, "End of paragraph image.", "End of paragraph image.", "\x00" * 24)],
+        [BrailleLine(1, "End of paragraph image. ", "End of paragraph image. ", "\x00" * 24)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)

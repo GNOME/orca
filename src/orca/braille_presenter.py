@@ -932,8 +932,6 @@ class BraillePresenter(Extension):
         flattened_regions: list = []
         for regions in regions_list:
             flattened_regions.extend(regions)
-        if flattened_regions:
-            flattened_regions[-1].string = flattened_regions[-1].string.rstrip(" ")
         self.present_regions(flattened_regions, focused_region)
 
     def present_generated_braille(

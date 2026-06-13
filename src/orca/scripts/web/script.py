@@ -403,6 +403,10 @@ class Script(default.Script):
             handled_reason = "plain text document"
         elif input_event_manager.get_manager().last_event_was_caret_selection():
             handled_reason = "caret selection"
+        elif (
+            last_caret_set := AXUtilities.get_last_caret_set()
+        ) is not None and last_caret_set.reason == CaretSetReason.BRAILLE_PANNING:
+            handled_reason = "braille panning"
 
         if not handled_reason:
             tokens = ["WEB: updating braille for unhandled navigation type", obj]

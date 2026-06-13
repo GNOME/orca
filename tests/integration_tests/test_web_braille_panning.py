@@ -71,17 +71,21 @@ def test_navigate_by_character_snaps_braille_back(web_long_line: NativeAppSessio
         session.orca.press_bound_key(right_key)  # pan the window off the caret
         assert helpers.capture(session) == (
             [],
-            [helpers.BrailleLine(0, _FULL_LONG, "the lazy dog and then keeps runn", _LONG_MASK)],
+            [
+                helpers.BrailleLine(
+                    0, _FULL_LONG + " ", "the lazy dog and then keeps runn", _LONG_MASK
+                )
+            ],
         )
         keyboard.tap_key(keyboard.KEYSYM_RIGHT)
         assert helpers.capture(session) == (
             ["h"],
-            [helpers.BrailleLine(2, _FULL_LONG, _VISIBLE_LONG, _LONG_MASK)],
+            [helpers.BrailleLine(2, _FULL_LONG + " ", _VISIBLE_LONG, _LONG_MASK)],
         )
         keyboard.tap_key(keyboard.KEYSYM_RIGHT)
         assert helpers.capture(session) == (
             ["e"],
-            [helpers.BrailleLine(3, _FULL_LONG, _VISIBLE_LONG, _LONG_MASK)],
+            [helpers.BrailleLine(3, _FULL_LONG + " ", _VISIBLE_LONG, _LONG_MASK)],
         )
 
 
@@ -97,17 +101,21 @@ def test_navigate_by_word_snaps_braille_back(web_long_line: NativeAppSession) ->
         session.orca.press_bound_key(right_key)  # pan the window off the caret
         assert helpers.capture(session) == (
             [],
-            [helpers.BrailleLine(0, _FULL_LONG, "the lazy dog and then keeps runn", _LONG_MASK)],
+            [
+                helpers.BrailleLine(
+                    0, _FULL_LONG + " ", "the lazy dog and then keeps runn", _LONG_MASK
+                )
+            ],
         )
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
         assert helpers.capture(session) == (
             ["The "],
-            [helpers.BrailleLine(4, _FULL_LONG, _VISIBLE_LONG, _LONG_MASK)],
+            [helpers.BrailleLine(4, _FULL_LONG + " ", _VISIBLE_LONG, _LONG_MASK)],
         )
         keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
         assert helpers.capture(session) == (
             ["quick "],
-            [helpers.BrailleLine(10, _FULL_LONG, _VISIBLE_LONG, _LONG_MASK)],
+            [helpers.BrailleLine(10, _FULL_LONG + " ", _VISIBLE_LONG, _LONG_MASK)],
         )
 
 
@@ -123,7 +131,11 @@ def test_navigate_by_line_snaps_braille_back(web_long_line: NativeAppSession) ->
         session.orca.press_bound_key(right_key)  # pan the window off the caret
         assert helpers.capture(session) == (
             [],
-            [helpers.BrailleLine(0, _FULL_LONG, "the lazy dog and then keeps runn", _LONG_MASK)],
+            [
+                helpers.BrailleLine(
+                    0, _FULL_LONG + " ", "the lazy dog and then keeps runn", _LONG_MASK
+                )
+            ],
         )
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         assert helpers.capture(session) == (
@@ -154,17 +166,29 @@ def test_pan_braille_right_then_left(web_long_line: NativeAppSession) -> None:
         session.orca.press_bound_key(right_key)
         assert helpers.capture(session) == (
             [],
-            [helpers.BrailleLine(0, _FULL_LONG, "the lazy dog and then keeps runn", _LONG_MASK)],
+            [
+                helpers.BrailleLine(
+                    0, _FULL_LONG + " ", "the lazy dog and then keeps runn", _LONG_MASK
+                )
+            ],
         )
         session.orca.press_bound_key(right_key)
         assert helpers.capture(session) == (
             [],
-            [helpers.BrailleLine(0, _FULL_LONG, "running across the wide open fie", _LONG_MASK)],
+            [
+                helpers.BrailleLine(
+                    0, _FULL_LONG + " ", "running across the wide open fie", _LONG_MASK
+                )
+            ],
         )
         session.orca.press_bound_key(left_key)
         assert helpers.capture(session) == (
             [],
-            [helpers.BrailleLine(0, _FULL_LONG, "the lazy dog and then keeps runn", _LONG_MASK)],
+            [
+                helpers.BrailleLine(
+                    0, _FULL_LONG + " ", "the lazy dog and then keeps runn", _LONG_MASK
+                )
+            ],
         )
 
 
@@ -187,17 +211,29 @@ def test_pan_left_with_word_wrap_returns_to_intermediate_range(
             session.orca.press_bound_key(right_key)
             assert helpers.capture(session) == (
                 [],
-                [helpers.BrailleLine(0, _FULL_LONG, "the lazy dog and then keeps ", _LONG_MASK)],
+                [
+                    helpers.BrailleLine(
+                        0, _FULL_LONG + " ", "the lazy dog and then keeps ", _LONG_MASK
+                    )
+                ],
             )
             session.orca.press_bound_key(right_key)
             assert helpers.capture(session) == (
                 [],
-                [helpers.BrailleLine(0, _FULL_LONG, "running across the wide open ", _LONG_MASK)],
+                [
+                    helpers.BrailleLine(
+                        0, _FULL_LONG + " ", "running across the wide open ", _LONG_MASK
+                    )
+                ],
             )
             session.orca.press_bound_key(left_key)
             assert helpers.capture(session) == (
                 [],
-                [helpers.BrailleLine(0, _FULL_LONG, "the lazy dog and then keeps ", _LONG_MASK)],
+                [
+                    helpers.BrailleLine(
+                        0, _FULL_LONG + " ", "the lazy dog and then keeps ", _LONG_MASK
+                    )
+                ],
             )
     finally:
         session.orca.set("BraillePresenter", "WordWrapIsEnabled", False)
@@ -272,7 +308,11 @@ def test_pan_requires_grab_refresh(web_long_line: NativeAppSession) -> None:
         session.orca.press_bound_key(right_key)
         assert helpers.capture(session) == (
             [],
-            [helpers.BrailleLine(0, _FULL_LONG, "the lazy dog and then keeps runn", _LONG_MASK)],
+            [
+                helpers.BrailleLine(
+                    0, _FULL_LONG + " ", "the lazy dog and then keeps runn", _LONG_MASK
+                )
+            ],
         )
     finally:
         session.orca.unbind_command(helpers.PAN_RIGHT_COMMAND)
@@ -297,17 +337,29 @@ def test_pan_braille_over_assembled_link_line(web_long_line: NativeAppSession) -
         session.orca.press_bound_key(right_key)
         assert helpers.capture(session) == (
             [],
-            [helpers.BrailleLine(0, _FULL_RICH, "before a middle link followed by", _RICH_MASK)],
+            [
+                helpers.BrailleLine(
+                    0, _FULL_RICH + " ", "before a middle link followed by", _RICH_MASK
+                )
+            ],
         )
         session.orca.press_bound_key(right_key)
         assert helpers.capture(session) == (
             [],
-            [helpers.BrailleLine(0, _FULL_RICH, "by bold and slanted trailing fil", _RICH_MASK)],
+            [
+                helpers.BrailleLine(
+                    0, _FULL_RICH + " ", "by bold and slanted trailing fil", _RICH_MASK
+                )
+            ],
         )
         session.orca.press_bound_key(left_key)
         assert helpers.capture(session) == (
             [],
-            [helpers.BrailleLine(0, _FULL_RICH, "before a middle link followed by", _RICH_MASK)],
+            [
+                helpers.BrailleLine(
+                    0, _FULL_RICH + " ", "before a middle link followed by", _RICH_MASK
+                )
+            ],
         )
 
 
@@ -321,7 +373,7 @@ def test_pan_contracted_line_walks_to_next_visual_line(web_long_line: NativeAppS
     session.orca.set("BraillePresenter", "ContractionTable", "en-us-g2")
     session.reader.drain(quiescence_timeout=0.4, overall_timeout=2.0)
     session.reader.reset()
-    contracted_mask = "\x00" * len(_PAN_LINE_CONTRACTED)
+    contracted_mask = "\x00" * (len(_PAN_LINE_CONTRACTED) + 1)
     with helpers.bound_pan_keys(session) as (_left_key, right_key):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         assert helpers.capture(session) == (
@@ -331,7 +383,10 @@ def test_pan_contracted_line_walks_to_next_visual_line(web_long_line: NativeAppS
             ],
             [
                 helpers.BrailleLine(
-                    1, _PAN_LINE_CONTRACTED, "_the qk br{n fox jumps ov} ! laz", contracted_mask
+                    1,
+                    _PAN_LINE_CONTRACTED + " ",
+                    "_the qk br{n fox jumps ov} ! laz",
+                    contracted_mask,
                 )
             ],
         )
@@ -340,16 +395,43 @@ def test_pan_contracted_line_walks_to_next_visual_line(web_long_line: NativeAppS
             [],
             [
                 helpers.BrailleLine(
-                    0, _PAN_LINE_CONTRACTED, "lazy dog & !n keeps runn+ acr ! ", contracted_mask
+                    0,
+                    _PAN_LINE_CONTRACTED + " ",
+                    "lazy dog & !n keeps runn+ acr ! ",
+                    contracted_mask,
                 )
             ],
         )
         session.orca.press_bound_key(right_key)
         assert helpers.capture(session) == (
             [],
-            [helpers.BrailleLine(0, _PAN_LINE_CONTRACTED, "wide op5 field =a v", contracted_mask)],
+            [
+                helpers.BrailleLine(
+                    0, _PAN_LINE_CONTRACTED + " ", "wide op5 field =a v ", contracted_mask
+                )
+            ],
         )
         # Panning past the end walks to the next visual line ("long time.").
         session.orca.press_bound_key(right_key)
         next_line = helpers.BrailleLine(1, 'long "t4', 'long "t4', "\x00" * 8)
         assert helpers.capture(session) == ([], [next_line, next_line])
+
+
+@pytest.mark.native_app
+def test_edge_pan_into_a_line_with_a_link_renders_the_link(
+    web_long_line: NativeAppSession,
+) -> None:
+    """Tests that edge-panning into a line containing a link renders the link, not blank cells."""
+
+    session = web_long_line
+    _reset(session)
+    session.orca.set("BraillePresenter", "ContractedBrailleIsEnabled", False)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+    with helpers.bound_pan_keys(session) as (_left_key, right_key):
+        for _ in range(4):
+            keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        helpers.capture(session)
+        session.orca.press_bound_key(right_key)
+        link_line = helpers.BrailleLine(1, "See the link", "See the link", "\x00" * 8 + "\xc0" * 4)
+        assert helpers.capture(session) == ([], [link_line, link_line])
