@@ -27,7 +27,7 @@ from __future__ import annotations
 
 import re
 import time
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import gi
 
@@ -92,12 +92,12 @@ class _AXObjectCache:
         if self._known_dead is not None:
             self._known_dead.put(ax_cache_manager.get_object_key(obj), is_dead)
 
-    def get_attributes(self, obj: Atspi.Accessible) -> dict[str, str] | None:
-        """Returns cached object attributes, or None when absent."""
+    def get_attributes(self, obj: Atspi.Accessible) -> Any:
+        """Returns the cached object attributes for obj."""
 
         if self._object_attributes is None:
-            return None
-        return self._object_attributes.get(ax_cache_manager.get_object_key(obj), None)
+            return ax_cache_manager.MISSING
+        return self._object_attributes.get(ax_cache_manager.get_object_key(obj))
 
     def set_attributes(self, obj: Atspi.Accessible, attributes: dict[str, str]) -> None:
         """Stores object attributes."""
@@ -1045,7 +1045,7 @@ class AXObject:
 
         if use_cache:
             attributes = AXObject._CACHE.get_attributes(obj)
-            if attributes:
+            if attributes is not ax_cache_manager.MISSING:
                 return attributes
 
         try:
