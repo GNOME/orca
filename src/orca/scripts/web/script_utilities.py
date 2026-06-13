@@ -3575,8 +3575,8 @@ class Utilities(script_utilities.Utilities):
             return None, -1
 
         if self._can_have_caret_context(obj):
-            if self.treat_as_text_object(obj) and AXText.get_character_count(obj):
-                all_text = AXText.get_all_text(obj)
+            all_text = AXText.get_all_text(obj) if self.treat_as_text_object(obj) else ""
+            if all_text:
                 for i in range(offset + 1, len(all_text)):
                     child = AXHypertext.find_child_at_offset(obj, i)
                     if child and all_text[i] != "\ufffc":
@@ -3662,8 +3662,8 @@ class Utilities(script_utilities.Utilities):
             return None, -1
 
         if self._can_have_caret_context(obj):
-            if self.treat_as_text_object(obj) and AXText.get_character_count(obj):
-                all_text = AXText.get_all_text(obj)
+            all_text = AXText.get_all_text(obj) if self.treat_as_text_object(obj) else ""
+            if all_text:
                 if offset == -1 or offset > len(all_text):
                     offset = len(all_text)
                 for i in range(offset - 1, -1, -1):
