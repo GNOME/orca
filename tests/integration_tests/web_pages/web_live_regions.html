@@ -26,6 +26,9 @@ function removeChildNode(parentId, childId) {
 <p><button type="button" onclick="announce('off', 'Nothing to hear')">Quiet</button></p>
 <div id="off" aria-live="off"></div>
 
+<p><button type="button" onclick="announce('status', 'Status updated')">Status</button></p>
+<div id="status" role="status"></div>
+
 <p><button type="button" onclick="removeChildNode('removal', 'removal-child')">Remove</button></p>
 <div id="removal" aria-live="polite"><span id="removal-child">Removable</span></div>
 </body>

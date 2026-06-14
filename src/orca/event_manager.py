@@ -343,6 +343,7 @@ class EventManager:
         self,
         event: Atspi.Event,
         focus: Atspi.Accessible | None,
+        role: Atspi.Role,
     ) -> bool | None:
         """Returns False if focus/state means we should not ignore, or None if inconclusive."""
 
@@ -372,8 +373,9 @@ class EventManager:
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
-        if event_type.startswith("object:text-changed:insert") and AXUtilities.is_section(
-            event.source,
+        if event_type.startswith("object:text-changed:insert") and (
+            AXUtilities.is_section(event.source, role)
+            or AXUtilities.is_status_bar(event.source, role)
         ):
             live = AXObject.get_attribute(event.source, "live")
             if live and live != "off":
@@ -614,7 +616,7 @@ class EventManager:
         role = AXObject.get_role(event.source)
         for check in (
             lambda: self._ignore_by_role(event, role),
-            lambda: self._ignore_by_focus_state(event, focus),
+            lambda: self._ignore_by_focus_state(event, focus, role),
             lambda: self._ignore_property_change(event, role),
             lambda: self._ignore_by_spam_filter(event),
             lambda: self._ignore_active_descendant_or_selection(event),

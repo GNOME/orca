@@ -379,10 +379,10 @@ class AXUtilitiesEvent:
         """Returns the reason if obj-type or event-type dictates one, else None to continue."""
 
         obj = event.source
-        if AXObject.get_role(obj) in AXUtilitiesRole.get_text_ui_roles():
-            return TextEventReason.UI_UPDATE
         if AXUtilitiesRole.is_live_region(obj):
             return TextEventReason.LIVE_REGION_UPDATE
+        if AXObject.get_role(obj) in AXUtilitiesRole.get_text_ui_roles():
+            return TextEventReason.UI_UPDATE
         if event.type.endswith("system"):
             return TextEventReason.SYSTEM_UPDATE
         if mgr.last_event_was_page_switch():

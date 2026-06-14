@@ -61,6 +61,8 @@ _TOP_TO_BOTTOM = (
     ["Save", "button"],
     ["Break", "button"],
     ["Quiet", "button"],
+    ["Status", "button"],
+    ["status bar", "blank"],
     ["Remove", "button"],
     ["Removable"],
 )
@@ -68,6 +70,8 @@ _TOP_TO_BOTTOM = (
 
 _BOTTOM_TO_TOP = (
     ["Remove", "button"],
+    ["status bar", "blank"],
+    ["Status", "button"],
     ["Quiet", "button"],
     ["Break", "button"],
     ["Save", "button"],
@@ -125,13 +129,28 @@ def test_live_region_politeness(web_live_regions: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
+def test_status_role_live_region_is_announced(web_live_regions: NativeAppSession) -> None:
+    """Tests that an update to a polite role=status live region is announced."""
+
+    session = web_live_regions
+    reset_web_state(session)
+
+    for _ in range(4):
+        keyboard.tap_key(keyboard.KEYSYM_TAB)
+    assert speech(session) == ["Status", "button"]
+
+    keyboard.tap_key(keyboard.KEYSYM_SPACE)
+    assert speech(session, wait_async=True) == ["Status updated"]
+
+
+@pytest.mark.native_app
 def test_live_region_child_removal_is_silent(web_live_regions: NativeAppSession) -> None:
     """Tests that removing a child of a polite live region away from focus is not announced."""
 
     session = web_live_regions
     reset_web_state(session)
 
-    for _ in range(4):
+    for _ in range(5):
         keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert speech(session) == ["Remove", "button"]
 

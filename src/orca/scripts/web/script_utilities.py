@@ -825,6 +825,9 @@ class Utilities(script_utilities.Utilities):
         ) or document_presenter.get_presenter().browse_mode_is_sticky(self._script.app):
             return True
 
+        if AXUtilities.is_live_region(obj):
+            return True
+
         rv = AXText.get_character_count(obj) > 0 or AXUtilities.is_editable(obj)
         if (
             rv
@@ -836,7 +839,7 @@ class Utilities(script_utilities.Utilities):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = False
 
-        elif rv and not AXUtilities.is_live_region(obj):
+        elif rv:
             not_text_roles = [
                 Atspi.Role.LIST_BOX,
                 Atspi.Role.TABLE,
