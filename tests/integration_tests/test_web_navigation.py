@@ -193,19 +193,19 @@ def test_structural_navigation_by_list(web_basic: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_L)
     assert capture(session) == (
-        ["l", "List with 3 items", "•  Apple item"],
+        ["l", "List with 3 items", "• Apple item"],
         [BrailleLine(1, "• Apple item", "• Apple item", "\x00" * 12)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_L)
     assert capture(session) == (
-        ["l", "leaving list.", "List with 2 items", "1.  First step"],
+        ["l", "leaving list.", "List with 2 items", "1. First step"],
         [BrailleLine(1, "1. First step", "1. First step", "\x00" * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_L)
     assert capture(session) == (
-        ["l", "Wrapping to top.", "leaving list.", "List with 3 items", "•  Apple item"],
+        ["l", "Wrapping to top.", "leaving list.", "List with 3 items", "• Apple item"],
         [
             BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
             BrailleLine(1, "• Apple item", "• Apple item", "\x00" * 12),
@@ -214,7 +214,7 @@ def test_structural_navigation_by_list(web_basic: NativeAppSession) -> None:
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_L)
     assert capture(session) == (
-        ["L", "Wrapping to bottom.", "leaving list.", "List with 2 items", "1.  First step"],
+        ["L", "Wrapping to bottom.", "leaving list.", "List with 2 items", "1. First step"],
         [
             BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
             BrailleLine(1, "1. First step", "1. First step", "\x00" * 13),
@@ -223,13 +223,13 @@ def test_structural_navigation_by_list(web_basic: NativeAppSession) -> None:
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_L)
     assert capture(session) == (
-        ["L", "leaving list.", "List with 3 items", "•  Apple item"],
+        ["L", "leaving list.", "List with 3 items", "• Apple item"],
         [BrailleLine(1, "• Apple item", "• Apple item", "\x00" * 12)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_L)
     assert capture(session) == (
-        ["L", "Wrapping to bottom.", "leaving list.", "List with 2 items", "1.  First step"],
+        ["L", "Wrapping to bottom.", "leaving list.", "List with 2 items", "1. First step"],
         [
             BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
             BrailleLine(1, "1. First step", "1. First step", "\x00" * 13),
@@ -380,19 +380,19 @@ def test_caret_navigation(web_basic: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        ["List with 3 items", "•  Apple item"],
+        ["List with 3 items", "• Apple item"],
         [BrailleLine(1, "• Apple item", "• Apple item", "\x00" * 12)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        ["•  Banana item"],
+        ["• Banana item"],
         [BrailleLine(1, "• Banana item", "• Banana item", "\x00" * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
-        ["•  Cherry item"],
+        ["• Cherry item"],
         [BrailleLine(1, "• Cherry item", "• Cherry item", "\x00" * 13)],
     )
 
@@ -404,19 +404,19 @@ def test_caret_navigation(web_basic: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session) == (
-        ["List with 3 items", "•  Cherry item"],
+        ["List with 3 items", "• Cherry item"],
         [BrailleLine(1, "• Cherry item", "• Cherry item", "\x00" * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session) == (
-        ["•  Banana item"],
+        ["• Banana item"],
         [BrailleLine(1, "• Banana item", "• Banana item", "\x00" * 13)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_UP)
     assert capture(session) == (
-        ["•  Apple item"],
+        ["• Apple item"],
         [BrailleLine(1, "• Apple item", "• Apple item", "\x00" * 12)],
     )
 

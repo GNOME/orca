@@ -35,16 +35,16 @@ if TYPE_CHECKING:
 
 
 _TOP_TO_BOTTOM = (
-    ["List with 3 items", "•  Apple"],
-    ["•  Bread"],
-    ["•  Cheese"],
-    ["leaving list.", "List with 3 items", "1.  Wash"],
-    ["2.  Rinse"],
-    ["3.  Dry"],
-    ["leaving list.", "List with 2 items", "•  Produce"],
-    ["List with 2 items Nesting level 1", "◦  Carrot"],
-    ["◦  Onion"],
-    ["leaving list.", "List with 2 items", "•  Dairy"],
+    ["List with 3 items", "• Apple"],
+    ["• Bread"],
+    ["• Cheese"],
+    ["leaving list.", "List with 3 items", "1. Wash"],
+    ["2. Rinse"],
+    ["3. Dry"],
+    ["leaving list.", "List with 2 items", "• Produce"],
+    ["List with 2 items Nesting level 1", "◦ Carrot"],
+    ["◦ Onion"],
+    ["leaving list.", "List with 2 items", "• Dairy"],
 )
 
 
@@ -73,15 +73,15 @@ def test_caret_navigation_top_to_bottom_layout_off(web_lists: NativeAppSession) 
 
 
 _BOTTOM_TO_TOP = (
-    ["List with 2 items Nesting level 1", "◦  Onion"],
-    ["◦  Carrot"],
-    ["leaving list.", "•  Produce"],
-    ["leaving list.", "List with 3 items", "3.  Dry"],
-    ["2.  Rinse"],
-    ["1.  Wash"],
-    ["leaving list.", "List with 3 items", "•  Cheese"],
-    ["•  Bread"],
-    ["•  Apple"],
+    ["List with 2 items Nesting level 1", "◦ Onion"],
+    ["◦ Carrot"],
+    ["leaving list.", "• Produce"],
+    ["leaving list.", "List with 3 items", "3. Dry"],
+    ["2. Rinse"],
+    ["1. Wash"],
+    ["leaving list.", "List with 3 items", "• Cheese"],
+    ["• Bread"],
+    ["• Apple"],
     ["leaving list.", "Grocery lists", "heading 1"],
 )
 
@@ -121,31 +121,31 @@ def test_structural_navigation_by_list(web_lists: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
-        ["l", "List with 3 items", "•  Apple"],
+        ["l", "List with 3 items", "• Apple"],
         [BrailleLine(1, "• Apple", "• Apple", "\x00" * 7)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
-        ["l", "leaving list.", "List with 3 items", "1.  Wash"],
+        ["l", "leaving list.", "List with 3 items", "1. Wash"],
         [BrailleLine(1, "1. Wash", "1. Wash", "\x00" * 7)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
-        ["l", "leaving list.", "List with 2 items", "•  Produce"],
+        ["l", "leaving list.", "List with 2 items", "• Produce"],
         [BrailleLine(1, "• Produce", "• Produce", "\x00" * 9)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
-        ["l", "List with 2 items Nesting level 1", "◦  Carrot"],
+        ["l", "List with 2 items Nesting level 1", "◦ Carrot"],
         [BrailleLine(1, "◦ Carrot", "◦ Carrot", "\x00" * 8)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
-        ["l", "Wrapping to top.", "leaving list.", "List with 3 items", "•  Apple"],
+        ["l", "Wrapping to top.", "leaving list.", "List with 3 items", "• Apple"],
         [
             BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
             BrailleLine(1, "• Apple", "• Apple", "\x00" * 7),
@@ -159,7 +159,7 @@ def test_structural_navigation_by_list(web_lists: NativeAppSession) -> None:
             "Wrapping to bottom.",
             "leaving list.",
             "List with 2 items Nesting level 1",
-            "◦  Carrot",
+            "◦ Carrot",
         ],
         [
             BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
@@ -169,19 +169,19 @@ def test_structural_navigation_by_list(web_lists: NativeAppSession) -> None:
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
-        ["L", "leaving list.", "•  Produce"],
+        ["L", "leaving list.", "• Produce"],
         [BrailleLine(1, "• Produce", "• Produce", "\x00" * 9)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
-        ["L", "leaving list.", "List with 3 items", "1.  Wash"],
+        ["L", "leaving list.", "List with 3 items", "1. Wash"],
         [BrailleLine(1, "1. Wash", "1. Wash", "\x00" * 7)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_L)
     assert helpers.capture(session) == (
-        ["L", "leaving list.", "List with 3 items", "•  Apple"],
+        ["L", "leaving list.", "List with 3 items", "• Apple"],
         [BrailleLine(1, "• Apple", "• Apple", "\x00" * 7)],
     )
 
@@ -195,67 +195,67 @@ def test_structural_navigation_by_list_item(web_lists: NativeAppSession) -> None
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
-        ["i", "List with 3 items", "•  Apple"],
+        ["i", "List with 3 items", "• Apple"],
         [BrailleLine(1, "• Apple", "• Apple", "\x00" * 7)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
-        ["i", "•  Bread"],
+        ["i", "• Bread"],
         [BrailleLine(1, "• Bread", "• Bread", "\x00" * 7)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
-        ["i", "•  Cheese"],
+        ["i", "• Cheese"],
         [BrailleLine(1, "• Cheese", "• Cheese", "\x00" * 8)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
-        ["i", "leaving list.", "List with 3 items", "1.  Wash"],
+        ["i", "leaving list.", "List with 3 items", "1. Wash"],
         [BrailleLine(1, "1. Wash", "1. Wash", "\x00" * 7)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
-        ["i", "2.  Rinse"],
+        ["i", "2. Rinse"],
         [BrailleLine(1, "2. Rinse", "2. Rinse", "\x00" * 8)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
-        ["i", "3.  Dry"],
+        ["i", "3. Dry"],
         [BrailleLine(1, "3. Dry", "3. Dry", "\x00" * 6)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
-        ["i", "leaving list.", "List with 2 items", "•  Produce"],
+        ["i", "leaving list.", "List with 2 items", "• Produce"],
         [BrailleLine(1, "• Produce", "• Produce", "\x00" * 9)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
-        ["i", "List with 2 items Nesting level 1", "◦  Carrot"],
+        ["i", "List with 2 items Nesting level 1", "◦ Carrot"],
         [BrailleLine(1, "◦ Carrot", "◦ Carrot", "\x00" * 8)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
-        ["i", "◦  Onion"],
+        ["i", "◦ Onion"],
         [BrailleLine(1, "◦ Onion", "◦ Onion", "\x00" * 7)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
-        ["i", "leaving list.", "List with 2 items", "•  Dairy"],
+        ["i", "leaving list.", "List with 2 items", "• Dairy"],
         [BrailleLine(1, "• Dairy", "• Dairy", "\x00" * 7)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
-        ["i", "Wrapping to top.", "leaving list.", "List with 3 items", "•  Apple"],
+        ["i", "Wrapping to top.", "leaving list.", "List with 3 items", "• Apple"],
         [
             BrailleLine(0, "Wrapping to top.", "Wrapping to top.", "\x00" * 16),
             BrailleLine(1, "• Apple", "• Apple", "\x00" * 7),
@@ -266,7 +266,7 @@ def test_structural_navigation_by_list_item(web_lists: NativeAppSession) -> None
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
-        ["I", "Wrapping to bottom.", "List with 2 items", "•  Dairy"],
+        ["I", "Wrapping to bottom.", "List with 2 items", "• Dairy"],
         [
             BrailleLine(0, "Wrapping to bottom.", "Wrapping to bottom.", "\x00" * 19),
             BrailleLine(1, "• Dairy", "• Dairy", "\x00" * 7),
@@ -275,25 +275,25 @@ def test_structural_navigation_by_list_item(web_lists: NativeAppSession) -> None
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
-        ["I", "List with 2 items Nesting level 1", "◦  Onion"],
+        ["I", "List with 2 items Nesting level 1", "◦ Onion"],
         [BrailleLine(1, "◦ Onion", "◦ Onion", "\x00" * 7)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
-        ["I", "◦  Carrot"],
+        ["I", "◦ Carrot"],
         [BrailleLine(1, "◦ Carrot", "◦ Carrot", "\x00" * 8)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
-        ["I", "leaving list.", "•  Produce"],
+        ["I", "leaving list.", "• Produce"],
         [BrailleLine(1, "• Produce", "• Produce", "\x00" * 9)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_I)
     assert helpers.capture(session) == (
-        ["I", "leaving list.", "List with 3 items", "3.  Dry"],
+        ["I", "leaving list.", "List with 3 items", "3. Dry"],
         [BrailleLine(1, "3. Dry", "3. Dry", "\x00" * 6)],
     )
 
@@ -309,32 +309,22 @@ def test_say_all_lists(web_lists: NativeAppSession) -> None:
     assert helpers.speech(session) == [
         "Grocery lists",
         "List with 3 items",
-        "• ",
-        "Apple",
-        "• ",
-        "Bread",
-        "• ",
-        "Cheese",
+        "• Apple",
+        "• Bread",
+        "• Cheese",
         "leaving list.",
         "List with 3 items",
-        "1. ",
-        "Wash",
-        "2. ",
-        "Rinse",
-        "3. ",
-        "Dry",
+        "1. Wash",
+        "2. Rinse",
+        "3. Dry",
         "leaving list.",
         "List with 2 items",
-        "• ",
-        "Produce",
+        "• Produce",
         "List with 2 items",
         "Nesting level 1",
-        "◦ ",
-        "Carrot",
-        "◦ ",
-        "Onion",
+        "◦ Carrot",
+        "◦ Onion",
         "leaving list.",
         "List with 2 items",
-        "• ",
-        "Dairy",
+        "• Dairy",
     ]

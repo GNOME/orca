@@ -2038,6 +2038,58 @@ class SpeechGenerator(generator.Generator):
             announce_formatting,
         )
 
+    def _should_split_text_by_attributes(
+        self, obj: Atspi.Accessible, announce_formatting: bool
+    ) -> bool:
+        """Returns True if text must be walked by attribute run rather than spoken as a whole."""
+
+        if AXUtilities.is_terminal(obj):
+            # Terminals don't expose language or spelling/grammar attributes, so the only
+            # reason to split is to announce a formatting change.
+            return announce_formatting
+        if self._context is None:
+            return False
+        return (
+            announce_formatting
+            or self._context.speak_misspelled_indicator
+            or self._context.auto_language_switching_content
+        )
+
+    def _get_run_annotations(
+        self,
+        obj: Atspi.Accessible,
+        attr_runs: list[tuple[int, int, dict[str, str]]],
+        announce_formatting: bool,
+    ) -> list[list[Any]]:
+        """Returns the leading annotations to speak before each run's text."""
+
+        announce_spelling = self._context is not None and self._context.speak_misspelled_indicator
+        system_voice = self.voice(speechserver.VoiceType.SYSTEM)
+        annotations_per_run: list[list[Any]] = []
+        prev_had_spelling = False
+        prev_had_grammar = False
+        prev_attrs: dict[str, str] = {}
+        for i, (run_start, run_end, attrs) in enumerate(attr_runs):
+            annotations: list[Any] = []
+            if i > 0 and announce_formatting:
+                exclude = AXUtilities.get_redundant_text_attributes(obj, run_start, run_end)
+                for desc in self._get_attribute_change_descriptions(prev_attrs, attrs, exclude):
+                    annotations.extend([desc, *system_voice])
+            if announce_spelling:
+                has_spelling = AXUtilities.string_has_spelling_error(obj, run_start)
+                has_grammar = AXUtilities.string_has_grammar_error(obj, run_start)
+                if has_spelling and not prev_had_spelling:
+                    annotations.extend([messages.MISSPELLED, *system_voice])
+                elif has_grammar and not prev_had_grammar:
+                    annotations.extend(
+                        [object_properties.STATE_INVALID_GRAMMAR_SPEECH, *system_voice]
+                    )
+                prev_had_spelling = has_spelling
+                prev_had_grammar = has_grammar
+            prev_attrs = attrs
+            annotations_per_run.append(annotations)
+        return annotations_per_run
+
     def _generate_text_with_attribute_changes(
         self,
         obj: Atspi.Accessible,
@@ -2047,49 +2099,27 @@ class SpeechGenerator(generator.Generator):
     ) -> list[Any]:
         """Generates speech for a text range with inline attribute change annotations."""
 
-        # TODO - JD: braille.py also walks attribute runs for the same range to apply
-        # dot indicators. Investigate sharing the attribute-run data between speech and
-        # braille to avoid redundant AT-SPI queries.
-        result: list[Any] = []
         presenter = speech_presenter.get_presenter()
-        system_voice = self.voice(speechserver.VoiceType.SYSTEM)
-
-        # Terminals don't expose language or spelling/grammar text attributes, so when we
-        # aren't announcing formatting changes there's no need for the text attributes.
-        if not announce_formatting and AXUtilities.is_terminal(obj):
-            string = AXText.get_substring(obj, start_offset, end_offset)
+        if not self._should_split_text_by_attributes(obj, announce_formatting):
+            string = AXText.get_substring(obj, start_offset, end_offset).replace("\ufffc", "")
             if not string:
                 return []
             voice = self.voice(string=string, obj=obj)
             adjusted = presenter.adjust_for_presentation(obj, string, start_offset)
             return [adjusted, *voice] if adjusted else []
 
-        announce_spelling = self._context is not None and self._context.speak_misspelled_indicator
         attr_runs = AXUtilities.get_all_text_attributes(obj, start_offset, end_offset)
-        prev_had_spelling = False
-        prev_had_grammar = False
-        prev_attrs: dict[str, str] = {}
-        for i, (run_start, run_end, attrs) in enumerate(attr_runs):
-            if i > 0 and announce_formatting:
-                exclude = AXUtilities.get_redundant_text_attributes(obj, run_start, run_end)
-                for desc in self._get_attribute_change_descriptions(prev_attrs, attrs, exclude):
-                    result.extend([desc, *system_voice])
+        annotations_by_run = self._get_run_annotations(obj, attr_runs, announce_formatting)
 
-            if announce_spelling:
-                has_spelling = AXUtilities.string_has_spelling_error(obj, run_start)
-                has_grammar = AXUtilities.string_has_grammar_error(obj, run_start)
-                if has_spelling and not prev_had_spelling:
-                    result.extend([messages.MISSPELLED, *system_voice])
-                elif has_grammar and not prev_had_grammar:
-                    result.extend(
-                        [
-                            object_properties.STATE_INVALID_GRAMMAR_SPEECH,
-                            *system_voice,
-                        ]
-                    )
-                prev_had_spelling = has_spelling
-                prev_had_grammar = has_grammar
-            prev_attrs = attrs
+        result: list[Any] = []
+        # Language/dialect of the utterance still being built, or None to start a new one.
+        open_language_and_dialect: tuple[str, str] | None = None
+        for (run_start, run_end, attrs), run_annotations in zip(
+            attr_runs, annotations_by_run, strict=True
+        ):
+            if run_annotations:
+                result.extend(run_annotations)
+                open_language_and_dialect = None
 
             string = AXText.get_substring(obj, run_start, run_end).replace("\ufffc", "")
             if not string:
@@ -2099,14 +2129,18 @@ class SpeechGenerator(generator.Generator):
             dialect = ""
             if "-" in language:
                 language, dialect = language.split("-", 1)
-
-            voice = self.voice(string=string, obj=obj, language=language, dialect=dialect)
             adjusted = presenter.adjust_for_presentation(obj, string, run_start)
-            if adjusted:
-                # TODO - JD: speech.speak() has a bug which causes a list of utterances
-                # to be presented before a string+voice pair that comes first. Until we
-                # can fix speak() properly, we'll avoid triggering it here.
+            if not adjusted:
+                continue
+
+            # Nothing announced and same voice: append to the open run rather than start a new
+            # utterance, which speech.speak() would otherwise separate with a stray space.
+            if open_language_and_dialect == (language, dialect):
+                result[-2] += adjusted
+            else:
+                voice = self.voice(string=string, obj=obj, language=language, dialect=dialect)
                 result.extend([adjusted, *voice])
+                open_language_and_dialect = (language, dialect)
 
         return result
 

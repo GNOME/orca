@@ -44,7 +44,7 @@ _LINKS_MASK = _LINK * 9 + "\x00" * 5 + _LINK * 6 + "\x00" * 5 + _LINK * 9
 _LINKS_CONTRACTED = 'k & p = "*'
 _LINKS_CONTRACTED_MASK = _LINK + "\x00" * 3 + _LINK + "\x00" * 3 + _LINK * 2
 
-_FORMAT_SPEECH = ["a  knowledge  and  people  here"]
+_FORMAT_SPEECH = ["a knowledge and people here"]
 _FORMAT = "a knowledge and people here"
 _FORMAT_MASK = "\x00" * 2 + _ATTR * 9 + "\x00" * 5 + _ATTR * 6 + "\x00" * 5
 _FORMAT_CONTRACTED = 'a k & p "h'

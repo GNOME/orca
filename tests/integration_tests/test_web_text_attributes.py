@@ -62,7 +62,7 @@ def test_caret_navigation_top_to_bottom(web_text_attributes: NativeAppSession) -
         ["A ", "subscript", "lower", " word."],
         ["A ", "superscript", "higher", " word."],
         ["A ", "linked", "link", " word."],
-        ["Normal  heavy  then  slanted  then  lined  then normal."],
+        ["Normal heavy then slanted then lined then normal."],
     ):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         assert speech(session) == expected
@@ -95,7 +95,7 @@ def test_caret_navigation_top_to_bottom_layout_off(web_text_attributes: NativeAp
         ["A "],
         ["linked", "link"],
         [" word."],
-        ["Normal  heavy  then  slanted  then  lined  then normal."],
+        ["Normal heavy then slanted then lined then normal."],
     ):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         assert speech(session) == expected

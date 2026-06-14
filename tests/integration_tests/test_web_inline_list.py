@@ -46,9 +46,9 @@ def test_inline_list_items_share_a_line(web_inline_list: NativeAppSession) -> No
 
     # A block list is the contrast: each item is its own line.
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["leaving list.", "List with 2 items", "•  alpha"]
+    assert speech(session) == ["leaving list.", "List with 2 items", "• alpha"]
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["•  beta"]
+    assert speech(session) == ["• beta"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert speech(session) == ["leaving list.", "Tail paragraph."]
