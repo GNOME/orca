@@ -246,7 +246,7 @@ def test_structural_navigation_by_form_field(web_basic: NativeAppSession) -> Non
 
     keyboard.tap_key(keyboard.KEYSYM_F)
     assert capture(session) == (
-        ["f", "Pick a color", "panel", "Red color", "not selected radio button"],
+        ["f", "form", "Pick a color", "panel", "Red color", "not selected radio button"],
         [
             BrailleLine(
                 14,
@@ -503,7 +503,7 @@ def test_radio_group_in_focus_mode(web_basic: NativeAppSession) -> None:
 
     keyboard.tap_key(keyboard.KEYSYM_F)
     assert capture(session) == (
-        ["f", "Pick a color", "panel", "Red color", "not selected radio button"],
+        ["f", "form", "Pick a color", "panel", "Red color", "not selected radio button"],
         [
             BrailleLine(
                 14,
