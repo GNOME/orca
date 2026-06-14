@@ -12,6 +12,10 @@ function removeChildNode(parentId, childId) {
   var child = document.getElementById(childId);
   parent.removeChild(child);
 }
+function showIcon(id) {
+  document.getElementById(id).innerHTML =
+    '<svg width="20" height="20"><path d="M5 4 L15 10 L5 16 Z"></path></svg>';
+}
 </script>
 </head>
 <body>
@@ -31,5 +35,8 @@ function removeChildNode(parentId, childId) {
 
 <p><button type="button" onclick="removeChildNode('removal', 'removal-child')">Remove</button></p>
 <div id="removal" aria-live="polite"><span id="removal-child">Removable</span></div>
+
+<p><button type="button" onclick="showIcon('bezel')">Bezel</button></p>
+<div id="bezel" aria-live="polite" aria-atomic="true" aria-label="Play"></div>
 </body>
 </html>

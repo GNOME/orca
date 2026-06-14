@@ -69,6 +69,8 @@ _TOP_TO_BOTTOM = (
 
 
 _BOTTOM_TO_TOP = (
+    ["Bezel", "button"],
+    ["Removable"],
     ["Remove", "button"],
     ["status bar", "blank"],
     ["Status", "button"],
@@ -141,6 +143,23 @@ def test_status_role_live_region_is_announced(web_live_regions: NativeAppSession
 
     keyboard.tap_key(keyboard.KEYSYM_SPACE)
     assert speech(session, wait_async=True) == ["Status updated"]
+
+
+@pytest.mark.native_app
+def test_live_region_with_icon_content_is_announced_by_name(
+    web_live_regions: NativeAppSession,
+) -> None:
+    """Tests that an atomic live region whose only content is an icon is announced by its name."""
+
+    session = web_live_regions
+    reset_web_state(session)
+
+    for _ in range(6):
+        keyboard.tap_key(keyboard.KEYSYM_TAB)
+    assert speech(session) == ["Bezel", "button"]
+
+    keyboard.tap_key(keyboard.KEYSYM_SPACE)
+    assert speech(session, wait_async=True) == ["Play"]
 
 
 @pytest.mark.native_app

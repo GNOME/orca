@@ -647,10 +647,10 @@ class LiveRegionPresenter(Extension):
             content = script.utilities.expand_eocs(container)
 
         content = content.strip()
-        if not content:
-            return None
-
         name = AXObject.get_name(event.source).strip()
+        if not content:
+            return name or None
+
         if name and name != content:
             content = f"{name}. {content}"
         return content
