@@ -373,9 +373,8 @@ class EventManager:
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
-        if event_type.startswith("object:text-changed:insert") and (
-            AXUtilities.is_section(event.source, role)
-            or AXUtilities.is_status_bar(event.source, role)
+        if event_type.startswith("object:text-changed:insert") and AXUtilities.has_live_region_role(
+            event.source, role
         ):
             live = AXObject.get_attribute(event.source, "live")
             if live and live != "off":

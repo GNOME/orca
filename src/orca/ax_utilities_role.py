@@ -591,6 +591,32 @@ class AXUtilitiesRole:
         return Atspi.role_get_localized_name(role)
 
     @staticmethod
+    def has_live_region_role(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
+        """Returns True if obj has a role that is used for a live region."""
+
+        # Technically, any role can be a live region. But the work required to determine if an
+        # object is a presentable live region is not cheap: We need to obtain the object attributes
+        # and we cannot use a cached version because the aria-live value can change. And the reason
+        # we need to do this check is to prevent the event manager's spam filtering from treating
+        # these events as spam, i.e. during an event flood. Therefore, the list below can be
+        # updated on a case-by-case basis but should remain small.
+
+        if role is None:
+            role = AXObject.get_role(obj)
+
+        # Gecko maps the ARIA alert role to the alert role (a type of dialog) rather than to
+        # the notification role specified by the Core-AAM.
+        roles = [
+            Atspi.Role.ALERT,
+            Atspi.Role.LOG,
+            Atspi.Role.NOTIFICATION,
+            Atspi.Role.PARAGRAPH,
+            Atspi.Role.SECTION,
+            Atspi.Role.STATUS_BAR,
+        ]
+        return role in roles
+
+    @staticmethod
     def has_role_from_aria(obj: Atspi.Accessible) -> bool:
         """Returns True if obj's role comes from ARIA"""
 
