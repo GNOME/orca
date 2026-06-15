@@ -122,23 +122,15 @@ class Script(default.Script):
 
         return self._loading_content
 
-    def say_character(self, obj: Atspi.Accessible) -> None:
-        """Speaks the character at the current caret position."""
+    def say_character(self, obj: Atspi.Accessible, offset: int) -> None:
+        """Speaks the character at the specified offset."""
 
-        tokens = ["WEB: Say character for", obj]
+        tokens = ["WEB: Say character for", obj, "offset", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if not self.utilities.in_document_content(obj):
             msg = "WEB: Object is not in document content."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            super().say_character(obj)
-            return
-
-        document = self.utilities.get_top_level_document_for_object(obj)
-        obj, offset = self.utilities.get_caret_context(document=document)
-        tokens = ["WEB: Adjusted object and offset for say character to", obj, offset]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if not obj:
+            super().say_character(obj, offset)
             return
 
         contents: list[tuple[Atspi.Accessible, int, int, str]] | None = None
@@ -169,27 +161,19 @@ class Script(default.Script):
 
         AXUtilities.set_last_text_unit_spoken(TextUnit.CHAR)
 
-    def say_word(self, obj: Atspi.Accessible) -> None:
-        """Speaks the word at the current caret position."""
+    def say_word(self, obj: Atspi.Accessible, offset: int) -> None:
+        """Speaks the word at the specified offset."""
 
-        tokens = ["WEB: Say word for", obj]
+        tokens = ["WEB: Say word for", obj, "offset", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         if not self.utilities.in_document_content(obj):
             msg = "WEB: Object is not in document content."
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            super().say_word(obj)
+            super().say_word(obj, offset)
             return
 
-        document = self.utilities.get_top_level_document_for_object(obj)
-        obj, offset = self.utilities.get_caret_context(document=document)
         if input_event_manager.get_manager().last_event_was_right():
             offset -= 1
-
-        tokens = ["WEB: Adjusted object and offset for say word to", obj, offset]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if not obj:
-            return
 
         word_contents = self.utilities.get_word_contents_at_offset(obj, offset, use_cache=True)
         text_obj, start_offset, _end_offset, _word = word_contents[0]

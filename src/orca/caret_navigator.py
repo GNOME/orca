@@ -540,7 +540,7 @@ class CaretNavigator(Extension):
             return True
 
         script.update_braille(obj, offset=offset)
-        script.say_character(obj)
+        script.say_character(obj, offset)
         return True
 
     @dbus_service.command
@@ -569,7 +569,7 @@ class CaretNavigator(Extension):
             return True
 
         script.update_braille(obj, offset=offset)
-        script.say_character(obj)
+        script.say_character(obj, offset)
         return True
 
     @dbus_service.command
@@ -619,7 +619,7 @@ class CaretNavigator(Extension):
             return True
 
         script.update_braille(obj, offset=end)
-        script.say_word(obj)
+        script.say_word(obj, end)
         return True
 
     @dbus_service.command
@@ -658,7 +658,7 @@ class CaretNavigator(Extension):
             return True
 
         script.update_braille(obj, offset=start)
-        script.say_word(obj)
+        script.say_word(obj, start)
         return True
 
     @dbus_service.command
@@ -813,7 +813,7 @@ class CaretNavigator(Extension):
         if not notify_user or AXUtilities.is_math_related(obj):
             return True
 
-        script.say_character(obj)
+        script.say_character(obj, start)
         presentation_manager.get_manager().display_contents(line)
         return True
 
@@ -849,7 +849,7 @@ class CaretNavigator(Extension):
         if not notify_user or AXUtilities.is_math_related(obj):
             return True
 
-        script.say_character(obj)
+        script.say_character(obj, end)
         presentation_manager.get_manager().display_contents(line)
         return True
 

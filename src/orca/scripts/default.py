@@ -1573,14 +1573,16 @@ class Script(script.Script):
             self.say_line(obj, event.detail1)
             return True
 
-        navigation_handlers: dict[TextEventReason, Callable[[Atspi.Accessible], None]] = {
-            TextEventReason.NAVIGATION_BY_WORD: self.say_word,
-            TextEventReason.NAVIGATION_BY_CHARACTER: self.say_character,
-            TextEventReason.NAVIGATION_TO_LINE_BOUNDARY: self.say_character,
-        }
-        handler = navigation_handlers.get(reason)
-        if handler is not None:
-            handler(obj)
+        if reason == TextEventReason.NAVIGATION_BY_WORD:
+            self.say_word(obj, event.detail1)
+            return True
+
+        character_reasons = (
+            TextEventReason.NAVIGATION_BY_CHARACTER,
+            TextEventReason.NAVIGATION_TO_LINE_BOUNDARY,
+        )
+        if reason in character_reasons:
+            self.say_character(obj, event.detail1)
             return True
 
         if reason == TextEventReason.MOUSE_PRIMARY_BUTTON:
@@ -1590,14 +1592,8 @@ class Script(script.Script):
                 return True
         return False
 
-    def say_character(self, obj: Atspi.Accessible) -> None:
-        """Speak the character at the caret."""
-
-        context_obj, context_offset = self.utilities.get_caret_context(obj)
-        if context_obj == obj:
-            offset = context_offset
-        else:
-            offset = AXText.get_caret_offset(obj)
+    def say_character(self, obj: Atspi.Accessible, offset: int) -> None:
+        """Speak the character at the specified offset."""
 
         if input_event_manager.get_manager().last_event_was_forward_caret_selection():
             offset -= 1
@@ -1654,14 +1650,8 @@ class Script(script.Script):
         speech_presenter.get_presenter().speak_phrase(self, obj, start_offset, end_offset, phrase)
         AXUtilities.set_last_text_unit_spoken(TextUnit.PHRASE)
 
-    def say_word(self, obj: Atspi.Accessible) -> None:
-        """Speaks the word at the caret, taking into account the previous caret position."""
-
-        context_obj, context_offset = self.utilities.get_caret_context(obj)
-        if context_obj == obj:
-            offset = context_offset
-        else:
-            offset = AXText.get_caret_offset(obj)
+    def say_word(self, obj: Atspi.Accessible, offset: int) -> None:
+        """Speaks the word at the specified offset, taking into account the previous position."""
 
         word, start_offset, end_offset = self.utilities.get_word_at_offset_adjusted_for_navigation(
             obj,
