@@ -328,6 +328,8 @@ class PresentationManager:
         self,
         character: str,
         obj: Atspi.Accessible | None = None,
+        language: str = "",
+        dialect: str = "",
     ) -> None:
         """Speaks a single character."""
 
@@ -336,6 +338,8 @@ class PresentationManager:
             voice_from=character,
             cap_style=self._get_cap_style(character),
             obj=obj,
+            language=language,
+            dialect=dialect,
         )
 
     def speak_character_at_offset(

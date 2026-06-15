@@ -155,7 +155,10 @@ class Script(default.Script):
         presenter = presentation_manager.get_manager()
         if string:
             speech_pres.present_text_attribute_state(obj, start)
-            presenter.speak_character(string, obj=obj)
+            language, dialect = self.utilities.get_language_and_dialect_for_substring(
+                obj, start, start + 1
+            )
+            presenter.speak_character(string, obj=obj, language=language, dialect=dialect)
         else:
             presenter.speak_contents(contents)
 

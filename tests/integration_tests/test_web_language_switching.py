@@ -82,3 +82,53 @@ def test_arrowing_does_not_switch_voice_when_disabled(web_languages: NativeAppSe
 
     languages = {language for _, language in seen}
     assert len(languages) == 1, f"Expected one voice language across items, saw: {seen}"
+
+
+def _down_to_italiano(session: NativeAppSession) -> None:
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    for _ in range(5):  # English, Español, Français, Deutsch, Italiano
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+
+
+@pytest.mark.native_app
+def test_character_navigation_switches_voice_language(web_languages: NativeAppSession) -> None:
+    """Right-arrowing through a foreign-language item speaks each character in that language."""
+
+    session = web_languages
+    session.orca.set("SpeechManager", "AutoLanguageSwitching", True)
+    _down_to_italiano(session)
+
+    session.reader.reset()
+    keyboard.tap_key(keyboard.KEYSYM_RIGHT)  # leading space before the item text
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+
+    for char in "Italian":
+        session.reader.reset()
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+        record = session.reader.wait_for_speech(char, timeout=3.0)
+        assert record.language == "it", f"char {char!r}: expected 'it', got {record.language!r}"
+
+
+@pytest.mark.native_app
+def test_word_navigation_switches_voice_language(web_languages: NativeAppSession) -> None:
+    """Control+Right word navigation speaks each word in its item's language."""
+
+    session = web_languages
+    session.orca.set("SpeechManager", "AutoLanguageSwitching", True)
+    _down_to_italiano(session)
+
+    session.reader.reset()
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+    record = session.reader.wait_for_speech("Italiano", timeout=3.0)
+    assert record.language == "it", f"expected 'it', got {record.language!r}"
+
+    session.reader.reset()
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)  # bullet of next item
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+
+    session.reader.reset()
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+    record = session.reader.wait_for_speech("Português", timeout=3.0)
+    assert record.language == "pt", f"expected 'pt', got {record.language!r}"
