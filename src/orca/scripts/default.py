@@ -1611,8 +1611,6 @@ class Script(script.Script):
 
         if offset is None:
             offset = AXText.get_caret_offset(obj)
-        else:
-            AXUtilities.set_caret_offset_with_reason(obj, offset, CaretSetReason.LINE_PRESENTATION)
 
         line, start_offset = AXText.get_line_at_offset(obj, offset)[0:2]
         if line and line != "\n":

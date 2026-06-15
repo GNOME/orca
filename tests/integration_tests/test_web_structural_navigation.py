@@ -184,13 +184,13 @@ def test_table_container_start_and_end(web_structural_navigation: NativeAppSessi
         ["<", "Name", "column header", "Age", "column header", "column 2"],
         [
             BrailleLine(1, "Ada", "Ada", "\x00" * 3),
-            BrailleLine(0, "Name Age", "Name Age", "\x00" * 8),
+            BrailleLine(1, "Name Age", "Name Age", "\x00" * 8),
         ],
     )
 
     assert _container_end(session) == (
         [",", "leaving table.", "First link", "link"],
-        [BrailleLine(0, "First link", "First link", "\xc0" * 10)],
+        [BrailleLine(1, "First link", "First link", "\xc0" * 10)],
     )
 
 
@@ -215,7 +215,7 @@ def test_blockquote_container_start_and_end(web_structural_navigation: NativeApp
 
     assert _container_end(session) == (
         [",", "leaving blockquote.", "Save", "button"],
-        [BrailleLine(0, "Save button", "Save button", "\x00" * 11)],
+        [BrailleLine(1, "Save button", "Save button", "\x00" * 11)],
     )
 
 

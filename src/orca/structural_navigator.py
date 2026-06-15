@@ -940,19 +940,22 @@ class StructuralNavigator(Extension):
             presenter.say_all(script, event=None, obj=obj, offset=offset)
             return
 
+        prior_obj = manager.get_locus_of_focus()
         manager.emit_region_changed(obj, offset, mode=focus_manager.STRUCTURAL_NAVIGATOR)
+        contents = script.utilities.get_line_contents_at_offset(obj, offset or 0)
+        if contents and contents[0] and AXObject.supports_text(contents[0][0]):
+            script.utilities.set_caret_position(
+                contents[0][0], contents[0][1], reason=CaretSetReason.STRUCTURAL_NAVIGATION
+            )
         if not notify_user:
             msg = "STRUCTURAL NAVIGATOR: _present_line called with notify_user=False"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             manager.set_locus_of_focus(None, obj, False)
-            if AXObject.supports_text(obj):
-                script.utilities.set_caret_position(
-                    obj, offset or 0, reason=CaretSetReason.STRUCTURAL_NAVIGATION
-                )
             return
 
-        script.update_braille(obj, offset)
-        script.say_line(obj, offset)
+        pres_manager = presentation_manager.get_manager()
+        pres_manager.speak_contents(contents, prior_obj=prior_obj)
+        pres_manager.display_contents(contents)
 
     def _present_object(
         self,
@@ -1929,12 +1932,8 @@ class StructuralNavigator(Extension):
         )
 
     def _get_first_item(self, obj: Atspi.Accessible) -> Atspi.Accessible | None:
-        # The reason we present the item (or first child) rather than the full list are twofold:
-        # 1. Given a huge list, navigating to the item and presenting the ancestor list is more
-        #    performant.
-        # 2. When we calculate what's on the same line, it should be based on the item's bounding
-        #    box; not the list's.
-        # TODO - JD: Handle the second issue in the utilities which calculate the line.
+        # Given a huge list, navigating to the item and presenting the ancestor list is more
+        # performant.
         return AXObject.get_child(obj, 0)
 
     @dbus_service.command
@@ -2234,12 +2233,8 @@ class StructuralNavigator(Extension):
         return AXUtilities.find_all_tables(root, pred=pred)
 
     def _get_first_table_cell(self, table: Atspi.Accessible) -> Atspi.Accessible | None:
-        # The reason we present the cell rather than the full table are twofold:
-        # 1. Given a huge table, navigating to the cell and presenting the ancestor table is more
-        #    performant.
-        # 2. When we calculate what's on the same line, it should be based on the cell's bounding
-        #    box; not the table's.
-        # TODO - JD: Handle the second issue in the utilities which calculate the line.
+        # Given a huge table, navigating to the cell and presenting the ancestor table is more
+        # performant.
         if not AXUtilities.is_table(table):
             return None
 

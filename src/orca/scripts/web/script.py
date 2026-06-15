@@ -216,16 +216,6 @@ class Script(default.Script):
             tokens = ["WEB: Adjusted object and offset for say line to", obj, offset]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        contents = self.utilities.get_line_contents_at_offset(obj, offset, use_cache=True)
-        if (
-            contents
-            and contents[0]
-            and not document_presenter.get_presenter().in_focus_mode(self.app)
-        ):
-            self.utilities.set_caret_position(
-                contents[0][0], contents[0][1], reason=CaretSetReason.LINE_PRESENTATION
-            )
-
         line, start_offset = AXText.get_line_at_offset(obj, offset)[0:2]
         speech_presenter.get_presenter().speak_line(
             self,
