@@ -1365,7 +1365,7 @@ class Script(script.Script):
         if reason == TextEventReason.SEARCH_PRESENTABLE:
             msg = "DEFAULT: Presenting line believed to be search match"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self.say_line(event.source)
+            self.say_line(event.source, AXText.get_caret_offset(event.source))
             AXUtilities.update_cached_selected_text(event.source)
             return True
         if reason == TextEventReason.SEARCH_UNPRESENTABLE:
@@ -1563,13 +1563,19 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
+        line_reasons = (
+            TextEventReason.NAVIGATION_BY_LINE,
+            TextEventReason.NAVIGATION_BY_PAGE,
+            TextEventReason.NAVIGATION_TO_FILE_BOUNDARY,
+        )
+        if reason in line_reasons:
+            self.say_line(obj, event.detail1)
+            return True
+
         navigation_handlers: dict[TextEventReason, Callable[[Atspi.Accessible], None]] = {
-            TextEventReason.NAVIGATION_BY_LINE: self.say_line,
             TextEventReason.NAVIGATION_BY_WORD: self.say_word,
             TextEventReason.NAVIGATION_BY_CHARACTER: self.say_character,
-            TextEventReason.NAVIGATION_BY_PAGE: self.say_line,
             TextEventReason.NAVIGATION_TO_LINE_BOUNDARY: self.say_character,
-            TextEventReason.NAVIGATION_TO_FILE_BOUNDARY: self.say_line,
         }
         handler = navigation_handlers.get(reason)
         if handler is not None:
@@ -1579,7 +1585,7 @@ class Script(script.Script):
         if reason == TextEventReason.MOUSE_PRIMARY_BUTTON:
             text, _start, _end = AXUtilities.get_cached_selected_text(event.source)
             if not text:
-                self.say_line(obj)
+                self.say_line(obj, event.detail1)
                 return True
         return False
 
@@ -1606,11 +1612,8 @@ class Script(script.Script):
         presentation_manager.get_manager().speak_character_at_offset(obj, offset, character)
         AXUtilities.set_last_text_unit_spoken(TextUnit.CHAR)
 
-    def say_line(self, obj: Atspi.Accessible, offset: int | None = None) -> None:
-        """Speaks the line at the current or specified offset."""
-
-        if offset is None:
-            offset = AXText.get_caret_offset(obj)
+    def say_line(self, obj: Atspi.Accessible, offset: int) -> None:
+        """Speaks the line at the specified offset."""
 
         line, start_offset = AXText.get_line_at_offset(obj, offset)[0:2]
         if line and line != "\n":
