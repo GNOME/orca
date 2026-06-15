@@ -2305,10 +2305,11 @@ class SpeechPresenter(Extension):
             return ""
 
         msg = ""
-        if AXUtilities.string_has_spelling_error(obj, offset):
+        attributes = AXText.get_text_attributes_at_offset(obj, offset)[0]
+        if AXUtilities.attributes_indicate_spelling_error(attributes):
             # TODO - JD: We're using the message here to preserve existing behavior.
             msg = messages.MISSPELLED
-        elif AXUtilities.string_has_grammar_error(obj, offset):
+        elif AXUtilities.attributes_indicate_grammar_error(attributes):
             msg = object_properties.STATE_INVALID_GRAMMAR_SPEECH
 
         if only_if_changed and msg == self._last_error_description:

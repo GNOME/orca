@@ -1681,6 +1681,10 @@ class AXUtilities:
         clip_rect: Atspi.Rect,
     ) -> tuple[str, int, int]: ...
     @staticmethod
+    def attributes_indicate_spelling_error(attributes: dict[str, str]) -> bool: ...
+    @staticmethod
+    def attributes_indicate_grammar_error(attributes: dict[str, str]) -> bool: ...
+    @staticmethod
     def string_has_spelling_error(
         obj: Atspi.Accessible,
         offset: int | None = None,

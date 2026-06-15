@@ -1010,8 +1010,8 @@ class Utilities(script_utilities.Utilities):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return "", 0, 1
 
-        all_text = AXText.get_all_text(obj)
         if granularity is None:
+            all_text = AXText.get_all_text(obj)
             string, start, end = all_text, 0, len(all_text)
             s = string_for_debug(string)
             tokens = [
@@ -1026,6 +1026,7 @@ class Utilities(script_utilities.Utilities):
             return string, start, end
 
         if granularity == Atspi.TextGranularity.SENTENCE and not AXUtilities.is_editable(obj):
+            all_text = AXText.get_all_text(obj)
             if AXObject.get_role(obj) in [Atspi.Role.LIST_ITEM, Atspi.Role.HEADING] or not (
                 re.search(r"\w", all_text) and self.is_text_block_element(obj)
             ):
@@ -2310,8 +2311,7 @@ class Utilities(script_utilities.Utilities):
 
         # Check for single-char lines.
         is_single_chars = True
-        for i in range(n_chars):
-            char = AXText.get_character_at_offset(obj, i)[0]
+        for i, char in enumerate(string):
             if char.isspace() or char in ["\ufffc", "\ufffd"]:
                 continue
             line_string = AXText.get_line_at_offset(obj, i)[0]

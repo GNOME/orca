@@ -1218,10 +1218,9 @@ class AXUtilitiesText:
         return result
 
     @staticmethod
-    def string_has_spelling_error(obj: Atspi.Accessible, offset: int | None = None) -> bool:
-        """Returns True if the text attributes indicate a spelling error."""
+    def attributes_indicate_spelling_error(attributes: dict[str, str]) -> bool:
+        """Returns True if the given text attributes indicate a spelling error."""
 
-        attributes = AXText.get_text_attributes_at_offset(obj, offset)[0]
         if attributes.get("invalid") == "spelling":
             return True
         if attributes.get("invalid") == "grammar":
@@ -1231,13 +1230,26 @@ class AXUtilitiesText:
         return attributes.get("underline") in ["error", "spelling"]
 
     @staticmethod
+    def attributes_indicate_grammar_error(attributes: dict[str, str]) -> bool:
+        """Returns True if the given text attributes indicate a grammar error."""
+
+        if attributes.get("invalid") == "grammar":
+            return True
+        return attributes.get("underline") == "grammar"
+
+    @staticmethod
+    def string_has_spelling_error(obj: Atspi.Accessible, offset: int | None = None) -> bool:
+        """Returns True if the text attributes indicate a spelling error."""
+
+        attributes = AXText.get_text_attributes_at_offset(obj, offset)[0]
+        return AXUtilitiesText.attributes_indicate_spelling_error(attributes)
+
+    @staticmethod
     def string_has_grammar_error(obj: Atspi.Accessible, offset: int | None = None) -> bool:
         """Returns True if the text attributes indicate a grammar error."""
 
         attributes = AXText.get_text_attributes_at_offset(obj, offset)[0]
-        if attributes.get("invalid") == "grammar":
-            return True
-        return attributes.get("underline") == "grammar"
+        return AXUtilitiesText.attributes_indicate_grammar_error(attributes)
 
     @staticmethod
     def is_eoc(character: str) -> bool:

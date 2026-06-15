@@ -146,8 +146,8 @@ class TestSpeechGeneratorMisspelledIndicator:
         ax_utilities.get_all_text_attributes = test_context.Mock(
             return_value=[(0, 3, {"language": "en-us"})]
         )
-        ax_utilities.string_has_spelling_error = test_context.Mock(return_value=True)
-        ax_utilities.string_has_grammar_error = test_context.Mock(return_value=False)
+        ax_utilities.attributes_indicate_spelling_error = test_context.Mock(return_value=True)
+        ax_utilities.attributes_indicate_grammar_error = test_context.Mock(return_value=False)
         essential_modules["orca.ax_utilities"].AXUtilities = ax_utilities
 
         essential_modules["orca.ax_text"].AXText.get_substring = test_context.Mock(

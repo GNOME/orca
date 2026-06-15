@@ -1243,8 +1243,8 @@ class _AccessibleTextRegion(Region):
                 mask = INDICATOR_NONE
                 offset = end_offset
                 if check_spelling and (
-                    AXUtilities.string_has_spelling_error(self.accessible, start_offset)
-                    or AXUtilities.string_has_grammar_error(self.accessible, start_offset)
+                    AXUtilities.attributes_indicate_spelling_error(attributes)
+                    or AXUtilities.attributes_indicate_grammar_error(attributes)
                 ):
                     mask = attr_indicator
                 else:

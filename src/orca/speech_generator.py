@@ -2076,8 +2076,8 @@ class SpeechGenerator(generator.Generator):
                 for desc in self._get_attribute_change_descriptions(prev_attrs, attrs, exclude):
                     annotations.extend([desc, *system_voice])
             if announce_spelling:
-                has_spelling = AXUtilities.string_has_spelling_error(obj, run_start)
-                has_grammar = AXUtilities.string_has_grammar_error(obj, run_start)
+                has_spelling = AXUtilities.attributes_indicate_spelling_error(attrs)
+                has_grammar = AXUtilities.attributes_indicate_grammar_error(attrs)
                 if has_spelling and not prev_had_spelling:
                     annotations.extend([messages.MISSPELLED, *system_voice])
                 elif has_grammar and not prev_had_grammar:

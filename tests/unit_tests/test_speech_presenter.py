@@ -102,14 +102,17 @@ class TestSpeechPresenter:
         ax_text_mock = essential_modules["orca.ax_text"]
         ax_text_mock.AXText = test_context.Mock()
         ax_text_mock.AXText.get_character_at_offset = test_context.Mock(return_value=("a", 0))
+        ax_text_mock.AXText.get_text_attributes_at_offset = test_context.Mock(
+            return_value=({}, 0, 1),
+        )
 
         ax_utilities_mock = essential_modules["orca.ax_utilities"]
         ax_utilities_mock.AXUtilities = test_context.Mock()
         ax_utilities_mock.AXUtilities.find_ancestor_inclusive = test_context.Mock(return_value=None)
-        ax_utilities_mock.AXUtilities.string_has_spelling_error = test_context.Mock(
+        ax_utilities_mock.AXUtilities.attributes_indicate_spelling_error = test_context.Mock(
             return_value=False,
         )
-        ax_utilities_mock.AXUtilities.string_has_grammar_error = test_context.Mock(
+        ax_utilities_mock.AXUtilities.attributes_indicate_grammar_error = test_context.Mock(
             return_value=False,
         )
         ax_utilities_mock.AXUtilities.get_table = test_context.Mock(return_value=None)
@@ -464,10 +467,10 @@ class TestSpeechPresenter:
         ax_text_mock = essential_modules["orca.ax_text"]
         ax_text_mock.AXText.get_character_at_offset = test_context.Mock(return_value=("a", 0))
         ax_utilities_mock = essential_modules["orca.ax_utilities"]
-        ax_utilities_mock.AXUtilities.string_has_spelling_error = test_context.Mock(
+        ax_utilities_mock.AXUtilities.attributes_indicate_spelling_error = test_context.Mock(
             return_value=True,
         )
-        ax_utilities_mock.AXUtilities.string_has_grammar_error = test_context.Mock(
+        ax_utilities_mock.AXUtilities.attributes_indicate_grammar_error = test_context.Mock(
             return_value=False,
         )
 
