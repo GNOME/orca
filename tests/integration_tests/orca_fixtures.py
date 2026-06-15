@@ -457,6 +457,8 @@ def _make_plain_text_fixture(page: str) -> Callable[..., Iterator[NativeAppSessi
 _web_basic = _make_web_fixture("web_basic.html")
 _web_plain_text = _make_plain_text_fixture("web_plain_text.txt")
 _web_languages = _make_web_fixture("web_languages.html")
+_web_line_breaks = _make_web_fixture("web_line_breaks.html", caret_browsing=True)
+_web_cssed_brokenness = _make_web_fixture("web_cssed_brokenness.html")
 _web_tables = _make_web_fixture("web_tables.html")
 _web_form_fields = _make_web_fixture("web_form_fields.html")
 _web_landmarks = _make_web_fixture("web_landmarks.html")

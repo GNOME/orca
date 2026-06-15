@@ -922,6 +922,7 @@ class Script(script.Script):
             navigation_reasons = {
                 TextEventReason.NAVIGATION_BY_WORD,
                 TextEventReason.NAVIGATION_BY_CHARACTER,
+                TextEventReason.NAVIGATION_BY_LINE,
             }
             if reason not in navigation_reasons:
                 msg = "DEFAULT: Event is for last saved cursor position"

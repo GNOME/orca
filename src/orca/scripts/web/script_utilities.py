@@ -2292,6 +2292,14 @@ class Utilities(script_utilities.Utilities):
             self._cache.set_for_object(self._cache.LINES_ARE_SINGLE_CHARS, obj, False)
             return
 
+        # An actual newline is a genuine hard line break (e.g. from a br element) whose
+        # per-line structure must be honored. The CSSed-into-brokenness text we are trying
+        # to detect is given to us a word/char at a time without any real line breaks.
+        if "\n" in string:
+            self._cache.set_for_object(self._cache.LINES_ARE_SINGLE_WORDS, obj, False)
+            self._cache.set_for_object(self._cache.LINES_ARE_SINGLE_CHARS, obj, False)
+            return
+
         # Note: We cannot check for the editable-text interface, because Gecko
         # seems to be exposing that for non-editable things. Thanks Gecko.
         is_editable = AXUtilities.is_editable(obj) or AXUtilities.is_text_input(obj)

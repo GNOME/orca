@@ -125,6 +125,8 @@ orca_integration_tests = [
   'integration_tests/test_web_autocomplete.py',
   'integration_tests/test_web_dynamic_content.py',
   'integration_tests/test_web_caret_context.py',
+  'integration_tests/test_web_cssed_brokenness.py',
+  'integration_tests/test_web_line_breaks.py',
   'integration_tests/test_web_page_up_down.py',
   'integration_tests/test_web_same_page_links.py',
   'integration_tests/test_web_image_link.py',
