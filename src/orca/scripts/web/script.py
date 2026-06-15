@@ -199,28 +199,6 @@ class Script(default.Script):
         speech_pres.speak_word(self, obj, offset)
         AXUtilities.set_last_text_unit_spoken(TextUnit.WORD)
 
-    def say_line(self, obj: Atspi.Accessible, offset: int) -> None:
-        """Speaks the line at the specified offset."""
-
-        tokens = ["WEB: Say line for", obj]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        if not self.utilities.in_document_content(obj):
-            msg = "WEB: Object is not in document content."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            super().say_line(obj, offset)
-            return
-
-        line, start_offset = AXText.get_line_at_offset(obj, offset)[0:2]
-        speech_presenter.get_presenter().speak_line(
-            self,
-            obj,
-            start_offset,
-            start_offset + len(line),
-            line,
-        )
-
-        AXUtilities.set_last_text_unit_spoken(TextUnit.LINE)
-
     def present_object(
         self,
         obj: Atspi.Accessible,
