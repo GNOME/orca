@@ -1826,6 +1826,15 @@ class SpeechManager(Extension):
 
         return ACSS(voice)
 
+    def get_voice_set_voice(self, voice_type: str, voice_set: str) -> ACSS:
+        """Returns the set's voice for voice_type, falling back to the set's default voice."""
+
+        for vtype in (voice_type, speechserver.VoiceType.DEFAULT):
+            config = self.get_voice_properties(vtype, voice_set=voice_set)
+            if config and config.get(self.KEY_ESTABLISHED):
+                return config
+        return ACSS({})
+
     def _get_voice_set_properties(self, voice_type: str, voice_set: str) -> ACSS:
         """Returns voice properties for a non-primary voice set."""
 

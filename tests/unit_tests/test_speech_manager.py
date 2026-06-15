@@ -754,6 +754,39 @@ class TestSpeechManager:
         assert result is True
         mock_server.set_output_module.assert_called_once_with("espeak")
 
+    def test_get_voice_set_voice_falls_back_to_set_default(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test get_voice_set_voice uses the set's default when the type isn't configured."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        essential_modules["orca.acss"].ACSS = dict
+        essential_modules["orca.speechserver"].VoiceType.DEFAULT = "default"
+        from orca.speech_manager import SpeechManager
+
+        manager = SpeechManager()
+        established: dict[str, dict] = {
+            "default": {"established": True, "family": {"name": "luca"}}
+        }
+
+        def fake_get_voice_properties(
+            voice_type: str = "", app_name=None, voice_set: str = ""
+        ) -> dict:
+            return established.get(voice_type, {})
+
+        test_context.patch_object(
+            manager, "get_voice_properties", side_effect=fake_get_voice_properties
+        )
+
+        established["hyperlink"] = {"established": True, "family": {"name": "alicia"}}
+        assert manager.get_voice_set_voice("hyperlink", "it")["family"]["name"] == "alicia"
+
+        del established["hyperlink"]
+        assert manager.get_voice_set_voice("hyperlink", "it")["family"]["name"] == "luca"
+
+        established.clear()
+        assert not manager.get_voice_set_voice("hyperlink", "it")
+
     @pytest.mark.parametrize(
         "case",
         [

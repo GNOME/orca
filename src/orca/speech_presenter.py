@@ -2686,8 +2686,10 @@ class SpeechPresenter(Extension):
             return voice
 
         voice_type = voice.pop(ACSS.VOICE_TYPE, speechserver.VoiceType.DEFAULT)
-        config = mgr.get_voice_properties(voice_type, voice_set=language)
-        if not config or not config.get("established"):
+        # A set with no voice for this type uses its own default voice, not the
+        # synthesizer's default for the language.
+        config = mgr.get_voice_set_voice(voice_type, language)
+        if not config:
             return voice
 
         msg = f"SPEECH PRESENTER: Applying voice set overrides for {language} ({voice_type})"
