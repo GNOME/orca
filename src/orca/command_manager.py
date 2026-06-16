@@ -211,6 +211,8 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._original_keyboard_layout_is_desktop = get_manager().get_keyboard_layout_is_desktop()
         # set_keyboard_layout_is_desktop() already applied the overrides and updated the grabs.
         self._populate_keybindings()
+        if self._current_category and self._current_category in self._categories:
+            self._populate_category_detail(self._current_category)
         self._modified_keybindings.clear()
         self._has_unsaved_changes = False
         self.refresh()
@@ -910,6 +912,8 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         for category_commands in self._categories.values():
             for cmd in category_commands:
                 handler_name = cmd.get_name()
+                if get_manager().get_keyboard_command(handler_name) is None:
+                    continue
                 if handler_name in self._modified_keybindings:
                     current_kb = self._modified_keybindings[handler_name]
                 else:
@@ -1453,6 +1457,13 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
 
         elif isinstance(command, BrailleCommand):
             self._braille_commands[command.get_name()] = command
+
+    def remove_command(self, command_name: str) -> None:
+        """Removes a keyboard command from the registry and its key indexes."""
+
+        command = self._keyboard_commands.pop(command_name, None)
+        if command is not None:
+            self._remove_from_key_index(command)
 
     def get_command(self, command_name: str) -> Command | None:
         """Returns the command with the specified name, or None."""

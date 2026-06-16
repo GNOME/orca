@@ -517,6 +517,44 @@ class TestCommandManager:
 
         assert manager.get_keyboard_command("nonexistent") is None
 
+    def test_remove_command_clears_registry_and_key_index(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test remove_command drops a bound command from the registry and the key index."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import CommandManager, KeyboardCommand
+
+        manager = CommandManager()
+
+        function = self._create_mock_function(test_context)
+        kb = self._create_mock_keybinding(test_context)
+        kb.matches.return_value = True
+        kb.modifiers = 4
+        kb.click_count = 1
+
+        cmd = KeyboardCommand("cmd", function, "Test Group", desktop_keybinding=kb)
+        cmd.set_keybinding(kb)
+        manager.add_command(cmd)
+
+        event = test_context.Mock()
+        event.get_click_count.return_value = 1
+        event.id = 65
+        event.hw_code = 38
+        event.modifiers = 4
+        event.is_keypad_key_with_numlock_on.return_value = False
+
+        assert manager.get_keyboard_command("cmd") == cmd
+        assert manager.get_command_for_event(event) == cmd
+
+        manager.remove_command("cmd")
+
+        assert manager.get_keyboard_command("cmd") is None
+        assert manager.get_command_for_event(event) is None
+
+        # Removing an unknown command is a no-op rather than an error.
+        manager.remove_command("cmd")
+
     def test_get_all_keyboard_commands(self, test_context: OrcaTestContext) -> None:
         """Test CommandManager.get_all_keyboard_commands."""
 
