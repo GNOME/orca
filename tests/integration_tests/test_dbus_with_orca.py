@@ -28,6 +28,7 @@
 
 from __future__ import annotations
 
+import contextlib
 import os
 from typing import TYPE_CHECKING, Any
 
@@ -1287,7 +1288,10 @@ class TestOrcaDBusIntegration:
                         "error": str(error),
                     }
                 new_value = get_property(bus, module_name, prop_name)
-                set_property(bus, module_name, prop_name, to_variant(current_value, sig))
+                # Restoring the original is best-effort: a value that was readable isn't guaranteed
+                # to be settable (e.g. a synthesizer the active server doesn't offer).
+                with contextlib.suppress(DBusError):
+                    set_property(bus, module_name, prop_name, to_variant(current_value, sig))
                 return {
                     "success": True,
                     "original_value": current_value,
