@@ -715,7 +715,7 @@ class TestSayAllPresenter:
 
         self._setup_dependencies(test_context)
         from orca import focus_manager as fm
-        from orca import input_event_manager, speechserver
+        from orca import input_event_manager, speechserver, structural_navigator
         from orca.ax_text import AXText
         from orca.say_all_presenter import SayAllPresenter
 
@@ -740,7 +740,14 @@ class TestSayAllPresenter:
         iem_instance.last_event_was_keyboard.return_value = True
         iem_instance.last_event_was_down.return_value = False
         iem_instance.last_event_was_up.return_value = False
+        iem_instance.last_event_was_caret_navigation.return_value = False
         test_context.patch_object(input_event_manager, "get_manager", return_value=iem_instance)
+
+        navigator_instance = test_context.Mock()
+        navigator_instance.last_input_event_was_navigation_command.return_value = False
+        test_context.patch_object(
+            structural_navigator, "get_navigator", return_value=navigator_instance
+        )
 
         presenter._progress_callback(mock_context, speechserver.SayAllContext.INTERRUPTED)
 
@@ -751,6 +758,57 @@ class TestSayAllPresenter:
             None,
             fm.FOCUS_TRACKING,
         )
+
+    @pytest.mark.parametrize(
+        "caret_navigation, structural_navigation",
+        [
+            pytest.param(True, False, id="caret_navigation"),
+            pytest.param(False, True, id="structural_navigation"),
+        ],
+    )
+    def test_progress_callback_navigation_interrupt_ends_say_all(
+        self,
+        test_context: OrcaTestContext,
+        caret_navigation: bool,
+        structural_navigation: bool,
+    ) -> None:
+        """Test that a navigation command interrupting Say All ends it without re-presenting."""
+
+        self._setup_dependencies(test_context)
+        from orca import focus_manager as fm
+        from orca import input_event_manager, speechserver, structural_navigator
+        from orca.say_all_presenter import SayAllPresenter
+
+        presenter = SayAllPresenter()
+        presenter._script = test_context.Mock()
+
+        mock_context = test_context.Mock(spec=speechserver.SayAllContext)
+        mock_context.obj = test_context.Mock()
+        mock_context.current_offset = 5
+        mock_context.current_end_offset = 10
+
+        focus_instance = test_context.Mock()
+        test_context.patch_object(fm, "get_manager", return_value=focus_instance)
+
+        iem_instance = test_context.Mock()
+        iem_instance.last_event_was_keyboard.return_value = True
+        iem_instance.last_event_was_down.return_value = False
+        iem_instance.last_event_was_up.return_value = False
+        iem_instance.last_event_was_caret_navigation.return_value = caret_navigation
+        test_context.patch_object(input_event_manager, "get_manager", return_value=iem_instance)
+
+        navigator_instance = test_context.Mock()
+        navigator_instance.last_input_event_was_navigation_command.return_value = (
+            structural_navigation
+        )
+        test_context.patch_object(
+            structural_navigator, "get_navigator", return_value=navigator_instance
+        )
+
+        presenter._progress_callback(mock_context, speechserver.SayAllContext.INTERRUPTED)
+
+        assert presenter._say_all_is_running is False
+        focus_instance.emit_region_changed.assert_not_called()
 
     @pytest.mark.parametrize(
         "end_offset, expected_next_context_offset",
