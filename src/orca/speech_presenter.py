@@ -2861,6 +2861,10 @@ class SpeechPresenter(Extension):
         active_mode, _obj = mgr.get_active_mode_and_object_of_interest()
         speech_mgr = speech_manager.get_manager()
 
+        # Automatic language switching only applies while the global voice set is active,
+        # regardless of the setting.
+        auto_switch = speech_mgr.get_active_voice_set() == gsettings_registry.PRIMARY_VOICE_SET
+
         return SpeechGeneratorContext(
             enabled=speech_mgr.get_speech_is_enabled(),
             verbose=self.use_verbose_speech(),
@@ -2883,10 +2887,11 @@ class SpeechPresenter(Extension):
             role_subject=None,
             include_context=True,
             in_preferences_window=mgr.is_in_preferences_window(),
-            auto_language_switching_content=speech_mgr.get_auto_language_switching(),
+            auto_language_switching_content=speech_mgr.get_auto_language_switching()
+            and auto_switch,
             only_switch_configured_languages=speech_mgr.get_only_switch_configured_languages(),
             voice_set_languages=tuple(speech_mgr.get_voice_set_names()),
-            auto_language_switching_ui=speech_mgr.get_auto_language_switching_ui(),
+            auto_language_switching_ui=speech_mgr.get_auto_language_switching_ui() and auto_switch,
             insert_pauses_between_utterances=speech_mgr.get_insert_pauses_between_utterances(),
             punctuation_level=speech_mgr.get_punctuation_level(),
             voices={vt: speech_mgr.get_voice_properties(vt) for vt in speechserver.VoiceType},

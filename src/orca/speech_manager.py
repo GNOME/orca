@@ -1842,23 +1842,26 @@ class SpeechManager(Extension):
         return base
 
     def apply_voice_set(self, voice: ACSS) -> ACSS:
-        """Overlays the voice set matching the voice's language, if one is configured."""
+        """Overlays the active voice set, or the set matching the voice's language."""
 
-        family = voice.get(ACSS.FAMILY)
-        if not family:
-            return voice
-
-        lang = family.get(speechserver.VoiceFamily.LANG, "")
-        if not lang:
-            return voice
-
-        dialect = family.get(speechserver.VoiceFamily.DIALECT, "")
-        voice_set = f"{lang}-{dialect}".lower() if dialect else lang.lower()
-        voice_set_names = self.get_voice_set_names()
-        if voice_set not in voice_set_names:
-            voice_set = lang.lower()
-        if voice_set not in voice_set_names:
-            return voice
+        if self._active_voice_set != gsettings_registry.PRIMARY_VOICE_SET:
+            # A command loaded a set manually; it overrides every voice type.
+            voice_set = self._active_voice_set
+        else:
+            # Otherwise follow the voice's own language (automatic switching).
+            family = voice.get(ACSS.FAMILY)
+            if not family:
+                return voice
+            lang = family.get(speechserver.VoiceFamily.LANG, "")
+            if not lang:
+                return voice
+            dialect = family.get(speechserver.VoiceFamily.DIALECT, "")
+            voice_set = f"{lang}-{dialect}".lower() if dialect else lang.lower()
+            voice_set_names = self.get_voice_set_names()
+            if voice_set not in voice_set_names:
+                voice_set = lang.lower()
+            if voice_set not in voice_set_names:
+                return voice
 
         voice_type = voice.pop(ACSS.VOICE_TYPE, speechserver.VoiceType.DEFAULT)
         config = self.get_voice_set_voice(voice_type, voice_set)
@@ -1868,6 +1871,11 @@ class SpeechManager(Extension):
         tokens = ["SPEECH MANAGER: Applying voice set", voice_set, "for", voice_type]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self.apply_voice_overrides(voice, config)
+
+    def get_active_voice_set(self) -> str:
+        """Returns the name of the active voice set used for speech output."""
+
+        return self._active_voice_set
 
     def _get_voice_set_properties(self, voice_type: str, voice_set: str) -> ACSS:
         """Returns voice properties for a non-primary voice set."""
@@ -1960,6 +1968,7 @@ class SpeechManager(Extension):
         self._families_sorted: bool = False
         self._mute_speech: bool = False
         self._server: SpeechServer | None = None
+        self._active_voice_set: str = gsettings_registry.PRIMARY_VOICE_SET
         super().__init__()
 
     def _get_commands(self) -> list[Command]:
