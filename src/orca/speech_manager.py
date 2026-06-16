@@ -1595,7 +1595,7 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             if lc.lower() == target:
                 voice_lang_combo.set_active(i)
                 break
-            if partial_match < 0 and lc.lower() == target.split("-")[0]:
+            if partial_match < 0 and lc.lower().split("-")[0] == target.split("-")[0]:
                 partial_match = i
         else:
             if partial_match >= 0:
