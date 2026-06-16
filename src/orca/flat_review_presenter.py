@@ -1875,7 +1875,7 @@ class FlatReviewPresenter(Extension):
         return FocusTracking.AUTO.value
 
     @dbus_service.setter
-    def set_focus_tracking(self, value: UInt32) -> UInt32:
+    def set_focus_tracking(self, value: UInt32) -> bool:
         """Sets the flat review focus-tracking mode."""
 
         msg = f"FLAT REVIEW PRESENTER: Setting focus-tracking to {value}."
@@ -1884,7 +1884,7 @@ class FlatReviewPresenter(Extension):
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_FOCUS_TRACKING, mode.name.lower()
         )
-        return value
+        return True
 
     @dbus_service.command
     def toggle_restrict(

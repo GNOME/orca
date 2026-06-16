@@ -208,6 +208,40 @@ class TestDBusService:
         assert hasattr(set_rate, "dbus_setter_description")
         assert set_rate.dbus_setter_description == "Sets the current speech rate."
 
+    def test_property_setter_raises_when_setter_reports_failure(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test the property write accessor errors when the wrapped setter returns False."""
+
+        self._setup_dependencies(test_context)
+        from orca import dbus_service
+
+        def succeed(_value):
+            return True
+
+        def reject(_value):
+            return False
+
+        dbus_service._InterfaceBuilder._make_property_setter(succeed)(None, "value")
+
+        write_reject = dbus_service._InterfaceBuilder._make_property_setter(reject)
+        with pytest.raises(_MockDBusError):
+            write_reject(None, "value")
+
+    def test_property_setter_rejects_non_bool_return_annotation(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test the property write accessor refuses a setter not annotated to return bool."""
+
+        self._setup_dependencies(test_context)
+        from orca import dbus_service
+
+        def returns_int(_value) -> int:
+            return 1
+
+        with pytest.raises(TypeError):
+            dbus_service._InterfaceBuilder._make_property_setter(returns_int)
+
     def test_multiple_decorators_on_module(self, test_context: OrcaTestContext) -> None:
         """Test multiple decorators on module."""
 

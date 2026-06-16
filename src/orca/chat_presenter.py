@@ -721,7 +721,7 @@ class ChatPresenter(Extension):
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_SPEAK_ROOM_NAME, value
         )
-        return value
+        return True
 
     @gsettings_registry.get_registry().gsetting(
         key=KEY_ANNOUNCE_BUDDY_TYPING,
@@ -746,7 +746,7 @@ class ChatPresenter(Extension):
             self.KEY_ANNOUNCE_BUDDY_TYPING,
             value,
         )
-        return value
+        return True
 
     @gsettings_registry.get_registry().gsetting(
         key=KEY_ROOM_HISTORIES,
@@ -769,7 +769,7 @@ class ChatPresenter(Extension):
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_ROOM_HISTORIES, value
         )
-        return value
+        return True
 
     @gsettings_registry.get_registry().gsetting(
         key=KEY_MESSAGE_VERBOSITY,
@@ -800,7 +800,7 @@ class ChatPresenter(Extension):
         return 0
 
     @dbus_service.setter
-    def set_message_verbosity(self, value: UInt32) -> UInt32:
+    def set_message_verbosity(self, value: UInt32) -> bool:
         """Sets the chat message verbosity setting."""
 
         gsettings_registry.get_registry().set_runtime_value(
@@ -808,7 +808,7 @@ class ChatPresenter(Extension):
             self.KEY_MESSAGE_VERBOSITY,
             value,
         )
-        return value
+        return True
 
     @gsettings_registry.get_registry().gsetting(
         key=KEY_SPEAK_ROOM_NAME_LAST,
@@ -833,7 +833,7 @@ class ChatPresenter(Extension):
             self.KEY_SPEAK_ROOM_NAME_LAST,
             value,
         )
-        return value
+        return True
 
     @dbus_service.command
     def toggle_prefix(

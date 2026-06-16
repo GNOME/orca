@@ -1272,19 +1272,28 @@ class TestOrcaDBusIntegration:
         def test_single_property(prop_name, is_setter=False):
             try:
                 current_value = get_property(bus, module_name, prop_name)
-                if is_setter:
-                    test_value = get_test_value(bus, prop_name, current_value)
-                    sig = property_signature(iface_xml, prop_name)
+                if not is_setter:
+                    return {"success": True, "value": current_value}
+                test_value = get_test_value(bus, prop_name, current_value)
+                sig = property_signature(iface_xml, prop_name)
+                try:
                     set_property(bus, module_name, prop_name, to_variant(test_value, sig))
-                    new_value = get_property(bus, module_name, prop_name)
-                    set_property(bus, module_name, prop_name, to_variant(current_value, sig))
+                except DBusError as error:
+                    # A setter that rejects a value (validation) is acceptable, not a failure.
                     return {
                         "success": True,
-                        "original_value": current_value,
+                        "rejected": True,
                         "test_value": test_value,
-                        "actual_new_value": new_value,
+                        "error": str(error),
                     }
-                return {"success": True, "value": current_value}
+                new_value = get_property(bus, module_name, prop_name)
+                set_property(bus, module_name, prop_name, to_variant(current_value, sig))
+                return {
+                    "success": True,
+                    "original_value": current_value,
+                    "test_value": test_value,
+                    "actual_new_value": new_value,
+                }
             except (DBusError, AttributeError, TypeError, ValueError) as error:
                 return {"success": False, "error": str(error)}
 
@@ -1326,7 +1335,11 @@ class TestOrcaDBusIntegration:
                 print("    Setter tests:")
                 for prop_key, res in setter_results.items():
                     prop = prop_key[4:]
-                    if res["success"]:
+                    if res.get("rejected"):
+                        print(
+                            f"      - {prop}: rejected test value {res['test_value']!r} (validated)"
+                        )
+                    elif res["success"]:
                         original = res["original_value"]
                         test_val = res["test_value"]
                         actual = res["actual_new_value"]

@@ -590,13 +590,19 @@ class _InterfaceBuilder:
         """Builds the write accessor for a D-Bus property, wrapping the original @setter method."""
 
         set_sig = cls._resolved_signature(set_method)
+        return_annotation = set_sig.return_annotation
+        if return_annotation not in (bool, inspect.Signature.empty):
+            raise TypeError(
+                f"D-Bus setter {set_method.__name__!r} must return bool, not {return_annotation!r}"
+            )
         value_param = next(param for name, param in set_sig.parameters.items() if name != "self")
         value_type = cls._strip_optional(value_param.annotation)
         if value_type is inspect.Signature.empty:
             value_type = bool
 
         def write(_self, value, _original=set_method):
-            _original(value)
+            if _original(value) is False:
+                raise DBusError(f"{_original.__name__} rejected value {value!r}")
 
         write.__signature__ = inspect.Signature(  # type: ignore[attr-defined]
             [
