@@ -445,10 +445,13 @@ class Script(script.Script):
                 self.update_braille(new_focus)
                 return True
 
-        # If we got here because the focused object's name changed, treat the new
-        # content as a fresh presentation: don't pass the same obj as prior_obj,
-        # which would cause the generators to suppress the content.
-        prior = None if (is_name_change and old_focus == new_focus) else old_focus
+        # A name change on the focused object usually means only its value changed (e.g.
+        # arrowing a combo box); keep old_focus as prior_obj so we don't re-speak the
+        # ancestor context. Reused table rows (e.g. Thunderbird message deletion) are the
+        # exception: present those in full.
+        prior = old_focus
+        if is_name_change and old_focus == new_focus and AXUtilities.is_table_row(new_focus):
+            prior = None
         manager.present_object(self, new_focus, prior_obj=prior)
         return True
 
