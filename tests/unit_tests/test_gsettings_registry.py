@@ -147,6 +147,19 @@ class TestActiveState:
         assert gsettings_registry.get_registry().get_active_app() == "Firefox"
         gsettings_registry.get_registry().set_active_app(None)
 
+    def test_set_active_profile_notifies_observers(self, test_context: OrcaTestContext) -> None:
+        """Test set_active_profile invokes registered profile-change observers."""
+
+        self._setup(test_context)
+        from orca import gsettings_registry
+
+        calls = []
+        registry = gsettings_registry.get_registry()
+        registry.add_profile_change_observer(calls.append)
+        registry.set_active_profile("spanish")
+        registry.set_active_profile("default")
+        assert calls == ["spanish", "default"]
+
     def test_set_active_app_empty_string_becomes_none(self, test_context: OrcaTestContext) -> None:
         """Test set_active_app treats empty string as None."""
 

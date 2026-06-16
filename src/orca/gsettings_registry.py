@@ -144,6 +144,7 @@ class GSettingsRegistry:
         self._runtime_values: dict[tuple[str, str, str | None], Any] = {}
         self._ignore_runtime: bool = False
         self._cache = _GSettingsRegistryCache()
+        self._profile_change_observers: list[Callable[[str], None]] = []
 
     def clear_value_cache(self) -> None:
         """Clears the cached GSettings lookup values."""
@@ -416,11 +417,18 @@ class GSettingsRegistry:
         self._app_name = app_name or None
         self.clear_value_cache()
 
+    def add_profile_change_observer(self, observer: Callable[[str], None]) -> None:
+        """Registers a callback invoked with the new profile name after the profile changes."""
+
+        self._profile_change_observers.append(observer)
+
     def set_active_profile(self, profile: str) -> None:
         """Sets the active profile for GSettings lookups."""
 
         self._profile = profile
         self.clear_value_cache()
+        for observer in self._profile_change_observers:
+            observer(profile)
 
     def get_active_app(self) -> str | None:
         """Returns the active app name for GSettings lookups."""
