@@ -717,15 +717,18 @@ class SayAllPresenter(Extension):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             manager = input_event_manager.get_manager()
             if manager.last_event_was_keyboard():
-                if manager.last_event_was_down() and self._fast_forward(context):
-                    return
-                if manager.last_event_was_up() and self._rewind(context):
+                if manager.last_event_was_caret_navigation():
+                    if manager.last_event_was_down() and self._fast_forward(context):
+                        return
+                    if manager.last_event_was_up() and self._rewind(context):
+                        return
+                    self._say_all_is_running = False
                     return
                 navigator = structural_navigator.get_navigator()
-                if (
-                    self.get_structural_navigation_enabled()
-                    and navigator.last_input_event_was_navigation_command()
-                ):
+                if navigator.last_input_event_was_navigation_command():
+                    if self.get_structural_navigation_enabled():
+                        return
+                    self._say_all_is_running = False
                     return
                 presentation_manager.get_manager().interrupt_presentation()
                 AXUtilities.set_caret_offset_with_reason(
