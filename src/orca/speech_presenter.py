@@ -2664,46 +2664,6 @@ class SpeechPresenter(Extension):
             return ACSS(acss)
         return ACSS({})
 
-    def _apply_voice_set_overrides(self, voice: ACSS) -> ACSS:
-        """Applies voice set overrides if a matching set exists for the voice's language."""
-
-        family = voice.get(ACSS.FAMILY)
-        if not family:
-            return voice
-
-        lang = family.get(VoiceFamily.LANG, "")
-        if not lang:
-            return voice
-
-        dialect = family.get(VoiceFamily.DIALECT, "")
-        language = f"{lang}-{dialect}".lower() if dialect else lang.lower()
-
-        mgr = speech_manager.get_manager()
-        voice_set_names = mgr.get_voice_set_names()
-        if language not in voice_set_names:
-            language = lang.lower()
-        if language not in voice_set_names:
-            return voice
-
-        voice_type = voice.pop(ACSS.VOICE_TYPE, speechserver.VoiceType.DEFAULT)
-        # A set with no voice for this type uses its own default voice, not the
-        # synthesizer's default for the language.
-        config = mgr.get_voice_set_voice(voice_type, language)
-        if not config:
-            return voice
-
-        msg = f"SPEECH PRESENTER: Applying voice set overrides for {language} ({voice_type})"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        if ACSS.FAMILY in config:
-            family.update(config[ACSS.FAMILY])
-            voice[ACSS.FAMILY] = family
-        for prop in (ACSS.RATE, ACSS.AVERAGE_PITCH, ACSS.PITCH_RANGE, ACSS.GAIN):
-            if prop in config:
-                voice[prop] = config[prop]
-
-        return voice
-
     def _speak_single(self, text: str, acss: ACSS | dict[str, Any] | None) -> None:
         """Speaks an individual string using the given ACSS."""
 
@@ -2713,7 +2673,7 @@ class SpeechPresenter(Extension):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return
 
-        resolved_voice = self._apply_voice_set_overrides(self._resolve_acss(acss))
+        resolved_voice = speech_manager.get_manager().apply_voice_set(self._resolve_acss(acss))
         msg = f"SPEECH OUTPUT: '{text}' {resolved_voice}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         server.speak(text, resolved_voice)
@@ -3139,7 +3099,9 @@ class SpeechPresenter(Extension):
 
         def _with_monitor(iterator: Any) -> Any:
             for context, acss in iterator:
-                resolved_voice = self._apply_voice_set_overrides(self._resolve_acss(acss))
+                resolved_voice = speech_manager.get_manager().apply_voice_set(
+                    self._resolve_acss(acss)
+                )
                 self._record_speech(context.utterance, resolved_voice)
                 self.write_to_monitor(context.utterance)
                 yield context, resolved_voice
@@ -3169,7 +3131,9 @@ class SpeechPresenter(Extension):
         voice = self._get_voice(
             text=voice_from or character, obj=obj, language=language, dialect=dialect
         )
-        acss = self._apply_voice_set_overrides(self._resolve_acss(voice[0] if voice else None))
+        acss = speech_manager.get_manager().apply_voice_set(
+            self._resolve_acss(voice[0] if voice else None)
+        )
         msg = f"SPEECH OUTPUT: '{character}'"
         tokens = [msg, acss]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)

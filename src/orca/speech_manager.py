@@ -1825,6 +1825,50 @@ class SpeechManager(Extension):
                 return config
         return ACSS({})
 
+    @staticmethod
+    def apply_voice_overrides(base: ACSS, override: ACSS) -> ACSS:
+        """Overlays family and prosody from override onto base, returning the merged ACSS."""
+
+        tokens = ["SPEECH MANAGER: Applying voice overrides:", override, "onto:", base]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        if ACSS.FAMILY in override:
+            family = dict(base.get(ACSS.FAMILY, {}))
+            family.update(override[ACSS.FAMILY])
+            base[ACSS.FAMILY] = family
+        for prop in (ACSS.RATE, ACSS.AVERAGE_PITCH, ACSS.PITCH_RANGE, ACSS.GAIN):
+            if prop in override:
+                base[prop] = override[prop]
+        return base
+
+    def apply_voice_set(self, voice: ACSS) -> ACSS:
+        """Overlays the voice set matching the voice's language, if one is configured."""
+
+        family = voice.get(ACSS.FAMILY)
+        if not family:
+            return voice
+
+        lang = family.get(speechserver.VoiceFamily.LANG, "")
+        if not lang:
+            return voice
+
+        dialect = family.get(speechserver.VoiceFamily.DIALECT, "")
+        voice_set = f"{lang}-{dialect}".lower() if dialect else lang.lower()
+        voice_set_names = self.get_voice_set_names()
+        if voice_set not in voice_set_names:
+            voice_set = lang.lower()
+        if voice_set not in voice_set_names:
+            return voice
+
+        voice_type = voice.pop(ACSS.VOICE_TYPE, speechserver.VoiceType.DEFAULT)
+        config = self.get_voice_set_voice(voice_type, voice_set)
+        if not config:
+            return voice
+
+        tokens = ["SPEECH MANAGER: Applying voice set", voice_set, "for", voice_type]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return self.apply_voice_overrides(voice, config)
+
     def _get_voice_set_properties(self, voice_type: str, voice_set: str) -> ACSS:
         """Returns voice properties for a non-primary voice set."""
 
