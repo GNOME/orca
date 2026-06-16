@@ -30,7 +30,6 @@
 from __future__ import annotations
 
 import importlib
-import locale
 import os
 from typing import TYPE_CHECKING, Any
 
@@ -47,6 +46,7 @@ from . import (
     guilabels,
     input_event,
     keybindings,
+    language_utilities,
     messages,
     preferences_grid_base,
     presentation_manager,
@@ -726,7 +726,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 language = lang
 
             display = (
-                self._get_language_display_name(lang, dialect) if language else "default language"
+                language_utilities.get_language_display_name(lang, dialect)
+                if language
+                else "default language"
             )
             languages.append(language)
             model.append([display])
@@ -747,11 +749,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             else:
                 saved_language = lang
         elif voice_type == speechserver.VoiceType.DEFAULT:
-            family_locale, _encoding = locale.getlocale(locale.LC_MESSAGES)
-            if family_locale:
-                locale_parts = family_locale.split("_")
-                lang = locale_parts[0]
-                dialect = locale_parts[1] if len(locale_parts) > 1 else ""
+            lang, dialect = language_utilities.get_current_language_and_dialect()
+            if lang:
                 saved_language = f"{lang}-{dialect}" if dialect else lang
 
         if saved_language:
@@ -1239,11 +1238,11 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             dialect = family.get(speechserver.VoiceFamily.DIALECT, "")
             if not lang or (lang, dialect) in done:
                 continue
-            if dialect and not self._is_standard_locale(lang, dialect):
+            if dialect and not language_utilities.is_standard_locale(lang, dialect):
                 continue
             done.add((lang, dialect))
             code = f"{lang}-{dialect}" if dialect else lang
-            display = self._get_language_display_name(lang, dialect)
+            display = language_utilities.get_language_display_name(lang, dialect)
             languages.append((code, display))
         return sorted(languages, key=lambda x: x[1])
 
@@ -1275,7 +1274,7 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             lang = primary_family.get(speechserver.VoiceFamily.LANG, "")
             dialect = primary_family.get(speechserver.VoiceFamily.DIALECT, "")
             if lang:
-                primary_lang_display = self._get_language_display_name(lang, dialect)
+                primary_lang_display = language_utilities.get_language_display_name(lang, dialect)
         if primary_lang_display:
             primary_label = f"{self._PRIMARY_LABEL}: {primary_lang_display}"
         else:
@@ -1284,7 +1283,9 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         names = set(self._manager.get_voice_set_names())
         names.update(self._staged_configs.keys())
         names -= self._deleted_sets
-        items.extend((name, self._get_language_display_name(name)) for name in sorted(names))
+        items.extend(
+            (name, language_utilities.get_language_display_name(name)) for name in sorted(names)
+        )
         return items
 
     def _build(self) -> None:
@@ -1401,30 +1402,19 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         languages: dict[str, str] = {}
         seen_display_names: set[str] = set()
-        for alias_key in locale.locale_alias:
-            stripped = alias_key.split(".")[0].split("@")[0]
-            parts = stripped.split("_")
-            lang = parts[0].lower()
-            if len(lang) != 2 or not lang.isalpha():
+        for lang, dialect in language_utilities.get_known_language_codes():
+            code = f"{lang}-{dialect}" if dialect else lang
+            if code in existing or code in languages:
                 continue
-
-            region = parts[1] if len(parts) > 1 and len(parts[1]) >= 2 else ""
-            codes_to_try = [(lang, "")]
-            if region:
-                codes_to_try.append((f"{lang}-{region}", region))
-
-            for code, dialect in codes_to_try:
-                if code in existing or code in languages:
-                    continue
-                display = self._get_language_display_name(lang, dialect)
-                if display == code:
-                    continue
-                if dialect and not self._is_standard_locale(lang, dialect):
-                    continue
-                if display in seen_display_names:
-                    continue
-                seen_display_names.add(display)
-                languages[code] = display
+            display = language_utilities.get_language_display_name(lang, dialect)
+            if display == code:
+                continue
+            if dialect and not language_utilities.is_standard_locale(lang, dialect):
+                continue
+            if display in seen_display_names:
+                continue
+            seen_display_names.add(display)
+            languages[code] = display
 
         return sorted(languages.items(), key=lambda x: x[1])
 
@@ -1483,7 +1473,7 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             message_type=Gtk.MessageType.WARNING,
             buttons=Gtk.ButtonsType.YES_NO,
             text=guilabels.VOICE_SET_DELETE_CONFIRMATION
-            % self._get_language_display_name(voice_set),
+            % language_utilities.get_language_display_name(voice_set),
         )
         response = dialog.run()
         dialog.destroy()
@@ -1521,7 +1511,7 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         """Show a dialog for editing a voice type within a language voice set."""
 
         label = guilabels.VOICE_TYPE_LABELS.get(voice_type, voice_type)
-        voice_set_display = self._get_language_display_name(voice_set)
+        voice_set_display = language_utilities.get_language_display_name(voice_set)
         title = f"{label} ({voice_set_display})"
 
         staged = self._staged_configs.get(voice_set, {}).get(voice_type)

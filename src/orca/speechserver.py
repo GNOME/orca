@@ -27,11 +27,10 @@
 
 from __future__ import annotations
 
-import locale
 from enum import Enum, StrEnum
 from typing import TYPE_CHECKING, Any
 
-from . import debug, gsettings_registry, guilabels
+from . import debug, gsettings_registry, guilabels, language_utilities
 from .acss import ACSS
 from .ax_utilities_debugging import AXUtilitiesDebugging
 
@@ -254,11 +253,10 @@ class SpeechServer:
     ) -> str:
         """Returns the default language string based on the current locale and available voices."""
 
-        current_locale = locale.getlocale(locale.LC_MESSAGES)[0]
-        if current_locale is None or "_" not in current_locale:
+        locale_lang, locale_dialect = language_utilities.get_current_language_and_dialect()
+        if not locale_dialect:
             return ""
 
-        locale_lang, locale_dialect = current_locale.split("_")
         locale_language = f"{locale_lang}-{locale_dialect}"
         for _name, lang, _variant in voices:
             if lang == locale_language:
@@ -506,14 +504,7 @@ class SpeechServer:
         dialect = acss_family.get(VoiceFamily.DIALECT)
 
         if not language:
-            family_locale, _encoding = locale.getlocale()
-
-            language, dialect = "", ""
-            if family_locale:
-                locale_values = family_locale.split("_")
-                language = locale_values[0]
-                if len(locale_values) == 2:
-                    dialect = locale_values[1]
+            language, dialect = language_utilities.get_current_language_and_dialect()
 
         return str(language), str(dialect)
 

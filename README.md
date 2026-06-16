@@ -32,7 +32,8 @@ Orca has the following dependencies:
 * pygobject-3.0: Python bindings for the GObject library
 * gtk+-3.0: GTK+ toolkit
 * at-spi2-core 2.58.6 or newer, built with Python support
-* python3-babel: Babel support for localized language display names (optional)
+* python3-babel: Babel support for localized language display names (strongly encouraged).
+  Without Babel, languages in Orca's UI will be displayed as codes rather than names.
 * python3-brlapi: BrlAPI (<https://mielke.cc/brltty/>) support for braille (optional)
 * python3-dasbus: Dasbus (<https://dasbus.readthedocs.io/>) support for remote control of Orca
 * python3-louis: Liblouis (<https://liblouis.io/>) support for contracted braille (optional)
@@ -40,6 +41,9 @@ Orca has the following dependencies:
 * python3-setproctitle: Python library to set the process title (optional)
 * python3-speechd: Python bindings for Speech Dispatcher (optional)
 * gstreamer-1.0: GStreamer - Streaming media framework (optional)
+* cargo: Used to build MathCAT (<https://daisy.github.io/MathCAT/>) for MathML support.
+  MathCAT is built by default, so cargo is required unless you opt out by
+  passing `-Dmathcat=false` to `meson setup`.
 * libwnck3: Used for mouse review in X11 (optional, deprecated)
 
 You are strongly encouraged to also have the latest stable versions

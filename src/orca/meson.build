@@ -116,6 +116,7 @@ lib_sources = [
   'keybindings.py',
   'keynames.py',
   'label_inference.py',
+  'language_utilities.py',
   'learn_mode_presenter.py',
   'live_region_presenter.py',
   'math_navigator.py',

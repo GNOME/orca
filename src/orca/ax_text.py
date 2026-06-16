@@ -38,7 +38,14 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi, GLib
 
-from . import colornames, debug, messages, object_properties, text_attribute_names
+from . import (
+    colornames,
+    debug,
+    language_utilities,
+    messages,
+    object_properties,
+    text_attribute_names,
+)
 from .ax_object import AXObject
 from .ax_utilities_role import AXUtilitiesRole
 from .ax_utilities_state import AXUtilitiesState
@@ -187,8 +194,7 @@ class AXTextAttribute(enum.Enum):
         if self == AXTextAttribute.WEIGHT:
             return value == "400"
         if self == AXTextAttribute.LANGUAGE:
-            loc = locale.getlocale()[0] or ""
-            return value == loc[:2]
+            return value == language_utilities.get_current_language()
 
         return False
 

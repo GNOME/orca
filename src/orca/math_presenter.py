@@ -25,7 +25,6 @@
 from __future__ import annotations
 
 import contextlib
-import locale
 import os
 from enum import Enum
 from typing import TYPE_CHECKING
@@ -35,6 +34,7 @@ from . import (  # pylint: disable=no-name-in-module
     debug,
     gsettings_registry,
     guilabels,
+    language_utilities,
     orca_platform,
     preferences_grid_base,
 )
@@ -272,9 +272,8 @@ class MathPresenter(Extension):
         if lang and lang != "Auto":
             return lang
 
-        system_locale = locale.getlocale()[0]
-        if system_locale:
-            return system_locale.split("_")[0]
+        if language := language_utilities.get_current_language():
+            return language
 
         return "en"
 
@@ -355,7 +354,7 @@ class MathPresenter(Extension):
             self._SCHEMA, self.KEY_LANGUAGE, value, "s"
         )
         if self._available:
-            lang_code = value if value != "Auto" else (locale.getlocale()[0] or "").split("_")[0]
+            lang_code = value if value != "Auto" else language_utilities.get_current_language()
             libmathcat_py.SetPreference("Language", lang_code)
         return True
 

@@ -30,7 +30,6 @@
 
 from __future__ import annotations
 
-import locale
 import os
 import queue
 import re
@@ -41,7 +40,7 @@ from typing import TYPE_CHECKING, Any, cast
 
 from gi.repository import GLib
 
-from . import debug, script_manager, systemd, text_attribute_manager
+from . import debug, language_utilities, script_manager, systemd, text_attribute_manager
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
@@ -863,16 +862,15 @@ def _finish_brlapi_connection(
 def _get_default_table() -> str:
     """Returns the default braille translation table for the current locale."""
 
-    user_locale = locale.getlocale(locale.LC_MESSAGES)[0]
-    user_locale_tokens = ["BRAILLE: User locale is", user_locale]
-    debug.print_tokens(debug.LEVEL_INFO, user_locale_tokens, True)
-
-    if not user_locale or user_locale == "C":
+    lang, dialect = language_utilities.get_current_language_and_dialect()
+    if not lang:
         msg = "BRAILLE: Locale cannot be determined. Falling back on 'en-us'"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         language = "en-us"
     else:
-        language = "-".join(user_locale.split("_")).lower()
+        language = f"{lang}-{dialect}".lower() if dialect else lang.lower()
+        tokens = ["BRAILLE: Default braille language is", language]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
     try:
         tables = [x for x in os.listdir(tablesdir) if x[-4:] in (".utb", ".ctb")]
