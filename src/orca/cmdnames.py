@@ -528,6 +528,12 @@ CYCLE_PUNCTUATION_LEVEL = _("Cycle to the next speaking of punctuation level")
 # is the description of the command.
 CYCLE_SYNTHESIZER = _("Cycle to the next speech synthesizer")
 
+# Translators: Orca can hold several "voice sets": collections of voices, such as
+# one set per language. This command switches the voice Orca speaks with to the
+# named set. The "%s" is replaced with the name of the set, e.g. a language name
+# or "Global" for the user's primary set.
+SWITCH_VOICE_SET = _("Switch voice to: %s")
+
 # Translators: Orca has a feature whereby users can set up different "profiles,"
 # which are collection of settings which apply to a given task, such as a
 # "Spanish" profile which would use Spanish text-to-speech and Spanish braille

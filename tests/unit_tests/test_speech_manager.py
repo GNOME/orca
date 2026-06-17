@@ -102,6 +102,12 @@ class TestSpeechManager:
         dbus_service_mock.command = passthrough_decorator
         dbus_service_mock.parameterized_command = passthrough_decorator
 
+        cmdnames_mock = essential_modules["orca.cmdnames"]
+        cmdnames_mock.SWITCH_VOICE_SET = "Switch voice to: %s"
+
+        guilabels_mock = essential_modules["orca.guilabels"]
+        guilabels_mock.VOICE_SET_GLOBAL = "Global"
+
         debug_mock = essential_modules["orca.debug"]
         debug_mock.print_message.return_value = None
         debug_mock.print_tokens.return_value = None
@@ -170,6 +176,31 @@ class TestSpeechManager:
         assert cmd_manager.get_command("cycleCapitalizationStyleHandler") is not None
         assert cmd_manager.get_command("cycleSpeakingPunctuationLevelHandler") is not None
         assert cmd_manager.get_command("cycleSynthesizerHandler") is not None
+
+        primary_switch = cmd_manager.get_command("switch-voice-set-primary")
+        assert primary_switch is not None
+        assert primary_switch.get_description() == "Switch voice to: Global"
+
+    def test_refresh_voice_set_commands(self, test_context: OrcaTestContext) -> None:
+        """Test refresh_voice_set_commands adds new sets and drops deleted ones."""
+
+        self._setup_dependencies(test_context)
+        from orca import command_manager
+        from orca.speech_manager import SpeechManager
+
+        manager = SpeechManager()
+        test_context.patch_object(manager, "get_voice_set_names", return_value=["es"])
+        manager.set_up_commands()
+
+        cmd_manager = command_manager.get_manager()
+        assert cmd_manager.get_command("switch-voice-set-es") is not None
+
+        test_context.patch_object(manager, "get_voice_set_names", return_value=["it"])
+        manager.refresh_voice_set_commands()
+
+        assert cmd_manager.get_command("switch-voice-set-primary") is not None
+        assert cmd_manager.get_command("switch-voice-set-it") is not None
+        assert cmd_manager.get_command("switch-voice-set-es") is None
 
     @pytest.mark.parametrize(
         "case",

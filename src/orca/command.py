@@ -58,6 +58,7 @@ class Command:
         description: str = "",
         enabled: bool = True,
         suspended: bool = False,
+        transient: bool = False,
     ) -> None:
         """Initializes a command."""
 
@@ -67,6 +68,7 @@ class Command:
         self._description = description
         self._enabled = enabled
         self._suspended = suspended
+        self._transient = transient
 
     def __str__(self) -> str:
         """Returns a string representation of the command."""
@@ -126,6 +128,16 @@ class Command:
 
         self._suspended = suspended
 
+    def is_transient(self) -> bool:
+        """Returns True if this command can come and go, so it sorts last for display."""
+
+        return self._transient
+
+    def set_transient(self, transient: bool) -> None:
+        """Sets whether this command can come and go, so it sorts last for display."""
+
+        self._transient = transient
+
     def execute(self, script: default.Script, event: input_event.InputEvent | None = None) -> bool:
         """Executes this command's function and returns True if handled."""
 
@@ -147,10 +159,11 @@ class KeyboardCommand(Command):  # pylint: disable=too-many-instance-attributes
         enabled: bool = True,
         suspended: bool = False,
         is_group_toggle: bool = False,
+        transient: bool = False,
     ) -> None:
         """Initializes a keyboard command."""
 
-        super().__init__(name, function, group_label, description, enabled, suspended)
+        super().__init__(name, function, group_label, description, enabled, suspended, transient)
 
         # The default bindings.
         self._desktop_keybinding = desktop_keybinding

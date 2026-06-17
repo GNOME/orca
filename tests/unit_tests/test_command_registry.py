@@ -638,6 +638,9 @@ class TestCommandRegistry:
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
+        essential_modules["orca.cmdnames"].SWITCH_VOICE_SET = "Switch voice to: %s"
+        essential_modules["orca.guilabels"].VOICE_SET_GLOBAL = "Global"
+
         essential_modules["orca.orca_i18n"]._ = lambda x: x
         essential_modules["orca.orca_i18n"].C_ = lambda c, x: x
         essential_modules["orca.orca_i18n"].ngettext = lambda s, p, n: s if n == 1 else p

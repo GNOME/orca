@@ -2168,7 +2168,7 @@ TEXT_ATTRIBUTES_INFO = _(
 # dialog.
 VOICE = _("Voice")
 
-# Translators: This is the label for a section in the Voice Types preferences
+# Translators: This is the label for a section in the Voice Sets preferences
 # page where users can select and manage voice sets for different languages.
 LANGUAGE_VOICE_SETTINGS = _("Voice Sets")
 
@@ -2191,8 +2191,9 @@ VOICE_SET_GLOBAL = C_("VoiceSet", "Global")
 VOICE_SET_CREATE_NEW = _("New Voice Set")
 
 # Translators: This is an informational message shown at the top of the Voice
-# Types page explaining what voice sets are. The "%s" is replaced with the
-# name of the global voice set (e.g. "Global").
+# Sets page explaining what voice sets are. The "%s" is replaced with the
+# name of the global voice set, which comes from this localized string above:
+# `VOICE_SET_GLOBAL = C_("VoiceSet", "Global")`
 VOICE_SET_INFO = (
     _(
         "Voice sets are collections of voice types (such as default, uppercase, "
@@ -2202,6 +2203,13 @@ VOICE_SET_INFO = (
     )
     % VOICE_SET_GLOBAL
 )
+
+# Translators: This is an informational message shown at the top of the Voice
+# Sets page. A voice set is a named collection of voice settings, such as
+# the primary set or a language-specific set (e.g. Italian). When translating
+# "Commands", please use terminology consistent with that of this localized
+# string above: `COMMANDS = _("Commands")`
+VOICE_SET_INFO_COMMANDS = "You can assign keybindings to any configured voice set in Commands."
 
 # Translators: This is the label of the Voice Types page in the Orca
 # Preferences dialog, where users configure voices for different contexts

@@ -29,6 +29,7 @@
 
 from __future__ import annotations
 
+import functools
 import importlib
 import os
 from typing import TYPE_CHECKING, Any
@@ -40,6 +41,7 @@ from gi.repository import GObject, Gtk
 
 from . import (
     cmdnames,
+    command_manager,
     dbus_service,
     debug,
     gsettings_registry,
@@ -709,7 +711,8 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _build(self) -> None:
         row = 0
 
-        info_listbox = self._create_info_listbox(guilabels.VOICE_SET_INFO)
+        msg = f"{guilabels.VOICE_SET_INFO} {guilabels.VOICE_SET_INFO_COMMANDS}"
+        info_listbox = self._create_info_listbox(msg)
         info_listbox.set_margin_bottom(12)
         self.attach(info_listbox, 0, row, 1, 1)
         row += 1
@@ -1137,6 +1140,7 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._staged_configs.clear()
         self._deleted_sets.clear()
         self._has_unsaved_changes = False
+        self._manager.refresh_voice_set_commands()
         return {}
 
     def has_changes(self) -> bool:
@@ -1497,7 +1501,11 @@ class SpeechManager(Extension):
         self._server: SpeechServer | None = None
         self._active_voice_set: str = gsettings_registry.PRIMARY_VOICE_SET
         self._auditioning_voice = False
+        self._voice_set_command_names: set[str] = set()
         super().__init__()
+        gsettings_registry.get_registry().add_profile_change_observer(
+            self.refresh_voice_set_commands
+        )
 
     def _get_commands(self) -> list[Command]:
         """Returns commands for registration."""
@@ -1585,7 +1593,7 @@ class SpeechManager(Extension):
             ),
         ]
 
-        return [
+        commands: list[Command] = [
             KeyboardCommand(
                 name,
                 function,
@@ -1596,6 +1604,40 @@ class SpeechManager(Extension):
             )
             for name, function, description, desktop_kb, laptop_kb in commands_data
         ]
+        commands.extend(self._build_voice_set_commands())
+        return commands
+
+    def _build_voice_set_commands(self) -> list[KeyboardCommand]:
+        """Returns one unbound activation command per available voice set."""
+
+        commands = [
+            KeyboardCommand(
+                f"switch-voice-set-{set_id}",
+                functools.partial(self.activate_voice_set, set_id),
+                self.GROUP_LABEL,
+                cmdnames.SWITCH_VOICE_SET % self._voice_set_display_name(set_id),
+                desktop_keybinding=None,
+                laptop_keybinding=None,
+                transient=True,
+            )
+            for set_id in self.get_available_voice_sets()
+        ]
+        self._voice_set_command_names = {cmd.get_name() for cmd in commands}
+        return commands
+
+    def refresh_voice_set_commands(self, _profile: str = "") -> None:
+        """Re-registers the per-set activation commands after the available sets change."""
+
+        if not self._commands_initialized:
+            return
+
+        manager = command_manager.get_manager()
+        previous = self._voice_set_command_names
+        commands = self._build_voice_set_commands()
+        for name in previous:
+            manager.remove_command(name)
+        for command in commands:
+            manager.add_command(command)
 
     def get_server(self) -> SpeechServer | None:
         """Returns the speech server instance, or None if not initialized."""

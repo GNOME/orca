@@ -251,6 +251,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if app_name and app_name in self._categories and not self._categories[app_name]:
             del self._categories[app_name]
 
+        for commands in self._categories.values():
+            commands.sort(key=lambda command: command.is_transient())
+
         self._categories_listbox.set_header_func(self._separator_header_func, None)
 
         # Custom sort: For app-specific, app name first then Default. For non-app, Default first.
