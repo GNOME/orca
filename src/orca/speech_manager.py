@@ -85,9 +85,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             self._voices[vt] = manager.get_voice_properties(vt, app_name=self._app_name)
 
         self._voice_families: list[speechserver.VoiceFamily] = []
-        self._family_choices: dict[str, list[speechserver.VoiceFamily]] = {
-            vt: [] for vt in speechserver.VoiceType
-        }
 
         self._speech_systems_combo: Gtk.ComboBox
         self._speech_synthesizers_combo: Gtk.ComboBox
@@ -96,20 +93,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._global_frame: Gtk.Frame | None = None
         self._voice_types_frame: Gtk.Frame | None = None
 
-        self._voice_widgets: dict[str, dict[str, Gtk.Widget | None]] = {
-            vt: {
-                "languages_combo": None,
-                "families_combo": None,
-                "rate_scale": None,
-                "pitch_scale": None,
-                "pitch_range_scale": None,
-                "volume_scale": None,
-            }
-            for vt in speechserver.VoiceType
-        }
-
         self._families_sorted: bool = False
-        self._language_codes_for_voice_type: dict[str, list[str]] = {}
 
         self._build()
         self._populate_speech_systems()
@@ -268,175 +252,6 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self.show_all()  # pylint: disable=no-member
 
-    def show_voice_settings_dialog(self, voice_type: str) -> None:
-        """Show a dialog for editing settings for a specific voice type."""
-
-        title = guilabels.VOICE_TYPE_LABELS.get(voice_type, voice_type)
-
-        # Save current ACSS state in case user cancels
-        voice_acss = self._get_acss_for_voice_type(voice_type)
-        saved_acss = ACSS(dict(voice_acss))
-
-        dialog, ok_button = self._create_header_bar_dialog(
-            title,
-            guilabels.BTN_CANCEL,
-            guilabels.BTN_OK,
-        )
-
-        content_area = dialog.get_content_area()
-
-        voice_listbox = preferences_grid_base.FocusManagedListBox()
-        combo_size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
-
-        def on_language_changed(widget: Gtk.ComboBox) -> None:
-            self._on_speech_language_changed(widget, voice_type)
-
-        lang_row, lang_combo, _lang_label = self._create_combo_box_row(
-            guilabels.VOICE_LANGUAGE,
-            Gtk.ListStore(GObject.TYPE_STRING),
-            on_language_changed,
-            include_top_separator=False,
-        )
-        combo_size_group.add_widget(lang_combo)
-        voice_listbox.add_row_with_widget(lang_row, lang_combo)
-
-        def on_family_changed(widget: Gtk.ComboBox) -> None:
-            self._on_speech_family_changed(widget, voice_type)
-
-        person_row, person_combo, _person_label = self._create_combo_box_row(
-            guilabels.VOICE_PERSON,
-            Gtk.ListStore(GObject.TYPE_STRING),
-            on_family_changed,
-            include_top_separator=False,
-        )
-        combo_size_group.add_widget(person_combo)
-        voice_listbox.add_row_with_widget(person_row, person_combo)
-
-        def on_rate_changed(widget: Gtk.Scale) -> None:
-            self._on_rate_changed(widget, voice_type)
-
-        rate_adj = Gtk.Adjustment(value=50, lower=0, upper=100, step_increment=1, page_increment=10)
-        rate_row, rate_scale, _rate_label = self._create_slider_row(
-            guilabels.VOICE_RATE,
-            rate_adj,
-            changed_handler=on_rate_changed,
-            include_top_separator=False,
-        )
-        voice_listbox.add_row_with_widget(rate_row, rate_scale)
-
-        def on_pitch_changed(widget: Gtk.Scale) -> None:
-            self._on_pitch_changed(widget, voice_type)
-
-        pitch_adj = Gtk.Adjustment(
-            value=5.0,
-            lower=0,
-            upper=10,
-            step_increment=0.1,
-            page_increment=1,
-        )
-        pitch_row, pitch_scale, _pitch_label = self._create_slider_row(
-            guilabels.VOICE_PITCH,
-            pitch_adj,
-            changed_handler=on_pitch_changed,
-            include_top_separator=False,
-            digits=1,
-        )
-        voice_listbox.add_row_with_widget(pitch_row, pitch_scale)
-
-        def on_pitch_range_changed(widget: Gtk.Scale) -> None:
-            self._on_pitch_range_changed(widget, voice_type)
-
-        pitch_range_adj = Gtk.Adjustment(
-            value=5.0,
-            lower=0,
-            upper=10,
-            step_increment=0.1,
-            page_increment=1,
-        )
-        pitch_range_row, pitch_range_scale, _pitch_range_label = self._create_slider_row(
-            guilabels.VOICE_INFLECTION,
-            pitch_range_adj,
-            changed_handler=on_pitch_range_changed,
-            include_top_separator=False,
-            digits=1,
-        )
-        voice_listbox.add_row_with_widget(pitch_range_row, pitch_range_scale)
-
-        def on_volume_changed(widget: Gtk.Scale) -> None:
-            self._on_volume_changed(widget, voice_type)
-
-        volume_adj = Gtk.Adjustment(
-            value=10.0,
-            lower=0,
-            upper=10,
-            step_increment=0.1,
-            page_increment=1,
-        )
-        volume_row, volume_scale, _volume_label = self._create_slider_row(
-            guilabels.VOICE_VOLUME,
-            volume_adj,
-            changed_handler=on_volume_changed,
-            include_top_separator=False,
-            digits=1,
-        )
-        voice_listbox.add_row_with_widget(volume_row, volume_scale)
-
-        self._voice_widgets[voice_type] = {
-            "languages_combo": lang_combo,
-            "families_combo": person_combo,
-            "rate_scale": rate_scale,
-            "pitch_scale": pitch_scale,
-            "pitch_range_scale": pitch_range_scale,
-            "volume_scale": volume_scale,
-        }
-
-        self._populate_languages_for_voice_type(voice_type)
-        self._populate_families_for_voice_type(voice_type, apply_changes=False)
-
-        self._initializing = True
-        self._refresh_voice_widgets(
-            voice_type, rate_scale, pitch_scale, pitch_range_scale, volume_scale
-        )
-        self._initializing = False
-
-        def on_response(dlg, response_id):
-            if response_id in (Gtk.ResponseType.CANCEL, Gtk.ResponseType.DELETE_EVENT):
-                # User cancelled - revert local copy and sync runtime values
-                voice_acss.clear()
-                voice_acss.update(saved_acss)
-            else:
-                # User clicked OK. The combo may show a selection the user
-                # didn't interact with (e.g. auto-selected first entry after
-                # a synthesizer change). Sync it so the ACSS dict matches
-                # what the UI shows.
-                if ACSS.FAMILY not in voice_acss:
-                    _lang, families_combo, family_choices = self._get_widgets_for_voice_type(
-                        voice_type
-                    )
-                    active = families_combo.get_active()
-                    if 0 <= active < len(family_choices):
-                        voice_acss[ACSS.FAMILY] = family_choices[active]
-                self._has_unsaved_changes = True
-
-            self._sync_voice_to_settings(voice_type)
-            dlg.destroy()
-
-        dialog.connect("response", on_response)
-
-        parent = self.get_toplevel()  # pylint: disable=no-member
-
-        def on_parent_destroy(*_args):
-            if not dialog.get_property("visible"):
-                return
-            # Trigger cancel response which will clean up and destroy the dialog
-            dialog.response(Gtk.ResponseType.DELETE_EVENT)
-
-        parent.connect("destroy", on_parent_destroy)
-
-        content_area.pack_start(voice_listbox, True, True, 0)
-        dialog.show_all()  # pylint: disable=no-member
-        ok_button.grab_default()
-
     # TODO - JD: Remove this function if it continues to prove unnecessary
     # pylint: disable-next=useless-parent-delegation
     def has_changes(self) -> bool:
@@ -543,56 +358,10 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self._initializing = False
 
-    def _refresh_voice_widgets(
-        self,
-        voice_type: str,
-        rate_scale: Gtk.Scale,
-        pitch_scale: Gtk.Scale,
-        pitch_range_scale: Gtk.Scale,
-        volume_scale: Gtk.Scale,
-    ) -> None:
-        """Update widgets for a specific voice type."""
-
-        voice_acss = self._get_acss_for_voice_type(voice_type)
-
-        rate = voice_acss.get(ACSS.RATE, 50)
-        rate_scale.set_value(rate)
-
-        pitch = voice_acss.get(ACSS.AVERAGE_PITCH, 5.0)
-        pitch_scale.set_value(pitch)
-
-        pitch_range = voice_acss.get(ACSS.PITCH_RANGE, 5.0)
-        pitch_range_scale.set_value(pitch_range)
-
-        volume = voice_acss.get(ACSS.GAIN, 10.0)
-        volume_scale.set_value(volume)
-
     def _get_acss_for_voice_type(self, voice_type: str) -> ACSS:
         """Return the local ACSS copy for the given voice type."""
 
         return self._voices.get(voice_type, self._voices[speechserver.VoiceType.DEFAULT])
-
-    def _get_widgets_for_voice_type(
-        self,
-        voice_type: str,
-    ) -> tuple[Gtk.ComboBox, Gtk.ComboBox, list[speechserver.VoiceFamily]]:
-        """Return the widgets and family choices for a given voice type."""
-
-        w = self._voice_widgets.get(voice_type, self._voice_widgets[speechserver.VoiceType.DEFAULT])
-        languages_combo = w["languages_combo"]
-        families_combo = w["families_combo"]
-        assert isinstance(languages_combo, Gtk.ComboBox)
-        assert isinstance(families_combo, Gtk.ComboBox)
-        return (languages_combo, families_combo, self._family_choices.get(voice_type, []))
-
-    def _set_family_choices_for_voice_type(
-        self,
-        voice_type: str,
-        choices: list[speechserver.VoiceFamily],
-    ) -> None:
-        """Set the family choices for a given voice type."""
-
-        self._family_choices[voice_type] = choices
 
     def _populate_speech_systems(self) -> None:
         """Populate the speech systems combo."""
@@ -674,315 +443,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         # Note: Voice widgets are created on-demand in dialogs, so we don't populate them here
 
     # pylint: disable-next=too-many-branches
-    def _populate_languages_for_voice_type(
-        self,
-        voice_type: str,
-    ) -> None:
-        """Populate the languages combo for a specific voice type."""
-
-        languages_combo, _, _ = self._get_widgets_for_voice_type(voice_type)
-
-        self._initializing = True
-
-        model = languages_combo.get_model()
-        if not model:
-            model = Gtk.ListStore(str, str)
-        languages_combo.set_model(None)
-        model.clear()
-
-        if len(self._voice_families) == 0:
-            languages_combo.set_model(model)
-            self._initializing = False
-            return
-
-        if not self._families_sorted:
-            default_marker = guilabels.SPEECH_DEFAULT_VOICE.replace("%s", "").strip().lower()
-
-            def _get_sort_key(family):
-                variant = family.get(speechserver.VoiceFamily.VARIANT)
-                name = family.get(speechserver.VoiceFamily.NAME, "")
-                if default_marker in name.lower() or "default" in name.lower():
-                    return (0, "")
-                if variant not in (None, "none", "None"):
-                    return (1, variant.lower())
-                return (1, name.lower())
-
-            self._voice_families.sort(key=_get_sort_key)
-            self._families_sorted = True
-
-        done = {}
-        languages = []
-        for family in self._voice_families:
-            lang = family.get(speechserver.VoiceFamily.LANG, "")
-            dialect = family.get(speechserver.VoiceFamily.DIALECT, "")
-
-            if (lang, dialect) in done:
-                continue
-            done[(lang, dialect)] = True
-
-            if dialect:
-                language = f"{lang}-{dialect}"
-            else:
-                language = lang
-
-            display = (
-                language_utilities.get_language_display_name(lang, dialect)
-                if language
-                else "default language"
-            )
-            languages.append(language)
-            model.append([display])
-
-        self._language_codes_for_voice_type[voice_type] = languages
-        languages_combo.set_model(model)
-
-        voice_acss = self._get_acss_for_voice_type(voice_type)
-        saved_family: speechserver.VoiceFamily | None = voice_acss.get(ACSS.FAMILY)
-        selected_index = 0
-        saved_language = ""
-
-        if saved_family:
-            lang = saved_family.get(speechserver.VoiceFamily.LANG, "")
-            dialect = saved_family.get(speechserver.VoiceFamily.DIALECT, "")
-            if dialect:
-                saved_language = f"{lang}-{dialect}"
-            else:
-                saved_language = lang
-        elif voice_type == speechserver.VoiceType.DEFAULT:
-            lang, dialect = language_utilities.get_current_language_and_dialect()
-            if lang:
-                saved_language = f"{lang}-{dialect}" if dialect else lang
-
-        if saved_language:
-            lang_only = saved_language.partition("-")[0]
-            partial_match = -1
-            for i, language in enumerate(languages):
-                if language == saved_language:
-                    selected_index = i
-                    break
-                if partial_match < 0:
-                    if language == lang_only or language.startswith(f"{lang_only}-"):
-                        partial_match = i
-            else:
-                if partial_match >= 0:
-                    selected_index = partial_match
-
-        if len(languages) > 0:
-            languages_combo.set_active(selected_index)
-
-        self._initializing = False
-
     # pylint: disable-next=too-many-branches
-    def _populate_families_for_voice_type(
-        self,
-        voice_type: str,
-        apply_changes: bool = True,
-    ) -> None:
-        """Populate the families/persons combo for a specific voice type."""
-
-        languages_combo, families_combo, _ = self._get_widgets_for_voice_type(voice_type)
-
-        self._initializing = True
-
-        families_model = families_combo.get_model()
-        if not families_model:
-            families_model = Gtk.ListStore(str, str)
-        families_combo.set_model(None)
-        families_model.clear()
-
-        active = languages_combo.get_active()
-        if active < 0:
-            families_combo.set_model(families_model)
-            self._initializing = False
-            return
-
-        codes = self._language_codes_for_voice_type.get(voice_type, [])
-        if active >= len(codes):
-            families_combo.set_model(families_model)
-            self._initializing = False
-            return
-        current_language = codes[active]
-
-        family_choices = []
-        for family in self._voice_families:
-            lang = family.get(speechserver.VoiceFamily.LANG, "")
-            dialect = family.get(speechserver.VoiceFamily.DIALECT, "")
-
-            if dialect:
-                language = f"{lang}-{dialect}"
-            else:
-                language = lang
-
-            if language != current_language:
-                continue
-
-            name = family.get(speechserver.VoiceFamily.NAME, "")
-            variant = family.get(speechserver.VoiceFamily.VARIANT, "")
-
-            # Show variant if it exists and is not "none", otherwise show name
-            display_name = name
-            if variant and variant not in ("none", "None"):
-                display_name = variant
-
-            family_choices.append(family)
-            families_model.append([display_name])
-
-        families_combo.set_model(families_model)
-
-        self._set_family_choices_for_voice_type(voice_type, family_choices)
-
-        voice_acss = self._get_acss_for_voice_type(voice_type)
-        saved_family: speechserver.VoiceFamily | None = voice_acss.get(ACSS.FAMILY)
-        selected_index = 0
-
-        if saved_family and len(family_choices) > 0:
-            saved_name = saved_family.get(speechserver.VoiceFamily.NAME, "")
-
-            for i, family in enumerate(family_choices):
-                family_name = family.get(speechserver.VoiceFamily.NAME, "")
-                if family_name == saved_name:
-                    selected_index = i
-                    break
-
-        if len(family_choices) > 0:
-            families_combo.set_active(selected_index)
-
-            if apply_changes:
-                family = family_choices[selected_index]
-                voice_name = family.get(speechserver.VoiceFamily.NAME, "")
-
-                voice_acss[ACSS.FAMILY] = family
-                voice_acss["established"] = True
-
-                # Sync runtime values so the voice change is heard immediately
-                self._sync_voice_to_settings(voice_type)
-
-                # Only set as current voice if this is the default voice type
-                if voice_type == speechserver.VoiceType.DEFAULT:
-                    self._manager.set_current_voice(voice_name)
-
-        self._initializing = False
-
-    def _sync_voice_to_settings(self, voice_type: str) -> None:
-        """Sync local voice copy to runtime values for immediate preview."""
-
-        voice = ACSS(self._voices[voice_type])
-        settings_key = voice_type
-        registry = gsettings_registry.get_registry()
-        schema = self._VOICE_SCHEMA
-
-        if ACSS.RATE in voice:
-            registry.set_runtime_value(
-                schema, SpeechManager.KEY_RATE, voice[ACSS.RATE], voice_type=settings_key
-            )
-        if ACSS.AVERAGE_PITCH in voice:
-            registry.set_runtime_value(
-                schema,
-                SpeechManager.KEY_PITCH,
-                voice[ACSS.AVERAGE_PITCH],
-                voice_type=settings_key,
-            )
-        if ACSS.PITCH_RANGE in voice:
-            registry.set_runtime_value(
-                schema,
-                SpeechManager.KEY_PITCH_RANGE,
-                voice[ACSS.PITCH_RANGE],
-                voice_type=settings_key,
-            )
-        if ACSS.GAIN in voice:
-            registry.set_runtime_value(
-                schema, SpeechManager.KEY_VOLUME, voice[ACSS.GAIN], voice_type=settings_key
-            )
-        family = voice.get(ACSS.FAMILY, {})
-        for dconf_key, family_key in (
-            (SpeechManager.KEY_FAMILY_NAME, speechserver.VoiceFamily.NAME),
-            (SpeechManager.KEY_FAMILY_LANG, speechserver.VoiceFamily.LANG),
-            (SpeechManager.KEY_FAMILY_DIALECT, speechserver.VoiceFamily.DIALECT),
-            (SpeechManager.KEY_FAMILY_GENDER, speechserver.VoiceFamily.GENDER),
-            (SpeechManager.KEY_FAMILY_VARIANT, speechserver.VoiceFamily.VARIANT),
-        ):
-            if family_key in family:
-                registry.set_runtime_value(
-                    schema,
-                    dconf_key,
-                    family[family_key],
-                    voice_type=settings_key,
-                )
-
-        server = self._manager.get_server()
-        if server is not None:
-            if settings_key == speechserver.VoiceType.DEFAULT:
-                server.set_default_voice(voice)
-            server.clear_cached_voice_properties()
-
-    def _on_rate_changed(
-        self,
-        widget: Gtk.Scale,
-        voice_type: str,
-    ) -> None:
-        """Handle rate slider change for a specific voice type."""
-
-        if self._initializing:
-            return
-
-        rate = widget.get_value()
-        voice_acss = self._get_acss_for_voice_type(voice_type)
-        voice_acss[ACSS.RATE] = rate
-        voice_acss["established"] = True
-        self._sync_voice_to_settings(voice_type)
-        self._has_unsaved_changes = True
-
-    def _on_pitch_changed(
-        self,
-        widget: Gtk.Scale,
-        voice_type: str,
-    ) -> None:
-        """Handle pitch slider change for a specific voice type."""
-
-        if self._initializing:
-            return
-
-        pitch = widget.get_value()
-        voice_acss = self._get_acss_for_voice_type(voice_type)
-        voice_acss[ACSS.AVERAGE_PITCH] = pitch
-        voice_acss["established"] = True
-        self._sync_voice_to_settings(voice_type)
-        self._has_unsaved_changes = True
-
-    def _on_pitch_range_changed(
-        self,
-        widget: Gtk.Scale,
-        voice_type: str,
-    ) -> None:
-        """Handle inflection (pitch range) slider change for a specific voice type."""
-
-        if self._initializing:
-            return
-
-        pitch_range = widget.get_value()
-        voice_acss = self._get_acss_for_voice_type(voice_type)
-        voice_acss[ACSS.PITCH_RANGE] = pitch_range
-        voice_acss["established"] = True
-        self._sync_voice_to_settings(voice_type)
-        self._has_unsaved_changes = True
-
-    def _on_volume_changed(
-        self,
-        widget: Gtk.Scale,
-        voice_type: str,
-    ) -> None:
-        """Handle volume slider change for a specific voice type."""
-
-        if self._initializing:
-            return
-
-        volume = widget.get_value()
-        voice_acss = self._get_acss_for_voice_type(voice_type)
-        voice_acss[ACSS.GAIN] = volume
-        voice_acss["established"] = True
-        self._sync_voice_to_settings(voice_type)
-        self._has_unsaved_changes = True
-
     def _on_punctuation_changed(self, widget: Gtk.ComboBox) -> None:
         """Handle punctuation combo box change."""
 
@@ -1139,66 +600,23 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self._has_unsaved_changes = True
 
-    def _on_speech_language_changed(
-        self,
-        widget: Gtk.ComboBox,
-        voice_type: str,
-    ) -> None:
-        """Handle speech language combo change for a specific voice type."""
+    def get_voice_for_type(self, voice_type: str) -> ACSS:
+        """Returns a copy of the primary voice currently configured for voice_type."""
 
-        if self._initializing:
-            return
+        return ACSS(self._voices.get(voice_type, self._voices[speechserver.VoiceType.DEFAULT]))
 
-        self._populate_families_for_voice_type(voice_type)
+    def set_voice_for_type(self, voice_type: str, voice: ACSS) -> None:
+        """Updates the primary voice for voice_type and marks the grid as changed."""
+
+        configured = ACSS(voice)
+        configured["established"] = True
+        self._voices[voice_type] = configured
         self._has_unsaved_changes = True
 
-        if voice_type == speechserver.VoiceType.DEFAULT:
-            self._propagate_language_to_other_voices(widget)
+    def get_all_voices(self) -> dict[str, ACSS]:
+        """Returns copies of the staged primary voices keyed by voice type."""
 
-    def _propagate_language_to_other_voices(self, _language_combo: Gtk.ComboBox) -> None:
-        """Update other voice types to use the same voice family as the Default voice."""
-
-        default_voice = self._get_acss_for_voice_type(speechserver.VoiceType.DEFAULT)
-        default_family = default_voice.get(ACSS.FAMILY)
-        if not default_family:
-            return
-
-        for voice_type in speechserver.VoiceType:
-            if voice_type == speechserver.VoiceType.DEFAULT:
-                continue
-            voice_acss = self._get_acss_for_voice_type(voice_type)
-            voice_acss[ACSS.FAMILY] = default_family
-            voice_acss["established"] = True
-            self._sync_voice_to_settings(voice_type)
-
-    def _on_speech_family_changed(
-        self,
-        widget: Gtk.ComboBox,
-        voice_type: str,
-    ) -> None:
-        """Handle speech family combo change for a specific voice type."""
-
-        if self._initializing:
-            return
-
-        _lang_combo, _fam_combo, family_choices = self._get_widgets_for_voice_type(voice_type)
-
-        active = widget.get_active()
-        if active < 0 or active >= len(family_choices):
-            return
-
-        family = family_choices[active]
-        voice_name = family.get(speechserver.VoiceFamily.NAME, "")
-
-        voice_acss = self._get_acss_for_voice_type(voice_type)
-        voice_acss[ACSS.FAMILY] = family
-        voice_acss["established"] = True
-        self._sync_voice_to_settings(voice_type)
-
-        if voice_type == speechserver.VoiceType.DEFAULT:
-            self._manager.set_current_voice(voice_name)
-
-        self._has_unsaved_changes = True
+        return {voice_type: ACSS(voice) for voice_type, voice in self._voices.items()}
 
     def get_voice_families(self) -> list[speechserver.VoiceFamily]:
         """Returns the full list of voice families from the current synthesizer."""
@@ -1366,9 +784,7 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             label = guilabels.VOICE_TYPE_LABELS.get(vt, vt)
 
             def _make_handler(voice_type: str = vt):
-                if is_primary:
-                    return lambda _btn: self._voices_grid.show_voice_settings_dialog(voice_type)
-                return lambda _btn: self._show_language_voice_dialog(voice_type, voice_set)
+                return lambda _btn: self._show_voice_dialog(voice_type, voice_set)
 
             button_items.append((label, "applications-system-symbolic", _make_handler()))
 
@@ -1507,15 +923,22 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 self._voice_set_combo.set_active(i)
                 return
 
-    def _show_language_voice_dialog(self, voice_type: str, voice_set: str) -> None:
-        """Show a dialog for editing a voice type within a language voice set."""
+    def _show_voice_dialog(self, voice_type: str, voice_set: str) -> None:
+        """Show a dialog for editing a voice type within a voice set, with live preview."""
 
         label = guilabels.VOICE_TYPE_LABELS.get(voice_type, voice_type)
-        voice_set_display = language_utilities.get_language_display_name(voice_set)
-        title = f"{label} ({voice_set_display})"
+        is_primary = voice_set == gsettings_registry.PRIMARY_VOICE_SET
+        if is_primary:
+            title = label
+            config = self._voices_grid.get_voice_for_type(voice_type)
+        else:
+            voice_set_display = language_utilities.get_language_display_name(voice_set)
+            title = f"{label} ({voice_set_display})"
+            staged = self._staged_configs.get(voice_set, {}).get(voice_type)
+            config = staged or self._manager.get_voice_properties(voice_type, voice_set=voice_set)
 
-        staged = self._staged_configs.get(voice_set, {}).get(voice_type)
-        config = staged or self._manager.get_voice_properties(voice_type, voice_set=voice_set)
+        # Edits are applied to the live voice so they can be heard while the dialog is open;
+        # the configured voice is restored when it closes.
 
         dialog, ok_button = self._create_header_bar_dialog(
             title,
@@ -1634,8 +1057,33 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         )
         voice_listbox.add_row_with_widget(vol_row, vol_scale)
 
+        def update_live_voice(*_args: Any) -> None:
+            active = person_combo.get_active()
+            if not 0 <= active < len(person_choices):
+                return
+            self._manager.apply_live_voice(
+                ACSS(
+                    {
+                        ACSS.FAMILY: dict(person_choices[active]),
+                        ACSS.RATE: int(rate_scale.get_value()),
+                        ACSS.AVERAGE_PITCH: pitch_scale.get_value(),
+                        ACSS.PITCH_RANGE: pr_scale.get_value(),
+                        ACSS.GAIN: vol_scale.get_value(),
+                    }
+                )
+            )
+
+        person_combo.connect("changed", update_live_voice)
+        for scale in (rate_scale, pitch_scale, pr_scale, vol_scale):
+            scale.connect("value-changed", update_live_voice)
+
+        # Apply the configured voice immediately so it is heard on entry, not only on edit.
+        # This matters for sets whose voice differs from the global one.
+        update_live_voice()
+
         def on_response(dlg: Gtk.Dialog, response_id: int) -> None:
-            if response_id not in (Gtk.ResponseType.CANCEL, Gtk.ResponseType.DELETE_EVENT):
+            confirmed = response_id not in (Gtk.ResponseType.CANCEL, Gtk.ResponseType.DELETE_EVENT)
+            if confirmed:
                 props: dict[str, Any] = {
                     ACSS.RATE: int(rate_scale.get_value()),
                     ACSS.AVERAGE_PITCH: pitch_scale.get_value(),
@@ -1645,11 +1093,23 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 active = person_combo.get_active()
                 if 0 <= active < len(person_choices):
                     props[ACSS.FAMILY] = dict(person_choices[active])
-                self._staged_configs.setdefault(voice_set, {})[voice_type] = ACSS(props)
-                self._has_unsaved_changes = True
+                if is_primary:
+                    self._voices_grid.set_voice_for_type(voice_type, ACSS(props))
+                else:
+                    self._staged_configs.setdefault(voice_set, {})[voice_type] = ACSS(props)
+                    self._has_unsaved_changes = True
+            # Make the staged global voices live (each by type), replacing the audition
+            # override. So an OK'd default/system/etc. voice stays in effect; a set's voice
+            # was staged separately and only applies when that set is active.
+            self._manager.restore_live_voices(self._voices_grid.get_all_voices())
             dlg.destroy()
 
+        def on_parent_destroy(*_args: Any) -> None:
+            if dialog.get_property("visible"):
+                dialog.response(Gtk.ResponseType.DELETE_EVENT)
+
         dialog.connect("response", on_response)
+        self.get_toplevel().connect("destroy", on_parent_destroy)  # pylint: disable=no-member
         content_area.pack_start(voice_listbox, True, True, 0)
         dialog.show_all()  # pylint: disable=no-member
         ok_button.grab_default()
@@ -1825,6 +1285,64 @@ class SpeechManager(Extension):
                 return config
         return ACSS({})
 
+    def _set_runtime_voice(self, voice_type: str, voice: ACSS) -> None:
+        """Overrides the runtime voice for voice_type, clearing any previous override."""
+
+        registry = gsettings_registry.get_registry()
+        prosody = (
+            (ACSS.RATE, self.KEY_RATE),
+            (ACSS.AVERAGE_PITCH, self.KEY_PITCH),
+            (ACSS.PITCH_RANGE, self.KEY_PITCH_RANGE),
+            (ACSS.GAIN, self.KEY_VOLUME),
+        )
+        families = (
+            (speechserver.VoiceFamily.NAME, self.KEY_FAMILY_NAME),
+            (speechserver.VoiceFamily.LANG, self.KEY_FAMILY_LANG),
+            (speechserver.VoiceFamily.DIALECT, self.KEY_FAMILY_DIALECT),
+            (speechserver.VoiceFamily.GENDER, self.KEY_FAMILY_GENDER),
+            (speechserver.VoiceFamily.VARIANT, self.KEY_FAMILY_VARIANT),
+        )
+        for _attr, key in ((None, self.KEY_ESTABLISHED), *prosody, *families):
+            registry.remove_runtime_value(self._VOICE_SCHEMA, key, voice_type=voice_type)
+        # A non-default voice type is only used if it is established; mirror that here so the
+        # generator applies it rather than falling back to the default voice.
+        registry.set_runtime_value(
+            self._VOICE_SCHEMA,
+            self.KEY_ESTABLISHED,
+            bool(voice.get("established")),
+            voice_type=voice_type,
+        )
+        for acss_key, key in prosody:
+            if acss_key in voice:
+                registry.set_runtime_value(
+                    self._VOICE_SCHEMA, key, voice[acss_key], voice_type=voice_type
+                )
+        family = voice.get(ACSS.FAMILY, {})
+        for family_key, key in families:
+            if family.get(family_key):
+                registry.set_runtime_value(
+                    self._VOICE_SCHEMA, key, family[family_key], voice_type=voice_type
+                )
+
+    def apply_live_voice(self, voice: ACSS) -> None:
+        """Auditions voice as the live default voice, bypassing voice-set rerouting."""
+
+        self._auditioning_voice = True
+        self._set_runtime_voice(speechserver.VoiceType.DEFAULT, voice)
+        if (server := self.get_server()) is not None:
+            server.set_default_voice(voice)
+            server.clear_cached_voice_properties()
+
+    def restore_live_voices(self, voices: dict[str, ACSS]) -> None:
+        """Makes each staged voice live by voice type and resumes normal voice-set processing."""
+
+        self._auditioning_voice = False
+        for voice_type, voice in voices.items():
+            self._set_runtime_voice(voice_type, voice)
+        if (server := self.get_server()) is not None:
+            server.set_default_voice(voices.get(speechserver.VoiceType.DEFAULT, ACSS({})))
+            server.clear_cached_voice_properties()
+
     @staticmethod
     def apply_voice_overrides(base: ACSS, override: ACSS) -> ACSS:
         """Overlays family and prosody from override onto base, returning the merged ACSS."""
@@ -1844,6 +1362,9 @@ class SpeechManager(Extension):
     def apply_voice_set(self, voice: ACSS) -> ACSS:
         """Overlays the active voice set, or the set matching the voice's language."""
 
+        if self._auditioning_voice:
+            # A voice is being auditioned in preferences; let it be heard as configured.
+            return voice
         if self._active_voice_set != gsettings_registry.PRIMARY_VOICE_SET:
             # A command loaded a set manually; it overrides every voice type.
             voice_set = self._active_voice_set
@@ -1969,6 +1490,7 @@ class SpeechManager(Extension):
         self._mute_speech: bool = False
         self._server: SpeechServer | None = None
         self._active_voice_set: str = gsettings_registry.PRIMARY_VOICE_SET
+        self._auditioning_voice = False
         super().__init__()
 
     def _get_commands(self) -> list[Command]:
