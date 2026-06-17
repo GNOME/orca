@@ -70,25 +70,28 @@ def get_known_language_codes() -> list[tuple[str, str]]:
     return result
 
 
-def get_language_display_name(lang: str, dialect: str = "") -> str:
+def get_language_display_name(lang: str, dialect: str = "", in_own_language: bool = False) -> str:
     """Returns a human-readable display name for a language code."""
 
     if not dialect and "-" in lang:
         lang, dialect = lang.split("-", 1)
 
     if _BabelLocale is not None:
-        default_locale = _BabelLocale.default()
         try:
             locale_id = f"{lang}_{dialect}" if dialect else lang
-            if display := _BabelLocale.parse(locale_id).get_display_name(default_locale):
+            target = _BabelLocale.parse(locale_id)
+            display_locale = target if in_own_language else _BabelLocale.default()
+            if display := target.get_display_name(display_locale):
                 if dialect:
-                    base_display = _BabelLocale.parse(lang).get_display_name(default_locale)
+                    base_display = _BabelLocale.parse(lang).get_display_name(display_locale)
                     if display == base_display:
                         return f"{display} ({dialect})"
                 return display
         except (ValueError, _UnknownLocaleError):
             try:
-                if dialect and (base := _BabelLocale.parse(lang).get_display_name(default_locale)):
+                base_locale = _BabelLocale.parse(lang)
+                display_locale = base_locale if in_own_language else _BabelLocale.default()
+                if dialect and (base := base_locale.get_display_name(display_locale)):
                     return f"{base} ({dialect})"
             except (ValueError, _UnknownLocaleError):
                 pass

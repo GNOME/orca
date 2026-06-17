@@ -749,6 +749,8 @@ class TestSpeechPresenter:
             return_value=False,
         )
         speech_manager_instance.get_voice_set_names = test_context.Mock(return_value=[])
+        speech_manager_instance.get_active_voice_set = test_context.Mock(return_value="primary")
+        speech_manager_instance.get_voice_properties = test_context.Mock(return_value={})
         mock_server = test_context.Mock()
         speech_manager_instance.get_server = test_context.Mock(return_value=mock_server)
         speech_manager_mock.get_manager = test_context.Mock(return_value=speech_manager_instance)

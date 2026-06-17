@@ -2817,8 +2817,8 @@ class SpeechPresenter(Extension):
         text = self.adjust_for_presentation(obj, text, start_offset)
         self._speak(text, voice[0] if voice else None)
 
-    def speak_message(self, text: str) -> None:
-        """Speaks a message using the system voice."""
+    def speak_message(self, text: str, voice_type: str = speechserver.VoiceType.SYSTEM) -> None:
+        """Speaks a message using the given voice type (the system voice by default)."""
 
         try:
             assert isinstance(text, str)
@@ -2832,7 +2832,9 @@ class SpeechPresenter(Extension):
             return
 
         mgr = speech_manager.get_manager()
-        voice = mgr.get_voice_properties(speechserver.VoiceType.SYSTEM)
+        voice = mgr.get_voice_properties(voice_type)
+        if mgr.get_active_voice_set() != gsettings_registry.PRIMARY_VOICE_SET:
+            voice[ACSS.VOICE_TYPE] = voice_type
 
         server = mgr.get_server()
         if server is not None:

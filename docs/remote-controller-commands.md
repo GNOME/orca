@@ -439,14 +439,17 @@ These commands are available directly on the main service object at `/org/gnome/
 
 #### Parameterized Commands
 
+- **`ActivateVoiceSet`** → `b`: Makes set_id the active voice set and announces the change. Parameters: `set_id` (s).
 - **`GetVoicesForLanguage`** → `a(sss)`: Returns a list of available voices for the specified language. Parameters: `language` (s), `variant` (s).
 
 #### Properties
 
+- **`ActiveVoiceSet`** (`s`, read/write): The active voice set used for speech output.
 - **`AutoLanguageSwitching`** (`b`, read/write): Whether automatic language switching for document content is enabled.
 - **`AutoLanguageSwitchingUi`** (`b`, read/write): Whether automatic language switching for UI elements is enabled.
 - **`AvailableServers`** (`as`, read-only): A list of available servers.
 - **`AvailableSynthesizers`** (`as`, read-only): A list of available synthesizers of the speech server.
+- **`AvailableVoiceSets`** (`as`, read-only): The valid values for the active voice set.
 - **`AvailableVoices`** (`as`, read-only): A list of available voices for the current synthesizer.
 - **`CapitalizationStyle`** (`s`, read/write): The capitalization style.
 - **`CurrentServer`** (`s`, read/write): The current speech server (e.g. Speech Dispatcher or Spiel).

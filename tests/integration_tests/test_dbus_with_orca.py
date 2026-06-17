@@ -313,13 +313,15 @@ MODULE_CONFIG = {
             "StartSpeech",
             "ToggleSpeech",
         ],
-        "parameterized_commands": ["GetVoicesForLanguage"],
+        "parameterized_commands": ["ActivateVoiceSet", "GetVoicesForLanguage"],
         "getters": [
+            "ActiveVoiceSet",
             "AutoLanguageSwitching",
             "AutoLanguageSwitchingUi",
             "OnlySwitchConfiguredLanguages",
             "AvailableServers",
             "AvailableSynthesizers",
+            "AvailableVoiceSets",
             "AvailableVoices",
             "CapitalizationStyle",
             "CurrentServer",
@@ -338,6 +340,7 @@ MODULE_CONFIG = {
             "Volume",
         ],
         "setters": [
+            "ActiveVoiceSet",
             "AutoLanguageSwitching",
             "AutoLanguageSwitchingUi",
             "OnlySwitchConfiguredLanguages",
@@ -883,6 +886,7 @@ MODULE_CONFIG = {
 }
 
 PARAMETERIZED_TEST_PARAMS = {
+    "ActivateVoiceSet": {"set_id": "primary"},
     "GetVoicesForLanguage": {"language": "en", "variant": ""},
     "ExecuteMathcatCommand": {"mathcat_command": "ReadCurrent"},
 }

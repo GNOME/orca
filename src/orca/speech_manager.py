@@ -1276,10 +1276,16 @@ class SpeechManager(Extension):
 
         return ACSS(voice)
 
-    def get_voice_set_voice(self, voice_type: str, voice_set: str) -> ACSS:
-        """Returns the set's voice for voice_type, falling back to the set's default voice."""
+    def get_voice_set_voice(
+        self, voice_type: str, voice_set: str, fall_back_to_default: bool = True
+    ) -> ACSS:
+        """Returns the set's voice for voice_type, optionally falling back to its default voice."""
 
-        for vtype in (voice_type, speechserver.VoiceType.DEFAULT):
+        if fall_back_to_default:
+            types: tuple[str, ...] = (voice_type, speechserver.VoiceType.DEFAULT)
+        else:
+            types = (voice_type,)
+        for vtype in types:
             config = self.get_voice_properties(vtype, voice_set=voice_set)
             if config and config.get(self.KEY_ESTABLISHED):
                 return config
@@ -1365,9 +1371,14 @@ class SpeechManager(Extension):
         if self._auditioning_voice:
             # A voice is being auditioned in preferences; let it be heard as configured.
             return voice
+        voice_type = voice.get(ACSS.VOICE_TYPE, speechserver.VoiceType.DEFAULT)
+        fall_back_to_default = True
         if self._active_voice_set != gsettings_registry.PRIMARY_VOICE_SET:
-            # A command loaded a set manually; it overrides every voice type.
+            # A command loaded a set manually; it overrides every voice type. The system
+            # voice is used only if the set configures one; otherwise status messages stay
+            # in Orca's own voice rather than borrowing the set's default voice.
             voice_set = self._active_voice_set
+            fall_back_to_default = voice_type != speechserver.VoiceType.SYSTEM
         else:
             # Otherwise follow the voice's own language (automatic switching).
             family = voice.get(ACSS.FAMILY)
@@ -1384,19 +1395,14 @@ class SpeechManager(Extension):
             if voice_set not in voice_set_names:
                 return voice
 
-        voice_type = voice.pop(ACSS.VOICE_TYPE, speechserver.VoiceType.DEFAULT)
-        config = self.get_voice_set_voice(voice_type, voice_set)
+        voice.pop(ACSS.VOICE_TYPE, None)
+        config = self.get_voice_set_voice(voice_type, voice_set, fall_back_to_default)
         if not config:
             return voice
 
         tokens = ["SPEECH MANAGER: Applying voice set", voice_set, "for", voice_type]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self.apply_voice_overrides(voice, config)
-
-    def get_active_voice_set(self) -> str:
-        """Returns the name of the active voice set used for speech output."""
-
-        return self._active_voice_set
 
     def _get_voice_set_properties(self, voice_type: str, voice_set: str) -> ACSS:
         """Returns voice properties for a non-primary voice set."""
@@ -2870,6 +2876,63 @@ class SpeechManager(Extension):
         msg = f"SPEECH MANAGER: Setting speech muted to {value}."
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._mute_speech = value
+        return True
+
+    @dbus_service.getter
+    def get_available_voice_sets(self) -> list[str]:
+        """Returns the valid values for the active voice set."""
+
+        result = [gsettings_registry.PRIMARY_VOICE_SET, *sorted(self.get_voice_set_names())]
+        msg = f"SPEECH MANAGER: Available voice sets: {result}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return result
+
+    @dbus_service.getter
+    def get_active_voice_set(self) -> str:
+        """Returns the name of the active voice set used for speech output."""
+
+        return self._active_voice_set
+
+    @dbus_service.setter
+    def set_active_voice_set(self, name: str) -> bool:
+        """Sets the active voice set used for speech output."""
+
+        if name != gsettings_registry.PRIMARY_VOICE_SET and name not in self.get_voice_set_names():
+            msg = f"SPEECH MANAGER: Ignoring unknown voice set {name!r}."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
+        msg = f"SPEECH MANAGER: Setting active voice set to {name}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        self._active_voice_set = name
+        return True
+
+    def _voice_set_display_name(self, set_id: str) -> str:
+        """Returns the user-facing name for the given voice set."""
+
+        if set_id == gsettings_registry.PRIMARY_VOICE_SET:
+            return guilabels.VOICE_SET_GLOBAL
+        return language_utilities.get_language_display_name(set_id, in_own_language=True)
+
+    @dbus_service.parameterized_command
+    def activate_voice_set(
+        self,
+        set_id: str,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Makes set_id the active voice set and announces the change."""
+
+        tokens = ["SPEECH MANAGER: activate_voice_set", set_id, "Script:", script, "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        if not self.set_active_voice_set(set_id):
+            return True
+
+        if script is not None and notify_user:
+            presentation_manager.get_manager().present_message(
+                self._voice_set_display_name(set_id), voice_type=speechserver.VoiceType.DEFAULT
+            )
         return True
 
     @gsettings_registry.get_registry().gsetting(

@@ -293,13 +293,14 @@ class TestPresentationManager:
 
         essential_modules = self._setup_dependencies(test_context)
         from orca.presentation_manager import get_manager
+        from orca.speechserver import VoiceType
 
         manager = get_manager()
         manager.present_message("This is a full message")
 
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
         speech_pres.speak_message.assert_called_once_with(
-            "This is a full message",
+            "This is a full message", VoiceType.SYSTEM
         )
         braille_presenter = essential_modules["orca.braille_presenter"].get_presenter()
         braille_presenter.present_message.assert_called()
@@ -309,14 +310,13 @@ class TestPresentationManager:
 
         essential_modules = self._setup_dependencies(test_context)
         from orca.presentation_manager import get_manager
+        from orca.speechserver import VoiceType
 
         manager = get_manager()
         manager.present_message("Full message", brief="Brief")
 
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
-        speech_pres.speak_message.assert_called_once_with(
-            "Full message",
-        )
+        speech_pres.speak_message.assert_called_once_with("Full message", VoiceType.SYSTEM)
 
     def test_present_message_empty_string(self, test_context: OrcaTestContext) -> None:
         """Test present_message with empty string returns early."""
@@ -355,13 +355,12 @@ class TestPresentationManager:
         speech_pres.get_messages_are_detailed.return_value = False
 
         from orca.presentation_manager import get_manager
+        from orca.speechserver import VoiceType
 
         manager = get_manager()
         manager.present_message("Full message", brief="Brief")
 
-        speech_pres.speak_message.assert_called_once_with(
-            "Brief",
-        )
+        speech_pres.speak_message.assert_called_once_with("Brief", VoiceType.SYSTEM)
 
     def test_present_message_speech_disabled(self, test_context: OrcaTestContext) -> None:
         """Test present_message skips speech when speech is disabled."""

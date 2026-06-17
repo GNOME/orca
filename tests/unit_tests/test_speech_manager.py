@@ -783,6 +783,7 @@ class TestSpeechManager:
 
         del established["hyperlink"]
         assert manager.get_voice_set_voice("hyperlink", "it")["family"]["name"] == "luca"
+        assert not manager.get_voice_set_voice("hyperlink", "it", fall_back_to_default=False)
 
         established.clear()
         assert not manager.get_voice_set_voice("hyperlink", "it")

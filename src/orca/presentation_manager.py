@@ -249,6 +249,7 @@ class PresentationManager:
         self,
         full: str,
         brief: str | None = None,
+        voice_type: str = speechserver.VoiceType.SYSTEM,
     ) -> None:
         """Convenience method to speak a message and 'flash' it in braille."""
 
@@ -262,7 +263,7 @@ class PresentationManager:
             speech_pres = speech_presenter.get_presenter()
             message = full if speech_pres.get_messages_are_detailed() else brief
             if message:
-                speech_pres.speak_message(message)
+                speech_pres.speak_message(message, voice_type)
 
         braille_pres = braille_presenter.get_presenter()
         if not (braille_pres.use_braille() and braille_pres.get_flash_messages_are_enabled()):

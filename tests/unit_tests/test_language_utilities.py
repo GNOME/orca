@@ -102,6 +102,13 @@ class TestLanguageUtilities:
             language_utilities.get_language_display_name("en", "gb") == "English (United Kingdom)"
         )
         assert language_utilities.get_language_display_name("zz") == "zz"
+        assert (
+            language_utilities.get_language_display_name("fr", in_own_language=True) == "français"
+        )
+        assert (
+            language_utilities.get_language_display_name("it", in_own_language=True) == "italiano"
+        )
+        assert language_utilities.get_language_display_name("zz", in_own_language=True) == "zz"
 
     def test_is_standard_locale_with_babel(self, test_context: OrcaTestContext) -> None:
         """Test is_standard_locale distinguishes real locales via babel when available."""
