@@ -2680,6 +2680,15 @@ class SpeechPresenter(Extension):
         self._record_speech(text, resolved_voice)
         self.write_to_monitor(text)
 
+    @staticmethod
+    def _resolved_voice(voice: ACSS) -> ACSS:
+        """Returns voice with the active voice set applied, for merge-boundary decisions."""
+
+        candidate = ACSS(voice)
+        if (voice_type := voice.get(ACSS.VOICE_TYPE)) is not None:
+            candidate[ACSS.VOICE_TYPE] = voice_type
+        return speech_manager.get_manager().apply_voice_set(candidate)
+
     def _speak_list(self, content: list, acss: ACSS | dict[str, Any] | None) -> None:
         """Processes a list of speech content items."""
 
@@ -2713,7 +2722,14 @@ class SpeechPresenter(Extension):
             elif isinstance(element, ACSS):
                 new_voice = ACSS(acss)
                 new_voice.update(element)
-                if pending_text and new_voice != active_voice:
+                # Merge text only when the two voices resolve to the same voice once the
+                # active voice set is applied. Otherwise a default-voiced name and a
+                # system-voiced role (identical until the set overlays them) would be
+                # spoken together in whichever voice came last.
+                if pending_text and (
+                    new_voice != active_voice
+                    or self._resolved_voice(active_voice) != self._resolved_voice(new_voice)
+                ):
                     tokens = [
                         "SPEECH: New voice",
                         new_voice,
