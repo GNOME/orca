@@ -534,6 +534,11 @@ CYCLE_SYNTHESIZER = _("Cycle to the next speech synthesizer")
 # or "Global" for the user's primary set.
 SWITCH_VOICE_SET = _("Switch voice to: %s")
 
+# Translators: Orca can hold several "voice sets": collections of voices, such as
+# one set per language. This command switches the voice Orca speaks with to the
+# next set in the list, wrapping around to the first set after the last.
+CYCLE_VOICE_SET = _("Cycle to the next voice set")
+
 # Translators: Orca has a feature whereby users can set up different "profiles,"
 # which are collection of settings which apply to a given task, such as a
 # "Spanish" profile which would use Spanish text-to-speech and Spanish braille

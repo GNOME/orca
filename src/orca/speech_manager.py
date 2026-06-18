@@ -1534,6 +1534,13 @@ class SpeechManager(Extension):
                 None,
                 None,
             ),
+            (
+                "cycleVoiceSetHandler",
+                self.cycle_voice_set,
+                cmdnames.CYCLE_VOICE_SET,
+                None,
+                None,
+            ),
             ("toggleSilenceSpeechHandler", self.toggle_speech, cmdnames.TOGGLE_SPEECH, kb_s, kb_s),
             (
                 "decreaseSpeechRateHandler",
@@ -2976,6 +2983,28 @@ class SpeechManager(Extension):
                 self._voice_set_display_name(set_id), voice_type=speechserver.VoiceType.DEFAULT
             )
         return True
+
+    @dbus_service.command
+    def cycle_voice_set(
+        self,
+        script: default.Script | None = None,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Switches to the next available voice set, wrapping after the last."""
+
+        tokens = ["SPEECH MANAGER: cycle_voice_set. Script:", script, "Event:", event]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        available = self.get_available_voice_sets()
+        try:
+            index = available.index(self._active_voice_set) + 1
+        except ValueError:
+            index = 0
+        if index == len(available):
+            index = 0
+
+        return self.activate_voice_set(available[index], script, event, notify_user)
 
     @gsettings_registry.get_registry().gsetting(
         key=KEY_ENABLE,
