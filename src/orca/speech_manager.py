@@ -837,6 +837,31 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         return sorted(languages.items(), key=lambda x: x[1])
 
+    def _families_for_language(self, lang_code: str) -> list[speechserver.VoiceFamily]:
+        """Returns the voice families matching lang_code, in synthesizer order."""
+
+        match_lang, _sep, match_dialect = lang_code.lower().partition("-")
+        families = []
+        for family in self._voices_grid.get_voice_families():
+            lang = family.get(speechserver.VoiceFamily.LANG, "").lower()
+            dialect = family.get(speechserver.VoiceFamily.DIALECT, "").lower()
+            if lang == match_lang and (not match_dialect or dialect == match_dialect):
+                families.append(family)
+        return families
+
+    def _default_voice_set_config(self, lang_code: str) -> ACSS:
+        """Returns a complete default voice config for a newly created voice set."""
+
+        props: dict[str, Any] = {
+            ACSS.RATE: ACSS.settings[ACSS.RATE],
+            ACSS.AVERAGE_PITCH: ACSS.settings[ACSS.AVERAGE_PITCH],
+            ACSS.PITCH_RANGE: ACSS.settings[ACSS.PITCH_RANGE],
+            ACSS.GAIN: ACSS.settings[ACSS.GAIN],
+        }
+        if families := self._families_for_language(lang_code):
+            props[ACSS.FAMILY] = dict(families[0])
+        return ACSS(props)
+
     def _on_add_voice_set(self, _button: Gtk.Button) -> None:
         """Handle add voice set button click."""
 
@@ -867,7 +892,7 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 if lang_code:
                     self._staged_configs.setdefault(lang_code, {})[
                         speechserver.VoiceType.DEFAULT
-                    ] = ACSS({ACSS.RATE: 50})
+                    ] = self._default_voice_set_config(lang_code)
                     self._deleted_sets.discard(lang_code)
                     self._refresh_voice_set_combo()
                     self._select_voice_set(lang_code)
@@ -955,7 +980,6 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         combo_size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
 
         available_languages = self._voices_grid.get_available_languages()
-        all_families = list(self._voices_grid.get_voice_families())
         person_choices: list[dict[str, Any]] = []
 
         voice_lang_row, voice_lang_combo, _vl_label = self._create_combo_box_text_row(
@@ -975,12 +999,7 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         def populate_persons(voice_language: str) -> None:
             person_choices.clear()
             person_combo.remove_all()
-            match_lang, _sep, match_dialect = voice_language.partition("-")
-            for family in all_families:
-                lang = family.get(speechserver.VoiceFamily.LANG, "")
-                dialect = family.get(speechserver.VoiceFamily.DIALECT, "")
-                if lang != match_lang or (match_dialect and dialect != match_dialect):
-                    continue
+            for family in self._families_for_language(voice_language):
                 name = family.get(speechserver.VoiceFamily.NAME, "")
                 variant = family.get(speechserver.VoiceFamily.VARIANT, "")
                 display = variant if variant and variant not in ("none", "None") else name

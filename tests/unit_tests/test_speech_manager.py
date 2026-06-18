@@ -1457,3 +1457,50 @@ class TestVoicesPreferencesGridUI:
         assert result["speech-server-factory"] == "spiel"
         assert result["speech-server"] == "Spiel"
         assert result["synthesizer"] == "Piper"
+
+
+@pytest.mark.unit
+class TestVoiceTypesPreferencesGridMatching:
+    """Test VoiceTypesPreferencesGrid voice-set language matching."""
+
+    def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
+        """Set up mocks for VoiceTypesPreferencesGrid dependencies."""
+
+        additional_modules = ["orca.speechserver", "orca.acss", "orca.presentation_manager"]
+        essential_modules = test_context.setup_shared_dependencies(additional_modules)
+
+        family = essential_modules["orca.speechserver"].VoiceFamily
+        family.NAME = "name"
+        family.LANG = "lang"
+        family.DIALECT = "dialect"
+        return essential_modules
+
+    @pytest.mark.parametrize(
+        "code, expected",
+        [
+            pytest.param("nl", ["Dutch"], id="language_only"),
+            pytest.param("fr-fr", ["French (France)"], id="dialect_case_insensitive"),
+            pytest.param("fr-be", ["French (Belgium)"], id="dialect_specific"),
+            pytest.param("fr", ["French (France)", "French (Belgium)"], id="language_all_dialects"),
+            pytest.param("de", [], id="no_match"),
+        ],
+    )
+    def test_families_for_language(
+        self, test_context: OrcaTestContext, code: str, expected: list[str]
+    ) -> None:
+        """Test that families are matched by language with case-insensitive dialects."""
+
+        self._setup_dependencies(test_context)
+        from orca.speech_manager import VoiceTypesPreferencesGrid
+
+        families = [
+            {"name": "Dutch", "lang": "nl", "dialect": ""},
+            {"name": "French (France)", "lang": "fr", "dialect": "FR"},
+            {"name": "French (Belgium)", "lang": "fr", "dialect": "BE"},
+        ]
+
+        grid_mock = test_context.Mock()
+        grid_mock._voices_grid.get_voice_families.return_value = families
+
+        result = VoiceTypesPreferencesGrid._families_for_language(grid_mock, code)
+        assert [family["name"] for family in result] == expected
