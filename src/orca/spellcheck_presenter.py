@@ -39,10 +39,8 @@ from orca import (
     debug,
     focus_manager,
     gsettings_registry,
-    guilabels,
     messages,
     object_properties,
-    preferences_grid_base,
     presentation_manager,
     speech_presenter,
 )
@@ -52,6 +50,7 @@ from orca.ax_utilities import AXUtilities
 
 if TYPE_CHECKING:
     from .scripts import default
+    from .spellcheck_presenter_preferences_grid import SpellCheckPreferencesGrid
 
 
 @dataclass
@@ -198,6 +197,9 @@ class SpellCheckPresenter:
 
     def create_preferences_grid(self) -> SpellCheckPreferencesGrid:
         """Create and return the spell check preferences grid."""
+
+        # pylint: disable-next=import-outside-toplevel
+        from .spellcheck_presenter_preferences_grid import SpellCheckPreferencesGrid
 
         return SpellCheckPreferencesGrid(self)
 
@@ -922,40 +924,6 @@ class SpellCheckPresenter:
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return error_widget, suggestions_list, change_to_entry
-
-
-class SpellCheckPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
-    """GtkGrid containing the Spell Check preferences page."""
-
-    _gsettings_schema = "spellcheck"
-
-    def __init__(self, presenter: SpellCheckPresenter) -> None:
-        controls = [
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.SPELL_CHECK_SPELL_ERROR,
-                getter=presenter.get_spell_error,
-                setter=presenter.set_spell_error,
-                prefs_key=SpellCheckPresenter.KEY_SPELL_ERROR,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.SPELL_CHECK_SPELL_SUGGESTION,
-                getter=presenter.get_spell_suggestion,
-                setter=presenter.set_spell_suggestion,
-                prefs_key=SpellCheckPresenter.KEY_SPELL_SUGGESTION,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.SPELL_CHECK_PRESENT_CONTEXT,
-                getter=presenter.get_present_context,
-                setter=presenter.set_present_context,
-                prefs_key=SpellCheckPresenter.KEY_PRESENT_CONTEXT,
-            ),
-        ]
-
-        super().__init__(
-            guilabels.SPELL_CHECK,
-            controls,
-            info_message=guilabels.SPELL_CHECK_DESCRIPTION,
-        )
 
 
 _presenter: SpellCheckPresenter = SpellCheckPresenter()

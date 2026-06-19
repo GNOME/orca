@@ -51,7 +51,6 @@ from . import (
     input_event_manager,
     keybindings,
     messages,
-    preferences_grid_base,
     presentation_manager,
     script_manager,
     speech_presenter,
@@ -67,6 +66,7 @@ from .extension import Extension
 
 if TYPE_CHECKING:
     from .dbus_service import UInt32
+    from .flat_review_presenter_preferences_grid import FlatReviewPreferencesGrid
     from .scripts import default
 
 
@@ -80,47 +80,6 @@ class FocusTracking(Enum):
     OFF = 0
     AUTO = 1
     ON = 2
-
-
-class FlatReviewPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
-    """GtkGrid containing the Flat Review preferences page."""
-
-    _gsettings_schema = "flat-review"
-
-    def __init__(self, presenter: FlatReviewPresenter) -> None:
-        controls: list[preferences_grid_base.ControlType] = [
-            preferences_grid_base.EnumPreferenceControl(
-                label=guilabels.FLAT_REVIEW_FOLLOW_FOCUS,
-                options=[
-                    guilabels.FLAT_REVIEW_FOLLOW_ALWAYS,
-                    guilabels.FLAT_REVIEW_FOLLOW_AUTOMATICALLY,
-                    guilabels.FLAT_REVIEW_FOLLOW_NEVER,
-                ],
-                values=[FocusTracking.ON.value, FocusTracking.AUTO.value, FocusTracking.OFF.value],
-                getter=presenter.get_focus_tracking,
-                setter=presenter.set_focus_tracking,
-                prefs_key=FlatReviewPresenter.KEY_FOCUS_TRACKING,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.FLAT_REVIEW_SPEAK_UPDATES,
-                getter=presenter.get_speaks_updates,
-                setter=presenter.set_speaks_updates,
-                prefs_key=FlatReviewPresenter.KEY_SPEAK_UPDATES,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.FLAT_REVIEW_DISPLAY_UPDATES,
-                getter=presenter.get_displays_updates,
-                setter=presenter.set_displays_updates,
-                prefs_key=FlatReviewPresenter.KEY_DISPLAY_UPDATES,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.FLAT_REVIEW_RESTRICT,
-                getter=presenter.get_is_restricted,
-                setter=presenter.set_is_restricted,
-                prefs_key=FlatReviewPresenter.KEY_RESTRICTED,
-            ),
-        ]
-        super().__init__(guilabels.FLAT_REVIEW, controls)
 
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.FlatReview", name="flat-review")
@@ -509,7 +468,9 @@ class FlatReviewPresenter(Extension):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
-    def _can_use_existing_context(self, is_panning: bool = False) -> bool:
+    def _can_use_existing_context(  # pylint: disable=too-many-return-statements
+        self, is_panning: bool = False
+    ) -> bool:
         """Returns True if the existing context can be used."""
 
         if not self._context:
@@ -771,7 +732,7 @@ class FlatReviewPresenter(Extension):
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
-        notify_user: bool = True,
+        notify_user: bool = True,  # pylint: disable=unused-argument
     ) -> bool:
         """Moves to the top left of the current window."""
 
@@ -1322,7 +1283,7 @@ class FlatReviewPresenter(Extension):
         return self._context.get_current_object()
 
     @dbus_service.command
-    def move_review_to_focus(
+    def move_review_to_focus(  # pylint: disable=unused-argument
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
@@ -1775,6 +1736,9 @@ class FlatReviewPresenter(Extension):
 
     def create_preferences_grid(self) -> FlatReviewPreferencesGrid:
         """Returns the GtkGrid containing the Flat Review preferences UI."""
+
+        # pylint: disable-next=import-outside-toplevel
+        from .flat_review_presenter_preferences_grid import FlatReviewPreferencesGrid
 
         return FlatReviewPreferencesGrid(self)
 

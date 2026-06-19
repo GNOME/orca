@@ -57,7 +57,6 @@ from . import (
     guilabels,
     input_event,
     messages,
-    preferences_grid_base,
     presentation_manager,
     script_manager,
 )
@@ -69,6 +68,7 @@ from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
+    from .mouse_review_preferences_grid import MousePreferencesGrid
     from .scripts import default
 
 
@@ -376,32 +376,6 @@ class _ItemContext:
         return True
 
 
-class MousePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
-    """GtkGrid containing the Mouse preferences page."""
-
-    _gsettings_schema = "mouse-review"
-
-    def __init__(self, reviewer: MouseReviewer) -> None:
-        """Initialize the preferences grid."""
-
-        controls = [
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.GENERAL_PRESENT_TOOLTIPS,
-                getter=reviewer.get_present_tooltips,
-                setter=reviewer.set_present_tooltips,
-                prefs_key=MouseReviewer.KEY_PRESENT_TOOLTIPS,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.GENERAL_SPEAK_OBJECT_UNDER_MOUSE,
-                getter=reviewer.get_is_enabled,
-                setter=reviewer.set_is_enabled,
-                prefs_key=MouseReviewer.KEY_ENABLED,
-            ),
-        ]
-
-        super().__init__(guilabels.MOUSE, controls, info_message=guilabels.MOUSE_WAYLAND_WARNING)
-
-
 @gsettings_registry.get_registry().gsettings_schema(
     "org.gnome.Orca.MouseReview",
     name="mouse-review",
@@ -478,6 +452,9 @@ class MouseReviewer(Extension):
 
     def create_preferences_grid(self) -> MousePreferencesGrid:
         """Returns the GtkGrid containing the mouse preferences UI."""
+
+        # pylint: disable-next=import-outside-toplevel
+        from .mouse_review_preferences_grid import MousePreferencesGrid
 
         return MousePreferencesGrid(self)
 

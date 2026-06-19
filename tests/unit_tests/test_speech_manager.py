@@ -800,7 +800,7 @@ class TestSpeechManager:
             "default": {"established": True, "family": {"name": "luca"}}
         }
 
-        def fake_get_voice_properties(
+        def fake_get_voice_properties(  # pylint: disable=unused-argument
             voice_type: str = "", app_name=None, voice_set: str = ""
         ) -> dict:
             return established.get(voice_type, {})
@@ -1426,7 +1426,8 @@ class TestVoicesPreferencesGridUI:
         self._setup_dependencies(test_context)
 
         from orca import gsettings_registry
-        from orca.speech_manager import SpeechManager, VoicesPreferencesGrid
+        from orca.speech_manager import SpeechManager
+        from orca.speech_manager_preferences_grid import VoicesPreferencesGrid
 
         registry = gsettings_registry.get_registry()
         registry.set_runtime_value("speech", "speech-server-factory", "spiel")
@@ -1491,7 +1492,7 @@ class TestVoiceTypesPreferencesGridMatching:
         """Test that families are matched by language with case-insensitive dialects."""
 
         self._setup_dependencies(test_context)
-        from orca.speech_manager import VoiceTypesPreferencesGrid
+        from orca.speech_manager_preferences_grid import VoiceTypesPreferencesGrid
 
         families = [
             {"name": "Dutch", "lang": "nl", "dialect": ""},

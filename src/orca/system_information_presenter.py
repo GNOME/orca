@@ -53,7 +53,6 @@ from . import (
     keybindings,
     keynames,
     messages,
-    preferences_grid_base,
     presentation_manager,
 )
 from .command import Command, KeyboardCommand
@@ -105,55 +104,9 @@ class TimeFormat(Enum):
         return self.name.lower()
 
 
-class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
-    """GtkGrid containing the Time and Date preferences page."""
-
-    _gsettings_schema = "system-information"
-
-    def __init__(self, presenter: SystemInformationPresenter) -> None:
-        """Initialize the preferences grid."""
-
-        # Generate display options (strftime examples) and values (format strings)
-        date_options = []
-        date_values = []
-        for fmt in DateFormat:
-            example = time.strftime(fmt.value, time.localtime())
-            date_options.append(example)
-            date_values.append(fmt.value)
-
-        time_options = []
-        time_values = []
-        for time_fmt in TimeFormat:
-            example = time.strftime(time_fmt.value, time.localtime())
-            time_options.append(example)
-            time_values.append(time_fmt.value)
-
-        controls = [
-            preferences_grid_base.EnumPreferenceControl(
-                label=guilabels.GENERAL_DATE_FORMAT,
-                options=date_options,
-                values=date_values,
-                getter=presenter._get_date_format_string,
-                setter=presenter._set_date_format_string,
-                prefs_key=SystemInformationPresenter.KEY_DATE_FORMAT,
-                member_of=guilabels.TIME_AND_DATE,
-            ),
-            preferences_grid_base.EnumPreferenceControl(
-                label=guilabels.GENERAL_TIME_FORMAT,
-                options=time_options,
-                values=time_values,
-                getter=presenter._get_time_format_string,
-                setter=presenter._set_time_format_string,
-                prefs_key=SystemInformationPresenter.KEY_TIME_FORMAT,
-                member_of=guilabels.TIME_AND_DATE,
-            ),
-        ]
-
-        super().__init__(guilabels.KB_GROUP_SYSTEM_INFORMATION, controls)
-
-
 if TYPE_CHECKING:
     from .scripts import default
+    from .system_information_presenter_preferences_grid import TimeAndDatePreferencesGrid
 
 
 @gsettings_registry.get_registry().gsettings_schema(
@@ -222,6 +175,9 @@ class SystemInformationPresenter(Extension):
 
     def create_time_and_date_preferences_grid(self) -> TimeAndDatePreferencesGrid:
         """Returns the GtkGrid containing the time and date preferences UI."""
+
+        # pylint: disable-next=import-outside-toplevel
+        from .system_information_presenter_preferences_grid import TimeAndDatePreferencesGrid
 
         return TimeAndDatePreferencesGrid(self)
 

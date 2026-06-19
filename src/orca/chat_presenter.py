@@ -36,7 +36,6 @@ from . import (
     input_event,
     input_event_manager,
     messages,
-    preferences_grid_base,
     presentation_manager,
     script_manager,
 )
@@ -52,6 +51,7 @@ if TYPE_CHECKING:
 
     from gi.repository import Atspi
 
+    from .chat_presenter_preferences_grid import ChatPreferencesGrid
     from .dbus_service import UInt32
     from .scripts import default
 
@@ -360,67 +360,6 @@ class Chat:
         return float(attr.get("scale", "1")) < 1 or int(attr.get("weight", "400")) < 400
 
 
-class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
-    """Preferences grid for Chat settings."""
-
-    _gsettings_schema = "chat"
-
-    def __init__(self, presenter: ChatPresenter) -> None:
-        options = [
-            guilabels.CHAT_SPEAK_MESSAGES_ALL,
-            guilabels.CHAT_SPEAK_MESSAGES_ACTIVE_CHANNEL,
-            guilabels.CHAT_SPEAK_MESSAGES_ALL_IF_FOCUSED,
-            guilabels.CHAT_SPEAK_MESSAGES_ACTIVE,
-        ]
-        values = [
-            ChatMessageVerbosity.ALL_ANY_APP.value,
-            ChatMessageVerbosity.CURRENT_ANY_APP.value,
-            ChatMessageVerbosity.ALL_ACTIVE_APP.value,
-            ChatMessageVerbosity.CURRENT_ACTIVE_APP.value,
-        ]
-
-        controls: list[
-            preferences_grid_base.BooleanPreferenceControl
-            | preferences_grid_base.SelectionPreferenceControl
-        ] = [
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.CHAT_SPEAK_ROOM_NAME,
-                getter=presenter.get_speak_room_name,
-                setter=presenter.set_speak_room_name,
-                prefs_key=ChatPresenter.KEY_SPEAK_ROOM_NAME,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.CHAT_SPEAK_ROOM_NAME_LAST,
-                getter=presenter.get_speak_room_name_last,
-                setter=presenter.set_speak_room_name_last,
-                prefs_key=ChatPresenter.KEY_SPEAK_ROOM_NAME_LAST,
-                determine_sensitivity=presenter.get_speak_room_name,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.CHAT_ANNOUNCE_BUDDY_TYPING,
-                getter=presenter.get_announce_buddy_typing,
-                setter=presenter.set_announce_buddy_typing,
-                prefs_key=ChatPresenter.KEY_ANNOUNCE_BUDDY_TYPING,
-            ),
-            preferences_grid_base.BooleanPreferenceControl(
-                label=guilabels.CHAT_SEPARATE_MESSAGE_HISTORIES,
-                getter=presenter.get_room_histories,
-                setter=presenter.set_room_histories,
-                prefs_key=ChatPresenter.KEY_ROOM_HISTORIES,
-            ),
-            preferences_grid_base.SelectionPreferenceControl(
-                label=guilabels.CHAT_SPEAK_MESSAGES_FROM,
-                options=options,
-                values=values,
-                getter=presenter.get_message_verbosity,
-                setter=presenter.set_message_verbosity,
-                prefs_key=ChatPresenter.KEY_MESSAGE_VERBOSITY,
-            ),
-        ]
-
-        super().__init__(guilabels.KB_GROUP_CHAT, controls)
-
-
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Chat", name="chat")
 class ChatPresenter(Extension):
     """Presenter for chat preferences and commands."""
@@ -480,6 +419,9 @@ class ChatPresenter(Extension):
 
     def create_preferences_grid(self) -> ChatPreferencesGrid:
         """Create and return the chat preferences grid."""
+
+        # pylint: disable-next=import-outside-toplevel
+        from .chat_presenter_preferences_grid import ChatPreferencesGrid
 
         return ChatPreferencesGrid(self)
 

@@ -300,6 +300,12 @@ class TestProfilePreferencesGridUI:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Set up mocks for ProfilePreferencesGrid dependencies."""
 
+        from gi.repository import Gtk  # pylint: disable=no-name-in-module
+
+        initialized, _argv = Gtk.init_check()  # pylint: disable=no-value-for-parameter
+        if not initialized:
+            pytest.skip("GTK display is not available")
+
         additional_modules = [
             "orca.braille",
             "orca.orca",
@@ -348,7 +354,8 @@ class TestProfilePreferencesGridUI:
         from gi.repository import Gtk  # pylint: disable=no-name-in-module
 
         self._setup_dependencies(test_context)
-        from orca.profile_manager import ProfileManager, ProfilePreferencesGrid
+        from orca.profile_manager import ProfileManager
+        from orca.profile_manager_preferences_grid import ProfilePreferencesGrid
 
         manager = ProfileManager()
 
@@ -363,7 +370,8 @@ class TestProfilePreferencesGridUI:
         """Test ProfilePreferencesGrid has auto_grid with controls."""
 
         self._setup_dependencies(test_context)
-        from orca.profile_manager import ProfileManager, ProfilePreferencesGrid
+        from orca.profile_manager import ProfileManager
+        from orca.profile_manager_preferences_grid import ProfilePreferencesGrid
 
         manager = ProfileManager()
 
@@ -378,7 +386,8 @@ class TestProfilePreferencesGridUI:
         """Test save_settings returns a dictionary."""
 
         self._setup_dependencies(test_context)
-        from orca.profile_manager import ProfileManager, ProfilePreferencesGrid
+        from orca.profile_manager import ProfileManager
+        from orca.profile_manager_preferences_grid import ProfilePreferencesGrid
 
         manager = ProfileManager()
 
@@ -395,7 +404,8 @@ class TestProfilePreferencesGridUI:
         """Test has_changes returns False initially."""
 
         self._setup_dependencies(test_context)
-        from orca.profile_manager import ProfileManager, ProfilePreferencesGrid
+        from orca.profile_manager import ProfileManager
+        from orca.profile_manager_preferences_grid import ProfilePreferencesGrid
 
         manager = ProfileManager()
 
@@ -410,7 +420,8 @@ class TestProfilePreferencesGridUI:
         """Test reload clears pending renames."""
 
         self._setup_dependencies(test_context)
-        from orca.profile_manager import ProfileManager, ProfilePreferencesGrid
+        from orca.profile_manager import ProfileManager
+        from orca.profile_manager_preferences_grid import ProfilePreferencesGrid
 
         manager = ProfileManager()
 
@@ -430,7 +441,8 @@ class TestProfilePreferencesGridUI:
         """Test app-specific grid disables startup profile setter."""
 
         self._setup_dependencies(test_context)
-        from orca.profile_manager import ProfileManager, ProfilePreferencesGrid
+        from orca.profile_manager import ProfileManager
+        from orca.profile_manager_preferences_grid import ProfilePreferencesGrid
 
         manager = ProfileManager()
 
@@ -445,7 +457,8 @@ class TestProfilePreferencesGridUI:
         """Test _validate_profile_name detects existing profile names."""
 
         self._setup_dependencies(test_context)
-        from orca.profile_manager import ProfileManager, ProfilePreferencesGrid
+        from orca.profile_manager import ProfileManager
+        from orca.profile_manager_preferences_grid import ProfilePreferencesGrid
 
         manager = ProfileManager()
 
@@ -463,7 +476,8 @@ class TestProfilePreferencesGridUI:
         """Test _validate_profile_name allows unique names."""
 
         self._setup_dependencies(test_context)
-        from orca.profile_manager import ProfileManager, ProfilePreferencesGrid
+        from orca.profile_manager import ProfileManager
+        from orca.profile_manager_preferences_grid import ProfilePreferencesGrid
 
         manager = ProfileManager()
 
@@ -484,7 +498,8 @@ class TestProfilePreferencesGridUI:
         """Test _get_available_profiles includes pending renames."""
 
         self._setup_dependencies(test_context)
-        from orca.profile_manager import ProfileManager, ProfilePreferencesGrid
+        from orca.profile_manager import ProfileManager
+        from orca.profile_manager_preferences_grid import ProfilePreferencesGrid
 
         manager = ProfileManager()
 
