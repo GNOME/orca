@@ -140,9 +140,6 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._current_category: str | None = None
         self._captured_key: tuple[str, int, int] = ("", 0, 0)
         self._orca_modifier_pressed_during_capture: bool = False
-        self._binding_cleared: bool = False
-        self._pending_key_bindings: dict[str, str] = {}
-        self._pending_already_bound_message_id: int | None = None
         # Store modified keybindings separately so they survive apply_user_overrides()
         self._modified_keybindings: dict[str, keybindings.KeyBinding | None] = {}
         self._keybinding_being_edited: str | None = None
@@ -310,8 +307,6 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             )
 
         self._categories_listbox.show_all()
-
-        self._pending_key_bindings = {}
 
     @staticmethod
     def _separator_header_func(row, before, _user_data):
@@ -735,183 +730,6 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         # Same key pressed again - increment click count
         self._captured_key = (event_string, event_state, click_count + 1)
         return True
-
-    def _create_key_capture_dialog(
-        self,
-        description: str,
-        command: KeyboardCommand,
-    ) -> tuple[Gtk.Dialog, Gtk.Entry]:
-        """Creates and returns a dialog and entry configured for key capture."""
-
-        dialog = Gtk.Dialog(transient_for=self.get_toplevel())
-        dialog.set_modal(True)
-        dialog.set_title(guilabels.KB_HEADER_KEY_BINDING)
-        dialog.set_default_size(500, -1)
-
-        content = dialog.get_content_area()
-        content.set_spacing(18)
-        content.set_margin_start(24)
-        content.set_margin_end(24)
-        content.set_margin_top(24)
-        content.set_margin_bottom(24)
-
-        desc_label = Gtk.Label(label=description)
-        desc_label.set_line_wrap(True)
-        desc_label.set_xalign(0)
-        content.pack_start(desc_label, False, False, 0)
-
-        entry = Gtk.Entry()
-        entry.set_editable(False)
-        entry.set_can_focus(True)
-        entry.set_width_chars(40)
-
-        binding = command.get_keybinding()
-        if binding and binding.keysymstring:
-            current_text = self._format_keybinding_text(binding)
-            entry.set_text(current_text or "")
-        else:
-            entry.set_text("")
-
-        content.pack_start(entry, False, False, 0)
-
-        instructions = Gtk.Label(label=messages.KB_ENTER_NEW_KEY)
-        instructions.set_line_wrap(True)
-        instructions.set_xalign(0)
-        instructions.get_style_context().add_class("dim-label")
-        content.pack_start(instructions, False, False, 0)
-
-        dialog.add_button(guilabels.BTN_CANCEL, Gtk.ResponseType.CANCEL)
-        dialog.add_button(guilabels.BTN_OK, Gtk.ResponseType.OK)
-
-        return dialog, entry
-
-    def _handle_dialog_key_press(
-        self,
-        event: Gdk.EventKey,
-        entry: Gtk.Entry,
-        handler_name: str,
-        group_label: str,
-        dialog: Gtk.Dialog,
-    ) -> bool:
-        """Handles a key press event in the key capture dialog."""
-
-        if event.keyval == Gdk.KEY_Escape:
-            dialog.response(Gtk.ResponseType.CANCEL)
-            return True
-
-        if event.keyval in (Gdk.KEY_Tab, Gdk.KEY_ISO_Left_Tab):
-            return False
-
-        if not self._process_key_captured(event) or not self._captured_key[0]:
-            return False
-
-        key_name, modifiers, click_count = self._captured_key
-
-        if key_name in ("Delete", "BackSpace") and not modifiers:
-            entry.set_text("")
-            presentation_manager.get_manager().present_message(messages.KB_DELETED)
-            self._captured_key = ("", 0, 0)
-            self._binding_cleared = True
-            return True
-
-        modifier_names = keybindings.get_modifier_names(modifiers)
-        click_count_string = keynames.get_click_count_string(click_count)
-        if click_count_string:
-            click_count_string = f" ({click_count_string})"
-        new_string = modifier_names + key_name + click_count_string
-
-        entry.set_text(new_string)
-
-        description_dup = self._find_duplicate_binding(
-            key_name,
-            modifiers,
-            click_count,
-            handler_name,
-            group_label,
-        )
-        if description_dup:
-            msg = messages.KB_ALREADY_BOUND % description_dup
-        else:
-            msg = messages.KB_CAPTURED % new_string
-        presentation_manager.get_manager().present_message(msg)
-
-        return True
-
-    def _apply_dialog_key_capture(
-        self,
-        response: Gtk.ResponseType,
-        command: KeyboardCommand,
-    ) -> None:
-        """Applies the result of a key capture dialog."""
-
-        if response != Gtk.ResponseType.OK:
-            return
-
-        handler_name = command.get_name()
-        key_name, modifiers, click_count = self._captured_key
-        if self._binding_cleared:
-            command.set_keybinding(None)
-            self._modified_keybindings[handler_name] = None
-        elif key_name:
-            new_kb = keybindings.KeyBinding(key_name, modifiers, click_count)
-            command.set_keybinding(new_kb)
-            self._modified_keybindings[handler_name] = new_kb
-
-        self._has_unsaved_changes = True
-        if self._current_category:
-            self._populate_category_detail(self._current_category)
-
-    def _show_key_capture_dialog(self, command: KeyboardCommand) -> None:
-        """Show dialog to capture a new key binding for the given command."""
-
-        description = command.get_description() or command.get_name()
-        handler_name = command.get_name()
-
-        dialog, entry = self._create_key_capture_dialog(description, command)
-
-        self._captured_key = ("", 0, 0)
-        self._binding_cleared = False
-        self._keybinding_being_edited = handler_name
-
-        script = script_manager.get_manager().get_active_script()
-        assert script
-
-        def on_key_press(_widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
-            return self._handle_dialog_key_press(
-                event,
-                entry,
-                handler_name,
-                command.get_group_label(),
-                dialog,
-            )
-
-        entry.connect("key-press-event", on_key_press)
-
-        presentation_manager.get_manager().present_message(messages.KB_ENTER_NEW_KEY)
-
-        dialog.show_all()
-        entry.grab_focus()
-        entry.grab_add()
-
-        while Gtk.events_pending():  # pylint: disable=no-value-for-parameter
-            Gtk.main_iteration()
-
-        saved_commands = command_manager.get_manager().get_keyboard_commands()
-        orca_modifier_manager.get_manager().remove_grabs_for_orca_modifiers()
-        command_manager.get_manager().set_active_commands({}, "Capturing keys")
-        ax_device_manager.get_manager().unmap_all_modifiers()
-
-        response = dialog.run()
-
-        entry.grab_remove()
-        command_manager.get_manager().set_active_commands(saved_commands, "Done capturing keys")
-        orca_modifier_manager.get_manager().add_grabs_for_orca_modifiers()
-
-        self._apply_dialog_key_capture(response, command)
-
-        dialog.destroy()
-        self._captured_key = ("", 0, 0)
-        self._keybinding_being_edited = None
 
     # pylint: enable=no-member
 
