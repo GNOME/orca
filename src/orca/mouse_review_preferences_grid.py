@@ -34,6 +34,42 @@ class MousePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Mouse preferences page."""
 
     _gsettings_schema = "mouse-review"
+    _documentation_summary = (
+        "Use these settings to control what Orca presents as the pointer moves."
+    )
+
+    @classmethod
+    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+        """Return documentation metadata for mouse preferences."""
+
+        return preferences_grid_base.PreferencePanelDoc(
+            title=guilabels.MOUSE,
+            panel_id="mouse_review.mouse",
+            description=guilabels.MOUSE_WAYLAND_WARNING,
+            schema="mouse-review",
+            controls=(
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.GENERAL_PRESENT_TOOLTIPS,
+                    kind="switch",
+                    summary=(
+                        "Controls whether Orca presents tooltips that appear when the "
+                        "pointer hovers over an object."
+                    ),
+                    schema="mouse-review",
+                    key=mouse_review.MouseReviewer.KEY_PRESENT_TOOLTIPS,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.GENERAL_SPEAK_OBJECT_UNDER_MOUSE,
+                    kind="switch",
+                    summary=(
+                        "Controls whether Orca speaks the object under the mouse pointer "
+                        "as the pointer moves."
+                    ),
+                    schema="mouse-review",
+                    key=mouse_review.MouseReviewer.KEY_ENABLED,
+                ),
+            ),
+        )
 
     def __init__(self, reviewer: MouseReviewer) -> None:
         """Initialize the preferences grid."""

@@ -38,6 +38,29 @@ if TYPE_CHECKING:
 class SleepModePreferencesGrid(preferences_grid_base.PreferencesGridBase):
     """Preferences grid for sleep mode settings."""
 
+    @classmethod
+    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+        """Return documentation metadata for sleep mode preferences."""
+
+        return preferences_grid_base.PreferencePanelDoc(
+            title=guilabels.KB_GROUP_SLEEP_MODE,
+            panel_id="manual.sleep-mode",
+            summary="Use these settings to choose applications where Orca should automatically "
+            "enter sleep mode.",
+            description=guilabels.SLEEP_MODE_INFO,
+            schema="sleep-mode",
+            controls=(
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.SLEEP_MODE_APPS,
+                    kind="list",
+                    summary="Lists the applications for which you can enable automatic sleep mode.",
+                    schema="sleep-mode",
+                    key="apps",
+                    dynamic_values=True,
+                ),
+            ),
+        )
+
     def __init__(self, manager: SleepModeManager) -> None:
         super().__init__(guilabels.KB_GROUP_SLEEP_MODE)
         self._manager: SleepModeManager = manager

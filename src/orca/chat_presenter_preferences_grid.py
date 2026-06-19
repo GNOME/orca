@@ -33,6 +33,100 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """Preferences grid for Chat settings."""
 
     _gsettings_schema = "chat"
+    _documentation_summary = (
+        "Use these settings to control how chat messages and chat-room context are presented."
+    )
+
+    @classmethod
+    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+        """Return documentation metadata for chat preferences."""
+
+        return preferences_grid_base.PreferencePanelDoc(
+            title=guilabels.KB_GROUP_CHAT,
+            panel_id="chat_presenter.chat",
+            description=(
+                "Chat settings control how Orca presents messages, room names, typing "
+                "status, and message history in supported chat applications."
+            ),
+            schema="chat",
+            controls=(
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.CHAT_SPEAK_ROOM_NAME,
+                    kind="switch",
+                    summary="Controls whether Orca includes the chat room name with messages.",
+                    schema="chat",
+                    key=chat_presenter.ChatPresenter.KEY_SPEAK_ROOM_NAME,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.CHAT_SPEAK_ROOM_NAME_LAST,
+                    kind="switch",
+                    summary=(
+                        "Controls whether the chat room name is spoken after the message "
+                        "instead of before it."
+                    ),
+                    schema="chat",
+                    key=chat_presenter.ChatPresenter.KEY_SPEAK_ROOM_NAME_LAST,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.CHAT_ANNOUNCE_BUDDY_TYPING,
+                    kind="switch",
+                    summary="Controls whether Orca announces when people are typing.",
+                    schema="chat",
+                    key=chat_presenter.ChatPresenter.KEY_ANNOUNCE_BUDDY_TYPING,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.CHAT_SEPARATE_MESSAGE_HISTORIES,
+                    kind="switch",
+                    summary=(
+                        "Controls whether Orca keeps separate recent-message histories for "
+                        "each chat room."
+                    ),
+                    schema="chat",
+                    key=chat_presenter.ChatPresenter.KEY_ROOM_HISTORIES,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.CHAT_SPEAK_MESSAGES_FROM,
+                    kind="choice",
+                    summary="Controls which incoming chat messages Orca speaks automatically.",
+                    schema="chat",
+                    key=chat_presenter.ChatPresenter.KEY_MESSAGE_VERBOSITY,
+                    value_docs=(
+                        preferences_grid_base.PreferenceValueDoc(
+                            label=guilabels.CHAT_SPEAK_MESSAGES_ALL,
+                            value="all",
+                            summary=(
+                                "Speaks messages from all channels, even when another "
+                                "application is active."
+                            ),
+                        ),
+                        preferences_grid_base.PreferenceValueDoc(
+                            label=guilabels.CHAT_SPEAK_MESSAGES_ACTIVE_CHANNEL,
+                            value="focused-channel",
+                            summary=(
+                                "Speaks messages from the active channel, even when another "
+                                "application is active."
+                            ),
+                        ),
+                        preferences_grid_base.PreferenceValueDoc(
+                            label=guilabels.CHAT_SPEAK_MESSAGES_ALL_IF_FOCUSED,
+                            value="all-if-focused",
+                            summary=(
+                                "Speaks messages from all channels while the chat application "
+                                "is active."
+                            ),
+                        ),
+                        preferences_grid_base.PreferenceValueDoc(
+                            label=guilabels.CHAT_SPEAK_MESSAGES_ACTIVE,
+                            value="active-channel",
+                            summary=(
+                                "Speaks messages from the active channel while the chat "
+                                "application is active."
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        )
 
     def __init__(self, presenter: ChatPresenter) -> None:
         options = [

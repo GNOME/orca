@@ -34,6 +34,85 @@ class FlatReviewPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Flat Review preferences page."""
 
     _gsettings_schema = "flat-review"
+    _documentation_summary = (
+        "Use these settings to control how flat review follows focus and presents updates."
+    )
+
+    @classmethod
+    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+        """Return documentation metadata for flat review preferences."""
+
+        return preferences_grid_base.PreferencePanelDoc(
+            title=guilabels.FLAT_REVIEW,
+            panel_id="flat_review_presenter.flat-review",
+            description=(
+                "Flat review lets you examine the contents of the window as a sequence "
+                "of lines, items, and characters, independently of the focus and caret."
+            ),
+            schema="flat-review",
+            controls=(
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.FLAT_REVIEW_FOLLOW_FOCUS,
+                    kind="choice",
+                    summary=(
+                        "Controls when the flat review location moves to follow the focus or caret."
+                    ),
+                    schema="flat-review",
+                    key=flat_review_presenter.FlatReviewPresenter.KEY_FOCUS_TRACKING,
+                    value_docs=(
+                        preferences_grid_base.PreferenceValueDoc(
+                            label=guilabels.FLAT_REVIEW_FOLLOW_ALWAYS,
+                            value="on",
+                            summary=(
+                                "Flat review moves whenever the focus or caret location changes."
+                            ),
+                        ),
+                        preferences_grid_base.PreferenceValueDoc(
+                            label=guilabels.FLAT_REVIEW_FOLLOW_AUTOMATICALLY,
+                            value="auto",
+                            summary=(
+                                "Orca decides when moving flat review to the focus or caret "
+                                "location is useful."
+                            ),
+                        ),
+                        preferences_grid_base.PreferenceValueDoc(
+                            label=guilabels.FLAT_REVIEW_FOLLOW_NEVER,
+                            value="off",
+                            summary="Flat review stays where you last moved it.",
+                        ),
+                    ),
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.FLAT_REVIEW_SPEAK_UPDATES,
+                    kind="switch",
+                    summary=(
+                        "Controls whether Orca speaks content changes at the flat review location."
+                    ),
+                    schema="flat-review",
+                    key=flat_review_presenter.FlatReviewPresenter.KEY_SPEAK_UPDATES,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.FLAT_REVIEW_DISPLAY_UPDATES,
+                    kind="switch",
+                    summary=(
+                        "Controls whether Orca refreshes braille when content changes at "
+                        "the flat review location."
+                    ),
+                    schema="flat-review",
+                    key=flat_review_presenter.FlatReviewPresenter.KEY_DISPLAY_UPDATES,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.FLAT_REVIEW_RESTRICT,
+                    kind="switch",
+                    summary=(
+                        "Controls whether flat review is limited to the current object "
+                        "instead of the whole window."
+                    ),
+                    schema="flat-review",
+                    key=flat_review_presenter.FlatReviewPresenter.KEY_RESTRICTED,
+                ),
+            ),
+        )
 
     def __init__(self, presenter: FlatReviewPresenter) -> None:
         controls: list[preferences_grid_base.ControlType] = [

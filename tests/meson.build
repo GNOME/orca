@@ -60,6 +60,7 @@ unit_tests = [
   'unit_tests/test_orca_modifier_manager.py',
   'unit_tests/test_output_reader.py',
   'unit_tests/test_output_recorder.py',
+  'unit_tests/test_preferences_documentation_metadata.py',
   'unit_tests/test_preferences_grid_base.py',
   'unit_tests/test_presentation_manager.py',
   'unit_tests/test_pronunciation_dictionary_manager.py',

@@ -56,6 +56,51 @@ class CaretNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """Sub-grid for caret navigation settings within the Documents page."""
 
     _gsettings_schema = "caret-navigation"
+    _documentation_summary = (
+        "Use these settings to control Orca's caret navigation behavior in document content."
+    )
+
+    @classmethod
+    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+        """Return documentation metadata for caret navigation preferences."""
+
+        return preferences_grid_base.PreferencePanelDoc(
+            title=guilabels.KB_GROUP_CARET_NAVIGATION,
+            panel_id="document_presenter.caret-navigation",
+            description=(
+                "Caret navigation settings apply when moving through document content "
+                "with caret commands."
+            ),
+            schema="caret-navigation",
+            controls=(
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.KB_GROUP_CARET_NAVIGATION,
+                    kind="switch",
+                    summary="Controls whether Orca handles caret navigation commands.",
+                    schema="caret-navigation",
+                    key=caret_navigator.CaretNavigator.KEY_ENABLED,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.AUTOMATIC_FOCUS_MODE,
+                    kind="switch",
+                    summary=(
+                        "Controls whether caret navigation can cause Orca to switch to focus mode."
+                    ),
+                    schema="caret-navigation",
+                    key=caret_navigator.CaretNavigator.KEY_TRIGGERS_FOCUS_MODE,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.CONTENT_LAYOUT_MODE,
+                    kind="switch",
+                    summary=(
+                        "Controls whether Orca presents each full visual line or treats "
+                        "each object as if it were on a separate line."
+                    ),
+                    schema="caret-navigation",
+                    key=caret_navigator.CaretNavigator.KEY_LAYOUT_MODE,
+                ),
+            ),
+        )
 
     def __init__(self) -> None:
         nav = caret_navigator.get_navigator()
@@ -105,6 +150,77 @@ class StructuralNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesG
     """Sub-grid for structural navigation settings within the Documents page."""
 
     _gsettings_schema = "structural-navigation"
+    _documentation_summary = (
+        "Use these settings to control navigation by headings, landmarks, form fields, "
+        "and other document structures."
+    )
+
+    @classmethod
+    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+        """Return documentation metadata for structural navigation preferences."""
+
+        return preferences_grid_base.PreferencePanelDoc(
+            title=guilabels.KB_GROUP_STRUCTURAL_NAVIGATION,
+            panel_id="document_presenter.structural-navigation",
+            description=(
+                "Structural navigation settings apply when moving among document "
+                "elements such as headings, links, and form fields."
+            ),
+            schema="structural-navigation",
+            controls=(
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.KB_GROUP_STRUCTURAL_NAVIGATION,
+                    kind="switch",
+                    summary=(
+                        "Controls whether Orca's structural navigation commands are available."
+                    ),
+                    schema="structural-navigation",
+                    key=structural_navigator.StructuralNavigator.KEY_ENABLED,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.AUTOMATIC_FOCUS_MODE,
+                    kind="switch",
+                    summary=(
+                        "Controls whether structural navigation can cause Orca to switch "
+                        "to focus mode."
+                    ),
+                    schema="structural-navigation",
+                    key=structural_navigator.StructuralNavigator.KEY_TRIGGERS_FOCUS_MODE,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.STRUCTURAL_NAVIGATION_WRAP_AROUND,
+                    kind="switch",
+                    summary=(
+                        "Controls whether structural navigation wraps to the other end "
+                        "of the document."
+                    ),
+                    schema="structural-navigation",
+                    key=structural_navigator.StructuralNavigator.KEY_WRAPS,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.STRUCTURAL_NAVIGATION_LARGE_OBJECT_LENGTH,
+                    kind="spin",
+                    summary=(
+                        "Sets the minimum number of characters for an element to be "
+                        "included by large object navigation commands."
+                    ),
+                    schema="structural-navigation",
+                    key=structural_navigator.StructuralNavigator.KEY_LARGE_OBJECT_TEXT_LENGTH,
+                    minimum="1",
+                    maximum="500",
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.STRUCTURAL_NAVIGATION_SKIP_UNLABELED_IMAGES,
+                    kind="switch",
+                    summary=(
+                        "Controls whether image navigation skips images without accessible "
+                        "names or descriptions."
+                    ),
+                    schema="structural-navigation",
+                    key=structural_navigator.StructuralNavigator.KEY_SKIP_UNLABELED_IMAGES,
+                ),
+            ),
+        )
 
     def __init__(self) -> None:
         nav = structural_navigator.get_navigator()
@@ -170,6 +286,37 @@ class TableNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """Sub-grid for table navigation settings within the Documents page."""
 
     _gsettings_schema = "table-navigation"
+    _documentation_summary = "Use these settings to control table navigation behavior."
+
+    @classmethod
+    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+        """Return documentation metadata for table navigation preferences."""
+
+        return preferences_grid_base.PreferencePanelDoc(
+            title=guilabels.KB_GROUP_TABLE_NAVIGATION,
+            panel_id="document_presenter.table-navigation",
+            description=(
+                "Table navigation lets you use Orca commands to move by table cell, "
+                "row, and column in document content."
+            ),
+            schema="table-navigation",
+            controls=(
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.KB_GROUP_TABLE_NAVIGATION,
+                    kind="switch",
+                    summary=("Controls whether Orca's table navigation commands are available."),
+                    schema="table-navigation",
+                    key=table_navigator.TableNavigator.KEY_ENABLED,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.TABLE_SKIP_BLANK_CELLS,
+                    kind="switch",
+                    summary=("Controls whether table navigation skips empty cells."),
+                    schema="table-navigation",
+                    key=table_navigator.TableNavigator.KEY_SKIP_BLANK_CELLS,
+                ),
+            ),
+        )
 
     def __init__(self) -> None:
         nav = table_navigator.get_navigator()
@@ -208,6 +355,112 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
     """Sub-grid for native navigation settings within the Documents page."""
 
     _gsettings_schema = "document"
+    _documentation_summary = (
+        "Use these settings to control how Orca responds to application-provided navigation "
+        "and find results."
+    )
+
+    @classmethod
+    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+        """Return documentation metadata for native navigation preferences."""
+
+        return preferences_grid_base.PreferencePanelDoc(
+            title=guilabels.NATIVE_NAVIGATION,
+            panel_id="document_presenter.native-navigation",
+            description=(
+                "Native navigation settings apply to application-handled navigation, "
+                "find results, and page loading."
+            ),
+            schema="document",
+            controls=(
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.AUTOMATIC_FOCUS_MODE,
+                    kind="switch",
+                    summary=(
+                        "Controls whether native navigation can cause Orca to switch to focus mode."
+                    ),
+                    schema="document",
+                    key=document_presenter.DocumentPresenter.KEY_NATIVE_NAV_TRIGGERS_FOCUS_MODE,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.AUTO_STICKY_FOCUS_MODE,
+                    kind="switch",
+                    summary=(
+                        "Controls whether Orca detects web applications and Electron apps "
+                        "and stays in focus mode."
+                    ),
+                    schema="document",
+                    key=document_presenter.DocumentPresenter.KEY_AUTO_STICKY_FOCUS_MODE,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.FIND_OPTIONS,
+                    kind="group",
+                    summary=(
+                        "Controls what Orca speaks while you use an application's Find toolbar."
+                    ),
+                    controls=(
+                        preferences_grid_base.PreferenceControlDoc(
+                            label=guilabels.FIND_SPEAK_RESULTS,
+                            kind="switch",
+                            summary=(
+                                "Controls whether Orca speaks the line containing each find result."
+                            ),
+                        ),
+                        preferences_grid_base.PreferenceControlDoc(
+                            label=guilabels.FIND_ONLY_SPEAK_CHANGED_LINES,
+                            kind="switch",
+                            summary=(
+                                "Controls whether Orca speaks a find result only when it is "
+                                "on a different line than the previous result."
+                            ),
+                        ),
+                        preferences_grid_base.PreferenceControlDoc(
+                            label=guilabels.FIND_MINIMUM_MATCH_LENGTH,
+                            kind="spin",
+                            summary=(
+                                "Sets the minimum length a find result must have before "
+                                "Orca speaks it."
+                            ),
+                            schema="document",
+                            key=(
+                                document_presenter.DocumentPresenter.KEY_FIND_RESULTS_MINIMUM_LENGTH
+                            ),
+                            minimum="0",
+                            maximum="20",
+                        ),
+                    ),
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.PAGE_LOAD,
+                    kind="group",
+                    summary=(
+                        "Controls what Orca does when a document or web page finishes loading."
+                    ),
+                    controls=(
+                        preferences_grid_base.PreferenceControlDoc(
+                            label=guilabels.READ_PAGE_UPON_LOAD,
+                            kind="switch",
+                            summary=(
+                                "Controls whether Orca automatically starts reading a page "
+                                "when it first loads."
+                            ),
+                            schema="document",
+                            key=document_presenter.DocumentPresenter.KEY_SAY_ALL_ON_LOAD,
+                        ),
+                        preferences_grid_base.PreferenceControlDoc(
+                            label=guilabels.PAGE_SUMMARY_UPON_LOAD,
+                            kind="switch",
+                            summary=(
+                                "Controls whether Orca presents a page summary when a page "
+                                "first loads."
+                            ),
+                            schema="document",
+                            key=document_presenter.DocumentPresenter.KEY_PAGE_SUMMARY_ON_LOAD,
+                        ),
+                    ),
+                ),
+            ),
+        )
 
     def __init__(self, presenter: DocumentPresenter) -> None:
         self._presenter = presenter
@@ -284,6 +537,55 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
 
 class DocumentPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     """Main document preferences grid with categorized navigation settings."""
+
+    @classmethod
+    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+        """Return documentation metadata for the documents preferences landing page."""
+
+        return preferences_grid_base.PreferencePanelDoc(
+            title=guilabels.DOCUMENTS,
+            panel_id="manual.documents",
+            description=(
+                "Document settings control how Orca navigates and presents documents, "
+                "web pages, and math content.\n\n"
+                "Activate a row, or press Right Arrow, to open its settings. Press "
+                "Left Arrow, Escape, or Alt+Left to return to the list."
+            ),
+            show_available_settings=False,
+            controls=(
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.KB_GROUP_CARET_NAVIGATION,
+                    kind="page",
+                    summary="Opens settings for caret navigation in document content.",
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.KB_GROUP_STRUCTURAL_NAVIGATION,
+                    kind="page",
+                    summary=(
+                        "Opens settings for navigation by headings, landmarks, links, "
+                        "and other structures."
+                    ),
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.KB_GROUP_TABLE_NAVIGATION,
+                    kind="page",
+                    summary="Opens settings for table navigation in document content.",
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.NATIVE_NAVIGATION,
+                    kind="page",
+                    summary=(
+                        "Opens settings for application-provided navigation, find results, "
+                        "and page loading."
+                    ),
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.MATH_PRESENTATION,
+                    kind="page",
+                    summary="Opens settings for presenting and navigating math content.",
+                ),
+            ),
+        )
 
     def __init__(
         self,

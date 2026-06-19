@@ -65,6 +65,65 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
     # pylint: disable=no-member
 
+    @classmethod
+    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+        """Return documentation metadata for commands preferences."""
+
+        return preferences_grid_base.PreferencePanelDoc(
+            title=guilabels.COMMANDS,
+            panel_id="manual.commands",
+            description=(
+                "Commands settings let you choose the keyboard layout and screen reader "
+                "modifier keys, and customize command keybindings.\n\n"
+                "Orca commands are organized into groups in the Commands list. Choose a "
+                "group from the list, then activate its row, or press Right Arrow, to "
+                "open its commands. Press Left Arrow, Escape, or Alt+Left to return to "
+                "the list.\n\n"
+                "After choosing a command, press the new key combination, then press "
+                "Return to bind it. Press Delete or Backspace without modifiers to "
+                "unbind the command. Press Escape to cancel. Orca warns you if the "
+                "binding is already used by another active command."
+            ),
+            schema="keybindings",
+            controls=(
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.KEYBOARD_LAYOUT,
+                    kind="choice",
+                    summary="Choose the layout that matches your keyboard.",
+                    schema="keybindings",
+                    key="keyboard-layout",
+                    values=(guilabels.KEYBOARD_LAYOUT_DESKTOP, guilabels.KEYBOARD_LAYOUT_LAPTOP),
+                    value_docs=(
+                        preferences_grid_base.PreferenceValueDoc(
+                            label=guilabels.KEYBOARD_LAYOUT_DESKTOP,
+                            value="desktop",
+                            summary="Intended for use with a full-size keyboard. The desktop "
+                            "layout uses the numeric keypad for some Orca commands.",
+                        ),
+                        preferences_grid_base.PreferenceValueDoc(
+                            label=guilabels.KEYBOARD_LAYOUT_LAPTOP,
+                            value="laptop",
+                            summary="Intended for use with a laptop-style keyboard, including "
+                            "keyboards that lack a numeric keypad.",
+                        ),
+                    ),
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.MODIFIER_KEYS,
+                    kind="list",
+                    summary=(
+                        "Chooses which keys act as the Orca modifier for the selected "
+                        "keyboard layout."
+                    ),
+                    values=(
+                        guilabels.MODIFIER_INSERT,
+                        guilabels.MODIFIER_KP_INSERT,
+                        guilabels.MODIFIER_CAPS_LOCK,
+                    ),
+                ),
+            ),
+        )
+
     def __init__(
         self,
         script: default.Script,

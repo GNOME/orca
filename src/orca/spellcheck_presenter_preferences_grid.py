@@ -35,6 +35,51 @@ class SpellCheckPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Spell Check preferences page."""
 
     _gsettings_schema = "spellcheck"
+    _documentation_summary = (
+        "Use these settings to control what Orca announces while reviewing spelling and "
+        "grammar suggestions."
+    )
+
+    @classmethod
+    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+        """Return documentation metadata for spell-check preferences."""
+
+        return preferences_grid_base.PreferencePanelDoc(
+            title=guilabels.SPELL_CHECK,
+            panel_id="spellcheck_presenter.spell-check",
+            description=guilabels.SPELL_CHECK_DESCRIPTION,
+            schema="spellcheck",
+            controls=(
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.SPELL_CHECK_SPELL_ERROR,
+                    kind="switch",
+                    summary=(
+                        "Controls whether Orca spells out the current error after speaking it."
+                    ),
+                    schema="spellcheck",
+                    key=spellcheck_presenter.SpellCheckPresenter.KEY_SPELL_ERROR,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.SPELL_CHECK_SPELL_SUGGESTION,
+                    kind="switch",
+                    summary=(
+                        "Controls whether Orca spells out the current suggestion after speaking it."
+                    ),
+                    schema="spellcheck",
+                    key=spellcheck_presenter.SpellCheckPresenter.KEY_SPELL_SUGGESTION,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.SPELL_CHECK_PRESENT_CONTEXT,
+                    kind="switch",
+                    summary=(
+                        "Controls whether Orca presents the surrounding text in which the "
+                        "mistake occurred."
+                    ),
+                    schema="spellcheck",
+                    key=spellcheck_presenter.SpellCheckPresenter.KEY_PRESENT_CONTEXT,
+                ),
+            ),
+        )
 
     def __init__(self, presenter: SpellCheckPresenter) -> None:
         controls = [

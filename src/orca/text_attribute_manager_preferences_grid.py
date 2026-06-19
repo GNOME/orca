@@ -31,7 +31,13 @@ from gi.repository import Gdk, GObject, Gtk
 from . import gsettings_registry, guilabels, text_attribute_manager
 from .ax_text import AXTextAttribute
 from .ax_utilities import AXUtilities
-from .preferences_grid_base import PreferencesGridBase
+from .preferences_grid_base import (
+    PreferenceActionDoc,
+    PreferenceControlDoc,
+    PreferencePanelDoc,
+    PreferencesGridBase,
+    PreferenceValueDoc,
+)
 from .text_attribute_manager import PresentationMode
 
 
@@ -39,6 +45,81 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
     """Preferences grid for text attribute presentation settings."""
 
     # pylint: disable=no-member
+
+    @classmethod
+    def get_documentation(cls) -> PreferencePanelDoc:
+        """Return documentation metadata for text attribute preferences."""
+
+        return PreferencePanelDoc(
+            title=guilabels.TEXT_ATTRIBUTES,
+            panel_id="manual.text-attributes",
+            description=(
+                guilabels.TEXT_ATTRIBUTES_INFO
+                + "\n\n"
+                + "The list contains one row for each text attribute. Use the presentation "
+                + "mode on a row to choose whether Orca speaks the attribute, marks it in "
+                + "braille, does both, or does neither. Use the row menu or drag handle to "
+                + "change the order in which attributes are presented."
+            ),
+            schema="text-attributes",
+            show_available_settings=False,
+            controls=(
+                PreferenceControlDoc(
+                    label=guilabels.TEXT_ATTRIBUTES,
+                    kind="table",
+                    summary=(
+                        "Lists text attributes and lets you choose whether each one is spoken, "
+                        "marked in braille, both, or neither."
+                    ),
+                    value_docs=(
+                        PreferenceValueDoc(
+                            label=guilabels.TEXT_ATTRIBUTES_PRESENTATION_NONE,
+                            summary="Does not present the attribute.",
+                        ),
+                        PreferenceValueDoc(
+                            label=guilabels.PRESENTATION_SPEAK,
+                            summary="Speaks the attribute.",
+                        ),
+                        PreferenceValueDoc(
+                            label=guilabels.PRESENTATION_MARK_IN_BRAILLE,
+                            summary="Marks the attribute in braille.",
+                        ),
+                        PreferenceValueDoc(
+                            label=guilabels.PRESENTATION_SPEAK_AND_MARK,
+                            summary="Speaks the attribute and marks it in braille.",
+                        ),
+                    ),
+                    item_actions=(
+                        PreferenceActionDoc(
+                            label=guilabels.TEXT_ATTRIBUTES_REORDER,
+                            summary=(
+                                "Moves the selected text attribute earlier or later in the "
+                                "presentation order."
+                            ),
+                        ),
+                        PreferenceActionDoc(
+                            label=guilabels.TEXT_ATTRIBUTES_MOVE_TO_TOP,
+                            summary="Moves the selected text attribute to the top of the list.",
+                        ),
+                        PreferenceActionDoc(
+                            label=guilabels.TEXT_ATTRIBUTES_MOVE_UP_ONE,
+                            summary="Moves the selected text attribute up one position.",
+                        ),
+                        PreferenceActionDoc(
+                            label=guilabels.TEXT_ATTRIBUTES_MOVE_DOWN_ONE,
+                            summary="Moves the selected text attribute down one position.",
+                        ),
+                        PreferenceActionDoc(
+                            label=guilabels.TEXT_ATTRIBUTES_MOVE_TO_BOTTOM,
+                            summary=(
+                                "Moves the selected text attribute to the bottom of the list."
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        )
+
     def __init__(self) -> None:
         super().__init__(guilabels.TEXT_ATTRIBUTES)
         self._initializing: bool = True

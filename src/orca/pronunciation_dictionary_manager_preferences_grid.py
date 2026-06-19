@@ -54,6 +54,57 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
 
     BUILD_BATCH_SIZE: int = 50
 
+    @classmethod
+    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+        """Return documentation metadata for pronunciation preferences."""
+
+        return preferences_grid_base.PreferencePanelDoc(
+            title=guilabels.PRONUNCIATION,
+            panel_id="manual.pronunciation",
+            description=(
+                guilabels.PRONUNCIATION_DICTIONARY_INFO
+                + "\n\n"
+                + "The pronunciation dictionary is a list of words and the replacement text "
+                "Orca should speak. Add a new entry from the dictionary header. Edit or "
+                "delete an existing entry from its row."
+            ),
+            schema="pronunciations",
+            show_available_settings=False,
+            controls=(
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.PRONUNCIATION_DICTIONARY,
+                    kind="list",
+                    summary=(
+                        "Lists words and the replacement text Orca sends to speech before "
+                        "speaking them."
+                    ),
+                    actions=(
+                        preferences_grid_base.PreferenceActionDoc(
+                            label=guilabels.ADD_NEW_PRONUNCIATION,
+                            summary=(
+                                "Opens a dialog where you can add a word and the replacement "
+                                "text Orca should speak."
+                            ),
+                            placement="header",
+                        ),
+                    ),
+                    item_actions=(
+                        preferences_grid_base.PreferenceActionDoc(
+                            label=guilabels.EDIT_PRONUNCIATION,
+                            summary=(
+                                "Opens a dialog where you can change the selected pronunciation "
+                                "entry."
+                            ),
+                        ),
+                        preferences_grid_base.PreferenceActionDoc(
+                            label=guilabels.DICTIONARY_DELETE,
+                            summary="Removes the selected pronunciation entry.",
+                        ),
+                    ),
+                ),
+            ),
+        )
+
     def __init__(self, manager: PronunciationDictionaryManager, script: default.Script) -> None:
         super().__init__(guilabels.PRONUNCIATION)
         self._manager: PronunciationDictionaryManager = manager

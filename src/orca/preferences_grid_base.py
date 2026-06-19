@@ -23,6 +23,7 @@
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-nested-blocks
 # pylint: disable=too-many-positional-arguments
+# pylint: disable=too-many-instance-attributes
 
 """Base class for preference grid UI components."""
 
@@ -231,6 +232,56 @@ class SelectionPreferenceControl:  # pylint: disable=too-many-instance-attribute
     determine_sensitivity: Callable[[], bool] | None = None
     apply_immediately: bool = True
     tracks_changes: bool = True
+
+
+@dataclass(frozen=True)
+class PreferenceValueDoc:
+    """Documentation metadata for one preference value."""
+
+    label: str
+    value: str = ""
+    summary: str = ""
+
+
+@dataclass(frozen=True)
+class PreferenceActionDoc:
+    """Documentation metadata for an action associated with a preference control."""
+
+    label: str
+    summary: str = ""
+    placement: str = ""
+
+
+@dataclass(frozen=True)
+class PreferenceControlDoc:
+    """Documentation metadata for a preference control."""
+
+    label: str
+    kind: str
+    summary: str = ""
+    schema: str = ""
+    key: str = ""
+    values: tuple[str, ...] = ()
+    value_docs: tuple[PreferenceValueDoc, ...] = ()
+    actions: tuple[PreferenceActionDoc, ...] = ()
+    item_actions: tuple[PreferenceActionDoc, ...] = ()
+    controls: tuple[PreferenceControlDoc, ...] = ()
+    dynamic_values: bool = False
+    minimum: str = ""
+    maximum: str = ""
+
+
+@dataclass(frozen=True)
+class PreferencePanelDoc:
+    """Documentation metadata for a preference panel."""
+
+    title: str
+    panel_id: str = ""
+    summary: str = ""
+    description: str = ""
+    schema: str = ""
+    controls: tuple[PreferenceControlDoc, ...] = ()
+    show_available_settings: bool = True
 
 
 # pylint: disable=no-member
@@ -444,6 +495,12 @@ class PreferencesGridBase(Gtk.Grid):
         label = Gtk.Label(label=self._tab_label)
         label.show()
         return label
+
+    @classmethod
+    def get_documentation(cls) -> PreferencePanelDoc:
+        """Return documentation metadata for this preferences grid."""
+
+        return PreferencePanelDoc(title=cls.__name__)
 
     def has_changes(self) -> bool:
         """Return True if the user has made changes that haven't been written to file."""

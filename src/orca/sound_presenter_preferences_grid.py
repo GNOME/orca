@@ -38,6 +38,63 @@ if TYPE_CHECKING:
 class SoundProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Sound Progress Bars preferences page."""
 
+    _documentation_summary = (
+        "Use these settings to decide whether progress-bar changes are indicated with beeps."
+    )
+
+    @classmethod
+    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+        """Return documentation metadata for sound progress-bar preferences."""
+
+        return preferences_grid_base.PreferencePanelDoc(
+            title=guilabels.PROGRESS_BARS,
+            panel_id="sound_presenter.progress-bars",
+            description=(
+                "Progress bar settings control whether Orca indicates progress-bar "
+                "changes with beeps, how often beeps occur, and which progress bars apply."
+            ),
+            schema="sound",
+            controls=(
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.GENERAL_BEEP_UPDATES,
+                    kind="switch",
+                    summary="Controls whether Orca periodically beeps for progress-bar updates.",
+                    schema="sound",
+                    key=sound_presenter.SoundPresenter.KEY_BEEP_PROGRESS_BAR_UPDATES,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.GENERAL_FREQUENCY_SECS,
+                    kind="spin",
+                    summary="Sets how often Orca beeps for progress-bar updates.",
+                    schema="sound",
+                    key=sound_presenter.SoundPresenter.KEY_PROGRESS_BAR_BEEP_INTERVAL,
+                    minimum="0",
+                    maximum="100",
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.GENERAL_APPLIES_TO,
+                    kind="combo",
+                    summary="Selects which progress bars produce beep updates.",
+                    schema="sound",
+                    key=sound_presenter.SoundPresenter.KEY_PROGRESS_BAR_BEEP_VERBOSITY,
+                    value_docs=(
+                        preferences_grid_base.PreferenceValueDoc(
+                            label=guilabels.PROGRESS_BAR_ALL,
+                            summary="Progress bars in all applications.",
+                        ),
+                        preferences_grid_base.PreferenceValueDoc(
+                            label=guilabels.PROGRESS_BAR_APPLICATION,
+                            summary="Progress bars in the active application.",
+                        ),
+                        preferences_grid_base.PreferenceValueDoc(
+                            label=guilabels.PROGRESS_BAR_WINDOW,
+                            summary="Progress bars in the active window.",
+                        ),
+                    ),
+                ),
+            ),
+        )
+
     def __init__(self, presenter: SoundPresenter) -> None:
         controls: list[preferences_grid_base.ControlType] = [
             preferences_grid_base.BooleanPreferenceControl(
@@ -77,6 +134,46 @@ class SoundProgressBarsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid
 
 class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     """GtkGrid containing the Sound preferences page with nested stack navigation."""
+
+    @classmethod
+    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+        """Return documentation metadata for sound output preferences."""
+
+        return preferences_grid_base.PreferencePanelDoc(
+            title=guilabels.SOUND,
+            panel_id="manual.sound-output",
+            description=(
+                "Sound settings control Orca's non-speech audio output. The list contains "
+                "sound-related settings and pages.\n\n"
+                "Activate a row, or press Right Arrow, to open its settings. Press "
+                "Left Arrow, Escape, or Alt+Left to return to the list."
+            ),
+            show_available_settings=False,
+            schema="sound",
+            controls=(
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.SOUND_ENABLE_SOUND_SUPPORT,
+                    kind="switch",
+                    summary="Turns sound output on or off.",
+                    schema="sound",
+                    key=sound_presenter.SoundPresenter.KEY_ENABLED,
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.SOUND_VOLUME,
+                    kind="number",
+                    summary="Sets the volume for Orca sounds.",
+                    schema="sound",
+                    key=sound_presenter.SoundPresenter.KEY_VOLUME,
+                    minimum="0.0",
+                    maximum="1.0",
+                ),
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.PROGRESS_BARS,
+                    kind="page",
+                    summary="Opens settings for when Orca beeps for progress-bar updates.",
+                ),
+            ),
+        )
 
     def __init__(
         self,

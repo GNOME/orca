@@ -46,6 +46,44 @@ class ProfilePreferencesGrid(  # pylint: disable=too-many-instance-attributes
 
     # pylint: disable=no-member
 
+    @classmethod
+    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+        """Return documentation metadata for profile preferences."""
+
+        return preferences_grid_base.PreferencePanelDoc(
+            title="Profiles",
+            panel_id="manual.profiles",
+            summary="Use these settings to create, switch, rename, and remove Orca settings "
+            "profiles.",
+            description=guilabels.PROFILES_INFO,
+            controls=(
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.CURRENT_PROFILE,
+                    kind="list",
+                    summary="Lists the profiles you can select to use or modify.",
+                    dynamic_values=True,
+                    actions=(
+                        preferences_grid_base.PreferenceActionDoc(
+                            label=guilabels.PROFILE_CREATE_NEW,
+                            summary="Creates a new profile by copying the current profile's "
+                            "settings.",
+                            placement="header",
+                        ),
+                    ),
+                    item_actions=(
+                        preferences_grid_base.PreferenceActionDoc(
+                            label="Rename Profile",
+                            summary="Renames the selected profile.",
+                        ),
+                        preferences_grid_base.PreferenceActionDoc(
+                            label="Remove Profile",
+                            summary="Removes the selected profile.",
+                        ),
+                    ),
+                ),
+            ),
+        )
+
     def __init__(  # pylint: disable=too-many-arguments,too-many-positional-arguments
         self,
         manager: ProfileManager,

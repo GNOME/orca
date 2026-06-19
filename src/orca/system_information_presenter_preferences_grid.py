@@ -36,6 +36,51 @@ class TimeAndDatePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     """GtkGrid containing the Time and Date preferences page."""
 
     _gsettings_schema = "system-information"
+    _documentation_summary = (
+        "Use these settings to choose how Orca presents the current date and time."
+    )
+
+    @classmethod
+    def get_documentation(cls) -> preferences_grid_base.PreferencePanelDoc:
+        """Return documentation metadata for system-information preferences."""
+
+        return preferences_grid_base.PreferencePanelDoc(
+            title=guilabels.KB_GROUP_SYSTEM_INFORMATION,
+            panel_id="system_information_presenter.system-information",
+            description=(
+                "System information settings control how Orca presents information such as "
+                "the current date and time."
+            ),
+            controls=(
+                preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.TIME_AND_DATE,
+                    kind="group",
+                    summary="Controls how Orca presents the current date and time.",
+                    controls=(
+                        preferences_grid_base.PreferenceControlDoc(
+                            label=guilabels.GENERAL_DATE_FORMAT,
+                            kind="choice",
+                            summary=(
+                                "Selects the format Orca uses when presenting the current date."
+                            ),
+                            schema="system-information",
+                            # pylint: disable-next=line-too-long
+                            key=system_information_presenter.SystemInformationPresenter.KEY_DATE_FORMAT,
+                        ),
+                        preferences_grid_base.PreferenceControlDoc(
+                            label=guilabels.GENERAL_TIME_FORMAT,
+                            kind="choice",
+                            summary=(
+                                "Selects the format Orca uses when presenting the current time."
+                            ),
+                            schema="system-information",
+                            # pylint: disable-next=line-too-long
+                            key=system_information_presenter.SystemInformationPresenter.KEY_TIME_FORMAT,
+                        ),
+                    ),
+                ),
+            ),
+        )
 
     def __init__(self, presenter: SystemInformationPresenter) -> None:
         """Initialize the preferences grid."""
