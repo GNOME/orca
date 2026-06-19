@@ -106,11 +106,57 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                     ),
                 ),
                 preferences_grid_base.PreferenceControlDoc(
+                    label=guilabels.CHANGE_ANNOUNCEMENTS,
+                    kind="group",
+                    summary=(
+                        "Controls which document revision and text formatting changes Orca "
+                        "announces during Say All."
+                    ),
+                    controls=(
+                        preferences_grid_base.PreferenceControlDoc(
+                            label=guilabels.ANNOUNCE_TRACKED_CHANGES,
+                            kind="switch",
+                            summary=(
+                                "Controls whether Orca announces tracked changes during Say All."
+                            ),
+                            schema="say-all",
+                            key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_TRACKED_CHANGES,
+                        ),
+                        preferences_grid_base.PreferenceControlDoc(
+                            label=guilabels.TEXT_ATTRIBUTE_CHANGES,
+                            kind="choice",
+                            summary=(
+                                "Controls when Orca announces text formatting changes during "
+                                "Say All."
+                            ),
+                            schema="say-all",
+                            key=say_all_presenter.SayAllPresenter.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
+                            value_docs=(
+                                preferences_grid_base.PreferenceValueDoc(
+                                    label=guilabels.TEXT_ATTRIBUTE_CHANGES_OFF,
+                                    value="off",
+                                    summary="Does not announce formatting changes.",
+                                ),
+                                preferences_grid_base.PreferenceValueDoc(
+                                    label=guilabels.TEXT_ATTRIBUTE_CHANGES_EDITABLE,
+                                    value="editable-only",
+                                    summary="Announces formatting changes only in editable text.",
+                                ),
+                                preferences_grid_base.PreferenceValueDoc(
+                                    label=guilabels.TEXT_ATTRIBUTE_CHANGES_ALWAYS,
+                                    value="always",
+                                    summary="Always announces formatting changes.",
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+                preferences_grid_base.PreferenceControlDoc(
                     label=guilabels.ANNOUNCEMENTS,
                     kind="group",
                     summary=(
-                        "Controls which additional details Orca announces as Say All moves "
-                        "through the document."
+                        "Controls which document and web-container boundaries Orca announces "
+                        "during Say All."
                     ),
                     controls=(
                         preferences_grid_base.PreferenceControlDoc(
@@ -171,42 +217,6 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             schema="say-all",
                             key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_TABLE,
                         ),
-                        preferences_grid_base.PreferenceControlDoc(
-                            label=guilabels.ANNOUNCE_TRACKED_CHANGES,
-                            kind="switch",
-                            summary=(
-                                "Controls whether Orca announces tracked changes during Say All."
-                            ),
-                            schema="say-all",
-                            key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_TRACKED_CHANGES,
-                        ),
-                        preferences_grid_base.PreferenceControlDoc(
-                            label=guilabels.TEXT_ATTRIBUTE_CHANGES,
-                            kind="choice",
-                            summary=(
-                                "Controls when Orca announces text formatting changes during "
-                                "Say All."
-                            ),
-                            schema="say-all",
-                            key=say_all_presenter.SayAllPresenter.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
-                            value_docs=(
-                                preferences_grid_base.PreferenceValueDoc(
-                                    label=guilabels.TEXT_ATTRIBUTE_CHANGES_OFF,
-                                    value="off",
-                                    summary="Does not announce formatting changes.",
-                                ),
-                                preferences_grid_base.PreferenceValueDoc(
-                                    label=guilabels.TEXT_ATTRIBUTE_CHANGES_EDITABLE,
-                                    value="editable-only",
-                                    summary="Announces formatting changes only in editable text.",
-                                ),
-                                preferences_grid_base.PreferenceValueDoc(
-                                    label=guilabels.TEXT_ATTRIBUTE_CHANGES_ALWAYS,
-                                    value="always",
-                                    summary="Always announces formatting changes.",
-                                ),
-                            ),
-                        ),
                     ),
                 ),
             ),
@@ -246,6 +256,32 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 setter=presenter.set_structural_navigation_enabled,
                 prefs_key=say_all_presenter.SayAllPresenter.KEY_STRUCTURAL_NAVIGATION,
                 member_of=guilabels.SAY_ALL_REWIND_AND_FAST_FORWARD_BY,
+            ),
+            preferences_grid_base.BooleanPreferenceControl(
+                label=guilabels.ANNOUNCE_TRACKED_CHANGES,
+                getter=presenter.get_announce_tracked_changes,
+                setter=presenter.set_announce_tracked_changes,
+                prefs_key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_TRACKED_CHANGES,
+                member_of=guilabels.CHANGE_ANNOUNCEMENTS,
+                determine_sensitivity=self._only_speak_displayed_text_is_off,
+            ),
+            preferences_grid_base.EnumPreferenceControl(
+                label=guilabels.TEXT_ATTRIBUTE_CHANGES,
+                options=[
+                    guilabels.TEXT_ATTRIBUTE_CHANGES_OFF,
+                    guilabels.TEXT_ATTRIBUTE_CHANGES_EDITABLE,
+                    guilabels.TEXT_ATTRIBUTE_CHANGES_ALWAYS,
+                ],
+                values=[
+                    text_attribute_manager.TextAttributeChangeMode.OFF.value,
+                    text_attribute_manager.TextAttributeChangeMode.EDITABLE_ONLY.value,
+                    text_attribute_manager.TextAttributeChangeMode.ALWAYS.value,
+                ],
+                getter=presenter.get_text_attribute_change_mode_as_int,
+                setter=presenter.set_text_attribute_change_mode_from_int,
+                prefs_key=say_all_presenter.SayAllPresenter.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
+                member_of=guilabels.CHANGE_ANNOUNCEMENTS,
+                determine_sensitivity=self._only_speak_displayed_text_is_off,
             ),
             *[
                 preferences_grid_base.BooleanPreferenceControl(
@@ -305,37 +341,13 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         presenter.set_announce_table,
                         say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_TABLE,
                     ),
-                    (
-                        guilabels.ANNOUNCE_TRACKED_CHANGES,
-                        presenter.get_announce_tracked_changes,
-                        presenter.set_announce_tracked_changes,
-                        say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_TRACKED_CHANGES,
-                    ),
                 ]
             ],
-            preferences_grid_base.EnumPreferenceControl(
-                label=guilabels.TEXT_ATTRIBUTE_CHANGES,
-                options=[
-                    guilabels.TEXT_ATTRIBUTE_CHANGES_OFF,
-                    guilabels.TEXT_ATTRIBUTE_CHANGES_EDITABLE,
-                    guilabels.TEXT_ATTRIBUTE_CHANGES_ALWAYS,
-                ],
-                values=[
-                    text_attribute_manager.TextAttributeChangeMode.OFF.value,
-                    text_attribute_manager.TextAttributeChangeMode.EDITABLE_ONLY.value,
-                    text_attribute_manager.TextAttributeChangeMode.ALWAYS.value,
-                ],
-                getter=presenter.get_text_attribute_change_mode_as_int,
-                setter=presenter.set_text_attribute_change_mode_from_int,
-                prefs_key=say_all_presenter.SayAllPresenter.KEY_TEXT_ATTRIBUTE_CHANGE_MODE,
-                member_of=guilabels.ANNOUNCEMENTS,
-                determine_sensitivity=self._only_speak_displayed_text_is_off,
-            ),
         ]
 
         info = (
             f"{guilabels.SAY_ALL_INFO}\n\n{guilabels.SAY_ALL_NAVIGATION_INFO}"
-            f"\n\n{guilabels.SAY_ALL_CONTAINER_INFO}"
+            f"\n\n{guilabels.SAY_ALL_ANNOUNCEMENTS_INFO}"
         )
         super().__init__(guilabels.GENERAL_SAY_ALL, controls, info_message=info)
 

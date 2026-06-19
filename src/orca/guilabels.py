@@ -1661,12 +1661,13 @@ SAY_ALL_NAVIGATION_INFO = _(
     "to move within the document while Say All is active.",
 )
 
-# Translators: This is an informational message on the Say All preferences page
-# explaining the options found under the section with the following label:
-# ANNOUNCEMENTS = _("Container Announcements")
-SAY_ALL_CONTAINER_INFO = _(
-    'The "Container Announcements" settings determine what additional details '
-    "will be announced as Say All moves through the document.",
+# Translators: This is an informational message on the Say All preferences page.
+# It explains that the settings under Change Announcements and Container
+# Announcements control which additional details are spoken during Say All.
+SAY_ALL_ANNOUNCEMENTS_INFO = _(
+    "The announcement settings determine which document changes, text formatting "
+    "changes, and container boundaries will be announced as Say All moves through "
+    "the document.",
 )
 
 GENERAL_SPEAK_OBJECT_UNDER_MOUSE = _("Speak object under mo_use")
@@ -1983,6 +1984,10 @@ PAGE_LOAD = _("Page load")
 # Translators: This is the label for a group of settings related to what Orca
 # announces when entering/exiting different types of containers/ancestors.
 ANNOUNCEMENTS = _("Container Announcements")
+
+# Translators: This is the label for a group of settings which control
+# announcements of document revision markup and text formatting changes.
+CHANGE_ANNOUNCEMENTS = _("Change Announcements")
 
 # Translators: This is a heading for a group of toggleable widgets. Each one controls
 # whether Orca announces entering a type of container (e.g. blockquotes, forms,
