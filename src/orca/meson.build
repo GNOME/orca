@@ -161,6 +161,7 @@ lib_sources = [
   'speech_manager_preferences_grid.py',
   'speech_monitor.py',
   'speech_presenter.py',
+  'speech_presenter_preferences_grid.py',
   'spellcheck_presenter.py',
   'spellcheck_presenter_preferences_grid.py',
   'speechdispatcherfactory.py',
