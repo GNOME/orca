@@ -8,6 +8,7 @@ patch.*
 __pycache__/
 *.pyc
 subprojects/*/
+subprojects/.wraplock
 !subprojects/*.wrap
 !subprojects/packagefiles/
 !subprojects/packagefiles/mathcat-py/
