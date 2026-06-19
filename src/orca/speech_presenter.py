@@ -2709,7 +2709,7 @@ class SpeechPresenter(Extension):
             elif isinstance(element, list):
                 self._speak_list(element, acss)
             elif isinstance(element, str):
-                if element:
+                if element.strip(" "):
                     to_speak.append(element)
             elif isinstance(element, speech_generator.Pause):
                 if to_speak and to_speak[-1] and to_speak[-1][-1].isalnum():

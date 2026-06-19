@@ -307,3 +307,35 @@ def test_flat_review_markup_lines(web_text_attributes: NativeAppSession) -> None
         )
     finally:
         toggle_flat_review(session)
+
+
+@pytest.mark.native_app
+def test_caret_navigation_announces_formatting_changes(
+    web_text_attributes: NativeAppSession,
+) -> None:
+    """Tests that character navigation announces entering and leaving a bold run when enabled."""
+
+    session = web_text_attributes
+    reset_web_state(session)
+    session.orca.set("SpeechPresenter", "SpeakTextAttributeChanges", "always")
+
+    # Move to the final line, which has inline bold, italic, and underline runs.
+    for _ in range(7):
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        speech(session)
+
+    # Arrow right across the leading plain word to the start of the bold run.
+    for _ in range(6):
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+        speech(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+    assert speech(session) == ["bold", "h"]
+
+    # Arrow through the rest of the bold word; leaving it announces that bold ended.
+    for _ in range(4):
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+        speech(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+    assert speech(session) == ["bold off", " "]

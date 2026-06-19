@@ -91,7 +91,7 @@ def test_line_navigation_drops_error_message_from_content(
     capture(web_redundant_content)
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(web_redundant_content) == (
-        ["Status: ", "entry", "x", "invalid entry: Field is required.", " ", " done."],
+        ["Status: ", "entry", "x", "invalid entry: Field is required.", " done."],
         [
             BrailleLine(
                 1,

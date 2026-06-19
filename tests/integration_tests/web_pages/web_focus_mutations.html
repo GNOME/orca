@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Focus Mutations ready</title>
+<script>
+function replaceOnFocus(btn) {
+  const replacement = document.createElement("button");
+  replacement.type = "button";
+  replacement.id = "replaced";
+  replacement.textContent = "Replacement button";
+  btn.parentNode.replaceChild(replacement, btn);
+  replacement.focus();
+}
+function relabel(btn, text) {
+  btn.textContent = text;
+}
+</script>
+</head>
+<body>
+<h1>Focus mutations</h1>
+
+<p><button type="button" id="recreate" onfocus="replaceOnFocus(this)">Original button</button></p>
+
+<p><button type="button" id="relabel-similar" onclick="relabel(this, 'Saved')">Save</button></p>
+
+<p><button type="button" id="relabel-distinct" onclick="relabel(this, 'Loading complete')">Refresh</button></p>
+</body>
+</html>

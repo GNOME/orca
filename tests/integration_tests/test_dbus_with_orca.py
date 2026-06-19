@@ -299,6 +299,7 @@ MODULE_CONFIG = {
             "CycleCapitalizationStyle",
             "CyclePunctuationLevel",
             "CycleSynthesizer",
+            "CycleVoiceSet",
             "DecreasePitch",
             "DecreasePitchRange",
             "DecreaseRate",

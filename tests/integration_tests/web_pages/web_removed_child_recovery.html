@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Removed Child Recovery ready</title>
+<script>
+// Remove the doomed paragraph the first time the caret enters it past offset 0.
+// Chromium ignores a caret set at offset 0, so arming at offset 1 makes the removal
+// fire deterministically as the user arrows into the paragraph.
+let removed = false;
+function setup() {
+  document.addEventListener("selectionchange", () => {
+    if (removed) return;
+    const sel = document.getSelection();
+    const doomed = document.getElementById("doomed");
+    if (doomed && sel.anchorNode && doomed.contains(sel.anchorNode) && sel.anchorOffset >= 1) {
+      removed = true;
+      doomed.remove();
+    }
+  });
+}
+window.addEventListener("load", setup);
+</script>
+</head>
+<body>
+<h1>Go.</h1>
+<p id="doomed">Doomed.</p>
+<p id="after">After the doomed one.</p>
+<p id="last">Last paragraph here.</p>
+</body>
+</html>
