@@ -32,13 +32,12 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GLib, Gtk
 
 from . import (
-    cmdnames,
+    action_presenter_command_definitions,
     dbus_service,
     debug,
     focus_manager,
     guilabels,
     input_event,
-    keybindings,
     messages,
     presentation_manager,
     script_manager,
@@ -46,7 +45,6 @@ from . import (
 from .ax_action import AXAction
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
-from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -55,6 +53,7 @@ if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
+    from .command import Command
     from .scripts import default
 
 
@@ -70,17 +69,7 @@ class ActionPresenter(Extension):
         super().__init__()
 
     def _get_commands(self) -> list[Command]:
-        kb = keybindings.KeyBinding("a", keybindings.ORCA_SHIFT_MODIFIER_MASK)
-        return [
-            KeyboardCommand(
-                "show_actions_list",
-                self.show_actions_list,
-                self.GROUP_LABEL,
-                cmdnames.SHOW_ACTIONS_LIST,
-                desktop_keybinding=kb,
-                laptop_keybinding=kb,
-            ),
-        ]
+        return action_presenter_command_definitions.get_commands(self)
 
     def _restore_focus(self) -> None:
         """Restores focus to the object associated with the actions list."""

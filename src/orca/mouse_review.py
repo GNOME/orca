@@ -49,7 +49,6 @@ except Exception:  # noqa: S110 - Wnck is optional; unavailable on Wayland
 
 from . import (
     ax_device_manager,
-    cmdnames,
     dbus_service,
     debug,
     focus_manager,
@@ -57,6 +56,7 @@ from . import (
     guilabels,
     input_event,
     messages,
+    mouse_review_command_definitions,
     presentation_manager,
     script_manager,
 )
@@ -64,10 +64,10 @@ from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
+    from .command import Command
     from .mouse_review_preferences_grid import MousePreferencesGrid
     from .scripts import default
 
@@ -441,14 +441,7 @@ class MouseReviewer(Extension):
         super().__init__()
 
     def _get_commands(self) -> list[Command]:
-        return [
-            KeyboardCommand(
-                "toggleMouseReviewHandler",
-                self.toggle,
-                self.GROUP_LABEL,
-                cmdnames.MOUSE_REVIEW_TOGGLE,
-            ),
-        ]
+        return mouse_review_command_definitions.get_commands(self)
 
     def create_preferences_grid(self) -> MousePreferencesGrid:
         """Returns the GtkGrid containing the mouse preferences UI."""

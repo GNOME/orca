@@ -174,7 +174,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca import command_manager
@@ -203,7 +203,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -221,7 +221,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca import gsettings_registry
@@ -244,7 +244,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_manager = test_context.Mock()
@@ -270,7 +270,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_manager = test_context.Mock()
@@ -309,7 +309,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_cmd_mgr = test_context.Mock()
@@ -340,7 +340,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_cmd_mgr = test_context.Mock()
@@ -440,7 +440,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -478,7 +478,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -514,7 +514,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -537,7 +537,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -565,7 +565,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -626,7 +626,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -687,7 +687,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -731,7 +731,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -775,7 +775,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -803,7 +803,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -832,7 +832,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -876,7 +876,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -923,7 +923,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -950,7 +950,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -994,7 +994,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -1029,7 +1029,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
 
@@ -1067,7 +1067,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca import table_navigator
@@ -1109,7 +1109,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -1168,7 +1168,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -1210,7 +1210,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -1233,7 +1233,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -1261,7 +1261,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -1303,7 +1303,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -1330,7 +1330,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -1359,7 +1359,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -1410,7 +1410,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -1440,7 +1440,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -1472,7 +1472,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -1526,7 +1526,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -1553,7 +1553,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -1582,7 +1582,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -1631,7 +1631,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -1658,7 +1658,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -1687,7 +1687,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -1742,7 +1742,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -1769,7 +1769,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -1812,7 +1812,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -1842,7 +1842,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -1887,7 +1887,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -1914,7 +1914,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -1962,7 +1962,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -1992,7 +1992,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         mock_current_cell = test_context.Mock(spec=Atspi.Accessible)
@@ -2046,7 +2046,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -2081,7 +2081,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator
@@ -2136,7 +2136,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
 
@@ -2235,7 +2235,7 @@ class TestTableNavigator:
         mock_keybindings_instance = test_context.Mock()
         mock_keybindings_class.return_value = mock_keybindings_instance
         test_context.patch(
-            "orca.table_navigator.keybindings.KeyBindings",
+            "orca.table_navigator_command_definitions.keybindings.KeyBindings",
             new=mock_keybindings_class,
         )
         from orca.table_navigator import TableNavigator

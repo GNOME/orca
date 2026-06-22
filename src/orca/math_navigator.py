@@ -22,13 +22,12 @@
 
 from __future__ import annotations
 
-from functools import partial, wraps
+from functools import wraps
 from typing import TYPE_CHECKING
 
 from . import (
     braille,
     clipboard,
-    cmdnames,
     command_manager,
     dbus_service,
     debug,
@@ -36,7 +35,7 @@ from . import (
     focus_manager,
     guilabels,
     input_event,
-    keybindings,
+    math_navigator_command_definitions,
     math_presenter,
     messages,
     presentation_manager,
@@ -44,7 +43,6 @@ from . import (
 )
 from .ax_utilities_math import AXUtilitiesMath
 from .ax_utilities_text import CaretSetReason
-from .command import KeyboardCommand
 from .extension import Extension
 
 try:
@@ -65,7 +63,6 @@ class MathNavigator(Extension):
     """Provides interactive exploration of math expressions via MathCAT."""
 
     GROUP_LABEL = guilabels.KB_GROUP_MATH_NAVIGATION
-    _PLACE_MARKER_PREFIXES = ("MoveTo", "SetPlacemarker", "Read", "Describe")
 
     def __init__(self) -> None:
         self._active: bool = False
@@ -106,151 +103,8 @@ class MathNavigator(Extension):
     def get_supported_commands(self) -> list[str]:
         """Returns the MathCAT navigation commands supported by this navigator."""
 
-        commands = [mathcat_cmd for _name, mathcat_cmd, _desc, _kb in self._get_commands_data()]
-        for digit in range(10):
-            commands.extend(f"{prefix}{digit}" for prefix in self._PLACE_MARKER_PREFIXES)
-        return commands
+        return math_navigator_command_definitions.get_supported_commands()
 
-    @staticmethod
-    def _get_commands_data() -> list[tuple[str, str, str, keybindings.KeyBinding | None]]:
-        """Returns (command_name, mathcat_command, description, binding) for each command."""
-
-        no_mod = keybindings.NO_MODIFIER_MASK
-        ctrl = keybindings.CTRL_MODIFIER_MASK
-        shift = keybindings.SHIFT_MODIFIER_MASK
-        control_shift = keybindings.CTRL_SHIFT_MODIFIER_MASK
-        kb = keybindings.KeyBinding
-
-        return [
-            ("math_move_next", "MoveNext", cmdnames.MATH_NAV_MOVE_NEXT, kb("Right", no_mod)),
-            (
-                "math_move_previous",
-                "MovePrevious",
-                cmdnames.MATH_NAV_MOVE_PREVIOUS,
-                kb("Left", no_mod),
-            ),
-            ("math_zoom_in", "ZoomIn", cmdnames.MATH_NAV_ZOOM_IN, kb("Down", no_mod)),
-            ("math_zoom_out", "ZoomOut", cmdnames.MATH_NAV_ZOOM_OUT, kb("Up", no_mod)),
-            (
-                "math_zoom_in_all",
-                "ZoomInAll",
-                cmdnames.MATH_NAV_ZOOM_IN_ALL,
-                kb("Down", control_shift),
-            ),
-            (
-                "math_zoom_out_all",
-                "ZoomOutAll",
-                cmdnames.MATH_NAV_ZOOM_OUT_ALL,
-                kb("Up", control_shift),
-            ),
-            ("math_move_start", "MoveStart", cmdnames.MATH_NAV_MOVE_START, kb("Home", no_mod)),
-            ("math_move_end", "MoveEnd", cmdnames.MATH_NAV_MOVE_END, kb("End", no_mod)),
-            (
-                "math_move_line_start",
-                "MoveLineStart",
-                cmdnames.MATH_NAV_MOVE_LINE_START,
-                kb("Home", ctrl),
-            ),
-            ("math_move_line_end", "MoveLineEnd", cmdnames.MATH_NAV_MOVE_LINE_END, kb("End", ctrl)),
-            (
-                "math_move_column_start",
-                "MoveColumnStart",
-                cmdnames.MATH_NAV_MOVE_COLUMN_START,
-                kb("Home", shift),
-            ),
-            (
-                "math_move_column_end",
-                "MoveColumnEnd",
-                cmdnames.MATH_NAV_MOVE_COLUMN_END,
-                kb("End", shift),
-            ),
-            (
-                "math_move_cell_previous",
-                "MoveCellPrevious",
-                cmdnames.MATH_NAV_MOVE_CELL_PREVIOUS,
-                kb("Left", ctrl),
-            ),
-            (
-                "math_move_cell_next",
-                "MoveCellNext",
-                cmdnames.MATH_NAV_MOVE_CELL_NEXT,
-                kb("Right", ctrl),
-            ),
-            ("math_move_cell_up", "MoveCellUp", cmdnames.MATH_NAV_MOVE_CELL_UP, kb("Up", ctrl)),
-            (
-                "math_move_cell_down",
-                "MoveCellDown",
-                cmdnames.MATH_NAV_MOVE_CELL_DOWN,
-                kb("Down", ctrl),
-            ),
-            (
-                "math_move_last_location",
-                "MoveLastLocation",
-                cmdnames.MATH_NAV_MOVE_LAST_LOCATION,
-                kb("BackSpace", no_mod),
-            ),
-            (
-                "math_toggle_zoom_lock_up",
-                "ToggleZoomLockUp",
-                cmdnames.MATH_NAV_TOGGLE_ZOOM_LOCK_UP,
-                kb("Up", shift),
-            ),
-            (
-                "math_toggle_zoom_lock_down",
-                "ToggleZoomLockDown",
-                cmdnames.MATH_NAV_TOGGLE_ZOOM_LOCK_DOWN,
-                kb("Down", shift),
-            ),
-            (
-                "math_toggle_speech_mode",
-                "ToggleSpeakMode",
-                cmdnames.MATH_NAV_TOGGLE_SPEECH_MODE,
-                kb("space", shift),
-            ),
-            (
-                "math_read_previous",
-                "ReadPrevious",
-                cmdnames.MATH_NAV_READ_PREVIOUS,
-                kb("Left", shift),
-            ),
-            ("math_read_next", "ReadNext", cmdnames.MATH_NAV_READ_NEXT, kb("Right", shift)),
-            (
-                "math_read_current",
-                "ReadCurrent",
-                cmdnames.MATH_NAV_READ_CURRENT,
-                kb("space", no_mod),
-            ),
-            (
-                "math_read_cell_current",
-                "ReadCellCurrent",
-                cmdnames.MATH_NAV_READ_CELL_CURRENT,
-                kb("space", ctrl),
-            ),
-            (
-                "math_describe_previous",
-                "DescribePrevious",
-                cmdnames.MATH_NAV_DESCRIBE_PREVIOUS,
-                kb("Left", control_shift),
-            ),
-            (
-                "math_describe_next",
-                "DescribeNext",
-                cmdnames.MATH_NAV_DESCRIBE_NEXT,
-                kb("Right", control_shift),
-            ),
-            (
-                "math_describe_current",
-                "DescribeCurrent",
-                cmdnames.MATH_NAV_DESCRIBE_CURRENT,
-                kb("space", control_shift),
-            ),
-            ("math_where_am_i", "WhereAmI", cmdnames.MATH_NAV_WHERE_AM_I, None),
-            ("math_where_am_i_all", "WhereAmIAll", cmdnames.MATH_NAV_WHERE_AM_I_ALL, None),
-            ("math_exit", "Exit", cmdnames.MATH_NAV_EXIT, kb("Escape", no_mod)),
-            ("math_copy", "Copy", cmdnames.MATH_NAV_COPY, None),
-        ]
-
-    # pylint: disable-next=too-many-locals
     def _register_commands(self) -> None:
         if libmathcat_py is None:
             msg = f"EXTENSION: {self.module_name} MathCAT not available. Skipping command setup."
@@ -258,65 +112,9 @@ class MathNavigator(Extension):
             return
 
         manager = command_manager.get_manager()
-
-        for name, mathcat_cmd, description, binding in self._get_commands_data():
-            if mathcat_cmd == "Exit":
-                handler = self.exit_math_mode
-            elif mathcat_cmd == "Copy":
-                handler = self.copy_to_clipboard
-            else:
-                handler = partial(self._execute_command, mathcat_cmd)
-            manager.add_command(
-                KeyboardCommand(
-                    name,
-                    handler,
-                    self.GROUP_LABEL,
-                    description,
-                    desktop_keybinding=binding,
-                    laptop_keybinding=binding,
-                ),
-            )
-
-        no_mod = keybindings.NO_MODIFIER_MASK
-        ctrl = keybindings.CTRL_MODIFIER_MASK
-        shift = keybindings.SHIFT_MODIFIER_MASK
-        control_shift = keybindings.CTRL_SHIFT_MODIFIER_MASK
-        marker_types = [
-            (no_mod, self._PLACE_MARKER_PREFIXES[0], cmdnames.MATH_NAV_GOTO_PLACE_MARKER),
-            (ctrl, self._PLACE_MARKER_PREFIXES[1], cmdnames.MATH_NAV_SET_PLACE_MARKER),
-            (shift, self._PLACE_MARKER_PREFIXES[2], cmdnames.MATH_NAV_READ_PLACE_MARKER),
-            (
-                control_shift,
-                self._PLACE_MARKER_PREFIXES[3],
-                cmdnames.MATH_NAV_DESCRIBE_PLACE_MARKER,
-            ),
-        ]
-
-        for digit in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]:
-            for modifier_mask, cmd_prefix, description in marker_types:
-                cmd_name = f"math_{cmd_prefix.lower()}_{digit}"
-                manager.add_command(
-                    KeyboardCommand(
-                        cmd_name,
-                        partial(self._execute_command, f"{cmd_prefix}{digit}"),
-                        self.GROUP_LABEL,
-                        description,
-                        desktop_keybinding=keybindings.KeyBinding(digit, modifier_mask),
-                        laptop_keybinding=keybindings.KeyBinding(digit, modifier_mask),
-                    ),
-                )
-
+        for command in math_navigator_command_definitions.get_commands(self):
+            manager.add_command(command)
         manager.set_group_suspended(self.GROUP_LABEL, True)
-
-        manager.add_command(
-            KeyboardCommand(
-                "math_enter",
-                self.enter_math_mode_command,
-                self.GROUP_LABEL,
-                cmdnames.MATH_NAV_ENTER,
-                is_group_toggle=True,
-            ),
-        )
 
         msg = f"EXTENSION: {self.module_name} Commands set up."
         debug.print_message(debug.LEVEL_INFO, msg, True)

@@ -35,7 +35,6 @@ from typing import TYPE_CHECKING
 
 from . import (
     ax_event_synthesizer,
-    cmdnames,
     dbus_service,
     debug,
     focus_manager,
@@ -43,9 +42,9 @@ from . import (
     guilabels,
     input_event,
     input_event_manager,
-    keybindings,
     messages,
     presentation_manager,
+    say_all_presenter_command_definitions,
     speech_presenter,
     speechserver,
     structural_navigator,
@@ -55,7 +54,6 @@ from .acss import ACSS
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .ax_utilities_text import CaretSetReason
-from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -66,6 +64,7 @@ if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
+    from .command import Command
     from .say_all_presenter_preferences_grid import SayAllPreferencesGrid
     from .scripts import default
 
@@ -129,22 +128,7 @@ class SayAllPresenter(Extension):
         super().__init__()
 
     def _get_commands(self) -> list[Command]:
-        return [
-            KeyboardCommand(
-                "sayAllHandler",
-                self.say_all,
-                self.GROUP_LABEL,
-                cmdnames.SAY_ALL,
-                desktop_keybinding=keybindings.KeyBinding(
-                    "KP_Add",
-                    keybindings.NO_MODIFIER_MASK,
-                ),
-                laptop_keybinding=keybindings.KeyBinding(
-                    "semicolon",
-                    keybindings.ORCA_MODIFIER_MASK,
-                ),
-            ),
-        ]
+        return say_all_presenter_command_definitions.get_commands(self)
 
     def create_preferences_grid(self) -> SayAllPreferencesGrid:
         """Returns the GtkGrid containing the Say All preferences UI."""

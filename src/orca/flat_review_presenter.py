@@ -40,16 +40,15 @@ from . import (
     braille,
     braille_presenter,
     clipboard,
-    cmdnames,
     dbus_service,
     debug,
     flat_review,
+    flat_review_presenter_command_definitions,
     focus_manager,
     gsettings_registry,
     guilabels,
     input_event,
     input_event_manager,
-    keybindings,
     messages,
     presentation_manager,
     script_manager,
@@ -61,10 +60,10 @@ from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_utilities_event import TextEventReason
 from .ax_utilities_text import CaretSetReason
-from .command import BrailleCommand, Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
+    from .command import Command
     from .dbus_service import UInt32
     from .flat_review_presenter_preferences_grid import FlatReviewPreferencesGrid
     from .scripts import default
@@ -235,218 +234,8 @@ class FlatReviewPresenter(Extension):
 
         self._registered_app = None
 
-    # pylint: disable-next=too-many-locals
     def _get_commands(self) -> list[Command]:
-        def kb(keysym: str, mod: int, clicks: int = 1) -> keybindings.KeyBinding:
-            return keybindings.KeyBinding(keysym, mod, click_count=clicks)
-
-        cmd_bindings: dict[
-            str,
-            tuple[keybindings.KeyBinding | None, keybindings.KeyBinding | None],
-        ] = {
-            "toggleFlatReviewModeHandler": (
-                kb("KP_Subtract", keybindings.NO_MODIFIER_MASK),
-                kb("p", keybindings.ORCA_MODIFIER_MASK),
-            ),
-            "flatReviewSayAllHandler": (
-                kb("KP_Add", keybindings.NO_MODIFIER_MASK, 2),
-                kb("semicolon", keybindings.ORCA_MODIFIER_MASK, 2),
-            ),
-            "reviewHomeHandler": (
-                kb("KP_Home", keybindings.ORCA_MODIFIER_MASK),
-                kb("u", keybindings.ORCA_CTRL_MODIFIER_MASK),
-            ),
-            "reviewPreviousLineHandler": (
-                kb("KP_Home", keybindings.NO_MODIFIER_MASK),
-                kb("u", keybindings.ORCA_MODIFIER_MASK),
-            ),
-            "reviewCurrentLineHandler": (
-                kb("KP_Up", keybindings.NO_MODIFIER_MASK),
-                kb("i", keybindings.ORCA_MODIFIER_MASK),
-            ),
-            "reviewSpellCurrentLineHandler": (
-                kb("KP_Up", keybindings.NO_MODIFIER_MASK, 2),
-                kb("i", keybindings.ORCA_MODIFIER_MASK, 2),
-            ),
-            "reviewPhoneticCurrentLineHandler": (
-                kb("KP_Up", keybindings.NO_MODIFIER_MASK, 3),
-                kb("i", keybindings.ORCA_MODIFIER_MASK, 3),
-            ),
-            "reviewNextLineHandler": (
-                kb("KP_Page_Up", keybindings.NO_MODIFIER_MASK),
-                kb("o", keybindings.ORCA_MODIFIER_MASK),
-            ),
-            "reviewEndHandler": (
-                kb("KP_Page_Up", keybindings.ORCA_MODIFIER_MASK),
-                kb("o", keybindings.ORCA_CTRL_MODIFIER_MASK),
-            ),
-            "reviewPreviousItemHandler": (
-                kb("KP_Left", keybindings.NO_MODIFIER_MASK),
-                kb("j", keybindings.ORCA_MODIFIER_MASK),
-            ),
-            "reviewAboveHandler": (
-                kb("KP_Left", keybindings.ORCA_MODIFIER_MASK),
-                kb("j", keybindings.ORCA_CTRL_MODIFIER_MASK),
-            ),
-            "reviewCurrentItemHandler": (
-                kb("KP_Begin", keybindings.NO_MODIFIER_MASK),
-                kb("k", keybindings.ORCA_MODIFIER_MASK),
-            ),
-            "reviewSpellCurrentItemHandler": (
-                kb("KP_Begin", keybindings.NO_MODIFIER_MASK, 2),
-                kb("k", keybindings.ORCA_MODIFIER_MASK, 2),
-            ),
-            "reviewPhoneticCurrentItemHandler": (
-                kb("KP_Begin", keybindings.NO_MODIFIER_MASK, 3),
-                kb("k", keybindings.ORCA_MODIFIER_MASK, 3),
-            ),
-            "reviewCurrentAccessibleHandler": (
-                kb("KP_Begin", keybindings.ORCA_MODIFIER_MASK),
-                kb("k", keybindings.ORCA_CTRL_MODIFIER_MASK),
-            ),
-            "reviewNextItemHandler": (
-                kb("KP_Right", keybindings.NO_MODIFIER_MASK),
-                kb("l", keybindings.ORCA_MODIFIER_MASK),
-            ),
-            "reviewBelowHandler": (
-                kb("KP_Right", keybindings.ORCA_MODIFIER_MASK),
-                kb("l", keybindings.ORCA_CTRL_MODIFIER_MASK),
-            ),
-            "reviewPreviousCharacterHandler": (
-                kb("KP_End", keybindings.NO_MODIFIER_MASK),
-                kb("m", keybindings.ORCA_MODIFIER_MASK),
-            ),
-            "reviewEndOfLineHandler": (
-                kb("KP_End", keybindings.ORCA_MODIFIER_MASK),
-                kb("m", keybindings.ORCA_CTRL_MODIFIER_MASK),
-            ),
-            "reviewCurrentCharacterHandler": (
-                kb("KP_Down", keybindings.NO_MODIFIER_MASK),
-                kb("comma", keybindings.ORCA_MODIFIER_MASK),
-            ),
-            "reviewSpellCurrentCharacterHandler": (
-                kb("KP_Down", keybindings.NO_MODIFIER_MASK, 2),
-                kb("comma", keybindings.ORCA_MODIFIER_MASK, 2),
-            ),
-            "reviewUnicodeCurrentCharacterHandler": (
-                kb("KP_Down", keybindings.NO_MODIFIER_MASK, 3),
-                kb("comma", keybindings.ORCA_MODIFIER_MASK, 3),
-            ),
-            "reviewNextCharacterHandler": (
-                kb("KP_Page_Down", keybindings.NO_MODIFIER_MASK),
-                kb("period", keybindings.ORCA_MODIFIER_MASK),
-            ),
-        }
-
-        commands_data = [
-            (
-                "toggleFlatReviewModeHandler",
-                self.toggle_flat_review_mode,
-                cmdnames.TOGGLE_FLAT_REVIEW,
-            ),
-            ("reviewHomeHandler", self.go_home, cmdnames.REVIEW_HOME),
-            ("reviewEndHandler", self.go_end, cmdnames.REVIEW_END),
-            ("reviewBottomLeftHandler", self.go_bottom_left, cmdnames.REVIEW_BOTTOM_LEFT),
-            ("reviewPreviousLineHandler", self.go_previous_line, cmdnames.REVIEW_PREVIOUS_LINE),
-            ("reviewCurrentLineHandler", self.present_line, cmdnames.REVIEW_CURRENT_LINE),
-            ("reviewNextLineHandler", self.go_next_line, cmdnames.REVIEW_NEXT_LINE),
-            ("reviewSpellCurrentLineHandler", self.spell_line, cmdnames.REVIEW_SPELL_CURRENT_LINE),
-            (
-                "reviewPhoneticCurrentLineHandler",
-                self.phonetic_line,
-                cmdnames.REVIEW_PHONETIC_CURRENT_LINE,
-            ),
-            ("reviewEndOfLineHandler", self.go_end_of_line, cmdnames.REVIEW_END_OF_LINE),
-            ("reviewPreviousItemHandler", self.go_previous_item, cmdnames.REVIEW_PREVIOUS_ITEM),
-            ("reviewCurrentItemHandler", self.present_item, cmdnames.REVIEW_CURRENT_ITEM),
-            ("reviewNextItemHandler", self.go_next_item, cmdnames.REVIEW_NEXT_ITEM),
-            ("reviewSpellCurrentItemHandler", self.spell_item, cmdnames.REVIEW_SPELL_CURRENT_ITEM),
-            (
-                "reviewPhoneticCurrentItemHandler",
-                self.phonetic_item,
-                cmdnames.REVIEW_PHONETIC_CURRENT_ITEM,
-            ),
-            (
-                "reviewPreviousCharacterHandler",
-                self.go_previous_character,
-                cmdnames.REVIEW_PREVIOUS_CHARACTER,
-            ),
-            (
-                "reviewCurrentCharacterHandler",
-                self.present_character,
-                cmdnames.REVIEW_CURRENT_CHARACTER,
-            ),
-            (
-                "reviewSpellCurrentCharacterHandler",
-                self.spell_character,
-                cmdnames.REVIEW_SPELL_CURRENT_CHARACTER,
-            ),
-            (
-                "reviewUnicodeCurrentCharacterHandler",
-                self.unicode_current_character,
-                cmdnames.REVIEW_UNICODE_CURRENT_CHARACTER,
-            ),
-            ("reviewNextCharacterHandler", self.go_next_character, cmdnames.REVIEW_NEXT_CHARACTER),
-            (
-                "reviewCurrentAccessibleHandler",
-                self.present_object,
-                cmdnames.REVIEW_CURRENT_ACCESSIBLE,
-            ),
-            ("reviewAboveHandler", self.go_above, cmdnames.REVIEW_ABOVE),
-            ("reviewBelowHandler", self.go_below, cmdnames.REVIEW_BELOW),
-            ("showContentsHandler", self.show_contents, cmdnames.FLAT_REVIEW_SHOW_CONTENTS),
-            ("flatReviewCopyHandler", self.copy_to_clipboard, cmdnames.FLAT_REVIEW_COPY),
-            ("flatReviewAppendHandler", self.append_to_clipboard, cmdnames.FLAT_REVIEW_APPEND),
-            ("flatReviewSayAllHandler", self.say_all, cmdnames.SAY_ALL_FLAT_REVIEW),
-            (
-                "flatReviewToggleRestrictHandler",
-                self.toggle_restrict,
-                cmdnames.TOGGLE_RESTRICT_FLAT_REVIEW,
-            ),
-            ("move_review_to_focus", self.move_review_to_focus, cmdnames.MOVE_REVIEW_TO_FOCUS),
-            ("move_focus_to_review", self.move_focus_to_review, cmdnames.MOVE_FOCUS_TO_REVIEW),
-        ]
-
-        braille_bindings: dict[str, tuple[int, ...]] = {}
-        bindings = [
-            ("reviewAboveHandler", braille.BRLAPI_KEY_CMD_LNUP),
-            ("reviewBelowHandler", braille.BRLAPI_KEY_CMD_LNDN),
-            ("toggleFlatReviewModeHandler", braille.BRLAPI_KEY_CMD_FREEZE),
-            ("reviewHomeHandler", braille.BRLAPI_KEY_CMD_TOP_LEFT),
-            ("reviewBottomLeftHandler", braille.BRLAPI_KEY_CMD_BOT_LEFT),
-        ]
-        for name, key in bindings:
-            if key is not None:
-                braille_bindings[name] = (key,)
-        if not braille_bindings:
-            msg = "EXTENSION: FlatReviewPresenter Braille bindings unavailable."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        commands: list[Command] = []
-        for name, function, description in commands_data:
-            desktop_kb, laptop_kb = cmd_bindings.get(name, (None, None))
-            commands.append(
-                KeyboardCommand(
-                    name,
-                    function,
-                    self.GROUP_LABEL,
-                    description,
-                    desktop_keybinding=desktop_kb,
-                    laptop_keybinding=laptop_kb,
-                ),
-            )
-            if name in braille_bindings:
-                commands.append(
-                    BrailleCommand(
-                        name,
-                        function,
-                        self.GROUP_LABEL,
-                        description,
-                        braille_bindings=braille_bindings[name],
-                    ),
-                )
-
-        return commands
+        return flat_review_presenter_command_definitions.get_commands(self)
 
     def is_active(self) -> bool:
         """Returns True if the flat review presenter is active."""

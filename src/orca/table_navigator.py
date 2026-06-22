@@ -33,7 +33,6 @@ import functools
 from typing import TYPE_CHECKING
 
 from . import (
-    cmdnames,
     command_manager,
     dbus_service,
     debug,
@@ -42,16 +41,15 @@ from . import (
     guilabels,
     input_event,
     input_event_manager,
-    keybindings,
     messages,
     presentation_manager,
     speech_presenter,
+    table_navigator_command_definitions,
 )
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_utilities import AXUtilities
 from .ax_utilities_text import CaretSetReason
-from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -60,6 +58,7 @@ if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
+    from .command import Command
     from .input_event import InputEvent
     from .scripts import default
 
@@ -138,106 +137,8 @@ class TableNavigator(Extension):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return result
 
-    # pylint: disable-next=too-many-locals
     def _get_commands(self) -> list[Command]:
-        kb_t = keybindings.KeyBinding("t", keybindings.ORCA_SHIFT_MODIFIER_MASK)
-        kb_left = keybindings.KeyBinding("Left", keybindings.SHIFT_ALT_MODIFIER_MASK)
-        kb_right = keybindings.KeyBinding("Right", keybindings.SHIFT_ALT_MODIFIER_MASK)
-        kb_up = keybindings.KeyBinding("Up", keybindings.SHIFT_ALT_MODIFIER_MASK)
-        kb_down = keybindings.KeyBinding("Down", keybindings.SHIFT_ALT_MODIFIER_MASK)
-        kb_home = keybindings.KeyBinding("Home", keybindings.SHIFT_ALT_MODIFIER_MASK)
-        kb_end = keybindings.KeyBinding("End", keybindings.SHIFT_ALT_MODIFIER_MASK)
-        kb_left_orca = keybindings.KeyBinding("Left", keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK)
-        kb_right_orca = keybindings.KeyBinding("Right", keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK)
-        kb_up_orca = keybindings.KeyBinding("Up", keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK)
-        kb_down_orca = keybindings.KeyBinding("Down", keybindings.ORCA_ALT_SHIFT_MODIFIER_MASK)
-        kb_r = keybindings.KeyBinding("r", keybindings.ORCA_SHIFT_MODIFIER_MASK)
-        kb_r_2 = keybindings.KeyBinding("r", keybindings.ORCA_SHIFT_MODIFIER_MASK, click_count=2)
-        kb_c = keybindings.KeyBinding("c", keybindings.ORCA_SHIFT_MODIFIER_MASK)
-        kb_c_2 = keybindings.KeyBinding("c", keybindings.ORCA_SHIFT_MODIFIER_MASK, click_count=2)
-
-        commands: list[Command] = [
-            KeyboardCommand(
-                "table_navigator_toggle_enabled",
-                self.toggle_enabled,
-                self.GROUP_LABEL,
-                cmdnames.TABLE_NAVIGATION_TOGGLE,
-                desktop_keybinding=kb_t,
-                laptop_keybinding=kb_t,
-                is_group_toggle=True,
-            ),
-        ]
-
-        nav_commands = [
-            ("table_cell_left", self.move_left, cmdnames.TABLE_CELL_LEFT, kb_left),
-            ("table_cell_right", self.move_right, cmdnames.TABLE_CELL_RIGHT, kb_right),
-            ("table_cell_up", self.move_up, cmdnames.TABLE_CELL_UP, kb_up),
-            ("table_cell_down", self.move_down, cmdnames.TABLE_CELL_DOWN, kb_down),
-            ("table_cell_first", self.move_to_first_cell, cmdnames.TABLE_CELL_FIRST, kb_home),
-            ("table_cell_last", self.move_to_last_cell, cmdnames.TABLE_CELL_LAST, kb_end),
-            (
-                "table_cell_beginning_of_row",
-                self.move_to_beginning_of_row,
-                cmdnames.TABLE_CELL_BEGINNING_OF_ROW,
-                kb_left_orca,
-            ),
-            (
-                "table_cell_end_of_row",
-                self.move_to_end_of_row,
-                cmdnames.TABLE_CELL_END_OF_ROW,
-                kb_right_orca,
-            ),
-            (
-                "table_cell_top_of_column",
-                self.move_to_top_of_column,
-                cmdnames.TABLE_CELL_TOP_OF_COLUMN,
-                kb_up_orca,
-            ),
-            (
-                "table_cell_bottom_of_column",
-                self.move_to_bottom_of_column,
-                cmdnames.TABLE_CELL_BOTTOM_OF_COLUMN,
-                kb_down_orca,
-            ),
-            (
-                "set_dynamic_column_headers_row",
-                self.set_dynamic_column_headers_row,
-                cmdnames.DYNAMIC_COLUMN_HEADER_SET,
-                kb_r,
-            ),
-            (
-                "clear_dynamic_column_headers_row",
-                self.clear_dynamic_column_headers_row,
-                cmdnames.DYNAMIC_COLUMN_HEADER_CLEAR,
-                kb_r_2,
-            ),
-            (
-                "set_dynamic_row_headers_column",
-                self.set_dynamic_row_headers_column,
-                cmdnames.DYNAMIC_ROW_HEADER_SET,
-                kb_c,
-            ),
-            (
-                "clear_dynamic_row_headers_column",
-                self.clear_dynamic_row_headers_column,
-                cmdnames.DYNAMIC_ROW_HEADER_CLEAR,
-                kb_c_2,
-            ),
-        ]
-
-        for name, function, description, kb in nav_commands:
-            commands.append(
-                KeyboardCommand(
-                    name,
-                    function,
-                    self.GROUP_LABEL,
-                    description,
-                    desktop_keybinding=kb,
-                    laptop_keybinding=kb,
-                ),
-            )
-
-        return commands
+        return table_navigator_command_definitions.get_commands(self)
 
     @dbus_service.command
     def toggle_enabled(

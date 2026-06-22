@@ -33,19 +33,19 @@ from gi.repository import Gdk, GObject, Gtk
 
 from . import (
     ax_device_manager,
-    cmdnames,
     command_manager,
     debug,
     guilabels,
     input_event,
     keybindings,
+    learn_mode_presenter_command_definitions,
     messages,
     presentation_manager,
 )
-from .command import BrailleCommand, Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
+    from .command import BrailleCommand, Command, KeyboardCommand
     from .scripts import default
 
 
@@ -60,17 +60,7 @@ class LearnModePresenter(Extension):
         super().__init__()
 
     def _get_commands(self) -> list[Command]:
-        kb = keybindings.KeyBinding("h", keybindings.ORCA_MODIFIER_MASK)
-        return [
-            KeyboardCommand(
-                "enterLearnModeHandler",
-                self.start,
-                self.GROUP_LABEL,
-                cmdnames.ENTER_LEARN_MODE,
-                desktop_keybinding=kb,
-                laptop_keybinding=kb,
-            ),
-        ]
+        return learn_mode_presenter_command_definitions.get_commands(self)
 
     def is_active(self) -> bool:
         """Returns True if we're in learn mode"""
@@ -123,7 +113,7 @@ class LearnModePresenter(Extension):
         command_manager.get_manager().set_modal_handler(None)
         return True
 
-    def will_handle_event(
+    def will_handle_event(  # pylint: disable=unused-argument
         self,
         script: default.Script,
         event: input_event.KeyboardEvent,

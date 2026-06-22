@@ -34,8 +34,8 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import (  # pylint: disable=no-name-in-module
-    cmdnames,
     debug,
+    debugging_tools_manager_command_definitions,
     focus_manager,
     guilabels,
     input_event,
@@ -45,12 +45,12 @@ from . import (  # pylint: disable=no-name-in-module
 )
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
-from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
     from collections.abc import Generator
 
+    from .command import Command
     from .scripts import default
 
 
@@ -67,20 +67,7 @@ class DebuggingToolsManager(Extension):
         super().__init__()
 
     def _get_commands(self) -> list[Command]:
-        return [
-            KeyboardCommand(
-                "cycleDebugLevelHandler",
-                self._cycle_debug_level,
-                self.GROUP_LABEL,
-                cmdnames.DEBUG_CYCLE_LEVEL,
-            ),
-            KeyboardCommand(
-                "clear_atspi_app_cache",
-                self._clear_atspi_app_cache,
-                self.GROUP_LABEL,
-                cmdnames.DEBUG_CLEAR_ATSPI_CACHE_FOR_APPLICATION,
-            ),
-        ]
+        return debugging_tools_manager_command_definitions.get_commands(self)
 
     def _cycle_debug_level(
         self,

@@ -31,7 +31,6 @@ import subprocess
 from typing import TYPE_CHECKING
 
 from . import (
-    cmdnames,
     command_manager,
     dbus_service,
     debug,
@@ -42,13 +41,14 @@ from . import (
     orca,
     orca_modifier_manager,
     presentation_manager,
+    profile_manager_command_definitions,
 )
-from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+    from .command import Command
     from .profile_manager_preferences_grid import ProfilePreferencesGrid
     from .scripts import default
 
@@ -89,34 +89,7 @@ class ProfileManager(Extension):
     def _get_commands(self) -> list[Command]:
         """Returns commands for registration."""
 
-        commands_data = [
-            (
-                "cycleSettingsProfileHandler",
-                self.cycle_settings_profile,
-                cmdnames.CYCLE_SETTINGS_PROFILE,
-                None,
-                None,
-            ),
-            (
-                "presentCurrentProfileHandler",
-                self.present_current_profile,
-                cmdnames.PRESENT_CURRENT_PROFILE,
-                None,
-                None,
-            ),
-        ]
-
-        return [
-            KeyboardCommand(
-                name,
-                function,
-                self.GROUP_LABEL,
-                description,
-                desktop_keybinding=desktop_kb,
-                laptop_keybinding=laptop_kb,
-            )
-            for name, function, description, desktop_kb, laptop_kb in commands_data
-        ]
+        return profile_manager_command_definitions.get_commands(self)
 
     @dbus_service.getter
     def get_available_profiles(self) -> list[list[str]]:

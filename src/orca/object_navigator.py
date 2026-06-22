@@ -26,20 +26,18 @@ import functools
 from typing import TYPE_CHECKING
 
 from . import (
-    cmdnames,
     dbus_service,
     debug,
     focus_manager,
     guilabels,
     input_event,
-    keybindings,
     messages,
+    object_navigator_command_definitions,
     presentation_manager,
 )
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
-from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -48,6 +46,7 @@ if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
+    from .command import Command
     from .scripts import default
 
 
@@ -86,44 +85,7 @@ class ObjectNavigator(Extension):
         return wrapper
 
     def _get_commands(self) -> list[Command]:
-        commands_data = [
-            ("object_navigator_up", self.move_to_parent, cmdnames.NAVIGATOR_UP, "Up"),
-            ("object_navigator_down", self.move_to_first_child, cmdnames.NAVIGATOR_DOWN, "Down"),
-            ("object_navigator_next", self.move_to_next_sibling, cmdnames.NAVIGATOR_NEXT, "Right"),
-            (
-                "object_navigator_previous",
-                self.move_to_previous_sibling,
-                cmdnames.NAVIGATOR_PREVIOUS,
-                "Left",
-            ),
-            (
-                "object_navigator_perform_action",
-                self.perform_action,
-                cmdnames.NAVIGATOR_PERFORM_ACTION,
-                "Return",
-            ),
-            (
-                "object_navigator_toggle_simplify",
-                self.toggle_simplify,
-                cmdnames.NAVIGATOR_TOGGLE_SIMPLIFIED,
-                "s",
-            ),
-        ]
-
-        commands: list[Command] = []
-        for name, function, description, keysym in commands_data:
-            kb = keybindings.KeyBinding(keysym, keybindings.ORCA_CTRL_MODIFIER_MASK)
-            commands.append(
-                KeyboardCommand(
-                    name,
-                    function,
-                    self.GROUP_LABEL,
-                    description,
-                    desktop_keybinding=kb,
-                    laptop_keybinding=kb,
-                ),
-            )
-        return commands
+        return object_navigator_command_definitions.get_commands(self)
 
     def _include_in_simple_navigation(self, obj: Atspi.Accessible) -> bool:
         """Returns True if obj should be included in simple navigation."""

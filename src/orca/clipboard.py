@@ -37,7 +37,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Atspi, Gdk, Gtk
 
 from . import (
-    cmdnames,
+    clipboard_command_definitions,
     dbus_service,
     debug,
     guilabels,
@@ -48,7 +48,6 @@ from . import (
     script_manager,
 )
 from .ax_utilities import AXUtilities
-from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -56,6 +55,7 @@ if TYPE_CHECKING:
 
     from dasbus.client.proxy import InterfaceProxy
 
+    from .command import Command
     from .scripts import default
 
 
@@ -333,14 +333,7 @@ class ClipboardPresenter(Extension):
         super().__init__()
 
     def _get_commands(self) -> list[Command]:
-        return [
-            KeyboardCommand(
-                "present_clipboard_contents",
-                self.present_clipboard_contents,
-                self.GROUP_LABEL,
-                cmdnames.CLIPBOARD_PRESENT_CONTENTS,
-            ),
-        ]
+        return clipboard_command_definitions.get_commands(self)
 
     @dbus_service.command
     def present_clipboard_contents(

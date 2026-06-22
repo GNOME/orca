@@ -30,7 +30,7 @@ import functools
 from typing import TYPE_CHECKING
 
 from . import (
-    cmdnames,
+    caret_navigator_command_definitions,
     command_manager,
     dbus_service,
     debug,
@@ -39,7 +39,6 @@ from . import (
     guilabels,
     input_event,
     input_event_manager,
-    keybindings,
     messages,
     presentation_manager,
     say_all_presenter,
@@ -49,7 +48,6 @@ from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_utilities_text import CaretSetReason
-from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -58,6 +56,7 @@ if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
+    from .command import Command
     from .scripts import default
 
 
@@ -115,85 +114,7 @@ class CaretNavigator(Extension):
         return wrapper
 
     def _get_commands(self) -> list[Command]:
-        kb_f12 = keybindings.KeyBinding("F12", keybindings.ORCA_MODIFIER_MASK)
-        kb_right = keybindings.KeyBinding("Right", keybindings.NO_MODIFIER_MASK)
-        kb_left = keybindings.KeyBinding("Left", keybindings.NO_MODIFIER_MASK)
-        kb_right_ctrl = keybindings.KeyBinding("Right", keybindings.CTRL_MODIFIER_MASK)
-        kb_left_ctrl = keybindings.KeyBinding("Left", keybindings.CTRL_MODIFIER_MASK)
-        kb_down = keybindings.KeyBinding("Down", keybindings.NO_MODIFIER_MASK)
-        kb_up = keybindings.KeyBinding("Up", keybindings.NO_MODIFIER_MASK)
-        kb_end = keybindings.KeyBinding("End", keybindings.NO_MODIFIER_MASK)
-        kb_home = keybindings.KeyBinding("Home", keybindings.NO_MODIFIER_MASK)
-        kb_end_ctrl = keybindings.KeyBinding("End", keybindings.CTRL_MODIFIER_MASK)
-        kb_home_ctrl = keybindings.KeyBinding("Home", keybindings.CTRL_MODIFIER_MASK)
-
-        enabled = self.get_is_enabled() and not self._suspended
-
-        commands: list[Command] = [
-            KeyboardCommand(
-                "toggle_enabled",
-                self.toggle_enabled,
-                self.GROUP_LABEL,
-                cmdnames.CARET_NAVIGATION_TOGGLE,
-                desktop_keybinding=kb_f12,
-                laptop_keybinding=kb_f12,
-                enabled=not self._suspended,
-                is_group_toggle=True,
-            ),
-        ]
-
-        nav_commands = [
-            ("next_character", self.next_character, cmdnames.CARET_NAVIGATION_NEXT_CHAR, kb_right),
-            (
-                "previous_character",
-                self.previous_character,
-                cmdnames.CARET_NAVIGATION_PREV_CHAR,
-                kb_left,
-            ),
-            ("next_word", self.next_word, cmdnames.CARET_NAVIGATION_NEXT_WORD, kb_right_ctrl),
-            (
-                "previous_word",
-                self.previous_word,
-                cmdnames.CARET_NAVIGATION_PREV_WORD,
-                kb_left_ctrl,
-            ),
-            ("next_line", self.next_line, cmdnames.CARET_NAVIGATION_NEXT_LINE, kb_down),
-            ("previous_line", self.previous_line, cmdnames.CARET_NAVIGATION_PREV_LINE, kb_up),
-            (
-                "start_of_file",
-                self.start_of_file,
-                cmdnames.CARET_NAVIGATION_FILE_START,
-                kb_home_ctrl,
-            ),
-            ("end_of_file", self.end_of_file, cmdnames.CARET_NAVIGATION_FILE_END, kb_end_ctrl),
-            ("start_of_line", self.start_of_line, cmdnames.CARET_NAVIGATION_LINE_START, kb_home),
-            ("end_of_line", self.end_of_line, cmdnames.CARET_NAVIGATION_LINE_END, kb_end),
-        ]
-
-        for name, function, description, kb in nav_commands:
-            commands.append(
-                KeyboardCommand(
-                    name,
-                    function,
-                    self.GROUP_LABEL,
-                    description,
-                    desktop_keybinding=kb,
-                    laptop_keybinding=kb,
-                    enabled=enabled,
-                ),
-            )
-
-        commands.append(
-            KeyboardCommand(
-                "toggle_layout_mode",
-                self.toggle_layout_mode,
-                self.GROUP_LABEL,
-                cmdnames.TOGGLE_LAYOUT_MODE,
-                enabled=enabled,
-            ),
-        )
-
-        return commands
+        return caret_navigator_command_definitions.get_commands(self)
 
     def _is_active_script(self, script):
         active_script = script_manager.get_manager().get_active_script()

@@ -21,7 +21,6 @@
 # pylint: disable=too-many-public-methods
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-positional-arguments
-# pylint: disable=too-many-statements
 # pylint: disable=too-many-locals
 # pylint: disable=too-many-lines
 
@@ -29,32 +28,30 @@
 
 from __future__ import annotations
 
-import functools
 import importlib
 import os
 from typing import TYPE_CHECKING, Any
 
 from . import (
-    cmdnames,
     command_manager,
     dbus_service,
     debug,
     gsettings_registry,
     guilabels,
     input_event,
-    keybindings,
     language_utilities,
     messages,
     presentation_manager,
+    speech_manager_command_definitions,
     speechserver,
     systemd,
 )
 from .acss import ACSS
-from .command import Command, KeyboardCommand
 from .extension import Extension
 from .speechserver import CapitalizationStyle, PunctuationStyle
 
 if TYPE_CHECKING:
+    from .command import Command, KeyboardCommand
     from .dbus_service import UInt32
     from .scripts import default
     from .speech_manager_preferences_grid import VoicesPreferencesGrid, VoiceTypesPreferencesGrid
@@ -406,125 +403,14 @@ class SpeechManager(Extension):
     def _get_commands(self) -> list[Command]:
         """Returns commands for registration."""
 
-        kb_s = keybindings.KeyBinding("s", keybindings.ORCA_MODIFIER_MASK)
-
-        commands_data = [
-            (
-                "cycleCapitalizationStyleHandler",
-                self.cycle_capitalization_style,
-                cmdnames.CYCLE_CAPITALIZATION_STYLE,
-                None,
-                None,
-            ),
-            (
-                "cycleSpeakingPunctuationLevelHandler",
-                self.cycle_punctuation_level,
-                cmdnames.CYCLE_PUNCTUATION_LEVEL,
-                None,
-                None,
-            ),
-            (
-                "cycleSynthesizerHandler",
-                self.cycle_synthesizer,
-                cmdnames.CYCLE_SYNTHESIZER,
-                None,
-                None,
-            ),
-            (
-                "cycleVoiceSetHandler",
-                self.cycle_voice_set,
-                cmdnames.CYCLE_VOICE_SET,
-                None,
-                None,
-            ),
-            ("toggleSilenceSpeechHandler", self.toggle_speech, cmdnames.TOGGLE_SPEECH, kb_s, kb_s),
-            (
-                "decreaseSpeechRateHandler",
-                self.decrease_rate,
-                cmdnames.DECREASE_SPEECH_RATE,
-                None,
-                None,
-            ),
-            (
-                "increaseSpeechRateHandler",
-                self.increase_rate,
-                cmdnames.INCREASE_SPEECH_RATE,
-                None,
-                None,
-            ),
-            (
-                "decreaseSpeechPitchHandler",
-                self.decrease_pitch,
-                cmdnames.DECREASE_SPEECH_PITCH,
-                None,
-                None,
-            ),
-            (
-                "increaseSpeechPitchHandler",
-                self.increase_pitch,
-                cmdnames.INCREASE_SPEECH_PITCH,
-                None,
-                None,
-            ),
-            (
-                "decreaseSpeechInflectionHandler",
-                self.decrease_pitch_range,
-                cmdnames.DECREASE_SPEECH_INFLECTION,
-                None,
-                None,
-            ),
-            (
-                "increaseSpeechInflectionHandler",
-                self.increase_pitch_range,
-                cmdnames.INCREASE_SPEECH_INFLECTION,
-                None,
-                None,
-            ),
-            (
-                "decreaseSpeechVolumeHandler",
-                self.decrease_volume,
-                cmdnames.DECREASE_SPEECH_VOLUME,
-                None,
-                None,
-            ),
-            (
-                "increaseSpeechVolumeHandler",
-                self.increase_volume,
-                cmdnames.INCREASE_SPEECH_VOLUME,
-                None,
-                None,
-            ),
-        ]
-
-        commands: list[Command] = [
-            KeyboardCommand(
-                name,
-                function,
-                self.GROUP_LABEL,
-                description,
-                desktop_keybinding=desktop_kb,
-                laptop_keybinding=laptop_kb,
-            )
-            for name, function, description, desktop_kb, laptop_kb in commands_data
-        ]
+        commands = speech_manager_command_definitions.get_commands(self)
         commands.extend(self._build_voice_set_commands())
         return commands
 
     def _build_voice_set_commands(self) -> list[KeyboardCommand]:
         """Returns one unbound activation command per available voice set."""
 
-        commands = [
-            KeyboardCommand(
-                f"switch-voice-set-{set_id}",
-                functools.partial(self.activate_voice_set, set_id),
-                self.GROUP_LABEL,
-                cmdnames.SWITCH_VOICE_SET % self._voice_set_display_name(set_id),
-                desktop_keybinding=None,
-                laptop_keybinding=None,
-                transient=True,
-            )
-            for set_id in self.get_available_voice_sets()
-        ]
+        commands = speech_manager_command_definitions.get_voice_set_commands(self)
         self._voice_set_command_names = {cmd.get_name() for cmd in commands}
         return commands
 

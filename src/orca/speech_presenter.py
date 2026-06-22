@@ -38,7 +38,6 @@ from enum import Enum
 from typing import TYPE_CHECKING, Any
 
 from . import (
-    cmdnames,
     dbus_service,
     debug,
     document_presenter,
@@ -46,7 +45,6 @@ from . import (
     gsettings_registry,
     guilabels,
     input_event,
-    keybindings,
     messages,
     object_properties,
     output_recorder,
@@ -57,13 +55,13 @@ from . import (
     speech_generator,
     speech_manager,
     speech_monitor,
+    speech_presenter_command_definitions,
     speechserver,
 )
 from .acss import ACSS
 from .ax_hypertext import AXHypertext
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
-from .command import Command, KeyboardCommand
 from .extension import Extension
 from .speechserver import VoiceFamily
 from .text_attribute_manager import TextAttributeChangeMode
@@ -73,6 +71,7 @@ if TYPE_CHECKING:
 
     import gi
 
+    from .command import Command
     from .dbus_service import UInt32
     from .generator import PresentationReason
     from .speech_generator import SpeechGeneratorContext
@@ -192,66 +191,7 @@ class SpeechPresenter(Extension):
     def _get_commands(self) -> list[Command]:
         """Returns commands for registration."""
 
-        kb_v = keybindings.KeyBinding("v", keybindings.ORCA_MODIFIER_MASK)
-        kb_f11 = keybindings.KeyBinding("F11", keybindings.ORCA_MODIFIER_MASK)
-        kb_shift_d = keybindings.KeyBinding("d", keybindings.ORCA_SHIFT_MODIFIER_MASK)
-
-        commands_data = [
-            (
-                "changeNumberStyleHandler",
-                self.change_number_style,
-                cmdnames.CHANGE_NUMBER_STYLE,
-                None,
-                None,
-            ),
-            (
-                "toggleSpeechVerbosityHandler",
-                self.toggle_verbosity,
-                cmdnames.TOGGLE_SPEECH_VERBOSITY,
-                kb_v,
-                kb_v,
-            ),
-            (
-                "toggleSpeakingIndentationHandler",
-                self.toggle_indentation,
-                cmdnames.TOGGLE_SPOKEN_INDENTATION,
-                None,
-                None,
-            ),
-            (
-                "toggleTableCellReadModeHandler",
-                self.toggle_table_cell_reading_mode,
-                cmdnames.TOGGLE_TABLE_CELL_READ_MODE,
-                kb_f11,
-                kb_f11,
-            ),
-            (
-                "toggle_speech_monitor",
-                self.toggle_monitor,
-                cmdnames.TOGGLE_SPEECH_MONITOR,
-                kb_shift_d,
-                kb_shift_d,
-            ),
-            (
-                "cycle_text_attribute_change_mode",
-                self.cycle_text_attribute_change_mode,
-                cmdnames.CYCLE_TEXT_ATTRIBUTE_CHANGE_MODE,
-                None,
-                None,
-            ),
-        ]
-
-        return [
-            KeyboardCommand(
-                name,
-                function,
-                self.GROUP_LABEL,
-                description,
-                desktop_keybinding=desktop_kb,
-                laptop_keybinding=laptop_kb,
-            )
-            for name, function, description, desktop_kb, laptop_kb in commands_data
-        ]
+        return speech_presenter_command_definitions.get_commands(self)
 
     @gsettings_registry.get_registry().gsetting(
         key=KEY_SPEAK_MISSPELLED_INDICATOR,

@@ -38,7 +38,6 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import (
-    cmdnames,
     command_manager,
     dbus_service,
     debug,
@@ -46,7 +45,6 @@ from . import (
     gsettings_registry,
     guilabels,
     input_event_manager,
-    keybindings,
     live_region_presenter,
     messages,
     object_properties,
@@ -54,6 +52,7 @@ from . import (
     presentation_manager,
     say_all_presenter,
     script_manager,
+    structural_navigator_command_definitions,
 )
 from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
@@ -61,12 +60,12 @@ from .ax_table import AXTable
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_utilities_text import CaretSetReason
-from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+    from .command import Command
     from .dbus_service import UInt32
     from .input_event import InputEvent
     from .scripts import default
@@ -167,209 +166,8 @@ class StructuralNavigator(Extension):
 
         return wrapper
 
-    # pylint: disable-next=too-many-locals
     def _get_commands(self) -> list[Command]:
-        nav_bindings = [
-            ("q", NavigationType.BLOCKQUOTE),
-            ("b", NavigationType.BUTTON),
-            ("x", NavigationType.CHECK_BOX),
-            ("c", NavigationType.COMBO_BOX),
-            ("e", NavigationType.ENTRY),
-            ("f", NavigationType.FORM_FIELD),
-            ("h", NavigationType.HEADING),
-            ("g", NavigationType.IMAGE),
-            ("m", NavigationType.LANDMARK),
-            ("l", NavigationType.LIST),
-            ("i", NavigationType.LIST_ITEM),
-            ("p", NavigationType.PARAGRAPH),
-            ("r", NavigationType.RADIO_BUTTON),
-            ("t", NavigationType.TABLE),
-            ("k", NavigationType.LINK),
-            ("u", NavigationType.UNVISITED_LINK),
-            ("v", NavigationType.VISITED_LINK),
-            ("o", NavigationType.LARGE_OBJECT),
-            ("a", NavigationType.CLICKABLE),
-        ]
-
-        # Build command name -> keybinding mapping
-        cmd_bindings: dict[str, keybindings.KeyBinding | None] = {}
-        for key, nav_type in nav_bindings:
-            singular = nav_type.value
-            cmd_bindings[f"previous_{singular}"] = keybindings.KeyBinding(
-                key, keybindings.SHIFT_MODIFIER_MASK
-            )
-            cmd_bindings[f"next_{singular}"] = keybindings.KeyBinding(
-                key, keybindings.NO_MODIFIER_MASK
-            )
-            if singular == "entry":
-                plural = "entries"
-            elif singular in ("checkbox", "combobox"):
-                plural = f"{singular}es"
-            else:
-                plural = f"{singular}s"
-            cmd_bindings[f"list_{plural}"] = keybindings.KeyBinding(
-                key, keybindings.SHIFT_ALT_MODIFIER_MASK
-            )
-
-        cmd_bindings["previous_separator"] = keybindings.KeyBinding(
-            "s", keybindings.SHIFT_MODIFIER_MASK
-        )
-        cmd_bindings["next_separator"] = keybindings.KeyBinding("s", keybindings.NO_MODIFIER_MASK)
-        cmd_bindings["previous_live_region"] = keybindings.KeyBinding(
-            "d", keybindings.SHIFT_MODIFIER_MASK
-        )
-        cmd_bindings["next_live_region"] = keybindings.KeyBinding("d", keybindings.NO_MODIFIER_MASK)
-        cmd_bindings["last_live_region"] = keybindings.KeyBinding("y", keybindings.NO_MODIFIER_MASK)
-        cmd_bindings["container_start"] = keybindings.KeyBinding(
-            "comma", keybindings.SHIFT_MODIFIER_MASK
-        )
-        cmd_bindings["container_end"] = keybindings.KeyBinding(
-            "comma", keybindings.NO_MODIFIER_MASK
-        )
-        cmd_bindings["previous_annotation"] = None
-        cmd_bindings["next_annotation"] = None
-        cmd_bindings["list_annotations"] = None
-        cmd_bindings["previous_iframe"] = None
-        cmd_bindings["next_iframe"] = None
-        cmd_bindings["list_iframes"] = None
-
-        commands_data = [
-            ("previous_annotation", self.previous_annotation, cmdnames.ANNOTATION_PREV),
-            ("next_annotation", self.next_annotation, cmdnames.ANNOTATION_NEXT),
-            ("list_annotations", self.list_annotations, cmdnames.ANNOTATION_LIST),
-            ("previous_blockquote", self.previous_blockquote, cmdnames.BLOCKQUOTE_PREV),
-            ("next_blockquote", self.next_blockquote, cmdnames.BLOCKQUOTE_NEXT),
-            ("list_blockquotes", self.list_blockquotes, cmdnames.BLOCKQUOTE_LIST),
-            ("previous_button", self.previous_button, cmdnames.BUTTON_PREV),
-            ("next_button", self.next_button, cmdnames.BUTTON_NEXT),
-            ("list_buttons", self.list_buttons, cmdnames.BUTTON_LIST),
-            ("previous_checkbox", self.previous_checkbox, cmdnames.CHECK_BOX_PREV),
-            ("next_checkbox", self.next_checkbox, cmdnames.CHECK_BOX_NEXT),
-            ("list_checkboxes", self.list_checkboxes, cmdnames.CHECK_BOX_LIST),
-            ("previous_combobox", self.previous_combobox, cmdnames.COMBO_BOX_PREV),
-            ("next_combobox", self.next_combobox, cmdnames.COMBO_BOX_NEXT),
-            ("list_comboboxes", self.list_comboboxes, cmdnames.COMBO_BOX_LIST),
-            ("previous_entry", self.previous_entry, cmdnames.ENTRY_PREV),
-            ("next_entry", self.next_entry, cmdnames.ENTRY_NEXT),
-            ("list_entries", self.list_entries, cmdnames.ENTRY_LIST),
-            ("previous_form_field", self.previous_form_field, cmdnames.FORM_FIELD_PREV),
-            ("next_form_field", self.next_form_field, cmdnames.FORM_FIELD_NEXT),
-            ("list_form_fields", self.list_form_fields, cmdnames.FORM_FIELD_LIST),
-            ("previous_heading", self.previous_heading, cmdnames.HEADING_PREV),
-            ("next_heading", self.next_heading, cmdnames.HEADING_NEXT),
-            ("list_headings", self.list_headings, cmdnames.HEADING_LIST),
-            ("previous_iframe", self.previous_iframe, cmdnames.IFRAME_PREV),
-            ("next_iframe", self.next_iframe, cmdnames.IFRAME_NEXT),
-            ("list_iframes", self.list_iframes, cmdnames.IFRAME_LIST),
-            ("previous_image", self.previous_image, cmdnames.IMAGE_PREV),
-            ("next_image", self.next_image, cmdnames.IMAGE_NEXT),
-            ("list_images", self.list_images, cmdnames.IMAGE_LIST),
-            ("previous_landmark", self.previous_landmark, cmdnames.LANDMARK_PREV),
-            ("next_landmark", self.next_landmark, cmdnames.LANDMARK_NEXT),
-            ("list_landmarks", self.list_landmarks, cmdnames.LANDMARK_LIST),
-            ("previous_list", self.previous_list, cmdnames.LIST_PREV),
-            ("next_list", self.next_list, cmdnames.LIST_NEXT),
-            ("list_lists", self.list_lists, cmdnames.LIST_LIST),
-            ("previous_list_item", self.previous_list_item, cmdnames.LIST_ITEM_PREV),
-            ("next_list_item", self.next_list_item, cmdnames.LIST_ITEM_NEXT),
-            ("list_list_items", self.list_list_items, cmdnames.LIST_ITEM_LIST),
-            ("previous_live_region", self.previous_live_region, cmdnames.LIVE_REGION_PREV),
-            ("next_live_region", self.next_live_region, cmdnames.LIVE_REGION_NEXT),
-            ("last_live_region", self._last_live_region, cmdnames.LIVE_REGION_LAST),
-            ("previous_paragraph", self.previous_paragraph, cmdnames.PARAGRAPH_PREV),
-            ("next_paragraph", self.next_paragraph, cmdnames.PARAGRAPH_NEXT),
-            ("list_paragraphs", self.list_paragraphs, cmdnames.PARAGRAPH_LIST),
-            ("previous_radio_button", self.previous_radio_button, cmdnames.RADIO_BUTTON_PREV),
-            ("next_radio_button", self.next_radio_button, cmdnames.RADIO_BUTTON_NEXT),
-            ("list_radio_buttons", self.list_radio_buttons, cmdnames.RADIO_BUTTON_LIST),
-            ("previous_separator", self.previous_separator, cmdnames.SEPARATOR_PREV),
-            ("next_separator", self.next_separator, cmdnames.SEPARATOR_NEXT),
-            ("previous_table", self.previous_table, cmdnames.TABLE_PREV),
-            ("next_table", self.next_table, cmdnames.TABLE_NEXT),
-            ("list_tables", self.list_tables, cmdnames.TABLE_LIST),
-            ("previous_link", self.previous_link, cmdnames.LINK_PREV),
-            ("next_link", self.next_link, cmdnames.LINK_NEXT),
-            ("list_links", self.list_links, cmdnames.LINK_LIST),
-            ("previous_unvisited_link", self.previous_unvisited_link, cmdnames.UNVISITED_LINK_PREV),
-            ("next_unvisited_link", self.next_unvisited_link, cmdnames.UNVISITED_LINK_NEXT),
-            ("list_unvisited_links", self.list_unvisited_links, cmdnames.UNVISITED_LINK_LIST),
-            ("previous_visited_link", self.previous_visited_link, cmdnames.VISITED_LINK_PREV),
-            ("next_visited_link", self.next_visited_link, cmdnames.VISITED_LINK_NEXT),
-            ("list_visited_links", self.list_visited_links, cmdnames.VISITED_LINK_LIST),
-            ("previous_large_object", self.previous_large_object, cmdnames.LARGE_OBJECT_PREV),
-            ("next_large_object", self.next_large_object, cmdnames.LARGE_OBJECT_NEXT),
-            ("list_large_objects", self.list_large_objects, cmdnames.LARGE_OBJECT_LIST),
-            ("previous_clickable", self.previous_clickable, cmdnames.CLICKABLE_PREV),
-            ("next_clickable", self.next_clickable, cmdnames.CLICKABLE_NEXT),
-            ("list_clickables", self.list_clickables, cmdnames.CLICKABLE_LIST),
-            ("container_start", self.container_start, cmdnames.CONTAINER_START),
-            ("container_end", self.container_end, cmdnames.CONTAINER_END),
-        ]
-
-        kb_z = keybindings.KeyBinding("z", keybindings.ORCA_MODIFIER_MASK)
-        commands: list[Command] = [
-            KeyboardCommand(
-                "structural_navigator_mode_cycle",
-                self.cycle_mode,
-                self.GROUP_LABEL,
-                cmdnames.STRUCTURAL_NAVIGATION_MODE_CYCLE,
-                desktop_keybinding=kb_z,
-                laptop_keybinding=kb_z,
-                is_group_toggle=True,
-            ),
-        ]
-
-        for name, function, description in commands_data:
-            kb = cmd_bindings.get(name)
-            commands.append(
-                KeyboardCommand(
-                    name,
-                    function,
-                    self.GROUP_LABEL,
-                    description,
-                    desktop_keybinding=kb,
-                    laptop_keybinding=kb,
-                ),
-            )
-
-        for i in range(1, 7):
-            kb_prev = keybindings.KeyBinding(str(i), keybindings.SHIFT_MODIFIER_MASK)
-            kb_next = keybindings.KeyBinding(str(i), keybindings.NO_MODIFIER_MASK)
-            kb_list = keybindings.KeyBinding(str(i), keybindings.SHIFT_ALT_MODIFIER_MASK)
-
-            heading_commands = [
-                (
-                    f"previous_heading_level_{i}",
-                    getattr(self, f"previous_heading_level_{i}"),
-                    cmdnames.HEADING_AT_LEVEL_PREV % i,
-                    kb_prev,
-                ),
-                (
-                    f"next_heading_level_{i}",
-                    getattr(self, f"next_heading_level_{i}"),
-                    cmdnames.HEADING_AT_LEVEL_NEXT % i,
-                    kb_next,
-                ),
-                (
-                    f"list_headings_level_{i}",
-                    getattr(self, f"list_headings_level_{i}"),
-                    cmdnames.HEADING_AT_LEVEL_LIST % i,
-                    kb_list,
-                ),
-            ]
-            for name, function, description, kb in heading_commands:
-                commands.append(
-                    KeyboardCommand(
-                        name,
-                        function,
-                        self.GROUP_LABEL,
-                        description,
-                        desktop_keybinding=kb,
-                        laptop_keybinding=kb,
-                    ),
-                )
-
-        return commands
+        return structural_navigator_command_definitions.get_commands(self)
 
     def _is_active_script(self, script):
         active_script = script_manager.get_manager().get_active_script()
@@ -731,6 +529,7 @@ class StructuralNavigator(Extension):
             presentation_manager.get_manager().present_message(wrap_msg)
         return wrap_target
 
+    # pylint: disable-next=too-many-locals
     def _get_object_in_direction(
         self,
         script: default.Script,

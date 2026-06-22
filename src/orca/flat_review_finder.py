@@ -27,31 +27,31 @@ from __future__ import annotations
 import copy
 import re
 import time
+from typing import TYPE_CHECKING
 
 import gi
 
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gtk", "3.0")
-from typing import TYPE_CHECKING
 
 from gi.repository import Atspi, Gtk
 
 from . import (
-    cmdnames,
     debug,
+    flat_review_finder_command_definitions,
     flat_review_presenter,
     focus_manager,
     guilabels,
-    keybindings,
     messages,
     presentation_manager,
 )
-from .command import Command, KeyboardCommand
 from .extension import Extension
 from .flat_review import Context
 
 if TYPE_CHECKING:
     from collections.abc import Callable
+
+    from .command import Command
 
 
 class _SearchQueryMatch:
@@ -129,50 +129,7 @@ class FlatReviewFinder(Extension):
         super().__init__()
 
     def _get_commands(self) -> list[Command]:
-        return [
-            KeyboardCommand(
-                "findHandler",
-                self.show_dialog,
-                self.GROUP_LABEL,
-                cmdnames.SHOW_FIND_GUI,
-                desktop_keybinding=keybindings.KeyBinding(
-                    "KP_Delete",
-                    keybindings.NO_MODIFIER_MASK,
-                ),
-                laptop_keybinding=keybindings.KeyBinding(
-                    "bracketleft",
-                    keybindings.ORCA_MODIFIER_MASK,
-                ),
-            ),
-            KeyboardCommand(
-                "findNextHandler",
-                self.find_next,
-                self.GROUP_LABEL,
-                cmdnames.FIND_NEXT,
-                desktop_keybinding=keybindings.KeyBinding(
-                    "KP_Delete",
-                    keybindings.ORCA_MODIFIER_MASK,
-                ),
-                laptop_keybinding=keybindings.KeyBinding(
-                    "bracketright",
-                    keybindings.ORCA_MODIFIER_MASK,
-                ),
-            ),
-            KeyboardCommand(
-                "findPreviousHandler",
-                self.find_previous,
-                self.GROUP_LABEL,
-                cmdnames.FIND_PREVIOUS,
-                desktop_keybinding=keybindings.KeyBinding(
-                    "KP_Delete",
-                    keybindings.ORCA_SHIFT_MODIFIER_MASK,
-                ),
-                laptop_keybinding=keybindings.KeyBinding(
-                    "bracketright",
-                    keybindings.ORCA_CTRL_MODIFIER_MASK,
-                ),
-            ),
-        ]
+        return flat_review_finder_command_definitions.get_commands(self)
 
     def _on_query(self, query: SearchQuery) -> None:
         """Handler after a query has been made via the Find dialog."""

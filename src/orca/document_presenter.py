@@ -40,16 +40,15 @@ from gi.repository import Atspi  # pylint: disable=no-name-in-module
 
 from . import (
     caret_navigator,
-    cmdnames,
     command_manager,
     dbus_service,
     debug,
+    document_presenter_command_definitions,
     focus_manager,
     gsettings_registry,
     guilabels,
     input_event,
     input_event_manager,
-    keybindings,
     math_navigator,
     messages,
     presentation_manager,
@@ -61,12 +60,12 @@ from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_utilities_math import AXUtilitiesMath
-from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+    from .command import Command
     from .dbus_service import UInt32
     from .document_presenter_preferences_grid import DocumentPreferencesGrid
     from .scripts import default
@@ -155,42 +154,7 @@ class DocumentPresenter(Extension):
     def _get_commands(self) -> list[Command]:
         """Returns commands for registration."""
 
-        kb_a = keybindings.KeyBinding("a", keybindings.ORCA_MODIFIER_MASK)
-        kb_a_2 = keybindings.KeyBinding("a", keybindings.ORCA_MODIFIER_MASK, click_count=2)
-        kb_a_3 = keybindings.KeyBinding("a", keybindings.ORCA_MODIFIER_MASK, click_count=3)
-
-        commands_data = [
-            (
-                "toggle_presentation_mode",
-                self.toggle_presentation_mode,
-                cmdnames.TOGGLE_PRESENTATION_MODE,
-                kb_a,
-            ),
-            (
-                "enable_sticky_focus_mode",
-                self.enable_sticky_focus_mode,
-                cmdnames.SET_FOCUS_MODE_STICKY,
-                kb_a_2,
-            ),
-            (
-                "enable_sticky_browse_mode",
-                self.enable_sticky_browse_mode,
-                cmdnames.SET_BROWSE_MODE_STICKY,
-                kb_a_3,
-            ),
-        ]
-
-        return [
-            KeyboardCommand(
-                name,
-                function,
-                self.GROUP_LABEL,
-                description,
-                desktop_keybinding=kb,
-                laptop_keybinding=kb,
-            )
-            for name, function, description, kb in commands_data
-        ]
+        return document_presenter_command_definitions.get_commands(self)
 
     def _get_state_for_app(self, app: Atspi.Accessible | None) -> _AppModeState:
         """Returns the mode state for the given app, creating if needed."""

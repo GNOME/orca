@@ -44,19 +44,20 @@ except ModuleNotFoundError:
 
 from . import (
     ax_device_manager,
-    cmdnames,
     dbus_service,
     debug,
     gsettings_registry,
     guilabels,
     input_event,
-    keybindings,
     keynames,
     messages,
     presentation_manager,
+    system_information_presenter_command_definitions,
 )
-from .command import Command, KeyboardCommand
 from .extension import Extension
+
+if TYPE_CHECKING:
+    from .command import Command
 
 
 class DateFormat(Enum):
@@ -133,45 +134,7 @@ class SystemInformationPresenter(Extension):
     GROUP_LABEL = guilabels.KB_GROUP_SYSTEM_INFORMATION
 
     def _get_commands(self) -> list[Command]:
-        kb_t = keybindings.KeyBinding("t", keybindings.ORCA_MODIFIER_MASK)
-        kb_t_2 = keybindings.KeyBinding("t", keybindings.ORCA_MODIFIER_MASK, click_count=2)
-
-        return [
-            KeyboardCommand(
-                "presentTimeHandler",
-                self.present_time,
-                self.GROUP_LABEL,
-                cmdnames.PRESENT_CURRENT_TIME,
-                desktop_keybinding=kb_t,
-                laptop_keybinding=kb_t,
-            ),
-            KeyboardCommand(
-                "presentDateHandler",
-                self.present_date,
-                self.GROUP_LABEL,
-                cmdnames.PRESENT_CURRENT_DATE,
-                desktop_keybinding=kb_t_2,
-                laptop_keybinding=kb_t_2,
-            ),
-            KeyboardCommand(
-                "present_battery_status",
-                self.present_battery_status,
-                self.GROUP_LABEL,
-                cmdnames.PRESENT_BATTERY_STATUS,
-            ),
-            KeyboardCommand(
-                "present_cpu_and_memory_usage",
-                self.present_cpu_and_memory_usage,
-                self.GROUP_LABEL,
-                cmdnames.PRESENT_CPU_AND_MEMORY_USAGE,
-            ),
-            KeyboardCommand(
-                "present_modifier_keys_state",
-                self.present_modifier_keys_state,
-                self.GROUP_LABEL,
-                cmdnames.PRESENT_MODIFIER_KEYS_STATE,
-            ),
-        ]
+        return system_information_presenter_command_definitions.get_commands(self)
 
     def create_time_and_date_preferences_grid(self) -> TimeAndDatePreferencesGrid:
         """Returns the GtkGrid containing the time and date preferences UI."""

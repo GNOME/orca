@@ -31,7 +31,6 @@ from enum import Enum
 from typing import TYPE_CHECKING
 
 from . import (
-    cmdnames,
     dbus_service,
     debug,
     gsettings_registry,
@@ -40,10 +39,10 @@ from . import (
     messages,
     presentation_manager,
     speech_presenter,
+    typing_echo_presenter_command_definitions,
 )
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -51,6 +50,7 @@ if TYPE_CHECKING:
 
     from gi.repository import Atspi
 
+    from .command import Command
     from .scripts import default
     from .typing_echo_presenter_preferences_grid import TypingEchoPreferencesGrid
 
@@ -113,16 +113,7 @@ class TypingEchoPresenter(Extension):
     def _get_commands(self) -> list[Command]:
         """Returns commands for registration."""
 
-        return [
-            KeyboardCommand(
-                "cycleKeyEchoHandler",
-                self.cycle_key_echo,
-                self.GROUP_LABEL,
-                cmdnames.CYCLE_KEY_ECHO,
-                desktop_keybinding=None,
-                laptop_keybinding=None,
-            ),
-        ]
+        return typing_echo_presenter_command_definitions.get_commands(self)
 
     def create_preferences_grid(self) -> TypingEchoPreferencesGrid:
         """Returns the GtkGrid containing the Typing Echo preferences UI."""

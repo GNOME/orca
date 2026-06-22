@@ -32,13 +32,12 @@ from typing import TYPE_CHECKING
 from gi.repository import GLib
 
 from . import (
-    cmdnames,
     debug,
     focus_manager,
     gsettings_registry,
     guilabels,
     input_event,
-    keybindings,
+    live_region_presenter_command_definitions,
     messages,
     presentation_manager,
     script_manager,
@@ -46,7 +45,6 @@ from . import (
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .ax_utilities_text import CaretSetReason
-from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -55,6 +53,7 @@ if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
+    from .command import Command
     from .scripts import default
 
 
@@ -213,43 +212,7 @@ class LiveRegionPresenter(Extension):
         super().__init__()
 
     def _get_commands(self) -> list[Command]:
-        kb_backslash = keybindings.KeyBinding("backslash", keybindings.ORCA_MODIFIER_MASK)
-        return [
-            KeyboardCommand(
-                "toggle_live_region_support",
-                self.toggle_monitoring,
-                self.GROUP_LABEL,
-                cmdnames.LIVE_REGIONS_MONITOR,
-                desktop_keybinding=kb_backslash,
-                laptop_keybinding=kb_backslash,
-                is_group_toggle=True,
-            ),
-            KeyboardCommand(
-                "present_previous_live_region_message",
-                self.present_previous_live_region_message,
-                self.GROUP_LABEL,
-                cmdnames.LIVE_REGIONS_PREVIOUS,
-            ),
-            KeyboardCommand(
-                "advance_live_politeness",
-                self._advance_politeness_level,
-                self.GROUP_LABEL,
-                cmdnames.LIVE_REGIONS_ADVANCE_POLITENESS,
-            ),
-            KeyboardCommand(
-                "toggle_live_region_presentation",
-                self.toggle_live_region_presentation,
-                self.GROUP_LABEL,
-                cmdnames.LIVE_REGIONS_ARE_ANNOUNCED,
-                is_group_toggle=True,
-            ),
-            KeyboardCommand(
-                "present_next_live_region_message",
-                self.present_next_live_region_message,
-                self.GROUP_LABEL,
-                cmdnames.LIVE_REGIONS_NEXT,
-            ),
-        ]
+        return live_region_presenter_command_definitions.get_commands(self)
 
     def reset(self) -> None:
         """Reset the live region presenter."""

@@ -33,8 +33,8 @@ from typing import TYPE_CHECKING, Any
 from . import (
     braille,
     braille_monitor,
+    braille_presenter_command_definitions,
     brltablenames,
-    cmdnames,
     dbus_service,
     debug,
     document_presenter,
@@ -47,7 +47,6 @@ from . import (
     output_recorder,
 )
 from .braille_generator import BrailleGeneratorContext
-from .command import Command, KeyboardCommand
 from .extension import Extension
 from .generator import PresentationReason
 from .orca_platform import tablesdir  # pylint: disable=import-error
@@ -63,6 +62,7 @@ if TYPE_CHECKING:
     from gi.repository import Atspi
 
     from .braille_presenter_preferences_grid import BraillePreferencesGrid
+    from .command import Command
     from .scripts import default
 
 
@@ -168,14 +168,7 @@ class BraillePresenter(Extension):
     def _get_commands(self) -> list[Command]:
         """Returns commands for registration."""
 
-        return [
-            KeyboardCommand(
-                "toggle_braille_monitor",
-                self.toggle_monitor,
-                self.GROUP_LABEL,
-                cmdnames.TOGGLE_BRAILLE_MONITOR,
-            ),
-        ]
+        return braille_presenter_command_definitions.get_commands(self)
 
     @dbus_service.command
     def toggle_monitor(
@@ -219,30 +212,7 @@ class BraillePresenter(Extension):
     def _build_command_names() -> dict[int, str]:
         """Return BrlTTY command names for presentation in the UI."""
 
-        command_names: dict[int, str] = {}
-
-        def add_command(command_id: int | None, label: str) -> None:
-            if command_id is not None:
-                command_names[command_id] = label
-
-        add_command(braille.BRLAPI_KEY_CMD_HWINLT, cmdnames.BRAILLE_LINE_LEFT)
-        add_command(braille.BRLAPI_KEY_CMD_FWINLT, cmdnames.BRAILLE_LINE_LEFT)
-        add_command(braille.BRLAPI_KEY_CMD_FWINLTSKIP, cmdnames.BRAILLE_LINE_LEFT)
-        add_command(braille.BRLAPI_KEY_CMD_HWINRT, cmdnames.BRAILLE_LINE_RIGHT)
-        add_command(braille.BRLAPI_KEY_CMD_FWINRT, cmdnames.BRAILLE_LINE_RIGHT)
-        add_command(braille.BRLAPI_KEY_CMD_FWINRTSKIP, cmdnames.BRAILLE_LINE_RIGHT)
-        add_command(braille.BRLAPI_KEY_CMD_LNUP, cmdnames.BRAILLE_LINE_UP)
-        add_command(braille.BRLAPI_KEY_CMD_LNDN, cmdnames.BRAILLE_LINE_DOWN)
-        add_command(braille.BRLAPI_KEY_CMD_FREEZE, cmdnames.BRAILLE_FREEZE)
-        add_command(braille.BRLAPI_KEY_CMD_TOP_LEFT, cmdnames.BRAILLE_TOP_LEFT)
-        add_command(braille.BRLAPI_KEY_CMD_BOT_LEFT, cmdnames.BRAILLE_BOTTOM_LEFT)
-        add_command(braille.BRLAPI_KEY_CMD_HOME, cmdnames.BRAILLE_HOME)
-        add_command(braille.BRLAPI_KEY_CMD_SIXDOTS, cmdnames.BRAILLE_SIX_DOTS)
-        add_command(braille.BRLAPI_KEY_CMD_ROUTE, cmdnames.BRAILLE_ROUTE_CURSOR)
-        add_command(braille.BRLAPI_KEY_CMD_CUTBEGIN, cmdnames.BRAILLE_CUT_BEGIN)
-        add_command(braille.BRLAPI_KEY_CMD_CUTLINE, cmdnames.BRAILLE_CUT_LINE)
-
-        return command_names
+        return braille_presenter_command_definitions.get_brltty_command_names()
 
     def get_command_names(self) -> dict[int, str]:
         """Returns a mapping of BrlTTY command IDs to user-visible labels."""

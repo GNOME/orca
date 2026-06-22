@@ -27,7 +27,7 @@ from enum import Enum
 from typing import TYPE_CHECKING
 
 from . import (
-    cmdnames,
+    chat_presenter_command_definitions,
     dbus_service,
     debug,
     focus_manager,
@@ -43,7 +43,6 @@ from .ax_object import AXObject
 from .ax_selection import AXSelection
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
-from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -52,6 +51,7 @@ if TYPE_CHECKING:
     from gi.repository import Atspi
 
     from .chat_presenter_preferences_grid import ChatPreferencesGrid
+    from .command import Command
     from .dbus_service import UInt32
     from .scripts import default
 
@@ -384,38 +384,7 @@ class ChatPresenter(Extension):
     GROUP_LABEL = guilabels.KB_GROUP_CHAT
 
     def _get_commands(self) -> list[Command]:
-        return [
-            KeyboardCommand(
-                "chat_toggle_room_name_prefix",
-                self.toggle_prefix,
-                self.GROUP_LABEL,
-                cmdnames.CHAT_TOGGLE_ROOM_NAME_PREFIX,
-            ),
-            KeyboardCommand(
-                "chat_toggle_buddy_typing",
-                self.toggle_buddy_typing,
-                self.GROUP_LABEL,
-                cmdnames.CHAT_TOGGLE_BUDDY_TYPING,
-            ),
-            KeyboardCommand(
-                "chat_toggle_message_histories",
-                self.toggle_message_histories,
-                self.GROUP_LABEL,
-                cmdnames.CHAT_TOGGLE_MESSAGE_HISTORIES,
-            ),
-            KeyboardCommand(
-                "chat_previous_message",
-                self.present_previous_message,
-                self.GROUP_LABEL,
-                cmdnames.CHAT_PREVIOUS_MESSAGE,
-            ),
-            KeyboardCommand(
-                "chat_next_message",
-                self.present_next_message,
-                self.GROUP_LABEL,
-                cmdnames.CHAT_NEXT_MESSAGE,
-            ),
-        ]
+        return chat_presenter_command_definitions.get_commands(self)
 
     def create_preferences_grid(self) -> ChatPreferencesGrid:
         """Create and return the chat preferences grid."""

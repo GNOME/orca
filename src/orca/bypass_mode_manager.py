@@ -26,19 +26,18 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from . import (
-    cmdnames,
+    bypass_mode_manager_command_definitions,
     command_manager,
     guilabels,
     input_event,
-    keybindings,
     messages,
     orca_modifier_manager,
     presentation_manager,
 )
-from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
+    from .command import Command
     from .scripts import default
 
 
@@ -53,17 +52,7 @@ class BypassModeManager(Extension):
         super().__init__()
 
     def _get_commands(self) -> list[Command]:
-        kb = keybindings.KeyBinding("BackSpace", keybindings.ALT_MODIFIER_MASK)
-        return [
-            KeyboardCommand(
-                self.COMMAND_NAME,
-                self.toggle_enabled,
-                self.GROUP_LABEL,
-                cmdnames.BYPASS_MODE_TOGGLE,
-                desktop_keybinding=kb,
-                laptop_keybinding=kb,
-            ),
-        ]
+        return bypass_mode_manager_command_definitions.get_commands(self)
 
     def is_active(self) -> bool:
         """Returns True if bypass mode is active."""

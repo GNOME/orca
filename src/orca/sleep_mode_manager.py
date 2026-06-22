@@ -26,25 +26,24 @@ import os
 from typing import TYPE_CHECKING
 
 from . import (
-    cmdnames,
     dbus_service,
     debug,
     gsettings_registry,
     guilabels,
     input_event,
-    keybindings,
     messages,
     presentation_manager,
     script_manager,
+    sleep_mode_manager_command_definitions,
 )
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
-from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
     from gi.repository import Atspi
 
+    from .command import Command
     from .scripts import default
     from .sleep_mode_manager_preferences_grid import SleepModePreferencesGrid
 
@@ -68,18 +67,7 @@ class SleepModeManager(Extension):
     def _get_commands(self) -> list[Command]:
         """Returns commands for registration."""
 
-        kb = keybindings.KeyBinding("q", keybindings.SHIFT_ALT_CTRL_MODIFIER_MASK)
-
-        return [
-            KeyboardCommand(
-                self.COMMAND_NAME,
-                self.toggle_sleep_mode,
-                self.GROUP_LABEL,
-                cmdnames.TOGGLE_SLEEP_MODE,
-                desktop_keybinding=kb,
-                laptop_keybinding=kb,
-            ),
-        ]
+        return sleep_mode_manager_command_definitions.get_commands(self)
 
     def _is_on_persistent_list(self, app: Atspi.Accessible) -> bool:
         """Returns True if the app is on the persistent sleep mode list."""

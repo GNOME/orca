@@ -163,7 +163,7 @@ class TestSystemInformationPresenter:
 
         mock_bindings_instance = test_context.Mock()
         test_context.patch(
-            "orca.system_information_presenter.keybindings.KeyBindings",
+            "orca.system_information_presenter_command_definitions.keybindings.KeyBindings",
             return_value=mock_bindings_instance,
         )
         from orca import command_manager

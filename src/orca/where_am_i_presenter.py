@@ -25,14 +25,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from . import (
-    cmdnames,
     dbus_service,
     debug,
     flat_review_presenter,
     focus_manager,
     guilabels,
     input_event,
-    keybindings,
     math_navigator,
     math_presenter,
     messages,
@@ -40,12 +38,12 @@ from . import (
     speech_presenter,
     spellcheck_presenter,
     text_attribute_manager,
+    where_am_i_presenter_command_definitions,
 )
 from .ax_component import AXComponent
 from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
-from .command import Command, KeyboardCommand
 from .extension import Extension
 from .generator import PresentationReason
 
@@ -55,6 +53,7 @@ if TYPE_CHECKING:
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
+    from .command import Command
     from .scripts import default
 
 
@@ -63,115 +62,8 @@ class WhereAmIPresenter(Extension):
 
     GROUP_LABEL = guilabels.KB_GROUP_WHERE_AM_I
 
-    # pylint: disable-next=too-many-locals
     def _get_commands(self) -> list[Command]:
-        # Common keybindings (same for desktop and laptop)
-        kb_f = keybindings.KeyBinding("f", keybindings.ORCA_MODIFIER_MASK)
-        kb_e = keybindings.KeyBinding("e", keybindings.ORCA_MODIFIER_MASK)
-        kb_up = keybindings.KeyBinding("Up", keybindings.ORCA_SHIFT_MODIFIER_MASK)
-
-        # Desktop-specific keybindings
-        kb_equal = keybindings.KeyBinding("equal", keybindings.ORCA_MODIFIER_MASK)
-        kb_kp_enter_orca = keybindings.KeyBinding("KP_Enter", keybindings.ORCA_MODIFIER_MASK)
-        kb_kp_enter_orca_2 = keybindings.KeyBinding(
-            "KP_Enter",
-            keybindings.ORCA_MODIFIER_MASK,
-            click_count=2,
-        )
-        kb_kp_enter = keybindings.KeyBinding("KP_Enter", keybindings.NO_MODIFIER_MASK)
-        kb_kp_enter_2 = keybindings.KeyBinding(
-            "KP_Enter",
-            keybindings.NO_MODIFIER_MASK,
-            click_count=2,
-        )
-
-        # Laptop-specific keybindings
-        kb_slash = keybindings.KeyBinding("slash", keybindings.ORCA_MODIFIER_MASK)
-        kb_slash_2 = keybindings.KeyBinding("slash", keybindings.ORCA_MODIFIER_MASK, click_count=2)
-        kb_return = keybindings.KeyBinding("Return", keybindings.ORCA_MODIFIER_MASK)
-        kb_return_2 = keybindings.KeyBinding(
-            "Return",
-            keybindings.ORCA_MODIFIER_MASK,
-            click_count=2,
-        )
-
-        return [
-            KeyboardCommand(
-                "readCharAttributesHandler",
-                self.present_character_attributes,
-                self.GROUP_LABEL,
-                cmdnames.READ_CHAR_ATTRIBUTES,
-                desktop_keybinding=kb_f,
-                laptop_keybinding=kb_f,
-            ),
-            KeyboardCommand(
-                "presentSizeAndPositionHandler",
-                self.present_size_and_position,
-                self.GROUP_LABEL,
-                cmdnames.PRESENT_SIZE_AND_POSITION,
-            ),
-            KeyboardCommand(
-                "getTitleHandler",
-                self.present_title,
-                self.GROUP_LABEL,
-                cmdnames.PRESENT_TITLE,
-                desktop_keybinding=kb_kp_enter_orca,
-                laptop_keybinding=kb_slash,
-            ),
-            KeyboardCommand(
-                "getStatusBarHandler",
-                self.present_status_bar,
-                self.GROUP_LABEL,
-                cmdnames.PRESENT_STATUS_BAR,
-                desktop_keybinding=kb_kp_enter_orca_2,
-                laptop_keybinding=kb_slash_2,
-            ),
-            KeyboardCommand(
-                "present_default_button",
-                self.present_default_button,
-                self.GROUP_LABEL,
-                cmdnames.PRESENT_DEFAULT_BUTTON,
-                desktop_keybinding=kb_e,
-                laptop_keybinding=kb_e,
-            ),
-            KeyboardCommand(
-                "present_cell_formula",
-                self.present_cell_formula,
-                self.GROUP_LABEL,
-                cmdnames.PRESENT_CELL_FORMULA,
-                desktop_keybinding=kb_equal,
-            ),
-            KeyboardCommand(
-                "whereAmIBasicHandler",
-                self.where_am_i_basic,
-                self.GROUP_LABEL,
-                cmdnames.WHERE_AM_I_BASIC,
-                desktop_keybinding=kb_kp_enter,
-                laptop_keybinding=kb_return,
-            ),
-            KeyboardCommand(
-                "whereAmIDetailedHandler",
-                self.where_am_i_detailed,
-                self.GROUP_LABEL,
-                cmdnames.WHERE_AM_I_DETAILED,
-                desktop_keybinding=kb_kp_enter_2,
-                laptop_keybinding=kb_return_2,
-            ),
-            KeyboardCommand(
-                "whereAmILinkHandler",
-                self.present_link,
-                self.GROUP_LABEL,
-                cmdnames.WHERE_AM_I_LINK,
-            ),
-            KeyboardCommand(
-                "whereAmISelectionHandler",
-                self.present_selection,
-                self.GROUP_LABEL,
-                cmdnames.WHERE_AM_I_SELECTION,
-                desktop_keybinding=kb_up,
-                laptop_keybinding=kb_up,
-            ),
-        ]
+        return where_am_i_presenter_command_definitions.get_commands(self)
 
     def _localize_text_attribute(self, key: str, value: str | None) -> str:
         """Returns a localized description of the text attribute for Orca+F readout."""

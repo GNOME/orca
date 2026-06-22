@@ -38,20 +38,20 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import GObject, Gtk
 
 from . import (
-    cmdnames,
     dbus_service,
     debug,
     guilabels,
     input_event,
     messages,
+    notification_presenter_command_definitions,
     presentation_manager,
 )
-from .command import Command, KeyboardCommand
 from .extension import Extension
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+    from .command import Command
     from .scripts import default
 
 
@@ -73,32 +73,7 @@ class NotificationPresenter(Extension):
         super().__init__()
 
     def _get_commands(self) -> list[Command]:
-        return [
-            KeyboardCommand(
-                "present_last_notification",
-                self.present_last_notification,
-                self.GROUP_LABEL,
-                cmdnames.NOTIFICATION_MESSAGES_LAST,
-            ),
-            KeyboardCommand(
-                "present_next_notification",
-                self.present_next_notification,
-                self.GROUP_LABEL,
-                cmdnames.NOTIFICATION_MESSAGES_NEXT,
-            ),
-            KeyboardCommand(
-                "present_previous_notification",
-                self.present_previous_notification,
-                self.GROUP_LABEL,
-                cmdnames.NOTIFICATION_MESSAGES_PREVIOUS,
-            ),
-            KeyboardCommand(
-                "show_notification_list",
-                self.show_notification_list,
-                self.GROUP_LABEL,
-                cmdnames.NOTIFICATION_MESSAGES_LIST,
-            ),
-        ]
+        return notification_presenter_command_definitions.get_commands(self)
 
     def save_notification(self, message: str) -> None:
         """Adds message to the list of notification messages."""
