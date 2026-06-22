@@ -318,8 +318,8 @@ CLI_EXTENSION_APPROVED_BUT_DISABLED = _(
 )
 
 # Translators: This is the description of command line option '-s, --setup'
-# that will place the user in Orca's GUI preferences dialog.
-CLI_GUI_SETUP = _("Set up user preferences (GUI version)")
+# that will place the user in Orca's GUI preferences window.
+CLI_GUI_SETUP = _("Show the preferences window")
 
 # Translators: This text is the description displayed when Orca is launched
 # from the command line and the help text is displayed.

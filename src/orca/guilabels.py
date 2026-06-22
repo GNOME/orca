@@ -561,6 +561,10 @@ SLEEP_MODE_INFO = _(
 SLEEP_MODE_APPS = _("Always use sleep mode with these applications")
 
 # Translators: This string is a label for the group of Orca commands which
+# are related to opening the preferences window.
+KB_GROUP_PREFERENCES = _("Preferences")
+
+# Translators: This string is a label for the group of Orca commands which
 # are related to mouse interaction, such as routing the pointer, clicking
 # the current item, and toggling mouse review.
 KB_GROUP_MOUSE = _("Mouse")

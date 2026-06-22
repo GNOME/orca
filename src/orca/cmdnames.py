@@ -497,13 +497,13 @@ TOGGLE_KEYBOARD_LAYOUT = _("Toggle keyboard layout")
 # Orca.
 QUIT_ORCA = _("Quit the screen reader")
 
-# Translators: the preferences configuration dialog is the dialog that allows
-# users to set their preferences for Orca.
-SHOW_PREFERENCES_GUI = _("Display the preferences configuration dialog")
+# Translators: the preferences window allows users to set their preferences
+# for Orca.
+SHOW_PREFERENCES_GUI = _("Display the preferences window")
 
-# Translators: the preferences configuration dialog is the dialog that allows
-# users to set their preferences for a specific application within Orca.
-SHOW_APP_PREFERENCES_GUI = _("Display the application preferences configuration dialog")
+# Translators: the application preferences window allows users to set their
+# preferences for a specific application within Orca.
+SHOW_APP_PREFERENCES_GUI = _("Display the application preferences window")
 
 # Translators: Orca allows the user to enable/disable spoken indentation.
 TOGGLE_SPOKEN_INDENTATION = _("Toggle spoken indentation")

@@ -313,14 +313,18 @@ class TestDBusService:
         from orca import dbus_service
 
         mock_script = test_context.Mock()
-        mock_script.show_preferences_gui.return_value = None
         mock_manager = test_context.Mock()
         mock_manager.get_active_script.return_value = mock_script
         test_context.patch("orca.script_manager.get_manager", return_value=mock_manager)
+        mock_presenter = test_context.Mock()
+        mock_presenter.show_preferences_gui.return_value = True
+        preferences_presenter_mod = types.ModuleType("orca.preferences_presenter")
+        preferences_presenter_mod.get_presenter = test_context.Mock(return_value=mock_presenter)
+        test_context.patch_modules({"orca.preferences_presenter": preferences_presenter_mod})
         service = dbus_service.OrcaDBusServiceInterface()
         result = service.ShowPreferences()
         assert result is True
-        mock_script.show_preferences_gui.assert_called_once()
+        mock_presenter.show_preferences_gui.assert_called_once_with(mock_script)
 
     def test_show_preferences_no_active_script(self, test_context: OrcaTestContext) -> None:
         """Test OrcaDBusServiceInterface.ShowPreferences no active script."""
@@ -329,15 +333,19 @@ class TestDBusService:
         from orca import dbus_service
 
         mock_script = test_context.Mock()
-        mock_script.show_preferences_gui.return_value = None
         mock_manager = test_context.Mock()
         mock_manager.get_active_script.return_value = None
         mock_manager.get_default_script.return_value = mock_script
         test_context.patch("orca.script_manager.get_manager", return_value=mock_manager)
+        mock_presenter = test_context.Mock()
+        mock_presenter.show_preferences_gui.return_value = True
+        preferences_presenter_mod = types.ModuleType("orca.preferences_presenter")
+        preferences_presenter_mod.get_presenter = test_context.Mock(return_value=mock_presenter)
+        test_context.patch_modules({"orca.preferences_presenter": preferences_presenter_mod})
         service = dbus_service.OrcaDBusServiceInterface()
         result = service.ShowPreferences()
         assert result is True
-        mock_script.show_preferences_gui.assert_called_once()
+        mock_presenter.show_preferences_gui.assert_called_once_with(mock_script)
 
     def test_show_preferences_no_script(self, test_context: OrcaTestContext) -> None:
         """Test OrcaDBusServiceInterface.ShowPreferences no script."""
@@ -1085,7 +1093,7 @@ def _stub_orca_internals(test_context: OrcaTestContext) -> dict[str, object]:
     sm_mod = types.ModuleType("orca.script_manager")
     sm_mod.get_manager = lambda: sm_instance
 
-    stubs = {
+    stubs: dict[str, object] = {
         "orca.orca_platform": platform_mod,
         "orca.debug": debug_mod,
         "orca.input_event": input_event_mod,
@@ -1275,7 +1283,9 @@ class TestInterfaceBuilder:
         assert prop_annotation is not None
         assert prop_annotation.get("name") == "org.gtk.GDBus.DocString"
         # The setter description wins because it's stored unconditionally; both convey "rate".
-        assert "rate" in prop_annotation.get("value").lower()
+        value = prop_annotation.get("value")
+        assert value is not None
+        assert "rate" in value.lower()
 
     def test_user_params_resolved_when_reserved_param_unresolvable(
         self, test_context: OrcaTestContext

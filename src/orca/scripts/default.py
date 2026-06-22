@@ -62,7 +62,7 @@ from orca import (
     notification_presenter,
     object_navigator,
     orca,
-    orca_gui_prefs,
+    preferences_presenter,
     presentation_manager,
     profile_manager,
     say_all_presenter,
@@ -132,6 +132,7 @@ class Script(script.Script):
             (debugging_tools_manager.get_manager, guilabels.KB_GROUP_DEBUGGING_TOOLS),
             (chat_presenter.get_presenter, guilabels.KB_GROUP_CHAT),
             (profile_manager.get_manager, guilabels.GENERAL_PROFILES),
+            (preferences_presenter.get_presenter, guilabels.KB_GROUP_PREFERENCES),
         ]
         for getter, group_label in builtins:
             loader.register_builtin(getter, group_label)
@@ -152,9 +153,6 @@ class Script(script.Script):
         manager = command_manager.get_manager()
         manager.set_up_commands()
         group_label = guilabels.KB_GROUP_DEFAULT
-
-        kb_space_orca = keybindings.KeyBinding("space", keybindings.ORCA_MODIFIER_MASK)
-        kb_space_ctrl_orca = keybindings.KeyBinding("space", keybindings.ORCA_CTRL_MODIFIER_MASK)
 
         script_commands: list[
             tuple[
@@ -187,20 +185,6 @@ class Script(script.Script):
                 None,
             ),
             ("shutdownHandler", self.quit_orca, cmdnames.QUIT_ORCA, None, None),
-            (
-                "preferencesSettingsHandler",
-                self.show_preferences_gui,
-                cmdnames.SHOW_PREFERENCES_GUI,
-                kb_space_orca,
-                kb_space_orca,
-            ),
-            (
-                "appPreferencesSettingsHandler",
-                self.show_app_preferences_gui,
-                cmdnames.SHOW_APP_PREFERENCES_GUI,
-                kb_space_ctrl_orca,
-                kb_space_ctrl_orca,
-            ),
         ]
 
         for (
@@ -479,31 +463,6 @@ class Script(script.Script):
     # INPUT EVENT HANDLERS (AKA ORCA COMMANDS)                             #
     #                                                                      #
     ########################################################################
-
-    def show_app_preferences_gui(
-        self,
-        current_script: Script | None = None,
-        _event: input_event.InputEvent | None = None,
-    ) -> bool:
-        """Shows the app Preferences dialog."""
-
-        current_script = current_script or self
-        ui = orca_gui_prefs.OrcaSetupGUI(current_script)
-        ui.show_gui()
-        return True
-
-    def show_preferences_gui(
-        self,
-        _script: Script | None = None,
-        _event: input_event.InputEvent | None = None,
-    ) -> bool:
-        """Displays the Preferences dialog."""
-
-        default_script = script_manager.get_manager().get_default_script()
-        script_manager.get_manager().set_active_script(default_script, "Global preferences")
-        ui = orca_gui_prefs.OrcaSetupGUI(default_script)
-        ui.show_gui()
-        return True
 
     def quit_orca(
         self,

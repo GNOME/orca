@@ -188,6 +188,13 @@ TYPING_ECHO_PRESENTER_HANDLERS = frozenset(
     },
 )
 
+PREFERENCES_PRESENTER_HANDLERS = frozenset(
+    {
+        "appPreferencesSettingsHandler",
+        "preferencesSettingsHandler",
+    },
+)
+
 CARET_NAVIGATOR_HANDLERS = frozenset(
     {
         "end_of_file",
@@ -360,13 +367,11 @@ SPEECH_PRESENTER_HANDLERS = frozenset(
 # Script handlers - these will eventually move to presenter/manager modules
 DEFAULT_SCRIPT_HANDLERS = frozenset(
     {
-        "appPreferencesSettingsHandler",
         "contractedBrailleHandler",
         "cycleSettingsProfileHandler",
         "goBrailleHomeHandler",
         "panBrailleLeftHandler",
         "panBrailleRightHandler",
-        "preferencesSettingsHandler",
         "processBrailleCutBeginHandler",
         "processBrailleCutLineHandler",
         "processRoutingKeyHandler",
@@ -399,6 +404,7 @@ EXPECTED_TOTAL_COMMANDS = (
     + len(DEBUGGING_TOOLS_MANAGER_HANDLERS)
     + len(CLIPBOARD_HANDLERS)
     + len(TYPING_ECHO_PRESENTER_HANDLERS)
+    + len(PREFERENCES_PRESENTER_HANDLERS)
     + len(CARET_NAVIGATOR_HANDLERS)
     + len(STRUCTURAL_NAVIGATOR_HANDLERS)
     + len(TABLE_NAVIGATOR_HANDLERS)
@@ -941,6 +947,24 @@ class TestCommandRegistry:
         )
         assert not missing, f"Missing commands in clipboard: {missing}"
 
+    def test_preferences_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
+        """Test that all preferences presenter handlers are registered."""
+
+        self._setup_dependencies(test_context)
+        from orca import command_manager
+        from orca.preferences_presenter import get_presenter
+
+        presenter = get_presenter()
+        presenter.set_up_commands()
+        cmd_manager = command_manager.get_manager()
+
+        missing = frozenset(
+            name
+            for name in PREFERENCES_PRESENTER_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
+        )
+        assert not missing, f"Missing commands in preferences_presenter: {missing}"
+
     def test_caret_navigator_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all caret navigator commands are registered with CommandManager.
 
@@ -1114,6 +1138,7 @@ class TestCommandRegistry:
             + len(DEBUGGING_TOOLS_MANAGER_HANDLERS)
             + len(CLIPBOARD_HANDLERS)
             + len(TYPING_ECHO_PRESENTER_HANDLERS)
+            + len(PREFERENCES_PRESENTER_HANDLERS)
             + len(CARET_NAVIGATOR_HANDLERS)
             + len(STRUCTURAL_NAVIGATOR_HANDLERS)
             + len(TABLE_NAVIGATOR_HANDLERS)

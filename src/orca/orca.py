@@ -162,10 +162,9 @@ def _setup_signal_handlers():
     def _glib_show_preferences_handler():
         msg = "ORCA: GLib handler received show-preferences signal"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        manager = script_manager.get_manager()
-        script = manager.get_active_script() or manager.get_default_script()
-        if script:
-            script.show_preferences_gui()
+        from . import preferences_presenter  # pylint: disable=import-outside-toplevel
+
+        preferences_presenter.get_presenter().show_preferences_gui()
         return GLib.SOURCE_CONTINUE
 
     for signum, handler in (

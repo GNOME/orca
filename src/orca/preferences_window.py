@@ -77,6 +77,22 @@ if TYPE_CHECKING:
     from .scripts import default
 
 
+def show_app_preferences_gui(current_script: default.Script) -> bool:
+    """Shows the application-specific preferences window."""
+
+    ui = OrcaSetupGUI(current_script)
+    ui.show_gui()
+    return True
+
+
+def show_preferences_gui(default_script: default.Script) -> bool:
+    """Shows the global preferences window."""
+
+    ui = OrcaSetupGUI(default_script)
+    ui.show_gui()
+    return True
+
+
 @dataclass
 class _AppearanceProviders:
     """CSS providers for conditional appearance settings."""

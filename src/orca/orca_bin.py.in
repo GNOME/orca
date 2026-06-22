@@ -69,7 +69,7 @@ from orca import debugging_tools_manager
 from orca import extension_loader
 from orca import gsettings_registry
 from orca import messages
-from orca import script_manager
+from orca import preferences_presenter
 from orca import speech_manager
 
 class ListApps(argparse.Action):
@@ -382,12 +382,11 @@ def main() -> int:
 
     if args.setup:
         if running_orcas := other_orcas():
-            # Send SIGUSR1 to the running Orca to show preferences dialog
+            # Send SIGUSR1 to the running Orca to show preferences window.
             for pid in running_orcas:
                 os.kill(pid, signal.SIGUSR1)
             return 0
-        script = script_manager.get_manager().get_default_script()
-        script.show_preferences_gui()
+        preferences_presenter.get_presenter().show_preferences_gui()
 
     if other_orcas():
         print(messages.CLI_OTHER_ORCAS_ERROR)
