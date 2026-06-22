@@ -116,7 +116,7 @@ class SayAllPresenter(Extension):
             default=default,
         )
 
-    GROUP_LABEL = guilabels.KB_GROUP_DEFAULT
+    GROUP_LABEL = guilabels.GENERAL_SAY_ALL
 
     def __init__(self) -> None:
         self._script: default.Script | None = None

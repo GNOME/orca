@@ -78,7 +78,7 @@ class TypingEchoPreference:
 class TypingEchoPresenter(Extension):
     """Provides typing echo support."""
 
-    GROUP_LABEL = guilabels.KB_GROUP_DEFAULT
+    GROUP_LABEL = guilabels.ECHO
 
     _SCHEMA = "typing-echo"
     KEY_KEY_ECHO = "key-echo"

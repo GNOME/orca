@@ -479,6 +479,11 @@ KB_HEADER_KEY_BINDING = _("Key Binding")
 KB_GROUP_DEFAULT = C_("keybindings", "Default")
 
 # Translators: This string is a label for the group of Orca commands which
+# are related to bypass mode. Bypass mode causes Orca to pass subsequent
+# command keys to the current application instead of handling them itself.
+KB_GROUP_BYPASS_MODE = _("Bypass mode")
+
+# Translators: This string is a label for the group of Orca commands which
 # are related to debugging.
 KB_GROUP_DEBUGGING_TOOLS = C_("keybindings", "Debugging Tools")
 

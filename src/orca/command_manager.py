@@ -401,7 +401,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             KeyboardCommand(
                 "toggle_keyboard_layout",
                 self.toggle_keyboard_layout,
-                guilabels.KB_GROUP_DEFAULT,
+                guilabels.KEYBOARD_LAYOUT,
                 cmdnames.TOGGLE_KEYBOARD_LAYOUT,
             ),
         )

@@ -44,7 +44,7 @@ if TYPE_CHECKING:
 class BypassModeManager(Extension):
     """Provides means to pass keyboard events to the app being used."""
 
-    GROUP_LABEL = guilabels.KB_GROUP_DEFAULT
+    GROUP_LABEL = guilabels.KB_GROUP_BYPASS_MODE
     COMMAND_NAME = "bypass_mode_toggle"
 
     def __init__(self) -> None:
