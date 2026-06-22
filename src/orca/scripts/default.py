@@ -34,7 +34,6 @@ from typing import TYPE_CHECKING
 
 from orca import (
     action_presenter,
-    ax_event_synthesizer,
     braille,
     braille_presenter,
     bypass_mode_manager,
@@ -59,7 +58,7 @@ from orca import (
     live_region_presenter,
     math_navigator,
     messages,
-    mouse_review,
+    mouse_presenter,
     notification_presenter,
     object_navigator,
     orca,
@@ -125,7 +124,7 @@ class Script(script.Script):
             (document_presenter.get_presenter, guilabels.KB_GROUP_DOCUMENTS),
             (live_region_presenter.get_presenter, guilabels.KB_GROUP_LIVE_REGIONS),
             (learn_mode_presenter.get_presenter, guilabels.KB_GROUP_LEARN_MODE),
-            (mouse_review.get_reviewer, guilabels.KB_GROUP_MOUSE_REVIEW),
+            (mouse_presenter.get_presenter, guilabels.KB_GROUP_MOUSE),
             (action_presenter.get_presenter, guilabels.KB_GROUP_ACTIONS),
             (flat_review_presenter.get_presenter, guilabels.KB_GROUP_FLAT_REVIEW),
             (flat_review_finder.get_finder, guilabels.KB_GROUP_FIND),
@@ -154,12 +153,6 @@ class Script(script.Script):
         manager.set_up_commands()
         group_label = guilabels.KB_GROUP_DEFAULT
 
-        kb_kp_divide_orca = keybindings.KeyBinding("KP_Divide", keybindings.ORCA_MODIFIER_MASK)
-        kb_kp_divide = keybindings.KeyBinding("KP_Divide", keybindings.NO_MODIFIER_MASK)
-        kb_kp_multiply = keybindings.KeyBinding("KP_Multiply", keybindings.NO_MODIFIER_MASK)
-        kb_9_orca = keybindings.KeyBinding("9", keybindings.ORCA_MODIFIER_MASK)
-        kb_7_orca = keybindings.KeyBinding("7", keybindings.ORCA_MODIFIER_MASK)
-        kb_8_orca = keybindings.KeyBinding("8", keybindings.ORCA_MODIFIER_MASK)
         kb_space_orca = keybindings.KeyBinding("space", keybindings.ORCA_MODIFIER_MASK)
         kb_space_ctrl_orca = keybindings.KeyBinding("space", keybindings.ORCA_CTRL_MODIFIER_MASK)
 
@@ -172,27 +165,6 @@ class Script(script.Script):
                 keybindings.KeyBinding | None,
             ]
         ] = [
-            (
-                "routePointerToItemHandler",
-                self.route_pointer_to_item,
-                cmdnames.ROUTE_POINTER_TO_ITEM,
-                kb_kp_divide_orca,
-                kb_9_orca,
-            ),
-            (
-                "leftClickReviewItemHandler",
-                self.left_click_item,
-                cmdnames.LEFT_CLICK_REVIEW_ITEM,
-                kb_kp_divide,
-                kb_7_orca,
-            ),
-            (
-                "rightClickReviewItemHandler",
-                self.right_click_item,
-                cmdnames.RIGHT_CLICK_REVIEW_ITEM,
-                kb_kp_multiply,
-                kb_8_orca,
-            ),
             (
                 "panBrailleLeftHandler",
                 self.pan_braille_left,
@@ -734,87 +706,6 @@ class Script(script.Script):
         clipboard.get_presenter().set_text(text)
         return True
 
-    def route_pointer_to_item(
-        self,
-        _script: Script | None = None,
-        event: input_event.InputEvent | None = None,
-    ) -> bool:
-        """Moves the mouse pointer to the current item."""
-
-        if flat_review_presenter.get_presenter().is_active():
-            flat_review_presenter.get_presenter().route_pointer_to_object(self, event)
-            return True
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if ax_event_synthesizer.get_synthesizer().route_to_character(
-            focus,
-        ) or ax_event_synthesizer.get_synthesizer().route_to_object(focus):
-            presentation_manager.get_manager().present_message(messages.MOUSE_MOVED_SUCCESS)
-            return True
-
-        full = messages.LOCATION_NOT_FOUND_FULL
-        brief = messages.LOCATION_NOT_FOUND_BRIEF
-        presentation_manager.get_manager().present_message(full, brief)
-        return False
-
-    def left_click_item(
-        self,
-        _script: Script | None = None,
-        event: input_event.InputEvent | None = None,
-    ) -> bool:
-        """Performs a left mouse button click on the current item."""
-
-        if flat_review_presenter.get_presenter().is_active():
-            obj = flat_review_presenter.get_presenter().get_current_object(self, event)
-            if ax_event_synthesizer.get_synthesizer().try_all_clickable_actions(obj):
-                return True
-            return flat_review_presenter.get_presenter().left_click_on_object(self, event)
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if ax_event_synthesizer.get_synthesizer().try_all_clickable_actions(focus):
-            return True
-
-        if AXText.get_character_count(focus):
-            if ax_event_synthesizer.get_synthesizer().click_character(focus, None, 1):
-                return True
-
-        if ax_event_synthesizer.get_synthesizer().click_object(focus, 1):
-            return True
-
-        full = messages.LOCATION_NOT_FOUND_FULL
-        brief = messages.LOCATION_NOT_FOUND_BRIEF
-        presentation_manager.get_manager().present_message(full, brief)
-        return False
-
-    def right_click_item(
-        self,
-        _script: Script | None = None,
-        event: input_event.InputEvent | None = None,
-    ) -> bool:
-        """Performs a right mouse button click on the current item."""
-
-        if flat_review_presenter.get_presenter().is_active():
-            obj = flat_review_presenter.get_presenter().get_current_object(self, event)
-            if ax_event_synthesizer.get_synthesizer().try_all_right_click_actions(obj):
-                return True
-            flat_review_presenter.get_presenter().right_click_on_object(self, event)
-            return True
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if ax_event_synthesizer.get_synthesizer().try_all_right_click_actions(focus):
-            return True
-
-        if ax_event_synthesizer.get_synthesizer().click_character(focus, None, 3):
-            return True
-
-        if ax_event_synthesizer.get_synthesizer().click_object(focus, 3):
-            return True
-
-        full = messages.LOCATION_NOT_FOUND_FULL
-        brief = messages.LOCATION_NOT_FOUND_BRIEF
-        presentation_manager.get_manager().present_message(full, brief)
-        return False
-
     ########################################################################
     #                                                                      #
     # AT-SPI OBJECT EVENT HANDLERS                                         #
@@ -1119,11 +1010,11 @@ class Script(script.Script):
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        mouse_review_item = mouse_review.get_reviewer().get_current_item()
+        mouse_item = mouse_presenter.get_presenter().get_current_item()
         child = AXUtilities.get_selected_child_for_focus(
             event.source,
             focus,
-            lambda c: c == mouse_review_item or AXUtilities.is_layout_only(c),
+            lambda c: c == mouse_item or AXUtilities.is_layout_only(c),
         )
         if child is not None:
             if AXUtilities.is_page_tab(child) and not AXUtilities.is_focused(child):
@@ -1181,7 +1072,7 @@ class Script(script.Script):
 
         if AXUtilities.is_tool_tip(obj):
             was_f1 = input_event_manager.get_manager().last_event_was_f1()
-            if not was_f1 and not mouse_review.get_reviewer().get_present_tooltips():
+            if not was_f1 and not mouse_presenter.get_presenter().get_present_tooltips():
                 return True
             if event.detail1:
                 presentation_manager.get_manager().interrupt_if_needed_for_object_presentation()

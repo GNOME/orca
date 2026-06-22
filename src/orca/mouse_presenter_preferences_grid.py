@@ -18,16 +18,16 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Preferences grid for mouse review support."""
+"""Preferences grid for mouse presentation support."""
 
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from . import guilabels, mouse_review, preferences_grid_base
+from . import guilabels, mouse_presenter, preferences_grid_base
 
 if TYPE_CHECKING:
-    from .mouse_review import MouseReviewer
+    from .mouse_presenter import MousePresenter
 
 
 class MousePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
@@ -44,7 +44,7 @@ class MousePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
 
         return preferences_grid_base.PreferencePanelDoc(
             title=guilabels.MOUSE,
-            panel_id="mouse_review.mouse",
+            panel_id="mouse_presenter.mouse",
             description=guilabels.MOUSE_WAYLAND_WARNING,
             schema="mouse-review",
             controls=(
@@ -56,7 +56,7 @@ class MousePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "pointer hovers over an object."
                     ),
                     schema="mouse-review",
-                    key=mouse_review.MouseReviewer.KEY_PRESENT_TOOLTIPS,
+                    key=mouse_presenter.MousePresenter.KEY_PRESENT_TOOLTIPS,
                 ),
                 preferences_grid_base.PreferenceControlDoc(
                     label=guilabels.GENERAL_SPEAK_OBJECT_UNDER_MOUSE,
@@ -66,26 +66,26 @@ class MousePreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         "as the pointer moves."
                     ),
                     schema="mouse-review",
-                    key=mouse_review.MouseReviewer.KEY_ENABLED,
+                    key=mouse_presenter.MousePresenter.KEY_ENABLED,
                 ),
             ),
         )
 
-    def __init__(self, reviewer: MouseReviewer) -> None:
+    def __init__(self, presenter: MousePresenter) -> None:
         """Initialize the preferences grid."""
 
         controls = [
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.GENERAL_PRESENT_TOOLTIPS,
-                getter=reviewer.get_present_tooltips,
-                setter=reviewer.set_present_tooltips,
-                prefs_key=mouse_review.MouseReviewer.KEY_PRESENT_TOOLTIPS,
+                getter=presenter.get_present_tooltips,
+                setter=presenter.set_present_tooltips,
+                prefs_key=mouse_presenter.MousePresenter.KEY_PRESENT_TOOLTIPS,
             ),
             preferences_grid_base.BooleanPreferenceControl(
                 label=guilabels.GENERAL_SPEAK_OBJECT_UNDER_MOUSE,
-                getter=reviewer.get_is_enabled,
-                setter=reviewer.set_is_enabled,
-                prefs_key=mouse_review.MouseReviewer.KEY_ENABLED,
+                getter=presenter.get_is_enabled,
+                setter=presenter.set_is_enabled,
+                prefs_key=mouse_presenter.MousePresenter.KEY_ENABLED,
             ),
         ]
 

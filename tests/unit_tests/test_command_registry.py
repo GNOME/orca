@@ -148,8 +148,11 @@ ACTION_PRESENTER_HANDLERS = frozenset(
     },
 )
 
-MOUSE_REVIEW_HANDLERS = frozenset(
+MOUSE_PRESENTER_HANDLERS = frozenset(
     {
+        "leftClickReviewItemHandler",
+        "rightClickReviewItemHandler",
+        "routePointerToItemHandler",
         "toggleMouseReviewHandler",
     },
 )
@@ -361,15 +364,12 @@ DEFAULT_SCRIPT_HANDLERS = frozenset(
         "contractedBrailleHandler",
         "cycleSettingsProfileHandler",
         "goBrailleHomeHandler",
-        "leftClickReviewItemHandler",
         "panBrailleLeftHandler",
         "panBrailleRightHandler",
         "preferencesSettingsHandler",
         "processBrailleCutBeginHandler",
         "processBrailleCutLineHandler",
         "processRoutingKeyHandler",
-        "rightClickReviewItemHandler",
-        "routePointerToItemHandler",
         "shutdownHandler",
     },
 )
@@ -393,7 +393,7 @@ EXPECTED_TOTAL_COMMANDS = (
     + len(SYSTEM_INFORMATION_PRESENTER_HANDLERS)
     + len(LEARN_MODE_PRESENTER_HANDLERS)
     + len(ACTION_PRESENTER_HANDLERS)
-    + len(MOUSE_REVIEW_HANDLERS)
+    + len(MOUSE_PRESENTER_HANDLERS)
     + len(SLEEP_MODE_MANAGER_HANDLERS)
     + len(BYPASS_MODE_MANAGER_HANDLERS)
     + len(DEBUGGING_TOOLS_MANAGER_HANDLERS)
@@ -889,21 +889,23 @@ class TestCommandRegistry:
 
         assert not missing, f"Missing commands in bypass_mode_manager: {missing}"
 
-    def test_mouse_review_handlers_exist(self, test_context: OrcaTestContext) -> None:
-        """Test that all mouse review handlers are registered."""
+    def test_mouse_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
+        """Test that all mouse presenter handlers are registered."""
 
         self._setup_dependencies(test_context)
         from orca import command_manager
-        from orca.mouse_review import get_reviewer
+        from orca.mouse_presenter import get_presenter
 
-        reviewer = get_reviewer()
-        reviewer.set_up_commands()
+        presenter = get_presenter()
+        presenter.set_up_commands()
         cmd_manager = command_manager.get_manager()
 
         missing = frozenset(
-            name for name in MOUSE_REVIEW_HANDLERS if cmd_manager.get_keyboard_command(name) is None
+            name
+            for name in MOUSE_PRESENTER_HANDLERS
+            if cmd_manager.get_keyboard_command(name) is None
         )
-        assert not missing, f"Missing commands in mouse_review: {missing}"
+        assert not missing, f"Missing commands in mouse_presenter: {missing}"
 
     def test_typing_echo_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all typing echo presenter handlers are registered."""
@@ -1106,7 +1108,7 @@ class TestCommandRegistry:
             + len(SYSTEM_INFORMATION_PRESENTER_HANDLERS)
             + len(LEARN_MODE_PRESENTER_HANDLERS)
             + len(ACTION_PRESENTER_HANDLERS)
-            + len(MOUSE_REVIEW_HANDLERS)
+            + len(MOUSE_PRESENTER_HANDLERS)
             + len(SLEEP_MODE_MANAGER_HANDLERS)
             + len(BYPASS_MODE_MANAGER_HANDLERS)
             + len(DEBUGGING_TOOLS_MANAGER_HANDLERS)

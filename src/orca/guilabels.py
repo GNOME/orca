@@ -556,10 +556,9 @@ SLEEP_MODE_INFO = _(
 SLEEP_MODE_APPS = _("Always use sleep mode with these applications")
 
 # Translators: This string is a label for the group of Orca commands which
-# are related to presenting the object under the mouse pointer in speech
-# and/or braille. The translation should be consistent with the string
-# used in cmdnames.py.
-KB_GROUP_MOUSE_REVIEW = _("Mouse review")
+# are related to mouse interaction, such as routing the pointer, clicking
+# the current item, and toggling mouse review.
+KB_GROUP_MOUSE = _("Mouse")
 
 # Translators: This string is a label for the group of Orca commands which
 # are related to object navigation.

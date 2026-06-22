@@ -48,7 +48,7 @@ from . import (
     event_manager,
     focus_manager,
     messages,
-    mouse_review,
+    mouse_presenter,
     orca_modifier_manager,
     presentation_manager,
     script_manager,
@@ -64,7 +64,7 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
 
     if is_reload:
         presentation_manager.get_manager().shutdown_presenters()
-        mouse_review.get_reviewer().deactivate()
+        mouse_presenter.get_presenter().deactivate()
 
     event_manager.get_manager().pause_queuing(True, True, "Loading user settings.")
 
@@ -78,9 +78,9 @@ def load_user_settings(script=None, skip_reload_message=False, is_reload=True):
         presentation_manager.get_manager().speak_message(messages.SETTINGS_RELOADED)
 
     # TODO - JD: This ultimately belongs in an extension manager.
-    mouse_reviewer = mouse_review.get_reviewer()
-    if mouse_reviewer.get_is_enabled():
-        mouse_reviewer.activate()
+    presenter = mouse_presenter.get_presenter()
+    if presenter.get_is_enabled():
+        presenter.activate()
 
     # Handle the case where a change was made in the Orca Preferences dialog.
     orca_modifier_manager.get_manager().refresh_orca_modifiers("Loading user settings.")
@@ -128,7 +128,7 @@ def shutdown(_event=None, _signum=None):
 
     # TODO - JD: This ultimately belongs in an extension manager.
     clipboard.get_presenter().deactivate()
-    mouse_review.get_reviewer().deactivate()
+    mouse_presenter.get_presenter().deactivate()
 
     presentation_manager.get_manager().shutdown_presenters()
 

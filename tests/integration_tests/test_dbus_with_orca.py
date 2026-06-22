@@ -68,7 +68,7 @@ MODULE_TIMEOUTS = {
 }
 
 # Modules that may not be present in all environments (e.g., X11 vs Wayland)
-OPTIONAL_MODULES = {"MouseReviewer"}
+OPTIONAL_MODULES = {"MousePresenter"}
 
 MODULE_CONFIG = {
     "ActionPresenter": {
@@ -130,7 +130,7 @@ MODULE_CONFIG = {
         "toggle_commands": ["TogglePresentationMode"],
         "skip": [],
     },
-    "MouseReviewer": {
+    "MousePresenter": {
         "commands": ["Toggle"],
         "parameterized_commands": [],
         "getters": ["IsEnabled", "PresentTooltips"],

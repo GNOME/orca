@@ -123,7 +123,7 @@ class TestLearnModePresenter:
         guilabels_mock.KB_GROUP_NOTIFICATIONS = "Notification Commands"
         guilabels_mock.KB_GROUP_CLIPBOARD = "Clipboard Commands"
         guilabels_mock.KB_GROUP_BOOKMARKS = "Bookmark Commands"
-        guilabels_mock.KB_GROUP_MOUSE_REVIEW = "Mouse Review Commands"
+        guilabels_mock.KB_GROUP_MOUSE = "Mouse Commands"
         guilabels_mock.KB_GROUP_ACTIONS = "Action Commands"
         guilabels_mock.KB_GROUP_DEBUGGING_TOOLS = "Debugging Tool Commands"
         guilabels_mock.KB_HEADER_FUNCTION = "Function"
@@ -226,7 +226,7 @@ class TestLearnModePresenter:
             "get_system_information_presenter",
             "get_notification_presenter",
             "get_clipboard_presenter",
-            "get_mouse_reviewer",
+            "get_mouse_presenter",
             "get_action_presenter",
             "get_debugging_tools_manager",
         ]:

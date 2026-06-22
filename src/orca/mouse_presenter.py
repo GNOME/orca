@@ -1,4 +1,4 @@
-# Mouse reviewer for Orca
+# Mouse presenter for Orca
 #
 # Copyright 2008 Eitan Isaacson
 # Copyright 2016 Igalia, S.L.
@@ -25,7 +25,7 @@
 # pylint: disable=too-many-positional-arguments
 # pylint: disable=too-many-locals
 
-"""Mouse review mode."""
+"""Mouse presentation and interaction support."""
 
 from __future__ import annotations
 
@@ -49,14 +49,16 @@ except Exception:  # noqa: S110 - Wnck is optional; unavailable on Wayland
 
 from . import (
     ax_device_manager,
+    ax_event_synthesizer,
     dbus_service,
     debug,
+    flat_review_presenter,
     focus_manager,
     gsettings_registry,
     guilabels,
     input_event,
     messages,
-    mouse_review_command_definitions,
+    mouse_presenter_command_definitions,
     presentation_manager,
     script_manager,
 )
@@ -68,7 +70,7 @@ from .extension import Extension
 
 if TYPE_CHECKING:
     from .command import Command
-    from .mouse_review_preferences_grid import MousePreferencesGrid
+    from .mouse_presenter_preferences_grid import MousePreferencesGrid
     from .scripts import default
 
 
@@ -380,8 +382,8 @@ class _ItemContext:
     "org.gnome.Orca.MouseReview",
     name="mouse-review",
 )
-class MouseReviewer(Extension):
-    """Main class for the mouse-review feature."""
+class MousePresenter(Extension):
+    """Provides mouse review and pointer interaction support."""
 
     _SCHEMA = "mouse-review"
     KEY_PRESENT_TOOLTIPS = "present-tooltips"
@@ -397,7 +399,7 @@ class MouseReviewer(Extension):
             default=default,
         )
 
-    GROUP_LABEL = guilabels.KB_GROUP_MOUSE_REVIEW
+    GROUP_LABEL = guilabels.KB_GROUP_MOUSE
 
     def __init__(self) -> None:
         self._active: bool = False
@@ -441,13 +443,13 @@ class MouseReviewer(Extension):
         super().__init__()
 
     def _get_commands(self) -> list[Command]:
-        return mouse_review_command_definitions.get_commands(self)
+        return mouse_presenter_command_definitions.get_commands(self)
 
     def create_preferences_grid(self) -> MousePreferencesGrid:
         """Returns the GtkGrid containing the mouse preferences UI."""
 
         # pylint: disable-next=import-outside-toplevel
-        from .mouse_review_preferences_grid import MousePreferencesGrid
+        from .mouse_presenter_preferences_grid import MousePreferencesGrid
 
         return MousePreferencesGrid(self)
 
@@ -600,6 +602,87 @@ class MouseReviewer(Extension):
             self.deactivate()
 
         return True
+
+    def route_pointer_to_item(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+    ) -> bool:
+        """Moves the mouse pointer to the current item."""
+
+        if flat_review_presenter.get_presenter().is_active():
+            flat_review_presenter.get_presenter().route_pointer_to_object(script, event)
+            return True
+
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if ax_event_synthesizer.get_synthesizer().route_to_character(
+            focus,
+        ) or ax_event_synthesizer.get_synthesizer().route_to_object(focus):
+            presentation_manager.get_manager().present_message(messages.MOUSE_MOVED_SUCCESS)
+            return True
+
+        full = messages.LOCATION_NOT_FOUND_FULL
+        brief = messages.LOCATION_NOT_FOUND_BRIEF
+        presentation_manager.get_manager().present_message(full, brief)
+        return False
+
+    def left_click_item(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+    ) -> bool:
+        """Performs a left mouse button click on the current item."""
+
+        if flat_review_presenter.get_presenter().is_active():
+            obj = flat_review_presenter.get_presenter().get_current_object(script, event)
+            if ax_event_synthesizer.get_synthesizer().try_all_clickable_actions(obj):
+                return True
+            return flat_review_presenter.get_presenter().left_click_on_object(script, event)
+
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if ax_event_synthesizer.get_synthesizer().try_all_clickable_actions(focus):
+            return True
+
+        if AXText.get_character_count(focus):
+            if ax_event_synthesizer.get_synthesizer().click_character(focus, None, 1):
+                return True
+
+        if ax_event_synthesizer.get_synthesizer().click_object(focus, 1):
+            return True
+
+        full = messages.LOCATION_NOT_FOUND_FULL
+        brief = messages.LOCATION_NOT_FOUND_BRIEF
+        presentation_manager.get_manager().present_message(full, brief)
+        return False
+
+    def right_click_item(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+    ) -> bool:
+        """Performs a right mouse button click on the current item."""
+
+        if flat_review_presenter.get_presenter().is_active():
+            obj = flat_review_presenter.get_presenter().get_current_object(script, event)
+            if ax_event_synthesizer.get_synthesizer().try_all_right_click_actions(obj):
+                return True
+            flat_review_presenter.get_presenter().right_click_on_object(script, event)
+            return True
+
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        if ax_event_synthesizer.get_synthesizer().try_all_right_click_actions(focus):
+            return True
+
+        if ax_event_synthesizer.get_synthesizer().click_character(focus, None, 3):
+            return True
+
+        if ax_event_synthesizer.get_synthesizer().click_object(focus, 3):
+            return True
+
+        full = messages.LOCATION_NOT_FOUND_FULL
+        brief = messages.LOCATION_NOT_FOUND_BRIEF
+        presentation_manager.get_manager().present_message(full, brief)
+        return False
 
     @dbus_service.command
     def toggle(
@@ -849,10 +932,10 @@ class MouseReviewer(Extension):
         GLib.timeout_add(50, self._process_event)
 
 
-_reviewer = MouseReviewer()
+_presenter = MousePresenter()
 
 
-def get_reviewer() -> MouseReviewer:
-    """Returns the Mouse Reviewer singleton."""
+def get_presenter() -> MousePresenter:
+    """Returns the Mouse Presenter singleton."""
 
-    return _reviewer
+    return _presenter

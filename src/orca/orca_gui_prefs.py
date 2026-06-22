@@ -56,7 +56,7 @@ from . import (
     guilabels,
     learn_mode_presenter,
     messages,
-    mouse_review,
+    mouse_presenter,
     orca,
     preferences_grid_base,
     presentation_manager,
@@ -269,14 +269,14 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             self.stack.add_named(self.sleep_mode_grid, "sleep_mode")
             self._add_navigation_row("sleep_mode", self.sleep_mode_grid.get_label().get_text())
 
-        presenter = speech_presenter.get_presenter()
+        speech_pres = speech_presenter.get_presenter()
 
         def update_title(title: str) -> None:
             """Update the panel header title and window accessible name."""
 
             self._set_page_title(title)
 
-        self.speech_grid = presenter.create_speech_preferences_grid(
+        self.speech_grid = speech_pres.create_speech_preferences_grid(
             title_change_callback=update_title,
             app_name=self._app_name or "",
         )
@@ -311,8 +311,8 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self.stack.add_named(self.flat_review_grid, "flat_review")
         self._add_navigation_row("flat_review", self.flat_review_grid.get_label().get_text())
 
-        mouse_reviewer = mouse_review.get_reviewer()
-        self.mouse_grid = mouse_reviewer.create_preferences_grid()
+        mouse_pres = mouse_presenter.get_presenter()
+        self.mouse_grid = mouse_pres.create_preferences_grid()
         self.stack.add_named(self.mouse_grid, "mouse")
         self._add_navigation_row("mouse", self.mouse_grid.get_label().get_text())
 
