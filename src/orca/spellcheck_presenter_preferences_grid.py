@@ -47,7 +47,11 @@ class SpellCheckPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
         return preferences_grid_base.PreferencePanelDoc(
             title=guilabels.SPELL_CHECK,
             panel_id="spellcheck_presenter.spell-check",
-            description=guilabels.SPELL_CHECK_DESCRIPTION,
+            description=(
+                "Spell Check settings control how much detail Orca presents when "
+                "interacting with supported application spell checkers.\n\n"
+                + guilabels.SPELL_CHECK_DESCRIPTION
+            ),
             schema="spellcheck",
             controls=(
                 preferences_grid_base.PreferenceControlDoc(

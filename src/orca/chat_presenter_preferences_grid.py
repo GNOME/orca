@@ -70,7 +70,10 @@ class ChatPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                 preferences_grid_base.PreferenceControlDoc(
                     label=guilabels.CHAT_ANNOUNCE_BUDDY_TYPING,
                     kind="switch",
-                    summary="Controls whether Orca announces when people are typing.",
+                    summary=(
+                        "Controls whether Orca announces changes in typing status when "
+                        "the chat application provides that information."
+                    ),
                     schema="chat",
                     key=chat_presenter.ChatPresenter.KEY_ANNOUNCE_BUDDY_TYPING,
                 ),

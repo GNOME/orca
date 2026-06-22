@@ -1,0 +1,150 @@
+{
+  "groups": [
+    {
+      "id": "profiles",
+      "title": "Profiles",
+      "desc": "Create, switch, rename, and remove settings profiles",
+      "panels": [
+        "manual.profiles"
+      ]
+    },
+    {
+      "id": "sleep-mode",
+      "title": "Sleep mode",
+      "desc": "Disable Orca automatically for selected applications",
+      "panels": [
+        "manual.sleep-mode"
+      ]
+    },
+    {
+      "id": "speech",
+      "title": "Speech",
+      "desc": "Control Orca's spoken output",
+      "panels": [
+        "manual.speech",
+        "manual.global-voice-settings",
+        "manual.voice-sets",
+        "speech_presenter.verbosity",
+        "speech_presenter.tables",
+        "speech_presenter.progress-bars",
+        "speech_presenter.container-announcements",
+        "speech_presenter.on-screen-display"
+      ]
+    },
+    {
+      "id": "braille",
+      "title": "Braille",
+      "desc": "Control Orca's braille output",
+      "panels": [
+        "manual.braille",
+        "braille_presenter.verbosity",
+        "braille_presenter.display-settings",
+        "braille_presenter.flash-messages",
+        "braille_presenter.progress-bars",
+        "braille_presenter.on-screen-display"
+      ]
+    },
+    {
+      "id": "sound",
+      "title": "Sound",
+      "desc": "Control sound cues and progress-bar updates",
+      "panels": [
+        "manual.sound-output",
+        "sound_presenter.progress-bars"
+      ]
+    },
+    {
+      "id": "commands",
+      "title": "Commands",
+      "desc": "Choose keyboard layout, modifier keys, and command bindings",
+      "panels": [
+        "manual.commands"
+      ]
+    },
+    {
+      "id": "echo",
+      "title": "Echo",
+      "desc": "Choose what Orca speaks while you type",
+      "panels": [
+        "typing_echo_presenter.echo"
+      ]
+    },
+    {
+      "id": "flat-review",
+      "title": "Flat Review",
+      "desc": "Control how flat review follows focus and caret changes",
+      "panels": [
+        "flat_review_presenter.flat-review"
+      ]
+    },
+    {
+      "id": "mouse",
+      "title": "Mouse",
+      "desc": "Control what Orca presents as the pointer moves",
+      "panels": [
+        "mouse_review.mouse"
+      ]
+    },
+    {
+      "id": "documents",
+      "title": "Documents",
+      "desc": "Control navigation and presentation in documents and web content",
+      "panels": [
+        "manual.documents",
+        "document_presenter.caret-navigation",
+        "document_presenter.structural-navigation",
+        "document_presenter.table-navigation",
+        "document_presenter.native-navigation",
+        "math_presenter.math-presentation"
+      ]
+    },
+    {
+      "id": "say-all",
+      "title": "Say All",
+      "desc": "Control continuous reading",
+      "panels": [
+        "say_all_presenter.say-all"
+      ]
+    },
+    {
+      "id": "pronunciation",
+      "title": "Pronunciation",
+      "desc": "Customize how words are spoken",
+      "panels": [
+        "manual.pronunciation"
+      ]
+    },
+    {
+      "id": "spell-check",
+      "title": "Spell Check",
+      "desc": "Control how Orca presents spelling errors and suggestions",
+      "panels": [
+        "spellcheck_presenter.spell-check"
+      ]
+    },
+    {
+      "id": "chat",
+      "title": "Chat",
+      "desc": "Control how Orca presents chat messages",
+      "panels": [
+        "chat_presenter.chat"
+      ]
+    },
+    {
+      "id": "text-attributes",
+      "title": "Text Attributes",
+      "desc": "Choose which text formatting changes are spoken or marked in braille",
+      "panels": [
+        "manual.text-attributes"
+      ]
+    },
+    {
+      "id": "system-information",
+      "title": "System information",
+      "desc": "Choose how Orca presents date and time",
+      "panels": [
+        "system_information_presenter.system-information"
+      ]
+    }
+  ]
+}

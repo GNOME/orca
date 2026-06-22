@@ -64,9 +64,9 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
             description=(
                 guilabels.PRONUNCIATION_DICTIONARY_INFO
                 + "\n\n"
-                + "The pronunciation dictionary is a list of words and the replacement text "
-                "Orca should speak. Add a new entry from the dictionary header. Edit or "
-                "delete an existing entry from its row."
+                + "The pronunciation dictionary is a list of words and replacement text. "
+                "Add a new entry from the dictionary header. Edit or delete an existing "
+                "entry from its row."
             ),
             schema="pronunciations",
             show_available_settings=False,

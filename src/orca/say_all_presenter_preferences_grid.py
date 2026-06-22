@@ -87,8 +87,9 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             label=guilabels.SAY_ALL_UP_AND_DOWN_ARROW,
                             kind="switch",
                             summary=(
-                                "Allows Up Arrow and Down Arrow to rewind and fast-forward "
-                                "during Say All."
+                                "Allows Up Arrow and Down Arrow to move within the document "
+                                "during Say All so you can re-hear recent content or skip "
+                                "ahead without restarting Say All."
                             ),
                             schema="say-all",
                             key=say_all_presenter.SayAllPresenter.KEY_REWIND_AND_FAST_FORWARD,
@@ -97,8 +98,9 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             label=guilabels.SAY_ALL_STRUCTURAL_NAVIGATION,
                             kind="switch",
                             summary=(
-                                "Allows structural navigation commands to move backward and "
-                                "forward during Say All."
+                                "Allows structural navigation commands, such as heading and "
+                                "paragraph navigation, to move backward and forward during "
+                                "Say All."
                             ),
                             schema="say-all",
                             key=say_all_presenter.SayAllPresenter.KEY_STRUCTURAL_NAVIGATION,

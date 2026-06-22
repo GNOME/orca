@@ -418,8 +418,8 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                             label=guilabels.FIND_MINIMUM_MATCH_LENGTH,
                             kind="spin",
                             summary=(
-                                "Sets the minimum length a find result must have before "
-                                "Orca speaks it."
+                                "Sets the minimum number of matching characters required "
+                                "before Orca speaks the find result."
                             ),
                             schema="document",
                             key=(
@@ -441,8 +441,8 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                             label=guilabels.READ_PAGE_UPON_LOAD,
                             kind="switch",
                             summary=(
-                                "Controls whether Orca automatically starts reading a page "
-                                "when it first loads."
+                                "Controls whether Orca automatically performs Say All when "
+                                "a document or web page first loads."
                             ),
                             schema="document",
                             key=document_presenter.DocumentPresenter.KEY_SAY_ALL_ON_LOAD,
@@ -451,8 +451,9 @@ class NativeNavigationPreferencesGrid(preferences_grid_base.AutoPreferencesGrid)
                             label=guilabels.PAGE_SUMMARY_UPON_LOAD,
                             kind="switch",
                             summary=(
-                                "Controls whether Orca presents a page summary when a page "
-                                "first loads."
+                                "Controls whether Orca presents a summary, such as the "
+                                "number of headings, landmarks, and links, when a document "
+                                "or web page first loads."
                             ),
                             schema="document",
                             key=document_presenter.DocumentPresenter.KEY_PAGE_SUMMARY_ON_LOAD,

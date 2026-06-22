@@ -328,7 +328,8 @@ PRONUNCIATION_DICTIONARY = _("Pronunciation Dictionary")
 # Translators: This is an informational message on the Pronunciation Dictionary
 # preferences page explaining what the dictionary does.
 PRONUNCIATION_DICTIONARY_INFO = _(
-    "Customize how words are spoken. Add a word and its replacement below.",
+    "Customize how words are spoken by adding words and replacement text to "
+    "the pronunciation dictionary.",
 )
 
 # Translators: This is a label for a column header in Orca's pronunciation
@@ -546,7 +547,7 @@ SLEEP_MODE_INFO = _(
     "Sleep mode causes Orca to behave as if it were not running for a given "
     "application. The default keybinding to toggle sleep mode on or off is "
     "Shift+Alt+Ctrl+Q. This can be changed in Commands. An application must "
-    "be running to add it to the list below.",
+    "be running to add it to the sleep mode applications list.",
 )
 
 # Translators: This label appears above a list of applications on the Sleep Mode
@@ -1167,12 +1168,10 @@ READ_PAGE_UPON_LOAD = _("Automatically start speaking a page when it is first _l
 # (landmarks, forms, links, tables, etc.).
 PAGE_SUMMARY_UPON_LOAD = _("_Present summary of a page when it is first loaded")
 
-# Translators: Different speech systems and speech engines work differently when
-# it comes to handling pauses (e.g. sentence boundaries). This property allows
-# the user to specify whether speech should be sent to the speech synthesis
-# system immediately when a pause directive is encountered or if it should be
-# queued up and sent to the speech synthesis system once the entire set of
-# utterances has been calculated.
+# Translators: Orca generates speech in pieces, such as an object's name, role,
+# state, keyboard shortcut, position in a list, or table size. This setting
+# controls whether Orca inserts brief pauses between those pieces so they are
+# spoken as separate chunks rather than run together.
 SPEECH_BREAK_INTO_CHUNKS = _("Insert pauses to break up speech")
 
 # Translators: This string will appear in the list of available voices for the

@@ -336,7 +336,10 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         preferences_grid_base.PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_DESCRIPTION,
                             kind="switch",
-                            summary="Controls whether Orca speaks accessible descriptions.",
+                            summary=(
+                                "Controls whether Orca speaks an object's accessible "
+                                "description in addition to its accessible name."
+                            ),
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_SPEAK_DESCRIPTION,
                         ),
@@ -351,14 +354,20 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         preferences_grid_base.PreferenceControlDoc(
                             label=guilabels.PRESENT_OBJECT_MNEMONICS,
                             kind="switch",
-                            summary="Controls whether Orca speaks object mnemonics.",
+                            summary=(
+                                "Controls whether Orca speaks object mnemonics, such as "
+                                "Alt+O for an OK button."
+                            ),
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_SPEAK_WIDGET_MNEMONIC,
                         ),
                         preferences_grid_base.PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_TUTORIAL_MESSAGES,
                             kind="switch",
-                            summary="Controls whether Orca speaks tutorial messages.",
+                            summary=(
+                                "Controls whether Orca speaks extra information about how "
+                                "to interact with the focused object."
+                            ),
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_SPEAK_TUTORIAL_MESSAGES,
                         ),
@@ -366,7 +375,8 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             label=guilabels.SPEECH_SPEAK_BLANK_LINES,
                             kind="switch",
                             summary="Controls whether Orca speaks blank lines when navigating "
-                            "document content.",
+                            "document content. When disabled, Orca says nothing when you "
+                            "move to a blank line.",
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_SPEAK_BLANK_LINES,
                         ),
@@ -374,7 +384,8 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             label=guilabels.SPEECH_SPEAK_MISSPELLED_WORD_INDICATOR,
                             kind="switch",
                             summary="Controls whether Orca announces the misspelled-word "
-                            "indicator.",
+                            "indicator when you move into a misspelled word or type a "
+                            "word that the application marks as misspelled.",
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_SPEAK_MISSPELLED_INDICATOR,
                         ),
@@ -608,22 +619,31 @@ class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         preferences_grid_base.PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_FULL_ROW_IN_GUI_TABLES,
                             kind="switch",
-                            summary="Applies to application tables, such as GtkTreeView.",
+                            summary=(
+                                "Controls whether Orca speaks the entire row or only the "
+                                "focused cell in application tables, such as a message list."
+                            ),
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_SPEAK_ROW_IN_GUI_TABLE,
                         ),
                         preferences_grid_base.PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_FULL_ROW_IN_DOCUMENT_TABLES,
                             kind="switch",
-                            summary="Applies to document tables, such as Writer tables and "
-                            "HTML tables.",
+                            summary=(
+                                "Controls whether Orca speaks the entire row or only the "
+                                "focused cell in document tables, such as Writer and web "
+                                "tables."
+                            ),
                             schema="speech",
                             key=(speech_presenter.SpeechPresenter.KEY_SPEAK_ROW_IN_DOCUMENT_TABLE),
                         ),
                         preferences_grid_base.PreferenceControlDoc(
                             label=guilabels.SPEECH_SPEAK_FULL_ROW_IN_SPREADSHEETS,
                             kind="switch",
-                            summary="Applies to spreadsheet tables.",
+                            summary=(
+                                "Controls whether Orca speaks the entire row or only the "
+                                "focused cell in spreadsheets."
+                            ),
                             schema="speech",
                             key=speech_presenter.SpeechPresenter.KEY_SPEAK_ROW_IN_SPREADSHEET,
                         ),

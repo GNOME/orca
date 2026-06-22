@@ -54,7 +54,10 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
             title=guilabels.TEXT_ATTRIBUTES,
             panel_id="manual.text-attributes",
             description=(
-                guilabels.TEXT_ATTRIBUTES_INFO
+                "Text attributes are font, style, alignment, and other formatting "
+                "details associated with text."
+                "\n\n"
+                + guilabels.TEXT_ATTRIBUTES_INFO
                 + "\n\n"
                 + "The list contains one row for each text attribute. Use the presentation "
                 + "mode on a row to choose whether Orca speaks the attribute, marks it in "

@@ -165,7 +165,9 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                     label=guilabels.BRAILLE_ENABLE_WORD_WRAP,
                     kind="switch",
                     summary=(
-                        "Controls whether Orca adjusts displayed text so only full words are shown."
+                        "Controls whether Orca adjusts displayed text so only full words are "
+                        "shown. When word wrap is off, Orca uses all available cells so more "
+                        "text can be shown at once."
                     ),
                     schema="braille",
                     key=braille_presenter.BraillePresenter.KEY_WORD_WRAP,
@@ -202,7 +204,8 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
                     kind="group",
                     summary=(
                         "Controls which braille dots Orca uses to mark links, selections, "
-                        "and text attributes."
+                        "and text attributes. These indicators are shown like underlining "
+                        "on the braille display."
                     ),
                     controls=(
                         preferences_grid_base.PreferenceControlDoc(
@@ -417,15 +420,17 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
             title=guilabels.BRAILLE_FLASH_MESSAGES,
             panel_id="braille_presenter.flash-messages",
             description=(
-                "Braille flash messages are temporary announcements shown on the "
-                "braille display, after which the original display contents are restored."
+                "Braille flash messages are announcements, such as Orca messages or "
+                "command feedback, shown on the braille display. Temporary flash "
+                "messages are shown briefly, after which the original display contents "
+                "are restored."
             ),
             schema="braille",
             controls=(
                 preferences_grid_base.PreferenceControlDoc(
                     label=guilabels.BRAILLE_ENABLE_FLASH_MESSAGES,
                     kind="switch",
-                    summary="Controls whether Orca shows temporary braille messages.",
+                    summary="Controls whether Orca shows messages and command feedback in braille.",
                     schema="braille",
                     key=braille_presenter.BraillePresenter.KEY_FLASH_MESSAGES,
                 ),
@@ -434,7 +439,8 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
                     kind="switch",
                     summary=(
                         "Controls whether Orca shows detailed braille messages when a "
-                        "brief alternative is available."
+                        "brief alternative is available. For instance, detailed command "
+                        "feedback might include both the setting name and its new value."
                     ),
                     schema="braille",
                     key=braille_presenter.BraillePresenter.KEY_FLASH_MESSAGES_DETAILED,
@@ -443,7 +449,8 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
                     label=guilabels.BRAILLE_MESSAGES_ARE_PERSISTENT,
                     kind="switch",
                     summary=(
-                        "Controls whether flash messages remain displayed until you dismiss them."
+                        "Controls whether flash messages remain displayed until the display "
+                        "is updated instead of disappearing after the configured duration."
                     ),
                     schema="braille",
                     key=braille_presenter.BraillePresenter.KEY_FLASH_MESSAGES_PERSISTENT,
@@ -453,7 +460,8 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
                     kind="spin",
                     summary=(
                         "Sets how long temporary braille messages are displayed when "
-                        "they are not persistent."
+                        "they are not persistent. This setting is ignored when messages "
+                        "are persistent."
                     ),
                     minimum="1",
                     maximum="100",

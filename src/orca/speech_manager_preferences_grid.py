@@ -97,6 +97,30 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         guilabels.PUNCTUATION_STYLE_MOST,
                         guilabels.PUNCTUATION_STYLE_ALL,
                     ),
+                    value_docs=(
+                        preferences_grid_base.PreferenceValueDoc(
+                            label=guilabels.PUNCTUATION_STYLE_NONE,
+                            summary="Requests that punctuation symbols not be spoken.",
+                        ),
+                        preferences_grid_base.PreferenceValueDoc(
+                            label=guilabels.PUNCTUATION_STYLE_SOME,
+                            summary=(
+                                "Requests that some punctuation symbols be spoken. The "
+                                "speech system determines which symbols are included."
+                            ),
+                        ),
+                        preferences_grid_base.PreferenceValueDoc(
+                            label=guilabels.PUNCTUATION_STYLE_MOST,
+                            summary=(
+                                "Requests that most punctuation symbols be spoken. The "
+                                "speech system determines which symbols are included."
+                            ),
+                        ),
+                        preferences_grid_base.PreferenceValueDoc(
+                            label=guilabels.PUNCTUATION_STYLE_ALL,
+                            summary="Requests that all punctuation symbols be spoken.",
+                        ),
+                    ),
                 ),
                 preferences_grid_base.PreferenceControlDoc(
                     label=guilabels.VOICE_CAPITALIZATION_STYLE,
@@ -117,11 +141,17 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                         ),
                         preferences_grid_base.PreferenceValueDoc(
                             label=guilabels.CAPITALIZATION_STYLE_ICON,
-                            summary="Plays a tone before speaking an uppercase letter.",
+                            summary=(
+                                "Uses the configured uppercase voice and plays a tone "
+                                "before speaking an uppercase letter."
+                            ),
                         ),
                         preferences_grid_base.PreferenceValueDoc(
                             label=guilabels.CAPITALIZATION_STYLE_SPELL,
-                            summary="Says capital before speaking an uppercase letter.",
+                            summary=(
+                                "Uses the configured uppercase voice and says capital "
+                                "before speaking an uppercase letter."
+                            ),
                         ),
                     ),
                 ),
@@ -146,7 +176,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                     label=guilabels.SPEECH_BREAK_INTO_CHUNKS,
                     kind="switch",
                     summary="Controls whether Orca inserts brief pauses between parts "
-                    "of a spoken presentation.",
+                    "of a spoken presentation, such as name, role, state, mnemonic, "
+                    "and tutorial message.",
                     schema="speech",
                     key="insert-pauses-between-utterances",
                 ),

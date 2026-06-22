@@ -68,28 +68,31 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         preferences_grid_base.PreferenceControlDoc(
                             label=guilabels.ECHO_ALPHABETIC_KEYS,
                             kind="switch",
-                            summary="Controls whether Orca speaks alphabetic keys.",
+                            summary="Controls whether Orca speaks keys such as A, B, and C.",
                             schema="typing-echo",
                             key=typing_echo_presenter.TypingEchoPresenter.KEY_ALPHABETIC_KEYS,
                         ),
                         preferences_grid_base.PreferenceControlDoc(
                             label=guilabels.ECHO_NUMERIC_KEYS,
                             kind="switch",
-                            summary="Controls whether Orca speaks numeric keys.",
+                            summary="Controls whether Orca speaks keys such as 1, 2, and 3.",
                             schema="typing-echo",
                             key=typing_echo_presenter.TypingEchoPresenter.KEY_NUMERIC_KEYS,
                         ),
                         preferences_grid_base.PreferenceControlDoc(
                             label=guilabels.ECHO_PUNCTUATION_KEYS,
                             kind="switch",
-                            summary="Controls whether Orca speaks punctuation keys.",
+                            summary=(
+                                "Controls whether Orca speaks keys such as percent, "
+                                "semicolon, and question mark."
+                            ),
                             schema="typing-echo",
                             key=typing_echo_presenter.TypingEchoPresenter.KEY_PUNCTUATION_KEYS,
                         ),
                         preferences_grid_base.PreferenceControlDoc(
                             label=guilabels.ECHO_SPACE,
                             kind="switch",
-                            summary="Controls whether Orca speaks the space bar.",
+                            summary="Controls whether Orca speaks Space when it is pressed.",
                             schema="typing-echo",
                             key=typing_echo_presenter.TypingEchoPresenter.KEY_SPACE,
                         ),
@@ -97,8 +100,8 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             label=guilabels.ECHO_MODIFIER_KEYS,
                             kind="switch",
                             summary=(
-                                "Controls whether Orca speaks modifier keys, such as Shift, "
-                                "Control, and Alt."
+                                "Controls whether Orca speaks modifier keys such as Shift, "
+                                "Control, Alt, and Meta."
                             ),
                             schema="typing-echo",
                             key=typing_echo_presenter.TypingEchoPresenter.KEY_MODIFIER_KEYS,
@@ -106,7 +109,9 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         preferences_grid_base.PreferenceControlDoc(
                             label=guilabels.ECHO_FUNCTION_KEYS,
                             kind="switch",
-                            summary="Controls whether Orca speaks function keys, such as F1.",
+                            summary=(
+                                "Controls whether Orca speaks function keys from F1 through F12."
+                            ),
                             schema="typing-echo",
                             key=typing_echo_presenter.TypingEchoPresenter.KEY_FUNCTION_KEYS,
                         ),
@@ -114,8 +119,8 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             label=guilabels.ECHO_ACTION_KEYS,
                             kind="switch",
                             summary=(
-                                "Controls whether Orca speaks action keys, such as Enter, "
-                                "Escape, Tab, and Backspace."
+                                "Controls whether Orca speaks action keys such as Backspace, "
+                                "Delete, Return, Escape, Tab, Page Up, and Page Down."
                             ),
                             schema="typing-echo",
                             key=typing_echo_presenter.TypingEchoPresenter.KEY_ACTION_KEYS,
@@ -124,8 +129,8 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             label=guilabels.ECHO_NAVIGATION_KEYS,
                             kind="switch",
                             summary=(
-                                "Controls whether Orca speaks navigation keys, such as the "
-                                "arrow keys, Home, and End."
+                                "Controls whether Orca speaks navigation keys such as Left, "
+                                "Right, Up, Down, Home, and End."
                             ),
                             schema="typing-echo",
                             key=typing_echo_presenter.TypingEchoPresenter.KEY_NAVIGATION_KEYS,
@@ -133,7 +138,10 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         preferences_grid_base.PreferenceControlDoc(
                             label=guilabels.ECHO_DIACRITICAL_KEYS,
                             kind="switch",
-                            summary="Controls whether Orca speaks diacritical keys.",
+                            summary=(
+                                "Controls whether Orca speaks diacritical keys, such as "
+                                "keys used to add accents to letters."
+                            ),
                             schema="typing-echo",
                             key=typing_echo_presenter.TypingEchoPresenter.KEY_DIACRITICAL_KEYS,
                         ),
@@ -149,7 +157,11 @@ class TypingEchoPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         preferences_grid_base.PreferenceControlDoc(
                             label=guilabels.ECHO_CHARACTER,
                             kind="switch",
-                            summary=("Controls whether Orca speaks each inserted character."),
+                            summary=(
+                                "Controls whether Orca speaks each inserted character. This "
+                                "can include accented letters and other symbols that do not "
+                                "have a dedicated key."
+                            ),
                             schema="typing-echo",
                             key=typing_echo_presenter.TypingEchoPresenter.KEY_CHARACTER_ECHO,
                         ),
