@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Command definitions for preferences."""
+"""Command definitions for screen reader management."""
 
 from __future__ import annotations
 
@@ -28,11 +28,11 @@ from . import cmdnames, keybindings
 from .command import Command, KeyboardCommand
 
 if TYPE_CHECKING:
-    from .preferences_presenter import PreferencesPresenter
+    from .screen_reader_manager import ScreenReaderManager
 
 
-def get_commands(owner: PreferencesPresenter) -> list[Command]:
-    """Returns commands for preferences."""
+def get_commands(owner: ScreenReaderManager) -> list[Command]:
+    """Returns commands for screen reader management."""
 
     kb_orca_space = keybindings.KeyBinding("space", keybindings.ORCA_MODIFIER_MASK)
     kb_orca_control_space = keybindings.KeyBinding(
@@ -41,6 +41,12 @@ def get_commands(owner: PreferencesPresenter) -> list[Command]:
     )
 
     return [
+        KeyboardCommand(
+            "shutdownHandler",
+            owner.quit,
+            owner.GROUP_LABEL,
+            cmdnames.QUIT_ORCA,
+        ),
         KeyboardCommand(
             "preferencesSettingsHandler",
             owner.show_preferences_gui,

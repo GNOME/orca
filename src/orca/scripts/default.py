@@ -40,7 +40,6 @@ from orca import (
     caret_navigator,
     chat_presenter,
     clipboard,
-    cmdnames,
     command_manager,
     debug,
     debugging_tools_manager,
@@ -59,11 +58,10 @@ from orca import (
     mouse_presenter,
     notification_presenter,
     object_navigator,
-    orca,
-    preferences_presenter,
     presentation_manager,
     profile_manager,
     say_all_presenter,
+    screen_reader_manager,
     script,
     script_manager,
     sleep_mode_manager,
@@ -82,7 +80,6 @@ from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_event import TextEventReason
 from orca.ax_utilities_text import CaretSetReason, TextUnit
-from orca.command import KeyboardCommand
 from orca.generator import PresentationReason
 
 if TYPE_CHECKING:
@@ -128,7 +125,7 @@ class Script(script.Script):
             (debugging_tools_manager.get_manager, guilabels.KB_GROUP_DEBUGGING_TOOLS),
             (chat_presenter.get_presenter, guilabels.KB_GROUP_CHAT),
             (profile_manager.get_manager, guilabels.GENERAL_PROFILES),
-            (preferences_presenter.get_presenter, guilabels.KB_GROUP_SCREEN_READER_MANAGEMENT),
+            (screen_reader_manager.get_manager, guilabels.KB_GROUP_SCREEN_READER_MANAGEMENT),
         ]
         for getter, group_label in builtins:
             loader.register_builtin(getter, group_label)
@@ -148,14 +145,6 @@ class Script(script.Script):
 
         manager = command_manager.get_manager()
         manager.set_up_commands()
-        manager.add_command(
-            KeyboardCommand(
-                "shutdownHandler",
-                orca.quit_orca,
-                guilabels.KB_GROUP_SCREEN_READER_MANAGEMENT,
-                cmdnames.QUIT_ORCA,
-            )
-        )
 
         self._register_builtin_extensions()
         extension_loader.get_loader().set_up_all_commands()

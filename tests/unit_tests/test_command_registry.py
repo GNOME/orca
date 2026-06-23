@@ -188,10 +188,11 @@ TYPING_ECHO_PRESENTER_HANDLERS = frozenset(
     },
 )
 
-PREFERENCES_PRESENTER_HANDLERS = frozenset(
+SCREEN_READER_MANAGER_HANDLERS = frozenset(
     {
         "appPreferencesSettingsHandler",
         "preferencesSettingsHandler",
+        "shutdownHandler",
     },
 )
 
@@ -381,7 +382,6 @@ BRAILLE_PRESENTER_HANDLERS = frozenset(
 DEFAULT_SCRIPT_HANDLERS = frozenset(
     {
         "cycleSettingsProfileHandler",
-        "shutdownHandler",
     },
 )
 
@@ -410,7 +410,7 @@ EXPECTED_TOTAL_COMMANDS = (
     + len(DEBUGGING_TOOLS_MANAGER_HANDLERS)
     + len(CLIPBOARD_HANDLERS)
     + len(TYPING_ECHO_PRESENTER_HANDLERS)
-    + len(PREFERENCES_PRESENTER_HANDLERS)
+    + len(SCREEN_READER_MANAGER_HANDLERS)
     + len(CARET_NAVIGATOR_HANDLERS)
     + len(STRUCTURAL_NAVIGATOR_HANDLERS)
     + len(TABLE_NAVIGATOR_HANDLERS)
@@ -978,23 +978,23 @@ class TestCommandRegistry:
         )
         assert not missing, f"Missing commands in clipboard: {missing}"
 
-    def test_preferences_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
-        """Test that all preferences presenter handlers are registered."""
+    def test_screen_reader_manager_handlers_exist(self, test_context: OrcaTestContext) -> None:
+        """Test that all screen reader manager handlers are registered."""
 
         self._setup_dependencies(test_context)
         from orca import command_manager
-        from orca.preferences_presenter import get_presenter
+        from orca.screen_reader_manager import get_manager
 
-        presenter = get_presenter()
-        presenter.set_up_commands()
+        manager = get_manager()
+        manager.set_up_commands()
         cmd_manager = command_manager.get_manager()
 
         missing = frozenset(
             name
-            for name in PREFERENCES_PRESENTER_HANDLERS
+            for name in SCREEN_READER_MANAGER_HANDLERS
             if cmd_manager.get_keyboard_command(name) is None
         )
-        assert not missing, f"Missing commands in preferences_presenter: {missing}"
+        assert not missing, f"Missing commands in screen_reader_manager: {missing}"
 
     def test_caret_navigator_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all caret navigator commands are registered with CommandManager.
@@ -1202,7 +1202,7 @@ class TestCommandRegistry:
             + len(DEBUGGING_TOOLS_MANAGER_HANDLERS)
             + len(CLIPBOARD_HANDLERS)
             + len(TYPING_ECHO_PRESENTER_HANDLERS)
-            + len(PREFERENCES_PRESENTER_HANDLERS)
+            + len(SCREEN_READER_MANAGER_HANDLERS)
             + len(CARET_NAVIGATOR_HANDLERS)
             + len(STRUCTURAL_NAVIGATOR_HANDLERS)
             + len(TABLE_NAVIGATOR_HANDLERS)

@@ -318,9 +318,9 @@ class TestDBusService:
         test_context.patch("orca.script_manager.get_manager", return_value=mock_manager)
         mock_presenter = test_context.Mock()
         mock_presenter.show_preferences_gui.return_value = True
-        preferences_presenter_mod = types.ModuleType("orca.preferences_presenter")
-        preferences_presenter_mod.get_presenter = test_context.Mock(return_value=mock_presenter)
-        test_context.patch_modules({"orca.preferences_presenter": preferences_presenter_mod})
+        screen_reader_manager_mod = types.ModuleType("orca.screen_reader_manager")
+        screen_reader_manager_mod.get_manager = test_context.Mock(return_value=mock_presenter)
+        test_context.patch_modules({"orca.screen_reader_manager": screen_reader_manager_mod})
         service = dbus_service.OrcaDBusServiceInterface()
         result = service.ShowPreferences()
         assert result is True
@@ -339,9 +339,9 @@ class TestDBusService:
         test_context.patch("orca.script_manager.get_manager", return_value=mock_manager)
         mock_presenter = test_context.Mock()
         mock_presenter.show_preferences_gui.return_value = True
-        preferences_presenter_mod = types.ModuleType("orca.preferences_presenter")
-        preferences_presenter_mod.get_presenter = test_context.Mock(return_value=mock_presenter)
-        test_context.patch_modules({"orca.preferences_presenter": preferences_presenter_mod})
+        screen_reader_manager_mod = types.ModuleType("orca.screen_reader_manager")
+        screen_reader_manager_mod.get_manager = test_context.Mock(return_value=mock_presenter)
+        test_context.patch_modules({"orca.screen_reader_manager": screen_reader_manager_mod})
         service = dbus_service.OrcaDBusServiceInterface()
         result = service.ShowPreferences()
         assert result is True

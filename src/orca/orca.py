@@ -142,12 +142,6 @@ def shutdown(_event=None, _signum=None):
     return True
 
 
-def quit_orca(_script=None, _event=None):
-    """Quits Orca in response to a command."""
-
-    return shutdown()
-
-
 def _setup_signal_handlers():
     """Sets up signal handlers for reload, shutdown, and preferences."""
 
@@ -168,9 +162,9 @@ def _setup_signal_handlers():
     def _glib_show_preferences_handler():
         msg = "ORCA: GLib handler received show-preferences signal"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        from . import preferences_presenter  # pylint: disable=import-outside-toplevel
+        from . import screen_reader_manager  # pylint: disable=import-outside-toplevel
 
-        preferences_presenter.get_presenter().show_preferences_gui()
+        screen_reader_manager.get_manager().show_preferences_gui()
         return GLib.SOURCE_CONTINUE
 
     for signum, handler in (

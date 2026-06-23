@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Presenter for opening Orca preferences."""
+"""Manager for screen reader management commands."""
 
 from __future__ import annotations
 
@@ -27,8 +27,8 @@ from typing import TYPE_CHECKING
 from . import (
     guilabels,
     input_event,
-    preferences_presenter_command_definitions,
     preferences_window,
+    screen_reader_manager_command_definitions,
     script_manager,
 )
 from .extension import Extension
@@ -38,13 +38,24 @@ if TYPE_CHECKING:
     from .scripts import default
 
 
-class PreferencesPresenter(Extension):
-    """Presents the Orca preferences window."""
+class ScreenReaderManager(Extension):
+    """Manages screen reader commands that control Orca itself."""
 
     GROUP_LABEL = guilabels.KB_GROUP_SCREEN_READER_MANAGEMENT
 
     def _get_commands(self) -> list[Command]:
-        return preferences_presenter_command_definitions.get_commands(self)
+        return screen_reader_manager_command_definitions.get_commands(self)
+
+    def quit(
+        self,
+        _script: default.Script | None = None,
+        _event: input_event.InputEvent | None = None,
+    ) -> bool:
+        """Quits Orca in response to a command."""
+
+        from . import orca  # pylint: disable=import-outside-toplevel
+
+        return orca.shutdown()
 
     def show_app_preferences_gui(
         self,
@@ -75,10 +86,10 @@ class PreferencesPresenter(Extension):
         return preferences_window.show_preferences_gui(default_script)
 
 
-_presenter = PreferencesPresenter()
+_manager = ScreenReaderManager()
 
 
-def get_presenter() -> PreferencesPresenter:
-    """Returns the Preferences Presenter singleton."""
+def get_manager() -> ScreenReaderManager:
+    """Returns the Screen Reader Manager singleton."""
 
-    return _presenter
+    return _manager

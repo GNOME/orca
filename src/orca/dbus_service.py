@@ -642,9 +642,9 @@ class OrcaDBusServiceInterface(Publishable):
             debug.print_message(debug.LEVEL_WARNING, msg, True)
             return False
 
-        from . import preferences_presenter  # pylint: disable=import-outside-toplevel
+        from . import screen_reader_manager  # pylint: disable=import-outside-toplevel
 
-        preferences_presenter.get_presenter().show_preferences_gui(script)
+        screen_reader_manager.get_manager().show_preferences_gui(script)
         return True
 
     def PresentMessage(self, message: str) -> bool:  # pylint: disable=invalid-name
