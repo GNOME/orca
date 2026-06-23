@@ -103,6 +103,7 @@ orca_integration_tests = [
   'integration_tests/test_web_table_missing_cells.py',
   'integration_tests/test_web_sortable_table.py',
   'integration_tests/test_web_form_fields.py',
+  'integration_tests/test_web_form_fields_navigation.py',
   'integration_tests/test_web_landmarks.py',
   'integration_tests/test_web_inline_landmarks.py',
   'integration_tests/test_web_inline_list.py',

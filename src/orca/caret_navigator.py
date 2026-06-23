@@ -426,6 +426,10 @@ class CaretNavigator(Extension):
         if obj is None:
             return None, -1
 
+        # Chromium includes static text leaf nodes which we ignore; use the navigable parent.
+        if not AXUtilities.is_web_element(obj):
+            obj = AXObject.get_parent(obj)
+
         offset = max(0, AXText.get_character_count(obj) - 1)
         while obj:
             next_obj, next_offset = script.utilities.next_context(obj, offset, restrict_to=root)

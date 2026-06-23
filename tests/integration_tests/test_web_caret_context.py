@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, reset_web_state, speech
+from .helpers import BrailleLine, capture, move_to_bottom, reset_web_state, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -123,6 +123,87 @@ def test_say_all_skips_empty_and_hidden_content(web_caret_context: NativeAppSess
         "Paragraph three.",
         "Paragraph four.",
     ]
+
+
+@pytest.mark.native_app
+def test_character_navigation_left_to_right(web_caret_context: NativeAppSession) -> None:
+    """Tests Right-arrow character navigation across paragraphs, skipping aria-hidden content."""
+
+    session = web_caret_context
+    reset_web_state(session)
+    stream = "aret contextParagraph one.Paragraph three.Paragraph four."
+    for char in stream:
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+        assert speech(session) == [char]
+    keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+    assert speech(session) == ["blank"]
+
+
+@pytest.mark.native_app
+def test_character_navigation_right_to_left(web_caret_context: NativeAppSession) -> None:
+    """Tests Left-arrow character navigation back across paragraphs from the end."""
+
+    session = web_caret_context
+    reset_web_state(session)
+    for _ in range(70):
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+        speech(session)
+    stream = ".ruof hpargaraP.eerht hpargaraP.eno hpargaraPtxetnoc teraC"
+    for char in stream:
+        keyboard.tap_key(keyboard.KEYSYM_LEFT)
+        assert speech(session) == [char]
+
+
+@pytest.mark.native_app
+def test_word_navigation_left_to_right(web_caret_context: NativeAppSession) -> None:
+    """Tests Ctrl+Right word navigation across paragraphs, skipping aria-hidden content."""
+
+    session = web_caret_context
+    reset_web_state(session)
+
+    expected = [
+        ["Caret "],
+        ["context"],
+        ["Paragraph "],
+        ["one"],
+        ["Paragraph "],
+        ["three"],
+        ["Paragraph "],
+        ["four"],
+    ]
+    result = []
+    for _ in expected:
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+        result.append(speech(session))
+    assert result == expected
+
+
+@pytest.mark.native_app
+def test_word_navigation_right_to_left(web_caret_context: NativeAppSession) -> None:
+    """Tests Ctrl+Left word navigation back across paragraphs from the end."""
+
+    session = web_caret_context
+    reset_web_state(session)
+    move_to_bottom(session)
+
+    expected = [
+        ["."],
+        ["four"],
+        ["Paragraph "],
+        ["."],
+        ["three"],
+        ["Paragraph "],
+        ["."],
+        ["one"],
+        ["Paragraph "],
+        ["context"],
+        ["Caret "],
+    ]
+    result = []
+    for _ in expected:
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
+        result.append(speech(session))
+    assert result == expected
 
 
 # Keep this test last: focusing the span dirties caret context in a way reset_web_state

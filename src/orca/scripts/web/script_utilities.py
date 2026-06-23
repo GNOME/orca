@@ -1331,6 +1331,11 @@ class Utilities(script_utilities.Utilities):
         objects = self._get_contents_for_obj(obj, offset, granularity)
         rect = self._get_extents(obj, offset, offset + 1)
 
+        if AXUtilities.is_table_cell_or_header(obj):
+            obj_cell = obj
+        else:
+            obj_cell = AXUtilities.find_ancestor(obj, AXUtilities.is_table_cell_or_header)
+
         def _include(x):
             if x in objects:
                 return False
@@ -1342,12 +1347,11 @@ class Utilities(script_utilities.Utilities):
             if x_start == x_end or not x_string:
                 return False
 
-            if (
-                AXUtilities.is_table_cell_or_header(obj)
-                and AXUtilities.is_table_cell_or_header(x_obj)
-                and obj != x_obj
-            ):
-                return False
+            if obj != x_obj:
+                if AXUtilities.is_list_item(obj) and AXUtilities.is_list_item(x_obj):
+                    return False
+                if obj_cell is not None and not AXUtilities.is_ancestor(x_obj, obj_cell, True):
+                    return False
 
             x_rect = self._get_extents(x_obj, x_start, x_start + 1)
             return AXUtilities.rects_are_on_same_line(rect, x_rect)

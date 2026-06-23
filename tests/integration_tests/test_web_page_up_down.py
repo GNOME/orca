@@ -65,3 +65,18 @@ def test_page_down_then_up(web_page_up_down: NativeAppSession) -> None:
         ["Line one."],
         [BrailleLine(1, "Line one.", "Line one.", "\x00" * 9)],
     )
+
+
+@pytest.mark.native_app
+def test_end_of_file_then_caret_left(web_page_up_down: NativeAppSession) -> None:
+    """Tests Ctrl+End landing at the true end of the last line, then Left walking back."""
+
+    session = web_page_up_down
+    helpers.reset_web_state(session)
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
+    assert helpers.speech(session) == ["Line forty."]
+
+    for char in "Line forty."[::-1]:
+        keyboard.tap_key(keyboard.KEYSYM_LEFT)
+        assert helpers.speech(session) == [char]

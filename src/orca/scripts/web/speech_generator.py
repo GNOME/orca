@@ -847,7 +847,9 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             return []
 
         text_obj, start_offset, end_offset, word = word_contents[0]
-        if AXUtilities.is_editable(text_obj) and "\ufffc" not in word:
+        if "\ufffc" not in word and (
+            AXUtilities.is_editable(text_obj) or AXUtilities.is_table_cell_or_header(text_obj)
+        ):
             return self.generate_phrase(text_obj, start_offset, end_offset, word, context)
 
         prior_obj = text_obj if AXUtilities.is_text_input(text_obj) else None

@@ -27,7 +27,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import BrailleLine, capture, reset_web_state
+from .helpers import BrailleLine, capture, move_to_bottom, reset_web_state, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -196,3 +196,96 @@ def test_navigation_after_edit_reads_fresh_content(web_editable_embedded: Native
     capture(session)
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], ord("f"))
     capture(session)
+
+
+@pytest.mark.native_app
+def test_character_navigation_left_to_right(web_editable_embedded: NativeAppSession) -> None:
+    """Tests Right-arrow character navigation across the editable region, including its link."""
+
+    session = web_editable_embedded
+    reset_web_state(session)
+    for _ in range(2):  # into the editable region's first line
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        speech(session)
+
+    stream = "irst line of notes.See the link below.Last line of notes."
+    for char in stream:
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+        assert speech(session) == [char]
+
+
+@pytest.mark.native_app
+def test_character_navigation_right_to_left(web_editable_embedded: NativeAppSession) -> None:
+    """Tests Left-arrow character navigation back across the editable region, including its link."""
+
+    session = web_editable_embedded
+    reset_web_state(session)
+    move_to_bottom(session)
+
+    stream = ".seton fo enil tsaL.woleb knil eht eeS.seton fo enil tsriF"
+    for char in stream:
+        keyboard.tap_key(keyboard.KEYSYM_LEFT)
+        assert speech(session) == [char]
+
+
+@pytest.mark.native_app
+def test_word_navigation_left_to_right(web_editable_embedded: NativeAppSession) -> None:
+    """Tests Ctrl+Right word navigation across the editable region, including its link."""
+
+    session = web_editable_embedded
+    reset_web_state(session)
+    for _ in range(2):
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        speech(session)
+
+    expected = [
+        ["First "],
+        ["line "],
+        ["of "],
+        ["notes"],
+        ["See "],
+        ["the "],
+        ["link"],
+        ["below"],
+        ["Last "],
+        ["line "],
+        ["of "],
+        ["notes"],
+    ]
+    result = []
+    for _ in expected:
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+        result.append(speech(session))
+    assert result == expected
+
+
+@pytest.mark.native_app
+def test_word_navigation_right_to_left(web_editable_embedded: NativeAppSession) -> None:
+    """Tests Ctrl+Left word navigation back across the editable region, including its link."""
+
+    session = web_editable_embedded
+    reset_web_state(session)
+    move_to_bottom(session)
+
+    expected = [
+        ["."],
+        ["notes"],
+        ["of "],
+        ["line "],
+        ["Last "],
+        ["."],
+        ["below"],
+        ["link"],
+        ["the "],
+        ["See "],
+        ["."],
+        ["notes"],
+        ["of "],
+        ["line "],
+        ["First "],
+    ]
+    result = []
+    for _ in expected:
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
+        result.append(speech(session))
+    assert result == expected

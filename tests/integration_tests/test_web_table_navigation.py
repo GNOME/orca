@@ -1133,3 +1133,155 @@ def test_skip_blank_cells(web_tables: NativeAppSession) -> None:
         )
     finally:
         session.orca.set("TableNavigator", "SkipBlankCells", False)
+
+
+@pytest.mark.native_app
+def test_character_navigation_crosses_table_cells(web_tables: NativeAppSession) -> None:
+    """Tests Right-arrow character navigation across cell boundaries within a table."""
+
+    session = web_tables
+    move_to_top(session)
+
+    # Cell text runs together with no boundary announcement, the same as block text.
+    stream = "ablesBefore the tables.RoleOfficeAdaEngineerLondonGraceAdmiralBoston"
+    for char in stream:
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+        assert speech(session) == [char]
+
+
+@pytest.mark.native_app
+def test_character_navigation_crosses_table_cells_backward(web_tables: NativeAppSession) -> None:
+    """Tests Left-arrow character navigation back across cell boundaries within a table."""
+
+    session = web_tables
+    move_to_top(session)
+    for _ in range(3):  # onto the row with Ada, Engineer, and London
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        speech(session)
+    keyboard.tap_key(keyboard.KEYSYM_END)
+    speech(session)
+
+    # Walk back across the Ada / Engineer / London cell boundaries.
+    stream = "nodnoLreenignEadA"
+    for char in stream:
+        keyboard.tap_key(keyboard.KEYSYM_LEFT)
+        assert speech(session) == [char]
+
+
+@pytest.mark.native_app
+def test_word_navigation_across_table_cells(web_tables: NativeAppSession) -> None:
+    """Tests Ctrl+Right word navigation visiting each cell, including headers and links."""
+
+    session = web_tables
+    move_to_top(session)
+
+    expected = [
+        ["Tables"],
+        ["Before "],
+        ["the "],
+        ["tables"],
+        ["Role"],
+        ["Office"],
+        ["Ada"],
+        ["Engineer"],
+        ["London"],
+        ["Grace"],
+        ["Admiral"],
+        ["Boston"],
+    ]
+    result = []
+    for _ in expected:
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+        result.append(speech(session))
+    assert result == expected
+
+
+@pytest.mark.native_app
+def test_word_navigation_across_table_cells_backward(web_tables: NativeAppSession) -> None:
+    """Tests Ctrl+Left word navigation visiting each cell, including headers and links."""
+
+    session = web_tables
+    move_to_top(session)
+    for _ in range(12):  # to the last cell of the first table
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+        speech(session)
+
+    expected = [
+        ["Boston"],
+        ["Admiral"],
+        ["Grace"],
+        ["London"],
+        ["Engineer"],
+        ["Ada"],
+        ["Office"],
+        ["Role"],
+    ]
+    result = []
+    for _ in expected:
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
+        result.append(speech(session))
+    assert result == expected
+
+
+@pytest.mark.native_app
+def test_word_navigation_across_spanned_cells(web_tables: NativeAppSession) -> None:
+    """Tests Ctrl+Right word navigation visiting each cell of a table with spanned cells."""
+
+    session = web_tables
+    move_to_top(session)
+    for _ in range(12):  # past the first table
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+        speech(session)
+
+    expected = [
+        ["P"],
+        ["Q"],
+        ["R"],
+        ["Block"],
+        ["One"],
+        ["Two"],
+        ["Three"],
+        ["Wide"],
+        ["Tall"],
+        ["Four"],
+        ["Five"],
+        ["Six"],
+        ["Seven"],
+    ]
+    result = []
+    for _ in expected:
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+        result.append(speech(session))
+    assert result == expected
+
+
+@pytest.mark.native_app
+def test_word_navigation_across_spanned_cells_backward(web_tables: NativeAppSession) -> None:
+    """Tests Ctrl+Left word navigation visiting each cell of a table with spanned cells."""
+
+    session = web_tables
+    move_to_top(session)
+    for _ in range(25):  # to the last cell of the spanned table
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+        speech(session)
+
+    expected = [
+        ["Seven"],
+        ["Six"],
+        ["Five"],
+        ["Four"],
+        ["Tall"],
+        ["Wide"],
+        ["Three"],
+        ["Two"],
+        ["One"],
+        ["Block"],
+        ["R"],
+        ["Q"],
+        ["P"],
+    ]
+    result = []
+    for _ in expected:
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
+        result.append(speech(session))
+    assert result == expected

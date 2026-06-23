@@ -339,3 +339,151 @@ def test_caret_navigation_announces_formatting_changes(
 
     keyboard.tap_key(keyboard.KEYSYM_RIGHT)
     assert speech(session) == ["bold off", " "]
+
+
+@pytest.mark.native_app
+def test_character_navigation_left_to_right(web_text_attributes: NativeAppSession) -> None:
+    """Tests Right-arrow character navigation across the whole document, inline and block."""
+
+    session = web_text_attributes
+    reset_web_state(session)
+    session.orca.set("SpeechPresenter", "SpeakTextAttributeChanges", "off")
+
+    stream = (
+        "ext attributesA removed word.An added word.A marked word.A lower word."
+        "A higher word.A linked word.Normal heavy then slanted then lined then normal."
+    )
+    for char in stream:
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+        assert speech(session) == [char]
+
+
+@pytest.mark.native_app
+def test_character_navigation_right_to_left(web_text_attributes: NativeAppSession) -> None:
+    """Tests Left-arrow character navigation back across the whole document from the end."""
+
+    session = web_text_attributes
+    reset_web_state(session)
+    session.orca.set("SpeechPresenter", "SpeakTextAttributeChanges", "off")
+    move_to_bottom(session)
+
+    stream = (
+        ".lamron neht denil neht detnals neht yvaeh lamroN.drow deknil A"
+        ".drow rehgih A.drow rewol A.drow dekram A.drow dedda nA.drow devomer Asetubirtta txeT"
+    )
+    for char in stream:
+        keyboard.tap_key(keyboard.KEYSYM_LEFT)
+        assert speech(session) == [char]
+
+
+@pytest.mark.native_app
+def test_end_of_file_then_caret_left(web_text_attributes: NativeAppSession) -> None:
+    """Tests Ctrl+End at the end of a line with inline markup, then Left walking back."""
+
+    session = web_text_attributes
+    reset_web_state(session)
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
+    assert speech(session) == ["Normal heavy then slanted then lined then normal."]
+
+    for char in "normal."[::-1]:
+        keyboard.tap_key(keyboard.KEYSYM_LEFT)
+        assert speech(session) == [char]
+
+
+@pytest.mark.native_app
+def test_word_navigation_left_to_right(web_text_attributes: NativeAppSession) -> None:
+    """Tests Ctrl+Right word navigation across the whole document, words spanning inline markup."""
+
+    session = web_text_attributes
+    reset_web_state(session)
+    session.orca.set("SpeechPresenter", "SpeakTextAttributeChanges", "off")
+
+    expected = [
+        ["Text "],
+        ["attributes"],
+        ["A "],
+        ["deletion start", "removed", "deletion end"],
+        ["word"],
+        ["An "],
+        ["insertion start", "added", "insertion end"],
+        ["word"],
+        ["A "],
+        ["marked"],
+        ["word"],
+        ["A "],
+        ["lower"],
+        ["word"],
+        ["A "],
+        ["higher"],
+        ["word"],
+        ["A "],
+        ["linked"],
+        ["word"],
+        ["Normal "],
+        ["heavy "],
+        ["then "],
+        ["slanted "],
+        ["then "],
+        ["lined "],
+        ["then "],
+        ["normal"],
+    ]
+    result = []
+    for _ in expected:
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
+        result.append(speech(session))
+    assert result == expected
+
+
+@pytest.mark.native_app
+def test_word_navigation_right_to_left(web_text_attributes: NativeAppSession) -> None:
+    """Tests Ctrl+Left word navigation back across the whole document from the end."""
+
+    session = web_text_attributes
+    reset_web_state(session)
+    session.orca.set("SpeechPresenter", "SpeakTextAttributeChanges", "off")
+    move_to_bottom(session)
+
+    expected = [
+        ["."],
+        ["normal"],
+        ["then "],
+        ["lined "],
+        ["then "],
+        ["slanted "],
+        ["then "],
+        ["heavy "],
+        ["Normal "],
+        ["."],
+        ["word"],
+        ["linked"],
+        ["A "],
+        ["."],
+        ["word"],
+        ["higher"],
+        ["A "],
+        ["."],
+        ["word"],
+        ["lower"],
+        ["A "],
+        ["."],
+        ["word"],
+        ["marked"],
+        ["A "],
+        ["."],
+        ["word"],
+        ["insertion start", "added", "insertion end"],
+        ["An "],
+        ["."],
+        ["word"],
+        ["deletion start", "removed", "deletion end"],
+        ["A "],
+        ["attributes"],
+        ["Text "],
+    ]
+    result = []
+    for _ in expected:
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
+        result.append(speech(session))
+    assert result == expected
