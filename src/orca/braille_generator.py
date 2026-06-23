@@ -1600,6 +1600,9 @@ class BrailleGenerator(generator.Generator):
     def _generate_static(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates braille for the static role."""
 
+        if AXObject.supports_text(obj):
+            return self._generate_text_object(obj)
+
         return self._generate_default_presentation(obj)
 
     def _generate_status_bar(self, obj: Atspi.Accessible) -> list[Any]:
