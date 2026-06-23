@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2026-02-23 12:32+0000\n"
+"POT-Creation-Date: 2026-03-03 10:19+0000\n"
 "PO-Revision-Date: 2026-03-28 14:16+0100\n"
 "Last-Translator: Victoria Niedzielska <victorian@gnome.org>\n"
 "Language-Team: Polish <https://l10n.gnome.org/teams/pl/>\n"
@@ -4144,7 +4144,7 @@ msgstr "_Nazwa profilu:"
 #. is about to remove a user profile, and action that cannot be undone.
 #: src/orca/guilabels.py:723
 msgid "Remove user profile"
-msgstr "Usuń profil osoby"
+msgstr "Usuń profil użytkownika"
 
 #: src/orca/guilabels.py:732
 #, python-format
@@ -8731,7 +8731,7 @@ msgstr "System mowy"
 #. system is unavailable. A speech system provides various synthesizers with
 #. different voices and languages. The first string substituted in is the user-
 #. provided speech system. The second string substituted is a comma separated
-#. list of avaialable speech systems.
+#. list of available speech systems.
 #: src/orca/messages.py:246
 #, python-format
 msgid "Speech system “%s” is unavailable (available: %s)"
@@ -8782,7 +8782,7 @@ msgstr "PLIK"
 #. that will place the user in Orca's GUI preferences dialog.
 #: src/orca/messages.py:283
 msgid "Set up user preferences (GUI version)"
-msgstr "Preferencje osoby (wersja graficzna)"
+msgstr "Preferencje użytkownika (wersja graficzna)"
 
 #. Translators: This text is the description displayed when Orca is launched
 #. from the command line and the help text is displayed.
