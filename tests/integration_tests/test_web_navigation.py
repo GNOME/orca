@@ -453,12 +453,13 @@ def test_word_navigation_across_blank_line(web_basic: NativeAppSession) -> None:
     session = web_basic
     move_to_top(session)
 
-    # Jump to the preformatted block ("Hey there\n\nThis is fixed.") at the end of the page,
-    # then step back onto the radio button just before it to walk forward into the block.
+    # Jump to the end of the preformatted block ("Hey there\n\nThis is fixed."), then walk back
+    # out of it onto the radio button just before it to walk forward into the block.
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
     session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
-    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
-    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    for _ in range(7):
+        keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
+        session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
     session.reader.reset()
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
