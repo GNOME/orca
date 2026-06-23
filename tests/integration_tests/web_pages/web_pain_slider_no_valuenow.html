@@ -1,0 +1,69 @@
+<!doctype html>
+<!--
+  Slider markup and keyboard behavior adapted from the bug-report test case by HaTheo:
+  https://codepen.io/HaTheo/pen/RNKKwxw  (some purely-visual CSS trimmed).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Pain Slider No Valuenow ready</title>
+<style>
+body { font-family: system-ui, -apple-system, sans-serif; padding: 2rem; max-width: 800px; margin: 0 auto; }
+#label { font-size: 1.5rem; font-weight: bold; margin-bottom: 2rem; }
+#pain { position: relative; margin: 20px 60px 80px 60px; outline: none; }
+.slider-track { position: relative; width: 100%; height: 8px; background: #ddd; border-radius: 4px; }
+.slider-thumb { position: absolute; top: 50%; width: 24px; height: 24px; background: #d93025; border-radius: 50%; transform: translate(-50%, -50%); }
+#ratings { list-style: none; padding: 0; margin: 0; position: relative; width: 100%; }
+#ratings li { position: absolute; top: 16px; transform: translateX(-50%); width: 120px; text-align: center; font-size: 0.85rem; color: #666; }
+#ratings li.selected { color: #000; font-weight: bold; }
+</style>
+</head>
+<body>
+  <div id="label">Pain rating</div>
+  <div id="pain" role="slider" tabindex="0" aria-labelledby="label"
+       aria-valuetext="No pain" aria-valuemin="0" aria-valuemax="6">
+    <div class="slider-track" aria-hidden="true"><div class="slider-thumb" id="thumb"></div></div>
+    <ol id="ratings" aria-hidden="true">
+      <li class="selected">No pain</li>
+      <li>Hardly noticeable pain</li>
+      <li>Somewhat distracting pain</li>
+      <li>Pain interrupts some activities</li>
+      <li>Pain prevents daily activities</li>
+      <li>Unbearable pain, cannot do anything</li>
+      <li>As bad as pain can be, nothing else matters</li>
+    </ol>
+  </div>
+<script>
+const slider = document.getElementById('pain');
+const thumb = document.getElementById('thumb');
+const listItems = document.querySelectorAll('#ratings li');
+const maxIndex = listItems.length - 1;
+let currentIndex = 0;
+listItems.forEach((item, index) => {
+  const percentage = (index / maxIndex) * 100;
+  item.style.left = `${percentage}%`;
+  item.addEventListener('click', () => { currentIndex = index; updateSlider(currentIndex); slider.focus(); });
+});
+updateSlider(currentIndex);
+slider.addEventListener('keydown', (e) => {
+  let changed = false;
+  switch (e.key) {
+    case 'ArrowRight': case 'ArrowUp': if (currentIndex < maxIndex) { currentIndex++; changed = true; } break;
+    case 'ArrowLeft': case 'ArrowDown': if (currentIndex > 0) { currentIndex--; changed = true; } break;
+    case 'Home': if (currentIndex !== 0) { currentIndex = 0; changed = true; } break;
+    case 'End': if (currentIndex !== maxIndex) { currentIndex = maxIndex; changed = true; } break;
+  }
+  if (changed) { e.preventDefault(); updateSlider(currentIndex); }
+});
+function updateSlider(index) {
+  const percentage = (index / maxIndex) * 100;
+  thumb.style.left = `${percentage}%`;
+  const textValue = listItems[index].textContent;
+  slider.setAttribute('aria-valuetext', textValue);
+  // aria-valuenow intentionally omitted
+  listItems.forEach(li => li.classList.remove('selected'));
+  listItems[index].classList.add('selected');
+}
+</script>
+</body>
+</html>

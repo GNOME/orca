@@ -245,7 +245,7 @@ class TestAXUtilitiesEvent:
         event_calls = [
             call for call in register.call_args_list if call.args[0] is AXUtilitiesEvent._CACHE
         ]
-        assert len(event_calls) == 11
+        assert len(event_calls) == 12
         for call in event_calls:
             assert call.kwargs["lifetime"] is ax_cache_manager.Lifetime.PROCESS
 

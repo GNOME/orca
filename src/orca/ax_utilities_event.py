@@ -122,6 +122,7 @@ class _AXUtilitiesEventCache:
     LAST_KNOWN_PRESSED = "AXUtilitiesEvent.last-known-pressed"
     LAST_KNOWN_SELECTED = "AXUtilitiesEvent.last-known-selected"
     LAST_KNOWN_VALUE = "AXUtilitiesEvent.last-known-value"
+    LAST_KNOWN_VALUE_TEXT = "AXUtilitiesEvent.last-known-value-text"
     IGNORE_NAME_CHANGES_FOR = "AXUtilitiesEvent.ignore-name-changes-for"
     TEXT_EVENT_REASON = "AXUtilitiesEvent.text-event-reason"
 
@@ -135,6 +136,7 @@ class _AXUtilitiesEventCache:
         LAST_KNOWN_PRESSED,
         LAST_KNOWN_SELECTED,
         LAST_KNOWN_VALUE,
+        LAST_KNOWN_VALUE_TEXT,
         IGNORE_NAME_CHANGES_FOR,
         TEXT_EVENT_REASON,
     )
@@ -214,6 +216,22 @@ class _AXUtilitiesEventCache:
         cache = self._caches.get(self.LAST_KNOWN_VALUE)
         if cache is not None:
             cache.put(ax_cache_manager.get_object_key(obj), value)
+
+    def get_value_text(self, obj: Atspi.Accessible) -> str | None:
+        """Returns the cached value text for obj."""
+
+        cache = self._caches.get(self.LAST_KNOWN_VALUE_TEXT)
+        if cache is None:
+            return None
+
+        return cache.get(ax_cache_manager.get_object_key(obj), None)
+
+    def set_value_text(self, obj: Atspi.Accessible, value_text: str) -> None:
+        """Stores the value text for obj."""
+
+        cache = self._caches.get(self.LAST_KNOWN_VALUE_TEXT)
+        if cache is not None:
+            cache.put(ax_cache_manager.get_object_key(obj), value_text)
 
     def get_text_event_reason(self, event: Atspi.Event) -> TextEventReason | None:
         """Returns the cached reason for event."""
@@ -1203,7 +1221,12 @@ class AXUtilitiesEvent:
         old_value = AXUtilitiesEvent._CACHE.get_value(event.source)
         new_value = AXValue.get_current_value(event.source)
         AXUtilitiesEvent._CACHE.set_value(event.source, new_value)
-        if old_value == new_value:
+
+        old_value_text = AXUtilitiesEvent._CACHE.get_value_text(event.source)
+        new_value_text = AXValue.get_current_value_text(event.source)
+        AXUtilitiesEvent._CACHE.set_value_text(event.source, new_value_text)
+
+        if old_value == new_value and old_value_text == new_value_text:
             msg = "AXUtilitiesEvent: The new value matches the old value."
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return False

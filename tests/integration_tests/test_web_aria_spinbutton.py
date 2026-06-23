@@ -316,9 +316,14 @@ def test_rating_typing(web_aria_spinbutton: NativeAppSession) -> None:
         ],
     )
     keyboard.tap_key(keyboard.KEYSYM_0)
+    # aria-valuenow clamps at the max, but the changed value text ("8075") should still
+    # be announced.
     assert helpers.capture(session) == (
-        ["0"],
-        [helpers.BrailleLine(10, "Rating 8075 $l", "Rating 8075 $l", "\x00" * 14)],
+        ["8075"],
+        [
+            helpers.BrailleLine(10, "Rating 8075 $l", "Rating 8075 $l", "\x00" * 14),
+            helpers.BrailleLine(10, "Rating 8075 $l", "Rating 8075 $l", "\x00" * 14),
+        ],
     )
 
 
