@@ -86,6 +86,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_offscreen_labels,
     _web_option_removal,
     _web_page_up_down,
+    _web_pain_slider,
     _web_plain_text,
     _web_redundant_content,
     _web_removed_child_recovery,
