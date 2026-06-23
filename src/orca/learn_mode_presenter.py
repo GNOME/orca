@@ -182,20 +182,29 @@ class LearnModePresenter(Extension):
         return True
 
     def list_orca_shortcuts(self, script: default.Script, event: input_event.KeyboardEvent) -> bool:
-        """Shows a simple gui listing Orca's bound commands."""
+        """Shows a simple gui listing Orca's keyboard commands."""
 
-        items = 0
         commands_by_group: dict[str, list[KeyboardCommand]] = {}
         for cmd in command_manager.get_manager().get_all_keyboard_commands():
-            keybinding = cmd.get_keybinding()
-            if keybinding is None:
+            if not cmd.get_description():
                 continue
 
             if cmd.get_group_label() not in commands_by_group:
                 commands_by_group[cmd.get_group_label()] = []
             commands_by_group[cmd.get_group_label()].append(cmd)
-            items += 1
 
+        for commands in commands_by_group.values():
+            commands.sort(key=lambda cmd: (cmd.is_transient(), cmd.get_description().lower()))
+
+        def group_sort_key(group: str) -> tuple[int, str]:
+            if group == guilabels.KB_GROUP_SCREEN_READER_MANAGEMENT:
+                return (0, group)
+            return (1, group.lower())
+
+        commands_by_group = dict(
+            sorted(commands_by_group.items(), key=lambda item: group_sort_key(item[0]))
+        )
+        items = sum(len(commands) for commands in commands_by_group.values())
         title = messages.shortcuts_found_orca(items)
         if not commands_by_group:
             presentation_manager.get_manager().present_message(title)

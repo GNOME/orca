@@ -109,6 +109,7 @@ class TestLearnModePresenter:
         cmdnames_mock.ENTER_LEARN_MODE = "enterLearnMode"
 
         guilabels_mock = essential_modules["orca.guilabels"]
+        guilabels_mock.KB_GROUP_SCREEN_READER_MANAGEMENT = "Screen Reader Management"
         guilabels_mock.KB_GROUP_BYPASS_MODE = "Bypass Mode Commands"
         guilabels_mock.KB_GROUP_LEARN_MODE = "Learn Mode Commands"
         guilabels_mock.KB_GROUP_WHERE_AM_I = "Where Am I Commands"
@@ -188,7 +189,7 @@ class TestLearnModePresenter:
         messages_mock.LEARN_MODE_STOP = "Exiting learn mode"
         messages_mock.APPLICATION_NO_NAME = "application with no name"
         messages_mock.shortcuts_found_orca = test_context.Mock(
-            return_value="Found 25 Orca shortcuts",
+            return_value="Found 25 Orca commands",
         )
         messages_mock.shortcuts_found_app = test_context.Mock(
             return_value="Found 5 application shortcuts",
@@ -538,17 +539,28 @@ class TestLearnModePresenter:
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
         from orca.learn_mode_presenter import LearnModePresenter
 
-        mock_keybinding = test_context.Mock()
-        mock_keybinding.handler = test_context.Mock()
-        mock_keybinding.handler.description = "Test command"
+        def make_command(description, group, keybinding=None):
+            command = test_context.Mock()
+            command.get_description.return_value = description
+            command.get_group_label.return_value = group
+            command.get_keybinding.return_value = keybinding
+            command.is_transient.return_value = False
+            return command
 
-        mock_command = test_context.Mock()
-        mock_command.get_keybinding.return_value = mock_keybinding
-        mock_command.get_group_label.return_value = "Test Group"
+        mock_keybinding = test_context.Mock()
+        screen_reader_command = make_command(
+            "Quit the screen reader application",
+            "Screen Reader Management",
+            mock_keybinding,
+        )
+        unbound_command = make_command("Unbound command", "Test Group")
+        alpha_command = make_command("Alpha command", "Test Group", mock_keybinding)
 
         command_manager_mock = essential_modules["orca.command_manager"]
         command_manager_mock.get_manager.return_value.get_all_keyboard_commands.return_value = (
-            mock_command,
+            unbound_command,
+            screen_reader_command,
+            alpha_command,
         )
 
         script_manager = essential_modules["orca.script_manager"]
@@ -563,6 +575,10 @@ class TestLearnModePresenter:
         assert result is True
         mock_quit.assert_called_with(script, event)
         mock_gui.assert_called()
+        _script, _title, _column_headers, commands_by_group = mock_gui.call_args.args
+        assert list(commands_by_group) == ["Screen Reader Management", "Test Group"]
+        assert commands_by_group["Screen Reader Management"] == [screen_reader_command]
+        assert commands_by_group["Test Group"] == [alpha_command, unbound_command]
 
     def test_show_help_default_page(self, test_context: OrcaTestContext) -> None:
         """Test LearnModePresenter.show_help with default page."""

@@ -2581,13 +2581,13 @@ def selected_items_count(selected, total):
 
 
 def shortcuts_found_orca(count):
-    """Returns a string description of the number of Orca shortcuts found."""
+    """Returns a string description of the number of Orca commands found."""
 
     # Translators: This message is presented when the user is in a list of
-    # shortcuts associated with Orca commands. It appears as the title of the
-    # dialog containing the list.
+    # Orca commands and their current keyboard shortcuts. It appears as the
+    # title of the dialog containing the list.
     return (
-        ngettext("%d Screen reader shortcut found.", "%d Screen reader shortcuts found.", count)
+        ngettext("%d Screen reader command found.", "%d Screen reader commands found.", count)
         % count
     )
 
