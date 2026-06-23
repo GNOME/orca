@@ -364,17 +364,23 @@ SPEECH_PRESENTER_HANDLERS = frozenset(
     },
 )
 
-# Script handlers - these will eventually move to presenter/manager modules
-DEFAULT_SCRIPT_HANDLERS = frozenset(
+BRAILLE_PRESENTER_HANDLERS = frozenset(
     {
         "contractedBrailleHandler",
-        "cycleSettingsProfileHandler",
         "goBrailleHomeHandler",
         "panBrailleLeftHandler",
         "panBrailleRightHandler",
         "processBrailleCutBeginHandler",
         "processBrailleCutLineHandler",
         "processRoutingKeyHandler",
+        "toggle_braille_monitor",
+    },
+)
+
+# Script handlers - these will eventually move to presenter/manager modules
+DEFAULT_SCRIPT_HANDLERS = frozenset(
+    {
+        "cycleSettingsProfileHandler",
         "shutdownHandler",
     },
 )
@@ -412,6 +418,7 @@ EXPECTED_TOTAL_COMMANDS = (
     + len(SAY_ALL_PRESENTER_HANDLERS)
     + len(SPEECH_MANAGER_HANDLERS)
     + len(SPEECH_PRESENTER_HANDLERS)
+    + len(BRAILLE_PRESENTER_HANDLERS)
     + len(DEFAULT_SCRIPT_HANDLERS)
     + len(DOCUMENT_PRESENTER_HANDLERS)
 )
@@ -668,6 +675,30 @@ class TestCommandRegistry:
         acss_mock.ACSS.RATE = "rate"
         acss_mock.ACSS.AVERAGE_PITCH = "average-pitch"
         acss_mock.ACSS.GAIN = "gain"
+
+        return essential_modules
+
+    def _setup_braille_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
+        """Sets up dependencies for braille presenter testing."""
+
+        additional_modules = ["orca.braille", "orca.braille_monitor", "orca.orca_platform"]
+        essential_modules = test_context.setup_shared_dependencies(additional_modules)
+
+        platform_mock = essential_modules["orca.orca_platform"]
+        platform_mock.tablesdir = "/usr/share/liblouis/tables"
+
+        from orca import gsettings_registry
+
+        gsettings_registry.get_registry().clear_runtime_values()
+
+        test_context.patch(
+            "orca.braille_presenter.BraillePresenter._get_table_files",
+            return_value=[
+                "en-us-g1.ctb",
+                "en-us-g2.ctb",
+                "en-us-comp8.ctb",
+            ],
+        )
 
         return essential_modules
 
@@ -1095,6 +1126,39 @@ class TestCommandRegistry:
         )
         assert not missing, f"Missing commands in speech_presenter: {missing}"
 
+    def test_braille_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
+        """Test that all braille presenter handlers are registered."""
+
+        self._setup_braille_dependencies(test_context)
+        from orca import command_manager
+        from orca.braille_presenter import get_presenter
+
+        presenter = get_presenter()
+        presenter.set_up_commands()
+
+        manager = command_manager.get_manager()
+        keyboard_handlers = {
+            "contractedBrailleHandler",
+            "panBrailleLeftHandler",
+            "panBrailleRightHandler",
+            "toggle_braille_monitor",
+        }
+        missing_keyboard = frozenset(
+            name for name in keyboard_handlers if manager.get_keyboard_command(name) is None
+        )
+        assert not missing_keyboard, (
+            f"Missing keyboard commands in braille_presenter: {missing_keyboard}"
+        )
+
+        braille_handlers = BRAILLE_PRESENTER_HANDLERS - {"toggle_braille_monitor"}
+        registered_braille_handlers = {
+            command.get_name() for command in manager.get_all_braille_commands()
+        }
+        missing_braille = braille_handlers - registered_braille_handlers
+        assert not missing_braille, (
+            f"Missing braille commands in braille_presenter: {missing_braille}"
+        )
+
     def test_document_presenter_handlers_exist(self, test_context: OrcaTestContext) -> None:
         """Test that all document presenter handlers are registered."""
 
@@ -1146,6 +1210,7 @@ class TestCommandRegistry:
             + len(SAY_ALL_PRESENTER_HANDLERS)
             + len(SPEECH_MANAGER_HANDLERS)
             + len(SPEECH_PRESENTER_HANDLERS)
+            + len(BRAILLE_PRESENTER_HANDLERS)
             + len(DEFAULT_SCRIPT_HANDLERS)
             + len(DOCUMENT_PRESENTER_HANDLERS)
         )

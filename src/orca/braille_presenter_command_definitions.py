@@ -24,17 +24,39 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from . import braille, cmdnames
-from .command import Command, KeyboardCommand
+from . import braille, cmdnames, debug
+from .command import BrailleCommand, Command, KeyboardCommand
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from .braille_presenter import BraillePresenter
+
+    CommandCallback = Callable[..., bool]
 
 
 def get_commands(owner: BraillePresenter) -> list[Command]:
     """Returns commands for braille presentation."""
 
-    return [
+    commands: list[Command] = [
+        KeyboardCommand(
+            "panBrailleLeftHandler",
+            owner.pan_braille_left,
+            owner.GROUP_LABEL,
+            cmdnames.PAN_BRAILLE_LEFT,
+        ),
+        KeyboardCommand(
+            "panBrailleRightHandler",
+            owner.pan_braille_right,
+            owner.GROUP_LABEL,
+            cmdnames.PAN_BRAILLE_RIGHT,
+        ),
+        KeyboardCommand(
+            "contractedBrailleHandler",
+            owner.toggle_contracted_braille,
+            owner.GROUP_LABEL,
+            cmdnames.SET_CONTRACTED_BRAILLE,
+        ),
         KeyboardCommand(
             "toggle_braille_monitor",
             owner.toggle_monitor,
@@ -42,6 +64,106 @@ def get_commands(owner: BraillePresenter) -> list[Command]:
             cmdnames.TOGGLE_BRAILLE_MONITOR,
         ),
     ]
+
+    _append_braille_command(
+        commands,
+        "panBrailleLeftHandler",
+        owner.pan_braille_left,
+        owner.GROUP_LABEL,
+        cmdnames.PAN_BRAILLE_LEFT,
+        (
+            braille.BRLAPI_KEY_CMD_HWINLT,
+            braille.BRLAPI_KEY_CMD_FWINLT,
+            braille.BRLAPI_KEY_CMD_FWINLTSKIP,
+        ),
+        executes_in_learn_mode=True,
+    )
+    _append_braille_command(
+        commands,
+        "panBrailleRightHandler",
+        owner.pan_braille_right,
+        owner.GROUP_LABEL,
+        cmdnames.PAN_BRAILLE_RIGHT,
+        (
+            braille.BRLAPI_KEY_CMD_HWINRT,
+            braille.BRLAPI_KEY_CMD_FWINRT,
+            braille.BRLAPI_KEY_CMD_FWINRTSKIP,
+        ),
+        executes_in_learn_mode=True,
+    )
+    _append_braille_command(
+        commands,
+        "contractedBrailleHandler",
+        owner.toggle_contracted_braille,
+        owner.GROUP_LABEL,
+        cmdnames.SET_CONTRACTED_BRAILLE,
+        (braille.BRLAPI_KEY_CMD_SIXDOTS,),
+        executes_in_learn_mode=True,
+    )
+    _append_braille_command(
+        commands,
+        "goBrailleHomeHandler",
+        owner.go_home,
+        owner.GROUP_LABEL,
+        cmdnames.GO_BRAILLE_HOME,
+        (braille.BRLAPI_KEY_CMD_HOME,),
+    )
+    _append_braille_command(
+        commands,
+        "processRoutingKeyHandler",
+        owner.process_routing_key,
+        owner.GROUP_LABEL,
+        cmdnames.PROCESS_ROUTING_KEY,
+        (braille.BRLAPI_KEY_CMD_ROUTE,),
+    )
+    _append_braille_command(
+        commands,
+        "processBrailleCutBeginHandler",
+        owner.process_braille_cut_begin,
+        owner.GROUP_LABEL,
+        cmdnames.PROCESS_BRAILLE_CUT_BEGIN,
+        (braille.BRLAPI_KEY_CMD_CUTBEGIN,),
+    )
+    _append_braille_command(
+        commands,
+        "processBrailleCutLineHandler",
+        owner.process_braille_cut_line,
+        owner.GROUP_LABEL,
+        cmdnames.PROCESS_BRAILLE_CUT_LINE,
+        (braille.BRLAPI_KEY_CMD_CUTLINE,),
+    )
+
+    return commands
+
+
+# pylint: disable-next=too-many-arguments,too-many-positional-arguments
+def _append_braille_command(
+    commands: list[Command],
+    name: str,
+    function: CommandCallback,
+    group: str,
+    description: str,
+    bindings: tuple[int | None, ...],
+    executes_in_learn_mode: bool = False,
+) -> None:
+    """Appends a braille command when at least one binding is available."""
+
+    available_bindings = tuple(binding for binding in bindings if binding is not None)
+    if not available_bindings:
+        msg = f"BRAILLE PRESENTER: Braille bindings unavailable for {name}"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return
+
+    commands.append(
+        BrailleCommand(
+            name,
+            function,
+            group,
+            description,
+            braille_bindings=available_bindings,
+            executes_in_learn_mode=executes_in_learn_mode,
+        )
+    )
 
 
 def get_brltty_command_names() -> dict[int, str]:

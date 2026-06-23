@@ -27,9 +27,7 @@ from typing import TYPE_CHECKING
 from orca import (
     braille_presenter,
     debug,
-    flat_review_presenter,
     focus_manager,
-    input_event,
     input_event_manager,
     messages,
     presentation_manager,
@@ -74,65 +72,44 @@ class Script(default.Script):
 
         return Utilities(self)
 
-    def _pan_braille_left(self, event: input_event.InputEvent | None = None) -> bool:
-        """Pans the braille display to the left."""
+    def handle_braille_pan_at_edge(
+        self,
+        direction: braille_presenter.PanDirection,
+    ) -> bool | None:
+        """Handles braille panning when the presenter reaches the edge of a line."""
 
         focus = focus_manager.get_manager().get_locus_of_focus()
-        if (
-            flat_review_presenter.get_presenter().is_active()
-            or AXUtilities.is_spreadsheet_cell(focus)
-            or not AXUtilities.is_paragraph(focus)
-        ):
-            return super()._pan_braille_left(event)
+        if AXUtilities.is_spreadsheet_cell(focus) or not AXUtilities.is_paragraph(focus):
+            return super().handle_braille_pan_at_edge(direction)
 
-        if braille_presenter.get_presenter().pan_left():
-            return True
+        if direction == braille_presenter.PanDirection.LEFT:
+            start_offset = AXText.get_line_at_offset(focus)[1]
+            if start_offset > 0:
+                AXUtilities.set_caret_offset_with_reason(
+                    focus, start_offset - 1, CaretSetReason.BRAILLE_PANNING
+                )
+                return True
 
-        # At edge of a paragraph. Try to move caret to previous line.
-        start_offset = AXText.get_line_at_offset(focus)[1]
-        if start_offset > 0:
-            AXUtilities.set_caret_offset_with_reason(
-                focus, start_offset - 1, CaretSetReason.BRAILLE_PANNING
-            )
-            return True
+            obj = self.utilities.find_previous_object(focus)
+            if obj is not None:
+                focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
+                AXUtilities.set_caret_offset_to_end(obj, CaretSetReason.BRAILLE_PANNING)
+                return True
+        else:
+            end_offset = AXText.get_line_at_offset(focus)[2]
+            if end_offset < AXText.get_character_count(focus):
+                AXUtilities.set_caret_offset_with_reason(
+                    focus, end_offset, CaretSetReason.BRAILLE_PANNING
+                )
+                return True
 
-        obj = self.utilities.find_previous_object(focus)
-        if obj is not None:
-            focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
-            AXUtilities.set_caret_offset_to_end(obj, CaretSetReason.BRAILLE_PANNING)
-            return True
+            obj = self.utilities.find_next_object(focus)
+            if obj is not None:
+                focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
+                AXUtilities.set_caret_offset_to_start(obj, CaretSetReason.BRAILLE_PANNING)
+                return True
 
-        return super()._pan_braille_left(event)
-
-    def _pan_braille_right(self, event: input_event.InputEvent | None = None) -> bool:
-        """Pans the braille display to the right."""
-
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        if (
-            flat_review_presenter.get_presenter().is_active()
-            or AXUtilities.is_spreadsheet_cell(focus)
-            or not AXUtilities.is_paragraph(focus)
-        ):
-            return super()._pan_braille_right(event)
-
-        if braille_presenter.get_presenter().pan_right():
-            return True
-
-        # At edge of a paragraph. Try to move caret to next line.
-        end_offset = AXText.get_line_at_offset(focus)[2]
-        if end_offset < AXText.get_character_count(focus):
-            AXUtilities.set_caret_offset_with_reason(
-                focus, end_offset, CaretSetReason.BRAILLE_PANNING
-            )
-            return True
-
-        obj = self.utilities.find_next_object(focus)
-        if obj is not None:
-            focus_manager.get_manager().set_locus_of_focus(None, obj, notify_script=False)
-            AXUtilities.set_caret_offset_to_start(obj, CaretSetReason.BRAILLE_PANNING)
-            return True
-
-        return super()._pan_braille_right(event)
+        return super().handle_braille_pan_at_edge(direction)
 
     def locus_of_focus_changed(
         self,

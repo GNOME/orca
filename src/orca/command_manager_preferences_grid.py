@@ -74,11 +74,13 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             panel_id="manual.commands",
             description=(
                 "Commands settings let you choose the keyboard layout and screen reader "
-                "modifier keys, and customize command keybindings.\n\n"
+                "modifier keys, and customize command keyboard shortcuts.\n\n"
                 "Orca commands are organized into groups in the Commands list. Choose a "
                 "group from the list, then activate its row, or press Right Arrow, to "
                 "open its commands. Press Left Arrow, Escape, or Alt+Left to return to "
                 "the list.\n\n"
+                "The bindings shown here are for standard keyboards. Braille-display "
+                "button bindings are not configured in the Commands list.\n\n"
                 "After choosing a command, press the new key combination, then press "
                 "Return to bind it. Press Delete or Backspace without modifiers to "
                 "unbind the command. Press Escape to cancel. Orca warns you if the "

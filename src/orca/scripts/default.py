@@ -53,7 +53,6 @@ from orca import (
     guilabels,
     input_event,
     input_event_manager,
-    keybindings,
     learn_mode_presenter,
     live_region_presenter,
     math_navigator,
@@ -84,12 +83,10 @@ from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_event import TextEventReason
 from orca.ax_utilities_text import CaretSetReason, TextUnit
-from orca.command import BrailleCommand, KeyboardCommand
+from orca.command import KeyboardCommand
 from orca.generator import PresentationReason
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
-
     import gi
 
     gi.require_version("Atspi", "2.0")
@@ -152,139 +149,14 @@ class Script(script.Script):
 
         manager = command_manager.get_manager()
         manager.set_up_commands()
-        group_label = guilabels.KB_GROUP_DEFAULT
-
-        script_commands: list[
-            tuple[
-                str,
-                Callable[..., bool],
-                str,
-                keybindings.KeyBinding | None,
-                keybindings.KeyBinding | None,
-            ]
-        ] = [
-            (
-                "panBrailleLeftHandler",
-                self.pan_braille_left,
-                cmdnames.PAN_BRAILLE_LEFT,
-                None,
-                None,
-            ),
-            (
-                "panBrailleRightHandler",
-                self.pan_braille_right,
-                cmdnames.PAN_BRAILLE_RIGHT,
-                None,
-                None,
-            ),
-            (
-                "contractedBrailleHandler",
-                self.set_contracted_braille,
-                cmdnames.SET_CONTRACTED_BRAILLE,
-                None,
-                None,
-            ),
-            ("shutdownHandler", self.quit_orca, cmdnames.QUIT_ORCA, None, None),
-        ]
-
-        for (
-            name,
-            function,
-            description,
-            desktop_kb,
-            laptop_kb,
-        ) in script_commands:
-            manager.add_command(
-                KeyboardCommand(
-                    name,
-                    function,
-                    group_label,
-                    description,
-                    desktop_keybinding=desktop_kb,
-                    laptop_keybinding=laptop_kb,
-                ),
+        manager.add_command(
+            KeyboardCommand(
+                "shutdownHandler",
+                self.quit_orca,
+                guilabels.KB_GROUP_DEFAULT,
+                cmdnames.QUIT_ORCA,
             )
-
-        braille_bindings: dict[str, tuple[int, ...]] = {}
-        left_keys = tuple(
-            key
-            for key in (
-                braille.BRLAPI_KEY_CMD_HWINLT,
-                braille.BRLAPI_KEY_CMD_FWINLT,
-                braille.BRLAPI_KEY_CMD_FWINLTSKIP,
-            )
-            if key is not None
         )
-        right_keys = tuple(
-            key
-            for key in (
-                braille.BRLAPI_KEY_CMD_HWINRT,
-                braille.BRLAPI_KEY_CMD_FWINRT,
-                braille.BRLAPI_KEY_CMD_FWINRTSKIP,
-            )
-            if key is not None
-        )
-        if left_keys:
-            braille_bindings["panBrailleLeftHandler"] = left_keys
-        if right_keys:
-            braille_bindings["panBrailleRightHandler"] = right_keys
-
-        single_key_bindings: list[tuple[str, int | None]] = [
-            ("goBrailleHomeHandler", braille.BRLAPI_KEY_CMD_HOME),
-            ("contractedBrailleHandler", braille.BRLAPI_KEY_CMD_SIXDOTS),
-            ("processRoutingKeyHandler", braille.BRLAPI_KEY_CMD_ROUTE),
-            ("processBrailleCutBeginHandler", braille.BRLAPI_KEY_CMD_CUTBEGIN),
-            ("processBrailleCutLineHandler", braille.BRLAPI_KEY_CMD_CUTLINE),
-        ]
-        for handler_name, key in single_key_bindings:
-            if key is not None:
-                braille_bindings[handler_name] = (key,)
-        if not braille_bindings:
-            msg = "DEFAULT: Braille bindings unavailable."
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        braille_commands: list[tuple[str, Callable[..., bool], str, bool]] = [
-            ("panBrailleLeftHandler", self.pan_braille_left, cmdnames.PAN_BRAILLE_LEFT, True),
-            ("panBrailleRightHandler", self.pan_braille_right, cmdnames.PAN_BRAILLE_RIGHT, True),
-            (
-                "contractedBrailleHandler",
-                self.set_contracted_braille,
-                cmdnames.SET_CONTRACTED_BRAILLE,
-                True,
-            ),
-            ("goBrailleHomeHandler", self.go_braille_home, cmdnames.GO_BRAILLE_HOME, False),
-            (
-                "processRoutingKeyHandler",
-                self.process_routing_key,
-                cmdnames.PROCESS_ROUTING_KEY,
-                False,
-            ),
-            (
-                "processBrailleCutBeginHandler",
-                self.process_braille_cut_begin,
-                cmdnames.PROCESS_BRAILLE_CUT_BEGIN,
-                False,
-            ),
-            (
-                "processBrailleCutLineHandler",
-                self.process_braille_cut_line,
-                cmdnames.PROCESS_BRAILLE_CUT_LINE,
-                False,
-            ),
-        ]
-
-        for name, function, description, executes_in_learn_mode in braille_commands:
-            bb = braille_bindings.get(name, ())
-            manager.add_command(
-                BrailleCommand(
-                    name,
-                    function,
-                    group_label,
-                    description,
-                    braille_bindings=bb,
-                    executes_in_learn_mode=executes_in_learn_mode,
-                ),
-            )
 
         self._register_builtin_extensions()
         extension_loader.get_loader().set_up_all_commands()
@@ -458,6 +330,14 @@ class Script(script.Script):
             offset=offset,
         )
 
+    def handle_braille_pan_at_edge(
+        self,
+        _direction: braille_presenter.PanDirection,
+    ) -> bool | None:
+        """Handles braille panning when the presenter reaches the edge of a line."""
+
+        return None
+
     ########################################################################
     #                                                                      #
     # INPUT EVENT HANDLERS (AKA ORCA COMMANDS)                             #
@@ -472,197 +352,6 @@ class Script(script.Script):
         """Quit Orca."""
 
         orca.shutdown()
-        return True
-
-    def pan_braille_left(
-        self,
-        current_script: Script | None = None,
-        event: input_event.InputEvent | None = None,
-    ) -> bool:
-        """Pans the braille display to the left."""
-
-        if (
-            isinstance(event, input_event.KeyboardEvent)
-            and not braille_presenter.get_presenter().use_braille()
-        ):
-            msg = "DEFAULT: panBrailleLeft command requires braille or braille monitor"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        target = current_script or self
-        if target is not self:
-            return target.pan_braille_left(target, event)
-
-        tokens = ["DEFAULT: pan_braille_left using", target]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return self._pan_braille_left(event)
-
-    def _pan_braille_left(self, event: input_event.InputEvent | None = None) -> bool:
-        """Pans the braille display to the left."""
-
-        if flat_review_presenter.get_presenter().is_active():
-            return flat_review_presenter.get_presenter().pan_braille_left(self, event)
-
-        presenter = braille_presenter.get_presenter()
-        if presenter.pan_left():
-            return True
-
-        # Couldn't pan (at edge). For text areas, move caret to get more content.
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        is_text_area = AXUtilities.is_editable(focus) or AXUtilities.is_terminal(focus)
-        if not is_text_area:
-            return True
-
-        start_offset = AXText.get_line_at_offset(focus)[1]
-        moved_caret = False
-        if start_offset > 0:
-            moved_caret = AXUtilities.set_caret_offset_with_reason(
-                focus, start_offset - 1, CaretSetReason.BRAILLE_PANNING
-            )
-
-        # If we didn't move the caret and we're in a terminal, we
-        # jump into flat review to review the text.  See
-        # http://bugzilla.gnome.org/show_bug.cgi?id=482294.
-        if not moved_caret and AXUtilities.is_terminal(focus):
-            flat_review_presenter.get_presenter().go_start_of_line(self, event)
-            flat_review_presenter.get_presenter().go_previous_character(self, event)
-
-        return True
-
-    def pan_braille_right(
-        self,
-        current_script: Script | None = None,
-        event: input_event.InputEvent | None = None,
-    ) -> bool:
-        """Pans the braille display to the right."""
-
-        if (
-            isinstance(event, input_event.KeyboardEvent)
-            and not braille_presenter.get_presenter().use_braille()
-        ):
-            msg = "DEFAULT: panBrailleRight command requires braille or braille monitor"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
-
-        target = current_script or self
-        if target is not self:
-            return target.pan_braille_right(target, event)
-
-        tokens = ["DEFAULT: pan_braille_right using", target]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return self._pan_braille_right(event)
-
-    def _pan_braille_right(self, event: input_event.InputEvent | None = None) -> bool:
-        """Pans the braille display to the right."""
-
-        if flat_review_presenter.get_presenter().is_active():
-            return flat_review_presenter.get_presenter().pan_braille_right(self, event)
-
-        presenter = braille_presenter.get_presenter()
-        if presenter.pan_right():
-            return True
-
-        # Couldn't pan (at edge). For text areas, move caret to get more content.
-        focus = focus_manager.get_manager().get_locus_of_focus()
-        is_text_area = AXUtilities.is_editable(focus) or AXUtilities.is_terminal(focus)
-        if not is_text_area:
-            return True
-
-        end_offset = AXText.get_line_at_offset(focus)[2]
-        if end_offset < AXText.get_character_count(focus):
-            AXUtilities.set_caret_offset_with_reason(
-                focus, end_offset, CaretSetReason.BRAILLE_PANNING
-            )
-
-        return True
-
-    def go_braille_home(
-        self,
-        _script: Script | None = None,
-        event: input_event.InputEvent | None = None,
-    ) -> bool:
-        """Returns to the component with focus."""
-
-        if flat_review_presenter.get_presenter().is_active():
-            flat_review_presenter.get_presenter().quit()
-            return True
-
-        presentation_manager.get_manager().interrupt_presentation()
-        return braille.return_to_region_with_focus(event)
-
-    def set_contracted_braille(
-        self,
-        _script: Script | None = None,
-        event: input_event.InputEvent | None = None,
-    ) -> bool:
-        """Toggles contracted braille."""
-
-        braille.toggle_contracted_braille(event)
-        return True
-
-    def process_routing_key(
-        self,
-        _script: Script | None = None,
-        event: input_event.BrailleEvent | None = None,
-    ) -> bool:
-        """Processes a cursor routing key."""
-
-        # Don't kill flash here because it will restore the previous contents and
-        # then process the routing key. If the contents accept a click action, this
-        # would result in clicking on the link instead of clearing the flash message.
-        presentation_manager.get_manager().interrupt_presentation(kill_flash=False)
-        if event is None:
-            return True
-        braille.process_routing_key(event)
-        return True
-
-    def process_braille_cut_begin(
-        self,
-        _script: Script | None = None,
-        event: input_event.BrailleEvent | None = None,
-    ) -> bool:
-        """Clears the selection and moves the caret offset in the currently
-        active text area.
-        """
-
-        if event is None:
-            return True
-        caret_context = braille.get_caret_context(event)
-        if caret_context.offset < 0:
-            return True
-
-        presentation_manager.get_manager().interrupt_presentation()
-        AXUtilities.clear_all_selected_text(caret_context.accessible)
-        self.utilities.set_caret_offset(
-            caret_context.accessible, caret_context.offset, reason=CaretSetReason.BRAILLE_CUT
-        )
-        return True
-
-    def process_braille_cut_line(
-        self,
-        _script: Script | None = None,
-        event: input_event.BrailleEvent | None = None,
-    ) -> bool:
-        """Extends the text selection in the currently active text
-        area and also copies the selected text to the system clipboard."""
-
-        if event is None:
-            return True
-        caret_context = braille.get_caret_context(event)
-        if caret_context.offset < 0:
-            return True
-
-        presentation_manager.get_manager().interrupt_presentation()
-        start_offset = AXUtilities.get_selection_start_offset(caret_context.accessible)
-        end_offset = AXUtilities.get_selection_end_offset(caret_context.accessible)
-        if start_offset < 0 or end_offset < 0:
-            caret_offset = AXText.get_caret_offset(caret_context.accessible)
-            start_offset = min(caret_context.offset, caret_offset)
-            end_offset = max(caret_context.offset, caret_offset)
-
-        AXUtilities.set_selected_text(caret_context.accessible, start_offset, end_offset)
-        text = AXUtilities.get_selected_text(caret_context.accessible)[0]
-        clipboard.get_presenter().set_text(text)
         return True
 
     ########################################################################

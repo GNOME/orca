@@ -38,9 +38,7 @@ from orca import (
     caret_navigator,
     debug,
     document_presenter,
-    flat_review_presenter,
     focus_manager,
-    input_event,
     input_event_manager,
     label_inference,
     live_region_presenter,
@@ -378,52 +376,30 @@ class Script(default.Script):
         contents = self.utilities.get_line_contents_at_offset(obj, offset)
         presentation_manager.get_manager().display_contents(contents)
 
-    def _pan_braille_left(self, event: input_event.InputEvent | None = None) -> bool:
-        """Pans braille to the left."""
+    def handle_braille_pan_at_edge(
+        self,
+        direction: braille_presenter.PanDirection,
+    ) -> bool | None:
+        """Handles braille panning when the presenter reaches the edge of a line."""
 
-        if (
-            flat_review_presenter.get_presenter().is_active()
-            or not self.utilities.in_document_content()
-        ):
-            return super()._pan_braille_left(event)
+        if not self.utilities.in_document_content():
+            return super().handle_braille_pan_at_edge(direction)
 
-        presenter = braille_presenter.get_presenter()
-        if presenter.pan_left():
-            return True
-
-        # At edge, get previous line from document.
-        contents = self.utilities.get_previous_line_contents()
+        if direction == braille_presenter.PanDirection.LEFT:
+            contents = self.utilities.get_previous_line_contents()
+        else:
+            contents = self.utilities.get_next_line_contents()
         if not contents:
             return False
 
         obj, start, _end, _string = contents[0]
         self.utilities.set_caret_position(obj, start, reason=CaretSetReason.BRAILLE_PANNING)
         self.update_braille(obj, offset=start)
-        presenter.pan_to_end()
-        return True
-
-    def _pan_braille_right(self, event: input_event.InputEvent | None = None) -> bool:
-        """Pans braille to the right."""
-
-        if (
-            flat_review_presenter.get_presenter().is_active()
-            or not self.utilities.in_document_content()
-        ):
-            return super()._pan_braille_right(event)
-
         presenter = braille_presenter.get_presenter()
-        if presenter.pan_right():
-            return True
-
-        # At edge, get next line from document.
-        contents = self.utilities.get_next_line_contents()
-        if not contents:
-            return False
-
-        obj, start, _end, _string = contents[0]
-        self.utilities.set_caret_position(obj, start, reason=CaretSetReason.BRAILLE_PANNING)
-        self.update_braille(obj, offset=start)
-        presenter.pan_to_beginning()
+        if direction == braille_presenter.PanDirection.LEFT:
+            presenter.pan_to_end()
+        else:
+            presenter.pan_to_beginning()
         return True
 
     def locus_of_focus_changed(
