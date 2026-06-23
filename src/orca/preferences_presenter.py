@@ -41,7 +41,7 @@ if TYPE_CHECKING:
 class PreferencesPresenter(Extension):
     """Presents the Orca preferences window."""
 
-    GROUP_LABEL = guilabels.KB_GROUP_PREFERENCES
+    GROUP_LABEL = guilabels.KB_GROUP_SCREEN_READER_MANAGEMENT
 
     def _get_commands(self) -> list[Command]:
         return preferences_presenter_command_definitions.get_commands(self)

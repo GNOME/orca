@@ -109,7 +109,6 @@ class TestLearnModePresenter:
         cmdnames_mock.ENTER_LEARN_MODE = "enterLearnMode"
 
         guilabels_mock = essential_modules["orca.guilabels"]
-        guilabels_mock.KB_GROUP_DEFAULT = "Default Commands"
         guilabels_mock.KB_GROUP_BYPASS_MODE = "Bypass Mode Commands"
         guilabels_mock.KB_GROUP_LEARN_MODE = "Learn Mode Commands"
         guilabels_mock.KB_GROUP_WHERE_AM_I = "Where Am I Commands"

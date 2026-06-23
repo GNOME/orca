@@ -289,12 +289,12 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self._categories_listbox.set_header_func(self._separator_header_func, None)
 
-        # Custom sort: For app-specific, app name first then Default. For non-app, Default first.
-        # After that, sort alphabetically.
+        # Custom sort: For app-specific, app name first then screen-reader management.
+        # Otherwise, screen-reader management first. After that, sort alphabetically.
         def sort_key(category_name):
             if app_name and category_name == app_name:
                 return (0, category_name)
-            if category_name == guilabels.KB_GROUP_DEFAULT:
+            if category_name == guilabels.KB_GROUP_SCREEN_READER_MANAGEMENT:
                 if app_name and app_name in self._categories:
                     return (1, category_name)
                 return (0, category_name)

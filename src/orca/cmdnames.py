@@ -494,8 +494,10 @@ TOGGLE_SPEECH_VERBOSITY = _("Toggle speech verbosity level")
 TOGGLE_KEYBOARD_LAYOUT = _("Toggle keyboard layout")
 
 # Translators: this string is associated with the keyboard shortcut to quit
-# Orca.
-QUIT_ORCA = _("Quit the screen reader")
+# Orca when it was started like a regular application. It is not meant for
+# quitting an Orca instance managed as a systemd service, because systemd may
+# treat that as a failure and restart Orca.
+QUIT_ORCA = _("Quit the screen reader application")
 
 # Translators: the preferences window allows users to set their preferences
 # for Orca.

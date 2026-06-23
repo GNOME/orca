@@ -474,9 +474,9 @@ KB_HEADER_FUNCTION = _("Command")
 KB_HEADER_KEY_BINDING = _("Key Binding")
 
 # Translators: This string is a label for the group of Orca commands which
-# can be used in any setting, task, or application. They are not specific
-# to, for instance, web browsing.
-KB_GROUP_DEFAULT = C_("keybindings", "Default")
+# are related to managing the screen reader, such as opening preferences or
+# quitting Orca.
+KB_GROUP_SCREEN_READER_MANAGEMENT = _("Screen Reader Management")
 
 # Translators: This string is a label for the group of Orca commands which
 # are related to bypass mode. Bypass mode causes Orca to pass subsequent
@@ -559,10 +559,6 @@ SLEEP_MODE_INFO = _(
 # preferences page. The user can select which applications should automatically
 # have sleep mode enabled.
 SLEEP_MODE_APPS = _("Always use sleep mode with these applications")
-
-# Translators: This string is a label for the group of Orca commands which
-# are related to opening the preferences window.
-KB_GROUP_PREFERENCES = _("Preferences")
 
 # Translators: This string is a label for the group of Orca commands which
 # are related to mouse interaction, such as routing the pointer, clicking

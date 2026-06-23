@@ -142,6 +142,12 @@ def shutdown(_event=None, _signum=None):
     return True
 
 
+def quit_orca(_script=None, _event=None):
+    """Quits Orca in response to a command."""
+
+    return shutdown()
+
+
 def _setup_signal_handlers():
     """Sets up signal handlers for reload, shutdown, and preferences."""
 

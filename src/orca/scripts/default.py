@@ -51,7 +51,6 @@ from orca import (
     flat_review_presenter,
     focus_manager,
     guilabels,
-    input_event,
     input_event_manager,
     learn_mode_presenter,
     live_region_presenter,
@@ -129,7 +128,7 @@ class Script(script.Script):
             (debugging_tools_manager.get_manager, guilabels.KB_GROUP_DEBUGGING_TOOLS),
             (chat_presenter.get_presenter, guilabels.KB_GROUP_CHAT),
             (profile_manager.get_manager, guilabels.GENERAL_PROFILES),
-            (preferences_presenter.get_presenter, guilabels.KB_GROUP_PREFERENCES),
+            (preferences_presenter.get_presenter, guilabels.KB_GROUP_SCREEN_READER_MANAGEMENT),
         ]
         for getter, group_label in builtins:
             loader.register_builtin(getter, group_label)
@@ -152,8 +151,8 @@ class Script(script.Script):
         manager.add_command(
             KeyboardCommand(
                 "shutdownHandler",
-                self.quit_orca,
-                guilabels.KB_GROUP_DEFAULT,
+                orca.quit_orca,
+                guilabels.KB_GROUP_SCREEN_READER_MANAGEMENT,
                 cmdnames.QUIT_ORCA,
             )
         )
@@ -337,22 +336,6 @@ class Script(script.Script):
         """Handles braille panning when the presenter reaches the edge of a line."""
 
         return None
-
-    ########################################################################
-    #                                                                      #
-    # INPUT EVENT HANDLERS (AKA ORCA COMMANDS)                             #
-    #                                                                      #
-    ########################################################################
-
-    def quit_orca(
-        self,
-        _script: Script | None = None,
-        _event: input_event.InputEvent | None = None,
-    ) -> bool:
-        """Quit Orca."""
-
-        orca.shutdown()
-        return True
 
     ########################################################################
     #                                                                      #
