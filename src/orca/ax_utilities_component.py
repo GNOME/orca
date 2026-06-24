@@ -117,7 +117,12 @@ class AXUtilitiesComponent:
         )
 
     @staticmethod
-    def rects_are_on_same_line(rect1: Atspi.Rect, rect2: Atspi.Rect, pixel_delta: int = 5) -> bool:
+    def rects_are_on_same_line(
+        rect1: Atspi.Rect,
+        rect2: Atspi.Rect,
+        pixel_delta: int = 5,
+        inline_flow: bool = False,
+    ) -> bool:
         """Returns True if rect1 and rect2 are on the same horizontal line."""
 
         if AXUtilitiesComponent.is_same_rect(rect1, rect2):
@@ -132,6 +137,12 @@ class AXUtilitiesComponent:
         lowest_top = max(rect1.y, rect2.y)
         if lowest_top >= highest_bottom:
             return False
+
+        # Inline siblings share a baseline, not a midpoint, so allow a height difference.
+        if inline_flow:
+            shorter_height = min(rect1.height, rect2.height)
+            if shorter_height and (highest_bottom - lowest_top) >= shorter_height / 2:
+                return True
 
         rect1_middle = rect1.y + rect1.height / 2
         rect2_middle = rect2.y + rect2.height / 2

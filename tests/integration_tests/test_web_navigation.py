@@ -472,7 +472,7 @@ def test_word_navigation_across_blank_line(web_basic: NativeAppSession) -> None:
     # skipped ahead onto the blank line.
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_RIGHT)
     assert capture(session) == (
-        ["there\n\n"],
+        ["there"],
         [BrailleLine(10, "Hey there", "Hey there", "\x00" * 9)],
     )
 

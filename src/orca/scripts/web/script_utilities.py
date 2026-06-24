@@ -1714,7 +1714,10 @@ class Utilities(script_utilities.Utilities):
             elif AXUtilities.is_subscript_or_superscript_text_descendant(obj, inclusive=True):
                 on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect, rect.height)
             else:
-                on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect)
+                inline_flow = AXObject.get_parent(x_obj) == obj or AXObject.get_parent(obj) == x_obj
+                on_same_line = AXUtilities.rects_are_on_same_line(
+                    rect, x_rect, inline_flow=inline_flow
+                )
 
             return on_same_line
 

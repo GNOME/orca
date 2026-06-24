@@ -36,8 +36,7 @@ if TYPE_CHECKING:
 def _assert_lines_two_through_five(session: NativeAppSession) -> None:
     """Arrows Down through the remaining four lines, checking Orca speaks each separately."""
 
-    # A line that ends in a br carries the trailing newline in its content.
-    for expected in ["Two", "three four\n", "five", "This is a test of orca."]:
+    for expected in ["Two", "three four", "five", "This is a test of orca."]:
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         assert helpers.speech(session) == [expected]
 
@@ -50,7 +49,7 @@ def test_browse_mode_line_navigation(web_line_breaks: NativeAppSession) -> None:
     helpers.reset_web_state(session)
 
     keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
-    assert helpers.speech(session) == ["One\n"]
+    assert helpers.speech(session) == ["One"]
     _assert_lines_two_through_five(session)
 
 

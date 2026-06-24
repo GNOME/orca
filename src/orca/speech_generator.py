@@ -2025,11 +2025,16 @@ class SpeechGenerator(generator.Generator):
                 result.extend(self.voice(string=text, obj=obj))
                 return result
 
+        newline_offset = start_offset + len(text) - 1 if text.endswith("\n") else -1
+
         if content_start is not None and content_end is not None:
             start_offset = content_start
             end_offset = content_end
         else:
             end_offset = start_offset + len(text)
+
+        if start_offset <= newline_offset < end_offset:
+            end_offset = newline_offset
 
         return self._generate_text_with_attribute_changes(
             obj,

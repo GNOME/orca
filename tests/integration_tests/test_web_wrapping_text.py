@@ -78,7 +78,7 @@ def test_line_assembly_layout_mode_on(web_wrapping_text: NativeAppSession) -> No
         ["to wrap onto a second "],
         ["visual line within "],
         ["the block."],
-        ["leaving blockquote. code start", "code line one\n"],
+        ["leaving blockquote. code start", "code line one"],
         ["code line two", "code end"],
         ["Final paragraph after the "],
         ["preformatted block to confirm "],
