@@ -1466,24 +1466,11 @@ EXTENSIONS_REAPPROVE = _("Re-approve")
 # Translators: This is a button label in the Extensions preferences page.
 EXTENSIONS_REVOKE = _("Revoke")
 
-# Translators: This is a label for an enabled/disabled switch in the Extensions
-# preferences page. The string substitution is the extension filename.
-EXTENSIONS_ENABLE_EXTENSION = _("Enable %s")
-
-# Translators: This is a status label in the Extensions preferences page.
-EXTENSIONS_STATUS_APPROVED = _("Approved")
-
-# Translators: This is a status label in the Extensions preferences page.
-EXTENSIONS_STATUS_DISABLED = _("Disabled")
-
 # Translators: This is a status label in the Extensions preferences page.
 EXTENSIONS_STATUS_INVALID = _("Invalid")
 
 # Translators: This is a status label in the Extensions preferences page.
 EXTENSIONS_STATUS_MODIFIED = _("Modified; re-approval required")
-
-# Translators: This is a status label in the Extensions preferences page.
-EXTENSIONS_STATUS_UNAPPROVED = _("Not approved")
 
 # Translators: This is the label for a widget in the preferences dialog.
 DIALOG_SAVE_AS = _("Save _As")

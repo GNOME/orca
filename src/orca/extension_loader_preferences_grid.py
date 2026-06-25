@@ -237,7 +237,6 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _get_detail_text(self, info: extension_loader.UserExtensionInfo) -> str:
         """Returns the secondary row detail text for an extension."""
 
-        status = self._get_status_label(info.status)
         if info.status in (
             extension_loader.UserExtensionStatus.APPROVED,
             extension_loader.UserExtensionStatus.DISABLED,
@@ -247,6 +246,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         if info.group_description:
             return info.group_description
+        status = self._get_status_label(info.status)
         return status
 
     @staticmethod
@@ -265,11 +265,8 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         """Returns the user-visible label for a status."""
 
         labels = {
-            extension_loader.UserExtensionStatus.APPROVED: guilabels.EXTENSIONS_STATUS_APPROVED,
-            extension_loader.UserExtensionStatus.DISABLED: guilabels.EXTENSIONS_STATUS_DISABLED,
             extension_loader.UserExtensionStatus.INVALID: guilabels.EXTENSIONS_STATUS_INVALID,
             extension_loader.UserExtensionStatus.MODIFIED: guilabels.EXTENSIONS_STATUS_MODIFIED,
-            extension_loader.UserExtensionStatus.UNAPPROVED: guilabels.EXTENSIONS_STATUS_UNAPPROVED,
         }
         return labels[status]
 
