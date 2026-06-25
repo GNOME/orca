@@ -41,6 +41,7 @@ from . import (
     dbus_service,
     debug,
     document_presenter,
+    extension_loader,
     focus_manager,
     gsettings_registry,
     guilabels,
@@ -62,7 +63,7 @@ from .acss import ACSS
 from .ax_hypertext import AXHypertext
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities import AXUtilities
-from .extension import Extension
+from .extension import Extension, SpeechOutput, SpeechOutputResult
 from .speechserver import VoiceFamily
 from .text_attribute_manager import TextAttributeChangeMode
 
@@ -1937,19 +1938,119 @@ class SpeechPresenter(Extension):
             return ACSS(acss)
         return ACSS({})
 
-    def _speak_single(self, text: str, acss: ACSS | dict[str, Any] | None) -> None:
+    def _process_speech_output(
+        self,
+        text: str,
+        obj: Atspi.Accessible | None = None,
+    ) -> tuple[str, bool]:
+        """Lets extensions observe, replace, or consume outgoing speech."""
+
+        handlers = extension_loader.get_loader().iter_speech_output_handlers()
+        if not handlers:
+            return text, False
+
+        consumed = False
+        tokens = [
+            "SPEECH OUTPUT HOOK: object:",
+            obj,
+            "text:",
+            text,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        for handler in handlers:
+            tokens = [
+                "SPEECH OUTPUT HOOK: Calling extension:",
+                handler.module_name,
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            output = SpeechOutput(
+                text=text,
+                obj=obj,
+            )
+            try:
+                result = handler.on_speech_output(output)
+            except Exception as error:  # pylint: disable=broad-exception-caught
+                msg = (
+                    f"SPEECH PRESENTER: Extension {handler.module_name} "
+                    f"failed while handling speech output: {error}"
+                )
+                debug.print_message(debug.LEVEL_WARNING, msg, True)
+                continue
+
+            if result is None:
+                tokens = [
+                    "SPEECH OUTPUT HOOK: Extension",
+                    handler.module_name,
+                    "observed without changes.",
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                continue
+            if not isinstance(result, SpeechOutputResult):
+                msg = (
+                    f"SPEECH PRESENTER: Extension {handler.module_name} "
+                    f"returned unexpected speech output result: {result}"
+                )
+                debug.print_message(debug.LEVEL_WARNING, msg, True)
+                continue
+            if result.text is not None:
+                if not isinstance(result.text, str):
+                    msg = (
+                        f"SPEECH PRESENTER: Extension {handler.module_name} "
+                        f"returned non-string speech text: {result.text}"
+                    )
+                    debug.print_message(debug.LEVEL_WARNING, msg, True)
+                    continue
+                tokens = [
+                    "SPEECH OUTPUT HOOK: Extension",
+                    handler.module_name,
+                    "replaced text:",
+                    result.text,
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                text = result.text
+            if result.consume:
+                tokens = [
+                    "SPEECH OUTPUT HOOK: Extension",
+                    handler.module_name,
+                    "consumed output.",
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                consumed = True
+                break
+            tokens = [
+                "SPEECH OUTPUT HOOK: Extension",
+                handler.module_name,
+                "returned without consuming output.",
+            ]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        return text, consumed
+
+    def _speak_single(
+        self,
+        text: str,
+        acss: ACSS | dict[str, Any] | None,
+        obj: Atspi.Accessible | None = None,
+    ) -> None:
         """Speaks an individual string using the given ACSS."""
+
+        resolved_voice = speech_manager.get_manager().apply_voice_set(self._resolve_acss(acss))
+        text, consumed = self._process_speech_output(text, obj)
 
         server = speech_manager.get_manager().get_server()
         if not server:
-            msg = f"SPEECH OUTPUT: '{text}' {acss}"
+            msg = f"SPEECH OUTPUT: '{text}' {resolved_voice}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
+            if consumed:
+                self._record_speech(text, resolved_voice)
+                self.write_to_monitor(text)
             return
 
-        resolved_voice = speech_manager.get_manager().apply_voice_set(self._resolve_acss(acss))
         msg = f"SPEECH OUTPUT: '{text}' {resolved_voice}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
-        server.speak(text, resolved_voice)
+        if not consumed:
+            server.speak(text, resolved_voice)
         self._record_speech(text, resolved_voice)
         self.write_to_monitor(text)
 
@@ -1962,7 +2063,12 @@ class SpeechPresenter(Extension):
             candidate[ACSS.VOICE_TYPE] = voice_type
         return speech_manager.get_manager().apply_voice_set(candidate)
 
-    def _speak_list(self, content: list, acss: ACSS | dict[str, Any] | None) -> None:
+    def _speak_list(
+        self,
+        content: list,
+        acss: ACSS | dict[str, Any] | None,
+        obj: Atspi.Accessible | None,
+    ) -> None:
         """Processes a list of speech content items."""
 
         valid_types = (str, list, speech_generator.Pause, ACSS)
@@ -1980,7 +2086,7 @@ class SpeechPresenter(Extension):
                 msg = f"SPEECH: Bad content sent to speak(): {element}"
                 debug.print_message(debug.LEVEL_INFO, msg, True, True)
             elif isinstance(element, list):
-                self._speak_list(element, acss)
+                self._speak_list(element, acss, obj)
             elif isinstance(element, str):
                 if element.strip(" "):
                     to_speak.append(element)
@@ -1990,7 +2096,11 @@ class SpeechPresenter(Extension):
                 pending_text.extend(to_speak)
                 to_speak = []
                 if pending_text:
-                    self._speak_single(" ".join(pending_text), active_voice)
+                    self._speak_single(
+                        " ".join(pending_text),
+                        active_voice,
+                        obj,
+                    )
                     pending_text = []
             elif isinstance(element, ACSS):
                 new_voice = ACSS(acss)
@@ -2010,7 +2120,11 @@ class SpeechPresenter(Extension):
                         active_voice,
                     ]
                     debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                    self._speak_single(" ".join(pending_text), active_voice)
+                    self._speak_single(
+                        " ".join(pending_text),
+                        active_voice,
+                        obj,
+                    )
                     pending_text = []
                 pending_text.extend(to_speak)
                 to_speak = []
@@ -2018,9 +2132,14 @@ class SpeechPresenter(Extension):
 
         pending_text.extend(to_speak)
         if pending_text:
-            self._speak_single(" ".join(pending_text), active_voice)
+            self._speak_single(" ".join(pending_text), active_voice, obj)
 
-    def _speak(self, content: Any, acss: ACSS | dict[str, Any] | None = None) -> None:
+    def _speak(
+        self,
+        content: Any,
+        acss: ACSS | dict[str, Any] | None = None,
+        obj: Atspi.Accessible | None = None,
+    ) -> None:
         """Speaks the given content, which can be a string or a list from the speech generator."""
 
         if speech_manager.get_manager().get_speech_is_muted():
@@ -2029,7 +2148,7 @@ class SpeechPresenter(Extension):
         if isinstance(content, str):
             msg = f"SPEECH: Speak '{content}' acss: {acss}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            self._speak_single(content, acss)
+            self._speak_single(content, acss, obj)
             return
 
         if isinstance(content, list):
@@ -2037,7 +2156,7 @@ class SpeechPresenter(Extension):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self._begin_monitor_group()
             try:
-                self._speak_list(content, acss)
+                self._speak_list(content, acss, obj)
             finally:
                 self._end_monitor_group()
             return
@@ -2061,14 +2180,15 @@ class SpeechPresenter(Extension):
         event_string = f"{event_string} {locking_state_string}".strip()
         msg = f"SPEECH OUTPUT: '{event_string}' {acss}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
+        text, consumed = self._process_speech_output(event_string)
 
         server = speech_manager.get_manager().get_server()
-        if server:
-            server.speak_key_event(event, acss)
-        if key_name:
-            self.write_key_to_monitor(key_name)
-        else:
-            self.write_key_to_monitor(event.get_key_name())
+        if server and not consumed:
+            if text == event_string:
+                server.speak_key_event(event, acss)
+            else:
+                server.speak(text, acss)
+        self.write_key_to_monitor(text)
 
     def speak_accessible_text(
         self,
@@ -2083,12 +2203,16 @@ class SpeechPresenter(Extension):
             generator = script.get_speech_generator()
             context = self._build_generator_context()
             if utterances := generator.generate_line(obj, start_offset, end_offset, text, context):
-                self._speak(utterances)
+                self._speak(utterances, obj=obj)
                 return
 
         voice = self._get_voice(text, obj)
         text = self.adjust_for_presentation(obj, text, start_offset)
-        self._speak(text, voice[0] if voice else None)
+        self._speak(
+            text,
+            voice[0] if voice else None,
+            obj=obj,
+        )
 
     def speak_message(self, text: str, voice_type: str = speechserver.VoiceType.SYSTEM) -> None:
         """Speaks a message using the given voice type (the system voice by default)."""
@@ -2268,7 +2392,8 @@ class SpeechPresenter(Extension):
         context = self._build_generator_context(reason, prior_obj=prior_obj)
         generator = active_script.get_speech_generator()
         utterances = generator.generate_contents(contents, context)
-        self._speak(utterances)
+        obj = contents[0][0] if contents else None
+        self._speak(utterances, obj=obj)
 
     def present_generated_speech(
         self,
@@ -2285,7 +2410,7 @@ class SpeechPresenter(Extension):
             prior_obj=prior_obj,
         )
         utterances = script.get_speech_generator().generate_speech(obj, context)
-        self._speak(utterances)
+        self._speak(utterances, obj=obj)
 
     def speak_line(
         self,
@@ -2304,7 +2429,7 @@ class SpeechPresenter(Extension):
         context = self._build_generator_context()
         generator = script.get_speech_generator()
         utterances = generator.generate_line(obj, start_offset, end_offset, line, context)
-        self._speak(utterances)
+        self._speak(utterances, obj=obj)
 
     def speak_phrase(
         self,
@@ -2332,7 +2457,7 @@ class SpeechPresenter(Extension):
         context = self._build_generator_context()
         generator = script.get_speech_generator()
         utterances = generator.generate_phrase(obj, start_offset, end_offset, phrase, context)
-        self._speak(utterances)
+        self._speak(utterances, obj=obj)
 
     def speak_word(
         self,
@@ -2344,7 +2469,7 @@ class SpeechPresenter(Extension):
 
         context = self._build_generator_context()
         utterances = script.get_speech_generator().generate_word(obj, offset, context)
-        self._speak(utterances)
+        self._speak(utterances, obj=obj)
 
     def speak_character_at_offset(
         self,
@@ -2398,9 +2523,17 @@ class SpeechPresenter(Extension):
                 resolved_voice = speech_manager.get_manager().apply_voice_set(
                     self._resolve_acss(acss)
                 )
-                self._record_speech(context.utterance, resolved_voice)
-                self.write_to_monitor(context.utterance)
-                yield context, resolved_voice
+                text, consumed = self._process_speech_output(context.utterance, context.obj)
+                output_context = context
+                if text != context.utterance:
+                    output_context = context.copy()
+                    output_context.utterance = text
+                self._record_speech(output_context.utterance, resolved_voice)
+                self.write_to_monitor(output_context.utterance)
+                if consumed:
+                    progress_callback(output_context, speechserver.SayAllContext.COMPLETED)
+                    continue
+                yield output_context, resolved_voice
 
         server = speech_manager.get_manager().get_server()
         if server:
@@ -2433,12 +2566,16 @@ class SpeechPresenter(Extension):
         msg = f"SPEECH OUTPUT: '{character}'"
         tokens = [msg, acss]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        text, consumed = self._process_speech_output(character, obj)
 
         server = speech_manager.get_manager().get_server()
-        if server:
-            server.speak_character(character, acss=acss, cap_style=cap_style)
-        self._record_speech(character, acss)
-        self.write_to_monitor(character)
+        if server and not consumed:
+            if text == character and len(text) == 1:
+                server.speak_character(character, acss=acss, cap_style=cap_style)
+            else:
+                server.speak(text, acss)
+        self._record_speech(text, acss)
+        self.write_to_monitor(text)
 
     def spell_item(
         self,
@@ -2464,7 +2601,11 @@ class SpeechPresenter(Extension):
             language, dialect = self._language_at_offset(obj, start_offset, i)
             voice = self._get_voice(text=character, obj=obj, language=language, dialect=dialect)
             phonetic_string = phonnames.get_phonetic_name(character.lower())
-            self._speak(phonetic_string, voice[0] if voice else None)
+            self._speak(
+                phonetic_string,
+                voice[0] if voice else None,
+                obj=obj,
+            )
 
     @staticmethod
     def _language_at_offset(

@@ -22,12 +22,41 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, ClassVar
+from dataclasses import dataclass
+from typing import TYPE_CHECKING, Any, ClassVar
 
 from . import command_manager, dbus_service, debug
 
 if TYPE_CHECKING:
     from .command import Command
+
+
+@dataclass(frozen=True)
+class SpeechOutput:
+    """Text Orca is about to send to the active speech provider."""
+
+    text: str
+    obj: Any | None = None
+
+
+@dataclass(frozen=True)
+class SpeechOutputResult:
+    """Result returned by an extension speech-output hook."""
+
+    text: str | None = None
+    consume: bool = False
+
+    @classmethod
+    def replace(cls, text: str) -> SpeechOutputResult:
+        """Returns a result that replaces the text Orca will speak."""
+
+        return cls(text=text)
+
+    @classmethod
+    def consume_output(cls) -> SpeechOutputResult:
+        """Returns a result indicating that the extension handled speech output."""
+
+        return cls(consume=True)
 
 
 class Extension:
@@ -88,6 +117,11 @@ class Extension:
         """Override to provide commands for registration."""
 
         return []
+
+    def on_speech_output(self, output: SpeechOutput) -> SpeechOutputResult | None:
+        """Called before Orca sends speech to the active speech provider."""
+
+        return None
 
     @staticmethod
     def _wrap_function(func):

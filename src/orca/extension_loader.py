@@ -47,6 +47,7 @@ class ExtensionLoader:
     def __init__(self) -> None:
         self._builtins: list[tuple[Callable[[], Extension], str]] = []
         self._user_extensions: list[Extension] = []
+        self._speech_output_handlers: list[Extension] = []
 
     @gsettings_registry.get_registry().gsetting(
         key="disabled-extensions",
@@ -194,6 +195,8 @@ class ExtensionLoader:
                 continue
 
             self._user_extensions.append(extension)
+            if self._extension_handles_speech_output(extension):
+                self._speech_output_handlers.append(extension)
             msg = f"EXTENSION LOADER: Loaded extension {extension.module_name} from {filename}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -218,6 +221,22 @@ class ExtensionLoader:
             msg = f"EXTENSION LOADER: Loading user extension {ext.module_name}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             ext.set_up_commands()
+
+    def iter_speech_output_handlers(self) -> list[Extension]:
+        """Returns enabled user extensions that can handle outgoing speech."""
+
+        if not self._speech_output_handlers:
+            return []
+
+        disabled = self.get_disabled_extensions()
+
+        return [ext for ext in self._speech_output_handlers if ext.module_name not in disabled]
+
+    @staticmethod
+    def _extension_handles_speech_output(extension: Extension) -> bool:
+        """Returns True if extension overrides the speech-output hook."""
+
+        return type(extension).on_speech_output is not Extension.on_speech_output
 
     @staticmethod
     def get_class_name(filepath: str) -> str | None:

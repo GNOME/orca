@@ -51,6 +51,7 @@ class TestSpeechPresenter:
 
         additional_modules = [
             "orca.document_presenter",
+            "orca.extension_loader",
             "orca.mathsymbols",
             "orca.object_properties",
             "orca.phonnames",
@@ -134,6 +135,12 @@ class TestSpeechPresenter:
         pron_manager_instance.get_pronunciation = test_context.Mock(side_effect=lambda x: x)
         pron_manager_instance.apply_to_words = test_context.Mock(side_effect="".join)
         pronunciation_dict_mock.get_manager = test_context.Mock(return_value=pron_manager_instance)
+
+        extension_loader_mock = essential_modules["orca.extension_loader"]
+        loader_instance = test_context.Mock()
+        loader_instance.iter_speech_output_handlers = test_context.Mock(return_value=[])
+        extension_loader_mock.get_loader = test_context.Mock(return_value=loader_instance)
+        essential_modules["_extension_loader"] = loader_instance
 
         from orca import gsettings_registry
 
@@ -751,6 +758,7 @@ class TestSpeechPresenter:
         speech_manager_instance.get_voice_set_names = test_context.Mock(return_value=[])
         speech_manager_instance.get_active_voice_set = test_context.Mock(return_value="primary")
         speech_manager_instance.get_voice_properties = test_context.Mock(return_value={})
+        speech_manager_instance.apply_voice_set = test_context.Mock(side_effect=lambda voice: voice)
         mock_server = test_context.Mock()
         speech_manager_instance.get_server = test_context.Mock(return_value=mock_server)
         speech_manager_mock.get_manager = test_context.Mock(return_value=speech_manager_instance)
@@ -764,6 +772,7 @@ class TestSpeechPresenter:
             return_value=[{"family": {"name": "default"}}],
         )
         speech_gen.generate_contents = test_context.Mock(return_value=["generated speech"])
+        speech_gen.generate_speech = test_context.Mock(return_value=["object speech"])
         mock_script.get_speech_generator = test_context.Mock(return_value=speech_gen)
         script_manager_instance = test_context.Mock()
         script_manager_instance.get_active_script = test_context.Mock(return_value=mock_script)
@@ -845,6 +854,72 @@ class TestSpeechPresenter:
 
         essential_modules["_mock_server"].speak.assert_not_called()
 
+    def test_speech_output_hook_replaces_text(self, test_context: OrcaTestContext) -> None:
+        """Test speech output hook can replace text before backend speech."""
+
+        essential_modules = self._setup_speech_output_dependencies(test_context)
+        from orca.extension import SpeechOutputResult
+        from orca.speech_presenter import SpeechPresenter
+
+        handler = test_context.Mock()
+        handler.module_name = "ReverseWords"
+        handler.on_speech_output = test_context.Mock(
+            return_value=SpeechOutputResult.replace("world Hello"),
+        )
+        essential_modules["_extension_loader"].iter_speech_output_handlers.return_value = [handler]
+
+        presenter = SpeechPresenter()
+        presenter.speak_message("Hello world")
+
+        handler.on_speech_output.assert_called_once()
+        output = handler.on_speech_output.call_args.args[0]
+        assert output.text == "Hello world"
+        assert output.obj is None
+        assert essential_modules["_mock_server"].speak.call_args.args[0] == "world Hello"
+
+    def test_speech_output_hook_consumes_text(self, test_context: OrcaTestContext) -> None:
+        """Test speech output hook can consume text instead of using Orca backend speech."""
+
+        essential_modules = self._setup_speech_output_dependencies(test_context)
+        from orca.extension import SpeechOutputResult
+        from orca.speech_presenter import SpeechPresenter
+
+        handler = test_context.Mock()
+        handler.module_name = "ExternalProvider"
+        handler.on_speech_output = test_context.Mock(
+            return_value=SpeechOutputResult.consume_output(),
+        )
+        essential_modules["_extension_loader"].iter_speech_output_handlers.return_value = [handler]
+
+        presenter = SpeechPresenter()
+        presenter.speak_message("Hello world")
+
+        handler.on_speech_output.assert_called_once()
+        essential_modules["_mock_server"].speak.assert_not_called()
+
+    def test_speech_output_hook_exception_falls_back(self, test_context: OrcaTestContext) -> None:
+        """Test speech output hook exceptions do not prevent Orca backend speech."""
+
+        essential_modules = self._setup_speech_output_dependencies(test_context)
+        from orca.speech_presenter import SpeechPresenter
+
+        handler = test_context.Mock()
+        handler.module_name = "BrokenSpeechHook"
+        handler.on_speech_output = test_context.Mock(side_effect=RuntimeError("boom"))
+        essential_modules["_extension_loader"].iter_speech_output_handlers.return_value = [handler]
+
+        presenter = SpeechPresenter()
+        presenter.speak_message("Hello world")
+
+        handler.on_speech_output.assert_called_once()
+        essential_modules["orca.debug"].print_message.assert_any_call(
+            900,
+            "SPEECH PRESENTER: Extension BrokenSpeechHook "
+            "failed while handling speech output: boom",
+            True,
+        )
+        assert essential_modules["_mock_server"].speak.call_args.args[0] == "Hello world"
+
     def test_speak_character(self, test_context: OrcaTestContext) -> None:
         """Test speak_character speaks a single character."""
 
@@ -893,6 +968,28 @@ class TestSpeechPresenter:
         script = script_manager.get_active_script()
         script.get_speech_generator().generate_contents.assert_called_once()
         essential_modules["_mock_server"].speak.assert_called()
+
+    def test_speech_output_hook_gets_first_contents_object(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test content presentation includes the first content accessible object."""
+
+        essential_modules = self._setup_speech_output_dependencies(test_context)
+        from orca.speech_presenter import SpeechPresenter
+
+        handler = test_context.Mock()
+        handler.module_name = "ContentObserver"
+        handler.on_speech_output = test_context.Mock(return_value=None)
+        essential_modules["_extension_loader"].iter_speech_output_handlers.return_value = [handler]
+
+        presenter = SpeechPresenter()
+        obj = test_context.Mock()
+        presenter.speak_contents([(obj, 0, 10, "test text")])
+
+        output = handler.on_speech_output.call_args.args[0]
+        assert output.text == "generated speech"
+        assert output.obj is obj
 
     def test_speak_contents_no_active_script(self, test_context: OrcaTestContext) -> None:
         """Test speak_contents returns early when no active script."""
