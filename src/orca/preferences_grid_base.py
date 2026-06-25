@@ -253,6 +253,16 @@ class PreferenceActionDoc:
 
 
 @dataclass(frozen=True)
+class ListRowAction:
+    """Action button metadata for custom list rows."""
+
+    name: str
+    label: str
+    callback: Callable[[Gtk.Button], None]
+    icon_name: str | None = None
+
+
+@dataclass(frozen=True)
 class PreferenceControlDoc:
     """Documentation metadata for a preference control."""
 
@@ -326,12 +336,23 @@ class FocusManagedListBox(Gtk.ListBox):
     def add_row_with_widget(self, row: Gtk.ListBoxRow, widget: Gtk.Widget) -> None:
         """Add a row with its associated interactive widget."""
 
-        widget.connect("key-press-event", self._on_widget_key_press)
-        row.connect("focus-in-event", self._on_row_focus_in, widget)
+        self.add_row_with_widgets(row, [widget])
+
+    def add_row_with_widgets(self, row: Gtk.ListBoxRow, widgets: Sequence[Gtk.Widget]) -> None:
+        """Add a row with associated interactive widgets."""
+
+        if not widgets:
+            self.add(row)
+            self._rows.append(row)
+            return
+
+        for widget in widgets:
+            widget.connect("key-press-event", self._on_widget_key_press)
+        row.connect("focus-in-event", self._on_row_focus_in, widgets[0])
 
         self.add(row)
         self._rows.append(row)
-        self._widgets.append(widget)
+        self._widgets.extend(widgets)
 
     def get_last_row(self) -> Gtk.ListBoxRow | None:
         """Return the last row that was added, or None if no rows."""
@@ -845,6 +866,56 @@ class PreferencesGridBase(Gtk.Grid):
         )
 
         return row, button, label
+
+    def _create_action_list_row(  # pylint: disable=too-many-arguments,too-many-positional-arguments
+        self,
+        primary_text: str,
+        secondary_text: str,
+        actions: Sequence[ListRowAction] = (),
+        include_top_separator: bool = True,
+        primary_label_size_group: Gtk.SizeGroup | None = None,
+    ) -> tuple[Gtk.ListBoxRow, Gtk.Label, Gtk.Label, dict[str, Gtk.Button]]:
+        """Create a two-label list row with trailing action buttons."""
+
+        row = Gtk.ListBoxRow()
+        row.set_activatable(False)
+
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+
+        if include_top_separator:
+            separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL)
+            vbox.pack_start(separator, False, False, 0)
+
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
+        self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
+
+        primary_label = Gtk.Label(label=primary_text, xalign=0)
+        if primary_label_size_group:
+            primary_label_size_group.add_widget(primary_label)
+        hbox.pack_start(primary_label, False, False, 0)
+
+        secondary_label = Gtk.Label(label=secondary_text, xalign=0)
+        secondary_label.set_hexpand(True)
+        hbox.pack_start(secondary_label, True, True, 0)
+
+        action_buttons: dict[str, Gtk.Button] = {}
+        button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+        for action in actions:
+            if action.icon_name:
+                button = Gtk.Button.new_from_icon_name(action.icon_name, Gtk.IconSize.DND)
+                button.set_relief(Gtk.ReliefStyle.NONE)
+                button.get_accessible().set_name(action.label)
+            else:
+                button = Gtk.Button(label=action.label)
+            button.connect("clicked", action.callback)
+            button_box.pack_start(button, False, False, 0)
+            action_buttons[action.name] = button
+
+        hbox.pack_end(button_box, False, False, 0)
+        vbox.pack_start(hbox, False, False, 0)
+        row.add(vbox)
+
+        return row, primary_label, secondary_label, action_buttons
 
     def _create_labeled_entry_row(
         self,

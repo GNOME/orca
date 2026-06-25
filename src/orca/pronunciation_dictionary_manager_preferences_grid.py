@@ -168,7 +168,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         scrolled_window = self._create_scrolled_window(self._listbox)
         self.attach(scrolled_window, 0, row, 1, 1)
 
-    def _create_two_label_row(  # pylint: disable=too-many-arguments,too-many-positional-arguments,too-many-locals
+    def _create_two_label_row(  # pylint: disable=too-many-arguments,too-many-positional-arguments
         self,
         left_label_text: str,
         right_label_text: str,
@@ -179,57 +179,36 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
     ) -> Gtk.ListBoxRow:
         """Create a single listbox row with two labels and optional edit/delete buttons."""
 
-        row = Gtk.ListBoxRow()
-        row.set_activatable(False)
-
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
-
-        if include_top_separator:
-            separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL)
-            vbox.pack_start(separator, False, False, 0)
-
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        hbox.set_margin_start(12)
-        hbox.set_margin_end(12)
-        hbox.set_margin_top(12)
-        hbox.set_margin_bottom(12)
-
-        left_label = Gtk.Label(label=left_label_text, xalign=0)
-
-        if left_label_size_group:
-            left_label_size_group.add_widget(left_label)
-
-        hbox.pack_start(left_label, False, False, 0)
-
-        right_label = Gtk.Label(label=right_label_text, xalign=0)
-        right_label.set_hexpand(True)
-        hbox.pack_start(right_label, True, True, 0)
-
-        button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
-
-        delete_button = None
+        actions = []
         if delete_handler:
-            delete_button = Gtk.Button.new_from_icon_name("user-trash-symbolic", Gtk.IconSize.DND)
-            delete_button.set_relief(Gtk.ReliefStyle.NONE)
-            delete_button.get_accessible().set_name(guilabels.DICTIONARY_DELETE)
-            delete_button.connect("clicked", delete_handler)
-            button_box.pack_start(delete_button, False, False, 0)
-
-        edit_button = None
+            actions.append(
+                preferences_grid_base.ListRowAction(
+                    "delete",
+                    guilabels.DICTIONARY_DELETE,
+                    delete_handler,
+                    "user-trash-symbolic",
+                )
+            )
         if edit_handler:
-            edit_button = Gtk.Button.new_from_icon_name("document-edit-symbolic", Gtk.IconSize.DND)
-            edit_button.set_relief(Gtk.ReliefStyle.NONE)
-            edit_button.get_accessible().set_name(guilabels.DIALOG_EDIT)
-            edit_button.connect("clicked", edit_handler)
-            button_box.pack_start(edit_button, False, False, 0)
+            actions.append(
+                preferences_grid_base.ListRowAction(
+                    "edit",
+                    guilabels.DIALOG_EDIT,
+                    edit_handler,
+                    "document-edit-symbolic",
+                )
+            )
 
-        hbox.pack_end(button_box, False, False, 0)
+        row, _left_label, _right_label, action_buttons = self._create_action_list_row(
+            left_label_text,
+            right_label_text,
+            actions,
+            include_top_separator=include_top_separator,
+            primary_label_size_group=left_label_size_group,
+        )
 
-        vbox.pack_start(hbox, False, False, 0)
-        row.add(vbox)
-
-        row.delete_button = delete_button
-        row.edit_button = edit_button
+        row.delete_button = action_buttons.get("delete")
+        row.edit_button = action_buttons.get("edit")
 
         return row
 
