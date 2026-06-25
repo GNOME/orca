@@ -27,9 +27,11 @@ import hashlib
 import importlib.util
 import os
 import sys
+from dataclasses import dataclass
+from enum import Enum
 from typing import TYPE_CHECKING
 
-from . import debug, gsettings_registry
+from . import command_manager, debug, gsettings_registry
 from .extension import Extension
 
 if TYPE_CHECKING:
@@ -38,6 +40,36 @@ if TYPE_CHECKING:
 _SCHEMA = "extensions"
 _KEY_DISABLED = "disabled-extensions"
 _KEY_APPROVED = "approved-user-extensions"
+
+
+class UserExtensionStatus(Enum):
+    """Status of a discovered user extension file."""
+
+    INVALID = "invalid"
+    UNAPPROVED = "unapproved"
+    APPROVED = "approved"
+    MODIFIED = "modified"
+    DISABLED = "disabled"
+
+
+@dataclass(frozen=True)
+class UserExtensionInfo:
+    """Non-executing metadata for a user extension file."""
+
+    filename: str
+    filepath: str
+    class_name: str | None
+    group_label: str | None
+    group_description: str
+    file_hash: str
+    approved_hash: str | None
+    status: UserExtensionStatus
+
+    @property
+    def is_approved(self) -> bool:
+        """Returns True if the current file hash is approved."""
+
+        return self.approved_hash == self.file_hash
 
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Extensions", name="extensions")
@@ -123,6 +155,59 @@ class ExtensionLoader:
         approved = dict(self.get_approved_extensions())
         approved.pop(filename, None)
         self.set_approved_extensions(approved)
+
+    def discover_user_extensions(self, extensions_dir: str) -> list[UserExtensionInfo]:
+        """Returns metadata for user extension files without executing them."""
+
+        if not os.path.isdir(extensions_dir):
+            return []
+
+        approved = self.get_approved_extensions()
+        disabled = self.get_disabled_extensions()
+        result: list[UserExtensionInfo] = []
+
+        for filename in sorted(os.listdir(extensions_dir)):
+            if not filename.endswith(".py") or filename.startswith("_"):
+                continue
+
+            filepath = os.path.join(extensions_dir, filename)
+            if not os.path.isfile(filepath):
+                continue
+
+            class_name, group_label, group_description = self.get_metadata(filepath)
+            file_hash = self._compute_hash(filepath)
+            approved_hash = approved.get(filename)
+            status = self._get_user_extension_status(
+                class_name,
+                file_hash,
+                approved_hash,
+                disabled,
+            )
+            result.append(
+                UserExtensionInfo(
+                    filename=filename,
+                    filepath=filepath,
+                    class_name=class_name,
+                    group_label=group_label,
+                    group_description=group_description,
+                    file_hash=file_hash,
+                    approved_hash=approved_hash,
+                    status=status,
+                )
+            )
+
+        return result
+
+    def reload_user_extensions(self, extensions_dir: str) -> None:
+        """Reloads approved user extensions and their Orca-owned integration points."""
+
+        for extension in self._user_extensions:
+            extension.disable()
+        self._user_extensions.clear()
+        self._speech_output_handlers.clear()
+        self.discover_and_load(extensions_dir)
+        self.set_up_user_commands()
+        command_manager.get_manager().activate_commands("reloaded user extensions")
 
     def register_builtin(self, getter: Callable[[], Extension], group_label: str) -> None:
         """Registers a built-in extension with the loader."""
@@ -214,6 +299,13 @@ class ExtensionLoader:
             debug.print_message(debug.LEVEL_INFO, msg, True)
             ext.set_up_commands()
 
+        self.set_up_user_commands()
+
+    def set_up_user_commands(self) -> None:
+        """Calls set_up_commands on all enabled user extensions."""
+
+        disabled = self.get_disabled_extensions()
+
         for ext in self._user_extensions:
             if ext.module_name in disabled:
                 ext.disable()
@@ -239,14 +331,39 @@ class ExtensionLoader:
         return type(extension).on_speech_output is not Extension.on_speech_output
 
     @staticmethod
+    def _get_user_extension_status(
+        class_name: str | None,
+        file_hash: str,
+        approved_hash: str | None,
+        disabled: list[str],
+    ) -> UserExtensionStatus:
+        """Returns the status for a discovered user extension file."""
+
+        if class_name is None:
+            return UserExtensionStatus.INVALID
+        if approved_hash is None:
+            return UserExtensionStatus.UNAPPROVED
+        if approved_hash != file_hash:
+            return UserExtensionStatus.MODIFIED
+        if class_name in disabled:
+            return UserExtensionStatus.DISABLED
+        return UserExtensionStatus.APPROVED
+
+    @staticmethod
     def get_class_name(filepath: str) -> str | None:
         """Returns the Extension subclass name from a file without executing it."""
+
+        return ExtensionLoader.get_metadata(filepath)[0]
+
+    @staticmethod
+    def get_metadata(filepath: str) -> tuple[str | None, str | None, str]:
+        """Returns metadata from an Extension subclass without executing it."""
 
         try:
             with open(filepath, encoding="utf-8") as f:
                 tree = ast.parse(f.read())
         except (OSError, SyntaxError):
-            return None
+            return None, None, ""
 
         for node in ast.walk(tree):
             if not isinstance(node, ast.ClassDef):
@@ -259,7 +376,33 @@ class ExtensionLoader:
                 else:
                     continue
                 if name == "Extension":
-                    return node.name
+                    group_label = ExtensionLoader._get_class_string_constant(node, "GROUP_LABEL")
+                    group_description = (
+                        ExtensionLoader._get_class_string_constant(node, "GROUP_DESCRIPTION") or ""
+                    )
+                    return node.name, group_label, group_description
+
+        return None, None, ""
+
+    @staticmethod
+    def _get_class_string_constant(node: ast.ClassDef, name: str) -> str | None:
+        """Returns a string constant assigned in a class body."""
+
+        for child in node.body:
+            value: ast.expr | None = None
+            if isinstance(child, ast.Assign):
+                if not any(
+                    isinstance(target, ast.Name) and target.id == name for target in child.targets
+                ):
+                    continue
+                value = child.value
+            elif isinstance(child, ast.AnnAssign):
+                if not isinstance(child.target, ast.Name) or child.target.id != name:
+                    continue
+                value = child.value
+
+            if isinstance(value, ast.Constant) and isinstance(value.value, str):
+                return value.value
 
         return None
 

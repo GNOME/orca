@@ -764,6 +764,26 @@ class PreferencesGridBase(Gtk.Grid):
 
         return row, combo, label
 
+    def _create_switch_control(
+        self,
+        changed_handler: Callable[..., None] | None = None,
+        state: bool | None = None,
+        accessible_name: str = "",
+        *handler_args: Any,
+    ) -> Gtk.Switch:
+        """Create a switch with Orca's standard accessibility setup."""
+
+        switch = Gtk.Switch()
+        switch.set_valign(Gtk.Align.CENTER)
+        if state is not None:
+            switch.set_active(state)
+        if accessible_name:
+            switch.get_accessible().set_name(accessible_name)
+        switch.get_accessible().set_role(Atk.Role.SWITCH)
+        if changed_handler is not None:
+            switch.connect("notify::active", changed_handler, *handler_args)
+        return switch
+
     def _create_switch_row(
         self,
         label_text: str,
@@ -773,14 +793,7 @@ class PreferencesGridBase(Gtk.Grid):
     ) -> tuple[Gtk.ListBoxRow, Gtk.Switch, Gtk.Label]:
         """Create a single listbox row with label and switch."""
 
-        switch = Gtk.Switch()
-        switch.set_valign(Gtk.Align.CENTER)
-        switch.set_active(state)
-        switch.connect("notify::active", changed_handler)
-
-        switch_accessible = switch.get_accessible()
-        switch_accessible.set_role(Atk.Role.SWITCH)
-
+        switch = self._create_switch_control(changed_handler, state)
         row, _hbox, label = self._create_row_structure(
             include_top_separator,
             label_text,
@@ -874,8 +887,10 @@ class PreferencesGridBase(Gtk.Grid):
         actions: Sequence[ListRowAction] = (),
         include_top_separator: bool = True,
         primary_label_size_group: Gtk.SizeGroup | None = None,
+        stack_labels: bool = False,
+        detail_text: str = "",
     ) -> tuple[Gtk.ListBoxRow, Gtk.Label, Gtk.Label, dict[str, Gtk.Button]]:
-        """Create a two-label list row with trailing action buttons."""
+        """Create a list row with labels and trailing action buttons."""
 
         row = Gtk.ListBoxRow()
         row.set_activatable(False)
@@ -890,13 +905,19 @@ class PreferencesGridBase(Gtk.Grid):
         self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
 
         primary_label = Gtk.Label(label=primary_text, xalign=0)
-        if primary_label_size_group:
-            primary_label_size_group.add_widget(primary_label)
-        hbox.pack_start(primary_label, False, False, 0)
-
         secondary_label = Gtk.Label(label=secondary_text, xalign=0)
-        secondary_label.set_hexpand(True)
-        hbox.pack_start(secondary_label, True, True, 0)
+        if stack_labels:
+            primary_label.set_hexpand(True)
+            primary_label.set_line_wrap(True)
+            primary_label.set_max_width_chars(60)
+            self._set_stacked_label_text(primary_label, primary_text, secondary_text, detail_text)
+            hbox.pack_start(primary_label, True, True, 0)
+        else:
+            if primary_label_size_group:
+                primary_label_size_group.add_widget(primary_label)
+            hbox.pack_start(primary_label, False, False, 0)
+            secondary_label.set_hexpand(True)
+            hbox.pack_start(secondary_label, True, True, 0)
 
         action_buttons: dict[str, Gtk.Button] = {}
         button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
@@ -916,6 +937,19 @@ class PreferencesGridBase(Gtk.Grid):
         row.add(vbox)
 
         return row, primary_label, secondary_label, action_buttons
+
+    @staticmethod
+    def _set_stacked_label_text(
+        label: Gtk.Label,
+        primary_text: str,
+        secondary_text: str = "",
+        detail_text: str = "",
+    ) -> None:
+        """Set text for a stacked action-row label."""
+
+        lines = [primary_text]
+        lines.extend(text for text in (secondary_text, detail_text) if text)
+        label.set_text("\n".join(lines))
 
     def _create_labeled_entry_row(
         self,
@@ -1684,13 +1718,9 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         label.set_hexpand(True)
         hbox.pack_start(label, True, True, 0)
 
-        switch = Gtk.Switch()
-        switch.set_valign(Gtk.Align.CENTER)
-        switch.connect("notify::active", self._on_value_changed)
+        switch = self._create_switch_control(self._on_value_changed)
         label.set_mnemonic_widget(switch)
 
-        switch_accessible = switch.get_accessible()
-        switch_accessible.set_role(Atk.Role.SWITCH)
         hbox.pack_end(switch, False, False, 0)
 
         row.add(hbox)

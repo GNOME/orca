@@ -4,12 +4,11 @@
 
 This feature is early and experimental. The following are still pending:
 
-- UI for approving, re-approving, enabling, and disabling user extensions
-  (currently done manually via the command line and `dconf`).
 - GSettings support for user extension settings (user extensions cannot yet
   define their own configurable options)
-- Preferences UI for user extensions (built-in extensions have their own pages
-  in the Preferences dialog; user extensions cannot yet provide one)
+- Preferences UI for extension-specific settings (user extensions can be
+  approved, revoked, enabled, and disabled in Orca's Preferences window, but
+  cannot yet provide their own settings pages)
 - Fixing bugs and improving the API based on user feedback.
 
 ## Overview
@@ -26,7 +25,12 @@ directory that contains an `Extension` subclass is a potential extension.
 For security, extensions must be approved before Orca will load them. When Orca
 discovers an unapproved extension, it logs the file's SHA256 hash.
 
-Approval and revocation can be done via the command line:
+Use the User Extensions page in Orca's Preferences window to approve,
+re-approve, or revoke user extensions. The page computes the file's SHA256 hash
+and persists the approval in dconf. This is the recommended way to manage
+approval.
+
+Approval and revocation can also be done via the command line:
 
 ```sh
 # Approve an extension:
@@ -37,23 +41,22 @@ orca --revoke-extension my_extension.py
 ```
 
 These commands compute the file's SHA256 hash and persist the approval in dconf.
-The extension will be loaded on the next Orca startup.
+Extensions approved from the command line will be loaded on the next Orca
+startup.
 
 If you edit an approved extension, its hash changes and Orca will not load it
-until you re-approve it. If you delete an extension file, its approval entry
-remains but has no effect. There is currently no automatic cleanup of stale
-approvals.
+until you re-approve it from the User Extensions preferences page or the command
+line. If you delete an extension file, its approval entry remains but has no
+effect. There is currently no automatic cleanup of stale approvals.
 
 ## Disabling Extensions
 
-Any extension (built-in or user) can be disabled by adding its class name to
-the `disabled-extensions` list. A disabled extension's commands are not
-registered, do not appear in the keybindings list, and cannot be triggered.
-For built-in extensions like `StructuralNavigator` or `CaretNavigator`, this
-effectively removes that functionality from Orca entirely until re-enabled.
+Use the User Extensions page in Orca's Preferences window to enable or disable
+user extensions. This is the recommended way to manage enabled state for user
+extensions.
 
-Until the extension management UI is implemented, disabling is done via `dconf`.
-Note that `dconf write` replaces the entire list:
+User extensions can also be disabled via `dconf`, primarily for testing or
+scripting. Note that `dconf write` replaces the entire list:
 
 ```sh
 # Disable one extension:
@@ -62,21 +65,26 @@ dconf write /org/gnome/orca/default/extensions/disabled-extensions \
 
 # Disable multiple extensions:
 dconf write /org/gnome/orca/default/extensions/disabled-extensions \
-    "['HelloWorld', 'StructuralNavigator']"
+    "['HelloWorld', 'ReverseWords']"
 
 # Re-enable all:
 dconf reset /org/gnome/orca/default/extensions/disabled-extensions
 ```
 
-Disabling a user extension does not revoke its approval. Re-enabling it is just
-a matter of removing it from the disabled list.
+Disabling a user extension does not revoke its approval. Re-enabling a user
+extension is just a matter of removing it from the disabled list.
 
 ## Extension Class Basics
 
 ### Required Class Attributes
 
-- `GROUP_LABEL`: The label used to group this extension's commands in Orca's
-  keybindings list.
+- `GROUP_LABEL`: The user-visible label for this extension. It is also used to
+  group the extension's commands in Orca's keybindings list.
+
+Optional class attributes:
+
+- `GROUP_DESCRIPTION`: A short description shown in Orca's User Extensions
+  preferences page.
 
 ### Command Functions
 
@@ -169,6 +177,7 @@ class HelloWorld(Extension):
     """Example extension with greeting and voice-info commands."""
 
     GROUP_LABEL = "Hello World"
+    GROUP_DESCRIPTION = "Adds greeting and voice-info commands."
 
     def _get_commands(self) -> list[Command]:
         return [
@@ -318,6 +327,7 @@ class ReverseWords(Extension):
     """Reverses word order before Orca sends speech to the synthesizer."""
 
     GROUP_LABEL = "Reverse Words"
+    GROUP_DESCRIPTION = "Reverses spoken word order for testing speech hooks."
 
     @staticmethod
     def _should_ignore_object(obj: Atspi.Accessible | None) -> bool:

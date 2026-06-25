@@ -50,6 +50,7 @@ from . import (
     debug,
     document_presenter,
     event_manager,
+    extension_loader_preferences_grid,
     flat_review_presenter,
     focus_manager,
     gsettings_registry,
@@ -370,6 +371,13 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         self.stack.add_named(self.time_and_date_grid, "time_and_date")
         self._add_navigation_row("time_and_date", self.time_and_date_grid.get_label().get_text())
 
+        if not self._app_name:
+            self.extensions_grid = (
+                extension_loader_preferences_grid.ExtensionLoaderPreferencesGrid()
+            )
+            self.stack.add_named(self.extensions_grid, "extensions")
+            self._add_navigation_row("extensions", self.extensions_grid.get_label().get_text())
+
         registry.set_ignore_runtime(False)
 
         self._page_to_grid: dict[str, preferences_grid_base.PreferencesGridBase] = {
@@ -391,6 +399,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         }
         if not self._app_name:
             self._page_to_grid["sleep_mode"] = self.sleep_mode_grid
+            self._page_to_grid["extensions"] = self.extensions_grid
 
         for grid in self._page_to_grid.values():
             grid.set_focus_sidebar_callback(self._focus_sidebar)

@@ -143,3 +143,109 @@ class TestExtensionLoaderDataclass:
 
         assert loader.iter_speech_output_handlers() == []
         loader.get_disabled_extensions.assert_not_called()
+
+    def test_discover_user_extensions_reports_status_without_loading(
+        self,
+        test_context: OrcaTestContext,
+        tmp_path: Path,
+    ) -> None:
+        """Test extension discovery reports status without executing extension files."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.command_manager", "orca.gsettings_registry"]
+        )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        from orca.extension_loader import ExtensionLoader, UserExtensionStatus
+
+        approved_path = tmp_path / "approved.py"
+        approved_path.write_text(
+            "from orca.extension import Extension\n"
+            "class ApprovedExtension(Extension):\n"
+            '    GROUP_LABEL = "Approved"\n'
+            '    GROUP_DESCRIPTION = "Approved description"\n'
+        )
+        modified_path = tmp_path / "modified.py"
+        modified_path.write_text(
+            "from orca.extension import Extension\n"
+            "class ModifiedExtension(Extension):\n"
+            '    GROUP_LABEL = "Modified"\n'
+        )
+        unapproved_path = tmp_path / "unapproved.py"
+        unapproved_path.write_text(
+            "from orca.extension import Extension\n"
+            "class UnapprovedExtension(Extension):\n"
+            '    GROUP_LABEL = "Unapproved"\n'
+        )
+        invalid_path = tmp_path / "invalid.py"
+        invalid_path.write_text("print('not an extension')\n")
+
+        loader = ExtensionLoader()
+        loader.get_approved_extensions = test_context.Mock(
+            return_value={
+                "approved.py": loader._compute_hash(str(approved_path)),
+                "modified.py": "old-hash",
+            }
+        )
+        loader.get_disabled_extensions = test_context.Mock(return_value=["ApprovedExtension"])
+
+        infos = {info.filename: info for info in loader.discover_user_extensions(str(tmp_path))}
+
+        assert infos["approved.py"].class_name == "ApprovedExtension"
+        assert infos["approved.py"].group_label == "Approved"
+        assert infos["approved.py"].group_description == "Approved description"
+        assert infos["approved.py"].status is UserExtensionStatus.DISABLED
+        assert infos["modified.py"].group_label == "Modified"
+        assert infos["unapproved.py"].group_label == "Unapproved"
+        assert infos["modified.py"].status is UserExtensionStatus.MODIFIED
+        assert infos["unapproved.py"].status is UserExtensionStatus.UNAPPROVED
+        assert infos["invalid.py"].status is UserExtensionStatus.INVALID
+        assert "orca_user_extension.approved" not in sys.modules
+
+    def test_reload_user_extensions_unloads_old_extensions_and_sets_up_new_ones(
+        self,
+        test_context: OrcaTestContext,
+        tmp_path: Path,
+    ) -> None:
+        """Test reload clears stale user extensions and installs current ones."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.command_manager", "orca.gsettings_registry"]
+        )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        from orca.extension import Extension
+        from orca.extension_loader import ExtensionLoader
+
+        class OldExtension(Extension):
+            GROUP_LABEL = "Old"
+
+        ext_path = tmp_path / "new.py"
+        ext_path.write_text(
+            "from orca.extension import Extension\n"
+            "class NewExtension(Extension):\n"
+            '    GROUP_LABEL = "New"\n'
+        )
+
+        loader = ExtensionLoader()
+        old = OldExtension()
+        old.disable = test_context.Mock()
+        loader._user_extensions = [old]
+        loader._speech_output_handlers = [old]
+        loader.get_approved_extensions = test_context.Mock(
+            return_value={"new.py": loader._compute_hash(str(ext_path))}
+        )
+        loader.get_disabled_extensions = test_context.Mock(return_value=[])
+        command_manager = essential_modules["orca.command_manager"].get_manager.return_value
+
+        try:
+            loader.reload_user_extensions(str(tmp_path))
+        finally:
+            sys.modules.pop("orca_user_extension.new", None)
+
+        old.disable.assert_called_once()
+        assert [extension.module_name for extension in loader._user_extensions] == ["NewExtension"]
+        assert loader._speech_output_handlers == []
+        command_manager.activate_commands.assert_called_once_with("reloaded user extensions")

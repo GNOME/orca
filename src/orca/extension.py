@@ -63,11 +63,13 @@ class Extension:
     """Base class for Orca extensions."""
 
     GROUP_LABEL: ClassVar[str]
+    GROUP_DESCRIPTION: ClassVar[str] = ""
 
     def __init__(self) -> None:
         self._commands_initialized: bool = False
         self._is_user_extension: bool = False
         self._disabled: bool = False
+        self._registered_command_names: list[str] = []
         self.module_name: str = type(self).__name__
         self.controller = dbus_service.get_remote_controller()
         msg = f"EXTENSION: {self.module_name} Registering D-Bus commands."
@@ -80,6 +82,12 @@ class Extension:
         self._disabled = True
         msg = f"EXTENSION: {self.module_name} has been disabled."
         debug.print_message(debug.LEVEL_INFO, msg, True)
+        manager = command_manager.get_manager()
+        manager.remove_commands(
+            self._registered_command_names,
+            f"disabled extension {self.module_name}",
+        )
+        self._registered_command_names.clear()
         self.controller.deregister_module_commands(self.module_name)
 
     def set_up_commands(self) -> None:
@@ -104,6 +112,7 @@ class Extension:
             if self._is_user_extension:
                 cmd.set_function(self._wrap_function(cmd.get_function()))
             manager.add_command(cmd)
+            self._registered_command_names.append(cmd.get_name())
 
         msg = f"EXTENSION: {self.module_name} {len(commands)} command(s) registered."
         debug.print_message(debug.LEVEL_INFO, msg, True)

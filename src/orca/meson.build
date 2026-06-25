@@ -116,6 +116,7 @@ lib_sources = [
   'event_manager.py',
   'extension.py',
   'extension_loader.py',
+  'extension_loader_preferences_grid.py',
   'flat_review.py',
   'flat_review_finder.py',
   'flat_review_finder_command_definitions.py',

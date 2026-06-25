@@ -480,11 +480,33 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             self._braille_commands[command.get_name()] = command
 
     def remove_command(self, command_name: str) -> None:
-        """Removes a keyboard command from the registry and its key indexes."""
+        """Removes a command from the registry and key indexes."""
 
         command = self._keyboard_commands.pop(command_name, None)
         if command is not None:
             self._remove_from_key_index(command)
+            return
+
+        self._braille_commands.pop(command_name, None)
+
+    def remove_commands(self, command_names: list[str], reason: str = "") -> None:
+        """Removes commands from the registry and updates grabs."""
+
+        if not command_names:
+            return
+
+        old_bindings = self._get_active_bindings(self._keyboard_commands)
+        old_key_to_cmd = self._get_key_to_cmd_mapping(self._keyboard_commands)
+
+        for command_name in command_names:
+            self.remove_command(command_name)
+
+        self._diff_and_update_grabs(
+            self._keyboard_commands,
+            reason,
+            old_bindings,
+            old_key_to_cmd,
+        )
 
     def get_command(self, command_name: str) -> Command | None:
         """Returns the command with the specified name, or None."""
