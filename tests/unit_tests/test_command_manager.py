@@ -500,6 +500,92 @@ class TestCommandManager:
         assert not manager.get_all_keyboard_commands()
         assert not manager.get_all_braille_commands()
 
+    def test_set_modal_handler_refuses_user_extension_replacing_active_handler(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test a user extension cannot replace another active modal handler."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import CommandManager
+
+        manager = CommandManager()
+        first_handler = test_context.Mock()
+        second_handler = test_context.Mock()
+        manager.register_user_extension(first_handler)
+        manager.register_user_extension(second_handler)
+
+        assert manager.set_modal_handler(first_handler) is True
+        assert manager.get_modal_handler() is first_handler
+        assert manager.set_modal_handler(first_handler) is True
+        assert manager.get_modal_handler() is first_handler
+        assert manager.set_modal_handler(second_handler) is False
+        assert manager.get_modal_handler() is first_handler
+        assert manager.clear_modal_handler(first_handler) is True
+        assert manager.get_modal_handler() is None
+        assert manager.set_modal_handler(second_handler) is True
+        assert manager.get_modal_handler() is second_handler
+
+    def test_clear_modal_handler_refuses_to_clear_handler_owned_by_another_handler(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test a modal handler cannot clear another handler's modal state."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import CommandManager
+
+        manager = CommandManager()
+        first_handler = test_context.Mock()
+        second_handler = test_context.Mock()
+        manager.register_user_extension(first_handler)
+        manager.register_user_extension(second_handler)
+
+        assert manager.set_modal_handler(first_handler) is True
+        assert manager.get_modal_handler() is first_handler
+        assert manager.clear_modal_handler(second_handler) is False
+        assert manager.get_modal_handler() is first_handler
+        assert manager.clear_modal_handler(first_handler) is True
+        assert manager.get_modal_handler() is None
+
+    def test_set_modal_handler_allows_orca_handler_to_replace_user_extension(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test an Orca modal handler can replace a user extension modal handler."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import CommandManager
+
+        manager = CommandManager()
+        user_extension_handler = test_context.Mock()
+        orca_handler = test_context.Mock()
+        manager.register_user_extension(user_extension_handler)
+
+        assert manager.set_modal_handler(user_extension_handler) is True
+        assert manager.get_modal_handler() is user_extension_handler
+        assert manager.set_modal_handler(orca_handler) is True
+        assert manager.get_modal_handler() is orca_handler
+
+    def test_set_modal_handler_refuses_user_extension_replacing_orca_handler(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test a user extension modal handler cannot replace an Orca modal handler."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import CommandManager
+
+        manager = CommandManager()
+        orca_handler = test_context.Mock()
+        user_extension_handler = test_context.Mock()
+        manager.register_user_extension(user_extension_handler)
+
+        assert manager.set_modal_handler(orca_handler) is True
+        assert manager.get_modal_handler() is orca_handler
+        assert manager.set_modal_handler(user_extension_handler) is False
+        assert manager.get_modal_handler() is orca_handler
+
     def test_add_and_get_keyboard_command(self, test_context: OrcaTestContext) -> None:
         """Test CommandManager.add_command and get_keyboard_command."""
 

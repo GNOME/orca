@@ -31,6 +31,7 @@ from __future__ import annotations
 
 import contextlib
 import time
+import weakref
 from enum import Enum
 from typing import TYPE_CHECKING, Protocol
 
@@ -124,6 +125,7 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         self._exclusive_groups: list[set[str]] = []
         self._numlock_on: bool = False
         self._modal_handler: ModalInputHandler | None = None
+        self._user_extensions: weakref.WeakSet[object] = weakref.WeakSet()
         self._prior_suspended: set[str] = set()
 
         msg = "COMMAND MANAGER: Registering D-Bus commands."
@@ -333,15 +335,56 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
 
         return True
 
-    def set_modal_handler(self, handler: ModalInputHandler | None) -> None:
-        """Sets the handler that gets first refusal on keys while a modal feature is active."""
+    def set_modal_handler(self, handler: ModalInputHandler) -> bool:
+        """Sets the modal handler. Returns True if the request was accepted."""
+
+        if not self._can_replace_modal_handler(handler):
+            msg = "COMMAND MANAGER: Refusing to replace active modal handler."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
 
         self._modal_handler = handler
-        msg = f"COMMAND MANAGER: Modal handler is now {'set' if handler else 'cleared'}."
+        msg = "COMMAND MANAGER: Modal handler is now set."
         debug.print_message(debug.LEVEL_INFO, msg, True)
+        return True
 
-        if handler is None and self._is_desktop:
+    def clear_modal_handler(self, handler: ModalInputHandler) -> bool:
+        """Clears the modal handler if handler owns it."""
+
+        if self._modal_handler is not handler:
+            msg = "COMMAND MANAGER: Refusing to clear modal handler owned by another handler."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        self._modal_handler = None
+        msg = "COMMAND MANAGER: Modal handler is now cleared."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        if self._is_desktop:
             self._update_numlock_grabs()
+        return True
+
+    def _can_replace_modal_handler(self, handler: ModalInputHandler) -> bool:
+        """Returns True if the requested modal handler change is allowed."""
+
+        if self._modal_handler is None:
+            return True
+
+        if self._modal_handler is handler:
+            return True
+
+        active_handler_is_user_extension = self._is_user_extension_handler(self._modal_handler)
+        new_handler_is_user_extension = self._is_user_extension_handler(handler)
+        return active_handler_is_user_extension and not new_handler_is_user_extension
+
+    def register_user_extension(self, extension: object) -> None:
+        """Records extension as a user-provided extension."""
+
+        self._user_extensions.add(extension)
+
+    def _is_user_extension_handler(self, handler: ModalInputHandler) -> bool:
+        """Returns True if handler belongs to a user extension."""
+
+        return handler in self._user_extensions
 
     def get_modal_handler(self) -> ModalInputHandler | None:
         """Returns the active modal key handler, if any."""

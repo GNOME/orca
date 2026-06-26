@@ -110,7 +110,7 @@ class LearnModePresenter(Extension):
         msg = "LEARN MODE PRESENTER: Is now inactive"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         self._is_active = False
-        command_manager.get_manager().set_modal_handler(None)
+        command_manager.get_manager().clear_modal_handler(self)
         return True
 
     def will_handle_event(  # pylint: disable=unused-argument

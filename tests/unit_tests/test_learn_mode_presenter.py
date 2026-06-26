@@ -361,7 +361,7 @@ class TestLearnModePresenter:
         device_manager = essential_modules["orca.ax_device_manager"].get_manager.return_value
         device_manager.ungrab_keyboard.assert_called_with("Exiting learn mode")
         cmd_manager = essential_modules["orca.command_manager"].get_manager.return_value
-        cmd_manager.set_modal_handler.assert_called_with(None)
+        cmd_manager.clear_modal_handler.assert_called_with(presenter)
 
     @pytest.mark.parametrize(
         "is_active,script_provided,script_manager_returns_none,expected_debug_called",

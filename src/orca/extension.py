@@ -217,6 +217,7 @@ class Extension:
         """Marks this extension as user-provided so commands get wrapped."""
 
         self._is_user_extension = True
+        command_manager.get_manager().register_user_extension(self)
         if settings_namespace is not None:
             self.settings.set_namespace(settings_namespace)
 
