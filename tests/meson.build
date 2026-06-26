@@ -17,6 +17,7 @@ unit_tests = [
   'unit_tests/test_ax_collection.py',
   'unit_tests/test_ax_component.py',
   'unit_tests/test_ax_document.py',
+  'unit_tests/test_ax_device_manager.py',
   'unit_tests/test_ax_event_synthesizer.py',
   'unit_tests/test_ax_hypertext.py',
   'unit_tests/test_ax_object.py',

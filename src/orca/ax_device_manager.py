@@ -25,6 +25,8 @@
 
 from __future__ import annotations
 
+import inspect
+import os
 from typing import TYPE_CHECKING, Any
 
 import gi
@@ -52,11 +54,17 @@ class AXDeviceManager:
     def activate(self) -> None:
         """Called when this device manager is activated."""
 
+        if not self._called_from_orca_code("activate"):
+            return
+
         if self._device is None:
             self._device = Atspi.Device.new_full("org.gnome.Orca")
 
     def deactivate(self) -> None:
         """Called when this device manager is deactivated."""
+
+        if not self._called_from_orca_code("deactivate"):
+            return
 
         self._device = None
 
@@ -65,8 +73,11 @@ class AXDeviceManager:
 
         return self._device is not None
 
-    def get_device(self) -> Atspi.Device:
+    def get_device(self) -> Atspi.Device | None:
         """Returns the AT-SPI device."""
+
+        if not self._called_from_orca_code("get_device"):
+            return None
 
         return self._device
 
@@ -77,6 +88,9 @@ class AXDeviceManager:
         legacy_callback: Callable[..., Any],
     ) -> None:
         """Connects key event handlers to the device."""
+
+        if not self._called_from_orca_code("start_key_watcher"):
+            return
 
         msg = "AXDeviceManager: Starting key watcher."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -96,6 +110,9 @@ class AXDeviceManager:
     def stop_key_watcher(self) -> None:
         """Disconnects key event handlers from the device."""
 
+        if not self._called_from_orca_code("stop_key_watcher"):
+            return
+
         msg = "AXDeviceManager: Stopping key watcher."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -111,6 +128,9 @@ class AXDeviceManager:
 
     def enable_pointer_monitoring(self) -> bool:
         """Enables pointer monitoring on the device. Returns True on success."""
+
+        if not self._called_from_orca_code("enable_pointer_monitoring"):
+            return False
 
         if self._device is None:
             return False
@@ -130,6 +150,9 @@ class AXDeviceManager:
     def start_pointer_watcher(self, on_pointer_moved: Callable[..., Any]) -> None:
         """Connects a pointer-moved signal handler to the device."""
 
+        if not self._called_from_orca_code("start_pointer_watcher"):
+            return
+
         if self._device is None:
             return
 
@@ -141,6 +164,9 @@ class AXDeviceManager:
     def stop_pointer_watcher(self) -> None:
         """Disconnects the pointer-moved signal handler from the device."""
 
+        if not self._called_from_orca_code("stop_pointer_watcher"):
+            return
+
         if self._device is None or self._pointer_moved_id == 0:
             return
 
@@ -149,6 +175,9 @@ class AXDeviceManager:
 
     def add_grab_for_modifier(self, modifier: str, keysym: int, keycode: int) -> int:
         """Adds a key grab for a modifier key, returns the grab ID."""
+
+        if not self._called_from_orca_code("add_grab_for_modifier"):
+            return 0
 
         kd = Atspi.KeyDefinition()
         kd.keysym = keysym
@@ -163,12 +192,18 @@ class AXDeviceManager:
     def remove_grab_for_modifier(self, modifier: str, grab_id: int) -> None:
         """Removes a key grab for a modifier key."""
 
+        if not self._called_from_orca_code("remove_grab_for_modifier"):
+            return
+
         self.remove_key_grab(grab_id)
         msg = f"AXDeviceManager: Grab id removed for {modifier}: {grab_id}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
     def add_key_grab(self, key_definition: Atspi.KeyDefinition, callback: object = None) -> int:
         """Adds a key grab, returns the grab ID or 0 on failure."""
+
+        if not self._called_from_orca_code("add_key_grab"):
+            return 0
 
         if self._device is None:
             return 0
@@ -183,6 +218,9 @@ class AXDeviceManager:
     def remove_key_grab(self, grab_id: int) -> None:
         """Removes a key grab."""
 
+        if not self._called_from_orca_code("remove_key_grab"):
+            return
+
         if self._device is None:
             return
 
@@ -194,6 +232,9 @@ class AXDeviceManager:
 
     def grab_keyboard(self, reason: str = "") -> None:
         """Grabs the entire keyboard."""
+
+        if not self._called_from_orca_code("grab_keyboard"):
+            return
 
         msg = "AXDeviceManager: Grabbing keyboard"
         if reason:
@@ -212,6 +253,9 @@ class AXDeviceManager:
     def ungrab_keyboard(self, reason: str = "") -> None:
         """Releases the keyboard grab."""
 
+        if not self._called_from_orca_code("ungrab_keyboard"):
+            return
+
         msg = "AXDeviceManager: Ungrabbing keyboard"
         if reason:
             msg += f": {reason}"
@@ -226,8 +270,39 @@ class AXDeviceManager:
             msg = f"AXDeviceManager: Exception in ungrab_keyboard: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
+    @staticmethod
+    def _called_from_orca_code(method_name: str) -> bool:
+        """Returns True if the first non-device-manager caller is Orca package code."""
+
+        this_file = os.path.realpath(__file__)
+        orca_dir = os.path.dirname(this_file)
+        for frame_info in inspect.stack()[2:]:
+            filename = frame_info.filename
+            if not filename:
+                continue
+            filepath = os.path.realpath(filename)
+            if filepath == this_file:
+                continue
+
+            try:
+                is_orca_code = os.path.commonpath([orca_dir, filepath]) == orca_dir
+            except ValueError:
+                is_orca_code = False
+
+            if not is_orca_code:
+                msg = f"AXDeviceManager: Refusing {method_name} call from outside Orca: {filepath}"
+                debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return is_orca_code
+
+        msg = f"AXDeviceManager: Refusing {method_name} call with no Orca caller"
+        debug.print_message(debug.LEVEL_WARNING, msg, True)
+        return False
+
     def map_keysym_to_modifier(self, keysym: int) -> int:
         """Maps keysym as a modifier, returns the mapped modifier or 0 on failure."""
+
+        if not self._called_from_orca_code("map_keysym_to_modifier"):
+            return 0
 
         if self._device is None:
             return 0
@@ -263,6 +338,9 @@ class AXDeviceManager:
     def unmap_all_modifiers(self) -> None:
         """Unmaps all previously mapped modifiers."""
 
+        if not self._called_from_orca_code("unmap_all_modifiers"):
+            return
+
         if self._device is not None:
             for keycode in self._mapped_keycodes:
                 self._unmap_modifier(keycode)
@@ -274,6 +352,9 @@ class AXDeviceManager:
 
     def generate_mouse_event(self, obj: Atspi.Accessible, x: int, y: int, event: str) -> bool:
         """Generates a mouse event at the given coordinates on obj."""
+
+        if not self._called_from_orca_code("generate_mouse_event"):
+            return False
 
         if self._device is None:
             return False
@@ -288,6 +369,9 @@ class AXDeviceManager:
 
     def get_locked_modifiers(self) -> int:
         """Returns a bitmask of locked modifiers, or 0 if unavailable."""
+
+        if not self._called_from_orca_code("get_locked_modifiers"):
+            return 0
 
         # Requires at-spi2-core >= 2.59.0. Earlier versions always return 0.
 
