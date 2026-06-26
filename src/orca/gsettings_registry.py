@@ -77,6 +77,7 @@ class LookupCacheKey(NamedTuple):
 
     schema: str
     key: str
+    sub_path: str
     voice_type: str
     app_name: str
     profile: str
@@ -177,6 +178,7 @@ class GSettingsRegistry:
         genum: str | None = None,
         voice_type: str | None = None,
         app_name: str | None = None,
+        sub_path: str = "",
         *,
         default: Any,
     ) -> Any: ...
@@ -190,6 +192,7 @@ class GSettingsRegistry:
         genum: str | None = None,
         voice_type: str | None = None,
         app_name: str | None = None,
+        sub_path: str = "",
     ) -> Any | None: ...
 
     def layered_lookup(
@@ -200,6 +203,7 @@ class GSettingsRegistry:
         genum: str | None = None,
         voice_type: str | None = None,
         app_name: str | None = None,
+        sub_path: str = "",
         default: Any = _NOT_SET,
     ) -> Any | None:
         """Returns a setting value via layered GSettings lookup, default, or None."""
@@ -209,6 +213,7 @@ class GSettingsRegistry:
         cache_key = LookupCacheKey(
             schema,
             key,
+            sub_path,
             voice_type or "",
             effective_app,
             profile,
@@ -222,13 +227,13 @@ class GSettingsRegistry:
 
         handle = self._get_handle(schema)
 
-        sub_path = ""
-        if handle is not None and schema == "voice":
-            sub_path = self.voice_set_sub_path(voice_type or "default")
+        lookup_sub_path = sub_path
+        if handle is not None and schema == "voice" and not lookup_sub_path:
+            lookup_sub_path = self.voice_set_sub_path(voice_type or "default")
 
         # For explicit app lookups, check app dconf before runtime overrides.
         if app_name and handle is not None:
-            gs = handle.get_for_app(app_name, self.get_active_profile(), sub_path)
+            gs = handle.get_for_app(app_name, self.get_active_profile(), lookup_sub_path)
             if gs is not None and gs.get_user_value(key) is not None:
                 extractors: dict[str, Callable[..., Any]] = {
                     "b": gs.get_boolean,
@@ -263,11 +268,12 @@ class GSettingsRegistry:
             "as": handle.get_strv,
             "a{ss}": handle.get_dict,
             "a{saas}": handle.get_dict,
+            "a{sv}": handle.get_dict,
         }
         accessor = accessors.get("s" if genum else gtype)
         # For explicit app lookups, skip the app layer (already checked above).
         effective_app_arg = "" if app_name else None
-        result = accessor(key, sub_path, effective_app_arg) if accessor is not None else None
+        result = accessor(key, lookup_sub_path, effective_app_arg) if accessor is not None else None
         if result is not None:
             self._cache.set_value(cache_key, result)
             return result
@@ -365,15 +371,51 @@ class GSettingsRegistry:
         self._runtime_values.clear()
         self.clear_value_cache()
 
-    def set_dict(self, schema: str, key: str, gtype: str, value: dict) -> bool:
+    def set_dict(
+        self,
+        schema: str,
+        key: str,
+        gtype: str,
+        value: dict,
+        sub_path: str = "",
+    ) -> bool:
         """Sets a dict value in dconf for the current profile."""
 
-        gs = self.get_settings(schema, self._profile)
+        gs = self.get_settings(schema, self._profile, sub_path)
         if gs is None:
             return False
+        if gtype == "a{sv}":
+            value = self._variant_dict(value)
         gs.set_value(key, GLib.Variant(gtype, value))
         self.clear_value_cache()
         return True
+
+    @staticmethod
+    def _variant_for_value(value: Any) -> GLib.Variant:
+        """Returns a GLib.Variant for supported extension-setting values."""
+
+        if isinstance(value, bool):
+            return GLib.Variant("b", value)
+        if isinstance(value, int):
+            return GLib.Variant("i", value)
+        if isinstance(value, float):
+            return GLib.Variant("d", value)
+        if isinstance(value, str):
+            return GLib.Variant("s", value)
+        if isinstance(value, list) and all(isinstance(item, str) for item in value):
+            return GLib.Variant("as", value)
+        if isinstance(value, dict) and all(
+            isinstance(key, str) and not isinstance(item, (list, dict))
+            for key, item in value.items()
+        ):
+            return GLib.Variant("a{sv}", GSettingsRegistry._variant_dict(value))
+        raise TypeError(f"Unsupported GSettings variant value: {value!r}")
+
+    @classmethod
+    def _variant_dict(cls, value: dict[str, Any]) -> dict[str, GLib.Variant]:
+        """Returns a dict suitable for constructing an a{sv} GLib.Variant."""
+
+        return {key: cls._variant_for_value(item) for key, item in value.items()}
 
     def set_strv(self, schema: str, key: str, value: list[str]) -> bool:
         """Sets a string list in dconf for the current profile."""
@@ -579,6 +621,7 @@ class GSettingsRegistry:
             "i": gs.set_int,
             "d": gs.set_double,
             "as": gs.set_strv,
+            "a{sv}": lambda k, v: gs.set_value(k, GLib.Variant("a{sv}", self._variant_dict(v))),
         }
         readers: dict[str, Callable[..., Any]] = {
             "b": gs.get_boolean,
@@ -586,6 +629,7 @@ class GSettingsRegistry:
             "i": gs.get_int,
             "d": gs.get_double,
             "as": gs.get_strv,
+            "a{sv}": lambda k: gs.get_value(k).unpack(),
         }
         global_readers: dict[str, Callable[..., Any]] = {}
         if global_gs is not None:
@@ -595,6 +639,7 @@ class GSettingsRegistry:
                 "i": global_gs.get_int,
                 "d": global_gs.get_double,
                 "as": global_gs.get_strv,
+                "a{sv}": lambda k: global_gs.get_value(k).unpack(),
             }
 
         for key, value in settings.items():

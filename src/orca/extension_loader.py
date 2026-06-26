@@ -40,6 +40,7 @@ if TYPE_CHECKING:
 _SCHEMA = "extensions"
 _KEY_DISABLED = "disabled-extensions"
 _KEY_APPROVED = "approved-user-extensions"
+_KEY_SETTINGS = "settings"
 
 
 class UserExtensionStatus(Enum):
@@ -132,6 +133,23 @@ class ExtensionLoader:
             _KEY_APPROVED,
             "a{ss}",
             value,
+        )
+
+    @gsettings_registry.get_registry().gsetting(
+        key="settings",
+        schema="extensions",
+        gtype="a{sv}",
+        default={},
+        summary="Settings for a user extension",
+    )
+    def get_user_extension_settings(self) -> dict:
+        """Returns settings for the extensions root path."""
+
+        return gsettings_registry.get_registry().layered_lookup(
+            _SCHEMA,
+            _KEY_SETTINGS,
+            "a{sv}",
+            default={},
         )
 
     def approve_extension(self, filename: str, sha256_hash: str) -> None:
@@ -444,7 +462,8 @@ class ExtensionLoader:
             if isinstance(obj, type) and issubclass(obj, Extension) and obj is not Extension:
                 try:
                     instance = obj()
-                    instance.mark_as_user_extension()
+                    namespace = os.path.splitext(filename)[0]
+                    instance.mark_as_user_extension(namespace)
                     return instance
                 except Exception as error:  # pylint: disable=broad-exception-caught
                     msg = (

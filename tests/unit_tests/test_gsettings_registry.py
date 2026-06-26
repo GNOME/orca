@@ -305,6 +305,67 @@ class TestGsettingDecorator:
 
 
 @pytest.mark.unit
+class TestVariantDict:
+    """Tests for a{sv} value encoding."""
+
+    def _setup(self, test_context: OrcaTestContext):
+        """Set up dependencies."""
+
+        additional_modules = [
+            "orca.cmdnames",
+            "orca.messages",
+            "orca.object_properties",
+            "orca.orca_gui_navlist",
+            "orca.orca_i18n",
+            "orca.AXHypertext",
+            "orca.AXObject",
+            "orca.AXTable",
+            "orca.AXText",
+            "orca.AXUtilities",
+            "orca.input_event",
+        ]
+        test_context.setup_shared_dependencies(additional_modules)
+
+    def test_variant_dict_encodes_supported_values(self, test_context: OrcaTestContext) -> None:
+        """Test supported Python values are wrapped as GLib variants."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        result = GSettingsRegistry._variant_dict(
+            {
+                "enabled": True,
+                "count": 3,
+                "scale": 1.5,
+                "name": "orca",
+                "items": ["one", "two"],
+                "details": {"enabled": True, "count": 3, "scale": 1.5, "name": "orca"},
+            }
+        )
+
+        assert {key: value.unpack() for key, value in result.items()} == {
+            "enabled": True,
+            "count": 3,
+            "scale": 1.5,
+            "name": "orca",
+            "items": ["one", "two"],
+            "details": {"enabled": True, "count": 3, "scale": 1.5, "name": "orca"},
+        }
+
+    def test_variant_dict_rejects_unsupported_values(self, test_context: OrcaTestContext) -> None:
+        """Test unsupported values raise TypeError."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry
+
+        with pytest.raises(TypeError):
+            GSettingsRegistry._variant_dict({"bad-list": {"value": ["one"]}})
+
+        with pytest.raises(TypeError):
+            GSettingsRegistry._variant_dict({"bad-key": {1: "one"}})
+
+
+@pytest.mark.unit
 class TestGSettingsSchemaHandle:
     """Tests for GSettingsSchemaHandle."""
 
@@ -1297,6 +1358,36 @@ class TestLayeredLookup:
 
         registry.clear_value_cache()
         assert registry.layered_lookup("speech", "enabled", "b") is False
+
+    def test_lookup_cache_includes_sub_path(self, test_context: OrcaTestContext) -> None:
+        """Test layered_lookup keeps relocatable subpaths separate in the cache."""
+
+        self._setup(test_context)
+        from orca.gsettings_registry import GSettingsRegistry, GSettingsSchemaHandle
+
+        registry = GSettingsRegistry()
+        registry._schemas["extensions"] = "org.gnome.Orca.Extensions"
+
+        mock_handle = test_context.Mock(spec=GSettingsSchemaHandle)
+        mock_handle.get_dict.side_effect = [{"scope": "messages"}, {"scope": "objects"}]
+        registry._handles["extensions"] = mock_handle
+
+        assert registry.layered_lookup(
+            "extensions",
+            "settings",
+            "a{sv}",
+            sub_path="extensions/reverse-words",
+        ) == {"scope": "messages"}
+        assert registry.layered_lookup(
+            "extensions",
+            "settings",
+            "a{sv}",
+            sub_path="extensions/hello-world",
+        ) == {"scope": "objects"}
+        assert [call.args for call in mock_handle.get_dict.call_args_list] == [
+            ("settings", "extensions/reverse-words", None),
+            ("settings", "extensions/hello-world", None),
+        ]
 
     def test_routine_manager_clear_preserves_lookup_cache(
         self,

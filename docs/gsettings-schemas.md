@@ -147,6 +147,7 @@ These operations also work at the profile level:
 | --- | --- | --- | --- |
 | `approved-user-extensions` | `a{ss}` | `@a{ss} {}` | Approved user extensions (filename to SHA256 hash) |
 | `disabled-extensions` | `as` | `@as []` | Extensions disabled by the user (by MODULE_NAME) |
+| `settings` | `a{sv}` | `@a{sv} {}` | Settings for a user extension |
 
 ---
 

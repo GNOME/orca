@@ -52,6 +52,9 @@ class TestExtensionLoaderDataclass:
         registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
         registry.gsettings_schema.return_value = lambda cls: cls
         registry.gsetting.return_value = lambda func: func
+        essential_modules[
+            "orca.gsettings_registry"
+        ].GSettingsRegistry.sanitize_gsettings_path.side_effect = lambda name: name.lower()
         from orca.extension import Extension
         from orca.extension_loader import ExtensionLoader
 
@@ -79,6 +82,7 @@ class TestExtensionLoaderDataclass:
             result = ExtensionLoader._load_from_file(str(ext_path), "dctest.py")
             assert isinstance(result, Extension)
             assert result.GROUP_LABEL == "DCTest"
+            assert result.settings._namespace == "dctest"
         finally:
             sys.modules.pop("orca_user_extension.dctest", None)
 

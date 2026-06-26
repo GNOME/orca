@@ -4,8 +4,6 @@
 
 This feature is early and experimental. The following are still pending:
 
-- GSettings support for user extension settings (user extensions cannot yet
-  define their own configurable options)
 - Preferences UI for extension-specific settings (user extensions can be
   approved, revoked, enabled, and disabled in Orca's Preferences window, but
   cannot yet provide their own settings pages)
@@ -108,14 +106,84 @@ Available modifier masks:
 - `keybindings.ORCA_SHIFT_MODIFIER_MASK`
 - `keybindings.ORCA_CTRL_MODIFIER_MASK`
 
+## Extension Settings
+
+User extensions can store simple settings using `self.settings`. This is the
+supported API for extension settings; extensions should not use Orca's
+`gsettings_registry` module directly. Settings belong to the extension that
+creates them and are stored in Orca's active profile.
+
+Supported setting values are booleans, integers, floats, strings, lists of
+strings, and dictionaries whose keys are strings and whose values are booleans,
+integers, floats, or strings. Setting keys must be simple names containing only
+letters, numbers, underscores, hyphens, or periods.
+
+Use `get()` when deciding what your extension should do. Always pass a default
+unless `None` is meaningful for that setting:
+
+```python
+scope = self.settings.get("scope", default="objects")
+```
+
+Extension settings do not have registered per-key defaults. If a stored value
+does not exist, `get()` returns the default passed by the caller, or `None` if no
+default is provided.
+
+Use `set()` and `reset()` from extension code when the extension needs to change
+its own settings:
+
+```python
+self.settings.set("scope", "both")
+self.settings.reset("scope")
+```
+
+`reset()` removes the stored value; it does not write the default.
+
+### Testing Settings With dconf
+
+Until preferences UI support for extension settings is available, extension
+authors may find it useful to test settings with `dconf`. Orca stores each user
+extension's settings in its own path:
+
+```sh
+dconf read /org/gnome/orca/default/extensions/hello-world/settings
+```
+
+When using `dconf write`, include any existing values for that extension that
+you want to keep. The command replaces the settings dictionary for the extension
+path being written.
+
+For example, to test the command example below with alternative messages and rates:
+
+```sh
+dconf write /org/gnome/orca/default/extensions/hello-world/settings \
+    "{'greeting-message': <'Very slow hello'>, 'goodbye-message': <'Very fast goodbye'>, 'slow-rate': <5>, 'fast-rate': <90>}"
+```
+
+And to test the reverse-words example with messages only:
+
+```sh
+dconf write /org/gnome/orca/default/extensions/reverse-words/settings \
+    "{'scope': <'messages'>}"
+```
+
+Because message speech has no accessible object, application and role filters
+are not relevant when `scope` is `"messages"` and can thus be left out.
+
+To reset an extension's settings:
+
+```sh
+dconf reset /org/gnome/orca/default/extensions/reverse-words/settings
+```
+
 ## The Controller API
 
 Command extensions can use the remote controller, available as
 `self.controller` on the `Extension` base class. The controller provides access
 to all of Orca's settings and its commands, both bound and unbound.
 
-The following in-process "internal" wrappers should be used in user extensions to avoid
-making actual D-Bus calls:
+The following in-process "internal" wrappers should be used in user extensions
+to avoid making actual D-Bus calls:
 
 ### `present_message_internal(message)`
 
@@ -179,6 +247,18 @@ class HelloWorld(Extension):
     GROUP_LABEL = "Hello World"
     GROUP_DESCRIPTION = "Adds greeting and voice-info commands."
 
+    def _get_greeting_message(self) -> str:
+        return self.settings.get("greeting-message", default="Hello, world!")
+
+    def _get_goodbye_message(self) -> str:
+        return self.settings.get("goodbye-message", default="Goodbye, world!")
+
+    def _get_slow_rate(self) -> int:
+        return self.settings.get("slow-rate", default=20)
+
+    def _get_fast_rate(self) -> int:
+        return self.settings.get("fast-rate", default=80)
+
     def _get_commands(self) -> list[Command]:
         return [
             KeyboardCommand(
@@ -223,20 +303,21 @@ class HelloWorld(Extension):
         """Decreases the speech rate, says hello, then restores it."""
 
         original_rate = self.controller.get_value_internal("SpeechManager", "Rate")
-        self.controller.set_value_internal("SpeechManager", "Rate", 20)
-        self.controller.present_message_internal("Hello, world!")
+        self.controller.set_value_internal(
+            "SpeechManager", "Rate", self._get_slow_rate()
+        )
+        self.controller.present_message_internal(self._get_greeting_message())
         self.controller.set_value_internal("SpeechManager", "Rate", original_rate)
         return True
 
     def say_goodbye_fast(self):
-        """Increases the speech rate 5 times, says goodbye, then restores it."""
+        """Increases the speech rate, says goodbye, then restores it."""
 
         original_rate = self.controller.get_value_internal("SpeechManager", "Rate")
-        for _i in range(5):
-            self.controller.execute_command_internal(
-                "SpeechManager", "IncreaseRate",
-            )
-        self.controller.present_message_internal("Goodbye, world!")
+        self.controller.set_value_internal(
+            "SpeechManager", "Rate", self._get_fast_rate()
+        )
+        self.controller.present_message_internal(self._get_goodbye_message())
         self.controller.set_value_internal("SpeechManager", "Rate", original_rate)
         return True
 
@@ -263,6 +344,10 @@ class HelloWorld(Extension):
             f"Pitch: {pitch}",
             f"Pitch range: {pitch_range}",
             f"Volume: {volume}",
+            f"Greeting message: {self._get_greeting_message()}",
+            f"Goodbye message: {self._get_goodbye_message()}",
+            f"Slow rate: {self._get_slow_rate()}",
+            f"Fast rate: {self._get_fast_rate()}",
         ]
         self.controller.present_message_internal(". ".join(parts))
         return True
@@ -308,9 +393,14 @@ you trust.
 
 ### Reverse Word Order Example
 
-This silly example lets you test the hook locally. It reverses what Orca speaks,
-as long as there is an associated accessible object (i.e. not a system message),
-and that object is not a terminal nor is it from gnome-shell.
+This silly example lets you test the hook locally. It reverses what Orca speaks
+based on extension settings. By default it applies to speech associated with
+accessible objects, skips messages, skips terminals, and skips gnome-shell.
+The `scope` setting can be `"objects"`, `"messages"`, `"both"`, or `"none"`.
+The `excluded-applications` setting is a list of application names. The
+`excluded-roles` setting is a dictionary whose values are integer-backed AT-SPI
+roles. Application and role filters are only used for speech associated with an
+accessible object; messages do not have an object.
 
 ```python
 """Example extension that reverses the order of spoken words."""
@@ -329,22 +419,45 @@ class ReverseWords(Extension):
     GROUP_LABEL = "Reverse Words"
     GROUP_DESCRIPTION = "Reverses spoken word order for testing speech hooks."
 
-    @staticmethod
-    def _should_ignore_object(obj: Atspi.Accessible | None) -> bool:
-        if obj is None:
-            return True
+    def _applies_to_message(self) -> bool:
+        scope = self.settings.get("scope", default="objects")
+        return scope in ("messages", "both")
 
-        if Atspi.Accessible.get_role(obj) == Atspi.Role.TERMINAL:
-            return True
+    def _applies_to_object(self, obj: Atspi.Accessible | None) -> bool:
+        if obj is None:
+            return False
+
+        scope = self.settings.get("scope", default="objects")
+        if scope not in ("objects", "both"):
+            return False
 
         app = Atspi.Accessible.get_application(obj)
-        if app and Atspi.Accessible.get_name(app) == "gnome-shell":
-            return True
+        app_name = Atspi.Accessible.get_name(app) if app else ""
+        excluded_apps = self.settings.get(
+            "excluded-applications",
+            default=["gnome-shell"],
+        )
+        if app_name in excluded_apps:
+            return False
 
-        return False
+        role = Atspi.Accessible.get_role(obj)
+        excluded_roles = self.settings.get(
+            "excluded-roles",
+            default={"terminal": int(Atspi.Role.TERMINAL)},
+        )
+        role_values = {int(value) for value in excluded_roles.values()}
+        if int(role) in role_values:
+            return False
+
+        return True
+
+    def _should_process(self, output: SpeechOutput) -> bool:
+        if output.obj is None:
+            return self._applies_to_message()
+        return self._applies_to_object(output.obj)
 
     def on_speech_output(self, output: SpeechOutput) -> SpeechOutputResult | None:
-        if self._should_ignore_object(output.obj):
+        if not self._should_process(output):
             return None
 
         words = output.text.split()

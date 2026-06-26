@@ -248,6 +248,8 @@ def _format_default(gtype: str, default: Any, key_name: str) -> str:  # pylint: 
         return "@a{ss} {}"
     if gtype == "a{saas}":
         return "@a{saas} {}"
+    if gtype == "a{sv}":
+        return "@a{sv} {}"
     if gtype == "as":
         if not default:
             return "@as []"

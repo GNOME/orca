@@ -22,10 +22,11 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, ClassVar
 
-from . import command_manager, dbus_service, debug
+from . import command_manager, dbus_service, debug, gsettings_registry
 
 if TYPE_CHECKING:
     from .command import Command
@@ -59,6 +60,95 @@ class SpeechOutputResult:
         return cls(consume=True)
 
 
+class ExtensionSettings:
+    """Settings scoped to one extension."""
+
+    _SCHEMA = "extensions"
+    _KEY = "settings"
+    _SETTING_NAME = re.compile(r"^[A-Za-z0-9_.-]+$")
+
+    def __init__(self, namespace: str) -> None:
+        self._namespace = self._sanitize_namespace(namespace)
+
+    @staticmethod
+    def _sanitize_namespace(namespace: str) -> str:
+        """Return a stable namespace for settings keys."""
+
+        sanitized = gsettings_registry.GSettingsRegistry.sanitize_gsettings_path(namespace)
+        return sanitized or "extension"
+
+    def set_namespace(self, namespace: str) -> None:
+        """Set the namespace used to store this extension's settings."""
+
+        self._namespace = self._sanitize_namespace(namespace)
+
+    def _sub_path(self) -> str:
+        """Return the relocatable settings path for this extension."""
+
+        return f"extensions/{self._namespace}"
+
+    def _validate_key(self, key: str) -> str:
+        """Return the storage key if it is valid."""
+
+        if not key or not self._SETTING_NAME.fullmatch(key):
+            raise ValueError(f"Invalid extension setting key: {key!r}")
+        return key
+
+    def _get_local_settings(self) -> dict[str, Any]:
+        """Return the active profile's extension settings."""
+
+        registry = gsettings_registry.get_registry()
+        gs = registry.get_settings(
+            self._SCHEMA,
+            registry.get_active_profile(),
+            self._sub_path(),
+        )
+        if gs is None:
+            return {}
+        variant = gs.get_user_value(self._KEY)
+        if variant is None:
+            return {}
+        return dict(variant.unpack())
+
+    def get(self, key: str, default: Any = None) -> Any:
+        """Return a setting value using Orca's layered settings lookup."""
+
+        settings = gsettings_registry.get_registry().layered_lookup(
+            self._SCHEMA,
+            self._KEY,
+            "a{sv}",
+            sub_path=self._sub_path(),
+            default={},
+        )
+        return settings.get(self._validate_key(key), default)
+
+    def set(self, key: str, value: Any) -> bool:
+        """Persist a setting value in the active profile."""
+
+        settings = self._get_local_settings()
+        settings[self._validate_key(key)] = value
+        return gsettings_registry.get_registry().set_dict(
+            self._SCHEMA,
+            self._KEY,
+            "a{sv}",
+            settings,
+            sub_path=self._sub_path(),
+        )
+
+    def reset(self, key: str) -> bool:
+        """Remove a setting value from the active profile."""
+
+        settings = self._get_local_settings()
+        settings.pop(self._validate_key(key), None)
+        return gsettings_registry.get_registry().set_dict(
+            self._SCHEMA,
+            self._KEY,
+            "a{sv}",
+            settings,
+            sub_path=self._sub_path(),
+        )
+
+
 class Extension:
     """Base class for Orca extensions."""
 
@@ -71,6 +161,7 @@ class Extension:
         self._disabled: bool = False
         self._registered_command_names: list[str] = []
         self.module_name: str = type(self).__name__
+        self.settings = ExtensionSettings(self.module_name)
         self.controller = dbus_service.get_remote_controller()
         msg = f"EXTENSION: {self.module_name} Registering D-Bus commands."
         debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -117,10 +208,12 @@ class Extension:
         msg = f"EXTENSION: {self.module_name} {len(commands)} command(s) registered."
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
-    def mark_as_user_extension(self) -> None:
+    def mark_as_user_extension(self, settings_namespace: str | None = None) -> None:
         """Marks this extension as user-provided so commands get wrapped."""
 
         self._is_user_extension = True
+        if settings_namespace is not None:
+            self.settings.set_namespace(settings_namespace)
 
     def _get_commands(self) -> list[Command]:
         """Override to provide commands for registration."""
