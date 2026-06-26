@@ -97,6 +97,11 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self.refresh()
 
+    def save_settings(self, _profile: str = "", _app_name: str = "") -> dict:
+        """Save settings for this grid."""
+
+        return {}
+
     def refresh(self) -> None:
         """Rebuild the user extension list."""
 
