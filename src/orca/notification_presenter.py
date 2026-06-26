@@ -44,6 +44,7 @@ from . import (
     input_event,
     messages,
     notification_presenter_command_definitions,
+    orca_gui_base,
     presentation_manager,
 )
 from .extension import Extension
@@ -315,34 +316,17 @@ class NotificationListGUI:
         column_headers: list[str],
         rows: list[tuple[str, str]],
     ) -> Gtk.Dialog:
-        dialog = Gtk.Dialog(
+        dialog, tree = orca_gui_base.create_tree_view_dialog(
             title,
-            None,
-            Gtk.DialogFlags.MODAL,
-            (Gtk.STOCK_CLEAR, Gtk.ResponseType.APPLY, Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE),
+            column_headers=column_headers,
+            default_size=(600, 400),
+            buttons=(
+                (guilabels.BTN_CLEAR, Gtk.ResponseType.APPLY),
+                (guilabels.BTN_CLOSE, Gtk.ResponseType.CLOSE),
+            ),
         )
-        dialog.set_default_size(600, 400)
-
-        grid = Gtk.Grid()
-        content_area = dialog.get_content_area()
-        content_area.add(grid)
-
-        scrolled_window = Gtk.ScrolledWindow()
-        grid.add(scrolled_window)  # pylint: disable=no-member
-
-        tree = Gtk.TreeView()
-        tree.set_hexpand(True)
-        tree.set_vexpand(True)
-        scrolled_window.add(tree)  # pylint: disable=no-member
 
         cols = len(column_headers) * [GObject.TYPE_STRING]
-        for i, header in enumerate(column_headers):
-            cell = Gtk.CellRendererText()
-            column = Gtk.TreeViewColumn(header, cell, text=i)
-            tree.append_column(column)
-            if header:
-                column.set_sort_column_id(i)
-
         self._model = Gtk.ListStore(*cols)
         for row in rows:
             row_iter = self._model.append(None)

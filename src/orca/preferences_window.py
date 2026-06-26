@@ -27,9 +27,7 @@
 
 from __future__ import annotations
 
-import os
 import time
-from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
 import gi
@@ -37,7 +35,6 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import (
     Gdk,  # pylint: disable=no-name-in-module
-    Gio,
     GLib,
     GObject,
     Gtk,  # pylint: disable=no-name-in-module
@@ -59,6 +56,7 @@ from . import (
     messages,
     mouse_presenter,
     orca,
+    orca_gui_base,
     preferences_grid_base,
     presentation_manager,
     profile_manager,
@@ -94,15 +92,6 @@ def show_preferences_gui(default_script: default.Script) -> bool:
     return True
 
 
-@dataclass
-class _AppearanceProviders:
-    """CSS providers for conditional appearance settings."""
-
-    hc: Gtk.CssProvider
-    dark: Gtk.CssProvider
-    shapes: Gtk.CssProvider | None = None
-
-
 class NavigationRow(Gtk.ListBoxRow):
     """ListBoxRow with a panel_id attribute for navigation."""
 
@@ -134,7 +123,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         msg = "PREFERENCES: Initializing UI"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
-        appearance_refs = self._sync_appearance()
+        appearance_refs = orca_gui_base.sync_appearance()
         super().__init__(title=guilabels.DIALOG_SCREEN_READER_PREFERENCES)
         self._appearance_refs = appearance_refs
 
@@ -767,198 +756,6 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
         return False
-
-    _BASE_CSS = b"""
-        decoration {
-            border-radius: 15px;
-        }
-        @define-color orca_sidebar_bg shade(@theme_bg_color, 0.98);
-        list.frame {
-            border-color: alpha(@theme_fg_color, 0.15);
-        }
-        .orca-left-headerbar {
-            background-color: @orca_sidebar_bg;
-            background-image: none;
-            border-bottom-width: 0;
-        }
-        .orca-panel-headerbar {
-            background-color: @theme_bg_color;
-            background-image: none;
-            border-bottom-width: 0;
-        }
-        .orca-sidebar {
-            background-color: @orca_sidebar_bg;
-        }
-        .orca-sidebar scrolledwindow,
-        .orca-sidebar list {
-            background-color: transparent;
-        }
-        .orca-sidebar list {
-            padding: 6px 0;
-        }
-        .orca-sidebar list row {
-            border-radius: 9px;
-            min-height: 36px;
-            padding: 0 8px;
-            margin: 0 6px 2px;
-        }
-        .orca-sidebar list row:selected {
-            background-color: alpha(@theme_fg_color, 0.10);
-        }
-        .orca-sidebar list row:selected,
-        .orca-sidebar list row:selected label {
-            color: @theme_fg_color;
-        }
-        .orca-sidebar list row:hover {
-            background-color: alpha(@theme_fg_color, 0.07);
-        }
-        .orca-sidebar list row:selected:hover {
-            background-color: alpha(@theme_fg_color, 0.13);
-        }
-        .orca-sidebar list row:active,
-        .orca-sidebar list row:selected:active {
-            background-color: alpha(@theme_fg_color, 0.19);
-        }
-        list.frame row:focus {
-            box-shadow: inset 0 0 0 2px alpha(@theme_selected_bg_color, 0.5);
-        }
-    """
-
-    _HIGH_CONTRAST_CSS = b"""
-        list.frame {
-            border-color: alpha(@theme_fg_color, 0.4);
-        }
-        list separator {
-            background-color: alpha(@theme_fg_color, 0.4);
-        }
-        .dim-label {
-            opacity: 1.0;
-        }
-    """
-
-    _DARK_MODE_CSS = b"""
-        @define-color orca_sidebar_bg @theme_bg_color;
-        window.background {
-            background-color: @theme_base_color;
-        }
-        .orca-panel-headerbar {
-            background-color: @theme_base_color;
-        }
-        switch slider {
-            background-image: image(white);
-        }
-    """
-
-    _GNOME_DARK_CSS = b"""
-        @define-color theme_bg_color #303030;
-        @define-color theme_base_color #242424;
-        @define-color orca_sidebar_bg #2e2e32;
-    """
-
-    _STATUS_SHAPES_CSS = b"""
-        switch image {
-            color: @theme_fg_color;
-        }
-        switch:checked image {
-            color: white;
-        }
-    """
-
-    @staticmethod
-    def _sync_appearance() -> tuple | None:
-        """Bridges GNOME's color-scheme and high-contrast gsettings to GTK3."""
-
-        gtk_settings = Gtk.Settings.get_default()  # pylint: disable=no-value-for-parameter
-        screen = Gdk.Screen.get_default()  # pylint: disable=no-value-for-parameter
-        if gtk_settings is None or screen is None:
-            return None
-
-        base_provider = Gtk.CssProvider()
-        base_provider.load_from_data(OrcaSetupGUI._BASE_CSS)
-        Gtk.StyleContext.add_provider_for_screen(
-            screen,
-            base_provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-        )
-
-        providers = _AppearanceProviders(
-            hc=Gtk.CssProvider(),
-            dark=Gtk.CssProvider(),
-        )
-        providers.hc.load_from_data(OrcaSetupGUI._HIGH_CONTRAST_CSS)
-        dark_css = OrcaSetupGUI._DARK_MODE_CSS
-        if "GNOME" in os.environ.get("XDG_CURRENT_DESKTOP", ""):
-            dark_css += OrcaSetupGUI._GNOME_DARK_CSS
-        providers.dark.load_from_data(dark_css)
-
-        try:
-            interface_settings = Gio.Settings(schema_id="org.gnome.desktop.interface")
-            a11y_settings = Gio.Settings(schema_id="org.gnome.desktop.a11y.interface")
-            if "show-status-shapes" in a11y_settings.list_keys():
-                shapes_provider = Gtk.CssProvider()
-                shapes_provider.load_from_data(OrcaSetupGUI._STATUS_SHAPES_CSS)
-                providers.shapes = shapes_provider
-            OrcaSetupGUI._apply_appearance(
-                interface_settings,
-                a11y_settings,
-                gtk_settings,
-                screen,
-                providers,
-            )
-
-            def on_setting_changed(*_args):
-                OrcaSetupGUI._apply_appearance(
-                    interface_settings,
-                    a11y_settings,
-                    gtk_settings,
-                    screen,
-                    providers,
-                )
-
-            interface_settings.connect("changed::color-scheme", on_setting_changed)
-            a11y_settings.connect("changed::high-contrast", on_setting_changed)
-            if providers.shapes is not None:
-                a11y_settings.connect("changed::show-status-shapes", on_setting_changed)
-            gtk_settings.connect("notify::gtk-theme-name", on_setting_changed)
-            return interface_settings, a11y_settings, base_provider, providers
-        except GLib.Error as error:
-            msg = f"PREFERENCES WINDOW: Exception syncing appearance: {error}"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return None
-
-    @staticmethod
-    def _apply_appearance(
-        interface_settings: Gio.Settings,
-        a11y_settings: Gio.Settings,
-        gtk_settings: Gtk.Settings,
-        screen: Gdk.Screen,
-        providers: _AppearanceProviders,
-    ) -> None:
-        """Applies color-scheme, high-contrast, and status-shapes settings."""
-
-        prefer_dark = interface_settings.get_string("color-scheme") == "prefer-dark"
-        gtk_settings.set_property("gtk-application-prefer-dark-theme", prefer_dark)
-
-        theme = gtk_settings.get_property("gtk-theme-name")
-        if prefer_dark and theme == "HighContrast":
-            gtk_settings.set_property("gtk-theme-name", "HighContrastInverse")
-        elif not prefer_dark and theme == "HighContrastInverse":
-            gtk_settings.set_property("gtk-theme-name", "HighContrast")
-
-        priority = Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION + 1
-        conditional_providers: list[tuple[Gtk.CssProvider, bool]] = [
-            (providers.hc, a11y_settings.get_boolean("high-contrast")),
-            (providers.dark, prefer_dark),
-        ]
-        if providers.shapes is not None:
-            conditional_providers.append(
-                (providers.shapes, a11y_settings.get_boolean("show-status-shapes")),
-            )
-        for provider, enabled in conditional_providers:
-            if enabled:
-                Gtk.StyleContext.add_provider_for_screen(screen, provider, priority)
-            else:
-                Gtk.StyleContext.remove_provider_for_screen(screen, provider)
 
     def window_destroyed(self, _widget: Gtk.Widget) -> None:
         """Handle window destroyed signal by clearing window reference."""

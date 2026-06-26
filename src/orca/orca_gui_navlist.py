@@ -34,7 +34,7 @@ gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GObject, Gtk
 
-from . import debug, guilabels, script_manager
+from . import debug, guilabels, orca_gui_base, script_manager
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_utilities import AXUtilities
 from .ax_utilities_text import CaretSetReason
@@ -60,8 +60,9 @@ class OrcaNavListGUI:
         self._tree: Gtk.TreeView | None = None
         self._activate_button: Gtk.Button | None = None
         self._jump_to_button: Gtk.Button | None = None
-        self._gui: Gtk.Dialog = self._create_nav_list_dialog(column_headers, rows, selected_row)
-        self._gui.set_title(title)
+        self._gui: Gtk.Dialog = self._create_nav_list_dialog(
+            title, column_headers, rows, selected_row
+        )
         self._gui.set_modal(True)
         self._gui.set_keep_above(True)  # pylint: disable=no-member
         self._gui.set_focus_on_map(True)  # pylint: disable=no-member
@@ -71,35 +72,24 @@ class OrcaNavListGUI:
 
     def _create_nav_list_dialog(
         self,
+        title: str,
         column_headers: list[str],
         rows: list[tuple[Any, ...]],
         selected_row: int,
     ) -> Gtk.Dialog:
         """Create the navigation list dialog."""
-        dialog = Gtk.Dialog()
-        dialog.set_default_size(500, 400)
-
-        grid = Gtk.Grid()
-        content_area = dialog.get_content_area()
-        content_area.add(grid)
-
-        scrolled_window = Gtk.ScrolledWindow()
-        grid.add(scrolled_window)  # pylint: disable=no-member
-
-        self._tree = Gtk.TreeView()
-        self._tree.set_hexpand(True)
-        self._tree.set_vexpand(True)
-        scrolled_window.add(self._tree)  # pylint: disable=no-member
+        dialog, self._tree = orca_gui_base.create_tree_view_dialog(
+            title,
+            column_headers=column_headers,
+            text_column_offset=2,
+            sort_empty_headers=True,
+            default_size=(500, 400),
+            buttons=(),
+        )
 
         cols: list[type] = [GObject.TYPE_OBJECT, GObject.TYPE_INT]
         cols.extend(len(column_headers) * [GObject.TYPE_STRING])
         model = Gtk.ListStore(*cols)
-
-        for i, header in enumerate(column_headers):
-            cell = Gtk.CellRendererText()
-            column = Gtk.TreeViewColumn(header, cell, text=i + 2)
-            column.set_sort_column_id(i + 2)
-            self._tree.append_column(column)
 
         for row in rows:
             row_iter = model.append(None)

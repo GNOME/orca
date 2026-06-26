@@ -30,7 +30,7 @@ gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk  # pylint: disable=no-name-in-module
 
-from . import extension_loader, guilabels, preferences_grid_base
+from . import extension_loader, guilabels, orca_gui_base, preferences_grid_base
 
 
 class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
@@ -300,16 +300,13 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         parent = self.get_toplevel()
         transient_for = parent if isinstance(parent, Gtk.Window) else None
-        dialog = Gtk.Dialog(
-            title=self._get_display_name(info),
-            transient_for=transient_for,
-            modal=True,
+        dialog = orca_gui_base.create_dialog(
+            self._get_display_name(info),
+            default_size=(640, -1),
+            default_response=Gtk.ResponseType.CLOSE,
+            resizable=False,
         )
-        dialog.add_button(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
-        dialog.set_default_response(Gtk.ResponseType.CLOSE)
-        dialog.set_default_size(640, -1)
-        dialog.set_resizable(False)
-        dialog.set_border_width(12)
+        dialog.set_transient_for(transient_for)
 
         listbox = Gtk.ListBox()
         listbox.set_selection_mode(Gtk.SelectionMode.SINGLE)
@@ -328,6 +325,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         content_area = dialog.get_content_area()
         content_area.add(listbox)
+
         dialog.show_all()
         dialog.run()
         dialog.destroy()

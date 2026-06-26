@@ -154,6 +154,12 @@ BRAILLE_DOT_NONE = C_("braille dots", "None")
 BTN_CANCEL = _("_Cancel")
 
 # Translators: This is the label for a button in a dialog.
+BTN_CLOSE = _("_Close")
+
+# Translators: This is the label for a button in a dialog.
+BTN_CLEAR = _("_Clear")
+
+# Translators: This is the label for a button in a dialog.
 BTN_JUMP_TO = _("_Jump to")
 
 # Translators: This is the label for a button in a dialog.
