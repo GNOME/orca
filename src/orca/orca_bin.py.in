@@ -274,7 +274,9 @@ def _approve_extension(extensions_dir: str, filename: str) -> int:
     """Approves a user extension for loading."""
 
     filepath = os.path.join(extensions_dir, filename)
-    if not os.path.isfile(filepath):
+    is_file = os.path.isfile(filepath)
+    is_package = os.path.isfile(os.path.join(filepath, "__init__.py"))
+    if not (is_file or is_package):
         print(messages.CLI_EXTENSION_NOT_FOUND % filepath)
         return 1
 

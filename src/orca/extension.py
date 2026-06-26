@@ -153,7 +153,12 @@ class Extension:
     """Base class for Orca extensions."""
 
     GROUP_LABEL: ClassVar[str]
-    GROUP_DESCRIPTION: ClassVar[str] = ""
+    DESCRIPTION: ClassVar[str] = ""
+    VERSION: ClassVar[str] = ""
+    AUTHOR: ClassVar[str] = ""
+    ORGANIZATION: ClassVar[str] = ""
+    COPYRIGHT: ClassVar[str] = ""
+    WEBSITE: ClassVar[str] = ""
 
     def __init__(self) -> None:
         self._commands_initialized: bool = False

@@ -54,14 +54,34 @@ class UserExtensionStatus(Enum):
 
 
 @dataclass(frozen=True)
+class UserExtensionMetadata:
+    """Metadata parsed from a user extension without executing it."""
+
+    class_name: str | None = None
+    group_label: str | None = None
+    description: str = ""
+    version: str = ""
+    author: str = ""
+    organization: str = ""
+    copyright: str = ""
+    website: str = ""
+
+
+@dataclass(frozen=True)
 class UserExtensionInfo:
     """Non-executing metadata for a user extension file."""
 
     filename: str
     filepath: str
+    is_package: bool
     class_name: str | None
     group_label: str | None
-    group_description: str
+    description: str
+    version: str
+    author: str
+    organization: str
+    copyright: str
+    website: str
     file_hash: str
     approved_hash: str | None
     status: UserExtensionStatus
@@ -162,7 +182,7 @@ class ExtensionLoader:
     def approve_extension_file(self, filepath: str) -> str:
         """Computes the hash and approves the extension. Returns the hash."""
 
-        filename = os.path.basename(filepath)
+        filename = self._get_source_id(filepath)
         file_hash = self._compute_hash(filepath)
         self.approve_extension(filename, file_hash)
         return file_hash
@@ -184,19 +204,12 @@ class ExtensionLoader:
         disabled = self.get_disabled_extensions()
         result: list[UserExtensionInfo] = []
 
-        for filename in sorted(os.listdir(extensions_dir)):
-            if not filename.endswith(".py") or filename.startswith("_"):
-                continue
-
-            filepath = os.path.join(extensions_dir, filename)
-            if not os.path.isfile(filepath):
-                continue
-
-            class_name, group_label, group_description = self.get_metadata(filepath)
+        for filename, filepath, is_package in self._iter_extension_sources(extensions_dir):
+            metadata = self.get_metadata(filepath)
             file_hash = self._compute_hash(filepath)
             approved_hash = approved.get(filename)
             status = self._get_user_extension_status(
-                class_name,
+                metadata.class_name,
                 file_hash,
                 approved_hash,
                 disabled,
@@ -205,9 +218,15 @@ class ExtensionLoader:
                 UserExtensionInfo(
                     filename=filename,
                     filepath=filepath,
-                    class_name=class_name,
-                    group_label=group_label,
-                    group_description=group_description,
+                    is_package=is_package,
+                    class_name=metadata.class_name,
+                    group_label=metadata.group_label,
+                    description=metadata.description,
+                    version=metadata.version,
+                    author=metadata.author,
+                    organization=metadata.organization,
+                    copyright=metadata.copyright,
+                    website=metadata.website,
                     file_hash=file_hash,
                     approved_hash=approved_hash,
                     status=status,
@@ -243,14 +262,7 @@ class ExtensionLoader:
         approved = self.get_approved_extensions()
         disabled = self.get_disabled_extensions()
 
-        for filename in sorted(os.listdir(extensions_dir)):
-            if not filename.endswith(".py") or filename.startswith("_"):
-                continue
-
-            filepath = os.path.join(extensions_dir, filename)
-            if not os.path.isfile(filepath):
-                continue
-
+        for filename, filepath, _is_package in self._iter_extension_sources(extensions_dir):
             file_hash = self._compute_hash(filepath)
             approved_hash = approved.get(filename)
 
@@ -371,17 +383,22 @@ class ExtensionLoader:
     def get_class_name(filepath: str) -> str | None:
         """Returns the Extension subclass name from a file without executing it."""
 
-        return ExtensionLoader.get_metadata(filepath)[0]
+        return ExtensionLoader.get_metadata(filepath).class_name
 
     @staticmethod
-    def get_metadata(filepath: str) -> tuple[str | None, str | None, str]:
+    def get_metadata(filepath: str) -> UserExtensionMetadata:
         """Returns metadata from an Extension subclass without executing it."""
 
+        result = UserExtensionMetadata()
+        source_path = ExtensionLoader._get_source_file(filepath)
+        if source_path is None:
+            return result
+
         try:
-            with open(filepath, encoding="utf-8") as f:
+            with open(source_path, encoding="utf-8") as f:
                 tree = ast.parse(f.read())
         except (OSError, SyntaxError):
-            return None, None, ""
+            return result
 
         for node in ast.walk(tree):
             if not isinstance(node, ast.ClassDef):
@@ -394,13 +411,23 @@ class ExtensionLoader:
                 else:
                     continue
                 if name == "Extension":
-                    group_label = ExtensionLoader._get_class_string_constant(node, "GROUP_LABEL")
-                    group_description = (
-                        ExtensionLoader._get_class_string_constant(node, "GROUP_DESCRIPTION") or ""
+                    return UserExtensionMetadata(
+                        class_name=node.name,
+                        group_label=ExtensionLoader._get_class_string_constant(node, "GROUP_LABEL"),
+                        description=ExtensionLoader._get_class_string_constant(node, "DESCRIPTION")
+                        or "",
+                        version=ExtensionLoader._get_class_string_constant(node, "VERSION") or "",
+                        author=ExtensionLoader._get_class_string_constant(node, "AUTHOR") or "",
+                        organization=ExtensionLoader._get_class_string_constant(
+                            node, "ORGANIZATION"
+                        )
+                        or "",
+                        copyright=ExtensionLoader._get_class_string_constant(node, "COPYRIGHT")
+                        or "",
+                        website=ExtensionLoader._get_class_string_constant(node, "WEBSITE") or "",
                     )
-                    return node.name, group_label, group_description
 
-        return None, None, ""
+        return result
 
     @staticmethod
     def _get_class_string_constant(node: ast.ClassDef, name: str) -> str | None:
@@ -426,7 +453,10 @@ class ExtensionLoader:
 
     @staticmethod
     def _compute_hash(filepath: str) -> str:
-        """Returns the SHA256 hex digest of the file at filepath."""
+        """Returns the SHA256 hex digest of an extension file or package."""
+
+        if os.path.isdir(filepath):
+            return ExtensionLoader._compute_package_hash(filepath)
 
         sha256 = hashlib.sha256()
         with open(filepath, "rb") as f:
@@ -435,12 +465,93 @@ class ExtensionLoader:
         return sha256.hexdigest()
 
     @staticmethod
-    def _load_from_file(filepath: str, filename: str) -> Extension | None:
-        """Loads an Extension subclass from a Python file."""
+    def _compute_package_hash(dirpath: str) -> str:
+        """Returns a deterministic SHA256 digest for a package extension."""
 
-        module_name = f"orca_user_extension.{filename[:-3]}"
+        sha256 = hashlib.sha256()
+        for root, dirs, files in os.walk(dirpath):
+            dirs[:] = sorted(
+                dirname
+                for dirname in dirs
+                if dirname != "__pycache__" and not dirname.startswith(".")
+            )
+            for basename in sorted(files):
+                if ExtensionLoader._should_ignore_package_file(basename):
+                    continue
+                path = os.path.join(root, basename)
+                relpath = os.path.relpath(path, dirpath).replace(os.sep, "/")
+                sha256.update(relpath.encode("utf-8"))
+                sha256.update(b"\0")
+                with open(path, "rb") as f:
+                    for chunk in iter(lambda: f.read(8192), b""):
+                        sha256.update(chunk)
+                sha256.update(b"\0")
+        return sha256.hexdigest()
+
+    @staticmethod
+    def _should_ignore_package_file(filename: str) -> bool:
+        """Returns True if filename should not affect package approval."""
+
+        return filename.startswith(".") or filename.endswith((".pyc", ".pyo", "~"))
+
+    @staticmethod
+    def _iter_extension_sources(extensions_dir: str) -> list[tuple[str, str, bool]]:
+        """Returns extension source ids, paths, and package flags."""
+
+        sources: list[tuple[str, str, bool]] = []
+        for filename in sorted(os.listdir(extensions_dir)):
+            if filename.startswith("_"):
+                continue
+
+            filepath = os.path.join(extensions_dir, filename)
+            if os.path.isfile(filepath) and filename.endswith(".py"):
+                sources.append((filename, filepath, False))
+            elif os.path.isdir(filepath):
+                init_path = os.path.join(filepath, "__init__.py")
+                if os.path.isfile(init_path):
+                    sources.append((filename, filepath, True))
+        return sources
+
+    @staticmethod
+    def _get_source_id(filepath: str) -> str:
+        """Returns the approval id for an extension source."""
+
+        return os.path.basename(filepath)
+
+    @staticmethod
+    def _get_source_file(filepath: str) -> str | None:
+        """Returns the Python file that defines extension metadata."""
+
+        if os.path.isdir(filepath):
+            init_path = os.path.join(filepath, "__init__.py")
+            if os.path.isfile(init_path):
+                return init_path
+            return None
+        if os.path.isfile(filepath):
+            return filepath
+        return None
+
+    @staticmethod
+    def _load_from_file(filepath: str, filename: str) -> Extension | None:
+        """Loads an Extension subclass from a Python file or package."""
+
+        source_file = ExtensionLoader._get_source_file(filepath)
+        if source_file is None:
+            msg = f"EXTENSION LOADER: No loadable source found for {filepath}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return None
+
+        namespace = os.path.splitext(filename)[0] if filename.endswith(".py") else filename
+        module_name = f"orca_user_extension.{namespace}"
         try:
-            spec = importlib.util.spec_from_file_location(module_name, filepath)
+            if os.path.isdir(filepath):
+                spec = importlib.util.spec_from_file_location(
+                    module_name,
+                    source_file,
+                    submodule_search_locations=[filepath],
+                )
+            else:
+                spec = importlib.util.spec_from_file_location(module_name, source_file)
             if spec is None or spec.loader is None:
                 msg = f"EXTENSION LOADER: Could not create spec for {filepath}"
                 debug.print_message(debug.LEVEL_WARNING, msg, True)
@@ -462,7 +573,6 @@ class ExtensionLoader:
             if isinstance(obj, type) and issubclass(obj, Extension) and obj is not Extension:
                 try:
                     instance = obj()
-                    namespace = os.path.splitext(filename)[0]
                     instance.mark_as_user_extension(namespace)
                     return instance
                 except Exception as error:  # pylint: disable=broad-exception-caught

@@ -1445,32 +1445,108 @@ DIALOG_EDIT = _("Edit")
 # Translators: This is the label for a widget in the preferences dialog.
 DIALOG_HELP = _("Help")
 
-# Translators: This is the title of the preferences page for managing user extensions.
+# Translators: This is the title of the preferences page where users manage
+# Orca extensions they have installed in their home directory. These extensions
+# are Python code written by end users, not built-in Orca features.
 USER_EXTENSIONS = _("User Extensions")
 
-# Translators: This is an informational message on the Extensions preferences page.
+# Translators: This is an informational message on the User Extensions
+# preferences page. User extensions are Python code files or Python package
+# directories placed in the user's Orca data directory. "Approve" refers to the
+# user explicitly allowing Orca to load and run that code.
 EXTENSIONS_INFO = _(
-    "User extensions are Python files in ~/.local/share/orca/extensions. "
+    "User extensions are Python files or packages in ~/.local/share/orca/extensions. "
     "Only approve extensions that you trust."
 )
 
-# Translators: This is a label in the Extensions preferences page.
+# Translators: This message is shown in the User Extensions preferences page
+# when Orca does not find any user extension files or packages in
+# ~/.local/share/orca/extensions.
 EXTENSIONS_NO_EXTENSIONS = _("No user extensions found.")
 
-# Translators: This is a button label in the Extensions preferences page.
-EXTENSIONS_APPROVE = _("Approve")
+# Translators: This is a button label in the User Extensions preferences page.
+# Pressing this button approves the selected user extension so Orca can load and
+# run it the next time extensions are loaded.
+EXTENSIONS_APPROVE = C_("user extensions", "Approve")
 
-# Translators: This is a button label in the Extensions preferences page.
-EXTENSIONS_REAPPROVE = _("Re-approve")
+# Translators: This is a button label in the User Extensions preferences page.
+# It is shown when a previously-approved extension has changed on disk and must
+# be approved again before Orca will load and run it.
+EXTENSIONS_REAPPROVE = C_("user extensions", "Re-approve")
 
-# Translators: This is a button label in the Extensions preferences page.
-EXTENSIONS_REVOKE = _("Revoke")
+# Translators: This is a button label in the User Extensions preferences page.
+# Pressing this button removes Orca's approval for the selected user extension.
+EXTENSIONS_REVOKE = C_("user extensions", "Revoke")
 
-# Translators: This is a status label in the Extensions preferences page.
-EXTENSIONS_STATUS_INVALID = _("Invalid")
+# Translators: This is a button label in the User Extensions preferences page.
+# Pressing this button opens a dialog with metadata about the selected extension,
+# such as its author, version, and web page.
+EXTENSIONS_INFO_BUTTON = C_("user extensions", "Info")
 
-# Translators: This is a status label in the Extensions preferences page.
-EXTENSIONS_STATUS_MODIFIED = _("Modified; re-approval required")
+# Translators: This is a label in the user extension information dialog. It is
+# followed by the name of the person or people who wrote the extension.
+EXTENSIONS_INFO_AUTHOR = C_("user extensions", "Author")
+
+# Translators: This is a label in the user extension information dialog. It
+# refers to the company, project, or similar entity associated with the
+# extension.
+EXTENSIONS_INFO_ORGANIZATION = C_("user extensions", "Organization")
+
+# Translators: This is a label in the user extension information dialog. It is
+# followed by a copyright holder or copyright notice supplied by the extension
+# author.
+EXTENSIONS_INFO_COPYRIGHT = C_("user extensions", "Copyright")
+
+# Translators: This is a label in the user extension information dialog. It is
+# followed by a short explanation of what the extension does.
+EXTENSIONS_INFO_DESCRIPTION = C_("user extensions", "Description")
+
+# Translators: This is a label in the user extension information dialog. It is
+# followed by the filesystem path to the extension file or package directory.
+EXTENSIONS_INFO_LOCATION = C_("user extensions", "Location")
+
+# Translators: This is a label in the user extension information dialog. It is
+# followed by the user-visible name of the extension.
+EXTENSIONS_INFO_NAME = C_("user extensions", "Name")
+
+# Translators: This is a label in the user extension information dialog. It is
+# followed by whether the extension is approved, not approved, disabled, invalid,
+# or needs to be approved again.
+EXTENSIONS_INFO_STATUS = C_("user extensions", "Status")
+
+# Translators: This is a label in the user extension information dialog. It is
+# followed by the extension version supplied by the extension author.
+EXTENSIONS_INFO_VERSION = C_("user extensions", "Version")
+
+# Translators: This is a label in the user extension information dialog. It is
+# followed by a URL for the extension or its author.
+EXTENSIONS_INFO_WEBSITE = C_("user extensions", "Website")
+
+# Translators: This is a status label in the User Extensions preferences page and
+# in the user extension information dialog. It means Orca found a Python file or
+# package, but it does not contain a valid Orca extension.
+EXTENSIONS_STATUS_INVALID = C_("user extensions", "Invalid")
+
+# Translators: This is a status label in the User Extensions preferences page and
+# in the user extension information dialog. It means the user has approved this
+# extension and Orca is allowed to load and run it.
+EXTENSIONS_STATUS_APPROVED = C_("user extensions", "Approved")
+
+# Translators: This is a status label in the User Extensions preferences page and
+# in the user extension information dialog. It means the extension has been
+# approved, but the user has currently turned it off.
+EXTENSIONS_STATUS_DISABLED = C_("user extensions", "Disabled")
+
+# Translators: This is a status label in the User Extensions preferences page and
+# in the user extension information dialog. It means the user has not yet
+# approved this extension, so Orca will not load or run it.
+EXTENSIONS_STATUS_UNAPPROVED = C_("user extensions", "Not approved")
+
+# Translators: This is a status label in the User Extensions preferences page and
+# in the user extension information dialog. It means the extension was approved
+# previously, but its file or package contents have changed and must be approved
+# again before Orca will load and run it.
+EXTENSIONS_STATUS_MODIFIED = C_("user extensions", "Modified; re-approval required")
 
 # Translators: This is the label for a widget in the preferences dialog.
 DIALOG_SAVE_AS = _("Save _As")

@@ -12,20 +12,28 @@ This feature is early and experimental. The following are still pending:
 ## Overview
 
 User extensions allow you to add custom behavior to Orca, including keyboard
-commands and speech output hooks. An extension is a Python file containing a
-class that subclasses `Extension`.
+commands and speech output hooks. An extension contains a class that subclasses
+`Extension`.
 
-Extensions live in `~/.local/share/orca/extensions/`. Each `.py` file in that
-directory that contains an `Extension` subclass is a potential extension.
+Extensions live in `~/.local/share/orca/extensions/`. Orca supports both
+single-file extensions and package extensions:
+
+```text
+~/.local/share/orca/extensions/hello_world.py
+~/.local/share/orca/extensions/reverse_words/__init__.py
+```
+
+Each `.py` file or package directory with an `__init__.py` file containing an
+`Extension` subclass is a potential extension.
 
 ## Approving Extensions
 
 For security, extensions must be approved before Orca will load them. When Orca
-discovers an unapproved extension, it logs the file's SHA256 hash.
+discovers an unapproved extension, it logs the extension's SHA256 hash.
 
 Use the User Extensions page in Orca's Preferences window to approve,
-re-approve, or revoke user extensions. The page computes the file's SHA256 hash
-and persists the approval in dconf. This is the recommended way to manage
+re-approve, or revoke user extensions. The page computes the extension's SHA256
+hash and persists the approval in dconf. This is the recommended way to manage
 approval.
 
 Approval and revocation can also be done via the command line:
@@ -33,19 +41,23 @@ Approval and revocation can also be done via the command line:
 ```sh
 # Approve an extension:
 orca --approve-extension my_extension.py
+orca --approve-extension my_package
 
 # Revoke approval:
 orca --revoke-extension my_extension.py
+orca --revoke-extension my_package
 ```
 
-These commands compute the file's SHA256 hash and persist the approval in dconf.
+These commands compute the extension's SHA256 hash and persist the approval in
+dconf. For package extensions, Orca computes the hash from the package contents.
 Extensions approved from the command line will be loaded on the next Orca
 startup.
 
 If you edit an approved extension, its hash changes and Orca will not load it
 until you re-approve it from the User Extensions preferences page or the command
-line. If you delete an extension file, its approval entry remains but has no
-effect. There is currently no automatic cleanup of stale approvals.
+line. If you delete an extension file or package directory, its approval entry
+remains but has no effect. There is currently no automatic cleanup of stale
+approvals.
 
 ## Disabling Extensions
 
@@ -81,8 +93,19 @@ extension is just a matter of removing it from the disabled list.
 
 Optional class attributes:
 
-- `GROUP_DESCRIPTION`: A short description shown in Orca's User Extensions
-  preferences page.
+- `DESCRIPTION`: A short description shown in Orca's User Extensions
+  preferences page and extension information dialog.
+- `VERSION`: Version string shown in the extension information dialog.
+- `AUTHOR`: Author string shown in the extension information dialog.
+- `ORGANIZATION`: Organization string shown in the extension information
+  dialog.
+- `COPYRIGHT`: Copyright holder or notice shown in the extension information
+  dialog.
+- `WEBSITE`: Website shown in the extension information dialog.
+
+Metadata is read from the extension class without executing the extension.
+Simple string constants are supported. The User Extensions page includes an
+Info button for each extension that displays this metadata.
 
 ### Command Functions
 
@@ -245,7 +268,12 @@ class HelloWorld(Extension):
     """Example extension with greeting and voice-info commands."""
 
     GROUP_LABEL = "Hello World"
-    GROUP_DESCRIPTION = "Adds greeting and voice-info commands."
+    DESCRIPTION = "Adds greeting and voice-info commands."
+    VERSION = "1.0"
+    AUTHOR = "Extension Author"
+    ORGANIZATION = "Example, Inc."
+    COPYRIGHT = "2026 Example, Inc."
+    WEBSITE = "https://example.com/hello-world"
 
     def _get_greeting_message(self) -> str:
         return self.settings.get("greeting-message", default="Hello, world!")
@@ -257,7 +285,7 @@ class HelloWorld(Extension):
         return self.settings.get("slow-rate", default=20)
 
     def _get_fast_rate(self) -> int:
-        return self.settings.get("fast-rate", default=80)
+        return self.settings.get("fast-rate", default=90)
 
     def _get_commands(self) -> list[Command]:
         return [
@@ -402,6 +430,9 @@ The `excluded-applications` setting is a list of application names. The
 roles. Application and role filters are only used for speech associated with an
 accessible object; messages do not have an object.
 
+Create this as a package extension in
+`~/.local/share/orca/extensions/reverse_words/__init__.py`.
+
 ```python
 """Example extension that reverses the order of spoken words."""
 
@@ -417,7 +448,12 @@ class ReverseWords(Extension):
     """Reverses word order before Orca sends speech to the synthesizer."""
 
     GROUP_LABEL = "Reverse Words"
-    GROUP_DESCRIPTION = "Reverses spoken word order for testing speech hooks."
+    DESCRIPTION = "Reverses spoken word order for testing speech hooks."
+    VERSION = "1.0"
+    AUTHOR = "Extension Author"
+    ORGANIZATION = "Example, Inc."
+    COPYRIGHT = "2026 Example, Inc."
+    WEBSITE = "https://example.com/reverse-words"
 
     def _applies_to_message(self) -> bool:
         scope = self.settings.get("scope", default="objects")

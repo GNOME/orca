@@ -65,6 +65,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._scrolled: Gtk.ScrolledWindow | None = None
         self._rows_by_filename: dict[str, Gtk.ListBoxRow] = {}
         self._switches_by_filename: dict[str, Gtk.Switch] = {}
+        self._info_buttons_by_filename: dict[str, Gtk.Button] = {}
         self._approve_buttons_by_filename: dict[str, Gtk.Button] = {}
         self._revoke_buttons_by_filename: dict[str, Gtk.Button] = {}
         self._summary_labels_by_filename: dict[str, Gtk.Label] = {}
@@ -106,6 +107,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._listbox.get_accessible().set_name(guilabels.USER_EXTENSIONS)
         self._rows_by_filename = {}
         self._switches_by_filename = {}
+        self._info_buttons_by_filename = {}
         self._approve_buttons_by_filename = {}
         self._revoke_buttons_by_filename = {}
         self._summary_labels_by_filename = {}
@@ -149,6 +151,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._rows_by_filename[info.filename] = row
         self._switches_by_filename[info.filename] = switch
         self._summary_labels_by_filename[info.filename] = summary_label
+        self._info_buttons_by_filename[info.filename] = action_buttons["info"]
         self._approve_buttons_by_filename[info.filename] = action_buttons["approve"]
         self._revoke_buttons_by_filename[info.filename] = action_buttons["revoke"]
         self._sync_row(info)
@@ -170,6 +173,12 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         """Returns action buttons for an extension row."""
 
         return [
+            preferences_grid_base.ListRowAction(
+                "info",
+                guilabels.EXTENSIONS_INFO_BUTTON,
+                lambda _button: self._on_info_clicked(filename),
+                "help-about-symbolic",
+            ),
             preferences_grid_base.ListRowAction(
                 "approve",
                 guilabels.EXTENSIONS_APPROVE,
@@ -196,6 +205,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         filename = info.filename
         summary_label = self._summary_labels_by_filename.get(filename)
         switch = self._switches_by_filename.get(filename)
+        info_button = self._info_buttons_by_filename.get(filename)
         approve_button = self._approve_buttons_by_filename.get(filename)
         revoke_button = self._revoke_buttons_by_filename.get(filename)
         detail_text = self._get_detail_text(info)
@@ -225,6 +235,9 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             approve_button.get_accessible().set_name(approve_label)
             approve_button.set_sensitive(can_approve)
 
+        if info_button is not None:
+            info_button.set_sensitive(True)
+
         if revoke_button is not None:
             revoke_button.set_sensitive(can_revoke)
 
@@ -242,10 +255,10 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             extension_loader.UserExtensionStatus.DISABLED,
             extension_loader.UserExtensionStatus.UNAPPROVED,
         ):
-            return info.group_description
+            return info.description
 
-        if info.group_description:
-            return info.group_description
+        if info.description:
+            return info.description
         status = self._get_status_label(info.status)
         return status
 
@@ -266,9 +279,130 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         labels = {
             extension_loader.UserExtensionStatus.INVALID: guilabels.EXTENSIONS_STATUS_INVALID,
+            extension_loader.UserExtensionStatus.UNAPPROVED: guilabels.EXTENSIONS_STATUS_UNAPPROVED,
+            extension_loader.UserExtensionStatus.APPROVED: guilabels.EXTENSIONS_STATUS_APPROVED,
+            extension_loader.UserExtensionStatus.DISABLED: guilabels.EXTENSIONS_STATUS_DISABLED,
             extension_loader.UserExtensionStatus.MODIFIED: guilabels.EXTENSIONS_STATUS_MODIFIED,
         }
         return labels[status]
+
+    def _on_info_clicked(self, filename: str) -> None:
+        """Show metadata for an extension."""
+
+        info = self._get_info(filename)
+        if info is None:
+            return
+
+        parent = self.get_toplevel()
+        transient_for = parent if isinstance(parent, Gtk.Window) else None
+        dialog = Gtk.Dialog(
+            title=self._get_display_name(info),
+            transient_for=transient_for,
+            modal=True,
+        )
+        dialog.add_button(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
+        dialog.set_default_response(Gtk.ResponseType.CLOSE)
+        dialog.set_default_size(640, -1)
+        dialog.set_resizable(False)
+        dialog.set_border_width(12)
+
+        listbox = Gtk.ListBox()
+        listbox.set_selection_mode(Gtk.SelectionMode.SINGLE)
+        listbox.get_style_context().add_class("frame")
+        listbox.set_header_func(self._separator_header_func, None)
+        listbox.set_margin_top(6)
+        listbox.set_margin_bottom(6)
+        listbox.set_margin_start(6)
+        listbox.set_margin_end(6)
+
+        for label, value in self._get_info_dialog_rows(info):
+            if label == guilabels.EXTENSIONS_INFO_WEBSITE:
+                listbox.add(self._create_info_dialog_link_row(label, value))
+            else:
+                listbox.add(self._create_info_dialog_row(label, value))
+
+        content_area = dialog.get_content_area()
+        content_area.add(listbox)
+        dialog.show_all()
+        dialog.run()
+        dialog.destroy()
+
+    @staticmethod
+    def _separator_header_func(row: Gtk.ListBoxRow, before: Gtk.ListBoxRow | None, _data) -> None:
+        """Add separators between metadata rows."""
+
+        if before is not None:
+            row.set_header(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL))
+
+    @staticmethod
+    def _create_info_dialog_row(label: str, value: str) -> Gtk.ListBoxRow:
+        """Returns a metadata row."""
+
+        row = Gtk.ListBoxRow()
+        row.set_activatable(False)
+
+        label_widget = Gtk.Label(label=f"{label}: {value}", xalign=0)
+        label_widget.set_margin_top(6)
+        label_widget.set_margin_bottom(6)
+        label_widget.set_margin_start(12)
+        label_widget.set_margin_end(12)
+        label_widget.set_hexpand(True)
+        label_widget.set_line_wrap(True)
+        label_widget.set_max_width_chars(72)
+
+        row.add(label_widget)
+        return row
+
+    @staticmethod
+    def _create_info_dialog_link_row(label: str, value: str) -> Gtk.ListBoxRow:
+        """Returns a metadata row with an activatable link."""
+
+        row = Gtk.ListBoxRow()
+        row.set_activatable(False)
+
+        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+        hbox.set_margin_top(6)
+        hbox.set_margin_bottom(6)
+        hbox.set_margin_start(12)
+        hbox.set_margin_end(12)
+
+        label_widget = Gtk.Label(label=f"{label}: ", xalign=0)
+        link_button = Gtk.LinkButton.new_with_label(value, value)
+        link_button.get_accessible().set_name(f"{label}: {value}")
+        link_button.set_relief(Gtk.ReliefStyle.NONE)
+
+        def focus_link() -> bool:
+            link_button.grab_focus()
+            return False
+
+        def on_row_focus_in(*_args) -> bool:
+            GLib.idle_add(focus_link)
+            return False
+
+        row.connect("focus-in-event", on_row_focus_in)
+        hbox.pack_start(label_widget, False, False, 0)
+        hbox.pack_start(link_button, False, False, 0)
+        row.add(hbox)
+        return row
+
+    def _get_info_dialog_rows(
+        self,
+        info: extension_loader.UserExtensionInfo,
+    ) -> list[tuple[str, str]]:
+        """Returns rows for the extension information dialog."""
+
+        rows = [
+            (guilabels.EXTENSIONS_INFO_NAME, self._get_display_name(info)),
+            (guilabels.EXTENSIONS_INFO_DESCRIPTION, info.description),
+            (guilabels.EXTENSIONS_INFO_LOCATION, info.filepath),
+            (guilabels.EXTENSIONS_INFO_STATUS, self._get_status_label(info.status)),
+            (guilabels.EXTENSIONS_INFO_VERSION, info.version),
+            (guilabels.EXTENSIONS_INFO_AUTHOR, info.author),
+            (guilabels.EXTENSIONS_INFO_ORGANIZATION, info.organization),
+            (guilabels.EXTENSIONS_INFO_COPYRIGHT, info.copyright),
+            (guilabels.EXTENSIONS_INFO_WEBSITE, info.website),
+        ]
+        return [(label, value) for label, value in rows if value]
 
     def _on_approve_clicked(self, filename: str) -> None:
         """Approve or re-approve an extension."""

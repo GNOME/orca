@@ -86,6 +86,37 @@ class TestExtensionLoaderDataclass:
         finally:
             sys.modules.pop("orca_user_extension.dctest", None)
 
+    def test_package_extension_loads(self, test_context: OrcaTestContext, tmp_path: Path) -> None:
+        """Test a package extension loads from its __init__.py file."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.command_manager", "orca.gsettings_registry"]
+        )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        essential_modules[
+            "orca.gsettings_registry"
+        ].GSettingsRegistry.sanitize_gsettings_path.side_effect = lambda name: name.lower()
+        from orca.extension import Extension
+        from orca.extension_loader import ExtensionLoader
+
+        ext_dir = tmp_path / "pkgtest"
+        ext_dir.mkdir()
+        (ext_dir / "__init__.py").write_text(
+            "from orca.extension import Extension\n"
+            "class PackageExtension(Extension):\n"
+            '    GROUP_LABEL = "Package"\n'
+        )
+
+        try:
+            result = ExtensionLoader._load_from_file(str(ext_dir), "pkgtest")
+            assert isinstance(result, Extension)
+            assert result.GROUP_LABEL == "Package"
+            assert result.settings._namespace == "pkgtest"
+        finally:
+            sys.modules.pop("orca_user_extension.pkgtest", None)
+
     def test_iter_speech_output_handlers_returns_enabled_user_extensions_with_hook(
         self,
         test_context: OrcaTestContext,
@@ -168,7 +199,12 @@ class TestExtensionLoaderDataclass:
             "from orca.extension import Extension\n"
             "class ApprovedExtension(Extension):\n"
             '    GROUP_LABEL = "Approved"\n'
-            '    GROUP_DESCRIPTION = "Approved description"\n'
+            '    DESCRIPTION = "Adds commands for testing approved extensions."\n'
+            '    VERSION = "1.2"\n'
+            '    AUTHOR = "Example Author"\n'
+            '    ORGANIZATION = "Example, Inc."\n'
+            '    COPYRIGHT = "2026 Example, Inc."\n'
+            '    WEBSITE = "https://example.com/approved-extension"\n'
         )
         modified_path = tmp_path / "modified.py"
         modified_path.write_text(
@@ -198,7 +234,12 @@ class TestExtensionLoaderDataclass:
 
         assert infos["approved.py"].class_name == "ApprovedExtension"
         assert infos["approved.py"].group_label == "Approved"
-        assert infos["approved.py"].group_description == "Approved description"
+        assert infos["approved.py"].description == "Adds commands for testing approved extensions."
+        assert infos["approved.py"].version == "1.2"
+        assert infos["approved.py"].author == "Example Author"
+        assert infos["approved.py"].organization == "Example, Inc."
+        assert infos["approved.py"].copyright == "2026 Example, Inc."
+        assert infos["approved.py"].website == "https://example.com/approved-extension"
         assert infos["approved.py"].status is UserExtensionStatus.DISABLED
         assert infos["modified.py"].group_label == "Modified"
         assert infos["unapproved.py"].group_label == "Unapproved"
@@ -206,6 +247,72 @@ class TestExtensionLoaderDataclass:
         assert infos["unapproved.py"].status is UserExtensionStatus.UNAPPROVED
         assert infos["invalid.py"].status is UserExtensionStatus.INVALID
         assert "orca_user_extension.approved" not in sys.modules
+
+    def test_discover_user_extensions_reports_package_extensions(
+        self,
+        test_context: OrcaTestContext,
+        tmp_path: Path,
+    ) -> None:
+        """Test discovery includes package extensions without executing them."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.command_manager", "orca.gsettings_registry"]
+        )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        from orca.extension_loader import ExtensionLoader, UserExtensionStatus
+
+        package_dir = tmp_path / "packaged"
+        package_dir.mkdir()
+        (package_dir / "__init__.py").write_text(
+            "from orca.extension import Extension\n"
+            "class PackageExtension(Extension):\n"
+            '    GROUP_LABEL = "Packaged"\n'
+        )
+        (package_dir / "__pycache__").mkdir()
+        (package_dir / "__pycache__" / "ignored.pyc").write_bytes(b"ignored")
+
+        loader = ExtensionLoader()
+        loader.get_approved_extensions = test_context.Mock(
+            return_value={"packaged": loader._compute_hash(str(package_dir))}
+        )
+        loader.get_disabled_extensions = test_context.Mock(return_value=[])
+
+        infos = {info.filename: info for info in loader.discover_user_extensions(str(tmp_path))}
+
+        assert infos["packaged"].is_package is True
+        assert infos["packaged"].filepath == str(package_dir)
+        assert infos["packaged"].class_name == "PackageExtension"
+        assert infos["packaged"].group_label == "Packaged"
+        assert infos["packaged"].status is UserExtensionStatus.APPROVED
+        assert "orca_user_extension.packaged" not in sys.modules
+
+    def test_package_hash_ignores_bytecode_cache(
+        self,
+        test_context: OrcaTestContext,
+        tmp_path: Path,
+    ) -> None:
+        """Test package approval hash ignores bytecode cache files."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.command_manager", "orca.gsettings_registry"]
+        )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        from orca.extension_loader import ExtensionLoader
+
+        package_dir = tmp_path / "packaged"
+        package_dir.mkdir()
+        (package_dir / "__init__.py").write_text("VALUE = 1\n")
+
+        first_hash = ExtensionLoader._compute_hash(str(package_dir))
+        (package_dir / "__pycache__").mkdir()
+        (package_dir / "__pycache__" / "ignored.pyc").write_bytes(b"ignored")
+        (package_dir / ".ignored").write_text("ignored")
+
+        assert ExtensionLoader._compute_hash(str(package_dir)) == first_hash
 
     def test_reload_user_extensions_unloads_old_extensions_and_sets_up_new_ones(
         self,
