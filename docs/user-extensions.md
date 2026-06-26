@@ -399,6 +399,138 @@ class HelloWorld(Extension):
         return True
 ```
 
+## Modal Input Handling
+
+Extensions can temporarily observe input events for which Orca has a key grab
+by becoming Orca's modal input handler. This is useful when an extension has a
+mode in which it needs to observe, consume, or pass through Orca commands before
+they are executed.
+
+User extensions must not grab the keyboard. Keyboard grabs are difficult to get
+right and can prevent the user from controlling their session. Instead, register
+normal commands for keys your extension needs. Use modal input handling only for
+events bound to another Orca command that your extension temporarily needs to
+override.
+
+If a modal input handler is active, when Orca receives an input event for which
+there is a key grab, Orca calls two methods on the handler:
+
+- `will_handle_event(script, event, command)`: Return `True` to claim the
+  event, or `False` to leave it to Orca's normal event processing. The
+  `command` argument is the Orca command matched to the event, or `None` if no
+  command matched.
+- `handle_event(script, event, command)`: Handle an event that was claimed by
+  `will_handle_event()`.
+
+Only one modal input handler can be active at a time. User extension modal
+handlers cannot replace another active modal handler. Orca's own modal handlers
+can replace a user extension modal handler when needed, for instance when an
+Orca command starts a built-in modal feature. When your mode starts, call
+`command_manager.get_manager().set_modal_handler(self)`. If it returns `False`,
+another modal handler is active and your extension should not enter its mode.
+When your mode ends, call `clear_modal_handler(self)`. Orca only clears the
+handler if it still belongs to your extension.
+
+To pass a command through after observing it, call `command.execute(script,
+event)`. To consume a command, return `True` without executing the command.
+
+### Modal Command Observer Example
+
+This example toggles a modal command observer with Orca+Shift+F2. When enabled,
+it consumes Orca+E regardless of the command currently bound to that keystroke.
+It presents other commands it sees and then passes them through.
+
+```python
+"""Example extension demonstrating modal command observation."""
+
+from orca import command_manager, keybindings
+from orca.command import Command, KeyboardCommand
+from orca.extension import Extension
+
+
+class ModalCommandObserver(Extension):
+    """Observes and optionally consumes Orca commands while enabled."""
+
+    GROUP_LABEL = "Modal Command Observer"
+    DESCRIPTION = "Demonstrates observing, passing through, and consuming commands."
+    VERSION = "1.0"
+    AUTHOR = "Extension Author"
+    ORGANIZATION = "Example, Inc."
+    COPYRIGHT = "2026 Example, Inc."
+    WEBSITE = "https://example.com/modal-command-observer"
+
+    def __init__(self) -> None:
+        self._enabled = False
+        super().__init__()
+
+    def _get_commands(self) -> list[Command]:
+        return [
+            KeyboardCommand(
+                "toggle_modal_command_observer",
+                self.toggle_observer,
+                self.GROUP_LABEL,
+                "Toggles modal command observation",
+                desktop_keybinding=keybindings.KeyBinding(
+                    "F2", keybindings.ORCA_SHIFT_MODIFIER_MASK,
+                ),
+                laptop_keybinding=keybindings.KeyBinding(
+                    "F2", keybindings.ORCA_SHIFT_MODIFIER_MASK,
+                ),
+            ),
+        ]
+
+    def toggle_observer(self) -> bool:
+        manager = command_manager.get_manager()
+
+        if not self._enabled:
+            if not manager.set_modal_handler(self):
+                self.controller.present_message_internal(
+                    "Another modal input handler is active."
+                )
+                return True
+            self._enabled = True
+            self.controller.present_message_internal("Modal command observer enabled.")
+            return True
+
+        manager.clear_modal_handler(self)
+        self._enabled = False
+        self.controller.present_message_internal("Modal command observer disabled.")
+        return True
+
+    def will_handle_event(self, script, event, command=None) -> bool:
+        if not self._enabled:
+            return False
+
+        if not event.is_pressed_key():
+            return False
+
+        if self._is_consumed_event(event):
+            return True
+
+        return command is not None and command.get_name() != (
+            "toggle_modal_command_observer"
+        )
+
+    def handle_event(self, script, event, command=None) -> bool:
+        if self._is_consumed_event(event):
+            self.controller.present_message_internal("I am consuming Orca+E.")
+            return True
+
+        if command is None:
+            return False
+
+        description = command.get_description() or command.get_name()
+        self.controller.present_message_internal(
+            f"I see you want to use {description}. Ok."
+        )
+        return command.execute(script, event)
+
+    def _is_consumed_event(self, event) -> bool:
+        return keybindings.KeyBinding("e", keybindings.ORCA_MODIFIER_MASK).matches(
+            event.id, event.hw_code, event.modifiers
+        )
+```
+
 ## Speech Output Hooks
 
 Extensions can observe, replace, or consume speech immediately before Orca sends
