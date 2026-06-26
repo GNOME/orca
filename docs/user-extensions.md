@@ -113,6 +113,24 @@ Command functions take no arguments (other than `self`) and return `True` when
 handled. The base class automatically wraps them to be compatible with Orca's
 internal command dispatch.
 
+### Shutdown Hook
+
+Override `on_shutdown()` if your extension needs to clean up when Orca exits:
+
+```python
+def on_shutdown(self) -> None:
+    self._stop_background_worker()
+```
+
+Shutdown hooks must return quickly. Orca starts all loaded user-extension
+shutdown hooks, waits up to half a second total for them to finish, then
+continues shutting down so an extension cannot block shutdown.
+Shutdown hooks should only do local cleanup, such as stopping background
+workers or closing files. They should not present messages, invoke speech or
+braille commands, start services, or do network work. Orca has already
+presented "Screen reader off" before calling these hooks and is in the process
+of shutting down.
+
 ### Keybindings
 
 Each command needs a `KeyboardCommand` with a name, function, group label,

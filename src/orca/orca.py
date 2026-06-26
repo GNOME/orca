@@ -46,6 +46,7 @@ from . import (
     debug,
     debugging_tools_manager,
     event_manager,
+    extension_loader,
     focus_manager,
     messages,
     mouse_presenter,
@@ -115,6 +116,7 @@ def shutdown(_event=None, _signum=None):
     manager.interrupt_presentation()
     manager.present_message(messages.STOP_ORCA)
 
+    extension_loader.get_loader().shutdown_user_extensions()
     dbus_service.get_remote_controller().shutdown()
     orca_modifier_manager.get_manager().unset_orca_modifiers("Shutting down.")
 

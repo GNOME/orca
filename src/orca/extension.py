@@ -231,6 +231,9 @@ class Extension:
 
         return None
 
+    def on_shutdown(self) -> None:
+        """Called when Orca is shutting down."""
+
     @staticmethod
     def _wrap_function(func):
         """Wraps a user extension method so it accepts and discards script and event."""

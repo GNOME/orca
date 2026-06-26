@@ -27,6 +27,8 @@ import hashlib
 import importlib.util
 import os
 import sys
+import threading
+import time
 from dataclasses import dataclass
 from enum import Enum
 from typing import TYPE_CHECKING
@@ -96,6 +98,8 @@ class UserExtensionInfo:
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Extensions", name="extensions")
 class ExtensionLoader:
     """Discovers, validates, and loads built-in and user extensions."""
+
+    _SHUTDOWN_HOOK_TOTAL_TIMEOUT_SECONDS = 0.5
 
     def __init__(self) -> None:
         self._builtins: list[tuple[Callable[[], Extension], str]] = []
@@ -343,6 +347,39 @@ class ExtensionLoader:
             msg = f"EXTENSION LOADER: Loading user extension {ext.module_name}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             ext.set_up_commands()
+
+    def shutdown_user_extensions(self) -> None:
+        """Notifies loaded user extensions that Orca is shutting down."""
+
+        threads: list[tuple[Extension, threading.Thread]] = []
+        for ext in self._user_extensions:
+            msg = f"EXTENSION LOADER: Shutting down user extension {ext.module_name}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            thread = threading.Thread(target=self._run_shutdown_hook, args=(ext,), daemon=True)
+            thread.start()
+            threads.append((ext, thread))
+
+        deadline = time.monotonic() + self._SHUTDOWN_HOOK_TOTAL_TIMEOUT_SECONDS
+        for _ext, thread in threads:
+            timeout = deadline - time.monotonic()
+            if timeout <= 0:
+                break
+            thread.join(timeout)
+
+        timed_out = [ext.module_name for ext, thread in threads if thread.is_alive()]
+        if timed_out:
+            names = ", ".join(timed_out)
+            msg = f"EXTENSION LOADER: Shutdown hook timed out for: {names}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+
+    @staticmethod
+    def _run_shutdown_hook(extension: Extension) -> None:
+        """Runs an extension shutdown hook, logging exceptions."""
+
+        try:
+            extension.on_shutdown()
+        except Exception:  # pylint: disable=broad-exception-caught
+            debug.print_exception(debug.LEVEL_WARNING)
 
     def iter_speech_output_handlers(self) -> list[Extension]:
         """Returns enabled user extensions that can handle outgoing speech."""

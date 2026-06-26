@@ -27,6 +27,7 @@
 from __future__ import annotations
 
 import sys
+import threading
 from typing import TYPE_CHECKING
 
 import pytest
@@ -178,6 +179,127 @@ class TestExtensionLoaderDataclass:
 
         assert loader.iter_speech_output_handlers() == []
         loader.get_disabled_extensions.assert_not_called()
+
+    def test_shutdown_user_extensions_notifies_loaded_extensions(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test loaded user extensions are notified of Orca shutdown."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.command_manager", "orca.gsettings_registry"]
+        )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        from orca.extension import Extension
+        from orca.extension_loader import ExtensionLoader
+
+        calls = []
+
+        class FirstExtension(Extension):
+            GROUP_LABEL = "First"
+
+            def on_shutdown(self) -> None:
+                calls.append("first")
+
+        class SecondExtension(Extension):
+            GROUP_LABEL = "Second"
+
+            def on_shutdown(self) -> None:
+                calls.append("second")
+
+        loader = ExtensionLoader()
+        loader._user_extensions = [FirstExtension(), SecondExtension()]
+
+        loader.shutdown_user_extensions()
+
+        assert sorted(calls) == ["first", "second"]
+
+    def test_shutdown_user_extensions_logs_and_continues_after_exception(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test one extension shutdown failure does not block other extensions."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.command_manager", "orca.gsettings_registry"]
+        )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        debug_mock = essential_modules["orca.debug"]
+        from orca.extension import Extension
+        from orca.extension_loader import ExtensionLoader
+
+        calls = []
+
+        class FirstExtension(Extension):
+            GROUP_LABEL = "First"
+
+            def on_shutdown(self) -> None:
+                calls.append("first")
+
+        class FailingExtension(Extension):
+            GROUP_LABEL = "Failing"
+
+            def on_shutdown(self) -> None:
+                calls.append("failing")
+                raise RuntimeError("Shutdown failed")
+
+        loader = ExtensionLoader()
+        loader._user_extensions = [FirstExtension(), FailingExtension()]
+
+        loader.shutdown_user_extensions()
+
+        assert sorted(calls) == ["failing", "first"]
+        debug_mock.print_exception.assert_called_once_with(debug_mock.LEVEL_WARNING)
+
+    def test_shutdown_user_extensions_stops_after_timeout(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test blocking shutdown hooks do not block Orca shutdown."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.command_manager", "orca.gsettings_registry"]
+        )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        debug_mock = essential_modules["orca.debug"]
+        from orca.extension import Extension
+        from orca.extension_loader import ExtensionLoader
+
+        calls = []
+        block = threading.Event()
+
+        class FirstExtension(Extension):
+            GROUP_LABEL = "First"
+
+            def on_shutdown(self) -> None:
+                calls.append("first")
+
+        class BlockingExtension(Extension):
+            GROUP_LABEL = "Blocking"
+
+            def on_shutdown(self) -> None:
+                calls.append("blocking")
+                block.wait()
+
+        loader = ExtensionLoader()
+        loader._SHUTDOWN_HOOK_TOTAL_TIMEOUT_SECONDS = 0.01
+        loader._user_extensions = [FirstExtension(), BlockingExtension()]
+
+        loader.shutdown_user_extensions()
+        block.set()
+
+        assert sorted(calls) == ["blocking", "first"]
+        debug_mock.print_message.assert_any_call(
+            debug_mock.LEVEL_WARNING,
+            "EXTENSION LOADER: Shutdown hook timed out for: BlockingExtension",
+            True,
+        )
 
     def test_discover_user_extensions_reports_status_without_loading(
         self,
