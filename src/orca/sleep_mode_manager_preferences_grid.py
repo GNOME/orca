@@ -29,7 +29,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk  # pylint: disable=no-name-in-module
 
-from . import gsettings_registry, guilabels, preferences_grid_base
+from . import gsettings_registry, guilabels, orca_gui_base, preferences_grid_base
 
 if TYPE_CHECKING:
     from .sleep_mode_manager import SleepModeManager
@@ -74,7 +74,7 @@ class SleepModePreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         row = 0
 
-        info_listbox = self._create_info_listbox(guilabels.SLEEP_MODE_INFO)
+        info_listbox = orca_gui_base.create_info_listbox(guilabels.SLEEP_MODE_INFO)
         info_listbox.set_margin_bottom(12)
         self.attach(info_listbox, 0, row, 1, 1)
         row += 1

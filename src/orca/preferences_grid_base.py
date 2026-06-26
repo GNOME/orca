@@ -40,6 +40,8 @@ gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Atk, Gdk, GLib, Gtk  # pylint: disable=no-name-in-module
 
+from . import orca_gui_base
+
 if TYPE_CHECKING:
     from collections.abc import Callable, Sequence
 
@@ -614,43 +616,6 @@ class PreferencesGridBase(Gtk.Grid):
 
         return frame, content_container
 
-    def _create_info_row(
-        self,
-        message: str,
-        icon_name: str = "dialog-information-symbolic",
-    ) -> Gtk.ListBoxRow:
-        """Create a single-row informational message with icon."""
-
-        row = Gtk.ListBoxRow()
-        row.set_activatable(False)
-        row.set_can_focus(True)
-
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
-
-        icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.DND)
-        icon.set_valign(Gtk.Align.START)
-        hbox.pack_start(icon, False, False, 0)
-
-        icon_accessible = icon.get_accessible()
-        if icon_accessible:
-            icon_accessible.set_role(Atk.Role.IMAGE)
-
-        label = Gtk.Label(label=message, xalign=0)
-        label.set_line_wrap(True)
-        label.set_max_width_chars(60)
-        label.set_hexpand(True)
-        hbox.pack_start(label, True, True, 0)
-
-        row.add(hbox)
-
-        row_accessible = row.get_accessible()
-        if row_accessible:
-            row_accessible.set_name(message)
-            row_accessible.set_role(Atk.Role.LABEL)
-
-        return row
-
     @staticmethod
     def _create_listbox() -> Gtk.ListBox:
         """Creates a styled, non-selectable ListBox."""
@@ -658,24 +623,6 @@ class PreferencesGridBase(Gtk.Grid):
         listbox = Gtk.ListBox()
         listbox.set_selection_mode(Gtk.SelectionMode.NONE)
         listbox.get_style_context().add_class("frame")
-        return listbox
-
-    def _create_info_listbox(
-        self,
-        message: str,
-        icon_name: str = "dialog-information-symbolic",
-    ) -> Gtk.ListBox:
-        """Create a listbox with a single info row with proper accessibility."""
-
-        listbox = self._create_listbox()
-
-        listbox_accessible = listbox.get_accessible()
-        if listbox_accessible:
-            listbox_accessible.set_role(Atk.Role.PANEL)
-
-        info_row = self._create_info_row(message, icon_name)
-        listbox.add(info_row)
-
         return listbox
 
     def _create_label(
@@ -1513,7 +1460,6 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         tab_label: str,
         controls: Sequence[ControlType],
         info_message: str = "",
-        info_icon: str = "dialog-information-symbolic",
     ) -> None:
         """Initialize the grid with a list of controls."""
 
@@ -1524,7 +1470,6 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         self._group_labels: dict[str, Gtk.Label] = {}
         self._group_listboxes: dict[str, FocusManagedListBox] = {}
         self._info_message = info_message
-        self._info_icon = info_icon
         self._info_listbox: Gtk.ListBox | None = None
         self._initializing = True
 
@@ -1565,7 +1510,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         row = 0
 
         if self._info_message:
-            self._info_listbox = self._create_info_listbox(self._info_message, self._info_icon)
+            self._info_listbox = orca_gui_base.create_info_listbox(self._info_message)
             self._info_listbox.set_margin_bottom(24)
             content_grid.attach(self._info_listbox, 0, row, 1, 1)
             row += 1

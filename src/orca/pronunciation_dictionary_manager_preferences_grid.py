@@ -33,6 +33,7 @@ from . import (
     gsettings_registry,
     guilabels,
     messages,
+    orca_gui_base,
     preferences_grid_base,
     presentation_manager,
     script_manager,
@@ -134,32 +135,25 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         row = 0
 
         # Info box
-        info_listbox = self._create_info_listbox(guilabels.PRONUNCIATION_DICTIONARY_INFO)
+        info_listbox = orca_gui_base.create_info_listbox(guilabels.PRONUNCIATION_DICTIONARY_INFO)
         info_listbox.set_margin_bottom(12)
         self.attach(info_listbox, 0, row, 1, 1)
         row += 1
 
-        # Header box with title and + button
-        header_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        header_box.set_margin_bottom(6)
-
-        title_label = Gtk.Label(label=guilabels.PRONUNCIATION_DICTIONARY)
-        title_label.set_halign(Gtk.Align.START)
-        title_label.get_style_context().add_class("heading")
-        header_box.pack_start(title_label, True, True, 0)
-
-        add_button = Gtk.Button.new_from_icon_name("list-add-symbolic", Gtk.IconSize.BUTTON)
-        add_button.get_accessible().set_name(guilabels.DICTIONARY_NEW_ENTRY)
-        add_button.connect("clicked", self._on_add_clicked)
-        header_box.pack_end(add_button, False, False, 0)
+        header_box, _add_button = orca_gui_base.create_heading_action_box(
+            guilabels.PRONUNCIATION_DICTIONARY,
+            "list-add-symbolic",
+            guilabels.DICTIONARY_NEW_ENTRY,
+            self._on_add_clicked,
+        )
 
         self.attach(header_box, 0, row, 1, 1)
         row += 1
 
         # ListBox for pronunciation entries
-        self._listbox = Gtk.ListBox()
-        self._listbox.set_selection_mode(Gtk.SelectionMode.SINGLE)
-        self._listbox.get_style_context().add_class("frame")
+        self._listbox = orca_gui_base.create_framed_listbox(
+            selection_mode=Gtk.SelectionMode.SINGLE,
+        )
 
         # Suppress pronunciation substitution while editing entries
         self._listbox.connect("realize", self._on_listbox_realize)
@@ -507,7 +501,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
             if self.get_mapped():
                 self._schedule_build_chunk()
         else:
-            empty_row = self._create_info_row(guilabels.DICTIONARY_EMPTY)
+            empty_row = orca_gui_base.create_info_row(guilabels.DICTIONARY_EMPTY)
             self._listbox.add(empty_row)
             empty_row.show_all()
 

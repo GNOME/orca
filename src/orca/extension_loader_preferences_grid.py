@@ -78,14 +78,12 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         row = 0
 
-        info_listbox = self._create_info_listbox(guilabels.EXTENSIONS_INFO)
+        info_listbox = orca_gui_base.create_info_listbox(guilabels.EXTENSIONS_INFO)
         info_listbox.set_margin_bottom(12)
         self.attach(info_listbox, 0, row, 1, 1)
         row += 1
 
-        header_label = Gtk.Label(label=guilabels.USER_EXTENSIONS, xalign=0)
-        header_label.get_style_context().add_class("heading")
-        header_label.set_margin_bottom(6)
+        header_label = orca_gui_base.create_heading_label(guilabels.USER_EXTENSIONS, margin_top=0)
         self.attach(header_label, 0, row, 1, 1)
         row += 1
 
@@ -106,10 +104,10 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         """Rebuild the user extension list."""
 
         assert self._scrolled is not None
-        self._listbox = Gtk.ListBox()
-        self._listbox.set_selection_mode(Gtk.SelectionMode.SINGLE)
-        self._listbox.get_style_context().add_class("frame")
-        self._listbox.get_accessible().set_name(guilabels.USER_EXTENSIONS)
+        self._listbox = orca_gui_base.create_framed_listbox(
+            selection_mode=Gtk.SelectionMode.SINGLE,
+            accessible_name=guilabels.USER_EXTENSIONS,
+        )
         self._rows_by_filename = {}
         self._switches_by_filename = {}
         self._info_buttons_by_filename = {}
@@ -119,7 +117,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         infos = self._loader.discover_user_extensions(self._extensions_dir)
         if not infos:
-            self._listbox.add(self._create_info_row(guilabels.EXTENSIONS_NO_EXTENSIONS))
+            self._listbox.add(orca_gui_base.create_info_row(guilabels.EXTENSIONS_NO_EXTENSIONS))
         else:
             for info in infos:
                 self._add_extension_row(info)
@@ -308,10 +306,10 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         )
         dialog.set_transient_for(transient_for)
 
-        listbox = Gtk.ListBox()
-        listbox.set_selection_mode(Gtk.SelectionMode.SINGLE)
-        listbox.get_style_context().add_class("frame")
-        listbox.set_header_func(self._separator_header_func, None)
+        listbox = orca_gui_base.create_framed_listbox(
+            selection_mode=Gtk.SelectionMode.SINGLE,
+            separators=True,
+        )
         listbox.set_margin_top(6)
         listbox.set_margin_bottom(6)
         listbox.set_margin_start(6)
@@ -331,29 +329,20 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         dialog.destroy()
 
     @staticmethod
-    def _separator_header_func(row: Gtk.ListBoxRow, before: Gtk.ListBoxRow | None, _data) -> None:
-        """Add separators between metadata rows."""
-
-        if before is not None:
-            row.set_header(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL))
-
-    @staticmethod
     def _create_info_dialog_row(label: str, value: str) -> Gtk.ListBoxRow:
         """Returns a metadata row."""
 
         row = Gtk.ListBoxRow()
         row.set_activatable(False)
 
+        hbox = orca_gui_base.create_row_box()
         label_widget = Gtk.Label(label=f"{label}: {value}", xalign=0)
-        label_widget.set_margin_top(6)
-        label_widget.set_margin_bottom(6)
-        label_widget.set_margin_start(12)
-        label_widget.set_margin_end(12)
         label_widget.set_hexpand(True)
         label_widget.set_line_wrap(True)
         label_widget.set_max_width_chars(72)
+        hbox.pack_start(label_widget, True, True, 0)
 
-        row.add(label_widget)
+        row.add(hbox)
         return row
 
     @staticmethod
@@ -363,11 +352,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         row = Gtk.ListBoxRow()
         row.set_activatable(False)
 
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
-        hbox.set_margin_top(6)
-        hbox.set_margin_bottom(6)
-        hbox.set_margin_start(12)
-        hbox.set_margin_end(12)
+        hbox = orca_gui_base.create_row_box(spacing=0)
 
         label_widget = Gtk.Label(label=f"{label}: ", xalign=0)
         link_button = Gtk.LinkButton.new_with_label(value, value)

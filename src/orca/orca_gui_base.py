@@ -28,13 +28,14 @@ from typing import TYPE_CHECKING
 
 import gi
 
+gi.require_version("Atk", "1.0")
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gdk, Gio, GLib, Gtk  # pylint: disable=no-name-in-module
+from gi.repository import Atk, Gdk, Gio, GLib, Gtk  # pylint: disable=no-name-in-module
 
-from . import debug, guilabels
+from . import debug
 
 if TYPE_CHECKING:
-    from collections.abc import Sequence
+    from collections.abc import Callable, Sequence
 
 
 @dataclass
@@ -44,6 +45,16 @@ class AppearanceProviders:
     hc: Gtk.CssProvider
     dark: Gtk.CssProvider
     shapes: Gtk.CssProvider | None = None
+
+
+@dataclass(frozen=True)
+class ListRowAction:
+    """Action button metadata for custom list rows."""
+
+    name: str
+    label: str
+    callback: Callable[[Gtk.Button], None]
+    icon_name: str | None = None
 
 
 _BASE_CSS = b"""
@@ -244,6 +255,63 @@ def create_headerbar(title: str) -> Gtk.HeaderBar:
     return headerbar
 
 
+def set_margins(
+    widget: Gtk.Widget,
+    *,
+    start: int = 0,
+    end: int = 0,
+    top: int = 0,
+    bottom: int = 0,
+) -> None:
+    """Set all margins on a widget at once."""
+
+    widget.set_margin_start(start)
+    widget.set_margin_end(end)
+    widget.set_margin_top(top)
+    widget.set_margin_bottom(bottom)
+
+
+def create_row_box(spacing: int = 12, margin: int = 12) -> Gtk.Box:
+    """Return a standard horizontal row box."""
+
+    hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=spacing)
+    set_margins(hbox, start=margin, end=margin, top=margin, bottom=margin)
+    return hbox
+
+
+def create_heading_label(text: str, margin_top: int = 12) -> Gtk.Label:
+    """Return a heading label."""
+
+    label = Gtk.Label(label=text, xalign=0)
+    label.get_style_context().add_class("heading")
+    label.set_margin_top(margin_top)
+    label.set_margin_bottom(6)
+    return label
+
+
+def create_heading_action_box(
+    heading: str,
+    icon_name: str,
+    accessible_name: str,
+    clicked_handler: Callable[[Gtk.Button], None],
+) -> tuple[Gtk.Box, Gtk.Button]:
+    """Return a heading row with a trailing icon button."""
+
+    header_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
+    header_box.set_margin_bottom(6)
+
+    title_label = create_heading_label(heading, margin_top=0)
+    title_label.set_margin_bottom(0)
+    title_label.set_halign(Gtk.Align.START)
+    header_box.pack_start(title_label, True, True, 0)
+
+    button = Gtk.Button.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
+    button.get_accessible().set_name(accessible_name)
+    button.connect("clicked", clicked_handler)
+    header_box.pack_end(button, False, False, 0)
+    return header_box, button
+
+
 def create_dialog(
     title: str,
     *,
@@ -265,6 +333,8 @@ def create_dialog(
         dialog.set_default_size(*default_size)
 
     if buttons is None:
+        from . import guilabels  # pylint: disable=import-outside-toplevel
+
         buttons = ((guilabels.BTN_CLOSE, Gtk.ResponseType.CLOSE),)
     for label, response in buttons:
         dialog.add_button(label, response)
@@ -283,6 +353,229 @@ def create_dialog(
     action_area.set_margin_top(content_margin)
     action_area.set_margin_bottom(content_margin)
     return dialog
+
+
+def _separator_header_func(row: Gtk.ListBoxRow, before: Gtk.ListBoxRow | None, _data) -> None:
+    """Add a separator before rows after the first one."""
+
+    if before is not None:
+        row.set_header(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL))
+
+
+def create_framed_listbox(
+    *,
+    selection_mode: Gtk.SelectionMode = Gtk.SelectionMode.NONE,
+    accessible_name: str = "",
+    separators: bool = False,
+) -> Gtk.ListBox:
+    """Return an Orca-styled framed listbox."""
+
+    listbox = Gtk.ListBox()
+    listbox.set_selection_mode(selection_mode)
+    listbox.get_style_context().add_class("frame")
+    if accessible_name:
+        listbox.get_accessible().set_name(accessible_name)
+    if separators:
+        listbox.set_header_func(_separator_header_func, None)
+    return listbox
+
+
+def create_info_row(
+    message: str,
+    icon_name: str = "dialog-information-symbolic",
+) -> Gtk.ListBoxRow:
+    """Return an informational listbox row."""
+
+    row = Gtk.ListBoxRow()
+    row.set_activatable(False)
+    row.set_can_focus(True)
+
+    hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
+    set_margins(hbox, start=12, end=12, top=12, bottom=12)
+
+    icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.DND)
+    icon.set_valign(Gtk.Align.START)
+    hbox.pack_start(icon, False, False, 0)
+
+    icon_accessible = icon.get_accessible()
+    if icon_accessible:
+        icon_accessible.set_role(Atk.Role.IMAGE)
+
+    label = Gtk.Label(label=message, xalign=0)
+    label.set_line_wrap(True)
+    label.set_max_width_chars(60)
+    label.set_hexpand(True)
+    hbox.pack_start(label, True, True, 0)
+
+    row.add(hbox)
+
+    row_accessible = row.get_accessible()
+    if row_accessible:
+        row_accessible.set_name(message)
+        row_accessible.set_role(Atk.Role.LABEL)
+
+    return row
+
+
+def create_info_listbox(
+    message: str,
+    icon_name: str = "dialog-information-symbolic",
+) -> Gtk.ListBox:
+    """Return a framed listbox containing one informational row."""
+
+    listbox = create_framed_listbox()
+    listbox_accessible = listbox.get_accessible()
+    if listbox_accessible:
+        listbox_accessible.set_role(Atk.Role.PANEL)
+    listbox.add(create_info_row(message, icon_name))
+    return listbox
+
+
+def create_row_structure(  # pylint: disable=too-many-arguments,too-many-positional-arguments
+    include_top_separator: bool = True,
+    label_text: str | None = None,
+    widget: Gtk.Widget | None = None,
+    label_xalign: float | None = None,
+    label_halign: Gtk.Align | None = None,
+    label_hexpand: bool = True,
+    widget_expand: bool = False,
+) -> tuple[Gtk.ListBoxRow, Gtk.Box, Gtk.Label | None]:
+    """Return a standard listbox row structure."""
+
+    row = Gtk.ListBoxRow()
+    row.set_activatable(False)
+
+    vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+    if include_top_separator:
+        vbox.pack_start(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL), False, False, 0)
+
+    hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
+    set_margins(hbox, start=12, end=12, top=12, bottom=12)
+
+    label = None
+    if label_text and widget:
+        label = Gtk.Label(label=label_text)
+        label.set_use_underline(True)
+        if label_xalign is not None:
+            label.set_xalign(label_xalign)
+        if label_halign is not None:
+            label.set_halign(label_halign)
+        label.set_hexpand(label_hexpand)
+        hbox.pack_start(label, label_hexpand, label_hexpand, 0)
+        if not isinstance(widget, Gtk.Button):
+            label.set_mnemonic_widget(widget)
+        hbox.pack_end(widget, widget_expand, widget_expand, 0)
+
+    vbox.pack_start(hbox, False, False, 0)
+    row.add(vbox)
+    return row, hbox, label
+
+
+def create_switch_control(
+    changed_handler: Callable[..., None] | None = None,
+    state: bool | None = None,
+    accessible_name: str = "",
+    *handler_args: object,
+) -> Gtk.Switch:
+    """Return an Orca-styled switch."""
+
+    switch = Gtk.Switch()
+    switch.set_valign(Gtk.Align.CENTER)
+    if state is not None:
+        switch.set_active(state)
+    if accessible_name:
+        switch.get_accessible().set_name(accessible_name)
+    switch.get_accessible().set_role(Atk.Role.SWITCH)
+    if changed_handler is not None:
+        switch.connect("notify::active", changed_handler, *handler_args)
+    return switch
+
+
+def create_switch_row(
+    label_text: str,
+    changed_handler: Callable[..., None],
+    state: bool,
+    include_top_separator: bool = True,
+) -> tuple[Gtk.ListBoxRow, Gtk.Switch, Gtk.Label]:
+    """Return a standard listbox row with a label and switch."""
+
+    switch = create_switch_control(changed_handler, state)
+    row, _hbox, label = create_row_structure(
+        include_top_separator,
+        label_text,
+        switch,
+        label_xalign=0,
+    )
+    assert label is not None
+    return row, switch, label
+
+
+def set_stacked_label_text(
+    label: Gtk.Label,
+    primary_text: str,
+    secondary_text: str = "",
+    detail_text: str = "",
+) -> None:
+    """Set text for a stacked action-row label."""
+
+    lines = [primary_text]
+    lines.extend(text for text in (secondary_text, detail_text) if text)
+    label.set_text("\n".join(lines))
+
+
+def create_action_list_row(  # pylint: disable=too-many-arguments,too-many-positional-arguments
+    primary_text: str,
+    secondary_text: str,
+    actions: Sequence[ListRowAction] = (),
+    include_top_separator: bool = True,
+    primary_label_size_group: Gtk.SizeGroup | None = None,
+    stack_labels: bool = False,
+    detail_text: str = "",
+) -> tuple[Gtk.ListBoxRow, Gtk.Label, Gtk.Label, dict[str, Gtk.Button]]:
+    """Return a list row with labels and trailing action buttons."""
+
+    row = Gtk.ListBoxRow()
+    row.set_activatable(False)
+
+    vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
+    if include_top_separator:
+        vbox.pack_start(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL), False, False, 0)
+
+    hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
+    set_margins(hbox, start=12, end=12, top=12, bottom=12)
+
+    primary_label = Gtk.Label(label=primary_text, xalign=0)
+    secondary_label = Gtk.Label(label=secondary_text, xalign=0)
+    if stack_labels:
+        primary_label.set_hexpand(True)
+        primary_label.set_line_wrap(True)
+        primary_label.set_max_width_chars(60)
+        set_stacked_label_text(primary_label, primary_text, secondary_text, detail_text)
+        hbox.pack_start(primary_label, True, True, 0)
+    else:
+        if primary_label_size_group:
+            primary_label_size_group.add_widget(primary_label)
+        hbox.pack_start(primary_label, False, False, 0)
+        secondary_label.set_hexpand(True)
+        hbox.pack_start(secondary_label, True, True, 0)
+
+    action_buttons: dict[str, Gtk.Button] = {}
+    button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+    for action in actions:
+        if action.icon_name:
+            button = Gtk.Button.new_from_icon_name(action.icon_name, Gtk.IconSize.DND)
+            button.set_relief(Gtk.ReliefStyle.NONE)
+            button.get_accessible().set_name(action.label)
+        else:
+            button = Gtk.Button(label=action.label)
+        button.connect("clicked", action.callback)
+        button_box.pack_start(button, False, False, 0)
+        action_buttons[action.name] = button
+
+    hbox.pack_end(button_box, False, False, 0)
+    vbox.pack_start(hbox, False, False, 0)
+    row.add(vbox)
+    return row, primary_label, secondary_label, action_buttons
 
 
 def create_scrolled_window(child: Gtk.Widget | None = None) -> Gtk.ScrolledWindow:

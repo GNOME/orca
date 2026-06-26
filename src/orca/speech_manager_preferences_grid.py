@@ -36,7 +36,14 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import GObject, Gtk
 
-from . import gsettings_registry, guilabels, language_utilities, preferences_grid_base, speechserver
+from . import (
+    gsettings_registry,
+    guilabels,
+    language_utilities,
+    orca_gui_base,
+    preferences_grid_base,
+    speechserver,
+)
 from .acss import ACSS
 from .speechserver import CapitalizationStyle, PunctuationStyle
 
@@ -935,23 +942,17 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         row = 0
 
         msg = f"{guilabels.VOICE_SET_INFO} {guilabels.VOICE_SET_INFO_COMMANDS}"
-        info_listbox = self._create_info_listbox(msg)
+        info_listbox = orca_gui_base.create_info_listbox(msg)
         info_listbox.set_margin_bottom(12)
         self.attach(info_listbox, 0, row, 1, 1)
         row += 1
 
-        header_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        header_box.set_margin_bottom(6)
-
-        title_label = Gtk.Label(label=guilabels.LANGUAGE_VOICE_SETTINGS)
-        title_label.set_halign(Gtk.Align.START)
-        title_label.get_style_context().add_class("heading")
-        header_box.pack_start(title_label, True, True, 0)
-
-        self._add_button = Gtk.Button.new_from_icon_name("list-add-symbolic", Gtk.IconSize.BUTTON)
-        self._add_button.get_accessible().set_name(guilabels.VOICE_SET_CREATE_NEW)
-        self._add_button.connect("clicked", self._on_add_voice_set)
-        header_box.pack_end(self._add_button, False, False, 0)
+        header_box, self._add_button = orca_gui_base.create_heading_action_box(
+            guilabels.LANGUAGE_VOICE_SETTINGS,
+            "list-add-symbolic",
+            guilabels.VOICE_SET_CREATE_NEW,
+            self._on_add_voice_set,
+        )
 
         self.attach(header_box, 0, row, 1, 1)
         row += 1

@@ -34,6 +34,9 @@ import pytest
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
+GTK_INITIALIZED, _GTK_ARGV = Gtk.init_check()  # pylint: disable=no-value-for-parameter
+GTK_REQUIRED = pytest.mark.skipif(not GTK_INITIALIZED, reason="GTK could not be initialized")
+
 from orca.preferences_grid_base import (
     AutoPreferencesGrid,
     BooleanPreferenceControl,
@@ -165,6 +168,7 @@ class TestPreferenceControlDataclasses:
 
 
 @pytest.mark.unit
+@GTK_REQUIRED
 class TestHelperClasses:
     """Test helper classes in preferences_grid_base."""
 
@@ -288,6 +292,7 @@ class TestHelperClasses:
 
 
 @pytest.mark.unit
+@GTK_REQUIRED
 class TestFocusManagedListBox:
     """Test FocusManagedListBox focus management."""
 
@@ -340,6 +345,7 @@ class TestFocusManagedListBox:
 
 
 @pytest.mark.unit
+@GTK_REQUIRED
 class TestPreferencesGridBase:
     """Test PreferencesGridBase UI helper methods."""
 
@@ -425,10 +431,11 @@ class TestPreferencesGridBase:
         assert scale.get_value() == 50
 
     def test_create_info_listbox(self) -> None:
-        """Test _create_info_listbox creates listbox with info message."""
+        """Test create_info_listbox creates listbox with info message."""
 
-        grid = PreferencesGridBase("Test")
-        listbox = grid._create_info_listbox("This is an informational message.")
+        from orca import orca_gui_base
+
+        listbox = orca_gui_base.create_info_listbox("This is an informational message.")
 
         assert isinstance(listbox, Gtk.ListBox)
         assert listbox.get_selection_mode() == Gtk.SelectionMode.NONE
@@ -446,6 +453,7 @@ class TestPreferencesGridBase:
 
 
 @pytest.mark.unit
+@GTK_REQUIRED
 class TestAutoPreferencesGrid:
     """Test AutoPreferencesGrid automatic UI building."""
 
@@ -722,6 +730,7 @@ class TestAutoPreferencesGrid:
 
 
 @pytest.mark.unit
+@GTK_REQUIRED
 class TestAutoPreferencesGridSelectionControl:
     """Test AutoPreferencesGrid with SelectionPreferenceControl."""
 
@@ -797,6 +806,7 @@ class TestAutoPreferencesGridSelectionControl:
 
 
 @pytest.mark.unit
+@GTK_REQUIRED
 class TestPreferencesGridBaseMultiPageStack:
     """Test PreferencesGridBase multi-page stack functionality."""
 
@@ -866,6 +876,7 @@ class TestPreferencesGridBaseMultiPageStack:
 
 
 @pytest.mark.unit
+@GTK_REQUIRED
 class TestPreferencesGridBaseStackedPreferences:
     """Test PreferencesGridBase stacked drill-down preferences."""
 
