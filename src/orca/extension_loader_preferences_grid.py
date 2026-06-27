@@ -20,6 +20,9 @@
 
 """Preferences grid for user extension management."""
 
+# pylint: disable=no-member
+# pylint: disable=too-many-instance-attributes
+
 from __future__ import annotations
 
 import os
@@ -30,7 +33,7 @@ gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk  # pylint: disable=no-name-in-module
 
-from . import extension_loader, guilabels, orca_gui_base, preferences_grid_base
+from . import extension_loader, guilabels, orca_gui_helpers, preferences_grid_base
 
 
 class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
@@ -78,17 +81,17 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         row = 0
 
-        info_listbox = orca_gui_base.create_info_listbox(guilabels.EXTENSIONS_INFO)
-        info_listbox.set_margin_bottom(12)
+        info_listbox = orca_gui_helpers.create_info_listbox(guilabels.EXTENSIONS_INFO)
         self.attach(info_listbox, 0, row, 1, 1)
         row += 1
 
-        header_label = orca_gui_base.create_heading_label(guilabels.USER_EXTENSIONS, margin_top=0)
-        self.attach(header_label, 0, row, 1, 1)
-        row += 1
-
-        self._scrolled = self._create_scrolled_window(Gtk.Box())
-        self.attach(self._scrolled, 0, row, 1, 1)
+        section_box, section_content, _heading_label = orca_gui_helpers.create_section_box(
+            guilabels.USER_EXTENSIONS,
+            margin_top=0,
+        )
+        self._scrolled = orca_gui_helpers.create_preferences_scrolled_window()
+        orca_gui_helpers.add_section_content(section_box, section_content, self._scrolled)
+        self.attach(section_box, 0, row, 1, 1)
 
     def reload(self) -> None:
         """Reload extension metadata and refresh the UI."""
@@ -104,7 +107,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         """Rebuild the user extension list."""
 
         assert self._scrolled is not None
-        self._listbox = orca_gui_base.create_framed_listbox(
+        self._listbox = orca_gui_helpers.create_framed_listbox(
             selection_mode=Gtk.SelectionMode.SINGLE,
             accessible_name=guilabels.USER_EXTENSIONS,
         )
@@ -117,7 +120,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         infos = self._loader.discover_user_extensions(self._extensions_dir)
         if not infos:
-            self._listbox.add(orca_gui_base.create_info_row(guilabels.EXTENSIONS_NO_EXTENSIONS))
+            self._listbox.add(orca_gui_helpers.create_info_row(guilabels.EXTENSIONS_NO_EXTENSIONS))
         else:
             for info in infos:
                 self._add_extension_row(info)
@@ -133,18 +136,18 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         assert self._listbox is not None
 
-        row, summary_label, _detail_label, action_buttons = self._create_action_list_row(
+        row, summary_label, _detail_label, action_buttons = orca_gui_helpers.create_action_list_row(
             self._get_summary_text(info),
             self._get_detail_text(info),
             actions=self._get_actions(info.filename),
             stack_labels=True,
         )
 
-        switch = self._create_switch_control(
+        switch = orca_gui_helpers.create_switch_control(
             self._on_switch_toggled,
             info.status is extension_loader.UserExtensionStatus.APPROVED,
             "",
-            info.filename,
+            handler_args=(info.filename,),
         )
 
         hbox = self._get_action_list_row_box(row)
@@ -172,23 +175,23 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _get_actions(
         self,
         filename: str,
-    ) -> list[preferences_grid_base.ListRowAction]:
+    ) -> list[orca_gui_helpers.ListRowAction]:
         """Returns action buttons for an extension row."""
 
         return [
-            preferences_grid_base.ListRowAction(
+            orca_gui_helpers.ListRowAction(
                 "info",
                 guilabels.EXTENSIONS_INFO_BUTTON,
                 lambda _button: self._on_info_clicked(filename),
                 "help-about-symbolic",
             ),
-            preferences_grid_base.ListRowAction(
+            orca_gui_helpers.ListRowAction(
                 "approve",
                 guilabels.EXTENSIONS_APPROVE,
                 lambda _button: self._on_approve_clicked(filename),
                 "emblem-ok-symbolic",
             ),
-            preferences_grid_base.ListRowAction(
+            orca_gui_helpers.ListRowAction(
                 "revoke",
                 guilabels.EXTENSIONS_REVOKE,
                 lambda _button: self._on_revoke_clicked(filename),
@@ -214,7 +217,11 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         detail_text = self._get_detail_text(info)
 
         if summary_label is not None:
-            self._set_stacked_label_text(summary_label, self._get_summary_text(info), detail_text)
+            orca_gui_helpers.set_stacked_label_text(
+                summary_label,
+                self._get_summary_text(info),
+                detail_text,
+            )
 
         status = info.status
         can_approve = status in (
@@ -298,7 +305,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         parent = self.get_toplevel()
         transient_for = parent if isinstance(parent, Gtk.Window) else None
-        dialog = orca_gui_base.create_dialog(
+        dialog = orca_gui_helpers.create_dialog(
             self._get_display_name(info),
             default_size=(640, -1),
             default_response=Gtk.ResponseType.CLOSE,
@@ -306,7 +313,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         )
         dialog.set_transient_for(transient_for)
 
-        listbox = orca_gui_base.create_framed_listbox(
+        listbox = orca_gui_helpers.create_framed_listbox(
             selection_mode=Gtk.SelectionMode.SINGLE,
             separators=True,
         )
@@ -317,9 +324,9 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         for label, value in self._get_info_dialog_rows(info):
             if label == guilabels.EXTENSIONS_INFO_WEBSITE:
-                listbox.add(self._create_info_dialog_link_row(label, value))
+                listbox.add(orca_gui_helpers.create_key_link_row(label, value))
             else:
-                listbox.add(self._create_info_dialog_row(label, value))
+                listbox.add(orca_gui_helpers.create_key_value_row(label, value))
 
         content_area = dialog.get_content_area()
         content_area.add(listbox)
@@ -327,51 +334,6 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         dialog.show_all()
         dialog.run()
         dialog.destroy()
-
-    @staticmethod
-    def _create_info_dialog_row(label: str, value: str) -> Gtk.ListBoxRow:
-        """Returns a metadata row."""
-
-        row = Gtk.ListBoxRow()
-        row.set_activatable(False)
-
-        hbox = orca_gui_base.create_row_box()
-        label_widget = Gtk.Label(label=f"{label}: {value}", xalign=0)
-        label_widget.set_hexpand(True)
-        label_widget.set_line_wrap(True)
-        label_widget.set_max_width_chars(72)
-        hbox.pack_start(label_widget, True, True, 0)
-
-        row.add(hbox)
-        return row
-
-    @staticmethod
-    def _create_info_dialog_link_row(label: str, value: str) -> Gtk.ListBoxRow:
-        """Returns a metadata row with an activatable link."""
-
-        row = Gtk.ListBoxRow()
-        row.set_activatable(False)
-
-        hbox = orca_gui_base.create_row_box(spacing=0)
-
-        label_widget = Gtk.Label(label=f"{label}: ", xalign=0)
-        link_button = Gtk.LinkButton.new_with_label(value, value)
-        link_button.get_accessible().set_name(f"{label}: {value}")
-        link_button.set_relief(Gtk.ReliefStyle.NONE)
-
-        def focus_link() -> bool:
-            link_button.grab_focus()
-            return False
-
-        def on_row_focus_in(*_args) -> bool:
-            GLib.idle_add(focus_link)
-            return False
-
-        row.connect("focus-in-event", on_row_focus_in)
-        hbox.pack_start(label_widget, False, False, 0)
-        hbox.pack_start(link_button, False, False, 0)
-        row.add(hbox)
-        return row
 
     def _get_info_dialog_rows(
         self,

@@ -580,18 +580,14 @@ class VerbosityPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     def _only_speak_displayed_text_is_off(self) -> bool:
         """Returns True if only-speak-displayed-text is off in the UI."""
 
-        only_displayed_widget = self.get_widget_for_control(self._only_speak_displayed_control)
-        if only_displayed_widget:
-            return not only_displayed_widget.get_active()
-        return True
+        return not self._get_control_value(self._only_speak_displayed_control, False)
 
     def _indentation_enabled(self) -> bool:
         """Check if speak indentation is enabled in the UI (widget state, not settings)."""
 
         if not self._only_speak_displayed_text_is_off():
             return False
-        widget = self.get_widget_for_control(self._enable_indentation_control)
-        return widget.get_active() if widget else True
+        return self._get_control_value(self._enable_indentation_control, True)
 
 
 class TablesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
@@ -1010,7 +1006,7 @@ class SpeechPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             (guilabels.ON_SCREEN_DISPLAY, "osd", self._osd_grid),
         ]
 
-        enable_listbox, stack, _categories_listbox = self._create_multi_page_stack(
+        enable_listbox, stack, _categories_listbox = self._create_child_grid_preferences_stack(
             enable_label=guilabels.SPEECH_ENABLE_SPEECH,
             enable_getter=manager.get_speech_is_enabled,
             enable_setter=manager.set_speech_is_enabled,

@@ -28,7 +28,7 @@ gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GObject, Gtk
 
-from . import gsettings_registry, guilabels, orca_gui_base, text_attribute_manager
+from . import gsettings_registry, guilabels, orca_gui_helpers, text_attribute_manager
 from .ax_text import AXTextAttribute
 from .ax_utilities import AXUtilities
 from .preferences_grid_base import (
@@ -140,14 +140,14 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
 
         row = 0
 
-        info_listbox = orca_gui_base.create_info_listbox(guilabels.TEXT_ATTRIBUTES_INFO)
+        info_listbox = orca_gui_helpers.create_info_listbox(guilabels.TEXT_ATTRIBUTES_INFO)
         self.attach(info_listbox, 0, row, 1, 1)
         row += 1
 
-        self._listbox = orca_gui_base.create_framed_listbox(
+        self._listbox = orca_gui_helpers.create_framed_listbox(
             accessible_name=guilabels.TEXT_ATTRIBUTES,
         )
-        scrolled_window = self._create_scrolled_window(self._listbox)
+        scrolled_window = orca_gui_helpers.create_preferences_scrolled_window(self._listbox)
         self.attach(scrolled_window, 0, row, 1, 1)
         self.show_all()
 
@@ -181,7 +181,7 @@ class TextAttributePreferencesGrid(PreferencesGridBase):
             separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL)
             vbox.pack_start(separator, False, False, 0)
 
-        hbox = orca_gui_base.create_row_box()
+        hbox = orca_gui_helpers.create_row_box()
 
         drag_area = Gtk.EventBox()
         drag_area_hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)

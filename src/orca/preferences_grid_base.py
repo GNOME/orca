@@ -40,7 +40,7 @@ gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Atk, Gdk, GLib, Gtk  # pylint: disable=no-name-in-module
 
-from . import orca_gui_base
+from . import orca_gui_helpers
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Sequence
@@ -57,46 +57,6 @@ class CategoryListBoxRow(Gtk.ListBoxRow):
     def category(self) -> str:
         """Get the category identifier."""
         return self._category
-
-
-class CommandListBoxRow(Gtk.ListBoxRow):
-    """ListBoxRow for command keybindings with command details."""
-
-    def __init__(self) -> None:
-        super().__init__()
-        self._command = None
-        self._vbox = None
-        self._binding_label = None
-
-    @property
-    def command(self):
-        """Get the command."""
-        return self._command
-
-    @command.setter
-    def command(self, value) -> None:
-        """Set the command."""
-        self._command = value
-
-    @property
-    def vbox(self):
-        """Get the vbox container."""
-        return self._vbox
-
-    @vbox.setter
-    def vbox(self, value) -> None:
-        """Set the vbox container."""
-        self._vbox = value
-
-    @property
-    def binding_label(self):
-        """Get the binding label."""
-        return self._binding_label
-
-    @binding_label.setter
-    def binding_label(self, value) -> None:
-        """Set the binding label."""
-        self._binding_label = value
 
 
 class RadioButtonWithActions(Gtk.RadioButton):
@@ -117,8 +77,8 @@ class RadioButtonWithActions(Gtk.RadioButton):
         self._action_buttons = value
 
 
-class StackedPreferencesHelper:
-    """Helper for managing stacked drill-down preferences UI."""
+class ListDetailPreferencesStackHelper:
+    """Helper for managing list/detail preferences stack."""
 
     def __init__(self) -> None:
         self.stack: Gtk.Stack | None = None
@@ -236,6 +196,16 @@ class SelectionPreferenceControl:  # pylint: disable=too-many-instance-attribute
     tracks_changes: bool = True
 
 
+ControlType = (
+    BooleanPreferenceControl
+    | IntRangePreferenceControl
+    | FloatRangePreferenceControl
+    | EnumPreferenceControl
+    | ColorPreferenceControl
+    | SelectionPreferenceControl
+)
+
+
 @dataclass(frozen=True)
 class PreferenceValueDoc:
     """Documentation metadata for one preference value."""
@@ -252,16 +222,6 @@ class PreferenceActionDoc:
     label: str
     summary: str = ""
     placement: str = ""
-
-
-@dataclass(frozen=True)
-class ListRowAction:
-    """Action button metadata for custom list rows."""
-
-    name: str
-    label: str
-    callback: Callable[[Gtk.Button], None]
-    icon_name: str | None = None
 
 
 @dataclass(frozen=True)
@@ -297,100 +257,8 @@ class PreferencePanelDoc:
 
 
 # pylint: disable=no-member
-class FocusManagedListBox(Gtk.ListBox):
-    """A ListBox that automatically manages focus for interactive widgets in rows."""
-
-    def __init__(self, heading: str = ""):
-        super().__init__()
-        self.set_selection_mode(Gtk.SelectionMode.NONE)
-        self.get_style_context().add_class("frame")
-        self.set_can_focus(False)
-
-        # Show separators between rows
-        self.set_header_func(self._separator_header_func, None)
-
-        self._widgets: list[Gtk.Widget] = []
-        self._rows: list[Gtk.ListBoxRow] = []
-        self._exiting_backward = [False]
-        self._container: Gtk.Box | None = None
-
-        if heading:
-            label = PreferencesGridBase._create_heading_label(heading)
-            self._container = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-            self._container.pack_start(label, False, False, 0)
-            self._container.pack_start(self, False, False, 0)
-            relation_set = self.get_accessible().ref_relation_set()
-            relation_set.add(
-                Atk.Relation.new([label.get_accessible()], Atk.RelationType.LABELLED_BY),
-            )
-
-    def get_container(self) -> Gtk.Widget:
-        """Returns the container to attach to a grid, or self if no heading."""
-        return self._container or self
-
-    @staticmethod
-    def _separator_header_func(row, before, _user_data):
-        """Add separator between rows (standard GTK ListBox pattern)."""
-
-        if before is not None:
-            row.set_header(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL))
-
-    def add_row_with_widget(self, row: Gtk.ListBoxRow, widget: Gtk.Widget) -> None:
-        """Add a row with its associated interactive widget."""
-
-        self.add_row_with_widgets(row, [widget])
-
-    def add_row_with_widgets(self, row: Gtk.ListBoxRow, widgets: Sequence[Gtk.Widget]) -> None:
-        """Add a row with associated interactive widgets."""
-
-        if not widgets:
-            self.add(row)
-            self._rows.append(row)
-            return
-
-        for widget in widgets:
-            widget.connect("key-press-event", self._on_widget_key_press)
-        row.connect("focus-in-event", self._on_row_focus_in, widgets[0])
-
-        self.add(row)
-        self._rows.append(row)
-        self._widgets.extend(widgets)
-
-    def get_last_row(self) -> Gtk.ListBoxRow | None:
-        """Return the last row that was added, or None if no rows."""
-
-        if self._rows:
-            return self._rows[-1]
-        return None
-
-    def _focus_next_sensitive_widget(self, widget: Gtk.Widget) -> bool:
-        """Focus the next sensitive widget after the given one."""
-
-        try:
-            current_index = self._widgets.index(widget)
-            for next_index in range(current_index + 1, len(self._widgets)):
-                if self._widgets[next_index].get_sensitive():
-                    self._widgets[next_index].grab_focus()
-                    return True
-        except ValueError:
-            pass
-        return False
-
-    def _focus_prev_sensitive_widget(self, widget: Gtk.Widget) -> bool:
-        """Focus the previous sensitive widget before the given one."""
-
-        try:
-            current_index = self._widgets.index(widget)
-            for prev_index in range(current_index - 1, -1, -1):
-                if self._widgets[prev_index].get_sensitive():
-                    self._widgets[prev_index].grab_focus()
-                    return True
-            if self._rows:
-                self._exiting_backward[0] = True
-                self._rows[0].grab_focus()
-        except ValueError:
-            pass
-        return False
+class PreferencesFocusManagedListBox(orca_gui_helpers.FocusManagedListBox):
+    """Focus-managed listbox with preferences-window Left arrow behavior."""
 
     def _navigate_left_from_widget(self, widget: Gtk.Widget) -> bool:
         """Exit nested group or move to sidebar on Left arrow."""
@@ -412,30 +280,6 @@ class FocusManagedListBox(Gtk.ListBox):
             return True
         return False
 
-    def _on_widget_key_press(self, widget: Gtk.Widget, event) -> bool:
-        """Handle Tab, Shift+Tab, and Left arrow to navigate."""
-
-        if event.keyval == Gdk.KEY_Tab:
-            return self._focus_next_sensitive_widget(widget)
-        if event.keyval == Gdk.KEY_Left:
-            return self._navigate_left_from_widget(widget)
-        if event.keyval == Gdk.KEY_ISO_Left_Tab:
-            return self._focus_prev_sensitive_widget(widget)
-        return False
-
-    def _on_row_focus_in(self, _row, _event, widget: Gtk.Widget) -> bool:
-        """Redirect focus from row to widget and activate radio buttons."""
-
-        if self._exiting_backward[0]:
-            self._exiting_backward[0] = False
-            return False
-
-        def activate_widget():
-            widget.grab_focus()
-
-        GLib.idle_add(activate_widget)
-        return False
-
 
 # pylint: enable=no-member
 
@@ -443,16 +287,6 @@ class FocusManagedListBox(Gtk.ListBox):
 # pylint: disable-next=too-many-instance-attributes
 class PreferencesGridBase(Gtk.Grid):
     """Base class for all preferences grid widgets with common UI helpers."""
-
-    @staticmethod
-    def _create_heading_label(text: str, margin_top: int = 12) -> Gtk.Label:
-        """Create a heading label for use above a group of controls."""
-
-        label = Gtk.Label(label=text, xalign=0)
-        label.get_style_context().add_class("heading")
-        label.set_margin_top(margin_top)
-        label.set_margin_bottom(6)
-        return label
 
     # pylint: disable=no-member
     def __init__(self, tab_label: str) -> None:
@@ -470,54 +304,22 @@ class PreferencesGridBase(Gtk.Grid):
         self.set_row_spacing(12)
         self.set_column_spacing(48)
 
-        self._stacked_prefs_helper: StackedPreferencesHelper | None = None
+        self._list_detail_stack_helper: ListDetailPreferencesStackHelper | None = None
         self._multipage_stack: Gtk.Stack | None = None
         self._multipage_title_callback: Callable[[str], None] | None = None
         self._multipage_main_title: str | None = None
         self._multipage_categories: list[tuple[str, str, PreferencesGridBase]] | None = None
         self._multipage_category_map: dict[str, tuple[str, PreferencesGridBase]] | None = None
-        self._multipage_enable_listbox: FocusManagedListBox | None = None
+        self._multipage_enable_listbox: PreferencesFocusManagedListBox | None = None
         self._multipage_enable_switch: Gtk.Switch | None = None
         self._multipage_enable_initial: bool = False
         self._multipage_categories_listbox: Gtk.ListBox | None = None
         self._multipage_last_activated_row: Gtk.ListBoxRow | None = None
 
-    @staticmethod
-    def _set_margins(
-        widget: Gtk.Widget,
-        start: int = 0,
-        end: int = 0,
-        top: int = 0,
-        bottom: int = 0,
-    ) -> None:
-        """Set all margins on a widget at once."""
+    def get_title(self) -> str:
+        """Return the panel title."""
 
-        widget.set_margin_start(start)
-        widget.set_margin_end(end)
-        widget.set_margin_top(top)
-        widget.set_margin_bottom(bottom)
-
-    @property
-    def _stack(self) -> Gtk.Stack | None:
-        """Access stack through helper for backward compatibility."""
-        return self._stacked_prefs_helper.stack if self._stacked_prefs_helper else None
-
-    @property
-    def _categories_listbox(self) -> Gtk.ListBox | None:
-        """Access categories listbox through helper for backward compatibility."""
-        return self._stacked_prefs_helper.categories_listbox if self._stacked_prefs_helper else None
-
-    @property
-    def _detail_listbox(self) -> Gtk.ListBox | None:
-        """Access detail listbox through helper for backward compatibility."""
-        return self._stacked_prefs_helper.detail_listbox if self._stacked_prefs_helper else None
-
-    def get_label(self) -> Gtk.Label:
-        """Return a Gtk.Label for use as panel label."""
-
-        label = Gtk.Label(label=self._tab_label)
-        label.show()
-        return label
+        return self._tab_label
 
     @classmethod
     def get_documentation(cls) -> PreferencePanelDoc:
@@ -559,451 +361,15 @@ class PreferencesGridBase(Gtk.Grid):
         visible_child = self._multipage_stack.get_visible_child_name()
         return visible_child is not None and visible_child != "categories"
 
-    def _create_header_bar_dialog(
-        self,
-        title: str,
-        cancel_label: str,
-        ok_label: str,
-        width: int = 600,
-    ) -> tuple[Gtk.Dialog, Gtk.Button]:
-        """Create a dialog with header bar, no close button, and consistent styling."""
-
-        dialog = Gtk.Dialog(
-            title=title,
-            transient_for=self.get_toplevel(),
-            modal=True,
-            destroy_with_parent=True,
-            use_header_bar=True,
-        )
-        dialog.set_default_size(width, -1)
-        dialog.set_deletable(False)
-
-        header_bar = dialog.get_header_bar()
-
-        cancel_button = Gtk.Button.new_with_mnemonic(cancel_label)
-        cancel_button.connect("clicked", lambda btn: dialog.response(Gtk.ResponseType.CANCEL))
-        header_bar.pack_start(cancel_button)
-
-        ok_button = Gtk.Button.new_with_mnemonic(ok_label)
-        ok_button.get_style_context().add_class("suggested-action")
-        ok_button.connect("clicked", lambda btn: dialog.response(Gtk.ResponseType.OK))
-        ok_button.set_can_default(True)
-        header_bar.pack_end(ok_button)
-
-        content_area = dialog.get_content_area()
-        content_area.set_border_width(24)
-        content_area.set_spacing(18)
-
-        return dialog, ok_button
-
-    def _create_frame(self, label: str, margin_top: int = 0) -> tuple[Gtk.Frame, Gtk.Grid]:
-        """Create a labeled frame."""
-
-        frame = Gtk.Frame()
-        frame.set_shadow_type(Gtk.ShadowType.NONE)
-        label_widget = Gtk.Label(label=label, xalign=0)
-        label_widget.get_style_context().add_class("heading")
-        label_widget.set_margin_top(max(0, margin_top))
-        label_widget.set_margin_bottom(6)
-        frame.set_label_widget(label_widget)
-
-        content_container = Gtk.Grid()
-        content_container.set_row_spacing(6)
-        content_container.set_column_spacing(12)
-        content_container.set_margin_top(6)
-
-        frame.add(content_container)
-
-        return frame, content_container
-
-    @staticmethod
-    def _create_listbox() -> Gtk.ListBox:
-        """Creates a styled, non-selectable ListBox."""
-
-        listbox = Gtk.ListBox()
-        listbox.set_selection_mode(Gtk.SelectionMode.NONE)
-        listbox.get_style_context().add_class("frame")
-        return listbox
-
-    def _create_label(
-        self,
-        text: str,
-        halign: Gtk.Align = Gtk.Align.END,
-        valign: Gtk.Align = Gtk.Align.FILL,
-    ) -> Gtk.Label:
-        """Create a label with mnemonic support."""
-
-        label = Gtk.Label()
-        label.set_text_with_mnemonic(text)
-        label.set_halign(halign)
-        label.set_valign(valign)
-        return label
-
-    def _create_row_structure(  # pylint: disable=too-many-arguments,too-many-positional-arguments
-        self,
-        include_top_separator: bool = True,
-        label_text: str | None = None,
-        widget: Gtk.Widget | None = None,
-        label_xalign: float | None = None,
-        label_halign: Gtk.Align | None = None,
-        label_hexpand: bool = True,
-        widget_expand: bool = False,
-    ) -> tuple[Gtk.ListBoxRow, Gtk.Box, Gtk.Label | None]:
-        """Create basic row structure with optional label+widget pair."""
-
-        row = Gtk.ListBoxRow()
-        row.set_activatable(False)
-
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
-
-        if include_top_separator:
-            separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL)
-            vbox.pack_start(separator, False, False, 0)
-
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
-
-        label = None
-        if label_text and widget:
-            label = Gtk.Label(label=label_text)
-            label.set_use_underline(True)
-
-            if label_xalign is not None:
-                label.set_xalign(label_xalign)
-            if label_halign is not None:
-                label.set_halign(label_halign)
-
-            label.set_hexpand(label_hexpand)
-            hbox.pack_start(label, label_hexpand, label_hexpand, 0)
-
-            if not isinstance(widget, Gtk.Button):
-                label.set_mnemonic_widget(widget)
-            hbox.pack_end(widget, widget_expand, widget_expand, 0)
-
-        vbox.pack_start(hbox, False, False, 0)
-        row.add(vbox)
-
-        return row, hbox, label
-
-    def _create_combo_box_row(
-        self,
-        label_text: str,
-        model: Gtk.ListStore,
-        changed_handler: Callable[[Gtk.ComboBox], None],
-        include_top_separator: bool = True,
-    ) -> tuple[Gtk.ListBoxRow, Gtk.ComboBox, Gtk.Label]:
-        """Create a single listbox row with label and combo box."""
-
-        combo = Gtk.ComboBox()
-        combo.set_model(model)
-        renderer = Gtk.CellRendererText()
-        combo.pack_start(renderer, True)
-        combo.add_attribute(renderer, "text", 0)
-        combo.set_valign(Gtk.Align.CENTER)
-        combo.connect("changed", changed_handler)
-
-        row, _hbox, label = self._create_row_structure(
-            include_top_separator,
-            label_text,
-            combo,
-            label_halign=Gtk.Align.START,
-        )
-
-        return row, combo, label
-
-    def _create_switch_control(
-        self,
-        changed_handler: Callable[..., None] | None = None,
-        state: bool | None = None,
-        accessible_name: str = "",
-        *handler_args: Any,
-    ) -> Gtk.Switch:
-        """Create a switch with Orca's standard accessibility setup."""
-
-        switch = Gtk.Switch()
-        switch.set_valign(Gtk.Align.CENTER)
-        if state is not None:
-            switch.set_active(state)
-        if accessible_name:
-            switch.get_accessible().set_name(accessible_name)
-        switch.get_accessible().set_role(Atk.Role.SWITCH)
-        if changed_handler is not None:
-            switch.connect("notify::active", changed_handler, *handler_args)
-        return switch
-
-    def _create_switch_row(
-        self,
-        label_text: str,
-        changed_handler: Callable[[Gtk.Switch, Any], None],
-        state: bool,
-        include_top_separator: bool = True,
-    ) -> tuple[Gtk.ListBoxRow, Gtk.Switch, Gtk.Label]:
-        """Create a single listbox row with label and switch."""
-
-        switch = self._create_switch_control(changed_handler, state)
-        row, _hbox, label = self._create_row_structure(
-            include_top_separator,
-            label_text,
-            switch,
-            label_xalign=0,
-        )
-
-        return row, switch, label
-
-    def _create_slider_row(
-        self,
-        label_text: str,
-        adjustment: Gtk.Adjustment,
-        changed_handler: Callable[[Gtk.Scale], None] | None = None,
-        include_top_separator: bool = True,
-        digits: int = 0,
-    ) -> tuple[Gtk.ListBoxRow, Gtk.Scale, Gtk.Label]:
-        """Create a single listbox row with label and horizontal slider."""
-
-        scale = Gtk.Scale(orientation=Gtk.Orientation.HORIZONTAL, adjustment=adjustment)
-        scale.set_digits(digits)
-        scale.set_draw_value(True)
-        scale.set_value_pos(Gtk.PositionType.RIGHT)
-        scale.set_hexpand(True)
-        scale.set_valign(Gtk.Align.CENTER)
-        if changed_handler is not None:
-            scale.connect("value-changed", changed_handler)
-
-        row, _hbox, label = self._create_row_structure(
-            include_top_separator,
-            label_text,
-            scale,
-            label_halign=Gtk.Align.START,
-            label_hexpand=False,
-            widget_expand=True,
-        )
-
-        return row, scale, label
-
-    def _create_button_listbox(
-        self,
-        items: list[tuple[str, str | None, Callable[[Gtk.Button], None]]],
-    ) -> tuple[FocusManagedListBox, list[Gtk.Button]]:
-        """Create a listbox with one or more label+button rows."""
-
-        listbox = FocusManagedListBox()
-        all_buttons = []
-
-        for label_text, icon_name, clicked_handler in items:
-            row, button, _label = self._create_button_row(
-                label_text,
-                icon_name,
-                clicked_handler,
-                include_top_separator=False,
-            )
-
-            listbox.add_row_with_widget(row, button)
-            all_buttons.append(button)
-
-        return listbox, all_buttons
-
-    def _create_button_row(
-        self,
-        label_text: str,
-        icon_name: str | None,
-        clicked_handler: Callable[[Gtk.Button], None],
-        include_top_separator: bool = True,
-    ) -> tuple[Gtk.ListBoxRow, Gtk.Button, Gtk.Label]:
-        """Create a single listbox row with label and button."""
-
-        button = Gtk.Button()
-        if icon_name:
-            icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.DND)
-            button.set_image(icon)
-        button.set_valign(Gtk.Align.CENTER)
-        button.connect("clicked", clicked_handler)
-
-        row, _hbox, label = self._create_row_structure(
-            include_top_separator,
-            label_text,
-            button,
-            label_halign=Gtk.Align.START,
-        )
-
-        return row, button, label
-
-    def _create_action_list_row(  # pylint: disable=too-many-arguments,too-many-positional-arguments
-        self,
-        primary_text: str,
-        secondary_text: str,
-        actions: Sequence[ListRowAction] = (),
-        include_top_separator: bool = True,
-        primary_label_size_group: Gtk.SizeGroup | None = None,
-        stack_labels: bool = False,
-        detail_text: str = "",
-    ) -> tuple[Gtk.ListBoxRow, Gtk.Label, Gtk.Label, dict[str, Gtk.Button]]:
-        """Create a list row with labels and trailing action buttons."""
-
-        row = Gtk.ListBoxRow()
-        row.set_activatable(False)
-
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
-
-        if include_top_separator:
-            separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL)
-            vbox.pack_start(separator, False, False, 0)
-
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
-
-        primary_label = Gtk.Label(label=primary_text, xalign=0)
-        secondary_label = Gtk.Label(label=secondary_text, xalign=0)
-        if stack_labels:
-            primary_label.set_hexpand(True)
-            primary_label.set_line_wrap(True)
-            primary_label.set_max_width_chars(60)
-            self._set_stacked_label_text(primary_label, primary_text, secondary_text, detail_text)
-            hbox.pack_start(primary_label, True, True, 0)
-        else:
-            if primary_label_size_group:
-                primary_label_size_group.add_widget(primary_label)
-            hbox.pack_start(primary_label, False, False, 0)
-            secondary_label.set_hexpand(True)
-            hbox.pack_start(secondary_label, True, True, 0)
-
-        action_buttons: dict[str, Gtk.Button] = {}
-        button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
-        for action in actions:
-            if action.icon_name:
-                button = Gtk.Button.new_from_icon_name(action.icon_name, Gtk.IconSize.DND)
-                button.set_relief(Gtk.ReliefStyle.NONE)
-                button.get_accessible().set_name(action.label)
-            else:
-                button = Gtk.Button(label=action.label)
-            button.connect("clicked", action.callback)
-            button_box.pack_start(button, False, False, 0)
-            action_buttons[action.name] = button
-
-        hbox.pack_end(button_box, False, False, 0)
-        vbox.pack_start(hbox, False, False, 0)
-        row.add(vbox)
-
-        return row, primary_label, secondary_label, action_buttons
-
-    @staticmethod
-    def _set_stacked_label_text(
-        label: Gtk.Label,
-        primary_text: str,
-        secondary_text: str = "",
-        detail_text: str = "",
-    ) -> None:
-        """Set text for a stacked action-row label."""
-
-        lines = [primary_text]
-        lines.extend(text for text in (secondary_text, detail_text) if text)
-        label.set_text("\n".join(lines))
-
-    def _create_labeled_entry_row(
-        self,
-        label_text: str,
-        entry: Gtk.Entry,
-        include_top_separator: bool = True,
-        label_size_group: Gtk.SizeGroup | None = None,
-    ) -> Gtk.ListBoxRow:
-        """Create a ListBoxRow with a label and entry field."""
-
-        row, hbox, _ = self._create_row_structure(include_top_separator)
-
-        label = Gtk.Label(label=label_text, xalign=0)
-        label.set_use_underline(True)
-        hbox.pack_start(label, False, False, 0)
-
-        if label_size_group:
-            label_size_group.add_widget(label)
-
-        entry.set_hexpand(True)
-        label.set_mnemonic_widget(entry)
-        hbox.pack_start(entry, True, True, 0)
-
-        return row
-
-    def _create_combo_box(
-        self,
-        model: Gtk.ListStore,
-        changed_handler: Callable[[Gtk.ComboBox], None],
-    ) -> Gtk.ComboBox:
-        """Create a combo box with standard formatting."""
-
-        combo = Gtk.ComboBox()
-        combo.set_model(model)
-        renderer = Gtk.CellRendererText()
-        combo.pack_start(renderer, True)
-        combo.add_attribute(renderer, "text", 0)
-        combo.set_hexpand(False)
-        combo.connect("changed", changed_handler)
-        return combo
-
-    @staticmethod
-    def _enable_first_letter_nav(combo: Gtk.ComboBoxText) -> None:
-        """Enables first-letter navigation on a ComboBoxText."""
-
-        def on_key_press(_widget: Gtk.Widget, event: Any) -> bool:
-            char = event.string.lower()
-            if not char or not char.isalpha():
-                return False
-            model = combo.get_model()
-            current = max(combo.get_active(), 0)
-            for offset in range(1, len(model) + 1):
-                idx = (current + offset) % len(model)
-                text = (model[idx][0] or "").lower()
-                if text.startswith(char):
-                    combo.set_active(idx)
-                    return True
-            return False
-
-        combo.connect("key-press-event", on_key_press)
-
-    def _create_combo_box_text_row(
-        self,
-        label_text: str,
-        items: list[tuple[str, str]],
-        include_top_separator: bool = True,
-    ) -> tuple[Gtk.ListBoxRow, Gtk.ComboBoxText, Gtk.Label | None]:
-        """Creates a row with a label and a ComboBoxText populated from (id, display) pairs."""
-
-        combo = Gtk.ComboBoxText()
-        for item_id, display_text in items:
-            combo.append(item_id, display_text)
-        if items:
-            combo.set_active(0)
-        self._enable_first_letter_nav(combo)
-
-        row, _hbox, label = self._create_row_structure(
-            include_top_separator,
-            label_text,
-            combo,
-            label_halign=Gtk.Align.START,
-        )
-
-        return row, combo, label
-
-    def _create_scrolled_window(self, widget: Gtk.Widget) -> Gtk.ScrolledWindow:
-        """Create a scrolled window containing the widget with standard settings."""
-
-        scrolled = Gtk.ScrolledWindow()
-        scrolled.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
-        scrolled.set_shadow_type(Gtk.ShadowType.IN)  # pylint: disable=no-member
-        scrolled.set_size_request(700, -1)
-        scrolled.add(widget)  # pylint: disable=no-member
-        scrolled.set_hexpand(True)
-        scrolled.set_vexpand(True)
-
-        return scrolled
-
-    def _create_stacked_preferences(
+    def _create_list_detail_preferences_stack(
         self,
         on_category_activated: Callable[[Gtk.ListBoxRow], None],
         on_detail_row_activated: Callable[[Gtk.ListBox, Gtk.ListBoxRow], None] | None = None,
     ) -> tuple[Gtk.Stack, Gtk.ListBox, Gtk.ListBox]:
-        """Create a stack-based drill-down preferences UI with ListBox detail view."""
+        """Create a category-list stack with one shared detail list."""
 
-        helper = StackedPreferencesHelper()
-        self._stacked_prefs_helper = helper
+        helper = ListDetailPreferencesStackHelper()
+        self._list_detail_stack_helper = helper
 
         helper.stack = Gtk.Stack()
         helper.stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT)
@@ -1013,7 +379,9 @@ class PreferencesGridBase(Gtk.Grid):
         helper.categories_listbox.connect("key-press-event", self._on_stack_categories_key_press)
         helper.categories_listbox.connect("row-activated", self._on_stack_category_activated)
         helper.on_category_activated_callback = on_category_activated
-        categories_scrolled = self._create_scrolled_window(helper.categories_listbox)
+        categories_scrolled = orca_gui_helpers.create_preferences_scrolled_window(
+            helper.categories_listbox
+        )
         helper.stack.add_named(categories_scrolled, "categories")
 
         helper.detail_listbox = Gtk.ListBox()
@@ -1021,10 +389,11 @@ class PreferencesGridBase(Gtk.Grid):
         helper.detail_listbox.connect("key-press-event", self._on_stack_detail_key_press)
         if on_detail_row_activated:
             helper.detail_listbox.connect("row-activated", on_detail_row_activated)
-        detail_scrolled = self._create_scrolled_window(helper.detail_listbox)
+        detail_scrolled = orca_gui_helpers.create_preferences_scrolled_window(helper.detail_listbox)
         helper.stack.add_named(detail_scrolled, "detail")
 
         helper.stack.set_hexpand(True)
+        helper.stack.set_vexpand(True)
         helper.stack.set_visible_child_name("categories")
         return (helper.stack, helper.categories_listbox, helper.detail_listbox)
 
@@ -1040,8 +409,7 @@ class PreferencesGridBase(Gtk.Grid):
         row = CategoryListBoxRow(category)
         row.set_activatable(True)
 
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
+        hbox = orca_gui_helpers.create_row_box()
 
         label_widget = Gtk.Label(label=label, xalign=0)
         label_widget.set_hexpand(True)
@@ -1063,36 +431,44 @@ class PreferencesGridBase(Gtk.Grid):
     def _register_stack_disable_widgets(self, *widgets: Gtk.Widget) -> None:
         """Register widgets that should be disabled when in detail view."""
 
-        if self._stacked_prefs_helper:
-            self._stacked_prefs_helper.register_disable_widgets(*widgets)
+        if self._list_detail_stack_helper:
+            self._list_detail_stack_helper.register_disable_widgets(*widgets)
 
     def _show_stack_categories(self) -> None:
         """Switch to categories view and enable registered widgets."""
 
-        if self._stacked_prefs_helper:
-            self._stacked_prefs_helper.show_categories()
+        if self._list_detail_stack_helper:
+            self._list_detail_stack_helper.show_categories()
 
     def _show_stack_detail(self) -> None:
         """Switch to detail view and disable registered widgets."""
 
-        if self._stacked_prefs_helper:
-            self._stacked_prefs_helper.show_detail()
+        if self._list_detail_stack_helper:
+            self._list_detail_stack_helper.show_detail()
 
     def _on_stack_category_activated(self, _listbox: Gtk.ListBox, row: Gtk.ListBoxRow) -> None:
         """Internal handler for category activation - delegates to callback."""
 
-        if self._stacked_prefs_helper and self._stacked_prefs_helper.on_category_activated_callback:
-            self._stacked_prefs_helper.on_category_activated_callback(row)
+        if (
+            self._list_detail_stack_helper
+            and self._list_detail_stack_helper.on_category_activated_callback
+        ):
+            self._list_detail_stack_helper.on_category_activated_callback(row)
 
     def _on_stack_categories_key_press(self, _widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
         """Handle key press in categories page - Right arrow activates focused row."""
 
         if event.keyval == Gdk.KEY_Right:
             # Get the focused row (selection mode is NONE, so get_selected_row won't work)
-            if self._categories_listbox:
-                focused_child = self._categories_listbox.get_focus_child()
+            categories_listbox = (
+                self._list_detail_stack_helper.categories_listbox
+                if self._list_detail_stack_helper
+                else None
+            )
+            if categories_listbox:
+                focused_child = categories_listbox.get_focus_child()
                 if focused_child and isinstance(focused_child, Gtk.ListBoxRow):
-                    self._on_stack_category_activated(self._categories_listbox, focused_child)
+                    self._on_stack_category_activated(categories_listbox, focused_child)
                     return True
         return False
 
@@ -1141,7 +517,7 @@ class PreferencesGridBase(Gtk.Grid):
             grid.connect("key-press-event", self._on_multipage_child_key_press)
 
     # pylint: disable-next=too-many-arguments, too-many-positional-arguments
-    def _create_multi_page_stack(
+    def _create_child_grid_preferences_stack(
         self,
         enable_label: str | None,
         enable_getter: Callable[[], bool] | None,
@@ -1149,18 +525,18 @@ class PreferencesGridBase(Gtk.Grid):
         categories: list[tuple[str, str, PreferencesGridBase]],
         title_change_callback: Callable[[str], None] | None = None,
         main_title: str | None = None,
-    ) -> tuple[FocusManagedListBox | None, Gtk.Stack, Gtk.ListBox]:
-        """Create a multi-page nested stack with optional enable switch and category navigation.
+    ) -> tuple[PreferencesFocusManagedListBox | None, Gtk.Stack, Gtk.ListBox]:
+        """Create a category-list stack whose detail pages are child grids.
 
         This helper encapsulates the common pattern used by Speech and Braille preferences
-        where there's an enable switch at the top, a categories page, and multiple child
-        grid pages for each category.
+        where there's an optional enable switch at the top, a categories page, and one
+        child PreferencesGridBase page for each category.
 
         Args:
             enable_label: Label for the enable switch (e.g., "Enable speech"), or None to skip
             enable_getter: Function to get current enable state, or None to skip
             enable_setter: Function to set enable state, or None to skip
-            categories: List of (label, page_id, grid) tuples for each category
+            categories: List of (label, page_id, child_grid) tuples for each category
             title_change_callback: Optional callback to update window title
             main_title: Title to use when on categories page (defaults to grid's label)
 
@@ -1173,7 +549,7 @@ class PreferencesGridBase(Gtk.Grid):
                 (guilabels.GENERAL, "general", self._general_grid),
                 (guilabels.SETTINGS, "settings", self._settings_grid),
             ]
-            enable_listbox, stack, categories_listbox = self._create_multi_page_stack(
+            enable_listbox, stack, categories_listbox = self._create_child_grid_preferences_stack(
                 enable_label=guilabels.ENABLE_FEATURE,
                 enable_getter=self._manager.get_enabled,
                 enable_setter=self._manager.set_enabled,
@@ -1184,7 +560,7 @@ class PreferencesGridBase(Gtk.Grid):
         """
 
         if main_title is None:
-            main_title = self._label.get_text()
+            main_title = self._tab_label
 
         self._multipage_title_callback = title_change_callback
         self._multipage_main_title = main_title
@@ -1193,10 +569,10 @@ class PreferencesGridBase(Gtk.Grid):
             page_id: (label, grid) for label, page_id, grid in categories
         }
 
-        enable_listbox: FocusManagedListBox | None = None
+        enable_listbox: PreferencesFocusManagedListBox | None = None
         if enable_label is not None and enable_getter is not None and enable_setter is not None:
-            enable_listbox = FocusManagedListBox()
-            enable_row, enable_switch, _label = self._create_switch_row(
+            enable_listbox = PreferencesFocusManagedListBox()
+            enable_row, enable_switch, _label = orca_gui_helpers.create_switch_row(
                 enable_label,
                 lambda switch, _param: self._on_multipage_enable_toggled(switch, enable_setter),
                 enable_getter(),
@@ -1216,7 +592,7 @@ class PreferencesGridBase(Gtk.Grid):
         categories_listbox.set_selection_mode(Gtk.SelectionMode.NONE)
         categories_listbox.connect("row-activated", self._on_multipage_category_activated)
         categories_listbox.connect("key-press-event", self._on_multipage_categories_key_press)
-        categories_listbox.set_header_func(self._multipage_separator_header_func, None)
+        orca_gui_helpers.set_listbox_separators(categories_listbox)
 
         for label, page_id, _grid in categories:
             self._add_stack_category_row(categories_listbox, label, category=page_id)
@@ -1243,19 +619,12 @@ class PreferencesGridBase(Gtk.Grid):
 
         return (enable_listbox, stack, categories_listbox)
 
-    @staticmethod
-    def _multipage_separator_header_func(row, before, _user_data):
-        """Add separator between rows in multi-page categories listbox."""
-
-        if before is not None:
-            row.set_header(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL))
-
     def _on_multipage_enable_toggled(
         self,
         switch: Gtk.Switch,
         setter: Callable[[bool], Any],
     ) -> None:
-        """Handle enable switch toggle in multi-page stack."""
+        """Handle enable switch toggle in child-grid stack."""
 
         if self._initializing:
             return
@@ -1284,7 +653,7 @@ class PreferencesGridBase(Gtk.Grid):
         return False
 
     def _on_multipage_category_activated(self, _listbox: Gtk.ListBox, row: Gtk.ListBoxRow) -> None:
-        """Handle category activation in multi-page stack."""
+        """Handle category activation in child-grid stack."""
 
         if not isinstance(row, CategoryListBoxRow):
             return
@@ -1319,7 +688,7 @@ class PreferencesGridBase(Gtk.Grid):
                 GLib.idle_add(self._multipage_focus_first_widget, grid)
 
     @staticmethod
-    def _get_children_via_foreach(container: Gtk.Container) -> list[Gtk.Widget]:
+    def _get_children(container: Gtk.Container) -> list[Gtk.Widget]:
         """Gets non-internal children via foreach."""
 
         children: list[Gtk.Widget] = []
@@ -1336,50 +705,52 @@ class PreferencesGridBase(Gtk.Grid):
                 return True
         return False
 
-    def _focus_first_in_frame(self, frame: Gtk.Frame) -> bool:
-        """Tries to focus the first listbox row inside a frame."""
-
-        frame_child = frame.get_child()
-        if not (frame_child and isinstance(frame_child, Gtk.Container)):
-            return False
-        grandchildren = self._get_children_via_foreach(frame_child)
-        if isinstance(frame_child, Gtk.Grid):
-            grandchildren = list(reversed(grandchildren))
-        for grandchild in grandchildren:
-            if isinstance(grandchild, Gtk.ListBox) and self._focus_first_listbox_row(grandchild):
-                return True
-        return False
-
-    def _focus_first_in_scrolled_window(self, scrolled_window: Gtk.ScrolledWindow) -> None:
+    def _focus_first_in_scrolled_window(self, scrolled_window: Gtk.ScrolledWindow) -> bool:
         """Tries to focus the first listbox row inside a scrolled window."""
 
-        for sw_child in self._get_children_via_foreach(scrolled_window):
+        for sw_child in self._get_children(scrolled_window):
             viewport_children = (
-                self._get_children_via_foreach(sw_child)
-                if isinstance(sw_child, Gtk.Container)
-                else []
+                self._get_children(sw_child) if isinstance(sw_child, Gtk.Container) else []
             )
             for vp_child in viewport_children:
-                if isinstance(vp_child, Gtk.Grid):
-                    for gc in reversed(self._get_children_via_foreach(vp_child)):
-                        if isinstance(gc, Gtk.ListBox) and self._focus_first_listbox_row(gc):
-                            return
+                if isinstance(vp_child, Gtk.ListBox) and self._focus_first_listbox_row(vp_child):
+                    return True
+                if isinstance(vp_child, Gtk.Container) and self._focus_first_in_container(vp_child):
+                    return True
+        return False
+
+    def _focus_first_in_container(self, container: Gtk.Container) -> bool:
+        """Tries to focus the first listbox row inside a container."""
+
+        children = self._get_children(container)
+        if isinstance(container, Gtk.Grid):
+            children = list(reversed(children))
+
+        for child in children:
+            if isinstance(child, Gtk.ListBox) and self._focus_first_listbox_row(child):
+                return True
+            if isinstance(child, Gtk.ScrolledWindow) and self._focus_first_in_scrolled_window(
+                child
+            ):
+                return True
+            if isinstance(child, Gtk.Container) and self._focus_first_in_container(child):
+                return True
+        return False
 
     def _multipage_focus_first_widget(self, grid: PreferencesGridBase) -> bool:
         """Focus the first focusable widget in a multi-page child grid."""
 
-        children = list(reversed(self._get_children_via_foreach(grid)))
+        children = list(reversed(self._get_children(grid)))
 
         for child in children:
-            if isinstance(child, Gtk.Frame):
-                if self._focus_first_in_frame(child):
-                    return False
-            elif isinstance(child, Gtk.ScrolledWindow):
-                self._focus_first_in_scrolled_window(child)
+            if isinstance(child, Gtk.ScrolledWindow) and self._focus_first_in_scrolled_window(
+                child
+            ):
                 return False
-            elif isinstance(child, Gtk.ListBox):
-                if self._focus_first_listbox_row(child):
-                    return False
+            if isinstance(child, Gtk.ListBox) and self._focus_first_listbox_row(child):
+                return False
+            if isinstance(child, Gtk.Container) and self._focus_first_in_container(child):
+                return False
 
         return False
 
@@ -1402,7 +773,7 @@ class PreferencesGridBase(Gtk.Grid):
         return False
 
     def multipage_show_categories(self) -> None:
-        """Switch back to categories view in multi-page stack."""
+        """Switch back to categories view in child-grid stack."""
 
         if self._multipage_stack:
             # Explicitly hide the current child if it's a detail page so AT-SPI
@@ -1430,23 +801,13 @@ class PreferencesGridBase(Gtk.Grid):
             self._multipage_categories_listbox.grab_focus()
 
     def multipage_on_becoming_visible(self) -> None:
-        """Reset multi-page stack to categories view when grid becomes visible.
+        """Reset child-grid stack to categories view when grid becomes visible.
 
-        Call this from your on_becoming_visible() override if using multi-page stack.
+        Call this from your on_becoming_visible() override if using child-grid stack.
         """
 
         self._multipage_last_activated_row = None
         self.multipage_show_categories()
-
-
-ControlType = (
-    BooleanPreferenceControl
-    | IntRangePreferenceControl
-    | FloatRangePreferenceControl
-    | EnumPreferenceControl
-    | ColorPreferenceControl
-    | SelectionPreferenceControl
-)
 
 
 class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-instance-attributes
@@ -1468,7 +829,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         self._widgets: list[Gtk.Widget] = []
         self._rows: list[Gtk.ListBoxRow] = []
         self._group_labels: dict[str, Gtk.Label] = {}
-        self._group_listboxes: dict[str, FocusManagedListBox] = {}
+        self._group_listboxes: dict[str, PreferencesFocusManagedListBox] = {}
         self._info_message = info_message
         self._info_listbox: Gtk.ListBox | None = None
         self._initializing = True
@@ -1483,7 +844,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
 
     def _populate_listbox(
         self,
-        listbox: FocusManagedListBox,
+        listbox: PreferencesFocusManagedListBox,
         controls: list[tuple[int, ControlType]],
     ) -> None:
         """Adds control rows to a listbox and registers widgets."""
@@ -1510,7 +871,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         row = 0
 
         if self._info_message:
-            self._info_listbox = orca_gui_base.create_info_listbox(self._info_message)
+            self._info_listbox = orca_gui_helpers.create_info_listbox(self._info_message)
             self._info_listbox.set_margin_bottom(24)
             content_grid.attach(self._info_listbox, 0, row, 1, 1)
             row += 1
@@ -1525,7 +886,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
 
         # Ungrouped controls.
         if None in groups:
-            listbox = FocusManagedListBox()
+            listbox = PreferencesFocusManagedListBox()
             listbox.set_hexpand(True)
             listbox.set_halign(Gtk.Align.FILL)
             listbox.get_accessible().set_name(self._tab_label)
@@ -1548,7 +909,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                 self._group_labels[member] = label
                 row += 1
 
-                listbox = FocusManagedListBox()
+                listbox = PreferencesFocusManagedListBox()
                 listbox.set_hexpand(True)
                 listbox.set_halign(Gtk.Align.FILL)
                 listbox.get_accessible().set_name(member)
@@ -1570,11 +931,6 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         scrolled.set_hexpand(True)
         scrolled.set_vexpand(True)
         self.attach(scrolled, 0, 0, 1, 1)
-
-    def get_group_listbox(self, group_name: str) -> FocusManagedListBox | None:
-        """Get the listbox for a named group, or None if not found."""
-
-        return self._group_listboxes.get(group_name)
 
     def add_button_to_group_header(
         self,
@@ -1628,7 +984,11 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
 
         return button
 
-    def _create_control_row(self, control: ControlType, listbox: FocusManagedListBox) -> Gtk.Widget:
+    def _create_control_row(
+        self,
+        control: ControlType,
+        listbox: PreferencesFocusManagedListBox,
+    ) -> Gtk.Widget:
         """Create a row for any type of control."""
 
         if isinstance(control, BooleanPreferenceControl):
@@ -1648,47 +1008,25 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
     def _create_boolean_row(
         self,
         control: BooleanPreferenceControl,
-        listbox: FocusManagedListBox,
+        listbox: PreferencesFocusManagedListBox,
     ) -> Gtk.Switch:
         """Create a switch row for a boolean control."""
 
-        row = Gtk.ListBoxRow()
-        row.set_activatable(False)
-
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
-
-        label = Gtk.Label(label=control.label, xalign=0)
-        label.set_use_underline(True)
-        label.set_hexpand(True)
-        hbox.pack_start(label, True, True, 0)
-
-        switch = self._create_switch_control(self._on_value_changed)
-        label.set_mnemonic_widget(switch)
-
-        hbox.pack_end(switch, False, False, 0)
-
-        row.add(hbox)
+        row, switch, _label = orca_gui_helpers.create_switch_row(
+            control.label,
+            self._on_value_changed,
+            bool(control.getter()),
+            include_top_separator=False,
+        )
         listbox.add_row_with_widget(row, switch)
         return switch
 
     def _create_int_range_row(
         self,
         control: IntRangePreferenceControl,
-        listbox: FocusManagedListBox,
+        listbox: PreferencesFocusManagedListBox,
     ) -> Gtk.SpinButton:
         """Create a spin button row for an integer range control."""
-
-        row = Gtk.ListBoxRow()
-        row.set_activatable(False)
-
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
-
-        label = Gtk.Label(label=control.label, xalign=0)
-        label.set_use_underline(True)
-        label.set_hexpand(True)
-        hbox.pack_start(label, True, True, 0)
 
         adjustment = Gtk.Adjustment(
             value=control.minimum,
@@ -1697,115 +1035,66 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
             step_increment=1,
             page_increment=10,
         )
-        spin = Gtk.SpinButton(adjustment=adjustment)
-        spin.set_digits(0)
-        spin.connect("value-changed", self._on_value_changed)
-        label.set_mnemonic_widget(spin)
-        hbox.pack_end(spin, False, False, 0)
-        row.add(hbox)
+        row, spin, _label = orca_gui_helpers.create_spin_button_row(
+            control.label,
+            adjustment,
+            self._on_value_changed,
+            include_top_separator=False,
+        )
         listbox.add_row_with_widget(row, spin)
         return spin
 
     def _create_float_range_row(
         self,
         control: FloatRangePreferenceControl,
-        listbox: FocusManagedListBox,
+        listbox: PreferencesFocusManagedListBox,
     ) -> Gtk.Scale:
         """Create a scale row for a float range control."""
 
-        row = Gtk.ListBoxRow()
-        row.set_activatable(False)
-
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
-        self._set_margins(vbox, start=12, end=12, top=12, bottom=12)
-
-        label = Gtk.Label(label=control.label, xalign=0)
-        label.set_use_underline(True)
-        vbox.pack_start(label, False, False, 0)
-
-        scale = Gtk.Scale.new_with_range(
-            Gtk.Orientation.HORIZONTAL,
-            control.minimum,
-            control.maximum,
-            (control.maximum - control.minimum) / 100,
+        adjustment = orca_gui_helpers.create_range_adjustment(
+            value=control.minimum,
+            minimum=control.minimum,
+            maximum=control.maximum,
         )
-        scale.set_draw_value(True)
-        scale.set_value_pos(Gtk.PositionType.RIGHT)
-        scale.connect("value-changed", self._on_value_changed)
-        label.set_mnemonic_widget(scale)
-        vbox.pack_start(scale, False, False, 0)
-
-        row.add(vbox)
+        row, scale, _label = orca_gui_helpers.create_slider_row(
+            control.label,
+            adjustment,
+            self._on_value_changed,
+            include_top_separator=False,
+        )
         listbox.add_row_with_widget(row, scale)
         return scale
-
-    @staticmethod
-    def _set_color_button_hex(button: Gtk.ColorButton, hex_color: str) -> None:
-        """Set a ColorButton's color from a hex string."""
-
-        button.set_color(Gdk.color_parse(hex_color))  # type: ignore[arg-type]
-
-    @staticmethod
-    def _rgba_to_hex(rgba: Gdk.RGBA) -> str:
-        """Convert a Gdk.RGBA to a hex color string."""
-
-        return f"#{int(rgba.red * 255):02x}{int(rgba.green * 255):02x}{int(rgba.blue * 255):02x}"
 
     def _create_color_row(
         self,
         control: ColorPreferenceControl,
-        listbox: FocusManagedListBox,
+        listbox: PreferencesFocusManagedListBox,
     ) -> Gtk.ColorButton:
         """Create a color button row for a color control."""
 
-        row = Gtk.ListBoxRow()
-        row.set_activatable(False)
-
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
-
-        label = Gtk.Label(label=control.label, xalign=0)
-        label.set_use_underline(True)
-        label.set_hexpand(True)
-        hbox.pack_start(label, True, True, 0)
-
-        color_button = Gtk.ColorButton()
-        color_button.set_use_alpha(False)
-        self._set_color_button_hex(color_button, control.getter())
-        color_button.connect("color-set", self._on_value_changed)
-        label.set_mnemonic_widget(color_button)
-        hbox.pack_end(color_button, False, False, 0)
-        row.add(hbox)
+        row, color_button, _label = orca_gui_helpers.create_color_button_row(
+            control.label,
+            self._on_value_changed,
+            include_top_separator=False,
+        )
+        orca_gui_helpers.set_color_button_hex(color_button, control.getter())
         listbox.add_row_with_widget(row, color_button)
         return color_button
 
     def _create_enum_row(
         self,
         control: EnumPreferenceControl,
-        listbox: FocusManagedListBox,
+        listbox: PreferencesFocusManagedListBox,
     ) -> Gtk.ComboBoxText:
         """Create a combo box row for an enum control."""
 
-        row = Gtk.ListBoxRow()
-        row.set_activatable(False)
-
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
-
-        label = Gtk.Label(label=control.label, xalign=0)
-        label.set_use_underline(True)
-        label.set_hexpand(True)
-        hbox.pack_start(label, True, True, 0)
-
-        combo = Gtk.ComboBoxText()
-        for option in control.options:
-            combo.append_text(option)
-        combo.connect("changed", self._on_value_changed)
-        label.set_mnemonic_widget(combo)
-
+        row, combo, _label = orca_gui_helpers.create_combo_box_text_row(
+            control.label,
+            [(option, option) for option in control.options],
+            include_top_separator=False,
+            changed_handler=self._on_value_changed,
+        )
         self._combo_size_group.add_widget(combo)
-        hbox.pack_end(combo, False, False, 0)
-        row.add(hbox)
         listbox.add_row_with_widget(row, combo)
 
         return combo
@@ -1813,7 +1102,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
     def _create_selection_row(
         self,
         control: SelectionPreferenceControl,
-        listbox: FocusManagedListBox,
+        listbox: PreferencesFocusManagedListBox,
     ) -> Gtk.Widget:
         """Create a combo box or radio button rows for a selection control."""
 
@@ -1824,38 +1113,63 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
     def _create_selection_combo_row(
         self,
         control: SelectionPreferenceControl,
-        listbox: FocusManagedListBox,
+        listbox: PreferencesFocusManagedListBox,
     ) -> Gtk.ComboBoxText:
         """Create a combo box row for a selection control (no per-item actions)."""
 
-        row = Gtk.ListBoxRow()
-        row.set_activatable(False)
-
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        self._set_margins(hbox, start=12, end=12, top=12, bottom=12)
-
-        label = Gtk.Label(label=control.label, xalign=0)
-        label.set_use_underline(True)
-        label.set_hexpand(True)
-        hbox.pack_start(label, True, True, 0)
-
-        combo = Gtk.ComboBoxText()
-        for option in control.options:
-            combo.append_text(option)
-        combo.connect("changed", self._on_value_changed)
-        label.set_mnemonic_widget(combo)
-
+        row, combo, _label = orca_gui_helpers.create_combo_box_text_row(
+            control.label,
+            [(option, option) for option in control.options],
+            include_top_separator=False,
+            changed_handler=self._on_value_changed,
+        )
         self._combo_size_group.add_widget(combo)
-        hbox.pack_end(combo, False, False, 0)
-        row.add(hbox)
         listbox.add_row_with_widget(row, combo)
 
         return combo
 
+    def _create_radio_button_with_actions(
+        self,
+        option_label: str,
+        value: Any,
+        group: Gtk.RadioButton | None,
+    ) -> RadioButtonWithActions:
+        """Create a radio button for a selection option."""
+
+        if group is None:
+            radio = RadioButtonWithActions(label=option_label)
+        else:
+            radio = RadioButtonWithActions(group=group, label=option_label)
+        radio.set_hexpand(True)
+        radio.connect("toggled", self._on_value_changed)
+        radio.connect("key-press-event", self._on_radio_key_press)
+        self._radio_to_selection_value[radio] = value
+        return radio
+
+    def _create_radio_action_buttons(
+        self,
+        actions: list[tuple[str, str, Callable[[], None]]],
+    ) -> tuple[Gtk.Box | None, list[Gtk.Button]]:
+        """Create action buttons for a radio-button selection row."""
+
+        if not actions:
+            return None, []
+
+        button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+        action_buttons = []
+        for action_label, icon_name, callback in actions:
+            button = orca_gui_helpers.create_flat_icon_button(icon_name, action_label)
+            button.connect("clicked", lambda _btn, cb=callback: cb())
+            button.connect("key-press-event", self._on_action_button_key_press)
+            button_box.pack_start(button, False, False, 0)
+            action_buttons.append(button)
+
+        return button_box, action_buttons
+
     def _create_selection_radio_rows(
         self,
         control: SelectionPreferenceControl,
-        listbox: FocusManagedListBox,
+        listbox: PreferencesFocusManagedListBox,
     ) -> Gtk.RadioButton:
         """Create radio button rows with three-dot menus for a selection control."""
 
@@ -1867,41 +1181,17 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
         for option_label, value in zip(control.options, values, strict=True):
             row = Gtk.ListBoxRow()
             row.set_activatable(False)
-
-            hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-            hbox.set_margin_start(12)
-            hbox.set_margin_end(12)
-            hbox.set_margin_top(12)
-            hbox.set_margin_bottom(12)
-
+            hbox = orca_gui_helpers.create_row_box()
+            radio = self._create_radio_button_with_actions(option_label, value, first_radio)
             if first_radio is None:
-                radio = RadioButtonWithActions(label=option_label)
                 first_radio = radio
-            else:
-                radio = RadioButtonWithActions(group=first_radio, label=option_label)
-
-            radio.set_hexpand(True)
-            radio.connect("toggled", self._on_value_changed)
-            radio.connect("key-press-event", self._on_radio_key_press)
-            self._radio_to_selection_value[radio] = value
             hbox.pack_start(radio, True, True, 0)
 
-            actions = control.get_actions_for_option(value)
-            action_buttons = []
-            if actions:
-                button_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
-
-                for action_label, icon_name, callback in actions:
-                    button = Gtk.Button.new_from_icon_name(icon_name, Gtk.IconSize.DND)
-                    button.set_relief(Gtk.ReliefStyle.NONE)
-                    button.get_accessible().set_name(action_label)
-                    button.connect("clicked", lambda _btn, cb=callback: cb())
-                    button.connect("key-press-event", self._on_action_button_key_press)
-                    button_box.pack_start(button, False, False, 0)
-                    action_buttons.append(button)
-
+            button_box, action_buttons = self._create_radio_action_buttons(
+                control.get_actions_for_option(value)
+            )
+            if button_box is not None:
                 hbox.pack_end(button_box, False, False, 0)
-
             radio.action_buttons = action_buttons
 
             row.add(hbox)
@@ -2045,7 +1335,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                 control.setter(widget.get_value_as_int())
             elif isinstance(control, ColorPreferenceControl):
                 assert isinstance(widget, Gtk.ColorButton)
-                control.setter(self._rgba_to_hex(widget.get_rgba()))
+                control.setter(orca_gui_helpers.rgba_to_hex(widget.get_rgba()))
             elif isinstance(control, SelectionPreferenceControl):
                 if control.apply_immediately and control.setter is not None:
                     if isinstance(widget, Gtk.ComboBoxText):
@@ -2143,7 +1433,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
                 widget.set_active((control.values or control.options).index(control.getter()))
         elif isinstance(control, ColorPreferenceControl):
             assert isinstance(widget, Gtk.ColorButton)
-            self._set_color_button_hex(widget, control.getter())
+            orca_gui_helpers.set_color_button_hex(widget, control.getter())
         elif isinstance(control, SelectionPreferenceControl):
             self._refresh_selection_widget(control, widget)
 
@@ -2191,7 +1481,7 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
             return (control.values or control.options)[active] if active >= 0 else None
         if isinstance(control, ColorPreferenceControl):
             assert isinstance(widget, Gtk.ColorButton)
-            return self._rgba_to_hex(widget.get_rgba())
+            return orca_gui_helpers.rgba_to_hex(widget.get_rgba())
         return (
             self._get_selection_value(control, widget)
             if isinstance(
@@ -2200,6 +1490,14 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
             )
             else None
         )
+
+    def _get_control_value(self, control: ControlType, default: Any = None) -> Any:
+        """Return the current UI value for control, or default if it is not found."""
+
+        for ctrl, widget in zip(self._controls, self._widgets, strict=True):
+            if ctrl is control:
+                return self._get_widget_value(control, widget)
+        return default
 
     def save_settings(self, profile: str = "", app_name: str = "") -> dict[str, Any]:
         """Save all values using their setters and return a dict of changes."""
@@ -2232,18 +1530,3 @@ class AutoPreferencesGrid(PreferencesGridBase):  # pylint: disable=too-many-inst
             app_name,
             skip_defaults,
         )
-
-    def get_widget(self, index: int) -> Gtk.Widget | None:
-        """Get the widget at the specified index, or None if out of range."""
-
-        if 0 <= index < len(self._widgets):
-            return self._widgets[index]
-        return None
-
-    def get_widget_for_control(self, control: ControlType) -> Gtk.Widget | None:
-        """Find the widget corresponding to a control object, or None if not found."""
-
-        for ctrl, widget in zip(self._controls, self._widgets, strict=True):
-            if ctrl is control:
-                return widget
-        return None

@@ -33,7 +33,7 @@ from . import (
     gsettings_registry,
     guilabels,
     messages,
-    orca_gui_base,
+    orca_gui_helpers,
     preferences_grid_base,
     presentation_manager,
     script_manager,
@@ -135,12 +135,11 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         row = 0
 
         # Info box
-        info_listbox = orca_gui_base.create_info_listbox(guilabels.PRONUNCIATION_DICTIONARY_INFO)
-        info_listbox.set_margin_bottom(12)
+        info_listbox = orca_gui_helpers.create_info_listbox(guilabels.PRONUNCIATION_DICTIONARY_INFO)
         self.attach(info_listbox, 0, row, 1, 1)
         row += 1
 
-        header_box, _add_button = orca_gui_base.create_heading_action_box(
+        header_box, _add_button = orca_gui_helpers.create_heading_action_box(
             guilabels.PRONUNCIATION_DICTIONARY,
             "list-add-symbolic",
             guilabels.DICTIONARY_NEW_ENTRY,
@@ -151,7 +150,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         row += 1
 
         # ListBox for pronunciation entries
-        self._listbox = orca_gui_base.create_framed_listbox(
+        self._listbox = orca_gui_helpers.create_framed_listbox(
             selection_mode=Gtk.SelectionMode.SINGLE,
         )
 
@@ -159,7 +158,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         self._listbox.connect("realize", self._on_listbox_realize)
         self._listbox.connect("unrealize", self._on_listbox_unrealize)
 
-        scrolled_window = self._create_scrolled_window(self._listbox)
+        scrolled_window = orca_gui_helpers.create_preferences_scrolled_window(self._listbox)
         self.attach(scrolled_window, 0, row, 1, 1)
 
     def _create_two_label_row(  # pylint: disable=too-many-arguments,too-many-positional-arguments
@@ -176,7 +175,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         actions = []
         if delete_handler:
             actions.append(
-                preferences_grid_base.ListRowAction(
+                orca_gui_helpers.ListRowAction(
                     "delete",
                     guilabels.DICTIONARY_DELETE,
                     delete_handler,
@@ -185,7 +184,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
             )
         if edit_handler:
             actions.append(
-                preferences_grid_base.ListRowAction(
+                orca_gui_helpers.ListRowAction(
                     "edit",
                     guilabels.DIALOG_EDIT,
                     edit_handler,
@@ -193,7 +192,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
                 )
             )
 
-        row, _left_label, _right_label, action_buttons = self._create_action_list_row(
+        row, _left_label, _right_label, action_buttons = orca_gui_helpers.create_action_list_row(
             left_label_text,
             right_label_text,
             actions,
@@ -277,23 +276,36 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
     def _show_add_dialog(self) -> None:
         """Show dialog to add a new pronunciation."""
 
-        dialog, add_button = self._create_header_bar_dialog(
+        dialog, add_button = orca_gui_helpers.create_header_bar_dialog(
             guilabels.ADD_NEW_PRONUNCIATION,
             guilabels.DIALOG_CANCEL,
             guilabels.DIALOG_ADD,
+            transient_for=self.get_toplevel(),
         )
 
         content_area = dialog.get_content_area()
 
-        listbox = preferences_grid_base.FocusManagedListBox()
+        listbox = orca_gui_helpers.FocusManagedListBox()
 
         # Size group to ensure labels have same width and entries align
-        label_size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
+        label_size_group = orca_gui_helpers.create_horizontal_size_group()
 
-        # Actual string row
-        phrase_entry = Gtk.Entry()
-        phrase_entry.set_size_request(-1, 40)
-        phrase_row = self._create_labeled_entry_row(
+        def on_entry_activate(_entry):
+            """Only accept the dialog if both fields are filled."""
+            if phrase_entry.get_text().strip() and substitution_entry.get_text().strip():
+                dialog.response(Gtk.ResponseType.OK)
+
+        def update_add_button_sensitivity(_entry: Gtk.Entry | None = None) -> None:
+            add_button.set_sensitive(
+                bool(phrase_entry.get_text().strip() and substitution_entry.get_text().strip())
+            )
+
+        phrase_entry = orca_gui_helpers.create_entry(
+            size_request=(-1, 40),
+            changed_handler=update_add_button_sensitivity,
+            activate_handler=on_entry_activate,
+        )
+        phrase_row = orca_gui_helpers.create_labeled_entry_row(
             guilabels.DICTIONARY_ACTUAL_STRING,
             phrase_entry,
             include_top_separator=False,
@@ -301,23 +313,17 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         )
         listbox.add_row_with_widget(phrase_row, phrase_entry)
 
-        # Replacement string row
-        substitution_entry = Gtk.Entry()
-        substitution_entry.set_size_request(-1, 40)
-        substitution_row = self._create_labeled_entry_row(
+        substitution_entry = orca_gui_helpers.create_entry(
+            size_request=(-1, 40),
+            changed_handler=update_add_button_sensitivity,
+            activate_handler=on_entry_activate,
+        )
+        substitution_row = orca_gui_helpers.create_labeled_entry_row(
             guilabels.DICTIONARY_REPLACEMENT_STRING,
             substitution_entry,
             label_size_group=label_size_group,
         )
         listbox.add_row_with_widget(substitution_row, substitution_entry)
-
-        def on_entry_activate(_entry):
-            """Only activate dialog if both fields are filled."""
-            if phrase_entry.get_text().strip() and substitution_entry.get_text().strip():
-                dialog.response(Gtk.ResponseType.OK)
-
-        phrase_entry.connect("activate", on_entry_activate)
-        substitution_entry.connect("activate", on_entry_activate)
 
         content_area.pack_start(listbox, True, True, 0)
 
@@ -332,8 +338,10 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
             dlg.destroy()
 
         dialog.connect("response", on_response)
+        update_add_button_sensitivity()
         dialog.show_all()
-        add_button.grab_default()
+        if add_button.get_sensitive():
+            add_button.grab_default()
         phrase_entry.grab_focus()
 
     def _show_edit_dialog(  # pylint: disable=too-many-locals
@@ -344,24 +352,37 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
     ) -> None:
         """Show dialog to edit an existing pronunciation."""
 
-        dialog, edit_button = self._create_header_bar_dialog(
+        dialog, edit_button = orca_gui_helpers.create_header_bar_dialog(
             guilabels.EDIT_PRONUNCIATION,
             guilabels.DIALOG_CANCEL,
             guilabels.DIALOG_EDIT,
+            transient_for=self.get_toplevel(),
         )
 
         content_area = dialog.get_content_area()
 
-        listbox = preferences_grid_base.FocusManagedListBox()
+        listbox = orca_gui_helpers.FocusManagedListBox()
 
         # Size group to ensure labels have same width and entries align
-        label_size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
+        label_size_group = orca_gui_helpers.create_horizontal_size_group()
 
-        # Actual string row
-        phrase_entry = Gtk.Entry()
-        phrase_entry.set_text(phrase)
-        phrase_entry.set_size_request(-1, 40)
-        phrase_row = self._create_labeled_entry_row(
+        def on_entry_activate(_entry):
+            """Only accept the dialog if both fields are filled."""
+            if phrase_entry.get_text().strip() and substitution_entry.get_text().strip():
+                dialog.response(Gtk.ResponseType.OK)
+
+        def update_edit_button_sensitivity(_entry: Gtk.Entry | None = None) -> None:
+            edit_button.set_sensitive(
+                bool(phrase_entry.get_text().strip() and substitution_entry.get_text().strip())
+            )
+
+        phrase_entry = orca_gui_helpers.create_entry(
+            phrase,
+            size_request=(-1, 40),
+            changed_handler=update_edit_button_sensitivity,
+            activate_handler=on_entry_activate,
+        )
+        phrase_row = orca_gui_helpers.create_labeled_entry_row(
             guilabels.DICTIONARY_ACTUAL_STRING,
             phrase_entry,
             include_top_separator=False,
@@ -369,24 +390,18 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
         )
         listbox.add_row_with_widget(phrase_row, phrase_entry)
 
-        # Replacement string row
-        substitution_entry = Gtk.Entry()
-        substitution_entry.set_text(substitution)
-        substitution_entry.set_size_request(-1, 40)
-        substitution_row = self._create_labeled_entry_row(
+        substitution_entry = orca_gui_helpers.create_entry(
+            substitution,
+            size_request=(-1, 40),
+            changed_handler=update_edit_button_sensitivity,
+            activate_handler=on_entry_activate,
+        )
+        substitution_row = orca_gui_helpers.create_labeled_entry_row(
             guilabels.DICTIONARY_REPLACEMENT_STRING,
             substitution_entry,
             label_size_group=label_size_group,
         )
         listbox.add_row_with_widget(substitution_row, substitution_entry)
-
-        def on_entry_activate(_entry):
-            """Only activate dialog if both fields are filled."""
-            if phrase_entry.get_text().strip() and substitution_entry.get_text().strip():
-                dialog.response(Gtk.ResponseType.OK)
-
-        phrase_entry.connect("activate", on_entry_activate)
-        substitution_entry.connect("activate", on_entry_activate)
 
         content_area.pack_start(listbox, True, True, 0)
 
@@ -402,6 +417,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
             dlg.destroy()
 
         dialog.connect("response", on_response)
+        update_edit_button_sensitivity()
         dialog.show_all()
         edit_button.grab_default()
         phrase_entry.grab_focus()
@@ -501,7 +517,7 @@ class PronunciationDictionaryPreferencesGrid(  # pylint: disable=too-many-instan
             if self.get_mapped():
                 self._schedule_build_chunk()
         else:
-            empty_row = orca_gui_base.create_info_row(guilabels.DICTIONARY_EMPTY)
+            empty_row = orca_gui_helpers.create_info_row(guilabels.DICTIONARY_EMPTY)
             self._listbox.add(empty_row)
             empty_row.show_all()
 

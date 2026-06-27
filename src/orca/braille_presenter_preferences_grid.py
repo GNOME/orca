@@ -403,8 +403,7 @@ class BrailleDisplaySettingsPreferencesGrid(preferences_grid_base.AutoPreference
     def _contracted_enabled(self) -> bool:
         """Check if contracted braille is enabled in the UI."""
 
-        widget = self.get_widget_for_control(self._enable_contracted_control)
-        return widget.get_active() if widget else True
+        return self._get_control_value(self._enable_contracted_control, True)
 
 
 class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
@@ -510,8 +509,7 @@ class BrailleFlashMessagesPreferencesGrid(preferences_grid_base.AutoPreferencesG
     def _flash_not_persistent(self) -> bool:
         """Check if flash messages are not persistent in the UI."""
 
-        widget = self.get_widget_for_control(self._flash_persistent_control)
-        return not widget.get_active() if widget else True
+        return not self._get_control_value(self._flash_persistent_control, False)
 
     def save_settings(self, profile: str = "", app_name: str = "") -> dict:
         """Persist staged values, including flash-message-duration in milliseconds."""
@@ -798,7 +796,7 @@ class BraillePreferencesGrid(preferences_grid_base.PreferencesGridBase):
             (guilabels.ON_SCREEN_DISPLAY, "osd", self._osd_grid),
         ]
 
-        enable_listbox, stack, _categories_listbox = self._create_multi_page_stack(
+        enable_listbox, stack, _categories_listbox = self._create_child_grid_preferences_stack(
             enable_label=guilabels.BRAILLE_ENABLE_BRAILLE_SUPPORT,
             enable_getter=self._presenter.get_braille_is_enabled,
             enable_setter=self._presenter.set_braille_is_enabled,

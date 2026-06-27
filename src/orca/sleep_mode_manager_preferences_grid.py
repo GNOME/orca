@@ -24,14 +24,14 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-import gi
-
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk  # pylint: disable=no-name-in-module
-
-from . import gsettings_registry, guilabels, orca_gui_base, preferences_grid_base
+from . import gsettings_registry, guilabels, orca_gui_helpers, preferences_grid_base
 
 if TYPE_CHECKING:
+    import gi
+
+    gi.require_version("Gtk", "3.0")
+    from gi.repository import Gtk  # pylint: disable=no-name-in-module
+
     from .sleep_mode_manager import SleepModeManager
 
 
@@ -65,7 +65,7 @@ class SleepModePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         super().__init__(guilabels.KB_GROUP_SLEEP_MODE)
         self._manager: SleepModeManager = manager
         self._app_switches: list[tuple[str, Gtk.Switch]] = []
-        self._listbox: preferences_grid_base.FocusManagedListBox | None = None
+        self._listbox: preferences_grid_base.PreferencesFocusManagedListBox | None = None
         self._build()
         self.refresh()
 
@@ -74,26 +74,24 @@ class SleepModePreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         row = 0
 
-        info_listbox = orca_gui_base.create_info_listbox(guilabels.SLEEP_MODE_INFO)
-        info_listbox.set_margin_bottom(12)
+        info_listbox = orca_gui_helpers.create_info_listbox(guilabels.SLEEP_MODE_INFO)
         self.attach(info_listbox, 0, row, 1, 1)
         row += 1
 
-        header_label = Gtk.Label(label=guilabels.SLEEP_MODE_APPS, xalign=0)
-        header_label.get_style_context().add_class("heading")
-        header_label.set_margin_bottom(6)
-        self.attach(header_label, 0, row, 1, 1)
-        row += 1
-
-        self._scrolled = self._create_scrolled_window(Gtk.Box())
-        self.attach(self._scrolled, 0, row, 1, 1)
+        section_box, section_content, _heading_label = orca_gui_helpers.create_section_box(
+            guilabels.SLEEP_MODE_APPS,
+            margin_top=0,
+        )
+        self._scrolled = orca_gui_helpers.create_preferences_scrolled_window()
+        orca_gui_helpers.add_section_content(section_box, section_content, self._scrolled)
+        self.attach(section_box, 0, row, 1, 1)
         self._scrolled_row = row
 
     def _create_app_row(self, app_name: str, is_enabled: bool) -> None:
         """Create a switch row for an app and add it to the listbox."""
 
         assert self._listbox is not None
-        row, switch, _label = self._create_switch_row(
+        row, switch, _label = orca_gui_helpers.create_switch_row(
             app_name,
             self._on_switch_toggled,
             is_enabled,
@@ -114,11 +112,11 @@ class SleepModePreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self.refresh()
 
     def refresh(self) -> None:
-        """Rebuild the app list with a fresh FocusManagedListBox."""
+        """Rebuild the app list with a fresh PreferencesFocusManagedListBox."""
 
         # pylint: disable=no-member
         self._app_switches.clear()
-        self._listbox = preferences_grid_base.FocusManagedListBox()
+        self._listbox = preferences_grid_base.PreferencesFocusManagedListBox()
         self._listbox.get_accessible().set_name(guilabels.SLEEP_MODE_APPS)
 
         saved_apps = set(self._manager.get_sleep_mode_apps())

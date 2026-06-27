@@ -40,7 +40,7 @@ from . import (
     gsettings_registry,
     guilabels,
     language_utilities,
-    orca_gui_base,
+    orca_gui_helpers,
     preferences_grid_base,
     speechserver,
 )
@@ -48,8 +48,6 @@ from .acss import ACSS
 from .speechserver import CapitalizationStyle, PunctuationStyle
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
-
     from .speech_manager import SpeechManager
 
 
@@ -238,8 +236,8 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._speech_synthesizers_combo: Gtk.ComboBox
         self._punctuation_combo: Gtk.ComboBox
         self._capitalization_combo: Gtk.ComboBox
-        self._global_frame: Gtk.Frame | None = None
-        self._voice_types_frame: Gtk.Frame | None = None
+        self._global_section: Gtk.Box | None = None
+        self._voice_types_section: Gtk.Box | None = None
 
         self._families_sorted: bool = False
 
@@ -252,7 +250,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         row = 0
 
-        self._global_frame, global_content = self._create_frame(
+        self._global_section, global_content, global_heading = orca_gui_helpers.create_section_box(
             guilabels.VOICE_GLOBAL_VOICE_SETTINGS,
             margin_top=12,
         )
@@ -274,8 +272,9 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             [guilabels.CAPITALIZATION_STYLE_SPELL, CapitalizationStyle.SPELL.value],
         )
 
-        global_listbox = preferences_grid_base.FocusManagedListBox()
-        combo_size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
+        global_listbox = preferences_grid_base.PreferencesFocusManagedListBox()
+        orca_gui_helpers.add_labelled_by(global_listbox, global_heading)
+        combo_size_group = orca_gui_helpers.create_horizontal_size_group()
 
         row_data = [
             (
@@ -298,7 +297,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         global_combos = []
         for label_text, model, changed_handler in row_data:
-            row_widget, combo, _label = self._create_combo_box_row(
+            row_widget, combo, _label = orca_gui_helpers.create_combo_box_row(
                 label_text,
                 model,
                 changed_handler,
@@ -338,7 +337,7 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         switches = []
         for label_text, handler, state in switch_data:
-            row_widget, switch, _label = self._create_switch_row(
+            row_widget, switch, _label = orca_gui_helpers.create_switch_row(
                 label_text,
                 handler,
                 state,
@@ -352,13 +351,15 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._enable_pause_breaks_switch = switches[2]
         self._use_pronunciation_dict_switch = switches[3]
 
-        global_content.add(global_listbox)  # pylint: disable=no-member
-        self.attach(self._global_frame, 0, row, 1, 1)
+        orca_gui_helpers.add_section_content(self._global_section, global_content, global_listbox)
+        self.attach(self._global_section, 0, row, 1, 1)
         row += 1
 
-        lang_switch_frame, lang_switch_content = self._create_frame(
-            guilabels.LANGUAGE_SWITCHING,
-            margin_top=12,
+        lang_switch_section, lang_switch_content, lang_switch_heading = (
+            orca_gui_helpers.create_section_box(
+                guilabels.LANGUAGE_SWITCHING,
+                margin_top=12,
+            )
         )
 
         lang_switch_data = [
@@ -379,10 +380,11 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             ),
         ]
 
-        lang_switch_listbox = preferences_grid_base.FocusManagedListBox()
+        lang_switch_listbox = preferences_grid_base.PreferencesFocusManagedListBox()
+        orca_gui_helpers.add_labelled_by(lang_switch_listbox, lang_switch_heading)
         lang_switches = []
         for label_text, handler, state in lang_switch_data:
-            row_widget, switch, _label = self._create_switch_row(
+            row_widget, switch, _label = orca_gui_helpers.create_switch_row(
                 label_text,
                 handler,
                 state,
@@ -395,8 +397,12 @@ class VoicesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._auto_language_switching_ui_switch = lang_switches[1]
         self._only_switch_configured_languages_switch = lang_switches[2]
 
-        lang_switch_content.add(lang_switch_listbox)  # pylint: disable=no-member
-        self.attach(lang_switch_frame, 0, row, 1, 1)
+        orca_gui_helpers.add_section_content(
+            lang_switch_section,
+            lang_switch_content,
+            lang_switch_listbox,
+        )
+        self.attach(lang_switch_section, 0, row, 1, 1)
 
         self.show_all()  # pylint: disable=no-member
 
@@ -912,7 +918,7 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._deleted_sets: set[str] = set()
         self._voice_set_combo: Gtk.ComboBoxText
         self._delete_button: Gtk.Button
-        self._buttons_listbox: preferences_grid_base.FocusManagedListBox
+        self._buttons_listbox: preferences_grid_base.PreferencesFocusManagedListBox
         self._build()
 
     def _get_voice_set_items(self) -> list[tuple[str, str]]:
@@ -942,12 +948,11 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         row = 0
 
         msg = f"{guilabels.VOICE_SET_INFO} {guilabels.VOICE_SET_INFO_COMMANDS}"
-        info_listbox = orca_gui_base.create_info_listbox(msg)
-        info_listbox.set_margin_bottom(12)
+        info_listbox = orca_gui_helpers.create_info_listbox(msg)
         self.attach(info_listbox, 0, row, 1, 1)
         row += 1
 
-        header_box, self._add_button = orca_gui_base.create_heading_action_box(
+        header_box, self._add_button = orca_gui_helpers.create_heading_action_box(
             guilabels.LANGUAGE_VOICE_SETTINGS,
             "list-add-symbolic",
             guilabels.VOICE_SET_CREATE_NEW,
@@ -975,22 +980,29 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         combo_box.pack_start(self._voice_set_combo, False, False, 0)
         combo_box.pack_start(self._delete_button, False, False, 0)
 
-        selector_row, _hbox, _label = self._create_row_structure(
+        selector_row, _hbox, _label = orca_gui_helpers.create_row_structure(
             False, guilabels.VOICE_SET, combo_box, label_halign=Gtk.Align.START
         )
 
-        selector_listbox = preferences_grid_base.FocusManagedListBox()
+        selector_listbox = preferences_grid_base.PreferencesFocusManagedListBox()
         selector_listbox.add_row_with_widget(selector_row, self._voice_set_combo)
         self.attach(selector_listbox, 0, row, 1, 1)
         row += 1
 
-        self._buttons_frame, buttons_content = self._create_frame(
-            guilabels.VOICE_VOICE_TYPE_SETTINGS,
-            margin_top=12,
+        self._voice_types_section, buttons_content, buttons_heading = (
+            orca_gui_helpers.create_section_box(
+                guilabels.VOICE_VOICE_TYPE_SETTINGS,
+                margin_top=12,
+            )
         )
-        self._buttons_listbox = preferences_grid_base.FocusManagedListBox()
-        buttons_content.add(self._buttons_listbox)  # pylint: disable=no-member
-        self.attach(self._buttons_frame, 0, row, 1, 1)
+        self._buttons_listbox = preferences_grid_base.PreferencesFocusManagedListBox()
+        orca_gui_helpers.add_labelled_by(self._buttons_listbox, buttons_heading)
+        orca_gui_helpers.add_section_content(
+            self._voice_types_section,
+            buttons_content,
+            self._buttons_listbox,
+        )
+        self.attach(self._voice_types_section, 0, row, 1, 1)
 
         self._voice_set_combo.connect("changed", self._on_voice_set_changed)
         self._rebuild_buttons()
@@ -1006,28 +1018,24 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         is_primary = voice_set == gsettings_registry.PRIMARY_VOICE_SET
         self._delete_button.set_sensitive(not is_primary)
 
-        button_items: list[tuple[str, str | None, Callable[[Gtk.Button], None]]] = []
         for vt in speechserver.VoiceType:
             label = guilabels.VOICE_TYPE_LABELS.get(vt, vt)
 
             def _make_handler(voice_type: str = vt):
                 return lambda _btn: self._show_voice_dialog(voice_type, voice_set)
 
-            button_items.append((label, "applications-system-symbolic", _make_handler()))
-
-        _listbox, voice_buttons = self._create_button_listbox(button_items)
-
-        for voice_type, button in zip(speechserver.VoiceType, voice_buttons, strict=True):
-            label = guilabels.VOICE_TYPE_LABELS.get(voice_type, voice_type)
+            row, button, _label = orca_gui_helpers.create_button_row(
+                label,
+                "applications-system-symbolic",
+                _make_handler(),
+                include_top_separator=False,
+            )
             accessible_name = guilabels.VOICE_TYPE_SETTINGS % label
             button.set_tooltip_text(accessible_name)
             accessible = button.get_accessible()
             if accessible:
                 accessible.set_name(accessible_name)
-
-        for child in _listbox.get_children():
-            _listbox.remove(child)
-            self._buttons_listbox.add(child)  # pylint: disable=no-member
+            self._buttons_listbox.add_row_with_widget(row, button)
 
         self._buttons_listbox.show_all()  # pylint: disable=no-member
 
@@ -1093,20 +1101,21 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if not available:
             return
 
-        dialog, ok_button = self._create_header_bar_dialog(
+        dialog, ok_button = orca_gui_helpers.create_header_bar_dialog(
             guilabels.LANGUAGE_VOICE_SETTINGS,
             guilabels.BTN_CANCEL,
             guilabels.BTN_OK,
+            transient_for=self.get_toplevel(),
             width=400,
         )
         content_area = dialog.get_content_area()
-        lang_row, lang_combo, _label = self._create_combo_box_text_row(
+        lang_row, lang_combo, _label = orca_gui_helpers.create_combo_box_text_row(
             guilabels.VOICE_LANGUAGE,
             available,
             include_top_separator=False,
         )
 
-        listbox = preferences_grid_base.FocusManagedListBox()
+        listbox = orca_gui_helpers.FocusManagedListBox()
         listbox.add_row_with_widget(lang_row, lang_combo)
         content_area.pack_start(listbox, False, False, 0)
 
@@ -1192,21 +1201,22 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         # Edits are applied to the live voice so they can be heard while the dialog is open;
         # the configured voice is restored when it closes.
 
-        dialog, ok_button = self._create_header_bar_dialog(
+        dialog, ok_button = orca_gui_helpers.create_header_bar_dialog(
             title,
             guilabels.BTN_CANCEL,
             guilabels.BTN_OK,
+            transient_for=self.get_toplevel(),
             width=500,
         )
 
         content_area = dialog.get_content_area()
-        voice_listbox = preferences_grid_base.FocusManagedListBox()
-        combo_size_group = Gtk.SizeGroup(mode=Gtk.SizeGroupMode.HORIZONTAL)
+        voice_listbox = orca_gui_helpers.FocusManagedListBox()
+        combo_size_group = orca_gui_helpers.create_horizontal_size_group()
 
         available_languages = self._voices_grid.get_available_languages()
         person_choices: list[dict[str, Any]] = []
 
-        voice_lang_row, voice_lang_combo, _vl_label = self._create_combo_box_text_row(
+        voice_lang_row, voice_lang_combo, _vl_label = orca_gui_helpers.create_combo_box_text_row(
             guilabels.VOICE_LANGUAGE,
             available_languages,
             include_top_separator=False,
@@ -1214,7 +1224,7 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         combo_size_group.add_widget(voice_lang_combo)
         voice_listbox.add_row_with_widget(voice_lang_row, voice_lang_combo)
 
-        person_row, person_combo, _pl = self._create_combo_box_text_row(
+        person_row, person_combo, _pl = orca_gui_helpers.create_combo_box_text_row(
             guilabels.VOICE_PERSON, [], include_top_separator=False
         )
         combo_size_group.add_widget(person_combo)
@@ -1268,38 +1278,45 @@ class VoiceTypesPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 break
 
         current_rate = config.get(ACSS.RATE, 50)
-        rate_adj = Gtk.Adjustment(
-            value=current_rate, lower=0, upper=100, step_increment=1, page_increment=10
-        )
-        rate_row, rate_scale, _rl = self._create_slider_row(
-            guilabels.VOICE_RATE, rate_adj, include_top_separator=False
+        rate_row, rate_scale, _rl = orca_gui_helpers.create_range_slider_row(
+            guilabels.VOICE_RATE,
+            current_rate,
+            0,
+            100,
+            include_top_separator=False,
         )
         voice_listbox.add_row_with_widget(rate_row, rate_scale)
 
         current_pitch = config.get(ACSS.AVERAGE_PITCH, 5.0)
-        pitch_adj = Gtk.Adjustment(
-            value=current_pitch, lower=0, upper=10, step_increment=0.1, page_increment=1
-        )
-        pitch_row, pitch_scale, _pl = self._create_slider_row(
-            guilabels.VOICE_PITCH, pitch_adj, include_top_separator=False, digits=1
+        pitch_row, pitch_scale, _pl = orca_gui_helpers.create_range_slider_row(
+            guilabels.VOICE_PITCH,
+            current_pitch,
+            0,
+            10,
+            include_top_separator=False,
+            digits=1,
         )
         voice_listbox.add_row_with_widget(pitch_row, pitch_scale)
 
         current_pr = config.get(ACSS.PITCH_RANGE, 5.0)
-        pr_adj = Gtk.Adjustment(
-            value=current_pr, lower=0, upper=10, step_increment=0.1, page_increment=1
-        )
-        pr_row, pr_scale, _prl = self._create_slider_row(
-            guilabels.VOICE_INFLECTION, pr_adj, include_top_separator=False, digits=1
+        pr_row, pr_scale, _prl = orca_gui_helpers.create_range_slider_row(
+            guilabels.VOICE_INFLECTION,
+            current_pr,
+            0,
+            10,
+            include_top_separator=False,
+            digits=1,
         )
         voice_listbox.add_row_with_widget(pr_row, pr_scale)
 
         current_vol = config.get(ACSS.GAIN, 10.0)
-        vol_adj = Gtk.Adjustment(
-            value=current_vol, lower=0, upper=10, step_increment=0.1, page_increment=1
-        )
-        vol_row, vol_scale, _vl = self._create_slider_row(
-            guilabels.VOICE_VOLUME, vol_adj, include_top_separator=False, digits=1
+        vol_row, vol_scale, _vl = orca_gui_helpers.create_range_slider_row(
+            guilabels.VOICE_VOLUME,
+            current_vol,
+            0,
+            10,
+            include_top_separator=False,
+            digits=1,
         )
         voice_listbox.add_row_with_widget(vol_row, vol_scale)
 

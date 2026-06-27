@@ -40,7 +40,7 @@ from . import (
     keybindings,
     learn_mode_presenter_command_definitions,
     messages,
-    orca_gui_base,
+    orca_gui_helpers,
     presentation_manager,
 )
 from .extension import Extension
@@ -255,7 +255,7 @@ class CommandListGUI:
     ) -> Gtk.Dialog:
         """Creates the commands-list dialog."""
 
-        dialog, tree = orca_gui_base.create_tree_view_dialog(
+        dialog, tree = orca_gui_helpers.create_tree_view_dialog(
             title,
             column_headers=column_headers,
             default_size=(1000, 800),

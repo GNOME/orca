@@ -24,14 +24,20 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any
 
-import gi
-
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
-
-from . import gsettings_registry, guilabels, preferences_grid_base, sound_presenter
+from . import (
+    gsettings_registry,
+    guilabels,
+    orca_gui_helpers,
+    preferences_grid_base,
+    sound_presenter,
+)
 
 if TYPE_CHECKING:
+    import gi
+
+    gi.require_version("Gtk", "3.0")
+    from gi.repository import Gtk
+
     from .sound_presenter import SoundPresenter
 
 
@@ -187,7 +193,7 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self._progress_bars_grid = SoundProgressBarsPreferencesGrid(presenter)
         self._volume_scale: Gtk.Scale | None = None
-        self._volume_listbox: preferences_grid_base.FocusManagedListBox | None = None
+        self._volume_listbox: preferences_grid_base.PreferencesFocusManagedListBox | None = None
 
         self._build()
         self._initializing = False
@@ -201,7 +207,7 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             (guilabels.PROGRESS_BARS, "progress-bars", self._progress_bars_grid),
         ]
 
-        enable_listbox, stack, _categories_listbox = self._create_multi_page_stack(
+        enable_listbox, stack, _categories_listbox = self._create_child_grid_preferences_stack(
             enable_label=guilabels.SOUND_ENABLE_SOUND_SUPPORT,
             enable_getter=self._presenter.get_sound_is_enabled,
             enable_setter=self._presenter.set_sound_is_enabled,
@@ -214,21 +220,18 @@ class SoundPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         row += 1
 
         # Volume slider on the main page
-        self._volume_listbox = preferences_grid_base.FocusManagedListBox()
+        self._volume_listbox = preferences_grid_base.PreferencesFocusManagedListBox()
 
-        volume_adj = Gtk.Adjustment(
-            value=self._presenter.get_sound_volume(),
-            lower=0.0,
-            upper=1.0,
-            step_increment=0.1,
-            page_increment=0.1,
-        )
-        volume_row, self._volume_scale, _volume_label = self._create_slider_row(
+        volume_row, self._volume_scale, _volume_label = orca_gui_helpers.create_range_slider_row(
             guilabels.SOUND_VOLUME,
-            volume_adj,
+            self._presenter.get_sound_volume(),
+            0.0,
+            1.0,
             changed_handler=self._on_volume_changed,
             include_top_separator=False,
             digits=1,
+            steps=10,
+            page_steps=10,
         )
         self._volume_listbox.add_row_with_widget(volume_row, self._volume_scale)
         self._volume_listbox.set_sensitive(self._presenter.get_sound_is_enabled())

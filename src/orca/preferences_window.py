@@ -56,7 +56,7 @@ from . import (
     messages,
     mouse_presenter,
     orca,
-    orca_gui_base,
+    orca_gui_helpers,
     preferences_grid_base,
     presentation_manager,
     profile_manager,
@@ -123,7 +123,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
         msg = "PREFERENCES: Initializing UI"
         debug.print_message(debug.LEVEL_ALL, msg, True)
 
-        appearance_refs = orca_gui_base.sync_appearance()
+        appearance_refs = orca_gui_helpers.sync_appearance()
         super().__init__(title=guilabels.DIALOG_SCREEN_READER_PREFERENCES)
         self._appearance_refs = appearance_refs
 
@@ -266,14 +266,14 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             unsaved_changes_checker=self._has_unsaved_changes,
         )
         self.stack.add_named(self.profiles_grid, "profiles")
-        self._add_navigation_row("profiles", self.profiles_grid.get_label().get_text())
+        self._add_navigation_row("profiles", self.profiles_grid.get_title())
         self.update_menu_labels()
 
         if not self._app_name:
             sleep_mgr = sleep_mode_manager.get_manager()
             self.sleep_mode_grid = sleep_mgr.create_preferences_grid()
             self.stack.add_named(self.sleep_mode_grid, "sleep_mode")
-            self._add_navigation_row("sleep_mode", self.sleep_mode_grid.get_label().get_text())
+            self._add_navigation_row("sleep_mode", self.sleep_mode_grid.get_title())
 
         speech_pres = speech_presenter.get_presenter()
 
@@ -287,17 +287,17 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             app_name=self._app_name or "",
         )
         self.stack.add_named(self.speech_grid, "speech")
-        self._add_navigation_row("speech", self.speech_grid.get_label().get_text())
+        self._add_navigation_row("speech", self.speech_grid.get_title())
 
         braille_pres = braille_presenter.get_presenter()
         self.braille_grid = braille_pres.create_preferences_grid(title_change_callback=update_title)
         self.stack.add_named(self.braille_grid, "braille")
-        self._add_navigation_row("braille", self.braille_grid.get_label().get_text())
+        self._add_navigation_row("braille", self.braille_grid.get_title())
 
         sound_pres = sound_presenter.get_presenter()
         self.sound_grid = sound_pres.create_preferences_grid(title_change_callback=update_title)
         self.stack.add_named(self.sound_grid, "sound")
-        self._add_navigation_row("sound", self.sound_grid.get_label().get_text())
+        self._add_navigation_row("sound", self.sound_grid.get_title())
 
         cmd_manager = command_manager.get_manager()
         self.keybindings_grid = cmd_manager.create_preferences_grid(
@@ -305,67 +305,67 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             title_change_callback=update_title,
         )
         self.stack.add_named(self.keybindings_grid, "keybindings")
-        self._add_navigation_row("keybindings", self.keybindings_grid.get_label().get_text())
+        self._add_navigation_row("keybindings", self.keybindings_grid.get_title())
 
         typing_pres = typing_echo_presenter.get_presenter()
         self.typing_echo_grid = typing_pres.create_preferences_grid()
         self.stack.add_named(self.typing_echo_grid, "typing_echo")
-        self._add_navigation_row("typing_echo", self.typing_echo_grid.get_label().get_text())
+        self._add_navigation_row("typing_echo", self.typing_echo_grid.get_title())
 
         flat_review_pres = flat_review_presenter.get_presenter()
         self.flat_review_grid = flat_review_pres.create_preferences_grid()
         self.stack.add_named(self.flat_review_grid, "flat_review")
-        self._add_navigation_row("flat_review", self.flat_review_grid.get_label().get_text())
+        self._add_navigation_row("flat_review", self.flat_review_grid.get_title())
 
         mouse_pres = mouse_presenter.get_presenter()
         self.mouse_grid = mouse_pres.create_preferences_grid()
         self.stack.add_named(self.mouse_grid, "mouse")
-        self._add_navigation_row("mouse", self.mouse_grid.get_label().get_text())
+        self._add_navigation_row("mouse", self.mouse_grid.get_title())
 
         doc_presenter = document_presenter.get_presenter()
         self.document_grid = doc_presenter.create_preferences_grid(update_title)
         self.stack.add_named(self.document_grid, "documents")
-        self._add_navigation_row("documents", self.document_grid.get_label().get_text())
+        self._add_navigation_row("documents", self.document_grid.get_title())
 
         say_all_pres = say_all_presenter.get_presenter()
         self.say_all_grid = say_all_pres.create_preferences_grid()
         self.stack.add_named(self.say_all_grid, "say_all")
-        self._add_navigation_row("say_all", self.say_all_grid.get_label().get_text())
+        self._add_navigation_row("say_all", self.say_all_grid.get_title())
 
         pronunciation_manager = pronunciation_dictionary_manager.get_manager()
         self.pronunciation_grid = pronunciation_manager.create_preferences_grid(self.script)
         self.stack.add_named(self.pronunciation_grid, "pronunciation")
-        self._add_navigation_row("pronunciation", self.pronunciation_grid.get_label().get_text())
+        self._add_navigation_row("pronunciation", self.pronunciation_grid.get_title())
 
         spellcheck_pres = spellcheck_presenter.get_presenter()
         self.spellcheck_grid = spellcheck_pres.create_preferences_grid()
         self.stack.add_named(self.spellcheck_grid, "spellcheck")
-        self._add_navigation_row("spellcheck", self.spellcheck_grid.get_label().get_text())
+        self._add_navigation_row("spellcheck", self.spellcheck_grid.get_title())
 
         chat_pres = chat_presenter.get_presenter()
         self.chat_grid = chat_pres.create_preferences_grid()
         self.stack.add_named(self.chat_grid, "chat")
-        self._add_navigation_row("chat", self.chat_grid.get_label().get_text())
+        self._add_navigation_row("chat", self.chat_grid.get_title())
 
         text_attr_mgr = text_attribute_manager.get_manager()
         self.text_attributes_grid = text_attr_mgr.create_preferences_grid()
         self.stack.add_named(self.text_attributes_grid, "text_attributes")
         self._add_navigation_row(
             "text_attributes",
-            self.text_attributes_grid.get_label().get_text(),
+            self.text_attributes_grid.get_title(),
         )
 
         system_info_presenter = system_information_presenter.get_presenter()
         self.time_and_date_grid = system_info_presenter.create_time_and_date_preferences_grid()
         self.stack.add_named(self.time_and_date_grid, "time_and_date")
-        self._add_navigation_row("time_and_date", self.time_and_date_grid.get_label().get_text())
+        self._add_navigation_row("time_and_date", self.time_and_date_grid.get_title())
 
         if not self._app_name:
             self.extensions_grid = (
                 extension_loader_preferences_grid.ExtensionLoaderPreferencesGrid()
             )
             self.stack.add_named(self.extensions_grid, "extensions")
-            self._add_navigation_row("extensions", self.extensions_grid.get_label().get_text())
+            self._add_navigation_row("extensions", self.extensions_grid.get_title())
 
         registry.set_ignore_runtime(False)
 
@@ -493,7 +493,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
             title = AXObject.get_name(self.script.app)
         else:
             child = self.stack.get_child_by_name(panel_id)
-            title = child.get_label().get_text()
+            title = child.get_title()
 
         self._set_page_title(title)
 
@@ -540,7 +540,7 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
                 title = AXObject.get_name(self.script.app)
             else:
                 child = self.stack.get_child_by_name(panel_id)
-                title = child.get_label().get_text()
+                title = child.get_title()
             self._set_page_title(title)
             self.stack.set_visible_child_name(panel_id)
 

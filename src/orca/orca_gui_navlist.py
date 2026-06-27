@@ -34,7 +34,7 @@ gi.require_version("Gdk", "3.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gdk, GObject, Gtk
 
-from . import debug, guilabels, orca_gui_base, script_manager
+from . import debug, guilabels, orca_gui_helpers, script_manager
 from .ax_event_synthesizer import AXEventSynthesizer
 from .ax_utilities import AXUtilities
 from .ax_utilities_text import CaretSetReason
@@ -78,7 +78,7 @@ class OrcaNavListGUI:
         selected_row: int,
     ) -> Gtk.Dialog:
         """Create the navigation list dialog."""
-        dialog, self._tree = orca_gui_base.create_tree_view_dialog(
+        dialog, self._tree = orca_gui_helpers.create_tree_view_dialog(
             title,
             column_headers=column_headers,
             text_column_offset=2,

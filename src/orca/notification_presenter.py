@@ -44,7 +44,7 @@ from . import (
     input_event,
     messages,
     notification_presenter_command_definitions,
-    orca_gui_base,
+    orca_gui_helpers,
     presentation_manager,
 )
 from .extension import Extension
@@ -316,7 +316,7 @@ class NotificationListGUI:
         column_headers: list[str],
         rows: list[tuple[str, str]],
     ) -> Gtk.Dialog:
-        dialog, tree = orca_gui_base.create_tree_view_dialog(
+        dialog, tree = orca_gui_helpers.create_tree_view_dialog(
             title,
             column_headers=column_headers,
             default_size=(600, 400),

@@ -46,6 +46,7 @@ from . import (
     keybindings,
     keynames,
     messages,
+    orca_gui_helpers,
     orca_modifier_manager,
     preferences_grid_base,
     presentation_manager,
@@ -58,6 +59,16 @@ if TYPE_CHECKING:
 
     from .command import KeyboardCommand
     from .scripts import default
+
+
+class CommandListBoxRow(Gtk.ListBoxRow):
+    """ListBoxRow for command keybindings with command details."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.command: KeyboardCommand | None = None
+        self.vbox: Gtk.Box | None = None
+        self.binding_label: Gtk.Label | None = None
 
 
 class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
@@ -153,7 +164,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self.keyboard_layout_combo: Gtk.ComboBox | None = None
         self._modifier_switches: dict[str, Gtk.Switch] = {}
-        self._settings_listbox: preferences_grid_base.FocusManagedListBox | None = None
+        self._settings_listbox: preferences_grid_base.PreferencesFocusManagedListBox | None = None
+        self._commands_categories_listbox: Gtk.ListBox | None = None
+        self._commands_detail_listbox: Gtk.ListBox | None = None
 
         self._build()
         self._initializing = False
@@ -177,9 +190,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             [guilabels.KEYBOARD_LAYOUT_LAPTOP, command_manager.KeyboardLayout.LAPTOP.value],
         )
 
-        self._settings_listbox = preferences_grid_base.FocusManagedListBox()
+        self._settings_listbox = preferences_grid_base.PreferencesFocusManagedListBox()
 
-        layout_row, layout_combo, _label = self._create_combo_box_row(
+        layout_row, layout_combo, _label = orca_gui_helpers.create_combo_box_row(
             guilabels.KEYBOARD_LAYOUT,
             keyboard_layout_model,
             self._on_keyboard_layout_changed,
@@ -191,10 +204,12 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self.attach(self._settings_listbox, 0, row, 1, 1)
         row += 1
 
-        modifier_listbox = preferences_grid_base.FocusManagedListBox(guilabels.MODIFIER_KEYS)
+        modifier_listbox = preferences_grid_base.PreferencesFocusManagedListBox(
+            guilabels.MODIFIER_KEYS
+        )
 
         for label, keys in self._MODIFIER_KEY_OPTIONS:
-            switch_row, switch, _label = self._create_switch_row(
+            switch_row, switch, _label = orca_gui_helpers.create_switch_row(
                 label,
                 self._on_modifier_switch_toggled,
                 state=False,
@@ -206,17 +221,18 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self.attach(modifier_listbox.get_container(), 0, row, 1, 1)
         row += 1
 
-        commands_heading = self._create_heading_label(guilabels.COMMANDS)
-        self.attach(commands_heading, 0, row, 1, 1)
-        row += 1
-
-        stack, _categories_listbox, _detail_listbox = self._create_stacked_preferences(
-            on_category_activated=self._on_category_activated,
-            on_detail_row_activated=self._on_keybinding_activated,
+        section_box, section_content, commands_heading = orca_gui_helpers.create_section_box(
+            guilabels.COMMANDS
         )
-        if self._categories_listbox:
-            self._categories_listbox.get_accessible().set_name(guilabels.COMMANDS)
-        self.attach(stack, 0, row, 1, 1)
+        stack, self._commands_categories_listbox, self._commands_detail_listbox = (
+            self._create_list_detail_preferences_stack(
+                on_category_activated=self._on_category_activated,
+                on_detail_row_activated=self._on_keybinding_activated,
+            )
+        )
+        self._commands_categories_listbox.get_accessible().set_name(guilabels.COMMANDS)
+        orca_gui_helpers.add_section_content(section_box, section_content, stack)
+        self.attach(section_box, 0, row, 1, 1)
 
         self._register_stack_disable_widgets(
             self._settings_listbox,
@@ -262,12 +278,12 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def _populate_keybindings(self) -> None:
         """Build categories dictionary and populate the categories list."""
 
-        if self._categories_listbox is None:
+        if self._commands_categories_listbox is None:
             return
 
         self._categories.clear()
-        for child in self._categories_listbox.get_children():
-            self._categories_listbox.remove(child)
+        for child in self._commands_categories_listbox.get_children():
+            self._commands_categories_listbox.remove(child)
 
         app_name = AXObject.get_name(self._script.app) if self._script.app else ""
         if app_name:
@@ -287,7 +303,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         for commands in self._categories.values():
             commands.sort(key=lambda command: command.is_transient())
 
-        self._categories_listbox.set_header_func(self._separator_header_func, None)
+        orca_gui_helpers.set_listbox_separators(self._commands_categories_listbox)
 
         # Custom sort: For app-specific, app name first then screen-reader management.
         # Otherwise, screen-reader management first. After that, sort alphabetically.
@@ -303,19 +319,12 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         sorted_categories = sorted(self._categories.keys(), key=sort_key)
         for category_name in sorted_categories:
             self._add_stack_category_row(
-                self._categories_listbox,
+                self._commands_categories_listbox,
                 category_name,
                 category=category_name,
             )
 
-        self._categories_listbox.show_all()
-
-    @staticmethod
-    def _separator_header_func(row, before, _user_data):
-        """Add separator between rows (standard GTK ListBox pattern)."""
-
-        if before is not None:
-            row.set_header(Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL))
+        self._commands_categories_listbox.show_all()
 
     def _on_category_activated(self, row: Gtk.ListBoxRow) -> None:
         """Handle category selection - navigate to detail page."""
@@ -336,8 +345,8 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         self.reload()
         self._show_stack_categories()
-        if self._categories_listbox:
-            self._categories_listbox.grab_focus()
+        if self._commands_categories_listbox:
+            self._commands_categories_listbox.grab_focus()
 
     def _show_stack_categories(self) -> None:
         """Switch to categories view and update title to main page."""
@@ -353,23 +362,23 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if self._current_category:
             if self._title_change_callback:
                 self._title_change_callback(self._current_category)
-            if self._detail_listbox:
-                self._detail_listbox.get_accessible().set_name(self._current_category)
+            if self._commands_detail_listbox:
+                self._commands_detail_listbox.get_accessible().set_name(self._current_category)
 
     # pylint: disable=no-member
 
     def _populate_category_detail(self, category_name: str) -> None:
         """Populate the detail page with keybindings for the given category."""
 
-        if self._detail_listbox is None or category_name not in self._categories:
+        if self._commands_detail_listbox is None or category_name not in self._categories:
             return
 
-        for child in self._detail_listbox.get_children():
-            self._detail_listbox.remove(child)
+        for child in self._commands_detail_listbox.get_children():
+            self._commands_detail_listbox.remove(child)
 
         commands = self._categories[category_name]
         for i, cmd in enumerate(commands):
-            row = preferences_grid_base.CommandListBoxRow()
+            row = CommandListBoxRow()
             row.set_activatable(True)
 
             outer_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
@@ -378,11 +387,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 separator = Gtk.Separator(orientation=Gtk.Orientation.HORIZONTAL)
                 outer_vbox.pack_start(separator, False, False, 0)
 
-            vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
-            vbox.set_margin_start(12)
-            vbox.set_margin_end(12)
-            vbox.set_margin_top(12)
-            vbox.set_margin_bottom(12)
+            vbox = orca_gui_helpers.create_vertical_row_box()
 
             description = cmd.get_description() or cmd.get_name()
             desc_label = Gtk.Label(label=description, xalign=0)
@@ -405,9 +410,9 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             row.vbox = vbox
             row.binding_label = binding_label
             row.show_all()
-            self._detail_listbox.add(row)
+            self._commands_detail_listbox.add(row)
 
-        self._detail_listbox.show_all()
+        self._commands_detail_listbox.show_all()
 
     def _on_keybinding_activated(self, _listbox: Gtk.ListBox, row: Gtk.ListBoxRow) -> None:
         """Handle keybinding row activation - start inline editing."""
@@ -415,7 +420,7 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if self._keybinding_being_edited is not None:
             return
 
-        if not isinstance(row, preferences_grid_base.CommandListBoxRow):
+        if not isinstance(row, CommandListBoxRow):
             return
 
         command = row.command
@@ -887,7 +892,8 @@ class KeybindingsPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         keys: list[str] = []
         for _label, key_names in self._MODIFIER_KEY_OPTIONS:
-            if self._modifier_switches.get(key_names[0], Gtk.Switch()).get_active():
+            switch = self._modifier_switches.get(key_names[0])
+            if switch is not None and switch.get_active():
                 keys.extend(key_names)
         return keys
 

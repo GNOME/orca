@@ -356,7 +356,4 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
     def _only_speak_displayed_text_is_off(self) -> bool:
         """Returns True if only-speak-displayed-text is off in the UI."""
 
-        widget = self.get_widget_for_control(self._only_speak_displayed_control)
-        if widget:
-            return not widget.get_active()
-        return True
+        return not self._get_control_value(self._only_speak_displayed_control, False)

@@ -151,7 +151,7 @@ lib_sources = [
   'object_navigator_command_definitions.py',
   'object_properties.py',
   'orca.py',
-  'orca_gui_base.py',
+  'orca_gui_helpers.py',
   'orca_gui_navlist.py',
   'orca_modifier_manager.py',
   'output_reader.py',

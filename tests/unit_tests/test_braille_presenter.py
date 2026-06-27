@@ -1042,13 +1042,13 @@ class TestBraillePreferencesGridUI:
         presenter = BraillePresenter()
         grid = BrailleDisplaySettingsPreferencesGrid(presenter)
 
-        contracted_switch = grid.get_widget(2)
+        contracted_switch = grid._widgets[2]
         assert contracted_switch is not None
 
-        computer_braille_at_cursor_switch = grid.get_widget(3)
+        computer_braille_at_cursor_switch = grid._widgets[3]
         assert computer_braille_at_cursor_switch is not None
 
-        contraction_table_combo = grid.get_widget(4)
+        contraction_table_combo = grid._widgets[4]
         assert contraction_table_combo is not None
 
     def test_braille_flash_messages_grid_creates_widgets(
@@ -1082,10 +1082,10 @@ class TestBraillePreferencesGridUI:
         presenter = BraillePresenter()
         grid = BrailleFlashMessagesPreferencesGrid(presenter)
 
-        persistent_switch = grid.get_widget(2)
+        persistent_switch = grid._widgets[2]
         assert persistent_switch is not None
 
-        duration_spinbutton = grid.get_widget(3)
+        duration_spinbutton = grid._widgets[3]
         assert duration_spinbutton is not None
 
     def test_braille_progress_bars_grid_creates_widgets(
@@ -1110,7 +1110,7 @@ class TestBraillePreferencesGridUI:
         self,
         test_context: OrcaTestContext,
     ) -> None:
-        """Test BraillePreferencesGrid creates multi-page stack."""
+        """Test BraillePreferencesGrid creates child-grid stack."""
 
         from gi.repository import Gtk
 
@@ -1177,7 +1177,7 @@ class TestBraillePreferencesGridUI:
         presenter.set_verbosity_level("verbose")
         grid = BrailleVerbosityPreferencesGrid(presenter)
 
-        detailed_switch = grid.get_widget(0)
+        detailed_switch = grid._widgets[0]
         assert detailed_switch is not None
         assert detailed_switch.get_active() is True
 
@@ -1196,7 +1196,7 @@ class TestBraillePreferencesGridUI:
         presenter.set_verbosity_level("brief")
         grid = BrailleVerbosityPreferencesGrid(presenter)
 
-        detailed_switch = grid.get_widget(0)
+        detailed_switch = grid._widgets[0]
         assert detailed_switch is not None
         assert detailed_switch.get_active() is False
 
@@ -1218,7 +1218,7 @@ class TestBraillePreferencesGridUI:
         presenter.set_flash_message_duration(3000)
         grid = BrailleFlashMessagesPreferencesGrid(presenter)
 
-        duration_spinbutton = grid.get_widget(3)
+        duration_spinbutton = grid._widgets[3]
         assert duration_spinbutton is not None
         assert duration_spinbutton.get_value() == 3
 
@@ -1234,6 +1234,6 @@ class TestBraillePreferencesGridUI:
         presenter.set_link_indicator("dot7")
         grid = BrailleDisplaySettingsPreferencesGrid(presenter)
 
-        link_combo = grid.get_widget(5)
+        link_combo = grid._widgets[5]
         assert link_combo is not None
         assert link_combo.get_active() == 1

@@ -31,7 +31,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk  # pylint: disable=no-name-in-module
 
-from . import debug, gsettings_registry, guilabels, preferences_grid_base
+from . import debug, gsettings_registry, guilabels, orca_gui_helpers, preferences_grid_base
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -363,37 +363,29 @@ class ProfilePreferencesGrid(  # pylint: disable=too-many-instance-attributes
         if profile is None:
             return
 
-        dialog, ok_button = self._create_header_bar_dialog(
+        dialog, ok_button = orca_gui_helpers.create_header_bar_dialog(
             guilabels.MENU_RENAME,
             guilabels.DIALOG_CANCEL,
             guilabels.DIALOG_APPLY,
+            transient_for=self.get_toplevel(),
             width=400,
         )
 
         content_area = dialog.get_content_area()
         content_area.set_spacing(12)
 
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        hbox.set_margin_start(12)
-        hbox.set_margin_end(12)
-        hbox.set_margin_top(12)
-        hbox.set_margin_bottom(12)
-
-        label = Gtk.Label(label=guilabels.PROFILE_NAME_LABEL, xalign=0)
-        label.set_use_underline(True)
-        hbox.pack_start(label, False, False, 0)
-
-        entry = Gtk.Entry()
-        entry.set_text(profile[0])
-        entry.set_hexpand(True)
-        entry.set_activates_default(True)
-        entry.connect(
-            "changed",
-            lambda e: ok_button.set_sensitive(bool(self._sanitize_profile_label(e.get_text()))),
+        entry = orca_gui_helpers.create_entry(
+            profile[0],
+            activates_default=True,
+            changed_handler=lambda e: ok_button.set_sensitive(
+                bool(self._sanitize_profile_label(e.get_text()))
+            ),
         )
-        label.set_mnemonic_widget(entry)
-        hbox.pack_start(entry, True, True, 0)
-
+        hbox = orca_gui_helpers.create_labeled_entry_box(
+            guilabels.PROFILE_NAME_LABEL,
+            entry,
+            margin=12,
+        )
         content_area.pack_start(hbox, False, False, 0)
 
         dialog.show_all()
@@ -429,36 +421,28 @@ class ProfilePreferencesGrid(  # pylint: disable=too-many-instance-attributes
     def get_new_profile_name(self) -> list[str] | None:
         """Show dialog to get a new profile name. Returns [label, name] or None if cancelled."""
 
-        dialog, ok_button = self._create_header_bar_dialog(
+        dialog, ok_button = orca_gui_helpers.create_header_bar_dialog(
             guilabels.PROFILE_SAVE_AS_TITLE,
             guilabels.DIALOG_CANCEL,
             guilabels.DIALOG_ADD,
+            transient_for=self.get_toplevel(),
             width=400,
         )
 
         content_area = dialog.get_content_area()
         content_area.set_spacing(12)
 
-        hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12)
-        hbox.set_margin_start(12)
-        hbox.set_margin_end(12)
-        hbox.set_margin_top(12)
-        hbox.set_margin_bottom(12)
-
-        label = Gtk.Label(label=guilabels.PROFILE_NAME_LABEL, xalign=0)
-        label.set_use_underline(True)
-        hbox.pack_start(label, False, False, 0)
-
-        entry = Gtk.Entry()
-        entry.set_hexpand(True)
-        entry.set_activates_default(True)
-        entry.connect(
-            "changed",
-            lambda e: ok_button.set_sensitive(bool(self._sanitize_profile_label(e.get_text()))),
+        entry = orca_gui_helpers.create_entry(
+            activates_default=True,
+            changed_handler=lambda e: ok_button.set_sensitive(
+                bool(self._sanitize_profile_label(e.get_text()))
+            ),
         )
-        label.set_mnemonic_widget(entry)
-        hbox.pack_start(entry, True, True, 0)
-
+        hbox = orca_gui_helpers.create_labeled_entry_box(
+            guilabels.PROFILE_NAME_LABEL,
+            entry,
+            margin=12,
+        )
         content_area.pack_start(hbox, False, False, 0)
 
         ok_button.set_sensitive(False)
