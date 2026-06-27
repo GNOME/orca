@@ -444,7 +444,7 @@ class TestBrailleCommand:
 
 
 @pytest.mark.unit
-class TestCommandManager:
+class TestCommandManager:  # pylint: disable=too-many-public-methods
     """Test CommandManager class methods."""
 
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, Mock]:
@@ -488,6 +488,7 @@ class TestCommandManager:
         kb.keyval = keyval
         kb.keycode = keycode
         kb.keysymstring = "a"
+        kb.as_string.return_value = "a"
         return kb
 
     def test_init(self, test_context: OrcaTestContext) -> None:
@@ -666,6 +667,84 @@ class TestCommandManager:
         assert cmd1 in all_commands
         assert cmd2 in all_commands
         assert cmd3 in all_commands
+
+    def test_user_extension_command_conflicting_with_orca_command_is_unbound(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test user-extension keybindings do not override existing Orca commands."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import CommandManager, KeyboardCommand
+
+        manager = CommandManager()
+
+        orca_binding = self._create_mock_keybinding(test_context)
+        orca_binding.modifiers = 256
+        orca_binding.click_count = 1
+        user_binding = self._create_mock_keybinding(test_context)
+        user_binding.modifiers = 256
+        user_binding.click_count = 1
+
+        orca_command = KeyboardCommand(
+            "orcaCommand",
+            self._create_mock_function(test_context),
+            "Orca",
+            desktop_keybinding=orca_binding,
+        )
+        user_command = KeyboardCommand(
+            "userCommand",
+            self._create_mock_function(test_context),
+            "User",
+            desktop_keybinding=user_binding,
+        )
+
+        manager.add_command(orca_command)
+        manager.add_user_extension_command("DemoExtension", user_command)
+
+        assert orca_command.get_keybinding() is orca_binding
+        assert user_command.get_keybinding() is None
+        assert manager.has_user_extension_keybinding_conflicts("DemoExtension")
+        assert not manager.has_user_extension_keybinding_conflicts("OtherExtension")
+
+    def test_user_extension_command_conflicting_with_user_extension_command_is_unbound(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test later user-extension commands do not override earlier user-extension commands."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import CommandManager, KeyboardCommand
+
+        manager = CommandManager()
+
+        first_binding = self._create_mock_keybinding(test_context)
+        first_binding.modifiers = 256
+        first_binding.click_count = 1
+        second_binding = self._create_mock_keybinding(test_context)
+        second_binding.modifiers = 256
+        second_binding.click_count = 1
+
+        first_command = KeyboardCommand(
+            "firstCommand",
+            self._create_mock_function(test_context),
+            "First",
+            desktop_keybinding=first_binding,
+        )
+        second_command = KeyboardCommand(
+            "secondCommand",
+            self._create_mock_function(test_context),
+            "Second",
+            desktop_keybinding=second_binding,
+        )
+
+        manager.add_user_extension_command("FirstExtension", first_command)
+        manager.add_user_extension_command("SecondExtension", second_command)
+
+        assert first_command.get_keybinding() is first_binding
+        assert second_command.get_keybinding() is None
+        assert not manager.has_user_extension_keybinding_conflicts("FirstExtension")
+        assert manager.has_user_extension_keybinding_conflicts("SecondExtension")
 
     def test_get_command_for_event_finds_match(self, test_context: OrcaTestContext) -> None:
         """Test get_command_for_event returns matching command."""
@@ -1183,6 +1262,7 @@ class TestDiffBasedGrabUpdates:
         kb.remove_grabs = test_context.Mock()
         kb.get_grab_ids = test_context.Mock(return_value=[])
         kb.set_grab_ids = test_context.Mock()
+        kb.as_string.return_value = keysymstring
         return kb
 
     def test_binding_key_returns_tuple(self, test_context: OrcaTestContext) -> None:

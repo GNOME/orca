@@ -1515,6 +1515,14 @@ EXTENSIONS_INFO_LOCATION = C_("user extensions", "Location")
 # followed by the user-visible name of the extension.
 EXTENSIONS_INFO_NAME = C_("user extensions", "Name")
 
+# Translators: This note is shown for an enabled user extension when one or more
+# of its commands could not use their requested keyboard shortcuts because those
+# shortcuts are already used by other Orca commands.
+EXTENSIONS_INFO_KEYBINDING_CONFLICT = C_(
+    "user extensions",
+    "Some commands were unbound due to conflicts.",
+)
+
 # Translators: This is a label in the user extension information dialog. It is
 # followed by whether the extension is approved, not approved, disabled, invalid,
 # or needs to be approved again.

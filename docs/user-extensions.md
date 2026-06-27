@@ -147,6 +147,23 @@ Available modifier masks:
 - `keybindings.ORCA_SHIFT_MODIFIER_MASK`
 - `keybindings.ORCA_CTRL_MODIFIER_MASK`
 
+### Keybinding Conflicts
+
+User-extension commands cannot take a keybinding that is already used by an
+Orca command. This includes keybindings that users have assigned in Orca's
+preferences. If a user-extension command requests a keybinding that conflicts
+with a built-in Orca command, Orca registers the extension command but leaves it
+unbound.
+
+If two user extensions request the same keybinding, one extension keeps the
+binding and the other extension's conflicting command is left unbound. Choose
+non-conflicting defaults and let users rebind commands in Orca's preferences
+when needed.
+
+The User Extensions information dialog reports this in the Status row as
+`Some commands were unbound due to conflicts.` for an approved extension whose
+commands lost one or more requested keybindings.
+
 ## Extension Settings
 
 User extensions can store simple settings using `self.settings`. This is the

@@ -33,7 +33,7 @@ gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk  # pylint: disable=no-name-in-module
 
-from . import extension_loader, guilabels, orca_gui_helpers, preferences_grid_base
+from . import command_manager, extension_loader, guilabels, orca_gui_helpers, preferences_grid_base
 
 
 class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
@@ -345,7 +345,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             (guilabels.EXTENSIONS_INFO_NAME, self._get_display_name(info)),
             (guilabels.EXTENSIONS_INFO_DESCRIPTION, info.description),
             (guilabels.EXTENSIONS_INFO_LOCATION, info.filepath),
-            (guilabels.EXTENSIONS_INFO_STATUS, self._get_status_label(info.status)),
+            (guilabels.EXTENSIONS_INFO_STATUS, self._get_info_status(info)),
             (guilabels.EXTENSIONS_INFO_VERSION, info.version),
             (guilabels.EXTENSIONS_INFO_AUTHOR, info.author),
             (guilabels.EXTENSIONS_INFO_ORGANIZATION, info.organization),
@@ -353,6 +353,33 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             (guilabels.EXTENSIONS_INFO_WEBSITE, info.website),
         ]
         return [(label, value) for label, value in rows if value]
+
+    def _get_info_status(self, info: extension_loader.UserExtensionInfo) -> str:
+        """Returns the status text for the extension information dialog."""
+
+        status = self._get_status_label(info.status)
+        conflict_note = self._get_keybinding_conflicts(info)
+        if conflict_note:
+            return f"{status}; {conflict_note}"
+        return status
+
+    @staticmethod
+    def _get_keybinding_conflicts(info: extension_loader.UserExtensionInfo) -> str:
+        """Returns any keybinding conflicts for info."""
+
+        if info.status is not extension_loader.UserExtensionStatus.APPROVED:
+            return ""
+
+        if not info.class_name:
+            return ""
+
+        has_conflicts = command_manager.get_manager().has_user_extension_keybinding_conflicts(
+            info.class_name
+        )
+        if not has_conflicts:
+            return ""
+
+        return guilabels.EXTENSIONS_INFO_KEYBINDING_CONFLICT
 
     def _on_approve_clicked(self, filename: str) -> None:
         """Approve or re-approve an extension."""

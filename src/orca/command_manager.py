@@ -126,6 +126,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         self._numlock_on: bool = False
         self._modal_handler: ModalInputHandler | None = None
         self._user_extensions: weakref.WeakSet[object] = weakref.WeakSet()
+        self._user_extension_command_names: dict[str, str] = {}
+        self._user_extension_binding_conflicts: dict[str, set[str]] = {}
         self._prior_suspended: set[str] = set()
 
         msg = "COMMAND MANAGER: Registering D-Bus commands."
@@ -462,7 +464,9 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             if old_kb is not default_kb:
                 self._remove_from_key_index(cmd)
                 cmd.set_keybinding(default_kb)
-                self._add_to_key_index(cmd)
+                self._resolve_user_extension_keybinding(cmd)
+                if cmd.get_keybinding() is not None:
+                    self._add_to_key_index(cmd)
                 if old_kb is None and default_kb is not None:
                     restored_names.append(cmd.get_name())
         if restored_names:
@@ -504,6 +508,93 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
             with contextlib.suppress(ValueError):
                 self._commands_by_keycode[kb.keycode].remove(cmd)
 
+    def _is_user_extension_command(self, cmd: KeyboardCommand) -> bool:
+        """Returns True if cmd belongs to a user extension."""
+
+        return cmd.get_name() in self._user_extension_command_names
+
+    def _find_keybinding_conflict(self, cmd: KeyboardCommand) -> KeyboardCommand | None:
+        """Returns a command using the same keybinding as cmd, or None."""
+
+        key = self._binding_key(cmd.get_keybinding())
+        if key is None:
+            return None
+
+        for existing in self._keyboard_commands.values():
+            if existing is cmd or existing.get_name() == cmd.get_name():
+                continue
+            if self._binding_key(existing.get_keybinding()) == key:
+                return existing
+        return None
+
+    def _clear_user_extension_keybinding(
+        self,
+        cmd: KeyboardCommand,
+        conflicting_command: KeyboardCommand,
+    ) -> None:
+        """Clears cmd's keybinding because it conflicts with another command."""
+
+        binding = cmd.get_keybinding()
+        assert binding is not None
+        binding_name = binding.as_string()
+        command_name = cmd.get_name()
+        extension_name = self._user_extension_command_names.get(command_name, "unknown")
+        conflicting_command_name = conflicting_command.get_name()
+        msg = (
+            f"COMMAND MANAGER: Refusing keybinding {binding_name} for user extension "
+            f"{extension_name} command {command_name}; already used by "
+            f"{conflicting_command_name}."
+        )
+        debug.print_message(debug.LEVEL_WARNING, msg, True)
+        self._remove_from_key_index(cmd)
+        cmd.set_keybinding(None)
+        self._user_extension_binding_conflicts.setdefault(extension_name, set()).add(command_name)
+
+    def _clear_user_extension_keybinding_conflict(self, command_name: str) -> None:
+        """Clears any stored keybinding conflict for command_name."""
+
+        extension_name = self._user_extension_command_names.get(command_name)
+        if extension_name is None:
+            return
+
+        conflicts = self._user_extension_binding_conflicts.get(extension_name)
+        if conflicts is None:
+            return
+
+        conflicts.discard(command_name)
+        if not conflicts:
+            self._user_extension_binding_conflicts.pop(extension_name, None)
+
+    def _resolve_user_extension_keybinding(self, cmd: KeyboardCommand) -> None:
+        """Clears cmd's keybinding if it conflicts with another command."""
+
+        if not self._is_user_extension_command(cmd):
+            return
+
+        conflicting_command = self._find_keybinding_conflict(cmd)
+        if conflicting_command is None:
+            self._clear_user_extension_keybinding_conflict(cmd.get_name())
+            return
+
+        self._clear_user_extension_keybinding(cmd, conflicting_command)
+
+    def _unbind_conflicting_user_extension_commands(self, cmd: KeyboardCommand) -> None:
+        """Ensures user extension commands lose any keybinding conflicts."""
+
+        if self._is_user_extension_command(cmd):
+            self._resolve_user_extension_keybinding(cmd)
+            return
+
+        key = self._binding_key(cmd.get_keybinding())
+        if key is None:
+            return
+
+        for existing in tuple(self._keyboard_commands.values()):
+            if not self._is_user_extension_command(existing):
+                continue
+            if self._binding_key(existing.get_keybinding()) == key:
+                self._clear_user_extension_keybinding(existing, cmd)
+
     def add_command(self, command: Command) -> None:
         """Adds a command to the registry and sets its active keybinding."""
 
@@ -517,10 +608,25 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
 
             self._keyboard_commands[name] = command
             command.set_keybinding(command.get_default_keybinding(self._is_desktop))
+            self._unbind_conflicting_user_extension_commands(command)
             self._add_to_key_index(command)
 
         elif isinstance(command, BrailleCommand):
             self._braille_commands[command.get_name()] = command
+
+    def add_user_extension_command(
+        self,
+        extension_name: str,
+        command: Command,
+    ) -> None:
+        """Adds a user extension command, clearing any conflicting keybinding."""
+
+        if isinstance(command, KeyboardCommand):
+            self._user_extension_command_names[command.get_name()] = extension_name
+            self.add_command(command)
+            return
+
+        self.add_command(command)
 
     def remove_command(self, command_name: str) -> None:
         """Removes a command from the registry and key indexes."""
@@ -528,6 +634,8 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         command = self._keyboard_commands.pop(command_name, None)
         if command is not None:
             self._remove_from_key_index(command)
+            self._clear_user_extension_keybinding_conflict(command_name)
+            self._user_extension_command_names.pop(command_name, None)
             return
 
         self._braille_commands.pop(command_name, None)
@@ -572,6 +680,11 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         """Returns all registered braille commands."""
 
         return tuple(self._braille_commands.values())
+
+    def has_user_extension_keybinding_conflicts(self, extension_name: str) -> bool:
+        """Returns True if the specified user extension has keybinding conflicts."""
+
+        return bool(self._user_extension_binding_conflicts.get(extension_name))
 
     def _get_keyboard_commands_by_group_label(
         self,
@@ -649,7 +762,9 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
                     self._remove_from_key_index(cmd)
                     kb = keybindings.KeyBinding(keysym, int(mods), click_count=int(clicks))
                     cmd.set_keybinding(kb)
-                    self._add_to_key_index(cmd)
+                    self._resolve_user_extension_keybinding(cmd)
+                    if cmd.get_keybinding() is not None:
+                        self._add_to_key_index(cmd)
 
     def get_command_for_event(
         self,

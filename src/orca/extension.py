@@ -207,7 +207,9 @@ class Extension:
         for cmd in commands:
             if self._is_user_extension:
                 cmd.set_function(self._wrap_function(cmd.get_function()))
-            manager.add_command(cmd)
+                manager.add_user_extension_command(self.module_name, cmd)
+            else:
+                manager.add_command(cmd)
             self._registered_command_names.append(cmd.get_name())
 
         msg = f"EXTENSION: {self.module_name} {len(commands)} command(s) registered."
@@ -226,7 +228,10 @@ class Extension:
 
         return []
 
-    def on_speech_output(self, output: SpeechOutput) -> SpeechOutputResult | None:
+    def on_speech_output(  # pylint: disable=unused-argument
+        self,
+        output: SpeechOutput,
+    ) -> SpeechOutputResult | None:
         """Called before Orca sends speech to the active speech provider."""
 
         return None
