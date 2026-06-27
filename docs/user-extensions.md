@@ -404,6 +404,27 @@ you trust.
 For a complete extension using speech output hooks, see
 [Example 3](#example-3-speech-output-hook).
 
+### Braille Output Hooks
+
+Extensions can observe, replace, or consume braille immediately before Orca
+displays generated braille. Override `on_braille_output(output)` in your
+extension. It receives a `BrailleOutput` instance with:
+
+- `regions`: The tuple of braille regions Orca is about to display.
+- `focused_region`: The region that has focus, or `None`.
+
+Return `None` to observe without changing braille. Return
+`BrailleOutputResult.consume_output()` if the extension has handled the braille
+itself. Return `BrailleOutputResult.replace(text)` to replace Orca's generated
+braille with a single flat, non-interactive string.
+
+Braille regions include the information and accessible objects Orca needs for
+positioning the caret in text, synthesizing clicks on objects, displaying link,
+selection, and text-attribute indicators, and supporting panning. Those pieces
+are tightly coupled to the region objects and to Orca's braille line model. For
+that reason, Orca does not provide an API for extensions to return modified
+regions.
+
 ## Examples
 
 ### Example 1: Commands, Controller API, and Settings

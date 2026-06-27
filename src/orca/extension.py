@@ -60,6 +60,34 @@ class SpeechOutputResult:
         return cls(consume=True)
 
 
+@dataclass(frozen=True)
+class BrailleOutput:
+    """Braille regions Orca is about to display."""
+
+    regions: tuple[Any, ...] = ()
+    focused_region: Any | None = None
+
+
+@dataclass(frozen=True)
+class BrailleOutputResult:
+    """Result returned by an extension braille-output hook."""
+
+    text: str | None = None
+    consume: bool = False
+
+    @classmethod
+    def replace(cls, text: str) -> BrailleOutputResult:
+        """Returns a result that replaces braille output with flat text."""
+
+        return cls(text=text)
+
+    @classmethod
+    def consume_output(cls) -> BrailleOutputResult:
+        """Returns a result indicating that the extension handled braille output."""
+
+        return cls(consume=True)
+
+
 class ExtensionSettings:
     """Settings scoped to one extension."""
 
@@ -233,6 +261,14 @@ class Extension:
         output: SpeechOutput,
     ) -> SpeechOutputResult | None:
         """Called before Orca sends speech to the active speech provider."""
+
+        return None
+
+    def on_braille_output(  # pylint: disable=unused-argument
+        self,
+        output: BrailleOutput,
+    ) -> BrailleOutputResult | None:
+        """Called before Orca displays generated braille."""
 
         return None
 

@@ -50,11 +50,18 @@ class TestBraillePresenter:
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Set up mocks for braille_presenter dependencies."""
 
-        additional_modules = ["orca.braille", "orca.braille_monitor", "orca.orca_platform"]
+        additional_modules = [
+            "orca.braille",
+            "orca.braille_monitor",
+            "orca.extension_loader",
+            "orca.orca_platform",
+        ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         platform_mock = essential_modules["orca.orca_platform"]
         platform_mock.tablesdir = "/usr/share/liblouis/tables"
+        loader = essential_modules["orca.extension_loader"].get_loader.return_value
+        loader.iter_braille_output_handlers.return_value = []
 
         from orca import gsettings_registry
 
@@ -858,6 +865,88 @@ class TestBraillePresenter:
 
         mock_monitor.write_text.assert_not_called()
         assert presenter._monitor is mock_monitor
+
+    def test_present_regions_observes_braille_output_hook(self, test_context: OrcaTestContext):
+        """Test braille output hooks can observe generated braille."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.braille_presenter import get_presenter
+
+        class Region:
+            string = "Hello"
+            accessible = "obj"
+
+        handler = test_context.Mock()
+        handler.module_name = "BrailleObserver"
+        handler.on_braille_output.return_value = None
+        loader = essential_modules["orca.extension_loader"].get_loader.return_value
+        loader.iter_braille_output_handlers.return_value = [handler]
+
+        presenter = get_presenter()
+        region = Region()
+        presenter.present_regions([region], region)
+
+        handler.on_braille_output.assert_called_once()
+        output = handler.on_braille_output.call_args.args[0]
+        assert output.regions == (region,)
+        assert output.focused_region is region
+        essential_modules["orca.braille"].display_line.assert_called_once()
+
+    def test_present_regions_replaces_braille_output_with_flat_text(
+        self,
+        test_context: OrcaTestContext,
+    ):
+        """Test braille output hooks can replace generated braille with flat text."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.braille_presenter import get_presenter
+        from orca.extension import BrailleOutputResult
+
+        class Region:
+            string = "Hello"
+
+        handler = test_context.Mock()
+        handler.module_name = "BrailleReplacer"
+        handler.on_braille_output.return_value = BrailleOutputResult.replace("Bonjour")
+        loader = essential_modules["orca.extension_loader"].get_loader.return_value
+        loader.iter_braille_output_handlers.return_value = [handler]
+
+        presenter = get_presenter()
+        presenter.present_regions([Region()], None)
+
+        essential_modules["orca.braille"].Region.assert_called_once_with("Bonjour")
+        line = essential_modules["orca.braille"].Line.return_value
+        line.add_regions.assert_called_once_with(
+            [essential_modules["orca.braille"].Region.return_value]
+        )
+        essential_modules["orca.braille"].display_line.assert_called_once_with(
+            line,
+            essential_modules["orca.braille"].Region.return_value,
+            pan_to_cursor=True,
+            stop_flash=True,
+        )
+
+    def test_present_regions_consumes_braille_output(self, test_context: OrcaTestContext):
+        """Test braille output hooks can consume generated braille."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.braille_presenter import get_presenter
+        from orca.extension import BrailleOutputResult
+
+        class Region:
+            string = "Hello"
+
+        handler = test_context.Mock()
+        handler.module_name = "BrailleConsumer"
+        handler.on_braille_output.return_value = BrailleOutputResult.consume_output()
+        loader = essential_modules["orca.extension_loader"].get_loader.return_value
+        loader.iter_braille_output_handlers.return_value = [handler]
+
+        presenter = get_presenter()
+        presenter.present_regions([Region()], None)
+
+        handler.on_braille_output.assert_called_once()
+        essential_modules["orca.braille"].display_line.assert_not_called()
 
     def test_destroy_monitor(self, test_context: OrcaTestContext):
         """Test destroy_monitor destroys existing monitor."""

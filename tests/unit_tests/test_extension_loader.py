@@ -180,6 +180,68 @@ class TestExtensionLoaderDataclass:
         assert loader.iter_speech_output_handlers() == []
         loader.get_disabled_extensions.assert_not_called()
 
+    def test_iter_braille_output_handlers_returns_enabled_user_extensions_with_hook(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test braille output handlers are hook overrides not disabled by name."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.command_manager", "orca.gsettings_registry"]
+        )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        from orca.extension import Extension
+        from orca.extension_loader import ExtensionLoader
+
+        class NoHookExtension(Extension):
+            GROUP_LABEL = "No Hook"
+
+        class EnabledHookExtension(Extension):
+            GROUP_LABEL = "Enabled"
+
+            def on_braille_output(self, output):
+                return None
+
+        class DisabledHookExtension(Extension):
+            GROUP_LABEL = "Disabled"
+
+            def on_braille_output(self, output):
+                return None
+
+        loader = ExtensionLoader()
+        no_hook = NoHookExtension()
+        enabled = EnabledHookExtension()
+        disabled = DisabledHookExtension()
+        loader._user_extensions = [no_hook, enabled, disabled]
+        loader._braille_output_handlers = [
+            ext for ext in loader._user_extensions if loader._extension_handles_braille_output(ext)
+        ]
+        loader.get_disabled_extensions = test_context.Mock(return_value=["DisabledHookExtension"])
+
+        assert loader.iter_braille_output_handlers() == [enabled]
+
+    def test_iter_braille_output_handlers_short_circuits_without_hooks(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test no disabled-extension lookup is needed when no braille hooks exist."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.command_manager", "orca.gsettings_registry"]
+        )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        from orca.extension_loader import ExtensionLoader
+
+        loader = ExtensionLoader()
+        loader.get_disabled_extensions = test_context.Mock()
+
+        assert loader.iter_braille_output_handlers() == []
+        loader.get_disabled_extensions.assert_not_called()
+
     def test_shutdown_user_extensions_notifies_loaded_extensions(
         self,
         test_context: OrcaTestContext,

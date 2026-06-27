@@ -1949,7 +1949,6 @@ class SpeechPresenter(Extension):
         if not handlers:
             return text, False
 
-        consumed = False
         tokens = [
             "SPEECH OUTPUT HOOK: object:",
             obj,
@@ -1959,48 +1958,16 @@ class SpeechPresenter(Extension):
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         for handler in handlers:
-            tokens = [
-                "SPEECH OUTPUT HOOK: Calling extension:",
-                handler.module_name,
-            ]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            output = SpeechOutput(
-                text=text,
-                obj=obj,
-            )
-            try:
-                result = handler.on_speech_output(output)
-            except Exception as error:  # pylint: disable=broad-exception-caught
-                msg = (
-                    f"SPEECH PRESENTER: Extension {handler.module_name} "
-                    f"failed while handling speech output: {error}"
-                )
-                debug.print_message(debug.LEVEL_WARNING, msg, True)
-                continue
-
+            result = self._call_speech_output_handler(handler, SpeechOutput(text, obj))
             if result is None:
                 tokens = [
                     "SPEECH OUTPUT HOOK: Extension",
                     handler.module_name,
-                    "observed without changes.",
+                    "returned without consuming output.",
                 ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 continue
-            if not isinstance(result, SpeechOutputResult):
-                msg = (
-                    f"SPEECH PRESENTER: Extension {handler.module_name} "
-                    f"returned unexpected speech output result: {result}"
-                )
-                debug.print_message(debug.LEVEL_WARNING, msg, True)
-                continue
             if result.text is not None:
-                if not isinstance(result.text, str):
-                    msg = (
-                        f"SPEECH PRESENTER: Extension {handler.module_name} "
-                        f"returned non-string speech text: {result.text}"
-                    )
-                    debug.print_message(debug.LEVEL_WARNING, msg, True)
-                    continue
                 tokens = [
                     "SPEECH OUTPUT HOOK: Extension",
                     handler.module_name,
@@ -2016,8 +1983,7 @@ class SpeechPresenter(Extension):
                     "consumed output.",
                 ]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                consumed = True
-                break
+                return text, True
             tokens = [
                 "SPEECH OUTPUT HOOK: Extension",
                 handler.module_name,
@@ -2025,7 +1991,45 @@ class SpeechPresenter(Extension):
             ]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        return text, consumed
+        return text, False
+
+    @staticmethod
+    def _call_speech_output_handler(
+        handler: Extension,
+        output: SpeechOutput,
+    ) -> SpeechOutputResult | None:
+        """Calls a speech output handler and validates the result."""
+
+        tokens = ["SPEECH OUTPUT HOOK: Calling extension:", handler.module_name]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        try:
+            result = handler.on_speech_output(output)
+        except Exception as error:  # pylint: disable=broad-exception-caught
+            msg = (
+                f"SPEECH PRESENTER: Extension {handler.module_name} "
+                f"failed while handling speech output: {error}"
+            )
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return None
+
+        if result is None:
+            return None
+        if not isinstance(result, SpeechOutputResult):
+            msg = (
+                f"SPEECH PRESENTER: Extension {handler.module_name} "
+                f"returned unexpected speech output result: {result}"
+            )
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return None
+        if result.text is not None and not isinstance(result.text, str):
+            msg = (
+                f"SPEECH PRESENTER: Extension {handler.module_name} "
+                f"returned non-string speech text: {result.text}"
+            )
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return None
+        return result
 
     def _speak_single(
         self,

@@ -105,6 +105,7 @@ class ExtensionLoader:
         self._builtins: list[tuple[Callable[[], Extension], str]] = []
         self._user_extensions: list[Extension] = []
         self._speech_output_handlers: list[Extension] = []
+        self._braille_output_handlers: list[Extension] = []
 
     @gsettings_registry.get_registry().gsetting(
         key="disabled-extensions",
@@ -246,6 +247,7 @@ class ExtensionLoader:
             extension.disable()
         self._user_extensions.clear()
         self._speech_output_handlers.clear()
+        self._braille_output_handlers.clear()
         self.discover_and_load(extensions_dir)
         self.set_up_user_commands()
         command_manager.get_manager().activate_commands("reloaded user extensions")
@@ -316,6 +318,8 @@ class ExtensionLoader:
             self._user_extensions.append(extension)
             if self._extension_handles_speech_output(extension):
                 self._speech_output_handlers.append(extension)
+            if self._extension_handles_braille_output(extension):
+                self._braille_output_handlers.append(extension)
             msg = f"EXTENSION LOADER: Loaded extension {extension.module_name} from {filename}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
 
@@ -391,11 +395,27 @@ class ExtensionLoader:
 
         return [ext for ext in self._speech_output_handlers if ext.module_name not in disabled]
 
+    def iter_braille_output_handlers(self) -> list[Extension]:
+        """Returns enabled user extensions that can handle outgoing braille."""
+
+        if not self._braille_output_handlers:
+            return []
+
+        disabled = self.get_disabled_extensions()
+
+        return [ext for ext in self._braille_output_handlers if ext.module_name not in disabled]
+
     @staticmethod
     def _extension_handles_speech_output(extension: Extension) -> bool:
         """Returns True if extension overrides the speech-output hook."""
 
         return type(extension).on_speech_output is not Extension.on_speech_output
+
+    @staticmethod
+    def _extension_handles_braille_output(extension: Extension) -> bool:
+        """Returns True if extension overrides the braille-output hook."""
+
+        return type(extension).on_braille_output is not Extension.on_braille_output
 
     @staticmethod
     def _get_user_extension_status(

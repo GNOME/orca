@@ -39,6 +39,7 @@ from . import (
     dbus_service,
     debug,
     document_presenter,
+    extension_loader,
     flat_review_presenter,
     focus_manager,
     gsettings_registry,
@@ -53,7 +54,7 @@ from .ax_text import AXText
 from .ax_utilities import AXUtilities
 from .ax_utilities_text import CaretSetReason
 from .braille_generator import BrailleGeneratorContext
-from .extension import Extension
+from .extension import BrailleOutput, BrailleOutputResult, Extension
 from .generator import PresentationReason
 from .orca_platform import tablesdir  # pylint: disable=import-error
 
@@ -638,6 +639,13 @@ class BraillePresenter(Extension):
     ) -> None:
         """Build a line from regions and present it as a single braille line."""
 
+        regions, focused_region, consumed = self._process_braille_output(
+            regions,
+            focused_region,
+        )
+        if consumed:
+            return
+
         line = braille.Line()
         line.add_regions(regions)
         braille.display_line(
@@ -728,6 +736,90 @@ class BraillePresenter(Extension):
         result, focused_region = generator.generate_braille(obj, context)
         if result:
             self.present_regions(list(result), focused_region)
+
+    def _process_braille_output(
+        self,
+        regions: list[braille.Region],
+        focused_region: braille.Region | None,
+    ) -> tuple[list[braille.Region], braille.Region | None, bool]:
+        """Lets extensions observe, replace, or consume outgoing braille."""
+
+        handlers = extension_loader.get_loader().iter_braille_output_handlers()
+        if not handlers:
+            return regions, focused_region, False
+
+        tokens = [
+            "BRAILLE OUTPUT HOOK: regions:",
+            regions,
+            "focused region:",
+            focused_region,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        output = BrailleOutput(tuple(regions), focused_region)
+        for handler in handlers:
+            result = self._call_braille_output_handler(handler, output)
+            if result is None:
+                continue
+            if result.text is not None:
+                tokens = [
+                    "BRAILLE OUTPUT HOOK: Extension",
+                    handler.module_name,
+                    "replaced text:",
+                    result.text,
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                regions = [braille.Region(result.text)]
+                focused_region = regions[0] if result.text else None
+                output = BrailleOutput(tuple(regions), focused_region)
+            if result.consume:
+                tokens = [
+                    "BRAILLE OUTPUT HOOK: Extension",
+                    handler.module_name,
+                    "consumed output.",
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return regions, focused_region, True
+
+        return regions, focused_region, False
+
+    @staticmethod
+    def _call_braille_output_handler(
+        handler: Extension,
+        output: BrailleOutput,
+    ) -> BrailleOutputResult | None:
+        """Calls a braille output handler and validates the result."""
+
+        tokens = ["BRAILLE OUTPUT HOOK: Calling extension:", handler.module_name]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        try:
+            result = handler.on_braille_output(output)
+        except Exception as error:  # pylint: disable=broad-exception-caught
+            msg = (
+                f"BRAILLE PRESENTER: Extension {handler.module_name} "
+                f"failed while handling braille output: {error}"
+            )
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return None
+
+        if result is None:
+            return None
+        if not isinstance(result, BrailleOutputResult):
+            msg = (
+                f"BRAILLE PRESENTER: Extension {handler.module_name} "
+                f"returned unexpected braille output result: {result}"
+            )
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return None
+        if result.text is not None and not isinstance(result.text, str):
+            msg = (
+                f"BRAILLE PRESENTER: Extension {handler.module_name} "
+                f"returned non-string braille text: {result.text}"
+            )
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return None
+        return result
 
     @gsettings_registry.get_registry().gsetting(
         key=KEY_ENABLED,
