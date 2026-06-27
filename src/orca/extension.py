@@ -27,9 +27,20 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, ClassVar
 
 from . import command_manager, dbus_service, debug, gsettings_registry
+from .extension_preferences import ExtensionPreference, ExtensionPreferenceKind
 
 if TYPE_CHECKING:
     from .command import Command
+
+__all__ = [
+    "BrailleOutput",
+    "BrailleOutputResult",
+    "Extension",
+    "ExtensionPreference",
+    "ExtensionPreferenceKind",
+    "SpeechOutput",
+    "SpeechOutputResult",
+]
 
 
 @dataclass(frozen=True)
@@ -253,6 +264,11 @@ class Extension:
 
     def _get_commands(self) -> list[Command]:
         """Override to provide commands for registration."""
+
+        return []
+
+    def get_preferences(self) -> list[ExtensionPreference]:
+        """Override to provide declarative preferences."""
 
         return []
 

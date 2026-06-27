@@ -1489,6 +1489,11 @@ EXTENSIONS_REVOKE = C_("user extensions", "Revoke")
 # such as its author, version, and web page.
 EXTENSIONS_INFO_BUTTON = C_("user extensions", "Info")
 
+# Translators: This is a button label in the User Extensions preferences page.
+# Pressing this button opens a dialog with settings provided by the selected
+# user extension.
+EXTENSIONS_SETTINGS_BUTTON = C_("user extensions", "Settings")
+
 # Translators: This is a label in the user extension information dialog. It is
 # followed by the name of the person or people who wrote the extension.
 EXTENSIONS_INFO_AUTHOR = C_("user extensions", "Author")

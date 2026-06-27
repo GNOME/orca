@@ -405,6 +405,14 @@ class ExtensionLoader:
 
         return [ext for ext in self._braille_output_handlers if ext.module_name not in disabled]
 
+    def get_loaded_user_extension(self, class_name: str) -> Extension | None:
+        """Returns the loaded user extension with class_name."""
+
+        return next(
+            (ext for ext in self._user_extensions if ext.module_name == class_name),
+            None,
+        )
+
     @staticmethod
     def _extension_handles_speech_output(extension: Extension) -> bool:
         """Returns True if extension overrides the speech-output hook."""

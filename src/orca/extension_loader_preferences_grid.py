@@ -26,6 +26,7 @@
 from __future__ import annotations
 
 import os
+from typing import Any
 
 import gi
 
@@ -33,7 +34,15 @@ gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk  # pylint: disable=no-name-in-module
 
-from . import command_manager, extension_loader, guilabels, orca_gui_helpers, preferences_grid_base
+from . import (
+    command_manager,
+    extension_loader,
+    extension_preferences,
+    extension_preferences_dialog,
+    guilabels,
+    orca_gui_helpers,
+    preferences_grid_base,
+)
 
 
 class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
@@ -69,9 +78,14 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._rows_by_filename: dict[str, Gtk.ListBoxRow] = {}
         self._switches_by_filename: dict[str, Gtk.Switch] = {}
         self._info_buttons_by_filename: dict[str, Gtk.Button] = {}
+        self._settings_buttons_by_filename: dict[str, Gtk.Button] = {}
         self._approve_buttons_by_filename: dict[str, Gtk.Button] = {}
         self._revoke_buttons_by_filename: dict[str, Gtk.Button] = {}
         self._summary_labels_by_filename: dict[str, Gtk.Label] = {}
+        self._staged_settings_by_class_name: dict[
+            str,
+            tuple[list[extension_preferences.ExtensionPreference], dict[str, Any]],
+        ] = {}
         self._syncing_filenames: set[str] = set()
         self._build()
         self.refresh()
@@ -101,7 +115,23 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
     def save_settings(self, _profile: str = "", _app_name: str = "") -> dict:
         """Save settings for this grid."""
 
-        return {}
+        result: dict[str, Any] = {}
+        for class_name, (preferences, values) in self._staged_settings_by_class_name.items():
+            extension = self._loader.get_loaded_user_extension(class_name)
+            if extension is None:
+                continue
+
+            for pref in preferences:
+                value = values[pref.key]
+                if value == pref.default:
+                    extension.settings.reset(pref.key)
+                else:
+                    extension.settings.set(pref.key, value)
+                result[f"{class_name}/{pref.key}"] = value
+
+        self._staged_settings_by_class_name = {}
+        self._has_unsaved_changes = False
+        return result
 
     def refresh(self) -> None:
         """Rebuild the user extension list."""
@@ -114,6 +144,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._rows_by_filename = {}
         self._switches_by_filename = {}
         self._info_buttons_by_filename = {}
+        self._settings_buttons_by_filename = {}
         self._approve_buttons_by_filename = {}
         self._revoke_buttons_by_filename = {}
         self._summary_labels_by_filename = {}
@@ -158,6 +189,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._switches_by_filename[info.filename] = switch
         self._summary_labels_by_filename[info.filename] = summary_label
         self._info_buttons_by_filename[info.filename] = action_buttons["info"]
+        self._settings_buttons_by_filename[info.filename] = action_buttons["settings"]
         self._approve_buttons_by_filename[info.filename] = action_buttons["approve"]
         self._revoke_buttons_by_filename[info.filename] = action_buttons["revoke"]
         self._sync_row(info)
@@ -186,6 +218,12 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 "help-about-symbolic",
             ),
             orca_gui_helpers.ListRowAction(
+                "settings",
+                guilabels.EXTENSIONS_SETTINGS_BUTTON,
+                lambda _button: self._on_settings_clicked(filename),
+                "emblem-system-symbolic",
+            ),
+            orca_gui_helpers.ListRowAction(
                 "approve",
                 guilabels.EXTENSIONS_APPROVE,
                 lambda _button: self._on_approve_clicked(filename),
@@ -212,6 +250,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         summary_label = self._summary_labels_by_filename.get(filename)
         switch = self._switches_by_filename.get(filename)
         info_button = self._info_buttons_by_filename.get(filename)
+        settings_button = self._settings_buttons_by_filename.get(filename)
         approve_button = self._approve_buttons_by_filename.get(filename)
         revoke_button = self._revoke_buttons_by_filename.get(filename)
         detail_text = self._get_detail_text(info)
@@ -247,6 +286,9 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         if info_button is not None:
             info_button.set_sensitive(True)
+
+        if settings_button is not None:
+            settings_button.set_sensitive(self._can_show_settings(info))
 
         if revoke_button is not None:
             revoke_button.set_sensitive(can_revoke)
@@ -334,6 +376,60 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         dialog.show_all()
         dialog.run()
         dialog.destroy()
+
+    def _can_show_settings(self, info: extension_loader.UserExtensionInfo) -> bool:
+        """Returns whether info has user-visible settings."""
+
+        if info.status is not extension_loader.UserExtensionStatus.APPROVED:
+            return False
+        if info.class_name is None:
+            return False
+        extension = self._loader.get_loaded_user_extension(info.class_name)
+        if extension is None:
+            return False
+        return any(
+            extension_preferences.is_supported_in_generated_dialog(pref)
+            for pref in extension.get_preferences()
+        )
+
+    def _on_settings_clicked(self, filename: str) -> None:
+        """Show settings for an extension."""
+
+        info = self._get_info(filename)
+        if info is None or info.class_name is None:
+            return
+
+        extension = self._loader.get_loaded_user_extension(info.class_name)
+        if extension is None:
+            return
+
+        preferences = extension.get_preferences()
+        if not preferences:
+            return
+
+        parent = self.get_toplevel()
+        transient_for = parent if isinstance(parent, Gtk.Window) else None
+        dialog = extension_preferences_dialog.ExtensionPreferencesDialog(
+            extension,
+            preferences,
+            self._get_staged_settings(info.class_name),
+            transient_for,
+        )
+        values = dialog.run()
+        if values is None:
+            return
+
+        self._staged_settings_by_class_name[info.class_name] = (preferences, values)
+        self._has_unsaved_changes = True
+
+    def _get_staged_settings(self, class_name: str) -> dict[str, Any] | None:
+        """Return currently staged settings for class_name."""
+
+        staged = self._staged_settings_by_class_name.get(class_name)
+        if staged is None:
+            return None
+        _preferences, values = staged
+        return values
 
     def _get_info_dialog_rows(
         self,

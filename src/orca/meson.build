@@ -117,6 +117,8 @@ lib_sources = [
   'extension.py',
   'extension_loader.py',
   'extension_loader_preferences_grid.py',
+  'extension_preferences.py',
+  'extension_preferences_dialog.py',
   'flat_review.py',
   'flat_review_finder.py',
   'flat_review_finder_command_definitions.py',

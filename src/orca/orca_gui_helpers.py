@@ -709,6 +709,7 @@ def create_row_structure(  # pylint: disable=too-many-arguments,too-many-positio
     label_halign: Gtk.Align | None = None,
     label_hexpand: bool = True,
     widget_expand: bool = False,
+    label_size_group: Gtk.SizeGroup | None = None,
 ) -> tuple[Gtk.ListBoxRow, Gtk.Box, Gtk.Label | None]:
     """Return a standard listbox row structure."""
 
@@ -730,6 +731,8 @@ def create_row_structure(  # pylint: disable=too-many-arguments,too-many-positio
         if label_halign is not None:
             label.set_halign(label_halign)
         label.set_hexpand(label_hexpand)
+        if label_size_group is not None:
+            label_size_group.add_widget(label)
         hbox.pack_start(label, label_hexpand, label_hexpand, 0)
         if not isinstance(widget, Gtk.Button):
             label.set_mnemonic_widget(widget)
@@ -765,6 +768,7 @@ def create_switch_row(
     changed_handler: Callable[..., None],
     state: bool,
     include_top_separator: bool = True,
+    label_size_group: Gtk.SizeGroup | None = None,
 ) -> tuple[Gtk.ListBoxRow, Gtk.Switch, Gtk.Label]:
     """Return a standard listbox row with a label and switch."""
 
@@ -774,6 +778,7 @@ def create_switch_row(
         label_text,
         switch,
         label_xalign=0,
+        label_size_group=label_size_group,
     )
     assert label is not None
     return row, switch, label
@@ -785,6 +790,7 @@ def create_spin_button_row(
     changed_handler: Callable[[Gtk.SpinButton], None] | None = None,
     include_top_separator: bool = True,
     digits: int = 0,
+    label_size_group: Gtk.SizeGroup | None = None,
 ) -> tuple[Gtk.ListBoxRow, Gtk.SpinButton, Gtk.Label]:
     """Return a standard listbox row with a label and spin button."""
 
@@ -799,6 +805,7 @@ def create_spin_button_row(
         label_text,
         spin,
         label_xalign=0,
+        label_size_group=label_size_group,
     )
     assert label is not None
     return row, spin, label
@@ -838,6 +845,7 @@ def create_slider_row(
     changed_handler: Callable[[Gtk.Scale], None] | None = None,
     include_top_separator: bool = True,
     digits: int = 0,
+    label_size_group: Gtk.SizeGroup | None = None,
 ) -> tuple[Gtk.ListBoxRow, Gtk.Scale, Gtk.Label]:
     """Return a standard listbox row with a label and horizontal slider."""
 
@@ -857,6 +865,7 @@ def create_slider_row(
         label_halign=Gtk.Align.START,
         label_hexpand=False,
         widget_expand=True,
+        label_size_group=label_size_group,
     )
 
     assert label is not None
@@ -874,6 +883,7 @@ def create_range_slider_row(
     digits: int = 0,
     steps: int = 100,
     page_steps: int = 10,
+    label_size_group: Gtk.SizeGroup | None = None,
 ) -> tuple[Gtk.ListBoxRow, Gtk.Scale, Gtk.Label]:
     """Return a slider row for a numeric range."""
 
@@ -890,6 +900,7 @@ def create_range_slider_row(
         changed_handler=changed_handler,
         include_top_separator=include_top_separator,
         digits=digits,
+        label_size_group=label_size_group,
     )
 
 
@@ -1017,6 +1028,7 @@ def create_combo_box_row(
     model: Gtk.ListStore,
     changed_handler: Callable[[Gtk.ComboBox], None],
     include_top_separator: bool = True,
+    label_size_group: Gtk.SizeGroup | None = None,
 ) -> tuple[Gtk.ListBoxRow, Gtk.ComboBox, Gtk.Label]:
     """Return a standard listbox row with a label and combo box."""
 
@@ -1026,6 +1038,7 @@ def create_combo_box_row(
         label_text,
         combo,
         label_halign=Gtk.Align.START,
+        label_size_group=label_size_group,
     )
     assert label is not None
     return row, combo, label
@@ -1056,6 +1069,7 @@ def create_combo_box_text_row(
     items: Sequence[tuple[str, str]],
     include_top_separator: bool = True,
     changed_handler: Callable[[Gtk.ComboBoxText], None] | None = None,
+    label_size_group: Gtk.SizeGroup | None = None,
 ) -> tuple[Gtk.ListBoxRow, Gtk.ComboBoxText, Gtk.Label | None]:
     """Return a listbox row with a label and ComboBoxText populated from items."""
 
@@ -1074,6 +1088,7 @@ def create_combo_box_text_row(
         combo,
         label_xalign=0,
         label_halign=Gtk.Align.START,
+        label_size_group=label_size_group,
     )
 
     return row, combo, label

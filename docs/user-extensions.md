@@ -6,9 +6,10 @@
 
 This feature is early and experimental. The following are still pending:
 
-- Preferences UI for extension-specific settings (user extensions can be
-  approved, revoked, enabled, and disabled in Orca's Preferences window, but
-  cannot yet provide their own settings pages)
+- Custom extension-provided preferences dialogs.
+- Informational text boxes in generated extension preferences dialogs.
+- Additional generated preference controls, such as radio-button groups, color
+  buttons, file/path pickers, list rows, and dictionary rows.
 - Fixing bugs and improving the API based on user feedback.
 
 ## Overview
@@ -263,11 +264,69 @@ self.settings.reset("scope")
 
 `reset()` removes the stored value; it does not write the default.
 
+### Preferences UI
+
+Orca provides a generated preferences dialog for user extensions. Extensions
+that want to show settings in that dialog should override `get_preferences()`.
+The settings button for an approved and enabled extension opens the generated
+dialog. Pressing OK in that dialog stages the changes in Orca's Preferences
+window. The changes are saved to dconf when the user applies or saves the main
+preferences window.
+
+Generated preferences dialog support is still a work in progress. The available
+control types and layout options are intentionally limited for now.
+
+Custom extension-provided preferences dialogs are not supported yet.
+
+```python
+from orca.extension import ExtensionPreference
+
+def get_preferences(self) -> list[ExtensionPreference]:
+    return [
+        ExtensionPreference.string(
+            "greeting-message",
+            "Greeting message",
+            "Hello, world!",
+        ),
+        ExtensionPreference.integer("slow-rate", "Slow rate", 20, 0, 100),
+    ]
+```
+
+The preference key must match the key used with `self.settings.get()`. If the
+user sets a preference back to its declared default, Orca removes the stored
+value so the extension falls back to the default passed to `get()`.
+
+The default dialog supports boolean switches, strings, integer spin buttons,
+floating-point sliders, and combo boxes:
+
+```python
+ExtensionPreference.boolean("enabled", "Enabled", True)
+ExtensionPreference.string("message", "Message", "Hello")
+ExtensionPreference.integer("rate", "Rate", 50, 0, 100)
+ExtensionPreference.floating("volume", "Volume", 5.0, 0.0, 10.0)
+ExtensionPreference.enum(
+    "scope",
+    "Scope",
+    (("objects", "Objects"), ("messages", "Messages"), ("both", "Both")),
+    "objects",
+)
+```
+
+These preference types are displayed as follows:
+
+- `boolean`: switch
+- `string`: text entry
+- `integer`: spin button
+- `float`: slider
+- `enum`: combo box
+
+`string_list` and `dictionary` preferences can be declared, but Orca's
+generated dialog does not display them yet.
+
 ### Testing Settings With dconf
 
-Until preferences UI support for extension settings is available, extension
-authors may find it useful to test settings with `dconf`. Orca stores each user
-extension's settings in its own path:
+Extension authors may find it useful to test settings with `dconf`. Orca stores
+each user extension's settings in its own path:
 
 ```sh
 dconf read /org/gnome/orca/default/extensions/hello-world/settings
@@ -281,7 +340,9 @@ For example, to test Example 1 with alternative messages and rates:
 
 ```sh
 dconf write /org/gnome/orca/default/extensions/hello-world/settings \
-    "{'greeting-message': <'Very slow hello'>, 'goodbye-message': <'Very fast goodbye'>, 'slow-rate': <5>, 'fast-rate': <90>}"
+    "{'greeting-message': <'Very slow hello'>, "\
+    "'goodbye-message': <'Very fast goodbye'>, "\
+    "'slow-rate': <5>, 'fast-rate': <90>}"
 ```
 
 And to test Example 3 with messages only:
@@ -437,7 +498,7 @@ controller API calls, and extension settings.
 
 from orca import keybindings
 from orca.command import Command, KeyboardCommand
-from orca.extension import Extension
+from orca.extension import Extension, ExtensionPreference
 
 
 class HelloWorld(Extension):
@@ -462,6 +523,22 @@ class HelloWorld(Extension):
 
     def _get_fast_rate(self) -> int:
         return self.settings.get("fast-rate", default=90)
+
+    def get_preferences(self) -> list[ExtensionPreference]:
+        return [
+            ExtensionPreference.string(
+                "greeting-message",
+                "Greeting message",
+                "Hello, world!",
+            ),
+            ExtensionPreference.string(
+                "goodbye-message",
+                "Goodbye message",
+                "Goodbye, world!",
+            ),
+            ExtensionPreference.integer("slow-rate", "Slow rate", 20, 0, 100),
+            ExtensionPreference.integer("fast-rate", "Fast rate", 90, 0, 100),
+        ]
 
     def _get_commands(self) -> list[Command]:
         return [
@@ -682,7 +759,12 @@ import gi
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
-from orca.extension import Extension, SpeechOutput, SpeechOutputResult
+from orca.extension import (
+    Extension,
+    ExtensionPreference,
+    SpeechOutput,
+    SpeechOutputResult,
+)
 
 
 class ReverseWords(Extension):
@@ -695,6 +777,34 @@ class ReverseWords(Extension):
     ORGANIZATION = "Example, Inc."
     COPYRIGHT = "2026 Example, Inc."
     WEBSITE = "https://example.com/reverse-words"
+
+    def get_preferences(self) -> list[ExtensionPreference]:
+        return [
+            ExtensionPreference.enum(
+                "scope",
+                "Scope",
+                (
+                    ("objects", "Objects"),
+                    ("messages", "Messages"),
+                    ("both", "Objects and messages"),
+                    ("none", "None"),
+                ),
+                "objects",
+            ),
+            # These filters are valid extension settings, but the generated
+            # preferences dialog does not display list or dictionary settings
+            # yet.
+            ExtensionPreference.string_list(
+                "excluded-applications",
+                "Excluded applications",
+                ["gnome-shell"],
+            ),
+            ExtensionPreference.dictionary(
+                "excluded-roles",
+                "Excluded roles",
+                {"terminal": int(Atspi.Role.TERMINAL)},
+            ),
+        ]
 
     def _applies_to_message(self) -> bool:
         scope = self.settings.get("scope", default="objects")
