@@ -259,11 +259,10 @@ class PresentationManager:
         if brief is None:
             brief = full
 
-        if speech_manager.get_manager().get_speech_is_enabled_and_not_muted():
-            speech_pres = speech_presenter.get_presenter()
-            message = full if speech_pres.get_messages_are_detailed() else brief
-            if message:
-                speech_pres.speak_message(message, voice_type)
+        speech_pres = speech_presenter.get_presenter()
+        message = full if speech_pres.get_messages_are_detailed() else brief
+        if message:
+            self.speak_message(message, voice_type)
 
         braille_pres = braille_presenter.get_presenter()
         if not (braille_pres.use_braille() and braille_pres.get_flash_messages_are_enabled()):
@@ -280,6 +279,21 @@ class PresentationManager:
             message = " ".join(message)
 
         braille_pres.present_message(message)
+
+    @staticmethod
+    def display_message(message: str, persistent: bool = False) -> None:
+        """Displays a plain message in braille, or clears it if message is empty."""
+
+        presenter = braille_presenter.get_presenter()
+        if not message:
+            presenter.kill_flash(restore_saved=True)
+            return
+
+        presenter.present_message(
+            message,
+            restore_previous=not persistent,
+            flash_time=-1 if persistent else None,
+        )
 
     @staticmethod
     def play_sound(sounds: list[Icon | Tone] | Icon | Tone, interrupt: bool = True) -> None:
@@ -371,12 +385,16 @@ class PresentationManager:
             return
         speech_presenter.get_presenter().speak_accessible_text(obj, text, start_offset)
 
-    def speak_message(self, text: str) -> None:
+    def speak_message(
+        self,
+        text: str,
+        voice_type: str = speechserver.VoiceType.SYSTEM,
+    ) -> None:
         """Speaks a single string."""
 
-        if speech_manager.get_manager().get_speech_is_muted():
+        if not speech_manager.get_manager().get_speech_is_enabled_and_not_muted():
             return
-        speech_presenter.get_presenter().speak_message(text)
+        speech_presenter.get_presenter().speak_message(text, voice_type)
 
     # pylint: disable-next=too-many-arguments
     def present_object(

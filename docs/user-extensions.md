@@ -1,5 +1,7 @@
 # User Extensions
 
+[TOC]
+
 ## Status
 
 This feature is early and experimental. The following are still pending:
@@ -81,8 +83,7 @@ dconf write /org/gnome/orca/default/extensions/disabled-extensions \
 dconf reset /org/gnome/orca/default/extensions/disabled-extensions
 ```
 
-Disabling a user extension does not revoke its approval. Re-enabling a user
-extension is just a matter of removing it from the disabled list.
+Disabling a user extension does not revoke its approval.
 
 ## Extension Class Basics
 
@@ -112,24 +113,6 @@ Info button for each extension that displays this metadata.
 Command functions take no arguments (other than `self`) and return `True` when
 handled. The base class automatically wraps them to be compatible with Orca's
 internal command dispatch.
-
-### Shutdown Hook
-
-Override `on_shutdown()` if your extension needs to clean up when Orca exits:
-
-```python
-def on_shutdown(self) -> None:
-    self._stop_background_worker()
-```
-
-Shutdown hooks must return quickly. Orca starts all loaded user-extension
-shutdown hooks, waits up to half a second total for them to finish, then
-continues shutting down so an extension cannot block shutdown.
-Shutdown hooks should only do local cleanup, such as stopping background
-workers or closing files. They should not present messages, invoke speech or
-braille commands, start services, or do network work. Orca has already
-presented "Screen reader off" before calling these hooks and is in the process
-of shutting down.
 
 ### Keybindings
 
@@ -163,6 +146,89 @@ when needed.
 The User Extensions information dialog reports this in the Status row as
 `Some commands were unbound due to conflicts.` for an approved extension whose
 commands lost one or more requested keybindings.
+
+## The Controller API
+
+Command extensions can use the remote controller, available as
+`self.controller` on the `Extension` base class. The controller provides access
+to all of Orca's settings and its commands, both bound and unbound.
+
+The following in-process "internal" wrappers should be used in user extensions
+to avoid making actual D-Bus calls:
+
+### `present_message_internal(message)`
+
+Presents a message using Orca's normal message presentation. This can include
+speech and a braille flash message, depending on the user's settings.
+
+```python
+self.controller.present_message_internal("Text to speak and braille")
+```
+
+### `speak_message_internal(message)`
+
+Speaks a message.
+
+```python
+self.controller.speak_message_internal("Text to speak")
+```
+
+### `display_message_internal(message, persistent=False)`
+
+Displays a plain text, non-interactive message in braille.
+
+```python
+self.controller.display_message_internal("Text to display in braille")
+```
+
+Set `persistent=True` when the message should remain until it is interrupted or
+replaced, such as when the user navigates to new content, Orca updates the
+braille display, or the extension displays another string.
+
+```python
+self.controller.display_message_internal("Persistent braille text", persistent=True)
+```
+
+### `execute_command_internal(module_name, command_name)`
+
+Executes a command registered by an Orca module. The module and command names
+correspond to those listed in
+[remote-controller-commands.md](remote-controller-commands.md).
+
+```python
+self.controller.execute_command_internal("SpeechManager", "DecreaseRate")
+self.controller.execute_command_internal("SpeechManager", "ToggleSpeech")
+self.controller.execute_command_internal("WhereAmIPresenter", "WhereAmIBasic")
+self.controller.execute_command_internal("StructuralNavigator", "NextHeading")
+```
+
+### `get_value_internal(module_name, property_name)`
+
+Reads a runtime value from an Orca module. The property names correspond to the
+getter names in [remote-controller-commands.md](remote-controller-commands.md).
+
+```python
+rate = self.controller.get_value_internal("SpeechManager", "Rate")
+pitch = self.controller.get_value_internal("SpeechManager", "Pitch")
+volume = self.controller.get_value_internal("SpeechManager", "Volume")
+voice = self.controller.get_value_internal("SpeechManager", "CurrentVoice")
+synth = self.controller.get_value_internal("SpeechManager", "CurrentSynthesizer")
+muted = self.controller.get_value_internal("SpeechManager", "SpeechIsMuted")
+layout = self.controller.get_value_internal(
+    "CommandManager", "KeyboardLayoutIsDesktop"
+)
+```
+
+### `set_value_internal(module_name, property_name, value)`
+
+Sets a runtime value on an Orca module. The property names follow the same
+convention as `get_value_internal`:
+
+```python
+self.controller.set_value_internal("SpeechManager", "Rate", 50)
+self.controller.set_value_internal("SpeechManager", "Pitch", 5.0)
+self.controller.set_value_internal("SpeechManager", "Volume", 8.0)
+```
 
 ## Extension Settings
 
@@ -211,14 +277,14 @@ When using `dconf write`, include any existing values for that extension that
 you want to keep. The command replaces the settings dictionary for the extension
 path being written.
 
-For example, to test the command example below with alternative messages and rates:
+For example, to test Example 1 with alternative messages and rates:
 
 ```sh
 dconf write /org/gnome/orca/default/extensions/hello-world/settings \
     "{'greeting-message': <'Very slow hello'>, 'goodbye-message': <'Very fast goodbye'>, 'slow-rate': <5>, 'fast-rate': <90>}"
 ```
 
-And to test the reverse-words example with messages only:
+And to test Example 3 with messages only:
 
 ```sh
 dconf write /org/gnome/orca/default/extensions/reverse-words/settings \
@@ -234,62 +300,116 @@ To reset an extension's settings:
 dconf reset /org/gnome/orca/default/extensions/reverse-words/settings
 ```
 
-## The Controller API
+For a complete extension using class metadata, commands, keybindings, the
+controller API, and settings, see
+[Example 1](#example-1-commands-controller-api-and-settings).
 
-Command extensions can use the remote controller, available as
-`self.controller` on the `Extension` base class. The controller provides access
-to all of Orca's settings and its commands, both bound and unbound.
+## Hooks and Observers
 
-The following in-process "internal" wrappers should be used in user extensions
-to avoid making actual D-Bus calls:
+### Shutdown Hook
 
-### `present_message_internal(message)`
-
-Presents a message via speech and/or braille:
+Override `on_shutdown()` if your extension needs to clean up when Orca exits:
 
 ```python
-self.controller.present_message_internal("Text to speak and braille")
+def on_shutdown(self) -> None:
+    self._stop_background_worker()
 ```
 
-### `execute_command_internal(module_name, command_name)`
+Shutdown hooks must return quickly. Orca starts all loaded user-extension
+shutdown hooks, waits up to half a second total for them to finish, then
+continues shutting down so an extension cannot block shutdown.
 
-Executes a command registered by an Orca module. The module and command names
-correspond to those listed in [remote-controller-commands.md](remote-controller-commands.md).
+Shutdown hooks should only do local cleanup, such as stopping background workers
+or closing files. They should not present messages, invoke speech or braille
+commands, start services, or do network work. Orca has already presented
+"Screen reader off" before calling these hooks and is in the process of shutting
+down.
 
-```python
-self.controller.execute_command_internal("SpeechManager", "DecreaseRate")
-self.controller.execute_command_internal("SpeechManager", "ToggleSpeech")
-self.controller.execute_command_internal("WhereAmIPresenter", "WhereAmIBasic")
-self.controller.execute_command_internal("StructuralNavigator", "NextHeading")
-```
+### Modal Input Handling
 
-### `get_value_internal(module_name, property_name)`
+Extensions can temporarily observe input events for which Orca has a key grab
+by becoming Orca's modal input handler. This is useful when an extension has a
+mode in which it needs to observe, consume, or pass through Orca commands before
+they are executed.
 
-Reads a runtime value from an Orca module. The property names correspond to the getter names in
-[remote-controller-commands.md](remote-controller-commands.md).
+User extensions must not grab the keyboard. Keyboard grabs are difficult to get
+right and can prevent the user from controlling their session. Instead, register
+normal commands for keys your extension needs. Use modal input handling only for
+events bound to another Orca command that your extension temporarily needs to
+override.
 
-```python
-rate = self.controller.get_value_internal("SpeechManager", "Rate")
-pitch = self.controller.get_value_internal("SpeechManager", "Pitch")
-volume = self.controller.get_value_internal("SpeechManager", "Volume")
-voice = self.controller.get_value_internal("SpeechManager", "CurrentVoice")
-synth = self.controller.get_value_internal("SpeechManager", "CurrentSynthesizer")
-muted = self.controller.get_value_internal("SpeechManager", "SpeechIsMuted")
-layout = self.controller.get_value_internal("CommandManager", "KeyboardLayoutIsDesktop")
-```
+If a modal input handler is active, when Orca receives an input event for which
+there is a key grab, Orca calls two methods on the handler:
 
-### `set_value_internal(module_name, property_name, value)`
+- `will_handle_event(script, event, command)`: Return `True` to claim the
+  event, or `False` to leave it to Orca's normal event processing. The
+  `command` argument is the Orca command matched to the event, or `None` if no
+  command matched.
+- `handle_event(script, event, command)`: Handle an event that was claimed by
+  `will_handle_event()`.
 
-Sets a runtime value on an Orca module. The property names follow the same convention as
-`get_value_internal`:
+Only one modal input handler can be active at a time. User extension modal
+handlers cannot replace another active modal handler. Orca's own modal handlers
+can replace a user extension modal handler when needed, for instance when an
+Orca command starts a built-in modal feature. When your mode starts, call
+`command_manager.get_manager().set_modal_handler(self)`. If it returns `False`,
+another modal handler is active and your extension should not enter its mode.
+When your mode ends, call `clear_modal_handler(self)`. Orca only clears the
+handler if it still belongs to your extension.
 
-```python
-self.controller.set_value_internal("SpeechManager", "Rate", 50)
-self.controller.set_value_internal("SpeechManager", "Pitch", 5.0)
-self.controller.set_value_internal("SpeechManager", "Volume", 8.0)
-```
+To pass a command through after observing it, call `command.execute(script,
+event)`. To consume a command, return `True` without executing the command.
 
-## Command Example
+For a complete extension using modal input handling, see
+[Example 2](#example-2-modal-command-observer).
+
+### Speech Output Hooks
+
+Extensions can observe, replace, or consume speech immediately before Orca sends
+it to the active speech provider. This enables features such as translating
+Orca's generated speech, or routing speech through a provider that Orca does not
+support directly.
+
+Override `on_speech_output(output)` in your extension. It receives a
+`SpeechOutput` instance with:
+
+- `text`: The text Orca is about to speak.
+- `obj`: The accessible object associated with the speech, or `None` for
+  messages and other speech that is not tied to an accessible object.
+
+When `obj` is not `None`, extensions can use standard AT-SPI calls on it to
+determine the application, role, state, attributes, and other details that might
+be relevant to whether they wish to modify or consume the speech.
+
+Return `None` to observe without changing speech. Return
+`SpeechOutputResult.replace(text)` to replace what Orca will speak. Return
+`SpeechOutputResult.consume_output()` if the extension has handled the speech
+itself and Orca should not send it to its configured speech provider.
+
+Speech hooks are called in extension load order. Replacements are chained, so
+later hooks receive the text returned by earlier hooks. If an extension consumes
+the output, hook processing stops and that extension owns the speech. Orca does
+not try to coordinate multiple consumers yet; the current model keeps ownership
+simple until there is a compelling use case for more orchestration.
+
+Speech hooks are latency-sensitive. Slow work, including network calls to AI or
+translation services, can make Orca feel unresponsive. If your extension needs
+to do slow work, consider consuming the output and speaking asynchronously
+through your own provider.
+
+Speech hooks can receive anything Orca is about to speak, including typed text,
+document contents, chat messages, and notifications. Only approve extensions
+you trust.
+
+For a complete extension using speech output hooks, see
+[Example 3](#example-3-speech-output-hook).
+
+## Examples
+
+### Example 1: Commands, Controller API, and Settings
+
+This example demonstrates class metadata, command functions, keybindings,
+controller API calls, and extension settings.
 
 ```python
 """Example extension demonstrating custom Orca commands."""
@@ -416,46 +536,14 @@ class HelloWorld(Extension):
         return True
 ```
 
-## Modal Input Handling
+### Example 2: Modal Command Observer
 
-Extensions can temporarily observe input events for which Orca has a key grab
-by becoming Orca's modal input handler. This is useful when an extension has a
-mode in which it needs to observe, consume, or pass through Orca commands before
-they are executed.
+This example demonstrates modal input handling by observing, passing through,
+and consuming Orca commands.
 
-User extensions must not grab the keyboard. Keyboard grabs are difficult to get
-right and can prevent the user from controlling their session. Instead, register
-normal commands for keys your extension needs. Use modal input handling only for
-events bound to another Orca command that your extension temporarily needs to
-override.
-
-If a modal input handler is active, when Orca receives an input event for which
-there is a key grab, Orca calls two methods on the handler:
-
-- `will_handle_event(script, event, command)`: Return `True` to claim the
-  event, or `False` to leave it to Orca's normal event processing. The
-  `command` argument is the Orca command matched to the event, or `None` if no
-  command matched.
-- `handle_event(script, event, command)`: Handle an event that was claimed by
-  `will_handle_event()`.
-
-Only one modal input handler can be active at a time. User extension modal
-handlers cannot replace another active modal handler. Orca's own modal handlers
-can replace a user extension modal handler when needed, for instance when an
-Orca command starts a built-in modal feature. When your mode starts, call
-`command_manager.get_manager().set_modal_handler(self)`. If it returns `False`,
-another modal handler is active and your extension should not enter its mode.
-When your mode ends, call `clear_modal_handler(self)`. Orca only clears the
-handler if it still belongs to your extension.
-
-To pass a command through after observing it, call `command.execute(script,
-event)`. To consume a command, return `True` without executing the command.
-
-### Modal Command Observer Example
-
-This example toggles a modal command observer with Orca+Shift+F2. When enabled,
-it consumes Orca+E regardless of the command currently bound to that keystroke.
-It presents other commands it sees and then passes them through.
+It toggles a modal command observer with Orca+Shift+F2. When enabled, it
+consumes Orca+E regardless of the command currently bound to that keystroke. It
+presents other commands it sees and then passes them through.
 
 ```python
 """Example extension demonstrating modal command observation."""
@@ -548,45 +636,10 @@ class ModalCommandObserver(Extension):
         )
 ```
 
-## Speech Output Hooks
+### Example 3: Speech Output Hook
 
-Extensions can observe, replace, or consume speech immediately before Orca sends
-it to the active speech provider. This enables features such as translating
-Orca's generated speech, or routing speech through a provider that Orca does not
-support directly.
-
-Override `on_speech_output(output)` in your extension. It receives a
-`SpeechOutput` instance with:
-
-- `text`: The text Orca is about to speak.
-- `obj`: The accessible object associated with the speech, or `None` for
-  messages and other speech that is not tied to an accessible object.
-
-When `obj` is not `None`, extensions can use standard AT-SPI calls on it to
-determine the application, role, state, attributes, and other details that might
-be relevant to whether they wish to modify or consume the speech.
-
-Return `None` to observe without changing speech. Return
-`SpeechOutputResult.replace(text)` to replace what Orca will speak. Return
-`SpeechOutputResult.consume_output()` if the extension has handled the speech
-itself and Orca should not send it to its configured speech provider.
-
-Speech hooks are called in extension load order. Replacements are chained, so
-later hooks receive the text returned by earlier hooks. If an extension consumes
-the output, hook processing stops and that extension owns the speech. Orca does
-not try to coordinate multiple consumers yet; the current model keeps ownership
-simple until there is a compelling use case for more orchestration.
-
-Speech hooks are latency-sensitive. Slow work, including network calls to AI or
-translation services, can make Orca feel unresponsive. If your extension needs
-to do slow work, consider consuming the output and speaking asynchronously
-through your own provider.
-
-Speech hooks can receive anything Orca is about to speak, including typed text,
-document contents, chat messages, and notifications. Only approve extensions
-you trust.
-
-### Reverse Word Order Example
+This example demonstrates speech output hooks by replacing Orca's generated
+speech before it is sent to the active speech provider.
 
 This silly example lets you test the hook locally. It reverses what Orca speaks
 based on extension settings. By default it applies to speech associated with

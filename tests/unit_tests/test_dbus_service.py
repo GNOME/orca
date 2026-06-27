@@ -396,6 +396,32 @@ class TestDBusService:
         assert result is True
         pres_manager.present_message.assert_called_once_with("Test message")
 
+    def test_speak_message(self, test_context: OrcaTestContext) -> None:
+        """Test OrcaDBusServiceInterface.SpeakMessage delegates to presentation manager."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca import dbus_service
+
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        service = dbus_service.OrcaDBusServiceInterface()
+        result = service.SpeakMessage("Speech only")
+
+        assert result is True
+        pres_manager.speak_message.assert_called_once_with("Speech only")
+
+    def test_display_message(self, test_context: OrcaTestContext) -> None:
+        """Test OrcaDBusServiceInterface.DisplayMessage delegates to presentation manager."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca import dbus_service
+
+        pres_manager = essential_modules["orca.presentation_manager"].get_manager()
+        service = dbus_service.OrcaDBusServiceInterface()
+        result = service.DisplayMessage("Braille only", True)
+
+        assert result is True
+        pres_manager.display_message.assert_called_once_with("Braille only", persistent=True)
+
     @pytest.mark.parametrize(
         "case",
         [
@@ -1477,6 +1503,28 @@ class TestRemoteControllerInternalAPIs:
         controller = self._registered_controller(dbus_service, [])
         assert controller.get_value_internal("FakeManager", "Bogus") is None
         assert controller.set_value_internal("FakeManager", "Bogus", 1) is False
+
+    def test_message_internal_apis_route_to_service(self, test_context: OrcaTestContext) -> None:
+        """Message internal APIs call the service object directly."""
+
+        _stub_orca_internals(test_context)
+        from orca import dbus_service
+
+        service = test_context.Mock()
+        service.PresentMessage.return_value = True
+        service.SpeakMessage.return_value = True
+        service.DisplayMessage.return_value = True
+
+        controller = dbus_service.OrcaRemoteController()
+        controller._dbus_service_interface = service
+
+        assert controller.present_message_internal("Both") is True
+        assert controller.speak_message_internal("Speech") is True
+        assert controller.display_message_internal("Braille", persistent=True) is True
+
+        service.PresentMessage.assert_called_once_with("Both")
+        service.SpeakMessage.assert_called_once_with("Speech")
+        service.DisplayMessage.assert_called_once_with("Braille", True)
 
 
 @pytest.mark.unit

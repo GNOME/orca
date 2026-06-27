@@ -15,10 +15,12 @@ Additional information about using the remote controller can be found in [remote
 
 These commands are available directly on the main service object at `/org/gnome/Orca1/Service`.
 
+- **`DisplayMessage`**(`message` (s), `persistent` (b)) → `b`: Displays message on the braille display.
 - **`GetVersion`**() → `s`: Returns Orca's version and revision if available.
-- **`PresentMessage`**(`message` (s)) → `b`: Presents message to the user.
+- **`PresentMessage`**(`message` (s)) → `b`: Presents message to the user via speech and braille.
 - **`Quit`**() → `b`: Quits Orca.
 - **`ShowPreferences`**() → `b`: Shows Orca's preferences GUI.
+- **`SpeakMessage`**(`message` (s)) → `b`: Speaks message to the user.
 
 ---
 
@@ -281,11 +283,11 @@ These commands are available directly on the main service object at `/org/gnome/
 
 ---
 
-### MouseReviewer
+### MousePresenter
 
-**Object Path:** `/org/gnome/Orca1/Service/MouseReviewer`
+**Object Path:** `/org/gnome/Orca1/Service/MousePresenter`
 
-**Interface:** `org.gnome.Orca1.MouseReviewer`
+**Interface:** `org.gnome.Orca1.MousePresenter`
 
 #### Commands
 
@@ -423,6 +425,7 @@ These commands are available directly on the main service object at `/org/gnome/
 - **`CycleCapitalizationStyle`:** Cycle through the speech-dispatcher capitalization styles.
 - **`CyclePunctuationLevel`:** Cycles through punctuation levels for speech.
 - **`CycleSynthesizer`:** Cycles through available speech synthesizers.
+- **`CycleVoiceSet`:** Switches to the next available voice set, wrapping after the last.
 - **`DecreasePitch`:** Decreases the speech pitch
 - **`DecreasePitchRange`:** Decreases the speech inflection (pitch range).
 - **`DecreaseRate`:** Decreases the speech rate.

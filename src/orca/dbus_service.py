@@ -648,7 +648,7 @@ class OrcaDBusServiceInterface(Publishable):
         return True
 
     def PresentMessage(self, message: str) -> bool:  # pylint: disable=invalid-name
-        """Presents message to the user."""
+        """Presents message to the user via speech and braille."""
 
         from . import presentation_manager  # pylint: disable=import-outside-toplevel
 
@@ -656,6 +656,36 @@ class OrcaDBusServiceInterface(Publishable):
         debug.print_message(debug.LEVEL_INFO, msg, True)
 
         presentation_manager.get_manager().present_message(message)
+        return True
+
+    def SpeakMessage(self, message: str) -> bool:  # pylint: disable=invalid-name
+        """Speaks message to the user."""
+
+        from . import presentation_manager  # pylint: disable=import-outside-toplevel
+
+        msg = f"DBUS SERVICE: SpeakMessage called with: '{message}'"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        presentation_manager.get_manager().speak_message(message)
+        return True
+
+    def DisplayMessage(  # pylint: disable=invalid-name
+        self,
+        message: str,
+        persistent: bool,
+    ) -> bool:
+        """Displays message on the braille display."""
+
+        from . import presentation_manager  # pylint: disable=import-outside-toplevel
+
+        tokens = [
+            "DBUS SERVICE: DisplayMessage called:",
+            message,
+            f"persistent={persistent}",
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        presentation_manager.get_manager().display_message(message, persistent=persistent)
         return True
 
     def GetVersion(self) -> str:  # pylint: disable=invalid-name
@@ -811,6 +841,26 @@ class OrcaRemoteController:
             return False
 
         return self._dbus_service_interface.PresentMessage(message)
+
+    def speak_message_internal(self, message: str) -> bool:
+        """Speaks a message without a D-Bus round-trip."""
+
+        if self._dbus_service_interface is None:
+            msg = "REMOTE CONTROLLER: Cannot speak message; service not started."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        return self._dbus_service_interface.SpeakMessage(message)
+
+    def display_message_internal(self, message: str, persistent: bool = False) -> bool:
+        """Displays a message in braille without a D-Bus round-trip."""
+
+        if self._dbus_service_interface is None:
+            msg = "REMOTE CONTROLLER: Cannot display message; service not started."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        return self._dbus_service_interface.DisplayMessage(message, persistent)
 
     def execute_command_internal(
         self,

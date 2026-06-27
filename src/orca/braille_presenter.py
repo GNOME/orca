@@ -1564,13 +1564,19 @@ class BraillePresenter(Extension):
 
         braille.kill_flash(restore_saved)
 
-    def present_message(self, message: str, restore_previous: bool = True) -> None:
+    def present_message(
+        self,
+        message: str,
+        restore_previous: bool = True,
+        flash_time: int | None = None,
+    ) -> None:
         """Displays a single line message in braille."""
 
         if not self.use_braille():
             return
 
-        flash_time = self.get_flashtime_from_settings()
+        if flash_time is None:
+            flash_time = self.get_flashtime_from_settings()
 
         if not restore_previous and flash_time:
             braille.kill_flash(restore_saved=False)
