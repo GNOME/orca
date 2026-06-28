@@ -29,7 +29,7 @@ import gi
 
 gi.require_version("Atk", "1.0")
 gi.require_version("Gtk", "3.0")
-from gi.repository import Atk, Gtk  # pylint: disable=no-name-in-module
+from gi.repository import Atk, Gdk, Gtk  # pylint: disable=no-name-in-module
 
 from . import guilabels, orca_gui_helpers
 from .extension_preferences import (
@@ -157,7 +157,19 @@ class ExtensionPreferencesDialog:
             if isinstance(value, list) and all(isinstance(item, str) for item in value):
                 return list(value)
             return list(pref.default) if isinstance(pref.default, list) else []
+        if pref.kind is ExtensionPreferenceKind.COLOR:
+            return ExtensionPreferencesDialog._normalize_color(value, pref.default)
         return value
+
+    @staticmethod
+    def _normalize_color(value: Any, default: Any) -> str:
+        """Return a valid color string."""
+
+        if isinstance(value, str) and Gdk.color_parse(value) is not None:
+            return value
+        if isinstance(default, str) and Gdk.color_parse(default) is not None:
+            return default
+        return "#000000"
 
     def _create_row(
         self,
@@ -172,6 +184,8 @@ class ExtensionPreferencesDialog:
             return self._create_string_row(pref, include_separator)
         if pref.kind is ExtensionPreferenceKind.PATH:
             return self._create_path_row(pref, include_separator)
+        if pref.kind is ExtensionPreferenceKind.COLOR:
+            return self._create_color_row(pref, include_separator)
         if pref.kind is ExtensionPreferenceKind.INTEGER:
             return self._create_integer_row(pref, include_separator)
         if pref.kind is ExtensionPreferenceKind.FLOAT:
@@ -286,6 +300,25 @@ class ExtensionPreferencesDialog:
                 entry.set_text(filename)
                 self._set_value(pref.key, filename)
         dialog.destroy()
+
+    def _create_color_row(
+        self,
+        pref: ExtensionPreference,
+        include_separator: bool,
+    ) -> tuple[Gtk.ListBoxRow, tuple[Gtk.ColorButton]]:
+        """Create a color row."""
+
+        row, color_button, _label = orca_gui_helpers.create_color_button_row(
+            pref.label,
+            lambda widget: self._set_value(
+                pref.key,
+                orca_gui_helpers.rgba_to_hex(widget.get_rgba()),
+            ),
+            include_top_separator=include_separator,
+            label_size_group=self._label_size_group,
+        )
+        orca_gui_helpers.set_color_button_hex(color_button, str(self._values[pref.key]))
+        return row, (color_button,)
 
     def _create_integer_row(
         self,

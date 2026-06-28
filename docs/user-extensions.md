@@ -9,8 +9,9 @@ This feature is early and experimental. The following are still pending:
 - Custom extension-provided preferences dialogs.
 - User-extension-provided localized strings.
 - Informational text boxes in generated extension preferences dialogs.
-- Additional generated preference controls, such as radio-button groups, color
-  buttons, and structured dictionary editors.
+- Additional generated preference controls, such as radio-button groups and
+  structured dictionary editors.
+- Wrapped convenience APIs for user-extension dialogs and other UI.
 - Utilities to facilitate user-extension-driven navigation.
 - Fixing bugs and improving the API based on user feedback.
 
@@ -362,6 +363,7 @@ It currently supports these generated controls:
 ExtensionPreference.boolean("enabled", "Enabled", True)
 ExtensionPreference.string("message", "Message", "Hello")
 ExtensionPreference.path("folder", "Folder", "~/orca-output", directory=True)
+ExtensionPreference.color("foreground-color", "Foreground color", "#000000")
 ExtensionPreference.integer("rate", "Rate", 50, 0, 100)
 ExtensionPreference.floating("volume", "Volume", 5.0, 0.0, 10.0)
 ExtensionPreference.enum(
@@ -378,6 +380,7 @@ These preference types are displayed as follows:
 - `boolean`: switch
 - `string`: text entry
 - `path`: text entry with a Browse button
+- `color`: color button
 - `integer`: spin button
 - `float`: slider
 - `enum`: combo box
@@ -385,6 +388,8 @@ These preference types are displayed as follows:
 
 Path preferences open a file chooser by default. Pass `directory=True` to open a
 folder chooser instead.
+
+Color preferences are stored as hex strings such as `#ffffff`.
 
 String-list preferences can include an optional item validator and error message
 for values that need extension-specific validation.

@@ -909,6 +909,7 @@ def create_color_button_row(
     changed_handler: Callable[[Gtk.ColorButton], None] | None = None,
     include_top_separator: bool = True,
     use_alpha: bool = False,
+    label_size_group: Gtk.SizeGroup | None = None,
 ) -> tuple[Gtk.ListBoxRow, Gtk.ColorButton, Gtk.Label]:
     """Return a standard listbox row with a label and color button."""
 
@@ -923,6 +924,7 @@ def create_color_button_row(
         label_text,
         color_button,
         label_xalign=0,
+        label_size_group=label_size_group,
     )
     assert label is not None
     return row, color_button, label

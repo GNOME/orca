@@ -36,6 +36,7 @@ class ExtensionPreferenceKind(Enum):
     BOOLEAN = "boolean"
     STRING = "string"
     PATH = "path"
+    COLOR = "color"
     INTEGER = "integer"
     FLOAT = "float"
     ENUM = "enum"
@@ -82,6 +83,12 @@ class ExtensionPreference:
         """Return a file or directory path preference."""
 
         return cls(key, label, default, ExtensionPreferenceKind.PATH, directory=directory)
+
+    @classmethod
+    def color(cls, key: str, label: str, default: str = "#000000") -> ExtensionPreference:
+        """Return a color preference stored as a hex string."""
+
+        return cls(key, label, default, ExtensionPreferenceKind.COLOR)
 
     @classmethod
     def integer(
@@ -157,6 +164,7 @@ GENERATED_DIALOG_KINDS = {
     ExtensionPreferenceKind.BOOLEAN,
     ExtensionPreferenceKind.STRING,
     ExtensionPreferenceKind.PATH,
+    ExtensionPreferenceKind.COLOR,
     ExtensionPreferenceKind.INTEGER,
     ExtensionPreferenceKind.FLOAT,
     ExtensionPreferenceKind.ENUM,
