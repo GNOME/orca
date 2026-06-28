@@ -3995,6 +3995,8 @@ class SpeechGenerator(generator.Generator):
         ) or self._generate_accessible_placeholder_text(obj)
         result += self._generate_text_selection(obj)
         result += self._generate_pause(obj)
+        result += self._generate_state_invalid(obj)
+        result += self._generate_pause(obj)
         result += self._generate_keyboard_mnemonic(obj)
         result += self._generate_default_suffix(obj)
         return result

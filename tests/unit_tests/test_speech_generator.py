@@ -192,6 +192,36 @@ class TestSpeechGeneratorMisspelledIndicator:
         assert essential_modules["orca.messages"].MISSPELLED in result
 
 
+@pytest.mark.unit
+class TestSpeechGeneratorTextRole:
+    """Tests speech generation for text-role objects."""
+
+    def test_text_role_includes_invalid_state(self, test_context: OrcaTestContext) -> None:
+        """Text-role where-am-I output should include invalid-entry error details."""
+
+        test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
+        from orca.speech_generator import SpeechGenerator
+
+        generator = SpeechGenerator(test_context.Mock())
+        obj = test_context.Mock()
+        generator._generate_default_prefix = test_context.Mock(return_value=[])
+        generator._generate_accessible_label_and_name = test_context.Mock(return_value=["Name"])
+        generator._generate_state_read_only = test_context.Mock(return_value=[])
+        generator._generate_accessible_role = test_context.Mock(return_value=["text"])
+        generator._generate_pause = test_context.Mock(return_value=[])
+        generator._generate_text_indentation = test_context.Mock(return_value=[])
+        generator._generate_text_line = test_context.Mock(return_value=["value"])
+        generator._generate_accessible_placeholder_text = test_context.Mock(return_value=[])
+        generator._generate_text_selection = test_context.Mock(return_value=[])
+        generator._generate_state_invalid = test_context.Mock(return_value=["invalid: error"])
+        generator._generate_keyboard_mnemonic = test_context.Mock(return_value=[])
+        generator._generate_default_suffix = test_context.Mock(return_value=[])
+
+        result = generator._generate_text(obj)
+
+        assert result == ["Name", "text", "value", "invalid: error"]
+
+
 _GENERATOR_TEST_MODULES = [
     "orca.input_event_manager",
     "orca.math_presenter",
