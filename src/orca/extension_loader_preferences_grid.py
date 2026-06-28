@@ -26,6 +26,7 @@
 from __future__ import annotations
 
 import os
+import shutil
 from typing import Any
 
 import gi
@@ -36,12 +37,14 @@ from gi.repository import GLib, Gtk  # pylint: disable=no-name-in-module
 
 from . import (
     command_manager,
+    debug,
     extension_loader,
     extension_preferences,
     extension_preferences_dialog,
     guilabels,
     orca_gui_helpers,
     preferences_grid_base,
+    presentation_manager,
 )
 
 
@@ -79,6 +82,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._switches_by_filename: dict[str, Gtk.Switch] = {}
         self._info_buttons_by_filename: dict[str, Gtk.Button] = {}
         self._settings_buttons_by_filename: dict[str, Gtk.Button] = {}
+        self._delete_buttons_by_filename: dict[str, Gtk.Button] = {}
         self._approval_buttons_by_filename: dict[str, Gtk.Button] = {}
         self._summary_labels_by_filename: dict[str, Gtk.Label] = {}
         self._approval_button_size_group = orca_gui_helpers.create_horizontal_size_group()
@@ -145,6 +149,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._switches_by_filename = {}
         self._info_buttons_by_filename = {}
         self._settings_buttons_by_filename = {}
+        self._delete_buttons_by_filename = {}
         self._approval_buttons_by_filename = {}
         self._summary_labels_by_filename = {}
         self._approval_button_size_group = orca_gui_helpers.create_horizontal_size_group()
@@ -190,6 +195,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._summary_labels_by_filename[info.filename] = summary_label
         self._info_buttons_by_filename[info.filename] = action_buttons["info"]
         self._settings_buttons_by_filename[info.filename] = action_buttons["settings"]
+        self._delete_buttons_by_filename[info.filename] = action_buttons["delete"]
         self._approval_buttons_by_filename[info.filename] = action_buttons["approval"]
         self._configure_approval_button(action_buttons["approval"])
         self._sync_row(info)
@@ -224,6 +230,12 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 "emblem-system-symbolic",
             ),
             orca_gui_helpers.ListRowAction(
+                "delete",
+                guilabels.EXTENSIONS_DELETE,
+                lambda _button: self._on_delete_clicked(filename),
+                "user-trash-symbolic",
+            ),
+            orca_gui_helpers.ListRowAction(
                 "approval",
                 guilabels.EXTENSIONS_APPROVE,
                 lambda _button: self._on_approval_clicked(filename),
@@ -251,6 +263,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         switch = self._switches_by_filename.get(filename)
         info_button = self._info_buttons_by_filename.get(filename)
         settings_button = self._settings_buttons_by_filename.get(filename)
+        delete_button = self._delete_buttons_by_filename.get(filename)
         approval_button = self._approval_buttons_by_filename.get(filename)
         detail_text = self._get_detail_text(info)
 
@@ -275,6 +288,9 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         if settings_button is not None:
             settings_button.set_sensitive(self._can_show_settings(info))
+
+        if delete_button is not None:
+            delete_button.set_sensitive(True)
 
         if switch is not None:
             self._syncing_filenames.add(filename)
@@ -507,6 +523,86 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._loader.reload_user_extensions(self._extensions_dir)
         if info := self._get_info(filename):
             self._sync_row(info)
+
+    def _on_delete_clicked(self, filename: str) -> None:
+        """Delete an extension file or package directory."""
+
+        info = self._get_info(filename)
+        if info is None:
+            return
+
+        if not self._confirm_delete(info):
+            return
+
+        if not self._is_deletable_extension_path(info.filepath):
+            tokens = [
+                "EXTENSION LOADER PREFERENCES: Refusing to delete unexpected path",
+                info.filepath,
+            ]
+            debug.print_tokens(debug.LEVEL_WARNING, tokens, True)
+            self._present_delete_error(info)
+            return
+
+        try:
+            if os.path.isdir(info.filepath) and not os.path.islink(info.filepath):
+                shutil.rmtree(info.filepath)
+            else:
+                os.remove(info.filepath)
+        except OSError as error:
+            msg = f"EXTENSION LOADER PREFERENCES: Could not delete {info.filepath}: {error}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            self._present_delete_error(info)
+            self._loader.reload_user_extensions(self._extensions_dir)
+            self.refresh()
+            return
+
+        self._loader.revoke_extension(filename)
+        if info.class_name:
+            disabled = [
+                class_name
+                for class_name in self._loader.get_disabled_extensions()
+                if class_name != info.class_name
+            ]
+            self._loader.set_disabled_extensions(disabled)
+            self._staged_settings_by_class_name.pop(info.class_name, None)
+
+        self._loader.reload_user_extensions(self._extensions_dir)
+        self.refresh()
+
+    def _is_deletable_extension_path(self, filepath: str) -> bool:
+        """Returns True if filepath is a direct child of the user extensions directory."""
+
+        extensions_dir = os.path.realpath(self._extensions_dir)
+        target = os.path.realpath(filepath)
+        if os.path.dirname(target) != extensions_dir:
+            return False
+        return os.path.basename(target) == os.path.basename(filepath)
+
+    def _confirm_delete(self, info: extension_loader.UserExtensionInfo) -> bool:
+        """Returns True if the user confirms deleting info."""
+
+        parent = self.get_toplevel()
+        transient_for = parent if isinstance(parent, Gtk.Window) else None
+        dialog = Gtk.MessageDialog(
+            transient_for=transient_for,
+            modal=True,
+            message_type=Gtk.MessageType.WARNING,
+            buttons=Gtk.ButtonsType.YES_NO,
+            text=guilabels.EXTENSIONS_DELETE_CONFIRMATION_TITLE,
+        )
+        dialog.format_secondary_text(
+            guilabels.EXTENSIONS_DELETE_CONFIRMATION_MESSAGE % self._get_display_name(info)
+        )
+        response = dialog.run()
+        dialog.destroy()
+        return response == Gtk.ResponseType.YES
+
+    def _present_delete_error(self, info: extension_loader.UserExtensionInfo) -> None:
+        """Present a deletion error message."""
+
+        presentation_manager.get_manager().present_message(
+            guilabels.EXTENSIONS_DELETE_ERROR_MESSAGE % self._get_display_name(info),
+        )
 
     def _on_switch_toggled(
         self,

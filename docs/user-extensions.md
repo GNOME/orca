@@ -50,9 +50,11 @@ them. When Orca discovers an unapproved extension, it logs the extension's
 SHA256 hash.
 
 Use the User Extensions page in Orca's Preferences window to approve,
-re-approve, or revoke user extensions. The page computes the extension's SHA256
-hash and persists the approval in dconf. This is the recommended way to manage
-approval.
+re-approve, revoke, or delete user extensions. The page computes the
+extension's SHA256 hash and persists the approval in dconf. When deleting an
+extension, it removes the extension file or package directory from the user
+extensions folder and cleans up Orca's approval and disabled-state records for
+that extension. This is the recommended way to manage user extensions.
 
 Approval and revocation can also be done via the command line:
 
@@ -73,9 +75,9 @@ startup.
 
 If the contents of an approved extension change, its hash changes and Orca will
 not load it until you re-approve it from the User Extensions preferences page
-or the command line. If you delete an extension file or package directory, its
-approval entry remains but has no effect. There is currently no automatic
-cleanup of stale approvals.
+or the command line. If you delete an extension file or package directory
+outside Orca's Preferences window, any existing approval entry remains but has
+no effect.
 
 ## Disabling Extensions
 

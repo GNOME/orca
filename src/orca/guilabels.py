@@ -1485,6 +1485,29 @@ EXTENSIONS_REAPPROVE = C_("user extensions", "Re-approve")
 EXTENSIONS_REVOKE = C_("user extensions", "Revoke")
 
 # Translators: This is a button label in the User Extensions preferences page.
+# Pressing this button asks the user to confirm deleting the selected extension
+# file or package directory from ~/.local/share/orca/extensions.
+EXTENSIONS_DELETE = C_("user extensions", "Delete")
+
+# Translators: This is the title of a confirmation dialog shown before deleting
+# a user extension file or package directory from ~/.local/share/orca/extensions.
+EXTENSIONS_DELETE_CONFIRMATION_TITLE = C_("user extensions", "Delete user extension?")
+
+# Translators: This is the message in a confirmation dialog shown before deleting
+# a user extension file or package directory from ~/.local/share/orca/extensions.
+# The string substitution is the display name of the extension.
+EXTENSIONS_DELETE_CONFIRMATION_MESSAGE = C_(
+    "user extensions",
+    "The following extension will be permanently deleted from your user "
+    "extensions folder: %s. Do you want to continue?",
+)
+
+# Translators: This message is presented when Orca fails to delete a user
+# extension file or package directory from ~/.local/share/orca/extensions. The
+# string substitution is the display name of the extension.
+EXTENSIONS_DELETE_ERROR_MESSAGE = C_("user extensions", "Could not delete: %s.")
+
+# Translators: This is a button label in the User Extensions preferences page.
 # Pressing this button opens a dialog with metadata about the selected extension,
 # such as its author, version, and web page.
 EXTENSIONS_INFO_BUTTON = C_("user extensions", "Info")
