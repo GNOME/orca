@@ -47,6 +47,15 @@ if TYPE_CHECKING:
 class TestInputEventManager:
     """Test InputEventManager class methods."""
 
+    @staticmethod
+    def _frame(test_context: OrcaTestContext, filename: str, f_back=None):
+        """Return a lightweight frame mock for caller checks."""
+
+        return test_context.Mock(
+            f_code=test_context.Mock(co_filename=filename),
+            f_back=f_back,
+        )
+
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Returns dependencies for input_event_manager module testing."""
 
@@ -234,16 +243,16 @@ class TestInputEventManager:
 
         from orca import input_event_manager as input_event_manager_module
 
-        frame = test_context.Mock()
-        frame.filename = "/home/test/.local/share/orca/extensions/demo.py"
+        frame = self._frame(test_context, "/home/test/.local/share/orca/extensions/demo.py")
         test_context.patch_object(
-            input_event_manager_module.inspect,
-            "stack",
-            return_value=[frame, frame, frame],
+            input_event_manager_module.sys,
+            "_getframe",
+            return_value=frame,
         )
         input_event_manager._last_input_event = test_context.Mock()
 
-        assert input_event_manager.get_last_input_event() is None
+        with pytest.raises(PermissionError):
+            input_event_manager.get_last_input_event()
 
     def test_get_last_input_event_allows_orca_call(self, test_context: OrcaTestContext) -> None:
         """Test Orca code can retrieve the raw last input event."""
@@ -252,15 +261,14 @@ class TestInputEventManager:
 
         from orca import input_event_manager as input_event_manager_module
 
-        frame = test_context.Mock()
         orca_dir = input_event_manager_module.os.path.dirname(
             input_event_manager_module.os.path.realpath(input_event_manager_module.__file__)
         )
-        frame.filename = f"{orca_dir}/flat_review_presenter.py"
+        frame = self._frame(test_context, f"{orca_dir}/flat_review_presenter.py")
         test_context.patch_object(
-            input_event_manager_module.inspect,
-            "stack",
-            return_value=[frame, frame, frame],
+            input_event_manager_module.sys,
+            "_getframe",
+            return_value=frame,
         )
         input_event_manager._last_input_event = test_context.Mock()
 

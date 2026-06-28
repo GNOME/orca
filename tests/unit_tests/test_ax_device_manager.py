@@ -26,6 +26,7 @@
 
 from __future__ import annotations
 
+import os
 from typing import TYPE_CHECKING
 
 import pytest
@@ -39,6 +40,15 @@ if TYPE_CHECKING:
 @pytest.mark.unit
 class TestAXDeviceManager:
     """Test AXDeviceManager class methods."""
+
+    @staticmethod
+    def _frame(test_context: OrcaTestContext, filename: str, f_back=None):
+        """Return a lightweight frame mock for caller checks."""
+
+        return test_context.Mock(
+            f_code=test_context.Mock(co_filename=filename),
+            f_back=f_back,
+        )
 
     def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
         """Returns dependencies for ax_device_manager module testing."""
@@ -62,17 +72,17 @@ class TestAXDeviceManager:
         from orca import ax_device_manager
         from orca.ax_device_manager import AXDeviceManager
 
-        frame = test_context.Mock()
-        frame.filename = "/home/test/.local/share/orca/extensions/demo.py"
+        frame = self._frame(test_context, "/home/test/.local/share/orca/extensions/demo.py")
         test_context.patch_object(
-            ax_device_manager.inspect,
-            "stack",
-            return_value=[frame, frame, frame],
+            ax_device_manager.sys,
+            "_getframe",
+            return_value=frame,
         )
 
         manager = AXDeviceManager()
         manager._device = test_context.Mock()
-        manager.grab_keyboard("Test grab")
+        with pytest.raises(PermissionError):
+            manager.grab_keyboard("Test grab")
 
         manager._device.grab_keyboard.assert_not_called()
 
@@ -83,15 +93,12 @@ class TestAXDeviceManager:
         from orca import ax_device_manager
         from orca.ax_device_manager import AXDeviceManager
 
-        frame = test_context.Mock()
-        orca_dir = ax_device_manager.os.path.dirname(
-            ax_device_manager.os.path.realpath(ax_device_manager.__file__)
-        )
-        frame.filename = f"{orca_dir}/learn_mode_presenter.py"
+        orca_dir = os.path.dirname(os.path.realpath(ax_device_manager.__file__))
+        frame = self._frame(test_context, f"{orca_dir}/learn_mode_presenter.py")
         test_context.patch_object(
-            ax_device_manager.inspect,
-            "stack",
-            return_value=[frame, frame, frame],
+            ax_device_manager.sys,
+            "_getframe",
+            return_value=frame,
         )
 
         manager = AXDeviceManager()
@@ -110,16 +117,16 @@ class TestAXDeviceManager:
         from orca import ax_device_manager
         from orca.ax_device_manager import AXDeviceManager
 
-        frame = test_context.Mock()
-        frame.filename = "/home/test/.local/share/orca/extensions/demo.py"
+        frame = self._frame(test_context, "/home/test/.local/share/orca/extensions/demo.py")
         test_context.patch_object(
-            ax_device_manager.inspect,
-            "stack",
-            return_value=[frame, frame, frame],
+            ax_device_manager.sys,
+            "_getframe",
+            return_value=frame,
         )
 
         manager = AXDeviceManager()
         manager._device = test_context.Mock()
 
-        assert manager.add_key_grab(test_context.Mock()) == 0
+        with pytest.raises(PermissionError):
+            manager.add_key_grab(test_context.Mock())
         manager._device.add_key_grab.assert_not_called()

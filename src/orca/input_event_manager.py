@@ -27,11 +27,13 @@
 
 from __future__ import annotations
 
-import inspect
 import os
+import sys
 import time
 
 import gi
+
+import orca
 
 gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
@@ -337,41 +339,25 @@ class InputEventManager:
     def get_last_input_event(self) -> input_event.InputEvent | None:
         """Returns the most recently processed input event (of any type), or None."""
 
-        if not self._called_from_orca_code("get_last_input_event"):
-            return None
+        self._ensure_allowed_call("get_last_input_event")
 
         return self._last_input_event
 
     @staticmethod
-    def _called_from_orca_code(method_name: str) -> bool:
-        """Returns True if the first non-input-event-manager caller is Orca package code."""
+    def _ensure_allowed_call(method_name: str) -> None:
+        """Raise PermissionError if the caller is not Orca code."""
 
-        this_file = os.path.realpath(__file__)
-        orca_dir = os.path.dirname(this_file)
-        for frame_info in inspect.stack()[2:]:
-            filename = frame_info.filename
-            if not filename:
-                continue
-            filepath = os.path.realpath(filename)
-            if filepath == this_file:
-                continue
+        try:
+            filename = sys._getframe(2).f_code.co_filename  # pylint: disable=protected-access
+        except ValueError:
+            filename = ""
 
-            try:
-                is_orca_code = os.path.commonpath([orca_dir, filepath]) == orca_dir
-            except ValueError:
-                is_orca_code = False
+        if orca.is_orca(filename):
+            return
 
-            if not is_orca_code:
-                msg = (
-                    f"INPUT EVENT MANAGER: Refusing {method_name} "
-                    f"call from outside Orca: {filepath}"
-                )
-                debug.print_message(debug.LEVEL_WARNING, msg, True)
-            return is_orca_code
-
-        msg = f"INPUT EVENT MANAGER: Refusing {method_name} call with no Orca caller"
+        msg = f"INPUT EVENT MANAGER: Refusing {method_name} call from outside Orca: {filename}"
         debug.print_message(debug.LEVEL_WARNING, msg, True)
-        return False
+        raise PermissionError(msg)
 
     def _last_key_and_modifiers(self):
         """Returns the last keyval name and modifiers"""

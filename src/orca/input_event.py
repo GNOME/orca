@@ -25,13 +25,15 @@
 
 from __future__ import annotations
 
-import inspect
 import math
+import sys
 import time
 import unicodedata
 from typing import TYPE_CHECKING
 
 import gi
+
+import orca
 
 gi.require_version("Atspi", "2.0")
 gi.require_version("Gdk", "3.0")
@@ -628,9 +630,7 @@ class KeyboardEvent(InputEvent):
     def set_object(self, obj: Atspi.Accessible | None) -> None:
         """Sets the object believed to be associated with this key event."""
 
-        module_name = inspect.getmodulename(inspect.stack()[1].filename)
-        if not (module_name and module_name.startswith("input_event")):
-            raise PermissionError("Unauthorized setter of input event property")
+        self._ensure_allowed_call("set_object")
 
         self._obj = obj
 
@@ -642,9 +642,7 @@ class KeyboardEvent(InputEvent):
     def set_window(self, window: Atspi.Accessible | None) -> None:
         """Sets the window believed to be associated with this key event."""
 
-        module_name = inspect.getmodulename(inspect.stack()[1].filename)
-        if not (module_name and module_name.startswith("input_event")):
-            raise PermissionError("Unauthorized setter of input event property")
+        self._ensure_allowed_call("set_window")
 
         self._window = window
 
@@ -656,11 +654,23 @@ class KeyboardEvent(InputEvent):
     def set_script(self, script: default.Script | None) -> None:
         """Sets the script believed to be associated with this key event."""
 
-        module_name = inspect.getmodulename(inspect.stack()[1].filename)
-        if not (module_name and module_name.startswith("input_event")):
-            raise PermissionError("Unauthorized setter of input event property")
+        self._ensure_allowed_call("set_script")
 
         self._script = script
+
+    @staticmethod
+    def _ensure_allowed_call(method_name: str) -> None:
+        """Raise PermissionError if the caller is not an Orca input-event module."""
+
+        try:
+            filename = sys._getframe(2).f_code.co_filename  # pylint: disable=protected-access
+        except ValueError:
+            filename = ""
+
+        if orca.is_orca(filename, "input_event"):
+            return
+
+        raise PermissionError(f"Unauthorized setter of input event property: {method_name}")
 
     def _present(self) -> None:
         if not self._script:
