@@ -31,10 +31,23 @@ single-file extensions and package extensions:
 Each `.py` file or package directory with an `__init__.py` file containing an
 `Extension` subclass is a potential extension.
 
+## Extension Catalogs and Stores
+
+User extensions are an advanced customization mechanism. The Orca project does
+not maintain an official extension store because extensions may have broad
+access to user data and system interaction, and the project does not have the
+resources or infrastructure to audit, sandbox, continuously monitor, and revoke
+unsafe extensions.
+
+Community members may maintain third-party lists, catalogs, or stores, but
+those are not official Orca resources and should not imply endorsement or
+security review by the Orca project.
+
 ## Approving Extensions
 
-For security, extensions must be approved before Orca will load them. When Orca
-discovers an unapproved extension, it logs the extension's SHA256 hash.
+For security, extensions must be approved by the user before Orca will load
+them. When Orca discovers an unapproved extension, it logs the extension's
+SHA256 hash.
 
 Use the User Extensions page in Orca's Preferences window to approve,
 re-approve, or revoke user extensions. The page computes the extension's SHA256
@@ -58,11 +71,11 @@ dconf. For package extensions, Orca computes the hash from the package contents.
 Extensions approved from the command line will be loaded on the next Orca
 startup.
 
-If you edit an approved extension, its hash changes and Orca will not load it
-until you re-approve it from the User Extensions preferences page or the command
-line. If you delete an extension file or package directory, its approval entry
-remains but has no effect. There is currently no automatic cleanup of stale
-approvals.
+If the contents of an approved extension change, its hash changes and Orca will
+not load it until you re-approve it from the User Extensions preferences page
+or the command line. If you delete an extension file or package directory, its
+approval entry remains but has no effect. There is currently no automatic
+cleanup of stale approvals.
 
 ## Disabling Extensions
 
