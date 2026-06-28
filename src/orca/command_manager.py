@@ -388,6 +388,15 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
 
         return handler in self._user_extensions
 
+    def can_modal_handler_handle_event(
+        self,
+        handler: ModalInputHandler,
+        command: KeyboardCommand | None,
+    ) -> bool:
+        """Returns True if handler can be consulted for command."""
+
+        return command is not None or not self._is_user_extension_handler(handler)
+
     def get_modal_handler(self) -> ModalInputHandler | None:
         """Returns the active modal key handler, if any."""
 

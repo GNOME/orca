@@ -711,12 +711,24 @@ class KeyboardEvent(InputEvent):
                 tokens = ["COMMAND:", command.get_name()]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-            modal_handler = command_manager.get_manager().get_modal_handler()
-            if modal_handler is not None and modal_handler.will_handle_event(script, self, command):
-                msg = "KEYBOARD EVENT: Modal handler claimed the event"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                self._handler = lambda: modal_handler.handle_event(script, self, command)
-            elif command is not None and command.is_enabled():
+            cmd_manager = command_manager.get_manager()
+            modal_handler = cmd_manager.get_modal_handler()
+            modal_handler_claimed_event = False
+            if modal_handler is not None:
+                can_handle_modal_event = cmd_manager.can_modal_handler_handle_event(
+                    modal_handler,
+                    command,
+                )
+                if not can_handle_modal_event:
+                    msg = "KEYBOARD EVENT: Skipping user-extension modal handler without command"
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                elif modal_handler.will_handle_event(script, self, command):
+                    msg = "KEYBOARD EVENT: Modal handler claimed the event"
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                    self._handler = lambda: modal_handler.handle_event(script, self, command)
+                    modal_handler_claimed_event = True
+
+            if not modal_handler_claimed_event and command is not None and command.is_enabled():
                 self._handler = lambda: command.execute(script, self)
 
         if self.is_orca_modifier():

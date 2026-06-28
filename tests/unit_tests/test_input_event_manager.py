@@ -224,6 +224,48 @@ class TestInputEventManager:
         assert input_event_manager._last_input_event is None
         assert input_event_manager._last_non_modifier_key_event is None
 
+    def test_get_last_input_event_refuses_call_from_outside_orca(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test code outside Orca cannot retrieve the raw last input event."""
+
+        input_event_manager, _essential_modules = self._setup_input_event_manager(test_context)
+
+        from orca import input_event_manager as input_event_manager_module
+
+        frame = test_context.Mock()
+        frame.filename = "/home/test/.local/share/orca/extensions/demo.py"
+        test_context.patch_object(
+            input_event_manager_module.inspect,
+            "stack",
+            return_value=[frame, frame, frame],
+        )
+        input_event_manager._last_input_event = test_context.Mock()
+
+        assert input_event_manager.get_last_input_event() is None
+
+    def test_get_last_input_event_allows_orca_call(self, test_context: OrcaTestContext) -> None:
+        """Test Orca code can retrieve the raw last input event."""
+
+        input_event_manager, _essential_modules = self._setup_input_event_manager(test_context)
+
+        from orca import input_event_manager as input_event_manager_module
+
+        frame = test_context.Mock()
+        orca_dir = input_event_manager_module.os.path.dirname(
+            input_event_manager_module.os.path.realpath(input_event_manager_module.__file__)
+        )
+        frame.filename = f"{orca_dir}/flat_review_presenter.py"
+        test_context.patch_object(
+            input_event_manager_module.inspect,
+            "stack",
+            return_value=[frame, frame, frame],
+        )
+        input_event_manager._last_input_event = test_context.Mock()
+
+        assert input_event_manager.get_last_input_event() is input_event_manager._last_input_event
+
     def test_start_key_watcher(self, test_context) -> None:
         """Test InputEventManager.start_key_watcher."""
 

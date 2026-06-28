@@ -587,6 +587,26 @@ class TestCommandManager:  # pylint: disable=too-many-public-methods
         assert manager.set_modal_handler(user_extension_handler) is False
         assert manager.get_modal_handler() is orca_handler
 
+    def test_user_extension_modal_handler_requires_command(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test user extension modal handlers are only consulted for commands."""
+
+        self._setup_dependencies(test_context)
+        from orca.command_manager import CommandManager, KeyboardCommand
+
+        manager = CommandManager()
+        user_extension_handler = test_context.Mock()
+        orca_handler = test_context.Mock()
+        command = KeyboardCommand("testCommand", test_context.Mock(), "Test Group")
+        manager.register_user_extension(user_extension_handler)
+
+        assert manager.can_modal_handler_handle_event(user_extension_handler, None) is False
+        assert manager.can_modal_handler_handle_event(user_extension_handler, command) is True
+        assert manager.can_modal_handler_handle_event(orca_handler, None) is True
+        assert manager.can_modal_handler_handle_event(orca_handler, command) is True
+
     def test_add_and_get_keyboard_command(self, test_context: OrcaTestContext) -> None:
         """Test CommandManager.add_command and get_keyboard_command."""
 

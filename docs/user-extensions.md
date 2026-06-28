@@ -111,6 +111,8 @@ Metadata is read from the extension class without executing the extension.
 Simple string constants are supported. The User Extensions page includes an
 Info button for each extension that displays this metadata.
 
+## Commands and Keybindings
+
 ### Command Functions
 
 Command functions take no arguments (other than `self`) and return `True` when
@@ -149,6 +151,20 @@ when needed.
 The User Extensions information dialog reports this in the Status row as
 `Some commands were unbound due to conflicts.` for an approved extension whose
 commands lost one or more requested keybindings.
+
+### Monitoring and Consuming Input Events
+
+For security and privacy reasons, user extensions cannot monitor all input
+events. In addition, Orca cannot intercept input events for which it has not
+registered a key grab. Without the grab, the focused application receives those
+events.
+
+For this reason, if an extension needs to consume a key press that is not an
+existing Orca command, it must register that key as the keybinding for an
+extension command. Orca will then manage the key grab on behalf of your
+extension. Your command will need to perform whatever work is expected because
+the key grab, by definition, prevents the key from reaching the focused
+application.
 
 ## The Controller API
 
@@ -425,10 +441,16 @@ down.
 
 ### Modal Input Handling
 
-Extensions can temporarily observe input events for which Orca has a key grab
-by becoming Orca's modal input handler. This is useful when an extension has a
-mode in which it needs to observe, consume, or pass through Orca commands before
-they are executed.
+Extensions can temporarily observe command input events for which Orca has a key
+grab by becoming Orca's modal input handler. This is useful when an extension
+has a mode in which it needs to observe, consume, or pass through Orca commands
+before they are executed.
+
+As described in
+[Monitoring and Consuming Input Events](#monitoring-and-consuming-input-events),
+Orca does not permit user extensions to monitor all input events. Modal input
+handlers in user extensions are only called for input events that match an Orca
+command.
 
 User extensions must not grab the keyboard. Keyboard grabs are difficult to get
 right and can prevent the user from controlling their session. Instead, register
@@ -437,12 +459,12 @@ events bound to another Orca command that your extension temporarily needs to
 override.
 
 If a modal input handler is active, when Orca receives an input event for which
-there is a key grab, Orca calls two methods on the handler:
+there is a key grab and a matching Orca command, Orca calls two methods on the
+handler:
 
 - `will_handle_event(script, event, command)`: Return `True` to claim the
   event, or `False` to leave it to Orca's normal event processing. The
-  `command` argument is the Orca command matched to the event, or `None` if no
-  command matched.
+  `command` argument is the Orca command matched to the event.
 - `handle_event(script, event, command)`: Handle an event that was claimed by
   `will_handle_event()`.
 
@@ -747,17 +769,12 @@ class ModalCommandObserver(Extension):
         if self._is_consumed_event(event):
             return True
 
-        return command is not None and command.get_name() != (
-            "toggle_modal_command_observer"
-        )
+        return command.get_name() != "toggle_modal_command_observer"
 
     def handle_event(self, script, event, command=None) -> bool:
         if self._is_consumed_event(event):
             self.controller.present_message_internal("I am consuming Orca+E.")
             return True
-
-        if command is None:
-            return False
 
         description = command.get_description() or command.get_name()
         self.controller.present_message_internal(

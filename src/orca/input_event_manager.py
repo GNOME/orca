@@ -27,6 +27,7 @@
 
 from __future__ import annotations
 
+import inspect
 import os
 import time
 
@@ -336,7 +337,41 @@ class InputEventManager:
     def get_last_input_event(self) -> input_event.InputEvent | None:
         """Returns the most recently processed input event (of any type), or None."""
 
+        if not self._called_from_orca_code("get_last_input_event"):
+            return None
+
         return self._last_input_event
+
+    @staticmethod
+    def _called_from_orca_code(method_name: str) -> bool:
+        """Returns True if the first non-input-event-manager caller is Orca package code."""
+
+        this_file = os.path.realpath(__file__)
+        orca_dir = os.path.dirname(this_file)
+        for frame_info in inspect.stack()[2:]:
+            filename = frame_info.filename
+            if not filename:
+                continue
+            filepath = os.path.realpath(filename)
+            if filepath == this_file:
+                continue
+
+            try:
+                is_orca_code = os.path.commonpath([orca_dir, filepath]) == orca_dir
+            except ValueError:
+                is_orca_code = False
+
+            if not is_orca_code:
+                msg = (
+                    f"INPUT EVENT MANAGER: Refusing {method_name} "
+                    f"call from outside Orca: {filepath}"
+                )
+                debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return is_orca_code
+
+        msg = f"INPUT EVENT MANAGER: Refusing {method_name} call with no Orca caller"
+        debug.print_message(debug.LEVEL_WARNING, msg, True)
+        return False
 
     def _last_key_and_modifiers(self):
         """Returns the last keyval name and modifiers"""
