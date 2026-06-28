@@ -79,9 +79,9 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._switches_by_filename: dict[str, Gtk.Switch] = {}
         self._info_buttons_by_filename: dict[str, Gtk.Button] = {}
         self._settings_buttons_by_filename: dict[str, Gtk.Button] = {}
-        self._approve_buttons_by_filename: dict[str, Gtk.Button] = {}
-        self._revoke_buttons_by_filename: dict[str, Gtk.Button] = {}
+        self._approval_buttons_by_filename: dict[str, Gtk.Button] = {}
         self._summary_labels_by_filename: dict[str, Gtk.Label] = {}
+        self._approval_button_size_group = orca_gui_helpers.create_horizontal_size_group()
         self._staged_settings_by_class_name: dict[
             str,
             tuple[list[extension_preferences.ExtensionPreference], dict[str, Any]],
@@ -145,9 +145,9 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._switches_by_filename = {}
         self._info_buttons_by_filename = {}
         self._settings_buttons_by_filename = {}
-        self._approve_buttons_by_filename = {}
-        self._revoke_buttons_by_filename = {}
+        self._approval_buttons_by_filename = {}
         self._summary_labels_by_filename = {}
+        self._approval_button_size_group = orca_gui_helpers.create_horizontal_size_group()
 
         infos = self._loader.discover_user_extensions(self._extensions_dir)
         if not infos:
@@ -190,8 +190,8 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         self._summary_labels_by_filename[info.filename] = summary_label
         self._info_buttons_by_filename[info.filename] = action_buttons["info"]
         self._settings_buttons_by_filename[info.filename] = action_buttons["settings"]
-        self._approve_buttons_by_filename[info.filename] = action_buttons["approve"]
-        self._revoke_buttons_by_filename[info.filename] = action_buttons["revoke"]
+        self._approval_buttons_by_filename[info.filename] = action_buttons["approval"]
+        self._configure_approval_button(action_buttons["approval"])
         self._sync_row(info)
 
     @staticmethod
@@ -224,18 +224,18 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
                 "emblem-system-symbolic",
             ),
             orca_gui_helpers.ListRowAction(
-                "approve",
+                "approval",
                 guilabels.EXTENSIONS_APPROVE,
-                lambda _button: self._on_approve_clicked(filename),
-                "emblem-ok-symbolic",
-            ),
-            orca_gui_helpers.ListRowAction(
-                "revoke",
-                guilabels.EXTENSIONS_REVOKE,
-                lambda _button: self._on_revoke_clicked(filename),
-                "user-trash-symbolic",
+                lambda _button: self._on_approval_clicked(filename),
             ),
         ]
+
+    def _configure_approval_button(self, button: Gtk.Button) -> None:
+        """Configure the stable approve/revoke action button."""
+
+        button.set_valign(Gtk.Align.CENTER)
+        button.set_size_request(112, -1)
+        self._approval_button_size_group.add_widget(button)
 
     def _get_info(self, filename: str) -> extension_loader.UserExtensionInfo | None:
         """Returns the current info for a user extension."""
@@ -251,8 +251,7 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         switch = self._switches_by_filename.get(filename)
         info_button = self._info_buttons_by_filename.get(filename)
         settings_button = self._settings_buttons_by_filename.get(filename)
-        approve_button = self._approve_buttons_by_filename.get(filename)
-        revoke_button = self._revoke_buttons_by_filename.get(filename)
+        approval_button = self._approval_buttons_by_filename.get(filename)
         detail_text = self._get_detail_text(info)
 
         if summary_label is not None:
@@ -263,26 +262,13 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
             )
 
         status = info.status
-        can_approve = status in (
-            extension_loader.UserExtensionStatus.UNAPPROVED,
-            extension_loader.UserExtensionStatus.MODIFIED,
-        )
-        can_revoke = status in (
-            extension_loader.UserExtensionStatus.APPROVED,
-            extension_loader.UserExtensionStatus.DISABLED,
-            extension_loader.UserExtensionStatus.MODIFIED,
-        )
         can_toggle = status in (
             extension_loader.UserExtensionStatus.APPROVED,
             extension_loader.UserExtensionStatus.DISABLED,
         )
 
-        if approve_button is not None:
-            approve_label = guilabels.EXTENSIONS_APPROVE
-            if status is extension_loader.UserExtensionStatus.MODIFIED:
-                approve_label = guilabels.EXTENSIONS_REAPPROVE
-            approve_button.get_accessible().set_name(approve_label)
-            approve_button.set_sensitive(can_approve)
+        if approval_button is not None:
+            self._sync_approval_button(approval_button, status)
 
         if info_button is not None:
             info_button.set_sensitive(True)
@@ -290,14 +276,39 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if settings_button is not None:
             settings_button.set_sensitive(self._can_show_settings(info))
 
-        if revoke_button is not None:
-            revoke_button.set_sensitive(can_revoke)
-
         if switch is not None:
             self._syncing_filenames.add(filename)
             switch.set_sensitive(can_toggle)
             switch.set_active(status is extension_loader.UserExtensionStatus.APPROVED)
             self._syncing_filenames.discard(filename)
+
+    @staticmethod
+    def _sync_approval_button(
+        button: Gtk.Button,
+        status: extension_loader.UserExtensionStatus,
+    ) -> None:
+        """Sync approval action button with status."""
+
+        label = guilabels.EXTENSIONS_APPROVE
+        sensitive = status in (
+            extension_loader.UserExtensionStatus.UNAPPROVED,
+            extension_loader.UserExtensionStatus.MODIFIED,
+            extension_loader.UserExtensionStatus.APPROVED,
+            extension_loader.UserExtensionStatus.DISABLED,
+        )
+
+        if status is extension_loader.UserExtensionStatus.MODIFIED:
+            label = guilabels.EXTENSIONS_REAPPROVE
+        elif status in (
+            extension_loader.UserExtensionStatus.APPROVED,
+            extension_loader.UserExtensionStatus.DISABLED,
+        ):
+            label = guilabels.EXTENSIONS_REVOKE
+
+        button.set_image(None)
+        button.set_label(label)
+        button.get_accessible().set_name(label)
+        button.set_sensitive(sensitive)
 
     def _get_detail_text(self, info: extension_loader.UserExtensionInfo) -> str:
         """Returns the secondary row detail text for an extension."""
@@ -478,29 +489,24 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
 
         return guilabels.EXTENSIONS_INFO_KEYBINDING_CONFLICT
 
-    def _on_approve_clicked(self, filename: str) -> None:
-        """Approve or re-approve an extension."""
+    def _on_approval_clicked(self, filename: str) -> None:
+        """Approve, re-approve, or revoke approval for an extension."""
 
         info = self._get_info(filename)
         if info is None:
             return
 
-        self._loader.approve_extension_file(info.filepath)
+        if info.status in (
+            extension_loader.UserExtensionStatus.APPROVED,
+            extension_loader.UserExtensionStatus.DISABLED,
+        ):
+            self._loader.revoke_extension(filename)
+        else:
+            self._loader.approve_extension_file(info.filepath)
+
         self._loader.reload_user_extensions(self._extensions_dir)
         if info := self._get_info(filename):
             self._sync_row(info)
-            if switch := self._switches_by_filename.get(filename):
-                switch.grab_focus()
-
-    def _on_revoke_clicked(self, filename: str) -> None:
-        """Revoke approval for an extension."""
-
-        self._loader.revoke_extension(filename)
-        self._loader.reload_user_extensions(self._extensions_dir)
-        if info := self._get_info(filename):
-            self._sync_row(info)
-            if approve_button := self._approve_buttons_by_filename.get(filename):
-                approve_button.grab_focus()
 
     def _on_switch_toggled(
         self,
