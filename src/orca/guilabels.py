@@ -1494,6 +1494,26 @@ EXTENSIONS_INFO_BUTTON = C_("user extensions", "Info")
 # user extension.
 EXTENSIONS_SETTINGS_BUTTON = C_("user extensions", "Settings")
 
+# Translators: This is a button label in the generated settings dialog for a
+# user extension. The button adds one item to a list setting exposed by the
+# extension, for instance a list of application names.
+EXTENSIONS_SETTINGS_NEW_ITEM = C_("user extensions", "New item")
+
+# Translators: This is a button label in the generated settings dialog for a
+# user extension. The button removes one item from a list setting exposed by the
+# extension, for instance a list of application names.
+EXTENSIONS_SETTINGS_DELETE_ITEM = C_("user extensions", "Delete")
+
+# Translators: This error message appears in the generated settings dialog for a
+# user extension when the user enters an invalid item in a list setting. The
+# exact list setting depends on the extension.
+EXTENSIONS_SETTINGS_INVALID_ITEM = C_("user extensions", "Invalid item.")
+
+# Translators: This error message appears in the generated settings dialog for a
+# user extension when the user enters an item that is already present in the same
+# list setting.
+EXTENSIONS_SETTINGS_DUPLICATE_ITEM = C_("user extensions", "Item already exists.")
+
 # Translators: This is a label in the user extension information dialog. It is
 # followed by the name of the person or people who wrote the extension.
 EXTENSIONS_INFO_AUTHOR = C_("user extensions", "Author")

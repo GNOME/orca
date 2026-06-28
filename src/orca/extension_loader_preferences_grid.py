@@ -419,7 +419,8 @@ class ExtensionLoaderPreferencesGrid(preferences_grid_base.PreferencesGridBase):
         if values is None:
             return
 
-        self._staged_settings_by_class_name[info.class_name] = (preferences, values)
+        staged_preferences = [pref for pref in preferences if pref.key in values]
+        self._staged_settings_by_class_name[info.class_name] = (staged_preferences, values)
         self._has_unsaved_changes = True
 
     def _get_staged_settings(self, class_name: str) -> dict[str, Any] | None:

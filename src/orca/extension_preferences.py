@@ -24,7 +24,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 
 class ExtensionPreferenceKind(Enum):
@@ -50,6 +53,8 @@ class ExtensionPreference:
     minimum: int | float | None = None
     maximum: int | float | None = None
     options: tuple[tuple[Any, str], ...] = ()
+    item_validator: Callable[[str], bool] | None = None
+    item_error: str = ""
 
     @classmethod
     def boolean(cls, key: str, label: str, default: bool = False) -> ExtensionPreference:
@@ -107,10 +112,19 @@ class ExtensionPreference:
         key: str,
         label: str,
         default: list[str] | None = None,
+        item_validator: Callable[[str], bool] | None = None,
+        item_error: str = "",
     ) -> ExtensionPreference:
         """Return a string-list preference."""
 
-        return cls(key, label, default or [], ExtensionPreferenceKind.STRING_LIST)
+        return cls(
+            key,
+            label,
+            default or [],
+            ExtensionPreferenceKind.STRING_LIST,
+            item_validator=item_validator,
+            item_error=item_error,
+        )
 
     @classmethod
     def dictionary(
@@ -130,6 +144,7 @@ GENERATED_DIALOG_KINDS = {
     ExtensionPreferenceKind.INTEGER,
     ExtensionPreferenceKind.FLOAT,
     ExtensionPreferenceKind.ENUM,
+    ExtensionPreferenceKind.STRING_LIST,
 }
 
 

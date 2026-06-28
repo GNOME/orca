@@ -7,9 +7,10 @@
 This feature is early and experimental. The following are still pending:
 
 - Custom extension-provided preferences dialogs.
+- User-extension-provided localized strings.
 - Informational text boxes in generated extension preferences dialogs.
 - Additional generated preference controls, such as radio-button groups, color
-  buttons, file/path pickers, list rows, and dictionary rows.
+  buttons, file/path pickers, and structured dictionary editors.
 - Fixing bugs and improving the API based on user feedback.
 
 ## Overview
@@ -296,8 +297,7 @@ The preference key must match the key used with `self.settings.get()`. If the
 user sets a preference back to its declared default, Orca removes the stored
 value so the extension falls back to the default passed to `get()`.
 
-The default dialog supports boolean switches, strings, integer spin buttons,
-floating-point sliders, and combo boxes:
+It currently supports these generated controls:
 
 ```python
 ExtensionPreference.boolean("enabled", "Enabled", True)
@@ -310,6 +310,7 @@ ExtensionPreference.enum(
     (("objects", "Objects"), ("messages", "Messages"), ("both", "Both")),
     "objects",
 )
+ExtensionPreference.string_list("applications", "Applications", ["gnome-shell"])
 ```
 
 These preference types are displayed as follows:
@@ -319,9 +320,17 @@ These preference types are displayed as follows:
 - `integer`: spin button
 - `float`: slider
 - `enum`: combo box
+- `string_list`: editable list rows
 
-`string_list` and `dictionary` preferences can be declared, but Orca's
-generated dialog does not display them yet.
+String-list preferences can include an optional item validator and error message
+for values that need extension-specific validation.
+
+Dictionary preferences can also be declared and stored, but Orca's generated
+dialog does not display them yet:
+
+```python
+ExtensionPreference.dictionary("limits", "Limits", {"minimum": 1})
+```
 
 ### Testing Settings With dconf
 
@@ -754,6 +763,8 @@ Create this as a package extension in
 ```python
 """Example extension that reverses the order of spoken words."""
 
+import re
+
 import gi
 
 gi.require_version("Atspi", "2.0")
@@ -778,6 +789,8 @@ class ReverseWords(Extension):
     COPYRIGHT = "2026 Example, Inc."
     WEBSITE = "https://example.com/reverse-words"
 
+    _APP_NAME = re.compile(r"^[A-Za-z0-9_.-]+$")
+
     def get_preferences(self) -> list[ExtensionPreference]:
         return [
             ExtensionPreference.enum(
@@ -791,20 +804,25 @@ class ReverseWords(Extension):
                 ),
                 "objects",
             ),
-            # These filters are valid extension settings, but the generated
-            # preferences dialog does not display list or dictionary settings
-            # yet.
             ExtensionPreference.string_list(
                 "excluded-applications",
                 "Excluded applications",
                 ["gnome-shell"],
+                self._is_application_name,
+                "Enter one application name.",
             ),
+            # Dictionary preferences are valid settings, but Orca's generated
+            # dialog does not display them yet.
             ExtensionPreference.dictionary(
                 "excluded-roles",
                 "Excluded roles",
                 {"terminal": int(Atspi.Role.TERMINAL)},
             ),
         ]
+
+    @classmethod
+    def _is_application_name(cls, value: str) -> bool:
+        return bool(cls._APP_NAME.fullmatch(value))
 
     def _applies_to_message(self) -> bool:
         scope = self.settings.get("scope", default="objects")
