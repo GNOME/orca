@@ -372,6 +372,13 @@ class TestAXUtilitiesRelation:
                 "has_self_target": False,
             },
             {
+                "id": "dynamic_ignores_cache",
+                "scenario": "cached",
+                "relation_type": Atspi.RelationType.ERROR_MESSAGE,
+                "expected_result": "all_targets",
+                "has_self_target": False,
+            },
+            {
                 "id": "no_relation",
                 "scenario": "no_relation",
                 "relation_type": Atspi.RelationType.LABELLED_BY,
@@ -415,9 +422,10 @@ class TestAXUtilitiesRelation:
         if case["scenario"] == "cached":
             mock_targets = [mock_target1]
             AXUtilitiesRelation._CACHE.set_targets(mock_obj, case["relation_type"], mock_targets)
-            result = AXUtilitiesRelation._get_relation_targets(mock_obj, case["relation_type"])
-            assert result == mock_targets
-            return
+            if case["expected_result"] == "cached_targets":
+                result = AXUtilitiesRelation._get_relation_targets(mock_obj, case["relation_type"])
+                assert result == mock_targets
+                return
 
         if case["scenario"] == "no_relation":
             test_context.patch_object(AXUtilitiesRelation, "_get_relation", return_value=None)

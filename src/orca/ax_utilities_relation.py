@@ -93,17 +93,24 @@ class AXUtilitiesRelation:
     """Utilities for accessible relations."""
 
     _CACHE = _AXUtilitiesRelationCache()
+    _DYNAMIC_RELATION_TYPES = frozenset(
+        {
+            Atspi.RelationType.ERROR_FOR,
+            Atspi.RelationType.ERROR_MESSAGE,
+        }
+    )
 
     @staticmethod
-    def get_relations(obj: Atspi.Accessible) -> list[Atspi.Relation]:
+    def get_relations(obj: Atspi.Accessible, use_cache: bool = True) -> list[Atspi.Relation]:
         """Returns the list of Atspi.Relation objects associated with obj"""
 
         if not AXObject.is_valid(obj):
             return []
 
-        relations = AXUtilitiesRelation._CACHE.get_relations(obj)
-        if relations is not None:
-            return relations
+        if use_cache:
+            relations = AXUtilitiesRelation._CACHE.get_relations(obj)
+            if relations is not None:
+                return relations
 
         try:
             relations = Atspi.Accessible.get_relation_set(obj)
@@ -117,17 +124,19 @@ class AXUtilitiesRelation:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
-        AXUtilitiesRelation._CACHE.set_relations(obj, relations)
+        if use_cache:
+            AXUtilitiesRelation._CACHE.set_relations(obj, relations)
         return relations
 
     @staticmethod
     def _get_relation(
         obj: Atspi.Accessible,
         relation_type: Atspi.RelationType,
+        use_cache: bool = True,
     ) -> Atspi.Relation | None:
         """Returns the specified Atspi.Relation for obj"""
 
-        for relation in AXUtilitiesRelation.get_relations(obj):
+        for relation in AXUtilitiesRelation.get_relations(obj, use_cache):
             if relation and relation.get_relation_type() == relation_type:
                 return relation
 
@@ -149,13 +158,16 @@ class AXUtilitiesRelation:
     ) -> list[Atspi.Accessible]:
         """Returns the list of targets with the specified relation type to obj."""
 
-        cached_targets = AXUtilitiesRelation._CACHE.get_targets(obj, relation_type)
-        if cached_targets is not None:
-            return cached_targets
+        use_cache = relation_type not in AXUtilitiesRelation._DYNAMIC_RELATION_TYPES
+        if use_cache:
+            cached_targets = AXUtilitiesRelation._CACHE.get_targets(obj, relation_type)
+            if cached_targets is not None:
+                return cached_targets
 
-        relation = AXUtilitiesRelation._get_relation(obj, relation_type)
+        relation = AXUtilitiesRelation._get_relation(obj, relation_type, use_cache)
         if relation is None:
-            AXUtilitiesRelation._CACHE.set_targets(obj, relation_type, [])
+            if use_cache:
+                AXUtilitiesRelation._CACHE.set_targets(obj, relation_type, [])
             return []
 
         targets = set()
@@ -171,7 +183,8 @@ class AXUtilitiesRelation:
             targets.remove(obj)
 
         result = list(targets)
-        AXUtilitiesRelation._CACHE.set_targets(obj, relation_type, result)
+        if use_cache:
+            AXUtilitiesRelation._CACHE.set_targets(obj, relation_type, result)
         return result
 
     @staticmethod
