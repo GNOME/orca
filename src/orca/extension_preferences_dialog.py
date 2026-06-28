@@ -74,6 +74,9 @@ class ExtensionPreferencesDialog:
             width=720,
         )
         self._dialog.set_default_size(720, 520)
+        if transient_for is not None:
+            transient_for.connect("destroy", self._on_parent_destroy)
+
         self._label_size_group = orca_gui_helpers.create_horizontal_size_group()
         self._build()
 
@@ -85,6 +88,12 @@ class ExtensionPreferencesDialog:
         values = dict(self._values) if response == Gtk.ResponseType.OK else None
         self._dialog.destroy()
         return values
+
+    def _on_parent_destroy(self, *_args: Any) -> None:
+        """Responds to parent destruction by closing the dialog."""
+
+        if self._dialog.get_visible():
+            self._dialog.response(Gtk.ResponseType.DELETE_EVENT)
 
     def _build(self) -> None:
         """Build the preference rows."""

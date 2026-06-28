@@ -92,6 +92,13 @@ def show_preferences_gui(default_script: default.Script) -> bool:
     return True
 
 
+def close_preferences_gui_for_shutdown() -> None:
+    """Closes the preferences window and its transient dialogs during shutdown."""
+
+    if OrcaSetupGUI.WINDOW is not None:
+        OrcaSetupGUI.WINDOW.close_for_shutdown()
+
+
 class NavigationRow(Gtk.ListBoxRow):
     """ListBoxRow with a panel_id attribute for navigation."""
 
@@ -562,6 +569,23 @@ class OrcaSetupGUI(Gtk.ApplicationWindow):  # pylint: disable=too-many-instance-
 
         # Enable configuring mode after a brief delay to allow initial setup to complete
         GLib.timeout_add(100, enable_configuring_mode)
+
+    def close_for_shutdown(self) -> None:
+        """Close preferences UI without prompting during Orca shutdown."""
+
+        msg = "PREFERENCES: Closing preferences UI for shutdown"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+        for window in Gtk.Window.list_toplevels():
+            parent = window.get_transient_for()
+            while parent is not None:
+                if parent is self:
+                    if isinstance(window, Gtk.Dialog) and window.get_visible():
+                        window.response(Gtk.ResponseType.DELETE_EVENT)
+                    break
+                parent = parent.get_transient_for()
+
+        self.destroy()
 
     def help_button_clicked(self, _widget: Gtk.Button) -> None:
         """Handle Help button click to show preferences help."""

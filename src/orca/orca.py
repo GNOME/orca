@@ -134,6 +134,11 @@ def shutdown(_event=None, _signum=None):
 
     presentation_manager.get_manager().shutdown_presenters()
 
+    # pylint: disable-next=import-outside-toplevel
+    from . import preferences_window
+
+    preferences_window.close_preferences_gui_for_shutdown()
+
     ax_device_manager.get_manager().deactivate()
     systemd.get_manager().notify_stopping()
     signal.alarm(0)
