@@ -31,12 +31,18 @@ import typing
 import xml.etree.ElementTree as ET
 from collections.abc import Callable
 
+import gi
 from dasbus.connection import SessionMessageBus
 from dasbus.error import DBusError
 from dasbus.server.interface import dbus_interface
 from dasbus.server.publishable import Publishable
 from dasbus.typing import UInt32 as UInt32  # noqa: PLC0414  (re-export)
-from gi.repository import GLib
+
+# This module cannot use `from __future__ import annotations`: dasbus inspects
+# runtime annotations when building interfaces. Import Atspi normally so these
+# internal return types can stay unquoted.
+gi.require_version("Atspi", "2.0")
+from gi.repository import Atspi, GLib
 
 from . import (  # pylint: disable=no-name-in-module
     debug,
@@ -861,6 +867,20 @@ class OrcaRemoteController:
             return False
 
         return self._dbus_service_interface.DisplayMessage(message, persistent)
+
+    def get_active_window_internal(self) -> Atspi.Accessible | None:
+        """Returns the active window without a D-Bus round-trip."""
+
+        from . import focus_manager  # pylint: disable=import-outside-toplevel
+
+        return focus_manager.get_manager().get_active_window()
+
+    def get_current_object_internal(self) -> Atspi.Accessible | None:
+        """Returns the current object (AKA 'locus of focus') without a D-Bus round-trip."""
+
+        from . import focus_manager  # pylint: disable=import-outside-toplevel
+
+        return focus_manager.get_manager().get_locus_of_focus()
 
     def execute_command_internal(
         self,

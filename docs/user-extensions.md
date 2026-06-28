@@ -11,6 +11,7 @@ This feature is early and experimental. The following are still pending:
 - Informational text boxes in generated extension preferences dialogs.
 - Additional generated preference controls, such as radio-button groups, color
   buttons, file/path pickers, and structured dictionary editors.
+- Utilities to facilitate user-extension-driven navigation.
 - Fixing bugs and improving the API based on user feedback.
 
 ## Overview
@@ -189,6 +190,33 @@ braille display, or the extension displays another string.
 
 ```python
 self.controller.display_message_internal("Persistent braille text", persistent=True)
+```
+
+### `get_active_window_internal()`
+
+Returns the accessible object Orca currently believes to be the active window.
+
+Note: This is deliberately read-only. Extensions should not attempt to manipulate
+this value through calls to code within Orca because that can have unwanted side
+effects on Orca's script management, event management, settings management, key
+grab management, etc.
+
+```python
+window = self.controller.get_active_window_internal()
+```
+
+### `get_current_object_internal()`
+
+Returns the accessible object Orca currently treats as the current/focused object.
+
+Note: This is deliberately read-only. Extensions should not attempt to manipulate
+this value through calls to code within Orca because that can have unwanted side
+effects on Orca's script management, event management, settings management, key
+grab management, etc. Utilities will be put into place to facilitate navigation
+driven by user extensions.
+
+```python
+obj = self.controller.get_current_object_internal()
 ```
 
 ### `execute_command_internal(module_name, command_name)`
