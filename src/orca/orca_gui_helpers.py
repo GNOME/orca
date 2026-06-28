@@ -1210,12 +1210,14 @@ def create_scrolled_window(
     size_request: tuple[int, int] | None = None,
     hexpand: bool | None = None,
     vexpand: bool | None = None,
+    framed: bool = True,
 ) -> Gtk.ScrolledWindow:
-    """Return a framed scrolled window for Orca dialogs."""
+    """Return a scrolled window for Orca dialogs."""
 
     scrolled_window = Gtk.ScrolledWindow()
-    scrolled_window.get_style_context().add_class("frame")
-    scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
+    if framed:
+        scrolled_window.get_style_context().add_class("frame")
+        scrolled_window.set_shadow_type(Gtk.ShadowType.IN)
     if hscroll_policy is not None or vscroll_policy is not None:
         scrolled_window.set_policy(
             hscroll_policy or Gtk.PolicyType.AUTOMATIC,

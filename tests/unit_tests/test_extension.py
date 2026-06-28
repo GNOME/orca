@@ -141,6 +141,28 @@ class TestExtensionSettings:
 
         assert settings.get("reverse", default=True) is True
 
+    def test_get_unpacks_nested_variant_values(self, test_context: OrcaTestContext) -> None:
+        """Test get returns plain Python values from a nested variant dictionary."""
+
+        extension = self._setup(test_context)
+        registry = _RegistryLike()
+        variant = extension.gsettings_registry.GLib.Variant
+        registry.layered_values["extensions/hello-world"] = {
+            "settings": {
+                "word-replacements": variant(
+                    "a{sv}",
+                    {
+                        "screen": variant("s", "display"),
+                    },
+                )
+            }
+        }
+        self._patch_registry(test_context, extension, registry)
+
+        settings = extension.ExtensionSettings("hello_world")
+
+        assert settings.get("word-replacements", default={}) == {"screen": "display"}
+
     def test_set_writes_to_active_profile(self, test_context: OrcaTestContext) -> None:
         """Test set stores the value in the extension's settings path."""
 

@@ -56,8 +56,12 @@ class ExtensionPreference:
     minimum: int | float | None = None
     maximum: int | float | None = None
     options: tuple[tuple[Any, str], ...] = ()
+    key_label: str = ""
     item_validator: Callable[[str], bool] | None = None
     item_error: str = ""
+    value_label: str = ""
+    value_validator: Callable[[str], bool] | None = None
+    value_error: str = ""
     directory: bool = False
 
     @classmethod
@@ -141,6 +145,7 @@ class ExtensionPreference:
         key: str,
         label: str,
         default: list[str] | None = None,
+        *,
         item_validator: Callable[[str], bool] | None = None,
         item_error: str = "",
     ) -> ExtensionPreference:
@@ -161,10 +166,28 @@ class ExtensionPreference:
         key: str,
         label: str,
         default: dict[str, bool | int | float | str] | None = None,
+        *,
+        key_label: str = "",
+        value_label: str = "",
+        key_validator: Callable[[str], bool] | None = None,
+        value_validator: Callable[[str], bool] | None = None,
+        key_error: str = "",
+        value_error: str = "",
     ) -> ExtensionPreference:
         """Return a dictionary preference."""
 
-        return cls(key, label, default or {}, ExtensionPreferenceKind.DICTIONARY)
+        return cls(
+            key,
+            label,
+            default or {},
+            ExtensionPreferenceKind.DICTIONARY,
+            key_label=key_label,
+            item_validator=key_validator,
+            item_error=key_error,
+            value_label=value_label,
+            value_validator=value_validator,
+            value_error=value_error,
+        )
 
 
 GENERATED_DIALOG_KINDS = {
@@ -177,6 +200,7 @@ GENERATED_DIALOG_KINDS = {
     ExtensionPreferenceKind.FLOAT,
     ExtensionPreferenceKind.ENUM,
     ExtensionPreferenceKind.STRING_LIST,
+    ExtensionPreferenceKind.DICTIONARY,
 }
 
 

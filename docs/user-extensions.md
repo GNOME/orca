@@ -6,19 +6,14 @@
 
 This feature is early and experimental. The following are still pending:
 
-- Custom extension-provided preferences dialogs.
 - User-extension-provided localized strings.
-- Additional generated preference controls, such as radio-button groups and
-  structured dictionary editors.
-- Wrapped convenience APIs for user-extension dialogs and other UI.
-- Utilities to facilitate user-extension-driven navigation.
+- Stable convenience functions for creating non-preferences user-extension UI.
+- Utilities to facilitate user-extension-driven navigation (setting the caret, updating focus, etc.)
 - Fixing bugs and improving the API based on user feedback.
 
 ## Overview
 
-User extensions allow you to add custom behavior to Orca, including keyboard
-commands and speech output hooks. An extension contains a class that subclasses
-`Extension`.
+User extensions allow you to add custom commands and features to Orca.
 
 Extensions live in `~/.local/share/orca/extensions/`. Orca supports both
 single-file extensions and package extensions:
@@ -28,13 +23,13 @@ single-file extensions and package extensions:
 ~/.local/share/orca/extensions/reverse_words/__init__.py
 ```
 
-Each `.py` file or package directory with an `__init__.py` file containing an
+Each `.py` file or package directory with an `__init__.py` file that contains an
 `Extension` subclass is a potential extension.
 
 ## Extension Catalogs and Stores
 
 User extensions are an advanced customization mechanism. The Orca project does
-not maintain an official extension store because extensions may have broad
+not maintain an official extension store because user extensions may have broad
 access to user data and system interaction, and the project does not have the
 resources or infrastructure to audit, sandbox, continuously monitor, and revoke
 unsafe extensions.
@@ -169,17 +164,19 @@ commands lost one or more requested keybindings.
 
 ### Monitoring and Consuming Input Events
 
-For security and privacy reasons, user extensions cannot monitor all input
-events. In addition, Orca cannot intercept input events for which it has not
-registered a key grab. Without the grab, the focused application receives those
-events.
+For security and privacy reasons, user extensions are not permitted to monitor
+all input events. In addition, Orca cannot intercept input events for which it
+has not registered a key grab. Without the grab, the focused application
+receives those events.
 
-For this reason, if an extension needs to consume a key press that is not an
-existing Orca command, it must register that key as the keybinding for an
-extension command. Orca will then manage the key grab on behalf of your
-extension. Your command will need to perform whatever work is expected because
-the key grab, by definition, prevents the key from reaching the focused
-application.
+For this reason, if your extension needs to consume a key press that is not an
+existing Orca command, it must register that key as the keybinding for one of
+its commands. Orca will then manage the key grab on behalf of your extension.
+Your command will need to perform whatever work is expected because the key
+grab, by definition, prevents the key from reaching the focused application.
+
+If an extension needs to temporarily observe or consume existing Orca commands,
+use [Modal Input Handling](#modal-input-handling).
 
 ## The Controller API
 
@@ -326,17 +323,30 @@ self.settings.reset("scope")
 
 ### Preferences UI
 
-Orca provides a generated preferences dialog for user extensions. Extensions
-that want to show settings in that dialog should override `get_preferences()`.
-The settings button for an approved and enabled extension opens the generated
-dialog. Pressing OK in that dialog stages the changes in Orca's Preferences
+Generated preferences dialogs are the supported way for extensions to expose
+settings in Orca's Preferences window. The generated dialog can be opened by
+pressing the settings button for the selected extension on the User Extensions
+page. Pressing OK in that dialog stages the changes in Orca's Preferences
 window. The changes are saved to dconf when the user applies or saves the main
-preferences window.
+preferences.
 
-Generated preferences dialog support is still a work in progress. The available
-control types and layout options are intentionally limited for now.
+Extensions are not prevented from creating their own dialogs. Extensions that
+do create their own dialogs are responsible for the dialog's behavior,
+accessibility, theming, staging settings until the user applies or saves the
+main preferences, writing settings to the correct dconf location, and future
+compatibility. If Orca's generated dialogs lack a feature your extension needs,
+please file a bug so the missing feature can be considered for generated-dialog
+support.
 
-Custom extension-provided preferences dialogs are not supported yet.
+The UI helpers in Orca's source tree, such as `orca_gui_helpers.py` and
+`preferences_grid_base.py`, are internal implementation details even when a
+method or function is public. They may change as Orca's own UI changes.
+
+#### Declaring Preferences
+
+Extensions that want to show settings in Orca's generated dialog should
+override `get_preferences()` and return a list of `ExtensionPreference`
+instances:
 
 ```python
 from orca.extension import ExtensionPreference
@@ -356,53 +366,72 @@ The preference key must match the key used with `self.settings.get()`. If the
 user sets a preference back to its declared default, Orca removes the stored
 value so the extension falls back to the default passed to `get()`.
 
-It currently supports these generated controls:
+#### Supported Controls
+
+Generated dialogs currently support these preference types:
+
+- `info`: informational text box. Info entries are not stored as settings.
+- `boolean`: switch.
+- `string`: text entry.
+- `path`: text entry with a Browse button. Path preferences open a file
+  chooser by default. Pass `directory=True` to open a folder chooser instead.
+- `color`: color button. Color preferences are stored as hex strings such as
+  `#ffffff`.
+- `integer`: spin button.
+- `float`: slider.
+- `enum`: combo box.
+- `string_list`: editable list rows. String-list preferences can include an
+  optional item validator and error message for values that need
+  extension-specific validation.
+- `dictionary`: editable list rows with two fields per item. Dictionary
+  preferences can include custom field labels, validators, and error messages.
+  The generated dialog edits dictionary values as strings.
 
 ```python
+# Message only; not stored as a setting.
 ExtensionPreference.info("This extension changes what Orca speaks.")
+
+# key, label, default
 ExtensionPreference.boolean("enabled", "Enabled", True)
 ExtensionPreference.string("message", "Message", "Hello")
-ExtensionPreference.path("folder", "Folder", "~/orca-output", directory=True)
 ExtensionPreference.color("foreground-color", "Foreground color", "#000000")
+
+# key, label, default, and whether the chooser selects a directory
+ExtensionPreference.path("folder", "Folder", "~/orca-output", directory=True)
+
+# key, label, default, minimum, maximum
 ExtensionPreference.integer("rate", "Rate", 50, 0, 100)
 ExtensionPreference.floating("volume", "Volume", 5.0, 0.0, 10.0)
+
+# key, label, choices, default
 ExtensionPreference.enum(
     "scope",
     "Scope",
     (("objects", "Objects"), ("messages", "Messages"), ("both", "Both")),
     "objects",
 )
-ExtensionPreference.string_list("applications", "Applications", ["gnome-shell"])
-```
 
-These preference types are displayed as follows:
+# key, label, default list, optional item validator and error message
+ExtensionPreference.string_list(
+    "applications",
+    "Applications",
+    ["gnome-shell"],
+    item_validator=self._is_application_name,
+    item_error="Enter one application name.",
+)
 
-- `info`: informational text box
-- `boolean`: switch
-- `string`: text entry
-- `path`: text entry with a Browse button
-- `color`: color button
-- `integer`: spin button
-- `float`: slider
-- `enum`: combo box
-- `string_list`: editable list rows
-
-Path preferences open a file chooser by default. Pass `directory=True` to open a
-folder chooser instead.
-
-Color preferences are stored as hex strings such as `#ffffff`.
-
-Info entries are not stored as settings. They only add explanatory text to the
-generated dialog.
-
-String-list preferences can include an optional item validator and error message
-for values that need extension-specific validation.
-
-Dictionary preferences can also be declared and stored, but Orca's generated
-dialog does not display them yet:
-
-```python
-ExtensionPreference.dictionary("limits", "Limits", {"minimum": 1})
+# key, label, default dictionary, labels and validators for item fields
+ExtensionPreference.dictionary(
+    "word-replacements",
+    "Word replacements",
+    {"orca": "screen reader"},
+    key_label="Word",
+    value_label="Replacement",
+    key_validator=self._is_word,
+    value_validator=self._is_replacement,
+    key_error="Enter one word.",
+    value_error="Enter replacement text.",
+)
 ```
 
 ### Testing Settings With dconf
@@ -418,7 +447,9 @@ When using `dconf write`, include any existing values for that extension that
 you want to keep. The command replaces the settings dictionary for the extension
 path being written.
 
-For example, to test Example 1 with alternative messages and rates:
+For example, to test
+[Example 1](#example-1-commands-controller-api-and-settings) with alternative
+messages and rates:
 
 ```sh
 dconf write /org/gnome/orca/default/extensions/hello-world/settings \
@@ -427,15 +458,16 @@ dconf write /org/gnome/orca/default/extensions/hello-world/settings \
     "'slow-rate': <5>, 'fast-rate': <90>}"
 ```
 
-And to test Example 3 with messages only:
+And to test [Example 3](#example-3-speech-output-hook) with messages only and
+one word replacement:
 
 ```sh
 dconf write /org/gnome/orca/default/extensions/reverse-words/settings \
-    "{'scope': <'messages'>}"
+    "{'scope': <'messages'>, 'word-replacements': <{'screen': <'display'>}>}"
 ```
 
-Because message speech has no accessible object, application and role filters
-are not relevant when `scope` is `"messages"` and can thus be left out.
+Because message speech has no accessible object, application filters are not
+relevant when `scope` is `"messages"` and can thus be left out.
 
 To reset an extension's settings:
 
@@ -824,12 +856,13 @@ speech before it is sent to the active speech provider.
 
 This silly example lets you test the hook locally. It reverses what Orca speaks
 based on extension settings. By default it applies to speech associated with
-accessible objects, skips messages, skips terminals, and skips gnome-shell.
-The `scope` setting can be `"objects"`, `"messages"`, `"both"`, or `"none"`.
-The `excluded-applications` setting is a list of application names. The
-`excluded-roles` setting is a dictionary whose values are integer-backed AT-SPI
-roles. Application and role filters are only used for speech associated with an
-accessible object; messages do not have an object.
+accessible objects, skips messages, and skips gnome-shell. The `scope` setting
+can be `"objects"`, `"messages"`, `"both"`, or `"none"`. The
+`excluded-applications` setting is a list of application names. The
+`word-replacements` setting is a dictionary whose keys are words and whose
+values are replacement text to use before reversing the output. Application
+filters are only used for speech associated with an accessible object; messages
+do not have an object.
 
 Create this as a package extension in
 `~/.local/share/orca/extensions/reverse_words/__init__.py`.
@@ -864,6 +897,7 @@ class ReverseWords(Extension):
     WEBSITE = "https://example.com/reverse-words"
 
     _APP_NAME = re.compile(r"^[A-Za-z0-9_.-]+$")
+    _WORD = re.compile(r"^\S+$")
 
     def get_preferences(self) -> list[ExtensionPreference]:
         return [
@@ -882,21 +916,33 @@ class ReverseWords(Extension):
                 "excluded-applications",
                 "Excluded applications",
                 ["gnome-shell"],
-                self._is_application_name,
-                "Enter one application name.",
+                item_validator=self._is_application_name,
+                item_error="Enter one application name.",
             ),
-            # Dictionary preferences are valid settings, but Orca's generated
-            # dialog does not display them yet.
             ExtensionPreference.dictionary(
-                "excluded-roles",
-                "Excluded roles",
-                {"terminal": int(Atspi.Role.TERMINAL)},
+                "word-replacements",
+                "Word replacements",
+                {"hello": "hi"},
+                key_label="Word",
+                value_label="Replacement",
+                key_validator=self._is_word,
+                value_validator=self._is_replacement,
+                key_error="Enter one word.",
+                value_error="Enter replacement text.",
             ),
         ]
 
     @classmethod
     def _is_application_name(cls, value: str) -> bool:
         return bool(cls._APP_NAME.fullmatch(value))
+
+    @classmethod
+    def _is_word(cls, value: str) -> bool:
+        return bool(cls._WORD.fullmatch(value))
+
+    @staticmethod
+    def _is_replacement(value: str) -> bool:
+        return bool(value.strip())
 
     def _applies_to_message(self) -> bool:
         scope = self.settings.get("scope", default="objects")
@@ -919,15 +965,6 @@ class ReverseWords(Extension):
         if app_name in excluded_apps:
             return False
 
-        role = Atspi.Accessible.get_role(obj)
-        excluded_roles = self.settings.get(
-            "excluded-roles",
-            default={"terminal": int(Atspi.Role.TERMINAL)},
-        )
-        role_values = {int(value) for value in excluded_roles.values()}
-        if int(role) in role_values:
-            return False
-
         return True
 
     def _should_process(self, output: SpeechOutput) -> bool:
@@ -939,7 +976,11 @@ class ReverseWords(Extension):
         if not self._should_process(output):
             return None
 
-        words = output.text.split()
+        replacements = self.settings.get("word-replacements", default={"hello": "hi"})
+        words = [
+            str(replacements.get(word, replacements.get(word.lower(), word)))
+            for word in output.text.split()
+        ]
         if len(words) < 2:
             return None
 

@@ -133,6 +133,18 @@ class ExtensionSettings:
             raise ValueError(f"Invalid extension setting key: {key!r}")
         return key
 
+    @classmethod
+    def _unpack_setting_value(cls, value: Any) -> Any:
+        """Return a plain Python value for an extension setting."""
+
+        if isinstance(value, gsettings_registry.GLib.Variant):
+            return cls._unpack_setting_value(value.unpack())
+        if isinstance(value, dict):
+            return {key: cls._unpack_setting_value(item) for key, item in value.items()}
+        if isinstance(value, list):
+            return [cls._unpack_setting_value(item) for item in value]
+        return value
+
     def _get_local_settings(self) -> dict[str, Any]:
         """Return the active profile's extension settings."""
 
@@ -147,18 +159,23 @@ class ExtensionSettings:
         variant = gs.get_user_value(self._KEY)
         if variant is None:
             return {}
-        return dict(variant.unpack())
+        value = self._unpack_setting_value(variant.unpack())
+        return dict(value) if isinstance(value, dict) else {}
 
     def get(self, key: str, default: Any = None) -> Any:
         """Return a setting value using Orca's layered settings lookup."""
 
-        settings = gsettings_registry.get_registry().layered_lookup(
-            self._SCHEMA,
-            self._KEY,
-            "a{sv}",
-            sub_path=self._sub_path(),
-            default={},
+        settings = self._unpack_setting_value(
+            gsettings_registry.get_registry().layered_lookup(
+                self._SCHEMA,
+                self._KEY,
+                "a{sv}",
+                sub_path=self._sub_path(),
+                default={},
+            )
         )
+        if not isinstance(settings, dict):
+            return default
         return settings.get(self._validate_key(key), default)
 
     def set(self, key: str, value: Any) -> bool:

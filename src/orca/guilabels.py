@@ -1542,6 +1542,21 @@ EXTENSIONS_SETTINGS_INVALID_ITEM = C_("user extensions", "Invalid item.")
 # list setting.
 EXTENSIONS_SETTINGS_DUPLICATE_ITEM = C_("user extensions", "Item already exists.")
 
+# Translators: This is a fallback label in the generated settings dialog for a
+# user extension. It is used for the first field in a dictionary entry editor
+# when the extension does not provide a more specific label.
+EXTENSIONS_SETTINGS_DICTIONARY_NAME = C_("user extensions", "Name")
+
+# Translators: This is a fallback label in the generated settings dialog for a
+# user extension. It is used for the second field in a dictionary entry editor
+# when the extension does not provide a more specific label.
+EXTENSIONS_SETTINGS_DICTIONARY_VALUE = C_("user extensions", "Value")
+
+# Translators: This error message appears in the generated settings dialog for a
+# user extension when the user enters an invalid value in a dictionary setting.
+# The exact dictionary setting depends on the extension.
+EXTENSIONS_SETTINGS_INVALID_VALUE = C_("user extensions", "Invalid value.")
+
 # Translators: This is a label in the user extension information dialog. It is
 # followed by the name of the person or people who wrote the extension.
 EXTENSIONS_INFO_AUTHOR = C_("user extensions", "Author")
