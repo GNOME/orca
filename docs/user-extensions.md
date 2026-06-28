@@ -8,7 +8,6 @@ This feature is early and experimental. The following are still pending:
 
 - Custom extension-provided preferences dialogs.
 - User-extension-provided localized strings.
-- Informational text boxes in generated extension preferences dialogs.
 - Additional generated preference controls, such as radio-button groups and
   structured dictionary editors.
 - Wrapped convenience APIs for user-extension dialogs and other UI.
@@ -360,6 +359,7 @@ value so the extension falls back to the default passed to `get()`.
 It currently supports these generated controls:
 
 ```python
+ExtensionPreference.info("This extension changes what Orca speaks.")
 ExtensionPreference.boolean("enabled", "Enabled", True)
 ExtensionPreference.string("message", "Message", "Hello")
 ExtensionPreference.path("folder", "Folder", "~/orca-output", directory=True)
@@ -377,6 +377,7 @@ ExtensionPreference.string_list("applications", "Applications", ["gnome-shell"])
 
 These preference types are displayed as follows:
 
+- `info`: informational text box
 - `boolean`: switch
 - `string`: text entry
 - `path`: text entry with a Browse button
@@ -390,6 +391,9 @@ Path preferences open a file chooser by default. Pass `directory=True` to open a
 folder chooser instead.
 
 Color preferences are stored as hex strings such as `#ffffff`.
+
+Info entries are not stored as settings. They only add explanatory text to the
+generated dialog.
 
 String-list preferences can include an optional item validator and error message
 for values that need extension-specific validation.

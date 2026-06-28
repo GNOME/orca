@@ -33,6 +33,7 @@ if TYPE_CHECKING:
 class ExtensionPreferenceKind(Enum):
     """Supported user-extension preference control kinds."""
 
+    INFO = "info"
     BOOLEAN = "boolean"
     STRING = "string"
     PATH = "path"
@@ -58,6 +59,12 @@ class ExtensionPreference:
     item_validator: Callable[[str], bool] | None = None
     item_error: str = ""
     directory: bool = False
+
+    @classmethod
+    def info(cls, message: str) -> ExtensionPreference:
+        """Return an informational text box for the generated dialog."""
+
+        return cls("", message, None, ExtensionPreferenceKind.INFO)
 
     @classmethod
     def boolean(cls, key: str, label: str, default: bool = False) -> ExtensionPreference:
@@ -161,6 +168,7 @@ class ExtensionPreference:
 
 
 GENERATED_DIALOG_KINDS = {
+    ExtensionPreferenceKind.INFO,
     ExtensionPreferenceKind.BOOLEAN,
     ExtensionPreferenceKind.STRING,
     ExtensionPreferenceKind.PATH,

@@ -66,6 +66,7 @@ class ExtensionPreferencesDialog:
                 ),
             )
             for pref in self._preferences
+            if self._is_setting(pref)
         }
         self._dialog, _ok_button = orca_gui_helpers.create_header_bar_dialog(
             extension.GROUP_LABEL,
@@ -80,6 +81,12 @@ class ExtensionPreferencesDialog:
 
         self._label_size_group = orca_gui_helpers.create_horizontal_size_group()
         self._build()
+
+    @staticmethod
+    def _is_setting(preference: ExtensionPreference) -> bool:
+        """Return True if preference represents a stored setting."""
+
+        return preference.kind is not ExtensionPreferenceKind.INFO
 
     def run(self) -> dict[str, Any] | None:
         """Run the dialog and return staged values if accepted."""
@@ -115,6 +122,16 @@ class ExtensionPreferencesDialog:
                 listbox_row_count = 0
 
         for pref in self._preferences:
+            if pref.kind is ExtensionPreferenceKind.INFO:
+                flush_listbox()
+                content_box.pack_start(
+                    orca_gui_helpers.create_info_listbox(pref.label),
+                    False,
+                    False,
+                    0,
+                )
+                continue
+
             if pref.kind is ExtensionPreferenceKind.STRING_LIST:
                 flush_listbox()
                 section, _button = self._create_string_list_section(pref)
