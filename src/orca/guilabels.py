@@ -1523,6 +1523,11 @@ EXTENSIONS_SETTINGS_BUTTON = C_("user extensions", "Settings")
 EXTENSIONS_SETTINGS_NEW_ITEM = C_("user extensions", "New item")
 
 # Translators: This is a button label in the generated settings dialog for a
+# user extension. The button opens a file chooser so the user can choose a file
+# or folder path for a setting exposed by the extension.
+EXTENSIONS_SETTINGS_BROWSE = C_("user extensions", "Browse...")
+
+# Translators: This is a button label in the generated settings dialog for a
 # user extension. The button removes one item from a list setting exposed by the
 # extension, for instance a list of application names.
 EXTENSIONS_SETTINGS_DELETE_ITEM = C_("user extensions", "Delete")

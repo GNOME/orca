@@ -22,6 +22,7 @@
 
 from __future__ import annotations
 
+import os
 from typing import TYPE_CHECKING, Any
 
 import gi
@@ -124,8 +125,8 @@ class ExtensionPreferencesDialog:
                 listbox = orca_gui_helpers.FocusManagedListBox()
                 listbox.set_hexpand(True)
 
-            row, widget = self._create_row(pref, listbox_row_count > 0)
-            listbox.add_row_with_widget(row, widget)
+            row, widgets = self._create_row(pref, listbox_row_count > 0)
+            listbox.add_row_with_widgets(row, widgets)
             listbox_row_count += 1
 
         flush_listbox()
@@ -162,13 +163,15 @@ class ExtensionPreferencesDialog:
         self,
         pref: ExtensionPreference,
         include_separator: bool,
-    ) -> tuple[Gtk.ListBoxRow, Gtk.Widget]:
+    ) -> tuple[Gtk.ListBoxRow, tuple[Gtk.Widget, ...]]:
         """Create a row for pref."""
 
         if pref.kind is ExtensionPreferenceKind.BOOLEAN:
             return self._create_boolean_row(pref, include_separator)
         if pref.kind is ExtensionPreferenceKind.STRING:
             return self._create_string_row(pref, include_separator)
+        if pref.kind is ExtensionPreferenceKind.PATH:
+            return self._create_path_row(pref, include_separator)
         if pref.kind is ExtensionPreferenceKind.INTEGER:
             return self._create_integer_row(pref, include_separator)
         if pref.kind is ExtensionPreferenceKind.FLOAT:
@@ -181,7 +184,7 @@ class ExtensionPreferencesDialog:
         self,
         pref: ExtensionPreference,
         include_separator: bool,
-    ) -> tuple[Gtk.ListBoxRow, Gtk.Switch]:
+    ) -> tuple[Gtk.ListBoxRow, tuple[Gtk.Switch]]:
         """Create a boolean row."""
 
         row, switch, _label = orca_gui_helpers.create_switch_row(
@@ -191,13 +194,13 @@ class ExtensionPreferencesDialog:
             include_top_separator=include_separator,
             label_size_group=self._label_size_group,
         )
-        return row, switch
+        return row, (switch,)
 
     def _create_string_row(
         self,
         pref: ExtensionPreference,
         include_separator: bool,
-    ) -> tuple[Gtk.ListBoxRow, Gtk.Entry]:
+    ) -> tuple[Gtk.ListBoxRow, tuple[Gtk.Entry]]:
         """Create a string row."""
 
         entry = orca_gui_helpers.create_entry(
@@ -211,13 +214,84 @@ class ExtensionPreferencesDialog:
             include_top_separator=include_separator,
             label_size_group=self._label_size_group,
         )
-        return row, entry
+        return row, (entry,)
+
+    def _create_path_row(
+        self,
+        pref: ExtensionPreference,
+        include_separator: bool,
+    ) -> tuple[Gtk.ListBoxRow, tuple[Gtk.Entry, Gtk.Button]]:
+        """Create a path row with an entry and browse button."""
+
+        entry = orca_gui_helpers.create_entry(
+            str(self._values[pref.key]),
+            changed_handler=lambda widget: self._set_value(pref.key, widget.get_text()),
+            size_request=(280, -1),
+        )
+        browse_button = Gtk.Button.new_with_mnemonic(guilabels.EXTENSIONS_SETTINGS_BROWSE)
+        browse_button.set_valign(Gtk.Align.CENTER)
+        browse_button.connect("clicked", lambda _button: self._browse_for_path(pref, entry))
+
+        input_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
+        input_box.set_hexpand(True)
+        input_box.pack_start(entry, True, True, 0)
+        input_box.pack_start(browse_button, False, False, 0)
+
+        row, _hbox, label = orca_gui_helpers.create_row_structure(
+            include_separator,
+            pref.label,
+            input_box,
+            label_xalign=0,
+            label_size_group=self._label_size_group,
+            widget_expand=True,
+        )
+        assert label is not None
+        label.set_mnemonic_widget(entry)
+        orca_gui_helpers.add_labelled_by(entry, label)
+        browse_button.get_accessible().set_name(
+            f"{pref.label}: {guilabels.EXTENSIONS_SETTINGS_BROWSE}"
+        )
+        return row, (entry, browse_button)
+
+    def _browse_for_path(self, pref: ExtensionPreference, entry: Gtk.Entry) -> None:
+        """Browse for a path and put it in entry."""
+
+        action = (
+            Gtk.FileChooserAction.SELECT_FOLDER if pref.directory else Gtk.FileChooserAction.SAVE
+        )
+        dialog = Gtk.FileChooserDialog(
+            title=pref.label,
+            transient_for=self._dialog,
+            action=action,
+        )
+        dialog.add_buttons(
+            guilabels.DIALOG_CANCEL,
+            Gtk.ResponseType.CANCEL,
+            guilabels.BTN_OK,
+            Gtk.ResponseType.OK,
+        )
+        dialog.set_modal(True)
+        path = entry.get_text().strip()
+        if path:
+            expanded_path = os.path.abspath(os.path.expanduser(path))
+            if pref.directory:
+                dialog.set_filename(expanded_path)
+            else:
+                dialog.set_current_folder(os.path.dirname(expanded_path))
+                dialog.set_current_name(os.path.basename(expanded_path))
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            filename = dialog.get_filename()
+            if filename:
+                entry.set_text(filename)
+                self._set_value(pref.key, filename)
+        dialog.destroy()
 
     def _create_integer_row(
         self,
         pref: ExtensionPreference,
         include_separator: bool,
-    ) -> tuple[Gtk.ListBoxRow, Gtk.SpinButton]:
+    ) -> tuple[Gtk.ListBoxRow, tuple[Gtk.SpinButton]]:
         """Create an integer row."""
 
         adjustment = orca_gui_helpers.create_range_adjustment(
@@ -232,13 +306,13 @@ class ExtensionPreferencesDialog:
             include_top_separator=include_separator,
             label_size_group=self._label_size_group,
         )
-        return row, spin
+        return row, (spin,)
 
     def _create_float_row(
         self,
         pref: ExtensionPreference,
         include_separator: bool,
-    ) -> tuple[Gtk.ListBoxRow, Gtk.Scale]:
+    ) -> tuple[Gtk.ListBoxRow, tuple[Gtk.Scale]]:
         """Create a float row."""
 
         row, scale, _label = orca_gui_helpers.create_range_slider_row(
@@ -251,13 +325,13 @@ class ExtensionPreferencesDialog:
             digits=2,
             label_size_group=self._label_size_group,
         )
-        return row, scale
+        return row, (scale,)
 
     def _create_enum_row(
         self,
         pref: ExtensionPreference,
         include_separator: bool,
-    ) -> tuple[Gtk.ListBoxRow, Gtk.ComboBoxText]:
+    ) -> tuple[Gtk.ListBoxRow, tuple[Gtk.ComboBoxText]]:
         """Create an enum row."""
 
         if not pref.options:
@@ -276,7 +350,7 @@ class ExtensionPreferencesDialog:
         )
         values = [value for value, _label in pref.options]
         combo.set_active(values.index(self._values[pref.key]))
-        return row, combo
+        return row, (combo,)
 
     @staticmethod
     def _get_enum_value(pref: ExtensionPreference, index: int) -> Any:

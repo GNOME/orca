@@ -35,6 +35,7 @@ class ExtensionPreferenceKind(Enum):
 
     BOOLEAN = "boolean"
     STRING = "string"
+    PATH = "path"
     INTEGER = "integer"
     FLOAT = "float"
     ENUM = "enum"
@@ -55,6 +56,7 @@ class ExtensionPreference:
     options: tuple[tuple[Any, str], ...] = ()
     item_validator: Callable[[str], bool] | None = None
     item_error: str = ""
+    directory: bool = False
 
     @classmethod
     def boolean(cls, key: str, label: str, default: bool = False) -> ExtensionPreference:
@@ -67,6 +69,19 @@ class ExtensionPreference:
         """Return a string preference."""
 
         return cls(key, label, default, ExtensionPreferenceKind.STRING)
+
+    @classmethod
+    def path(
+        cls,
+        key: str,
+        label: str,
+        default: str = "",
+        *,
+        directory: bool = False,
+    ) -> ExtensionPreference:
+        """Return a file or directory path preference."""
+
+        return cls(key, label, default, ExtensionPreferenceKind.PATH, directory=directory)
 
     @classmethod
     def integer(
@@ -141,6 +156,7 @@ class ExtensionPreference:
 GENERATED_DIALOG_KINDS = {
     ExtensionPreferenceKind.BOOLEAN,
     ExtensionPreferenceKind.STRING,
+    ExtensionPreferenceKind.PATH,
     ExtensionPreferenceKind.INTEGER,
     ExtensionPreferenceKind.FLOAT,
     ExtensionPreferenceKind.ENUM,
