@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: orca master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/orca/issues\n"
-"POT-Creation-Date: 2026-06-28 10:00+0000\n"
-"PO-Revision-Date: 2026-06-27 17:37+0200\n"
+"POT-Creation-Date: 2026-06-28 17:28+0000\n"
+"PO-Revision-Date: 2026-06-29 11:14+0200\n"
 "Last-Translator: Attila Hammer <hammera at pickup dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -2832,8 +2832,7 @@ msgstr "Végrehajtja a hol vagyok műveletet."
 #. with focus as well as its mnemonic.
 #: src/orca/cmdnames.py:68
 msgid "Perform the detailed Where Am I operation"
-msgstr ""
-"Végrehajtja a hol vagyok műveletet, de részletesebb információt kapunk."
+msgstr "Végrehajtja a hol vagyok műveletet, de részletesebb információt kapunk."
 
 #. Translators: This is the description of a dedicated command to speak the
 #. current selection / highlighted object(s). For instance, in a text object,
@@ -2994,8 +2993,7 @@ msgstr "Lebetűzi az aktuális sort, ahol az egyszerű áttekintés áll."
 #. by character phonetically, saying "Alpha" for "a", "Bravo" for "b" and so on.
 #: src/orca/cmdnames.py:191
 msgid "Phonetically spell the current flat review line"
-msgstr ""
-"Fonetikusan lebetűzi az aktuális sort, ahol az egyszerű áttekintés áll."
+msgstr "Fonetikusan lebetűzi az aktuális sort, ahol az egyszerű áttekintés áll."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -3048,9 +3046,7 @@ msgstr "Lebetűzi azt az elemet vagy szót, ahol az egyszerű áttekintés áll.
 #. and so on.
 #: src/orca/cmdnames.py:234
 msgid "Phonetically spell the current flat review item or word"
-msgstr ""
-"Fonetikusan lebetűzi azt az elemet vagy szót, ahol az egyszerű áttekintés "
-"áll."
+msgstr "Fonetikusan lebetűzi azt az elemet vagy szót, ahol az egyszerű áttekintés áll."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -3127,8 +3123,7 @@ msgstr "Kimondja azt a karaktert, ahol az egyszerű áttekintés áll."
 #. saying "Alpha" for "a", "Bravo" for "b" and so on.
 #: src/orca/cmdnames.py:297
 msgid "Phonetically speak the current flat review character"
-msgstr ""
-"Fonetikusan lebetűzi az aktuális karaktert, ahol az egyszerű áttekintés áll."
+msgstr "Fonetikusan lebetűzi az aktuális karaktert, ahol az egyszerű áttekintés áll."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -3139,9 +3134,7 @@ msgstr ""
 #. value.
 #: src/orca/cmdnames.py:306
 msgid "Speak unicode value of the current flat review character"
-msgstr ""
-"Kimondja annak a karakternek az unicode kódját, ahol az egyszerű áttekintés "
-"áll."
+msgstr "Kimondja annak a karakternek az unicode kódját, ahol az egyszerű áttekintés áll."
 
 #. Translators: the 'flat review' feature of Orca allows the blind user to
 #. explore the text in a window in a 2D fashion.  That is, Orca treats all
@@ -3561,8 +3554,7 @@ msgstr "Módosítóbillentyűk állapotának megjelenítése"
 #. of keyboard shortcuts.
 #: src/orca/cmdnames.py:622
 msgid "Present size and location of current object"
-msgstr ""
-"Kimondja vagy Braille kijelzőre írja a jelenlegi objektum méretét és helyét."
+msgstr "Kimondja vagy Braille kijelzőre írja a jelenlegi objektum méretét és helyét."
 
 #. Translators: This command toggles all (other) Orca commands so that the
 #. associated keystroke can by consumed by the native application. For example,
@@ -3829,8 +3821,7 @@ msgstr "Élő régiók udvariassági beállításának módosítása."
 #. to turn off live regions by default.
 #: src/orca/cmdnames.py:812
 msgid "Set default live region politeness level to off"
-msgstr ""
-"Az élő régió alapértelmezett udvariassági szintjének beállítása kikapcsoltra."
+msgstr "Az élő régió alapértelmezett udvariassági szintjének beállítása kikapcsoltra."
 
 #. Translators: A live region is an area of a web page that is periodically
 #. updated, e.g. stock ticker. https://w3c.github.io/aria/#dfn-live-region
@@ -3864,9 +3855,7 @@ msgstr "élő régiók megjelenítése."
 #. the command to set the row.
 #: src/orca/cmdnames.py:838
 msgid "Set the row to use as dynamic column headers"
-msgstr ""
-"Beállítja a dinamikus oszlopfejlécekként használandó sort a táblázat "
-"celláinak felolvasásakor."
+msgstr "Beállítja a dinamikus oszlopfejlécekként használandó sort a táblázat celláinak felolvasásakor."
 
 #. Translators: Orca allows you to dynamically define which row of a spreadsheet
 #. or table should be treated as containing column headers. This string refers to
@@ -3881,9 +3870,7 @@ msgstr "Törli a dinamikus oszlopfejléceket."
 #. string refers to the command to set the column.
 #: src/orca/cmdnames.py:849
 msgid "Set the column to use as dynamic row headers"
-msgstr ""
-"Beállítja a dinamikus sorfejlécekként használandó oszlopot a táblázat "
-"celláinak felolvasásakor."
+msgstr "Beállítja a dinamikus sorfejlécekként használandó oszlopot a táblázat celláinak felolvasásakor."
 
 #. Translators: Orca allows you to dynamically define which column of a
 #. spreadsheet or table should be treated as containing column headers. This
@@ -4618,9 +4605,7 @@ msgstr "Hol vagyok művelet végrehajtása a matematikai kifejezésben"
 #: src/orca/cmdnames.py:1309
 msgctxt "mathcat"
 msgid "Where am I (detailed)"
-msgstr ""
-"Részletes hol vagyok művelet végrehajtása az aktuális matematikai "
-"kifejezésben"
+msgstr "Részletes hol vagyok művelet végrehajtása az aktuális matematikai kifejezésben"
 
 #. Translators: Orca has a modal math navigation mode powered by MathCAT
 #. (https://daisy.github.io/MathCAT). This command returns to the position
@@ -5847,20 +5832,14 @@ msgid "Automatic focus mode"
 msgstr "Automatikus fókuszmód."
 
 #: src/orca/guilabels.py:105
-msgid ""
-"Automatic focus mode causes Orca to switch to focus mode when you navigate "
-"into a form field or other interactive widget."
+msgid "Automatic focus mode causes Orca to switch to focus mode when you navigate into a form field or other interactive widget."
 msgstr ""
-"Az automatikus fókusz mód azt eredményezi, hogy az Orka fókusz módba vált, "
-"amikor űrlapmezőbe vagy más interaktív widgetbe navigál."
+"Az automatikus fókusz mód azt eredményezi, hogy az Orka fókusz módba vált, amikor űrlapmezőbe vagy más interaktív widgetbe "
+"navigál."
 
 #: src/orca/guilabels.py:112
-msgid ""
-"Native navigation refers to keyboard commands handled by the application, "
-"such as Tab, Page Up, Page Down, and Enter."
-msgstr ""
-"A natív navigáció az alkalmazás által kezelt billentyűparancsokra utal, mint "
-"például a Tab, Page Up, Page Down és Enter."
+msgid "Native navigation refers to keyboard commands handled by the application, such as Tab, Page Up, Page Down, and Enter."
+msgstr "A natív navigáció az alkalmazás által kezelt billentyűparancsokra utal, mint például a Tab, Page Up, Page Down és Enter."
 
 #. Translators: This setting controls whether Orca automatically enables sticky
 #. focus mode for web applications (such as Facebook Messenger) and Electron apps
@@ -5870,18 +5849,15 @@ msgstr ""
 #. messages.py.
 #: src/orca/guilabels.py:122
 msgid "Automatic sticky focus mode for web applications"
-msgstr ""
-"A rögzített fókuszmód automatikus bekapcsolása a webalkalmazások "
-"használatakor"
+msgstr "A rögzített fókuszmód automatikus bekapcsolása a webalkalmazások használatakor"
 
 #: src/orca/guilabels.py:127
 msgid ""
-"Automatic sticky focus mode causes Orca to detect web applications and "
-"Electron apps and stay in focus mode until toggled off by command."
+"Automatic sticky focus mode causes Orca to detect web applications and Electron apps and stay in focus mode until toggled off by "
+"command."
 msgstr ""
-"Ha az Orka képernyőolvasó webalkalmazásokat vagy Electron alkalmazásokat "
-"észlel, automatikusan rögzített fókuszmódban marad, amíg a megfelelő "
-"paranccsal a rögzített fókuszmódot ki nem kapcsolja."
+"Ha az Orka képernyőolvasó webalkalmazásokat vagy Electron alkalmazásokat észlel, automatikusan rögzített fókuszmódban marad, amíg "
+"a megfelelő paranccsal a rögzített fókuszmódot ki nem kapcsolja."
 
 #. Translators: A single braille cell on a refreshable braille display consists
 #. of 8 dots. Dot 7 is the dot in the bottom left corner. If the user selects
@@ -6140,14 +6116,11 @@ msgstr "Elrendezés mód."
 
 #: src/orca/guilabels.py:315
 msgid ""
-"If layout mode is enabled, Orca will present the full line as it appears on "
-"the screen. Otherwise, Orca will treat each object as if it were on a "
-"separate line."
+"If layout mode is enabled, Orca will present the full line as it appears on the screen. Otherwise, Orca will treat each object as "
+"if it were on a separate line."
 msgstr ""
-"Ha az Elrendezés mód engedélyezve van, az Orka a teljes sort úgy jeleníti "
-"meg, ahogy az a képernyőn megjelenik. Ha az elrendezés mód nem "
-"engedélyezett, az Orka minden objektumot úgy kezel, mintha külön sorban "
-"lennének."
+"Ha az Elrendezés mód engedélyezve van, az Orka a teljes sort úgy jeleníti meg, ahogy az a képernyőn megjelenik. Ha az elrendezés "
+"mód nem engedélyezett, az Orka minden objektumot úgy kezel, mintha külön sorban lennének."
 
 #. Translators: This is a label which will appear in the list of available speech
 #. engines as a special item. It refers to the default engine configured within
@@ -6168,12 +6141,8 @@ msgid "Pronunciation Dictionary"
 msgstr "Kiejtési szótár"
 
 #: src/orca/guilabels.py:337
-msgid ""
-"Customize how words are spoken by adding words and replacement text to the "
-"pronunciation dictionary."
-msgstr ""
-"Szabja testre a szavak kimondásának módját. Adjon hozzá egy szót és annak "
-"helyettesítőjét a kiejtési szótárhoz."
+msgid "Customize how words are spoken by adding words and replacement text to the pronunciation dictionary."
+msgstr "Szabja testre a szavak kimondásának módját. Adjon hozzá egy szót és annak helyettesítőjét a kiejtési szótárhoz."
 
 #. Translators: This is a label for a column header in Orca's pronunciation
 #. dictionary. The pronunciation dictionary allows the user to correct words
@@ -6406,7 +6375,7 @@ msgstr "Műveletek"
 #. Translators: This is the label of the Documents page in the Orca Preferences
 #. dialog. On that page there are settings related to navigating and reading documents,
 #. including web pages, word processor documents, and PDFs.
-#: src/orca/guilabels.py:509 src/orca/guilabels.py:2118
+#: src/orca/guilabels.py:509 src/orca/guilabels.py:2161
 msgid "Documents"
 msgstr "Dokumentum mód"
 
@@ -6425,13 +6394,10 @@ msgid "Math navigation"
 msgstr "Matematikai navigáció"
 
 #: src/orca/guilabels.py:524
-msgid ""
-"When enabled, Orca handles the arrow keys, Home, and End to move through "
-"content by character, word, or line."
+msgid "When enabled, Orca handles the arrow keys, Home, and End to move through content by character, word, or line."
 msgstr ""
-"Ha a mutatónavigáció engedélyezve van, karakterenként, szavanként vagy "
-"soronként mozoghat a tartalomban a nyílbillentyűk, a Home és az End "
-"billentyűk segítségével. Ilyenkor a mutatót az Orka vezérli."
+"Ha a mutatónavigáció engedélyezve van, karakterenként, szavanként vagy soronként mozoghat a tartalomban a nyílbillentyűk, a Home "
+"és az End billentyűk segítségével. Ilyenkor a mutatót az Orka vezérli."
 
 #. Translators: This string is a label for the group of Orca commands which
 #. are related to chat applications such as instant messaging.
@@ -6469,16 +6435,13 @@ msgstr "Alvó mód"
 
 #: src/orca/guilabels.py:558
 msgid ""
-"Sleep mode causes Orca to behave as if it were not running for a given "
-"application. The default keybinding to toggle sleep mode on or off is "
-"Shift+Alt+Ctrl+Q. This can be changed in Commands. An application must be "
-"running to add it to the sleep mode applications list."
+"Sleep mode causes Orca to behave as if it were not running for a given application. The default keybinding to toggle sleep mode "
+"on or off is Shift+Alt+Ctrl+Q. This can be changed in Commands. An application must be running to add it to the sleep mode "
+"applications list."
 msgstr ""
-"Az Orka alvó mód hatására az Orka úgy viselkedik, mintha nem futna egy adott "
-"alkalmazás használatakor. Az alvó mód be- és kikapcsolásának alapértelmezett "
-"billentyűkombinációja a Shift+Alt+Ctrl+Q. Ez a billentyűkombináció a "
-"Parancsok részben módosítható. Egy alkalmazásnak futnia kell ahhoz, hogy "
-"felkerüljön az alábbi listára."
+"Az Orka alvó mód hatására az Orka úgy viselkedik, mintha nem futna egy adott alkalmazás használatakor. Az alvó mód be- és "
+"kikapcsolásának alapértelmezett billentyűkombinációja a Shift+Alt+Ctrl+Q. Ez a billentyűkombináció a Parancsok részben "
+"módosítható. Egy alkalmazásnak futnia kell ahhoz, hogy felkerüljön az alábbi listára."
 
 #. Translators: This label appears above a list of applications on the Sleep Mode
 #. preferences page. The user can select which applications should automatically
@@ -6493,7 +6456,7 @@ msgstr "Mindig alvó mód használata ezeknél az alkalmazásoknál"
 #. Translators: This is the label of the Mouse page in the Orca Preferences dialog.
 #. On that page there are settings related to what information Orca presents when
 #. the mouse pointer moves.
-#: src/orca/guilabels.py:572 src/orca/guilabels.py:2174
+#: src/orca/guilabels.py:572 src/orca/guilabels.py:2217
 msgid "Mouse"
 msgstr "Egér"
 
@@ -6524,13 +6487,11 @@ msgstr "Strukturált navigáció"
 
 #: src/orca/guilabels.py:591
 msgid ""
-"When enabled, alphanumeric keys can be used to quickly jump between "
-"elements. For example, H moves to the next heading, K to the next link. Add "
-"Shift to move backwards."
+"When enabled, alphanumeric keys can be used to quickly jump between elements. For example, H moves to the next heading, K to the "
+"next link. Add Shift to move backwards."
 msgstr ""
-"Ha ez a funkció engedélyezve van, néhány alfanumerikus billentyűvel gyorsan "
-"ugrálhat az egyes elemek között. Például a H a következő címsorra, a K a "
-"következő hivatkozásra ugrik. A Shift billentyűvel visszafelé ugorhat."
+"Ha ez a funkció engedélyezve van, néhány alfanumerikus billentyűvel gyorsan ugrálhat az egyes elemek között. Például a H a "
+"következő címsorra, a K a következő hivatkozásra ugrik. A Shift billentyűvel visszafelé ugorhat."
 
 #. Translators: This is a label for a switch that controls whether structural
 #. navigation wraps around when reaching the top or bottom of a document.
@@ -6547,12 +6508,11 @@ msgstr "A nagy objektum hossza"
 
 #: src/orca/guilabels.py:612
 msgid ""
-"Large object length defines the minimum number of characters an element must "
-"have to be included when using the large object navigation shortcuts."
+"Large object length defines the minimum number of characters an element must have to be included when using the large object "
+"navigation shortcuts."
 msgstr ""
-"A nagy objektumhossz határozza meg a minimális karakterszámot, amelyet egy "
-"elemnek tartalmaznia kell a nagy objektumok navigációs gyorsbillentyűinek "
-"használatakor."
+"A nagy objektumhossz határozza meg a minimális karakterszámot, amelyet egy elemnek tartalmaznia kell a nagy objektumok navigációs "
+"gyorsbillentyűinek használatakor."
 
 #. Translators: This is a label for a switch that controls whether images
 #. without accessible names or descriptions are skipped during image
@@ -6831,26 +6791,21 @@ msgstr "Felhasználói profil eltávolítása"
 #: src/orca/guilabels.py:825
 #, python-format
 msgid ""
-"You are about to remove profile %s. All unsaved settings and settings saved "
-"in this profile will be lost. Do you want to continue and remove this "
-"profile and all related settings?"
+"You are about to remove profile %s. All unsaved settings and settings saved in this profile will be lost. Do you want to continue "
+"and remove this profile and all related settings?"
 msgstr ""
-"A(z) %s felhasználói profil eltávolítására készül. Az összes el nem mentett "
-"beállítás és a profilban elmentett összes beállítás el fog veszni. Szeretné "
-"folytatni és eltávolítani ezt a profilt és az összes hozzá kapcsolódó "
-"beállítást?"
+"A(z) %s felhasználói profil eltávolítására készül. Az összes el nem mentett beállítás és a profilban elmentett összes beállítás "
+"el fog veszni. Szeretné folytatni és eltávolítani ezt a profilt és az összes hozzá kapcsolódó beállítást?"
 
 #: src/orca/guilabels.py:835
 msgid ""
-"You have unsaved changes. Creating a new profile will copy your current "
-"saved settings, not your unsaved changes. Your unsaved changes will be "
-"lost.\n"
+"You have unsaved changes. Creating a new profile will copy your current saved settings, not your unsaved changes. Your unsaved "
+"changes will be lost.\n"
 "\n"
 "Do you want to continue?"
 msgstr ""
-"Vannak mentetlen módosításai. Új profil létrehozásakor a jelenlegi mentett "
-"beállításai kerülnek másolásra, nem pedig a nem mentett módosítások. A nem "
-"mentett módosítások  elvesznek.\n"
+"Vannak mentetlen módosításai. Új profil létrehozásakor a jelenlegi mentett beállításai kerülnek másolásra, nem pedig a nem "
+"mentett módosítások. A nem mentett módosítások  elvesznek.\n"
 "\n"
 "Biztosan folytatja?"
 
@@ -7436,12 +7391,10 @@ msgid "Spell Check"
 msgstr "Helyesírás-ellenőrzés"
 
 #: src/orca/guilabels.py:1241
-msgid ""
-"These settings apply when the screen reader can identify the elements of the "
-"application's spell check dialog."
+msgid "These settings apply when the screen reader can identify the elements of the application's spell check dialog."
 msgstr ""
-"Ezek a beállítások akkor érvényesülnek, ha a képernyőolvasó képes "
-"azonosítani az alkalmazás helyesírás-ellenőrző párbeszédpaneljének elemeit."
+"Ezek a beállítások akkor érvényesülnek, ha a képernyőolvasó képes azonosítani az alkalmazás helyesírás-ellenőrző "
+"párbeszédpaneljének elemeit."
 
 #. Translators: This is a label for a widget associated with an Orca setting.
 #. When this option is enabled, Orca will spell out the current error in addition
@@ -7738,12 +7691,10 @@ msgid "User Extensions"
 msgstr "Felhasználói kiterjesztések"
 
 #: src/orca/guilabels.py:1464
-msgid ""
-"User extensions are Python files or packages in ~/.local/share/orca/"
-"extensions. Only approve extensions that you trust."
+msgid "User extensions are Python files or packages in ~/.local/share/orca/extensions. Only approve extensions that you trust."
 msgstr ""
-"A felhasználói kiterjesztések Python fájlok a ~/.local/share/orca/extensions "
-"könyvtárban. Csak azokat a kiterjesztéseket hagyja jóvá, amelyekben megbízik."
+"A felhasználói kiterjesztések Python fájlok a ~/.local/share/orca/extensions könyvtárban. Csak azokat a kiterjesztéseket hagyja "
+"jóvá, amelyekben megbízik."
 
 #. Translators: This message is shown in the User Extensions preferences page
 #. when Orca does not find any user extension files or packages in
@@ -7776,9 +7727,45 @@ msgid "Revoke"
 msgstr "Visszavonás"
 
 #. Translators: This is a button label in the User Extensions preferences page.
+#. Pressing this button asks the user to confirm deleting the selected extension
+#. file or package directory from ~/.local/share/orca/extensions.
+#. Translators: This is a button label in the generated settings dialog for a
+#. user extension. The button removes one item from a list setting exposed by the
+#. extension, for instance a list of application names.
+#: src/orca/guilabels.py:1490 src/orca/guilabels.py:1533
+msgctxt "user extensions"
+msgid "Delete"
+msgstr "Törlés"
+
+#. Translators: This is the title of a confirmation dialog shown before deleting
+#. a user extension file or package directory from ~/.local/share/orca/extensions.
+#: src/orca/guilabels.py:1494
+#| msgid "User Extensions"
+msgctxt "user extensions"
+msgid "Delete user extension?"
+msgstr "Törli a felhasználói kiterjesztést?"
+
+#: src/orca/guilabels.py:1501
+#, python-format
+msgctxt "user extensions"
+msgid "The following extension will be permanently deleted from your user extensions folder: %s. Do you want to continue?"
+msgstr ""
+"A következő felhasználói kiterjesztés véglegesen törlődik a felhasználói kiterjesztések mappájából: %s. Biztosan folytatni akarja?"
+
+#. Translators: This message is presented when Orca fails to delete a user
+#. extension file or package directory from ~/.local/share/orca/extensions. The
+#. string substitution is the display name of the extension.
+#: src/orca/guilabels.py:1508
+#, python-format
+#| msgid "Profile could not be loaded: %s"
+msgctxt "user extensions"
+msgid "Could not delete: %s."
+msgstr "A következő felhasználói kiterjesztés nem törölhető: %s"
+
+#. Translators: This is a button label in the User Extensions preferences page.
 #. Pressing this button opens a dialog with metadata about the selected extension,
 #. such as its author, version, and web page.
-#: src/orca/guilabels.py:1490
+#: src/orca/guilabels.py:1513
 msgctxt "user extensions"
 msgid "Info"
 msgstr "Információ"
@@ -7786,9 +7773,7 @@ msgstr "Információ"
 #. Translators: This is a button label in the User Extensions preferences page.
 #. Pressing this button opens a dialog with settings provided by the selected
 #. user extension.
-#: src/orca/guilabels.py:1495
-#| msgctxt "VoiceType"
-#| msgid "%s Settings"
+#: src/orca/guilabels.py:1518
 msgctxt "user extensions"
 msgid "Settings"
 msgstr "Felhasználói kiterjesztés beállításai"
@@ -7796,27 +7781,24 @@ msgstr "Felhasználói kiterjesztés beállításai"
 #. Translators: This is a button label in the generated settings dialog for a
 #. user extension. The button adds one item to a list setting exposed by the
 #. extension, for instance a list of application names.
-#: src/orca/guilabels.py:1500
-#| msgid "0 items"
+#: src/orca/guilabels.py:1523
 msgctxt "user extensions"
 msgid "New item"
 msgstr "Új elem"
 
 #. Translators: This is a button label in the generated settings dialog for a
-#. user extension. The button removes one item from a list setting exposed by the
-#. extension, for instance a list of application names.
-#: src/orca/guilabels.py:1505
-#| msgid "Delete"
+#. user extension. The button opens a file chooser so the user can choose a file
+#. or folder path for a setting exposed by the extension.
+#: src/orca/guilabels.py:1528
+#| msgid "Browse mode"
 msgctxt "user extensions"
-msgid "Delete"
-msgstr "Törlés"
+msgid "Browse..."
+msgstr "Tallózás..."
 
 #. Translators: This error message appears in the generated settings dialog for a
 #. user extension when the user enters an invalid item in a list setting. The
 #. exact list setting depends on the extension.
-#: src/orca/guilabels.py:1510
-#| msgctxt "user extensions"
-#| msgid "Invalid"
+#: src/orca/guilabels.py:1538
 msgctxt "user extensions"
 msgid "Invalid item."
 msgstr "érvénytelen elemet adott meg"
@@ -7824,16 +7806,44 @@ msgstr "érvénytelen elemet adott meg"
 #. Translators: This error message appears in the generated settings dialog for a
 #. user extension when the user enters an item that is already present in the same
 #. list setting.
-#: src/orca/guilabels.py:1515
-#| msgctxt "math symbol"
-#| msgid "there exists"
+#: src/orca/guilabels.py:1543
 msgctxt "user extensions"
 msgid "Item already exists."
 msgstr "Ez az elem már létezik"
 
+#. Translators: This is a fallback label in the generated settings dialog for a
+#. user extension. It is used for the first field in a dictionary entry editor
+#. when the extension does not provide a more specific label.
+#. Translators: This is a label in the user extension information dialog. It is
+#. followed by the user-visible name of the extension.
+#: src/orca/guilabels.py:1548 src/orca/guilabels.py:1584
+msgctxt "user extensions"
+msgid "Name"
+msgstr "Név"
+
+#. Translators: This is a fallback label in the generated settings dialog for a
+#. user extension. It is used for the second field in a dictionary entry editor
+#. when the extension does not provide a more specific label.
+#: src/orca/guilabels.py:1553
+#| msgctxt "structural navigation"
+#| msgid "Value"
+msgctxt "user extensions"
+msgid "Value"
+msgstr "Érték"
+
+#. Translators: This error message appears in the generated settings dialog for a
+#. user extension when the user enters an invalid value in a dictionary setting.
+#. The exact dictionary setting depends on the extension.
+#: src/orca/guilabels.py:1558
+#| msgctxt "user extensions"
+#| msgid "Invalid item."
+msgctxt "user extensions"
+msgid "Invalid value."
+msgstr "érvénytelen elemet adott meg"
+
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by the name of the person or people who wrote the extension.
-#: src/orca/guilabels.py:1519
+#: src/orca/guilabels.py:1562
 msgctxt "user extensions"
 msgid "Author"
 msgstr "Szerző"
@@ -7841,7 +7851,7 @@ msgstr "Szerző"
 #. Translators: This is a label in the user extension information dialog. It
 #. refers to the company, project, or similar entity associated with the
 #. extension.
-#: src/orca/guilabels.py:1524
+#: src/orca/guilabels.py:1567
 msgctxt "user extensions"
 msgid "Organization"
 msgstr "Szervezet"
@@ -7849,33 +7859,26 @@ msgstr "Szervezet"
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by a copyright holder or copyright notice supplied by the extension
 #. author.
-#: src/orca/guilabels.py:1529
+#: src/orca/guilabels.py:1572
 msgctxt "user extensions"
 msgid "Copyright"
 msgstr "Copyright"
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by a short explanation of what the extension does.
-#: src/orca/guilabels.py:1533
+#: src/orca/guilabels.py:1576
 msgctxt "user extensions"
 msgid "Description"
 msgstr "Leírás"
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by the filesystem path to the extension file or package directory.
-#: src/orca/guilabels.py:1537
+#: src/orca/guilabels.py:1580
 msgctxt "user extensions"
 msgid "Location"
 msgstr "hely"
 
-#. Translators: This is a label in the user extension information dialog. It is
-#. followed by the user-visible name of the extension.
-#: src/orca/guilabels.py:1541
-msgctxt "user extensions"
-msgid "Name"
-msgstr "Név"
-
-#: src/orca/guilabels.py:1548
+#: src/orca/guilabels.py:1591
 msgctxt "user extensions"
 msgid "Some commands were unbound due to conflicts."
 msgstr "Néhány parancshoz ütközések miatt nincs billentyűtársítás."
@@ -7883,21 +7886,21 @@ msgstr "Néhány parancshoz ütközések miatt nincs billentyűtársítás."
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by whether the extension is approved, not approved, disabled, invalid,
 #. or needs to be approved again.
-#: src/orca/guilabels.py:1554
+#: src/orca/guilabels.py:1597
 msgctxt "user extensions"
 msgid "Status"
 msgstr "Állapot"
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by the extension version supplied by the extension author.
-#: src/orca/guilabels.py:1558
+#: src/orca/guilabels.py:1601
 msgctxt "user extensions"
 msgid "Version"
 msgstr "Verzió"
 
 #. Translators: This is a label in the user extension information dialog. It is
 #. followed by a URL for the extension or its author.
-#: src/orca/guilabels.py:1562
+#: src/orca/guilabels.py:1605
 msgctxt "user extensions"
 msgid "Website"
 msgstr "Weboldal"
@@ -7905,7 +7908,7 @@ msgstr "Weboldal"
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means Orca found a Python file or
 #. package, but it does not contain a valid Orca extension.
-#: src/orca/guilabels.py:1567
+#: src/orca/guilabels.py:1610
 msgctxt "user extensions"
 msgid "Invalid"
 msgstr "érvénytelen"
@@ -7913,7 +7916,7 @@ msgstr "érvénytelen"
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means the user has approved this
 #. extension and Orca is allowed to load and run it.
-#: src/orca/guilabels.py:1572
+#: src/orca/guilabels.py:1615
 msgctxt "user extensions"
 msgid "Approved"
 msgstr "Jóváhagyva"
@@ -7921,7 +7924,7 @@ msgstr "Jóváhagyva"
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means the extension has been
 #. approved, but the user has currently turned it off.
-#: src/orca/guilabels.py:1577
+#: src/orca/guilabels.py:1620
 msgctxt "user extensions"
 msgid "Disabled"
 msgstr "Kikapcsolva"
@@ -7929,7 +7932,7 @@ msgstr "Kikapcsolva"
 #. Translators: This is a status label in the User Extensions preferences page and
 #. in the user extension information dialog. It means the user has not yet
 #. approved this extension, so Orca will not load or run it.
-#: src/orca/guilabels.py:1582
+#: src/orca/guilabels.py:1625
 msgctxt "user extensions"
 msgid "Not approved"
 msgstr "Nincs jóváhagyva"
@@ -7938,13 +7941,13 @@ msgstr "Nincs jóváhagyva"
 #. in the user extension information dialog. It means the extension was approved
 #. previously, but its file or package contents have changed and must be approved
 #. again before Orca will load and run it.
-#: src/orca/guilabels.py:1588
+#: src/orca/guilabels.py:1631
 msgctxt "user extensions"
 msgid "Modified; re-approval required"
 msgstr "Módosítva lett; újbóli jóváhagyás szükséges"
 
 #. Translators: This is the label for a widget in the preferences dialog.
-#: src/orca/guilabels.py:1591
+#: src/orca/guilabels.py:1634
 msgid "Save _As"
 msgstr "Mentés máskén_t"
 
@@ -7952,82 +7955,82 @@ msgstr "Mentés máskén_t"
 #. the label for the setting which determines whether or not key echo is enabled.
 #. If it is enabled, the user can then choose which types of keys they want to
 #. hear. See the strings which follow this one.
-#: src/orca/guilabels.py:1597
+#: src/orca/guilabels.py:1640
 msgid "Key echo"
 msgstr "Billentyűvisszhang"
 
 #. Translators: Orca has a feature to "echo" keys as they are pressed. This is
 #. the label for the setting which controls whether or not alphabetic keys will
 #. be spoken when pressed.
-#: src/orca/guilabels.py:1602
+#: src/orca/guilabels.py:1645
 msgid "Alphabetic keys"
 msgstr "_Alfabetikus billentyűk engedélyezése"
 
 #. Translators: Orca has a feature to "echo" keys as they are pressed. This is
 #. the label for the setting which controls whether or not numeric keys will
 #. be spoken when pressed.
-#: src/orca/guilabels.py:1607
+#: src/orca/guilabels.py:1650
 msgid "Numeric keys"
 msgstr "_Számbillentyűk engedélyezése"
 
 #. Translators: Orca has a feature to "echo" keys as they are pressed. This is
 #. the label for the setting which controls whether or not punctuation keys will
 #. be spoken when pressed.
-#: src/orca/guilabels.py:1612
+#: src/orca/guilabels.py:1655
 msgid "Punctuation keys"
 msgstr "_Írásjelek engedélyezése"
 
 #. Translators: Orca has a feature to "echo" keys as they are pressed. This is
 #. the label for the setting which controls whether or not function keys (F1, F2,
 #. etc.) will be spoken when pressed.
-#: src/orca/guilabels.py:1617
+#: src/orca/guilabels.py:1660
 msgid "Function keys"
 msgstr "_Funkcióbillentyűk engedélyezése"
 
 #. Translators: Orca has a feature to "echo" keys as they are pressed. This is
 #. the label for the setting which controls whether or not diacritical keys will
 #. be spoken when pressed.
-#: src/orca/guilabels.py:1622
+#: src/orca/guilabels.py:1665
 msgid "Diacritical keys"
 msgstr "_Diakritikus billentyűk billentyűk engedélyezése"
 
 #. Translators: Orca has a feature to "echo" keys as they are pressed. This is
 #. the label for the setting which controls whether or not modifier keys (Shift,
 #. Control, Alt, etc.) will be spoken when pressed.
-#: src/orca/guilabels.py:1627
+#: src/orca/guilabels.py:1670
 msgid "Modifier keys"
 msgstr "_Módosítóbillentyűk engedélyezése"
 
 #. Translators: Orca has a feature to "echo" keys as they are pressed. This is
 #. the label for the setting which controls whether or not navigation keys (Arrows,
 #. Home, End, etc.) will be spoken when pressed.
-#: src/orca/guilabels.py:1632
+#: src/orca/guilabels.py:1675
 msgid "Navigation keys"
 msgstr "Navigá_ciós billentyűk engedélyezése"
 
 #. Translators: Orca has a feature to "echo" keys as they are pressed. This is
 #. the label for the setting which controls whether or not the space bar will
 #. be spoken when pressed.
-#: src/orca/guilabels.py:1637
+#: src/orca/guilabels.py:1680
 msgid "Space"
 msgstr "A _szóköz billentyű engedélyezése"
 
 #. Translators: Orca has a feature to "echo" keys as they are pressed. This is
 #. the label for the setting which controls whether or not action keys such as
 #. Enter, Escape, Tab, Backspace, etc. will be spoken when pressed.
-#: src/orca/guilabels.py:1642
+#: src/orca/guilabels.py:1685
 msgid "Action keys"
 msgstr "_Műveletbillentyűk engedélyezése"
 
 #. Translators: This is the label for a group of settings on the Echo preferences
 #. page. It groups the types of keys that will be spoken when pressed.
-#: src/orca/guilabels.py:1646
+#: src/orca/guilabels.py:1689
 msgid "Keys to Echo"
 msgstr "Billentyűvisszhang"
 
 #. Translators: This is the label for a group of settings on the Echo preferences
 #. page. It groups the text echo options (character, word, sentence).
-#: src/orca/guilabels.py:1650
+#: src/orca/guilabels.py:1693
 msgid "Typing Echo"
 msgstr "Gépelési visszhang"
 
@@ -8035,7 +8038,7 @@ msgstr "Gépelési visszhang"
 #. by the user. While Orca's "key echo" options present the actual keyboard keys
 #. being pressed, "character echo" presents the character/string of length 1 that
 #. is inserted as a result of the keypress.
-#: src/orca/guilabels.py:1656
+#: src/orca/guilabels.py:1699
 msgctxt "Typing echo"
 msgid "Character"
 msgstr "Karakterenként"
@@ -8043,7 +8046,7 @@ msgstr "Karakterenként"
 #. Translators: Orca has an "echo" feature to present text as it is being written
 #. by the user. While Orca's "key echo" options present the actual keyboard keys
 #. being pressed, "sentence echo" presents the sentence that was just completed.
-#: src/orca/guilabels.py:1661
+#: src/orca/guilabels.py:1704
 msgctxt "Typing echo"
 msgid "Sentence"
 msgstr "Mondatonként"
@@ -8051,7 +8054,7 @@ msgstr "Mondatonként"
 #. Translators: Orca has an "echo" feature to present text as it is being written
 #. by the user. While Orca's "key echo" options present the actual keyboard keys
 #. being pressed, "word echo" presents the word that was just completed.
-#: src/orca/guilabels.py:1666
+#: src/orca/guilabels.py:1709
 msgctxt "Typing echo"
 msgid "Word"
 msgstr "Szavanként"
@@ -8059,7 +8062,7 @@ msgstr "Szavanként"
 #. Translators: This is a label for a widget that allows the user to select which
 #. settings profile should be active. A profile is a collection of settings which
 #. can be saved and later loaded.
-#: src/orca/guilabels.py:1671
+#: src/orca/guilabels.py:1714
 msgid "Active _Profile:"
 msgstr "_Aktív profil:"
 
@@ -8068,7 +8071,7 @@ msgstr "_Aktív profil:"
 #. this widget is enabled, Orca will announce that a form has been entered
 #. before speaking the contents of that form. At the end of the form, Orca will
 #. announce that the form is being exited.
-#: src/orca/guilabels.py:1678
+#: src/orca/guilabels.py:1721
 msgid "Announce _forms in Say All"
 msgstr "ű_rlapok bejelentése felolvasás közben"
 
@@ -8078,7 +8081,7 @@ msgstr "ű_rlapok bejelentése felolvasás közben"
 #. before speaking the new location. At the end of the panel contents, Orca will
 #. announce that the panel is being exited. A panel is a generic container of
 #. objects, such as a group of related form fields.
-#: src/orca/guilabels.py:1686
+#: src/orca/guilabels.py:1729
 msgid "Announce _panels in Say All"
 msgstr "_Panelek bejelentése felolvasás közben"
 
@@ -8087,7 +8090,7 @@ msgstr "_Panelek bejelentése felolvasás közben"
 #. this widget is enabled, Orca will announce that a table with x rows and y
 #. columns has been entered before speaking the content of that table. At the
 #. end of the table content, Orca will announce that the table is being exited.
-#: src/orca/guilabels.py:1693
+#: src/orca/guilabels.py:1736
 msgid "Announce _tables in Say All"
 msgstr "_Táblázatok bejelentése felolvasás közben"
 
@@ -8096,7 +8099,7 @@ msgstr "_Táblázatok bejelentése felolvasás közben"
 #. this widget is enabled, Orca will announce that a blockquote has been
 #. entered before speaking the text. At the end of the text, Orca will announce
 #. that the blockquote is being exited.
-#: src/orca/guilabels.py:1700
+#: src/orca/guilabels.py:1743
 msgid "Announce block_quotes in Say All"
 msgstr "_Idézetblokkok bejelentése felolvasás közben"
 
@@ -8106,7 +8109,7 @@ msgstr "_Idézetblokkok bejelentése felolvasás közben"
 #. entered or exited. ARIA landmarks are the W3C defined HTML tag attribute
 #. 'role' used to identify important part of webpage like banners, main context,
 #. search, etc.
-#: src/orca/guilabels.py:1708
+#: src/orca/guilabels.py:1751
 msgid "Announce land_marks in Say All"
 msgstr "_Jelölők bejelentése felolvasás közben"
 
@@ -8115,14 +8118,14 @@ msgstr "_Jelölők bejelentése felolvasás közben"
 #. this widget is enabled, Orca will announce that a list with x items has
 #. been entered before speaking the content of that list. At the end of the list
 #. content, Orca will announce that the list is being exited.
-#: src/orca/guilabels.py:1715
+#: src/orca/guilabels.py:1758
 msgid "Announce li_sts in Say All"
 msgstr "_Listák bejelentése felolvasás közben"
 
 #. Translators: Orca has a setting which determines which progress bar updates
 #. should be announced. The options are all progress bars, only progress bars in
 #. the active application, or only progress bars in the current window.
-#: src/orca/guilabels.py:1720
+#: src/orca/guilabels.py:1763
 msgid "Applies to:"
 msgstr "Alkalmazás"
 
@@ -8130,7 +8133,7 @@ msgstr "Alkalmazás"
 #. should be announced. The options are all progress bars, only progress bars in
 #. the active application, or only progress bars in the current window. This
 #. label is for the second option.
-#: src/orca/guilabels.py:1726
+#: src/orca/guilabels.py:1769
 msgid "Application"
 msgstr "Alkalmazás"
 
@@ -8138,7 +8141,7 @@ msgstr "Alkalmazás"
 #. should be announced. The options are all progress bars, only progress bars in
 #. the active application, or only progress bars in the current window. This
 #. label is for the third option.
-#: src/orca/guilabels.py:1732
+#: src/orca/guilabels.py:1775
 msgid "Window"
 msgstr "Ablak"
 
@@ -8146,19 +8149,19 @@ msgstr "Ablak"
 #. presentation of progress bar updates. If this widget is enabled, Orca will
 #. periodically emit beeps which increase in pitch as the value of the progress
 #. bar increases.
-#: src/orca/guilabels.py:1738
+#: src/orca/guilabels.py:1781
 msgid "Bee_p updates"
 msgstr "_Hangjelzés a folyamatjelző frissülésekor"
 
 #. Translators: This is a label for the setting which controls how Orca will
 #. present the date.
-#: src/orca/guilabels.py:1742
+#: src/orca/guilabels.py:1785
 msgid "Dat_e format:"
 msgstr "Dá_tumformátum:"
 
 #. Translators: This is a label for the setting which controls how Orca will
 #. present the time.
-#: src/orca/guilabels.py:1746
+#: src/orca/guilabels.py:1789
 msgid "_Time format:"
 msgstr "I_dőformátum:"
 
@@ -8167,40 +8170,37 @@ msgstr "I_dőformátum:"
 #. text written in English using an English-language speech synthesizer and
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text. The
 #. following string is the label for the profiles sidebar item.
-#: src/orca/guilabels.py:1753
+#: src/orca/guilabels.py:1796
 msgid "Profiles"
 msgstr "Profilok"
 
 #. Translators: This is the heading shown at the top of the profiles preferences
 #. page, indicating which profile is currently selected and being edited.
-#: src/orca/guilabels.py:1757
+#: src/orca/guilabels.py:1800
 msgid "Current Profile"
 msgstr "Jelenlegi profil"
 
-#: src/orca/guilabels.py:1765
+#: src/orca/guilabels.py:1808
 #, python-format
 msgid ""
-"Profiles are collections of settings. The \"%s\" profile is loaded at "
-"startup. To edit an existing profile, select it below and then adjust "
-"settings on the other pages. To rename or delete the selected profile, use "
-"the Tab key to navigate to its associated buttons."
+"Profiles are collections of settings. The \"%s\" profile is loaded at startup. To edit an existing profile, select it below and "
+"then adjust settings on the other pages. To rename or delete the selected profile, use the Tab key to navigate to its associated "
+"buttons."
 msgstr ""
-"A profilok beállítások gyűjteményei. A használt \"%s\" profil indításkor "
-"betöltődik. Egy meglévő profil szerkesztéséhez jelölje ki azt alább, majd "
-"módosítsa a beállításokat a többi oldalon. A kiválasztott profil "
-"átnevezéséhez vagy törléséhez a Tab billentyűvel navigáljon a hozzá tartozó "
-"gombokhoz."
+"A profilok beállítások gyűjteményei. A használt \"%s\" profil indításkor betöltődik. Egy meglévő profil szerkesztéséhez jelölje "
+"ki azt alább, majd módosítsa a beállításokat a többi oldalon. A kiválasztott profil átnevezéséhez vagy törléséhez a Tab "
+"billentyűvel navigáljon a hozzá tartozó gombokhoz."
 
 #. Translators: This is a label in the Preferences dialog box. It applies to
 #. several options related to which progress bars Orca should speak and how
 #. often Orca should speak them.
-#: src/orca/guilabels.py:1776
+#: src/orca/guilabels.py:1819
 msgid "Progress Bars"
 msgstr "Folyamatjelző frissítési beállításai"
 
 #. Translators: Orca has a Say All feature which speaks the entire document.
 #. This is the label for the group of settings related to Say All.
-#: src/orca/guilabels.py:1780
+#: src/orca/guilabels.py:1823
 msgid "Say All"
 msgstr "Felolvasási beállítások"
 
@@ -8211,39 +8211,34 @@ msgstr "Felolvasási beállítások"
 #. fiction, it would probably be best to do say all by sentence so it sounds
 #. more natural. If Orca were speaking something like a page of computer
 #. commands, doing a say all by line would work better.
-#: src/orca/guilabels.py:1789
+#: src/orca/guilabels.py:1832
 msgid "Say All By"
 msgstr "_Kimondás:"
 
-#: src/orca/guilabels.py:1795
+#: src/orca/guilabels.py:1838
 msgid ""
-"Say All reads from the current location to the end of the document, pausing "
-"after each sentence or line based on the \"Say All By\" value."
+"Say All reads from the current location to the end of the document, pausing after each sentence or line based on the \"Say All By"
+"\" value."
 msgstr ""
-"A Felolvasás parancs az aktuális helytől a dokumentum végéig olvassa fel a "
-"szöveget, minden mondat vagy sor után szünetet tartva a „Kimondás” beállítás "
-"értékének megfelelően."
+"A Felolvasás parancs az aktuális helytől a dokumentum végéig olvassa fel a szöveget, minden mondat vagy sor után szünetet tartva "
+"a „Kimondás” beállítás értékének megfelelően."
 
-#: src/orca/guilabels.py:1805
+#: src/orca/guilabels.py:1848
 msgid ""
-"If enabled, you can use the arrow keys and/or structural navigation commands "
-"to move within the document while Say All is active."
+"If enabled, you can use the arrow keys and/or structural navigation commands to move within the document while Say All is active."
 msgstr ""
-"Ha ez a funkció engedélyezve van, a nyílbillentyűkkel és/vagy a strukturális "
-"navigációs parancsokkal mozoghat a dokumentumon belül, miközben a felolvasás "
-"aktív marad."
+"Ha ez a funkció engedélyezve van, a nyílbillentyűkkel és/vagy a strukturális navigációs parancsokkal mozoghat a dokumentumon "
+"belül, miközben a felolvasás aktív marad."
 
-#: src/orca/guilabels.py:1813
+#: src/orca/guilabels.py:1856
 msgid ""
-"The announcement settings determine which document changes, text formatting "
-"changes, and container boundaries will be announced as Say All moves through "
-"the document."
+"The announcement settings determine which document changes, text formatting changes, and container boundaries will be announced "
+"as Say All moves through the document."
 msgstr ""
-"A „bejelentésbeállítások” beállításai határozzák meg, hogy milyen további "
-"részleteket kell bejelenteni, miközben a Felolvasás funkció halad a "
-"dokumentumban."
+"A „bejelentésbeállítások” beállításai határozzák meg, hogy milyen további részleteket kell bejelenteni, miközben a Felolvasás "
+"funkció halad a dokumentumban."
 
-#: src/orca/guilabels.py:1818
+#: src/orca/guilabels.py:1861
 msgid "Speak object under mo_use"
 msgstr "Az e_gér alatti objektum felolvasása"
 
@@ -8253,42 +8248,42 @@ msgstr "Az e_gér alatti objektum felolvasása"
 #. braille rules, and a similar 'Spanish' profile for reading Spanish text. The
 #. following string is the label for the widget from which the user can select
 #. which profile should be loaded when Orca starts up.
-#: src/orca/guilabels.py:1826
+#: src/orca/guilabels.py:1869
 msgid "Start-up Profile:"
 msgstr "Kezdeti profil:"
 
 #. Translators: This is an option in the Preferences dialog box related to the
 #. presentation of progress bar updates. If this widget is enabled, Orca will
 #. periodically display the current percentage in braille.
-#: src/orca/guilabels.py:1831
+#: src/orca/guilabels.py:1874
 msgid "_Braille updates"
 msgstr "Folyamatjelző frissítésének megjelenítése a _Braille-kijelzőn"
 
 #. This button will load the selected settings profile in the application.
-#: src/orca/guilabels.py:1835
+#: src/orca/guilabels.py:1878
 msgid "_Load"
 msgstr "_Betöltés"
 
-#: src/orca/guilabels.py:1837
+#: src/orca/guilabels.py:1880
 msgid "_Present tooltips"
 msgstr "Buboréksúgók megjele_nítése"
 
 #. Translators: This is the label for a button in a dialog.
-#: src/orca/guilabels.py:1840
+#: src/orca/guilabels.py:1883
 msgid "_Remove"
 msgstr "_Eltávolítás"
 
 #. Translators: This is an option in the Preferences dialog box related to the
 #. presentation of progress bar updates. If this widget is enabled, Orca will
 #. periodically speak the current percentage.
-#: src/orca/guilabels.py:1845
+#: src/orca/guilabels.py:1888
 msgid "_Speak updates"
 msgstr "_Folyamatjelző frissítésének kimondása"
 
 #. Translators: Here this is a label for a spin button through which a user can
 #. customize the frequency in seconds an announcement should be made regarding
 #. the current value of a progress bar.
-#: src/orca/guilabels.py:1850
+#: src/orca/guilabels.py:1893
 msgctxt "ProgressBar"
 msgid "Frequency (secs):"
 msgstr "Gyakoriság másodpercben:"
@@ -8297,29 +8292,29 @@ msgstr "Gyakoriság másodpercben:"
 #. The default Orca modifier is KP_Insert for the "desktop" keyboard layout and
 #. Caps Lock for the "laptop" keyboard layout. This string is a label for choosing
 #. which key(s) should be used as the Orca modifier.
-#: src/orca/guilabels.py:1856
+#: src/orca/guilabels.py:1899
 msgid "Screen Reader Modifier Keys"
 msgstr "Képernyőolvasó módosítóbillentyűk:"
 
 #. Translators: This refers to the Insert key being used as the Orca modifier.
-#: src/orca/guilabels.py:1859
+#: src/orca/guilabels.py:1902
 msgid "Insert"
 msgstr "inzert"
 
 #. Translators: This refers to the keypad Insert key being used as the Orca modifier.
 #. It is important that the translation be different from the one for "Insert" so
 #. that users can distinguish between the two keys.
-#: src/orca/guilabels.py:1864
+#: src/orca/guilabels.py:1907
 msgid "Keypad Insert"
 msgstr "Numerikus inzert"
 
 #. Translators: This refers to the Caps Lock key being used as the Orca modifier.
-#: src/orca/guilabels.py:1867
+#: src/orca/guilabels.py:1910
 msgid "Caps Lock"
 msgstr "Caps Lock"
 
 #. Translators: This refers to the Shift Lock key being used as the Orca modifier.
-#: src/orca/guilabels.py:1870
+#: src/orca/guilabels.py:1913
 msgid "Shift Lock"
 msgstr "nagybetű zár"
 
@@ -8329,7 +8324,7 @@ msgstr "nagybetű zár"
 #. arrows into it and before speaking the new location. Upon navigating out of
 #. the form, Orca will announce that the form has been exited prior to speaking
 #. the new location.
-#: src/orca/guilabels.py:1878
+#: src/orca/guilabels.py:1921
 msgid "Announce _forms during navigation"
 msgstr "Ű_rlapok bejelentése navigálás közben"
 
@@ -8339,7 +8334,7 @@ msgstr "Ű_rlapok bejelentése navigálás közben"
 #. entered as the user arrows into it and before speaking the list content. Upon
 #. navigating out of the list, Orca will announce that the list has been exited
 #. prior to speaking the new location.
-#: src/orca/guilabels.py:1886
+#: src/orca/guilabels.py:1929
 msgid "Announce _lists during navigation"
 msgstr "_Listák bejelentése navigálás közben"
 
@@ -8350,7 +8345,7 @@ msgstr "_Listák bejelentése navigálás közben"
 #. of the panel, Orca will announce that the panel has been exited prior to
 #. speaking the new location. A panel is a generic container of objects, such as
 #. a group of related form fields.
-#: src/orca/guilabels.py:1895
+#: src/orca/guilabels.py:1938
 msgid "Announce _panels during navigation"
 msgstr "_Panelek bejelentése navigálás közben"
 
@@ -8360,7 +8355,7 @@ msgstr "_Panelek bejelentése navigálás közben"
 #. columns has been entered as the user arrows into it and before speaking the
 #. table content. Upon navigating out of the table, Orca will announce that the
 #. table has been exited prior to speaking the new location.
-#: src/orca/guilabels.py:1903
+#: src/orca/guilabels.py:1946
 msgid "Announce _tables during navigation"
 msgstr "_Táblázatok bejelentése navigálás közben"
 
@@ -8370,7 +8365,7 @@ msgstr "_Táblázatok bejelentése navigálás közben"
 #. the user arrows into it and before speaking the text. Upon navigating out of
 #. the blockquote, Orca will announce that the blockquote has been exited prior
 #. to speaking the new location.
-#: src/orca/guilabels.py:1911
+#: src/orca/guilabels.py:1954
 msgid "Announce block_quotes during navigation"
 msgstr "_Idézetblokkok bejelentése navigálás közben"
 
@@ -8382,7 +8377,7 @@ msgstr "_Idézetblokkok bejelentése navigálás közben"
 #. exited prior to speaking the new location. ARIA landmarks are the W3C defined
 #. HTML tag attribute 'role' used to identify important part of webpage like
 #. banners, main context, search, etc.
-#: src/orca/guilabels.py:1921
+#: src/orca/guilabels.py:1964
 msgid "Announce land_marks during navigation"
 msgstr "_Jelölők bejelentése navigálás közben"
 
@@ -8392,7 +8387,7 @@ msgstr "_Jelölők bejelentése navigálás közben"
 #. indicate the presence of red squiggly spelling error lines -- things which
 #. Orca normally speaks. This setting is primarily intended for low vision users
 #. and sighted users with a learning disability.
-#: src/orca/guilabels.py:1929
+#: src/orca/guilabels.py:1972
 msgid "Only speak displayed text"
 msgstr "Csak a képernyőn megjelenő szöveg kimondása"
 
@@ -8400,14 +8395,14 @@ msgstr "Csak a képernyőn megjelenő szöveg kimondása"
 #. including foreground and background color. The setting associated with this
 #. widget determines how Orca will speak colors: As rgb values or as names
 #. (e.g. light blue).
-#: src/orca/guilabels.py:1935
+#: src/orca/guilabels.py:1978
 msgid "S_peak colors as names"
 msgstr "A színek kimondása szín_nevekkel"
 
 #. Translators: This is a label for a widget associated with whether Orca will
 #. present the mnemonic (underlined character) of an object, such as a button or
 #. menu item, when it becomes focused/selected.
-#: src/orca/guilabels.py:1940
+#: src/orca/guilabels.py:1983
 msgid "Mnemonics"
 msgstr "Hívóbetűk"
 
@@ -8417,20 +8412,20 @@ msgstr "Hívóbetűk"
 #. contents of the accessible description tend to be longer, e.g. matching the
 #. text of the tooltip, and are sometimes redundant to the accessible name.
 #. Therefore, we allow the user to opt out of this additional information.
-#: src/orca/guilabels.py:1948
+#: src/orca/guilabels.py:1991
 msgid "Description"
 msgstr "Leírás"
 
 #. Translators: This is a label for a widget associated with whether Orca will
 #. speak indentation information for text content.
-#: src/orca/guilabels.py:1952
+#: src/orca/guilabels.py:1995
 msgid "Indentation"
 msgstr "Behúzás"
 
 #. Translators: This is the label for a widget on the Speech preferences page.
 #. When checked, indentation will only be announced when it has changed from
 #. the previous line.
-#: src/orca/guilabels.py:1957
+#: src/orca/guilabels.py:2000
 msgid "Only speak indentation if changed"
 msgstr "Behúzás felolvasása csak akkor, ha változás van"
 
@@ -8439,45 +8434,45 @@ msgstr "Behúzás felolvasása csak akkor, ha változás van"
 #. is enabled, when a user first moves into a word with this indicator, or types
 #. a misspelled word causing this indicator to appear, Orca will announce that
 #. the word is misspelled.
-#: src/orca/guilabels.py:1964
+#: src/orca/guilabels.py:2007
 msgid "Misspelled-word indicator"
 msgstr "A hibásan írt szó jelzése"
 
 #. Translators: This is a label for a widget associated with when Orca will
 #. announce text formatting changes (e.g. bold, italic) when navigating.
-#: src/orca/guilabels.py:1968
+#: src/orca/guilabels.py:2011
 msgid "Text attribute changes"
 msgstr "Szövegattribútum-változások"
 
 #. Translators: This is an option for the text attribute changes setting.
-#: src/orca/guilabels.py:1971
+#: src/orca/guilabels.py:2014
 msgctxt "text attribute changes"
 msgid "Off"
 msgstr "Ki"
 
 #. Translators: This is an option for the text attribute changes setting.
 #. When selected, formatting changes are only announced in editable content.
-#: src/orca/guilabels.py:1975
+#: src/orca/guilabels.py:2018
 msgctxt "text attribute changes"
 msgid "Editable text only"
 msgstr "Csak szerkeszthető tartalom esetén"
 
 #. Translators: This is an option for the text attribute changes setting.
 #. When selected, formatting changes are always announced.
-#: src/orca/guilabels.py:1979
+#: src/orca/guilabels.py:2022
 msgctxt "text attribute changes"
 msgid "Always"
 msgstr "Mindig"
 
 #. Translators: This is a label for a widget associated with whether Orca will
 #. speak blank lines when navigating in document content.
-#: src/orca/guilabels.py:1983
+#: src/orca/guilabels.py:2026
 msgid "Blank lines"
 msgstr "Üres sorok felolvasása"
 
 #. Translators: This widget toggles whether or not Orca says the child
 #. position (e.g., item 6 of 7).
-#: src/orca/guilabels.py:1987
+#: src/orca/guilabels.py:2030
 msgid "Position in set"
 msgstr "P_ozícióadatok kimondásának engedélyezése"
 
@@ -8487,7 +8482,7 @@ msgstr "P_ozícióadatok kimondásának engedélyezése"
 #. and web content, and spreadsheet tables such as those found in Calc are not
 #. considered GUI tables. If this setting is enabled, Orca will speak the entire
 #. row; if it is disabled, Orca will only speak the cell with focus.
-#: src/orca/guilabels.py:1995
+#: src/orca/guilabels.py:2038
 msgid "Speak full row in _GUI tables"
 msgstr "A teljes sor kimondása a _grafikus táblázatokban"
 
@@ -8498,7 +8493,7 @@ msgstr "A teljes sor kimondása a _grafikus táblázatokban"
 #. spreadsheet tables such as found in Calc. If this setting is enabled, Orca
 #. will speak the entire row; if it is disabled, Orca will only speak the cell
 #. with focus.
-#: src/orca/guilabels.py:2004
+#: src/orca/guilabels.py:2047
 msgid "Speak full row in _document tables"
 msgstr "A teljes sor kimondása a _dokumentum táblázatokban"
 
@@ -8506,26 +8501,26 @@ msgstr "A teljes sor kimondása a _dokumentum táblázatokban"
 #. what happens if a user presses Up or Down arrow to move row by row in a
 #. spreadsheet. If this setting is enabled, Orca will speak the entire row; if
 #. it is disabled, Orca will only speak the cell with focus.
-#: src/orca/guilabels.py:2010
+#: src/orca/guilabels.py:2053
 msgid "Speak full row in sp_readsheets"
 msgstr "A teljes sor kimondása a _táblázatkezelőkben"
 
 #. Translators: This is a label for a widget associated with whether Orca speaks
 #. tutorial messages / "help text".
-#: src/orca/guilabels.py:2014
+#: src/orca/guilabels.py:2057
 msgid "Tutorial messages"
 msgstr "Oktatói üzenetek kimondásának engedélyezése"
 
 #. Translators: This is the label for a group of settings on the Speech
 #. preferences page. It groups settings related to how objects are presented
 #. via speech (descriptions, mnemonics, child position).
-#: src/orca/guilabels.py:2019
+#: src/orca/guilabels.py:2062
 msgid "Spoken Object Details"
 msgstr "Kimondott objektum részletei"
 
 #. Translators: This is a setting in the Speech and Braille preferences pages.
 #. When enabled, Orca will provide detailed/verbose object descriptions.
-#: src/orca/guilabels.py:2023
+#: src/orca/guilabels.py:2066
 msgid "Object presentation is detailed"
 msgstr "Az objektum bemutatása _részletes"
 
@@ -8533,7 +8528,7 @@ msgstr "Az objektum bemutatása _részletes"
 #. When checked, Orca will apply the user's pronunciation dictionary when speaking.
 #. The pronunciation dictionary allows users to customize how specific words or
 #. character sequences are spoken by the speech synthesizer.
-#: src/orca/guilabels.py:2029
+#: src/orca/guilabels.py:2072
 msgid "Use pronunciation dictionary"
 msgstr "_Kiejtési szótár használatának engedélyezése"
 
@@ -8541,13 +8536,13 @@ msgstr "_Kiejtési szótár használatának engedélyezése"
 #. chose what is and is not spoken by Orca during navigation or Say All. For
 #. instance, when the user first navigates into a table, should Orca speak the
 #. table details or just the newly focused/selected cell?
-#: src/orca/guilabels.py:2035
+#: src/orca/guilabels.py:2078
 msgid "Spoken Context"
 msgstr "Kimondott szövegkörnyezet"
 
 #. Translators: This is the label for a widget in the preferences dialog.
 #. If selected speech support will be enabled.
-#: src/orca/guilabels.py:2039
+#: src/orca/guilabels.py:2082
 msgid "Speech support"
 msgstr "Beszédrendszer"
 
@@ -8558,7 +8553,7 @@ msgstr "Beszédrendszer"
 #. the message to be displayed is long/detailed, Orca provides a brief
 #. alternative. Users who prefer that brief alternative can uncheck this
 #. widget.
-#: src/orca/guilabels.py:2048
+#: src/orca/guilabels.py:2091
 msgid "_System messages are detailed"
 msgstr "_Részletes rendszerüzenetek engedélyezése"
 
@@ -8567,7 +8562,7 @@ msgstr "_Részletes rendszerüzenetek engedélyezése"
 #. including the braille dots and the text characters they correspond to. It is
 #. primarily used by developers and testers who may not have a physical braille
 #. display.
-#: src/orca/guilabels.py:2055
+#: src/orca/guilabels.py:2098
 msgid "On-screen braille"
 msgstr "Képernyőn megjelenő Braille"
 
@@ -8575,26 +8570,26 @@ msgstr "Képernyőn megjelenő Braille"
 #. scrolling log of all text spoken by the screen reader. It is primarily used by
 #. developers and testers to verify what is being spoken without having to listen
 #. to the audio.
-#: src/orca/guilabels.py:2061
+#: src/orca/guilabels.py:2104
 msgid "On-screen speech"
 msgstr "Képernyőn megjelenő beszéd"
 
 #. Translators: This is the title of the on-screen display settings category in the
 #. Orca Preferences dialog. These settings control the appearance of the on-screen
 #. braille and speech monitor windows.
-#: src/orca/guilabels.py:2066
+#: src/orca/guilabels.py:2109
 msgid "On-Screen Display"
 msgstr "Képernyőkijelző"
 
 #. Translators: This is the label of a spin button that controls the number of braille
 #. cells displayed in the on-screen braille monitor.
-#: src/orca/guilabels.py:2070
+#: src/orca/guilabels.py:2113
 msgid "Cell count"
 msgstr "Cellák száma:"
 
 #. Translators: This is the label of a checkbox that controls whether the on-screen
 #. braille monitor shows Unicode braille dot patterns instead of text characters.
-#: src/orca/guilabels.py:2074
+#: src/orca/guilabels.py:2117
 msgid "Show braille dot patterns"
 msgstr "Braille pontmintázatok megjelenítése"
 
@@ -8602,7 +8597,7 @@ msgstr "Braille pontmintázatok megjelenítése"
 #. in the on-screen braille monitor.
 #. Translators: This is the label of a color button that controls the text color
 #. in the on-screen speech monitor.
-#: src/orca/guilabels.py:2078 src/orca/guilabels.py:2090
+#: src/orca/guilabels.py:2121 src/orca/guilabels.py:2133
 msgid "Text color"
 msgstr "Szöveg színe:"
 
@@ -8610,66 +8605,60 @@ msgstr "Szöveg színe:"
 #. in the on-screen braille monitor.
 #. Translators: This is the label of a color button that controls the background color
 #. in the on-screen speech monitor.
-#: src/orca/guilabels.py:2082 src/orca/guilabels.py:2094
+#: src/orca/guilabels.py:2125 src/orca/guilabels.py:2137
 msgid "Background color"
 msgstr "Háttér színe:"
 
 #. Translators: This is the label of a spin button that controls the font size of
 #. text in the on-screen speech monitor.
-#: src/orca/guilabels.py:2086
+#: src/orca/guilabels.py:2129
 msgid "Font size"
 msgstr "Betűméret:"
 
-#: src/orca/guilabels.py:2099
+#: src/orca/guilabels.py:2142
 msgid ""
-"The on-screen speech display is a window that shows what the screen reader "
-"is speaking. The default keybinding to show or hide it is Orca+Shift+d. This "
-"can be changed in Commands."
+"The on-screen speech display is a window that shows what the screen reader is speaking. The default keybinding to show or hide it "
+"is Orca+Shift+d. This can be changed in Commands."
 msgstr ""
-"A képernyőn megjelenő beszédkijelző egy ablak, amely azt mutatja, amit a "
-"képernyőolvasó mond. Az alapértelmezett billentyűkombináció a "
-"megjelenítéséhez vagy elrejtéséhez az Orka módosító+Shift+D "
-"billentyűkombináció. Ez a billentyűkombináció a Parancsok részben "
-"módosítható."
+"A képernyőn megjelenő beszédkijelző egy ablak, amely azt mutatja, amit a képernyőolvasó mond. Az alapértelmezett "
+"billentyűkombináció a megjelenítéséhez vagy elrejtéséhez az Orka módosító+Shift+D billentyűkombináció. Ez a billentyűkombináció a "
+"Parancsok részben módosítható."
 
-#: src/orca/guilabels.py:2107
+#: src/orca/guilabels.py:2150
 msgid ""
-"The on-screen braille display is a window intended for developers that shows "
-"what would be presented on a braille display. To show or hide it, assign a "
-"keybinding in Commands."
+"The on-screen braille display is a window intended for developers that shows what would be presented on a braille display. To "
+"show or hide it, assign a keybinding in Commands."
 msgstr ""
-"A képernyőn megjelenő Braille-kijelző egy fejlesztőknek szánt ablak, amely "
-"azt a kimenetet mutatja, ami egy Braille-kijelzőn jelenne meg. A "
-"megjelenítéséhez vagy elrejtéséhez rendeljen hozzá billentyűkombinációt a "
-"Parancsok részben ehhez a funkcióhoz."
+"A képernyőn megjelenő Braille-kijelző egy fejlesztőknek szánt ablak, amely azt a kimenetet mutatja, ami egy Braille-kijelzőn "
+"jelenne meg. A megjelenítéséhez vagy elrejtéséhez rendeljen hozzá billentyűkombinációt a Parancsok részben ehhez a funkcióhoz."
 
 #. Translators: This is the label of the Braille page in the Orca Preferences dialog.
-#: src/orca/guilabels.py:2113
+#: src/orca/guilabels.py:2156
 msgid "Braille"
 msgstr "Braille"
 
 #. Translators: This string is a label for a preferences page containing settings
 #. that apply when the user is navigating using the application's native navigation
 #. (e.g., arrow keys handled by the app) rather than the screen reader's browse mode.
-#: src/orca/guilabels.py:2123
+#: src/orca/guilabels.py:2166
 msgid "Native navigation"
 msgstr "Natív navigáció"
 
 #. Translators: This string is a label for a group of settings related to what
 #. happens when a document or web page finishes loading.
-#: src/orca/guilabels.py:2127
+#: src/orca/guilabels.py:2170
 msgid "Page load"
 msgstr "Oldalbetöltéssel kapcsolatos üzenetek"
 
 #. Translators: This is the label for a group of settings related to what Orca
 #. announces when entering/exiting different types of containers/ancestors.
-#: src/orca/guilabels.py:2131
+#: src/orca/guilabels.py:2174
 msgid "Container Announcements"
 msgstr "Konténer bejelentések"
 
 #. Translators: This is the label for a group of settings which control
 #. announcements of document revision markup and text formatting changes.
-#: src/orca/guilabels.py:2135
+#: src/orca/guilabels.py:2178
 msgid "Change Announcements"
 msgstr "Változásbejelentések"
 
@@ -8677,43 +8666,41 @@ msgstr "Változásbejelentések"
 #. whether Orca announces entering a type of container (e.g. blockquotes, forms,
 #. landmarks, lists, panels, tables). The full meaning is "Announce when entering
 #. [container type]" where the container types are listed below this heading.
-#: src/orca/guilabels.py:2141
+#: src/orca/guilabels.py:2184
 msgid "Announce when entering"
 msgstr "Bejelentés rálépéskor"
 
 #. Translators: This is the label of the Echo page in the Orca Preferences dialog.
 #. On that page there are a variety of settings related to what Orca will echo
 #. as the user types on the keyboard.
-#: src/orca/guilabels.py:2146
+#: src/orca/guilabels.py:2189
 msgid "Echo"
 msgstr "Billentyűvisszhang"
 
-#: src/orca/guilabels.py:2152
-msgid ""
-"Key echo speaks the key you pressed. Typing echo speaks what was inserted "
-"into the document as a result of your typing."
+#: src/orca/guilabels.py:2195
+msgid "Key echo speaks the key you pressed. Typing echo speaks what was inserted into the document as a result of your typing."
 msgstr ""
-"A Billentyűvisszhang kimondja a lenyomott billentyűt. A Gépelési visszhang "
-"kimondja, hogy mi került a dokumentumba a gépelés eredményeként."
+"A Billentyűvisszhang kimondja a lenyomott billentyűt. A Gépelési visszhang kimondja, hogy mi került a dokumentumba a gépelés "
+"eredményeként."
 
 #. Translators: This is the label of the General page in the Orca Preferences
 #. dialog. On that page there are a variety of general Orca settings which do
 #. not fit well into any of the other pages.
-#: src/orca/guilabels.py:2159
+#: src/orca/guilabels.py:2202
 msgid "General"
 msgstr "Általános"
 
 #. Translators: This is the label of the Key Bindings page in the Orca Preferences
 #. dialog. On that page there is a list of all Orca commands and the keystrokes
 #. associated with them. The user can customize the keystrokes for any command.
-#: src/orca/guilabels.py:2164
+#: src/orca/guilabels.py:2207
 msgid "Key Bindings"
 msgstr "Billentyűtársítások"
 
 #. Translators: This is the label of the Commands page in the Orca Preferences
 #. dialog. On that page there is a list of all Orca commands and the keystrokes
 #. associated with them. The user can customize the keystrokes for any command.
-#: src/orca/guilabels.py:2169
+#: src/orca/guilabels.py:2212
 msgid "Commands"
 msgstr "parancsok"
 
@@ -8721,7 +8708,7 @@ msgstr "parancsok"
 #. preferences page. Mouse review features may not work properly on
 #. Wayland because Wayland restricts applications from monitoring the
 #. mouse pointer.
-#: src/orca/guilabels.py:2180
+#: src/orca/guilabels.py:2223
 msgid "These settings may not work on Wayland."
 msgstr "Lehetséges, hogy ezek a beállítások nem működnek Waylanden."
 
@@ -8730,58 +8717,58 @@ msgstr "Lehetséges, hogy ezek a beállítások nem működnek Waylanden."
 #. to the speech synthesizer. For instance "idk" can be sent to the speech server
 #. as "I don't know" or "I D K" or "eye dee kay" or whatever causes the user's
 #. speech synthesizer to say what the user finds most helpful.
-#: src/orca/guilabels.py:2187
+#: src/orca/guilabels.py:2230
 msgid "Pronunciation"
 msgstr "Kiejtés"
 
 #. Translators: This is the title of the math presentation settings. Math here refers
 #. to mathematical expressions such as equations, fractions, and formulas encountered
 #. in documents and web pages. Presentation refers to how they are spoken and brailled.
-#: src/orca/guilabels.py:2192
+#: src/orca/guilabels.py:2235
 msgid "Math presentation"
 msgstr "Matematikai megjelenítés"
 
 #. Translators: This refers to a human language such as English, Spanish, or German.
-#: src/orca/guilabels.py:2195
+#: src/orca/guilabels.py:2238
 msgid "Language:"
 msgstr "Nyelv"
 
 #. Translators: This is the style used when speaking mathematical expressions.
 #. "ClearSpeak" produces natural-sounding speech (e.g. "x squared") while
 #. "SimpleSpeak" is more literal and structured (e.g. "x superscript 2 end superscript").
-#: src/orca/guilabels.py:2200
+#: src/orca/guilabels.py:2243
 msgid "Speech style:"
 msgstr "Beszédstílus:"
 
 #. Translators: This is a verbosity level for speaking mathematical expressions.
 #. "Terse" provides minimal information, for example "square root x" instead of
 #. "the square root of x".
-#: src/orca/guilabels.py:2205
+#: src/orca/guilabels.py:2248
 msgid "Terse"
 msgstr "Tömör"
 
 #. Translators: This is a verbosity level for speaking mathematical expressions.
 #. "Medium" is the default and provides a moderate amount of detail.
-#: src/orca/guilabels.py:2209
+#: src/orca/guilabels.py:2252
 msgid "Medium"
 msgstr "Közepes"
 
 #. Translators: This is a verbosity level for speaking mathematical expressions.
 #. "Verbose" provides the most detail, for example "the square root of x" instead
 #. of "square root x".
-#: src/orca/guilabels.py:2214
+#: src/orca/guilabels.py:2257
 msgid "Verbose"
 msgstr "Részletes"
 
 #. Translators: This is the braille code used to represent mathematical expressions.
 #. Examples include "Nemeth" (common in the US) and "UEB" (Unified English Braille).
-#: src/orca/guilabels.py:2218
+#: src/orca/guilabels.py:2261
 msgid "Braille code:"
 msgstr "Braille-kód:"
 
 #. Translators: This is the format used when copying math content to the clipboard.
 #. Options include MathML, LaTeX, ASCIIMath, and Speech.
-#: src/orca/guilabels.py:2222
+#: src/orca/guilabels.py:2265
 msgid "Copy format:"
 msgstr "Másolási formátum:"
 
@@ -8790,7 +8777,7 @@ msgstr "Másolási formátum:"
 #. mode, MathCAT groups related items (e.g. treating "x+1" as one unit). In
 #. Simple mode, each element is visited individually. In Character mode,
 #. individual symbols are visited one at a time.
-#: src/orca/guilabels.py:2229
+#: src/orca/guilabels.py:2272
 msgid "Navigation mode:"
 msgstr "Navigációs mód:"
 
@@ -8799,7 +8786,7 @@ msgstr "Navigációs mód:"
 #. on a braille display during math navigation. Dots 7 and 8 are used to mark
 #. the position. The options control which cells get those dots: none, only the
 #. first character, the first and last characters, or all characters.
-#: src/orca/guilabels.py:2236
+#: src/orca/guilabels.py:2279
 msgid "Braille navigation highlight:"
 msgstr "Braille navigáció kiemelése:"
 
@@ -8807,35 +8794,35 @@ msgstr "Braille navigáció kiemelése:"
 #. setting is enabled, navigating past the edge of a 2D structure like a matrix
 #. or table automatically moves back to the containing expression rather than
 #. staying inside the structure.
-#: src/orca/guilabels.py:2242
+#: src/orca/guilabels.py:2285
 msgid "Automatically exit 2D math structures"
 msgstr "Automatikus kilépés a 2D matematikai struktúrákból"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the navigation granularity options. In Enhanced mode, MathCAT groups
 #. related items together for faster navigation.
-#: src/orca/guilabels.py:2247
+#: src/orca/guilabels.py:2290
 msgid "Enhanced"
 msgstr "Speciális"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the navigation granularity options. In Simple mode, each math
 #. element is visited individually.
-#: src/orca/guilabels.py:2252
+#: src/orca/guilabels.py:2295
 msgid "Simple"
 msgstr "Egyszerű"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the navigation granularity options. In Character mode, individual
 #. symbols are visited one at a time.
-#: src/orca/guilabels.py:2257
+#: src/orca/guilabels.py:2300
 msgid "Character"
 msgstr "Karakter"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the braille highlight options. When set to None, the current position
 #. during math navigation is not highlighted on the braille display.
-#: src/orca/guilabels.py:2262
+#: src/orca/guilabels.py:2305
 msgctxt "braille nav highlight"
 msgid "None"
 msgstr "Fejlécoldal"
@@ -8843,39 +8830,39 @@ msgstr "Fejlécoldal"
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the braille highlight options. When set to First character, only the
 #. first cell of the current math item is highlighted with dots 7 and 8.
-#: src/orca/guilabels.py:2267
+#: src/orca/guilabels.py:2310
 msgid "First character"
 msgstr "Első karakter"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the braille highlight options. When set to End points, the first and
 #. last cells of the current math item are highlighted with dots 7 and 8.
-#: src/orca/guilabels.py:2272
+#: src/orca/guilabels.py:2315
 msgid "End points"
 msgstr "Végpontok"
 
 #. Translators: Orca has a math navigation mode powered by MathCAT. This is
 #. one of the braille highlight options. When set to All cells, every cell of
 #. the current math item is highlighted with dots 7 and 8.
-#: src/orca/guilabels.py:2277
+#: src/orca/guilabels.py:2320
 msgid "All cells"
 msgstr "Minden cella"
 
 #. Translators: This is the label of the Sound page in the Orca Preferences dialog.
 #. On that page there are settings related to sound output, including volume
 #. and progress bar beep notifications.
-#: src/orca/guilabels.py:2282
+#: src/orca/guilabels.py:2325
 msgid "Sound"
 msgstr "Hang"
 
 #. Translators: This is the label for a widget in the preferences dialog which
 #. turns sound support on or off.
-#: src/orca/guilabels.py:2286
+#: src/orca/guilabels.py:2329
 msgid "Sound support"
 msgstr "Hangtámogatás"
 
 #. Translators: This is the label for the volume control in the Sound preferences.
-#: src/orca/guilabels.py:2289
+#: src/orca/guilabels.py:2332
 msgid "Volume"
 msgstr "Hange_rő:"
 
@@ -8883,57 +8870,55 @@ msgstr "Hange_rő:"
 #. dialog. On that page there are settings related to table navigation, such as
 #. whether to speak table cell coordinates, row and column headers, and whether
 #. to read tables cell by cell or by full rows.
-#: src/orca/guilabels.py:2295
+#: src/orca/guilabels.py:2338
 msgid "Tables"
 msgstr "Táblázatok"
 
 #. Translators: This is the label of the Time and Date page in the Orca Preferences
 #. dialog.
-#: src/orca/guilabels.py:2299
+#: src/orca/guilabels.py:2342
 msgid "Time and Date"
 msgstr "Idő és dátum"
 
 #. Translators: This is the label of the Speech page in the Orca Preferences dialog.
-#: src/orca/guilabels.py:2302
+#: src/orca/guilabels.py:2345
 msgid "Speech"
 msgstr "Beszéd"
 
 #. Translators: This is the label of the Text Attributes page in the Orca Preferences
 #. dialog.
-#: src/orca/guilabels.py:2306
+#: src/orca/guilabels.py:2349
 msgid "Text Attributes"
 msgstr "Szövegattribútumok"
 
-#: src/orca/guilabels.py:2313
-msgid ""
-"Configure which text attributes are spoken and/or marked in braille, and the "
-"order in which they are presented."
+#: src/orca/guilabels.py:2356
+msgid "Configure which text attributes are spoken and/or marked in braille, and the order in which they are presented."
 msgstr ""
-"Konfigurálja, hogy mely szövegattribútumok legyenek felolvasva és/vagy "
-"megjelölve Braille-írásban, és milyen sorrendben jelenjenek meg."
+"Konfigurálja, hogy mely szövegattribútumok legyenek felolvasva és/vagy megjelölve Braille-írásban, és milyen sorrendben "
+"jelenjenek meg."
 
 #. Translators: This is the label of the Voice page in the Orca Preferences
 #. dialog.
-#: src/orca/guilabels.py:2319
+#: src/orca/guilabels.py:2362
 msgid "Voice"
 msgstr "Hang"
 
 #. Translators: This is the label for a section in the Voice Sets preferences
 #. page where users can select and manage voice sets for different languages.
-#: src/orca/guilabels.py:2323
+#: src/orca/guilabels.py:2366
 msgid "Voice Sets"
 msgstr "Hangkészletek"
 
 #. Translators: This is a label for a combo box that selects which voice set
 #. to configure. A voice set is a named collection of voice settings, such as
 #. the primary set or a language-specific set (e.g. Italian).
-#: src/orca/guilabels.py:2328
+#: src/orca/guilabels.py:2371
 msgid "Voice set:"
 msgstr "Hangkészlet:"
 
 #. Translators: This is the title of a confirmation dialog shown when the user
 #. is about to delete a voice set. The %s is replaced with the voice set name.
-#: src/orca/guilabels.py:2332
+#: src/orca/guilabels.py:2375
 #, python-format
 msgid "Delete voice set '%s'?"
 msgstr "Törli a(z) %s hangkészletet?"
@@ -8941,41 +8926,37 @@ msgstr "Törli a(z) %s hangkészletet?"
 #. Translators: This is the label for the global (default) voice set in the
 #. voice set selector combo box. It represents the main voice configuration
 #. for the current profile.
-#: src/orca/guilabels.py:2337
+#: src/orca/guilabels.py:2380
 msgctxt "VoiceSet"
 msgid "Global"
 msgstr "Globális"
 
 #. Translators: This is the accessible name for a button that creates a new
 #. voice set for a specific language.
-#: src/orca/guilabels.py:2341
+#: src/orca/guilabels.py:2384
 msgid "New Voice Set"
 msgstr "Új hangkészlet"
 
-#: src/orca/guilabels.py:2349
+#: src/orca/guilabels.py:2392
 #, python-format
 msgid ""
-"Voice sets are collections of voice types (such as default, uppercase, "
-"hyperlink, and system). The \"%s\" voice set contains the voice types for "
-"the current profile. Additional voice sets can be created for specific "
-"languages."
+"Voice sets are collections of voice types (such as default, uppercase, hyperlink, and system). The \"%s\" voice set contains the "
+"voice types for the current profile. Additional voice sets can be created for specific languages."
 msgstr ""
-"A hangkészletek hangtípusok gyűjteményei (például alapértelmezett, "
-"nagybetűs, hiperlink és rendszerhang). A \"%s\" hangkészlet az aktuális "
-"profil hangtípusait tartalmazza. További hangkészletek hozhatók létre "
-"bizonyos nyelvekhez."
+"A hangkészletek hangtípusok gyűjteményei (például alapértelmezett, nagybetűs, hiperlink és rendszerhang). A \"%s\" hangkészlet az "
+"aktuális profil hangtípusait tartalmazza. További hangkészletek hozhatók létre bizonyos nyelvekhez."
 
 #. Translators: This is the label of the Voice Types page in the Orca
 #. Preferences dialog, where users configure voices for different contexts
 #. (e.g. default, uppercase, hyperlink, system).
-#: src/orca/guilabels.py:2367
+#: src/orca/guilabels.py:2410
 msgid "Voice Types"
 msgstr "Hangtípus:"
 
 #. Translators: This is the label for a group of settings on the Voice preferences
 #. page. It contains widgets that control whether speech is enabled and how
 #. certain content (numbers, colors) is spoken.
-#: src/orca/guilabels.py:2372
+#: src/orca/guilabels.py:2415
 msgid "Speech Settings"
 msgstr "Beszéd beállításai"
 
@@ -8984,7 +8965,7 @@ msgstr "Beszéd beállításai"
 #. default, hyperlink, uppercase, or system). The button displays only an icon
 #. (a cog/gear), so this label is for screen reader users. The %s is replaced
 #. with the voice type name (e.g., "Default", "Uppercase", "Hyperlink", "System").
-#: src/orca/guilabels.py:2379
+#: src/orca/guilabels.py:2422
 #, python-format
 msgctxt "VoiceType"
 msgid "%s Settings"
@@ -8992,7 +8973,7 @@ msgstr "%s beállításai"
 
 #. Translators: This is the heading for a group of language switching settings
 #. in the Voice preferences dialog.
-#: src/orca/guilabels.py:2383
+#: src/orca/guilabels.py:2426
 msgid "Language Switching"
 msgstr "Automatikus nyelvváltás"
 
@@ -9000,7 +8981,7 @@ msgstr "Automatikus nyelvváltás"
 #. automatically switch the speech synthesizer's language based on the language
 #. of document content being spoken (e.g. text in a web page or word processor).
 #. It appears under a "Language Switching" group heading.
-#: src/orca/guilabels.py:2389
+#: src/orca/guilabels.py:2432
 msgid "Document content"
 msgstr "Dokumentum tartalma"
 
@@ -9008,7 +8989,7 @@ msgstr "Dokumentum tartalma"
 #. automatically switch the speech synthesizer's language based on the language
 #. of UI elements being spoken (e.g. buttons, labels, and menus).
 #. It appears under a "Language Switching" group heading.
-#: src/orca/guilabels.py:2395
+#: src/orca/guilabels.py:2438
 msgid "UI elements"
 msgstr "Felhasználói felület elemei"
 
@@ -9016,7 +8997,7 @@ msgstr "Felhasználói felület elemei"
 #. only switch to languages that the user has explicitly configured a voice for.
 #. When enabled, encountering text in an unconfigured language will not trigger
 #. a voice change. It appears under a "Language Switching" group heading.
-#: src/orca/guilabels.py:2401
+#: src/orca/guilabels.py:2444
 msgid "Limit switching to configured voices"
 msgstr "Nyelvváltás korlátozása csak a konfigurált hangokra"
 
@@ -9024,7 +9005,7 @@ msgstr "Nyelvváltás korlátozása csak a konfigurált hangokra"
 #. pane of the Orca Preferences dialog. On that pane there is a long list of
 #. possible text attributes. The user can select one and then, by using the
 #. Move buttons in this group, adjust when that attribute is spoken by Orca.
-#: src/orca/guilabels.py:2407
+#: src/orca/guilabels.py:2450
 msgid "Adjust selected attribute"
 msgstr ""
 "Kiválasztott attribútum\n"
@@ -9034,7 +9015,7 @@ msgstr ""
 #. braille dot or dots should be used to indicate that character(s) being
 #. shown on the braille display have a particular attribute (e.g. bold). The
 #. "indicator" can be chosen from among: None, Dot 7, Dot 8, Dots 7 and 8.
-#: src/orca/guilabels.py:2413
+#: src/orca/guilabels.py:2456
 msgid "Braille Indicator"
 msgstr "Braille-kiválasztás jelző"
 
@@ -9044,7 +9025,7 @@ msgstr "Braille-kiválasztás jelző"
 #. button, move that attribute down one line in the list. The ordering in the
 #. list is important as Orca will speak the selected text attributes in the
 #. given order.
-#: src/orca/guilabels.py:2421
+#: src/orca/guilabels.py:2464
 msgid "Move down one"
 msgstr "Eggyel _lejjebb"
 
@@ -9054,7 +9035,7 @@ msgstr "Eggyel _lejjebb"
 #. button, move that attribute up one line in the list. The ordering in the list
 #. is important as Orca will speak the selected text attributes in the given
 #. order.
-#: src/orca/guilabels.py:2429
+#: src/orca/guilabels.py:2472
 msgid "Move up one"
 msgstr "Eggyel _feljebb"
 
@@ -9064,7 +9045,7 @@ msgstr "Eggyel _feljebb"
 #. button, move that attribute to the bottom of the list. The ordering in the
 #. list is important as Orca will speak the selected text attributes in the
 #. given order.
-#: src/orca/guilabels.py:2437
+#: src/orca/guilabels.py:2480
 msgid "Move to bottom"
 msgstr "Az aljá_ra"
 
@@ -9074,31 +9055,31 @@ msgstr "Az aljá_ra"
 #. button, move that attribute to the top of the list. The ordering in the list
 #. is important as Orca will speak the selected text attributes in the given
 #. order.
-#: src/orca/guilabels.py:2445
+#: src/orca/guilabels.py:2488
 msgid "Move to top"
 msgstr "A _tetejére"
 
 #. Translators: This is a label for a group of widgets associated with how Orca
 #. will present text attributes such as bold, underline, italic, font size,
-#: src/orca/guilabels.py:2449
+#: src/orca/guilabels.py:2492
 msgid "Text attributes"
 msgstr "Szövegattribútumok"
 
 #. Translators: This is the accessible name for a widget in the preferences dialog
 #. that allows the user to reorder text attributes in the list.
-#: src/orca/guilabels.py:2453
+#: src/orca/guilabels.py:2496
 msgid "Reorder"
 msgstr "Újrarendezés"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus. The choices are Brief and Verbose.
-#: src/orca/guilabels.py:2457
+#: src/orca/guilabels.py:2500
 msgid "Verbosity"
 msgstr "Részletesség"
 
 #. Translators: This refers to the amount of information Orca provides about a
 #. particular object that receives focus.
-#: src/orca/guilabels.py:2461
+#: src/orca/guilabels.py:2504
 msgid "Ver_bose"
 msgstr "Rés_zletes"
 
@@ -9106,14 +9087,14 @@ msgstr "Rés_zletes"
 #. will speak regardless of which voice (Default, Hyperlink, System, Uppercase)
 #. is being used. For instance, Orca can speak numbers as individual digits
 #. (e.g. 123 as 1 2 3) or as a whole (e.g. 123 as one hundred and twenty three).
-#: src/orca/guilabels.py:2467
+#: src/orca/guilabels.py:2510
 msgid "Global Voice Settings"
 msgstr "Globális hangbeállítások"
 
 #. Translators: If this setting is enabled, 123 will be spoken as the individual
 #. digits 1 2 3; otherwise, it will be sent to the synthesizer and (likely)
 #. spoken as one hundred and twenty three.
-#: src/orca/guilabels.py:2472
+#: src/orca/guilabels.py:2515
 msgid "Speak _numbers as digits"
 msgstr "_Számok kimondása számjegyenként"
 
@@ -9125,21 +9106,21 @@ msgstr "_Számok kimondása számjegyenként"
 #. system -- each of which can be configured by the user to sound the way he/she
 #. finds most helpful. This string is displayed in the label for the group of
 #. all of the controls associated with configuring a particular voice type.
-#: src/orca/guilabels.py:2482
+#: src/orca/guilabels.py:2525
 msgid "Voice Type Settings"
 msgstr "Hangtípusok beállításai"
 
 #. Translators: This is the label for a widget from which the user can select
 #. which speech synthesis system Orca should use. Examples of speech synthesis
 #. systems include Speech Dispatcher and Spiel.
-#: src/orca/guilabels.py:2487
+#: src/orca/guilabels.py:2530
 msgid "Speech _system:"
 msgstr "Beszé_drendszer:"
 
 #. Translators: This is the label for a widget from which the user can select
 #. which speech synthesizer Orca should use. Examples of speech synthesizers
 #. include eSpeak, Festival, and Pico.
-#: src/orca/guilabels.py:2492
+#: src/orca/guilabels.py:2535
 msgid "Speech synthesi_zer:"
 msgstr "Beszédszintetizát_or:"
 
@@ -9150,45 +9131,45 @@ msgstr "Beszédszintetizát_or:"
 #. or play a tone (which Speech Dispatcher refers to as a sound 'icon'). Orca
 #. refers to these things as 'capitalization style'. This string is the text of
 #. the label through which users can choose which of style they would prefer.
-#: src/orca/guilabels.py:2501
+#: src/orca/guilabels.py:2544
 msgid "Capitalization style"
 msgstr "_Nagybetű jelzési stílus:"
 
 #. Translators: This is the label for a widget from which the user can select
 #. the language of the speech synthesizer.
-#: src/orca/guilabels.py:2505
+#: src/orca/guilabels.py:2548
 msgid "_Language:"
 msgstr "Nyel_v"
 
 #. Translators: This is the label for a widget from which the user can select
 #. which voice from the current speech synthesizer should be used. Often voices
 #. have human names such as "Allison". Hence the use of the term person.
-#: src/orca/guilabels.py:2510
+#: src/orca/guilabels.py:2553
 msgid "_Person:"
 msgstr "Személ_y:"
 
 #. Translators: This is the label for a widget from which the user can set the
 #. speaking rate of the current voice.
-#: src/orca/guilabels.py:2514
+#: src/orca/guilabels.py:2557
 msgid "_Rate:"
 msgstr "Se_besség:"
 
 #. Translators: This is the label for a widget from which the user can set the
 #. pitch of the current voice.
-#: src/orca/guilabels.py:2518
+#: src/orca/guilabels.py:2561
 msgid "Pi_tch:"
 msgstr "Hangmaga_sság:"
 
 #. Translators: This is the label for a widget from which the user can set the
 #. volume of the current voice.
-#: src/orca/guilabels.py:2522
+#: src/orca/guilabels.py:2565
 msgid "Vo_lume:"
 msgstr "Hange_rő:"
 
 #. Translators: This is the label for a widget from which the user can set the
 #. inflection (pitch range) of the current voice. More inflection means the voice
 #. varies its pitch more when speaking; less inflection means it sounds more monotone.
-#: src/orca/guilabels.py:2527
+#: src/orca/guilabels.py:2570
 msgid "_Inflection:"
 msgstr "_Hangmagasság tartománya:"
 
@@ -9200,18 +9181,18 @@ msgstr "_Hangmagasság tartománya:"
 #. system -- each of which can be configured by the user to sound the way he/she
 #. finds most helpful. This string is displayed in the label for the combo box
 #. in which the user selects a voice type to configure.
-#: src/orca/guilabels.py:2537
+#: src/orca/guilabels.py:2580
 msgid "_Voice type:"
 msgstr "_Hangtípus:"
 
 #. Translators: This refers to the voice used by Orca by default.
-#: src/orca/guilabels.py:2540
+#: src/orca/guilabels.py:2583
 msgid "Default"
 msgstr "Alapértelmezett"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which are part of a hyperlink.
-#: src/orca/guilabels.py:2544
+#: src/orca/guilabels.py:2587
 msgid "Hyperlink"
 msgstr "Hiperlink"
 
@@ -9221,13 +9202,13 @@ msgstr "Hiperlink"
 #. indicate the presence of the red squiggly line found under a spelling error;
 #. Orca might say "3 of 6" when a user Tabs into a list of six items and the
 #. third item is selected. And so on.
-#: src/orca/guilabels.py:2552
+#: src/orca/guilabels.py:2595
 msgid "System"
 msgstr "Rendszer"
 
 #. Translators: This refers to the voice used by Orca when presenting one or more
 #. characters which is written in uppercase.
-#: src/orca/guilabels.py:2556
+#: src/orca/guilabels.py:2599
 msgid "Uppercase"
 msgstr "Nagybetűkké"
 
@@ -9236,7 +9217,7 @@ msgstr "Nagybetűkké"
 #. Super+M, but it works in all desktop environments. This string is the title
 #. of the dialog that contains the list of notification messages. The string
 #. substitution is for the number of messages in the list.
-#: src/orca/guilabels.py:2567
+#: src/orca/guilabels.py:2610
 #, python-format
 msgid "%d notification"
 msgid_plural "%d notifications"
@@ -9338,14 +9319,12 @@ msgid "scroll lock"
 msgstr "scroll lock"
 
 #. Translators: this is how someone would speak the name of the page up key
-#: src/orca/keynames.py:82 src/orca/keynames.py:85 src/orca/keynames.py:88
-#: src/orca/keynames.py:91
+#: src/orca/keynames.py:82 src/orca/keynames.py:85 src/orca/keynames.py:88 src/orca/keynames.py:91
 msgid "page up"
 msgstr "page up"
 
 #. Translators: this is how someone would speak the name of the page down key
-#: src/orca/keynames.py:94 src/orca/keynames.py:97 src/orca/keynames.py:100
-#: src/orca/keynames.py:103
+#: src/orca/keynames.py:94 src/orca/keynames.py:97 src/orca/keynames.py:100 src/orca/keynames.py:103
 msgid "page down"
 msgstr "page down"
 
@@ -9811,11 +9790,8 @@ msgstr "A következő profil nem tölthető be: %s"
 #. Translators: This message is presented to the user who attempts to launch Orca
 #. from some other environment than the graphical desktop.
 #: src/orca/messages.py:226
-msgid ""
-"Cannot start the screen reader because it cannot connect to the Desktop."
-msgstr ""
-"A képernyőolvasó nem tudott elindulni, mivel nem tud kapcsolódni az asztali "
-"környezethez"
+msgid "Cannot start the screen reader because it cannot connect to the Desktop."
+msgstr "A képernyőolvasó nem tudott elindulni, mivel nem tud kapcsolódni az asztali környezethez"
 
 #: src/orca/messages.py:231
 msgid ""
@@ -9823,8 +9799,7 @@ msgid ""
 "Run “orca --replace” to replace that process with a new one."
 msgstr ""
 "Már fut egy képernyőolvasó ebben a munkamenetben.\n"
-"Futtassa az „orca --replace” parancsot az aktuális Orka folyamat "
-"lecseréléséhez."
+"Futtassa az „orca --replace” parancsot az aktuális Orka folyamat lecseréléséhez."
 
 #. Translators: This string indicates to the user what should be provided when
 #. using the '-p, --profile' command line option.
@@ -9878,8 +9853,7 @@ msgstr "Megjeleníti a súgóképernyőt, majd kilép."
 #. start with 'debug' and end with '.out', regardless of the locale.).
 #: src/orca/messages.py:275
 msgid "Send debug output to debug-YYYY-MM-DD-HH:MM:SS.out"
-msgstr ""
-"A hibakövetési információk mentése a debug-ÉÉÉÉ-HH-NN-OO:PP:MM.out fájlba"
+msgstr "A hibakövetési információk mentése a debug-ÉÉÉÉ-HH-NN-OO:PP:MM.out fájlba"
 
 #. Translators: This is the description of command line option '--debug-file'
 #. which allows the user to override the default date-based name of the debugging
@@ -9943,9 +9917,7 @@ msgstr "A kiterjesztés nincs jóváhagyva: %s"
 #: src/orca/messages.py:317
 #, python-format
 msgid "Warning: %s is currently disabled and will not load until enabled."
-msgstr ""
-"Figyelem: a(z) %s kiterjesztés jelenleg le van tiltva, és csak engedélyezés "
-"után töltődik be."
+msgstr "Figyelem: a(z) %s kiterjesztés jelenleg le van tiltva, és csak engedélyezés után töltődik be."
 
 #. Translators: This is the description of command line option '-s, --setup'
 #. that will place the user in Orca's GUI preferences window.
@@ -9957,9 +9929,7 @@ msgstr "Megjeleníti a beállítások ablakot"
 #. from the command line and the help text is displayed.
 #: src/orca/messages.py:326
 msgid "Report bugs on https://gitlab.gnome.org/GNOME/orca/-/issues."
-msgstr ""
-"A hibákat az alábbi weblapon keresztül jelezheti:  https://gitlab.gnome.org/"
-"GNOME/orca/-/issues."
+msgstr "A hibákat az alábbi weblapon keresztül jelezheti:  https://gitlab.gnome.org/GNOME/orca/-/issues."
 
 #. Translators: Orca has a command to present the contents of the clipboard without
 #. the user having to switch to a clipboard manager. This message is spoken by Orca
@@ -10827,15 +10797,12 @@ msgstr "Tanulómód. Kilépéshez nyomja meg az Esc billentyűt."
 
 #: src/orca/messages.py:954
 msgid ""
-"Entering learn mode.  Press any key to hear its function.  To view the "
-"screen reader's documentation, press F1. To get a list of the screen "
-"reader's shortcuts, press F2. To exit learn mode, press the escape key."
+"Entering learn mode.  Press any key to hear its function.  To view the screen reader's documentation, press F1. To get a list of "
+"the screen reader's shortcuts, press F2. To exit learn mode, press the escape key."
 msgstr ""
-"Belépés a tanulómódba. Nyomjon meg egy billentyűt a funkciójának "
-"meghallgatásához. A képernyőolvasó dokumentációjának megjelenítéséhez nyomja "
-"le az F1 billentyűt. A képernyőolvasó általános billentyűparancsainak "
-"listájának megjelenítéséhez nyomja le az F2 billentyűt. Ha ki szeretne lépni "
-"a tanulómódból, nyomja meg az ESC billentyűt."
+"Belépés a tanulómódba. Nyomjon meg egy billentyűt a funkciójának meghallgatásához. A képernyőolvasó dokumentációjának "
+"megjelenítéséhez nyomja le az F1 billentyűt. A képernyőolvasó általános billentyűparancsainak listájának megjelenítéséhez nyomja "
+"le az F2 billentyűt. Ha ki szeretne lépni a tanulómódból, nyomja meg az ESC billentyűt."
 
 #. Translators: This message is presented when a user is navigating within
 #. an article and then navigates out of it.
@@ -12968,8 +12935,7 @@ msgstr[1] "Matematikai táblázat %d sorral"
 #. which is nested inside another mathematical table.
 #. See http://www.w3.org/TR/MathML3/chapter3.html#presm.mtable
 #. Translators: this represents the number of columns in a table.
-#: src/orca/messages.py:2504 src/orca/messages.py:2520
-#: src/orca/messages.py:2661
+#: src/orca/messages.py:2504 src/orca/messages.py:2520 src/orca/messages.py:2661
 #, python-format
 msgid "%d column"
 msgid_plural "%d columns"
@@ -14023,17 +13989,14 @@ msgstr "nyelvi hiba"
 
 #: src/orca/phonnames.py:47
 msgid ""
-"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : "
-"golf, h : hotel, i : india, j : juliet, k : kilo, l : lima, m : mike, n : "
-"november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, "
-"u : uniform, v : victor, w : whiskey, x : xray, y : yankee, z : zulu"
+"a : alpha, b : bravo, c : charlie, d : delta, e : echo, f : foxtrot, g : golf, h : hotel, i : india, j : juliet, k : kilo, l : "
+"lima, m : mike, n : november, o : oscar, p : papa, q : quebec, r : romeo, s : sierra, t : tango, u : uniform, v : victor, w : "
+"whiskey, x : xray, y : yankee, z : zulu"
 msgstr ""
-"a : aladár, á : ádám, b : béla, c : cecil, d : dénes, e : elemér, é : éva, "
-"f : ferenc, g : gábor, h : hugó, i : ilona, í : ilona hosszú, j : józsef, "
-"k : károly, l : lászló, m : márton, n: nándor, o : olga, ó : olga hosszú, "
-"ö : ödön, ő : ödön hosszú, ü : ürmös, ű : ürmös hosszú, p : péter, q : "
-"kvelle, r : róbert, s : sándor, t : tamás, u : ubul, ú : ubul hosszú, v : "
-"vilmos, w : dupla vilmos, x : xénia, y : ipszilon, z : zoltán"
+"a : aladár, á : ádám, b : béla, c : cecil, d : dénes, e : elemér, é : éva, f : ferenc, g : gábor, h : hugó, i : ilona, í : ilona "
+"hosszú, j : józsef, k : károly, l : lászló, m : márton, n: nándor, o : olga, ó : olga hosszú, ö : ödön, ő : ödön hosszú, ü : "
+"ürmös, ű : ürmös hosszú, p : péter, q : kvelle, r : róbert, s : sándor, t : tamás, u : ubul, ú : ubul hosszú, v : vilmos, w : "
+"dupla vilmos, x : xénia, y : ipszilon, z : zoltán"
 
 #. Translators: this attribute specifies the background color of the text.
 #. The value is an RGB value of the format "u,u,u".
@@ -14844,15 +14807,11 @@ msgstr "betűtévesztés"
 #~ msgid ""
 #~ "Import settings from DIR into dconf (overwrites current settings).\n"
 #~ "To back up first: dconf dump /org/gnome/orca/ > backup.ini\n"
-#~ "To restore: dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/"
-#~ "orca/ < backup.ini"
+#~ "To restore: dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ < backup.ini"
 #~ msgstr ""
-#~ "Beállítások importálása egy könyvtárból a dconf fájlba (ez a művelet "
-#~ "felülírja az aktuális beállításokat).\n"
-#~ "Először készítsen biztonsági mentést az alábbi paranccsal: dconf dump /"
-#~ "org/gnome/orca/ >backup.ini\n"
-#~ "A régi beállításokat így állíthatja vissza: dconf reset -f /org/gnome/"
-#~ "orca/ && dconf load /org/gnome/orca/ <backup.ini"
+#~ "Beállítások importálása egy könyvtárból a dconf fájlba (ez a művelet felülírja az aktuális beállításokat).\n"
+#~ "Először készítsen biztonsági mentést az alábbi paranccsal: dconf dump /org/gnome/orca/ >backup.ini\n"
+#~ "A régi beállításokat így állíthatja vissza: dconf reset -f /org/gnome/orca/ && dconf load /org/gnome/orca/ <backup.ini"
 
 #~ msgid "DIR"
 #~ msgstr "KÖNYVTÁR"
@@ -14863,8 +14822,7 @@ msgstr "betűtévesztés"
 
 #~| msgid "Automatic language switching"
 #~ msgid "Automatic language switching for UI elements"
-#~ msgstr ""
-#~ "Automatikus nyelvváltás engedélyezése a felhasználói felület elemeihez"
+#~ msgstr "Automatikus nyelvváltás engedélyezése a felhasználói felület elemeihez"
 
 #~ msgctxt "math symbol"
 #~ msgid "bold %s"
@@ -16553,8 +16511,7 @@ msgstr "betűtévesztés"
 #~ "Continue loading profile discarding previous changes?"
 #~ msgstr ""
 #~ "Arra készül, hogy megváltoztassa az aktív profilt.\n"
-#~ "Ha változtatásokat hajtott végre az Orka beállításainál, ezek el fognak "
-#~ "veszni az új profil betöltésekor.\n"
+#~ "Ha változtatásokat hajtott végre az Orka beállításainál, ezek el fognak veszni az új profil betöltésekor.\n"
 #~ "\n"
 #~ "Folytatja a profil betöltését, elvetve a korábbi változtatásokat?"
 
@@ -16610,16 +16567,13 @@ msgstr "betűtévesztés"
 #~ msgstr "elérhetetlen"
 
 #~ msgid "Use Up and Down Arrow to navigate the list. Press Escape to exit."
-#~ msgstr ""
-#~ "A listában való navigációhoz használja a felfelé és lefelé nyilakat, a "
-#~ "kilépéshez pedig az Escape billentyűt."
+#~ msgstr "A listában való navigációhoz használja a felfelé és lefelé nyilakat, a kilépéshez pedig az Escape billentyűt."
 
 #~ msgid "politeness level %s"
 #~ msgstr "%s udvariassági szint"
 
 #~ msgid "To enable focus mode press %s."
-#~ msgstr ""
-#~ "A fókuszmód bekapcsolásához nyomja meg a(z) %s billentyűkombinációt."
+#~ msgstr "A fókuszmód bekapcsolásához nyomja meg a(z) %s billentyűkombinációt."
 
 #~ msgid "Error: Could not create list of objects."
 #~ msgstr "Hiba: a kért objektumok listája nem hozható létre."
@@ -16670,12 +16624,10 @@ msgstr "betűtévesztés"
 
 # megjegyzés: Talán a "A fókuszmód automatikus bekapcsolása navigálás közben" megnevezés jobb lenne
 #~ msgid "Automatic focus mode during structural navigation"
-#~ msgstr ""
-#~ "A fókuszmód automatikus bekapcsolása a strukturált navigáció használatakor"
+#~ msgstr "A fókuszmód automatikus bekapcsolása a strukturált navigáció használatakor"
 
 #~ msgid "Automatic focus mode during native navigation"
-#~ msgstr ""
-#~ "A fókuszmód automatikus bekapcsolása a natív navigáció használatakor"
+#~ msgstr "A fókuszmód automatikus bekapcsolása a natív navigáció használatakor"
 
 #~ msgid "Enable _structural navigation"
 #~ msgstr "_Strukturált navigáció engedélyezése"
@@ -16779,12 +16731,8 @@ msgstr "betűtévesztés"
 
 #~ msgid "%(count)d Screen reader shortcut for %(application)s found."
 #~ msgid_plural "%(count)d Screen reader shortcuts for %(application)s found."
-#~ msgstr[0] ""
-#~ "%(count)d képernyőolvasó billentyűparancs található a(z) %(application)s "
-#~ "alkalmazáshoz."
-#~ msgstr[1] ""
-#~ "%(count)d képernyőolvasó billentyűparancs található a(z) %(application)s "
-#~ "alkalmazáshoz."
+#~ msgstr[0] "%(count)d képernyőolvasó billentyűparancs található a(z) %(application)s alkalmazáshoz."
+#~ msgstr[1] "%(count)d képernyőolvasó billentyűparancs található a(z) %(application)s alkalmazáshoz."
 
 #~ msgid "Present the contents of the input line"
 #~ msgstr "Megjeleníti a beviteli sor tartalmát."
@@ -16849,8 +16797,7 @@ msgstr "betűtévesztés"
 #~ msgid "Toggle whether we provide chat room specific message histories"
 #~ msgstr "A csatorna nevének a csevegőüzenetek elé szúrása be/ki."
 
-#~ msgid ""
-#~ "Toggle whether we prefix chat room messages with the name of the chat room"
+#~ msgid "Toggle whether we prefix chat room messages with the name of the chat room"
 #~ msgstr "A csatorna nevének a csevegőüzenetek elé szúrása be/ki."
 
 #~ msgid "Bookmark where am I with respect to current position"
@@ -16898,8 +16845,7 @@ msgstr "betűtévesztés"
 #~ msgstr "Az élő régiók figyelése bekapcsolva"
 
 #~ msgid "Move focus into and away from the current mouse over"
-#~ msgstr ""
-#~ "A fókuszt az egérmutatónál felbukkanó objektumra, vagy arról elmozgatja."
+#~ msgstr "A fókuszt az egérmutatónál felbukkanó objektumra, vagy arról elmozgatja."
 
 #~ msgid "Mouse over object not found."
 #~ msgstr "A felbukkanó objektum nem található."
@@ -17524,34 +17470,25 @@ msgstr "betűtévesztés"
 #~ msgstr "Az állapot megváltoztatásához nyomja meg a szóköz billentyűt."
 
 #~ msgid "Press space to expand, and use up and down to select an item."
-#~ msgstr ""
-#~ "A legördítéshez használja a szóköz, az elemeken való navigáláshoz a fel- "
-#~ "és le nyíl billentyűket."
+#~ msgstr "A legördítéshez használja a szóköz, az elemeken való navigáláshoz a fel- és le nyíl billentyűket."
 
 #~ msgid "Press alt+f6 to give focus to child windows."
-#~ msgstr ""
-#~ "Az ablakok közötti váltáshoz használja az Alt+F6 billentyűkombinációt."
+#~ msgstr "Az ablakok közötti váltáshoz használja az Alt+F6 billentyűkombinációt."
 
 #~ msgid "To move to items, use either the arrow keys or type ahead searching."
-#~ msgstr ""
-#~ "Az elemeken való navigáláshoz használja a nyíl billentyűket, vagy írjon "
-#~ "be néhány karaktert a kereséshez."
+#~ msgstr "Az elemeken való navigáláshoz használja a nyíl billentyűket, vagy írjon be néhány karaktert a kereséshez."
 
 #~ msgid "To get to the system menus press the alt+f1 key."
-#~ msgstr ""
-#~ "A rendszermenük eléréséhez nyomja meg az Alt+F1 billentyűkombinációt."
+#~ msgstr "A rendszermenük eléréséhez nyomja meg az Alt+F1 billentyűkombinációt."
 
 #~ msgid "Use up and down to select an item."
 #~ msgstr "Egy elem kijelöléséhez használja a fel- és le nyíl billentyűket."
 
 #~ msgid "To collapse, press shift plus left."
-#~ msgstr ""
-#~ "A fanézet összecsukásához használja a Shift+bal nyíl billentyűkombinációt."
+#~ msgstr "A fanézet összecsukásához használja a Shift+bal nyíl billentyűkombinációt."
 
 #~ msgid "To expand, press shift plus right."
-#~ msgstr ""
-#~ "A fanézet kiterjesztéséhez használja a Shift+jobbra nyíl "
-#~ "billentyűkombinációt."
+#~ msgstr "A fanézet kiterjesztéséhez használja a Shift+jobbra nyíl billentyűkombinációt."
 
 #~ msgid "To activate press return."
 #~ msgstr "Aktiválásához nyomja meg az enter billentyűt."
@@ -17560,41 +17497,29 @@ msgstr "betűtévesztés"
 #~ msgstr "Gépelje be a kért információt, vagy módosítsa a meglévőt."
 
 #~ msgid "Use left and right to view other tabs."
-#~ msgstr ""
-#~ "A lapfülek közötti váltáshoz használja a balra- és jobbra nyíl "
-#~ "billentyűket."
+#~ msgstr "A lapfülek közötti váltáshoz használja a balra- és jobbra nyíl billentyűket."
 
 #~ msgid "To activate press space."
 #~ msgstr "Aktiválásához nyomja meg a szóköz billentyűt."
 
-#~ msgid ""
-#~ "Use up or down arrow to select value. Or type in the desired numerical "
-#~ "value."
-#~ msgstr ""
-#~ "Az érték megadásához használja a felfelé és lefelé nyílbillentyűket, vagy "
-#~ "gépelje be az értéket."
+#~ msgid "Use up or down arrow to select value. Or type in the desired numerical value."
+#~ msgstr "Az érték megadásához használja a felfelé és lefelé nyílbillentyűket, vagy gépelje be az értéket."
 
 #~ msgid "Use arrow keys to change."
 #~ msgstr "A kijelölés módosításához használja a nyíl billentyűket."
 
-#~ msgid ""
-#~ "To navigate, press left or right arrow. To move through items press up or "
-#~ "down arrow."
+#~ msgid "To navigate, press left or right arrow. To move through items press up or down arrow."
 #~ msgstr ""
-#~ "A főmenük között a balra- és jobbra nyíl billentyűk segítségével "
-#~ "léptethet. A menüelemeken való navigációhoz használja a fel- és le nyíl "
-#~ "billentyűket."
+#~ "A főmenük között a balra- és jobbra nyíl billentyűk segítségével léptethet. A menüelemeken való navigációhoz használja a fel- "
+#~ "és le nyíl billentyűket."
 
 #~ msgid "To enter sub menu, press right arrow."
 #~ msgstr "Az almenü megnyitásához használja a jobbra nyíl billentyűt."
 
-#~ msgid ""
-#~ "To decrease press left arrow, to increase press right arrow. To go to "
-#~ "minimum press home, and for maximum press end."
+#~ msgid "To decrease press left arrow, to increase press right arrow. To go to minimum press home, and for maximum press end."
 #~ msgstr ""
-#~ "Az érték csökkentéséhez használja a balra nyíl, növeléséhez a jobbra nyíl "
-#~ "billentyűt. A legkisebb értékre ugráshoz használja a Home, a legnagyobb "
-#~ "értékre ugráshoz pedig az End billentyűt."
+#~ "Az érték csökkentéséhez használja a balra nyíl, növeléséhez a jobbra nyíl billentyűt. A legkisebb értékre ugráshoz használja a "
+#~ "Home, a legnagyobb értékre ugráshoz pedig az End billentyűt."
 
 #~ msgctxt "structural navigation"
 #~ msgid "Interal Frames"
@@ -17612,13 +17537,10 @@ msgstr "betűtévesztés"
 #~ "Press Space to repeat the last message read.\n"
 #~ "Press one digit to read a specific message.\n"
 #~ msgstr ""
-#~ "A listában való navigáláshoz használja a felfelé nyíl, lefelé nyíl, Home "
-#~ "vagy End billentyűket.\n"
+#~ "A listában való navigáláshoz használja a felfelé nyíl, lefelé nyíl, Home vagy End billentyűket.\n"
 #~ "A kilépéshez nyomja meg az Escape billentyűt.\n"
-#~ "Az utolsó felolvasott értesítés megismétléséhez nyomja meg a szóköz "
-#~ "billentyűt.\n"
-#~ "Egy megadott számú értesítés felolvastatásához nyomja meg a megfelelő "
-#~ "számbillentyűt.\n"
+#~ "Az utolsó felolvasott értesítés megismétléséhez nyomja meg a szóköz billentyűt.\n"
+#~ "Egy megadott számú értesítés felolvastatásához nyomja meg a megfelelő számbillentyűt.\n"
 
 #~ msgid "Selection removed."
 #~ msgstr "A kijelölt tartalom eltávolítva."
