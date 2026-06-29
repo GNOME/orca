@@ -46,6 +46,51 @@ Short list of non-translation commits:
 NOTE: You should also make sure the external dependencies listed in
 meson.build and README.md are accurate.
 
+CHECK THE MATHCAT VERSION:
+--------------------------
+
+MathCAT (https://github.com/daisy/MathCAT) provides our math speech and
+braille. We build it from the Python bindings, MathCATForPython
+(https://github.com/daisy/MathCATForPython).
+
+Orca keeps its own copy of the binding directly in subprojects/mathcat-py/:
+Cargo.toml, Cargo.lock, build.rs, meson.build, and the one upstream source
+file, src/lib.rs. There is no wrap and nothing is downloaded at build time, so
+a `git pull` is all it takes for a build to pick up a new version: the build
+always re-runs cargo, and the install wipes and re-extracts the rule files so
+nothing stale lingers.
+
+The MathCAT engine itself is a crates.io crate, pinned with `=X.Y.Z` in our
+Cargo.toml; cargo fetches that exact crate. The full version list, including
+the betas we use, is at https://crates.io/crates/mathcat/versions.
+
+Cargo.lock records the exact version cargo picked for every library in the
+build, so everyone who builds from main gets the same result. You do not
+regenerate it by hand: cargo only rewrites it when Cargo.toml changes (the
+version bump below), and it does so automatically during the next build. You
+just commit the updated file.
+
+To move to a newer MathCAT:
+
+* Set the new version (for example 0.7.6-beta.5) in three places in our
+  Cargo.toml: `version` under [package], `version` under
+  [dependencies.mathcat], and the `version` inside the `mathcat = {...}` line
+  under [build-dependencies].
+
+* Compare our Cargo.toml against upstream's
+  (https://github.com/daisy/MathCATForPython/blob/main/Cargo.toml). If its
+  `edition` or `zip` line differs, make ours match. A newer edition can raise
+  the minimum required rustc. Ignore differences that are only comments.
+
+* Replace src/lib.rs with upstream's for the matching version
+  (https://github.com/daisy/MathCATForPython/blob/main/src/lib.rs). We compile
+  it directly, so it must match the crate we pin.
+
+* If the X.Y.Z base changes (not just the beta suffix), also bump `version:`
+  in our meson.build to that base (for example 0.7.6).
+
+* Build, then commit the updated Cargo.lock together with your changes.
+
 COMMIT RELEASE CHANGES AND TAG THE RELEASE, TRIGGERING A RELEASE BUILD:
 -----------------------------------------------------------------------
 

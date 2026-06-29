@@ -10,7 +10,8 @@ __pycache__/
 subprojects/*/
 subprojects/.wraplock
 !subprojects/*.wrap
-!subprojects/packagefiles/
-!subprojects/packagefiles/mathcat-py/
+!subprojects/mathcat-py/
+subprojects/mathcat-py/addon/
+subprojects/mathcat-py/target/
 .coverage-integration/
 htmlcov-integration/
