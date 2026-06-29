@@ -13,7 +13,7 @@ crate-type = ["cdylib"]
 version = "=0.7.6-beta.5"
 
 [dependencies.pyo3]
-version = "0.27"
+version = "0.29"
 features = ["extension-module", "abi3"]
 
 [build-dependencies]
