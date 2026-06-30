@@ -868,6 +868,22 @@ class OrcaRemoteController:
 
         return self._dbus_service_interface.DisplayMessage(message, persistent)
 
+    def set_clipboard_text_internal(self, text: str) -> bool:
+        """Attempts to set the clipboard contents without a D-Bus round-trip."""
+
+        from . import clipboard  # pylint: disable=import-outside-toplevel
+
+        clipboard.get_presenter().set_text(text)
+        return True
+
+    def append_clipboard_text_internal(self, text: str, separator: str = "\n") -> bool:
+        """Attempts to append text to the clipboard contents without a D-Bus round-trip."""
+
+        from . import clipboard  # pylint: disable=import-outside-toplevel
+
+        clipboard.get_presenter().append_text(text, separator)
+        return True
+
     def get_active_window_internal(self) -> Atspi.Accessible | None:
         """Returns the active window without a D-Bus round-trip."""
 

@@ -32,6 +32,9 @@ Orca has the following dependencies:
 * pygobject-3.0: Python bindings for the GObject library
 * gtk+-3.0: GTK+ toolkit
 * at-spi2-core 2.58.6 or newer, built with Python support
+* gpaste: Clipboard manager for non-KDE Wayland sessions (optional).
+  This is needed for Orca's commands which copy or append items to the clipboard.
+  In KDE sessions, Orca attempts to use Klipper.
 * python3-babel: Babel support for localized language display names (strongly encouraged).
   Without Babel, languages in Orca's UI will be displayed as codes rather than names.
 * python3-brlapi: BrlAPI (<https://mielke.cc/brltty/>) support for braille (optional)

@@ -184,8 +184,11 @@ Command extensions can use the remote controller, available as
 `self.controller` on the `Extension` base class. The controller provides access
 to all of Orca's settings and its commands, both bound and unbound.
 
-The following in-process "internal" wrappers should be used in user extensions
-to avoid making actual D-Bus calls:
+Please note: User extensions should only rely on the API documented here. Public
+Python functions in Orca are intended only for Orca's own use. These functions
+may change or be removed as Orca's internals change. In-process helper functions
+whose names end in `_internal()` are the only supported way for user extensions
+to reach Orca functionality.
 
 ### `present_message_internal(message)`
 
@@ -245,6 +248,38 @@ driven by user extensions.
 
 ```python
 obj = self.controller.get_current_object_internal()
+```
+
+### `set_clipboard_text_internal(text)` - Unsupported
+
+Attempts to set the clipboard contents to `text`. May or may not succeed.
+
+This support is more likely to work in GTK-based Wayland desktop environments if
+GPaste is installed. In KDE Orca attempts to use Klipper.
+
+The reason this is unsupported is that Wayland's privacy and security restrictions
+limit what Orca can place in the clipboard when the user is not in an Orca window.
+Orca is also unable to prevent the application being used with Orca from modifying
+those contents. These things are beyond Orca's control.
+
+The most reliable way to ensure something can be successfully added to, and persisted
+in, the clipboard is to provide an actual window with the desired contents. This is
+the approach used in Orca's features to display Orca's speech history and to display
+the current flat-review contents.
+
+```python
+self.controller.set_clipboard_text_internal("Text to copy")
+```
+
+### `append_clipboard_text_internal(text, separator="\n")` - Unsupported
+
+Attempts to append `text` to the clipboard contents, separated from the existing
+contents by `separator`. May or may not succeed.
+
+Please see the note above regarding why this function is available, but unsupported.
+
+```python
+self.controller.append_clipboard_text_internal("Text to append")
 ```
 
 ### `execute_command_internal(module_name, command_name)`
