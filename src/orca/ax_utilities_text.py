@@ -844,7 +844,7 @@ class AXUtilitiesText:
         """Sets the caret offset, recording the time and reason for later use."""
 
         result = AXText.set_caret_offset(obj, offset)
-        AXUtilitiesText.LAST_CARET_SET = LastCaretSet(obj, offset, time.time(), reason)
+        AXUtilitiesText.LAST_CARET_SET = LastCaretSet(obj, offset, time.monotonic(), reason)
         tokens = ["AXUtilitiesText: Set caret offset to", offset, "in", obj, "reason:", reason]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return result

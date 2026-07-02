@@ -789,6 +789,16 @@ class Script(script.Script):
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return True
 
+        if reason == TextEventReason.TERMINAL_LINE_NAVIGATION_REPAINT:
+            msg = "DEFAULT: Presenting line due to terminal line-navigation repaint"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            offset = AXText.get_caret_offset(event.source)
+            self.update_braille(event.source)
+            self.say_line(event.source, offset)
+            focus_manager.get_manager().set_last_cursor_position(event.source, offset)
+            self.utilities.set_caret_context(event.source, offset)
+            return True
+
         if reason == TextEventReason.SPIN_BUTTON_VALUE_CHANGE:
             msg = "DEFAULT: Ignoring insertion; spin button value is presented via value-changed"
             debug.print_message(debug.LEVEL_INFO, msg, True)

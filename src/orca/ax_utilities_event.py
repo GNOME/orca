@@ -101,6 +101,7 @@ class TextEventReason(enum.Enum):
     SELECTION_TO_LINE_BOUNDARY = enum.auto()
     SPIN_BUTTON_VALUE_CHANGE = enum.auto()
     SYSTEM_UPDATE = enum.auto()
+    TERMINAL_LINE_NAVIGATION_REPAINT = enum.auto()
     TYPING = enum.auto()
     TYPING_ECHOABLE = enum.auto()
     UI_UPDATE = enum.auto()
@@ -271,8 +272,52 @@ class AXUtilitiesEvent:
 
     # How recent a caret set must be for its resulting event to be attributed to it.
     CARET_SET_EVENT_WINDOW_SECONDS = 1.0
+    TERMINAL_REPAINT_EVENT_WINDOW_SECONDS = 1.0
 
     _CACHE = _AXUtilitiesEventCache()
+    _LAST_TERMINAL_LINE_NAVIGATION_DELETION: tuple[object, float, str] | None = None
+
+    @staticmethod
+    def _save_terminal_line_navigation_deletion(event: Atspi.Event) -> None:
+        AXUtilitiesEvent._LAST_TERMINAL_LINE_NAVIGATION_DELETION = (
+            ax_cache_manager.get_object_key(event.source),
+            time.monotonic(),
+            event.any_data,
+        )
+
+    @staticmethod
+    def _is_terminal_line_navigation_repaint(event: Atspi.Event) -> bool:
+        prior = AXUtilitiesEvent._LAST_TERMINAL_LINE_NAVIGATION_DELETION
+        if prior is None:
+            return False
+
+        obj_key, timestamp, text = prior
+        if obj_key != ax_cache_manager.get_object_key(event.source):
+            return False
+
+        if time.monotonic() - timestamp > AXUtilitiesEvent.TERMINAL_REPAINT_EVENT_WINDOW_SECONDS:
+            return False
+
+        deleted_lines = text.split("\n")
+        inserted_lines = event.any_data.split("\n")
+        if min(len(deleted_lines), len(inserted_lines)) < 4:
+            return False
+
+        # Terminal repaint text can have clipped edge lines. Compare the deleted
+        # lines without their edges with the inserted lines shifted one row in either
+        # direction. In tiny terminals, an expiring TUI status line can be another
+        # edge row, leaving only the inner two shifted rows to compare.
+        return (
+            deleted_lines[1:-1] == inserted_lines[2:]
+            or deleted_lines[2:] == inserted_lines[1:-1]
+            or (
+                min(len(deleted_lines), len(inserted_lines)) >= 5
+                and (
+                    deleted_lines[1:-2] == inserted_lines[2:-1]
+                    or deleted_lines[2:-1] == inserted_lines[1:-2]
+                )
+            )
+        )
 
     @staticmethod
     def _strings_are_redundant(str1: str | None, str2: str | None, threshold: float = 0.85) -> bool:
@@ -495,7 +540,8 @@ class AXUtilitiesEvent:
             and last_caret_set.reason == CaretSetReason.BRAILLE_PANNING
             and obj == last_caret_set.obj
             and event.detail1 in (last_caret_set.offset, -1)
-            and time.time() - last_caret_set.time < AXUtilitiesEvent.CARET_SET_EVENT_WINDOW_SECONDS
+            and time.monotonic() - last_caret_set.time
+            < AXUtilitiesEvent.CARET_SET_EVENT_WINDOW_SECONDS
         ):
             return TextEventReason.BRAILLE_PANNING
 
@@ -584,6 +630,13 @@ class AXUtilitiesEvent:
         if mgr.last_event_was_up_or_down() or mgr.last_event_was_page_up_or_page_down():
             if AXUtilitiesEvent._is_spin_button_descendant(obj):
                 return TextEventReason.SPIN_BUTTON_VALUE_CHANGE
+            if (
+                AXUtilitiesRole.is_terminal(obj)
+                and mgr.last_event_was_up_or_down()
+                and mgr.last_event_was_line_navigation()
+                and len(event.any_data.split("\n")) >= 4
+            ):
+                AXUtilitiesEvent._save_terminal_line_navigation_deletion(event)
             return TextEventReason.AUTO_DELETION_UNPRESENTABLE
 
         selected_text, _start, _end = AXUtilitiesText.get_cached_selected_text(obj)
@@ -662,6 +715,13 @@ class AXUtilitiesEvent:
         if mgr.last_event_was_up_or_down() or mgr.last_event_was_page_up_or_page_down():
             if AXUtilitiesEvent._is_spin_button_descendant(obj):
                 return TextEventReason.SPIN_BUTTON_VALUE_CHANGE
+            if (
+                is_terminal
+                and mgr.last_event_was_up_or_down()
+                and mgr.last_event_was_line_navigation()
+                and AXUtilitiesEvent._is_terminal_line_navigation_repaint(event)
+            ):
+                return TextEventReason.TERMINAL_LINE_NAVIGATION_REPAINT
             return TextEventReason.AUTO_INSERTION_PRESENTABLE
         if has_selected:
             return TextEventReason.SELECTED_TEXT_INSERTION

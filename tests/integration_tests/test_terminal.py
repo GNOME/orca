@@ -184,6 +184,45 @@ def test_key_echo_while_typing_in_vim(gtk3_terminal_vim: NativeAppSession) -> No
     assert helpers.speech(session) == ["b"]
 
 
+def _assert_single_spoken_line(
+    session: NativeAppSession,
+    line_number: int,
+    blank_already_seen: bool,
+) -> bool:
+    """Asserts that the expected line is spoken once, ignoring nano status cleanup."""
+
+    actual = helpers.speech(session, quiescence=0.4, overall=3.0)
+    expected = f"line {line_number}"
+    line_utterances = [utterance for utterance in actual if utterance.strip() == expected]
+    assert len(line_utterances) == 1, actual
+    assert all(utterance == "blank" or utterance.strip() == expected for utterance in actual), (
+        actual
+    )
+    blank_count = actual.count("blank")
+    assert blank_count <= 1, actual
+    assert not (blank_count and blank_already_seen), actual
+    return blank_already_seen or bool(blank_count)
+
+
+@pytest.mark.native_app
+def test_nano_line_navigation_repaint_speaks_each_line_once(
+    gtk3_terminal_nano: NativeAppSession,
+) -> None:
+    """Tests line navigation through nano repaints speaks the current line exactly once."""
+
+    session = gtk3_terminal_nano
+    _settle(session)
+
+    blank_seen = False
+    for line_number in range(2, 31):
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        blank_seen = _assert_single_spoken_line(session, line_number, blank_seen)
+
+    for line_number in range(29, 0, -1):
+        keyboard.tap_key(keyboard.KEYSYM_UP)
+        blank_seen = _assert_single_spoken_line(session, line_number, blank_seen)
+
+
 @pytest.mark.native_app
 def test_pager_navigation_speaks_each_page(gtk3_terminal_pager: NativeAppSession) -> None:
     """Tests that paging through Less forward and back speaks each newly shown page."""

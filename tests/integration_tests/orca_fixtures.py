@@ -121,6 +121,7 @@ _gtk3_widget_notebook = _make_native_app_fixture(gtk3_widget_notebook)
 _gtk3_toolbar = _make_native_app_fixture(gtk3_toolbar, scope="function")
 
 _PAGER_DOC = "\n".join(f"line {n:02d}" for n in range(1, 21)) + "\n"
+_NANO_DOC = "\n".join(f"line {n}" for n in range(1, 31)) + "\n"
 
 
 def _make_terminal_fixture(
@@ -151,6 +152,12 @@ _gtk3_terminal_flatrev = _make_terminal_fixture(
 )
 _gtk3_terminal_pager = _make_terminal_fixture(
     "gtk3_terminal_pager", binary_names=("less",), args=("doc.txt",), files={"doc.txt": _PAGER_DOC}
+)
+_gtk3_terminal_nano = _make_terminal_fixture(
+    "gtk3_terminal_nano",
+    binary_names=("nano",),
+    args=("-I", "-v", "doc.txt"),
+    files={"doc.txt": _NANO_DOC},
 )
 
 _WIDE_PAGER_DOC = "top\nthis line is wider than the display now\nbottom\n"
