@@ -131,12 +131,17 @@ MODULE_CONFIG = {
         "skip": [],
     },
     "MousePresenter": {
-        "commands": ["Toggle"],
+        "commands": [
+            "LeftClickItem",
+            "RightClickItem",
+            "RoutePointerToItem",
+            "ToggleMouseReview",
+        ],
         "parameterized_commands": [],
         "getters": ["IsEnabled", "PresentTooltips"],
         "setters": ["IsEnabled", "PresentTooltips"],
         "ui_commands": [],
-        "toggle_commands": ["Toggle"],
+        "toggle_commands": ["ToggleMouseReview"],
         "skip": [],
     },
     "FlatReviewPresenter": {

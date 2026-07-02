@@ -54,7 +54,7 @@ def get_commands(owner: MousePresenter) -> list[Command]:
     return [
         KeyboardCommand(
             "toggleMouseReviewHandler",
-            owner.toggle,
+            owner.toggle_mouse_review,
             owner.GROUP_LABEL,
             cmdnames.MOUSE_REVIEW_TOGGLE,
         ),

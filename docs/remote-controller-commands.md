@@ -291,7 +291,10 @@ These commands are available directly on the main service object at `/org/gnome/
 
 #### Commands
 
-- **`Toggle`:** Toggle mouse reviewing on or off (requires Wnck).
+- **`LeftClickItem`:** Performs a left mouse button click on the current item.
+- **`RightClickItem`:** Performs a right mouse button click on the current item.
+- **`RoutePointerToItem`:** Moves the mouse pointer to the current item.
+- **`ToggleMouseReview`:** Toggle mouse reviewing on or off (requires Wnck).
 
 #### Properties
 

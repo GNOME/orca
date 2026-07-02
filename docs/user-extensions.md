@@ -295,6 +295,39 @@ self.controller.execute_command_internal("WhereAmIPresenter", "WhereAmIBasic")
 self.controller.execute_command_internal("StructuralNavigator", "NextHeading")
 ```
 
+### Pointer and Click Commands - Unsupported
+
+Some Orca commands attempt to move the mouse pointer or perform mouse clicks.
+Extensions can invoke those commands with `execute_command_internal()`, for example:
+
+```python
+self.controller.execute_command_internal("MousePresenter", "RoutePointerToItem")
+self.controller.execute_command_internal("MousePresenter", "LeftClickItem")
+self.controller.execute_command_internal("MousePresenter", "RightClickItem")
+```
+
+These commands operate on Orca's current item. In focus-tracking mode, that is
+normally the current/focused object. If flat review is active, the commands operate
+on the current flat-review location instead.
+
+This functionality is available, but unsupported for user extensions. Orca's
+click commands first try click-like accessible actions. When that succeeds, the
+application or toolkit performs the action, which is more likely to work across
+display servers and can also work when an object is scrolled off screen. The
+fragile part is the fallback to synthesized mouse events when no suitable
+accessible action is available.
+
+Synthesized pointer movement and mouse clicks depend on display-server support.
+On Wayland, Orca cannot synthesize global mouse movement or clicks. Routing the
+pointer is therefore not expected to work on Wayland, and click commands only
+work when Orca can perform an accessible action instead.
+
+On X11, synthesized mouse events generally work, but Orca chooses the click
+location based on the bounding box reported through AT-SPI. If the object is not
+actually at that reported location, for instance because of toolkit bugs,
+application bugs, or display scaling, Orca does not know that and the click can
+happen in the wrong place. This is beyond Orca's control.
+
 ### `get_value_internal(module_name, property_name)`
 
 Reads a runtime value from an Orca module. The property names correspond to the

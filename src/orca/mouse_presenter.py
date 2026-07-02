@@ -603,10 +603,12 @@ class MousePresenter(Extension):
 
         return True
 
+    @dbus_service.command
     def route_pointer_to_item(
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
     ) -> bool:
         """Moves the mouse pointer to the current item."""
 
@@ -615,21 +617,32 @@ class MousePresenter(Extension):
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
+        if focus is None:
+            if notify_user:
+                full = messages.LOCATION_NOT_FOUND_FULL
+                brief = messages.LOCATION_NOT_FOUND_BRIEF
+                presentation_manager.get_manager().present_message(full, brief)
+            return False
+
         if ax_event_synthesizer.get_synthesizer().route_to_character(
             focus,
         ) or ax_event_synthesizer.get_synthesizer().route_to_object(focus):
-            presentation_manager.get_manager().present_message(messages.MOUSE_MOVED_SUCCESS)
+            if notify_user:
+                presentation_manager.get_manager().present_message(messages.MOUSE_MOVED_SUCCESS)
             return True
 
-        full = messages.LOCATION_NOT_FOUND_FULL
-        brief = messages.LOCATION_NOT_FOUND_BRIEF
-        presentation_manager.get_manager().present_message(full, brief)
+        if notify_user:
+            full = messages.LOCATION_NOT_FOUND_FULL
+            brief = messages.LOCATION_NOT_FOUND_BRIEF
+            presentation_manager.get_manager().present_message(full, brief)
         return False
 
+    @dbus_service.command
     def left_click_item(
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
     ) -> bool:
         """Performs a left mouse button click on the current item."""
 
@@ -640,6 +653,13 @@ class MousePresenter(Extension):
             return flat_review_presenter.get_presenter().left_click_on_object(script, event)
 
         focus = focus_manager.get_manager().get_locus_of_focus()
+        if focus is None:
+            if notify_user:
+                full = messages.LOCATION_NOT_FOUND_FULL
+                brief = messages.LOCATION_NOT_FOUND_BRIEF
+                presentation_manager.get_manager().present_message(full, brief)
+            return False
+
         if ax_event_synthesizer.get_synthesizer().try_all_clickable_actions(focus):
             return True
 
@@ -650,15 +670,18 @@ class MousePresenter(Extension):
         if ax_event_synthesizer.get_synthesizer().click_object(focus, 1):
             return True
 
-        full = messages.LOCATION_NOT_FOUND_FULL
-        brief = messages.LOCATION_NOT_FOUND_BRIEF
-        presentation_manager.get_manager().present_message(full, brief)
+        if notify_user:
+            full = messages.LOCATION_NOT_FOUND_FULL
+            brief = messages.LOCATION_NOT_FOUND_BRIEF
+            presentation_manager.get_manager().present_message(full, brief)
         return False
 
+    @dbus_service.command
     def right_click_item(
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
     ) -> bool:
         """Performs a right mouse button click on the current item."""
 
@@ -670,6 +693,13 @@ class MousePresenter(Extension):
             return True
 
         focus = focus_manager.get_manager().get_locus_of_focus()
+        if focus is None:
+            if notify_user:
+                full = messages.LOCATION_NOT_FOUND_FULL
+                brief = messages.LOCATION_NOT_FOUND_BRIEF
+                presentation_manager.get_manager().present_message(full, brief)
+            return False
+
         if ax_event_synthesizer.get_synthesizer().try_all_right_click_actions(focus):
             return True
 
@@ -679,13 +709,14 @@ class MousePresenter(Extension):
         if ax_event_synthesizer.get_synthesizer().click_object(focus, 3):
             return True
 
-        full = messages.LOCATION_NOT_FOUND_FULL
-        brief = messages.LOCATION_NOT_FOUND_BRIEF
-        presentation_manager.get_manager().present_message(full, brief)
+        if notify_user:
+            full = messages.LOCATION_NOT_FOUND_FULL
+            brief = messages.LOCATION_NOT_FOUND_BRIEF
+            presentation_manager.get_manager().present_message(full, brief)
         return False
 
     @dbus_service.command
-    def toggle(
+    def toggle_mouse_review(
         self,
         script: default.Script,
         event: input_event.InputEvent | None = None,
@@ -694,7 +725,7 @@ class MousePresenter(Extension):
         """Toggle mouse reviewing on or off (requires Wnck)."""
 
         tokens = [
-            "MOUSE REVIEW: Toggle. Script:",
+            "MOUSE REVIEW: ToggleMouseReview. Script:",
             script,
             "Event:",
             event,
