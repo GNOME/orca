@@ -50,6 +50,7 @@ class TestPresentationManager:
         additional_modules = [
             "orca.braille_presenter",
             "orca.live_region_presenter",
+            "orca.sound",
             "orca.sound_presenter",
             "orca.speech_manager",
             "orca.speech_presenter",
@@ -408,29 +409,82 @@ class TestPresentationManager:
         speech_pres = essential_modules["orca.speech_presenter"].get_presenter()
         speech_pres.speak_accessible_text.assert_not_called()
 
-    def test_play_sound(self, test_context: OrcaTestContext) -> None:
-        """Test play_sound delegates to sound_presenter."""
+    def test_play_sound_file(self, test_context: OrcaTestContext, tmp_path) -> None:
+        """Test play_sound_file creates an icon and plays it."""
 
         essential_modules = self._setup_dependencies(test_context)
         from orca.presentation_manager import PresentationManager
 
-        mock_sound = test_context.Mock()
-        PresentationManager.play_sound(mock_sound)
+        sound_file = tmp_path / "ding.ogg"
+        sound_file.write_text("")
+        icon = test_context.Mock()
+        essential_modules["orca.sound"].Icon.return_value = icon
 
+        result = PresentationManager.play_sound_file(str(sound_file), interrupt=False)
+
+        assert result is True
+        essential_modules["orca.sound"].Icon.assert_called_once_with(str(tmp_path), "ding.ogg")
         sound_presenter = essential_modules["orca.sound_presenter"].get_presenter()
-        sound_presenter.play.assert_called_once_with(mock_sound, True)
+        sound_presenter.play.assert_called_once_with(icon, False)
 
-    def test_play_sound_no_interrupt(self, test_context: OrcaTestContext) -> None:
-        """Test play_sound with interrupt=False."""
+    def test_play_sound_file_missing(self, test_context: OrcaTestContext, tmp_path) -> None:
+        """Test play_sound_file rejects a missing file."""
 
         essential_modules = self._setup_dependencies(test_context)
         from orca.presentation_manager import PresentationManager
 
-        mock_sound = test_context.Mock()
-        PresentationManager.play_sound(mock_sound, interrupt=False)
+        result = PresentationManager.play_sound_file(str(tmp_path / "missing.ogg"))
 
+        assert result is False
+        essential_modules["orca.sound"].Icon.assert_not_called()
         sound_presenter = essential_modules["orca.sound_presenter"].get_presenter()
-        sound_presenter.play.assert_called_once_with(mock_sound, False)
+        sound_presenter.play.assert_not_called()
+
+    def test_play_tone(self, test_context: OrcaTestContext) -> None:
+        """Test play_tone creates a tone and plays it."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.presentation_manager import PresentationManager
+
+        tone = test_context.Mock()
+        sound_mod = essential_modules["orca.sound"]
+        sound_mod.Tone.SINE_WAVE = 0
+        sound_mod.Tone.SQUARE_WAVE = 1
+        sound_mod.Tone.SAW_WAVE = 2
+        sound_mod.Tone.TRIANGLE_WAVE = 3
+        sound_mod.Tone.SILENCE = 4
+        sound_mod.Tone.WHITE_UNIFORM_NOISE = 5
+        sound_mod.Tone.PINK_NOISE = 6
+        sound_mod.Tone.return_value = tone
+
+        result = PresentationManager.play_tone(0.25, 440, 2.0, "sine", interrupt=False)
+
+        assert result is True
+        sound_mod.Tone.assert_called_once_with(0.25, 440, 1.0, 0)
+        sound_presenter = essential_modules["orca.sound_presenter"].get_presenter()
+        sound_presenter.play.assert_called_once_with(tone, False)
+
+    @pytest.mark.parametrize("duration,wave", [(0.0, "sine"), (0.25, "bogus")])
+    def test_play_tone_invalid(
+        self,
+        test_context: OrcaTestContext,
+        duration: float,
+        wave: str,
+    ) -> None:
+        """Test play_tone rejects invalid values."""
+
+        essential_modules = self._setup_dependencies(test_context)
+        from orca.presentation_manager import PresentationManager
+
+        sound_mod = essential_modules["orca.sound"]
+        sound_mod.Tone.SINE_WAVE = 0
+
+        result = PresentationManager.play_tone(duration, 440, 1.0, wave)
+
+        assert result is False
+        sound_mod.Tone.assert_not_called()
+        sound_presenter = essential_modules["orca.sound_presenter"].get_presenter()
+        sound_presenter.play.assert_not_called()
 
     def test_present_braille_message(self, test_context: OrcaTestContext) -> None:
         """Test present_braille_message shows braille message."""

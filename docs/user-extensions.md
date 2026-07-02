@@ -223,6 +223,30 @@ braille display, or the extension displays another string.
 self.controller.display_message_internal("Persistent braille text", persistent=True)
 ```
 
+### `play_sound_file_internal(path, interrupt=True)`
+
+Plays the sound file at `path`. The path must name an existing file.
+
+```python
+self.controller.play_sound_file_internal("/home/me/sounds/ding.ogg")
+```
+
+Set `interrupt=False` to play the file without first interrupting any sound
+already being played.
+
+### `play_tone_internal(duration, frequency, volume=1.0, wave="sine", interrupt=True)`
+
+Plays a generated tone. `duration` is in seconds, `frequency` is in Hz, and
+`volume` is clamped between `0.0` and `1.0`.
+
+```python
+self.controller.play_tone_internal(0.2, 440)
+self.controller.play_tone_internal(0.5, 880, volume=0.5, wave="triangle")
+```
+
+Supported wave names are `sine`, `square`, `saw`, `triangle`, `silence`,
+`white-noise`, and `pink-noise`.
+
 ### `get_active_window_internal()`
 
 Returns the accessible object Orca currently believes to be the active window.

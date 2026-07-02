@@ -26,6 +26,7 @@
 from __future__ import annotations
 
 import enum
+import os
 from typing import TYPE_CHECKING
 
 from . import (
@@ -36,6 +37,7 @@ from . import (
     live_region_presenter,
     messages,
     script_manager,
+    sound,
     sound_presenter,
     speech_manager,
     speech_presenter,
@@ -55,7 +57,6 @@ if TYPE_CHECKING:
 
     from .input_event import KeyboardEvent
     from .scripts import default
-    from .sound import Icon, Tone
 
 
 class _Command(enum.Enum):
@@ -296,10 +297,52 @@ class PresentationManager:
         )
 
     @staticmethod
-    def play_sound(sounds: list[Icon | Tone] | Icon | Tone, interrupt: bool = True) -> None:
-        """Plays the specified sound(s)."""
+    def play_sound_file(path: str, interrupt: bool = True) -> bool:
+        """Plays the sound file at path."""
 
-        sound_presenter.get_presenter().play(sounds, interrupt)
+        sound_path = os.path.abspath(os.path.expanduser(path))
+        if not os.path.isfile(sound_path):
+            msg = f"PRESENTATION MANAGER: Sound file not found: {path}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        icon = sound.Icon(os.path.dirname(sound_path), os.path.basename(sound_path))
+        sound_presenter.get_presenter().play(icon, interrupt)
+        return True
+
+    @staticmethod
+    def play_tone(
+        duration: float,
+        frequency: int,
+        volume: float = 1.0,
+        wave: str = "sine",
+        interrupt: bool = True,
+    ) -> bool:
+        """Plays a tone."""
+
+        if duration <= 0:
+            msg = f"PRESENTATION MANAGER: Invalid tone duration: {duration}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        wave_values = {
+            "sine": sound.Tone.SINE_WAVE,
+            "square": sound.Tone.SQUARE_WAVE,
+            "saw": sound.Tone.SAW_WAVE,
+            "triangle": sound.Tone.TRIANGLE_WAVE,
+            "silence": sound.Tone.SILENCE,
+            "white-noise": sound.Tone.WHITE_UNIFORM_NOISE,
+            "pink-noise": sound.Tone.PINK_NOISE,
+        }
+        wave_value = wave_values.get(wave)
+        if wave_value is None:
+            msg = f"PRESENTATION MANAGER: Unknown tone wave: {wave}"
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return False
+
+        tone = sound.Tone(duration, frequency, min(max(0.0, volume), 1.0), wave_value)
+        sound_presenter.get_presenter().play(tone, interrupt)
+        return True
 
     @staticmethod
     def present_braille_message(message: str, restore_previous: bool = True) -> None:

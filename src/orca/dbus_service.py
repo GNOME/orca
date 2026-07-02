@@ -868,6 +868,33 @@ class OrcaRemoteController:
 
         return self._dbus_service_interface.DisplayMessage(message, persistent)
 
+    def play_sound_file_internal(self, path: str, interrupt: bool = True) -> bool:
+        """Plays a sound file without a D-Bus round-trip."""
+
+        from . import presentation_manager  # pylint: disable=import-outside-toplevel
+
+        return presentation_manager.get_manager().play_sound_file(path, interrupt=interrupt)
+
+    def play_tone_internal(
+        self,
+        duration: float,
+        frequency: int,
+        volume: float = 1.0,
+        wave: str = "sine",
+        interrupt: bool = True,
+    ) -> bool:
+        """Plays a tone without a D-Bus round-trip."""
+
+        from . import presentation_manager  # pylint: disable=import-outside-toplevel
+
+        return presentation_manager.get_manager().play_tone(
+            duration,
+            frequency,
+            volume=volume,
+            wave=wave,
+            interrupt=interrupt,
+        )
+
     def set_clipboard_text_internal(self, text: str) -> bool:
         """Attempts to set the clipboard contents without a D-Bus round-trip."""
 

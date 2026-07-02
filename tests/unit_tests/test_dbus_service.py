@@ -118,6 +118,7 @@ class TestDBusService:
         essential_modules["dasbus.server.interface"].dbus_interface = mock_dbus_interface
 
         essential_modules["orca.debug"].LEVEL_INFO = 800
+        essential_modules["orca.debug"].LEVEL_WARNING = 900
         essential_modules["orca.debug"].println = test_context.Mock()
 
         essential_modules["orca.orca_platform"].version = "test-version"
@@ -1119,11 +1120,17 @@ def _stub_orca_internals(test_context: OrcaTestContext) -> dict[str, object]:
     sm_mod = types.ModuleType("orca.script_manager")
     sm_mod.get_manager = lambda: sm_instance
 
+    presentation_manager_instance = test_context.Mock()
+    presentation_manager_mod = types.ModuleType("orca.presentation_manager")
+    presentation_manager_mod.get_manager = lambda: presentation_manager_instance
+
     stubs: dict[str, object] = {
         "orca.orca_platform": platform_mod,
         "orca.debug": debug_mod,
         "orca.input_event": input_event_mod,
         "orca.input_event_manager": iem_mod,
+        "orca.presentation_manager": presentation_manager_mod,
+        "presentation_manager_instance": presentation_manager_instance,
         "orca.script_manager": sm_mod,
     }
     test_context.patch_modules(stubs)
@@ -1525,6 +1532,36 @@ class TestRemoteControllerInternalAPIs:
         service.PresentMessage.assert_called_once_with("Both")
         service.SpeakMessage.assert_called_once_with("Speech")
         service.DisplayMessage.assert_called_once_with("Braille", True)
+
+    def test_sound_internal_apis_route_to_presentation_manager(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Sound internal APIs call the presentation manager directly."""
+
+        stubs = _stub_orca_internals(test_context)
+        from orca import dbus_service
+
+        presentation_manager_instance = stubs["presentation_manager_instance"]
+        presentation_manager_instance.play_sound_file.return_value = True
+        presentation_manager_instance.play_tone.return_value = True
+
+        controller = dbus_service.OrcaRemoteController()
+
+        assert controller.play_sound_file_internal("/tmp/ding.ogg", interrupt=False) is True
+        assert controller.play_tone_internal(0.25, 440, 0.5, "square", interrupt=False) is True
+
+        presentation_manager_instance.play_sound_file.assert_called_once_with(
+            "/tmp/ding.ogg",
+            interrupt=False,
+        )
+        presentation_manager_instance.play_tone.assert_called_once_with(
+            0.25,
+            440,
+            volume=0.5,
+            wave="square",
+            interrupt=False,
+        )
 
 
 @pytest.mark.unit
