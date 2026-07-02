@@ -35,6 +35,11 @@ def get_commands(owner: WhereAmIPresenter) -> list[Command]:
     """Returns commands for Where Am I."""
 
     kb_orca_f = keybindings.KeyBinding("f", keybindings.ORCA_MODIFIER_MASK)
+    kb_orca_f_2 = keybindings.KeyBinding(
+        "f",
+        keybindings.ORCA_MODIFIER_MASK,
+        click_count=2,
+    )
     kb_orca_e = keybindings.KeyBinding("e", keybindings.ORCA_MODIFIER_MASK)
     kb_orca_shift_up = keybindings.KeyBinding("Up", keybindings.ORCA_SHIFT_MODIFIER_MASK)
 
@@ -70,9 +75,17 @@ def get_commands(owner: WhereAmIPresenter) -> list[Command]:
             "readCharAttributesHandler",
             owner.present_character_attributes,
             owner.GROUP_LABEL,
-            cmdnames.READ_CHAR_ATTRIBUTES,
+            cmdnames.PRESENT_CHARACTER_FORMATTING,
             desktop_keybinding=kb_orca_f,
             laptop_keybinding=kb_orca_f,
+        ),
+        KeyboardCommand(
+            "show_character_attributes",
+            owner.show_character_attributes,
+            owner.GROUP_LABEL,
+            cmdnames.SHOW_CHARACTER_FORMATTING,
+            desktop_keybinding=kb_orca_f_2,
+            laptop_keybinding=kb_orca_f_2,
         ),
         KeyboardCommand(
             "presentSizeAndPositionHandler",

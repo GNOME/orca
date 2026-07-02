@@ -91,6 +91,7 @@ WHERE_AM_I_PRESENTER_HANDLERS = frozenset(
         "whereAmILinkHandler",
         "whereAmISelectionHandler",
         "readCharAttributesHandler",
+        "show_character_attributes",
         "presentSizeAndPositionHandler",
         "present_default_button",
         "present_cell_formula",

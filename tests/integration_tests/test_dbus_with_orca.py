@@ -810,6 +810,7 @@ MODULE_CONFIG = {
         "commands": [
             "PresentCellFormula",
             "PresentCharacterAttributes",
+            "ShowCharacterAttributes",
             "PresentDefaultButton",
             "PresentLink",
             "PresentSelectedText",

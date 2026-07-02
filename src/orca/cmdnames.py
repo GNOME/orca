@@ -366,9 +366,16 @@ TOGGLE_TABLE_CELL_READ_MODE = _(
     "Toggle whether to read just the current table cell or the whole row",
 )
 
-# Translators: the attributes being presented are the text attributes, such as
-# bold, italic, font name, font size, etc.
-READ_CHAR_ATTRIBUTES = _("Read the attributes associated with the current text character")
+# Translators: This is a command description. The command presents formatting
+# information for the current text character, such as font name, font size,
+# bold, italic, underline, foreground color, and background color.
+PRESENT_CHARACTER_FORMATTING = _("Present character formatting")
+
+# Translators: This is a command description. The command opens a window
+# containing available formatting information for the current text character,
+# such as font name, font size, bold, italic, underline, foreground color, and
+# background color.
+SHOW_CHARACTER_FORMATTING = _("Show character formatting")
 
 # Translators: a refreshable braille display is an external hardware device that
 # presents braille characters to the user. There are a limited number of cells

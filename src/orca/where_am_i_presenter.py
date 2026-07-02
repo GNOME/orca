@@ -22,7 +22,13 @@
 
 from __future__ import annotations
 
+import time
 from typing import TYPE_CHECKING
+
+import gi
+
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gdk, Gtk  # pylint: disable=no-name-in-module
 
 from . import (
     dbus_service,
@@ -48,8 +54,6 @@ from .extension import Extension
 from .generator import PresentationReason
 
 if TYPE_CHECKING:
-    import gi
-
     gi.require_version("Atspi", "2.0")
     from gi.repository import Atspi
 
@@ -62,8 +66,28 @@ class WhereAmIPresenter(Extension):
 
     GROUP_LABEL = guilabels.KB_GROUP_WHERE_AM_I
 
+    def __init__(self) -> None:
+        super().__init__()
+        self._char_attributes_gui: CharacterAttributesGUI | None = None
+
     def _get_commands(self) -> list[Command]:
         return where_am_i_presenter_command_definitions.get_commands(self)
+
+    def _get_current_character_info(self, script: default.Script) -> tuple[dict[str, str], str]:
+        """Returns the text attributes and string for the current character."""
+
+        reviewer = flat_review_presenter.get_presenter()
+        if reviewer.is_active():
+            context = reviewer.get_or_create_context(script)
+            obj = context.get_current_object()
+            offset = context.get_current_text_offset()
+        else:
+            obj = focus_manager.get_manager().get_locus_of_focus()
+            offset = None
+
+        attrs = AXText.get_text_attributes_at_offset(obj, offset)[0]
+        char = AXText.get_character_at_offset(obj, offset)[0]
+        return attrs, char
 
     def _localize_text_attribute(self, key: str, value: str | None) -> str:
         """Returns a localized description of the text attribute for Orca+F readout."""
@@ -85,6 +109,36 @@ class WhereAmIPresenter(Extension):
         localized_value = ax_text_attribute.get_localized_value(value)
         return f"{localized_key}: {localized_value}"
 
+    def _get_all_available_text_attributes(self, attrs: dict[str, str]) -> list[str]:
+        """Returns localized descriptions of all available text attributes."""
+
+        result = []
+        seen = set()
+        for key, value in attrs.items():
+            ax_text_attribute = AXTextAttribute.from_string(key)
+            sort_key = ax_text_attribute.get_localized_name() if ax_text_attribute else key
+            canonical_key = ax_text_attribute.get_attribute_name() if ax_text_attribute else key
+
+            if canonical_key in seen or value is None:
+                continue
+
+            if ax_text_attribute is not None:
+                localized_key = ax_text_attribute.get_localized_name()
+                localized_value = ax_text_attribute.get_localized_value(value)
+                description = f"{localized_key}: {localized_value}"
+            else:
+                description = f"{key}: {value}"
+
+            result.append((sort_key.casefold(), description))
+            seen.add(canonical_key)
+
+        return [description for _sort_key, description in sorted(result)]
+
+    def _get_character_formatting_text(self, attrs: dict[str, str]) -> str:
+        """Returns text for the character-formatting window."""
+
+        return "\n".join(self._get_all_available_text_attributes(attrs))
+
     @dbus_service.command
     def present_character_attributes(
         self,
@@ -104,26 +158,64 @@ class WhereAmIPresenter(Extension):
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
-        reviewer = flat_review_presenter.get_presenter()
-        if reviewer.is_active():
-            context = reviewer.get_or_create_context(script)
-            obj = context.get_current_object()
-            offset = context.get_current_text_offset()
-        else:
-            obj = focus_manager.get_manager().get_locus_of_focus()
-            offset = None
-
-        attrs = AXText.get_text_attributes_at_offset(obj, offset)[0]
-
+        attrs, _char = self._get_current_character_info(script)
         attr_list = text_attribute_manager.get_manager().get_resolved_attributes_to_speak()
+        presented = False
 
         for ax_text_attr in attr_list:
             key = ax_text_attr.get_attribute_name()
             value = ax_text_attr.get_value_from_attrs(attrs)
             if not ax_text_attr.value_is_default(value):
-                presentation_manager.get_manager().speak_message(
+                presentation_manager.get_manager().present_message(
                     self._localize_text_attribute(key, value),
                 )
+                presented = True
+
+        if not presented:
+            msg = (
+                messages.CHARACTER_FORMATTING_DEFAULT
+                if attrs
+                else messages.CHARACTER_FORMATTING_NOT_AVAILABLE
+            )
+            presentation_manager.get_manager().present_message(
+                msg,
+            )
+
+        return True
+
+    @dbus_service.command
+    def show_character_attributes(
+        self,
+        script: default.Script,
+        event: input_event.InputEvent | None = None,
+        notify_user: bool = True,
+    ) -> bool:
+        """Shows the font and formatting details for the current character."""
+
+        tokens = [
+            "WHERE AM I PRESENTER: show_character_attributes. Script:",
+            script,
+            "Event:",
+            event,
+            "notify_user:",
+            notify_user,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
+        attrs, char = self._get_current_character_info(script)
+        descriptions = self._get_all_available_text_attributes(attrs)
+        if not descriptions:
+            presentation_manager.get_manager().present_message(
+                messages.CHARACTER_FORMATTING_NOT_AVAILABLE,
+            )
+            return True
+
+        title = guilabels.CHARACTER_FORMATTING
+        if char:
+            title = guilabels.CHARACTER_FORMATTING_FOR % char
+        text = self._get_character_formatting_text(attrs)
+        self._char_attributes_gui = CharacterAttributesGUI(title, text)
+        self._char_attributes_gui.show_gui()
 
         return True
 
@@ -553,6 +645,64 @@ class WhereAmIPresenter(Extension):
         # first one.
         presentation_manager.get_manager().interrupt_presentation()
         return self._do_where_am_i(script, False, notify_user=notify_user)
+
+
+class CharacterAttributesGUI:
+    """Presents character attributes in a text view."""
+
+    def __init__(self, title: str, text: str) -> None:
+        self._gui: Gtk.Dialog = self._create_dialog(title, text)
+
+    def _create_dialog(self, title: str, text: str) -> Gtk.Dialog:
+        """Creates the dialog."""
+
+        dialog = Gtk.Dialog(
+            title,
+            None,
+            Gtk.DialogFlags.MODAL,
+            (Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE),
+        )
+        dialog.set_default_size(600, 400)
+
+        scrolled_window = Gtk.ScrolledWindow()
+        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        scrolled_window.set_hexpand(True)
+        scrolled_window.set_vexpand(True)
+
+        textbuffer = Gtk.TextBuffer()
+        textbuffer.set_text(text)
+        textbuffer.place_cursor(textbuffer.get_start_iter())
+
+        textview = Gtk.TextView(buffer=textbuffer)
+        textview.set_editable(False)
+        textview.set_cursor_visible(True)
+        textview.set_wrap_mode(Gtk.WrapMode.WORD)
+        scrolled_window.add(textview)  # pylint: disable=no-member
+        dialog.get_content_area().pack_start(scrolled_window, True, True, 0)
+        dialog.set_focus(textview)
+        dialog.connect("response", self.on_response)
+        dialog.connect("key-press-event", self.on_key_press)
+        return dialog
+
+    def on_response(self, _dialog: Gtk.Dialog, response: Gtk.ResponseType) -> None:
+        """Handler for the 'response' signal of the dialog."""
+
+        if response == Gtk.ResponseType.CLOSE:
+            self._gui.destroy()
+
+    def on_key_press(self, _dialog: Gtk.Dialog, event: Gdk.EventKey) -> bool:
+        """Handler for the 'key-press-event' signal of the dialog."""
+
+        if event.keyval == Gdk.KEY_Escape:
+            self._gui.destroy()
+            return True
+        return False
+
+    def show_gui(self) -> None:
+        """Shows the dialog."""
+
+        self._gui.show_all()  # pylint: disable=no-member
+        self._gui.present_with_time(time.time())
 
 
 _presenter = WhereAmIPresenter()

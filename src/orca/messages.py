@@ -1364,6 +1364,21 @@ LOCATION_NOT_FOUND_BRIEF = C_("location", "Not found")
 # for some reason Orca cannot identify/find the current location.
 LOCATION_NOT_FOUND_FULL = _("Could not find current location.")
 
+# Translators: Orca has a command which presents formatting information for the
+# current text character. Examples of this information include font family, font
+# size, bold, italic, underline, foreground color, and background color. This
+# message is presented when the current character does not expose any formatting
+# information to Orca.
+CHARACTER_FORMATTING_NOT_AVAILABLE = _("Character format unknown.")
+
+# Translators: Orca has a command which presents formatting information for the
+# current text character. Examples of this information include font family, font
+# size, bold, italic, underline, foreground color, and background color. This
+# message is presented when Orca obtains formatting information, but none of the
+# formatting attributes configured to be presented differ from their default
+# values.
+CHARACTER_FORMATTING_DEFAULT = _("Default character format.")
+
 # Translators: This string is used to present the state of a locking key, such
 # as Caps Lock. If Caps Lock is "off", then letters typed will appear in
 # lowercase; if Caps Lock is "on", they will instead appear in uppercase. This

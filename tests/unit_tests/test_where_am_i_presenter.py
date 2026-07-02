@@ -38,7 +38,8 @@ import pytest
 if TYPE_CHECKING:
     from .orca_test_context import OrcaTestContext
 
-READ_CHAR_ATTRIBUTES_CMD = "readCharAttributesCommand"
+PRESENT_CHARACTER_FORMATTING_CMD = "presentCharacterFormattingCommand"
+SHOW_CHARACTER_FORMATTING_CMD = "showCharacterFormattingCommand"
 PRESENT_SIZE_AND_POSITION_CMD = "presentSizeAndPositionCommand"
 PRESENT_TITLE_CMD = "presentTitleCommand"
 PRESENT_STATUS_BAR_CMD = "presentStatusBarCommand"
@@ -74,7 +75,8 @@ class TestWhereAmIPresenter:
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
         cmdnames_mock = essential_modules["orca.cmdnames"]
-        cmdnames_mock.READ_CHAR_ATTRIBUTES = READ_CHAR_ATTRIBUTES_CMD
+        cmdnames_mock.PRESENT_CHARACTER_FORMATTING = PRESENT_CHARACTER_FORMATTING_CMD
+        cmdnames_mock.SHOW_CHARACTER_FORMATTING = SHOW_CHARACTER_FORMATTING_CMD
         cmdnames_mock.PRESENT_SIZE_AND_POSITION = PRESENT_SIZE_AND_POSITION_CMD
         cmdnames_mock.PRESENT_TITLE = PRESENT_TITLE_CMD
         cmdnames_mock.PRESENT_STATUS_BAR = PRESENT_STATUS_BAR_CMD
@@ -83,6 +85,10 @@ class TestWhereAmIPresenter:
         cmdnames_mock.WHERE_AM_I_DETAILED = WHERE_AM_I_DETAILED_CMD
         cmdnames_mock.WHERE_AM_I_LINK = WHERE_AM_I_LINK_CMD
         cmdnames_mock.WHERE_AM_I_SELECTION = WHERE_AM_I_SELECTION_CMD
+        essential_modules["orca.guilabels"].CHARACTER_FORMATTING = "Character Formatting"
+        essential_modules[
+            "orca.guilabels"
+        ].CHARACTER_FORMATTING_FOR = "Character Formatting for: '%s'"
 
         keybindings_mock = essential_modules["orca.keybindings"]
         keybindings_mock.ORCA_MODIFIER_MASK = 2
@@ -91,6 +97,8 @@ class TestWhereAmIPresenter:
         messages_mock = essential_modules["orca.messages"]
         messages_mock.BOLD = "bold"
         messages_mock.MISSPELLED = "misspelled"
+        messages_mock.CHARACTER_FORMATTING_NOT_AVAILABLE = "Character format unknown."
+        messages_mock.CHARACTER_FORMATTING_DEFAULT = "Default character format."
         messages_mock.LOCATION_NOT_FOUND_FULL = LOCATION_NOT_FOUND_MSG
         messages_mock.LOCATION_NOT_FOUND_BRIEF = LOCATION_NOT_FOUND_MSG
         messages_mock.SIZE_AND_POSITION_FULL = "Size: %d by %d pixels, at %d, %d"
@@ -149,6 +157,7 @@ class TestWhereAmIPresenter:
         ax_text_mock.AXText.get_text_attributes_at_offset = test_context.Mock(
             return_value=({"weight": "bold"}, 0, 5),
         )
+        ax_text_mock.AXText.get_character_at_offset = test_context.Mock(return_value=("a", 0, 1))
 
         ax_text_attribute_instance = test_context.Mock()
         ax_text_attribute_instance.get_localized_name = test_context.Mock(return_value="Weight")
@@ -199,6 +208,7 @@ class TestWhereAmIPresenter:
         assert cmd_manager.get_keyboard_command("whereAmIBasicHandler") is not None
         assert cmd_manager.get_keyboard_command("whereAmIDetailedHandler") is not None
         assert cmd_manager.get_keyboard_command("readCharAttributesHandler") is not None
+        assert cmd_manager.get_keyboard_command("show_character_attributes") is not None
 
         dbus_mock = deps["orca.dbus_service"]
         assert dbus_mock.get_remote_controller.call_count >= 1
@@ -229,6 +239,7 @@ class TestWhereAmIPresenter:
         cmd_manager = command_manager.get_manager()
         expected_commands = [
             "readCharAttributesHandler",
+            "show_character_attributes",
             "presentSizeAndPositionHandler",
             "getTitleHandler",
             "getStatusBarHandler",
@@ -294,13 +305,13 @@ class TestWhereAmIPresenter:
         ].get_manager.return_value.get_resolved_attributes_to_speak.return_value = [mock_attr]
 
         pres_manager = deps["orca.presentation_manager"].get_manager()
-        pres_manager.speak_message.reset_mock()
+        pres_manager.present_message.reset_mock()
         mock_script = test_context.Mock()
         presenter = WhereAmIPresenter()
         result = presenter.present_character_attributes(mock_script)
         assert result is True
-        pres_manager.speak_message.assert_called()
-        assert pres_manager.speak_message.call_count >= 1
+        pres_manager.present_message.assert_called()
+        assert pres_manager.present_message.call_count >= 1
 
     def test_present_character_attributes_no_custom_attributes(
         self,
@@ -320,12 +331,133 @@ class TestWhereAmIPresenter:
         ].get_manager.return_value.get_resolved_attributes_to_speak.return_value = [default_attr]
 
         pres_manager = deps["orca.presentation_manager"].get_manager()
-        pres_manager.speak_message.reset_mock()
+        pres_manager.present_message.reset_mock()
         mock_script = test_context.Mock()
         presenter = WhereAmIPresenter()
         result = presenter.present_character_attributes(mock_script)
         assert result is True
-        pres_manager.speak_message.assert_called()
+        pres_manager.present_message.assert_called()
+
+    def test_present_character_attributes_default_formatting(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test WhereAmIPresenter.present_character_attributes with default formatting."""
+
+        deps = self._setup_dependencies(test_context)
+        from orca.where_am_i_presenter import WhereAmIPresenter
+
+        attr = test_context.Mock()
+        attr.get_attribute_name.return_value = "weight"
+        attr.get_value_from_attrs.return_value = None
+        attr.value_is_default.return_value = True
+        deps[
+            "orca.text_attribute_manager"
+        ].get_manager.return_value.get_resolved_attributes_to_speak.return_value = [attr]
+
+        pres_manager = deps["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
+        mock_script = test_context.Mock()
+        presenter = WhereAmIPresenter()
+        result = presenter.present_character_attributes(mock_script)
+        assert result is True
+        pres_manager.present_message.assert_called_once_with(
+            "Default character format.",
+        )
+
+    def test_present_character_attributes_no_formatting_information(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test WhereAmIPresenter.present_character_attributes with no formatting info."""
+
+        deps = self._setup_dependencies(test_context)
+        from orca.where_am_i_presenter import WhereAmIPresenter
+
+        deps["orca.ax_text"].AXText.get_text_attributes_at_offset.return_value = ({}, 0, 5)
+
+        attr = test_context.Mock()
+        attr.get_attribute_name.return_value = "weight"
+        attr.get_value_from_attrs.return_value = None
+        attr.value_is_default.return_value = True
+        deps[
+            "orca.text_attribute_manager"
+        ].get_manager.return_value.get_resolved_attributes_to_speak.return_value = [attr]
+
+        pres_manager = deps["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
+        mock_script = test_context.Mock()
+        presenter = WhereAmIPresenter()
+        result = presenter.present_character_attributes(mock_script)
+        assert result is True
+        pres_manager.present_message.assert_called_once_with(
+            "Character format unknown.",
+        )
+
+    def test_show_character_attributes(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test WhereAmIPresenter.show_character_attributes."""
+
+        deps = self._setup_dependencies(test_context)
+        from orca.where_am_i_presenter import WhereAmIPresenter
+
+        deps["orca.ax_text"].AXText.get_text_attributes_at_offset.return_value = (
+            {
+                "weight": "bold",
+                "style": "normal",
+                "family-name": "Sans",
+            },
+            0,
+            5,
+        )
+
+        def _attr(name: str, localized_name: str):
+            attr = test_context.Mock()
+            attr.get_attribute_name.return_value = name
+            attr.get_localized_name.return_value = localized_name
+            attr.get_localized_value.side_effect = lambda value: value
+            return attr
+
+        attr_map = {
+            "weight": _attr("weight", "Weight"),
+            "style": _attr("style", "Style"),
+            "family-name": _attr("family-name", "Family Name"),
+        }
+        deps["orca.ax_text"].AXTextAttribute.from_string.side_effect = attr_map.get
+
+        presenter = WhereAmIPresenter()
+        mock_gui = test_context.patch("orca.where_am_i_presenter.CharacterAttributesGUI")
+        result = presenter.show_character_attributes(test_context.Mock())
+        assert result is True
+        mock_gui.assert_called_once_with(
+            "Character Formatting for: 'a'",
+            "Family Name: Sans\nStyle: normal\nWeight: bold",
+        )
+        mock_gui.return_value.show_gui.assert_called_once()
+
+    def test_show_character_attributes_no_font_information(
+        self,
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test WhereAmIPresenter.show_character_attributes with no font info."""
+
+        deps = self._setup_dependencies(test_context)
+        from orca.where_am_i_presenter import WhereAmIPresenter
+
+        deps["orca.ax_text"].AXText.get_text_attributes_at_offset.return_value = ({}, 0, 5)
+
+        presenter = WhereAmIPresenter()
+        mock_gui = test_context.patch("orca.where_am_i_presenter.CharacterAttributesGUI")
+        pres_manager = deps["orca.presentation_manager"].get_manager()
+        pres_manager.present_message.reset_mock()
+        result = presenter.show_character_attributes(test_context.Mock())
+        assert result is True
+        mock_gui.assert_not_called()
+        pres_manager.present_message.assert_called_once_with(
+            "Character format unknown.",
+        )
 
     def test_present_size_and_position_flat_review(self, test_context: OrcaTestContext) -> None:
         """Test WhereAmIPresenter.present_size_and_position in flat review mode."""

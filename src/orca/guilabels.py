@@ -761,6 +761,15 @@ PRESENTATION_SPEAK = _("Speak")
 # be presented. If selected, the attribute will be both spoken and marked in braille.
 PRESENTATION_SPEAK_AND_MARK = _("Speak and mark")
 
+# Translators: This is the title of a window which displays formatting
+# information associated with the current text character.
+CHARACTER_FORMATTING = _("Character Formatting")
+
+# Translators: This is the title of a window which displays formatting
+# information associated with the current text character. The string is the
+# current character.
+CHARACTER_FORMATTING_FOR = _("Character Formatting for: '%s'")
+
 # Translators: This is an option in a combo box for how a text attribute should
 # be presented. If selected, the attribute will not be presented.
 TEXT_ATTRIBUTES_PRESENTATION_NONE = C_("text attributes", "None")
