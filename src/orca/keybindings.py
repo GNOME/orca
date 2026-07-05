@@ -285,22 +285,20 @@ class KeyBinding:
 
         manager = ax_device_manager.get_manager()
         for kd in self.key_definitions(orca_modifiers):
-            tokens = [
-                "KEYBINDINGS: Adding grab for",
-                self,
-                f"keysym={kd.keysym}",
-                f"keycode={kd.keycode}",
-                f"modifiers={kd.modifiers}",
-            ]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             grab_id = manager.add_key_grab(kd, None)
-            tokens = ["KEYBINDINGS: Grab result for", self, f"grab id={grab_id}"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             # When we have double/triple-click bindings, the single-click binding will be
             # registered first, and subsequent attempts to register what is externally the
             # same grab will fail. If we only have a double/triple-click, it succeeds.
             # A grab id of 0 indicates failure.
             if grab_id == 0:
+                tokens = [
+                    "KEYBINDINGS: AT-SPI returned grab id 0 for",
+                    self,
+                    f"keysym={kd.keysym}",
+                    f"keycode={kd.keycode}",
+                    f"modifiers={kd.modifiers}",
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 continue
             self._grab_ids.append(grab_id)
 
@@ -309,7 +307,5 @@ class KeyBinding:
 
         manager = ax_device_manager.get_manager()
         for grab_id in self._grab_ids:
-            tokens = ["KEYBINDINGS: Removing grab for", self, f"grab id={grab_id}"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             manager.remove_key_grab(grab_id)
         self._grab_ids = []

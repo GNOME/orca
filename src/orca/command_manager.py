@@ -429,11 +429,6 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         orca_modifiers = orca_modifier_manager.get_manager().get_orca_modifier_keys()
 
         def update_grabs() -> bool:
-            msg = (
-                f"COMMAND MANAGER: Running NumLock grab update. NumLock is on: {self._numlock_on}."
-            )
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-
             for cmd in self._keyboard_commands.values():
                 if not cmd.is_active():
                     continue
@@ -441,24 +436,10 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
                 if kb is None or not kb.keysymstring.startswith("KP_"):
                     continue
 
-                tokens = [
-                    "COMMAND MANAGER: NumLock grab candidate:",
-                    cmd.get_name(),
-                    kb,
-                    f"grab ids={kb.get_grab_ids()}",
-                ]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 if self._numlock_on and kb.has_grabs():
                     kb.remove_grabs()
                 elif not self._numlock_on and not kb.has_grabs():
                     kb.add_grabs(orca_modifiers)
-                tokens = [
-                    "COMMAND MANAGER: NumLock grab result:",
-                    cmd.get_name(),
-                    kb,
-                    f"grab ids={kb.get_grab_ids()}",
-                ]
-                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return False
 
         GLib.idle_add(update_grabs)
@@ -1029,11 +1010,6 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
         for key, new_kb in new_bindings.items():
             if key not in transferred_keys and not new_kb.has_grabs():
                 if self._is_desktop and self._numlock_on and key[0].startswith("KP_"):
-                    tokens = [
-                        "COMMAND MANAGER: Not adding KP_* grab while NumLock is on:",
-                        key,
-                    ]
-                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                     continue
                 new_kb.add_grabs(orca_modifiers)
                 if new_kb.has_grabs():
