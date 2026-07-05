@@ -401,7 +401,10 @@ class BrailleGenerator(generator.Generator):
         if not self._context.end_of_line_indicator:
             return []
 
-        if not (AXUtilities.is_editable(obj) or AXUtilities.is_code(obj)):
+        if not (
+            AXUtilities.is_editable(obj)
+            or AXUtilities.is_code_block_descendant(obj, inclusive=True)
+        ):
             return []
 
         return [object_properties.EOL_INDICATOR_BRAILLE]

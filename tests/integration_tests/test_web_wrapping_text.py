@@ -33,7 +33,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 from .harness import keyboard
-from .helpers import move_to_top, reset_web_state, speech
+from .helpers import BrailleLine, capture, move_to_top, reset_web_state, speech
 
 if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
@@ -149,3 +149,40 @@ def test_line_assembly_walking_up(web_wrapping_text: NativeAppSession) -> None:
         ["foxtrot golf hotel, then a "],
         ["Alpha bravo charlie delta echo "],
     ]
+
+
+def _down_to_line(session: NativeAppSession, count: int) -> tuple[list[str], list[BrailleLine]]:
+    result = None
+    for _ in range(count):
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        result = capture(session)
+    assert result is not None
+    return result
+
+
+@pytest.mark.native_app
+def test_eol_indicator_on_code_blocks_not_inline(web_wrapping_text: NativeAppSession) -> None:
+    """Tests that the braille EOL indicator marks preformatted code lines but not inline code."""
+
+    session = web_wrapping_text
+    reset_web_state(session)
+    assert session.orca.get("CaretNavigator", "LayoutMode") is True
+
+    assert _down_to_line(session, 10) == (
+        ["of ", "inline code", " and water is "],
+        [
+            BrailleLine(
+                1, "of inline code and water is ", "of inline code and water is ", "\x00" * 28
+            )
+        ],
+    )
+
+    assert _down_to_line(session, 13) == (
+        ["leaving blockquote. code start", "code line one"],
+        [BrailleLine(1, "code line one $l", "code line one $l", "\x00" * 16)],
+    )
+
+    assert _down_to_line(session, 1) == (
+        ["code line two", "code end"],
+        [BrailleLine(1, "code line two $l", "code line two $l", "\x00" * 16)],
+    )
