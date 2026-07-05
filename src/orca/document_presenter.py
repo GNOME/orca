@@ -973,9 +973,31 @@ class DocumentPresenter(Extension):
         )
         return True
 
+    def _restrict_find_results_to_cell(
+        self,
+        obj: Atspi.Accessible,
+        contents: list[tuple[Atspi.Accessible, int, int, str]],
+    ) -> list[tuple[Atspi.Accessible, int, int, str]]:
+        """Limits find-result contents to obj's table cell rather than the whole row."""
+
+        cell = AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_table_cell)
+        if cell is None:
+            return contents
+
+        return [
+            content
+            for content in contents
+            if AXUtilities.find_ancestor_inclusive(content[0], AXUtilities.is_table_cell) == cell
+        ]
+
     # pylint: disable-next=too-many-locals
     def present_find_results(self, obj: Atspi.Accessible, offset: int) -> bool:
         """Presents find results if appropriate based on settings. Returns True if presented."""
+
+        if not self.get_speak_find_results():
+            msg = "DOCUMENT PRESENTER: Speaking find results is disabled."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return False
 
         script = script_manager.get_manager().get_active_script()
         if script is None:
@@ -1006,21 +1028,38 @@ class DocumentPresenter(Extension):
         context = script.utilities.get_caret_context(document)
         script.utilities.set_caret_context(obj, offset, document=document)
 
+        focus = focus_manager.get_manager().get_locus_of_focus()
+        manager = input_event_manager.get_manager()
+        user_is_editing_search_term = (
+            manager.last_event_was_printable_key()
+            or manager.last_event_was_backspace()
+            or manager.last_event_was_delete()
+        ) and AXUtilities.is_editable(focus)
         end = AXUtilities.get_selection_end_offset(obj)
-        if (
-            end - start < self.get_find_results_minimum_length()
-            or not self.get_speak_find_results()
-        ):
+        if end - start < self.get_find_results_minimum_length() and user_is_editing_search_term:
+            msg = "DOCUMENT PRESENTER: Search term is shorter than the minimum length."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
             return False
 
-        if self._made_find_announcement and self.get_only_speak_changed_lines():
+        if self._made_find_announcement:
             context_obj, context_offset = context
-            context_rect = AXText.get_range_rect(context_obj, context_offset, context_offset + 1)
-            current_rect = AXText.get_range_rect(obj, offset, offset + 1)
-            if AXUtilities.rects_are_on_same_line(context_rect, current_rect):
+            if context_obj == obj and context_offset == offset:
+                msg = "DOCUMENT PRESENTER: Find result location is unchanged. Not presenting."
+                debug.print_message(debug.LEVEL_INFO, msg, True)
                 return False
 
+            if self.get_only_speak_changed_lines():
+                context_rect = AXText.get_range_rect(
+                    context_obj, context_offset, context_offset + 1
+                )
+                current_rect = AXText.get_range_rect(obj, offset, offset + 1)
+                if AXUtilities.rects_are_on_same_line(context_rect, current_rect):
+                    msg = "DOCUMENT PRESENTER: Find result is on the same line as the last one."
+                    debug.print_message(debug.LEVEL_INFO, msg, True)
+                    return False
+
         contents = script.utilities.get_line_contents_at_offset(obj, offset)
+        contents = self._restrict_find_results_to_cell(obj, contents)
         presentation_manager.get_manager().speak_contents(contents)
         script.update_braille(obj)
 
