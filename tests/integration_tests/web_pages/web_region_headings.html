@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Region Headings ready</title>
+<style>
+  .heading-row { display: flex; align-items: baseline; gap: 0.5em; }
+  .heading-row h2 { margin: 0; }
+</style>
+</head>
+<body>
+<p>Intro paragraph.</p>
+<section aria-labelledby="cause">
+  <div class="heading-row">
+    <h2 id="cause">Cause</h2>
+    <span>[<a href="#e1">edit</a>]</span>
+  </div>
+  <p>Cause text.</p>
+</section>
+<section aria-labelledby="aftermath">
+  <div class="heading-row">
+    <h2 id="aftermath">Aftermath</h2>
+    <span>[<a href="#e2">edit</a>]</span>
+  </div>
+  <p>Aftermath text.</p>
+</section>
+<h2>Before <a href="#mid">middle</a> after</h2>
+<p>Closing paragraph.</p>
+</body>
+</html>

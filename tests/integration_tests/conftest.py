@@ -99,6 +99,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_pain_slider_no_valuenow,
     _web_plain_text,
     _web_redundant_content,
+    _web_region_headings,
     _web_removed_child_recovery,
     _web_sister_projects,
     _web_sliders,

@@ -529,3 +529,4 @@ _web_contracted_braille = _make_web_fixture("web_contracted_braille.html", caret
 _web_custom_wrappers = _make_web_fixture("web_custom_wrappers.html")
 _web_emoji_links = _make_web_fixture("web_emoji_links.html")
 _web_attribute_mask = _make_web_fixture("web_attribute_mask.html", caret_browsing=True)
+_web_region_headings = _make_web_fixture("web_region_headings.html")

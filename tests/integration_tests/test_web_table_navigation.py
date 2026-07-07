@@ -524,6 +524,8 @@ def test_say_all_over_tables(web_tables: NativeAppSession) -> None:
         "0.04",
         "leaving table.",
         "table with 4 rows 3 columns",
+        "Student scores",
+        "caption",
         "Pupil",
         "Score",
         "Grade",

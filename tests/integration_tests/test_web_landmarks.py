@@ -44,8 +44,8 @@ _TOP_TO_BOTTOM = (
     ["leaving main content.", "complementary content", "Sidebar", "Aside text."],
     ["leaving complementary content.", "form", "Newsletter signup", "Email "],
     ["Email", "entry"],
-    ["leaving form.", "Related links", "landmark", "Region text."],
-    ["leaving region.", "Status updates", "landmark", "Status text."],
+    ["leaving form.", "Related links", "region", "Region text."],
+    ["leaving region.", "Status updates", "region", "Status text."],
     ["leaving region.", "information", "Footer text."],
 )
 
@@ -75,8 +75,8 @@ def test_caret_navigation_top_to_bottom_layout_off(web_landmarks: NativeAppSessi
 
 
 _BOTTOM_TO_TOP = (
-    ["leaving information.", "Status updates", "landmark", "Status text."],
-    ["leaving region.", "Related links", "landmark", "Region text."],
+    ["leaving information.", "Status updates", "region", "Status text."],
+    ["leaving region.", "Related links", "region", "Region text."],
     ["leaving region.", "form", "Newsletter signup", "Email", "entry"],
     ["leaving form.", "complementary content", "Sidebar", "Aside text."],
     ["leaving complementary content.", "main content", "Body paragraph."],
@@ -88,8 +88,8 @@ _BOTTOM_TO_TOP = (
 )
 # Layout off splits each entry's label onto its own line, so two extra stops appear.
 _BOTTOM_TO_TOP_LAYOUT_OFF = (
-    ["leaving information.", "Status updates", "landmark", "Status text."],
-    ["leaving region.", "Related links", "landmark", "Region text."],
+    ["leaving information.", "Status updates", "region", "Status text."],
+    ["leaving region.", "Related links", "region", "Region text."],
     ["leaving region.", "form", "Newsletter signup", "Email", "entry"],
     ["Email "],
     ["leaving form.", "complementary content", "Sidebar", "Aside text."],
@@ -233,13 +233,13 @@ def test_structural_navigation_by_landmark_forward(web_landmarks: NativeAppSessi
 
     keyboard.tap_key(keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
-        ["m", "leaving form.", "Related links", "landmark", "Region text."],
+        ["m", "leaving form.", "Related links", "region", "Region text."],
         [BrailleLine(1, "Region text.", "Region text.", "\x00" * 12)],
     )
 
     keyboard.tap_key(keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
-        ["m", "leaving region.", "Status updates", "landmark", "Status text."],
+        ["m", "leaving region.", "Status updates", "region", "Status text."],
         [BrailleLine(1, "Status text.", "Status text.", "\x00" * 12)],
     )
 
@@ -283,13 +283,13 @@ def test_structural_navigation_by_landmark_backward(web_landmarks: NativeAppSess
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
-        ["M", "leaving information.", "Status updates", "landmark", "Status text."],
+        ["M", "leaving information.", "Status updates", "region", "Status text."],
         [BrailleLine(1, "Status text.", "Status text.", "\x00" * 12)],
     )
 
     keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_M)
     assert helpers.capture(session) == (
-        ["M", "leaving region.", "Related links", "landmark", "Region text."],
+        ["M", "leaving region.", "Related links", "region", "Region text."],
         [BrailleLine(1, "Region text.", "Region text.", "\x00" * 12)],
     )
 
@@ -399,11 +399,11 @@ def test_say_all_landmarks(web_landmarks: NativeAppSession) -> None:
         "Aside text.",
         "leaving complementary content.",
         "Related links",
-        "landmark",
+        "region",
         "Region text.",
         "leaving region.",
         "Status updates",
-        "landmark",
+        "region",
         "Status text.",
         "leaving region.",
         "information",

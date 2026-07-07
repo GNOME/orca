@@ -2447,6 +2447,9 @@ class Utilities(script_utilities.Utilities):
         if AXUtilities.is_widget(obj):
             return False
 
+        if AXUtilities.is_heading(obj) or AXUtilities.is_caption(obj):
+            return False
+
         targets = AXUtilities.get_is_label_for(obj)
         if not contents:
             if targets:

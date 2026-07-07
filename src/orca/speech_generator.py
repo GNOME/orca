@@ -1179,6 +1179,12 @@ class SpeechGenerator(generator.Generator):
         if dialog:
             return []
 
+        if any(
+            AXUtilities.is_ancestor(prior_obj, labelled)
+            for labelled in AXUtilities.get_is_label_for(prior_obj)
+        ):
+            return []
+
         include_only = [
             Atspi.Role.ARTICLE,
             Atspi.Role.BLOCK_QUOTE,
@@ -3569,8 +3575,10 @@ class SpeechGenerator(generator.Generator):
         result = self._generate_default_prefix(obj)
         prior_obj = self._get_prior_obj()
         if prior_obj and obj != prior_obj and not AXUtilities.is_ancestor(prior_obj, obj):
-            result += self._generate_accessible_label_and_name(obj)
-            result += self._generate_accessible_role(obj)
+            name = self._generate_accessible_label_and_name(obj)
+            if name:
+                result += name
+                result += self._generate_accessible_role(obj)
 
         if self._is_ancestor() or self._is_minimal():
             return result

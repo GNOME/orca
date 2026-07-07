@@ -553,8 +553,6 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         role = self._get_resolved_role(obj)
         start = self._get_start_offset(obj)
         end = self._get_end_offset(obj)
-        index = self._get_content_position(obj).index
-        total = self._get_content_position(obj).total
 
         ancestor_with_usable_role = self._get_ancestor_with_usable_role(obj)
         if not self._should_speak_role(obj):
@@ -594,7 +592,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
                 result.extend(self.voice(speech_generator.SYSTEM, obj=obj))
 
         elif role == Atspi.Role.HEADING:
-            if index == total - 1:
+            if self._get_content_position(obj).last_for_object:
                 level = AXUtilities.get_heading_level(obj)
                 if level:
                     result.append(
@@ -771,10 +769,17 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             elif announce_attrs:
                 prev_attrs = AXText.get_text_attributes_at_offset(obj, start)[0]
 
+            last_for_object = all(other[0] != obj for other in contents[i + 1 :])
             if base_position is not None:
-                position = ContentPosition(index=base_position.index + i, total=base_position.total)
+                position = ContentPosition(
+                    index=base_position.index + i,
+                    total=base_position.total,
+                    last_for_object=last_for_object,
+                )
             else:
-                position = ContentPosition(index=i, total=len(contents))
+                position = ContentPosition(
+                    index=i, total=len(contents), last_for_object=last_for_object
+                )
             self._context = replace(
                 self._context,
                 content_item=ContentItem(start_offset=start, end_offset=end, string=string),

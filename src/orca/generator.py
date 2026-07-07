@@ -82,6 +82,7 @@ class ContentPosition:
 
     index: int = 0
     total: int = 1
+    last_for_object: bool = True
 
 
 @dataclass(frozen=True)
@@ -520,8 +521,9 @@ class Generator:
         """Returns a string representing the localized rolename of obj."""
 
         resolved = role if role is not None else self._get_resolved_role(obj)
-        result = AXUtilities.get_localized_role_name(obj, resolved)
-        return result
+        if not isinstance(resolved, Atspi.Role):
+            resolved = None
+        return AXUtilities.get_localized_role_name(obj, resolved)
 
     def get_state_indicator(self, obj: Atspi.Accessible) -> list[Any]:
         """Returns an array with the generated state of obj."""

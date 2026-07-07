@@ -111,6 +111,7 @@ orca_integration_tests = [
   'integration_tests/test_web_form_fields_navigation.py',
   'integration_tests/test_web_custom_wrappers.py',
   'integration_tests/test_web_landmarks.py',
+  'integration_tests/test_web_region_headings.py',
   'integration_tests/test_web_inline_landmarks.py',
   'integration_tests/test_web_inline_list.py',
   'integration_tests/test_web_nested_headings.py',

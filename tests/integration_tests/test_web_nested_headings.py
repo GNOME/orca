@@ -42,7 +42,7 @@ def test_backward_navigation_escapes_nested_heading(web_nested_headings: NativeA
 
     # Forward navigation lands on the outer heading, then the third heading.
     keyboard.tap_key(keyboard.KEYSYM_H)
-    assert speech(session) == ["h", "Inner heading", " outer tail", "heading 2"]
+    assert speech(session) == ["h", "Inner heading", "heading 3", " outer tail", "heading 2"]
     keyboard.tap_key(keyboard.KEYSYM_H)
     assert speech(session) == ["h", "Third heading", "heading 2"]
 

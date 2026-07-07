@@ -276,7 +276,12 @@ class SayAllPresenter(Extension):
         obj, start_offset, end_offset, _text = content
         if start_offset == end_offset:
             return True, "start_offset equals end_offset"
-        if AXUtilities.get_is_label_for(obj) and not AXUtilities.is_focusable(obj):
+        if (
+            AXUtilities.get_is_label_for(obj)
+            and not AXUtilities.is_focusable(obj)
+            and not AXUtilities.is_heading(obj)
+            and not AXUtilities.is_caption(obj)
+        ):
             return True, "is non-focusable label for other object"
         stripped = _text.strip()
         if stripped and all(unicodedata.category(c).startswith("P") for c in stripped):
