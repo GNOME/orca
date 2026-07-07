@@ -66,8 +66,8 @@ class TestAXHypertext:
 
         return essential_modules
 
-    def test_get_link_count_with_hypertext_support(self, test_context: OrcaTestContext) -> None:
-        """Test AXHypertext._get_link_count with hypertext support."""
+    def testget_link_count_with_hypertext_support(self, test_context: OrcaTestContext) -> None:
+        """Test AXHypertext.get_link_count with hypertext support."""
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         self._setup_dependencies(test_context)
@@ -75,22 +75,22 @@ class TestAXHypertext:
 
         test_context.patch("orca.ax_hypertext.AXObject.supports_hypertext", return_value=True)
         test_context.patch("orca.ax_hypertext.Atspi.Hypertext.get_n_links", return_value=3)
-        result = AXHypertext._get_link_count(mock_accessible)
+        result = AXHypertext.get_link_count(mock_accessible)
         assert result == 3
 
-    def test_get_link_count_without_hypertext_support(self, test_context: OrcaTestContext) -> None:
-        """Test AXHypertext._get_link_count without hypertext support."""
+    def testget_link_count_without_hypertext_support(self, test_context: OrcaTestContext) -> None:
+        """Test AXHypertext.get_link_count without hypertext support."""
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         self._setup_dependencies(test_context)
         from orca.ax_hypertext import AXHypertext
 
         test_context.patch("orca.ax_hypertext.AXObject.supports_hypertext", return_value=False)
-        result = AXHypertext._get_link_count(mock_accessible)
+        result = AXHypertext.get_link_count(mock_accessible)
         assert result == 0
 
-    def test_get_link_count_with_glib_error(self, test_context: OrcaTestContext) -> None:
-        """Test AXHypertext._get_link_count handles GLib.GError."""
+    def testget_link_count_with_glib_error(self, test_context: OrcaTestContext) -> None:
+        """Test AXHypertext.get_link_count handles GLib.GError."""
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
@@ -108,7 +108,7 @@ class TestAXHypertext:
             "orca.ax_hypertext.debug.print_message",
             new=essential_modules["orca.debug"].print_message,
         )
-        result = AXHypertext._get_link_count(mock_accessible)
+        result = AXHypertext.get_link_count(mock_accessible)
         assert result == 0
         essential_modules["orca.debug"].print_message.assert_called()
 
@@ -120,14 +120,14 @@ class TestAXHypertext:
             (True, True, False),  # With GLib error
         ],
     )
-    def test_get_link_at_index_scenarios(
+    def testget_link_at_index_scenarios(
         self,
         test_context: OrcaTestContext,
         has_hypertext_support: bool,
         raises_glib_error: bool,
         should_return_link: bool,
     ) -> None:
-        """Test AXHypertext._get_link_at_index under different scenarios."""
+        """Test AXHypertext.get_link_at_index under different scenarios."""
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
         mock_hyperlink = test_context.Mock(spec=Atspi.Hyperlink)
@@ -156,7 +156,7 @@ class TestAXHypertext:
                 "orca.ax_hypertext.Atspi.Hypertext.get_link",
                 return_value=mock_hyperlink,
             )
-        result = AXHypertext._get_link_at_index(mock_accessible, 0)
+        result = AXHypertext.get_link_at_index(mock_accessible, 0)
         if should_return_link:
             assert result == mock_hyperlink
         else:
@@ -198,16 +198,16 @@ class TestAXHypertext:
             return -1
 
         test_context.patch(
-            "orca.ax_hypertext.AXHypertext._get_link_count",
+            "orca.ax_hypertext.AXHypertext.get_link_count",
             return_value=len(mock_links),
         )
 
-        def mock_get_link_at_index(_obj, index):
+        def mockget_link_at_index(_obj, index):
             return mock_links[index] if index < len(mock_links) else None
 
         test_context.patch(
-            "orca.ax_hypertext.AXHypertext._get_link_at_index",
-            side_effect=mock_get_link_at_index,
+            "orca.ax_hypertext.AXHypertext.get_link_at_index",
+            side_effect=mockget_link_at_index,
         )
         test_context.patch(
             "orca.ax_hypertext.AXHypertext.get_link_start_offset",
@@ -227,7 +227,7 @@ class TestAXHypertext:
         self._setup_dependencies(test_context)
         from orca.ax_hypertext import AXHypertext
 
-        test_context.patch("orca.ax_hypertext.AXHypertext._get_link_count", return_value=0)
+        test_context.patch("orca.ax_hypertext.AXHypertext.get_link_count", return_value=0)
         result = AXHypertext.get_all_links(mock_accessible)
         assert not result
 
@@ -240,13 +240,13 @@ class TestAXHypertext:
 
         mock_link1 = test_context.Mock(spec=Atspi.Hyperlink)
         mock_link2 = test_context.Mock(spec=Atspi.Hyperlink)
-        test_context.patch("orca.ax_hypertext.AXHypertext._get_link_count", return_value=2)
+        test_context.patch("orca.ax_hypertext.AXHypertext.get_link_count", return_value=2)
 
         def mock_get_link_by_index(_obj, index):
             return mock_link1 if index == 0 else mock_link2
 
         test_context.patch(
-            "orca.ax_hypertext.AXHypertext._get_link_at_index",
+            "orca.ax_hypertext.AXHypertext.get_link_at_index",
             side_effect=mock_get_link_by_index,
         )
         result = AXHypertext.get_all_links(mock_accessible)
@@ -262,13 +262,13 @@ class TestAXHypertext:
         from orca.ax_hypertext import AXHypertext
 
         mock_link = test_context.Mock(spec=Atspi.Hyperlink)
-        test_context.patch("orca.ax_hypertext.AXHypertext._get_link_count", return_value=3)
+        test_context.patch("orca.ax_hypertext.AXHypertext.get_link_count", return_value=3)
 
         def mock_get_specific_link(_obj, index):
             return mock_link if index == 1 else None
 
         test_context.patch(
-            "orca.ax_hypertext.AXHypertext._get_link_at_index",
+            "orca.ax_hypertext.AXHypertext.get_link_at_index",
             side_effect=mock_get_specific_link,
         )
         result = AXHypertext.get_all_links(mock_accessible)
@@ -541,7 +541,7 @@ class TestAXHypertext:
         test_context.patch("orca.ax_hypertext.AXObject.supports_hypertext", return_value=True)
         test_context.patch("orca.ax_hypertext.Atspi.Hypertext.get_link_index", return_value=0)
         test_context.patch(
-            "orca.ax_hypertext.AXHypertext._get_link_at_index",
+            "orca.ax_hypertext.AXHypertext.get_link_at_index",
             return_value=mock_hyperlink,
         )
         test_context.patch(
@@ -620,7 +620,7 @@ class TestAXHypertext:
         test_context.patch("orca.ax_hypertext.AXObject.supports_hypertext", return_value=True)
         test_context.patch("orca.ax_hypertext.Atspi.Hypertext.get_link_index", return_value=0)
         test_context.patch(
-            "orca.ax_hypertext.AXHypertext._get_link_at_index",
+            "orca.ax_hypertext.AXHypertext.get_link_at_index",
             return_value=mock_hyperlink,
         )
         test_context.patch(

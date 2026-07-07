@@ -37,6 +37,7 @@ from gi.repository import Atspi
 
 from .ax_text import AXTextAttribute
 from .ax_utilities_event import TextEventReason
+from .ax_utilities_hypertext import CaretPolicy
 from .ax_utilities_text import CaretSetReason, LastCaretSet, TextUnit
 
 class AXUtilities:
@@ -269,6 +270,36 @@ class AXUtilities:
     def is_presentable_text_deletion(event: Atspi.Event) -> bool: ...
     @staticmethod
     def is_presentable_text_insertion(event: Atspi.Event) -> bool: ...
+
+    # From ax_utilities_hypertext.py
+    @staticmethod
+    def find_next_context(
+        obj: Atspi.Accessible | None, offset: int, policy: CaretPolicy
+    ) -> tuple[Atspi.Accessible | None, int]: ...
+    @staticmethod
+    def find_previous_context(
+        obj: Atspi.Accessible | None, offset: int, policy: CaretPolicy
+    ) -> tuple[Atspi.Accessible | None, int]: ...
+    @staticmethod
+    def search_for_caret_context(
+        obj: Atspi.Accessible,
+        policy: CaretPolicy,
+        is_document: Callable[[Atspi.Accessible], bool],
+    ) -> tuple[Atspi.Accessible, int]: ...
+    @staticmethod
+    def find_child_at_offset(obj: Atspi.Accessible, offset: int) -> Atspi.Accessible | None: ...
+    @staticmethod
+    def is_valid_position(obj: Atspi.Accessible, offset: int, policy: CaretPolicy) -> bool: ...
+    @staticmethod
+    def get_all_links_in_range(
+        obj: Atspi.Accessible, start_offset: int, end_offset: int
+    ) -> list[Atspi.Hyperlink]: ...
+    @staticmethod
+    def get_all_links(obj: Atspi.Accessible) -> list[Atspi.Hyperlink]: ...
+    @staticmethod
+    def get_link_basename(
+        obj: Atspi.Accessible, index: int = 0, remove_extension: bool = False
+    ) -> str: ...
 
     # From ax_utilities_role.py
     @staticmethod

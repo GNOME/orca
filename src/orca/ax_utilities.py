@@ -47,6 +47,7 @@ from .ax_utilities_collection import AXUtilitiesCollection
 from .ax_utilities_component import AXUtilitiesComponent
 from .ax_utilities_document import AXUtilitiesDocument
 from .ax_utilities_event import AXUtilitiesEvent
+from .ax_utilities_hypertext import AXUtilitiesHypertext
 from .ax_utilities_math import AXUtilitiesMath
 from .ax_utilities_object import AXUtilitiesObject
 from .ax_utilities_relation import AXUtilitiesRelation
@@ -1655,6 +1656,9 @@ for method_name, method in inspect.getmembers(AXUtilitiesApplication, predicate=
     setattr(AXUtilities, method_name, method)
 
 for method_name, method in inspect.getmembers(AXUtilitiesEvent, predicate=inspect.isfunction):
+    setattr(AXUtilities, method_name, method)
+
+for method_name, method in inspect.getmembers(AXUtilitiesHypertext, predicate=inspect.isfunction):
     setattr(AXUtilities, method_name, method)
 
 for method_name, method in inspect.getmembers(AXUtilitiesRelation, predicate=inspect.isfunction):

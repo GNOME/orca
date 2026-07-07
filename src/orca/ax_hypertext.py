@@ -43,7 +43,7 @@ class AXHypertext:
     _MAX_OFFSET_SKEW = 3
 
     @staticmethod
-    def _get_link_count(obj: Atspi.Accessible) -> int:
+    def get_link_count(obj: Atspi.Accessible) -> int:
         """Returns the number of hyperlinks in obj."""
 
         if not AXObject.supports_hypertext(obj):
@@ -52,7 +52,7 @@ class AXHypertext:
         try:
             count = Atspi.Hypertext.get_n_links(obj)
         except GLib.GError as error:
-            msg = f"AXHypertext: Exception in _get_link_count: {error}"
+            msg = f"AXHypertext: Exception in get_link_count: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return 0
 
@@ -61,7 +61,7 @@ class AXHypertext:
         return count
 
     @staticmethod
-    def _get_link_at_index(obj: Atspi.Accessible, index: int) -> Atspi.Hyperlink | None:
+    def get_link_at_index(obj: Atspi.Accessible, index: int) -> Atspi.Hyperlink | None:
         """Returns the hyperlink object at the specified index."""
 
         if not AXObject.supports_hypertext(obj):
@@ -70,7 +70,7 @@ class AXHypertext:
         try:
             link = Atspi.Hypertext.get_link(obj, index)
         except GLib.GError as error:
-            msg = f"AXHypertext: Exception in _get_link_at_index: {error}"
+            msg = f"AXHypertext: Exception in get_link_at_index: {error}"
             debug.print_message(debug.LEVEL_INFO, msg, True)
             return None
 
@@ -85,8 +85,8 @@ class AXHypertext:
         """Returns all the hyperlinks in obj who started within the specified range."""
 
         links = []
-        for i in range(AXHypertext._get_link_count(obj)):
-            link = AXHypertext._get_link_at_index(obj, i)
+        for i in range(AXHypertext.get_link_count(obj)):
+            link = AXHypertext.get_link_at_index(obj, i)
             if link is None:
                 continue
             if (
@@ -108,8 +108,8 @@ class AXHypertext:
         """Returns a list of all the hyperlinks in obj."""
 
         links = []
-        for i in range(AXHypertext._get_link_count(obj)):
-            link = AXHypertext._get_link_at_index(obj, i)
+        for i in range(AXHypertext.get_link_count(obj)):
+            link = AXHypertext.get_link_at_index(obj, i)
             if link is not None:
                 links.append(link)
 
@@ -268,7 +268,7 @@ class AXHypertext:
         if index < 0:
             return None
 
-        link = AXHypertext._get_link_at_index(obj, index)
+        link = AXHypertext.get_link_at_index(obj, index)
         if link is None:
             return None
 
@@ -280,6 +280,25 @@ class AXHypertext:
             return None
 
         tokens = [f"AXHypertext: Child at offset {offset} in", obj, "is", child]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return child
+
+    @staticmethod
+    def get_child_at_link_index(obj: Atspi.Accessible, index: int) -> Atspi.Accessible | None:
+        """Returns the embedded-object child of obj for the hyperlink at the specified index."""
+
+        link = AXHypertext.get_link_at_index(obj, index)
+        if link is None:
+            return None
+
+        try:
+            child = Atspi.Hyperlink.get_object(link, 0)
+        except GLib.GError as error:
+            msg = f"AXHypertext: Exception in get_child_at_link_index: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return None
+
+        tokens = [f"AXHypertext: Child for link index {index} in", obj, "is", child]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return child
 

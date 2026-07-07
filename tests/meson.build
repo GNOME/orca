@@ -20,6 +20,7 @@ unit_tests = [
   'unit_tests/test_ax_device_manager.py',
   'unit_tests/test_ax_event_synthesizer.py',
   'unit_tests/test_ax_hypertext.py',
+  'unit_tests/test_ax_utilities_hypertext.py',
   'unit_tests/test_ax_object.py',
   'unit_tests/test_ax_selection.py',
   'unit_tests/test_ax_table.py',
