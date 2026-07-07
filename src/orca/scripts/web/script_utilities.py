@@ -3422,7 +3422,9 @@ class Utilities(script_utilities.Utilities):
         self._cache.clear_caret_context_decisions("web first context")
         return rv
 
-    def _first_context(self, obj, offset):
+    def _first_context(self, obj: Atspi.Accessible, offset: int) -> tuple[Atspi.Accessible, int]:
+        """Returns the first viable caret context at or after obj, offset."""
+
         tokens = ["WEB: Looking for first caret context for", obj, ", ", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -3444,68 +3446,77 @@ class Utilities(script_utilities.Utilities):
             return self._first_context(first_child, 0)
 
         treat_as_text = self.treat_as_text_object(obj)
-        if not treat_as_text and self._can_have_caret_context(obj):
-            tokens = ["WEB: First caret context for non-text context is", obj, "0"]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return obj, 0
 
         length = AXText.get_character_count(obj)
         if treat_as_text and offset >= length:
-            if (
-                self.is_content_editable_with_embedded_objects(obj)
-                and input_event_manager.get_manager().last_event_was_character_navigation()
-            ):
-                next_obj, next_offset = self.next_context(obj, length)
-                if not next_obj:
-                    tokens = ["WEB: No next object found at end of contenteditable", obj]
-                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                elif not self.is_content_editable_with_embedded_objects(next_obj):
-                    tokens = [
-                        "WEB: Next object",
-                        next_obj,
-                        "found at end of contenteditable",
-                        obj,
-                        "is not editable",
-                    ]
-                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                else:
-                    tokens = [
-                        "WEB: First caret context at end of contenteditable",
-                        obj,
-                        "is next context",
-                        next_obj,
-                        ", ",
-                        next_offset,
-                    ]
-                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                    return next_obj, next_offset
-
-            tokens = [
-                "WEB: First caret context at end of",
-                obj,
-                ", ",
-                offset,
-                "is",
-                obj,
-                ", ",
-                length,
-            ]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-            return obj, length
+            return self._first_context_at_text_end(obj, offset, length)
 
         offset = max(0, offset)
-        if treat_as_text:
-            all_text = AXText.get_all_text(obj)
-            if (all_text and all_text[offset] != "\ufffc") or role == Atspi.Role.ENTRY:
-                msg = "WEB: First caret context is unchanged"
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return obj, offset
+        if AXUtilities.is_valid_position(obj, offset, self.caret_policy):
+            if not treat_as_text:
+                offset = 0
+            tokens = ["WEB: First caret context is", obj, ", ", offset]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            return obj, offset
 
-            # Descending an element that we're treating as whole can lead to looping/getting stuck.
-            if self._element_lines_are_single_chars(obj):
-                msg = "WEB: EOC in single-char-lines element. Returning context unchanged."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                return obj, offset
+        if treat_as_text and self._element_lines_are_single_chars(obj):
+            msg = "WEB: EOC in single-char-lines element. Returning context unchanged."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return obj, offset
+
+        return self._first_context_in_child(obj, offset)
+
+    def _first_context_at_text_end(
+        self, obj: Atspi.Accessible, offset: int, length: int
+    ) -> tuple[Atspi.Accessible, int]:
+        """Returns the first caret context when offset is at or past the end of obj's text."""
+
+        if (
+            self.is_content_editable_with_embedded_objects(obj)
+            and input_event_manager.get_manager().last_event_was_character_navigation()
+        ):
+            next_obj, next_offset = self.next_context(obj, length)
+            if not next_obj:
+                tokens = ["WEB: No next object found at end of contenteditable", obj]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            elif not self.is_content_editable_with_embedded_objects(next_obj):
+                tokens = [
+                    "WEB: Next object",
+                    next_obj,
+                    "found at end of contenteditable",
+                    obj,
+                    "is not editable",
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+            else:
+                tokens = [
+                    "WEB: First caret context at end of contenteditable",
+                    obj,
+                    "is next context",
+                    next_obj,
+                    ", ",
+                    next_offset,
+                ]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return next_obj, next_offset
+
+        tokens = [
+            "WEB: First caret context at end of",
+            obj,
+            ", ",
+            offset,
+            "is",
+            obj,
+            ", ",
+            length,
+        ]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return obj, length
+
+    def _first_context_in_child(
+        self, obj: Atspi.Accessible, offset: int
+    ) -> tuple[Atspi.Accessible, int]:
+        """Returns the first caret context found by descending into the child at offset."""
 
         child = AXUtilities.find_child_at_offset(obj, offset)
         if not child:
