@@ -1051,9 +1051,10 @@ class Generator:
         else:
             return []
 
-        if AXUtilities.is_checked(obj):
+        state_set = AXObject.get_state_set(obj)
+        if AXUtilities.is_checked(obj, state_set):
             return [indicators[1]]
-        if AXUtilities.is_indeterminate(obj):
+        if AXUtilities.is_indeterminate(obj, state_set):
             return [indicators[2]]
         return [indicators[0]]
 
@@ -1076,7 +1077,8 @@ class Generator:
         else:
             return []
 
-        if AXUtilities.is_checked(obj) or AXUtilities.is_pressed(obj):
+        state_set = AXObject.get_state_set(obj)
+        if AXUtilities.is_checked(obj, state_set) or AXUtilities.is_pressed(obj, state_set):
             return [indicators[1]]
         return [indicators[0]]
 
@@ -1101,11 +1103,12 @@ class Generator:
         else:
             return []
 
-        if AXUtilities.is_collapsed(obj):
+        state_set = AXObject.get_state_set(obj)
+        if AXUtilities.is_collapsed(obj, state_set):
             return [indicators[0]]
-        if AXUtilities.is_expanded(obj):
+        if AXUtilities.is_expanded(obj, state_set):
             return [indicators[1]]
-        if AXUtilities.is_expandable(obj):
+        if AXUtilities.is_expandable(obj, state_set):
             return [indicators[0]]
         return []
 
@@ -1174,7 +1177,8 @@ class Generator:
         else:
             return []
 
-        if AXUtilities.is_checked(obj) or AXUtilities.is_pressed(obj):
+        state_set = AXObject.get_state_set(obj)
+        if AXUtilities.is_checked(obj, state_set) or AXUtilities.is_pressed(obj, state_set):
             return [indicators[1]]
         return [indicators[0]]
 

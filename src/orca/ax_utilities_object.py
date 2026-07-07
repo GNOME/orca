@@ -45,10 +45,10 @@ class AXUtilitiesObject:
         """Returns a list of the ancestors of obj, starting with its parent."""
 
         ancestors = []
-        parent = AXObject.get_parent_checked(obj)
+        parent = AXObject.get_parent(obj)
         while parent:
             ancestors.append(parent)
-            parent = AXObject.get_parent_checked(parent)
+            parent = AXObject.get_parent(parent)
         ancestors.reverse()
         return ancestors
 

@@ -148,20 +148,21 @@ class BrailleGenerator(generator.Generator):
         except IndexError:
             focused_region = None
 
+        role = AXObject.get_role(obj)
         for region in result:
             if isinstance(region, (braille.Component, braille.Text)) and region.accessible == obj:
                 focused_region = region
                 break
             if (
                 isinstance(region, braille.Text)
-                and AXUtilities.is_combo_box(obj)
+                and AXUtilities.is_combo_box(obj, role)
                 and AXObject.get_parent(region.accessible) == obj
             ):
                 focused_region = region
                 break
             if (
                 isinstance(region, braille.Component)
-                and AXUtilities.is_table_cell(obj)
+                and AXUtilities.is_table_cell(obj, role)
                 and AXObject.get_parent(region.accessible) == obj
             ):
                 focused_region = region

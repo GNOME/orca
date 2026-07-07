@@ -2117,14 +2117,14 @@ class Utilities(script_utilities.Utilities):
             if string and string != "\ufffc":
                 return True
 
-        child_count = AXObject.get_child_count(obj)
-        if AXUtilities.is_panel(obj) and not child_count:
-            return True
-
         namespace = self._cache.TREAT_AS_DIV
         cached = self._cache.get_for_object(namespace, obj)
         if cached is not ax_cache_manager.MISSING:
             return cached
+
+        child_count = AXObject.get_child_count(obj)
+        if AXUtilities.is_panel(obj) and not child_count:
+            return True
 
         rv = False
 
@@ -2224,20 +2224,12 @@ class Utilities(script_utilities.Utilities):
         cached = self._cache.get_for_object(namespace, obj)
         if cached is not ax_cache_manager.MISSING:
             return cached
-        rv = None
 
-        if not AXObject.get_child_count(obj):
+        document = self.active_document()
+        if obj != document and not self._has_grid_descendant(document):
             rv = False
         else:
-            document = self.active_document()
-            if obj != document:
-                document_has_grids = self._has_grid_descendant(document)
-                if not document_has_grids:
-                    rv = False
-
-        if rv is None:
-            grids = AXUtilities.find_all_grids(obj)
-            rv = bool(grids)
+            rv = bool(AXUtilities.find_all_grids(obj))
 
         self._cache.set_for_object(namespace, obj, rv)
         return rv
@@ -2302,7 +2294,7 @@ class Utilities(script_utilities.Utilities):
         # CSSified text we're trying to detect can have embedded object characters. So
         # if we have more than 30% EOCs, don't use this workaround. (The 30% is based on
         # testing with problematic text.)
-        string = AXText.get_all_text(obj)
+        string = AXText.get_all_text(obj, n_chars)
         if string.count("\ufffc") / n_chars > 0.3:
             self._cache.set_for_object(self._cache.LINES_ARE_SINGLE_WORDS, obj, False)
             self._cache.set_for_object(self._cache.LINES_ARE_SINGLE_CHARS, obj, False)
