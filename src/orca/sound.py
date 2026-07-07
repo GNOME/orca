@@ -105,9 +105,6 @@ class Player:
         if not self._gstreamer_available:
             msg = "SOUND: Gstreamer is not available"
             debug.print_message(debug.LEVEL_INFO, msg, True)
-            return
-
-        self.init()
 
     def _on_player_message(self, _bus: Gst.Bus, message: Gst.Message) -> None:
         assert self._player is not None
@@ -198,6 +195,7 @@ class Player:
     def play(self, item: Icon | Tone, interrupt: bool = True) -> None:
         """Plays a sound, interrupting the current play first unless specified."""
 
+        self.init()
         if isinstance(item, Icon):
             self._play_icon(item, interrupt)
         elif isinstance(item, Tone):

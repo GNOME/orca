@@ -73,6 +73,7 @@ class _AXObjectCache:
             clear_interval_seconds=None,
         )
         self._hung_objects = self._manager.get_cache(self, self.HUNG_OBJECTS)
+        self._latest_hung_expiry = 0.0
 
     def get_dead_status(self, obj: Atspi.Accessible) -> bool | None:
         """Returns the recorded result of a prior deadness probe."""
@@ -132,6 +133,8 @@ class _AXObjectCache:
     def get_hung_timestamp_for_key(self, key: Hashable) -> float | None:
         """Returns an unexpired hung marker timestamp, or None."""
 
+        if time.monotonic() >= self._latest_hung_expiry:
+            return None
         if self._hung_objects is None:
             return None
         return self._hung_objects.get(key, None)
@@ -141,11 +144,13 @@ class _AXObjectCache:
 
         if timestamp is None:
             timestamp = time.monotonic()
+        expires_at = timestamp + self._HUNG_TIMEOUT_SECONDS
+        self._latest_hung_expiry = max(self._latest_hung_expiry, expires_at)
         if self._hung_objects is not None:
             self._hung_objects.put(
                 ax_cache_manager.get_object_key(obj),
                 timestamp,
-                expires_at=timestamp + self._HUNG_TIMEOUT_SECONDS,
+                expires_at=expires_at,
             )
 
 

@@ -590,6 +590,9 @@ class CommandManager:  # pylint: disable=too-many-instance-attributes
     def _unbind_conflicting_user_extension_commands(self, cmd: KeyboardCommand) -> None:
         """Ensures user extension commands lose any keybinding conflicts."""
 
+        if not self._user_extension_command_names:
+            return
+
         if self._is_user_extension_command(cmd):
             self._resolve_user_extension_keybinding(cmd)
             return
