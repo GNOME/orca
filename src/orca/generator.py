@@ -194,8 +194,12 @@ class _GeneratorCache:
 
         scope = self._scope.get()
         if scope is not None:
-            return cache.get_scoped(scope, key, default)
-        return cache.get(key, default)
+            value = cache.get_scoped(scope, key, default)
+        else:
+            value = cache.get(key, default)
+        if isinstance(value, list):
+            return list(value)
+        return value
 
     def set_value(self, namespace: str, key: Hashable, value: Any) -> None:
         """Stores a cached value for key."""
@@ -204,6 +208,8 @@ class _GeneratorCache:
         if cache is None:
             return
 
+        if isinstance(value, list):
+            value = list(value)
         scope = self._scope.get()
         if scope is not None:
             cache.put_scoped(scope, key, value)
@@ -803,7 +809,7 @@ class Generator:
             Generator._CACHE.STATIC_TEXT, obj_hash, ax_cache_manager.MISSING
         )
         if cached is not ax_cache_manager.MISSING:
-            return list(cached)
+            return cached
 
         result = self._generate_accessible_description(obj)
         Generator._CACHE.set_value(

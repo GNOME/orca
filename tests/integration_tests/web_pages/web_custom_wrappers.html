@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Custom Wrappers ready</title>
+<style>
+  body { font-family: sans-serif; }
+  div.owner-row { display: flex; align-items: center; }
+  yt-formatted-string { display: flex; }
+  a.owner { display: block; }
+  div.badge-shape { display: block; }
+  yt-metadata-badge-renderer { display: inline; }
+  badge-shape[role="img"] { display: flex; width: 20px; height: 20px; }
+  div.subcount { display: flow-root; }
+  div.actions { display: flex; gap: 8px; align-items: flex-start; }
+  segmented-like-dislike-button-view-model { display: flex; }
+  like-button-view-model, dislike-button-view-model,
+  yt-button-shape { display: block; }
+  yt-button-view-model { display: inline-block; }
+  button.pill { display: flex; align-items: center; }
+  button.pill > .content { display: block; }
+  span.icon { display: inline-block; width: 18px; height: 18px; }
+</style>
+</head>
+<body>
+<div class="owner-row">
+  <yt-formatted-string><a class="owner" href="#ahrix">Ahrix</a></yt-formatted-string>
+  <div class="badge-shape">
+    <yt-metadata-badge-renderer>
+      <badge-shape role="img" aria-label="Verified"></badge-shape>
+    </yt-metadata-badge-renderer>
+  </div>
+</div>
+<div class="subcount">213 thousand subscribers</div>
+
+<div class="actions">
+  <segmented-like-dislike-button-view-model>
+    <like-button-view-model>
+      <button class="pill" aria-pressed="false"
+              aria-label="like this video along with 407,992 other people">
+        <div class="content"><span>407K</span></div>
+      </button>
+    </like-button-view-model>
+    <dislike-button-view-model>
+      <button class="pill" aria-pressed="false" aria-label="Dislike this video"><div class="content"><span>1.2K</span></div></button>
+    </dislike-button-view-model>
+  </segmented-like-dislike-button-view-model>
+  <button class="pill" aria-label="Share"><div class="content"><span>Share</span></div></button>
+  <yt-button-view-model>
+    <button class="pill" aria-label="Save to playlist"><div class="content"><span>Save</span></div></button>
+  </yt-button-view-model>
+  <yt-button-shape>
+    <button class="pill" aria-label="More actions"><div class="content"><span>More</span></div></button>
+  </yt-button-shape>
+</div>
+
+<div>After the toolbar.</div>
+</body>
+</html>

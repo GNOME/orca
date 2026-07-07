@@ -91,8 +91,9 @@ def _make_native_app_fixture(
     app: ModuleType,
     lines: tuple[str, ...] = (),
     scope: Literal["session", "function"] = "session",
+    name: str | None = None,
 ) -> Callable[..., Iterator[NativeAppSession]]:
-    @pytest.fixture(scope=scope, name=app.__name__.rsplit(".", 1)[-1])
+    @pytest.fixture(scope=scope, name=name or app.__name__.rsplit(".", 1)[-1])
     def fixture(tmp_path_factory: pytest.TempPathFactory) -> Iterator[NativeAppSession]:
         yield from _run_native_app(
             tmp_path_factory,
@@ -112,6 +113,17 @@ _gtk3_text_view = _make_native_app_fixture(
         "Line three.",
         "Line four also has extra words to push it past the wrap boundary in the view.",
         "Last line.",
+    ),
+)
+_gtk3_text_view_emoji = _make_native_app_fixture(
+    gtk3_text_view,
+    name="gtk3_text_view_emoji",
+    lines=(
+        "Start.",
+        "Flags 🇺🇸 and 🇮🇹 here.",
+        "Joined 🇺🇸🇮🇹 flags.",
+        "Family 👨‍👩‍👧‍👦 here.",
+        "End.",
     ),
 )
 _gtk3_tree_view = _make_native_app_fixture(gtk3_tree_view, scope="function")
@@ -462,15 +474,18 @@ def _make_plain_text_fixture(page: str) -> Callable[..., Iterator[NativeAppSessi
 
 
 _web_basic = _make_web_fixture("web_basic.html")
+_web_block_context = _make_web_fixture("web_block_context.html")
 _web_plain_text = _make_plain_text_fixture("web_plain_text.txt")
 _web_languages = _make_web_fixture("web_languages.html")
 _web_line_breaks = _make_web_fixture("web_line_breaks.html", caret_browsing=True)
 _web_cssed_brokenness = _make_web_fixture("web_cssed_brokenness.html")
+_web_wrapped_link = _make_web_fixture("web_wrapped_link.html")
 _web_tables = _make_web_fixture("web_tables.html")
 _web_form_fields = _make_web_fixture("web_form_fields.html")
 _web_landmarks = _make_web_fixture("web_landmarks.html")
 _web_inline_landmarks = _make_web_fixture("web_inline_landmarks.html")
 _web_inline_list = _make_web_fixture("web_inline_list.html")
+_web_inline_list_wrap = _make_web_fixture("web_inline_list_wrap.html")
 _web_nested_headings = _make_web_fixture("web_nested_headings.html")
 _web_label_inference = _make_web_fixture("web_label_inference.html")
 _web_structural_navigation = _make_web_fixture("web_structural_navigation.html")
@@ -481,6 +496,7 @@ _web_flat_review_shrink = _make_web_fixture("web_flat_review_shrink.html")
 _web_wrapping_text = _make_web_fixture("web_wrapping_text.html")
 _web_lists = _make_web_fixture("web_lists.html")
 _web_sister_projects = _make_web_fixture("web_sister_projects.html")
+_web_weird_headings = _make_web_fixture("web_weird_headings.html")
 _web_sliders = _make_web_fixture("web_sliders.html")
 _web_text_attributes = _make_web_fixture("web_text_attributes.html")
 _web_tree = _make_web_fixture("web_tree.html")
@@ -498,7 +514,9 @@ _web_pain_slider_no_valuenow = _make_web_fixture("web_pain_slider_no_valuenow.ht
 _web_redundant_content = _make_web_fixture("web_redundant_content.html")
 _web_editing = _make_web_fixture("web_editing.html")
 _web_editable_embedded = _make_web_fixture("web_editable_embedded.html")
+_web_emoji_offset_skew = _make_web_fixture("web_emoji_offset_skew.html")
 _web_long_line = _make_web_fixture("web_long_line.html")
+_web_math = _make_web_fixture("web_math.html")
 _web_missing_cells = _make_web_fixture("web_missing_cells.html")
 _web_sortable_table = _make_web_fixture("web_sortable_table.html")
 _web_page_up_down = _make_web_fixture("web_page_up_down.html", caret_browsing=True)
@@ -508,4 +526,6 @@ _web_offscreen_labels = _make_web_fixture("web_offscreen_labels.html")
 _web_option_removal = _make_web_fixture("web_option_removal.html")
 _web_alert = _make_web_fixture("web_alert.html")
 _web_contracted_braille = _make_web_fixture("web_contracted_braille.html", caret_browsing=True)
+_web_custom_wrappers = _make_web_fixture("web_custom_wrappers.html")
+_web_emoji_links = _make_web_fixture("web_emoji_links.html")
 _web_attribute_mask = _make_web_fixture("web_attribute_mask.html", caret_browsing=True)

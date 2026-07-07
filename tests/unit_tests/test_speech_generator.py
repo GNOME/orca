@@ -282,6 +282,21 @@ class TestGeneratorCache:
         assert Generator._CACHE.has_value(Generator._CACHE.DESCRIPTION, 123)
         assert Generator._CACHE.get_value(Generator._CACHE.DESCRIPTION, 123) == ["description"]
 
+    def test_cached_lists_are_isolated_from_callers(self, test_context: OrcaTestContext) -> None:
+        """Mutating a stored or returned list must not corrupt the cached value."""
+
+        test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
+        from orca.generator import Generator
+
+        stored = ["text"]
+        Generator._CACHE.set_value(Generator._CACHE.TEXT_SUBSTRING, 456, stored)
+        stored.append("mutated after set")
+        first = Generator._CACHE.get_value(Generator._CACHE.TEXT_SUBSTRING, 456)
+        assert first == ["text"]
+
+        first.append("voice appended by caller")
+        assert Generator._CACHE.get_value(Generator._CACHE.TEXT_SUBSTRING, 456) == ["text"]
+
     def test_presentation_scope_keeps_values_bounded(self, test_context: OrcaTestContext) -> None:
         """Presentation-scoped values do not leak into the two-second fallback cache."""
 

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Wrapped Link ready</title>
+<style>
+  /* Monospace + a fixed character width so a two-word inline link is forced to
+     wrap between its words mid-prose: word one ends a line shared with leading
+     text, word two begins the next line shared with trailing text. Each line of
+     the link is then a single word, which is what trips the CSS-brokenness
+     one-word-per-line shortcut. */
+  #para { width: 34ch; font: 16px/1.5 monospace; }
+</style>
+</head>
+<body>
+<h1>Start heading</h1>
+<p id="para">The group included star <a id="split" href="#member">Kelly Rowland</a> plus others here.</p>
+<p>This is the final line.</p>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Orca Inline List Wrap ready</title>
+<style>
+  body { font-family: sans-serif; font-size: 14px; }
+  /* Wikipedia "Recently featured" (mp-tfa-recent): right-aligned box, inline
+     .hlist with CSS-generated middot separators. The fixed width forces the last
+     item to wrap across two visual lines, giving it a rect taller than its line. */
+  .tfa-recent { width: 40em; text-align: right; padding: 8px; }
+  .hlist { display: inline; }
+  .hlist ul { display: inline; margin: 0; padding: 0; list-style: none; }
+  .hlist li { display: inline; }
+  .hlist li:not(:last-child)::after { content: " \00B7 "; font-weight: bold; }
+</style>
+</head>
+<body>
+<p>Line above the box.</p>
+<div class="tfa-recent">
+  <b>Recently featured</b>:
+  <div class="hlist inline">
+    <ul>
+      <li><i><a href="#a">The Path to Rome</a></i></li>
+      <li><a href="#b">Morris Park Aerodrome</a></li>
+      <li>"<a href="#c">The One Where Michael Leaves</a>"</li>
+    </ul>
+  </div>
+</div>
+<p>Line below the box.</p>
+</body></html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Weird Headings ready</title>
+<style>
+  .zerobox { width: 0; height: 0; overflow: hidden; }
+  .inlineblock { display: inline-block; }
+</style>
+</head>
+<body>
+<!-- 1: width:0 block heading -->
+<p>Before one.</p>
+<h2 class="zerobox">Heading one</h2>
+<p>After one.</p>
+
+<!-- 2: width:0 inline-block heading among inline text -->
+Alpha two<h2 class="zerobox inlineblock">Heading two</h2>Omega two
+
+<!-- 3: empty aria-labeled heading among inline text -->
+Alpha three<h2 class="inlineblock" aria-label="You can't see me!"></h2>Omega three
+
+<!-- 4: font-size:0 heading among inline text -->
+Alpha four<h2 class="inlineblock" style="font-size:0">Heading four</h2>Omega four
+
+<!-- 5: transform:scale(0) heading among inline text -->
+Alpha five<h2 class="inlineblock" style="transform:scale(0)">Heading five</h2>Omega five
+
+<!-- 6: visibility:hidden heading among inline text -->
+Alpha six<h2 style="visibility:hidden">Heading six</h2>Omega six
+
+<!-- 7: aria-labeled heading whose only content is an empty paragraph (embedded object char, nothing presentable) -->
+Alpha seven<h2 class="inlineblock" aria-label="I've got an empty paragraph"><p></p></h2>Omega seven
+
+<!-- 8: aria-labeled heading whose only content is an empty button -->
+Alpha eight<h2 class="inlineblock" aria-label="Empty button inside"><button></button></h2>Omega eight
+
+<!-- 9: aria-labeled heading whose only content is an empty focusable div -->
+Alpha nine<h2 class="inlineblock" aria-label="Empty focusable div inside"><div tabindex="0"></div></h2>Omega nine
+
+<!-- 10: aria-labeled heading whose only content is a decorative image -->
+Alpha ten<h2 class="inlineblock" aria-label="Image only heading"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt=""></h2>Omega ten
+
+<!-- 11: multi-line heading with embedded link and button -->
+<h2>This<br><a href="https://example.com">is<br>why</a><br>we<br><button>can't</button><br>have<br>nice<br>things<br>!<br>!<br></h2>
+<!-- 12: heading whose only content is a link (must keep the link role) -->
+Alpha twelve<h2 class="inlineblock"><a href="https://example.com">Home</a></h2>Omega twelve
+</body>
+</html>

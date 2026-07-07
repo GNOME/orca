@@ -7,16 +7,15 @@
   html { font-family: "DejaVu Sans Mono", monospace; font-size: 16px; line-height: 1.5; }
   .row { white-space: nowrap; }
   .row > * { display: inline-block; vertical-align: top; margin: 0 8px 0 0; }
+  .flexrow { display: flex; gap: 8px; align-items: flex-start; }
   .stack { position: relative; height: 1.5em; }
   .stack > a { position: absolute; left: 0; top: 0; }
 </style>
 </head>
 <body>
 
-<!-- S8: a banner link and a non-banner link rendered on the same visual row.
-     Their banner ancestors differ, so layout-mode line assembly must keep them
-     on separate lines even though they sit side by side. -->
-<div class="row">
+<!-- S8: a banner and a non-banner link side by side on one visual row (flex header). -->
+<div class="flexrow">
 <header><a href="https://example.com/home">Home</a></header><a href="https://example.com/catalog">Catalog</a>
 </div>
 
@@ -25,8 +24,8 @@
 <a href="https://example.com/alpha">Alpha</a><a href="https://example.com/beta">Beta</a>
 </div>
 
-<!-- S7: two navigation landmarks side by side on one visual row. -->
-<div class="row">
+<!-- S7: two navigation landmarks side by side on one visual row (flex navbar). -->
+<div class="flexrow">
 <nav aria-label="Primary">Primary nav</nav><nav aria-label="Secondary">Secondary nav</nav>
 </div>
 

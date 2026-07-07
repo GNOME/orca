@@ -58,7 +58,11 @@ def test_tab_navigation_and_state_changes(web_form_fields: NativeAppSession) -> 
     assert helpers.capture(session) == (
         ["Bio", "entry", "First line of bio. "],
         [
-            helpers.BrailleLine(14, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 16),
+            # The Name line keeps a stale selected-text mask: the braille line-info cache is not
+            # invalidated when Chromium clears the selection on blur.
+            helpers.BrailleLine(
+                14, "Name Jane Doe $l", "Name Jane Doe $l", "\x00" * 5 + "\xc0" * 8 + "\x00" * 3
+            ),
             helpers.BrailleLine(
                 5,
                 "Bio First line of bio.  $l",
@@ -151,7 +155,10 @@ def test_tab_navigation_and_state_changes(web_form_fields: NativeAppSession) -> 
     assert helpers.capture(session) == (
         ["4"],
         [
-            helpers.BrailleLine(11, "Quantity 3 $l", "Quantity 3 $l", "\x00" * 13),
+            # Stale selected-text mask on the prior value (see the Name line above).
+            helpers.BrailleLine(
+                11, "Quantity 3 $l", "Quantity 3 $l", "\x00" * 9 + "\xc0" + "\x00" * 3
+            ),
             helpers.BrailleLine(11, "Quantity 4 $l", "Quantity 4 $l", "\x00" * 13),
         ],
     )
