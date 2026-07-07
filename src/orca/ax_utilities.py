@@ -66,6 +66,7 @@ class _AXUtilitiesCache:
 
     SET_MEMBERS = "AXUtilities.set-members"
     IS_LAYOUT_ONLY = "AXUtilities.is-layout-only"
+    NEAREST_BLOCK_ANCESTOR = "AXUtilities.nearest-block-ancestor"
     IS_BLOCK_LIST_DESCENDANT = "AXUtilities.is-block-list-descendant"
     IS_CODE_BLOCK_DESCENDANT = "AXUtilities.is-code-block-descendant"
     IS_COMBO_BOX_DESCENDANT = "AXUtilities.is-combo-box-descendant"
@@ -91,6 +92,7 @@ class _AXUtilitiesCache:
         for namespace in (
             self.SET_MEMBERS,
             self.IS_LAYOUT_ONLY,
+            self.NEAREST_BLOCK_ANCESTOR,
             self.IS_BLOCK_LIST_DESCENDANT,
             self.IS_CODE_BLOCK_DESCENDANT,
             self.IS_COMBO_BOX_DESCENDANT,
@@ -117,6 +119,9 @@ class _AXUtilitiesCache:
             )
         self._members_cache = self._manager.get_cache(self, self.SET_MEMBERS)
         self._layout_only_cache = self._manager.get_cache(self, self.IS_LAYOUT_ONLY)
+        self._nearest_block_ancestor_cache = self._manager.get_cache(
+            self, self.NEAREST_BLOCK_ANCESTOR
+        )
         self._classification_caches = {
             namespace: self._manager.get_cache(self, namespace)
             for namespace in (
@@ -169,6 +174,20 @@ class _AXUtilitiesCache:
 
         if self._layout_only_cache is not None:
             self._layout_only_cache.put(ax_cache_manager.get_object_key(obj), result)
+
+    def get_nearest_block_ancestor(self, obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns the cached nearest block ancestor for obj."""
+
+        if self._nearest_block_ancestor_cache is None:
+            return None
+
+        return self._nearest_block_ancestor_cache.get(ax_cache_manager.get_object_key(obj), None)
+
+    def set_nearest_block_ancestor(self, obj: Atspi.Accessible, ancestor: Atspi.Accessible) -> None:
+        """Stores the nearest block ancestor for obj."""
+
+        if self._nearest_block_ancestor_cache is not None:
+            self._nearest_block_ancestor_cache.put(ax_cache_manager.get_object_key(obj), ancestor)
 
     def get_classification(self, namespace: str, obj: Atspi.Accessible) -> bool | None:
         """Returns a cached object classification."""
@@ -922,6 +941,46 @@ class AXUtilities:
             AXUtilitiesRole.is_inline_list_item,
             inclusive,
         )
+
+    @staticmethod
+    def get_nearest_block_ancestor(
+        obj: Atspi.Accessible, original: Atspi.Accessible | None = None
+    ) -> Atspi.Accessible | None:
+        """Returns obj or its nearest ancestor that is not an inline element."""
+
+        if original is None:
+            original = obj
+
+        # The wrapper transparency below holds only while ascending from the inline start, not
+        # for the start itself; the start is kept out of the cache too, so its answer and the
+        # ancestor answer for the same object cannot overwrite one another.
+        above_start = obj is not original
+        if above_start:
+            rv = AXUtilities._CACHE.get_nearest_block_ancestor(obj)
+            if rv is not None:
+                return rv
+
+        inline = AXUtilitiesRole.is_inline_element(obj)
+        if not inline and above_start and AXUtilitiesRole.is_section(obj):
+            # A generic section whose text is only embedded objects (e.g. like-button-view-
+            # model) is a transparent wrapper; the section gate keeps a structural [OBJ]-only
+            # element (a table row of cells) from being treated as a wrapper.
+            text = AXText.get_all_text(obj)
+            inline = "\ufffc" in text and not re.search(r"[^\s\ufffc]", text)
+
+        if inline:
+            parent = AXObject.get_parent(obj)
+            rv = (
+                AXUtilities.get_nearest_block_ancestor(parent, original)
+                if parent is not None
+                else obj
+            )
+        else:
+            rv = obj
+
+        if above_start and rv is not None:
+            AXUtilities._CACHE.set_nearest_block_ancestor(obj, rv)
+        return rv
 
     @staticmethod
     def is_grid_descendant(

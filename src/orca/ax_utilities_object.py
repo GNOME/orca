@@ -144,6 +144,14 @@ class AXUtilitiesObject:
         return AXUtilitiesObject.find_ancestor(obj, lambda x: x == ancestor) is not None
 
     @staticmethod
+    def label_is_ancestor_of_labelled(
+        label: Atspi.Accessible, labelled_objects: list[Atspi.Accessible]
+    ) -> bool:
+        """Returns True if label is an ancestor of an object it is the label for."""
+
+        return any(AXUtilitiesObject.is_ancestor(labelled, label) for labelled in labelled_objects)
+
+    @staticmethod
     def _find_descendant(
         obj: Atspi.Accessible,
         pred: Callable[[Atspi.Accessible], bool],

@@ -1651,6 +1651,23 @@ class AXUtilitiesRole:
         return "inline" in AXUtilitiesRole._get_display_style(obj)
 
     @staticmethod
+    def is_inline_element(obj: Atspi.Accessible) -> bool:
+        """Returns True if obj is an inline element rather than block-level."""
+
+        # Chromium exposes inline MathML as display=math; the block form is "block math".
+        display = AXUtilitiesRole._get_display_style(obj)
+        if "inline" in display or display == "math":
+            return True
+
+        # A link is inline-level content; a flex box whose children are presentational is an
+        # atomic widget (button, tab, slider) flexing its own icon/label. Both are inline-level
+        # regardless of CSS display.
+        if AXUtilitiesRole.is_link(obj):
+            return True
+
+        return "flex" in display and AXUtilitiesRole.children_are_presentational(obj)
+
+    @staticmethod
     def is_input_method_window(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has the input method window role"""
 

@@ -199,7 +199,7 @@ class TestAXUtilities:
         cache_calls = [
             call for call in register.call_args_list if call.args[0] is AXUtilities._CACHE
         ]
-        assert len(cache_calls) == 19
+        assert len(cache_calls) == 20
         for call in cache_calls:
             assert call.kwargs["lifetime"] is ax_cache_manager.Lifetime.PROCESS
             assert call.kwargs["clear_on_demand"] is ax_cache_manager.ClearPolicy.CLEAR

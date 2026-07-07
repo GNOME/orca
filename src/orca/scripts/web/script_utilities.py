@@ -2364,13 +2364,6 @@ class Utilities(script_utilities.Utilities):
         self._check_element_line_pattern(obj)
         return self._cache.get_for_object(namespace, obj, False)
 
-    def _label_is_ancestor_of_labelled(self, label: Atspi.Accessible) -> bool:
-        # TODO - JD: Move into AXUtilities.
-        for labelled in AXUtilities.get_is_label_for(label):
-            if AXUtilities.is_ancestor(labelled, label):
-                return True
-        return False
-
     def _is_off_screen_label(self, obj: Atspi.Accessible) -> bool:
         if not (obj and self.in_document_content(obj)):
             return False
@@ -2380,11 +2373,12 @@ class Utilities(script_utilities.Utilities):
         if cached is not ax_cache_manager.MISSING:
             return cached
 
-        if self._label_is_ancestor_of_labelled(obj):
+        labelled_objects = AXUtilities.get_is_label_for(obj)
+        if AXUtilities.label_is_ancestor_of_labelled(obj, labelled_objects):
             return False
 
         rv = False
-        if AXUtilities.get_is_label_for(obj):
+        if labelled_objects:
             end = max(1, AXText.get_character_count(obj))
             rect = AXText.get_range_rect(obj, 0, end)
             box = AXComponent.get_rect(obj)
@@ -2487,7 +2481,7 @@ class Utilities(script_utilities.Utilities):
         if cached is not ax_cache_manager.MISSING:
             return cached
 
-        if self._label_is_ancestor_of_labelled(obj):
+        if AXUtilities.label_is_ancestor_of_labelled(obj, AXUtilities.get_is_label_for(obj)):
             return False
 
         if self._has_grid_descendant(obj):
