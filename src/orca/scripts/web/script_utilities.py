@@ -58,6 +58,7 @@ from orca.ax_object import AXObject
 from orca.ax_text import AXText
 from orca.ax_utilities import AXUtilities
 from orca.ax_utilities_debugging import AXUtilitiesDebugging
+from orca.ax_utilities_hypertext import CaretPolicy
 
 if TYPE_CHECKING:
     from collections.abc import Hashable
@@ -360,6 +361,14 @@ class Utilities(script_utilities.Utilities):
     def __init__(self, script: Script) -> None:
         super().__init__(script)
         self._cache = _WebUtilitiesCache()
+        self.caret_policy = CaretPolicy(
+            can_have_caret_context=self._can_have_caret_context,
+            treat_as_text_object=self.treat_as_text_object,
+            treat_as_whole=self._treat_object_as_whole,
+            in_document_content=self.in_document_content,
+            is_boundary=self.is_top_level_document,
+            is_text_block_element=self.is_text_block_element,
+        )
         self._selection_anchor_and_focus: tuple[
             Atspi.Accessible | None, Atspi.Accessible | None
         ] = (
@@ -3185,36 +3194,6 @@ class Utilities(script_utilities.Utilities):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return rv
 
-    def search_for_caret_context(self, obj: Atspi.Accessible) -> tuple[Atspi.Accessible, int]:
-        """Searches inside obj for the caret context."""
-
-        tokens = ["WEB: Searching for caret context in", obj]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        container = obj
-        context_obj, context_offset = None, -1
-        while obj:
-            offset = AXText.get_caret_offset(obj)
-            if offset < 0:
-                obj = None
-            else:
-                context_obj, context_offset = obj, offset
-                if AXUtilities.is_math(obj):
-                    break
-                child = AXHypertext.find_child_at_offset(obj, offset)
-                if child:
-                    obj = child
-                else:
-                    break
-
-        if context_obj:
-            return self.find_next_caret_in_order(context_obj, max(-1, context_offset - 1))
-
-        if self.is_document(container):
-            return container, 0
-
-        return None, -1
-
     def get_caret_context(
         self,
         document: Atspi.Accessible | None = None,
@@ -3264,7 +3243,9 @@ class Utilities(script_utilities.Utilities):
                 )
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return None, -1
-            obj, offset = self.search_for_caret_context(document)
+            obj, offset = AXUtilities.search_for_caret_context(
+                document, self.caret_policy, self.is_document
+            )
         else:
             obj, offset = context
 
@@ -3360,7 +3341,9 @@ class Utilities(script_utilities.Utilities):
             # cache in _handleEventForRemovedSelectableChild. Also, if it is needed, should
             # it be recursive?
             AXObject.clear_cache(event.source, False, "Handling event for removed child.")
-            obj, offset = self.search_for_caret_context(event.source)
+            obj, offset = AXUtilities.search_for_caret_context(
+                event.source, self.caret_policy, self.is_document
+            )
             if obj is None:
                 obj = AXUtilities.get_focused_object(event.source)
 

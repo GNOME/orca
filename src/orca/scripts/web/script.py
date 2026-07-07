@@ -1293,7 +1293,9 @@ class Script(default.Script):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             self.utilities.clear_caret_context()
 
-            obj, offset = self.utilities.search_for_caret_context(event.source)
+            obj, offset = AXUtilities.search_for_caret_context(
+                event.source, self.utilities.caret_policy, self.utilities.is_document
+            )
             if obj:
                 tokens = ["WEB: Updating focus and context to", obj, ", ", offset]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)

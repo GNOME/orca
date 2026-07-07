@@ -78,6 +78,9 @@ class TestWebUtilitiesCache:
             def get_top_level_document_for_object(self, _obj):
                 return None
 
+            def is_text_block_element(self, _obj):
+                return False
+
         essential_modules["orca.script_utilities"].Utilities = BaseUtilities
         return essential_modules
 
