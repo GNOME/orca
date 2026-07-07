@@ -173,11 +173,12 @@ class TestPresentationManager:
         assert manager1 is manager2
         assert manager1.__class__.__name__ == "PresentationManager"
 
-    def test_present_object_uses_one_generator_scope(self, test_context: OrcaTestContext) -> None:
-        """Test generated speech, braille, and sound share one Generator cache scope."""
+    def test_present_object_uses_one_stable_tree_scope(self, test_context: OrcaTestContext) -> None:
+        """Test generated speech, braille, and sound share one stable-tree cache scope."""
 
         essential_modules = self._setup_dependencies(test_context)
-        from orca.generator import Generator, PresentationReason
+        from orca import ax_cache_manager
+        from orca.generator import PresentationReason
         from orca.presentation_manager import get_manager
 
         events = []
@@ -190,7 +191,7 @@ class TestPresentationManager:
             finally:
                 events.append("exit")
 
-        test_context.patch_object(Generator, "presentation_scope", side_effect=scope)
+        test_context.patch_object(ax_cache_manager, "stable_tree_scope", side_effect=scope)
         script = test_context.Mock()
         obj = test_context.Mock()
         speech = essential_modules["orca.speech_presenter"].get_presenter()
@@ -212,7 +213,7 @@ class TestPresentationManager:
         )
 
         assert events == ["enter", "speech", "braille", "sound", "exit"]
-        Generator.presentation_scope.assert_called_once_with()
+        ax_cache_manager.stable_tree_scope.assert_called_once_with()
         speech.present_generated_speech.assert_called_once_with(
             script,
             obj,

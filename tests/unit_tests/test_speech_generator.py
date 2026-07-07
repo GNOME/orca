@@ -279,8 +279,10 @@ class TestGeneratorCache:
 
         ax_cache_manager.get_manager().clear_cache_now("test reason")
 
-        assert Generator._CACHE.has_value(Generator._CACHE.DESCRIPTION, 123)
-        assert Generator._CACHE.get_value(Generator._CACHE.DESCRIPTION, 123) == ["description"]
+        cached = Generator._CACHE.get_value(
+            Generator._CACHE.DESCRIPTION, 123, ax_cache_manager.MISSING
+        )
+        assert cached == ["description"]
 
     def test_cached_lists_are_isolated_from_callers(self, test_context: OrcaTestContext) -> None:
         """Mutating a stored or returned list must not corrupt the cached value."""
@@ -297,8 +299,8 @@ class TestGeneratorCache:
         first.append("voice appended by caller")
         assert Generator._CACHE.get_value(Generator._CACHE.TEXT_SUBSTRING, 456) == ["text"]
 
-    def test_presentation_scope_keeps_values_bounded(self, test_context: OrcaTestContext) -> None:
-        """Presentation-scoped values do not leak into the two-second fallback cache."""
+    def test_stable_tree_scope_keeps_values_bounded(self, test_context: OrcaTestContext) -> None:
+        """Stable-tree-scoped values do not leak into the two-second fallback cache."""
 
         test_context.setup_shared_dependencies(_GENERATOR_TEST_MODULES)
         from orca import ax_cache_manager
@@ -307,11 +309,16 @@ class TestGeneratorCache:
         key = object()
         Generator._CACHE.set_value(Generator._CACHE.DESCRIPTION, key, ["fallback"])
 
-        with Generator.presentation_scope():
-            assert Generator._CACHE.has_value(Generator._CACHE.DESCRIPTION, key) is False
+        with ax_cache_manager.stable_tree_scope():
+            assert (
+                Generator._CACHE.get_value(
+                    Generator._CACHE.DESCRIPTION, key, ax_cache_manager.MISSING
+                )
+                is ax_cache_manager.MISSING
+            )
             Generator._CACHE.set_value(Generator._CACHE.DESCRIPTION, key, ["scoped"])
             assert Generator._CACHE.get_value(Generator._CACHE.DESCRIPTION, key) == ["scoped"]
-            with Generator.presentation_scope():
+            with ax_cache_manager.stable_tree_scope():
                 assert Generator._CACHE.get_value(Generator._CACHE.DESCRIPTION, key) == ["scoped"]
 
         assert Generator._CACHE.get_value(Generator._CACHE.DESCRIPTION, key) == ["fallback"]

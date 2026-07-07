@@ -25,9 +25,7 @@
 
 from __future__ import annotations
 
-import contextvars
 import time
-from contextlib import contextmanager
 from dataclasses import dataclass, replace
 from difflib import SequenceMatcher
 from enum import Enum
@@ -46,7 +44,7 @@ from .ax_utilities import AXUtilities
 from .ax_value import AXValue
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Hashable, Iterator
+    from collections.abc import Callable, Hashable
 
     from .script import Script
 
@@ -128,10 +126,7 @@ class _GeneratorCache:
     _CACHE_CLEAR_INTERVAL_SECONDS = 2
 
     def __init__(self) -> None:
-        self._manager = ax_cache_manager.get_manager()
-        self._scope: contextvars.ContextVar[ax_cache_manager.CacheScope | None] = (
-            contextvars.ContextVar("generator-cache-scope", default=None)
-        )
+        manager = ax_cache_manager.get_manager()
         for namespace in (
             self.DESCRIPTION,
             self.IMAGE_DESCRIPTION,
@@ -147,7 +142,7 @@ class _GeneratorCache:
             self.IS_DESCRIPTION_USED_FOR_NAME,
             self.IS_DESCRIPTION_USED_FOR_STATIC_TEXT,
         ):
-            self._manager.register_cache(
+            manager.register_cache(
                 self,
                 namespace,
                 lifetime=ax_cache_manager.Lifetime.PROCESS,
@@ -155,7 +150,7 @@ class _GeneratorCache:
                 clear_interval_seconds=self._CACHE_CLEAR_INTERVAL_SECONDS,
             )
         self._caches = {
-            namespace: self._manager.get_cache(self, namespace)
+            namespace: manager.get_cache(self, namespace)
             for namespace in (
                 self.DESCRIPTION,
                 self.IMAGE_DESCRIPTION,
@@ -173,18 +168,6 @@ class _GeneratorCache:
             )
         }
 
-    def has_value(self, namespace: str, key: Hashable) -> bool:
-        """Returns True if namespace has a cached value for key."""
-
-        cache = self._caches.get(namespace)
-        if cache is None:
-            return False
-
-        scope = self._scope.get()
-        if scope is not None:
-            return cache.contains_scoped(scope, key)
-        return cache.contains(key)
-
     def get_value(self, namespace: str, key: Hashable, default: Any = None) -> Any:
         """Returns a cached value for key."""
 
@@ -192,7 +175,7 @@ class _GeneratorCache:
         if cache is None:
             return default
 
-        scope = self._scope.get()
+        scope = ax_cache_manager.active_stable_tree_scope()
         if scope is not None:
             value = cache.get_scoped(scope, key, default)
         else:
@@ -210,40 +193,17 @@ class _GeneratorCache:
 
         if isinstance(value, list):
             value = list(value)
-        scope = self._scope.get()
+        scope = ax_cache_manager.active_stable_tree_scope()
         if scope is not None:
             cache.put_scoped(scope, key, value)
             return
         cache.put(key, value)
-
-    @contextmanager
-    def presentation_scope(self) -> Iterator[None]:
-        """Uses bounded cached values while one presentation is active."""
-
-        if self._scope.get() is not None:
-            yield
-            return
-
-        with self._manager.begin_scope() as scope:
-            token = self._scope.set(scope)
-            try:
-                yield
-            finally:
-                self._scope.reset(token)
 
 
 class Generator:
     """Superclass of classes used to generate presentations for objects."""
 
     _CACHE = _GeneratorCache()
-
-    @staticmethod
-    @contextmanager
-    def presentation_scope() -> Iterator[None]:
-        """Uses bounded cached values while one presentation is active."""
-
-        with Generator._CACHE.presentation_scope():
-            yield
 
     def __init__(self, script: Script, mode: GeneratorMode) -> None:
         self._mode: GeneratorMode = mode

@@ -29,10 +29,12 @@
 
 from __future__ import annotations
 
+import contextvars
 import math
 import threading
 import time
 import weakref
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from enum import Enum, auto
 from typing import TYPE_CHECKING, Any
@@ -40,7 +42,7 @@ from typing import TYPE_CHECKING, Any
 from . import debug
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Hashable
+    from collections.abc import Callable, Hashable, Iterator
     from types import TracebackType
 
 # Internal miss sentinel for callers that need to distinguish a cache miss from cached None.
@@ -49,6 +51,12 @@ MISSING = object()
 # Local caches can be forced clear in response to accessibility events.
 # The timeout limits stale data and cache growth when those events are missing.
 DEFAULT_CLEAR_INTERVAL_SECONDS = 60
+
+
+def get_object_key(obj: object) -> Hashable:
+    """Returns the cache key for an accessible object."""
+
+    return hash(obj)
 
 
 class Lifetime(Enum):
@@ -121,9 +129,7 @@ class _CacheAccessorBackend:
     """Stores manager operations used by cache accessors."""
 
     get_value: Callable[[_Cache, Hashable, Any], Any]
-    contains_value: Callable[[_Cache, Hashable], bool]
     get_scoped_value: Callable[[int, str, _Cache, CacheScope, Hashable, Any], Any]
-    contains_scoped_value: Callable[[int, str, _Cache, CacheScope, Hashable], bool]
     put_value: Callable[[_Cache, Hashable, Any, float | None], None]
     put_scoped_value: Callable[[int, str, _Cache, CacheScope, Hashable, Any], None]
     discard_value: Callable[[_Cache, Hashable], None]
@@ -178,23 +184,11 @@ class CacheAccessor:
 
         return self._backend.get_value(self._cache, key, default)
 
-    def contains(self, key: Hashable) -> bool:
-        """Returns True if key has a non-expired stored value."""
-
-        return self._backend.contains_value(self._cache, key)
-
     def get_scoped(self, scope: CacheScope, key: Hashable, default: Any = MISSING) -> Any:
         """Returns the scoped value for key, or default on a miss."""
 
         return self._backend.get_scoped_value(
             self._owner_id, self._cache_name, self._cache, scope, key, default
-        )
-
-    def contains_scoped(self, scope: CacheScope, key: Hashable) -> bool:
-        """Returns True if key has a scoped value."""
-
-        return self._backend.contains_scoped_value(
-            self._owner_id, self._cache_name, self._cache, scope, key
         )
 
     def put(self, key: Hashable, value: Any, *, expires_at: float | None = None) -> None:
@@ -249,9 +243,7 @@ class AXCacheManager:
         self._clearing_thread_started = False
         self._accessor_backend = _CacheAccessorBackend(
             get_value=self._get_accessor_value,
-            contains_value=self._contains_accessor_value,
             get_scoped_value=self._get_scoped_accessor_value,
-            contains_scoped_value=self._contains_scoped_accessor_value,
             put_value=self._put_accessor_value,
             put_scoped_value=self._put_scoped_accessor_value,
             discard_value=self._discard_accessor_value,
@@ -485,20 +477,6 @@ class AXCacheManager:
             except KeyError:
                 return default
 
-    def _contains_accessor_value(self, cache: _Cache, key: Hashable) -> bool:
-        """Returns True if a cache accessor has a value."""
-
-        with self._lock:
-            if not cache.is_active:
-                return False
-
-            if key in cache.expiration_times and cache.expiration_times[key] <= self._clock():
-                cache.values.pop(key, None)
-                cache.expiration_times.pop(key, None)
-                return False
-
-            return key in cache.values
-
     def _get_scoped_accessor_value(
         self,
         owner_id: int,
@@ -523,27 +501,6 @@ class AXCacheManager:
         if failure:
             debug.print_message(debug.LEVEL_INFO, failure, True)
         return value
-
-    def _contains_scoped_accessor_value(
-        self,
-        owner_id: int,
-        cache_name: str,
-        cache: _Cache,
-        scope: CacheScope,
-        key: Hashable,
-    ) -> bool:
-        """Returns True if a cache accessor has a scoped value."""
-
-        with self._lock:
-            scoped_values, failure = self._get_scope_values_locked(scope)
-            if scoped_values is None or failure or not cache.is_active:
-                rv = False
-            else:
-                values = scoped_values.get((owner_id, cache_name), {})
-                rv = key in values
-        if failure:
-            debug.print_message(debug.LEVEL_INFO, failure, True)
-        return rv
 
     def _put_accessor_value(
         self,
@@ -783,13 +740,71 @@ class AXCacheManager:
         return max(0.0, min(next_cleanup_times) - self._clock())
 
 
+class ScopedCache:
+    """A multi-namespace cache whose values live only within a caller-provided scope."""
+
+    def __init__(
+        self, namespaces: tuple[str, ...], active_scope: Callable[[], CacheScope | None]
+    ) -> None:
+        self._active_scope = active_scope
+        manager = get_manager()
+        for namespace in namespaces:
+            manager.register_cache(
+                self, namespace, lifetime=Lifetime.PROCESS, clear_on_demand=ClearPolicy.PRESERVE
+            )
+        self._caches = {namespace: manager.get_cache(self, namespace) for namespace in namespaces}
+
+    def get(self, namespace: str, key: Hashable) -> Any:
+        """Returns the value for key, or MISSING when no scope is active or on a miss."""
+
+        scope = self._active_scope()
+        cache = self._caches.get(namespace)
+        if scope is None or cache is None:
+            return MISSING
+        return cache.get_scoped(scope, key, MISSING)
+
+    def set(self, namespace: str, key: Hashable, value: Any) -> None:
+        """Stores value for key when a scope is active; otherwise does nothing."""
+
+        scope = self._active_scope()
+        cache = self._caches.get(namespace)
+        if scope is not None and cache is not None:
+            cache.put_scoped(scope, key, value)
+
+
+_stable_tree_scope: contextvars.ContextVar[CacheScope | None] = contextvars.ContextVar(
+    "stable-tree-scope", default=None
+)
+
+
+@contextmanager
+def stable_tree_scope() -> Iterator[None]:
+    """Enters a scope in which the accessibility tree is treated as stable; reuses an active one."""
+
+    # NOTE: As a general rule, the tree should not be considered stable. Limit the use of this
+    # scope to cases where repeated, expensive calls will be made in a very short period and where
+    # you can be fairly certain the work being done within the scope will not trigger changes in
+    # the objects of interest.
+
+    if _stable_tree_scope.get() is not None:
+        yield
+        return
+
+    with _manager.begin_scope() as scope:
+        token = _stable_tree_scope.set(scope)
+        try:
+            yield
+        finally:
+            _stable_tree_scope.reset(token)
+
+
+def active_stable_tree_scope() -> CacheScope | None:
+    """Returns the active stable-tree scope, or None when no scope is active."""
+
+    return _stable_tree_scope.get()
+
+
 _manager: AXCacheManager = AXCacheManager()
-
-
-def get_object_key(obj: object) -> Hashable:
-    """Returns the cache key for an accessible object."""
-
-    return hash(obj)
 
 
 def get_manager() -> AXCacheManager:

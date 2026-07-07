@@ -30,6 +30,7 @@ import os
 from typing import TYPE_CHECKING
 
 from . import (
+    ax_cache_manager,
     braille_presenter,
     debug,
     focus_manager,
@@ -47,7 +48,7 @@ from . import (
 from .ax_object import AXObject
 from .ax_utilities import AXUtilities
 from .ax_value import AXValue
-from .generator import Generator, PresentationReason
+from .generator import PresentationReason
 
 if TYPE_CHECKING:
     import gi
@@ -495,7 +496,7 @@ class PresentationManager:
         if not (generate_speech or generate_braille or generate_sound):
             return
 
-        with Generator.presentation_scope():
+        with ax_cache_manager.stable_tree_scope():
             if generate_speech:
                 speech_presenter.get_presenter().present_generated_speech(
                     script,

@@ -324,14 +324,12 @@ class TestAXCacheManager:
 
         cache.put("false", False)
         cache.put("none", None)
-        assert cache.contains("false") is True
-        assert cache.contains("none") is True
         assert cache.get("false") is False
         assert cache.get("none") is None
         assert cache.get("missing") is MISSING
 
         cache.discard("false")
-        assert cache.contains("false") is False
+        assert cache.get("false") is MISSING
         cache.invalidate(log=False)
         assert cache.get("none") is MISSING
 
@@ -351,7 +349,6 @@ class TestAXCacheManager:
         cache.put("key", "value", expires_at=1)
         assert cache.get("key") == "value"
         clock.now = 1
-        assert cache.contains("key") is False
         assert cache.get("key") is MISSING
 
     def test_cache_accessor_handles_scoped_values(self) -> None:
@@ -368,10 +365,9 @@ class TestAXCacheManager:
         with manager.begin_scope() as scope:
             assert cache.get_scoped(scope, "key") is MISSING
             cache.put_scoped(scope, "key", "value")
-            assert cache.contains_scoped(scope, "key") is True
             assert cache.get_scoped(scope, "key") == "value"
             cache.discard_scoped(scope, "key")
-            assert cache.contains_scoped(scope, "key") is False
+            assert cache.get_scoped(scope, "key") is MISSING
 
     def test_cache_accessor_does_not_keep_owner_alive(self) -> None:
         """Test stale owner-lifetime accessors stop using reclaimed caches."""
@@ -419,13 +415,10 @@ class TestAXCacheManager:
 
         with manager.begin_scope() as scope:
             assert cache.get_scoped(scope, "key") is MISSING
-            assert cache.contains_scoped(scope, "key") is False
             cache.put_scoped(scope, "key", "scoped")
-            assert cache.contains_scoped(scope, "key") is True
             assert cache.get_scoped(scope, "key") == "scoped"
             assert cache.get("key") == "ordinary"
             cache.discard_scoped(scope, "key")
-            assert cache.contains_scoped(scope, "key") is False
             assert cache.get_scoped(scope, "key") is MISSING
 
         assert scope not in manager._scoped_values
