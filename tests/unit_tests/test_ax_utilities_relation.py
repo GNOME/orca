@@ -85,6 +85,30 @@ class TestAXUtilitiesRelation:
             assert call.kwargs["clear_on_demand"] is ax_cache_manager.ClearPolicy.CLEAR
             assert "clear_interval_seconds" not in call.kwargs
 
+    def test_cached_target_lists_are_isolated_from_callers(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Mutating a stored or returned target list must not corrupt the cached value."""
+
+        self._setup_dependencies(test_context)
+        import gi
+
+        gi.require_version("Atspi", "2.0")
+        from gi.repository import Atspi
+
+        from orca.ax_utilities_relation import AXUtilitiesRelation
+
+        obj = test_context.Mock()
+        cache = AXUtilitiesRelation._CACHE
+        stored: list = []
+        cache.set_targets(obj, Atspi.RelationType.NODE_PARENT_OF, stored)
+        stored.append("mutated after set")
+        first = cache.get_targets(obj, Atspi.RelationType.NODE_PARENT_OF)
+        assert first == []
+
+        first.append("appended by caller")
+        assert cache.get_targets(obj, Atspi.RelationType.NODE_PARENT_OF) == []
+
     def test_manager_clear_cache_now_clears_relation_cache(
         self, test_context: OrcaTestContext
     ) -> None:

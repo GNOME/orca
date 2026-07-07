@@ -97,13 +97,16 @@ class _AXObjectCache:
 
         if self._object_attributes is None:
             return ax_cache_manager.MISSING
-        return self._object_attributes.get(ax_cache_manager.get_object_key(obj))
+        attributes = self._object_attributes.get(ax_cache_manager.get_object_key(obj))
+        if attributes is ax_cache_manager.MISSING:
+            return attributes
+        return dict(attributes)
 
     def set_attributes(self, obj: Atspi.Accessible, attributes: dict[str, str]) -> None:
         """Stores object attributes."""
 
         if self._object_attributes is not None:
-            self._object_attributes.put(ax_cache_manager.get_object_key(obj), attributes)
+            self._object_attributes.put(ax_cache_manager.get_object_key(obj), dict(attributes))
 
     def get_interface_support(self, obj: Atspi.Accessible, name: str) -> bool | None:
         """Returns cached interface support, or None when absent."""

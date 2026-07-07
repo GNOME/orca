@@ -187,13 +187,18 @@ class _WebUtilitiesCache:
         if cache is None:
             return default
 
-        return cache.get(ax_cache_manager.get_object_key(obj), default)
+        value = cache.get(ax_cache_manager.get_object_key(obj), default)
+        if isinstance(value, list):
+            return list(value)
+        return value
 
     def set_for_object(self, namespace: str, obj: Atspi.Accessible, value: object) -> None:
         """Stores a cached value for obj."""
 
         cache = self._caches.get(namespace)
         if cache is not None:
+            if isinstance(value, list):
+                value = list(value)
             cache.put(ax_cache_manager.get_object_key(obj), value)
 
     def clear_object_decisions(self, reason: str = "") -> None:
@@ -219,7 +224,10 @@ class _WebUtilitiesCache:
         if cache is None:
             return None
 
-        return cache.get(self._CONTENT_KEY, None)
+        contents = cache.get(self._CONTENT_KEY, ax_cache_manager.MISSING)
+        if contents is ax_cache_manager.MISSING:
+            return None
+        return list(contents)
 
     def set_content(
         self,
@@ -230,7 +238,7 @@ class _WebUtilitiesCache:
 
         cache = self._caches.get(namespace)
         if cache is not None:
-            cache.put(self._CONTENT_KEY, contents)
+            cache.put(self._CONTENT_KEY, list(contents))
 
     def clear_content(self, reason: str = "") -> None:
         """Clears cached web contents."""
@@ -2753,11 +2761,12 @@ class Utilities(script_utilities.Utilities):
         namespace = self._cache.INFERRED_LABEL
         cached = self._cache.get_for_object(namespace, obj)
         if cached is not ax_cache_manager.MISSING:
-            return cached
+            label, sources = cached
+            return label, list(sources)
 
-        rv = self._script.label_inference.infer(obj, False)
-        self._cache.set_for_object(namespace, obj, rv)
-        return rv
+        label, sources = self._script.label_inference.infer(obj, False)
+        self._cache.set_for_object(namespace, obj, (label, list(sources)))
+        return label, sources
 
     def _should_infer_label_for(self, obj: Atspi.Accessible) -> bool:
         if not self.in_document_content():

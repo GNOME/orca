@@ -59,13 +59,18 @@ class _AXUtilitiesRelationCache:
         if self._relations_cache is None:
             return None
 
-        return self._relations_cache.get(ax_cache_manager.get_object_key(obj), None)
+        relations = self._relations_cache.get(
+            ax_cache_manager.get_object_key(obj), ax_cache_manager.MISSING
+        )
+        if relations is ax_cache_manager.MISSING:
+            return None
+        return list(relations)
 
     def set_relations(self, obj: Atspi.Accessible, relations: list[Atspi.Relation]) -> None:
         """Stores relations for obj."""
 
         if self._relations_cache is not None:
-            self._relations_cache.put(ax_cache_manager.get_object_key(obj), relations)
+            self._relations_cache.put(ax_cache_manager.get_object_key(obj), list(relations))
 
     def get_targets(
         self, obj: Atspi.Accessible, relation_type: Atspi.RelationType
@@ -75,7 +80,12 @@ class _AXUtilitiesRelationCache:
         if self._targets_cache is None:
             return None
 
-        return self._targets_cache.get((ax_cache_manager.get_object_key(obj), relation_type), None)
+        targets = self._targets_cache.get(
+            (ax_cache_manager.get_object_key(obj), relation_type), ax_cache_manager.MISSING
+        )
+        if targets is ax_cache_manager.MISSING:
+            return None
+        return list(targets)
 
     def set_targets(
         self,
@@ -86,7 +96,9 @@ class _AXUtilitiesRelationCache:
         """Stores targets for a relation of obj."""
 
         if self._targets_cache is not None:
-            self._targets_cache.put((ax_cache_manager.get_object_key(obj), relation_type), targets)
+            self._targets_cache.put(
+                (ax_cache_manager.get_object_key(obj), relation_type), list(targets)
+            )
 
 
 class AXUtilitiesRelation:

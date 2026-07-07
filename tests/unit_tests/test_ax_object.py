@@ -2018,6 +2018,28 @@ class TestAXObject:
         if case["expects_handle_error"]:
             handle_error_mock.assert_called_once()
 
+    def test_cached_attributes_are_isolated_from_callers(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Mutating a stored or returned attributes dict must not corrupt the cached value."""
+
+        self._setup_dependencies(test_context)
+        from orca import ax_cache_manager
+        from orca.ax_object import AXObject
+
+        obj = test_context.Mock(spec=Atspi.Accessible)
+        stored = {"level": "2"}
+        AXObject._CACHE.set_attributes(obj, stored)
+        stored["mutated"] = "after set"
+        first = AXObject._CACHE.get_attributes(obj)
+        assert first == {"level": "2"}
+
+        first["mutated"] = "by caller"
+        assert AXObject._CACHE.get_attributes(obj) == {"level": "2"}
+        assert AXObject._CACHE.get_attributes(test_context.Mock(spec=Atspi.Accessible)) is (
+            ax_cache_manager.MISSING
+        )
+
     @pytest.mark.parametrize(
         "case",
         [

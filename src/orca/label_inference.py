@@ -91,7 +91,12 @@ class _LabelInferenceCache:
         if self._line_contents_cache is None:
             return None
 
-        return self._line_contents_cache.get(ax_cache_manager.get_object_key(obj), None)
+        contents = self._line_contents_cache.get(
+            ax_cache_manager.get_object_key(obj), ax_cache_manager.MISSING
+        )
+        if contents is ax_cache_manager.MISSING:
+            return None
+        return list(contents)
 
     def set_line_contents(
         self,
@@ -101,7 +106,7 @@ class _LabelInferenceCache:
         """Stores line contents for obj."""
 
         if self._line_contents_cache is not None:
-            self._line_contents_cache.put(obj_key, contents)
+            self._line_contents_cache.put(obj_key, list(contents))
 
     def get_text_extents(
         self,
