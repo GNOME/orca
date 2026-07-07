@@ -3020,7 +3020,10 @@ class SpeechGenerator(generator.Generator):
         """Generates speech for the heading role."""
 
         result = self._generate_default_prefix(obj)
-        result += self._generate_text_content(obj)
+        if AXUtilities.has_presentable_text(obj):
+            result += self._generate_text_content(obj)
+        else:
+            result += self._generate_accessible_name(obj)
         result += self._generate_accessible_role(obj)
         result += self._generate_state_expanded(obj)
         result += self._generate_default_suffix(obj)
