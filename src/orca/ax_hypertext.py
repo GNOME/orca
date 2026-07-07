@@ -22,10 +22,6 @@
 
 from __future__ import annotations
 
-import os
-import re
-from urllib.parse import urlparse
-
 import gi
 
 gi.require_version("Atspi", "2.0")
@@ -71,47 +67,6 @@ class AXHypertext:
             return None
 
         return link
-
-    @staticmethod
-    def get_all_links_in_range(
-        obj: Atspi.Accessible,
-        start_offset: int,
-        end_offset: int,
-    ) -> list[Atspi.Hyperlink]:
-        """Returns all the hyperlinks in obj who started within the specified range."""
-
-        links = []
-        for i in range(AXHypertext.get_link_count(obj)):
-            link = AXHypertext.get_link_at_index(obj, i)
-            if link is None:
-                continue
-            if (
-                start_offset <= AXHypertext.get_link_start_offset(link) < end_offset
-                or start_offset < AXHypertext.get_link_end_offset(link) <= end_offset
-            ):
-                links.append(link)
-
-        tokens = [
-            f"AXHypertext: {len(links)} hyperlinks found in",
-            obj,
-            f"between start: {start_offset} and end: {end_offset}",
-        ]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return links
-
-    @staticmethod
-    def get_all_links(obj: Atspi.Accessible) -> list[Atspi.Hyperlink]:
-        """Returns a list of all the hyperlinks in obj."""
-
-        links = []
-        for i in range(AXHypertext.get_link_count(obj)):
-            link = AXHypertext.get_link_at_index(obj, i)
-            if link is not None:
-                links.append(link)
-
-        tokens = [f"AXHypertext: {len(links)} hyperlinks found in", obj]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return links
 
     @staticmethod
     def get_link_uri(obj: Atspi.Accessible, index: int = 0) -> str:
@@ -182,28 +137,6 @@ class AXHypertext:
         tokens = ["AXHypertext: End offset of", obj, f"is {offset}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return offset
-
-    @staticmethod
-    def get_link_basename(
-        obj: Atspi.Accessible,
-        index: int = 0,
-        remove_extension: bool = False,
-    ) -> str:
-        """Strip directory and suffix off of the URL associated with obj."""
-
-        uri = AXHypertext.get_link_uri(obj, index)
-        if not uri:
-            return ""
-
-        parsed_uri = urlparse(uri)
-        basename = os.path.basename(parsed_uri.path)
-        if remove_extension:
-            basename = os.path.splitext(basename)[0]
-            basename = re.sub(r"[-_]", " ", basename)
-
-        tokens = ["AXHypertext: Basename for link", obj, f"is '{basename}'"]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return basename
 
     @staticmethod
     def get_child_at_offset(obj: Atspi.Accessible, offset: int) -> Atspi.Accessible | None:

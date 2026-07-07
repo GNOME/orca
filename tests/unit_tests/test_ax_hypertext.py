@@ -66,7 +66,7 @@ class TestAXHypertext:
 
         return essential_modules
 
-    def testget_link_count_with_hypertext_support(self, test_context: OrcaTestContext) -> None:
+    def test_get_link_count_with_hypertext_support(self, test_context: OrcaTestContext) -> None:
         """Test AXHypertext.get_link_count with hypertext support."""
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
@@ -78,7 +78,7 @@ class TestAXHypertext:
         result = AXHypertext.get_link_count(mock_accessible)
         assert result == 3
 
-    def testget_link_count_without_hypertext_support(self, test_context: OrcaTestContext) -> None:
+    def test_get_link_count_without_hypertext_support(self, test_context: OrcaTestContext) -> None:
         """Test AXHypertext.get_link_count without hypertext support."""
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
@@ -89,7 +89,7 @@ class TestAXHypertext:
         result = AXHypertext.get_link_count(mock_accessible)
         assert result == 0
 
-    def testget_link_count_with_glib_error(self, test_context: OrcaTestContext) -> None:
+    def test_get_link_count_with_glib_error(self, test_context: OrcaTestContext) -> None:
         """Test AXHypertext.get_link_count handles GLib.GError."""
 
         mock_accessible = test_context.Mock(spec=Atspi.Accessible)
@@ -120,7 +120,7 @@ class TestAXHypertext:
             (True, True, False),  # With GLib error
         ],
     )
-    def testget_link_at_index_scenarios(
+    def test_get_link_at_index_scenarios(
         self,
         test_context: OrcaTestContext,
         has_hypertext_support: bool,
@@ -163,117 +163,6 @@ class TestAXHypertext:
             assert result is None
         if raises_glib_error:
             essential_modules["orca.debug"].print_message.assert_called()
-
-    @pytest.mark.parametrize(
-        "start_offset, end_offset, link_ranges, expected_count",
-        [
-            pytest.param(0, 10, [], 0, id="no_links"),
-            pytest.param(0, 10, [(5, 8)], 1, id="link_within_range"),
-            pytest.param(0, 10, [(12, 15)], 0, id="link_outside_range"),
-            pytest.param(0, 10, [(0, 5), (8, 10)], 2, id="multiple_links_in_range"),
-            pytest.param(5, 15, [(0, 6), (10, 20)], 2, id="links_partially_overlapping"),
-            pytest.param(10, 15, [(10, 12)], 1, id="link_start_matches_range_start"),
-        ],
-    )
-    def test_get_all_links_in_range(  # pylint: disable=too-many-arguments, too-many-positional-arguments
-        self,
-        start_offset,
-        end_offset,
-        link_ranges,
-        expected_count,
-        test_context,
-    ) -> None:
-        """Test AXHypertext.get_all_links_in_range."""
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        self._setup_dependencies(test_context)
-        from orca.ax_hypertext import AXHypertext
-
-        mock_links = [test_context.Mock(spec=Atspi.Hyperlink) for _ in link_ranges]
-
-        def get_offset(link, is_start=True) -> int:
-            for i, mock_link in enumerate(mock_links):
-                if link == mock_link:
-                    return link_ranges[i][0 if is_start else 1]
-            return -1
-
-        test_context.patch(
-            "orca.ax_hypertext.AXHypertext.get_link_count",
-            return_value=len(mock_links),
-        )
-
-        def mockget_link_at_index(_obj, index):
-            return mock_links[index] if index < len(mock_links) else None
-
-        test_context.patch(
-            "orca.ax_hypertext.AXHypertext.get_link_at_index",
-            side_effect=mockget_link_at_index,
-        )
-        test_context.patch(
-            "orca.ax_hypertext.AXHypertext.get_link_start_offset",
-            side_effect=lambda link: get_offset(link, True),
-        )
-        test_context.patch(
-            "orca.ax_hypertext.AXHypertext.get_link_end_offset",
-            side_effect=lambda link: get_offset(link, False),
-        )
-        result = AXHypertext.get_all_links_in_range(mock_accessible, start_offset, end_offset)
-        assert len(result) == expected_count
-
-    def test_get_all_links_empty_object(self, test_context: OrcaTestContext) -> None:
-        """Test AXHypertext.get_all_links with object containing no links."""
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        self._setup_dependencies(test_context)
-        from orca.ax_hypertext import AXHypertext
-
-        test_context.patch("orca.ax_hypertext.AXHypertext.get_link_count", return_value=0)
-        result = AXHypertext.get_all_links(mock_accessible)
-        assert not result
-
-    def test_get_all_links_with_valid_links(self, test_context: OrcaTestContext) -> None:
-        """Test AXHypertext.get_all_links with multiple valid links."""
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        self._setup_dependencies(test_context)
-        from orca.ax_hypertext import AXHypertext
-
-        mock_link1 = test_context.Mock(spec=Atspi.Hyperlink)
-        mock_link2 = test_context.Mock(spec=Atspi.Hyperlink)
-        test_context.patch("orca.ax_hypertext.AXHypertext.get_link_count", return_value=2)
-
-        def mock_get_link_by_index(_obj, index):
-            return mock_link1 if index == 0 else mock_link2
-
-        test_context.patch(
-            "orca.ax_hypertext.AXHypertext.get_link_at_index",
-            side_effect=mock_get_link_by_index,
-        )
-        result = AXHypertext.get_all_links(mock_accessible)
-        assert len(result) == 2
-        assert result[0] == mock_link1
-        assert result[1] == mock_link2
-
-    def test_get_all_links_filters_none_values(self, test_context: OrcaTestContext) -> None:
-        """Test AXHypertext.get_all_links filters out None values."""
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        self._setup_dependencies(test_context)
-        from orca.ax_hypertext import AXHypertext
-
-        mock_link = test_context.Mock(spec=Atspi.Hyperlink)
-        test_context.patch("orca.ax_hypertext.AXHypertext.get_link_count", return_value=3)
-
-        def mock_get_specific_link(_obj, index):
-            return mock_link if index == 1 else None
-
-        test_context.patch(
-            "orca.ax_hypertext.AXHypertext.get_link_at_index",
-            side_effect=mock_get_specific_link,
-        )
-        result = AXHypertext.get_all_links(mock_accessible)
-        assert len(result) == 1
-        assert result[0] == mock_link
 
     def test_get_link_uri_with_valid_hyperlink(self, test_context: OrcaTestContext) -> None:
         """Test AXHypertext.get_link_uri with valid hyperlink."""
@@ -478,56 +367,6 @@ class TestAXHypertext:
         result = AXHypertext.get_link_end_offset(mock_hyperlink)
         assert result == -1
         essential_modules["orca.debug"].print_message.assert_called()
-
-    @pytest.mark.parametrize(
-        "uri, remove_extension, expected_result",
-        [
-            pytest.param(
-                "https://example.com/path/file.html",
-                False,
-                "file.html",
-                id="path_with_extension",
-            ),
-            pytest.param(
-                "https://example.com/path/file.html",
-                True,
-                "file",
-                id="path_with_extension_removed",
-            ),
-            pytest.param("https://example.com/", False, "", id="no_path_component"),
-            pytest.param("", False, "", id="empty_uri"),
-            pytest.param("https://example.com/simple", False, "simple", id="path_no_extension"),
-            pytest.param(
-                "https://example.com/simple",
-                True,
-                "simple",
-                id="path_no_extension_capitalized",
-            ),
-            pytest.param("file:///home/user/document.pdf", False, "document.pdf", id="file_uri"),
-            pytest.param(
-                "file:///home/user/document.pdf",
-                True,
-                "document",
-                id="file_uri_extension_removed",
-            ),
-        ],
-    )
-    def test_get_link_basename(
-        self,
-        uri,
-        remove_extension,
-        expected_result,
-        test_context,
-    ) -> None:
-        """Test AXHypertext.get_link_basename."""
-
-        mock_accessible = test_context.Mock(spec=Atspi.Accessible)
-        self._setup_dependencies(test_context)
-        from orca.ax_hypertext import AXHypertext
-
-        test_context.patch("orca.ax_hypertext.AXHypertext.get_link_uri", return_value=uri)
-        result = AXHypertext.get_link_basename(mock_accessible, 0, remove_extension)
-        assert result == expected_result
 
     def test_get_child_at_offset_with_valid_link(self, test_context: OrcaTestContext) -> None:
         """Test AXHypertext.get_child_at_offset with valid link."""
