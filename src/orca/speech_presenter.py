@@ -1945,6 +1945,8 @@ class SpeechPresenter(Extension):
     ) -> tuple[str, bool]:
         """Lets extensions observe, replace, or consume outgoing speech."""
 
+        # A zero-width no-break space is never speakable; Gecko interleaves it in emoji.
+        text = text.replace("\ufeff", "")
         handlers = extension_loader.get_loader().iter_speech_output_handlers()
         if not handlers:
             return text, False

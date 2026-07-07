@@ -133,7 +133,7 @@ class Script(default.Script):
 
         contents: list[tuple[Atspi.Accessible, int, int, str]] | None = None
         if self.utilities.treat_as_end_of_line(obj, offset) and AXObject.supports_text(obj):
-            char = AXText.get_character_at_offset(obj, offset)[0]
+            char = AXText.get_character_at_offset(obj, offset, ensure_whole_characters=True)[0]
             if char == "\ufffc":
                 char = ""
             contents = [(obj, offset, offset + 1, char)]

@@ -46,7 +46,6 @@ from . import (
     spellcheck_presenter,
     table_navigator,
 )
-from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_table import AXTable
 from .ax_text import AXText
@@ -532,7 +531,7 @@ class Utilities:
         to_build = list(text)
         for i, char in enumerate(to_build):
             if char == "\ufffc":
-                child = AXHypertext.find_child_at_offset(obj, i + start_offset)
+                child = AXUtilities.find_child_at_offset(obj, i + start_offset)
                 result = self.expand_eocs(child)
                 if child and AXObject.get_role(child) in block_roles:
                     result += " "
@@ -1097,12 +1096,12 @@ class Utilities:
         if old_chars < new_chars:
             changes.append([change_start, change_end, messages.TEXT_SELECTED])
             if old_string.endswith("\ufffc") and old_end == change_start:
-                child = AXHypertext.find_child_at_offset(obj, old_end - 1)
+                child = AXUtilities.find_child_at_offset(obj, old_end - 1)
                 self.handle_text_selection_change(child, False)
         else:
             changes.append([change_start, change_end, messages.TEXT_UNSELECTED])
             if new_string.endswith("\ufffc"):
-                child = AXHypertext.find_child_at_offset(obj, new_end - 1)
+                child = AXUtilities.find_child_at_offset(obj, new_end - 1)
                 self.handle_text_selection_change(child, False)
         return changes
 
@@ -1137,7 +1136,7 @@ class Utilities:
                     presentation_manager.get_manager().speak_message(message)
 
             if ends_with_child:
-                child = AXHypertext.find_child_at_offset(obj, effective_end)
+                child = AXUtilities.find_child_at_offset(obj, effective_end)
                 self.handle_text_selection_change(child, speak_message)
 
     def handle_text_selection_change(

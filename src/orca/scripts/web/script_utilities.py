@@ -815,7 +815,7 @@ class Utilities(script_utilities.Utilities):
         if not self.is_text_block_element(obj):
             return -1
 
-        child = AXHypertext.find_child_at_offset(obj, offset)
+        child = AXUtilities.find_child_at_offset(obj, offset)
         if child and not self.is_text_block_element(child):
             matches = [x for x in contents if x[0] == child]
             if len(matches) == 1:
@@ -1077,9 +1077,13 @@ class Utilities(script_utilities.Utilities):
         elif granularity == Atspi.TextGranularity.SENTENCE:
             string, start, end = AXText.get_sentence_at_offset(obj, offset)
         elif granularity == Atspi.TextGranularity.WORD:
-            string, start, end = AXText.get_word_at_offset(obj, offset)
+            string, start, end = AXText.get_word_at_offset(
+                obj, offset, ensure_whole_characters=True
+            )
         elif granularity == Atspi.TextGranularity.CHAR:
-            string, start, end = AXText.get_character_at_offset(obj, offset)
+            string, start, end = AXText.get_character_at_offset(
+                obj, offset, ensure_whole_characters=True
+            )
         else:
             string, start, end = AXText.get_line_at_offset(obj, offset)
 
@@ -1148,7 +1152,7 @@ class Utilities(script_utilities.Utilities):
             debug.print_message(debug.LEVEL_INFO, msg, True)
         else:
             if char == "\ufffc":
-                if child := AXHypertext.find_child_at_offset(obj, offset):
+                if child := AXUtilities.find_child_at_offset(obj, offset):
                     return self._get_contents_for_obj(child, 0, granularity)
 
         ranges = [m.span() for m in re.finditer("[^\ufffc]+", string)]
@@ -1633,7 +1637,7 @@ class Utilities(script_utilities.Utilities):
         if (
             AXUtilities.is_tool_bar(obj) or AXUtilities.is_menu_bar(obj)
         ) and not self._treat_object_as_whole(obj):
-            child = AXHypertext.find_child_at_offset(obj, offset)
+            child = AXUtilities.find_child_at_offset(obj, offset)
             if child:
                 obj = child
                 offset = 0
@@ -3500,7 +3504,7 @@ class Utilities(script_utilities.Utilities):
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return obj, offset
 
-        child = AXHypertext.find_child_at_offset(obj, offset)
+        child = AXUtilities.find_child_at_offset(obj, offset)
         if not child:
             msg = "WEB: Child at offset is null. Returning context unchanged."
             debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -3511,7 +3515,7 @@ class Utilities(script_utilities.Utilities):
                 tokens = ["WEB: Child", child, "of", obj, "at offset", offset, "cannot be context."]
                 debug.print_tokens(debug.LEVEL_INFO, tokens, True)
                 offset += 1
-                child = AXHypertext.find_child_at_offset(obj, offset)
+                child = AXUtilities.find_child_at_offset(obj, offset)
 
         if self._is_empty_anchor(child):
             next_obj, next_offset = self.next_context(obj, offset)
@@ -3574,7 +3578,7 @@ class Utilities(script_utilities.Utilities):
             all_text = AXText.get_all_text(obj) if self.treat_as_text_object(obj) else ""
             if all_text:
                 for i in range(offset + 1, len(all_text)):
-                    child = AXHypertext.find_child_at_offset(obj, i)
+                    child = AXUtilities.find_child_at_offset(obj, i)
                     if child and all_text[i] != "\ufffc":
                         tokens = [
                             "ERROR: Child",
@@ -3663,7 +3667,7 @@ class Utilities(script_utilities.Utilities):
                 if offset == -1 or offset > len(all_text):
                     offset = len(all_text)
                 for i in range(offset - 1, -1, -1):
-                    child = AXHypertext.find_child_at_offset(obj, i)
+                    child = AXUtilities.find_child_at_offset(obj, i)
                     if child and all_text[i] != "\ufffc":
                         tokens = [
                             "ERROR: Child",

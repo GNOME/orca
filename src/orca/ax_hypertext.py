@@ -38,10 +38,6 @@ from .ax_object import AXObject
 class AXHypertext:
     """Wrapper for the Atspi.Hypertext and Hyperlink interfaces."""
 
-    # Chromium and Firefox have off-by-n bugs; we check this many offsets on each side
-    # before giving up. See find_child_at_offset.
-    _MAX_OFFSET_SKEW = 3
-
     @staticmethod
     def get_link_count(obj: Atspi.Accessible) -> int:
         """Returns the number of hyperlinks in obj."""
@@ -208,48 +204,6 @@ class AXHypertext:
         tokens = ["AXHypertext: Basename for link", obj, f"is '{basename}'"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return basename
-
-    @staticmethod
-    def _child_and_reported_offset(
-        obj: Atspi.Accessible, offset: int
-    ) -> tuple[Atspi.Accessible | None, int]:
-        """Returns the child at offset and the offset it reports occupying, or (None, -1)."""
-
-        child = AXHypertext.get_child_at_offset(obj, offset)
-        if child is None:
-            return None, -1
-        return child, AXHypertext.get_character_offset_in_parent(child)
-
-    @staticmethod
-    def find_child_at_offset(obj: Atspi.Accessible, offset: int) -> Atspi.Accessible | None:
-        """Returns the child at offset, correcting for broken hypertext offset mappings."""
-
-        child, reported_offset = AXHypertext._child_and_reported_offset(obj, offset)
-        if child is not None:
-            if reported_offset == offset:
-                return child
-            tokens = [
-                "AXHypertext: Broken offset mapping.",
-                obj,
-                f"Child at offset {offset} reports offset {reported_offset}.",
-            ]
-            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        # Work around off-by-n bugs: check increasingly distant offsets and accept the
-        # child that reports being at the requested offset.
-        for skew in range(1, AXHypertext._MAX_OFFSET_SKEW + 1):
-            for lookup_offset in (offset - skew, offset + skew):
-                child, reported_offset = AXHypertext._child_and_reported_offset(obj, lookup_offset)
-                if child is not None and reported_offset == offset:
-                    tokens = [
-                        "AXHypertext: Broken offset mapping.",
-                        obj,
-                        f"Child for offset {offset} retrieved at offset {lookup_offset}.",
-                    ]
-                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                    return child
-
-        return None
 
     @staticmethod
     def get_child_at_offset(obj: Atspi.Accessible, offset: int) -> Atspi.Accessible | None:
