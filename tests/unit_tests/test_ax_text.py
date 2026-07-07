@@ -3057,3 +3057,62 @@ class TestAXText:
 
         result = AXText._find_sentence_boundaries(text)
         assert result == expected_boundaries
+
+
+_GRAPHEME_US_FLAG = "\U0001f1fa\U0001f1f8"
+_GRAPHEME_IT_FLAG = "\U0001f1ee\U0001f1f9"
+_GRAPHEME_FAMILY = "\U0001f468\u200d\U0001f469\u200d\U0001f467\u200d\U0001f466"
+_GRAPHEME_US_FLAG_FEFF = "\U0001f1fa\ufeff\U0001f1f8\ufeff"
+_GRAPHEME_FAMILY_FEFF = (
+    "\U0001f468\ufeff\u200d\U0001f469\ufeff\u200d\U0001f467\ufeff\u200d\U0001f466\ufeff"
+)
+
+
+@pytest.mark.unit
+class TestAXTextWholeCharacters:
+    """Test AXText whole-character offset adjustment."""
+
+    def _setup_dependencies(self, test_context: OrcaTestContext) -> dict[str, MagicMock]:
+        """Set up mocks for ax_text dependencies."""
+
+        additional_modules = [
+            "locale",
+            "orca.colornames",
+            "orca.ax_utilities_role",
+            "orca.ax_utilities_state",
+        ]
+        return test_context.setup_shared_dependencies(additional_modules)
+
+    @pytest.mark.parametrize(
+        "text, start, end, expected",
+        [
+            pytest.param("from " + _GRAPHEME_US_FLAG + " to", 5, 6, (5, 7), id="flag_first"),
+            pytest.param("from " + _GRAPHEME_US_FLAG + " to", 6, 7, (5, 7), id="flag_second"),
+            pytest.param("a " + _GRAPHEME_FAMILY + " b", 2, 3, (2, 9), id="family_first"),
+            pytest.param("a " + _GRAPHEME_FAMILY + " b", 6, 7, (2, 9), id="family_middle"),
+            pytest.param("a " + _GRAPHEME_FAMILY_FEFF + " b", 2, 3, (2, 13), id="family_feff"),
+            pytest.param(
+                "from " + _GRAPHEME_US_FLAG_FEFF + " to", 5, 6, (5, 9), id="gecko_flag_feff"
+            ),
+            pytest.param(
+                _GRAPHEME_US_FLAG + _GRAPHEME_IT_FLAG, 2, 3, (2, 4), id="adjacent_flags_separate"
+            ),
+            pytest.param("hello", 1, 3, (1, 3), id="plain_unchanged"),
+            pytest.param("\u2764\ufe0fx", 0, 1, (0, 2), id="variation_selector"),
+            pytest.param("\U0001f44d\U0001f3fd x", 0, 1, (0, 2), id="skin_tone"),
+        ],
+    )
+    def test_adjust_to_whole_characters(
+        self,
+        text: str,
+        start: int,
+        end: int,
+        expected: tuple[int, int],
+        test_context: OrcaTestContext,
+    ) -> None:
+        """Test AXText._adjust_to_whole_characters extends spans to whole characters."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_text import AXText
+
+        assert AXText._adjust_to_whole_characters(text, start, end) == expected

@@ -453,6 +453,12 @@ class CaretNavigator(Extension):
         if not self._is_navigable_object(script, obj):
             return False
 
+        string, char_start, char_end = AXText.get_character_at_offset(
+            obj, offset, ensure_whole_characters=True
+        )
+        if string and offset > char_start:
+            offset = char_end
+
         self._last_input_event = event
         presentation_manager.get_manager().interrupt_presentation()
         script.utilities.set_caret_position(obj, offset, reason=CaretSetReason.CARET_NAVIGATION)
@@ -481,6 +487,12 @@ class CaretNavigator(Extension):
         obj, offset = script.utilities.previous_context()
         if not self._is_navigable_object(script, obj):
             return False
+
+        string, char_start, _char_end = AXText.get_character_at_offset(
+            obj, offset, ensure_whole_characters=True
+        )
+        if string and offset > char_start:
+            offset = char_start
 
         self._last_input_event = event
         presentation_manager.get_manager().interrupt_presentation()

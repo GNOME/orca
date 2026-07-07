@@ -250,10 +250,90 @@ class AXTextAttribute(enum.Enum):
 class AXText:
     """Wrapper for the Atspi.Text interface."""
 
+    _ZERO_WIDTH_JOINER = "\u200d"
+    _ZERO_WIDTH_NO_BREAK_SPACE = "\ufeff"
+    _VARIATION_SELECTOR_RANGE = ("\ufe00", "\ufe0f")
+    _EMOJI_MODIFIER_RANGE = ("\U0001f3fb", "\U0001f3ff")
+    _REGIONAL_INDICATOR_RANGE = ("\U0001f1e6", "\U0001f1ff")
+    # Widest span (in code points) a handled emoji cluster can occupy, including Gecko's
+    # interleaved zero-width no-break spaces, with headroom. Bounds the text read for adjustment.
+    _WHOLE_CHARACTER_MARGIN = 64
+
+    @staticmethod
+    def _extends_previous_character(text: str, offset: int) -> bool:
+        """Returns True if text[offset] continues the previous character."""
+
+        char = text[offset]
+        if char == AXText._ZERO_WIDTH_NO_BREAK_SPACE:
+            return True
+
+        # Gecko interleaves zero-width no-break spaces, so look past them for the real neighbor.
+        index = offset - 1
+        while index >= 0 and text[index] == AXText._ZERO_WIDTH_NO_BREAK_SPACE:
+            index -= 1
+        if index < 0:
+            return False
+        previous = text[index]
+
+        if AXText._ZERO_WIDTH_JOINER in (char, previous):
+            return True
+        vs_low, vs_high = AXText._VARIATION_SELECTOR_RANGE
+        mod_low, mod_high = AXText._EMOJI_MODIFIER_RANGE
+        if vs_low <= char <= vs_high or mod_low <= char <= mod_high:
+            return True
+        ri_low, ri_high = AXText._REGIONAL_INDICATOR_RANGE
+        if ri_low <= char <= ri_high and ri_low <= previous <= ri_high:
+            # Two regional indicators form one flag, so break only after a complete pair.
+            run = 0
+            while index >= 0:
+                if text[index] == AXText._ZERO_WIDTH_NO_BREAK_SPACE:
+                    index -= 1
+                    continue
+                if not ri_low <= text[index] <= ri_high:
+                    break
+                run += 1
+                index -= 1
+            return run % 2 == 1
+        return False
+
+    @staticmethod
+    def _adjust_to_whole_characters(text: str, start: int, end: int) -> tuple[int, int]:
+        """Extends start and end outward so neither falls inside a multi-code-point character."""
+
+        length = len(text)
+        start = max(0, min(start, length))
+        end = max(start, min(end, length))
+        while 0 < start < length and AXText._extends_previous_character(text, start):
+            start -= 1
+        while 0 < end < length and AXText._extends_previous_character(text, end):
+            end += 1
+        return start, end
+
+    @staticmethod
+    def _whole_character_content(
+        obj: Atspi.Accessible, start: int, end: int
+    ) -> tuple[str, int, int]:
+        """Returns (content, start, end) grown to whole characters from a bounded text window."""
+
+        length = AXText.get_character_count(obj)
+        lo = max(0, start - AXText._WHOLE_CHARACTER_MARGIN)
+        hi = min(length, end + AXText._WHOLE_CHARACTER_MARGIN)
+        text = AXText.get_substring(obj, lo, hi)
+        adjusted_start, adjusted_end = AXText._adjust_to_whole_characters(
+            text, start - lo, end - lo
+        )
+        if (adjusted_start == 0 and lo > 0) or (adjusted_end == len(text) and hi < length):
+            # The cluster reached the window edge; reread the full text to be safe.
+            text = AXText.get_all_text(obj)
+            adjusted_start, adjusted_end = AXText._adjust_to_whole_characters(text, start, end)
+            return text[adjusted_start:adjusted_end], adjusted_start, adjusted_end
+        return text[adjusted_start:adjusted_end], adjusted_start + lo, adjusted_end + lo
+
     @staticmethod
     def get_character_at_offset(
         obj: Atspi.Accessible,
         offset: int | None = None,
+        ensure_whole_characters: bool = False,
     ) -> tuple[str, int, int]:
         """Returns the (character, start, end) for the current or specified offset."""
 
@@ -288,12 +368,20 @@ class AXText:
             f"'{debug_string}' ({result.start_offset}-{result.end_offset})",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return result.content, result.start_offset, result.end_offset
+        content, start, end = result.content, result.start_offset, result.end_offset
+        if ensure_whole_characters and start >= 0:
+            if end < start:
+                # Some engines return a broken boundary inside a multi-code-point
+                # character (e.g. Chromium between a flag's regional indicators).
+                start, end = offset, offset + 1
+            content, start, end = AXText._whole_character_content(obj, start, end)
+        return content, start, end
 
     @staticmethod
     def get_word_at_offset(
         obj: Atspi.Accessible,
         offset: int | None = None,
+        ensure_whole_characters: bool = False,
     ) -> tuple[str, int, int]:
         """Returns the (word, start, end) for the current or specified offset."""
 
@@ -323,7 +411,24 @@ class AXText:
             f"'{result.content}' ({result.start_offset}-{result.end_offset})",
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return result.content, result.start_offset, result.end_offset
+        content, start, end = result.content, result.start_offset, result.end_offset
+        if ensure_whole_characters and start >= 0:
+            if end < start:
+                # The engine returned a broken word boundary inside a multi-code-point
+                # character (e.g. Chromium inside a flag); recover the word from whitespace.
+                # Rare and limited to small web objects, so reading the full text is fine.
+                text = AXText.get_all_text(obj)
+                start = offset
+                while start > 0 and not text[start - 1].isspace():
+                    start -= 1
+                end = offset
+                while end < len(text) and not text[end].isspace():
+                    end += 1
+                start, end = AXText._adjust_to_whole_characters(text, start, end)
+                content = text[start:end]
+            else:
+                content, start, end = AXText._whole_character_content(obj, start, end)
+        return content, start, end
 
     @staticmethod
     def get_line_at_offset(
@@ -603,10 +708,11 @@ class AXText:
         return result
 
     @staticmethod
-    def get_all_text(obj: Atspi.Accessible) -> str:
+    def get_all_text(obj: Atspi.Accessible, length: int | None = None) -> str:
         """Returns the text content of obj."""
 
-        length = AXText.get_character_count(obj)
+        if length is None:
+            length = AXText.get_character_count(obj)
         if not length:
             return ""
 

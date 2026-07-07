@@ -174,6 +174,7 @@ orca_integration_tests = [
   'integration_tests/test_braille_presenter_commands.py',
   'integration_tests/test_typing_echo.py',
   'integration_tests/test_terminal.py',
+  'integration_tests/test_gtk_text_view_emoji.py',
 ]
 
 integration_wrapper = configure_file(

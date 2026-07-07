@@ -71,6 +71,10 @@ class TestCaretNavigator:
         ]
         essential_modules = test_context.setup_shared_dependencies(additional_modules)
 
+        essential_modules["orca.ax_text"].AXText.get_character_at_offset = test_context.Mock(
+            return_value=("", 0, 0)
+        )
+
         # Set up cmdnames with all required values for structural_navigator
         cmdnames = essential_modules["orca.cmdnames"]
         cmdnames.STRUCTURAL_NAVIGATION_MODE_CYCLE = "cycle_mode"

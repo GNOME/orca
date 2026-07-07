@@ -1122,7 +1122,9 @@ class Script(script.Script):
         if input_event_manager.get_manager().last_event_was_forward_caret_selection():
             offset -= 1
 
-        character, start_offset, end_offset = AXText.get_character_at_offset(obj, offset)
+        character, start_offset, end_offset = AXText.get_character_at_offset(
+            obj, offset, ensure_whole_characters=True
+        )
         focus_manager.get_manager().emit_region_changed(
             obj,
             start_offset,
