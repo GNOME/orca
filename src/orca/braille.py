@@ -1208,7 +1208,7 @@ class _AccessibleTextRegion(Region):
         link_indicator = _STATE.link_indicator
 
         if self._indicate_links and link_indicator != INDICATOR_NONE:
-            links = AXHypertext.get_all_links(self.accessible)
+            links = AXUtilities.get_all_links(self.accessible)
             for link in links:
                 start_offset = AXHypertext.get_link_start_offset(link)
                 end_offset = AXHypertext.get_link_end_offset(link)

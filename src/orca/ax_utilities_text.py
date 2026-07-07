@@ -40,6 +40,7 @@ from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_text import AXText, AXTextAttribute
 from .ax_utilities_application import AXUtilitiesApplication
+from .ax_utilities_hypertext import AXUtilitiesHypertext
 from .ax_utilities_role import AXUtilitiesRole
 
 if TYPE_CHECKING:
@@ -209,7 +210,7 @@ class AXUtilitiesText:
     ) -> bool:
         """Returns True if any hyperlink boundary coincides with a boundary of the text run."""
 
-        for link in AXHypertext.get_all_links(obj):
+        for link in AXUtilitiesHypertext.get_all_links(obj):
             link_start = AXHypertext.get_link_start_offset(link)
             link_end = AXHypertext.get_link_end_offset(link)
             if link_start in (run_start, run_end) or link_end in (run_start, run_end):

@@ -1358,7 +1358,7 @@ class SpeechGenerator(generator.Generator):
         else:
             link_output = messages.LINK_WITH_PROTOCOL_VISITED % link_uri_info[0]
         if not text:
-            text = AXHypertext.get_link_basename(obj)
+            text = AXUtilities.get_link_basename(obj)
         if text:
             link_output += " " + text
         result.append(link_output)

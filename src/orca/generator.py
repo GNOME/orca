@@ -37,7 +37,6 @@ gi.require_version("Atspi", "2.0")
 from gi.repository import Atspi
 
 from . import ax_cache_manager, braille, debug, focus_manager, messages, object_properties
-from .ax_hypertext import AXHypertext
 from .ax_object import AXObject
 from .ax_text import AXText
 from .ax_utilities import AXUtilities
@@ -735,7 +734,7 @@ class Generator:
         elif AXUtilities.is_link(parent):
             link = parent
         if link:
-            basename = AXHypertext.get_link_basename(link, remove_extension=True)
+            basename = AXUtilities.get_link_basename(link, remove_extension=True)
             if basename:
                 return [basename]
 

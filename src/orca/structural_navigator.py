@@ -719,7 +719,7 @@ class StructuralNavigator(Extension):
             return result
 
         if AXUtilities.is_link(obj):
-            result = AXHypertext.get_link_basename(obj)
+            result = AXUtilities.get_link_basename(obj)
 
         return result
 

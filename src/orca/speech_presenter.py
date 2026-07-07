@@ -1454,7 +1454,7 @@ class SpeechPresenter(Extension):
             return line
 
         end_offset = start_offset + len(line)
-        links = AXHypertext.get_all_links_in_range(obj, start_offset, end_offset)
+        links = AXUtilities.get_all_links_in_range(obj, start_offset, end_offset)
         offsets = [AXHypertext.get_link_end_offset(link) for link in links]
         offsets = sorted([offset - start_offset for offset in offsets], reverse=True)
         tokens = list(line)
