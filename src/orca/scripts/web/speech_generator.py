@@ -392,7 +392,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         ):
             return []
 
-        if AXUtilities.is_link(obj) and self._get_content_string(obj):
+        if AXUtilities.is_link(obj, self._get_resolved_role()) and self._get_content_string(obj):
             return []
 
         if AXUtilities.has_visible_caption(obj):

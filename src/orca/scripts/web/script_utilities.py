@@ -2729,7 +2729,10 @@ class Utilities(script_utilities.Utilities):
             reason = "has description"
         elif AXObject.get_child_count(obj):
             reason = "has children"
-        elif AXText.get_character_count(obj) and AXText.get_all_text(obj) != AXObject.get_name(obj):
+        elif (char_count := AXText.get_character_count(obj)) and (
+            char_count > len(name := AXObject.get_name(obj))
+            or AXText.get_all_text(obj, char_count) != name
+        ):
             reason = "has text content"
 
         if reason:

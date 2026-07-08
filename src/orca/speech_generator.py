@@ -338,7 +338,7 @@ class SpeechGenerator(generator.Generator):
         voice_override: ACSS | None = None
         resolved_voice_type = speechserver.VoiceType.DEFAULT
         if context is not None:
-            if AXUtilities.is_link(obj):
+            if AXUtilities.is_link(obj, self._get_resolved_role(obj)):
                 voice_override = context.voices.get(speechserver.VoiceType.HYPERLINK)
                 resolved_voice_type = speechserver.VoiceType.HYPERLINK
             elif isinstance(string, str) and string.isupper() and string.strip().isalpha():
