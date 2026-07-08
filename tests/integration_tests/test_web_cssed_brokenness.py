@@ -44,7 +44,10 @@ def test_one_word_per_line_text_is_read_whole(web_cssed_brokenness: NativeAppSes
     assert helpers.speech(session) == ["Start heading"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert helpers.speech(session) == ["alpha beta gamma delta", "epsilon zeta eta theta"]
+    assert helpers.speech(session) == ["alpha beta gamma delta"]
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert helpers.speech(session) == ["epsilon zeta eta theta"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert helpers.speech(session) == ["iota kappa lambda mu"]

@@ -186,3 +186,64 @@ def test_eol_indicator_on_code_blocks_not_inline(web_wrapping_text: NativeAppSes
         ["code line two", "code end"],
         [BrailleLine(1, "code line two $l", "code line two $l", "\x00" * 16)],
     )
+
+    # A pre whose line ends in a link: the code block's $l belongs at the end of the
+    # line, never mid-line after one of its fragments.
+    assert _down_to_line(session, 4) == (
+        ["code start", "see ", "the docs", "link"],
+        [BrailleLine(1, "see the docs", "see the docs", "\x00" * 4 + "\xc0" * 8)],
+    )
+    assert _down_to_line(session, 1) == (
+        ["code start", "see ", "the docs", "link"],
+        [
+            BrailleLine(
+                1,
+                "see the docs $l",
+                "see the docs $l",
+                "\x00" * 4 + "\xc0" * 8 + "\x00" * 3,
+            )
+        ],
+    )
+    assert _down_to_line(session, 1) == (
+        ["plain last line", "code end"],
+        [BrailleLine(1, "plain last line $l", "plain last line $l", "\x00" * 18)],
+    )
+
+    # A pre line whose last item is an inline child element still ends with the $l.
+    assert _down_to_line(session, 4) == (
+        ["code start", "mix ", "tail"],
+        [BrailleLine(1, "mix tail $l", "mix tail $l", "\x00" * 11)],
+    )
+    assert _down_to_line(session, 1) == (
+        ["code start", "mix ", "tail"],
+        [BrailleLine(1, "mix tail $l", "mix tail $l", "\x00" * 11)],
+    )
+    assert _down_to_line(session, 1) == (
+        ["plain end", "code end"],
+        [BrailleLine(1, "plain end $l", "plain end $l", "\x00" * 12)],
+    )
+
+
+@pytest.mark.native_app
+def test_fill_in_the_blank_line_assembly(web_wrapping_text: NativeAppSession) -> None:
+    """Tests that an empty inline entry with text on both sides presents as one line."""
+
+    session = web_wrapping_text
+    reset_web_state(session)
+    assert session.orca.get("CaretNavigator", "LayoutMode") is True
+
+    # The entry's $l marks the end of its (empty) text; the first paragraph wraps
+    # after ' to ', so 'continue.' is its own visual line. The second paragraph fits
+    # on a single visual line.
+    assert _down_to_line(session, 31) == (
+        ["Fill in ", "answer", "entry", " to "],
+        [BrailleLine(1, "Fill in answer  $l to ", "Fill in answer  $l to ", "\x00" * 12)],
+    )
+    assert _down_to_line(session, 1) == (
+        ["continue."],
+        [BrailleLine(1, "continue.", "continue.", "\x00" * 9)],
+    )
+    assert _down_to_line(session, 1) == (
+        ["Pick ", "choice", "entry", " now."],
+        [BrailleLine(1, "Pick choice  $l now.", "Pick choice  $l now.", "\x00" * 10)],
+    )

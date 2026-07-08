@@ -729,6 +729,15 @@ class Utilities(script_utilities.Utilities):
         ):
             return AXComponent.get_rect(parent)
 
+        # A non-text embedded object reports an absolute Component rect, but Chromium's
+        # text-range extents are web-area-relative; use its parent-relative embedded-character
+        # rect so both sides of a same-line comparison share one coordinate space.
+        offset = AXHypertext.get_character_offset_in_parent(obj)
+        if offset >= 0:
+            rect = AXText.get_range_rect(parent, offset, offset + 1)
+            if rect.width and rect.height:
+                return rect
+
         return AXComponent.get_rect(obj)
 
     def expand_eocs(
@@ -1684,8 +1693,6 @@ class Utilities(script_utilities.Utilities):
                 return False
 
             x_obj, x_start, x_end, _x_string = x
-            if x_start == x_end:
-                return False
 
             # Contiguous ranges from the same text object are different AT-SPI
             # lines. Character extents at wrap boundaries can be unreliable.
@@ -1694,7 +1701,7 @@ class Utilities(script_utilities.Utilities):
                     if existing_obj == x_obj and (x_start == e_end or x_end == e_start):
                         return False
 
-            x_rect = self._get_extents(x_obj, x_start, x_start + 1)
+            x_rect = self._get_extents(x_obj, x_start, x_end)
 
             if obj != x_obj:
                 if AXUtilities.is_landmark(obj) and AXUtilities.is_landmark(x_obj):
@@ -1760,14 +1767,16 @@ class Utilities(script_utilities.Utilities):
         if rect.width == 0 and rect.height == 0:
             rect = self._get_extents(first_obj, first_start, first_end)
 
-        last_obj, _last_start, last_end, _last_string = objects[-1]
+        last_obj, last_start, last_end, _last_string = objects[-1]
         if AXUtilities.is_math(last_obj):
             last_obj, last_end = self.last_context(last_obj)
             last_end += 1
 
         document = self.get_document_for_object(obj)
         prev_obj, prev_offset = self.find_previous_caret_in_order(first_obj, first_start)
-        next_obj, next_offset = self.find_next_caret_in_order(last_obj, last_end - 1)
+        next_obj, next_offset = self.find_next_caret_in_order(
+            last_obj, max(last_end - 1, last_start)
+        )
 
         # Check for things on the same line to the left of this object.
         prev_start_time = time.time()
@@ -1806,12 +1815,14 @@ class Utilities(script_utilities.Utilities):
                 break
 
             objects.extend(on_right)
-            last_obj, last_end = objects[-1][0], objects[-1][2]
+            last_obj, last_start, last_end = objects[-1][0], objects[-1][1], objects[-1][2]
             if AXUtilities.is_math(last_obj):
                 last_obj, last_end = self.last_context(last_obj)
                 last_end += 1
 
-            next_obj, next_offset = self.find_next_caret_in_order(last_obj, last_end - 1)
+            next_obj, next_offset = self.find_next_caret_in_order(
+                last_obj, max(last_end - 1, last_start)
+            )
 
         next_end_time = time.time()
         msg = f"INFO: Time to get line contents on right: {next_end_time - next_start_time:.4f}s"

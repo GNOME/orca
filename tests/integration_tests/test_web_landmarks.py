@@ -34,7 +34,21 @@ if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
 
 
+# Layout mode groups each landmark's label and empty entry onto one visual line.
 _TOP_TO_BOTTOM = (
+    ["leaving banner.", "navigation", "Primary", "Home", "link"],
+    ["leaving navigation.", "navigation", "Secondary", "Help", "link"],
+    ["leaving navigation.", "search", "Search", "entry"],
+    ["leaving search.", "main content", "Main content", "heading 1"],
+    ["Body paragraph."],
+    ["leaving main content.", "complementary content", "Sidebar", "Aside text."],
+    ["leaving complementary content.", "form", "Newsletter signup", "Email", "entry"],
+    ["leaving form.", "Related links", "region", "Region text."],
+    ["leaving region.", "Status updates", "region", "Status text."],
+    ["leaving region.", "information", "Footer text."],
+)
+# Layout off presents each object separately, so the entries split from their labels.
+_TOP_TO_BOTTOM_LAYOUT_OFF = (
     ["leaving banner.", "navigation", "Primary", "Home", "link"],
     ["leaving navigation.", "navigation", "Secondary", "Help", "link"],
     ["leaving navigation.", "search", "Search "],
@@ -69,7 +83,7 @@ def test_caret_navigation_top_to_bottom_layout_off(web_landmarks: NativeAppSessi
     session = web_landmarks
     helpers.reset_web_state(session)
     session.orca.set("CaretNavigator", "LayoutMode", False)
-    for expected in _TOP_TO_BOTTOM:
+    for expected in _TOP_TO_BOTTOM_LAYOUT_OFF:
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         assert helpers.speech(session) == expected
 

@@ -402,13 +402,20 @@ class BrailleGenerator(generator.Generator):
         if not self._context.end_of_line_indicator:
             return []
 
-        if not (
-            AXUtilities.is_editable(obj)
-            or AXUtilities.is_code_block_descendant(obj, inclusive=True)
-        ):
-            return []
+        # An editable's indicator marks where its text ends, even mid-line (e.g. an
+        # entry in a fill-in-the-blank sentence). A code block's marks the end of the
+        # presented line, so it belongs only on the line's last item.
+        if AXUtilities.is_editable(obj):
+            return [object_properties.EOL_INDICATOR_BRAILLE]
 
-        return [object_properties.EOL_INDICATOR_BRAILLE]
+        position = self._get_content_position(obj)
+        if (
+            AXUtilities.is_code_block_descendant(obj, inclusive=True)
+            and position.index == position.total - 1
+        ):
+            return [object_properties.EOL_INDICATOR_BRAILLE]
+
+        return []
 
     ################################### PER-ROLE ####################################
 
