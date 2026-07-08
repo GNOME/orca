@@ -756,6 +756,11 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
             tokens = [f"ITEM {i}: ", obj, f"start: {start}, end: {end} '{string}'"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
+            # A content item can be just the line's trailing newline; skip it rather
+            # than present it as "newline" or "blank".
+            if string and not string.strip("\n"):
+                continue
+
             if announce_attrs and i > 0:
                 curr_attrs, run_start, run_end = AXText.get_text_attributes_at_offset(obj, start)
                 exclude = AXUtilities.get_redundant_text_attributes(obj, run_start, run_end)

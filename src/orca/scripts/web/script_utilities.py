@@ -1677,6 +1677,11 @@ class Utilities(script_utilities.Utilities):
             or AXUtilities.is_whitespace_at_end_of_line(obj, offset)
         ):
             rect = self._get_extents(obj, offset - 1, offset)
+            # The preceding character can be an embedded object spanning multiple
+            # lines; when it is, the character at offset identifies this line.
+            end_rect = self._get_extents(obj, offset, offset + 1)
+            if 0 < end_rect.height * 2 <= rect.height:
+                rect = end_rect
         else:
             rect = self._get_extents(obj, offset, offset + 1)
 
@@ -1694,6 +1699,14 @@ class Utilities(script_utilities.Utilities):
 
             x_obj, x_start, x_end, _x_string = x
 
+            # A lone newline at obj's end offset is obj's end-of-line; include it by text order.
+            if (
+                _x_string == "\n"
+                and x_start == AXHypertext.get_link_end_offset(obj)
+                and AXUtilities.is_ancestor(obj, x_obj)
+            ):
+                return True
+
             # Contiguous ranges from the same text object are different AT-SPI
             # lines. Character extents at wrap boundaries can be unreliable.
             if x_obj == obj and AXObject.supports_text(obj):
@@ -1701,7 +1714,13 @@ class Utilities(script_utilities.Utilities):
                     if existing_obj == x_obj and (x_start == e_end or x_end == e_start):
                         return False
 
-            x_rect = self._get_extents(x_obj, x_start, x_end)
+            # A trailing newline can report extents which extend into the next block,
+            # so measure the candidate's range without it.
+            stripped = _x_string.rstrip("\n")
+            if stripped and len(stripped) < len(_x_string):
+                x_rect = self._get_extents(x_obj, x_start, x_start + len(stripped))
+            else:
+                x_rect = self._get_extents(x_obj, x_start, x_end)
 
             if obj != x_obj:
                 if AXUtilities.is_landmark(obj) and AXUtilities.is_landmark(x_obj):
@@ -2349,7 +2368,6 @@ class Utilities(script_utilities.Utilities):
             if len(line_string.strip()) > 1:
                 is_single_chars = False
                 break
-        self._cache.set_for_object(self._cache.LINES_ARE_SINGLE_CHARS, obj, is_single_chars)
 
         # Check for single-word lines (also requires not being code).
         is_single_words = False
@@ -2364,6 +2382,15 @@ class Utilities(script_utilities.Utilities):
                         is_single_words = False
                         break
                     i = max(i + 1, end)
+
+        # A tall, narrow column is CSSed brokenness; a wider-than-tall element merely wrapped.
+        if is_single_chars or is_single_words:
+            rect = AXComponent.get_rect(obj)
+            if rect.width > rect.height:
+                is_single_chars = False
+                is_single_words = False
+
+        self._cache.set_for_object(self._cache.LINES_ARE_SINGLE_CHARS, obj, is_single_chars)
         self._cache.set_for_object(self._cache.LINES_ARE_SINGLE_WORDS, obj, is_single_words)
 
     def _element_lines_are_single_words(self, obj: Atspi.Accessible) -> bool:
