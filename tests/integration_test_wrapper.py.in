@@ -24,6 +24,10 @@ _ATSPI_DIRECTORIES = (
 )
 _SANDBOX_READY_FLAG = "--sandbox-ready"
 
+# The only services our bus may start. Anything else the host has installed, including the
+# portals and the shortcuts window they open, stays unreachable from the sandbox.
+_ACTIVATABLE_SERVICES = ("org.gnome.GPaste",)
+
 # Mirror orca_bin.py.in so the pytest imports can find Orca's GSettings schemas when Orca is
 # installed under a non-system prefix.
 _share_dir = os.path.join("@prefix@", "share")
@@ -191,6 +195,44 @@ def _start_xvfb(
     return display_num
 
 
+def _write_bus_config(sandbox: str) -> str:
+    """Writes a session bus config whose only activatable services are _ACTIVATABLE_SERVICES."""
+
+    services = os.path.join(sandbox, "services")
+    os.makedirs(services, exist_ok=True)
+    for name in _ACTIVATABLE_SERVICES:
+        source = os.path.join("/usr/share/dbus-1/services", f"{name}.service")
+        if not os.path.exists(source):
+            continue
+        with open(source, encoding="utf-8") as handle:
+            lines = handle.readlines()
+        with open(os.path.join(services, f"{name}.service"), "w", encoding="utf-8") as handle:
+            handle.writelines(
+                line for line in lines if not line.startswith("SystemdService=")
+            )
+
+    config = os.path.join(sandbox, "session.conf")
+    with open(config, "w", encoding="utf-8") as handle:
+        handle.write(
+            '<!DOCTYPE busconfig PUBLIC "-//freedesktop//DTD D-Bus Bus Configuration 1.0//EN"\n'
+            ' "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">\n'
+            "<busconfig>\n"
+            "  <type>session</type>\n"
+            "  <keep_umask/>\n"
+            "  <listen>unix:tmpdir=/tmp</listen>\n"
+            "  <auth>EXTERNAL</auth>\n"
+            f"  <servicedir>{services}</servicedir>\n"
+            '  <policy context="default">\n'
+            '    <allow send_destination="*" eavesdrop="true"/>\n'
+            '    <allow eavesdrop="true"/>\n'
+            '    <allow own="*"/>\n'
+            "  </policy>\n"
+            '  <limit name="service_start_timeout">120000</limit>\n'
+            "</busconfig>\n"
+        )
+    return config
+
+
 def _setup(children: list[subprocess.Popen]) -> dict[str, str] | None:
     """Brings up Xvfb and the private AT-SPI stack. Returns the env pytest should run under."""
 
@@ -207,6 +249,15 @@ def _setup(children: list[subprocess.Popen]) -> dict[str, str] | None:
     # 1. Nested X server for isolation from the caller's desktop.
     display_num = _start_xvfb(children, stack_env)
     stack_env["DISPLAY"] = f":{display_num}"
+
+    # Services the bus activates (GPaste, the portals, and the shortcuts provider they spawn)
+    # get the bus environment, not stack_env. Give them our Xvfb; otherwise their windows
+    # open on the caller's desktop.
+    subprocess.run(
+        ["dbus-update-activation-environment", f"DISPLAY=:{display_num}"],
+        env=stack_env,
+        check=False,
+    )
 
     # 2. at-spi-bus-launcher on our private session bus.
     launcher = subprocess.Popen(
@@ -367,6 +418,11 @@ def main() -> int:
         os.makedirs(tmp_dir, mode=0o700, exist_ok=True)
         child_env = os.environ.copy()
         child_env["XDG_RUNTIME_DIR"] = runtime_dir
+        # The bus hands this environment to the services it activates, and our Xvfb does not
+        # exist yet, so remove the caller's display rather than let them inherit it.
+        child_env.pop("DISPLAY", None)
+        child_env.pop("WAYLAND_DISPLAY", None)
+        child_env["GSETTINGS_BACKEND"] = "memory"
         # Redirect temp files into the sandbox so they are removed with it. Chromium leaves
         # org.chromium.Chromium.* dirs in TMPDIR, which teardown SIGKILLs it before it can
         # clean up; in /tmp those orphan, in the sandbox they go with the rmtree.
@@ -376,8 +432,8 @@ def main() -> int:
         # inner wrapper exits but still hold our stderr fd, which keeps meson's
         # pipe reader blocked. Killing the group breaks that chain.
         proc = subprocess.Popen(
-            ["dbus-run-session", "--", sys.executable, sys.argv[0],
-             _SANDBOX_READY_FLAG, test_file],
+            ["dbus-run-session", f"--config-file={_write_bus_config(sandbox)}", "--",
+             sys.executable, sys.argv[0], _SANDBOX_READY_FLAG, test_file],
             env=child_env,
             start_new_session=True,
         )
