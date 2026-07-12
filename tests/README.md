@@ -5,7 +5,8 @@ This is the beginning of Orca's new unit test and integration test support.
 These tests, especially the new integration tests, are currently intended
 for use by the maintainer. Documenting the expected dependencies and versions,
 and ensuring compatibility with Orca's GitLab CI and multiple distros, are
-still pending.
+still pending. For this reason, the integration tests are currently disabled
+by default.
 
 The integration tests cannot run while Orca is already active on the user's
 session because each test launches and drives its own Orca. It was decided
@@ -30,19 +31,31 @@ session, you can still run the tests by signing in as a second local user
 
 ## Dependencies
 
+The unit tests need:
+
 * [pytest](https://pytest.org)
 * [pytest-mock](https://pytest-mock.readthedocs.io/) - Mock plugin for pytest
-* xvfb (integration tests only)
+
+The integration tests additionally need the following, on top of what Orca itself requires. A
+missing item causes a skip: xvfb skips the whole file; the rest skip only the tests which need
+them.
+
+* xvfb
+* The DejaVu Sans Mono font, which the text-view tests wrap against
+* VTE 2.91, the GTK3 version, plus less, nano, and vim, for the terminal tests
+* chromium or chromium-browser, for the web tests
 
 ## Running Tests
 
 ### Using Meson
 
 ```bash
-meson test -C _build                     # All tests
+meson test -C _build                     # Unit tests (the integration tests are currently excluded)
 meson test -C _build --suite unit        # Unit tests only
 meson test -C _build --suite integration # Integration tests only
 ```
+
+The integration tests are excluded from the default test setup, so ask for them by suite.
 
 ### Using Pytest
 

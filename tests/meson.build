@@ -218,3 +218,10 @@ foreach test_file : gsettings_integration_tests
     timeout: 30,
   )
 endforeach
+
+# The integration tests are a work in progress; run them with `meson test --suite integration`.
+add_test_setup(
+  'default',
+  is_default: true,
+  exclude_suites: ['integration'],
+)
