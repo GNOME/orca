@@ -26,6 +26,7 @@
 from __future__ import annotations
 
 import gc
+import sys
 import weakref
 from typing import TYPE_CHECKING
 
@@ -73,6 +74,14 @@ class MutatingOwnerCaches(dict):
             self.fail_once = False
             raise RuntimeError("dictionary changed size during iteration")
         return super().items()
+
+
+def _lock_is_held_by_current_thread(lock) -> bool:
+    """Returns True if lock is held by the current thread."""
+
+    if sys.version_info >= (3, 14):
+        return lock.locked()
+    return lock._recursion_count() > 0
 
 
 @pytest.mark.unit
@@ -827,7 +836,7 @@ class TestAXCacheManager:
         test_context.patch_object(manager, "_start_cache_cleanup_thread")
 
         def assert_unlocked(*_args: object) -> None:
-            assert not manager._lock.locked()
+            assert not _lock_is_held_by_current_thread(manager._lock)
 
         test_context.patch_object(debug, "print_message", side_effect=assert_unlocked)
         test_context.patch_object(debug, "print_tokens", side_effect=assert_unlocked)

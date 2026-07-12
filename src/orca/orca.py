@@ -250,6 +250,7 @@ def main():
     if error is not None:
         return error
 
+    ax_device_manager.get_manager().activate()
     load_user_settings(is_reload=False)
 
     is_systemd_managed = systemd.get_manager().is_systemd_managed()

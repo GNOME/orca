@@ -422,25 +422,36 @@ class MousePresenter(Extension):
         ):
             self._use_atspi = True
 
+        super().__init__()
+
+    def _report_mouse_review_unavailable(self) -> None:
+        """Reports that mouse review cannot be supported by the current backend."""
+
+        if self._use_atspi:
+            msg = "MOUSE REVIEW ERROR: Not supported by AT-SPI device"
+        else:
+            msg = "MOUSE REVIEW ERROR: Wnck or at-spi2-core >= 2.60 required"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+
+    def _ensure_mouse_review_capable(self) -> bool:
+        """Returns True if mouse review support is available, enabling it lazily."""
+
+        if self._mouse_review_capable:
+            return True
+
         try:
             if self._use_atspi:
                 manager = ax_device_manager.get_manager()
                 manager.activate()
-                if manager.enable_pointer_monitoring():
-                    self._mouse_review_capable = True
+                self._mouse_review_capable = manager.enable_pointer_monitoring()
             else:
                 self._mouse_review_capable = Wnck.Screen.get_default() is not None  # pylint: disable=no-value-for-parameter
         except Exception:
             debug.print_exception(debug.LEVEL_WARNING)
 
         if not self._mouse_review_capable:
-            if self._use_atspi:
-                msg = "MOUSE REVIEW ERROR: Not supported by AT-SPI device"
-            else:
-                msg = "MOUSE REVIEW ERROR: Wnck or at-spi2-core >= 2.60 required"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        super().__init__()
+            self._report_mouse_review_unavailable()
+        return self._mouse_review_capable
 
     def _get_commands(self) -> list[Command]:
         return mouse_presenter_command_definitions.get_commands(self)
@@ -456,12 +467,7 @@ class MousePresenter(Extension):
     def activate(self) -> None:
         """Activates mouse review."""
 
-        if not self._mouse_review_capable:
-            if self._use_atspi:
-                msg = "MOUSE REVIEW ERROR: Not supported by AT-SPI device"
-            else:
-                msg = "MOUSE REVIEW ERROR: Wnck or at-spi2-core >= 2.60 required"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+        if not self._ensure_mouse_review_capable():
             self._active = False
             return
 
@@ -585,9 +591,7 @@ class MousePresenter(Extension):
     def set_is_enabled(self, value: bool) -> bool:
         """Sets whether mouse review is enabled (requires Wnck)."""
 
-        if not self._mouse_review_capable:
-            msg = "MOUSE REVIEW ERROR: Wnck is not available"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
+        if value and not self._ensure_mouse_review_capable():
             return False
 
         msg = f"MOUSE REVIEW: Setting enable mouse review to {value}."
