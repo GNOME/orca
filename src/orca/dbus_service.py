@@ -911,14 +911,14 @@ class OrcaRemoteController:
         clipboard.get_presenter().append_text(text, separator)
         return True
 
-    def get_active_window_internal(self) -> Atspi.Accessible | None:
+    def get_active_window_internal(self) -> typing.Optional[Atspi.Accessible]:  # noqa: UP045
         """Returns the active window without a D-Bus round-trip."""
 
         from . import focus_manager  # pylint: disable=import-outside-toplevel
 
         return focus_manager.get_manager().get_active_window()
 
-    def get_current_object_internal(self) -> Atspi.Accessible | None:
+    def get_current_object_internal(self) -> typing.Optional[Atspi.Accessible]:  # noqa: UP045
         """Returns the current object (AKA 'locus of focus') without a D-Bus round-trip."""
 
         from . import focus_manager  # pylint: disable=import-outside-toplevel
