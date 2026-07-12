@@ -33,18 +33,20 @@ from gi.repository import Gdk, GLib, Gtk
 
 APP_TITLE = "OrcaTextView"
 
+FONT_FAMILY = "DejaVu Sans Mono"
+
 
 def main() -> int:
     """Shows the window and runs the GTK main loop."""
 
     window_width = 600
     window_height = 300
-    font_css = b"""
-    textview, textview text {
-        font-family: "DejaVu Sans Mono";
+    font_css = f"""
+    textview, textview text {{
+        font-family: "{FONT_FAMILY}";
         font-size: 12pt;
-    }
-    """
+    }}
+    """.encode()
 
     content = Path(sys.argv[1]).read_text(encoding="utf-8") if len(sys.argv) > 1 else ""
 

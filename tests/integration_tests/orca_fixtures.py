@@ -36,7 +36,8 @@ import gi
 import pytest
 
 gi.require_version("Atspi", "2.0")
-from gi.repository import Atspi, GLib
+gi.require_version("PangoCairo", "1.0")
+from gi.repository import Atspi, GLib, PangoCairo
 
 from orca.output_reader import OutputReader
 
@@ -87,14 +88,25 @@ def _orca(tmp_path_factory: pytest.TempPathFactory) -> Iterator[OrcaSession]:
         session.quit()
 
 
+def _font_is_installed(family: str) -> bool:
+    """Returns True if family is installed, as opposed to being substituted by fontconfig."""
+
+    families = PangoCairo.FontMap.get_default().list_families()
+    return any(candidate.get_name() == family for candidate in families)
+
+
 def _make_native_app_fixture(
     app: ModuleType,
     lines: tuple[str, ...] = (),
     scope: Literal["session", "function"] = "session",
     name: str | None = None,
+    required_font: str | None = None,
 ) -> Callable[..., Iterator[NativeAppSession]]:
     @pytest.fixture(scope=scope, name=name or app.__name__.rsplit(".", 1)[-1])
     def fixture(tmp_path_factory: pytest.TempPathFactory) -> Iterator[NativeAppSession]:
+        if required_font is not None and not _font_is_installed(required_font):
+            pytest.skip(f"Font not installed: {required_font}")
+
         yield from _run_native_app(
             tmp_path_factory,
             app.__name__,
@@ -114,10 +126,12 @@ _gtk3_text_view = _make_native_app_fixture(
         "Line four also has extra words to push it past the wrap boundary in the view.",
         "Last line.",
     ),
+    required_font=gtk3_text_view.FONT_FAMILY,
 )
 _gtk3_text_view_emoji = _make_native_app_fixture(
     gtk3_text_view,
     name="gtk3_text_view_emoji",
+    required_font=gtk3_text_view.FONT_FAMILY,
     lines=(
         "Start.",
         "Flags 🇺🇸 and 🇮🇹 here.",
