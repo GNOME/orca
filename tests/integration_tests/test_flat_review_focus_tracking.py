@@ -40,7 +40,7 @@ def _review_first_entry_then_tab_to_second(session: NativeAppSession) -> None:
     keyboard.tap_key(keyboard.KEYSYM_KP_UP)
     assert capture(session) == (
         ["Apple pie recipe"],
-        [BrailleLine(17, "Apple pie recipe $l", "Apple pie recipe $l", "\xc0" * 16 + "\x00" * 3)],
+        [BrailleLine(17, "Apple pie recipe $l", "Apple pie recipe $l", "\x00" * 19)],
     )
 
     # Tab flips focus_manager out of flat-review mode so the next review uses focus-tracking.

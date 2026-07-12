@@ -59,7 +59,12 @@ def main() -> int:
     box.pack_start(button, False, False, 0)
     window.add(box)
 
-    window.connect("map", lambda _widget: first_entry.grab_focus())
+    def focus_first_entry(_widget: Gtk.Widget) -> None:
+        # grab_focus() selects the text. Move the cursor to the end to eliminate test flakiness.
+        first_entry.grab_focus()
+        first_entry.set_position(-1)
+
+    window.connect("map", focus_first_entry)
 
     window.show_all()
     window.present()
