@@ -453,16 +453,17 @@ class AXUtilitiesEvent:
         return None
 
     @staticmethod
-    def _get_non_editable_reason(
-        event: Atspi.Event,
-        mgr: InputEventManager,
-    ) -> TextEventReason:
+    def _is_children_change(event: Atspi.Event) -> bool:
+        """Returns True if the event's text is nothing but embedded object characters."""
+
+        return bool(event.any_data) and not event.any_data.replace("\ufffc", "")
+
+    @staticmethod
+    def _get_non_editable_reason(mgr: InputEventManager) -> TextEventReason:
         """Returns the reason for an insert/delete in a non-editable, non-terminal object."""
 
         if mgr.last_event_was_command():
             return TextEventReason.UNSPECIFIED_COMMAND
-        if "\ufffc" in event.any_data and not event.any_data.replace("\ufffc", ""):
-            return TextEventReason.CHILDREN_CHANGE
         return TextEventReason.UNKNOWN
 
     @staticmethod
@@ -616,9 +617,12 @@ class AXUtilitiesEvent:
         if reason is not None:
             return reason
 
+        if AXUtilitiesEvent._is_children_change(event):
+            return TextEventReason.CHILDREN_CHANGE
+
         obj = event.source
         if not (AXUtilitiesState.is_editable(obj) or AXUtilitiesRole.is_terminal(obj)):
-            return AXUtilitiesEvent._get_non_editable_reason(event, mgr)
+            return AXUtilitiesEvent._get_non_editable_reason(mgr)
 
         reason = AXUtilitiesEvent._get_editing_reason(mgr)
         if reason != TextEventReason.UNKNOWN:
@@ -660,10 +664,13 @@ class AXUtilitiesEvent:
         if reason is not None:
             return reason
 
+        if AXUtilitiesEvent._is_children_change(event):
+            return TextEventReason.CHILDREN_CHANGE
+
         obj = event.source
         is_terminal = AXUtilitiesRole.is_terminal(obj)
         if not (AXUtilitiesState.is_editable(obj) or is_terminal):
-            return AXUtilitiesEvent._get_non_editable_reason(event, mgr)
+            return AXUtilitiesEvent._get_non_editable_reason(mgr)
 
         if is_terminal and AXUtilitiesEvent._is_terminal_escape_sequence(event.any_data):
             return TextEventReason.AUTO_INSERTION_UNPRESENTABLE

@@ -2484,6 +2484,43 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_text_deletion_event_reason(mock_event)
         assert result == TextEventReason.CHILDREN_CHANGE
 
+    def test_get_text_insertion_event_reason_children_change_in_editable(self, test_context):
+        """Test _get_text_insertion_event_reason with embedded objects inserted due to a command."""
+
+        self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+
+        mock_event = test_context.Mock(spec=Atspi.Event)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_obj
+        mock_event.any_data = "￼￼￼"
+        mock_event.type = "object:text-changed:insert"
+
+        mock_input_manager = test_context.Mock()
+        mock_input_manager.last_event_was_page_switch.return_value = False
+        mock_input_manager.last_event_was_command.return_value = True
+        test_context.patch_object(
+            input_event_manager,
+            "get_manager",
+            return_value=mock_input_manager,
+        )
+
+        test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.ENTRY)
+        test_context.patch_object(
+            AXUtilitiesRole,
+            "get_text_ui_roles",
+            return_value=[Atspi.Role.LABEL],
+        )
+        test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
+        test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
+
+        result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
+        assert result == TextEventReason.CHILDREN_CHANGE
+
     def test_get_text_insertion_event_reason_selected_text_restoration(self, test_context):
         """Test AXUtilitiesEvent._get_text_insertion_event_reason with selected text restoration."""
 
