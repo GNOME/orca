@@ -238,7 +238,13 @@ class _ClipboardManagerGPaste(_ClipboardManager):
         if self._gpaste_proxy is None:
             return ""
 
-        result = self._gpaste_proxy.GetElementAtIndex(0)[1]
+        try:
+            result = self._gpaste_proxy.GetElementAtIndex(0)[1]
+        except DBusError as error:
+            msg = f"GPASTE: Could not get clipboard contents: {error}"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return ""
+
         debug_string = result.replace("\n", "\\n")
         msg = f"GPASTE: Clipboard contents: {debug_string}"
         debug.print_message(debug.LEVEL_INFO, msg, True)
