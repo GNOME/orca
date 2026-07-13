@@ -628,6 +628,16 @@ class InputEventManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
         return rv
 
+    def last_event_was_ctrl_tab(self):
+        """Returns True if the last event is Ctrl+Tab."""
+
+        string, mods = self._last_key_and_modifiers()
+        rv = string == "Tab" and bool(mods & 1 << Atspi.ModifierType.CONTROL)
+        if rv:
+            msg = "INPUT EVENT MANAGER: Last event was Ctrl+Tab"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+        return rv
+
     def last_event_was_tab_navigation(self):
         """Returns True if the last event is believed to be Tab navigation."""
 

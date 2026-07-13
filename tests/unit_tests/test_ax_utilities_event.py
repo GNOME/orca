@@ -2527,18 +2527,36 @@ class TestAXUtilitiesEvent:
             {
                 "id": "multiline_after_line_navigation_is_a_repaint",
                 "any_data": "4\nline 5\nline 6",
+                "was_caret_nav": True,
+                "was_up_or_down": True,
+                "was_ctrl_tab": False,
                 "was_command": False,
                 "expected": "AUTO_DELETION_UNPRESENTABLE",
             },
             {
                 "id": "multiline_after_file_boundary_navigation_is_a_repaint",
                 "any_data": "58\nline 59\nline 60",
+                "was_caret_nav": True,
+                "was_up_or_down": False,
+                "was_ctrl_tab": False,
+                "was_command": True,
+                "expected": "AUTO_DELETION_UNPRESENTABLE",
+            },
+            {
+                "id": "multiline_after_ctrl_tab_is_a_repaint",
+                "any_data": "line 1\nline 2\nline 3\n",
+                "was_caret_nav": False,
+                "was_up_or_down": False,
+                "was_ctrl_tab": True,
                 "was_command": True,
                 "expected": "AUTO_DELETION_UNPRESENTABLE",
             },
             {
                 "id": "single_line_is_not_a_repaint",
                 "any_data": "value",
+                "was_caret_nav": True,
+                "was_up_or_down": False,
+                "was_ctrl_tab": False,
                 "was_command": True,
                 "expected": "UNSPECIFIED_COMMAND",
             },
@@ -2575,9 +2593,10 @@ class TestAXUtilitiesEvent:
             "last_event_was_page_up_or_page_down",
         ):
             getattr(mock_input_manager, predicate).return_value = False
-        mock_input_manager.last_event_was_caret_navigation.return_value = True
+        mock_input_manager.last_event_was_caret_navigation.return_value = case["was_caret_nav"]
+        mock_input_manager.last_event_was_ctrl_tab.return_value = case["was_ctrl_tab"]
         mock_input_manager.last_event_was_command.return_value = case["was_command"]
-        mock_input_manager.last_event_was_up_or_down.return_value = not case["was_command"]
+        mock_input_manager.last_event_was_up_or_down.return_value = case["was_up_or_down"]
         test_context.patch_object(
             input_event_manager, "get_manager", return_value=mock_input_manager
         )
@@ -2604,18 +2623,45 @@ class TestAXUtilitiesEvent:
             {
                 "id": "multiline_after_line_navigation_is_a_repaint",
                 "any_data": "4\nline 5\nline 6",
+                "was_caret_nav": True,
+                "was_up_or_down": True,
+                "was_ctrl_tab": False,
                 "was_command": False,
                 "expected": "AUTO_INSERTION_UNPRESENTABLE",
             },
             {
                 "id": "multiline_after_file_boundary_navigation_is_a_repaint",
                 "any_data": "58\nline 59\nline 60",
+                "was_caret_nav": True,
+                "was_up_or_down": False,
+                "was_ctrl_tab": False,
                 "was_command": True,
                 "expected": "AUTO_INSERTION_UNPRESENTABLE",
             },
             {
+                "id": "multiline_after_ctrl_tab_is_a_repaint",
+                "any_data": "foo\nbar\nbaz\n",
+                "was_caret_nav": False,
+                "was_up_or_down": False,
+                "was_ctrl_tab": True,
+                "was_command": True,
+                "expected": "AUTO_INSERTION_UNPRESENTABLE",
+            },
+            {
+                "id": "tab_typed_with_ctrl_tab_is_still_presented",
+                "any_data": "\t",
+                "was_caret_nav": False,
+                "was_up_or_down": False,
+                "was_ctrl_tab": True,
+                "was_command": True,
+                "expected": "UNSPECIFIED_COMMAND",
+            },
+            {
                 "id": "single_line_is_an_autocompletion",
                 "any_data": "completion",
+                "was_caret_nav": True,
+                "was_up_or_down": True,
+                "was_ctrl_tab": False,
                 "was_command": False,
                 "expected": "AUTO_INSERTION_PRESENTABLE",
             },
@@ -2657,9 +2703,10 @@ class TestAXUtilitiesEvent:
             "last_event_was_page_up_or_page_down",
         ):
             getattr(mock_input_manager, predicate).return_value = False
-        mock_input_manager.last_event_was_caret_navigation.return_value = True
+        mock_input_manager.last_event_was_caret_navigation.return_value = case["was_caret_nav"]
+        mock_input_manager.last_event_was_ctrl_tab.return_value = case["was_ctrl_tab"]
         mock_input_manager.last_event_was_command.return_value = case["was_command"]
-        mock_input_manager.last_event_was_up_or_down.return_value = not case["was_command"]
+        mock_input_manager.last_event_was_up_or_down.return_value = case["was_up_or_down"]
         test_context.patch_object(
             input_event_manager, "get_manager", return_value=mock_input_manager
         )
