@@ -510,3 +510,21 @@ def test_review_line_that_shrinks(gtk3_terminal_shell: NativeAppSession) -> None
         )
     finally:
         helpers.toggle_flat_review(session)
+
+
+@pytest.mark.native_app
+def test_ctrl_backspace_at_the_prompt(gtk3_terminal_shell: NativeAppSession) -> None:
+    """Tests that Ctrl+BackSpace at the bash prompt deletes a single character."""
+
+    session = gtk3_terminal_shell
+    session.orca.set("TypingEchoPresenter", "KeyEchoEnabled", True)
+    session.orca.set("TypingEchoPresenter", "WordEchoEnabled", False)
+    session.orca.set("TypingEchoPresenter", "SentenceEchoEnabled", False)
+    session.orca.set("TypingEchoPresenter", "CharacterEchoEnabled", False)
+    _settle(session)
+
+    _type("foo bar")
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_BACKSPACE)
+    assert helpers.speech(session) == ["r"]

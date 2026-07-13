@@ -207,3 +207,49 @@ def test_backspace_and_delete_in_text_view(gtk3_text_view: NativeAppSession) -> 
 
     keyboard.tap_key(keyboard.KEYSYM_DELETE)
     assert helpers.capture(session) == ([""], [helpers.BrailleLine(2, "a $l", "a $l", "\x00" * 4)])
+
+
+@pytest.mark.native_app
+def test_ctrl_backspace_in_text_view(gtk3_text_view: NativeAppSession) -> None:
+    """Tests Ctrl+BackSpace over a word, and at the start of a line, in a text view."""
+
+    session = gtk3_text_view
+    _set_echo(session, key=True, word=False, sentence=False, character=False)
+    _fresh_line(session)
+
+    _type("foo bar")
+    _quiet(session)
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_BACKSPACE)
+    assert helpers.speech(session) == ["bar"]
+
+    # The text view deletes the preceding word along with the newline.
+    _fresh_line(session)
+    _type("foo")
+    keyboard.tap_key(keyboard.KEYSYM_RETURN)
+    _type("word")
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
+    _quiet(session)
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_BACKSPACE)
+    assert helpers.speech(session) == ["foo\n"]
+
+
+@pytest.mark.native_app
+def test_backspace_over_multiline_selection(gtk3_text_view: NativeAppSession) -> None:
+    """Tests that BackSpace over a multi-line selection does not speak the deleted lines."""
+
+    session = gtk3_text_view
+    _set_echo(session, key=True, word=False, sentence=False, character=False)
+    _fresh_line(session)
+
+    _type("one")
+    keyboard.tap_key(keyboard.KEYSYM_RETURN)
+    _type("two")
+    _quiet(session)
+
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_UP)
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_HOME)
+    _quiet(session)
+
+    # The selection was presented when it was made; deleting it says nothing more.
+    keyboard.tap_key(keyboard.KEYSYM_BACKSPACE)
+    assert helpers.speech(session) == []

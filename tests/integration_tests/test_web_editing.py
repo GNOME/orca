@@ -238,3 +238,26 @@ def test_say_character_blank_line_speaks_newline_when_disabled(
         assert helpers.speech(session) == ["\n"]
     finally:
         session.orca.set("SpeechPresenter", "SpeakBlankLines", original)
+
+
+@pytest.mark.web
+def test_ctrl_backspace_in_textarea(web_editing: NativeAppSession) -> None:
+    """Tests Ctrl+BackSpace over a word, and at the start of a line, in a textarea."""
+
+    session = web_editing
+    _focus_field(session, tab_count=1)
+    _set_echo(session, key=True, word=False, sentence=False, character=False)
+
+    _type("foo bar")
+    _quiet(session)
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_BACKSPACE)
+    assert helpers.speech(session) == ["bar"]
+
+    # The textarea deletes only the newline.
+    _type("foo")
+    keyboard.tap_key(keyboard.KEYSYM_RETURN)
+    _type("word")
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_LEFT)
+    _quiet(session)
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_BACKSPACE)
+    assert helpers.speech(session) == ["\n"]

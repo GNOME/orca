@@ -625,6 +625,15 @@ class AXUtilitiesEvent:
             return AXUtilitiesEvent._get_non_editable_reason(mgr)
 
         reason = AXUtilitiesEvent._get_editing_reason(mgr)
+        if reason == TextEventReason.BACKSPACE:
+            selected_text, _start, _end = AXUtilitiesText.get_cached_selected_text(obj)
+            if event.any_data != selected_text and len(event.any_data.splitlines()) > 1:
+                msg = (
+                    "ERROR: Cannot speak what BackSpace deleted: any_data should contain "
+                    "only the deleted text."
+                )
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return TextEventReason.AUTO_DELETION_UNPRESENTABLE
         if reason != TextEventReason.UNKNOWN:
             return reason
         # Neither caret navigation nor Ctrl+Tab deletes lines. An editor which exposes only
