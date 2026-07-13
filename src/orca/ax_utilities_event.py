@@ -635,6 +635,12 @@ class AXUtilitiesEvent:
             and (mgr.last_event_was_caret_navigation() or mgr.last_event_was_ctrl_tab())
         ):
             return TextEventReason.AUTO_DELETION_UNPRESENTABLE
+        if (
+            not AXUtilitiesRole.is_terminal(obj)
+            and "\n" in event.any_data
+            and mgr.last_event_was_not_in_current_object(within=1.0)
+        ):
+            return TextEventReason.AUTO_DELETION_UNPRESENTABLE
         if mgr.last_event_was_command():
             return TextEventReason.UNSPECIFIED_COMMAND
         if mgr.last_event_was_printable_key():
@@ -709,6 +715,12 @@ class AXUtilitiesEvent:
             not is_terminal
             and "\n" in event.any_data
             and (mgr.last_event_was_caret_navigation() or mgr.last_event_was_ctrl_tab())
+        ):
+            return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
+        if (
+            not is_terminal
+            and "\n" in event.any_data
+            and mgr.last_event_was_not_in_current_object(within=1.0)
         ):
             return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
         if mgr.last_event_was_command():

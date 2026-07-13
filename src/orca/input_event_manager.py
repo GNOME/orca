@@ -628,6 +628,23 @@ class InputEventManager:
             debug.print_message(debug.LEVEL_INFO, msg, True)
         return rv
 
+    def last_event_was_not_in_current_object(self, within: float | None = None):
+        """Returns True if the last event occurred in an object other than the one with focus."""
+
+        if not self.last_event_was_keyboard(within):
+            return False
+
+        assert isinstance(self._last_input_event, input_event.KeyboardEvent)
+        obj = self._last_input_event.get_object()
+        if obj is None:
+            return False
+
+        rv = obj != focus_manager.get_manager().get_locus_of_focus()
+        if rv:
+            tokens = ["INPUT EVENT MANAGER: Last event was in", obj, "which does not have focus"]
+            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+        return rv
+
     def last_event_was_ctrl_tab(self):
         """Returns True if the last event is Ctrl+Tab."""
 
