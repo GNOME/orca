@@ -1203,18 +1203,10 @@ class Utilities(script_utilities.Utilities):
 
         offset = max(0, offset)
 
-        cached = self._cache.get_content(self._cache.SENTENCE_CONTENTS)
-        if use_cache and cached:
-            if (
-                self.find_object_in_contents(
-                    obj,
-                    offset,
-                    cached,
-                    use_cache=True,
-                )
-                != -1
-            ):
-                return cached or []
+        if use_cache:
+            cached = self._cache.get_content(self._cache.SENTENCE_CONTENTS)
+            if cached and self.find_object_in_contents(obj, offset, cached, use_cache=True) != -1:
+                return cached
 
         granularity = Atspi.TextGranularity.SENTENCE
         objects = self._get_contents_for_obj(obj, offset, granularity)
@@ -1305,18 +1297,10 @@ class Utilities(script_utilities.Utilities):
 
         offset = max(0, offset)
 
-        cached = self._cache.get_content(self._cache.CHARACTER_CONTENTS)
-        if use_cache and cached:
-            if (
-                self.find_object_in_contents(
-                    obj,
-                    offset,
-                    cached,
-                    use_cache=True,
-                )
-                != -1
-            ):
-                return cached or []
+        if use_cache:
+            cached = self._cache.get_content(self._cache.CHARACTER_CONTENTS)
+            if cached and self.find_object_in_contents(obj, offset, cached, use_cache=True) != -1:
+                return cached
 
         granularity = Atspi.TextGranularity.CHAR
         objects = self._get_contents_for_obj(obj, offset, granularity)
@@ -1349,19 +1333,11 @@ class Utilities(script_utilities.Utilities):
 
         offset = max(0, offset)
 
-        cached = self._cache.get_content(self._cache.WORD_CONTENTS)
-        if use_cache and cached:
-            if (
-                self.find_object_in_contents(
-                    obj,
-                    offset,
-                    cached,
-                    use_cache=True,
-                )
-                != -1
-            ):
+        if use_cache:
+            cached = self._cache.get_content(self._cache.WORD_CONTENTS)
+            if cached and self.find_object_in_contents(obj, offset, cached, use_cache=True) != -1:
                 self._debug_contents_info(obj, offset, cached, "Word (cached)")
-                return cached or []
+                return cached
 
         granularity = Atspi.TextGranularity.WORD
         objects = self._get_contents_for_obj(obj, offset, granularity)
@@ -1470,24 +1446,11 @@ class Utilities(script_utilities.Utilities):
 
         offset = max(0, offset)
 
-        cached = self._cache.get_content(self._cache.OBJECT_CONTENTS)
-        if use_cache and cached:
-            if (
-                self.find_object_in_contents(
-                    obj,
-                    offset,
-                    cached,
-                    use_cache=True,
-                )
-                != -1
-            ):
-                self._debug_contents_info(
-                    obj,
-                    offset,
-                    cached,
-                    "Object (cached)",
-                )
-                return cached or []
+        if use_cache:
+            cached = self._cache.get_content(self._cache.OBJECT_CONTENTS)
+            if cached and self.find_object_in_contents(obj, offset, cached, use_cache=True) != -1:
+                self._debug_contents_info(obj, offset, cached, "Object (cached)")
+                return cached
 
         obj_is_landmark = AXUtilities.is_landmark(obj)
         obj_list = AXUtilities.find_ancestor(obj, AXUtilities.is_list)
@@ -1649,19 +1612,11 @@ class Utilities(script_utilities.Utilities):
                 obj = child
                 offset = 0
 
-        cached = self._cache.get_content(self._cache.LINE_CONTENTS)
-        if use_cache and cached:
-            if (
-                self.find_object_in_contents(
-                    obj,
-                    offset,
-                    cached,
-                    use_cache=True,
-                )
-                != -1
-            ):
+        if use_cache:
+            cached = self._cache.get_content(self._cache.LINE_CONTENTS)
+            if cached and self.find_object_in_contents(obj, offset, cached, use_cache=True) != -1:
                 self._debug_contents_info(obj, offset, cached, "Line (cached)")
-                return cached or []
+                return cached
 
         if layout_mode is None:
             layout_mode = (
