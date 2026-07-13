@@ -42,7 +42,7 @@ them.
 
 * xvfb
 * The DejaVu Sans Mono font, which the text-view tests wrap against
-* VTE 2.91, the GTK3 version, plus less, nano, and vim, for the terminal tests
+* VTE 2.91, the GTK3 version, plus ncurses, less, nano, and vim, for the terminal tests
 * chromium or chromium-browser, for the web tests
 
 ## Running Tests

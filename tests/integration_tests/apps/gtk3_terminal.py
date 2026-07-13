@@ -35,6 +35,8 @@ from gi.repository import Gdk, GLib, Gtk, Vte
 
 APP_TITLE = "OrcaVteTerminal"
 
+TERM = "xterm"
+
 # A small, fixed grid: the pty inherits this winsize, so a pager paginates
 # identically every run and braille assertions stay short.
 _COLUMNS = 40
@@ -72,7 +74,7 @@ def main() -> int:
 
     # A curated environment so the prompt, locale, and terminal type are fixed.
     envv = [
-        "TERM=xterm",
+        f"TERM={TERM}",
         "LANG=en_US.UTF-8",
         "LC_ALL=en_US.UTF-8",
         "PS1=$ ",
@@ -80,6 +82,14 @@ def main() -> int:
         f"HOME={os.environ.get('HOME', '/tmp')}",
         f"PATH={os.environ.get('PATH', '/usr/bin')}",
     ]
+
+    # Programs which cannot look up TERM fall back to crude output, such as erasing a
+    # character by overwriting it with a space. Pass on where the database lives.
+    envv.extend(
+        f"{name}={value}"
+        for name in ("TERMINFO", "TERMINFO_DIRS")
+        if (value := os.environ.get(name))
+    )
 
     def spawn(_widget: Gtk.Widget) -> None:
         terminal.grab_focus()

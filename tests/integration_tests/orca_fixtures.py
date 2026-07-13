@@ -23,6 +23,7 @@
 from __future__ import annotations
 
 import contextlib
+import curses
 import os
 import shutil
 import subprocess
@@ -226,6 +227,19 @@ def _vte_available() -> bool:
     return "2.91" in gi.Repository.get_default().enumerate_versions("Vte")
 
 
+def _terminfo_is_available() -> bool:
+    """Returns True if the terminal type the terminal app uses can be looked up."""
+
+    fd = os.open(os.devnull, os.O_WRONLY)
+    try:
+        curses.setupterm(gtk3_terminal.TERM, fd)
+    except curses.error:
+        return False
+    finally:
+        os.close(fd)
+    return True
+
+
 def _run_terminal_app(
     tmp_path_factory: pytest.TempPathFactory,
     *,
@@ -237,6 +251,8 @@ def _run_terminal_app(
 
     if not _vte_available():
         pytest.skip("VTE 2.91 (GTK3) typelib is not available")
+    if not _terminfo_is_available():
+        pytest.skip(f"no terminfo entry for {gtk3_terminal.TERM!r}")
     binary = _resolve_binary(binary_names)
     if binary is None:
         pytest.skip(f"no terminal program found among {binary_names!r}")
