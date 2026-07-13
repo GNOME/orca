@@ -627,6 +627,14 @@ class AXUtilitiesEvent:
         reason = AXUtilitiesEvent._get_editing_reason(mgr)
         if reason != TextEventReason.UNKNOWN:
             return reason
+        # Caret navigation does not delete lines. An editor which exposes only part of its
+        # document is replacing what it exposes.
+        if (
+            not AXUtilitiesRole.is_terminal(obj)
+            and "\n" in event.any_data
+            and mgr.last_event_was_caret_navigation()
+        ):
+            return TextEventReason.AUTO_DELETION_UNPRESENTABLE
         if mgr.last_event_was_command():
             return TextEventReason.UNSPECIFIED_COMMAND
         if mgr.last_event_was_printable_key():
@@ -694,6 +702,11 @@ class AXUtilitiesEvent:
             return (
                 TextEventReason.SELECTED_TEXT_RESTORATION if has_selected else TextEventReason.REDO
             )
+        # Caret navigation does not insert lines. An editor which exposes only part of its
+        # document is replacing what it exposes. We present the new location in response to
+        # the caret-moved event.
+        if not is_terminal and "\n" in event.any_data and mgr.last_event_was_caret_navigation():
+            return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
         if mgr.last_event_was_command():
             return TextEventReason.UNSPECIFIED_COMMAND
         if mgr.last_event_was_space() and not AXUtilitiesRole.is_password_text(obj):

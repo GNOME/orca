@@ -2521,6 +2521,163 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == TextEventReason.CHILDREN_CHANGE
 
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "multiline_after_line_navigation_is_a_repaint",
+                "any_data": "4\nline 5\nline 6",
+                "was_command": False,
+                "expected": "AUTO_DELETION_UNPRESENTABLE",
+            },
+            {
+                "id": "multiline_after_file_boundary_navigation_is_a_repaint",
+                "any_data": "58\nline 59\nline 60",
+                "was_command": True,
+                "expected": "AUTO_DELETION_UNPRESENTABLE",
+            },
+            {
+                "id": "single_line_is_not_a_repaint",
+                "any_data": "value",
+                "was_command": True,
+                "expected": "UNSPECIFIED_COMMAND",
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_text_deletion_event_reason_caret_navigation(self, test_context, case):
+        """Test _get_text_deletion_event_reason for deletions which follow caret navigation."""
+
+        self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_utilities_text import AXUtilitiesText
+
+        mock_event = test_context.Mock(spec=Atspi.Event)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_obj
+        mock_event.any_data = case["any_data"]
+        mock_event.type = "object:text-changed:delete"
+
+        mock_input_manager = test_context.Mock()
+        for predicate in (
+            "last_event_was_page_switch",
+            "last_event_was_backspace",
+            "last_event_was_delete",
+            "last_event_was_cut",
+            "last_event_was_paste",
+            "last_event_was_undo",
+            "last_event_was_redo",
+            "last_event_was_printable_key",
+            "last_event_was_page_up_or_page_down",
+        ):
+            getattr(mock_input_manager, predicate).return_value = False
+        mock_input_manager.last_event_was_caret_navigation.return_value = True
+        mock_input_manager.last_event_was_command.return_value = case["was_command"]
+        mock_input_manager.last_event_was_up_or_down.return_value = not case["was_command"]
+        test_context.patch_object(
+            input_event_manager, "get_manager", return_value=mock_input_manager
+        )
+
+        test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.ENTRY)
+        test_context.patch_object(
+            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+        )
+        test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
+        test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
+        test_context.patch_object(
+            AXUtilitiesText, "get_cached_selected_text", return_value=("", 0, 0)
+        )
+        test_context.patch_object(
+            AXUtilitiesEvent, "_is_spin_button_descendant", return_value=False
+        )
+
+        result = AXUtilitiesEvent._get_text_deletion_event_reason(mock_event)
+        assert result == getattr(TextEventReason, case["expected"])
+
+    @pytest.mark.parametrize(
+        "case",
+        [
+            {
+                "id": "multiline_after_line_navigation_is_a_repaint",
+                "any_data": "4\nline 5\nline 6",
+                "was_command": False,
+                "expected": "AUTO_INSERTION_UNPRESENTABLE",
+            },
+            {
+                "id": "multiline_after_file_boundary_navigation_is_a_repaint",
+                "any_data": "58\nline 59\nline 60",
+                "was_command": True,
+                "expected": "AUTO_INSERTION_UNPRESENTABLE",
+            },
+            {
+                "id": "single_line_is_an_autocompletion",
+                "any_data": "completion",
+                "was_command": False,
+                "expected": "AUTO_INSERTION_PRESENTABLE",
+            },
+        ],
+        ids=lambda case: case["id"],
+    )
+    def test_get_text_insertion_event_reason_caret_navigation(self, test_context, case):
+        """Test _get_text_insertion_event_reason for insertions which follow caret navigation."""
+
+        self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_utilities_text import AXUtilitiesText
+
+        mock_event = test_context.Mock(spec=Atspi.Event)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_obj
+        mock_event.any_data = case["any_data"]
+        mock_event.type = "object:text-changed:insert"
+
+        mock_input_manager = test_context.Mock()
+        for predicate in (
+            "last_event_was_page_switch",
+            "last_event_was_backspace",
+            "last_event_was_delete",
+            "last_event_was_cut",
+            "last_event_was_paste",
+            "last_event_was_undo",
+            "last_event_was_redo",
+            "last_event_was_space",
+            "last_event_was_tab",
+            "last_event_was_return",
+            "last_event_was_printable_key",
+            "last_event_was_middle_click",
+            "last_event_was_middle_release",
+            "last_event_was_page_up_or_page_down",
+        ):
+            getattr(mock_input_manager, predicate).return_value = False
+        mock_input_manager.last_event_was_caret_navigation.return_value = True
+        mock_input_manager.last_event_was_command.return_value = case["was_command"]
+        mock_input_manager.last_event_was_up_or_down.return_value = not case["was_command"]
+        test_context.patch_object(
+            input_event_manager, "get_manager", return_value=mock_input_manager
+        )
+
+        test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.ENTRY)
+        test_context.patch_object(
+            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+        )
+        test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
+        test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
+        test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
+        test_context.patch_object(
+            AXUtilitiesEvent, "_is_spin_button_descendant", return_value=False
+        )
+
+        result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
+        assert result == getattr(TextEventReason, case["expected"])
+
     def test_get_text_insertion_event_reason_selected_text_restoration(self, test_context):
         """Test AXUtilitiesEvent._get_text_insertion_event_reason with selected text restoration."""
 
