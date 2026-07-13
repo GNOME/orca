@@ -736,6 +736,10 @@ class AXUtilitiesEvent:
                 return TextEventReason.AUTO_INSERTION_PRESENTABLE
             if AXUtilitiesState.is_single_line(obj):
                 return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
+            # Text which Return inserts, be it a newline or an accepted completion, leaves the
+            # caret at the end of that text.
+            if AXText.get_caret_offset(obj) != event.detail1 + event.detail2:
+                return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
             return TextEventReason.AUTO_INSERTION_PRESENTABLE
         if mgr.last_event_was_printable_key() or mgr.last_event_was_space():
             if has_selected:
