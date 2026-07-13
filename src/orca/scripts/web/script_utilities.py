@@ -1697,9 +1697,9 @@ class Utilities(script_utilities.Utilities):
             ):
                 return True
 
-            # A trailing newline can report extents which extend into the next block,
-            # so measure the candidate's range without it.
-            stripped = _x_string.rstrip("\n")
+            # Trailing whitespace at a line break can report extents which extend into the
+            # next line, so measure the candidate's range without it.
+            stripped = _x_string.rstrip()
             if stripped and len(stripped) < len(_x_string):
                 x_rect = self._get_extents(x_obj, x_start, x_start + len(stripped))
             else:

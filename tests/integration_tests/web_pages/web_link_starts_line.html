@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Link Starts Line ready</title>
+<style>
+  /* Monospace + a fixed character width so that a visual line of prose ends at a
+     space and the inline link begins the following visual line. */
+  #para { width: 40ch; font: 16px/1.5 monospace; }
+  /* Keep the link whole so it wraps as a unit onto the next visual line. */
+  #style { white-space: nowrap; }
+</style>
+</head>
+<body>
+<h1>Start heading</h1>
+<p id="para">The bank was the first building in the city to be built in the <a id="style" href="#style">International Style</a>. It was commissioned by the owners.</p>
+<p>This is the final line.</p>
+</body>
+</html>
