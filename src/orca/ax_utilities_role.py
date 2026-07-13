@@ -1633,15 +1633,6 @@ class AXUtilitiesRole:
         return "inline" in AXUtilitiesRole._get_display_style(obj)
 
     @staticmethod
-    def is_inline_list_item(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
-        """Returns True if obj has the list item role and is inline."""
-
-        if not AXUtilitiesRole.is_list_item(obj, role):
-            return False
-
-        return "inline" in AXUtilitiesRole._get_display_style(obj)
-
-    @staticmethod
     def is_inline_suggestion(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has the suggestion role and is inline."""
 
@@ -2331,17 +2322,6 @@ class AXUtilitiesRole:
         return role in [Atspi.Role.SUBSCRIPT, Atspi.Role.SUPERSCRIPT]
 
     @staticmethod
-    def is_subscript_or_superscript_text(
-        obj: Atspi.Accessible,
-        role: Atspi.Role | None = None,
-    ) -> bool:
-        """Returns True if obj has the subscript or superscript role and is not math-related"""
-
-        if AXUtilitiesRole.is_math_related(obj, role):
-            return False
-        return AXUtilitiesRole.is_subscript_or_superscript(obj, role)
-
-    @staticmethod
     def is_suggestion(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
         """Returns True if obj has the suggestion role"""
 
@@ -2392,13 +2372,19 @@ class AXUtilitiesRole:
         return role == Atspi.Role.TABLE_CELL
 
     @staticmethod
-    def is_table_cell_or_header(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
-        """Returns True if obj has the table cell or a header-related role"""
+    def is_table_cell_or_header(
+        obj: Atspi.Accessible,
+        role: Atspi.Role | None = None,
+        include_display: bool = False,
+    ) -> bool:
+        """Returns True if obj is a table cell/header by role, or CSS display if include_display."""
 
         roles = AXUtilitiesRole.get_table_cell_roles()
         if role is None:
             role = AXObject.get_role(obj)
-        return role in roles
+        if role in roles:
+            return True
+        return include_display and AXUtilitiesRole._get_display_style(obj) == "table-cell"
 
     @staticmethod
     def is_table_column_header(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
@@ -2431,12 +2417,18 @@ class AXUtilitiesRole:
         return role in roles
 
     @staticmethod
-    def is_table_row(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:
-        """Returns True if obj has the table row role"""
+    def is_table_row(
+        obj: Atspi.Accessible,
+        role: Atspi.Role | None = None,
+        include_display: bool = False,
+    ) -> bool:
+        """Returns True if obj is a table row by role, or CSS display if include_display."""
 
         if role is None:
             role = AXObject.get_role(obj)
-        return role == Atspi.Role.TABLE_ROW
+        if role == Atspi.Role.TABLE_ROW:
+            return True
+        return include_display and AXUtilitiesRole._get_display_style(obj) == "table-row"
 
     @staticmethod
     def is_table_row_header(obj: Atspi.Accessible, role: Atspi.Role | None = None) -> bool:

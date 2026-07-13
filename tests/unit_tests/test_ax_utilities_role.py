@@ -1730,11 +1730,6 @@ class TestAXUtilitiesRole:
                 "base_method_name": "is_internal_frame",
             },
             {
-                "id": "list_item",
-                "method_name": "is_inline_list_item",
-                "base_method_name": "is_list_item",
-            },
-            {
                 "id": "suggestion",
                 "method_name": "is_inline_suggestion",
                 "base_method_name": "is_suggestion",

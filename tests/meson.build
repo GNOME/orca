@@ -110,10 +110,12 @@ orca_integration_tests = [
   'integration_tests/test_web_form_fields.py',
   'integration_tests/test_web_form_fields_navigation.py',
   'integration_tests/test_web_custom_wrappers.py',
+  'integration_tests/test_web_emoji_links.py',
   'integration_tests/test_web_landmarks.py',
   'integration_tests/test_web_region_headings.py',
   'integration_tests/test_web_inline_landmarks.py',
   'integration_tests/test_web_inline_list.py',
+  'integration_tests/test_web_inline_list_wrap.py',
   'integration_tests/test_web_nested_headings.py',
   'integration_tests/test_web_headings.py',
   'integration_tests/test_web_structural_navigation.py',
@@ -202,6 +204,17 @@ foreach test_file : orca_integration_tests
     is_parallel: false,
   )
 endforeach
+
+# Thorough character-nav coverage exceeds the shared 120s cap; give it room.
+test(
+  'test_web_emoji_offset_skew',
+  integration_wrapper,
+  args: [files('integration_tests/test_web_emoji_offset_skew.py')],
+  env: test_env,
+  suite: 'integration',
+  timeout: 300,
+  is_parallel: false,
+)
 
 gsettings_integration_tests = [
   'integration_tests/test_gsettings.py',

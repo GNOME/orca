@@ -86,10 +86,6 @@ def test_line_navigation_drops_error_message_from_content(
     move_to_top(web_redundant_content)
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    capture(web_redundant_content)
-    keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    capture(web_redundant_content)
-    keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(web_redundant_content) == (
         ["Status: ", "entry", "x", "invalid entry: Field is required.", " done."],
         [
@@ -111,7 +107,7 @@ def test_line_navigation_drops_useless_image_in_editable(
 
     move_to_top(web_redundant_content)
 
-    for _ in range(4):
+    for _ in range(2):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
         capture(web_redundant_content)
     keyboard.tap_key(keyboard.KEYSYM_DOWN)

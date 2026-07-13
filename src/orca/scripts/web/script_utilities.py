@@ -85,7 +85,6 @@ class _WebUtilitiesCache:
     LINES_ARE_SINGLE_WORDS = "WebUtilities.lines-are-single-words"
     IS_CLICKABLE_ELEMENT = "WebUtilities.is-clickable-element"
     IS_LINK = "WebUtilities.is-link"
-    BANNER_ANCESTOR = "WebUtilities.banner-ancestor"
     IS_USELESS_IMAGE = "WebUtilities.is-useless-image"
     IS_REDUNDANT_SVG = "WebUtilities.is-redundant-svg"
     IS_USELESS_EMPTY_ELEMENT = "WebUtilities.is-useless-empty-element"
@@ -120,7 +119,6 @@ class _WebUtilitiesCache:
         LINES_ARE_SINGLE_WORDS,
         IS_CLICKABLE_ELEMENT,
         IS_LINK,
-        BANNER_ANCESTOR,
         IS_USELESS_IMAGE,
         IS_REDUNDANT_SVG,
         IS_USELESS_EMPTY_ELEMENT,
@@ -626,14 +624,16 @@ class Utilities(script_utilities.Utilities):
         if obj is None:
             obj, offset = self.get_caret_context()
 
-        next_obj, next_offset = self.find_next_caret_in_order(obj, offset)
+        next_obj, next_offset = AXUtilities.find_next_context(obj, offset, self.caret_policy)
         if skip_space:
             seen = {(next_obj, next_offset)}
             while (
                 self.treat_as_text_object(next_obj)
                 and AXText.get_character_at_offset(next_obj, next_offset)[0].isspace()
             ):
-                next_obj, next_offset = self.find_next_caret_in_order(next_obj, next_offset)
+                next_obj, next_offset = AXUtilities.find_next_context(
+                    next_obj, next_offset, self.caret_policy
+                )
                 if (next_obj, next_offset) in seen:
                     msg = "WEB: Cycle detected in next_context skip_space. Breaking."
                     debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -654,14 +654,16 @@ class Utilities(script_utilities.Utilities):
         if obj is None:
             obj, offset = self.get_caret_context()
 
-        prev_obj, prev_offset = self.find_previous_caret_in_order(obj, offset)
+        prev_obj, prev_offset = AXUtilities.find_previous_context(obj, offset, self.caret_policy)
         if skip_space:
             seen = {(prev_obj, prev_offset)}
             while (
                 self.treat_as_text_object(prev_obj)
                 and AXText.get_character_at_offset(prev_obj, prev_offset)[0].isspace()
             ):
-                prev_obj, prev_offset = self.find_previous_caret_in_order(prev_obj, prev_offset)
+                prev_obj, prev_offset = AXUtilities.find_previous_context(
+                    prev_obj, prev_offset, self.caret_policy
+                )
                 if (prev_obj, prev_offset) in seen:
                     msg = "WEB: Cycle detected in previous_context skip_space. Breaking."
                     debug.print_message(debug.LEVEL_INFO, msg, True)
@@ -1245,7 +1247,9 @@ class Utilities(script_utilities.Utilities):
                 if AXHypertext.get_character_offset_in_parent(first_obj) == 0:
                     break
 
-            prev_object, prev_offset = self.find_previous_caret_in_order(first_obj, first_start)
+            prev_object, prev_offset = AXUtilities.find_previous_context(
+                first_obj, first_start, self.caret_policy
+            )
             on_left = self._get_contents_for_obj(prev_object, prev_offset, granularity)
             on_left = list(filter(lambda x: x not in objects, on_left))
             ends_on_left = list(filter(_treat_as_sentence_end, on_left))
@@ -1262,7 +1266,9 @@ class Utilities(script_utilities.Utilities):
         # Check for things in the same sentence after this object.
         while not _treat_as_sentence_end(objects[-1]):
             last_obj, _last_start, last_end, _last_string = objects[-1]
-            next_obj, next_offset = self.find_next_caret_in_order(last_obj, last_end - 1)
+            next_obj, next_offset = AXUtilities.find_next_context(
+                last_obj, last_end - 1, self.caret_policy
+            )
             on_right = self._get_contents_for_obj(next_obj, next_offset, granularity)
             on_right = list(filter(lambda x: x not in objects, on_right))
             if not on_right:
@@ -1388,7 +1394,9 @@ class Utilities(script_utilities.Utilities):
 
         # Check for things in the same word to the left of this object.
         first_obj, first_start, _first_end, first_string = objects[0]
-        prev_obj, prev_offset = self.find_previous_caret_in_order(first_obj, first_start)
+        prev_obj, prev_offset = AXUtilities.find_previous_context(
+            first_obj, first_start, self.caret_policy
+        )
         while prev_obj and first_string and prev_obj != first_obj:
             char = AXText.get_character_at_offset(prev_obj, prev_offset)[0]
             if not char or char.isspace():
@@ -1399,24 +1407,22 @@ class Utilities(script_utilities.Utilities):
             if not on_left:
                 break
 
-            if self._content_is_subset_of(objects[0], on_left[-1]):
-                objects.pop(0)
-
             objects[0:0] = on_left
             first_obj, first_start, _first_end, first_string = objects[0]
-            prev_obj, prev_offset = self.find_previous_caret_in_order(first_obj, first_start)
+            prev_obj, prev_offset = AXUtilities.find_previous_context(
+                first_obj, first_start, self.caret_policy
+            )
 
         # Check for things in the same word to the right of this object.
         last_obj, _last_start, last_end, last_string = objects[-1]
         while last_obj and last_string and not last_string[-1].isspace():
-            next_obj, next_offset = self.find_next_caret_in_order(last_obj, last_end - 1)
+            next_obj, next_offset = AXUtilities.find_next_context(
+                last_obj, last_end - 1, self.caret_policy
+            )
             if next_obj == last_obj:
                 break
 
             on_right = self._get_contents_for_obj(next_obj, next_offset, granularity)
-            if on_right and self._content_is_subset_of(objects[0], on_right[-1]):
-                on_right = on_right[0:-1]
-
             on_right = list(filter(_include, on_right))
             if not on_right:
                 break
@@ -1518,7 +1524,9 @@ class Utilities(script_utilities.Utilities):
             return []
 
         last_obj, _last_start, last_end, _last_string = objects[-1]
-        next_obj, next_offset = self.find_next_caret_in_order(last_obj, last_end - 1)
+        next_obj, next_offset = AXUtilities.find_next_context(
+            last_obj, last_end - 1, self.caret_policy
+        )
         while next_obj:
             on_right = self._get_contents_for_obj(next_obj, next_offset, None)
             on_right = list(filter(_include, on_right))
@@ -1527,27 +1535,15 @@ class Utilities(script_utilities.Utilities):
 
             objects.extend(on_right)
             last_obj, last_end = objects[-1][0], objects[-1][2]
-            next_obj, next_offset = self.find_next_caret_in_order(last_obj, last_end - 1)
+            next_obj, next_offset = AXUtilities.find_next_context(
+                last_obj, last_end - 1, self.caret_policy
+            )
 
         if use_cache:
             self._cache.set_content(self._cache.OBJECT_CONTENTS, objects)
 
         self._debug_contents_info(obj, offset, objects, "Object (not cached)")
         return objects
-
-    def _content_is_subset_of(
-        self,
-        content_a: tuple[Atspi.Accessible, int, int, str],
-        content_b: tuple[Atspi.Accessible, int, int, str],
-    ) -> bool:
-        obj_a, start_a, end_a, _string_a = content_a
-        obj_b, start_b, end_b, _string_b = content_b
-        if obj_a == obj_b:
-            set_a = set(range(start_a, end_a))
-            set_b = set(range(start_b, end_b))
-            return set_a.issubset(set_b)
-
-        return False
 
     def _debug_contents_info(
         self,
@@ -1633,7 +1629,9 @@ class Utilities(script_utilities.Utilities):
         layout_mode: bool | None = None,
         use_cache: bool = True,
     ) -> list[tuple[Atspi.Accessible, int, int, str]]:
-        start_time = time.time()
+        tokens = ["WEB: _get_line_contents_at_offset for", obj, "at offset", offset]
+        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+
         if not obj:
             return []
 
@@ -1685,16 +1683,8 @@ class Utilities(script_utilities.Utilities):
         else:
             rect = self._get_extents(obj, offset, offset + 1)
 
-        if AXUtilities.is_inline_list_item_descendant(obj, inclusive=True):
-            container = AXUtilities.find_ancestor(obj, AXUtilities.is_list)
-            if container:
-                rect = self._get_extents(container, 0, 1)
-
-        obj_banner = self._get_banner_ancestor(obj)
-        obj_row = AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_table_row)
-
         def _include(x):
-            if x in objects:
+            if x in seen:
                 return False
 
             x_obj, x_start, x_end, _x_string = x
@@ -1707,13 +1697,6 @@ class Utilities(script_utilities.Utilities):
             ):
                 return True
 
-            # Contiguous ranges from the same text object are different AT-SPI
-            # lines. Character extents at wrap boundaries can be unreliable.
-            if x_obj == obj and AXObject.supports_text(obj):
-                for existing_obj, e_start, e_end, _e_string in objects:
-                    if existing_obj == x_obj and (x_start == e_end or x_end == e_start):
-                        return False
-
             # A trailing newline can report extents which extend into the next block,
             # so measure the candidate's range without it.
             stripped = _x_string.rstrip("\n")
@@ -1722,51 +1705,41 @@ class Utilities(script_utilities.Utilities):
             else:
                 x_rect = self._get_extents(x_obj, x_start, x_end)
 
-            if obj != x_obj:
-                if AXUtilities.is_landmark(obj) and AXUtilities.is_landmark(x_obj):
-                    return False
-                if self.is_link(obj) and self.is_link(x_obj):
-                    x_obj_banner = self._get_banner_ancestor(x_obj)
-                    if (obj_banner or x_obj_banner) and obj_banner != x_obj_banner:
-                        return False
-                    if abs(rect.x - x_rect.x) <= 1 and abs(rect.y - x_rect.y) <= 1:
-                        # This happens with dynamic skip links such as found on Wikipedia.
-                        return False
-                else:
-                    reason = None
-                    if AXUtilities.is_block_list_descendant(
-                        obj
-                    ) != AXUtilities.is_block_list_descendant(x_obj):
-                        reason = "block list descendant mismatch"
-                    elif AXUtilities.is_code_block_descendant(
-                        obj, inclusive=True
-                    ) != AXUtilities.is_code_block_descendant(x_obj, inclusive=True):
-                        reason = "code block descendant mismatch"
-                    elif AXUtilities.is_tree_related(obj) and AXUtilities.is_tree_related(x_obj):
-                        reason = "both tree related"
-                    elif AXUtilities.is_heading(obj) and AXUtilities.has_no_size(obj):
-                        reason = "obj is sizeless heading"
-                    elif AXUtilities.is_heading(x_obj) and AXUtilities.has_no_size(x_obj):
-                        reason = "x_obj is sizeless heading"
+            if x_obj == obj:
+                # Contiguous ranges from the same text object are different AT-SPI lines;
+                # character extents at wrap boundaries can be unreliable.
+                if AXObject.supports_text(obj):
+                    for existing_obj, e_start, e_end, _e_string in objects:
+                        if existing_obj == x_obj and (x_start == e_end or x_end == e_start):
+                            return False
 
-                    if reason:
-                        tokens = ["WEB: Excluding", x_obj, "from line contents:", reason]
-                        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                        return False
+                return AXUtilities.rects_are_on_same_line(rect, x_rect)
 
-            if AXUtilities.is_math(x_obj):
-                on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect, rect.height)
-            elif AXUtilities.is_subscript_or_superscript_text_descendant(x_obj, inclusive=True):
-                on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect, x_rect.height)
-            elif AXUtilities.is_subscript_or_superscript_text_descendant(obj, inclusive=True):
-                on_same_line = AXUtilities.rects_are_on_same_line(rect, x_rect, rect.height)
+            x_obj_block = AXUtilities.get_nearest_block_ancestor(x_obj)
+            if obj_block == x_obj_block:
+                if abs(rect.x - x_rect.x) <= 1 and abs(rect.y - x_rect.y) <= 1:
+                    # Coinciding position is stacked (skip links) unless one contains the other.
+                    return AXUtilities.get_common_ancestor(obj, x_obj) in (obj, x_obj)
+                return AXUtilities.rects_are_on_same_line(rect, x_rect, inline_flow=True)
+
+            reason = None
+            if AXUtilities.is_table_cell_or_header(
+                obj_block, include_display=True
+            ) and AXUtilities.is_table_cell_or_header(x_obj_block, include_display=True):
+                obj_block_row = AXObject.get_parent(obj_block)
+                if not AXUtilities.is_table_row(
+                    obj_block_row, include_display=True
+                ) or obj_block_row != AXObject.get_parent(x_obj_block):
+                    reason = "different table row"
             else:
-                inline_flow = AXObject.get_parent(x_obj) == obj or AXObject.get_parent(obj) == x_obj
-                on_same_line = AXUtilities.rects_are_on_same_line(
-                    rect, x_rect, inline_flow=inline_flow
-                )
+                reason = "different block ancestor"
 
-            return on_same_line
+            if reason:
+                tokens = ["WEB: Excluding", x_obj, "from line contents:", reason]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return False
+
+            return AXUtilities.rects_are_on_same_line(rect, x_rect, inline_flow=False)
 
         granularity = Atspi.TextGranularity.LINE
         objects = self._get_contents_for_obj(obj, offset, granularity)
@@ -1782,7 +1755,10 @@ class Utilities(script_utilities.Utilities):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return []
 
-        first_obj, first_start, first_end, first_string = objects[0]
+        obj_block = AXUtilities.get_nearest_block_ancestor(obj)
+        seen = set(objects)
+
+        first_obj, first_start, first_end, _first_string = objects[0]
         if rect.width == 0 and rect.height == 0:
             rect = self._get_extents(first_obj, first_start, first_end)
 
@@ -1792,77 +1768,63 @@ class Utilities(script_utilities.Utilities):
             last_end += 1
 
         document = self.get_document_for_object(obj)
-        prev_obj, prev_offset = self.find_previous_caret_in_order(first_obj, first_start)
-        next_obj, next_offset = self.find_next_caret_in_order(
-            last_obj, max(last_end - 1, last_start)
+        prev_obj, prev_offset = AXUtilities.find_previous_context(
+            first_obj, first_start, self.caret_policy
+        )
+        next_obj, next_offset = AXUtilities.find_next_context(
+            last_obj, max(last_end - 1, last_start), self.caret_policy
         )
 
         # Check for things on the same line to the left of this object.
-        prev_start_time = time.time()
         while prev_obj and self.get_document_for_object(prev_obj) == document:
-            if obj_row != AXUtilities.find_ancestor_inclusive(prev_obj, AXUtilities.is_table_row):
-                break
-
             on_left = self._get_contents_for_obj(prev_obj, prev_offset, granularity)
             on_left = list(filter(_include, on_left))
             if not on_left:
                 break
 
-            if self._content_is_subset_of(objects[0], on_left[-1]):
-                objects.pop(0)
-
             objects[0:0] = on_left
+            seen.update(on_left)
             first_obj, first_start = objects[0][0], objects[0][1]
-            prev_obj, prev_offset = self.find_previous_caret_in_order(first_obj, first_start)
-
-        prev_end_time = time.time()
-        msg = f"INFO: Time to get line contents on left: {prev_end_time - prev_start_time:.4f}s"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
+            prev_obj, prev_offset = AXUtilities.find_previous_context(
+                first_obj, first_start, self.caret_policy
+            )
 
         # Check for things on the same line to the right of this object.
-        next_start_time = time.time()
         while next_obj and self.get_document_for_object(next_obj) == document:
-            if obj_row != AXUtilities.find_ancestor_inclusive(next_obj, AXUtilities.is_table_row):
-                break
-
             on_right = self._get_contents_for_obj(next_obj, next_offset, granularity)
-            if on_right and self._content_is_subset_of(objects[0], on_right[-1]):
-                on_right = on_right[0:-1]
-
             on_right = list(filter(_include, on_right))
             if not on_right:
                 break
 
             objects.extend(on_right)
+            seen.update(on_right)
             last_obj, last_start, last_end = objects[-1][0], objects[-1][1], objects[-1][2]
             if AXUtilities.is_math(last_obj):
                 last_obj, last_end = self.last_context(last_obj)
                 last_end += 1
 
-            next_obj, next_offset = self.find_next_caret_in_order(
-                last_obj, max(last_end - 1, last_start)
+            next_obj, next_offset = AXUtilities.find_next_context(
+                last_obj, max(last_end - 1, last_start), self.caret_policy
             )
-
-        next_end_time = time.time()
-        msg = f"INFO: Time to get line contents on right: {next_end_time - next_start_time:.4f}s"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
-        first_obj, first_start, first_end, first_string = objects[0]
-        if first_string == "\n" and len(objects) > 1:
-            objects.pop(0)
 
         if use_cache:
             self._cache.set_content(self._cache.LINE_CONTENTS, objects)
 
-        msg = f"INFO: Time to get line contents: {time.time() - start_time:.4f}s"
-        debug.print_message(debug.LEVEL_INFO, msg, True)
-
         self._debug_contents_info(obj, offset, objects, "Line (layout mode)")
-
-        self._cache.clear_caret_context_decisions("web line contents")
         return objects
 
     def get_previous_line_contents(
+        self,
+        obj: Atspi.Accessible | None = None,
+        offset: int = -1,
+        layout_mode: bool | None = None,
+        use_cache: bool = True,
+    ) -> list[tuple[Atspi.Accessible, int, int, str]]:
+        """Returns a list of (obj, start, end, string) tuples for the previous line."""
+
+        return self._get_previous_line_contents(obj, offset, layout_mode, use_cache)
+
+    def _get_previous_line_contents(
         self,
         obj: Atspi.Accessible | None = None,
         offset: int = -1,
@@ -1928,6 +1890,17 @@ class Utilities(script_utilities.Utilities):
         return contents
 
     def get_next_line_contents(
+        self,
+        obj: Atspi.Accessible | None = None,
+        offset: int = -1,
+        layout_mode: bool | None = None,
+        use_cache: bool = True,
+    ) -> list[tuple[Atspi.Accessible, int, int, str]]:
+        """Returns a list of (obj, start, end, string) tuples for the next line."""
+
+        return self._get_next_line_contents(obj, offset, layout_mode, use_cache)
+
+    def _get_next_line_contents(
         self,
         obj: Atspi.Accessible | None = None,
         offset: int = -1,
@@ -2630,18 +2603,6 @@ class Utilities(script_utilities.Utilities):
         self._cache.set_for_object(namespace, obj, rv)
         return rv
 
-    def _get_banner_ancestor(self, obj: Atspi.Accessible) -> Atspi.Accessible | None:
-        """Returns the landmark banner ancestor of obj, or None."""
-
-        namespace = self._cache.BANNER_ANCESTOR
-        cached = self._cache.get_for_object(namespace, obj)
-        if cached is not ax_cache_manager.MISSING:
-            return cached
-
-        rv = AXUtilities.find_ancestor(obj, AXUtilities.is_landmark_banner)
-        self._cache.set_for_object(namespace, obj, rv)
-        return rv
-
     def has_useless_canvas_descendant(self, obj: Atspi.Accessible) -> bool:
         """Returns true if obj has a canvas descendant which lacks fallback content."""
 
@@ -3152,16 +3113,6 @@ class Utilities(script_utilities.Utilities):
         self._cache.set_for_object(namespace, obj, rv)
         return rv
 
-    def _range_in_parent_with_length(self, obj: Atspi.Accessible) -> tuple[int, int, int]:
-        # TODO - JD: Is this still needed?
-        parent = AXObject.get_parent(obj)
-        if not self.treat_as_text_object(parent):
-            return -1, -1, 0
-
-        start = AXHypertext.get_link_start_offset(obj)
-        end = AXHypertext.get_link_end_offset(obj)
-        return start, end, AXText.get_character_count(parent)
-
     def _can_have_caret_context(self, obj: Atspi.Accessible) -> bool:
         rv = self._cache.get_caret_context_decision(obj)
         if rv is not None:
@@ -3233,12 +3184,12 @@ class Utilities(script_utilities.Utilities):
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = True
         else:
-            tokens = ["WEB: ", obj, f"can have caret context. ({time.time() - start_time:.4f}s)"]
+            tokens = ["WEB: ", obj, "can have caret context."]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             rv = True
 
         self._cache.set_caret_context_decision(obj, rv)
-        msg = f"INFO: _canHaveCaretContext took {time.time() - start_time:.4f}s"
+        msg = f"INFO: _can_have_caret_context took {time.time() - start_time:.4f}s"
         debug.print_message(debug.LEVEL_INFO, msg, True)
         return rv
 
@@ -3594,178 +3545,3 @@ class Utilities(script_utilities.Utilities):
         tokens = ["WEB: Looking in child", child, "for first caret context for", obj, ", ", offset]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return self._first_context(child, 0)
-
-    def find_next_caret_in_order(
-        self,
-        obj: Atspi.Accessible | None = None,
-        offset: int = -1,
-    ) -> tuple[Atspi.Accessible, int]:
-        """Returns the next (obj, offset) to the specified one."""
-
-        start_time = time.time()
-        rv = self._find_next_caret_in_order_internal(obj, offset)
-        tokens = [
-            "WEB: Next caret in order for",
-            obj,
-            ", ",
-            offset,
-            ":",
-            rv[0],
-            ", ",
-            rv[1],
-            f"({time.time() - start_time:.4f}s)",
-        ]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return rv
-
-    def _find_next_caret_in_order_internal(
-        self,
-        obj: Atspi.Accessible | None = None,
-        offset: int = -1,
-    ) -> tuple[Atspi.Accessible, int]:
-        if not obj:
-            obj, offset = self.get_caret_context()
-
-        if not obj or not self.in_document_content(obj):
-            return None, -1
-
-        if self._can_have_caret_context(obj):
-            all_text = AXText.get_all_text(obj) if self.treat_as_text_object(obj) else ""
-            if all_text:
-                for i in range(offset + 1, len(all_text)):
-                    child = AXUtilities.find_child_at_offset(obj, i)
-                    if child and all_text[i] != "\ufffc":
-                        tokens = [
-                            "ERROR: Child",
-                            child,
-                            "found at offset with char '",
-                            all_text[i].replace("\n", "\\n"),
-                            "'",
-                        ]
-                        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                        if offset == AXHypertext.get_character_offset_in_parent(child):
-                            tokens = ["WEB: Handling error by returning", obj, i]
-                            debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                            return obj, i
-                    if self._can_have_caret_context(child):
-                        if self._treat_object_as_whole(child, -1):
-                            return child, 0
-                        return self._find_next_caret_in_order_internal(child, -1)
-                    if all_text[i] not in ("\ufffc", self.ZERO_WIDTH_NO_BREAK_SPACE):
-                        return obj, i
-            elif AXObject.get_child_count(obj) and not self._treat_object_as_whole(obj, offset):
-                return self._find_next_caret_in_order_internal(AXObject.get_child(obj, 0), -1)
-            elif offset < 0 and not self.is_text_block_element(obj):
-                return obj, 0
-
-        # If we're here, start looking up the tree, up to the document.
-        if self.is_top_level_document(obj):
-            return None, -1
-
-        while obj and (parent := AXObject.get_parent(obj)):
-            if not AXObject.is_valid(parent):
-                msg = "WEB: Finding next caret in order. Parent is not valid."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                if AXObject.get_parent(parent):
-                    obj = parent
-                    continue
-                break
-
-            start, end, length = self._range_in_parent_with_length(obj)
-            if start + 1 == end and 0 <= start < end <= length:
-                return self._find_next_caret_in_order_internal(parent, start)
-
-            child = AXObject.get_next_sibling(obj)
-            if child:
-                return self._find_next_caret_in_order_internal(child, -1)
-            obj = parent
-
-        return None, -1
-
-    def find_previous_caret_in_order(
-        self,
-        obj: Atspi.Accessible | None = None,
-        offset: int = -1,
-    ) -> tuple[Atspi.Accessible, int]:
-        """Returns the previous (obj, offset) to the specified one."""
-
-        start_time = time.time()
-        rv = self._find_previous_caret_in_order_internal(obj, offset)
-        tokens = [
-            "WEB: Previous caret in order for",
-            obj,
-            ", ",
-            offset,
-            ":",
-            rv[0],
-            ", ",
-            rv[1],
-            f"({time.time() - start_time:.4f}s)",
-        ]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-        return rv
-
-    def _find_previous_caret_in_order_internal(
-        self,
-        obj: Atspi.Accessible | None = None,
-        offset: int = -1,
-    ) -> tuple[Atspi.Accessible, int]:
-        if not obj:
-            obj, offset = self.get_caret_context()
-
-        if not obj or not self.in_document_content(obj):
-            return None, -1
-
-        if self._can_have_caret_context(obj):
-            all_text = AXText.get_all_text(obj) if self.treat_as_text_object(obj) else ""
-            if all_text:
-                if offset == -1 or offset > len(all_text):
-                    offset = len(all_text)
-                for i in range(offset - 1, -1, -1):
-                    child = AXUtilities.find_child_at_offset(obj, i)
-                    if child and all_text[i] != "\ufffc":
-                        tokens = [
-                            "ERROR: Child",
-                            child,
-                            "found at offset with char '",
-                            all_text[i].replace("\n", "\\n"),
-                            "'",
-                        ]
-                        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                    if self._can_have_caret_context(child):
-                        if self._treat_object_as_whole(child, -1):
-                            return child, 0
-                        return self._find_previous_caret_in_order_internal(child, -1)
-                    if all_text[i] not in ("\ufffc", self.ZERO_WIDTH_NO_BREAK_SPACE):
-                        return obj, i
-            elif AXObject.get_child_count(obj) and not self._treat_object_as_whole(obj, offset):
-                return self._find_previous_caret_in_order_internal(
-                    AXObject.get_child(obj, AXObject.get_child_count(obj) - 1),
-                    -1,
-                )
-            elif offset < 0 and not self.is_text_block_element(obj):
-                return obj, 0
-
-        # If we're here, start looking up the tree, up to the document.
-        if self.is_top_level_document(obj):
-            return None, -1
-
-        while obj and (parent := AXObject.get_parent(obj)):
-            if not AXObject.is_valid(parent):
-                msg = "WEB: Finding previous caret in order. Parent is not valid."
-                debug.print_message(debug.LEVEL_INFO, msg, True)
-                if AXObject.get_parent(parent):
-                    obj = parent
-                    continue
-                break
-
-            start, end, length = self._range_in_parent_with_length(obj)
-            if start + 1 == end and 0 <= start < end <= length:
-                return self._find_previous_caret_in_order_internal(parent, start)
-
-            child = AXObject.get_previous_sibling(obj)
-            if child:
-                return self._find_previous_caret_in_order_internal(child, -1)
-            obj = parent
-
-        return None, -1

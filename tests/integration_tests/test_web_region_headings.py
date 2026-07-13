@@ -33,10 +33,14 @@ if TYPE_CHECKING:
     from .orca_fixtures import NativeAppSession
 
 
+# The heading and its edit link share a visual row but have different block
+# ancestors, so they present as separate lines.
 _TOP_TO_BOTTOM = (
-    ["Cause", "heading 2", "[", "edit", "link", "]"],
+    ["Cause", "heading 2"],
+    ["[", "edit", "link", "]"],
     ["Cause text."],
-    ["leaving region.", "Aftermath", "heading 2", "[", "edit", "link", "]"],
+    ["leaving region.", "Aftermath", "heading 2"],
+    ["[", "edit", "link", "]"],
     ["Aftermath text."],
     ["leaving region.", "Before ", "middle", "link", " after", "heading 2"],
     ["Closing paragraph."],
@@ -93,7 +97,7 @@ def test_inline_link_heading_announces_level_once(web_region_headings: NativeApp
     session = web_region_headings
     helpers.reset_web_state(session)
 
-    for _ in range(5):
+    for _ in range(7):
         keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert helpers.speech(session) == [
         "leaving region.",

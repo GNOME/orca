@@ -66,8 +66,6 @@ class _AXUtilitiesCache:
 
     SET_MEMBERS = "AXUtilities.set-members"
     IS_LAYOUT_ONLY = "AXUtilities.is-layout-only"
-    NEAREST_BLOCK_ANCESTOR = "AXUtilities.nearest-block-ancestor"
-    IS_BLOCK_LIST_DESCENDANT = "AXUtilities.is-block-list-descendant"
     IS_CODE_BLOCK_DESCENDANT = "AXUtilities.is-code-block-descendant"
     IS_COMBO_BOX_DESCENDANT = "AXUtilities.is-combo-box-descendant"
     IS_DOCUMENT_DESCENDANT = "AXUtilities.is-document-descendant"
@@ -75,25 +73,19 @@ class _AXUtilitiesCache:
     IS_EMBEDDED_DESCENDANT = "AXUtilities.is-embedded-descendant"
     IS_ENTRY_DESCENDANT = "AXUtilities.is-entry-descendant"
     IS_GRID_DESCENDANT = "AXUtilities.is-grid-descendant"
-    IS_INLINE_LIST_ITEM_DESCENDANT = "AXUtilities.is-inline-list-item-descendant"
     IS_LABEL_OR_CAPTION_DESCENDANT = "AXUtilities.is-label-or-caption-descendant"
-    IS_LIST_DESCENDANT = "AXUtilities.is-list-descendant"
     IS_MENU_DESCENDANT = "AXUtilities.is-menu-descendant"
-    IS_SUBSCRIPT_OR_SUPERSCRIPT_TEXT_DESCENDANT = (
-        "AXUtilities.is-subscript-or-superscript-descendant"
-    )
     IS_TOOL_BAR_DESCENDANT = "AXUtilities.is-tool-bar-descendant"
     IS_TOOL_TIP_DESCENDANT = "AXUtilities.is-tool-tip-descendant"
     IS_PRESENTATIONAL_CHILD = "AXUtilities.is-presentational-child"
     IS_TREE_OR_TREE_TABLE_DESCENDANT = "AXUtilities.is-tree-or-tree-table-descendant"
+    NEAREST_BLOCK_ANCESTOR = "AXUtilities.nearest-block-ancestor"
 
     def __init__(self) -> None:
         self._manager = ax_cache_manager.get_manager()
         for namespace in (
             self.SET_MEMBERS,
             self.IS_LAYOUT_ONLY,
-            self.NEAREST_BLOCK_ANCESTOR,
-            self.IS_BLOCK_LIST_DESCENDANT,
             self.IS_CODE_BLOCK_DESCENDANT,
             self.IS_COMBO_BOX_DESCENDANT,
             self.IS_DOCUMENT_DESCENDANT,
@@ -101,15 +93,13 @@ class _AXUtilitiesCache:
             self.IS_EMBEDDED_DESCENDANT,
             self.IS_ENTRY_DESCENDANT,
             self.IS_GRID_DESCENDANT,
-            self.IS_INLINE_LIST_ITEM_DESCENDANT,
             self.IS_LABEL_OR_CAPTION_DESCENDANT,
-            self.IS_LIST_DESCENDANT,
             self.IS_MENU_DESCENDANT,
-            self.IS_SUBSCRIPT_OR_SUPERSCRIPT_TEXT_DESCENDANT,
             self.IS_TOOL_BAR_DESCENDANT,
             self.IS_TOOL_TIP_DESCENDANT,
             self.IS_PRESENTATIONAL_CHILD,
             self.IS_TREE_OR_TREE_TABLE_DESCENDANT,
+            self.NEAREST_BLOCK_ANCESTOR,
         ):
             self._manager.register_cache(
                 self,
@@ -125,7 +115,6 @@ class _AXUtilitiesCache:
         self._classification_caches = {
             namespace: self._manager.get_cache(self, namespace)
             for namespace in (
-                self.IS_BLOCK_LIST_DESCENDANT,
                 self.IS_CODE_BLOCK_DESCENDANT,
                 self.IS_COMBO_BOX_DESCENDANT,
                 self.IS_DOCUMENT_DESCENDANT,
@@ -133,11 +122,8 @@ class _AXUtilitiesCache:
                 self.IS_EMBEDDED_DESCENDANT,
                 self.IS_ENTRY_DESCENDANT,
                 self.IS_GRID_DESCENDANT,
-                self.IS_INLINE_LIST_ITEM_DESCENDANT,
                 self.IS_LABEL_OR_CAPTION_DESCENDANT,
-                self.IS_LIST_DESCENDANT,
                 self.IS_MENU_DESCENDANT,
-                self.IS_SUBSCRIPT_OR_SUPERSCRIPT_TEXT_DESCENDANT,
                 self.IS_TOOL_BAR_DESCENDANT,
                 self.IS_TOOL_TIP_DESCENDANT,
                 self.IS_PRESENTATIONAL_CHILD,
@@ -786,22 +772,6 @@ class AXUtilities:
         return rv
 
     @staticmethod
-    def is_block_list_descendant(obj: Atspi.Accessible) -> bool:
-        """Returns True if obj is in a list but not in an inline list item."""
-
-        rv = AXUtilities._CACHE.get_classification(AXUtilities._CACHE.IS_BLOCK_LIST_DESCENDANT, obj)
-        if rv is not None:
-            return rv
-
-        if not AXUtilities.is_list_descendant(obj):
-            rv = False
-        else:
-            rv = not AXUtilities.is_inline_list_item_descendant(obj, inclusive=True)
-
-        AXUtilities._CACHE.set_classification(AXUtilities._CACHE.IS_BLOCK_LIST_DESCENDANT, obj, rv)
-        return rv
-
-    @staticmethod
     def is_code_block_descendant(
         obj: Atspi.Accessible,
         inclusive: bool = False,
@@ -929,20 +899,6 @@ class AXUtilities:
         )
 
     @staticmethod
-    def is_inline_list_item_descendant(
-        obj: Atspi.Accessible,
-        inclusive: bool = False,
-    ) -> bool:
-        """Returns True if obj has an inline list item ancestor."""
-
-        return AXUtilities._is_descendant(
-            AXUtilities._CACHE.IS_INLINE_LIST_ITEM_DESCENDANT,
-            obj,
-            AXUtilitiesRole.is_inline_list_item,
-            inclusive,
-        )
-
-    @staticmethod
     def get_nearest_block_ancestor(
         obj: Atspi.Accessible, original: Atspi.Accessible | None = None
     ) -> Atspi.Accessible | None:
@@ -1011,20 +967,6 @@ class AXUtilities:
         )
 
     @staticmethod
-    def is_list_descendant(
-        obj: Atspi.Accessible,
-        inclusive: bool = False,
-    ) -> bool:
-        """Returns True if obj has a list ancestor."""
-
-        return AXUtilities._is_descendant(
-            AXUtilities._CACHE.IS_LIST_DESCENDANT,
-            obj,
-            AXUtilitiesRole.is_list,
-            inclusive,
-        )
-
-    @staticmethod
     def is_menu_descendant(
         obj: Atspi.Accessible,
         inclusive: bool = False,
@@ -1035,20 +977,6 @@ class AXUtilities:
             AXUtilities._CACHE.IS_MENU_DESCENDANT,
             obj,
             AXUtilitiesRole.is_menu,
-            inclusive,
-        )
-
-    @staticmethod
-    def is_subscript_or_superscript_text_descendant(
-        obj: Atspi.Accessible,
-        inclusive: bool = False,
-    ) -> bool:
-        """Returns True if obj has a subscript or superscript ancestor."""
-
-        return AXUtilities._is_descendant(
-            AXUtilities._CACHE.IS_SUBSCRIPT_OR_SUPERSCRIPT_TEXT_DESCENDANT,
-            obj,
-            AXUtilitiesRole.is_subscript_or_superscript_text,
             inclusive,
         )
 
