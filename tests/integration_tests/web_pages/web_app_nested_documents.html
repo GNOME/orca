@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web App Nested Documents ready</title>
+</head>
+<body>
+<h1>Main heading one</h1>
+<p>Paragraph before the application.</p>
+
+<div role="application" aria-label="Embedded application">
+  <div role="button" tabindex="0">Application button</div>
+
+  <!-- No focusable content, so Tab lands on the document of the frame itself. -->
+  <iframe title="Embedded frame" width="600" height="100" srcdoc="
+    <h2>Frame heading</h2>
+    <p>Paragraph inside the frame.</p>
+  "></iframe>
+
+  <div role="document" aria-label="Embedded document" tabindex="0">
+    <h2>Document heading</h2>
+    <p>Paragraph inside the document.</p>
+    <button type="button">Document button</button>
+    <input type="text" aria-label="Document entry">
+  </div>
+</div>
+
+<h1>Main heading two</h1>
+<p>Paragraph after the application.</p>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Aria Application ready</title>
+</head>
+<body>
+<h1>Main heading one</h1>
+<p>Paragraph before the application.</p>
+
+<div role="application" aria-label="Embedded application">
+  <h2>Application heading</h2>
+  <p>Paragraph inside the application.</p>
+  <div role="button" tabindex="0">Application button</div>
+  <p><a href="#main">Application link</a></p>
+  <input type="text" aria-label="Application entry">
+
+  <div role="document" aria-label="Embedded document">
+    <h2>Document heading</h2>
+    <p>Paragraph inside the document.</p>
+  </div>
+</div>
+
+<h1>Main heading two</h1>
+<p>Paragraph after the application.</p>
+
+<div role="application" aria-label="Focusable application" tabindex="0">
+  <h2>Focusable application heading</h2>
+  <p>Paragraph inside the focusable application.</p>
+</div>
+
+<h1>Main heading three</h1>
+<p>Paragraph after the focusable application.</p>
+</body>
+</html>

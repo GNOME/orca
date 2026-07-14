@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Iframes ready</title>
+</head>
+<body>
+<h1>Main heading one</h1>
+<p>Paragraph before the frame.</p>
+
+<!-- srcdoc rather than src: the fixture copies only this file into the sandbox. -->
+<iframe title="Embedded frame" width="600" height="150" srcdoc="
+  <h2>Frame heading</h2>
+  <p>Paragraph inside the frame.</p>
+  <button type='button'>Frame button</button>
+  <input type='text' aria-label='Frame entry'>
+"></iframe>
+
+<h1>Main heading two</h1>
+<p>Paragraph after the frame.</p>
+</body>
+</html>
