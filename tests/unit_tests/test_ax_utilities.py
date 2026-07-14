@@ -234,6 +234,45 @@ class TestAXUtilities:
             is None
         )
 
+    def test_is_descendant_does_not_classify_the_matching_ancestor_as_a_descendant(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test that classifying a child does not make its matching parent its own descendant."""
+
+        essential_modules: dict[str, MagicMock] = self._setup_dependencies(test_context)
+        from orca.ax_utilities import AXUtilities
+
+        embedded = test_context.Mock(spec=Atspi.Accessible)
+        section = test_context.Mock(spec=Atspi.Accessible)
+        button = test_context.Mock(spec=Atspi.Accessible)
+        parents = {button: section, section: embedded, embedded: None}
+
+        def is_embedded(obj, role=None):  # pylint: disable=unused-argument
+            return obj is embedded
+
+        def find_ancestor(obj, pred):
+            parent = parents.get(obj)
+            while parent is not None:
+                if pred(parent):
+                    return parent
+                parent = parents.get(parent)
+            return None
+
+        essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
+            side_effect=parents.get
+        )
+        essential_modules["orca.ax_utilities_role"].AXUtilitiesRole.is_embedded = test_context.Mock(
+            side_effect=is_embedded
+        )
+        essential_modules[
+            "orca.ax_utilities_object"
+        ].AXUtilitiesObject.find_ancestor = test_context.Mock(side_effect=find_ancestor)
+
+        # Classifying the child of the embedded object is what caches a result for that object.
+        assert AXUtilities.is_embedded_descendant(section) is True
+        assert AXUtilities.is_embedded_descendant(button) is True
+        assert AXUtilities.is_embedded_descendant(embedded) is False
+
     def test_has_explicit_name_true(self, test_context: OrcaTestContext) -> None:
         """Test AXUtilities.has_explicit_name with explicit name attribute."""
 
@@ -500,6 +539,9 @@ class TestAXUtilities:
                     essential_modules[
                         "orca.ax_utilities_object"
                     ].AXUtilitiesObject.find_ancestor = test_context.Mock(
+                        return_value=mock_combo,
+                    )
+                    essential_modules["orca.ax_object"].AXObject.get_parent = test_context.Mock(
                         return_value=mock_combo,
                     )
                 else:

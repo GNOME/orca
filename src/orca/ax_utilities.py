@@ -753,23 +753,21 @@ class AXUtilities:
             return rv
 
         parent = AXObject.get_parent(obj)
-        if parent is not None:
-            parent_rv = AXUtilities._CACHE.get_classification(namespace, parent)
-            if parent_rv is False:
-                AXUtilities._CACHE.set_classification(namespace, obj, False)
-                return False
-            if parent_rv is None:
-                parent_rv = (
-                    pred(parent) or AXUtilitiesObject.find_ancestor(parent, pred) is not None
-                )
-                AXUtilities._CACHE.set_classification(namespace, parent, parent_rv)
-                if not parent_rv:
-                    AXUtilities._CACHE.set_classification(namespace, obj, False)
-                    return False
+        if parent is None:
+            AXUtilities._CACHE.set_classification(namespace, obj, False)
+            return False
 
-        rv = AXUtilitiesObject.find_ancestor(obj, pred) is not None
-        AXUtilities._CACHE.set_classification(namespace, obj, rv)
-        return rv
+        if pred(parent):
+            AXUtilities._CACHE.set_classification(namespace, obj, True)
+            return True
+
+        parent_rv = AXUtilities._CACHE.get_classification(namespace, parent)
+        if parent_rv is None:
+            parent_rv = AXUtilitiesObject.find_ancestor(parent, pred) is not None
+            AXUtilities._CACHE.set_classification(namespace, parent, parent_rv)
+
+        AXUtilities._CACHE.set_classification(namespace, obj, parent_rv)
+        return parent_rv
 
     @staticmethod
     def is_code_block_descendant(
