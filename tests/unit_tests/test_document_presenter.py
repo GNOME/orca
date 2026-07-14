@@ -1295,6 +1295,38 @@ class TestDocumentPresenter:
         assert result is True
         assert presenter.in_focus_mode(mock_app) is True
 
+    def test_toggle_presentation_mode_override_requires_a_user_command(
+        self, test_context: OrcaTestContext
+    ) -> None:
+        """Test only a user command counts as changing the mode Orca made sticky."""
+
+        from unittest.mock import MagicMock
+
+        module, mocks = self._setup_presenter(test_context)
+
+        mock_app = MagicMock()
+        mock_script = MagicMock()
+        mock_script.app = mock_app
+        mock_script.utilities.in_document_content.return_value = True
+        mock_script.utilities.get_caret_context.return_value = (MagicMock(), 0)
+
+        for name in ("orca.caret_navigator", "orca.structural_navigator", "orca.table_navigator"):
+            nav_mock = mocks[name].get_navigator.return_value
+            nav_mock.last_input_event_was_navigation_command.return_value = False
+
+        presenter = module.get_presenter()
+        presenter._app_states[hash(mock_app)] = module._AppModeState(
+            in_focus_mode=False,
+            focus_mode_is_sticky=False,
+            browse_mode_is_sticky=False,
+        )
+
+        presenter.toggle_presentation_mode(mock_script)
+        assert presenter.user_has_overridden_auto_sticky_focus_mode(mock_app) is False
+
+        presenter.toggle_presentation_mode(mock_script, event=MagicMock())
+        assert presenter.user_has_overridden_auto_sticky_focus_mode(mock_app) is True
+
     def test_restore_mode_for_script_no_app(self, test_context: OrcaTestContext) -> None:
         """Test restore_mode_for_script with no app does nothing."""
 

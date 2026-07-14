@@ -96,7 +96,7 @@ class _AppModeState:
     in_focus_mode: bool = True
     focus_mode_is_sticky: bool = False
     browse_mode_is_sticky: bool = False
-    user_has_toggled: bool = False
+    user_has_overridden_auto_sticky_focus_mode: bool = False
 
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Document", name="document")
@@ -222,6 +222,27 @@ class DocumentPresenter(Extension):
         if app_hash not in self._app_states:
             return False
         return self._app_states[app_hash].in_focus_mode
+
+    def user_has_overridden_auto_sticky_focus_mode(
+        self, app: Atspi.Accessible | None = None
+    ) -> bool:
+        """Returns True if the user has changed the mode Orca automatically made sticky."""
+
+        if app is None:
+            app = self._get_current_app()
+        if app is None:
+            return False
+        app_hash = hash(app)
+        if app_hash not in self._app_states:
+            return False
+        return self._app_states[app_hash].user_has_overridden_auto_sticky_focus_mode
+
+    def set_user_has_overridden_auto_sticky_focus_mode(
+        self, app: Atspi.Accessible | None, overridden: bool
+    ) -> None:
+        """Sets whether the user has changed the mode Orca automatically made sticky."""
+
+        self._get_state_for_app(app).user_has_overridden_auto_sticky_focus_mode = overridden
 
     def focus_mode_is_sticky(self, app: Atspi.Accessible | None = None) -> bool:
         """Returns True if focus mode is sticky for the given app."""
@@ -503,7 +524,8 @@ class DocumentPresenter(Extension):
         state.in_focus_mode = False
         state.focus_mode_is_sticky = False
         state.browse_mode_is_sticky = True
-        state.user_has_toggled = True
+        if event is not None:
+            state.user_has_overridden_auto_sticky_focus_mode = True
 
         reason = "enable sticky browse mode"
         self.suspend_navigators(script, state.in_focus_mode, reason)
@@ -534,7 +556,8 @@ class DocumentPresenter(Extension):
         state.in_focus_mode = True
         state.focus_mode_is_sticky = True
         state.browse_mode_is_sticky = False
-        state.user_has_toggled = True
+        if event is not None:
+            state.user_has_overridden_auto_sticky_focus_mode = True
 
         reason = "enable sticky focus mode"
         self.suspend_navigators(script, state.in_focus_mode, reason)
@@ -567,7 +590,8 @@ class DocumentPresenter(Extension):
             document=document,
             notify_user=notify_user,
         )
-        self._get_state_for_app(script.app).user_has_toggled = True
+        if event is not None:
+            self.set_user_has_overridden_auto_sticky_focus_mode(script.app, True)
         return True
 
     @dbus_service.getter
@@ -624,8 +648,8 @@ class DocumentPresenter(Extension):
             state.focus_mode_is_sticky,
             "Browse sticky:",
             state.browse_mode_is_sticky,
-            "User toggled:",
-            state.user_has_toggled,
+            "User overrode auto sticky focus mode:",
+            state.user_has_overridden_auto_sticky_focus_mode,
         ]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
@@ -672,7 +696,7 @@ class DocumentPresenter(Extension):
         # toggled mode. This allows the user to escape auto-enabled sticky focus mode.
         if (
             self.get_auto_sticky_focus_mode_for_web_apps()
-            and not self._get_state_for_app(script.app).user_has_toggled
+            and not self.user_has_overridden_auto_sticky_focus_mode(script.app)
         ):
             if self._is_likely_electron_app(script.app):
                 msg = "DOCUMENT PRESENTER: Electron app detected, enabling sticky focus mode"
