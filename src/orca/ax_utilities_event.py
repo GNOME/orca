@@ -717,20 +717,22 @@ class AXUtilitiesEvent:
             return (
                 TextEventReason.SELECTED_TEXT_RESTORATION if has_selected else TextEventReason.REDO
             )
-        # Neither caret navigation nor Ctrl+Tab inserts lines. An editor which exposes only
-        # part of its document is replacing what it exposes. We present the new location in
-        # response to the caret-moved event.
-        if (
+        # Caret navigation does not insert text. An editor which exposes only part of its
+        # document is replacing what it exposes. We present the new location in response to
+        # the caret-moved event. Single-line objects are excluded because arrowing through
+        # an autocompletion list does insert text which should be presented. Spin buttons
+        # are excluded because Home, End, and Page Up/Down change their value.
+        is_document = (
             not is_terminal
-            and "\n" in event.any_data
-            and (mgr.last_event_was_caret_navigation() or mgr.last_event_was_ctrl_tab())
+            and not AXUtilitiesState.is_single_line(obj)
+            and not AXUtilitiesEvent._is_spin_button_descendant(obj)
+        )
+        if is_document and (
+            mgr.last_event_was_caret_navigation()
+            or mgr.last_event_was_not_in_current_object(within=1.0)
         ):
             return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
-        if (
-            not is_terminal
-            and "\n" in event.any_data
-            and mgr.last_event_was_not_in_current_object(within=1.0)
-        ):
+        if not is_terminal and "\n" in event.any_data and mgr.last_event_was_ctrl_tab():
             return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
         if mgr.last_event_was_command():
             return TextEventReason.UNSPECIFIED_COMMAND

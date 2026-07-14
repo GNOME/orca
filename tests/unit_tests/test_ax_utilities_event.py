@@ -2630,6 +2630,7 @@ class TestAXUtilitiesEvent:
             {
                 "id": "multiline_after_line_navigation_is_a_repaint",
                 "any_data": "4\nline 5\nline 6",
+                "is_single_line": False,
                 "was_caret_nav": True,
                 "was_up_or_down": True,
                 "was_ctrl_tab": False,
@@ -2640,6 +2641,18 @@ class TestAXUtilitiesEvent:
             {
                 "id": "multiline_after_file_boundary_navigation_is_a_repaint",
                 "any_data": "58\nline 59\nline 60",
+                "is_single_line": False,
+                "was_caret_nav": True,
+                "was_up_or_down": False,
+                "was_ctrl_tab": False,
+                "was_not_in_current_object": False,
+                "was_command": True,
+                "expected": "AUTO_INSERTION_UNPRESENTABLE",
+            },
+            {
+                "id": "partial_line_after_file_boundary_navigation_is_a_repaint",
+                "any_data": "7",
+                "is_single_line": False,
                 "was_caret_nav": True,
                 "was_up_or_down": False,
                 "was_ctrl_tab": False,
@@ -2650,6 +2663,7 @@ class TestAXUtilitiesEvent:
             {
                 "id": "multiline_after_ctrl_tab_is_a_repaint",
                 "any_data": "foo\nbar\nbaz\n",
+                "is_single_line": False,
                 "was_caret_nav": False,
                 "was_up_or_down": False,
                 "was_ctrl_tab": True,
@@ -2660,6 +2674,7 @@ class TestAXUtilitiesEvent:
             {
                 "id": "tab_typed_with_ctrl_tab_is_still_presented",
                 "any_data": "\t",
+                "is_single_line": False,
                 "was_caret_nav": False,
                 "was_up_or_down": False,
                 "was_ctrl_tab": True,
@@ -2670,6 +2685,7 @@ class TestAXUtilitiesEvent:
             {
                 "id": "multiline_typed_in_another_object_is_unpresentable",
                 "any_data": "49\nline 50\nline 51",
+                "is_single_line": False,
                 "was_caret_nav": False,
                 "was_up_or_down": False,
                 "was_ctrl_tab": False,
@@ -2678,8 +2694,32 @@ class TestAXUtilitiesEvent:
                 "expected": "AUTO_INSERTION_UNPRESENTABLE",
             },
             {
+                "id": "partial_line_typed_in_another_object_is_unpresentable",
+                "any_data": "7",
+                "is_single_line": False,
+                "was_caret_nav": False,
+                "was_up_or_down": False,
+                "was_ctrl_tab": False,
+                "was_not_in_current_object": True,
+                "was_command": False,
+                "expected": "AUTO_INSERTION_UNPRESENTABLE",
+            },
+            {
+                "id": "spin_button_value_change_is_not_a_repaint",
+                "any_data": "100",
+                "is_single_line": False,
+                "is_spin_button": True,
+                "was_caret_nav": True,
+                "was_up_or_down": False,
+                "was_ctrl_tab": False,
+                "was_not_in_current_object": False,
+                "was_command": True,
+                "expected": "UNSPECIFIED_COMMAND",
+            },
+            {
                 "id": "single_line_is_an_autocompletion",
                 "any_data": "completion",
+                "is_single_line": True,
                 "was_caret_nav": True,
                 "was_up_or_down": True,
                 "was_ctrl_tab": False,
@@ -2741,10 +2781,15 @@ class TestAXUtilitiesEvent:
             AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
         )
         test_context.patch_object(AXUtilitiesState, "is_editable", return_value=True)
+        test_context.patch_object(
+            AXUtilitiesState, "is_single_line", return_value=case["is_single_line"]
+        )
         test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=False)
         test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
         test_context.patch_object(
-            AXUtilitiesEvent, "_is_spin_button_descendant", return_value=False
+            AXUtilitiesEvent,
+            "_is_spin_button_descendant",
+            return_value=case.get("is_spin_button", False),
         )
 
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
