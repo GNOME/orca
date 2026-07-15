@@ -133,7 +133,7 @@ class ScriptManager:
     def _toolkit_for_object(self, obj: Atspi.Accessible) -> str | None:
         """Returns the name of the toolkit associated with obj."""
 
-        names = {"GTK": "gtk", "GAIL": "gtk"}
+        names = {"GTK": "gtk", "GAIL": "gtk", "WPEWebKit": "WebKitGTK"}
         name = AXObject.get_attribute(obj, "toolkit")
         return names.get(name, name)
 
