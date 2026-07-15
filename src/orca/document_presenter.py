@@ -97,6 +97,7 @@ class _AppModeState:
     focus_mode_is_sticky: bool = False
     browse_mode_is_sticky: bool = False
     user_has_overridden_auto_sticky_focus_mode: bool = False
+    document_with_last_manual_mode_change: int | None = None
 
 
 @gsettings_registry.get_registry().gsettings_schema("org.gnome.Orca.Document", name="document")
@@ -243,6 +244,34 @@ class DocumentPresenter(Extension):
         """Sets whether the user has changed the mode Orca automatically made sticky."""
 
         self._get_state_for_app(app).user_has_overridden_auto_sticky_focus_mode = overridden
+
+    def user_last_changed_mode_in_document(
+        self, script: default.Script, obj: Atspi.Accessible | None
+    ) -> bool:
+        """Returns True if the user last changed the mode in the document containing obj."""
+
+        state = self._get_state_for_app(script.app)
+        if state.document_with_last_manual_mode_change is None:
+            return False
+
+        document = script.utilities.get_top_level_document_for_object(obj)
+        if document is None:
+            return False
+        return state.document_with_last_manual_mode_change == hash(document)
+
+    def set_document_with_last_manual_mode_change(
+        self, script: default.Script, obj: Atspi.Accessible | None
+    ) -> None:
+        """Records the document containing obj as where the user last changed the mode."""
+
+        document = script.utilities.get_top_level_document_for_object(obj)
+        state = self._get_state_for_app(script.app)
+        state.document_with_last_manual_mode_change = None if document is None else hash(document)
+
+    def clear_document_with_last_manual_mode_change(self, app: Atspi.Accessible | None) -> None:
+        """Clears the record of the document in which the user last changed the mode."""
+
+        self._get_state_for_app(app).document_with_last_manual_mode_change = None
 
     def focus_mode_is_sticky(self, app: Atspi.Accessible | None = None) -> bool:
         """Returns True if focus mode is sticky for the given app."""
@@ -592,6 +621,7 @@ class DocumentPresenter(Extension):
         )
         if event is not None:
             self.set_user_has_overridden_auto_sticky_focus_mode(script.app, True)
+            self.set_document_with_last_manual_mode_change(script, obj)
         return True
 
     @dbus_service.getter
@@ -776,6 +806,10 @@ class DocumentPresenter(Extension):
             return False
 
         use_focus = self.use_focus_mode(new_focus, old_focus)
+        if use_focus != self.in_focus_mode(script.app):
+            msg = "DOCUMENT PRESENTER: Mode changed automatically. Clearing the manual change."
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            self.clear_document_with_last_manual_mode_change(script.app)
         self._set_presentation_mode(script, use_focus, obj=new_focus, document=new_doc)
         return True
 
@@ -1107,7 +1141,8 @@ class DocumentPresenter(Extension):
         if AXUtilities.is_tool_tip(obj):
             return AXUtilities.is_focused(obj)
 
-        if AXUtilities.is_document_web(obj):
+        document = AXUtilities.find_ancestor_inclusive(obj, AXUtilities.is_document)
+        if document is not None and AXUtilities.is_embedded_descendant(document):
             return not self.is_focus_mode_widget(script, obj)
 
         return False
@@ -1192,19 +1227,25 @@ class DocumentPresenter(Extension):
         was_in_app = AXUtilities.is_embedded_descendant(prev_obj)
         is_in_app = AXUtilities.is_embedded_descendant(obj)
         if is_in_app:
+            if self._force_browse_mode_for_web_app_descendant(script, obj):
+                tokens = ["DOCUMENT PRESENTER: Forcing browse mode for web app descendant", obj]
+                debug.print_tokens(debug.LEVEL_INFO, tokens, True)
+                return False
             if not was_in_app:
                 msg = "DOCUMENT PRESENTER: Using focus mode: just entered a web application"
                 debug.print_message(debug.LEVEL_INFO, msg, True)
                 return True
             if self.in_focus_mode(script.app):
-                force_browse = self._force_browse_mode_for_web_app_descendant(script, obj)
-                if force_browse:
-                    tokens = ["DOCUMENT PRESENTER: Forcing browse mode for web app descendant", obj]
-                    debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-                else:
-                    msg = "DOCUMENT PRESENTER: Staying in focus mode: inside a web application"
-                    debug.print_message(debug.LEVEL_INFO, msg, True)
-                return not force_browse
+                msg = "DOCUMENT PRESENTER: Staying in focus mode: inside a web application"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return True
+            if self.user_last_changed_mode_in_document(script, obj):
+                msg = "DOCUMENT PRESENTER: Not using focus mode: user changed the mode here"
+                debug.print_message(debug.LEVEL_INFO, msg, True)
+                return False
+            msg = "DOCUMENT PRESENTER: Using focus mode: focus moved inside a web application"
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+            return True
 
         tokens = ["DOCUMENT PRESENTER: Not using focus mode for", obj, "due to lack of cause"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)

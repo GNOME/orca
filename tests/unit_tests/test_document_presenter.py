@@ -773,7 +773,12 @@ class TestDocumentPresenter:
         ax_utilities.AXUtilities.is_embedded_descendant.side_effect = [False, True]
 
         presenter = module.get_presenter()
-        with patch.object(presenter, "is_focus_mode_widget", return_value=False):
+        with (
+            patch.object(presenter, "is_focus_mode_widget", return_value=False),
+            patch.object(
+                presenter, "_force_browse_mode_for_web_app_descendant", return_value=False
+            ),
+        ):
             result = presenter.use_focus_mode(MagicMock(), MagicMock())
 
         assert result is True

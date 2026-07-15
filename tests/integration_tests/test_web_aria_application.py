@@ -230,6 +230,24 @@ def test_structural_navigation_to_widget_can_trigger_focus_mode(
 
 
 @pytest.mark.native_app
+def test_tab_from_inside_the_application_switches_to_focus_mode(
+    web_aria_application: NativeAppSession,
+) -> None:
+    """Tests that Tab from content in the application switches to focus mode."""
+
+    session = web_aria_application
+    _reload(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_H)
+    assert speech(session) == ["h", "Application heading", "heading 2"]
+    assert not _in_focus_mode(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_TAB)
+    assert speech(session) == ["Application button", "button", "Focus mode"]
+    assert _in_focus_mode(session)
+
+
+@pytest.mark.native_app
 def test_browse_mode_the_user_turned_on_in_the_application_is_preserved(
     web_aria_application: NativeAppSession,
 ) -> None:
