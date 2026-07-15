@@ -94,6 +94,7 @@ class SayAllPresenter(Extension):
     KEY_ANNOUNCE_ARTICLE = "announce-article"
     KEY_ANNOUNCE_BLOCKQUOTE = "announce-blockquote"
     KEY_ANNOUNCE_CODE_BLOCK = "announce-code-block"
+    KEY_ANNOUNCE_DOCUMENT = "announce-document"
     KEY_ANNOUNCE_FORM = "announce-form"
     KEY_ANNOUNCE_GROUPING = "announce-grouping"
     KEY_ANNOUNCE_LANDMARK = "announce-landmark"
@@ -317,6 +318,14 @@ class SayAllPresenter(Extension):
             next_obj = self._script.utilities.find_next_object(obj, restrict_to)
             next_offset = 0
 
+        # The web context walkers ignore restrict_to, so stop Say All at the embedded document.
+        if (
+            next_obj is not None
+            and AXUtilities.is_embedded_document_frame(restrict_to)
+            and not AXUtilities.is_ancestor(next_obj, restrict_to, True)
+        ):
+            return None, 0
+
         if next_obj is not None:
             tokens = ["SAY ALL PRESENTER: Updating focus to", next_obj]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
@@ -448,8 +457,8 @@ class SayAllPresenter(Extension):
         if offset is None:
             offset = self._script.utilities.get_caret_context()[-1] or 0
 
-        restrict_to = None
-        if AXUtilities.is_text(obj) or AXUtilities.is_terminal(obj):
+        restrict_to = AXUtilities.get_embedded_document_frame_for_object(obj)
+        if restrict_to is None and (AXUtilities.is_text(obj) or AXUtilities.is_terminal(obj)):
             restrict_to = obj
 
         prev_obj, prev_offset = None, None
@@ -477,6 +486,10 @@ class SayAllPresenter(Extension):
                     layout_mode=True,
                     use_cache=False,
                 )
+
+            # A layout line at the edge of an embedded document can spill into the page below it.
+            if AXUtilities.is_embedded_document_frame(restrict_to):
+                contents = [c for c in contents if AXUtilities.is_ancestor(c[0], restrict_to, True)]
 
             filtered = self._script.utilities.filter_contents_for_presentation(contents)
             self._contents.extend(filtered)
@@ -680,6 +693,32 @@ class SayAllPresenter(Extension):
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA,
             self.KEY_ANNOUNCE_CODE_BLOCK,
+            value,
+        )
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_ANNOUNCE_DOCUMENT,
+        schema="say-all",
+        gtype="b",
+        default=True,
+        summary="Announce embedded documents",
+    )
+    @dbus_service.getter
+    def get_announce_document(self) -> bool:
+        """Returns whether embedded documents are announced when entered and left."""
+
+        return self._get_setting(self.KEY_ANNOUNCE_DOCUMENT, True)
+
+    @dbus_service.setter
+    def set_announce_document(self, value: bool) -> bool:
+        """Sets whether embedded documents are announced when entered and left."""
+
+        msg = f"SAY ALL PRESENTER: Setting announce documents to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA,
+            self.KEY_ANNOUNCE_DOCUMENT,
             value,
         )
         return True

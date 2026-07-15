@@ -95,6 +95,7 @@ class SpeechGeneratorContext(GeneratorContext):
     announce_article: bool
     announce_blockquote: bool
     announce_code_block: bool
+    announce_document: bool
     announce_form: bool
     announce_grouping: bool
     announce_landmark: bool
@@ -813,6 +814,7 @@ class SpeechGenerator(generator.Generator):
             Atspi.Role.CONTENT_DELETION,
             Atspi.Role.CONTENT_INSERTION,
             Atspi.Role.DESCRIPTION_LIST,
+            Atspi.Role.DOCUMENT_FRAME,
             "ROLE_DPUB_LANDMARK",
             "ROLE_DPUB_SECTION",
             "ROLE_FEED",
@@ -839,6 +841,8 @@ class SpeechGenerator(generator.Generator):
             enabled.append(Atspi.Role.BLOCK_QUOTE)
         if self._context.announce_code_block:
             enabled.append("ROLE_CODE_BLOCK")
+        if self._context.announce_document:
+            enabled.append(Atspi.Role.DOCUMENT_FRAME)
         if self._context.announce_form:
             enabled.append(Atspi.Role.FORM)
         if self._context.announce_grouping:
@@ -996,6 +1000,8 @@ class SpeechGenerator(generator.Generator):
             result = self._get_dpub_section_leaving_message(obj)
         elif AXUtilities.is_landmark(obj):
             result = self._get_landmark_leaving_message(obj)
+        elif AXUtilities.is_embedded_document_frame(obj):
+            result = messages.LEAVING_DOCUMENT
         elif role in simple_role_messages:
             result = simple_role_messages[role]
         elif role == Atspi.Role.SUGGESTION and not AXUtilities.is_inline_suggestion(obj, role):
@@ -1192,6 +1198,7 @@ class SpeechGenerator(generator.Generator):
             Atspi.Role.CONTENT_DELETION,
             Atspi.Role.CONTENT_INSERTION,
             Atspi.Role.DESCRIPTION_LIST,
+            Atspi.Role.DOCUMENT_FRAME,
             "ROLE_DPUB_LANDMARK",
             "ROLE_DPUB_SECTION",
             "ROLE_FEED",
@@ -2785,6 +2792,8 @@ class SpeechGenerator(generator.Generator):
     def _generate_document_frame(self, obj: Atspi.Accessible) -> list[Any]:
         """Generates speech for the document-frame role."""
 
+        if self._is_leaving():
+            return self._generate_leaving(obj)
         return self._generate_document(obj)
 
     def _generate_document_presentation(self, obj: Atspi.Accessible) -> list[Any]:

@@ -833,7 +833,9 @@ class StructuralNavigator(Extension):
         root = AXUtilities.find_ancestor_inclusive(focus, AXUtilities.is_modal_dialog)
         if root is None:
             if mode == NavigationMode.DOCUMENT:
-                root = script.utilities.get_top_level_document_for_object(focus)
+                root = AXUtilities.get_embedded_document_frame_for_object(
+                    focus
+                ) or script.utilities.get_top_level_document_for_object(focus)
             elif mode == NavigationMode.GUI:
                 root = AXUtilities.find_ancestor_inclusive(focus, AXUtilities.is_dialog_or_window)
                 if root is None:

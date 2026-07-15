@@ -99,6 +99,14 @@ class AnnouncementsPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_CODE_BLOCK,
                         ),
                         preferences_grid_base.PreferenceControlDoc(
+                            label=guilabels.ANNOUNCE_EMBEDDED_DOCUMENTS,
+                            kind="switch",
+                            summary="Controls whether Orca announces when entering or exiting "
+                            "a document embedded within an application.",
+                            schema="speech",
+                            key=speech_presenter.SpeechPresenter.KEY_ANNOUNCE_DOCUMENT,
+                        ),
+                        preferences_grid_base.PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_FORMS,
                             kind="switch",
                             summary="Controls whether Orca announces when entering or exiting "

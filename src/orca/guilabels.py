@@ -53,6 +53,12 @@ ANNOUNCE_BLOCKQUOTES = C_("Context", "Blockquotes")
 ANNOUNCE_CODE_BLOCKS = C_("Context", "Code blocks")
 
 # Translators: Some users want to hear additional information when entering
+# different types of content. When enabled, Orca will announce when a document
+# embedded within an application (such as the rendered preview of a document)
+# has been entered, and when it is being exited.
+ANNOUNCE_EMBEDDED_DOCUMENTS = C_("Context", "Embedded documents")
+
+# Translators: Some users want to hear additional information when entering
 # different types of content. If this checkbox is checked, Orca will announce
 # that a form has been entered before speaking the contents of that form. At
 # the end of the form, Orca will announce that the form is being exited.

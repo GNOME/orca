@@ -28,7 +28,7 @@ from __future__ import annotations
 import functools
 import inspect
 import re
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import gi
 
@@ -80,6 +80,7 @@ class _AXUtilitiesCache:
     IS_PRESENTATIONAL_CHILD = "AXUtilities.is-presentational-child"
     IS_TREE_OR_TREE_TABLE_DESCENDANT = "AXUtilities.is-tree-or-tree-table-descendant"
     NEAREST_BLOCK_ANCESTOR = "AXUtilities.nearest-block-ancestor"
+    EMBEDDED_DOCUMENT_FRAME = "AXUtilities.embedded-document-frame"
 
     def __init__(self) -> None:
         self._manager = ax_cache_manager.get_manager()
@@ -100,6 +101,7 @@ class _AXUtilitiesCache:
             self.IS_PRESENTATIONAL_CHILD,
             self.IS_TREE_OR_TREE_TABLE_DESCENDANT,
             self.NEAREST_BLOCK_ANCESTOR,
+            self.EMBEDDED_DOCUMENT_FRAME,
         ):
             self._manager.register_cache(
                 self,
@@ -111,6 +113,9 @@ class _AXUtilitiesCache:
         self._layout_only_cache = self._manager.get_cache(self, self.IS_LAYOUT_ONLY)
         self._nearest_block_ancestor_cache = self._manager.get_cache(
             self, self.NEAREST_BLOCK_ANCESTOR
+        )
+        self._embedded_document_frame_cache = self._manager.get_cache(
+            self, self.EMBEDDED_DOCUMENT_FRAME
         )
         self._classification_caches = {
             namespace: self._manager.get_cache(self, namespace)
@@ -174,6 +179,23 @@ class _AXUtilitiesCache:
 
         if self._nearest_block_ancestor_cache is not None:
             self._nearest_block_ancestor_cache.put(ax_cache_manager.get_object_key(obj), ancestor)
+
+    def get_embedded_document_frame(self, obj: Atspi.Accessible) -> Any:
+        """Returns the cached embedded document frame for obj, or MISSING on a miss."""
+
+        if self._embedded_document_frame_cache is None:
+            return ax_cache_manager.MISSING
+
+        key = ax_cache_manager.get_object_key(obj)
+        return self._embedded_document_frame_cache.get(key, ax_cache_manager.MISSING)
+
+    def set_embedded_document_frame(
+        self, obj: Atspi.Accessible, frame: Atspi.Accessible | None
+    ) -> None:
+        """Stores the embedded document frame for obj."""
+
+        if self._embedded_document_frame_cache is not None:
+            self._embedded_document_frame_cache.put(ax_cache_manager.get_object_key(obj), frame)
 
     def get_classification(self, namespace: str, obj: Atspi.Accessible) -> bool | None:
         """Returns a cached object classification."""
@@ -707,6 +729,8 @@ class AXUtilities:
             result, reason = AXUtilities._is_layout_only_group(obj)
         elif AXUtilitiesRole.is_panel(obj, role) or AXUtilitiesRole.is_grouping(obj, role):
             result, reason = AXUtilities._is_layout_only_panel(obj)
+        elif AXUtilities.is_embedded_document_frame(obj):
+            result, reason = False, "is an embedded document frame"
         elif AXUtilitiesRole.is_section(obj, role) or AXUtilitiesRole.is_document(obj, role):
             result, reason = AXUtilities._is_layout_only_section(obj)
         elif AXUtilitiesRole.is_tool_bar(obj):
@@ -883,6 +907,12 @@ class AXUtilities:
         )
 
     @staticmethod
+    def is_embedded_document_frame(obj: Atspi.Accessible) -> bool:
+        """Returns True if obj is a document frame nested inside an application."""
+
+        return AXUtilitiesRole.is_document_frame(obj) and AXUtilities.is_embedded_descendant(obj)
+
+    @staticmethod
     def is_entry_descendant(
         obj: Atspi.Accessible,
         inclusive: bool = False,
@@ -934,6 +964,18 @@ class AXUtilities:
 
         if above_start and rv is not None:
             AXUtilities._CACHE.set_nearest_block_ancestor(obj, rv)
+        return rv
+
+    @staticmethod
+    def get_embedded_document_frame_for_object(obj: Atspi.Accessible) -> Atspi.Accessible | None:
+        """Returns obj's nearest document-frame ancestor that is inside an application, if any."""
+
+        cached = AXUtilities._CACHE.get_embedded_document_frame(obj)
+        if cached is not ax_cache_manager.MISSING:
+            return cached
+
+        rv = AXUtilitiesObject.find_ancestor_inclusive(obj, AXUtilities.is_embedded_document_frame)
+        AXUtilities._CACHE.set_embedded_document_frame(obj, rv)
         return rv
 
     @staticmethod

@@ -980,6 +980,11 @@ LEAVING_CODE = C_("role", "leaving code.")
 # See https://w3c.github.io/aria/#aria-details
 LEAVING_DETAILS = _("leaving details.")
 
+# Translators: This message is presented when a user is navigating within a
+# document (e.g. an embedded PDF viewer or the rendered preview of a document)
+# and then navigates out of it into the surrounding page.
+LEAVING_DOCUMENT = _("leaving document.")
+
 # Translators: This message is presented when a user is navigating within
 # an object and then navigates out of it. The word or phrase that follows
 # "leaving" should be consistent with the translation provided for the

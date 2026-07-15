@@ -47,10 +47,10 @@ def _reload(session: NativeAppSession) -> None:
 
 
 @pytest.mark.native_app
-def test_heading_navigation_enters_the_applications(
+def test_heading_navigation_is_confined_to_the_nested_document(
     web_aria_application: NativeAppSession,
 ) -> None:
-    """Tests that next-heading reaches the headings inside the applications and the document."""
+    """Tests that heading navigation is confined once it enters the nested document."""
 
     session = web_aria_application
     _reload(session)
@@ -59,16 +59,18 @@ def test_heading_navigation_enters_the_applications(
     assert speech(session) == ["h", "Application heading", "heading 2"]
 
     keyboard.tap_key(keyboard.KEYSYM_H)
-    assert speech(session) == ["h", "Document heading", "heading 2"]
+    assert speech(session) == [
+        "h",
+        "Embedded document",
+        "document frame",
+        "Document heading",
+        "heading 2",
+    ]
 
+    # The nested document has one heading, so navigation wraps within it instead
+    # of continuing to "Main heading two" in the surrounding page.
     keyboard.tap_key(keyboard.KEYSYM_H)
-    assert speech(session) == ["h", "Main heading two", "heading 1"]
-
-    keyboard.tap_key(keyboard.KEYSYM_H)
-    assert speech(session) == ["h", "Focusable application heading", "heading 2"]
-
-    keyboard.tap_key(keyboard.KEYSYM_H)
-    assert speech(session) == ["h", "Main heading three", "heading 1"]
+    assert speech(session) == ["h", "Wrapping to top.", "Document heading"]
 
 
 @pytest.mark.native_app
@@ -124,13 +126,18 @@ def test_caret_navigation_inside_the_application(
     assert speech(session) == ["Application entry", "entry"]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Document heading", "heading 2"]
+    assert speech(session) == [
+        "Embedded document",
+        "document frame",
+        "Document heading",
+        "heading 2",
+    ]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert speech(session) == ["Paragraph inside the document."]
 
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
-    assert speech(session) == ["Main heading two", "heading 1"]
+    assert speech(session) == ["leaving document.", "Main heading two", "heading 1"]
 
 
 @pytest.mark.native_app

@@ -230,6 +230,7 @@ These operations also work at the profile level:
 | `announce-article` | `b` | `true` | Announce articles |
 | `announce-blockquote` | `b` | `true` | Announce blockquotes |
 | `announce-code-block` | `b` | `true` | Announce code blocks |
+| `announce-document` | `b` | `true` | Announce embedded documents |
 | `announce-form` | `b` | `true` | Announce non-landmark forms |
 | `announce-grouping` | `b` | `true` | Announce groupings |
 | `announce-landmark` | `b` | `true` | Announce landmarks |
@@ -275,6 +276,7 @@ These operations also work at the profile level:
 | `announce-cell-headers` | `b` | `true` | Announce cell headers |
 | `announce-cell-span` | `b` | `true` | Announce cell span |
 | `announce-code-block` | `b` | `true` | Announce code blocks |
+| `announce-document` | `b` | `true` | Announce embedded documents |
 | `announce-form` | `b` | `true` | Announce forms |
 | `announce-grouping` | `b` | `true` | Announce groupings/panels |
 | `announce-landmark` | `b` | `true` | Announce landmarks |

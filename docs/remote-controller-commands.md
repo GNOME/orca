@@ -371,6 +371,7 @@ These commands are available directly on the main service object at `/org/gnome/
 - **`AnnounceArticle`** (`b`, read/write): Whether articles are announced when entered.
 - **`AnnounceBlockquote`** (`b`, read/write): Whether blockquotes are announced when entered.
 - **`AnnounceCodeBlock`** (`b`, read/write): Whether code blocks are announced when entered.
+- **`AnnounceDocument`** (`b`, read/write): Whether embedded documents are announced when entered and left.
 - **`AnnounceForm`** (`b`, read/write): Whether non-landmark forms are announced when entered.
 - **`AnnounceGrouping`** (`b`, read/write): Whether groupings are announced when entered.
 - **`AnnounceLandmark`** (`b`, read/write): Whether landmarks are announced when entered.
@@ -500,6 +501,7 @@ These commands are available directly on the main service object at `/org/gnome/
 - **`AnnounceCellHeaders`** (`b`, read/write): Whether cell headers are announced.
 - **`AnnounceCellSpan`** (`b`, read/write): Whether cell spans are announced when greater than 1.
 - **`AnnounceCodeBlock`** (`b`, read/write): Whether code blocks are announced when entered.
+- **`AnnounceDocument`** (`b`, read/write): Whether embedded documents are announced when entered and left.
 - **`AnnounceForm`** (`b`, read/write): Whether non-landmark forms are announced when entered.
 - **`AnnounceGrouping`** (`b`, read/write): Whether groupings are announced when entered.
 - **`AnnounceLandmark`** (`b`, read/write): Whether landmarks are announced when entered.
@@ -767,6 +769,7 @@ These commands are available directly on the main service object at `/org/gnome/
 - **`PresentSizeAndPosition`:** Presents the size and position of the current object.
 - **`PresentStatusBar`:** Presents the status bar and info bar of the current window.
 - **`PresentTitle`:** Presents the title of the current window.
+- **`ShowCharacterAttributes`:** Shows the font and formatting details for the current character.
 - **`WhereAmIBasic`:** Presents basic information about the current location.
 - **`WhereAmIDetailed`:** Presents detailed information about the current location.
 

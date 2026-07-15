@@ -148,6 +148,7 @@ class SpeechPresenter(Extension):
     KEY_ANNOUNCE_ARTICLE = "announce-article"
     KEY_ANNOUNCE_BLOCKQUOTE = "announce-blockquote"
     KEY_ANNOUNCE_CODE_BLOCK = "announce-code-block"
+    KEY_ANNOUNCE_DOCUMENT = "announce-document"
     KEY_ANNOUNCE_FORM = "announce-form"
     KEY_ANNOUNCE_GROUPING = "announce-grouping"
     KEY_ANNOUNCE_LANDMARK = "announce-landmark"
@@ -783,6 +784,30 @@ class SpeechPresenter(Extension):
         debug.print_message(debug.LEVEL_INFO, msg, True)
         gsettings_registry.get_registry().set_runtime_value(
             self._SCHEMA, self.KEY_ANNOUNCE_LIST, value
+        )
+        return True
+
+    @gsettings_registry.get_registry().gsetting(
+        key=KEY_ANNOUNCE_DOCUMENT,
+        schema="speech",
+        gtype="b",
+        default=True,
+        summary="Announce embedded documents",
+    )
+    @dbus_service.getter
+    def get_announce_document(self) -> bool:
+        """Returns whether embedded documents are announced when entered and left."""
+
+        return self._get_setting(self.KEY_ANNOUNCE_DOCUMENT, "b", True)
+
+    @dbus_service.setter
+    def set_announce_document(self, value: bool) -> bool:
+        """Sets whether embedded documents are announced when entered and left."""
+
+        msg = f"SPEECH PRESENTER: Setting announce documents to {value}."
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        gsettings_registry.get_registry().set_runtime_value(
+            self._SCHEMA, self.KEY_ANNOUNCE_DOCUMENT, value
         )
         return True
 
@@ -2330,6 +2355,7 @@ class SpeechPresenter(Extension):
             announce_article=p.get_announce_article(),
             announce_blockquote=p.get_announce_blockquote(),
             announce_code_block=p.get_announce_code_block(),
+            announce_document=p.get_announce_document(),
             announce_form=p.get_announce_form(),
             announce_grouping=p.get_announce_grouping(),
             announce_landmark=p.get_announce_landmark(),
@@ -2709,6 +2735,12 @@ class SpeechPresenter(Extension):
                 guilabels.ANNOUNCE_CODE_BLOCKS,
                 self.get_announce_code_block,
                 self.set_announce_code_block,
+            ),
+            SpeechPreference(
+                self.KEY_ANNOUNCE_DOCUMENT,
+                guilabels.ANNOUNCE_EMBEDDED_DOCUMENTS,
+                self.get_announce_document,
+                self.set_announce_document,
             ),
             SpeechPreference(
                 self.KEY_ANNOUNCE_FORM,

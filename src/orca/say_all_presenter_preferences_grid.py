@@ -183,6 +183,15 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                             key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_CODE_BLOCK,
                         ),
                         preferences_grid_base.PreferenceControlDoc(
+                            label=guilabels.ANNOUNCE_EMBEDDED_DOCUMENTS,
+                            kind="switch",
+                            summary=(
+                                "Controls whether Orca announces embedded documents during Say All."
+                            ),
+                            schema="say-all",
+                            key=say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_DOCUMENT,
+                        ),
+                        preferences_grid_base.PreferenceControlDoc(
                             label=guilabels.ANNOUNCE_FORMS,
                             kind="switch",
                             summary="Controls whether Orca announces forms during Say All.",
@@ -312,6 +321,12 @@ class SayAllPreferencesGrid(preferences_grid_base.AutoPreferencesGrid):
                         presenter.get_announce_code_block,
                         presenter.set_announce_code_block,
                         say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_CODE_BLOCK,
+                    ),
+                    (
+                        guilabels.ANNOUNCE_EMBEDDED_DOCUMENTS,
+                        presenter.get_announce_document,
+                        presenter.set_announce_document,
+                        say_all_presenter.SayAllPresenter.KEY_ANNOUNCE_DOCUMENT,
                     ),
                     (
                         guilabels.ANNOUNCE_FORMS,

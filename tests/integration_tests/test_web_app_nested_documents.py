@@ -232,3 +232,190 @@ def test_caret_navigation_to_the_application_can_trigger_focus_mode(
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert speech(session) == ["Focus mode", "Embedded application", "embedded"]
     assert _in_focus_mode(session)
+
+
+@pytest.mark.native_app
+def test_structural_navigation_is_confined_to_the_nested_document(
+    web_app_nested_documents: NativeAppSession,
+) -> None:
+    """Tests that structural navigation inside the nested document stays within it."""
+
+    session = web_app_nested_documents
+    _reload(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_H)
+    assert speech(session) == ["h", "Frame heading", "heading 2"]
+
+    keyboard.tap_key(keyboard.KEYSYM_H)
+    assert speech(session) == [
+        "h",
+        "Embedded document",
+        "document frame",
+        "Document heading",
+        "heading 2",
+    ]
+
+    keyboard.tap_key(keyboard.KEYSYM_H)
+    assert speech(session) == ["h", "Document subheading", "heading 3"]
+
+    # Past the last heading, navigation wraps within the document instead of
+    # escaping to "Main heading two" in the surrounding page.
+    keyboard.tap_key(keyboard.KEYSYM_H)
+    assert speech(session) == ["h", "Wrapping to top.", "Document heading", "heading 2"]
+
+    _reload(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_B)
+    assert speech(session) == ["b", "Application button", "button"]
+
+    keyboard.tap_key(keyboard.KEYSYM_B)
+    assert speech(session) == [
+        "b",
+        "Embedded document",
+        "document frame",
+        "Document button",
+        "button",
+    ]
+
+    keyboard.tap_key(keyboard.KEYSYM_B)
+    assert speech(session) == ["b", "Second document button", "button"]
+
+    # Past the last button, navigation wraps within the document instead of
+    # escaping to "Application button" in the application body.
+    keyboard.tap_key(keyboard.KEYSYM_B)
+    assert speech(session) == ["b", "Wrapping to top.", "Document button", "button"]
+
+
+@pytest.mark.native_app
+def test_caret_navigation_reads_out_of_the_nested_document(
+    web_app_nested_documents: NativeAppSession,
+) -> None:
+    """Tests that caret navigation, unlike structural navigation, can leave the nested document."""
+
+    session = web_app_nested_documents
+    _reload(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_H)
+    assert speech(session) == ["h", "Frame heading", "heading 2"]
+
+    keyboard.tap_key(keyboard.KEYSYM_H)
+    assert speech(session) == [
+        "h",
+        "Embedded document",
+        "document frame",
+        "Document heading",
+        "heading 2",
+    ]
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert speech(session) == ["Paragraph inside the document."]
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert speech(session) == ["Document button", "button", "Document entry", "entry"]
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert speech(session) == ["Document subheading", "heading 3"]
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert speech(session) == ["More text inside the document."]
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert speech(session) == ["Second document button", "button"]
+
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert speech(session) == ["leaving document.", "Main heading two", "heading 1"]
+
+
+@pytest.mark.native_app
+def test_file_boundary_navigation_is_confined_to_the_nested_document(
+    web_app_nested_documents: NativeAppSession,
+) -> None:
+    """Tests that Ctrl+Home and Ctrl+End stay within the nested document."""
+
+    session = web_app_nested_documents
+    _reload(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_H)
+    keyboard.tap_key(keyboard.KEYSYM_H)
+    assert speech(session) == [
+        "h",
+        "Embedded document",
+        "document frame",
+        "Document heading",
+        "heading 2",
+    ]
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
+    assert speech(session) == ["Second document button", "button"]
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
+    assert speech(session) == ["Document heading", "heading 2"]
+
+
+@pytest.mark.native_app
+def test_file_boundary_navigation_reaches_the_page_boundaries(
+    web_app_nested_documents: NativeAppSession,
+) -> None:
+    """Tests that Ctrl+Home and Ctrl+End reach the page when not inside a nested document."""
+
+    session = web_app_nested_documents
+    _reload(session)
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
+    assert speech(session) == ["Paragraph after the application."]
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_HOME)
+    assert speech(session) == ["Main heading one", "heading 1"]
+
+
+@pytest.mark.native_app
+def test_embedded_document_announcements_can_be_disabled(
+    web_app_nested_documents: NativeAppSession,
+) -> None:
+    """Tests that disabling the setting silences the enter and leave announcements."""
+
+    session = web_app_nested_documents
+    _reload(session)
+    session.orca.set("SpeechPresenter", "AnnounceDocument", False)
+
+    keyboard.tap_key(keyboard.KEYSYM_H)
+    assert speech(session) == ["h", "Frame heading", "heading 2"]
+
+    # Entering the document no longer announces "Embedded document, document frame".
+    keyboard.tap_key(keyboard.KEYSYM_H)
+    assert speech(session) == ["h", "Document heading", "heading 2"]
+
+    keyboard.press_chord([keyboard.KEYSYM_CONTROL_L], keyboard.KEYSYM_END)
+    assert speech(session) == ["Second document button", "button"]
+
+    # Leaving the document no longer says "leaving document".
+    keyboard.tap_key(keyboard.KEYSYM_DOWN)
+    assert speech(session) == ["Main heading two", "heading 1"]
+
+
+@pytest.mark.native_app
+def test_say_all_is_confined_to_the_nested_document(
+    web_app_nested_documents: NativeAppSession,
+) -> None:
+    """Tests that Say All started inside the nested document stops at its boundary."""
+
+    session = web_app_nested_documents
+    _reload(session)
+
+    keyboard.tap_key(keyboard.KEYSYM_H)
+    keyboard.tap_key(keyboard.KEYSYM_H)
+    speech(session)
+
+    # Say All reads to the end of the document and stops instead of spilling into the page.
+    keyboard.tap_key(keyboard.KEYSYM_KP_ADD)
+    assert speech(session) == [
+        "Document heading",
+        "Paragraph inside the document.",
+        "Document button",
+        "button",
+        "Document subheading",
+        "heading 3",
+        "More text inside the document.",
+        "Second document button",
+        "button",
+    ]

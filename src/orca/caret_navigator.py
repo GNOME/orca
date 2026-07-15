@@ -402,10 +402,19 @@ class CaretNavigator(Extension):
 
         return False
 
+    def _get_embedded_document_frame(self, script: default.Script) -> Atspi.Accessible | None:
+        """Returns the embedded document frame that confines file-boundary navigation, if any."""
+
+        obj, _offset = script.utilities.get_caret_context()
+        if obj is None:
+            return None
+        return AXUtilities.get_embedded_document_frame_for_object(obj)
+
     def _get_start_of_file(self, script: default.Script) -> tuple[Atspi.Accessible | None, int]:
         """Returns the start of the file as (obj, offset)."""
 
-        root = self._get_root_object(script)
+        frame = self._get_embedded_document_frame(script)
+        root = frame if frame is not None else self._get_root_object(script)
         obj, offset = script.utilities.first_context(root, 0)
         if obj is None:
             return None, -1
@@ -414,6 +423,9 @@ class CaretNavigator(Extension):
             prev_obj, prev_offset = script.utilities.previous_context(obj, offset, restrict_to=root)
             if prev_obj is None or (prev_obj, prev_offset) == (obj, offset):
                 break
+            # The web context walkers ignore restrict_to, so enforce the frame boundary here.
+            if frame is not None and not AXUtilities.is_ancestor(prev_obj, frame, True):
+                break
             obj, offset = prev_obj, prev_offset
 
         return obj, offset
@@ -421,7 +433,8 @@ class CaretNavigator(Extension):
     def _get_end_of_file(self, script: default.Script) -> tuple[Atspi.Accessible | None, int]:
         """Returns the end of the file as (obj, offset)."""
 
-        root = self._get_root_object(script)
+        frame = self._get_embedded_document_frame(script)
+        root = frame if frame is not None else self._get_root_object(script)
         obj = AXUtilities.find_deepest_descendant(root)
         if obj is None:
             return None, -1
@@ -434,6 +447,9 @@ class CaretNavigator(Extension):
         while obj:
             next_obj, next_offset = script.utilities.next_context(obj, offset, restrict_to=root)
             if next_obj is None or (next_obj, next_offset) == (obj, offset):
+                break
+            # The web context walkers ignore restrict_to, so enforce the frame boundary here.
+            if frame is not None and not AXUtilities.is_ancestor(next_obj, frame, True):
                 break
             obj, offset = next_obj, next_offset
 
