@@ -600,7 +600,7 @@ class AXUtilitiesEvent:
             if AXUtilitiesEvent._is_terminal_being_flat_reviewed(obj):
                 return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
             return TextEventReason.UNKNOWN
-        if mgr.last_event_was_tab_navigation():
+        if mgr.last_event_was_tab_navigation() and AXUtilitiesState.is_focused(obj):
             return TextEventReason.FOCUS_CHANGE
         if AXUtilitiesObject.find_ancestor(obj, AXUtilitiesRole.children_are_presentational):
             return TextEventReason.UI_UPDATE

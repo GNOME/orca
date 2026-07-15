@@ -1854,6 +1854,7 @@ class TestAXUtilitiesEvent:
                 "test_scenario": "tab_navigation",
                 "input_manager_config": {"last_event_was_tab_navigation": True},
                 "editable_state": False,
+                "source_is_focused": True,
                 "expected_result": "FOCUS_CHANGE",
             },
             {
