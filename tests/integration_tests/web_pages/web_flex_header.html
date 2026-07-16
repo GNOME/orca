@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Orca Flex Header ready</title>
+<style>
+  /* Like eBay's gh-header__main: a flex row of mixed-display items (inline logo, flex buttons,
+     inline-block input, block select). Flex transparency lets them share a line; geometry still
+     governs, so the stacked (column) variant reflows to one item per line. */
+  .bar { display: flex; align-items: center; gap: 1em; }
+  .bar button { display: flex; }
+  .bar select { display: block; }
+  .stacked { display: flex; flex-direction: column; align-items: flex-start; gap: 1em; }
+  .stacked button { display: flex; }
+</style></head>
+<body>
+<p>Before header.</p>
+<header class="bar">
+  <a href="#logo"><svg width="48" height="48" viewBox="0 0 48 48" aria-label="Home"><rect width="48" height="48" fill="#888"></rect></svg></a>
+  <button>Shop by category</button>
+  <input type="text" aria-label="Search for anything">
+  <button aria-label="Camera"><svg width="24" height="24" aria-hidden="true"><rect width="24" height="24" fill="#888"></rect></svg></button>
+  <select aria-label="Category"><option>All Categories</option></select>
+</header>
+<header class="stacked">
+  <button>Stacked one</button>
+  <button>Stacked two</button>
+  <button>Stacked three</button>
+</header>
+<p>After header.</p>
+</body></html>

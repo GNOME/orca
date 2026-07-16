@@ -2,6 +2,11 @@
 <html lang="en"><head><meta charset="utf-8"><title>Orca Block Context ready</title>
 <style>
   .row { display: flex; gap: 2em; align-items: flex-start; }
+  .hnav { list-style: none; margin: 0; padding: 0; }
+  .hnav li { display: inline-block; margin-right: 2em; }
+  /* Off-screen but focusable and in the accessible name, like eBay's dropdown toggles. */
+  .hnav .expand { position: absolute; top: -10000px; }
+  .hbar a { margin-right: 2em; }
   ul, pre { margin: 0; }
 </style>
 </head>
@@ -15,5 +20,16 @@
 Code two</pre>
   <p>After code</p>
 </div>
+<header class="hbar">
+  <a href="#logo"><svg width="48" height="48" viewBox="0 0 48 48" aria-label="Home"><rect width="48" height="48" fill="#888"></rect></svg></a>
+  <button>Shop by category</button>
+</header>
+<nav aria-label="Categories">
+  <ul class="hnav">
+    <li><a href="#a">Motors</a><button class="expand">Expand: Motors</button></li>
+    <li><a href="#b">Electronics</a><button class="expand">Expand: Electronics</button></li>
+    <li><a href="#c">Collectibles</a><button class="expand">Expand: Collectibles</button></li>
+  </ul>
+</nav>
 <p>The end.</p>
 </body></html>

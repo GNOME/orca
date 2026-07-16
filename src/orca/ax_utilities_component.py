@@ -156,6 +156,15 @@ class AXUtilitiesComponent:
         return not AXUtilitiesComponent.is_empty_rect(intersection)
 
     @staticmethod
+    def object_is_outside_parent(obj: Atspi.Accessible) -> bool:
+        """Returns True if obj's rect does not intersect its parent's rect."""
+
+        parent = AXObject.get_parent(obj)
+        if parent is None:
+            return False
+        return not AXUtilitiesComponent.object_intersects_rect(obj, AXComponent.get_rect(parent))
+
+    @staticmethod
     def object_is_off_screen(obj: Atspi.Accessible) -> bool:
         """Returns True if the rect associated with obj is off-screen"""
 

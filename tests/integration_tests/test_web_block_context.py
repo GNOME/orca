@@ -18,7 +18,7 @@
 # Free Software Foundation, Inc., Franklin Street, Fifth Floor,
 # Boston MA  02110-1301 USA.
 
-"""Tests that block-list and code-block content is not merged with same-row siblings."""
+"""Tests line grouping for same-row siblings: block content stays separate, inline flexes merge."""
 
 from __future__ import annotations
 
@@ -39,7 +39,33 @@ _LINES = [
     (["code start", "Code one"], "Code one $l"),
     (["Code two", "code end"], "Code two $l"),
     (["After code"], "After code"),
-    (["The end."], "The end."),
+    (
+        ["banner", "Home", "image link", "Shop by category", "button"],
+        "Home image Shop by category button",
+    ),
+    (
+        [
+            "leaving banner.",
+            "navigation",
+            "Categories",
+            "List with 3 items",
+            "Motors",
+            "link",
+            "Expand: Motors",
+            "button",
+            "Electronics",
+            "link",
+            "Expand: Electronics",
+            "button",
+            "Collectibles",
+            "link",
+            "Expand: Collectibles",
+            "button",
+        ],
+        "Motors Expand: Motors button Electronics Expand: Electronics button "
+        "Collectibles Expand: Collectibles button",
+    ),
+    (["leaving list.", "leaving navigation.", "The end."], "The end."),
 ]
 
 
@@ -47,7 +73,7 @@ _LINES = [
 def test_block_context_boundaries_stay_on_separate_lines(
     web_block_context: NativeAppSession,
 ) -> None:
-    """Tests that a block list and a code block stay separate from same-row paragraphs."""
+    """Tests block content stays separate while flex rows of an image link and toggles group."""
 
     session = web_block_context
     reset_web_state(session)

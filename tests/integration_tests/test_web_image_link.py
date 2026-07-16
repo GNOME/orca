@@ -112,6 +112,30 @@ def test_small_standalone_image_is_filtered_from_content(
 
 
 @pytest.mark.native_app
+def test_named_icon_link_speaks_its_name(web_image_link: NativeAppSession) -> None:
+    """Tests a link wrapping a named icon section speaks its name in browse mode, not bare."""
+
+    session = web_image_link
+    move_to_top(session)
+    captured = None
+    for _ in range(6):
+        keyboard.tap_key(keyboard.KEYSYM_DOWN)
+        captured = capture(session)
+
+    assert captured == (
+        ["Your shopping cart contains 0 items", "link"],
+        [
+            BrailleLine(
+                1,
+                "Your shopping cart contains 0 items",
+                "Your shopping cart contains 0 it",
+                "\xc0" * 35,
+            )
+        ],
+    )
+
+
+@pytest.mark.native_app
 def test_say_all_skips_the_useless_image(web_image_link: NativeAppSession) -> None:
     """Tests that Say All reads the navigable images but skips the useless small one."""
 

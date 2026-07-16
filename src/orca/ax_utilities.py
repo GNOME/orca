@@ -945,6 +945,7 @@ class AXUtilities:
                 return rv
 
         inline = AXUtilitiesRole.is_inline_element(obj)
+        parent = AXObject.get_parent(obj)
         if not inline and above_start and AXUtilitiesRole.is_section(obj):
             # A generic section whose text is only embedded objects (e.g. like-button-view-
             # model) is a transparent wrapper; the section gate keeps a structural [OBJ]-only
@@ -953,7 +954,6 @@ class AXUtilities:
             inline = "\ufffc" in text and not re.search(r"[^\s\ufffc]", text)
 
         if inline:
-            parent = AXObject.get_parent(obj)
             rv = (
                 AXUtilities.get_nearest_block_ancestor(parent, original)
                 if parent is not None

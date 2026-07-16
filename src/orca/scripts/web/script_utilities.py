@@ -91,6 +91,7 @@ class _WebUtilitiesCache:
     HAS_NAME_AND_ACTION_AND_NO_USEFUL_CHILDREN = (
         "WebUtilities.has-name-and-action-and-no-useful-children"
     )
+    WRAPS_ONLY_SKIPPABLE_ELEMENTS = "WebUtilities.wraps-only-skippable-elements"
     INFERRED_LABEL = "WebUtilities.inferred-label"
     SHOULD_FILTER = "WebUtilities.should-filter"
     SHOULD_INFER_LABEL_FOR = "WebUtilities.should-infer-label-for"
@@ -123,6 +124,7 @@ class _WebUtilitiesCache:
         IS_REDUNDANT_SVG,
         IS_USELESS_EMPTY_ELEMENT,
         HAS_NAME_AND_ACTION_AND_NO_USEFUL_CHILDREN,
+        WRAPS_ONLY_SKIPPABLE_ELEMENTS,
         INFERRED_LABEL,
         SHOULD_FILTER,
         SHOULD_INFER_LABEL_FOR,
@@ -733,11 +735,16 @@ class Utilities(script_utilities.Utilities):
 
         # A non-text embedded object reports an absolute Component rect, but Chromium's
         # text-range extents are web-area-relative; use its parent-relative embedded-character
-        # rect so both sides of a same-line comparison share one coordinate space.
+        # rect so both sides of a same-line comparison share one coordinate space. Firefox can
+        # briefly collapse that height for an image mid-relayout, so use the image's own box height
+        # when it is taller.
         offset = AXHypertext.get_character_offset_in_parent(obj)
         if offset >= 0:
             rect = AXText.get_range_rect(parent, offset, offset + 1)
             if rect.width and rect.height:
+                if AXUtilities.is_image_or_canvas(obj):
+                    component = AXComponent.get_rect(obj)
+                    rect.height = max(rect.height, component.height)
                 return rect
 
         return AXComponent.get_rect(obj)
@@ -919,6 +926,29 @@ class Utilities(script_utilities.Utilities):
         self._cache.set_for_object(namespace, obj, rv)
         return rv
 
+    def _wraps_only_skippable_elements(self, obj: Atspi.Accessible) -> bool:
+        """Returns True if obj contains only named sections and otherwise useless elements."""
+
+        namespace = self._cache.WRAPS_ONLY_SKIPPABLE_ELEMENTS
+        cached = self._cache.get_for_object(namespace, obj)
+        if cached is not ax_cache_manager.MISSING:
+            return cached
+
+        rv = False
+        for child in AXObject.iter_children(obj):
+            if self._is_useless_empty_element(child) or self._is_useless_image(child):
+                continue
+            if AXUtilities.is_section(child) and self.has_name_and_action_and_no_useful_children(
+                child
+            ):
+                rv = True
+                continue
+            rv = False
+            break
+
+        self._cache.set_for_object(namespace, obj, rv)
+        return rv
+
     def _treat_object_as_whole(self, obj: Atspi.Accessible, offset: int | None = None) -> bool:
         always = [
             Atspi.Role.BUTTON,
@@ -980,7 +1010,11 @@ class Utilities(script_utilities.Utilities):
             return not document_presenter.get_presenter().browse_mode_is_sticky(self._script.app)
 
         if role == Atspi.Role.LINK:
-            return AXUtilities.has_explicit_name(obj) or self.has_useless_canvas_descendant(obj)
+            return (
+                AXUtilities.has_explicit_name(obj)
+                or self.has_useless_canvas_descendant(obj)
+                or self._wraps_only_skippable_elements(obj)
+            )
 
         if self._is_non_navigable_embedded_document(obj):
             return True
@@ -1675,7 +1709,35 @@ class Utilities(script_utilities.Utilities):
                 if abs(rect.x - x_rect.x) <= 1 and abs(rect.y - x_rect.y) <= 1:
                     # Coinciding position is stacked (skip links) unless one contains the other.
                     return AXUtilities.get_common_ancestor(obj, x_obj) in (obj, x_obj)
-                return AXUtilities.rects_are_on_same_line(rect, x_rect, inline_flow=True)
+                if not AXUtilities.rects_are_on_same_line(rect, x_rect, inline_flow=True):
+                    return False
+                # A tall image can vertically overlap text on the line below it; a text run joins
+                # this line only if it also shares the line with text already on it, not merely
+                # with the image (e.g. an icon beside a name must not pull in the description).
+                if _x_string.strip():
+                    for e_obj, e_start, e_end, e_string in objects:
+                        if e_string.strip():
+                            e_rect = self._get_extents(e_obj, e_start, e_end)
+                            return AXUtilities.rects_are_on_same_line(
+                                e_rect, x_rect, inline_flow=True
+                            )
+                return True
+
+            # A focusable tab-order control that is hidden but still holds its place (an
+            # off-screen or clipped dropdown toggle) is an inline sibling; keep it on the line
+            # when its parent shares obj's block. Non-focusable hidden content (e.g. off-screen
+            # labels) is left out.
+            x_obj_parent = AXObject.get_parent(x_obj)
+            if (
+                x_obj_parent is not None
+                and AXUtilities.is_focusable(x_obj)
+                and AXUtilities.get_nearest_block_ancestor(x_obj_parent) == obj_block
+                and (
+                    AXUtilities.object_is_outside_parent(x_obj)
+                    or (AXUtilities.is_visible(x_obj) and not AXUtilities.is_showing(x_obj))
+                )
+            ):
+                return True
 
             reason = None
             if AXUtilities.is_table_cell_or_header(
