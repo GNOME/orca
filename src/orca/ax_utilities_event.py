@@ -276,6 +276,7 @@ class AXUtilitiesEvent:
 
     _CACHE = _AXUtilitiesEventCache()
     _LAST_TERMINAL_LINE_NAVIGATION_DELETION: tuple[object, float, str] | None = None
+    _LAST_TERMINAL_LINE_NAVIGATION_REPAINT_LINE: tuple[object, float, str] | None = None
 
     @staticmethod
     def _save_terminal_line_navigation_deletion(event: Atspi.Event) -> None:
@@ -284,6 +285,30 @@ class AXUtilitiesEvent:
             time.monotonic(),
             event.any_data,
         )
+        AXUtilitiesEvent._LAST_TERMINAL_LINE_NAVIGATION_REPAINT_LINE = None
+
+    @staticmethod
+    def _save_terminal_line_navigation_repaint_line(event: Atspi.Event) -> None:
+        AXUtilitiesEvent._LAST_TERMINAL_LINE_NAVIGATION_REPAINT_LINE = (
+            ax_cache_manager.get_object_key(event.source),
+            time.monotonic(),
+            AXText.get_line_at_offset(event.source)[0],
+        )
+
+    @staticmethod
+    def _repeats_terminal_line_navigation_repaint_line(event: Atspi.Event) -> bool:
+        prior = AXUtilitiesEvent._LAST_TERMINAL_LINE_NAVIGATION_REPAINT_LINE
+        if prior is None:
+            return False
+
+        obj_key, timestamp, line = prior
+        if obj_key != ax_cache_manager.get_object_key(event.source):
+            return False
+
+        if time.monotonic() - timestamp > AXUtilitiesEvent.TERMINAL_REPAINT_EVENT_WINDOW_SECONDS:
+            return False
+
+        return bool(line.strip()) and event.any_data.strip() == line.strip()
 
     @staticmethod
     def _is_terminal_line_navigation_repaint(event: Atspi.Event) -> bool:
@@ -771,9 +796,15 @@ class AXUtilitiesEvent:
                 is_terminal
                 and mgr.last_event_was_up_or_down()
                 and mgr.last_event_was_line_navigation()
-                and AXUtilitiesEvent._is_terminal_line_navigation_repaint(event)
             ):
-                return TextEventReason.TERMINAL_LINE_NAVIGATION_REPAINT
+                if AXUtilitiesEvent._is_terminal_line_navigation_repaint(event):
+                    AXUtilitiesEvent._save_terminal_line_navigation_repaint_line(event)
+                    return TextEventReason.TERMINAL_LINE_NAVIGATION_REPAINT
+                # VTE can draw the row scrolled into view as a separate insertion after the
+                # repaint. If the repaint handling already presented exactly that line, saying
+                # it again is noise.
+                if AXUtilitiesEvent._repeats_terminal_line_navigation_repaint_line(event):
+                    return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
             return TextEventReason.AUTO_INSERTION_PRESENTABLE
         if has_selected:
             return TextEventReason.SELECTED_TEXT_INSERTION
