@@ -3038,6 +3038,69 @@ class TestAXUtilitiesEvent:
         result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
         assert result == getattr(TextEventReason, case["expected"])
 
+    @pytest.mark.parametrize(
+        "caret_offset",
+        [14, 1],
+        ids=["caret_at_end_of_this_events_range", "caret_no_longer_at_this_events_range"],
+    )
+    def test_get_text_insertion_event_reason_return_terminal_ignores_caret(
+        self, test_context, caret_offset
+    ):
+        """Test that terminal Return output is presented regardless of caret offset."""
+
+        self._setup_dependencies(test_context)
+        from orca import input_event_manager
+        from orca.ax_object import AXObject
+        from orca.ax_text import AXText
+        from orca.ax_utilities_event import AXUtilitiesEvent, TextEventReason
+        from orca.ax_utilities_role import AXUtilitiesRole
+        from orca.ax_utilities_state import AXUtilitiesState
+        from orca.ax_utilities_text import AXUtilitiesText
+
+        mock_event = test_context.Mock(spec=Atspi.Event)
+        mock_obj = test_context.Mock(spec=Atspi.Accessible)
+        mock_event.source = mock_obj
+        mock_event.any_data = "\nline 1\nline 2"
+        mock_event.detail1 = 0
+        mock_event.detail2 = 14
+        mock_event.type = "object:text-changed:insert"
+
+        mock_input_manager = test_context.Mock()
+        for predicate in (
+            "last_event_was_page_switch",
+            "last_event_was_backspace",
+            "last_event_was_delete",
+            "last_event_was_cut",
+            "last_event_was_paste",
+            "last_event_was_undo",
+            "last_event_was_redo",
+            "last_event_was_command",
+            "last_event_was_space",
+            "last_event_was_tab",
+            "last_event_was_printable_key",
+            "last_event_was_caret_navigation",
+            "last_event_was_ctrl_tab",
+            "last_event_was_not_in_current_object",
+        ):
+            getattr(mock_input_manager, predicate).return_value = False
+        mock_input_manager.last_event_was_return.return_value = True
+        test_context.patch_object(
+            input_event_manager, "get_manager", return_value=mock_input_manager
+        )
+
+        test_context.patch_object(AXObject, "get_role", return_value=Atspi.Role.TERMINAL)
+        test_context.patch_object(
+            AXUtilitiesRole, "get_text_ui_roles", return_value=[Atspi.Role.LABEL]
+        )
+        test_context.patch_object(AXUtilitiesState, "is_editable", return_value=False)
+        test_context.patch_object(AXUtilitiesRole, "is_terminal", return_value=True)
+        test_context.patch_object(AXUtilitiesState, "is_single_line", return_value=False)
+        test_context.patch_object(AXUtilitiesText, "get_selected_text", return_value=("", 0, 0))
+        test_context.patch_object(AXText, "get_caret_offset", return_value=caret_offset)
+
+        result = AXUtilitiesEvent._get_text_insertion_event_reason(mock_event)
+        assert result == TextEventReason.AUTO_INSERTION_PRESENTABLE
+
     def test_get_text_insertion_event_reason_middle_click(self, test_context):
         """Test AXUtilitiesEvent._get_text_insertion_event_reason with middle click."""
 

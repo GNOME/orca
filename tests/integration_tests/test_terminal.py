@@ -103,6 +103,22 @@ def test_multiline_command_output_is_spoken(gtk3_terminal_shell: NativeAppSessio
 
 
 @pytest.mark.native_app
+def test_scrolled_command_output_is_spoken(gtk3_terminal_shell: NativeAppSession) -> None:
+    """Tests that command output which scrolls the terminal is spoken."""
+
+    if shutil.which("seq") is None:
+        pytest.skip("seq is not available")
+
+    session = gtk3_terminal_shell
+    _settle(session)
+
+    # The terminal is 8 rows, so seq 20 scrolls lines 1-13 off the top and only the
+    # visible remainder is spoken.
+    _type("seq 20\n")
+    assert helpers.speech(session) == ["14\n15\n16\n17\n18\n19\n20\n$ \n"]
+
+
+@pytest.mark.native_app
 def test_typed_characters_are_echoed(gtk3_terminal_shell: NativeAppSession) -> None:
     """Tests that key echo speaks each character as it is typed at the prompt."""
 

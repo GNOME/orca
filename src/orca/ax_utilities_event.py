@@ -748,8 +748,9 @@ class AXUtilitiesEvent:
             if AXUtilitiesState.is_single_line(obj):
                 return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
             # Text which Return inserts, be it a newline or an accepted completion, leaves the
-            # caret at the end of that text.
-            if AXText.get_caret_offset(obj) != event.detail1 + event.detail2:
+            # caret at the end of that text. A terminal is excluded: there Return runs a command
+            # rather than accepting a completion, so this caret check does not apply.
+            if not is_terminal and AXText.get_caret_offset(obj) != event.detail1 + event.detail2:
                 return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
             return TextEventReason.AUTO_INSERTION_PRESENTABLE
         if mgr.last_event_was_printable_key() or mgr.last_event_was_space():
