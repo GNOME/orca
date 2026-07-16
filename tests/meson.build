@@ -186,7 +186,6 @@ orca_integration_tests = [
   'integration_tests/test_speech_presenter_commands.py',
   'integration_tests/test_braille_presenter_commands.py',
   'integration_tests/test_typing_echo.py',
-  'integration_tests/test_terminal.py',
   'integration_tests/test_gtk_text_view_emoji.py',
 ]
 
@@ -220,6 +219,18 @@ test(
   env: test_env,
   suite: 'integration',
   timeout: 300,
+  is_parallel: false,
+)
+
+# Launches a fresh Orca and terminal app for every test, putting a normal pass
+# near the shared 120s cap; give it room.
+test(
+  'test_terminal',
+  integration_wrapper,
+  args: [files('integration_tests/test_terminal.py')],
+  env: test_env,
+  suite: 'integration',
+  timeout: 240,
   is_parallel: false,
 )
 
