@@ -483,7 +483,7 @@ class CaretNavigator(Extension):
             start_offset=offset,
             mode=focus_manager.CARET_NAVIGATOR,
         )
-        if not notify_user or AXUtilities.is_math_related(obj):
+        if not notify_user:
             return True
 
         script.update_braille(obj, offset=offset)
@@ -518,7 +518,7 @@ class CaretNavigator(Extension):
             start_offset=offset,
             mode=focus_manager.CARET_NAVIGATOR,
         )
-        if not notify_user or AXUtilities.is_math_related(obj):
+        if not notify_user:
             return True
 
         script.update_braille(obj, offset=offset)
@@ -568,7 +568,7 @@ class CaretNavigator(Extension):
             end,
             focus_manager.CARET_NAVIGATOR,
         )
-        if not notify_user or AXUtilities.is_math_related(obj):
+        if not notify_user:
             return True
 
         script.update_braille(obj, offset=end)
@@ -607,7 +607,7 @@ class CaretNavigator(Extension):
             focus_manager.CARET_NAVIGATOR,
         )
 
-        if not notify_user or AXUtilities.is_math_related(obj):
+        if not notify_user:
             return True
 
         script.update_braille(obj, offset=start)
@@ -670,7 +670,7 @@ class CaretNavigator(Extension):
             focus_manager.CARET_NAVIGATOR,
         )
 
-        if notify_user and not AXUtilities.is_math_related(obj):
+        if notify_user:
             # Setting the last object on the current line as priorObj
             # prevents re-announcing context.
             presenter = presentation_manager.get_manager()
@@ -729,7 +729,7 @@ class CaretNavigator(Extension):
             focus_manager.CARET_NAVIGATOR,
         )
 
-        if notify_user and not AXUtilities.is_math_related(obj):
+        if notify_user:
             # Setting the first object on the current line as priorObj
             # prevents re-announcing context.
             presenter = presentation_manager.get_manager()
@@ -763,7 +763,7 @@ class CaretNavigator(Extension):
             focus_manager.CARET_NAVIGATOR,
         )
 
-        if not notify_user or AXUtilities.is_math_related(obj):
+        if not notify_user:
             return True
 
         script.say_character(obj, start)
@@ -799,7 +799,7 @@ class CaretNavigator(Extension):
             focus_manager.CARET_NAVIGATOR,
         )
 
-        if not notify_user or AXUtilities.is_math_related(obj):
+        if not notify_user:
             return True
 
         script.say_character(obj, end)
@@ -835,7 +835,7 @@ class CaretNavigator(Extension):
             focus_manager.CARET_NAVIGATOR,
         )
 
-        if not notify_user or AXUtilities.is_math_related(obj):
+        if not notify_user:
             return True
 
         presenter = presentation_manager.get_manager()
@@ -871,7 +871,7 @@ class CaretNavigator(Extension):
             end,
             focus_manager.CARET_NAVIGATOR,
         )
-        if not notify_user or AXUtilities.is_math_related(obj):
+        if not notify_user:
             return True
 
         presenter = presentation_manager.get_manager()

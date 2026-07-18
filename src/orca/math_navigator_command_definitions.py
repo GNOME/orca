@@ -174,7 +174,18 @@ def get_supported_commands() -> list[str]:
 def get_commands(owner: MathNavigator) -> list[Command]:
     """Returns commands for math navigation."""
 
-    commands: list[Command] = []
+    enter_binding = keybindings.KeyBinding("m", keybindings.ORCA_ALT_MODIFIER_MASK)
+    commands: list[Command] = [
+        KeyboardCommand(
+            "math_enter",
+            owner.enter_math_mode_command,
+            owner.GROUP_LABEL,
+            cmdnames.MATH_NAV_ENTER,
+            desktop_keybinding=enter_binding,
+            laptop_keybinding=enter_binding,
+            is_group_toggle=True,
+        )
+    ]
     for name, mathcat_command, description, key, modifier_name in COMMAND_SPECS:
         if mathcat_command == "Exit":
             handler = owner.exit_math_mode
@@ -218,13 +229,4 @@ def get_commands(owner: MathNavigator) -> list[Command]:
                 )
             )
 
-    commands.append(
-        KeyboardCommand(
-            "math_enter",
-            owner.enter_math_mode_command,
-            owner.GROUP_LABEL,
-            cmdnames.MATH_NAV_ENTER,
-            is_group_toggle=True,
-        )
-    )
     return commands

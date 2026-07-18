@@ -154,19 +154,20 @@ class MathNavigator(Extension):
         """Enters math navigation mode for the expression containing obj."""
 
         already_active = self._active
-        if not already_active and not self._enter(obj):
+        # Always (re-)enter so pressing the command again restarts navigation at the outermost
+        # element rather than leaving the caret wherever it last was in the expression.
+        if not self._enter(obj):
             return False
 
         if not already_active:
-            presentation_manager.get_manager().present_message(
-                messages.MATH_NAVIGATION_ENTERED,
-            )
+            # Navigation already read the expression, so first entry only confirms the mode.
+            presentation_manager.get_manager().present_message(messages.MATH_NAVIGATION_ENTERED)
+            return True
 
+        # Re-pressing restarts at the outermost element and re-presents the whole expression.
         math_obj = self._math_object or obj
-        speech = math_presenter.get_presenter().get_speech_for_math(math_obj)
-        if speech:
+        if speech := math_presenter.get_presenter().get_speech_for_math(math_obj):
             presentation_manager.get_manager().speak_accessible_text(math_obj, speech)
-
         return True
 
     @dbus_service.command

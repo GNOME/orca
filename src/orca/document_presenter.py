@@ -134,10 +134,6 @@ class DocumentPresenter(Extension):
 
         super()._register_commands()
 
-        focus_manager.get_manager().add_region_changed_listener(
-            self._on_region_changed,
-        )
-
         manager = command_manager.get_manager()
         manager.add_exclusive_groups(
             guilabels.KB_GROUP_MATH_NAVIGATION,
@@ -375,24 +371,6 @@ class DocumentPresenter(Extension):
         caret_navigator.get_navigator().suspend_commands(script, suspended, reason)
         structural_navigator.get_navigator().suspend_commands(script, suspended, reason)
         return True
-
-    def _on_region_changed(self, obj: Atspi.Accessible | None, mode: str) -> None:
-        """Handles region-changed notifications from the focus manager."""
-
-        if obj is None or math_navigator.get_navigator().is_active():
-            return
-
-        if not AXUtilities.is_math_related(obj):
-            return
-
-        tokens = ["DOCUMENT PRESENTER: Math object found via", mode, ":", obj]
-        debug.print_tokens(debug.LEVEL_INFO, tokens, True)
-
-        if not (math_root := AXUtilitiesMath.find_math_root(obj)):
-            return
-
-        if script := script_manager.get_manager().get_active_script():
-            self.enter_math_navigation(script, math_root)
 
     def enter_math_navigation(self, script: default.Script, obj: Atspi.Accessible) -> bool:
         """Enters math navigation mode for the given math object."""
@@ -793,9 +771,7 @@ class DocumentPresenter(Extension):
             caret_navigator.get_navigator().set_enabled_for_script(script, False)
             return True
 
-        if math_root := AXUtilitiesMath.find_math_root(new_focus):
-            if not math_navigator.get_navigator().is_active():
-                self.enter_math_navigation(script, math_root)
+        if math_navigator.get_navigator().is_active() and AXUtilitiesMath.find_math_root(new_focus):
             return True
 
         if old_doc is None and not focus_manager.get_manager().old_focus_was_dead():
