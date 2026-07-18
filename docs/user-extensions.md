@@ -190,6 +190,15 @@ may change or be removed as Orca's internals change. In-process helper functions
 whose names end in `_internal()` are the only supported way for user extensions
 to reach Orca functionality.
 
+### `get_version_internal()`
+
+Returns Orca's version and revision (if available) as a string, for example
+`"51.beta (rev abc1234)"`.
+
+```python
+version = self.controller.get_version_internal()
+```
+
 ### `present_message_internal(message)`
 
 Presents a message using Orca's normal message presentation. This can include

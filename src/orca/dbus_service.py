@@ -838,6 +838,16 @@ class OrcaRemoteController:
 
         return self._unpublish_module(module_name)
 
+    def get_version_internal(self) -> str:
+        """Returns Orca's version and revision without a D-Bus round-trip."""
+
+        if self._dbus_service_interface is None:
+            msg = "REMOTE CONTROLLER: Cannot get version; service not started."
+            debug.print_message(debug.LEVEL_WARNING, msg, True)
+            return ""
+
+        return self._dbus_service_interface.GetVersion()
+
     def present_message_internal(self, message: str) -> bool:
         """Presents a message via speech and/or braille without a D-Bus round-trip."""
 
