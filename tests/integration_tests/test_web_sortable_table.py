@@ -100,8 +100,6 @@ def test_column_reorder_announced(web_sortable_table: NativeAppSession) -> None:
     assert capture(session) == (
         [
             "t",
-            "Name",
-            "column header sorted ascending",
             "leaving table.",
             "table with 2 rows 3 columns",
             "row header",

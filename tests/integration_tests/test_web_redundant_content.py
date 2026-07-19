@@ -112,7 +112,7 @@ def test_line_navigation_drops_useless_image_in_editable(
         capture(web_redundant_content)
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(web_redundant_content) == (
-        ["Notes", "Icons", "x ", "Red square", "image", "Blue square", "image", " y"],
+        ["Icons", "x ", "Red square", "image", "Blue square", "image", " y"],
         [
             BrailleLine(
                 1,

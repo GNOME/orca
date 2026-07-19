@@ -97,7 +97,7 @@ def test_tab_navigation_and_state_changes(web_form_fields: NativeAppSession) -> 
 
     keyboard.tap_key(keyboard.KEYSYM_TAB)
     assert helpers.capture(session) == (
-        ["Fruit", "combo box collapsed", "Subscribe", "check box not checked", "Browse mode"],
+        ["Subscribe", "check box not checked", "Browse mode"],
         [
             helpers.BrailleLine(
                 1, "< > Subscribe check box", "< > Subscribe check box", "\x00" * 23

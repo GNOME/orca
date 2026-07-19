@@ -157,6 +157,7 @@ class SpeechGenerator(speech_generator.SpeechGenerator):
         result.extend(
             super()._generate_ancestors(
                 obj,
+                include_only=include_only,
                 stop_at_roles=stop_at_roles,
                 skip_roles=skip_roles,
                 stop_after_roles=[Atspi.Role.TOOL_BAR],

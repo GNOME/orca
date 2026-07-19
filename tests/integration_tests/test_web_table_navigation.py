@@ -291,9 +291,6 @@ def test_caret_navigation_in_a_table(web_tables: NativeAppSession) -> None:
     keyboard.tap_key(keyboard.KEYSYM_DOWN)
     assert capture(session) == (
         [
-            "Grace row header Office column header",
-            "row 3",
-            "column 3",
             "leaving table.",
             "table with 6 rows 3 columns",
             "P",
