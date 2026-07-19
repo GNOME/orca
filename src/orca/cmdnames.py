@@ -1078,6 +1078,15 @@ LIVE_REGION_NEXT = _("Go to next live region")
 # ticker. https://w3c.github.io/aria/#dfn-live-region
 LIVE_REGION_LAST = _("Go to the last live region which made an announcement")
 
+# Translators: this is for navigating among math expressions in a document.
+MATH_PREV = _("Go to previous math expression")
+
+# Translators: this is for navigating among math expressions in a document.
+MATH_NEXT = _("Go to next math expression")
+
+# Translators: this is for navigating among math expressions in a document.
+MATH_LIST = _("Display a list of math expressions")
+
 # Translators: the object navigator allows users to explore UI objects presented
 # as a hierarchy.
 NAVIGATOR_UP = _("Go to the parent of the object with navigator focus.")

@@ -582,6 +582,7 @@ These commands are available directly on the main service object at `/org/gnome/
 - **`ListLinks`:** Displays a list of links.
 - **`ListListItems`:** Displays a list of list items.
 - **`ListLists`:** Displays a list of lists.
+- **`ListMath`:** Displays a list of math expressions.
 - **`ListParagraphs`:** Displays a list of paragraphs.
 - **`ListRadioButtons`:** Displays a list of radio buttons.
 - **`ListTables`:** Displays a list of tables.
@@ -610,6 +611,7 @@ These commands are available directly on the main service object at `/org/gnome/
 - **`NextList`:** Goes to the next list.
 - **`NextListItem`:** Goes to the next list item.
 - **`NextLiveRegion`:** Goes to the next live region.
+- **`NextMath`:** Goes to the next math expression.
 - **`NextParagraph`:** Goes to the next paragraph.
 - **`NextRadioButton`:** Goes to the next radio button.
 - **`NextSeparator`:** Goes to the next separator.
@@ -639,6 +641,7 @@ These commands are available directly on the main service object at `/org/gnome/
 - **`PreviousList`:** Goes to the previous list.
 - **`PreviousListItem`:** Goes to the previous list item.
 - **`PreviousLiveRegion`:** Goes to the previous live region.
+- **`PreviousMath`:** Goes to the previous math expression.
 - **`PreviousParagraph`:** Goes to the previous paragraph.
 - **`PreviousRadioButton`:** Goes to the previous radio button.
 - **`PreviousSeparator`:** Goes to the previous separator.

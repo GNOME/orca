@@ -1025,6 +1025,12 @@ SN_HEADER_LIST_ITEM = C_("structural navigation", "List Item")
 # Translators: Orca has a command that presents a list of structural navigation
 # objects in a dialog box so that users can navigate more quickly than they
 # could with native keyboard navigation. This is the title for a column which
+# contains the text of a math expression.
+SN_HEADER_MATH = C_("structural navigation", "Math Expression")
+
+# Translators: Orca has a command that presents a list of structural navigation
+# objects in a dialog box so that users can navigate more quickly than they
+# could with native keyboard navigation. This is the title for a column which
 # contains the text of an object.
 SN_HEADER_OBJECT = C_("structural navigation", "Object")
 
@@ -1157,6 +1163,11 @@ SN_TITLE_LIST = C_("structural navigation", "Lists")
 # objects in a dialog box so that users can navigate more quickly than they
 # could with native keyboard navigation. This is the title of such a dialog box.
 SN_TITLE_LIST_ITEM = C_("structural navigation", "List Items")
+
+# Translators: Orca has a command that presents a list of structural navigation
+# objects in a dialog box so that users can navigate more quickly than they
+# could with native keyboard navigation. This is the title of such a dialog box.
+SN_TITLE_MATH = C_("structural navigation", "Math Expressions")
 
 # Translators: Orca has a command that presents a list of structural navigation
 # objects in a dialog box so that users can navigate more quickly than they

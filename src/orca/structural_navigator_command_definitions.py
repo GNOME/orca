@@ -103,6 +103,9 @@ COMMAND_SPECS = (
     ("previous_live_region", "previous_live_region", cmdnames.LIVE_REGION_PREV),
     ("next_live_region", "next_live_region", cmdnames.LIVE_REGION_NEXT),
     ("last_live_region", "_last_live_region", cmdnames.LIVE_REGION_LAST),
+    ("previous_math", "previous_math", cmdnames.MATH_PREV),
+    ("next_math", "next_math", cmdnames.MATH_NEXT),
+    ("list_math", "list_math", cmdnames.MATH_LIST),
     ("previous_paragraph", "previous_paragraph", cmdnames.PARAGRAPH_PREV),
     ("next_paragraph", "next_paragraph", cmdnames.PARAGRAPH_NEXT),
     ("list_paragraphs", "list_paragraphs", cmdnames.PARAGRAPH_LIST),
@@ -186,6 +189,9 @@ def _get_command_bindings() -> dict[str, keybindings.KeyBinding | None]:
     command_bindings["previous_iframe"] = None
     command_bindings["next_iframe"] = None
     command_bindings["list_iframes"] = None
+    command_bindings["previous_math"] = None
+    command_bindings["next_math"] = None
+    command_bindings["list_math"] = None
     return command_bindings
 
 

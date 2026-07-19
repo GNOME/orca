@@ -1658,6 +1658,11 @@ NO_MORE_LIST_ITEMS = _("No more list items.")
 # more info, see https://w3c.github.io/aria/#dfn-live-region
 NO_MORE_LIVE_REGIONS = _("No more live regions.")
 
+# Translators: This is for navigating document content by moving from math
+# expression to math expression. This is a detailed message which will be
+# presented to the user if no more math expressions can be found.
+NO_MORE_MATH = _("No more math expressions.")
+
 # Translators: This is for navigating document content by moving from paragraph
 # to paragraph. This is a detailed message which will be presented to the user
 # if no more paragraphs can be found.

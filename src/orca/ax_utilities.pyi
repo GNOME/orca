@@ -1171,6 +1171,11 @@ class AXUtilities:
         pred: Callable | None = None,
     ) -> list[Atspi.Accessible]: ...
     @staticmethod
+    def find_all_math(
+        root: Atspi.Accessible,
+        pred: Callable | None = None,
+    ) -> list[Atspi.Accessible]: ...
+    @staticmethod
     def find_all_page_tabs(
         root: Atspi.Accessible,
         pred: Callable | None = None,

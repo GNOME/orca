@@ -52,6 +52,7 @@ from . import (
     presentation_manager,
     say_all_presenter,
     script_manager,
+    speech_presenter,
     structural_navigator_command_definitions,
 )
 from .ax_hypertext import AXHypertext
@@ -96,6 +97,7 @@ class NavigationType(Enum):
     LIST = "list"
     LIST_ITEM = "list_item"
     LIVE_REGION = "live_region"
+    MATH = "math"
     PARAGRAPH = "paragraph"
     RADIO_BUTTON = "radio_button"
     SEPARATOR = "separator"
@@ -1875,6 +1877,52 @@ class StructuralNavigator(Extension):
         self._last_input_event = event
         live_region_presenter.get_presenter().go_last_live_region(script, event)
         return True
+
+    ########################
+    #                      #
+    # Math                 #
+    #                      #
+    ########################
+
+    def _get_all_math(self, script: default.Script) -> list[Atspi.Accessible]:
+        pred = None
+        if self.get_mode(script) == NavigationMode.GUI:
+            pred = self._is_non_document_object
+
+        root = self._determine_root_container(script)
+        return AXUtilities.find_all_math(root, pred=pred)
+
+    @dbus_service.command
+    @navigation_command
+    def previous_math(self, script: default.Script, notify_user: bool = True) -> None:
+        """Goes to the previous math expression."""
+
+        matches = self._get_all_math(script)
+        result = self._get_object_in_direction(script, matches, False, NavigationType.MATH)
+        self._present_object(script, result, messages.NO_MORE_MATH, notify_user=notify_user)
+
+    @dbus_service.command
+    @navigation_command
+    def next_math(self, script: default.Script, notify_user: bool = True) -> None:
+        """Goes to the next math expression."""
+
+        matches = self._get_all_math(script)
+        result = self._get_object_in_direction(script, matches, True, NavigationType.MATH)
+        self._present_object(script, result, messages.NO_MORE_MATH, notify_user=notify_user)
+
+    @dbus_service.command
+    @navigation_command
+    def list_math(self, script: default.Script, notify_user: bool = True) -> None:
+        """Displays a list of math expressions."""
+
+        self._present_object_list(
+            script,
+            self._get_all_math(script),
+            guilabels.SN_TITLE_MATH,
+            [guilabels.SN_HEADER_MATH],
+            lambda obj: [speech_presenter.get_presenter().generate_speech_string(script, obj)],
+            notify_user=notify_user,
+        )
 
     ########################
     #                      #
