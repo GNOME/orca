@@ -40,6 +40,7 @@ from . import (
     messages,
     presentation_manager,
     script_manager,
+    speech_presenter,
 )
 from .ax_utilities_math import AXUtilitiesMath
 from .ax_utilities_text import CaretSetReason
@@ -281,7 +282,7 @@ class MathNavigator(Extension):
 
         if notify_user:
             self._present(speech, mathcat_command)
-            if at_boundary:
+            if at_boundary and speech_presenter.get_presenter().use_verbose_speech():
                 presentation_manager.get_manager().present_message(
                     messages.MATH_NAVIGATION_ESCAPE_HINT,
                 )
