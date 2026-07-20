@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Code Block ready</title>
+<style>
+  /* A line-numbered code block. The absolutely-positioned gutter whose
+     spans carry CSS-generated counter() text is what makes Chromium return an
+     invalid (-1,-1) line boundary for the code line after the blank line. */
+  pre[class*="language-"].line-numbers {
+    counter-reset: linenumber;
+    padding-left: 2.6em;
+    position: relative;
+    white-space: pre;
+    overflow: auto;
+  }
+  pre[class*="language-"].line-numbers > code {
+    display: block;
+    white-space: inherit;
+  }
+  .line-numbers .line-numbers-rows {
+    position: absolute;
+    top: 0;
+    left: -3.2em;
+    width: 3em;
+  }
+  .line-numbers-rows > span {
+    counter-increment: linenumber;
+    display: block;
+  }
+  .line-numbers-rows > span:before {
+    content: counter(linenumber);
+    display: block;
+  }
+</style>
+</head>
+<body>
+<p>So these commands are what I use:</p>
+<div data-code-block="" class="container"><pre class="language-ruby line-numbers" tabindex="0"><code class="language-ruby" data-lang-auto="ruby">nvidia<span class="token operator">-</span>settings <span class="token operator">-</span><span class="token operator">-</span>assign <span class="token string-literal"><span class="token string">"CurrentMetaMode=DPY-4: nvidia-auto-select @1920x1080 +1920+0 {ViewPortIn=1920x1080, ViewPortOut=1920x1080+0+0}, DPY-1: nvidia-auto-select @1920x1080 +0+0 {ViewPortIn=1920x1080, ViewPortOut=1920x1080+0+0}"</span></span>
+
+nvidia<span class="token operator">-</span>settings <span class="token operator">-</span><span class="token operator">-</span>assign <span class="token string-literal"><span class="token string">"CurrentMetaMode=DPY-4: nvidia-auto-select @1920x1080 +0+0 {ViewPortIn=1920x1080, ViewPortOut=1920x1080+0+0}"</span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
+<p>I use fluxbox and xrandr.</p>
+</body>
+</html>

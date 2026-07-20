@@ -473,6 +473,18 @@ class AXText:
             offset -= 1
             result = Atspi.Text.get_string_at_offset(obj, offset, Atspi.TextGranularity.LINE)
 
+        if (
+            debug.debugLevel <= debug.LEVEL_INFO
+            and result.start_offset == result.end_offset == -1
+            and 0 < offset < length
+            and AXObject.get_toolkit_name(obj).startswith("chromium")
+        ):
+            msg = (
+                f"ERROR: Chromium returned invalid line boundary at offset {offset}. "
+                "See https://crbug.com/536662914"
+            )
+            debug.print_message(debug.LEVEL_INFO, msg, True)
+
         debug_string = result.content.replace("\n", "\\n")
         tokens = [
             f"AXText: Line at offset {offset} in",

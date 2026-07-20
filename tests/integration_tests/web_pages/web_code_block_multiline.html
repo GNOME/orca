@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Code Block Multiline ready</title>
+<style>
+  /* A line-numbered code block. The last line's boundary comes back invalid
+     from Chromium even with no blank line anywhere in the block. */
+  pre[class*="language-"].line-numbers {
+    counter-reset: linenumber;
+    padding-left: 2.6em;
+    position: relative;
+    white-space: pre;
+    overflow: auto;
+  }
+  pre[class*="language-"].line-numbers > code {
+    display: block;
+    white-space: inherit;
+  }
+  .line-numbers .line-numbers-rows {
+    position: absolute;
+    top: 0;
+    left: -3.2em;
+    width: 3em;
+  }
+  .line-numbers-rows > span {
+    counter-increment: linenumber;
+    display: block;
+  }
+  .line-numbers-rows > span:before {
+    content: counter(linenumber);
+    display: block;
+  }
+</style>
+</head>
+<body>
+<p>The build reports:</p>
+<div data-code-block="" class="container"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin">Build with GStreamer support.. : yes
+Build for GStreamer version... : 1.0
+Build with D-Bus support...... : yes
+Build with voice and video.... : no
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
+<p>End of report.</p>
+</body>
+</html>

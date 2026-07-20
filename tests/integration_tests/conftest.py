@@ -65,6 +65,8 @@ from .orca_fixtures import (  # noqa: F401
     _web_basic,
     _web_block_context,
     _web_caret_context,
+    _web_code_block,
+    _web_code_block_multiline,
     _web_contracted_braille,
     _web_cssed_brokenness,
     _web_custom_wrappers,
