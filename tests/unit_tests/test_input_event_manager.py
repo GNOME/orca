@@ -821,13 +821,35 @@ class TestInputEventManager:
                 "id": "printable_key_true",
                 "is_keyboard": True,
                 "is_printable": True,
+                "is_modified": False,
+                "unmodified_only": False,
                 "expected_result": True,
                 "expects_debug": True,
+            },
+            {
+                "id": "modified_printable_key_allowed_by_default",
+                "is_keyboard": True,
+                "is_printable": True,
+                "is_modified": True,
+                "unmodified_only": False,
+                "expected_result": True,
+                "expects_debug": True,
+            },
+            {
+                "id": "modified_printable_key_excluded_when_requested",
+                "is_keyboard": True,
+                "is_printable": True,
+                "is_modified": True,
+                "unmodified_only": True,
+                "expected_result": False,
+                "expects_debug": False,
             },
             {
                 "id": "not_keyboard",
                 "is_keyboard": False,
                 "is_printable": None,
+                "is_modified": None,
+                "unmodified_only": False,
                 "expected_result": False,
                 "expects_debug": False,
             },
@@ -835,6 +857,8 @@ class TestInputEventManager:
                 "id": "not_printable",
                 "is_keyboard": True,
                 "is_printable": False,
+                "is_modified": False,
+                "unmodified_only": False,
                 "expected_result": False,
                 "expects_debug": False,
             },
@@ -856,9 +880,12 @@ class TestInputEventManager:
         if case["is_keyboard"] and case["is_printable"] is not None:
             mock_last_event = test_context.Mock()
             mock_last_event.is_printable_key.return_value = case["is_printable"]
+            mock_last_event.is_alt_control_or_orca_modified.return_value = case["is_modified"]
             input_event_manager._last_input_event = mock_last_event
 
-        result = input_event_manager.last_event_was_printable_key()
+        result = input_event_manager.last_event_was_printable_key(
+            unmodified=case["unmodified_only"]
+        )
         assert result is case["expected_result"]
 
         if case["expects_debug"]:

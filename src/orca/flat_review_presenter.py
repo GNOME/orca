@@ -150,8 +150,11 @@ class FlatReviewPresenter(Extension):
         if tracking == FocusTracking.OFF.value:
             return False
         if tracking == FocusTracking.ON.value:
-            # Always follow a caret move; ignore unpresentable insertions.
-            if caret_moved is not None:
+            if (
+                caret_moved is not None
+                and AXUtilities.get_text_event_reason(caret_moved)
+                != TextEventReason.AUTO_INSERTION_UNPRESENTABLE
+            ):
                 return True
             return (
                 text_inserted is not None

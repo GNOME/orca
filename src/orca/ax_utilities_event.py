@@ -620,7 +620,7 @@ class AXUtilitiesEvent:
                 if focus != obj and AXUtilitiesState.is_focused(obj):
                     return TextEventReason.FOCUS_CHANGE
                 return TextEventReason.UNSPECIFIED_COMMAND
-            if mgr.last_event_was_printable_key():
+            if mgr.last_event_was_printable_key(unmodified=True):
                 return TextEventReason.TYPING
             if AXUtilitiesEvent._is_terminal_being_flat_reviewed(obj):
                 return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
@@ -677,7 +677,7 @@ class AXUtilitiesEvent:
             return TextEventReason.AUTO_DELETION_UNPRESENTABLE
         if mgr.last_event_was_command():
             return TextEventReason.UNSPECIFIED_COMMAND
-        if mgr.last_event_was_printable_key():
+        if mgr.last_event_was_printable_key(unmodified=True):
             return TextEventReason.TYPING
         if mgr.last_event_was_up_or_down() or mgr.last_event_was_page_up_or_page_down():
             if AXUtilitiesEvent._is_spin_button_descendant(obj):
@@ -778,7 +778,7 @@ class AXUtilitiesEvent:
             if not is_terminal and AXText.get_caret_offset(obj) != event.detail1 + event.detail2:
                 return TextEventReason.AUTO_INSERTION_UNPRESENTABLE
             return TextEventReason.AUTO_INSERTION_PRESENTABLE
-        if mgr.last_event_was_printable_key() or mgr.last_event_was_space():
+        if mgr.last_event_was_printable_key(unmodified=True) or mgr.last_event_was_space():
             if has_selected:
                 return TextEventReason.AUTO_INSERTION_PRESENTABLE
             presenter = typing_echo_presenter.get_presenter()
@@ -844,7 +844,7 @@ class AXUtilitiesEvent:
             return TextEventReason.PAGE_SWITCH
         if mgr.last_event_was_command():
             return TextEventReason.UNSPECIFIED_COMMAND
-        if mgr.last_event_was_printable_key():
+        if mgr.last_event_was_printable_key(unmodified=True):
             cached_text, old_start, old_end = AXUtilitiesText.get_cached_selected_text(obj)
             if not cached_text:
                 _current, new_start, new_end = AXUtilitiesText.get_selected_text(obj)

@@ -316,6 +316,56 @@ class TestFlatReviewPresenter:
         result = presenter.is_active()
         assert result is expected
 
+    @pytest.mark.parametrize("event_kind", ["insertion", "caret"])
+    def test_unpresentable_automatic_change_preserves_location(
+        self,
+        test_context: OrcaTestContext,
+        event_kind: str,
+    ) -> None:
+        """Test an unpresentable automatic change does not move the review location."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities import AXUtilities
+        from orca.ax_utilities_event import TextEventReason
+        from orca.flat_review_presenter import FlatReviewPresenter, FocusTracking
+
+        presenter = FlatReviewPresenter()
+        presenter.get_focus_tracking = test_context.Mock(return_value=FocusTracking.ON.value)
+        insertion = test_context.Mock() if event_kind == "insertion" else None
+        caret = test_context.Mock() if event_kind == "caret" else None
+        test_context.patch_object(
+            AXUtilities,
+            "get_text_event_reason",
+            return_value=TextEventReason.AUTO_INSERTION_UNPRESENTABLE,
+        )
+
+        assert not presenter._change_invalidates_location(insertion, caret)
+
+    @pytest.mark.parametrize("event_kind", ["insertion", "caret"])
+    def test_typing_change_invalidates_location(
+        self,
+        test_context: OrcaTestContext,
+        event_kind: str,
+    ) -> None:
+        """Test a change caused by typing moves flat review when tracking is on."""
+
+        self._setup_dependencies(test_context)
+        from orca.ax_utilities import AXUtilities
+        from orca.ax_utilities_event import TextEventReason
+        from orca.flat_review_presenter import FlatReviewPresenter, FocusTracking
+
+        presenter = FlatReviewPresenter()
+        presenter.get_focus_tracking = test_context.Mock(return_value=FocusTracking.ON.value)
+        insertion = test_context.Mock() if event_kind == "insertion" else None
+        caret = test_context.Mock() if event_kind == "caret" else None
+        test_context.patch_object(
+            AXUtilities,
+            "get_text_event_reason",
+            return_value=TextEventReason.TYPING,
+        )
+
+        assert presenter._change_invalidates_location(insertion, caret)
+
     def test_get_or_create_context_creates_new_unrestricted(
         self,
         test_context: OrcaTestContext,

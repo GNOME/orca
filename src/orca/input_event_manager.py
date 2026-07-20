@@ -393,18 +393,22 @@ class InputEventManager:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
         return rv
 
-    def last_event_was_printable_key(self):
+    def last_event_was_printable_key(self, unmodified: bool = False) -> bool:
         """Returns True if the last event is believed to be a printable key."""
 
-        if not self.last_event_was_keyboard():
+        event = self._last_input_event
+        if not isinstance(event, input_event.KeyboardEvent):
             return False
 
-        if self._last_input_event.is_printable_key():
-            msg = "INPUT EVENT MANAGER: Last event was printable key"
-            debug.print_message(debug.LEVEL_INFO, msg, True)
-            return True
+        if not event.is_printable_key():
+            return False
 
-        return False
+        if unmodified and event.is_alt_control_or_orca_modified():
+            return False
+
+        msg = "INPUT EVENT MANAGER: Last event was printable key"
+        debug.print_message(debug.LEVEL_INFO, msg, True)
+        return True
 
     def last_event_was_caret_navigation(self):
         """Returns True if the last event is believed to be caret navigation."""

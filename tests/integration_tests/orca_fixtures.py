@@ -177,6 +177,14 @@ _gtk3_terminal_flatrev = _make_terminal_fixture(
     args=("--norc", "--noprofile"),
     files={"t.sh": f"printf c1; sleep {_LIVE_UPDATE_HOLD:g}; printf '\\rc2'; echo\n"},
 )
+_gtk3_terminal_review_update = _make_terminal_fixture(
+    "gtk3_terminal_review_update",
+    binary_names=("bash",),
+    args=("--norc", "--noprofile"),
+    files={
+        "review.sh": (f"printf 'anchor\\nc1'; sleep {_LIVE_UPDATE_HOLD:g}; printf '\\rc2'; echo\n"),
+    },
+)
 _gtk3_terminal_pager = _make_terminal_fixture(
     "gtk3_terminal_pager", binary_names=("less",), args=("doc.txt",), files={"doc.txt": _PAGER_DOC}
 )
