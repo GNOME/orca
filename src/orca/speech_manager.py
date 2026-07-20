@@ -188,6 +188,21 @@ class SpeechManager(Extension):
                 return config
         return ACSS({})
 
+    def _set_runtime_voice_family(self, voice_type: str, family: dict[str, str]) -> None:
+        """Overrides the runtime voice family for voice_type, clearing any previous override."""
+
+        registry = gsettings_registry.get_registry()
+        for family_key, key in (
+            (speechserver.VoiceFamily.NAME, self.KEY_FAMILY_NAME),
+            (speechserver.VoiceFamily.LANG, self.KEY_FAMILY_LANG),
+            (speechserver.VoiceFamily.DIALECT, self.KEY_FAMILY_DIALECT),
+            (speechserver.VoiceFamily.GENDER, self.KEY_FAMILY_GENDER),
+            (speechserver.VoiceFamily.VARIANT, self.KEY_FAMILY_VARIANT),
+        ):
+            registry.remove_runtime_value(self._VOICE_SCHEMA, key, voice_type=voice_type)
+            if value := family.get(family_key):
+                registry.set_runtime_value(self._VOICE_SCHEMA, key, value, voice_type=voice_type)
+
     def _set_runtime_voice(self, voice_type: str, voice: ACSS) -> None:
         """Overrides the runtime voice for voice_type, clearing any previous override."""
 
@@ -198,14 +213,7 @@ class SpeechManager(Extension):
             (ACSS.PITCH_RANGE, self.KEY_PITCH_RANGE),
             (ACSS.GAIN, self.KEY_VOLUME),
         )
-        families = (
-            (speechserver.VoiceFamily.NAME, self.KEY_FAMILY_NAME),
-            (speechserver.VoiceFamily.LANG, self.KEY_FAMILY_LANG),
-            (speechserver.VoiceFamily.DIALECT, self.KEY_FAMILY_DIALECT),
-            (speechserver.VoiceFamily.GENDER, self.KEY_FAMILY_GENDER),
-            (speechserver.VoiceFamily.VARIANT, self.KEY_FAMILY_VARIANT),
-        )
-        for _attr, key in ((None, self.KEY_ESTABLISHED), *prosody, *families):
+        for _attr, key in ((None, self.KEY_ESTABLISHED), *prosody):
             registry.remove_runtime_value(self._VOICE_SCHEMA, key, voice_type=voice_type)
         # A non-default voice type is only used if it is established; mirror that here so the
         # generator applies it rather than falling back to the default voice.
@@ -220,12 +228,7 @@ class SpeechManager(Extension):
                 registry.set_runtime_value(
                     self._VOICE_SCHEMA, key, voice[acss_key], voice_type=voice_type
                 )
-        family = voice.get(ACSS.FAMILY, {})
-        for family_key, key in families:
-            if family.get(family_key):
-                registry.set_runtime_value(
-                    self._VOICE_SCHEMA, key, family[family_key], voice_type=voice_type
-                )
+        self._set_runtime_voice_family(voice_type, voice.get(ACSS.FAMILY, {}))
 
     def apply_live_voice(self, voice: ACSS) -> None:
         """Auditions voice as the live default voice, bypassing voice-set rerouting."""
@@ -805,6 +808,7 @@ class SpeechManager(Extension):
             family_name = voice_family.get(speechserver.VoiceFamily.NAME, "")
             if family_name == voice_name:
                 server.set_voice_family(voice_family)
+                self._set_runtime_voice_family(speechserver.VoiceType.DEFAULT, voice_family)
                 result = True
                 break
 
