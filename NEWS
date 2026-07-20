@@ -1,3 +1,81 @@
+51.alpha - 20 July 2026
+
+New Features:
+
+* Orca now supports user extensions/plugins.
+
+* Orca now uses MathCAT for its MathML presentation.
+
+* Orca now has options to announce formatting changes when reading to
+  make proofreading easier.
+
+* Language-specific voice sets can now be created and activated via
+  command.
+
+* Sleep mode can now be enabled automatically for specific applications.
+
+* What flat review tracks can now be configured.
+
+* Orca+F double-clicked displays all font/formatting information in a
+  window for easier review.
+
+* Orca now supports speech inflection configuration.
+
+Bug Fixes and Other Improvements:
+
+* Add structural navigation option to skip unlabeled images.
+
+* Add unbound command to announce the current state of the modifier
+  keys.
+
+* Add UI to support Insert/KP_Insert and CapsLock as modifiers at the
+  same time.
+
+* Announce misspelled words when navigating by line.
+
+* Fix multiple bugs in the areas of automatic-language switching,
+  braille panning, web presentation, and terminal presentation.
+
+* Restrict structural navigation, Ctrl+Home/End in document viewers
+  inside web applications like VS Code.
+
+* Fix chattiness in response to VS Code's artificial-page repaints.
+
+* Improve performance by reducing AT-SPI calls where there is no
+  cached value.
+
+* Where Am I: Present error message for text role like we do for entry.
+
+* Learn mode: Include all commands in the list shown when F2 is pressed.
+
+* Present font attributes of flat review location when in flat review.
+
+New and updated translations (THANKS EVERYONE!!!):
+
+  be              Belarusian                Vasil Pupkin
+  cs              Czech                     Daniel Rusek
+  de              German                    Christian Kirbach
+  eo              Esperanto                 Kristjan ESPERANTO
+  eu              Basque                    Asier Saratsua Garmendia
+  fa              Persian                   Danial Behzadi
+  fr              French                    Guillaume Bernard
+  hu              Hungarian                 Attila Hammer
+  it              Italian                   Davide Ferracin
+  kk              Kazakh                    Baurzhan Muftakhidinov
+  lt              Lithuanian                Aurimas Aurimas Černius
+  nb              Norwegian Bokmål          Kjartan Maraas
+  pl              Polish                    Victoria Niedzielska
+  ro              Romanian                  Antonio Marin
+  ru              Russian                   Sergej A.
+  sk              Slovak                    Jose Riha
+  sl              Slovenian                 Martin
+  sr              Serbian                   Марко Костић
+  th              Thai                      Aefgh Threenine
+  uk              Ukrainian                 Yuri Chornoivan
+  zh_CN           Chinese (China)           luming zh
+
+=========
+
 50.2 - 26 May 2026
 
 Web:
