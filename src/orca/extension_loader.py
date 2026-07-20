@@ -34,9 +34,10 @@ from enum import Enum
 from typing import TYPE_CHECKING
 
 from . import command_manager, debug, gsettings_registry
-from .extension import Extension
+from .extension import Extension, get_translation
 
 if TYPE_CHECKING:
+    import gettext
     from collections.abc import Callable
 
 _SCHEMA = "extensions"
@@ -465,6 +466,7 @@ class ExtensionLoader:
         except (OSError, SyntaxError):
             return result
 
+        translation = get_translation(source_path)
         for node in ast.walk(tree):
             if not isinstance(node, ast.ClassDef):
                 continue
@@ -478,8 +480,12 @@ class ExtensionLoader:
                 if name == "Extension":
                     return UserExtensionMetadata(
                         class_name=node.name,
-                        group_label=ExtensionLoader._get_class_string_constant(node, "GROUP_LABEL"),
-                        description=ExtensionLoader._get_class_string_constant(node, "DESCRIPTION")
+                        group_label=ExtensionLoader._get_class_string_constant(
+                            node, "GROUP_LABEL", translation
+                        ),
+                        description=ExtensionLoader._get_class_string_constant(
+                            node, "DESCRIPTION", translation
+                        )
                         or "",
                         version=ExtensionLoader._get_class_string_constant(node, "VERSION") or "",
                         author=ExtensionLoader._get_class_string_constant(node, "AUTHOR") or "",
@@ -495,8 +501,12 @@ class ExtensionLoader:
         return result
 
     @staticmethod
-    def _get_class_string_constant(node: ast.ClassDef, name: str) -> str | None:
-        """Returns a string constant assigned in a class body."""
+    def _get_class_string_constant(
+        node: ast.ClassDef,
+        name: str,
+        translation: gettext.NullTranslations | None = None,
+    ) -> str | None:
+        """Returns a possibly localized string assigned in a class body."""
 
         for child in node.body:
             value: ast.expr | None = None
@@ -511,10 +521,43 @@ class ExtensionLoader:
                     continue
                 value = child.value
 
-            if isinstance(value, ast.Constant) and isinstance(value.value, str):
-                return value.value
+            message, context = ExtensionLoader._get_translatable_literal(value)
+            if message is None:
+                continue
+            if translation is None:
+                return message
+            if context is not None:
+                return translation.pgettext(context, message)
+            return translation.gettext(message)
 
         return None
+
+    @staticmethod
+    def _get_translatable_literal(value: ast.expr | None) -> tuple[str | None, str | None]:
+        """Returns the literal message and optional context from an expression."""
+
+        if isinstance(value, ast.Constant) and isinstance(value.value, str):
+            return value.value, None
+        if not isinstance(value, ast.Call):
+            return None, None
+
+        function_name = getattr(value.func, "id", getattr(value.func, "attr", None))
+        if function_name in ("_", "gettext") and len(value.args) == 1:
+            message = value.args[0]
+            if isinstance(message, ast.Constant) and isinstance(message.value, str):
+                return message.value, None
+
+        if function_name == "pgettext" and len(value.args) == 2:
+            context, message = value.args
+            if (
+                isinstance(context, ast.Constant)
+                and isinstance(context.value, str)
+                and isinstance(message, ast.Constant)
+                and isinstance(message.value, str)
+            ):
+                return message.value, context.value
+
+        return None, None
 
     @staticmethod
     def _compute_hash(filepath: str) -> str:

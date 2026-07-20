@@ -22,12 +22,170 @@
 
 from __future__ import annotations
 
+import struct
 from typing import TYPE_CHECKING
 
 import pytest
 
 if TYPE_CHECKING:
+    from pathlib import Path
+
     from .orca_test_context import OrcaTestContext
+
+
+def _write_mo(path: Path, messages: dict[str, str]) -> None:  # pylint: disable=too-many-locals
+    """Write a small GNU MO catalog for tests."""
+
+    encoded = sorted(
+        (message.encode("utf-8"), translation.encode("utf-8"))
+        for message, translation in messages.items()
+    )
+    count = len(encoded)
+    originals_offset = 7 * 4
+    translations_offset = originals_offset + count * 8
+    strings_offset = translations_offset + count * 8
+
+    original_data = b""
+    original_entries = []
+    for message, _translation in encoded:
+        original_entries.append((len(message), strings_offset + len(original_data)))
+        original_data += message + b"\0"
+
+    translation_data_offset = strings_offset + len(original_data)
+    translation_data = b""
+    translation_entries = []
+    for _message, translation in encoded:
+        translation_entries.append(
+            (len(translation), translation_data_offset + len(translation_data))
+        )
+        translation_data += translation + b"\0"
+
+    data = struct.pack(
+        "<7I",
+        0x950412DE,
+        0,
+        count,
+        originals_offset,
+        translations_offset,
+        0,
+        0,
+    )
+    data += b"".join(struct.pack("<2I", *entry) for entry in original_entries)
+    data += b"".join(struct.pack("<2I", *entry) for entry in translation_entries)
+    data += original_data + translation_data
+    path.parent.mkdir(parents=True)
+    path.write_bytes(data)
+
+
+@pytest.mark.unit
+class TestExtensionTranslation:
+    """Tests for package-scoped extension translations."""
+
+    @staticmethod
+    def _setup(test_context: OrcaTestContext):
+        test_context.setup_shared_dependencies(["orca.command_manager"])
+        from orca import extension
+
+        return extension
+
+    def test_get_translation_loads_package_catalog(
+        self,
+        test_context: OrcaTestContext,
+        tmp_path: Path,
+    ) -> None:
+        """Test gettext, plurals, and contexts use the package's domain."""
+
+        extension = self._setup(test_context)
+        package_dir = tmp_path / "localized_test"
+        source_file = package_dir / "__init__.py"
+        source_file.parent.mkdir()
+        source_file.write_text("")
+        catalog = package_dir / "locale" / "it" / "LC_MESSAGES" / "localized_test.mo"
+        _write_mo(
+            catalog,
+            {
+                "": (
+                    "Content-Type: text/plain; charset=UTF-8\n"
+                    "Language: it\n"
+                    "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+                ),
+                "Hello": "Ciao",
+                "One item\0Many items": "Un elemento\0Molti elementi",
+                "menu\x04Open": "Apri",
+            },
+        )
+        test_context.patch_env({"LANGUAGE": "it"})
+
+        translation = extension.get_translation(str(source_file))
+
+        assert translation.gettext("Hello") == "Ciao"
+        assert translation.ngettext("One item", "Many items", 1) == "Un elemento"
+        assert translation.ngettext("One item", "Many items", 2) == "Molti elementi"
+        assert translation.pgettext("menu", "Open") == "Apri"
+        assert translation.gettext("Missing") == "Missing"
+
+    def test_get_translation_keeps_package_domains_isolated(
+        self,
+        test_context: OrcaTestContext,
+        tmp_path: Path,
+    ) -> None:
+        """Test packages can translate the same source string differently."""
+
+        extension = self._setup(test_context)
+        test_context.patch_env({"LANGUAGE": "it"})
+        translations = {}
+        for domain, value in (("first", "Primo"), ("second", "Secondo")):
+            source_file = tmp_path / domain / "__init__.py"
+            source_file.parent.mkdir()
+            source_file.write_text("")
+            catalog = source_file.parent / "locale" / "it" / "LC_MESSAGES" / f"{domain}.mo"
+            _write_mo(
+                catalog,
+                {
+                    "": "Content-Type: text/plain; charset=UTF-8\nLanguage: it\n",
+                    "Value": value,
+                },
+            )
+            translations[domain] = extension.get_translation(str(source_file))
+
+        assert translations["first"].gettext("Value") == "Primo"
+        assert translations["second"].gettext("Value") == "Secondo"
+
+    def test_get_translation_uses_source_strings_for_single_file_extension(
+        self,
+        test_context: OrcaTestContext,
+        tmp_path: Path,
+    ) -> None:
+        """Test single-file extensions do not load unhashed sidecar catalogs."""
+
+        extension = self._setup(test_context)
+        source_file = tmp_path / "single.py"
+        source_file.write_text("")
+
+        translation = extension.get_translation(str(source_file))
+
+        assert translation.gettext("Hello") == "Hello"
+
+    def test_get_translation_ignores_broken_catalog(
+        self,
+        test_context: OrcaTestContext,
+        tmp_path: Path,
+    ) -> None:
+        """Test a malformed package catalog falls back to source strings."""
+
+        extension = self._setup(test_context)
+        source_file = tmp_path / "broken" / "__init__.py"
+        source_file.parent.mkdir()
+        source_file.write_text("")
+        catalog = source_file.parent / "locale" / "it" / "LC_MESSAGES" / "broken.mo"
+        catalog.parent.mkdir(parents=True)
+        catalog.write_bytes(b"not a message catalog")
+        test_context.patch_env({"LANGUAGE": "it"})
+
+        translation = extension.get_translation(str(source_file))
+
+        assert translation.gettext("Hello") == "Hello"
+        extension.debug.print_message.assert_called_once()  # pylint: disable=no-member
 
 
 class _VariantLike:

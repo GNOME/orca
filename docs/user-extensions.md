@@ -6,7 +6,6 @@
 
 This feature is early and experimental. The following are still pending:
 
-- User-extension-provided localized strings.
 - Stable convenience functions for creating non-preferences user-extension UI.
 - Utilities to facilitate user-extension-driven navigation (setting the caret, updating focus, etc.)
 - Fixing bugs and improving the API based on user feedback.
@@ -120,6 +119,138 @@ Optional class attributes:
 Metadata is read from the extension class without executing the extension.
 Simple string constants are supported. The User Extensions page includes an
 Info button for each extension that displays this metadata.
+
+## Localization
+
+User extensions can use the same GNU gettext catalog format as Orca. Python's
+standard-library `gettext` module provides the runtime support, so localized
+extensions do not add an Orca dependency.
+
+Localized extensions must be package extensions. Keeping the catalogs inside
+the package ensures Orca includes them in the extension's approval hash. A
+catalog change therefore requires re-approval, just like a Python code change.
+
+### Loading Translations
+
+Import `get_translation()` and create the translation before defining the
+extension class. The gettext domain is automatically the name of the package
+directory:
+
+```python
+from orca.extension import Extension, get_translation
+
+_translation = get_translation(__file__)
+_ = _translation.gettext
+ngettext = _translation.ngettext
+pgettext = _translation.pgettext
+npgettext = _translation.npgettext
+
+
+class ExampleExtension(Extension):
+    GROUP_LABEL = _("Example Extension")
+    DESCRIPTION = _("Demonstrates localized extension strings.")
+```
+
+Mark all user-visible extension strings, including command descriptions,
+preference labels and choices, validation errors, and presented messages:
+
+```python
+description = _("Reports the number of selected items")
+message = ngettext("One item selected", "%d items selected", count) % count
+label = pgettext("extension preference", "Language")
+```
+
+Use stable command names and preference keys as identifiers; do not translate
+them. User-entered setting values should normally be left unchanged.
+
+`GROUP_LABEL` and `DESCRIPTION` can use `_()` or `pgettext()` with literal
+strings. Orca safely recognizes these forms when showing extension metadata
+without executing unapproved extension code. Other metadata such as author,
+version, organization, copyright, and website is not localized.
+
+If the catalog or an individual message is missing, gettext returns the source
+string. A broken catalog is ignored and reported in Orca's debug output.
+
+### Package Layout
+
+For a package named `example_extension`, use this layout:
+
+```text
+~/.local/share/orca/extensions/example_extension/
+├── __init__.py
+├── po/
+│   ├── example_extension.pot
+│   └── it.po
+└── locale/
+    └── it/
+        └── LC_MESSAGES/
+            └── example_extension.mo
+```
+
+The package directory, translation domain, and `.mo` filename must match. In
+this example all three use `example_extension`.
+
+The `po/` directory is conventional source material for translators. Orca uses
+the compiled `.mo` file in `locale/` at runtime. Keeping both in the package is
+recommended so other people can update the translation.
+
+### Creating a Catalog
+
+GNU gettext's command-line tools can extract marked strings, initialize a
+translation, and compile it. Run these commands from the package directory,
+replacing `it` with the desired locale:
+
+```sh
+mkdir -p po locale/it/LC_MESSAGES
+
+xgettext --language=Python --from-code=UTF-8 \
+    --keyword=_ \
+    --keyword=ngettext:1,2 \
+    --keyword=pgettext:1c,2 \
+    --keyword=npgettext:1c,2,3 \
+    --add-comments=Translators \
+    --output=po/example_extension.pot \
+    __init__.py
+
+msginit --locale=it \
+    --input=po/example_extension.pot \
+    --output-file=po/it.po
+```
+
+Edit `po/it.po` with a PO editor or text editor. Each `msgid` is the source
+string and its `msgstr` is the translation. Then compile it:
+
+```sh
+msgfmt --check \
+    --output-file=locale/it/LC_MESSAGES/example_extension.mo \
+    po/it.po
+```
+
+When the Python strings change, run the `xgettext` command above again to
+regenerate the template. Then merge it into each existing translation and
+compile again:
+
+```sh
+msgmerge --update po/it.po po/example_extension.pot
+
+msgfmt --check \
+    --output-file=locale/it/LC_MESSAGES/example_extension.mo \
+    po/it.po
+```
+
+Gettext selects catalogs from the process locale. For example, an extension can
+be tested in Italian by starting a separate Orca test session with `LANGUAGE=it`
+in its environment.
+
+Translator comments immediately before a marked string can clarify ambiguous
+wording. `xgettext` includes comments that begin with `Translators` because of
+the `--add-comments=Translators` option above:
+
+```python
+# Translators: This command reverses the order of the selected words. For
+# example, "one two three" becomes "three two one".
+description = _("Reverse")
+```
 
 ## Commands and Keybindings
 

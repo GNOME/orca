@@ -472,6 +472,56 @@ class TestExtensionLoaderDataclass:
         assert infos["packaged"].status is UserExtensionStatus.APPROVED
         assert "orca_user_extension.packaged" not in sys.modules
 
+    def test_get_metadata_localizes_marked_package_strings_without_loading(
+        self,
+        test_context: OrcaTestContext,
+        tmp_path: Path,
+    ) -> None:
+        """Test marked metadata is safely parsed and localized without execution."""
+
+        essential_modules = test_context.setup_shared_dependencies(
+            ["orca.command_manager", "orca.gsettings_registry"]
+        )
+        registry = essential_modules["orca.gsettings_registry"].get_registry.return_value
+        registry.gsettings_schema.return_value = lambda cls: cls
+        registry.gsetting.return_value = lambda func: func
+        from orca import extension_loader
+
+        translation = test_context.Mock()
+        translation.gettext.side_effect = lambda message: {
+            "Localized Extension": "Estensione localizzata",
+        }.get(message, message)
+        translation.pgettext.side_effect = lambda context, message: {
+            ("extension description", "Demonstrates localization."): (
+                "Dimostra la localizzazione."
+            ),
+        }.get((context, message), message)
+        test_context.patch_object(
+            extension_loader,
+            "get_translation",
+            return_value=translation,
+        )
+        package_dir = tmp_path / "localized"
+        package_dir.mkdir()
+        (package_dir / "__init__.py").write_text(
+            "raise RuntimeError('must not execute')\n"
+            "from orca.extension import Extension\n"
+            "class LocalizedExtension(Extension):\n"
+            '    GROUP_LABEL = _("Localized Extension")\n'
+            "    DESCRIPTION = pgettext(\n"
+            '        "extension description", "Demonstrates localization."\n'
+            "    )\n"
+            '    VERSION = "1.0"\n'
+        )
+
+        metadata = extension_loader.ExtensionLoader.get_metadata(str(package_dir))
+
+        assert metadata.class_name == "LocalizedExtension"
+        assert metadata.group_label == "Estensione localizzata"
+        assert metadata.description == "Dimostra la localizzazione."
+        assert metadata.version == "1.0"
+        extension_loader.get_translation.assert_called_once_with(str(package_dir / "__init__.py"))  # pylint: disable=no-member
+
     def test_package_hash_ignores_bytecode_cache(
         self,
         test_context: OrcaTestContext,

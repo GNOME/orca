@@ -22,6 +22,8 @@
 
 from __future__ import annotations
 
+import gettext
+import os
 import re
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, ClassVar
@@ -40,7 +42,36 @@ __all__ = [
     "ExtensionPreferenceKind",
     "SpeechOutput",
     "SpeechOutputResult",
+    "get_translation",
 ]
+
+
+def get_translation(source_file: str) -> gettext.NullTranslations:
+    """Returns the package extension's translation for the current locale."""
+
+    source_file = os.path.abspath(source_file)
+    if os.path.basename(source_file) != "__init__.py":
+        return gettext.NullTranslations()
+
+    package_dir = os.path.dirname(source_file)
+    domain = os.path.basename(package_dir)
+    localedir = os.path.join(package_dir, "locale")
+
+    try:
+        catalog_paths = gettext.find(domain, localedir=localedir, all=True)
+        translation: gettext.NullTranslations | None = None
+        for catalog_path in catalog_paths or []:
+            with open(catalog_path, "rb") as catalog_file:
+                catalog = gettext.GNUTranslations(catalog_file)
+            if translation is None:
+                translation = catalog
+            else:
+                translation.add_fallback(catalog)
+        return translation or gettext.NullTranslations()
+    except Exception as error:  # pylint: disable=broad-exception-caught
+        msg = f"EXTENSION: Failed to load translations for {source_file}: {error}"
+        debug.print_message(debug.LEVEL_WARNING, msg, True)
+        return gettext.NullTranslations()
 
 
 @dataclass(frozen=True)
