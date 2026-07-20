@@ -172,6 +172,25 @@ def _build_files_page() -> Gtk.Box:
     return box
 
 
+def _build_list_availability_page() -> Gtk.Box:
+    """A page with a list whose disabled rows cannot be reached with Tab."""
+
+    box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4)
+    listbox = Gtk.ListBox()
+    for label, sensitive in (
+        ("Unavailable first", False),
+        ("Available", True),
+        ("Unavailable last", False),
+    ):
+        row = Gtk.ListBoxRow()
+        row.add(Gtk.Label(label=label))
+        row.set_sensitive(sensitive)
+        listbox.add(row)
+    box.pack_start(listbox, True, True, 0)
+    box.pack_start(Gtk.Button(label="After list"), False, False, 0)
+    return box
+
+
 def main() -> int:
     """Shows the window and runs the GTK main loop."""
 
@@ -189,6 +208,7 @@ def main() -> int:
     notebook.append_page(_build_messages_page(), Gtk.Label(label="Messages"))
     notebook.append_page(_build_labels_page(), Gtk.Label(label="Labels"))
     notebook.append_page(_build_files_page(), Gtk.Label(label="Files"))
+    notebook.append_page(_build_list_availability_page(), Gtk.Label(label="Availability"))
 
     box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4)
     box.pack_start(_build_menu_bar(), False, False, 0)

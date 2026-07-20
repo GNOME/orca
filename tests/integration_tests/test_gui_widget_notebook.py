@@ -335,6 +335,27 @@ def test_focusable_list_item_presents_descendants(
 
 
 @pytest.mark.native_app
+def test_list_count_distinguishes_available_items(
+    gtk3_widget_notebook: NativeAppSession,
+) -> None:
+    """Tests that a list count reflects the rows the user can reach with Tab."""
+
+    session = gtk3_widget_notebook
+    _prepare(session)
+
+    keyboard.press_chord([keyboard.KEYSYM_SHIFT_L], keyboard.KEYSYM_TAB)
+    for _ in range(4):
+        keyboard.tap_key(keyboard.KEYSYM_RIGHT)
+    session.reader.drain(quiescence_timeout=0.3, overall_timeout=2.0)
+    session.reader.reset()
+
+    keyboard.tap_key(keyboard.KEYSYM_TAB)
+    assert helpers.speech(session) == ["List with 1 available item", "Available"]
+    keyboard.tap_key(keyboard.KEYSYM_TAB)
+    assert helpers.speech(session) == ["After list button"]
+
+
+@pytest.mark.native_app
 def test_status_bar_presents_its_contents(gtk3_widget_notebook: NativeAppSession) -> None:
     """Tests that presenting the status bar speaks its contents."""
 

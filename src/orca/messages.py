@@ -2465,6 +2465,15 @@ def list_item_count(count):
     return ngettext("List with %d item", "List with %d items", count) % count
 
 
+def available_list_item_count(count):
+    """Returns a string description of the number of available items in a list."""
+
+    # Translators: This message describes the number of available items in a list which
+    # also contains unavailable items. Available items are those which the user can
+    # navigate to and interact with; unavailable items are insensitive.
+    return ngettext("List with %d available item", "List with %d available items", count) % count
+
+
 def nested_list_item_count(count):
     """Returns a string description of the number of items in a nested list."""
 

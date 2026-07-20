@@ -60,6 +60,8 @@ from .ax_utilities_text import AXUtilitiesText
 if TYPE_CHECKING:
     from collections.abc import Callable
 
+_MAX_CHILDREN_FOR_SENSITIVITY_COUNT = 50
+
 
 class _AXUtilitiesCache:
     """Provides utility-specific access to manager-backed cached values."""
@@ -1233,6 +1235,16 @@ class AXUtilities:
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
 
         return filtered
+
+    @staticmethod
+    def get_sensitive_child_count(obj: Atspi.Accessible) -> int:
+        """Returns the number of sensitive children, assuming large sets are all sensitive."""
+
+        child_count = AXObject.get_child_count(obj)
+        if child_count > _MAX_CHILDREN_FOR_SENSITIVITY_COUNT:
+            return child_count
+
+        return sum(AXUtilitiesState.is_sensitive(child) for child in AXObject.iter_children(obj))
 
     @staticmethod
     def get_set_size(obj: Atspi.Accessible) -> int:  # pylint: disable=too-many-return-statements

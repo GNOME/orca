@@ -736,10 +736,16 @@ class SpeechGenerator(generator.Generator):
             return result
 
         role = self._get_resolved_role()
-        if AXUtilities.is_list(obj, role) or AXUtilities.is_list_box(obj, role):
+        is_list_box = AXUtilities.is_list_box(obj, role)
+        if AXUtilities.is_list(obj, role) or is_list_box:
             set_size = AXUtilities.get_set_size(obj)
             if set_size:
-                result = [messages.list_item_count(set_size)]
+                count_message = messages.list_item_count(set_size)
+                if set_size > 0 and is_list_box:
+                    available_count = AXUtilities.get_sensitive_child_count(obj)
+                    if 0 < available_count < set_size:
+                        count_message = messages.available_list_item_count(available_count)
+                result = [count_message]
                 result.extend(self.voice(SYSTEM, obj=obj))
                 return result
             return []
