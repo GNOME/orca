@@ -109,6 +109,7 @@ class TestInputEventManager:
                 self.get_script = test_context.Mock()
                 self.get_click_count = test_context.Mock(return_value=1)
                 self.is_printable_key = test_context.Mock(return_value=True)
+                self.is_alt_control_or_orca_modified = test_context.Mock(return_value=False)
                 self.as_single_line_string = test_context.Mock(return_value="KeyboardEvent")
                 self.pressed = pressed
                 self.keycode = keycode
@@ -873,12 +874,8 @@ class TestInputEventManager:
         """Test InputEventManager.last_event_was_printable_key with various scenarios."""
 
         input_event_manager, essential_modules = self._setup_input_event_manager(test_context)
-        input_event_manager.last_event_was_keyboard = test_context.Mock(
-            return_value=case["is_keyboard"],
-        )
-
         if case["is_keyboard"] and case["is_printable"] is not None:
-            mock_last_event = test_context.Mock()
+            mock_last_event = essential_modules["orca.input_event"].KeyboardEvent()
             mock_last_event.is_printable_key.return_value = case["is_printable"]
             mock_last_event.is_alt_control_or_orca_modified.return_value = case["is_modified"]
             input_event_manager._last_input_event = mock_last_event
