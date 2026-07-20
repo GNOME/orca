@@ -139,6 +139,7 @@ build-release-tarball:
       when: always
     - when: never
   script:
+    - bash -x ci/install_atspi.sh
     - meson setup "${MESON_BUILD_DIR}"
     - meson dist -C "${MESON_BUILD_DIR}"
   artifacts:
