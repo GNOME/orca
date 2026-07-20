@@ -95,8 +95,7 @@ class AXValue:
         if not AXObject.supports_value(obj):
             return None
 
-        value = AXValue.get_current_value(obj)
-        if AXUtilitiesState.is_indeterminate(obj) and value <= 0:
+        if AXUtilitiesState.is_indeterminate(obj):
             tokens = ["AXValue:", obj, "has state indeterminate"]
             debug.print_tokens(debug.LEVEL_INFO, tokens, True)
             return None
@@ -106,6 +105,7 @@ class AXValue:
         if minimum == maximum:
             return None
 
+        value = AXValue.get_current_value(obj)
         result = int((value / (maximum - minimum)) * 100)
         tokens = ["AXValue: Current value of", obj, f"as percent is is {result}"]
         debug.print_tokens(debug.LEVEL_INFO, tokens, True)
