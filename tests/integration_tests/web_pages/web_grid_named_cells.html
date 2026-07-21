@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Orca Web Grid Named Cells ready</title>
+<style>
+  /* Mirrors the layout Chrome's downloads page uses for its grid rows: the row
+     is a flex container, the title cell holds a single link, and the action
+     cell holds a row of icon buttons. */
+  [role="row"] { display: flex; flex-wrap: wrap; }
+  #title-area { display: flex; }
+  #action-icon-buttons { display: flex; }
+</style>
+</head>
+<body>
+<h1>Grid</h1>
+<div role="grid" id="downloadsList">
+  <div role="row" tabindex="0" id="frb0">
+    <h2 id="date">Yesterday</h2>
+    <div role="gridcell" id="title-area"><a href="#file0">quarterly-report.pdf</a></div>
+    <div role="gridcell">From https://example.com</div>
+    <div role="gridcell" id="action-icon-buttons">
+      <button>Copy download link</button>
+      <button>Show in folder</button>
+      <button>Delete from history</button>
+    </div>
+  </div>
+  <div role="row" tabindex="0" id="frb1">
+    <div role="gridcell"><a href="#file1">meeting-notes.pdf</a></div>
+    <div role="gridcell">From https://example.org</div>
+    <div role="gridcell">
+      <button>Copy download link</button>
+      <button>Delete from history</button>
+    </div>
+  </div>
+</div>
+<p>After the grid.</p>
+</body>
+</html>

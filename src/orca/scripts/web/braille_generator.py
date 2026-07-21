@@ -140,6 +140,13 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         return result
 
     @log_generator_output
+    def _generate_text_substring(self, obj: Atspi.Accessible) -> list[Any]:
+        if not self._script.utilities.treat_as_text_object(obj):
+            return []
+
+        return super()._generate_text_substring(obj)
+
+    @log_generator_output
     def _generate_accessible_label(self, obj: Atspi.Accessible) -> list[Any]:
         if not self._script.utilities.in_document_content(obj):
             return super()._generate_accessible_label(obj)
@@ -155,7 +162,9 @@ class BrailleGenerator(braille_generator.BrailleGenerator):
         if not self._script.utilities.in_document_content(obj):
             return super()._generate_accessible_label_and_name(obj)
 
-        if self._script.utilities.is_text_block_element(obj):
+        if self._script.utilities.is_text_block_element(
+            obj
+        ) and self._script.utilities.treat_as_text_object(obj):
             return []
 
         if AXUtilities.is_editable(obj) and AXUtilities.find_ancestor(obj, AXUtilities.is_code):

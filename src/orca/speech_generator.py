@@ -1076,7 +1076,8 @@ class SpeechGenerator(generator.Generator):
                 dialect=ancestor_dialect,
             )
             self._leaving_count = ancestor_roles.count(alt_role)
-            result.append(self.generate(ancestor, role=alt_role))
+            if generated := self.generate(ancestor, role=alt_role):
+                result.append(generated)
         self._context = original_context
         self._leaving_count = original_leaving_count
 

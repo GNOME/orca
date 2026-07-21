@@ -41,6 +41,7 @@ from .gsettings_fixtures import (  # noqa: F401
     _gsettings_registry,
 )
 from .orca_fixtures import (  # noqa: F401
+    _gtk3_redundant_names,
     _gtk3_terminal_flatrev,
     _gtk3_terminal_nano,
     _gtk3_terminal_pager,
@@ -83,6 +84,7 @@ from .orca_fixtures import (  # noqa: F401
     _web_flex_header,
     _web_focus_mutations,
     _web_form_fields,
+    _web_grid_named_cells,
     _web_headings,
     _web_iframes,
     _web_image_link,

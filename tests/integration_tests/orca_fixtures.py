@@ -44,6 +44,7 @@ from orca.output_reader import OutputReader
 
 from .apps import (
     chromium_browser,
+    gtk3_redundant_names,
     gtk3_terminal,
     gtk3_text_view,
     gtk3_toolbar,
@@ -146,6 +147,7 @@ _gtk3_two_entries = _make_native_app_fixture(gtk3_two_entries, scope="function")
 _gtk3_two_windows = _make_native_app_fixture(gtk3_two_windows, scope="function")
 _gtk3_widget_notebook = _make_native_app_fixture(gtk3_widget_notebook)
 _gtk3_toolbar = _make_native_app_fixture(gtk3_toolbar, scope="function")
+_gtk3_redundant_names = _make_native_app_fixture(gtk3_redundant_names, scope="function")
 
 _PAGER_DOC = "\n".join(f"line {n:02d}" for n in range(1, 21)) + "\n"
 _NANO_DOC = "\n".join(f"line {n}" for n in range(1, 31)) + "\n"
@@ -523,6 +525,7 @@ _web_cssed_brokenness = _make_web_fixture("web_cssed_brokenness.html")
 _web_wrapped_link = _make_web_fixture("web_wrapped_link.html")
 _web_link_starts_line = _make_web_fixture("web_link_starts_line.html")
 _web_tables = _make_web_fixture("web_tables.html")
+_web_grid_named_cells = _make_web_fixture("web_grid_named_cells.html")
 _web_form_fields = _make_web_fixture("web_form_fields.html")
 _web_landmarks = _make_web_fixture("web_landmarks.html")
 _web_app_nested_documents = _make_web_fixture("web_app_nested_documents.html")

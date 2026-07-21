@@ -673,11 +673,14 @@ class Generator:
         # every time we ask for the cell. https://bugreports.qt.io/browse/QTBUG-128558
         # It was fixed in Qt in 2024, but users are still using apps without the fix, like
         # TeamTalk.
+        contains_focus = focus is not None and AXUtilities.is_ancestor(focus, obj)
+
         if (
             focus
             and obj != focus
             and not AXUtilities.is_dialog_or_window(obj)
             and AXObject.get_role(obj) != AXObject.get_role(focus)
+            and (self._is_ancestor() or not contains_focus)
         ):
             obj_name = AXObject.get_name(obj) or AXObject.get_description(obj)
             if obj_name and obj_name in [AXObject.get_name(focus), AXObject.get_description(focus)]:
@@ -1257,7 +1260,7 @@ class Generator:
             return cached
 
         result = Generator._generate_text_substring(self, obj)
-        if result:
+        if result and result[0]:
             if not AXUtilities.is_editable(obj):
                 Generator._CACHE.set_value(Generator._CACHE.TEXT_LINE, key, result)
             return result
@@ -1281,7 +1284,7 @@ class Generator:
             return cached
 
         result = Generator._generate_text_substring(self, obj)
-        if result:
+        if result and result[0]:
             if not AXUtilities.is_editable(obj):
                 Generator._CACHE.set_value(
                     Generator._CACHE.TEXT, ax_cache_manager.get_object_key(obj), result
